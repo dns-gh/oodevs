@@ -10,9 +10,11 @@
 #include "wise_driver_dll_pch.h"
 #include "Automat.h"
 #include "Formation.h"
+#include "KnowledgeGroup.h"
 #include "Model.h"
 #include "Party.h"
-#include "protocol/Simulation.h"
+#include "client_proxy/SwordMessagePublisher_ABC.h"
+#include "protocol/SimulationSenders.h"
 #include <sstream>
 #pragma warning( push )
 #pragma warning( disable: 4100 4201 )
@@ -22,7 +24,8 @@
 
 namespace
 {
-    const Entity_ABC* ResolveSuperior( const Model& model, const Common::ParentEntity& parent )
+    template< typename T >
+    const Entity_ABC* ResolveSuperior( const Model& model, const T& parent )
     {
         if( parent.has_formation() )
             return model.ResolveFormation( parent.formation().id() );
@@ -38,9 +41,11 @@ namespace
 // -----------------------------------------------------------------------------
 Automat::Automat( const Model& model, const MsgsSimToClient::MsgAutomatCreation& message )
     : WiseEntity( message.automat().id(), L"automat" )
+    , model_( model )
     , name_( message.nom().begin(), message.nom().end() )
     , type_( message.type().id() )
     , party_( model.ResolveParty( message.party().id() ) )
+    , knowledgeGroup_( model.ResolveKnowledgeGroup( message.knowledge_group().id() ) )
     , superior_( ResolveSuperior( model, message.parent() ) )
 {
     // NOTHING
@@ -76,18 +81,103 @@ void Automat::Create( CWISEDriver& driver, const WISE_HANDLE& database, const ti
     try
     {
         handle_ = WISE_INVALID_HANDLE;
-        std::map< std::wstring, WISE_HANDLE > attributes;
-        CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, identifier, L"Automat", handle_, attributes ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Identifier" ], long( GetId() ), currentTime ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Name" ], name_, currentTime ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Type" ], long( type_ ), currentTime ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Superior" ], superior_ ? superior_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Party" ], party_ ? party_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, identifier, L"Automat", handle_, attributes_ ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Identifier" ], long( GetId() ), currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Name" ], name_, currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Type" ], long( type_ ), currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Superior" ], superior_ ? superior_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Party" ], party_ ? party_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"KnowledgeGroup" ], knowledgeGroup_ ? knowledgeGroup_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, handle_ ) );
         driver.NotifyInfoMessage( FormatMessage( L"'Created." ) );
     }
     catch( WISE_RESULT& error )
     {
         driver.NotifyErrorMessage( FormatMessage( L"Creation failed." ), error );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: SEB 2010-12-13
+// -----------------------------------------------------------------------------
+void Automat::Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& attribute, const CWISEValueUnion& value )
+{
+    if( attribute == attributes_[ L"Superior" ] )
+    {
+        // $$$$ SEB 2010-12-13: change superior (magic action)
+    }
+    else if( attribute == attributes_[ L"KnowledgeGroup" ] )
+    {
+        // $$$$ SEB 2010-12-13: change knowledge group (magic action)
+    }
+    else if( attribute == attributes_[ L"Automation" ] )
+    {
+        simulation::SetAutomatMode message;
+        message().mutable_automate()->set_id( GetId() );
+        message().set_mode( value.GetByteValue() ? Common::embraye : Common::debraye );
+        message.Send( publisher, 0 );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: SEB 2010-12-13
+// -----------------------------------------------------------------------------
+void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgAutomatAttributes& message )
+{
+    try
+    {
+        if( message.has_etat_automate() )
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Automation" ], unsigned char( message.etat_automate() ), currentTime ) );
+        if( message.has_etat_operationnel() )
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"OperationalState" ], unsigned char( message.etat_operationnel() ), currentTime ) );
+        driver.NotifyDebugMessage( FormatMessage( L"Updated." ), MessageCategoryDebugLevel0 );
+    }
+    catch( WISE_RESULT& error )
+    {
+        driver.NotifyWarningMessage( FormatMessage( L"Update failed." ), error );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: SEB 2010-12-13
+// -----------------------------------------------------------------------------
+void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgAutomatChangeSuperior& message )
+{
+    try
+    {
+        if( message.has_superior() )
+        {
+            superior_ = ResolveSuperior( model_, message.superior() );
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Superior" ], superior_ ? superior_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
+        }
+        driver.NotifyDebugMessage( FormatMessage( L"Superior updated." ), MessageCategoryDebugLevel0 );
+    }
+    catch( WISE_RESULT& error )
+    {
+        driver.NotifyWarningMessage( FormatMessage( L"Superior update failed." ), error );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Update
+// Created: SEB 2010-12-13
+// -----------------------------------------------------------------------------
+void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgAutomatChangeKnowledgeGroup& message )
+{
+    try
+    {
+        if( message.has_knowledge_group() )
+        {
+            knowledgeGroup_ = model_.ResolveKnowledgeGroup( message.knowledge_group().id() );
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"KnowledgeGroup" ], knowledgeGroup_ ? knowledgeGroup_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
+        }
+        driver.NotifyDebugMessage( FormatMessage( L"Knowledge group updated." ), MessageCategoryDebugLevel0 );
+    }
+    catch( WISE_RESULT& error )
+    {
+        driver.NotifyWarningMessage( FormatMessage( L"Knowledge group update failed." ), error );
     }
 }

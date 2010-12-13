@@ -12,7 +12,17 @@
 
 #include "WiseEntity.h"
 
-namespace MsgsSimToClient { class MsgAutomatCreation; }
+namespace Common
+{
+    class MsgAutomatChangeKnowledgeGroup;
+    class MsgAutomatChangeSuperior;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgAutomatAttributes;
+    class MsgAutomatCreation;
+}
 
 class Model;
 
@@ -35,6 +45,10 @@ public:
     //! @name Operations
     //@{
     virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const;
+    virtual void Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& attribute, const CWISEValueUnion& value );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgAutomatAttributes& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgAutomatChangeSuperior& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgAutomatChangeKnowledgeGroup& message );
     //@}
 
 private:
@@ -52,9 +66,11 @@ private:
 private:
     //! @name Member data
     //@{
+    const Model& model_;
     const std::wstring name_;
     const unsigned long type_;
     const Entity_ABC* party_;
+    const Entity_ABC* knowledgeGroup_;
     const Entity_ABC* superior_;
     //@}
 };

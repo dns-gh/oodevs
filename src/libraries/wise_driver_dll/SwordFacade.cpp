@@ -104,6 +104,16 @@ void SwordFacade::OnEventReceived( const WISE_HANDLE& handle )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SwordFacade::OnUpdateReceived
+// Created: SEB 2010-12-13
+// -----------------------------------------------------------------------------
+void SwordFacade::OnUpdateReceived( const WISE_HANDLE& object, const WISE_HANDLE& attribute, const CWISEValueUnion& value )
+{
+    if( model_.get() )
+        model_->OnReceiveUpdate( object, attribute, value );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SwordFacade::OnConnectionSucceeded
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------

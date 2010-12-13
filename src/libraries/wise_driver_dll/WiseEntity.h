@@ -37,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const = 0;
     virtual void Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const;
+    virtual void Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& attribute, const CWISEValueUnion& value );
     //@}
 
 protected:
@@ -46,6 +46,7 @@ protected:
     //@{
     virtual std::wstring MakeIdentifier() const = 0;
     std::wstring FormatMessage( const std::wstring& message ) const;
+    std::wstring GetAttribute( const WISE_HANDLE& handle ) const;
     //@}
 
 private:

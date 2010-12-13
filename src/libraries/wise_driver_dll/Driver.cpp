@@ -248,9 +248,8 @@ WISE_RESULT Driver::OnUpdateAttribute( const timeb& timeStamp,
         // Validate internal state and parameters...
         CHECK_VALID_POINTER_EX( m_pSink, MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_E_NOT_INITIATED ) );
 
-        //
-        // TODO: Update attribute on communications protocol.
-        //
+        if( sword_.get() )
+            sword_->OnUpdateReceived( hObject, hAttribute, value );
 
         // Loopback update into WISE to activate triggers...
         CHECK_WISE_RESULT_EX( CWISEDriver::InternalNotifyAttributeUpdate( timeStamp, hDatabase, hObject, hAttribute, value, quality ) );

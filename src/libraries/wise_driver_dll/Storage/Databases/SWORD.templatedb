@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <templatedatabase>
 
-  <info author="Unknown" copyright="" description="Template Database for MASAGroup.SWORD." modified="2010-12-13T14:26:34.705Z" version="1.0.0.0"/>
+  <info author="Unknown" copyright="" description="Template Database for MASAGroup.SWORD." modified="2010-12-13T16:16:24.998Z" version="1.0.0.0"/>
 
   <datatypes>
     <integers>
@@ -161,11 +161,14 @@
       <attribute defaultvalue="0" description="Identifies the type of agent (Id from physical model)" name="Type" wisetype="long"/>
     </object>
     <object description="Aggregated commanding unit controlling a set of agents (company/squadron level)" sharingmode="publish" type="Automat">
-      <attribute datatype="AutomatIdentifier" defaultvalue="0" description="Identifies the automat" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
-      <attribute datatype="NullString" defaultvalue="" description="Name of the automat from the orbat" keyvalue="true" local="false" name="Name" wisetype="string"/>
-      <attribute defaultvalue="0" description="References automat's party " keyvalue="true" local="false" name="Party" wisetype="handle"/>
+      <attribute datatype="Boolean" defaultvalue="0" description="Whether subordinates automation is enabled or not" name="Automation" wisetype="byte"/>
+      <attribute datatype="AutomatIdentifier" defaultvalue="0" description="Identifies the automat" keyvalue="true" local="false" name="Identifier" sharingmode="publish" wisetype="long"/>
+      <attribute defaultvalue="0" description="References automat's knowledge group" name="KnowledgeGroup" wisetype="handle"/>
+      <attribute datatype="NullString" defaultvalue="" description="Name of the automat from the orbat" keyvalue="true" local="false" name="Name" sharingmode="publish" wisetype="string"/>
+      <attribute datatype="OperationalState" defaultvalue="0" description="Operational state of the automat (destroyed, tactically destroy or operational)" name="OperationalState" sharingmode="publish" wisetype="byte"/>
+      <attribute defaultvalue="0" description="References automat's party " keyvalue="true" local="false" name="Party" sharingmode="publish" wisetype="handle"/>
       <attribute defaultvalue="0" description="References automat's superior unit in the orbat (can be automat or formation)" keyvalue="true" local="false" name="Superior" wisetype="handle"/>
-      <attribute defaultvalue="0" description="Identifies the type of automat (Id from physical model)" name="Type" wisetype="long"/>
+      <attribute defaultvalue="0" description="Identifies the type of automat (Id from physical model)" name="Type" sharingmode="publish" wisetype="long"/>
     </object>
     <object description="Control measure describing a boundary limit as a list of points" sharingmode="publish" type="BoundaryLimit">
       <attribute defaultvalue="0" description="Boundary limit unique identifier" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
@@ -187,7 +190,7 @@
       <attribute defaultvalue="0" description="References belonging party" name="Superior" wisetype="handle"/>
       <attribute defaultvalue="" description="Identifies the type of knowledge group (from physical model)" name="Type" wisetype="string"/>
     </object>
-    <object description="Represents a man-made obstacle or terrain modification" type="Obstacle">
+    <object description="Represents a man-made obstacle or terrain modification" sharingmode="publish" type="Obstacle">
       <attribute datatype="GeometryType" defaultvalue="0" name="Geometry" wisetype="byte"/>
       <attribute defaultvalue="0" description="Obstacle identifier" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
       <attribute defaultvalue="" description="Obstacle name" name="Name" wisetype="string"/>
@@ -200,7 +203,7 @@
       <attribute datatype="PartyIdentifier" defaultvalue="0" description="Party unique identifier" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
       <attribute defaultvalue="" description="Party name" keyvalue="true" local="false" name="Name" wisetype="string"/>
     </object>
-    <object description="Defines diplomacy relationship between parties" type="PartyDiplomacy">
+    <object description="Defines diplomacy relationship between parties" sharingmode="publish" type="PartyDiplomacy">
       <attribute defaultvalue="0" description="Type of relationship between parties" name="Diplomacy" wisetype="byte"/>
       <attribute defaultvalue="0" description="Identifies party from which diplomacy is to be define regarding to PartyTo" keyvalue="true" local="false" name="PartyFrom" wisetype="handle"/>
       <attribute defaultvalue="0" description="Identifies party to which diplomacy is to be define regarding to PartyFrom" keyvalue="true" local="false" name="PartyTo" wisetype="handle"/>

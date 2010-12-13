@@ -21,6 +21,7 @@ class Agent;
 class Automat;
 class BoundaryLimit;
 class CWISEDriver;
+class CWISEValueUnion;
 class FireEngagement;
 class Formation;
 class KnowledgeGroup;
@@ -30,6 +31,7 @@ class PhaseLine;
 class Simulation;
 class SwordMessagePublisher_ABC;
 class TaskFactory;
+class WiseEntity;
 
 // =============================================================================
 /** @class  Model
@@ -56,6 +58,7 @@ public:
     //! @name Driver message handlers
     //@{
     void OnReceiveEvent( const WISE_HANDLE& handle );
+    void OnReceiveUpdate( const WISE_HANDLE& object, const WISE_HANDLE& attribute, const CWISEValueUnion& value );
     //@}
 
     //! @name Resolvers
@@ -96,6 +99,7 @@ private:
     //@{
     CWISEDriver& driver_;
     WISE_HANDLE database_;
+    SwordMessagePublisher_ABC& publisher_;
     std::auto_ptr< Simulation > simulation_;
     std::auto_ptr< TaskFactory > taskFactory_;
     std::map< unsigned long, Party* > parties_;
@@ -107,6 +111,7 @@ private:
     std::map< unsigned long, PhaseLine* > phaseLines_;
     std::map< unsigned long, Obstacle* > obstacles_;
     std::map< unsigned long, FireEngagement* > fireEngagements_;
+    std::map< WISE_HANDLE, WiseEntity* > entities_;
     //@}
 };
 

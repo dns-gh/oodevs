@@ -18,6 +18,7 @@
 #pragma warning( pop )
 
 class CWISEDriver;
+class CWISEValueUnion;
 class IWISEDriverSettings;
 class Model;
 class SwordProxy;
@@ -44,6 +45,7 @@ public:
     void Disconnect();
     void OnRun();
     void OnEventReceived( const WISE_HANDLE& handle );
+    void OnUpdateReceived( const WISE_HANDLE& object, const WISE_HANDLE& attribute, const CWISEValueUnion& value );
     //@}
 
 private:

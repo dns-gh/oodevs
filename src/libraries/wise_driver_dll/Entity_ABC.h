@@ -16,6 +16,8 @@
 #pragma warning( pop )
 
 class CWISEDriver;
+class CWISEValueUnion;
+class SwordMessagePublisher_ABC;
 
 // =============================================================================
 /** @class  Entity_ABC
@@ -43,6 +45,7 @@ public:
     //@{
     virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const = 0;
     virtual void Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const = 0;
+    virtual void Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& attribute, const CWISEValueUnion& value ) = 0;
     //@}
 };
 

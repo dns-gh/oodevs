@@ -35,6 +35,7 @@
 Model::Model( CWISEDriver& driver, const WISE_HANDLE& database, SwordMessagePublisher_ABC& publisher )
     : driver_( driver )
     , database_( database )
+    , publisher_( publisher )
     , simulation_( new Simulation( publisher ) )
     , taskFactory_( new TaskFactory( *this, publisher ) )
 {
@@ -66,6 +67,12 @@ void Model::OnReceiveMessage( const MsgsSimToClient::MsgSimToClient& message )
         Create( formations_, message.message().formation_creation() );
     else if( message.message().has_automat_creation() )
         Create( automats_, message.message().automat_creation() );
+    else if( message.message().has_automat_attributes() )
+        Update( automats_, message.message().automat_attributes().automat().id(), message.message().automat_attributes() );
+    else if( message.message().has_automat_change_superior() )
+        Update( automats_, message.message().automat_change_superior().automat().id(), message.message().automat_change_superior() );
+    else if( message.message().has_automat_change_knowledge_group() )
+        Update( automats_, message.message().automat_change_knowledge_group().automat().id(), message.message().automat_change_knowledge_group() );
     else if( message.message().has_unit_creation() )
         Create( agents_, message.message().unit_creation() );
     else if( message.message().has_unit_attributes() )
@@ -187,6 +194,7 @@ void Model::Reset()
     Clear( formations_ );
     Clear( knowledgeGroups_ );
     Clear( parties_ );
+    entities_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -200,6 +208,7 @@ void Model::Create( std::map< WISE_HANDLE, Entity* >& entities, const Message& m
     {
         entity->Create( driver_, database_, GetTime() );
         entities[ entity->GetId() ] = entity;
+        entities_[ entity->GetHandle() ] = entity;
     }
 }
 
@@ -295,4 +304,17 @@ void Model::OnReceiveEvent( const WISE_HANDLE& handle )
         taskFactory_->OnCreate( driver_, database_, handle );
     else
         driver_.NotifyWarningMessage( L"Unable to process event of type '" + type + L"'.", MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_W_INVALID_FORMAT ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::OnReceiveUpdate
+// Created: SEB 2010-12-13
+// -----------------------------------------------------------------------------
+void Model::OnReceiveUpdate( const WISE_HANDLE& object, const WISE_HANDLE& attribute, const CWISEValueUnion& value )
+{
+    std::map< WISE_HANDLE, WiseEntity* >::iterator it = entities_.find( object );
+    if( it != entities_.end() )
+        it->second->Update( publisher_, attribute, value );
+    else
+        driver_.NotifyWarningMessage( L"Unable to process attribute update.", MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_W_INVALID_FORMAT ) );
 }
