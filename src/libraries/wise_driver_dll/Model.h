@@ -23,6 +23,7 @@ class BoundaryLimit;
 class CWISEDriver;
 class FireEngagement;
 class Formation;
+class KnowledgeGroup;
 class Obstacle;
 class Party;
 class PhaseLine;
@@ -60,6 +61,7 @@ public:
     //! @name Resolvers
     //@{
     const Party* ResolveParty( const unsigned long& id ) const;
+    const KnowledgeGroup* ResolveKnowledgeGroup( const unsigned long& id ) const;
     const Formation* ResolveFormation( const unsigned long& id ) const;
     const Automat* ResolveAutomat( const unsigned long& id ) const;
     const Agent* ResolveAgent( const unsigned long& id ) const;
@@ -97,6 +99,7 @@ private:
     std::auto_ptr< Simulation > simulation_;
     std::auto_ptr< TaskFactory > taskFactory_;
     std::map< unsigned long, Party* > parties_;
+    std::map< unsigned long, KnowledgeGroup* > knowledgeGroups_;
     std::map< unsigned long, Formation* > formations_;
     std::map< unsigned long, Automat* > automats_;
     std::map< unsigned long, Agent* > agents_;

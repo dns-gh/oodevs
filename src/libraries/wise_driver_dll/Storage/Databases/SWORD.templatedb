@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <templatedatabase>
 
-  <info author="Unknown" copyright="" description="Template Database for MASAGroup.SWORD." modified="2010-10-27T20:20:18.612Z" version="1.0.0.0"/>
+  <info author="Unknown" copyright="" description="Template Database for MASAGroup.SWORD." modified="2010-12-13T12:16:29.278Z" version="1.0.0.0"/>
 
   <datatypes>
     <integers>
@@ -14,6 +14,7 @@
       <integer defaultvalue="0" description="Identifies a formation" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="FormationIdentifier" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
       <integer defaultvalue="0" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="Handle" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="handle"/>
       <integer defaultvalue="0" description="Describes a heading between 0 and 360 degrees" endian="big" format="" keytype="none" maxvalue="65535" minvalue="0" name="Heading" sign="unsigned" size="int16" unit="degrees" usemax="false" usemin="false" wisetype="long"/>
+      <integer defaultvalue="0" description="Identifies a knowledge group (communication group containing automats)" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="KnowledgeGroupIdentifier" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
       <integer defaultvalue="0" description="Identifies a party" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="PartyIdentifier" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
       <integer defaultvalue="0" description="Identifies an agent resource type" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="ResourceType" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
       <integer defaultvalue="0" description="Type used for defining simulation acceleration factor" endian="big" format="" keytype="none" maxvalue="9223372036854775807" minvalue="0" name="SimulationAccelerationFactor" sign="unsigned" size="int32" usemax="false" usemin="false" wisetype="long"/>
@@ -179,6 +180,13 @@
       <attribute defaultvalue="0" description="References owning party" name="Party" wisetype="handle"/>
       <attribute defaultvalue="0" description="References parent formation" name="Superior" wisetype="handle"/>
     </object>
+    <object description="Communication group containing automats mutually sharing environment knowledge" sharingmode="publish" type="KnowledgeGroup">
+      <attribute datatype="KnowledgeGroupIdentifier" defaultvalue="0" description="Identifies the knowledge group" name="Identifier" wisetype="long"/>
+      <attribute defaultvalue="0" description="References parent knowledge group (if any)" name="Parent" wisetype="handle"/>
+      <attribute datatype="Boolean" defaultvalue="0" description="If true, the knowledge group is currently scrambled" name="Scrambled" wisetype="byte"/>
+      <attribute defaultvalue="0" description="References belonging party" name="Superior" wisetype="handle"/>
+      <attribute defaultvalue="" description="Identifies the type of knowledge group (from physical model)" name="Type" wisetype="string"/>
+    </object>
     <object description="Represents a man-made obstacle or terrain modification" type="Obstacle">
       <attribute datatype="GeometryType" defaultvalue="0" name="Geometry" wisetype="byte"/>
       <attribute defaultvalue="0" description="Obstacle identifier" keyvalue="true" local="false" name="Identifier" wisetype="long"/>
@@ -194,8 +202,8 @@
     </object>
     <object description="Defines diplomacy relationship between parties" type="PartyDiplomacy">
       <attribute defaultvalue="0" description="Type of relationship between parties" name="Diplomacy" wisetype="byte"/>
-      <attribute defaultvalue="0" description="Identifies party from which diplomacy is to be define regarding to PartyTo" name="PartyFrom" wisetype="handle"/>
-      <attribute defaultvalue="0" description="Identifies party to which diplomacy is to be define regarding to PartyFrom" name="PartyTo" wisetype="handle"/>
+      <attribute defaultvalue="0" description="Identifies party from which diplomacy is to be define regarding to PartyTo" keyvalue="true" local="false" name="PartyFrom" wisetype="handle"/>
+      <attribute defaultvalue="0" description="Identifies party to which diplomacy is to be define regarding to PartyFrom" keyvalue="true" local="false" name="PartyTo" wisetype="handle"/>
     </object>
     <object description="Control measure describing a phase line as a list of points" sharingmode="publish" type="PhaseLine">
       <attribute defaultvalue="0" description="Phase line unique identifier" keyvalue="true" local="false" name="Identifier" wisetype="long"/>

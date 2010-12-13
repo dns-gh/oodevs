@@ -15,6 +15,7 @@
 #include "DetectionEvents.h"
 #include "FireEngagement.h"
 #include "Formation.h"
+#include "KnowledgeGroup.h"
 #include "Obstacle.h"
 #include "Party.h"
 #include "PhaseLine.h"
@@ -59,6 +60,8 @@ void Model::OnReceiveMessage( const MsgsSimToClient::MsgSimToClient& message )
         simulation_->Update( driver_, database_, GetTime(), message.message().control_begin_tick() );
     else if( message.message().has_party_creation() )
         Create( parties_, message.message().party_creation() );
+    else if( message.message().has_party_creation() )
+        Create( knowledgeGroups_, message.message().knowledge_group_creation() );
     else if( message.message().has_formation_creation() )
         Create( formations_, message.message().formation_creation() );
     else if( message.message().has_automat_creation() )
@@ -83,6 +86,8 @@ void Model::OnReceiveMessage( const MsgsSimToClient::MsgSimToClient& message )
         Create( obstacles_, message.message().object_creation() );
     else if( message.message().has_object_destruction() )
         Destroy( obstacles_, message.message().object_destruction().object().id() );
+    else if( message.message().has_change_diplomacy() )
+        Update( parties_, message.message().change_diplomacy().party1().id(), message.message().change_diplomacy() );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,6 +125,15 @@ namespace
 const Party* Model::ResolveParty( const unsigned long& id ) const
 {
     return ResolveEntity( parties_, id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ResolveKnowledgeGroup
+// Created: SEB 2010-10-13
+// -----------------------------------------------------------------------------
+const KnowledgeGroup* Model::ResolveKnowledgeGroup( const unsigned long& id ) const
+{
+    return ResolveEntity( knowledgeGroups_, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,6 +185,7 @@ void Model::Reset()
     Clear( agents_ );
     Clear( automats_ );
     Clear( formations_ );
+    Clear( knowledgeGroups_ );
     Clear( parties_ );
 }
 
