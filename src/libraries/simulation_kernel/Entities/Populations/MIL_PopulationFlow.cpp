@@ -44,12 +44,12 @@ void save_construct_data( Archive& archive, const MIL_PopulationFlow* flow, cons
 }
 
 template< typename Archive >
-void load_construct_data( Archive& archive, MIL_PopulationFlow* concentration, const unsigned int /*version*/ )
+void load_construct_data( Archive& archive, MIL_PopulationFlow* flow, const unsigned int /*version*/ )
 {
     MIL_Population* pPopulation;
     unsigned int nID;
     archive >> pPopulation >> nID;
-    ::new( concentration )MIL_PopulationFlow( *pPopulation, nID);
+    ::new( flow )MIL_PopulationFlow( *pPopulation, nID);
 }
 
 // -----------------------------------------------------------------------------

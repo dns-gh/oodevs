@@ -90,7 +90,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     concentrations_.push_back( pConcentration );
     nPeopleCount_ = pConcentration->GetNbrAliveHumans();
     pArmy_->RegisterPopulation( *this );    
-    vBarycenter.reset( new MT_Vector2D() );
+    vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
     xis >> xml::optional >> xml::start( "extensions" )
         >> xml::list( "entry", *this, &MIL_Population::ReadExtension )
@@ -116,7 +116,7 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
     , bBlinded_               ( false )
 {
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
-    vBarycenter.reset( new MT_Vector2D() );
+    vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
 }
 
@@ -147,7 +147,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     concentrations_.push_back( pConcentration );
     nPeopleCount_ = pConcentration->GetNbrAliveHumans();
     pArmy_->RegisterPopulation( *this );    
-    vBarycenter.reset( new MT_Vector2D() );
+    vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
 }
 
@@ -203,13 +203,15 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> rOverloadedPionMaxSpeed_
          >> pKnowledge_
          >> bHasDoneMagicMove_;
+	MT_Vector2D tmp;
+	file >> tmp;
+	vBarycenter_.reset( new MT_Vector2D( tmp ) );
     {
         DEC_PopulationDecision* pRole;
         file >> pRole;
         RegisterRole( *pRole );
         RegisterRole( *new DEC_Representations() );
     }
-    UpdateBarycenter();
 }
 
 // -----------------------------------------------------------------------------
@@ -231,7 +233,8 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << bPionMaxSpeedOverloaded_
          << rOverloadedPionMaxSpeed_
          << pKnowledge_
-         << bHasDoneMagicMove_;
+         << bHasDoneMagicMove_
+		 << (*vBarycenter_);
     SaveRole< DEC_PopulationDecision >( *this, file );
 }
 
@@ -630,7 +633,7 @@ MT_Vector2D MIL_Population::GetSafetyPosition( const MIL_AgentPion& agent, doubl
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > MIL_Population::GetBarycenter() const
 {
-    return vBarycenter;
+    return vBarycenter_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1260,7 +1263,7 @@ void MIL_Population::UpdateBarycenter()
     if( elements > 0 )
     {
         currentBarycenter = currentBarycenter / elements;
-        vBarycenter->rX_ = currentBarycenter.rX_;
-        vBarycenter->rY_ = currentBarycenter.rY_;
+        vBarycenter_->rX_ = currentBarycenter.rX_;
+        vBarycenter_->rY_ = currentBarycenter.rY_;
     }
 }

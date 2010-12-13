@@ -228,7 +228,7 @@ private:
     T_FlowVector trashedFlows_;
     DEC_PopulationKnowledge* pKnowledge_;
     MIL_PopulationOrderManager orderManager_;
-    boost::shared_ptr< MT_Vector2D > vBarycenter;
+    boost::shared_ptr< MT_Vector2D > vBarycenter_;
 
     // Pion effects
     bool bPionMaxSpeedOverloaded_;
