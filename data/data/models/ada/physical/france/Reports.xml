@@ -441,7 +441,9 @@
   <report category="operational" id="305" message="Fin du bouclage de la zone"/>
   <report category="operational" id="306" message="En appui"/>
   <report category="operational" id="307" message="En mouvement, l'appui n'est pas assuré"/>
-  <report category="operational" id="308" message="l'objet n'est pas contournable"/>
+  <report category="operational" id="308" message="l'objet %1 n'est pas contournable">
+    <parameter type="ObjectKnowledge"/>
+  </report>
   <report category="operational" id="309" message="Travaux impossibles : pas de capacite de destruction"/>
   <report category="operational" id="310" message="Cible non illuminée"/>
   <report category="operational" id="311" message="Tir impossible : Munition interdite"/>
@@ -450,6 +452,10 @@
   </report>
   <report category="operational" id="313" message="Posture de protection activée"/>
   <report category="operational" id="314" message="Posture de protection désactivée"/>
+  <report category="operational" id="315" message="debut controle bloc urbain"/>
+  <report category="operational" id="316" message="fin controle bloc urbain"/>
+  <report category="operational" id="317" message="debut controle point"/>
+  <report category="operational" id="318" message="fin controle point"/>
   <report category="operational" id="3000" message="Embarquement - début"/>
   <report category="operational" id="3001" message="Embarquement - interruption"/>
   <report category="operational" id="3002" message="Embarquement - reprise"/>
@@ -476,4 +482,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="1212660524" -->
+<!-- signature="2633282992" -->
