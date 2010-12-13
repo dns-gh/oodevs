@@ -11,45 +11,45 @@
     </message>
     <message>
         <source>Unhandled error</source>
-        <translation>Erreur irrécupérable</translation>
+        <translation>Error inesperado</translation>
     </message>
     <message>
         <source>Preparation</source>
-        <translation>Préparation</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
+        <translation>Preparación</translation>
     </message>
     <message>
         <source>Unknown exception caught</source>
-        <translation>Exception inconnue</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CommunicationListView</name>
     <message>
         <source>Create knowledge group</source>
-        <translation>Créer un groupe de connaissance</translation>
+        <translation>Crear grupo de información</translation>
     </message>
     <message>
         <source>Create sub knowledge group</source>
-        <translation>Créer un sous-groupe de connaissance</translation>
+        <translation>Crear subgrupo de información</translation>
     </message>
 </context>
 <context>
     <name>DotationsEditor</name>
     <message>
         <source>Dotations editor</source>
-        <translation>Edition des dotations</translation>
+        <translation>Editor de dotaciones</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Type</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Quantity</source>
-        <translation>Quantité</translation>
+        <translation>Cantidad</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -57,81 +57,81 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>ExerciseCreationDialog</name>
     <message>
         <source>Exercise Creation</source>
-        <translation>Création d&apos;exercice</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation type="unfinished">Nombre</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation>Terrain</translation>
+        <translation type="unfinished">Terreno</translation>
     </message>
     <message>
         <source>Model</source>
-        <translation>Modèle</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation type="unfinished">Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Erreur</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ExerciseDialog</name>
     <message>
         <source>Exercise</source>
-        <translation>Exercice</translation>
+        <translation>Ejercicio</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Información</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Nom:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <source>Briefing</source>
-        <translation>Briefing</translation>
+        <translation>Resumen</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Langue</translation>
+        <translation>Idioma</translation>
     </message>
     <message>
         <source>English</source>
-        <translation>Anglais</translation>
+        <translation>Inglés</translation>
     </message>
     <message>
         <source>source</source>
-        <translation>source</translation>
+        <translation>fuente</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation>Fichiers</translation>
+        <translation>Archivos</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>File</source>
-        <translation>Fichier</translation>
+        <translation>Archivo</translation>
     </message>
     <message>
         <source>+</source>
@@ -147,19 +147,19 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>French</source>
-        <translation>Français</translation>
+        <translation>Español</translation>
     </message>
     <message>
         <source>Parameters</source>
-        <translation>Paramètres</translation>
+        <translation>Parámetros</translation>
     </message>
     <message>
         <source>Infinite dotations</source>
-        <translation>Dotations infinies</translation>
+        <translation>Dotaciones infinitas</translation>
     </message>
     <message>
         <source>Spanish</source>
@@ -170,23 +170,23 @@
     <name>ExportDialog</name>
     <message>
         <source>Export exercise data</source>
-        <translation>Export de données d&apos;exercice</translation>
+        <translation>Exportar datos de ejercicio</translation>
     </message>
     <message>
         <source>Select export filter:</source>
-        <translation>Sélectionner le filtre d&apos;export:</translation>
+        <translation>Seleccionar filtro de exportación:</translation>
     </message>
     <message>
         <source>Select output directory:</source>
-        <translation>Sélectionner le répertoire de sortie:</translation>
+        <translation>Seleccionar directorio de salida:</translation>
     </message>
     <message>
         <source>Output to: </source>
-        <translation>Enregistrer dans: </translation>
+        <translation>Salida : </translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation>Parcourir...</translation>
+        <translation>Explorar...</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -194,80 +194,80 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Select output directory</source>
-        <translation>Sélectionner le répertoire de sortie</translation>
+        <translation>Seleccionar directorio de salida</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>Description:</translation>
+        <translation>Descripción:</translation>
     </message>
     <message>
         <source>Error exporting data</source>
-        <translation>Erreur pendant l&apos;export des données</translation>
+        <translation>Error exportando datos</translation>
     </message>
 </context>
 <context>
     <name>ExportFilter</name>
     <message>
         <source>No description available</source>
-        <translation>Aucune description disponible</translation>
+        <translation>No hay descripción disponible</translation>
     </message>
 </context>
 <context>
     <name>FileToolbar</name>
     <message>
+        <source>New</source>
+        <translation>Nuevo</translation>
+    </message>
+    <message>
         <source>File</source>
-        <translation>Fichier</translation>
+        <translation>Archivo</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Ouvrir</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Sauvegarder</translation>
+        <translation>Grabar</translation>
     </message>
     <message>
         <source>Standard</source>
         <translation>Standard</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation>Nouveau</translation>
     </message>
 </context>
 <context>
     <name>ImportOrbatDialog</name>
     <message>
         <source>Import order of battle</source>
-        <translation>Importer un ordre de bataille</translation>
+        <translation>Importar orden de batalla</translation>
     </message>
     <message>
         <source>Select file to import:</source>
-        <translation>Sélectionnez le fichier à importer:</translation>
+        <translation>Seleccionar archivo a importar:</translation>
     </message>
     <message>
         <source>Order of battle: </source>
-        <translation>Ordre de bataille: </translation>
+        <translation>Orden de batalla: </translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation>Parcourir...</translation>
+        <translation>Explorar...</translation>
     </message>
     <message>
         <source>Sides:</source>
-        <translation>Camps:</translation>
+        <translation>Bandos:</translation>
     </message>
     <message>
         <source>Import options:</source>
-        <translation>Options d&apos;import:</translation>
+        <translation>Opciones de importación:</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation>Objets</translation>
+        <translation>Objetos</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -275,233 +275,233 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Load orbat file</source>
-        <translation>Charger un fichier d&apos;ordre de bataille</translation>
+        <translation>Cargar archivo de orden de batalla</translation>
     </message>
     <message>
         <source>Error loading file</source>
-        <translation>Erreur à la lecture du fichier</translation>
+        <translation>Error cargando archivo</translation>
     </message>
     <message>
         <source>File does not appear to be a valid orbat file.
 Please select an other orbat file to import.</source>
-        <translation>Le fichier sélectionné n&apos;est pas un fichier d&apos;ordre de bataille valide.
-Merci de sélectionner un autre fichier à importer.</translation>
+        <translation>El archivo no parece ser un orden de batalla válido.
+Por favor seleccione un archivo de orden de batalla para importar.</translation>
     </message>
     <message>
         <source>Crowd</source>
-        <translation>Foule</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>InhabitantCreationPanel</name>
     <message>
         <source>Inhabitants</source>
-        <translation>Populations</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished">Information</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Nom:</translation>
+        <translation type="unfinished">Nombre:</translation>
     </message>
     <message>
         <source>Side:</source>
-        <translation>Camp:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Nombre:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New Population</source>
-        <translation>Nouvelle Population</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation type="unfinished">Crear</translation>
     </message>
 </context>
 <context>
     <name>InhabitantListView</name>
     <message>
         <source>Create side</source>
-        <translation type="unfinished">Créer un camp</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LocalWeathersList</name>
     <message>
         <source>Local patch</source>
-        <translation>Zones locales</translation>
+        <translation>Zona local</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Ajouter</translation>
+        <translation>Agregar</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Supprimer</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <source>Time parameters or location are incorrect</source>
-        <translation>Les paramètres de temps ou de localisation sont incorrects</translation>
+        <translation>Parámetros de tiempo o de posición incorrectos</translation>
     </message>
 </context>
 <context>
     <name>LogisticSuperiorEditor</name>
     <message>
         <source>None</source>
-        <translation>Aucun</translation>
+        <translation>Ninguno</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Tactical</source>
-        <translation>Tactique</translation>
+        <translation>Táctico</translation>
     </message>
     <message>
         <source>Communication</source>
-        <translation>Communication</translation>
+        <translation>Comunicación</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation>Unités</translation>
+        <translation>Unidades</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation>Objets</translation>
+        <translation>Objetos</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Poblaciones</translation>
     </message>
     <message>
         <source>Creation</source>
-        <translation>Création</translation>
+        <translation>Creación</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation>Terrain</translation>
+        <translation>Terreno</translation>
     </message>
     <message>
         <source>Raster</source>
-        <translation>Cartes Raster</translation>
+        <translation>Imágenes raster</translation>
     </message>
     <message>
         <source>Elevation</source>
-        <translation>Elévation</translation>
+        <translation>Elevación</translation>
     </message>
     <message>
         <source>Automats</source>
-        <translation>Automates</translation>
+        <translation>Automatas</translation>
     </message>
     <message>
         <source>Load exercise definition file (exercise.xml)</source>
-        <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
+        <translation>Cargar archivo de definición de ejercicio (exercise.xml)</translation>
     </message>
     <message>
         <source>New ORBAT</source>
-        <translation>Nouvel ODB</translation>
+        <translation>Nuevo ORBAT</translation>
     </message>
     <message>
         <source>Intelligences</source>
-        <translation>Renseignements</translation>
+        <translation>Inteligencias</translation>
     </message>
     <message>
         <source>Intelligence</source>
-        <translation>Renseignement</translation>
+        <translation>Inteligencia</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Propriétés</translation>
+        <translation>Propiedades</translation>
     </message>
     <message>
         <source>
 Do you want to save anyway?</source>
         <translation>
-Voulez-vous sauvegarder malgré tout?</translation>
+¿Desea grabar sin embargo?</translation>
     </message>
     <message>
         <source>Preparation - [%1]</source>
-        <translation>Préparation - [%1]</translation>
+        <translation>Preparación - [%1]</translation>
     </message>
     <message>
         <source>No file loaded</source>
-        <translation>Pas de fichier chargé</translation>
+        <translation>No hay archivo cargado</translation>
     </message>
     <message>
         <source>Watershed</source>
-        <translation>Montée des eaux</translation>
-    </message>
-    <message>
-        <source>Crowd</source>
-        <translation>Foule</translation>
+        <translation>Crecida de agua</translation>
     </message>
     <message>
         <source>Crowds</source>
-        <translation>Foules</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
+        <source>Crowd</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Menu</name>
     <message>
         <source>&amp;New...</source>
-        <translation>&amp;Nouveau...</translation>
+        <translation>&amp;Nuevo...</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation>&amp;Ouvrir...</translation>
+        <translation>&amp;Abrir...</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Fermer</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;Sauvegarder</translation>
+        <translation>&amp;Grabar</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Quitter</translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Fichier</translation>
+        <translation>&amp;Archivo</translation>
     </message>
     <message>
         <source>&amp;Profiles</source>
-        <translation>&amp;Profils</translation>
+        <translation>&amp;Perfiles</translation>
     </message>
     <message>
         <source>Logistic...</source>
-        <translation>Logistique...</translation>
+        <translation>Logística...</translation>
     </message>
     <message>
         <source>Small text</source>
-        <translation>Petit texte</translation>
+        <translation>Texto pequeño</translation>
     </message>
     <message>
         <source>Large text</source>
-        <translation>Gros texte</translation>
+        <translation>Texto grande</translation>
     </message>
     <message>
         <source>Tactical lines</source>
-        <translation>Lignes tactiques</translation>
+        <translation>Líneas tácticas</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation>Apagado</translation>
     </message>
     <message>
         <source>100m</source>
@@ -533,35 +533,35 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation>Grille</translation>
+        <translation>Grilla</translation>
     </message>
     <message>
         <source>Terrain...</source>
-        <translation>Terrain...</translation>
+        <translation>Terreno...</translation>
     </message>
     <message>
         <source>&amp;Preferences...</source>
-        <translation>&amp;Préférences...</translation>
+        <translation>&amp;Preferencias...</translation>
     </message>
     <message>
         <source>&amp;Display</source>
-        <translation>&amp;Affichage</translation>
+        <translation>&amp;Mostrar</translation>
     </message>
     <message>
         <source>View/Edit...</source>
-        <translation>Voir/Editer...</translation>
+        <translation>Ver/Editar...</translation>
     </message>
     <message>
         <source>Creation wizard...</source>
-        <translation>Assistant de création...</translation>
+        <translation>Asistente de creación...</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
-        <translation>&amp;Fenêtres</translation>
+        <translation>&amp;Ventanas</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>A propos</translation>
+        <translation>Acerca de</translation>
     </message>
     <message>
         <source>2D</source>
@@ -573,23 +573,23 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Display mode</source>
-        <translation>Mode d&apos;affichage</translation>
+        <translation>Modo de visualización</translation>
     </message>
     <message>
         <source>Links</source>
-        <translation>Liens</translation>
+        <translation>Enlaces</translation>
     </message>
     <message>
         <source>Missing links</source>
-        <translation>Liens manquants</translation>
+        <translation>Enlaces rotos</translation>
     </message>
     <message>
         <source>&amp;Import...</source>
-        <translation>&amp;Importer...</translation>
+        <translation>&amp;Importar...</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Aide</translation>
+        <translation>Ayuda</translation>
     </message>
     <message>
         <source>&amp;?</source>
@@ -597,90 +597,90 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Scores...</source>
-        <translation>Scores...</translation>
+        <translation>Indicadores...</translation>
     </message>
     <message>
         <source>&amp;Exercise</source>
-        <translation>&amp;Exercice</translation>
+        <translation>&amp;Ejercicio</translation>
     </message>
     <message>
         <source>Success factors...</source>
-        <translation>Facteurs de réussite...</translation>
+        <translation>Condiciones de éxito...</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation>Propriétés...</translation>
+        <translation>Propiedades...</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>&amp;Exporter...</translation>
+        <translation>&amp;Exportar...</translation>
     </message>
     <message>
         <source>Resource networks</source>
-        <translation>Réseaux de ressource</translation>
+        <translation>Redes de recursos</translation>
     </message>
     <message>
         <source>On</source>
-        <translation>On</translation>
+        <translation>Encendido</translation>
     </message>
     <message>
         <source>Selected: all links</source>
-        <translation>Sélectionné: tous les liens</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Selected: outgoing links</source>
-        <translation>Sélectionné: liens sortants</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ModelBuilder</name>
     <message>
         <source>Delete</source>
-        <translation>Supprimer</translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Confirmation</translation>
+        <translation>Confirmación</translation>
     </message>
     <message>
         <source>Delete &apos;%1&apos; and all its subordinates?</source>
-        <translation>Supprimer &quot;%1&quot; et ses subordonnés ?</translation>
+        <translation>Borrar &quot;%1&quot; y todos sus subordinados ?</translation>
     </message>
     <message>
         <source>Delete &apos;%1&apos;?</source>
-        <translation>Supprimer &quot;%1&quot; ?</translation>
+        <translation>Borrar &quot;%1&quot; ?</translation>
     </message>
 </context>
 <context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
-        <translation>Objets</translation>
+        <translation>Objetos</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation>Crear</translation>
     </message>
 </context>
 <context>
     <name>OrbatAttributesPanel</name>
     <message>
         <source>Extensions</source>
-        <translation>Extensions</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PopulationListView</name>
     <message>
         <source>Create side</source>
-        <translation>Créer un camp</translation>
+        <translation>Crear un bando</translation>
     </message>
 </context>
 <context>
     <name>PositionEditor</name>
     <message>
         <source>Position Editor</source>
-        <translation>Edition de la position</translation>
+        <translation>Editor de posición</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -688,22 +688,22 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Invalid coordinates</source>
-        <translation>Coordonnées invalides</translation>
+        <translation>Cordenadas no válidas</translation>
     </message>
     <message>
         <source> Location is outside terrain bounding box </source>
-        <translation>La position est en dehors du terrain</translation>
+        <translation>La ubicación está fuera de los límites del terreno</translation>
     </message>
 </context>
 <context>
     <name>ProfileDialog</name>
     <message>
         <source>User profiles</source>
-        <translation>Profils utilisateurs</translation>
+        <translation>Perfiles de usuario</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -711,61 +711,61 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>ProfileEditor</name>
     <message>
         <source>Duplicate login: &apos;%1&apos;.</source>
-        <translation>Profil en double: &apos;%1&apos;.</translation>
+        <translation>Usuario repetido: &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>
     <name>ProfileWizardDialog</name>
     <message>
         <source>User profiles creation wizard</source>
-        <translation>Assistant de création de profils utilisateurs</translation>
+        <translation>Asistente de creación de perfiles de usuario</translation>
     </message>
     <message>
         <source>Select profiles to generate: </source>
-        <translation>Sélectionner les profils à générer: </translation>
+        <translation>Seleccionar perfiles a generar: </translation>
     </message>
     <message>
         <source>one profile per side</source>
-        <translation>un profil par camp</translation>
+        <translation>un perfil por bando</translation>
     </message>
     <message>
         <source>one profile per top-level formation</source>
-        <translation>un profil par formation de plus haut niveau</translation>
+        <translation>un perfil por formación de alto nivel</translation>
     </message>
     <message>
         <source>one profile per formation</source>
-        <translation>un profil par formation</translation>
+        <translation>un perfil por formación</translation>
     </message>
     <message>
         <source>Select creation mode: </source>
-        <translation>Sélectionnez le mode de création: </translation>
+        <translation>Seleccionar modo de creación: </translation>
     </message>
     <message>
         <source>clear existing profiles</source>
-        <translation>supprimer les profils existants</translation>
+        <translation>Limpiar perfiles existentes</translation>
     </message>
     <message>
         <source>add new profiles to existing</source>
-        <translation>ajouter les nouveaux profils aux profils existants</translation>
+        <translation>agregar nuevos perfiles a los existentes</translation>
     </message>
     <message>
         <source>Select creation permissions: </source>
-        <translation>Sélectionner les droits: </translation>
+        <translation>Seleccionar permisos de creación: </translation>
     </message>
     <message>
         <source>writeable</source>
-        <translation>écriture</translation>
+        <translation>escribible</translation>
     </message>
     <message>
         <source>readonly</source>
-        <translation>lecture seule</translation>
+        <translation>sólo lectura</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -773,128 +773,128 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>PropertiesTableDisplayer</name>
     <message>
         <source>&lt;Edit Property Group...&gt;</source>
-        <translation>&lt;Editer le groupe de propriétés...&gt;</translation>
+        <translation>&lt;Editar Grupo de propiedades...&gt;</translation>
     </message>
     <message>
         <source>not set</source>
-        <translation>non défini</translation>
+        <translation>no definido</translation>
     </message>
     <message>
         <source>invalid</source>
-        <translation>invalide</translation>
+        <translation>no válido</translation>
     </message>
 </context>
 <context>
     <name>ScoreDef</name>
     <message>
         <source>Total</source>
-        <translation type="unfinished">Total</translation>
+        <translation>Total</translation>
     </message>
     <message>
         <source>Operational</source>
-        <translation type="unfinished">Operationnel</translation>
+        <translation>Operacional</translation>
     </message>
     <message>
         <source>Mental</source>
-        <translation type="unfinished">Moral</translation>
+        <translation>Moral</translation>
     </message>
     <message>
         <source>Officer</source>
-        <translation type="unfinished">Officier</translation>
+        <translation>Oficial</translation>
     </message>
     <message>
         <source>Sub officer</source>
-        <translation type="unfinished">Sous officier</translation>
+        <translation>Sub oficial</translation>
     </message>
     <message>
         <source>Troopers</source>
-        <translation type="unfinished">Soldat</translation>
+        <translation>Soldados</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation type="unfinished">Indisponible</translation>
+        <translation>No disponible</translation>
     </message>
     <message>
         <source>Repairable</source>
-        <translation type="unfinished">Réparable</translation>
+        <translation>Reparable</translation>
     </message>
     <message>
         <source>Repairing</source>
-        <translation type="unfinished">En réparation</translation>
+        <translation>En reparación</translation>
     </message>
     <message>
         <source>Invisible</source>
-        <translation type="unfinished">Invisible</translation>
+        <translation>Invisible</translation>
     </message>
     <message>
         <source>Detected</source>
-        <translation type="unfinished">Détecté</translation>
+        <translation>Detectado</translation>
     </message>
     <message>
         <source>Recognized</source>
-        <translation type="unfinished">Reconnu</translation>
+        <translation>Reconocido</translation>
     </message>
     <message>
         <source>Identified</source>
-        <translation type="unfinished">Identifié</translation>
+        <translation>Identificado</translation>
     </message>
     <message>
         <source>Recorded</source>
-        <translation type="unfinished">Enregistré</translation>
+        <translation>Registrado</translation>
     </message>
     <message>
         <source>Dead</source>
-        <translation type="unfinished">Mort</translation>
+        <translation>Muerto</translation>
     </message>
     <message>
         <source>Wounded</source>
-        <translation type="unfinished">Blessé</translation>
+        <translation>Herido</translation>
     </message>
     <message>
         <source>Nbc</source>
-        <translation type="unfinished">Nbc</translation>
+        <translation>Nbc</translation>
     </message>
     <message>
         <source>In treatment</source>
-        <translation type="unfinished">En traitement</translation>
+        <translation>En tratamiento</translation>
     </message>
     <message>
         <source>In maintenance</source>
-        <translation type="unfinished">En maintenance</translation>
+        <translation>En mantenimiento</translation>
     </message>
     <message>
         <source>Prisoner</source>
-        <translation type="unfinished">Prisonnier</translation>
+        <translation>Prisionero</translation>
     </message>
 </context>
 <context>
     <name>ScoreDialog</name>
     <message>
         <source>Scores</source>
-        <translation>Scores</translation>
+        <translation>Indicadores</translation>
     </message>
     <message>
         <source>Create new score</source>
-        <translation>Créer un nouveau score</translation>
+        <translation>Crear nuevo indicador</translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation>Nom: </translation>
+        <translation>Nombre: </translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -905,19 +905,19 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <name>ScoreEditor</name>
     <message>
         <source>Score editor</source>
-        <translation>Editeur de score</translation>
+        <translation>Editor de indicadores</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Informacion</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Nom:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <source>Formula</source>
-        <translation>Formule</translation>
+        <translation>Fórmula</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -925,15 +925,15 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Score edition - %1 </source>
-        <translation>Edition du score - %1</translation>
+        <translation>Edición de indicador - %1</translation>
     </message>
     <message>
         <source>Formula is empty.</source>
-        <translation>La formule est vide.</translation>
+        <translation>La formula está vacia.</translation>
     </message>
     <message>
         <source>Variables</source>
@@ -941,26 +941,26 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Definition</source>
-        <translation>Définition</translation>
+        <translation>Definición</translation>
     </message>
     <message>
         <source>Gauge</source>
-        <translation>Jauge</translation>
+        <translation>Instrumento</translation>
     </message>
 </context>
 <context>
     <name>ScoreGaugeConfiguration</name>
     <message>
         <source>Representation type: </source>
-        <translation>Type de représentation: </translation>
+        <translation>Tipo de representación: </translation>
     </message>
     <message>
         <source>Value normalization</source>
-        <translation>Normalisation des valeurs</translation>
+        <translation>Normalización de valores</translation>
     </message>
     <message>
         <source>Steps: </source>
-        <translation>Pas: </translation>
+        <translation>Pasos: </translation>
     </message>
     <message>
         <source>Min: </source>
@@ -972,7 +972,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Reverse</source>
-        <translation>Inverser</translation>
+        <translation>Reversa</translation>
     </message>
     <message>
         <source>Min</source>
@@ -984,63 +984,63 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Symbol</source>
-        <translation>Symbole</translation>
+        <translation>Símbolo</translation>
     </message>
 </context>
 <context>
     <name>ScoreList</name>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Edit...</source>
-        <translation>Editer...</translation>
+        <translation>Editar...</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Supprimer</translation>
+        <translation>Borrar</translation>
     </message>
 </context>
 <context>
     <name>ScorePrimitivesLibrary</name>
     <message>
         <source>Data</source>
-        <translation>Données</translation>
+        <translation>Datos</translation>
     </message>
     <message>
         <source>Functions</source>
-        <translation>Fonctions</translation>
+        <translation>Funciones</translation>
     </message>
 </context>
 <context>
     <name>ScorePrimitivesPage</name>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Insert</source>
-        <translation>Insérer</translation>
+        <translation>Insertar</translation>
     </message>
 </context>
 <context>
     <name>ScoreVariableCreationWizard</name>
     <message>
         <source>Create variable</source>
-        <translation>Créer une variable</translation>
+        <translation>Crear variable</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Información</translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation>Nom: </translation>
+        <translation>Nombre: </translation>
     </message>
     <message>
         <source>Type: </source>
-        <translation>Type: </translation>
+        <translation>Tipo: </translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1048,143 +1048,143 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation>Unité</translation>
+        <translation>Unidad</translation>
     </message>
     <message>
         <source>Unit list</source>
-        <translation>Liste d&apos;unités</translation>
+        <translation>Lista de unidades</translation>
     </message>
     <message>
         <source>Dotation list</source>
-        <translation>Liste de dotations</translation>
+        <translation>Lista de dotación</translation>
     </message>
     <message>
         <source>Equipment list</source>
-        <translation>Liste d&apos;équipements</translation>
+        <translation>Lista de equipos</translation>
     </message>
     <message>
         <source>Zone</source>
-        <translation>Zone</translation>
+        <translation>Zona</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valeur</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <source>Variable value: </source>
-        <translation>Valeur de la variable: </translation>
+        <translation>Valor de variable: </translation>
     </message>
     <message>
         <source>Human states</source>
-        <translation>Etats des humains</translation>
+        <translation>Estado de los humanos</translation>
     </message>
     <message>
         <source>Human ranks</source>
-        <translation>Rangs des humains</translation>
+        <translation>Rango de humanos</translation>
     </message>
     <message>
         <source>Equipment states</source>
-        <translation>Etats des équipements</translation>
+        <translation>Estado de equipos</translation>
     </message>
     <message>
         <source>Perception levels</source>
-        <translation>Niveaux de perception</translation>
+        <translation>Niveles de percepción</translation>
     </message>
 </context>
 <context>
     <name>ScoreVariablesList</name>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Type</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valeur</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Ajouter</translation>
+        <translation>Agregar</translation>
     </message>
     <message>
         <source>Del</source>
-        <translation>Suppr</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Coller</translation>
+        <translation>Pegar</translation>
     </message>
 </context>
 <context>
     <name>SuccessFactorConditionItem</name>
     <message>
         <source>equals to</source>
-        <translation>égal à</translation>
+        <translation>igual a</translation>
     </message>
     <message>
         <source>differs from</source>
-        <translation>différent de</translation>
+        <translation>diferente de</translation>
     </message>
     <message>
         <source>less than</source>
-        <translation>inférieur à</translation>
+        <translation>menor a</translation>
     </message>
     <message>
         <source>less than or equal</source>
-        <translation>inférieur ou égal à</translation>
+        <translation>menor o igual que</translation>
     </message>
     <message>
         <source>greater than</source>
-        <translation>supérieur à</translation>
+        <translation>mayor a</translation>
     </message>
     <message>
         <source>greater than or equal</source>
-        <translation>supérieur ou égal à</translation>
+        <translation>mayor o igual a</translation>
     </message>
 </context>
 <context>
     <name>SuccessFactorConditionsEditor</name>
     <message>
         <source>Actions must be executed when: </source>
-        <translation>Les actions sont exécutées lorsque: </translation>
+        <translation>Las acciones deben ser ejecutadas cuando: </translation>
     </message>
     <message>
         <source>at least one condition is verified</source>
-        <translation>au moins une condition est vraie</translation>
+        <translation>se cumple al menos una condición</translation>
     </message>
     <message>
         <source>all conditions are verified</source>
-        <translation>toutes les conditions sont vraies</translation>
+        <translation>se cumplen todas las condiciones</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Ajouter</translation>
+        <translation>Agregar</translation>
     </message>
 </context>
 <context>
     <name>SuccessFactorDialog</name>
     <message>
         <source>Success factors</source>
-        <translation>Facteur de succès</translation>
+        <translation>Condición de éxito</translation>
     </message>
     <message>
         <source>Create new factor</source>
-        <translation>Créer un facteur</translation>
+        <translation>Crear nueva condición</translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation>Nom: </translation>
+        <translation>Nombre: </translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1192,38 +1192,38 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Avertissement</translation>
+        <translation>Alerta</translation>
     </message>
     <message>
         <source>No score has been defined, success factors cannot be created without scores.</source>
-        <translation>Aucun score n&apos;a été défini, un facteur de succès ne peut être créé sans score.</translation>
+        <translation>No se ha definido indicador alguno, no se pueden crear condiciones de éxito sin indicadores.</translation>
     </message>
 </context>
 <context>
     <name>SuccessFactorEditor</name>
     <message>
         <source>Success factor editor</source>
-        <translation>Editeur de facteur de succès</translation>
+        <translation>Editor de condición de éxito</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Informacion</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Nom:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <source>Profiles</source>
-        <translation>Profils</translation>
+        <translation>Perfiles</translation>
     </message>
     <message>
         <source>Conditions</source>
-        <translation>Conditions</translation>
+        <translation>Condiciones</translation>
     </message>
     <message>
         <source>Actions</source>
-        <translation>Actions</translation>
+        <translation>Acciones</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1231,243 +1231,243 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Success Factor edition - %1 </source>
-        <translation>Edition de facteur de succès - %1 </translation>
+        <translation>Edición de condición de éxito - %1 </translation>
     </message>
 </context>
 <context>
     <name>SuccessFactorList</name>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Edit...</source>
-        <translation>Editer...</translation>
+        <translation>Editar...</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Supprimer</translation>
+        <translation>Borrar</translation>
     </message>
 </context>
 <context>
     <name>TacticalListView</name>
     <message>
         <source>Create side</source>
-        <translation>Créer un camp</translation>
+        <translation>Crear bando</translation>
     </message>
     <message>
         <source>Create formation</source>
-        <translation>Créer une formation</translation>
+        <translation>Crear una formación</translation>
     </message>
     <message>
         <source>Engage</source>
-        <translation>Embrayer</translation>
+        <translation>Comprometer</translation>
     </message>
     <message>
         <source>Disengage</source>
-        <translation>Débrayer</translation>
+        <translation>Liberar</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation>Renommer</translation>
+        <translation>Renombrar</translation>
     </message>
 </context>
 <context>
     <name>TemplateListView</name>
     <message>
         <source>Template</source>
-        <translation>Modèle</translation>
+        <translation>Plantilla</translation>
     </message>
 </context>
 <context>
     <name>TemplatesPanel</name>
     <message>
         <source>Templates</source>
-        <translation>Modèles</translation>
+        <translation>Plantillas</translation>
     </message>
     <message>
         <source>Create template</source>
-        <translation>Créer un modèle</translation>
+        <translation>Crear plantillas</translation>
     </message>
 </context>
 <context>
     <name>UserProfileList</name>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Supprimer</translation>
+        <translation>Borrar</translation>
     </message>
 </context>
 <context>
     <name>UserProfileRights</name>
     <message>
         <source>Read</source>
-        <translation>Lecture</translation>
+        <translation>Lectura</translation>
     </message>
     <message>
         <source>Write</source>
-        <translation>Ecriture</translation>
+        <translation>Escritura</translation>
     </message>
 </context>
 <context>
     <name>UserProfileWidget</name>
     <message>
         <source>Profile information</source>
-        <translation>Information sur le profil</translation>
+        <translation>Información del perfil</translation>
     </message>
     <message>
         <source>Login:</source>
-        <translation>Profil:</translation>
+        <translation>Usuario:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Mot de passe:</translation>
+        <translation>Clave:</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Général</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Access permissions</source>
-        <translation>Droits d&apos;accès</translation>
+        <translation>Permisos de acceso</translation>
     </message>
     <message>
         <source>Supervisor actions:</source>
-        <translation>Actions de supervision:</translation>
+        <translation>Acciones de supervisor:</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation>Unités</translation>
+        <translation>Unidades</translation>
     </message>
     <message>
         <source>Invalid profile information</source>
-        <translation>Information de profil invalide</translation>
+        <translation>Información de perfíl nó válida</translation>
     </message>
     <message>
         <source>Permissions</source>
-        <translation>Droits</translation>
+        <translation>Permisos</translation>
     </message>
     <message>
         <source>&apos;Read&apos; permission allows you to see an unit.
 &apos;Write&apos; permission allows you to control an unit.</source>
-        <translation>&apos;Lecture&apos; permet de voir une unité.
-&apos;Ecriture&apos; permet de contrôler une unité.</translation>
+        <translation>Permiso de &apos;Lectura&apos; permite visualizar una unidad.
+Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
     </message>
     <message>
         <source>Crowds</source>
-        <translation>Foules</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>WeatherPanel</name>
     <message>
         <source>Weather</source>
-        <translation>Météo</translation>
+        <translation>Clima</translation>
     </message>
     <message>
         <source>Exercise date:</source>
-        <translation>Date de l&apos;exercice:</translation>
+        <translation>Fecha de ejercicio:</translation>
     </message>
     <message>
         <source>Ephemerides</source>
-        <translation>Ephéméride</translation>
+        <translation>Efemérides</translation>
     </message>
     <message>
         <source>Sunrise:</source>
-        <translation>Lever du soleil:</translation>
+        <translation>Salida de sol:</translation>
     </message>
     <message>
         <source>Sunset:</source>
-        <translation>Coucher du soleil:</translation>
+        <translation>Puesta de sol:</translation>
     </message>
     <message>
         <source>Global weather</source>
-        <translation>Météo du théatre</translation>
+        <translation>Clima global</translation>
     </message>
     <message>
         <source>Local weather</source>
-        <translation>Zones météo locales</translation>
+        <translation>Clima local</translation>
     </message>
     <message>
         <source>Weather parameters</source>
-        <translation>Paramètres météo</translation>
+        <translation>Parámetros de clima</translation>
     </message>
     <message>
         <source>Set location</source>
-        <translation>Définir la position</translation>
+        <translation>Definir ubicación</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Enregistrer</translation>
+        <translation>Grabar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Time and Position Parameters</source>
-        <translation>Paramètres temporel et de localisation</translation>
+        <translation>Parámetros de tiempo y posición</translation>
     </message>
     <message>
         <source>Start time:</source>
-        <translation>Date de début:</translation>
+        <translation>Tiempo de inicio:</translation>
     </message>
     <message>
         <source>End time:</source>
-        <translation>Date de fin:</translation>
+        <translation>Tiempo de finalización:</translation>
     </message>
     <message>
         <source>Day lighting:</source>
-        <translation>Eclairage de jour:</translation>
+        <translation>Iluminación de día:</translation>
     </message>
     <message>
         <source>Night lighting:</source>
-        <translation>Eclairage de nuit:</translation>
+        <translation>Iluminación nocturna:</translation>
     </message>
 </context>
 <context>
     <name>WeatherWidget</name>
     <message>
         <source>Wind direction/speed:</source>
-        <translation>Vitesse/direction du vent:</translation>
+        <translation>Dirección del viento/velocidad:</translation>
     </message>
     <message>
         <source>Clouds floor/ceiling/density:</source>
-        <translation>Plancher/plafond/densité nuages:</translation>
+        <translation>Capa de nubes/techo/densidad:</translation>
     </message>
     <message>
         <source>Weather type:</source>
-        <translation>Type de temps:</translation>
+        <translation>Tipo de clima:</translation>
     </message>
 </context>
 <context>
     <name>tools</name>
     <message>
         <source>Error reading xml file: </source>
-        <translation>Erreur au chargement du fichier xml: </translation>
+        <translation>Error leyendo archivo xml: </translation>
     </message>
     <message>
         <source>Save modifications?</source>
-        <translation>Enregistrer les modifications ?</translation>
+        <translation>¿Grabar modificaciones?</translation>
     </message>
     <message>
         <source>Error loading exercise: </source>
-        <translation>Erreur lors du chargement de l&apos;exercice: </translation>
+        <translation>Error cargando ejercicio: </translation>
     </message>
     <message>
         <source>The following entities cannot be loaded: </source>
-        <translation>Les entités suivantes n&apos;ont pas pu être chargées: </translation>
+        <translation>Las siguientes entidades no pueden ser cargadas: </translation>
     </message>
     <message>
         <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation>Les signatures des fichiers suivants n&apos;existent pas ou bien sont invalides:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -17,4 +17,4 @@ Tools.cpp \
 TristateOption.cpp \
 Units.cpp \
 
-TRANSLATIONS = clients_kernel_fr.ts
+TRANSLATIONS = clients_kernel_fr.ts clients_kernel_es.ts

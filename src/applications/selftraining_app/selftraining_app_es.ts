@@ -3,27 +3,27 @@
     <name>Application</name>
     <message>
         <source>Close Simulations</source>
-        <translation>Arrêter les exercices en cours</translation>
+        <translation>Detener Simulaciones</translation>
     </message>
     <message>
         <source>Running Simulation(s) detected. Close ?</source>
-        <translation>Une ou plusieurs simulation(s) sont déjà lancées. Voulez-vous les fermer ? </translation>
+        <translation>Se detectaron simulaciones ejecutándose. ¿Desea detenerlas?</translation>
     </message>
     <message>
         <source>Close GUI</source>
-        <translation>Fermer les interfaces</translation>
+        <translation>Cerrar las interfaces</translation>
     </message>
     <message>
         <source>Running GUI(s) detected. Close ?</source>
-        <translation>Fermer les interfaces en cours d&apos;exécution?</translation>
+        <translation>Interfaces en ejecución, ¿Desea cerrarlas?</translation>
     </message>
     <message>
         <source>Already running</source>
-        <translation>Application en cours d&apos;exécution</translation>
+        <translation>Aplicaciones en ejecución</translation>
     </message>
     <message>
         <source>The FrontEnd is already running. Close ?</source>
-        <translation>L&apos;application est déjà lancée. Fermer ? </translation>
+        <translation>Aplicación en ejecución ¿Desea cerrarla?</translation>
     </message>
     <message>
         <source>SWORD</source>
@@ -35,310 +35,268 @@
     </message>
     <message>
         <source>Unhandled error</source>
-        <translation>Erreur inconnue</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
-    </message>
-    <message>
-        <source>Launcher service cannot be started: %1.</source>
-        <translation>Le service de lancement ne peut pas être démarré : %1.</translation>
+        <translation>Error inesperado</translation>
     </message>
 </context>
 <context>
     <name>AuthoringPage</name>
     <message>
         <source>Starting Application</source>
-        <translation>Démarrage de l&apos;application</translation>
+        <translation>Iniciando aplicación</translation>
     </message>
     <message>
         <source>Authoring</source>
-        <translation>Adaptation</translation>
+        <translation>Modelamiento</translation>
     </message>
     <message>
         <source>Launch Authoring application</source>
-        <translation>Démarrage d&apos;Adaptation</translation>
+        <translation>Ejecutar herramienta de modelamiento</translation>
     </message>
     <message>
         <source>Terrain Gen</source>
-        <translation>Gen Terrain</translation>
+        <translation>Generador de Terreno</translation>
     </message>
     <message>
         <source>Launch Terrain Generation application</source>
-        <translation>Démarrage de la Génération de Terrain</translation>
+        <translation>Ejecutar herramienta de generación de terreno</translation>
     </message>
     <message>
         <source>Terrain Workshop</source>
-        <translation>Atelier Terrain</translation>
+        <translation>Edición de Terreno</translation>
     </message>
     <message>
         <source>Launch Terrain Workshop application</source>
-        <translation>Démarrage de l&apos;Atelier Terrain</translation>
+        <translation>Ejecutar herramienta de edición de terreno</translation>
     </message>
 </context>
 <context>
     <name>BattleCenterJoinPage</name>
     <message>
         <source>Join</source>
-        <translation>Rejoindre</translation>
+        <translation>Unirse</translation>
     </message>
     <message>
         <source>Joining host</source>
-        <translation>Connexion à l&apos;hôte</translation>
+        <translation>Conectar al host</translation>
     </message>
     <message>
         <source>Host:</source>
-        <translation>Hôte: </translation>
+        <translation>Host:</translation>
+    </message>
+    <message>
+        <source>localhost</source>
+        <translation>localhost</translation>
     </message>
     <message>
         <source>Port:</source>
-        <translation>Port: </translation>
+        <translation>Puerto:</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Mise à jour</translation>
-    </message>
-    <message>
-        <source>127.0.0.1</source>
-        <translation>127.0.0.1</translation>
+        <translation>Actualizar</translation>
     </message>
 </context>
 <context>
     <name>BattleCenterLauncherPage</name>
     <message>
         <source>Multiplayer session</source>
-        <translation>Session multi-joueur</translation>
+        <translation>Sesión Multijugador</translation>
     </message>
 </context>
 <context>
     <name>BattleCenterPage</name>
     <message>
         <source>Start</source>
-        <translation>Démarrer</translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation>Rejoindre</translation>
-    </message>
-    <message>
-        <source>Remote</source>
-        <translation>Distant</translation>
+        <translation>Unirse</translation>
     </message>
 </context>
 <context>
     <name>CreateExerciceWidget</name>
     <message>
         <source>Create new exercise:</source>
-        <translation>Créer un exercice:</translation>
+        <translation>Crear un nuevo ejercicio:</translation>
     </message>
     <message>
         <source>Enter exercise name</source>
-        <translation>Saisir le nom de l&apos;exercice</translation>
+        <translation>Ingrese el nombre del ejercicio</translation>
     </message>
     <message>
         <source>Terrain:</source>
-        <translation>Terrain:</translation>
+        <translation>Terreno:</translation>
     </message>
     <message>
         <source>Model:</source>
-        <translation>Modèle:</translation>
+        <translation>Modelo:</translation>
     </message>
 </context>
 <context>
     <name>CreateTerrainPage</name>
     <message>
         <source>Create Terrain</source>
-        <translation>Créer un Terrain</translation>
+        <translation>Crear Terreno</translation>
     </message>
     <message>
         <source>Create new terrain:</source>
-        <translation>Créer un nouveau terrain:</translation>
+        <translation>Crear un nuevo terreno:</translation>
     </message>
     <message>
         <source>Enter terrain name</source>
-        <translation>Entrez le nom du terrain</translation>
+        <translation>Ingresar nombre de terreno</translation>
     </message>
     <message>
         <source>Terrain generation tool was not found on your system.</source>
-        <translation>L&apos;outil de génération de terrain n&apos;a pas été trouvé sur votre système.</translation>
+        <translation>No se encontró la herramienta de generación de terreno.</translation>
     </message>
     <message>
         <source>A terrain with this name already exists.</source>
-        <translation>Un terrain avec ce nom existe déjà.</translation>
+        <translation>Ya existe un terreno con este nombre.</translation>
     </message>
     <message>
         <source>The new terrain will be created in:
 %1</source>
         <translation>
-            Le nouveau terrain sera créé dans:
+           El nuevo terreno será creado en:
             %1</translation>
     </message>
     <message>
         <source>Starting terrain creation</source>
-        <translation>Démarrage de la création de terrain</translation>
+        <translation>Iniciando creación de terreno</translation>
     </message>
 </context>
 <context>
     <name>ExerciseList</name>
     <message>
         <source>Exercise:</source>
-        <translation>Exercice:</translation>
-    </message>
-    <message>
-        <source>Profile:</source>
-        <translation>Profil:</translation>
-    </message>
-</context>
-<context>
-    <name>ExerciseProperties</name>
-    <message>
-        <source>Exercise parameters:</source>
-        <translation>Paramètres d&apos;exercice:</translation>
-    </message>
-    <message>
-        <source>Terrain:</source>
-        <translation>Terrain:</translation>
-    </message>
-    <message>
-        <source>Model:</source>
-        <translation>Modèle:</translation>
+        <translation>Ejercicio:</translation>
     </message>
     <message>
         <source>No briefing available</source>
-        <translation>Aucun briefing</translation>
+        <translation>No hay instructivo</translation>
+    </message>
+    <message>
+        <source>Profile:</source>
+        <translation>Perfil:</translation>
     </message>
 </context>
 <context>
     <name>ExportWidget</name>
     <message>
         <source>Create a package</source>
-        <translation>Créer un paquetage</translation>
+        <translation>Crear un paquete</translation>
     </message>
     <message>
         <source>Exercise to package:</source>
-        <translation>Exercice à packager:</translation>
+        <translation>Ejercicio a paquete:</translation>
     </message>
     <message>
         <source>Package description:</source>
-        <translation>Description du paquetage:</translation>
+        <translation>Descripción de paquete:</translation>
     </message>
     <message>
         <source>Package content:</source>
-        <translation>Contenu du paquetage:</translation>
+        <translation>Contenido de paquete:</translation>
     </message>
     <message>
         <source>Select a package</source>
-        <translation>Sélectionnez un paquetage</translation>
+        <translation>Seleccione un paquete</translation>
     </message>
     <message>
         <source>Overwrite File?</source>
-        <translation>Ecraser le fichier existant ?</translation>
+        <translation>¿Sobreescribir archivo?</translation>
     </message>
     <message>
         <source>A file called %1 already exists. Do you want to overwrite it?</source>
-        <translation>Le fichier appelé %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
+        <translation>El archivo  %1 ya existe. ¿Desea sobreescribirlo?</translation>
     </message>
 </context>
 <context>
     <name>HomePage</name>
     <message>
         <source>Prepare</source>
-        <translation>Préparation</translation>
+        <translation>Preparar</translation>
     </message>
     <message>
         <source>Play</source>
-        <translation>Jeu</translation>
+        <translation>Jugar</translation>
     </message>
     <message>
         <source>Replay</source>
-        <translation>Rejeu</translation>
+        <translation>Reproducir</translation>
     </message>
     <message>
         <source>Adapt</source>
-        <translation>Adaptation</translation>
+        <translation>Adaptar</translation>
     </message>
     <message>
         <source>Edit scenario</source>
-        <translation>Editer un exercice</translation>
+        <translation>Editar escenario</translation>
     </message>
     <message>
         <source>Replay scenario</source>
-        <translation>Rejouer un exercice</translation>
+        <translation>Reproducir escenario</translation>
     </message>
     <message>
         <source>Start authoring, terrain generation or terrain workshop</source>
-        <translation>Démarrer l&apos;adaptation, la génération de terrain ou l&apos;atelier terrain</translation>
+        <translation>Iniciar modelamiento, generación de terreno o edición de terreno</translation>
     </message>
     <message>
         <source>Start single player or multiplayer training session</source>
-        <translation>Démarrer une session d&apos;entraînement solo ou multi-joueur</translation>
+        <translation>Iniciar sesión de entrenamiento individual o multijugador</translation>
     </message>
 </context>
 <context>
     <name>ImportWidget</name>
     <message>
         <source>Package to be installed:</source>
-        <translation>Paquetage à installer:</translation>
+        <translation>Paquete a ser instalado:</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation>Parcourir...</translation>
+        <translation>Examinar...</translation>
     </message>
     <message>
         <source>Package content:</source>
-        <translation>Contenu du paquetage</translation>
+        <translation>Contenido de paquete:</translation>
     </message>
     <message>
         <source>Package</source>
-        <translation>Paquetage</translation>
+        <translation>Paquete</translation>
     </message>
     <message>
         <source>Scenario</source>
-        <translation>Scénario</translation>
+        <translation>Escenario</translation>
     </message>
     <message>
         <source>Model: </source>
-        <translation>Modèle: </translation>
+        <translation>Modelo: </translation>
     </message>
     <message>
         <source>Model:</source>
-        <translation>Modèle:</translation>
+        <translation>Modelo:</translation>
     </message>
     <message>
         <source>Scenario Name</source>
-        <translation>Nom du scénario</translation>
+        <translation>Nombre de escenario</translation>
     </message>
     <message>
         <source>Terrain:</source>
-        <translation>Terrain:</translation>
+        <translation>Terreno:</translation>
     </message>
     <message>
         <source>Select a package</source>
-        <translation>Sélectionner un paquetage</translation>
+        <translation>Seleccionar paquete</translation>
     </message>
     <message>
         <source>Output Scenario Name: </source>
-        <translation>Nom du scénario à exporter: </translation>
+        <translation>Nombre de escenario a exportar: </translation>
     </message>
     <message>
         <source>Input Scenario: </source>
-        <translation>Scénario à importer: </translation>
-    </message>
-    <message>
-        <source>otpak corrupted: unable to load content properly</source>
-        <translation>otpak corrompy: impossible de lire le contenu</translation>
-    </message>
-</context>
-<context>
-    <name>LauncherClientPage</name>
-    <message>
-        <source>Failed to connect to host: %1.</source>
-        <translation>Impossible de se connecter à l&apos;hôte: %1.</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
+        <translation>Escenario a importar: </translation>
     </message>
 </context>
 <context>
@@ -356,26 +314,34 @@
     </message>
     <message>
         <source>Yes</source>
-        <translation>Oui</translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Non</translation>
+        <translation>No</translation>
     </message>
 </context>
 <context>
     <name>OptionsPage</name>
     <message>
         <source>Options</source>
-        <translation>Options</translation>
+        <translation>Opciones</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>Inglés</translation>
+    </message>
+    <message>
+        <source>Fran&#xe7;ais</source>
+        <translation>Español</translation>
     </message>
     <message>
         <source>Language: </source>
-        <translation>Langue: </translation>
+        <translation>Idioma: </translation>
     </message>
     <message>
         <source>Data directory: </source>
-        <translation>Répertoire de données: </translation>
+        <translation>Directorio de datos: </translation>
     </message>
     <message>
         <source>...</source>
@@ -383,197 +349,150 @@
     </message>
     <message>
         <source>Profile: </source>
-        <translation>Profil: </translation>
+        <translation>Perfil: </translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation>Terrain</translation>
+        <translation>Terreno</translation>
     </message>
     <message>
         <source>User</source>
-        <translation>Utilisation</translation>
+        <translation>Usuario</translation>
     </message>
     <message>
         <source>Advanced User</source>
-        <translation>Validation</translation>
+        <translation>Usuario avanzado</translation>
     </message>
     <message>
         <source>Administrator</source>
-        <translation>Administration</translation>
+        <translation>Administración</translation>
     </message>
-<<<<<<< .working
-    <message>
-        <source>English</source>
-        <translation>English</translation>
-    </message>
-    <message>
-        <source>Fran&#xe7;ais</source>
-        <translation>Français</translation>
-    </message>
-=======
     <message>
         <source>Espa&#xf1;ol</source>
         <translation type="unfinished"></translation>
     </message>
->>>>>>> .merge-right.r13265
 </context>
 <context>
     <name>Page_ABC</name>
     <message>
         <source>Back</source>
-        <translation>Retour</translation>
+        <translation>Regresar</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation>Options</translation>
+        <translation>Opciones</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Quitter</translation>
+        <translation>Salir</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Démarrer</translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation>Rejoindre</translation>
+        <translation>Unirse</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Editar</translation>
     </message>
 </context>
 <context>
     <name>ProcessDialogs</name>
     <message>
         <source>Running training sessions</source>
-        <translation>Sessions d&apos;entraînement en cours</translation>
+        <translation>Ejecutando sesiones de entrenamiento</translation>
     </message>
     <message>
         <source>Running training session detected. Close ?</source>
-        <translation>Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
+        <translation>Sesiones de entrenamiento en ejecución. ¿Detenerlas?</translation>
     </message>
-</context>
-<context>
-    <name>ProgressPage</name>
     <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
+        <source>Failed to start launcher service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1.
+You will not be able to start a multiplayer session. Do you want to start anyway?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QuitPage</name>
     <message>
         <source>Yes</source>
-        <translation>Oui</translation>
+        <translation>Sí</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Non</translation>
+        <translation>No</translation>
     </message>
     <message>
         <source>Please confirm</source>
-        <translation>Etes vous sûr ?</translation>
-    </message>
-</context>
-<context>
-    <name>ReadProfile</name>
-    <message>
-        <source>anonymous</source>
-        <translation>Anonyme</translation>
-    </message>
-</context>
-<context>
-    <name>RemoteControlPage</name>
-    <message>
-        <source>Remote control</source>
-        <translation>Contrôle à distance</translation>
-    </message>
-    <message>
-        <source>Host:</source>
-        <translation>Hôte: </translation>
-    </message>
-    <message>
-        <source>127.0.0.1</source>
-        <translation>127.0.0.1</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <translation>Port: </translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Mise à jour</translation>
-    </message>
-    <message>
-        <source>Start game</source>
-        <translation>Démarrer jeu</translation>
-    </message>
-    <message>
-        <source>Start replay</source>
-        <translation>Démarrer rejeu</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation>Démarrer</translation>
-    </message>
-    <message>
-        <source>Stop running session</source>
-        <translation>Arrêter la session en cours</translation>
-    </message>
-    <message>
-        <source>Control</source>
-        <translation>Contrôle</translation>
+        <translation>Confirmar</translation>
     </message>
 </context>
 <context>
     <name>ReplayPage</name>
     <message>
         <source>Replay</source>
-        <translation>Rejeu</translation>
+        <translation>Reproducir</translation>
     </message>
     <message>
         <source>Starting replay session</source>
-        <translation>Démarrage session rejeu</translation>
+        <translation>Iniciando sesión de reproducción</translation>
     </message>
 </context>
 <context>
     <name>ScenarioEditPage</name>
     <message>
         <source>Scenario</source>
-        <translation>Scénario</translation>
+        <translation>Escenario</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <source>Editing exercise</source>
-        <translation>Edition exercice</translation>
+        <translation>Editando ejercicio</translation>
+    </message>
+    <message>
+        <source>Terrain:</source>
+        <translation>Terreno:</translation>
+    </message>
+    <message>
+        <source>Model:</source>
+        <translation>Modelo:</translation>
+    </message>
+    <message>
+        <source>Exercise parameters:</source>
+        <translation>Parámetros de ejercicio:</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importer</translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Exporter</translation>
+        <translation>Exportar</translation>
     </message>
 </context>
 <context>
     <name>ScenarioLauncherPage</name>
     <message>
         <source>Scenario</source>
-        <translation>Scénario</translation>
+        <translation>Escenario</translation>
     </message>
     <message>
         <source>Starting %1</source>
-        <translation>Démarrage de %1</translation>
+        <translation>Iniciando %1</translation>
     </message>
     <message>
         <source>DIS</source>
@@ -589,19 +508,19 @@
     </message>
     <message>
         <source>General</source>
-        <translation>Général</translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Checkpoints</source>
-        <translation>Sauvegardes</translation>
+        <translation>Puntos de control</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation>Aléatoire</translation>
+        <translation>Aleatório</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Configuration</translation>
+        <translation>Configuración</translation>
     </message>
     <message>
         <source>Plugins</source>
@@ -609,78 +528,74 @@
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avancé</translation>
-    </message>
-    <message>
-        <source>EDXL-HAVE</source>
-        <translation>EDXL-HAVE</translation>
-    </message>
-    <message>
-        <source>ERP/Timeline</source>
-        <translation>ERP/Timeline</translation>
+        <translation>Avanzados</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation>Session</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EDXL-HAVE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERP/Timeline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ScenarioPage</name>
     <message>
         <source>Join multiplayer training session</source>
-        <translation>Rejoindre une session d&apos;entraînement multijoueur</translation>
+        <translation>Unirse a sesión multijugador</translation>
     </message>
     <message>
         <source>Start multiplayer training session</source>
-        <translation>Démarrer une session d&apos;entraînement multijoueur</translation>
-    </message>
-    <message>
-        <source>Control remote training sessions</source>
-        <translation>Contrôle les sessions d&apos;entrainement distantes</translation>
+        <translation>Iniciar una sesión multijugador</translation>
     </message>
 </context>
 <context>
     <name>SelfTrainingPage</name>
     <message>
         <source>Single</source>
-        <translation>Solo</translation>
+        <translation>Individual</translation>
     </message>
     <message>
         <source>Multiplayer</source>
-        <translation>Multijoueur</translation>
+        <translation>Multijugador</translation>
     </message>
     <message>
         <source>Start or join a multiplayer training session</source>
-        <translation>Démarrer ou rejoindre une session d&apos;entraînement multi-joueur</translation>
+        <translation>Iniciar o unirse a una sesión multijugador</translation>
     </message>
     <message>
         <source>Start a single training session</source>
-        <translation>Démarrer une session d&apos;entraînement solo</translation>
+        <translation>Iniciar una sesión individual</translation>
     </message>
 </context>
 <context>
     <name>SessionList</name>
     <message>
         <source>Session:</source>
-        <translation>Session : </translation>
+        <translation>Sesión: </translation>
     </message>
 </context>
 <context>
     <name>SessionTray</name>
     <message>
         <source>Show window</source>
-        <translation>Afficher la fenêtre</translation>
+        <translation>Mostrar Ventana</translation>
     </message>
 </context>
 <context>
     <name>TrayMenu</name>
     <message>
         <source>Show Normal</source>
-        <translation>Restaurer</translation>
+        <translation>Restaurar</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Fermer</translation>
+        <translation>Salir</translation>
     </message>
 </context>
 </TS>

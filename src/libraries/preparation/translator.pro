@@ -40,4 +40,4 @@ Tc2States.cpp \
 Team.cpp \
 TeamsModel.cpp \
 
-TRANSLATIONS = preparation_fr.ts
+TRANSLATIONS = preparation_fr.ts preparation_es.ts

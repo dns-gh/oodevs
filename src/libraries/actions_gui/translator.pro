@@ -19,4 +19,4 @@ ParamObstacle.cpp \
 ParamObstacleList.cpp \
 ParamPathList.cpp \
 
-TRANSLATIONS = actions_gui_fr.ts
+TRANSLATIONS = actions_gui_fr.ts actions_gui_es.ts

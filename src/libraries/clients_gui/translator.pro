@@ -66,4 +66,4 @@ UnitPreviewIcon.cpp \
 UnitsPanel.cpp \
 VisualisationScalesPanel.cpp \
 
-TRANSLATIONS = clients_gui_fr.ts
+TRANSLATIONS = clients_gui_fr.ts clients_gui_es.ts

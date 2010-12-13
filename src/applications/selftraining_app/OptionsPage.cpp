@@ -40,6 +40,7 @@ OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, Config& confi
 {
     languages_[ tools::translate( "OptionsPage", "English" ) ]  = "en";
     languages_[ tools::translate( "OptionsPage", "Français" ) ] = "fr";
+    languages_[ tools::translate( "OptionsPage", "Español" ) ] = "es";
 
     QVBox* mainBox = new QVBox( this );
     mainBox->setBackgroundOrigin( QWidget::WindowOrigin );

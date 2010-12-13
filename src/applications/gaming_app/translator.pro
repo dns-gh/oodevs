@@ -108,4 +108,4 @@ WeatherCreationPanel.cpp \
 WeatherWidget.cpp \
 main.cpp \
 
-TRANSLATIONS = gaming_app_fr.ts
+TRANSLATIONS = gaming_app_fr.ts gaming_app_es.ts

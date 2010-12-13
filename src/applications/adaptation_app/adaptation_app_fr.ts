@@ -2995,7 +2995,7 @@ Make sure the file exists.</source>
 Assurez vous que le fichier existe.</translation>
     </message>
 </context>
-<context>e
+<context>
     <name>ADN_OpenMode_Dialog</name>
     <message>
         <source>Open mode configuration</source>

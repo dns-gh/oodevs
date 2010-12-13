@@ -18,4 +18,4 @@ StartExercise.cpp \
 StartTerrainWorkshop.cpp \
 TimelinePluginConfigPanel.cpp \
 
-TRANSLATIONS = frontend_fr.ts
+TRANSLATIONS = frontend_fr.ts frontend_es.ts

@@ -57,4 +57,5 @@ UrbanKnowledge.cpp \
 UserProfileFactory.cpp \
 UserProfilesModel.cpp \
 
-TRANSLATIONS = gaming_fr.ts
+TRANSLATIONS = gaming_fr.ts gaming_es.ts
+ 							 

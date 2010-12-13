@@ -47,4 +47,4 @@ WeatherPanel.cpp \
 WeatherWidget.cpp \
 main.cpp \
 
-TRANSLATIONS = preparation_app_fr.ts
+TRANSLATIONS = preparation_app_fr.ts preparation_app_es.ts

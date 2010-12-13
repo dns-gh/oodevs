@@ -23,4 +23,4 @@ Path.cpp \
 PopulationKnowledge.cpp \
 UrbanBlock.cpp \
 
-TRANSLATIONS = actions_fr.ts
+TRANSLATIONS = actions_fr.ts actions_es.ts
