@@ -13,7 +13,7 @@
 #include "Movable_ABC.h"
 #include "Platform_ABC.h"
 #include "dispatcher/SimpleEntity.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace kernel
 {

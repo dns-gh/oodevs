@@ -20,7 +20,7 @@
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
 #include "dispatcher/UrbanKnowledgeConverter.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "protocol/Publisher_ABC.h"
 #include "tools/SessionConfig.h"
 #pragma warning( push, 0 )

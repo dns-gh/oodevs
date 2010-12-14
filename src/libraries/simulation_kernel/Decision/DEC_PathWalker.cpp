@@ -8,14 +8,14 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "DEC_PathWalker.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 

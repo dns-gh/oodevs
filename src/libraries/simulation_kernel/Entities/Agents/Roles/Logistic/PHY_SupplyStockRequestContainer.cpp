@@ -18,7 +18,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockRequestContainer constructor

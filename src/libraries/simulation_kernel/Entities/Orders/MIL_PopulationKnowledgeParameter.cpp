@@ -11,7 +11,7 @@
 #include "MIL_PopulationKnowledgeParameter.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationKnowledgeParameter constructor

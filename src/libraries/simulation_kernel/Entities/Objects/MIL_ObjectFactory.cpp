@@ -12,7 +12,7 @@
 #include "MIL_ObjectLoader.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 

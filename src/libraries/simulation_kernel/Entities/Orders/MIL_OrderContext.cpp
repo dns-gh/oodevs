@@ -18,7 +18,7 @@
 #include "MIL_IntelligenceOrdersVisitor_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "meteo/ReadDirections.h"
 
 // -----------------------------------------------------------------------------

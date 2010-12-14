@@ -11,7 +11,7 @@
 #include "MIL_PathParameter.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PathParameter constructor

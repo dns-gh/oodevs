@@ -12,7 +12,7 @@
 #include "DEC_PathPoint.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------

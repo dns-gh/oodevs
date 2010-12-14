@@ -10,7 +10,7 @@
 #ifndef __MIL_LimaFunction_h_
 #define __MIL_LimaFunction_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // =============================================================================
 /** @class  MIL_LimaFunction

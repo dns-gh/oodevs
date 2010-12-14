@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_NullParameter.h"
 #include "Network/NET_ASN_Tools.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_NullParameter constructor

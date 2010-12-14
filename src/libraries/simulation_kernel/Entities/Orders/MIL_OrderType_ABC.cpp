@@ -12,7 +12,7 @@
 #include "MIL_OrderTypeParameter.h"
 #include "MIL_OrderContext.h"
 #include "Decision/DEC_Tools.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "MIL_MissionParameter_ABC.h"
 #include "MIL_MissionParameterFactory.h"
 #include <boost/bind.hpp>

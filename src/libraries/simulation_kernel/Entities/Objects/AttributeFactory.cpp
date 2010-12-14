@@ -30,7 +30,7 @@
 #include "StockAttribute.h"
 #include "BuildableCapacity.h"
 #include "ImprovableCapacity.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 
 using namespace sword;

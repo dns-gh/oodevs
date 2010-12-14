@@ -11,7 +11,7 @@
 #include "EDXLReport.h"
 #include "HospitalUpdateReport.h"
 #include "Publisher_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #pragma warning( push, 1 )

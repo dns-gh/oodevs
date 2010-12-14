@@ -48,7 +48,7 @@
 #include "MockRolePerceiver.h"
 #include "MockRoleUrbanLocation.h"
 #include <xeumeuleu/xml.hpp>
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace sword;
 

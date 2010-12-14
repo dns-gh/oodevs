@@ -38,7 +38,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 #include <geometry/types.h>
 #include <xeumeuleu/xml.hpp>

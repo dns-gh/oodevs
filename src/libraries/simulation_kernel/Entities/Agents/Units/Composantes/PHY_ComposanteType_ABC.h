@@ -12,7 +12,7 @@
 #ifndef __PHY_ComposanteType_ABC_h_
 #define __PHY_ComposanteType_ABC_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace xml
 {

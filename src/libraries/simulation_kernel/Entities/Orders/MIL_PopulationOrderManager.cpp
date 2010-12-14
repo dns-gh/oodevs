@@ -17,7 +17,7 @@
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Network/NET_AsnException.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager constructor

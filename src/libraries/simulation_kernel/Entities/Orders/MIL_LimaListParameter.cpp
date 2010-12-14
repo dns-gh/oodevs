@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "MIL_LimaListParameter.h"
 #include "MIL_LimaOrder.h"
 

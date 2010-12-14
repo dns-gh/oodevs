@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanBlockParameter.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "simulation_kernel/knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "simulation_kernel/knowledge/DEC_Knowledge_Urban.h"
 

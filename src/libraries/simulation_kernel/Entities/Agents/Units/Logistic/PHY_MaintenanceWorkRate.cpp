@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceWorkRate.h"
 #include "PHY_Breakdown.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>

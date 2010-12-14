@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionLevel.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 const PHY_PerceptionLevel PHY_PerceptionLevel::identified_( "Identified", eIdentified, sword::identifiee );
 const PHY_PerceptionLevel PHY_PerceptionLevel::recognized_( "Recognized", eRecognized, sword::reconnue   );

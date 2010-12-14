@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_FireDamages_Population.h"
 #include "Entities/Populations/MIL_Population.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_FireDamages_Population constructor

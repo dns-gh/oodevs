@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MedicalTreatmentAttribute.h"
 #include "MIL_MedicalTreatmentType.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/lexical_cast.hpp>

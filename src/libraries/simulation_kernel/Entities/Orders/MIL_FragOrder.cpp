@@ -15,7 +15,7 @@
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "MIL_MissionParameter_ABC.h"
 #include <directia/brain/Brain.h>
 

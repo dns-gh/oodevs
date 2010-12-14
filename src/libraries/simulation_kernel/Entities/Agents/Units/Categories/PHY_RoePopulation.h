@@ -12,7 +12,7 @@
 #ifndef __PHY_RoePopulation_h_
 #define __PHY_RoePopulation_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "MT_Tools/MT_Stl.h"
 
 namespace sword

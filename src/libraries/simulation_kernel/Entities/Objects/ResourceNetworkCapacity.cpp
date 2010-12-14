@@ -13,7 +13,7 @@
 #include "MIL_AgentServer.h"
 #include "StructuralCapacity.h"
 #include "UrbanObjectWrapper.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "resource_network/NodeProperties.h"
 #include "resource_network/ResourceNetworkModel.h"
 #include <urban/TerrainObject_ABC.h>

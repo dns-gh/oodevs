@@ -11,7 +11,7 @@
 #include "TimeLimitedAttribute.h"
 #include "Object.h"
 #include "Tools/MIL_Tools.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( TimeLimitedAttribute )

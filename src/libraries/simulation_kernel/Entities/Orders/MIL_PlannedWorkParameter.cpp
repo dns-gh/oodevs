@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PlannedWorkParameter.h"
 #include "Decision/DEC_Gen_Object.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PlannedWorkParameter constructor

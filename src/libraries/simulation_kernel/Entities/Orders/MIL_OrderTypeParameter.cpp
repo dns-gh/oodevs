@@ -13,7 +13,7 @@
 #include "Entities/Orders/MIL_MissionParameter_ABC.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
 #include "Decision/DEC_Tools.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 

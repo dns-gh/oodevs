@@ -19,7 +19,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Network/NET_AsnException.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager constructor

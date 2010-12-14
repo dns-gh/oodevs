@@ -11,7 +11,7 @@
 #include "SupplyRouteAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <hla/HLA_UpdateFunctor.h>
 #include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.hpp>

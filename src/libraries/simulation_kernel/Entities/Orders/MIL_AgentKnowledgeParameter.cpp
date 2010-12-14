@@ -11,7 +11,7 @@
 #include "MIL_AgentKnowledgeParameter.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Network/NET_ASN_Tools.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "Network/NET_AsnException.h"
 
 // -----------------------------------------------------------------------------

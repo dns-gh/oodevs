@@ -41,7 +41,7 @@
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create

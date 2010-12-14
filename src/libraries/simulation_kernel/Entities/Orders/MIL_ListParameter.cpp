@@ -12,7 +12,7 @@
 #include "MIL_MissionParameterFactory.h"
 #include "knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "knowledge/DEC_Knowledge_Urban.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "urban/TerrainObject_ABC.h"
 
 // -----------------------------------------------------------------------------

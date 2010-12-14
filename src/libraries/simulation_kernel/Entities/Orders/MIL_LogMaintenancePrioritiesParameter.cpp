@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_LogMaintenancePrioritiesParameter.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LogMaintenancePrioritiesParameter constructor

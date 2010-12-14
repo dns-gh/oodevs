@@ -24,7 +24,7 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <boost/serialization/vector.hpp>
 
 using namespace hla;

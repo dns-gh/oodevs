@@ -11,7 +11,7 @@
 #include "HospitalUpdateReport.h"
 #include "dispatcher/Object.h"
 #include "clients_kernel/MedicalTreatmentType.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #pragma warning( push, 1 )

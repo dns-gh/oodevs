@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_FireResults_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 MIL_IDManager PHY_FireResults_ABC::idManager_;
 

@@ -16,7 +16,7 @@
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_terrain/TER_World.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <geodata/Feature_ABC.h>
 #include <geodata/FeatureHandler_ABC.h>
 #include <geodata/Primitive_ABC.h>

@@ -98,7 +98,7 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "protocol/ClientSenders.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <urban/Model.h>
 #include <urban/Architecture.h>
 #include <urban/ObjectVisitor_ABC.h>

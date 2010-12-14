@@ -11,7 +11,7 @@
 #define __MIL_ListParameter_h_
 
 #include "MIL_BaseParameter.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 class DEC_KnowledgeResolver_ABC;
 

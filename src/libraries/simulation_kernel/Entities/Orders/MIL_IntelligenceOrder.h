@@ -10,7 +10,7 @@
 #ifndef __MIL_IntelligenceOrder_h_
 #define __MIL_IntelligenceOrder_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 class MIL_Fuseau;
 class TER_Localisation;

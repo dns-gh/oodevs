@@ -12,7 +12,7 @@
 
 #include "TicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <geometry/types.h>
 #pragma warning (disable : 4511 4512 4127 )
 #include <boost/ptr_container/ptr_vector.hpp>

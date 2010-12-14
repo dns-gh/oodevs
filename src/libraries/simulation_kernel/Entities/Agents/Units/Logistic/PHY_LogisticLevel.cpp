@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_LogisticLevel.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 PHY_LogisticLevel::T_LogisticLevelMap PHY_LogisticLevel::logisticLevels_;
 

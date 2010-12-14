@@ -13,7 +13,7 @@
 #include "tools/OutputBinaryWrapper.h"
 #include "tools/InputBinaryWrapper.h"
 #include "MT_Tools/MT_Logger.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 )
 #include <boost/filesystem/convenience.hpp>

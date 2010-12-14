@@ -19,7 +19,7 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "MT_Tools/MT_Logger.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::edxl;

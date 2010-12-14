@@ -14,7 +14,7 @@
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Visitors.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "tools/OutputBinaryWrapper.h"
 
 using namespace plugins::saver;

@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoePopulation.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace sword;
 

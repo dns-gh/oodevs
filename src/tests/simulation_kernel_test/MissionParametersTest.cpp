@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "Fixture.h"
 #include "MockDEC_KnowledgeResolver_ABC.h"
 #include "MockMIL_EntityManager_ABC.h"

@@ -21,7 +21,7 @@
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Network/NET_AsnException.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager constructor

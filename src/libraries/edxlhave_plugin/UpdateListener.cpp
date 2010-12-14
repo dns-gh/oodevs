@@ -21,7 +21,7 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "dispatcher/NullClientPublisher.h"
 #include "protocol/SimulationSenders.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 #include "actions/ObjectMagicAction.h"
 #include <xeumeuleu/xml.hpp>

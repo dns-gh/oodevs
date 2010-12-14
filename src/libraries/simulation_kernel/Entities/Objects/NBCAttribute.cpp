@@ -14,7 +14,7 @@
 
 #include "hla/HLA_UpdateFunctor.h"
 #include "MIL_NbcAgentType.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <hla/Deserializer.h>
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>

@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_NatureLevel.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 PHY_NatureLevel::T_NatureLevelMap PHY_NatureLevel::natureLevels_;
 

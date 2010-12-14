@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_DirectionParameter.h"
 #include "MT_Tools/MT_Vector2D.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DirectionParameter constructor

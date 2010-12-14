@@ -17,7 +17,7 @@
 #include "MIL_NullParameter.h"
 #include "MIL_OrderTypeParameter.h"
 #include "Network/NET_AsnException.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 

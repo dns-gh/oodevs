@@ -11,7 +11,7 @@
 #include "DEC_Objective.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Objective constructor

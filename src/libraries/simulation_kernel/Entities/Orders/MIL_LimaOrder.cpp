@@ -14,7 +14,7 @@
 #include "Network/NET_AsnException.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Line.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 unsigned int MIL_LimaOrder::nNextID_ = 0;
 

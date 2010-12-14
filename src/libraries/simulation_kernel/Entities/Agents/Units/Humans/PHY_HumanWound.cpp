@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_HumanWound.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_Logger.h"

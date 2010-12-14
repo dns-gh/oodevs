@@ -10,7 +10,7 @@
 #include "NodeProperties.h"
 #include "ResourceNetworkModel.h"
 #include "ResourceTools_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 #include <urban/ResourceNetworkAttribute.h>
 #include <xeumeuleu/xml.hpp>

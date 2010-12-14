@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_LogMedicalPrioritiesParameter.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LogMedicalPrioritiesParameter constructor

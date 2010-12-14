@@ -10,7 +10,7 @@
 #include "edxlhave_plugin_pch.h"
 #include "Simulation.h"
 #include "tools/xmlcodecs.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::edxl;

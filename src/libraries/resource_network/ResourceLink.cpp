@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "ResourceLink.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace resource;
