@@ -298,27 +298,27 @@ message IntelligenceUpdate {
     */
     optional string          nature    = 4;
     /** @property level
-		@brief The updated hierarchical level/echelon of the intelligence.
-		@see EnumNatureLevel
+        @brief The updated hierarchical level/echelon of the intelligence.
+        @see EnumNatureLevel
         @note Only set if data has changed.
-	*/
+    */
     optional EnumNatureLevel level     = 5;
     /** @property embarked
-		@brief The updated embarkment state of the intelligence.
+        @brief The updated embarkment state of the intelligence.
         @note Only set if data has changed.
-	*/
+    */
     optional bool            embarked  = 6;
     /** @property location
-		@brief The updated location of the intelligence.
-		@see MsgCoordLatLong
+        @brief The updated location of the intelligence.
+        @see MsgCoordLatLong
         @note Only set if data has changed.
-	*/
+    */
     optional MsgCoordLatLong location  = 7;
     /** @property diplomacy
-		@brief The updated diplomacy/alignment of the intelligence.
-		@see EnumDiplomacy
+        @brief The updated diplomacy/alignment of the intelligence.
+        @see EnumDiplomacy
         @note Only set if data has changed.
-	*/
+    */
     optional EnumDiplomacy   diplomacy = 8;
 }
 
@@ -447,27 +447,27 @@ message ShapeUpdate {
     */
     required DrawingId           id       = 1;
     /** @property category
-		@brief The updated category of the shape.
+        @brief The updated category of the shape.
         @note Only set if data has changed.
-	*/
+    */
     optional string              category = 2;
     /** @property color
-		@brief The updated color of the shape.
+        @brief The updated color of the shape.
               Format is hexadecimal #rrggbb.
         @note Only set if data has changed.
-	*/
+    */
     optional string              color    = 3;
     /** @property template
-		@brief The updated template of the shape.
+        @brief The updated template of the shape.
         @note Only set if data has changed.
         @todo rename into pattern
-	*/
+    */
     optional string              template = 4;
     /** @property points
-		@brief The updated points of the shape.
-		@see MsgCoordLatLongList
+        @brief The updated points of the shape.
+        @see MsgCoordLatLongList
         @note Only set if data has changed.
-	*/
+    */
     optional MsgCoordLatLongList points   = 5;
 }
 
@@ -620,10 +620,10 @@ message MarkerUpdate {
     */
     optional MarkerId    parent      = 5;
     /** @property number
-		@brief The updated number of the marker. This is a user defined identifier.
+        @brief The updated number of the marker. This is a user defined identifier.
         @note Only set if data has changed.
         @todo remove/rename/generalize for user defined marker data
-	*/
+    */
     optional string      number      = 6;
 }
 
@@ -736,9 +736,9 @@ message ClientObjectCreation {
     */
     required string               name       = 2;
     /** @property properties
-		@brief The list of properties of the client object.
+        @brief The list of properties of the client object.
         @see ClientObjectProperty
-	*/
+    */
     repeated ClientObjectProperty properties = 3;
 }
 
@@ -760,10 +760,10 @@ message ClientObjectUpdate {
     */
     optional string               name       = 2;
     /** @property properties
-		@brief The updated properties of the client object.
+        @brief The updated properties of the client object.
         @see ClientObjectProperty
         @note Only set if data has changed.
-	*/
+    */
     repeated ClientObjectProperty properties = 3;
 }
 
@@ -883,186 +883,186 @@ message MessengerToClient {
     */
     message Content {
         /** @property limit_creation
-		    @brief A limit creation message.
+            @brief A limit creation message.
             @see LimitCreation
-	    */
+        */
         optional LimitCreation                     limit_creation                       = 1;
         /** @property limit_update
-		    @brief A limit update message.
+            @brief A limit update message.
             @see LimitUpdate
-	    */
+        */
         optional LimitUpdate                       limit_update                         = 2;
         /** @property limit_destruction
-		    @brief A limit destruction message.
+            @brief A limit destruction message.
             @see LimitDestruction
-	    */
+        */
         optional LimitDestruction                  limit_destruction                    = 3;
         /** @property limit_creation_request_ack
-		    @brief A limit creation request acknowledgement message.
+            @brief A limit creation request acknowledgement message.
             @see LimitCreationRequestAck
-	    */
+        */
         optional LimitCreationRequestAck           limit_creation_request_ack           = 4;
         /** @property limit_destruction_request_ack
-		    @brief A limit destruction request acknowledgement message.
+            @brief A limit destruction request acknowledgement message.
             @see LimitDestructionRequestAck
-	    */
+        */
         optional LimitDestructionRequestAck        limit_destruction_request_ack        = 5;
         /** @property limit_update_request_ack
-		    @brief A limit update request acknowledgement message.
+            @brief A limit update request acknowledgement message.
             @see LimitUpdateRequestAck
-	    */
+        */
         optional LimitUpdateRequestAck             limit_update_request_ack             = 6;
         /** @property lima_creation
-		    @brief A phase line creation message.
+            @brief A phase line creation message.
             @see LimaCreation
             @todo rename into phase_line_creation
-	    */
+        */
         optional LimaCreation                      lima_creation                        = 7;
         /** @property lima_update
-		    @brief A phase line update message.
+            @brief A phase line update message.
             @see LimaUpdate
             @todo rename into phase_line_update
-	    */
+        */
         optional LimaUpdate                        lima_update                          = 8;
         /** @property lima_destruction
-		    @brief A phase line destruction message.
+            @brief A phase line destruction message.
             @see LimaDestruction
             @todo rename into phase_line_destruction
-	    */
+        */
         optional LimaDestruction                   lima_destruction                     = 9;
         /** @property lima_creation_request_ack
-		    @brief A phase line creation request acknowledgement message.
+            @brief A phase line creation request acknowledgement message.
             @see LimaCreationRequestAck
             @todo rename into phase_line_creation_request_ack
-	    */
+        */
         optional LimaCreationRequestAck            lima_creation_request_ack            = 10;
         /** @property lima_update_request_ack
-		    @brief A phase line update request acknowledgement message.
+            @brief A phase line update request acknowledgement message.
             @see LimaUpdateRequestAck
             @todo rename into phase_line_update_request_ack
-	    */
+        */
         optional LimaDestructionRequestAck         lima_destruction_request_ack         = 11;
         /** @property lima_destruction_request_ack
-		    @brief A phase line destruction request acknowledgement message.
+            @brief A phase line destruction request acknowledgement message.
             @see LimaDestructionRequestAck
             @todo rename into phase_line_destruction_request_ack
-	    */
+        */
         optional LimaUpdateRequestAck              lima_update_request_ack              = 12;
         /** @property intelligence_creation
-		    @brief A intelligence creation message.
+            @brief A intelligence creation message.
             @see IntelligenceCreation
-	    */
+        */
         optional IntelligenceCreation              intelligence_creation                = 13;
         /** @property intelligence_update
-		    @brief A intelligence update message.
+            @brief A intelligence update message.
             @see IntelligenceUpdate
-	    */
+        */
         optional IntelligenceUpdate                intelligence_update                  = 14;
         /** @property intelligence_destruction
-		    @brief A intelligence destruction message.
+            @brief A intelligence destruction message.
             @see IntelligenceDestruction
-	    */
+        */
         optional IntelligenceDestruction           intelligence_destruction             = 15;
         /** @property intelligence_creation_request_ack
-		    @brief A intelligence creation request acknowledgement message.
+            @brief A intelligence creation request acknowledgement message.
             @see IntelligenceCreationRequestAck
-	    */
+        */
         optional IntelligenceCreationRequestAck    intelligence_creation_request_ack    = 16;
         /** @property intelligence_update_request_ack
-		    @brief A intelligence update request acknowledgement message.
+            @brief A intelligence update request acknowledgement message.
             @see IntelligenceUpdateRequestAck
-	    */
+        */
         optional IntelligenceUpdateRequestAck      intelligence_update_request_ack      = 17;
         /** @property intelligence_destruction_request_ack
-		    @brief A intelligence destruction request acknowledgement message.
+            @brief A intelligence destruction request acknowledgement message.
             @see IntelligenceDestructionRequestAck
-	    */
+        */
         optional IntelligenceDestructionRequestAck intelligence_destruction_request_ack = 18;
         /** @property shape_creation
-		    @brief A shape creation message.
+            @brief A shape creation message.
             @see ShapeCreation
             @todo rename into drawing_creation
-	    */
+        */
         optional ShapeCreation                     shape_creation                       = 19;
         /** @property shape_update
-		    @brief A shape update message.
+            @brief A shape update message.
             @see ShapeUpdate
             @todo rename into drawing_update
-	    */
+        */
         optional ShapeUpdate                       shape_update                         = 20;
         /** @property shape_destruction
-		    @brief A shape destruction message.
+            @brief A shape destruction message.
             @see ShapeDestruction
             @todo rename into drawing_destruction
-	    */
+        */
         optional ShapeDestruction                  shape_destruction                    = 21;
         /** @property shape_creation_request_ack
-		    @brief A shape creation request acknowledgement message.
+            @brief A shape creation request acknowledgement message.
             @see ShapeCreationRequestAck
             @todo rename into drawing_creation_request_ack
-	    */
+        */
         optional ShapeCreationRequestAck           shape_creation_request_ack           = 22;
         /** @property shape_destruction_request_ack
-		    @brief A shape destruction request acknowledgement message.
+            @brief A shape destruction request acknowledgement message.
             @see ShapeDestructionRequestAck
             @todo rename into drawing_destruction_request_ack
-	    */
+        */
         optional ShapeDestructionRequestAck        shape_destruction_request_ack        = 23;
         /** @property shape_update_request_ack
-		    @brief A shape update request acknowledgement message.
+            @brief A shape update request acknowledgement message.
             @see ShapeUpdateRequestAck
             @todo rename into drawing_update_request_ack
-	    */
+        */
         optional ShapeUpdateRequestAck             shape_update_request_ack             = 24;
         /** @property text_message
-		    @brief A text message.
+            @brief A text message.
             @see TextMessage
-	    */
+        */
         optional TextMessage                       text_message                         = 25;
         /** @property marker_creation
-		    @brief A marker creation message.
+            @brief A marker creation message.
             @see MarkerCreation
-	    */
+        */
         optional MarkerCreation                    marker_creation                      = 26;
         /** @property marker_update
-		    @brief A marker update message.
+            @brief A marker update message.
             @see MarkerUpdate
-	    */
+        */
         optional MarkerUpdate                      marker_update                        = 27;
         /** @property marker_destruction
-		    @brief A marker destruction message.
+            @brief A marker destruction message.
             @see MarkerDestruction
-	    */
+        */
         optional MarkerDestruction                 marker_destruction                   = 28;
         /** @property client_object_creation
-		    @brief A client object creation message.
+            @brief A client object creation message.
             @see ClientObjectCreation
-	    */
+        */
         optional ClientObjectCreation              client_object_creation               = 29;
         /** @property client_object_update
-		    @brief A client object update message.
+            @brief A client object update message.
             @see ClientObjectUpdate
-	    */
+        */
         optional ClientObjectUpdate                client_object_update                 = 30;
         /** @property client_object_destruction
-		    @brief A client object destruction message.
+            @brief A client object destruction message.
             @see ClientObjectDestruction
-	    */
+        */
         optional ClientObjectDestruction           client_object_destruction            = 31;
         /** @property client_object_creation_request_ack
-		    @brief A client object creation request acknowledgement message.
+            @brief A client object creation request acknowledgement message.
             @see ClientObjectCreationRequestAck
-	    */
+        */
         optional ClientObjectCreationRequestAck    client_object_creation_ack           = 32;
         /** @property client_object_update_request_ack
-		    @brief A client object update request acknowledgement message.
+            @brief A client object update request acknowledgement message.
             @see ClientObjectUpdateRequestAck
-	    */
+        */
         optional ClientObjectUpdateRequestAck      client_object_update_ack             = 33;
         /** @property client_object_destruction_request_ack
-		    @brief A client object destruction request acknowledgement message.
+            @brief A client object destruction request acknowledgement message.
             @see ClientObjectDestructionRequestAck
-	    */
+        */
         optional ClientObjectDestructionRequestAck client_object_destruction_ack        = 34;
     }
     optional int32   context = 1;

@@ -98,11 +98,10 @@ void DrawingsModel::Load( const dispatcher::Config& config )
 // Name: DrawingsModel::ReadShapes
 // Created: LDC 2010-12-02
 // -----------------------------------------------------------------------------
-void DrawingsModel::ReadShapes( xml::xistream& xis )
+void DrawingsModel::ReadShapes( xml::xisubstream xis )
 {
     xis >> xml::start( "shapes" )
-            >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
-        >> xml::end;
+            >> xml::list( "shape", *this, &DrawingsModel::ReadShape );
 }
 
 // -----------------------------------------------------------------------------

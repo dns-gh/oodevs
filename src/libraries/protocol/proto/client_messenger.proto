@@ -13,412 +13,412 @@ package sword;
 
 /** @struct LimaCreationRequest
     @brief A message to request phase line creation.
-	
-	This message requests the creation of a phase line.
-	@li A LimaCreationRequestAck message is sent to acknowledge the phase line creation.
-	@li A LimaCreation message is sent to all clients to notify the actual creation of the phase line.
-	
-	@todo translation: rename into PhaseLineCreationRequest
+    
+    This message requests the creation of a phase line.
+    @li A LimaCreationRequestAck message is sent to acknowledge the phase line creation.
+    @li A LimaCreation message is sent to all clients to notify the actual creation of the phase line.
+    
+    @todo translation: rename into PhaseLineCreationRequest
 */
 message LimaCreationRequest {
-	/** @property tactical_line
-		@brief The phase line data to use for creation.
-		@see MsgTacticalLine
-	*/
-	required MsgTacticalLine tactical_line = 1;
+    /** @property tactical_line
+        @brief The phase line data to use for creation.
+        @see MsgTacticalLine
+    */
+    required MsgTacticalLine tactical_line = 1;
 }
 
 /** @struct LimaUpdateRequest
     @brief A message to request phase line update.
-	
-	This message requests the update of an existing phase line.
-	@li A LimaUpdateRequestAck message is sent to acknowledge the phase line update.
-	@li A LimaUpdate message is sent to all clients to notify the actual update of the phase line.
+    
+    This message requests the update of an existing phase line.
+    @li A LimaUpdateRequestAck message is sent to acknowledge the phase line update.
+    @li A LimaUpdate message is sent to all clients to notify the actual update of the phase line.
 
-	@todo translation: rename into PhaseLineUpdateRequest
+    @todo translation: rename into PhaseLineUpdateRequest
 */
 message LimaUpdateRequest {
-	/** @property id
-		@brief The identifier of the phase line to update.
-		@see TacticalLineId
-	*/
-	required TacticalLineId  id            = 1;
-	/** @property tactical_line
-		@brief Specifies the phase line data to use for update.
-		@see MsgTacticalLine
-		@bug should not be optional
-	*/
-	optional MsgTacticalLine tactical_line = 2;
+    /** @property id
+        @brief The identifier of the phase line to update.
+        @see TacticalLineId
+    */
+    required TacticalLineId  id            = 1;
+    /** @property tactical_line
+        @brief Specifies the phase line data to use for update.
+        @see MsgTacticalLine
+        @bug should not be optional
+    */
+    optional MsgTacticalLine tactical_line = 2;
 }
 
 /** @struct LimaDestructionRequest
     @brief A message to request phase line destruction.
-	
-	This message requests the destruction of an existing phase line.
-	@li A LimaDestructionRequestAck message is sent to acknowledge the phase line destruction.
-	@li A LimaDestruction message is sent to all clients to notify the actual destruction of the phase line.
+    
+    This message requests the destruction of an existing phase line.
+    @li A LimaDestructionRequestAck message is sent to acknowledge the phase line destruction.
+    @li A LimaDestruction message is sent to all clients to notify the actual destruction of the phase line.
 
-	@todo translation: rename into PhaseLineDestructionRequest
+    @todo translation: rename into PhaseLineDestructionRequest
 */
 message LimaDestructionRequest {
-	/** @property id
-		@brief The identifier of the phase line to destroy.
-		@see TacticalLineId
-	*/
-	required TacticalLineId id = 1;
+    /** @property id
+        @brief The identifier of the phase line to destroy.
+        @see TacticalLineId
+    */
+    required TacticalLineId id = 1;
 }
 
 /** @struct LimitCreationRequest
     @brief A message to request limit creation.
-	
-	This message requests the creation of a limit.
-	@li A LimitCreationRequestAck message is sent to acknowledge the limit creation.
-	@li A LimitCreation message is sent to all clients to notify the actual creation of the limit.
+    
+    This message requests the creation of a limit.
+    @li A LimitCreationRequestAck message is sent to acknowledge the limit creation.
+    @li A LimitCreation message is sent to all clients to notify the actual creation of the limit.
 */
 message LimitCreationRequest {
-	/** @property tactical_line
-		@brief The limit data to use for creation.
-		@see MsgTacticalLine
-	*/
-	required MsgTacticalLine tactical_line = 1;
+    /** @property tactical_line
+        @brief The limit data to use for creation.
+        @see MsgTacticalLine
+    */
+    required MsgTacticalLine tactical_line = 1;
 }
 
 /** @struct LimitUpdateRequest
     @brief A message to request limit update.
-	
-	This message requests the update of an existing limit.
-	@li A LimitUpdateRequestAck message is sent to acknowledge the limit update.
-	@li A LimitUpdate message is sent to all clients to notify the actual update of the limit.
+    
+    This message requests the update of an existing limit.
+    @li A LimitUpdateRequestAck message is sent to acknowledge the limit update.
+    @li A LimitUpdate message is sent to all clients to notify the actual update of the limit.
 */
 message LimitUpdateRequest {
-	/** @property id
-		@brief The identifier of the limit to update.
-		@see TacticalLineId
-	*/
-	required TacticalLineId  id            = 1;
-	/** @property tactical_line
-		@brief Specifies the limit data to use for update.
-		@see MsgTacticalLine
-		@bug should not be optional
-	*/
-	optional MsgTacticalLine tactical_line = 2;
+    /** @property id
+        @brief The identifier of the limit to update.
+        @see TacticalLineId
+    */
+    required TacticalLineId  id            = 1;
+    /** @property tactical_line
+        @brief Specifies the limit data to use for update.
+        @see MsgTacticalLine
+        @bug should not be optional
+    */
+    optional MsgTacticalLine tactical_line = 2;
 }
 
 /** @struct LimitDestructionRequest
     @brief A message to request limit destruction.
-	
-	This message requests the destruction of an existing limit.
-	@li A LimitDestructionRequestAck message is sent to acknowledge the limit destruction.
-	@li A LimitDestruction message is sent to all clients to notify the actual destruction of the limit.
+    
+    This message requests the destruction of an existing limit.
+    @li A LimitDestructionRequestAck message is sent to acknowledge the limit destruction.
+    @li A LimitDestruction message is sent to all clients to notify the actual destruction of the limit.
 */
 message LimitDestructionRequest {
-	/** @property id
-		@brief The identifier of the limit to destroy.
-		@see TacticalLineId
-	*/
-	required TacticalLineId id = 1;
+    /** @property id
+        @brief The identifier of the limit to destroy.
+        @see TacticalLineId
+    */
+    required TacticalLineId id = 1;
 }
 
 /** @struct IntelligenceCreationRequest
     @brief A message to request intelligence creation.
-	
-	This message requests the creation of an intelligence.
-	@li An IntelligenceCreationRequestAck message is sent to acknowledge the intelligence creation.
-	@li An IntelligenceCreation message is sent to all clients to notify the actual creation of the intelligence.
+    
+    This message requests the creation of an intelligence.
+    @li An IntelligenceCreationRequestAck message is sent to acknowledge the intelligence creation.
+    @li An IntelligenceCreation message is sent to all clients to notify the actual creation of the intelligence.
 */
 message IntelligenceCreationRequest {
     /** @property intelligence
-		@brief The intelligence data to use for creation.
-		@see Intelligence
-	*/
+        @brief The intelligence data to use for creation.
+        @see Intelligence
+    */
     required Intelligence intelligence = 1;
 }
 
 /** @struct IntelligenceUpdateRequest
     @brief A message to request intelligence update.
-	
-	This message requests the update of an existing intelligence.
-	@li An IntelligenceUpdateRequestAck message is sent to acknowledge the intelligence update.
-	@li An IntelligenceUpdate message is sent to all clients to notify the actual update of the intelligence.
+    
+    This message requests the update of an existing intelligence.
+    @li An IntelligenceUpdateRequestAck message is sent to acknowledge the intelligence update.
+    @li An IntelligenceUpdate message is sent to all clients to notify the actual update of the intelligence.
 */
 message IntelligenceUpdateRequest {
     /** @property intelligence
-		@brief The identifier of the intelligence to update.
-		@see IntelligenceId
+        @brief The identifier of the intelligence to update.
+        @see IntelligenceId
         @todo should be named "id" instead of "intelligence" (coherence)
-	*/
+    */
     required IntelligenceId  intelligence = 1;
     /** @property formation
-		@brief The new identifier of the parent formation of the intelligence.
-		@see FormationId
+        @brief The new identifier of the parent formation of the intelligence.
+        @see FormationId
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional FormationId     formation    = 2;
     /** @property name
-		@brief The new name of the intelligence.
+        @brief The new name of the intelligence.
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional string          name         = 3;
     /** @property nature
-		@brief The new nature (MIL2525B App6 string) of the intelligence.
+        @brief The new nature (MIL2525B App6 string) of the intelligence.
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional string          nature       = 4;
     /** @property level
-		@brief The new hierarchical level/echelon of the intelligence.
-		@see EnumNatureLevel
+        @brief The new hierarchical level/echelon of the intelligence.
+        @see EnumNatureLevel
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional EnumNatureLevel level        = 5;
     /** @property embarked
-		@brief The new embarkment state of the intelligence.
+        @brief The new embarkment state of the intelligence.
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional bool            embarked     = 6;
     /** @property location
-		@brief The new location of the intelligence.
-		@see MsgCoordLatLong
+        @brief The new location of the intelligence.
+        @see MsgCoordLatLong
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional MsgCoordLatLong location     = 7;
     /** @property diplomacy
-		@brief The new diplomacy/alignment of the intelligence.
-		@see EnumDiplomacy
+        @brief The new diplomacy/alignment of the intelligence.
+        @see EnumDiplomacy
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional EnumDiplomacy   diplomacy    = 8;
 }
 
 /** @struct IntelligenceDestructionRequest
     @brief A message to request intelligence destruction.
-	
-	This message requests the destruction of an existing intelligence.
-	@li A IntelligenceDestructionRequestAck message is sent to acknowledge the intelligence destruction.
-	@li A IntelligenceDestruction message is sent to all clients to notify the actual destruction of the intelligence.
+    
+    This message requests the destruction of an existing intelligence.
+    @li A IntelligenceDestructionRequestAck message is sent to acknowledge the intelligence destruction.
+    @li A IntelligenceDestruction message is sent to all clients to notify the actual destruction of the intelligence.
 */
 message IntelligenceDestructionRequest {
     /** @property id
-		@brief The identifier of the intelligence to destroy.
-		@see IntelligenceId
-	*/
+        @brief The identifier of the intelligence to destroy.
+        @see IntelligenceId
+    */
     required IntelligenceId id = 1;
 }
 
 /** @struct ShapeCreationRequest
     @brief A message to request shape creation.
-	
-	This message requests the creation of a shape.
-	@li A ShapeCreationRequestAck message is sent to acknowledge the shape creation.
-	@li A ShapeCreation message is sent to all clients to notify the actual creation of the shape.
+    
+    This message requests the creation of a shape.
+    @li A ShapeCreationRequestAck message is sent to acknowledge the shape creation.
+    @li A ShapeCreation message is sent to all clients to notify the actual creation of the shape.
 
     @todo rename into Drawing/Graphics
 */
 message ShapeCreationRequest {
     /** @property shape
-		@brief The shape data to use for creation.
-		@see Shape
-	*/
+        @brief The shape data to use for creation.
+        @see Shape
+    */
     required Shape shape = 1;
 }
 
 /** @struct ShapeUpdateRequest
     @brief A message to request shape update.
-	
-	This message requests the update of an existing shape.
-	@li A ShapeUpdateRequestAck message is sent to acknowledge the shape update.
-	@li A ShapeUpdate message is sent to all clients to notify the actual update of the shape.
+    
+    This message requests the update of an existing shape.
+    @li A ShapeUpdateRequestAck message is sent to acknowledge the shape update.
+    @li A ShapeUpdate message is sent to all clients to notify the actual update of the shape.
 
     @todo rename into Drawing/Graphics
 */
 message ShapeUpdateRequest {
     /** @property shape
-		@brief The identifier of the shape to update.
-		@see DrawingId
+        @brief The identifier of the shape to update.
+        @see DrawingId
         @todo should be named "id" instead of "shape" (coherence)
-	*/
+    */
     required DrawingId           shape    = 1;
     /** @property category
-		@brief The new category of the shape.
+        @brief The new category of the shape.
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional string              category = 2;
     /** @property color
-		@brief The new color of the shape.
+        @brief The new color of the shape.
               Format is hexadecimal #rrggbb.
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional string              color    = 3;
     /** @property template
-		@brief The new template of the shape.
+        @brief The new template of the shape.
         @note Only needs to be set if data has changed.
         @todo rename into pattern
-	*/
+    */
     optional string              template = 4;
     /** @property points
-		@brief The new points of the shape.
-		@see MsgCoordLatLongList
+        @brief The new points of the shape.
+        @see MsgCoordLatLongList
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional MsgCoordLatLongList points   = 5;
 }
 
 /** @struct ShapeDestructionRequest
     @brief A message to request shape destruction.
-	
-	This message requests the destruction of an existing shape.
-	@li A ShapeDestructionRequestAck message is sent to acknowledge the shape destruction.
-	@li A ShapeDestruction message is sent to all clients to notify the actual destruction of the shape.
+    
+    This message requests the destruction of an existing shape.
+    @li A ShapeDestructionRequestAck message is sent to acknowledge the shape destruction.
+    @li A ShapeDestruction message is sent to all clients to notify the actual destruction of the shape.
 
     @todo rename into Drawing/Graphics
 */
 message ShapeDestructionRequest {
     /** @property id
-		@brief The identifier of the shape to destroy.
-		@see DrawingId
-	*/
+        @brief The identifier of the shape to destroy.
+        @see DrawingId
+    */
     required DrawingId id = 1;
 }
 
 /** @struct MarkerCreationRequest
     @brief A message to request marker creation.
-	
-	This message requests the creation of a marker.
-	@li A MarkerCreationRequestAck message is sent to acknowledge the marker creation.
-	@li A MarkerCreation message is sent to all clients to notify the actual creation of the marker.
+    
+    This message requests the creation of a marker.
+    @li A MarkerCreationRequestAck message is sent to acknowledge the marker creation.
+    @li A MarkerCreation message is sent to all clients to notify the actual creation of the marker.
 */
 message MarkerCreationRequest {
     /** @property marker
-		@brief The marker data to use for creation.
-		@see Marker
-	*/
+        @brief The marker data to use for creation.
+        @see Marker
+    */
     required Marker marker = 1;
 }
 
 /** @struct MarkerUpdateRequest
     @brief A message to request marker update.
-	
-	This message requests the update of an existing marker.
-	@li A MarkerUpdateRequestAck message is sent to acknowledge the marker update.
-	@li A MarkerUpdate message is sent to all clients to notify the actual update of the marker.
+    
+    This message requests the update of an existing marker.
+    @li A MarkerUpdateRequestAck message is sent to acknowledge the marker update.
+    @li A MarkerUpdate message is sent to all clients to notify the actual update of the marker.
 */
 message MarkerUpdateRequest {
     /** @property marker
-		@brief The identifier of the marker to update.
-		@see MarkerId
+        @brief The identifier of the marker to update.
+        @see MarkerId
         @todo should be named "id" instead of "marker" (coherence)
-	*/
+    */
     required MarkerId marker      = 1;
     /** @property name
-		@brief The new name of the marker.
+        @brief The new name of the marker.
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional string   name        = 2;
     /** @property number
-		@brief The new number of the marker. This is a user defined identifier.
+        @brief The new number of the marker. This is a user defined identifier.
         @note Only needs to be set if data has changed.
         @todo remove/rename/generalize for user defined marker data
-	*/
+    */
     optional string   number      = 3;
     /** @property description
-		@brief The new description of the marker.
+        @brief The new description of the marker.
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional string   description = 4;
     /** @property parent
-		@brief The identifier of the new parent marker (for nested markers).
+        @brief The identifier of the new parent marker (for nested markers).
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional MarkerId parent      = 5;
 }
 
 /** @struct MarkerDestructionRequest
     @brief A message to request marker destruction.
-	
-	This message requests the destruction of an existing marker.
-	@li A MarkerDestructionRequestAck message is sent to acknowledge the marker destruction.
-	@li A MarkerDestruction message is sent to all clients to notify the actual destruction of the marker.
+    
+    This message requests the destruction of an existing marker.
+    @li A MarkerDestructionRequestAck message is sent to acknowledge the marker destruction.
+    @li A MarkerDestruction message is sent to all clients to notify the actual destruction of the marker.
 */
 message MarkerDestructionRequest {
     /** @property marker
-		@brief The identifier of the marker to destroy.
-		@see MarkerId
+        @brief The identifier of the marker to destroy.
+        @see MarkerId
         @todo should be named "id" instead of "marker" (coherence)
-	*/
+    */
     required MarkerId marker     = 1;
     /** @property delete_all
-		@brief Flag used to request recursive destruction of any child marker.
-		@todo should be named "cascade" or "recursive" instead of "delete_all" 
+        @brief Flag used to request recursive destruction of any child marker.
+        @todo should be named "cascade" or "recursive" instead of "delete_all" 
               which tends to imply that all markers (not only specified/children)
               are going to be deleted.
-	*/
+    */
     required bool     delete_all = 2;
 }
 
 /** @struct ClientObjectCreationRequest
     @brief A message to request client object creation.
-	
-	This message requests the creation of a client object.
-	@li A ClientObjectCreationRequestAck message is sent to acknowledge the client object creation.
-	@li A ClientObjectCreation message is sent to all clients to notify the actual creation of the client object.
+    
+    This message requests the creation of a client object.
+    @li A ClientObjectCreationRequestAck message is sent to acknowledge the client object creation.
+    @li A ClientObjectCreation message is sent to all clients to notify the actual creation of the client object.
 */
 message ClientObjectCreationRequest {
     /** @property name
-		@brief The name of the client object to create.
-	*/
+        @brief The name of the client object to create.
+    */
     optional string               name       = 1;
     /** @property properties
-		@brief The list of properties of the client object.
-		@see ClientObjectProperty
-	*/
+        @brief The list of properties of the client object.
+        @see ClientObjectProperty
+    */
     repeated ClientObjectProperty properties = 2;
     /** @property persistent
-		@brief Flag used to toggle client object persistence.
+        @brief Flag used to toggle client object persistence.
         
         If set to "true", this flag enables client object persistence on simulation checkpoints.
-	*/
+    */
     optional bool                 persistent = 3;
 }
 
 /** @struct ClientObjectUpdateRequest
     @brief A message to request client object update.
-	
-	This message requests the update of an existing client object.
-	@li A ClientObjectUpdateRequestAck message is sent to acknowledge the client object update.
-	@li A ClientObjectUpdate message is sent to all clients to notify the actual update of the client object.
+    
+    This message requests the update of an existing client object.
+    @li A ClientObjectUpdateRequestAck message is sent to acknowledge the client object update.
+    @li A ClientObjectUpdate message is sent to all clients to notify the actual update of the client object.
 */
 message ClientObjectUpdateRequest {
     /** @property object
-		@brief The identifier of the client object to update.
+        @brief The identifier of the client object to update.
         @see ClientObjectId
         @todo should be named "id" instead of "object" (coherence)
-	*/
+    */
     required ClientObjectId       object     = 1;
     /** @property name
-		@brief The new name of the client object.
+        @brief The new name of the client object.
         @note Only needs to be set if data has changed.
-	*/
+    */
     optional string               name       = 2;
     /** @property properties
-		@brief The new properties values of the client object.
+        @brief The new properties values of the client object.
         @see ClientObjectProperty
         @note Only needs to be set if data has changed.
-	*/
+    */
     repeated ClientObjectProperty properties = 3;
 }
 
 /** @struct ClientObjectDestructionRequest
     @brief A message to request client object destruction.
-	
-	This message requests the destruction of an existing client object.
-	@li A ClientObjectDestructionRequestAck message is sent to acknowledge the client object destruction.
-	@li A ClientObjectDestruction message is sent to all clients to notify the actual destruction of the client object.
+    
+    This message requests the destruction of an existing client object.
+    @li A ClientObjectDestructionRequestAck message is sent to acknowledge the client object destruction.
+    @li A ClientObjectDestruction message is sent to all clients to notify the actual destruction of the client object.
 */
 message ClientObjectDestructionRequest {
     /** @property object
-		@brief The identifier of the client object to destroy.
+        @brief The identifier of the client object to destroy.
         @see ClientObjectId
         @todo should be named "id" instead of "object" (coherence)
-	*/
+    */
     required ClientObjectId object = 1;
 }
 
@@ -434,105 +434,105 @@ message ClientToMessenger {
     */
     message Content {
         /** @property limit_creation_request
-		    @brief A limit creation request message.
+            @brief A limit creation request message.
             @see LimitCreationRequest
-	    */
+        */
         optional LimitCreationRequest           limit_creation_request            = 1;
         /** @property limit_destruction_request
-		    @brief A limit destruction request message.
+            @brief A limit destruction request message.
             @see LimitDestructionRequest
-	    */
+        */
         optional LimitDestructionRequest        limit_destruction_request         = 2;
         /** @property limit_update_request
-		    @brief A limit update request message.
+            @brief A limit update request message.
             @see LimitUpdateRequest
-	    */
+        */
         optional LimitUpdateRequest             limit_update_request              = 3;
         /** @property lima_creation_request
-		    @brief A lima creation request message.
+            @brief A lima creation request message.
             @see LimaCreationRequest
             @todo rename into phase_line_creation_request
-	    */
+        */
         optional LimaCreationRequest            lima_creation_request             = 4;
         /** @property lima_destruction_request
-		    @brief A lima destruction request message.
+            @brief A lima destruction request message.
             @see LimaDestructionRequest
             @todo rename into phase_line_destruction_request
-	    */
+        */
         optional LimaDestructionRequest         lima_destruction_request          = 5;
         /** @property lima_update_request
-		    @brief A lima update request message.
+            @brief A lima update request message.
             @see LimaUpdateRequest
             @todo rename into phase_line_update_request
-	    */
+        */
         optional LimaUpdateRequest              lima_update_request               = 6;
         /** @property intelligence_creation_request
-		    @brief A intelligence creation request message.
+            @brief A intelligence creation request message.
             @see IntelligenceCreationRequest
-	    */
+        */
         optional IntelligenceCreationRequest    intelligence_creation_request     = 7;
         /** @property intelligence_update_request
-		    @brief A intelligence update request message.
+            @brief A intelligence update request message.
             @see IntelligenceUpdateRequest
-	    */
+        */
         optional IntelligenceUpdateRequest      intelligence_update_request       = 8;
         /** @property intelligence_destruction_request
-		    @brief A intelligence destruction request message.
+            @brief A intelligence destruction request message.
             @see IntelligenceDestructionRequest
-	    */
+        */
         optional IntelligenceDestructionRequest intelligence_destruction_request  = 9;
         /** @property shape_creation_request
-		    @brief A shape creation request message.
+            @brief A shape creation request message.
             @see ShapeCreationRequest
             @todo rename into drawings/graphics_creation_request
-	    */
+        */
         optional ShapeCreationRequest           shape_creation_request            = 10;
         /** @property shape_destruction_request
-		    @brief A shape destruction request message.
+            @brief A shape destruction request message.
             @see ShapeDestructionRequest
             @todo rename into drawings/graphics_destruction_request
-	    */
+        */
         optional ShapeDestructionRequest        shape_destruction_request         = 11;
         /** @property shape_update_request
-		    @brief A shape update request message.
+            @brief A shape update request message.
             @see ShapeUpdateRequest
             @todo rename into drawings/graphics_update_request
-	    */
+        */
         optional ShapeUpdateRequest             shape_update_request              = 12;
         /** @property text_message
-		    @brief A text message.
+            @brief A text message.
             @see TextMessage
-	    */
+        */
         optional TextMessage                    text_message                      = 13;
         /** @property marker_creation_request
-		    @brief A marker creation request message.
+            @brief A marker creation request message.
             @see MarkerCreationRequest
-	    */
+        */
         optional MarkerCreationRequest          marker_creation_request           = 14;
         /** @property marker_update_request
-		    @brief A marker update request message.
+            @brief A marker update request message.
             @see MarkerUpdateRequest
-	    */
+        */
         optional MarkerUpdateRequest            marker_update_request             = 15;
         /** @property marker_destruction_request
-		    @brief A marker destruction request message.
+            @brief A marker destruction request message.
             @see MarkerDestructionRequest
-	    */
+        */
         optional MarkerDestructionRequest       marker_destruction_request        = 16;
         /** @property client_object_creation_request
-		    @brief A client object creation request message.
+            @brief A client object creation request message.
             @see ClientObjectCreationRequest
-	    */
+        */
         optional ClientObjectCreationRequest    client_object_creation_request    = 17;
         /** @property client_object_update_request
-		    @brief A client object update request message.
+            @brief A client object update request message.
             @see ClientObjectUpdateRequest
-	    */
+        */
         optional ClientObjectUpdateRequest      client_object_update_request      = 18;
         /** @property client_object_destruction_request
-		    @brief A client object destruction request message.
+            @brief A client object destruction request message.
             @see ClientObjectDestructionRequest
-	    */
+        */
         optional ClientObjectDestructionRequest client_object_destruction_request = 19;
     }
     /** @property context
