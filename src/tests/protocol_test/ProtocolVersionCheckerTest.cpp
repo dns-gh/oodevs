@@ -83,7 +83,7 @@ BOOST_FIXTURE_TEST_CASE( ProtocolVersionChecker_versions_are_compatible_if_major
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( ProtocolVersionChecker_versions_are_incompatible_if_majors_dont_match, Fixture )
 {
-    ++values[2];
+    ++values[0];
     BOOST_CHECK( ! IsCompatible() );
 }
 
