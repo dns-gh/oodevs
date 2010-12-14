@@ -42,6 +42,7 @@
 #include "WorkableCapacity.h"
 #include "SealOffCapacity.h"
 #include "SupplyCapacity.h"
+#include "InteractIfHeightCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_PropagationManager.h"
 #include <xeumeuleu/xml.hpp>
@@ -124,6 +125,7 @@ CapacityFactory::CapacityFactory()
     // Ca sera à supprimer quand les xml des objets seront à jour (voire avec RPD).
     DoRegister( "structural", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
     DoRegister( "resources", boost::bind( &AddBuilder< ResourceNetworkCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< ResourceNetworkCapacity >::Update, _1, _2 ) );
+    DoRegister( "interaction-height", boost::bind( &AddBuilder< InteractIfHeightCapacity >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

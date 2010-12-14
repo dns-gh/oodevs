@@ -286,6 +286,12 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eInteractWithEnemyCapacityPresent ] = & interactWithEnemy->GetConnector();
     }
 
+    ADN_GroupBox* heightInteraction = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Height interaction" ), hBox );
+    {
+        vInfosConnectors[ eHeightInteractionPresent ] = & heightInteraction->GetConnector();
+        builder.AddField< ADN_EditLine_Double >( heightInteraction, tr( "Interaction max height" ), vInfosConnectors[ eHeightInteraction ], tr( "m" ) );
+    }
+
     ADN_GroupBox* protection = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Protection" ), hBox );
     {
         vInfosConnectors[ eProtectionCapacityPresent ] = & protection->GetConnector();

@@ -2962,6 +2962,14 @@ du tireur</translation>
         <source>Burn</source>
         <translation>Brûle</translation>
     </message>
+    <message>
+        <source>Height interaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interaction max height</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

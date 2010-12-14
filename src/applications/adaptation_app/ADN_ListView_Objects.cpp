@@ -133,6 +133,10 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     ADN_Objects_Data::ADN_CapacityInfos_Bypassable& bypassable = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Bypassable >( ADN_Objects_GUI::eBypassableCapacityPresent );
     vItemConnectors_[ADN_Objects_GUI::eBypassableCapacity_Speed]->Connect( &bypassable.rSpeed_, bConnect );
 
+    ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight& heightInteraction = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight >( ADN_Objects_GUI::eHeightInteractionPresent );
+    vItemConnectors_[ADN_Objects_GUI::eHeightInteraction]->Connect( &heightInteraction.height_, bConnect );
+
+
     ADN_Objects_Data::ADN_CapacityInfos_Mobility& mobility = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Mobility >( ADN_Objects_GUI::eMobilityCapacityPresent );
     vItemConnectors_[ADN_Objects_GUI::eMobilityCapacity_DefaultSpeed]->Connect( &mobility.rDefaultSpeed_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eMobilityCapacity_SpeedModifier]->Connect( &mobility.nSpeedModifier_, bConnect );
@@ -166,6 +170,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Interference >( ADN_Objects_GUI::eInterferenceCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_InteractWithEnemy >( ADN_Objects_GUI::eInteractWithEnemyCapacityPresent );
+    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight >( ADN_Objects_GUI::eHeightInteractionPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Occupable >( ADN_Objects_GUI::eOccupableCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Supply >( ADN_Objects_GUI::eSupplyCapacityPresent );
 

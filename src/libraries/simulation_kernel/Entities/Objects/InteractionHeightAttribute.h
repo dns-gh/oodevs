@@ -34,6 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              InteractionHeightAttribute();
+             InteractionHeightAttribute( double height );
     explicit InteractionHeightAttribute( const sword::MsgMissionParameter_Value& attributes );
     explicit InteractionHeightAttribute( xml::xistream& xis );
     virtual ~InteractionHeightAttribute();

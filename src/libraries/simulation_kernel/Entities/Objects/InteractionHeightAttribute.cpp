@@ -50,6 +50,16 @@ InteractionHeightAttribute::InteractionHeightAttribute( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: InteractionHeightAttribute constructor
+// Created: LDC 2009-03-09
+// -----------------------------------------------------------------------------
+InteractionHeightAttribute::InteractionHeightAttribute( double height )
+    : height_( height )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: InteractionHeightAttribute destructor
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------

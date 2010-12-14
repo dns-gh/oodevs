@@ -61,6 +61,7 @@ public:
         eImprovableCapacity_Dotation,
         eInterferenceCapacityPresent,
         eInteractWithEnemyCapacityPresent,
+        eHeightInteractionPresent,
         eIntoxicationCapacityPresent,
         eIntoxicationCapacity_MaxToxic,
         eLogisticCapacityPresent,
@@ -104,6 +105,7 @@ public:
         eFirePropagationModifierPresent,
         eFirePropagationModifier_Modifiers,
         eBurnCapacityPresent,
+        eHeightInteraction,
         eNbrGuiElements
     };
 
