@@ -28,6 +28,7 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_TimeField.h"
 #include "ADN_Nature_GUI.h"
+#include "ADN_SymbolWidget.h"
 #include <qcombo.h>
 #include <qframe.h>
 #include <qlabel.h>
@@ -119,8 +120,11 @@ void ADN_Units_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pReconGroup, tr( "Depth" ), vInfosConnectors[eProbeLength], tr( "m" ) );
 
     // Nature
-    QGroupBox* pNatureGroup = new QGroupBox( 2, Qt::Vertical, tr( "Nature" ), pGroup );
-    QGroupBox* subLayout = new QGroupBox( 3, Qt::Horizontal, pNatureGroup );
+    QGroupBox* pNatureGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Nature" ), pGroup );
+
+    QGroupBox* pNatureInternalGroup = new QGroupBox( 2, Qt::Vertical, pNatureGroup );
+    pNatureInternalGroup->setFrameStyle( QFrame::NoFrame );
+    QGroupBox* subLayout = new QGroupBox( 3, Qt::Horizontal, pNatureInternalGroup );
     subLayout->setInsideMargin( 0 );
     subLayout->setInsideSpacing( 0 );
     subLayout->setFrameStyle( QFrame::Plain );
@@ -130,8 +134,18 @@ void ADN_Units_GUI::Build()
     // nature atlas type
     builder.AddEnumField<E_NatureAtlasType>( subLayout, tr( "Atlas" ), vInfosConnectors[eNatureAtlas], ADN_Tr::ConvertFromNatureAtlasType );
 
-    ADN_Nature_GUI* natureGui = new ADN_Nature_GUI( pNatureGroup );
+    ADN_Nature_GUI* natureGui = new ADN_Nature_GUI( pNatureInternalGroup );
     vInfosConnectors[eNatureNature] = &natureGui->GetConnector();
+
+    // Symbol
+    QVBox* pSymbolLayout = new QVBox( pNatureGroup );
+    QLabel* pTestLabel = new QLabel( pSymbolLayout );
+    pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout );
+    pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
+    pSymbolWidget_->setMinimumSize( 130, 140 );
+    pSymbolWidget_->setMaximumSize( 130, 140 );
+    connect( natureGui, SIGNAL( textChanged( const QString& ) ), pSymbolWidget_, SLOT( OnNatureChanged( const QString& ) ) );
+    connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pTestLabel, SLOT( setText( const QString& ) ) );
 
     // Commandement
     QGroupBox* pCommandGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Command" ), pGroup );

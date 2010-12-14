@@ -14,12 +14,14 @@
 
 #include "ADN_GUI_ABC.h"
 #include "ADN_EditLine.h"
+
 class ADN_Units_Data;
 class QWidget;
 class ADN_GroupBox;
 class QComboBox;
 class ADN_ListView_Units;
 class ADN_Units_LogThreshold_GUI;
+class ADN_SymbolWidget;
 
 // =============================================================================
 /** @class  ADN_Units_GUI
@@ -114,6 +116,7 @@ private:
     ADN_GroupBox* pStockGroup_;
     ADN_Units_LogThreshold_GUI* pStockLogThreshold_;
     ADN_GroupBox* pInstallationGroup_;
+    ADN_SymbolWidget* pSymbolWidget_;
     //@}
 };
 
