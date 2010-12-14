@@ -403,15 +403,15 @@
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Anglais</translation>
     </message>
     <message>
         <source>Fran&#xe7;ais</source>
-        <translation type="unfinished"></translation>
+        <translation>Français</translation>
     </message>
     <message>
         <source>Espa&#xf1;ol</source>
-        <translation type="unfinished"></translation>
+        <translation>Espagnol</translation>
     </message>
 </context>
 <context>

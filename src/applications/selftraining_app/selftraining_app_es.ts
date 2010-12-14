@@ -370,14 +370,6 @@
         <translation>Opciones</translation>
     </message>
     <message>
-        <source>English</source>
-        <translation>Inglés</translation>
-    </message>
-    <message>
-        <source>Fran&#xe7;ais</source>
-        <translation>Español</translation>
-    </message>
-    <message>
         <source>Language: </source>
         <translation>Idioma: </translation>
     </message>
@@ -410,8 +402,16 @@
         <translation>Administración</translation>
     </message>
     <message>
+        <source>English</source>
+        <translation>Ingles</translation>
+    </message>
+    <message>
+        <source>Fran&#xe7;ais</source>
+        <translation>Francés</translation>
+    </message>
+    <message>
         <source>Espa&#xf1;ol</source>
-        <translation type="unfinished"></translation>
+        <translation>Español</translation>
     </message>
 </context>
 <context>
