@@ -17,6 +17,8 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/Effects/MIL_Effect_Explosion.h"
+#include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -107,6 +109,12 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
     {
         const MT_Ellipse attritionSurface     ( vTargetPosition, vTargetPosition + ( vFireDirection                        ),  vTargetPosition + ( vRotatedFireDirection                        ) );
         const MT_Ellipse neutralizationSurface( vTargetPosition, vTargetPosition + ( vFireDirection * rNeutralizationCoef_ ),  vTargetPosition + ( vRotatedFireDirection * rNeutralizationCoef_ ) );
+        
+        // Area effect messages
+        MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( attritionSurface, category_, 20 , false ) );
+        MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( neutralizationSurface, category_, 20, true ) );
+        
+        
         bool bRCSent = false;
 
         TER_Agent_ABC::T_AgentPtrVector targets;

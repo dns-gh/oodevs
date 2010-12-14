@@ -45,8 +45,10 @@
 #define COLOR_NBCSUIT       0.8f, 0.8f, 0.8f, 0.8f
 #define COLOR_NBCCONT       0.4f, 0.8f, 0.4f, 0.8f
 
-#define COLOR_SMOKE         0.8f, 0.6f, 0.6f, 0.3f
-#define COLOR_LIGHT         1.0f, 1.0f, 1.0f, 0.3f
+#define COLOR_AMMO_EFFECT_SMOKE           0.4f, 0.4f, 0.4f, 0.5f
+#define COLOR_AMMO_EFFECT_LIGHT           1.0f, 1.0f, 1.0f, 0.7f
+#define COLOR_AMMO_EFFECT_EXPLOSION       1.0f, 0.5f, 0.5f, 0.5f
+#define COLOR_AMMO_EFFECT_NEUTRALIZATION  0.8f, 0.6f, 0.6f, 0.5f
 
 #define COLOR_POPULATION_ATTITUDE_CALM      0.0f, 0.0f, 1.0f, 1.0f
 #define COLOR_POPULATION_ATTITUDE_AGITATED  0.0f, 1.0f, 0.0f, 1.0f

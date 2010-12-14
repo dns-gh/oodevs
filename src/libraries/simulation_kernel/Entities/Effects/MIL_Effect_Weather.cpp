@@ -19,16 +19,12 @@
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_IDManager.h"
 
-MIL_IDManager MIL_Effect_Weather::idManager_;
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_Weather constructor
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
 MIL_Effect_Weather::MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory, double rLifeDuration, double rDeploymentDuration )
-    : nID_                ( idManager_.GetFreeId() )
-    , surface_            ( surface )
-    , ammoCategory_       ( ammoCategory )
+    : MIL_Effect_Fire_ABC ( surface, ammoCategory )
     , nDeploymentTimeStep_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + (unsigned int)rDeploymentDuration )
     , nLifeLastTimeStep_  ( nDeploymentTimeStep_ + (unsigned int)rLifeDuration )
     , bIsDeployed_        ( false )
@@ -55,43 +51,16 @@ bool MIL_Effect_Weather::Execute()
     if( !bIsDeployed_ && nDeploymentTimeStep_ <= nCurrentTimeStep )
     {
         MIL_AgentServer::GetWorkspace().GetMeteoDataManager().RegisterWeatherEffect( surface_, ammoCategory_ );
-        SendStartEffect();
+        SendMsgStartEffect( ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? sword::smoke : sword::light );
         bIsDeployed_ = true;
     }
 
     if( bIsDeployed_ && nLifeLastTimeStep_ <= nCurrentTimeStep )
     {
-        SendStopEffect();
+        SendMsgStopEffect();
         MIL_AgentServer::GetWorkspace().GetMeteoDataManager().UnregisterWeatherEffect( surface_, ammoCategory_ );
         delete this;
         return false;
     }
     return true;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_Effect_Weather::SendStartEffect
-// Created: JVT 04-03-25
-//-----------------------------------------------------------------------------
-void MIL_Effect_Weather::SendStartEffect() const
-{
-    client::StartFireEffect asnMsg;
-
-    asnMsg().mutable_fire_effect()->set_id( nID_ );
-    asnMsg().set_type( ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? sword::smoke : sword::light );
-    NET_ASN_Tools::WriteEllipse( surface_, *asnMsg().mutable_location() );
-
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    asnMsg().clear_location();
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_Effect_Weather::SendStopEffect
-// Created: JVT 04-03-25
-//-----------------------------------------------------------------------------
-void MIL_Effect_Weather::SendStopEffect() const
-{
-    client::StopFireEffect asnMsg;
-    asnMsg().mutable_fire_effect()->set_id( nID_ );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }

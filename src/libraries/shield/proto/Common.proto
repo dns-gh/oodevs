@@ -127,8 +127,10 @@ enum EnumPrecipitationType {
 }
 
 enum EnumFireEffectType {
-   smoke                                            = 0;
-   light                                            = 1;
+   smoke          = 0;
+   light          = 1;
+   explosion      = 2;
+   neutralization = 3;
 }
 
 enum UnitFireType {

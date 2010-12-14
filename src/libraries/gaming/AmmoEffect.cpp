@@ -29,7 +29,7 @@ AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& contr
 {
     if( type_ == sword::eclairant )
         meteo_.Update( weather::PHY_Lighting::eclairant_ );
-    else
+    else if( type_ == sword::smoke )
         meteo_.Update( weather::PHY_Precipitation::smoke_  );
     controller_.Create( *this );
 }
@@ -49,10 +49,15 @@ AmmoEffect::~AmmoEffect()
 // -----------------------------------------------------------------------------
 void AmmoEffect::Draw( const GlTools_ABC& tools ) const
 {
-    if( type_ == sword::smoke )
-        glColor4f( COLOR_SMOKE );
-    else
-        glColor4f( COLOR_LIGHT );
+    switch( type_ )
+    {
+        case sword::smoke:          glColor4f( COLOR_AMMO_EFFECT_SMOKE ); break;
+        case sword::light:          glColor4f( COLOR_AMMO_EFFECT_LIGHT ); break;
+        case sword::explosion:      glColor4f( COLOR_AMMO_EFFECT_EXPLOSION ); break;
+        case sword::neutralization: glColor4f( COLOR_AMMO_EFFECT_NEUTRALIZATION ); break;
+        default:
+            ;
+    }
     ellipse_.Draw( tools );
 }
 
