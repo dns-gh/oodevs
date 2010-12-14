@@ -137,6 +137,7 @@ BOOST_FIXTURE_TEST_CASE( unsupported_message_sent_from_client_is_detected_by_pro
     MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection from" ) &&
                                                 mock::contain( "aborted" ) &&
                                                 mock::contain( "Unknown message tag" ) ).calls( --bl::var( notified ) );
+    MOCK_EXPECT( listener, Error );
     wait( bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
 }
 
@@ -167,5 +168,6 @@ BOOST_FIXTURE_TEST_CASE( unsupported_message_sent_from_simulation_is_detected_by
     MOCK_EXPECT( listener, Error ).once().with( mock::contain( "Shield proxy connection to" ) &&
                                                 mock::contain( "aborted" ) &&
                                                 mock::contain( "Unknown message tag" ) ).calls( --bl::var( notified ) );
+    MOCK_EXPECT( listener, Error );
     wait( bl::var( notified ) == 0, boost::bind( &Fixture::Update, this ) );
 }
