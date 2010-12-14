@@ -155,8 +155,8 @@ void ActionsModel::Load( const std::string& filename, bool readonly /*= false*/ 
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &ActionsModel::ReadAction, readonly, errors )
         >> xml::end;
-    if( !errors.empty() )
-        throw std::exception( tools::translate( "ActionsModel", "The order file contains error(s), some actions could not be loaded:\n%1" ).arg( errors.c_str() ) );
+//    if( !errors.empty() )
+//        throw std::exception( tools::translate( "ActionsModel", "The order file contains error(s), some actions could not be loaded:\n%1" ).arg( errors.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
