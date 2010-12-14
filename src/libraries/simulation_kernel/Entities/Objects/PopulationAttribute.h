@@ -32,6 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PopulationAttribute();
+			 PopulationAttribute( double density );
     explicit PopulationAttribute( xml::xistream& xis );
     virtual ~PopulationAttribute();
     //@}

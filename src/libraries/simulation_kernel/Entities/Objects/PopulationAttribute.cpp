@@ -35,6 +35,16 @@ PopulationAttribute::PopulationAttribute( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationAttribute constructor
+// Created: NLD 2010-11-24
+// -----------------------------------------------------------------------------
+PopulationAttribute::PopulationAttribute( double density )
+	: density_( density )
+{
+	// NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationAttribute destructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------

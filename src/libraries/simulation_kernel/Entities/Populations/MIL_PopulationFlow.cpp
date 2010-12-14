@@ -407,9 +407,12 @@ bool MIL_PopulationFlow::ManageObjectSplit()
     //pDestConcentration_->Move( destination_ ); $$ Auto next tick
     //$$$ TMP CRs - a changer apres refactor objets
     // $$$ TODO
-    const AnimatorAttribute::T_AgentSet& animators = pSplittingObject_->GetAttribute<AnimatorAttribute>().GetAnimators();
-    for( AnimatorAttribute::CIT_AgentSet it = animators.begin(); it != animators.end(); ++it )
-        MIL_Report::PostEvent( **it, MIL_Report::eReport_InterventionAgainstPopulationStarted, GetAttitude().GetID() );
+	const AnimatorAttribute* animatorAttribute = pSplittingObject_->RetrieveAttribute<AnimatorAttribute>();
+	if( animatorAttribute )
+	{
+		for( AnimatorAttribute::CIT_AgentSet it = animatorAttribute->GetAnimators().begin(); it != animatorAttribute->GetAnimators().end(); ++it )
+			MIL_Report::PostEvent( **it, MIL_Report::eReport_InterventionAgainstPopulationStarted, GetAttitude().GetID() );
+	}
     return true;
     /*
     //$$$$$$$$$$$$$$$$$$$$$
