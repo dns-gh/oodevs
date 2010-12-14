@@ -99,7 +99,7 @@ void LoggerApplication::ConnectionSucceeded( const std::string& endpoint )
 void LoggerApplication::ConnectionFailed( const std::string& address, const std::string& error )
 {
     DumpTime();
-    file_ << "Connection failed: " << address << " : " << error << std::endl << std::flush;
+    file_ << "Connection failed: " << address << " : " << error << std::endl;
     bConnectionLost_ = true;
 }
 
@@ -110,7 +110,7 @@ void LoggerApplication::ConnectionFailed( const std::string& address, const std:
 void LoggerApplication::ConnectionError( const std::string& address, const std::string& error )
 {
     DumpTime();
-    file_ << "Connection error: " << address << " : " << error << std::endl << std::flush;
+    file_ << "Connection error: " << address << " : " << error << std::endl;
     bConnectionLost_ = true;
 }
 
@@ -133,7 +133,7 @@ void LoggerApplication::OnReceiveSimToClient( const std::string& /*from*/, const
 void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /*from*/, const sword::AuthenticationToClient& /*wrapper*/ )
 {
     DumpTime();
-    file_ << "Authentication received" << std::endl << std::flush;
+    file_ << "Authentication received" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +143,7 @@ void LoggerApplication::OnReceiveMsgAuthenticationToClient( const std::string& /
 void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*from*/, const sword::DispatcherToClient& /*wrapper*/ )
 {
     DumpTime();
-    file_ << "Dispatcher message received" << std::endl << std::flush;
+    file_ << "Dispatcher message received" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ void LoggerApplication::OnReceiveMsgDispatcherToClient( const std::string& /*fro
 void LoggerApplication::OnReceiveMsgMessengerToClient( const std::string& /*from*/, const sword::MessengerToClient& /*wrapper*/ )
 {
     DumpTime();
-    file_ << "Messenger message received" << std::endl << std::flush;
+    file_ << "Messenger message received" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +163,7 @@ void LoggerApplication::OnReceiveMsgMessengerToClient( const std::string& /*from
 void LoggerApplication::OnReceiveMsgReplayToClient( const std::string& /*from*/, const sword::ReplayToClient& /*wrapper*/ )
 {
     DumpTime();
-    file_ << "Replay message received" << std::endl << std::flush;
+    file_ << "Replay message received" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +173,7 @@ void LoggerApplication::OnReceiveMsgReplayToClient( const std::string& /*from*/,
 void LoggerApplication::OnReceiveMsgAarToClient( const std::string& /*from*/, const sword::AarToClient& /*wrapper*/ )
 {
     DumpTime();
-    file_ << "Aar message received" << std::endl << std::flush;
+    file_ << "Aar message received" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +183,7 @@ void LoggerApplication::OnReceiveMsgAarToClient( const std::string& /*from*/, co
 void LoggerApplication::OnReceiveControlBeginTick( int tick )
 {
     DumpTime();
-    file_ << "New tick " << tick << std::endl << std::flush;
+    file_ << "New tick " << tick << std::endl;
 }
 
 // -----------------------------------------------------------------------------
