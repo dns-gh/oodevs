@@ -42,7 +42,7 @@ bool ProtocolVersionChecker::CheckCompatibility() const
     std::vector< std::string > actual, expected;
     boost::algorithm::split( actual, protocolVersion_, boost::algorithm::is_any_of( "." ), boost::algorithm::token_compress_on );
     std::string version = GetCurrentProtocolVersion();
-    boost::algorithm::split( actual, version, boost::algorithm::is_any_of( "." ), boost::algorithm::token_compress_on );
+    boost::algorithm::split( expected, version, boost::algorithm::is_any_of( "." ), boost::algorithm::token_compress_on );
     return actual.size() > 1 &&
         expected.size() > 1 &&
         actual[ 0 ] == expected[ 0 ] &&
