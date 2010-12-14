@@ -17,11 +17,11 @@ namespace aar
 {
     struct Service {};
 
-    GENERATE_ASN_MSG_SENDER( sword::ClientToAar, sword, PlotRequest   , plot_request );
+    GENERATE_MESSAGE( sword::ClientToAar, sword, PlotRequest, plot_request );
 
-    GENERATE_ASN_MSG_SENDER( sword::AarToClient, sword, AarInformation, aar_information );
-    GENERATE_ASN_MSG_SENDER( sword::AarToClient, sword, PlotResult    , plot_result );
-    GENERATE_ASN_MSG_SENDER( sword::AarToClient, sword, Indicator     , indicator );
+    GENERATE_MESSAGE( sword::AarToClient, sword, AarInformation, aar_information );
+    GENERATE_MESSAGE( sword::AarToClient, sword, PlotResult    , plot_result );
+    GENERATE_MESSAGE( sword::AarToClient, sword, Indicator     , indicator );
 }
 
 #endif // __protocol_AarSenders_h_

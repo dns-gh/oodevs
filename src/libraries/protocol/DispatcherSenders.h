@@ -15,9 +15,9 @@
 
 namespace dispatcher
 {
-    GENERATE_NOCTX_ASN_MSG_SENDER( MsgsDispatcherToSim::MsgDispatcherToSim, MsgsDispatcherToSim, CtrlClientAnnouncement, control_client_announcement );
+    GENERATE_NO_CONTEXT_MESSAGE( MsgsDispatcherToSim::MsgDispatcherToSim, MsgsDispatcherToSim, CtrlClientAnnouncement, control_client_announcement );
 
-    GENERATE_NOCTX_ASN_MSG_SENDER( sword::DispatcherToClient, sword, ServicesDescription, services_description );
+    GENERATE_NO_CONTEXT_MESSAGE( sword::DispatcherToClient, sword, ServicesDescription, services_description );
 }
 
 #endif // __protocol_DispatcherSenders_h_
