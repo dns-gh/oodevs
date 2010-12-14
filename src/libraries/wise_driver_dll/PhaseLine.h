@@ -14,7 +14,7 @@
 #include <list>
 #include <wise/wisevec3.h>
 
-namespace MsgsMessengerToClient { class MsgLimaCreation; }
+namespace sword { class LimaCreation; }
 
 class Model;
 
@@ -30,7 +30,7 @@ class PhaseLine : public WiseEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             PhaseLine( const Model& model, const MsgsMessengerToClient::MsgLimaCreation& message );
+             PhaseLine( const Model& model, const sword::LimaCreation& message );
     virtual ~PhaseLine();
     //@}
 

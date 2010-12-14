@@ -19,7 +19,7 @@
 // Name: Personnel constructor
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-Personnel::Personnel( const MsgsSimToClient::HumanDotations::HumanDotation& message )
+Personnel::Personnel( const sword::HumanDotations::HumanDotation& message )
     : rank_( message.rang() )
     , total_( 0 )
     , available_( 0 )
@@ -46,7 +46,7 @@ Personnel::~Personnel()
 // Name: Personnel::Update
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void Personnel::Update( const MsgsSimToClient::HumanDotations::HumanDotation& message )
+void Personnel::Update( const sword::HumanDotations::HumanDotation& message )
 {
     total_ = message.nb_total();
     available_ = message.nb_operationnels();

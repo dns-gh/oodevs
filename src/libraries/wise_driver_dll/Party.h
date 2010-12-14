@@ -12,8 +12,8 @@
 
 #include "WiseEntity.h"
 
-namespace MsgsSimToClient { class MsgPartyCreation; }
-namespace Common { class MsgChangeDiplomacy; }
+namespace sword { class PartyCreation; }
+namespace sword { class ChangeDiplomacy; }
 
 class Model;
 
@@ -29,7 +29,7 @@ class Party : public WiseEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             Party( const Model& model, const MsgsSimToClient::MsgPartyCreation& message );
+             Party( const Model& model, const sword::PartyCreation& message );
     virtual ~Party();
     //@}
 
@@ -37,7 +37,7 @@ public:
     //@{
     virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const;
     virtual void Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const;
-    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgChangeDiplomacy& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ChangeDiplomacy& message );
     //@}
 
 private:

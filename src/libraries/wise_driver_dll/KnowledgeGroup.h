@@ -12,7 +12,7 @@
 
 #include "WiseEntity.h"
 
-namespace MsgsSimToClient { class MsgKnowledgeGroupCreation; }
+namespace sword { class KnowledgeGroupCreation; }
 
 class Model;
 
@@ -28,7 +28,7 @@ class KnowledgeGroup : public WiseEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( const Model& model, const MsgsSimToClient::MsgKnowledgeGroupCreation& message );
+             KnowledgeGroup( const Model& model, const sword::KnowledgeGroupCreation& message );
     virtual ~KnowledgeGroup();
     //@}
 

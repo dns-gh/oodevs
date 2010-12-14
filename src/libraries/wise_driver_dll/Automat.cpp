@@ -39,7 +39,7 @@ namespace
 // Name: Automat constructor
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
-Automat::Automat( const Model& model, const MsgsSimToClient::MsgAutomatCreation& message )
+Automat::Automat( const Model& model, const sword::AutomatCreation& message )
     : WiseEntity( message.automat().id(), L"automat" )
     , model_( model )
     , name_( message.nom().begin(), message.nom().end() )
@@ -115,7 +115,7 @@ void Automat::Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& a
     {
         simulation::SetAutomatMode message;
         message().mutable_automate()->set_id( GetId() );
-        message().set_mode( value.GetByteValue() ? Common::embraye : Common::debraye );
+        message().set_mode( value.GetByteValue() ? sword::embraye : sword::debraye );
         message.Send( publisher, 0 );
     }
 }
@@ -124,7 +124,7 @@ void Automat::Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& a
 // Name: Automat::Update
 // Created: SEB 2010-12-13
 // -----------------------------------------------------------------------------
-void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgAutomatAttributes& message )
+void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::AutomatAttributes& message )
 {
     try
     {
@@ -144,7 +144,7 @@ void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const ti
 // Name: Automat::Update
 // Created: SEB 2010-12-13
 // -----------------------------------------------------------------------------
-void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgAutomatChangeSuperior& message )
+void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::AutomatChangeSuperior& message )
 {
     try
     {
@@ -165,7 +165,7 @@ void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const ti
 // Name: Automat::Update
 // Created: SEB 2010-12-13
 // -----------------------------------------------------------------------------
-void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgAutomatChangeKnowledgeGroup& message )
+void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::AutomatChangeKnowledgeGroup& message )
 {
     try
     {

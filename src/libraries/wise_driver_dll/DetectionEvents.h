@@ -15,10 +15,10 @@
 #include <wise/wiseinterfacetypes.h>
 #pragma warning( pop )
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgObjectDetection;
-    class MsgUnitDetection;
+    class ObjectDetection;
+    class UnitDetection;
 }
 
 class Agent;
@@ -36,8 +36,8 @@ class DetectionEvents
 public:
     //! @name Operations
     //@{
-    static void Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Model& model, const MsgsSimToClient::MsgUnitDetection& message );
-    static void Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Model& model, const MsgsSimToClient::MsgObjectDetection& message );
+    static void Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Model& model, const sword::UnitDetection& message );
+    static void Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Model& model, const sword::ObjectDetection& message );
     //@}
 };
 

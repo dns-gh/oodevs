@@ -14,7 +14,7 @@
 #include <list>
 #include <wise/wisevec3.h>
 
-namespace MsgsMessengerToClient { class MsgLimitCreation; }
+namespace sword { class LimitCreation; }
 
 class Model;
 
@@ -30,7 +30,7 @@ class BoundaryLimit : public WiseEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             BoundaryLimit( const Model& model, const MsgsMessengerToClient::MsgLimitCreation& message );
+             BoundaryLimit( const Model& model, const sword::LimitCreation& message );
     virtual ~BoundaryLimit();
     //@}
 

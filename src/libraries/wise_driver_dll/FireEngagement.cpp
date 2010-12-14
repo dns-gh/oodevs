@@ -23,7 +23,7 @@
 // Name: FireEngagement constructor
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-FireEngagement::FireEngagement( const Model& model, const MsgsSimToClient::MsgStartUnitFire& message )
+FireEngagement::FireEngagement( const Model& model, const sword::StartUnitFire& message )
     : model_( model )
     , id_( message.fire().id() )
     , shooter_( model.ResolveAgent( message.firing_unit().id() ) )
@@ -56,14 +56,14 @@ unsigned long FireEngagement::GetId() const
 // Name: FireEngagement::Update
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void FireEngagement::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& /*currentTime*/, const MsgsSimToClient::MsgStopUnitFire& message )
+void FireEngagement::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& /*currentTime*/, const sword::StopUnitFire& message )
 {
     try
     {
         // $$$$ SEB 2010-10-14: See if we need to handle when no damage has been done
         if( message.has_units_damages() )
         {
-            const MsgsSimToClient::MsgUnitsFireDamages& damages = message.units_damages();
+            const sword::UnitsFireDamages& damages = message.units_damages();
             IWISEStringCache* cache = dynamic_cast< IWISEStringCache* >( driver.GetSink() );
             CHECK_VALID_POINTER_EX( cache, MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_E_NOT_INITIATED ) );
             for( int i = 0; i < damages.elem_size(); ++i )
@@ -91,7 +91,7 @@ void FireEngagement::Update( CWISEDriver& driver, const WISE_HANDLE& database, c
 // Name: FireEngagement::SendDamages
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void FireEngagement::SendDamages( CWISEDriver& driver, const WISE_HANDLE& handle, IWISEStringCache& cache, std::map< std::wstring, WISE_HANDLE >& attributes, const MsgsSimToClient::MsgUnitFireDamages& message ) const
+void FireEngagement::SendDamages( CWISEDriver& driver, const WISE_HANDLE& handle, IWISEStringCache& cache, std::map< std::wstring, WISE_HANDLE >& attributes, const sword::UnitFireDamages& message ) const
 {
     std::list< CWISEAttributeGroup > equipments;
     for( int i = 0; i < message.equipments().elem_size(); ++i )
@@ -108,7 +108,7 @@ void FireEngagement::SendDamages( CWISEDriver& driver, const WISE_HANDLE& handle
 // Name: FireEngagement::SendEquipmentDamages
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void FireEngagement::SendEquipmentDamages( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache, const MsgsSimToClient::MsgUnitEquipmentFireDamage& message ) const
+void FireEngagement::SendEquipmentDamages( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache, const sword::UnitEquipmentFireDamage& message ) const
 {
     CWISEAttributeGroupTemplate groupTemplate;
     groupTemplate.Add( L"Type", long( message.equipement_type().id() ) );
@@ -125,7 +125,7 @@ void FireEngagement::SendEquipmentDamages( std::list< CWISEAttributeGroup >& lis
 // Name: FireEngagement::SendPersonnelDamages
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void FireEngagement::SendPersonnelDamages( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache, const MsgsSimToClient::UnitHumanFireDamage& message ) const
+void FireEngagement::SendPersonnelDamages( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache, const sword::UnitHumanFireDamage& message ) const
 {
     CWISEAttributeGroupTemplate groupTemplate;
     groupTemplate.Add( L"Rank", unsigned char( message.rank() ) );

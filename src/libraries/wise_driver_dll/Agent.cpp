@@ -26,7 +26,7 @@
 // Name: Agent constructor
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
-Agent::Agent( const Model& model, const MsgsSimToClient::MsgUnitCreation& message )
+Agent::Agent( const Model& model, const sword::UnitCreation& message )
     : WiseEntity( message.unit().id(), L"agent" )
     , name_( message.nom().begin(), message.nom().end() )
     , type_( message.type().id() )
@@ -83,7 +83,7 @@ void Agent::Create( CWISEDriver& driver, const WISE_HANDLE& database, const time
 // Name: Agent::Update
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
-void Agent::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgUnitAttributes& message )
+void Agent::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::UnitAttributes& message )
 {
     try
     {
@@ -129,7 +129,7 @@ namespace
     {
         return message.type().id();
     }
-    unsigned long ExtractId( const MsgsSimToClient::HumanDotations::HumanDotation& message )
+    unsigned long ExtractId( const sword::HumanDotations::HumanDotation& message )
     {
         return message.rang();
     }

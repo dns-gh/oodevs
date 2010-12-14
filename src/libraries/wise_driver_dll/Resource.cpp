@@ -19,7 +19,7 @@
 // Name: Resource constructor
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-Resource::Resource( const MsgsSimToClient::ResourceDotations::ResourceDotation& message )
+Resource::Resource( const sword::ResourceDotations::ResourceDotation& message )
     : type_( message.type().id() )
     , available_( 0 )
 {
@@ -39,7 +39,7 @@ Resource::~Resource()
 // Name: Resource::Update
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void Resource::Update( const MsgsSimToClient::ResourceDotations::ResourceDotation& message )
+void Resource::Update( const sword::ResourceDotations::ResourceDotation& message )
 {
     available_ = message.quantite_disponible();
 }

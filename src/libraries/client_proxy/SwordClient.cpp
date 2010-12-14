@@ -100,20 +100,20 @@ void SwordClient::ConnectionError( const std::string& endpoint, const std::strin
 // Name: SwordClient::HandleAarToClient
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void SwordClient::HandleAarToClient( const std::string& /*endpoint*/, const MsgsAarToClient::MsgAarToClient& /*message*/ )
+void SwordClient::HandleAarToClient( const std::string& /*endpoint*/, const sword::AarToClient& /*message*/ )
 {
     // NOTHING
 }
 
 namespace
 {
-    std::string ToString( const MsgsAuthenticationToClient::MsgAuthenticationResponse::ErrorCode& code )
+    std::string ToString( const sword::AuthenticationResponse::ErrorCode& code )
     {
-        if( code == MsgsAuthenticationToClient::MsgAuthenticationResponse::invalid_login )
+        if( code == sword::AuthenticationResponse::invalid_login )
             return "invalid login";
-        if( code == MsgsAuthenticationToClient::MsgAuthenticationResponse::too_many_connections )
+        if( code == sword::AuthenticationResponse::too_many_connections )
             return "too many connections";
-        if( code == MsgsAuthenticationToClient::MsgAuthenticationResponse::mismatched_protocol_version )
+        if( code == sword::AuthenticationResponse::mismatched_protocol_version )
             return "mismatched protocol version";
         return "unknown error";
     }
@@ -123,12 +123,12 @@ namespace
 // Name: SwordClient::HandleAuthenticationToClient
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void SwordClient::HandleAuthenticationToClient( const std::string& /*endpoint*/, const MsgsAuthenticationToClient::MsgAuthenticationToClient& message )
+void SwordClient::HandleAuthenticationToClient( const std::string& /*endpoint*/, const sword::AuthenticationToClient& message )
 {
     if( message.message().has_authentication_response() )
     {
         const std::string login( message.message().authentication_response().profile().login() );
-        loggedIn_ = message.message().authentication_response().error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse::success;
+        loggedIn_ = message.message().authentication_response().error_code() == sword::AuthenticationResponse::success;
         if( loggedIn_ )
             connectionHandler_->OnAuthenticationSucceeded( login );
         else
@@ -140,7 +140,7 @@ void SwordClient::HandleAuthenticationToClient( const std::string& /*endpoint*/,
 // Name: SwordClient::HandleDispatcherToClient
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void SwordClient::HandleDispatcherToClient( const std::string& /*endpoint*/, const MsgsDispatcherToClient::MsgDispatcherToClient& /*message*/ )
+void SwordClient::HandleDispatcherToClient( const std::string& /*endpoint*/, const sword::DispatcherToClient& /*message*/ )
 {
     // NOTHING
 }
@@ -149,7 +149,7 @@ void SwordClient::HandleDispatcherToClient( const std::string& /*endpoint*/, con
 // Name: SwordClient::HandleMessengerToClient
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void SwordClient::HandleMessengerToClient( const std::string& /*endpoint*/, const MsgsMessengerToClient::MsgMessengerToClient& message )
+void SwordClient::HandleMessengerToClient( const std::string& /*endpoint*/, const sword::MessengerToClient& message )
 {
     if( loggedIn_ )
         for( T_Handlers::iterator it = messageHandlers_.begin(); it != messageHandlers_.end(); ++it )
@@ -160,7 +160,7 @@ void SwordClient::HandleMessengerToClient( const std::string& /*endpoint*/, cons
 // Name: SwordClient::HandleReplayToClient
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void SwordClient::HandleReplayToClient( const std::string& /*endpoint*/, const MsgsReplayToClient::MsgReplayToClient& /*message*/ )
+void SwordClient::HandleReplayToClient( const std::string& /*endpoint*/, const sword::ReplayToClient& /*message*/ )
 {
     // NOTHING
 }
@@ -169,7 +169,7 @@ void SwordClient::HandleReplayToClient( const std::string& /*endpoint*/, const M
 // Name: SwordClient::HandleSimToClient
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void SwordClient::HandleSimToClient( const std::string& /*endpoint*/, const MsgsSimToClient::MsgSimToClient& message )
+void SwordClient::HandleSimToClient( const std::string& /*endpoint*/, const sword::SimToClient& message )
 {
     if( loggedIn_ )
         for( T_Handlers::iterator it = messageHandlers_.begin(); it != messageHandlers_.end(); ++it )
@@ -203,7 +203,7 @@ void SwordClient::UnregisterMessageHandler( SwordMessageHandler_ABC& handler )
 // Name: SwordClient::SendMessage
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void SwordClient::SendMessage( const MsgsClientToSim::MsgClientToSim& message ) const
+void SwordClient::SendMessage( const sword::ClientToSim& message ) const
 {
     if( publisher_.get() )
         publisher_->Send( message );

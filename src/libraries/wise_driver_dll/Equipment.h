@@ -28,13 +28,13 @@ class Equipment
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Equipment( const MsgsSimToClient::EquipmentDotations::EquipmentDotation& message );
+    explicit Equipment( const sword::EquipmentDotations::EquipmentDotation& message );
     virtual ~Equipment();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::EquipmentDotations::EquipmentDotation& message );
+    void Update( const sword::EquipmentDotations::EquipmentDotation& message );
     void AddAttributeGroup( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache ) const;
     //@}
 

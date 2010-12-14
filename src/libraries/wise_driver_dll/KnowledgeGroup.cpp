@@ -23,7 +23,7 @@
 // Name: KnowledgeGroup constructor
 // Created: SEB 2010-12-13
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( const Model& model, const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
+KnowledgeGroup::KnowledgeGroup( const Model& model, const sword::KnowledgeGroupCreation& message )
     : WiseEntity( message.knowledge_group().id(), L"knowledge-group" )
     , type_( message.type().begin(), message.type().end() )
     , scrambled_( message.jam() )

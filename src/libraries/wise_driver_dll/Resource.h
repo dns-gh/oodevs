@@ -28,13 +28,13 @@ class Resource
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Resource( const MsgsSimToClient::ResourceDotations::ResourceDotation& message );
+    explicit Resource( const sword::ResourceDotations::ResourceDotation& message );
     virtual ~Resource();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::ResourceDotations::ResourceDotation& message );
+    void Update( const sword::ResourceDotations::ResourceDotation& message );
     void AddAttributeGroup( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache ) const;
     //@}
 

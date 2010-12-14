@@ -10,8 +10,11 @@
 #ifndef __SwordMessageHandler_ABC_h_
 #define __SwordMessageHandler_ABC_h_
 
-namespace MsgsSimToClient       { class MsgSimToClient; }
-namespace MsgsMessengerToClient { class MsgMessengerToClient; }
+namespace sword
+{
+    class SimToClient;
+    class MessengerToClient;
+}
 
 // =============================================================================
 /** @class  SwordMessageHandler_ABC
@@ -31,8 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnReceiveMessage( const MsgsSimToClient::MsgSimToClient& message ) = 0;
-    virtual void OnReceiveMessage( const MsgsMessengerToClient::MsgMessengerToClient& message ) = 0;
+    virtual void OnReceiveMessage( const sword::SimToClient& message ) = 0;
+    virtual void OnReceiveMessage( const sword::MessengerToClient& message ) = 0;
     //@}
 };
 

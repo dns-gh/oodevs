@@ -20,10 +20,10 @@
 
 namespace
 {
-    unsigned char ConvertAlignment( const Common::EnumDiplomacy& diplomacy )
+    unsigned char ConvertAlignment( const sword::EnumDiplomacy& diplomacy )
     {
-        if( diplomacy == Common::unknown_diplo )
-            return Common::friend_diplo;
+        if( diplomacy == sword::unknown_diplo )
+            return sword::friend_diplo;
         return char( diplomacy ) - 1;
     }
 }
@@ -32,7 +32,7 @@ namespace
 // Name: Party constructor
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
-Party::Party( const Model& model, const MsgsSimToClient::MsgPartyCreation& message )
+Party::Party( const Model& model, const sword::PartyCreation& message )
     : WiseEntity( message.party().id(), L"party" )
     , model_( model )
     , name_( message.name().begin(), message.name().end() )
@@ -95,7 +95,7 @@ void Party::Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const
 
 namespace
 {
-    std::wstring MakeIdentifier( const Model& model, const Common::MsgChangeDiplomacy& message )
+    std::wstring MakeIdentifier( const Model& model, const sword::ChangeDiplomacy& message )
     {
         if( const Party* party1 = model.ResolveParty( message.party1().id() ) )
             if( const Party* party2 = model.ResolveParty( message.party2().id() ) )
@@ -112,7 +112,7 @@ namespace
 // Name: Party::Update
 // Created: SEB 2010-12-13
 // -----------------------------------------------------------------------------
-void Party::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgChangeDiplomacy& message )
+void Party::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ChangeDiplomacy& message )
 {
     const std::wstring identifier = ::MakeIdentifier( model_, message );
     try

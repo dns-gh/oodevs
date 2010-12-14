@@ -22,19 +22,19 @@
 
 namespace
 {
-    const Entity_ABC* ResolveSuperior( const Model& model, const Common::MsgTacticalLine::Diffusion& message )
+    const Entity_ABC* ResolveSuperior( const Model& model, const sword::MsgTacticalLine::Diffusion& message )
     {
         if( message.has_automat() )
             return model.ResolveAutomat( message.automat().id() );
         return model.ResolveFormation( message.formation().id() );
     }
 
-    std::list< CWISEVec3 > ReadPoints( const Common::MsgLocation& message )
+    std::list< CWISEVec3 > ReadPoints( const sword::MsgLocation& message )
     {
         std::list< CWISEVec3 > points;
         for( int i = 0; i < message.coordinates().elem_size(); ++i )
         {
-            const Common::MsgCoordLatLong& point = message.coordinates().elem( i );
+            const sword::MsgCoordLatLong& point = message.coordinates().elem( i );
             points.push_back( CWISEVec3( point.latitude(), point.longitude(), 0 ) );
         }
         return points;
@@ -45,7 +45,7 @@ namespace
 // Name: BoundaryLimit constructor
 // Created: SEB 2010-10-27
 // -----------------------------------------------------------------------------
-BoundaryLimit::BoundaryLimit( const Model& model, const MsgsMessengerToClient::MsgLimitCreation& message )
+BoundaryLimit::BoundaryLimit( const Model& model, const sword::LimitCreation& message )
     : WiseEntity( message.id().id(), L"boundary-limit" )
     , name_( message.tactical_line().name().begin(), message.tactical_line().name().end() )
     , superior_( ResolveSuperior( model, message.tactical_line().diffusion() ) )

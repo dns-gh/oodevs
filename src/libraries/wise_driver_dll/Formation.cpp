@@ -23,7 +23,7 @@
 // Name: Formation constructor
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
-Formation::Formation( const Model& model, const MsgsSimToClient::MsgFormationCreation& message )
+Formation::Formation( const Model& model, const sword::FormationCreation& message )
     : WiseEntity( message.formation().id(), L"formation" )
     , name_( message.name().begin(), message.name().end() )
     , echelon_( unsigned char( message.level() ) )

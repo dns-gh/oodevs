@@ -12,16 +12,16 @@
 
 #include "WiseEntity.h"
 
-namespace Common
+namespace sword
 {
-    class MsgAutomatChangeKnowledgeGroup;
-    class MsgAutomatChangeSuperior;
+    class AutomatChangeKnowledgeGroup;
+    class AutomatChangeSuperior;
 }
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgAutomatAttributes;
-    class MsgAutomatCreation;
+    class AutomatAttributes;
+    class AutomatCreation;
 }
 
 class Model;
@@ -38,7 +38,7 @@ class Automat : public WiseEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const Model& model, const MsgsSimToClient::MsgAutomatCreation& message );
+             Automat( const Model& model, const sword::AutomatCreation& message );
     virtual ~Automat();
     //@}
 
@@ -46,9 +46,9 @@ public:
     //@{
     virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const;
     virtual void Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& attribute, const CWISEValueUnion& value );
-    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgAutomatAttributes& message );
-    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgAutomatChangeSuperior& message );
-    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const Common::MsgAutomatChangeKnowledgeGroup& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::AutomatAttributes& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::AutomatChangeSuperior& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::AutomatChangeKnowledgeGroup& message );
     //@}
 
 private:

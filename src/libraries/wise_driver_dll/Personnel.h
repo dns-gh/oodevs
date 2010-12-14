@@ -28,13 +28,13 @@ class Personnel
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Personnel( const MsgsSimToClient::HumanDotations::HumanDotation& message );
+    explicit Personnel( const sword::HumanDotations::HumanDotation& message );
     virtual ~Personnel();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const MsgsSimToClient::HumanDotations::HumanDotation& message );
+    void Update( const sword::HumanDotations::HumanDotation& message );
     void AddAttributeGroup( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache ) const;
     //@}
 

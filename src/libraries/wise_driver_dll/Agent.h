@@ -13,13 +13,13 @@
 #include "WiseEntity.h"
 #include <wise/wisevec3.h>
 
-namespace MsgsSimToClient
+namespace sword
 {
     class EquipmentDotations;
     class HumanDotations;
     class ResourceDotations;
-    class MsgUnitAttributes;
-    class MsgUnitCreation;
+    class UnitAttributes;
+    class UnitCreation;
 }
 
 class Equipment;
@@ -39,14 +39,14 @@ class Agent : public WiseEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const Model& model, const MsgsSimToClient::MsgUnitCreation& message );
+             Agent( const Model& model, const sword::UnitCreation& message );
     virtual ~Agent();
     //@}
 
     //! @name Operations
     //@{
     virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const;
-    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgUnitAttributes& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::UnitAttributes& message );
     //@}
 
 private:

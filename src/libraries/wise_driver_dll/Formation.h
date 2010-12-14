@@ -12,7 +12,7 @@
 
 #include "WiseEntity.h"
 
-namespace MsgsSimToClient { class MsgFormationCreation; }
+namespace sword { class FormationCreation; }
 
 class Model;
 
@@ -28,7 +28,7 @@ class Formation : public WiseEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const Model& model, const MsgsSimToClient::MsgFormationCreation& message );
+             Formation( const Model& model, const sword::FormationCreation& message );
     virtual ~Formation();
     //@}
 

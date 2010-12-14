@@ -23,7 +23,7 @@ public:
     void Update() { client_->Update(); }
     void RegisterMessageHandler( SwordMessageHandler_ABC& handler ) { client_->RegisterMessageHandler( handler ); }
     void UnregisterMessageHandler( SwordMessageHandler_ABC& handler ) { client_->UnregisterMessageHandler( handler ); }
-    void Send( const MsgsClientToSim::MsgClientToSim& message ) const { client_->SendMessage( message ); }
+    void Send( const sword::ClientToSim& message ) const { client_->SendMessage( message ); }
 private:
     std::auto_ptr< SwordClient > client_;
 };
@@ -101,7 +101,7 @@ void SwordProxy::UnregisterMessageHandler( SwordMessageHandler_ABC* handler )
 // Name: SwordProxy::Send
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void SwordProxy::Send( const MsgsClientToSim::MsgClientToSim& message ) const
+void SwordProxy::Send( const sword::ClientToSim& message ) const
 {
     if( pimpl_ )
         pimpl_->Send( message );

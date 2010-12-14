@@ -10,9 +10,9 @@
 #ifndef __SwordMessagePublisher_ABC_h_
 #define __SwordMessagePublisher_ABC_h_
 
-namespace MsgsClientToSim
+namespace sword
 {
-    class MsgClientToSim;
+    class ClientToSim;
 }
 
 // =============================================================================
@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const MsgsClientToSim::MsgClientToSim& message ) const = 0;
+    virtual void Send( const sword::ClientToSim& message ) const = 0;
     //@}
 };
 

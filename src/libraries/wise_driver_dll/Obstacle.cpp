@@ -21,12 +21,12 @@
 
 namespace
 {
-    std::list< CWISEVec3 > ReadPoints( const Common::MsgLocation& message )
+    std::list< CWISEVec3 > ReadPoints( const sword::MsgLocation& message )
     {
         std::list< CWISEVec3 > points;
         for( int i = 0; i < message.coordinates().elem_size(); ++i )
         {
-            const Common::MsgCoordLatLong& point = message.coordinates().elem( i );
+            const sword::MsgCoordLatLong& point = message.coordinates().elem( i );
             points.push_back( CWISEVec3( point.latitude(), point.longitude(), 0 ) );
         }
         return points;
@@ -37,7 +37,7 @@ namespace
 // Name: Obstacle constructor
 // Created: SEB 2010-10-27
 // -----------------------------------------------------------------------------
-Obstacle::Obstacle( const Model& model, const MsgsSimToClient::MsgObjectCreation& message )
+Obstacle::Obstacle( const Model& model, const sword::ObjectCreation& message )
     : WiseEntity( message.object().id(), L"obstacle" )
     , name_( message.name().begin(), message.name().end() )
     , type_( message.type().id().begin(), message.type().id().end() )

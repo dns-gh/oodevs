@@ -14,7 +14,7 @@
 #include <list>
 #include <wise/wisevec3.h>
 
-namespace MsgsSimToClient { class MsgObjectCreation; }
+namespace sword { class ObjectCreation; }
 
 class Model;
 
@@ -30,7 +30,7 @@ class Obstacle : public WiseEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             Obstacle( const Model& model, const MsgsSimToClient::MsgObjectCreation& message );
+             Obstacle( const Model& model, const sword::ObjectCreation& message );
     virtual ~Obstacle();
     //@}
 

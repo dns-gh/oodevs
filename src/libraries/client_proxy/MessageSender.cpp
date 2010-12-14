@@ -37,7 +37,7 @@ MessageSender::~MessageSender()
 // Name: MessageSender::Send
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-void MessageSender::Send( const MsgsClientToAuthentication::MsgClientToAuthentication& message )
+void MessageSender::Send( const sword::ClientToAuthentication& message )
 {
     sender_.Send( endpoint_, message );
 }
@@ -46,7 +46,7 @@ void MessageSender::Send( const MsgsClientToAuthentication::MsgClientToAuthentic
 // Name: MessageSender::Send
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void MessageSender::Send( const MsgsClientToSim::MsgClientToSim& message )
+void MessageSender::Send( const sword::ClientToSim& message )
 {
     sender_.Send( endpoint_, message );
 }

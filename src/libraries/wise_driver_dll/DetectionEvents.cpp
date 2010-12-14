@@ -23,7 +23,7 @@
 // Name: DetectionEvents::Trigger
 // Created: SEB 2010-10-27
 // -----------------------------------------------------------------------------
-void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& /*currentTime*/, const Model& model, const MsgsSimToClient::MsgUnitDetection& message )
+void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& /*currentTime*/, const Model& model, const sword::UnitDetection& message )
 {
     try
     {
@@ -50,7 +50,7 @@ void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database,
 // Name: DetectionEvents::Trigger
 // Created: SEB 2010-10-27
 // -----------------------------------------------------------------------------
-void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& /*currentTime*/, const Model& model, const MsgsSimToClient::MsgObjectDetection& message )
+void DetectionEvents::Trigger( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& /*currentTime*/, const Model& model, const sword::ObjectDetection& message )
 {
     try
     {

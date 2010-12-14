@@ -16,11 +16,11 @@
 #include <wise/wiseinterfacetypes.h>
 #pragma warning( pop )
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgControlInformation;
-    class MsgControlBeginTick;
-    class MsgControlChangeTimeFactorAck;
+    class ControlInformation;
+    class ControlBeginTick;
+    class ControlChangeTimeFactorAck;
 }
 
 class CWISEDriver;
@@ -44,9 +44,9 @@ public:
 
     //! @name Operations
     //@{
-    void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgControlInformation& message );
-    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgControlBeginTick& message );
-    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgControlChangeTimeFactorAck& message );
+    void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlInformation& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlBeginTick& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlChangeTimeFactorAck& message );
     void Destroy( CWISEDriver& driver, const WISE_HANDLE& database );
     //@}
 

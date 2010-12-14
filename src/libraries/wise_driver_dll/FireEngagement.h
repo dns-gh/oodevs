@@ -17,12 +17,12 @@
 #include <wise/wiseinterfacetypes.h>
 #pragma warning( pop )
 
-namespace MsgsSimToClient
+namespace sword
 {
-    class MsgStartUnitFire;
-    class MsgStopUnitFire;
-    class MsgUnitEquipmentFireDamage;
-    class MsgUnitFireDamages;
+    class StartUnitFire;
+    class StopUnitFire;
+    class UnitEquipmentFireDamage;
+    class UnitFireDamages;
     class UnitHumanFireDamage;
 }
 
@@ -44,7 +44,7 @@ class FireEngagement
 public:
     //! @name Constructors/Destructor
     //@{
-             FireEngagement( const Model& model, const MsgsSimToClient::MsgStartUnitFire& message );
+             FireEngagement( const Model& model, const sword::StartUnitFire& message );
     virtual ~FireEngagement();
     //@}
 
@@ -55,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgStopUnitFire& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::StopUnitFire& message );
     //@}
 
 private:
@@ -67,9 +67,9 @@ private:
 
     //! @name Helpers
     //@{
-    void SendDamages( CWISEDriver& driver, const WISE_HANDLE& handle, IWISEStringCache& cache, std::map< std::wstring, WISE_HANDLE >& attributes, const MsgsSimToClient::MsgUnitFireDamages& message ) const;
-    void SendEquipmentDamages( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache, const MsgsSimToClient::MsgUnitEquipmentFireDamage& message ) const;
-    void SendPersonnelDamages( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache, const MsgsSimToClient::UnitHumanFireDamage& message ) const;
+    void SendDamages( CWISEDriver& driver, const WISE_HANDLE& handle, IWISEStringCache& cache, std::map< std::wstring, WISE_HANDLE >& attributes, const sword::UnitFireDamages& message ) const;
+    void SendEquipmentDamages( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache, const sword::UnitEquipmentFireDamage& message ) const;
+    void SendPersonnelDamages( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache, const sword::UnitHumanFireDamage& message ) const;
     //@}
 
 private:

@@ -39,7 +39,7 @@ Simulation::~Simulation()
 
 namespace
 {
-    std::wstring DateToWString( const Common::MsgDateTime& dateTime )
+    std::wstring DateToWString( const sword::MsgDateTime& dateTime )
     {
         return std::wstring( dateTime.data().begin(), dateTime.data().end() );
     }
@@ -49,7 +49,7 @@ namespace
 // Name: Simulation::Update
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void Simulation::Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgControlInformation& message )
+void Simulation::Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlInformation& message )
 {
     try
     {
@@ -58,7 +58,7 @@ void Simulation::Create( CWISEDriver& driver, const WISE_HANDLE& database, const
             driver.NotifyWarningMessage( L"Simulation object is already initialised.", MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_W_ALREADY_INITIATED ) );
             return;
         }
-        running_ = message.status() == Common::running;
+        running_ = message.status() == sword::running;
         CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, L"SwordSimulation", L"Simulation", handle_, attributes_ ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Running" ], unsigned char( running_ ), currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Tick" ], long( message.current_tick() ), currentTime ) );
@@ -78,7 +78,7 @@ void Simulation::Create( CWISEDriver& driver, const WISE_HANDLE& database, const
 // Name: Simulation::Update
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void Simulation::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgControlBeginTick& message )
+void Simulation::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlBeginTick& message )
 {
     try
     {
@@ -100,7 +100,7 @@ void Simulation::Update( CWISEDriver& driver, const WISE_HANDLE& database, const
 // Name: Simulation::Update
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void Simulation::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const MsgsSimToClient::MsgControlChangeTimeFactorAck& message )
+void Simulation::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlChangeTimeFactorAck& message )
 {
     try
     {

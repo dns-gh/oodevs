@@ -19,7 +19,7 @@
 // Name: Equipment constructor
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-Equipment::Equipment( const MsgsSimToClient::EquipmentDotations::EquipmentDotation& message )
+Equipment::Equipment( const sword::EquipmentDotations::EquipmentDotation& message )
     : type_( message.type().id() )
     , available_( 0 )
     , unAvailable_( 0 )
@@ -43,7 +43,7 @@ Equipment::~Equipment()
 // Name: Equipment::Update
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
-void Equipment::Update( const MsgsSimToClient::EquipmentDotations::EquipmentDotation& message )
+void Equipment::Update( const sword::EquipmentDotations::EquipmentDotation& message )
 {
     available_ = message.nb_disponibles();
     unAvailable_ = message.nb_indisponibles();

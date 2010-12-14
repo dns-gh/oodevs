@@ -51,8 +51,8 @@ public:
 
     //! @name Simulation message handlers
     //@{
-    virtual void OnReceiveMessage( const MsgsSimToClient::MsgSimToClient& message );
-    virtual void OnReceiveMessage( const MsgsMessengerToClient::MsgMessengerToClient& message );
+    virtual void OnReceiveMessage( const sword::SimToClient& message );
+    virtual void OnReceiveMessage( const sword::MessengerToClient& message );
     //@}
 
     //! @name Driver message handlers

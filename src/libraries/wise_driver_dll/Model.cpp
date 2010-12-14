@@ -55,7 +55,7 @@ Model::~Model()
 // Name: Model::OnReceiveMessage
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
-void Model::OnReceiveMessage( const MsgsSimToClient::MsgSimToClient& message )
+void Model::OnReceiveMessage( const sword::SimToClient& message )
 {
     if( message.message().has_control_begin_tick() )
         simulation_->Update( driver_, database_, GetTime(), message.message().control_begin_tick() );
@@ -101,7 +101,7 @@ void Model::OnReceiveMessage( const MsgsSimToClient::MsgSimToClient& message )
 // Name: Model::OnReceiveMessage
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
-void Model::OnReceiveMessage( const MsgsMessengerToClient::MsgMessengerToClient& message )
+void Model::OnReceiveMessage( const sword::MessengerToClient& message )
 {
     if( message.message().has_limit_creation() )
         Create( boundaryLimits_, message.message().limit_creation() );

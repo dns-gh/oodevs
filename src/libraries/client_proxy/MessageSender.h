@@ -10,8 +10,11 @@
 #ifndef __MessageSender_h_
 #define __MessageSender_h_
 
-namespace MsgsClientToAuthentication { class MsgClientToAuthentication; }
-namespace MsgsClientToSim { class MsgClientToSim; }
+namespace sword
+{
+    class ClientToAuthentication;
+    class ClientToSim;
+}
 
 namespace tools
 {
@@ -36,8 +39,8 @@ public:
 
     //! @name Operations
     //@{
-    void Send( const MsgsClientToAuthentication::MsgClientToAuthentication& message );
-    void Send( const MsgsClientToSim::MsgClientToSim& message );
+    void Send( const sword::ClientToAuthentication& message );
+    void Send( const sword::ClientToSim& message );
     //@}
 
 private:
@@ -45,10 +48,6 @@ private:
     //@{
     MessageSender( const MessageSender& );            //!< Copy constructor
     MessageSender& operator=( const MessageSender& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

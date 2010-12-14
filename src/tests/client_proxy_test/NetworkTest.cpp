@@ -61,24 +61,24 @@ namespace
             RegisterMessage( *this, &MockServer::ReceiveClientToReplay );
             AllowConnections();
         }
-        void ReceiveClientToSim( const std::string& /*endpoint*/, const MsgsClientToSim::MsgClientToSim& /*message*/ ) {}
-        void ReceiveClientToAar( const std::string& /*endpoint*/, const MsgsClientToAar::MsgClientToAar& /*message*/ ) {}
-        void ReceiveClientToReplay( const std::string& /*endpoint*/, const MsgsClientToReplay::MsgClientToReplay& /*message*/ ) {}
-        void ReceiveClientToMessenger( const std::string& /*endpoint*/, const MsgsClientToMessenger::MsgClientToMessenger& /*message*/ ) {}
+        void ReceiveClientToSim( const std::string& /*endpoint*/, const sword::ClientToSim& /*message*/ ) {}
+        void ReceiveClientToAar( const std::string& /*endpoint*/, const sword::ClientToAar& /*message*/ ) {}
+        void ReceiveClientToReplay( const std::string& /*endpoint*/, const sword::ClientToReplay& /*message*/ ) {}
+        void ReceiveClientToMessenger( const std::string& /*endpoint*/, const sword::ClientToMessenger& /*message*/ ) {}
 
-        void ReceiveClientToAuthentication( const std::string& endpoint, const MsgsClientToAuthentication::MsgClientToAuthentication& message )
+        void ReceiveClientToAuthentication( const std::string& endpoint, const sword::ClientToAuthentication& message )
         {
-            MsgsAuthenticationToClient::MsgAuthenticationToClient container;
+            sword::AuthenticationToClient container;
             container.set_context( 0 );
-            MsgsAuthenticationToClient::MsgAuthenticationResponse& response = *container.mutable_message()->mutable_authentication_response();
-            response.set_error_code( MsgsAuthenticationToClient::MsgAuthenticationResponse::success );
+            sword::AuthenticationResponse& response = *container.mutable_message()->mutable_authentication_response();
+            response.set_error_code( sword::AuthenticationResponse::success );
             response.mutable_server_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
             response.mutable_profile()->set_login( defaultProfile );
             response.mutable_profile()->set_supervisor( true );
             tools::MessageSender_ABC::Send( client_, container );
 
-            SendMessageStub< MsgsSimToClient::MsgSimToClient >();
-            SendMessageStub< MsgsMessengerToClient::MsgMessengerToClient >();
+            SendMessageStub< sword::SimToClient >();
+            SendMessageStub< sword::MessengerToClient >();
         }
         virtual void ConnectionSucceeded( const std::string& endpoint )
         {
@@ -111,8 +111,8 @@ namespace
 
     MOCK_BASE_CLASS( MockMessageHandler, SwordMessageHandler_ABC )
     {
-        MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const MsgsSimToClient::MsgSimToClient& ), OnReceiveMessageSimToClient );
-        MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const MsgsMessengerToClient::MsgMessengerToClient& ), OnReceiveMessageMessengerToClient );
+        MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const sword::SimToClient& ), OnReceiveMessageSimToClient );
+        MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const sword::MessengerToClient& ), OnReceiveMessageMessengerToClient );
     };
 
     std::string MakeHost( const std::string& host, unsigned short port )
