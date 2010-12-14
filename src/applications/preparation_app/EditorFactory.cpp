@@ -11,13 +11,13 @@
 #include "EditorFactory.h"
 #include "LogisticSuperiorEditor.h"
 #include "DotationsEditor.h"
+#include "LogisticLevelEditor.h"
 #include "preparation/LogisticSuperior.h"
 #include "preparation/Model.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
-#include "preparation/LogisticLevel.h"
 #include "preparation/IntelligenceKarmas.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Karma.h"
@@ -160,11 +160,12 @@ void EditorFactory::Call( IntelligenceKarma* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::LogisticLevel** const& value )
 {
-    SimpleResolverEditor< kernel::LogisticLevel, prepa::LogisticLevel >* editor = new SimpleResolverEditor< kernel::LogisticLevel, prepa::LogisticLevel >( parent_, staticModel_.logisticLevels_ );
-    editor->SetCurrentItem( *value );
-    result_ = editor;
+	if( !selected_ )
+		return;
+	LogisticLevelEditor* editor = new LogisticLevelEditor( parent_, *selected_ );
+	editor->SetCurrentItem( *value );
+	result_ = editor;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call

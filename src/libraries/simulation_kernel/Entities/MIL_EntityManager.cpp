@@ -265,7 +265,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
-    MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabtiants", inhabitantFactory_->Count() ) );
+    MT_LOG_INFO_MSG( MT_FormatString( " => %d inhabitants", inhabitantFactory_->Count() ) );
 
     // Check automate composition
     if( config.CheckAutomateComposition() )

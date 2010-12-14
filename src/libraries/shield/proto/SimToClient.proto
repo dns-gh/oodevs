@@ -12,14 +12,14 @@ package MsgsSimToClient;
 import "Common.proto";
 
 enum EnumLogSupplyHandlingStatus {
-  convoi_en_attente_camions                  = 1;
-  convoi_constitution                        = 2;
-  convoi_deplacement_vers_point_chargement   = 3;
-  convoi_chargement                          = 4;
-  convoi_deplacement_vers_point_dechargement = 5;
-  convoi_dechargement                        = 6;
-  convoi_deplacement_retour                  = 7;
-  termine                                    = 8;
+  convoi_en_attente_camions                  = 0;
+  convoi_constitution                        = 1;
+  convoi_deplacement_vers_point_chargement   = 2;
+  convoi_chargement                          = 3;
+  convoi_deplacement_vers_point_dechargement = 4;
+  convoi_dechargement                        = 5;
+  convoi_deplacement_retour                  = 6;
+  termine                                    = 7;
 }
 
 message OrderAck {

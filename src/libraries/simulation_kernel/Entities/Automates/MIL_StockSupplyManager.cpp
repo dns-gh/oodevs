@@ -204,8 +204,10 @@ void MIL_StockSupplyManager::NotifyStockSupplyCanceled( const PHY_SupplyStockSta
 // -----------------------------------------------------------------------------
 void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::MsgMissionParameters& msg )
 {
-    unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
-                msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
+    //$$$$ MIL_AgentServer::GetWorkspace().GetEntityManager().FindBrainLogistic( asn.oid_donneur ) pour simplifier ça ... comme dans Scipio ???
+ 	//$$$$ Et belle horreur, ce truc, au passage
+	unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
+	    		msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
     MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
     MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
     if( !candidateAutomate && !candidateFormation)
@@ -217,7 +219,7 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::MsgMission
     if( !pSupplier )
         throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow );
 
-    PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), false );
+    PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), PHY_SupplyStockRequestContainer::eUpward );
     if(!supplyRequests.HasRequests())
         throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_provider_pullflow );
 
@@ -248,7 +250,7 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow( const sword::MsgMission
     if( !pSupplier )
         throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
 
-    PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), false );
+    PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), PHY_SupplyStockRequestContainer::eDownward );
     if(!supplyRequests.HasRequests())
         throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
 

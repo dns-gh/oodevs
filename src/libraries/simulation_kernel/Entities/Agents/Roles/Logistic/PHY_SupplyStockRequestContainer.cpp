@@ -30,8 +30,8 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& 
     , bAtLeastOneExplicitSupplySatisfied_( false )
     , bAtLeastOneSupplySatisfied_        ( false )
     , bExplicitSupplyFullSatisfied_      ( false )
-    , bPushedFlow_                       ( false )
     , bManual_                           ( false )
+    , requestDirection_                  ( eUpward )
 {
     const MIL_Automate::T_PionVector& pions = suppliedAutomate.GetPions();
     for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
@@ -43,14 +43,14 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& 
 // Name: PHY_SupplyStockRequestContainer constructor
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const sword::MsgMissionParameter& asnStocks, bool pushedFlow )
+PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const sword::MsgMissionParameter& asnStocks, E_RequestDirection requestDirection )
     : suppliedAutomate_                  ( suppliedAutomate )
     , requests_                          ()
     , bAtLeastOneExplicitSupplySatisfied_( false )
     , bAtLeastOneSupplySatisfied_        ( false )
     , bExplicitSupplyFullSatisfied_      ( false )
-    , bPushedFlow_                       ( pushedFlow )
     , bManual_                           ( true )
+    , requestDirection_                  ( requestDirection )
 {
     if( asnStocks.null_value() || asnStocks.value_size() == 0 )
         return;
@@ -198,7 +198,7 @@ void PHY_SupplyStockRequestContainer::AddStock( PHY_DotationStock& stock )
 // Name: PHY_SupplyStockRequestContainer::AffectRequestsToAutomate
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate( )
+void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate()
 {
     bExplicitSupplyFullSatisfied_ = false;
 
@@ -206,7 +206,7 @@ void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate( )
     {
         PHY_SupplyStockRequest& request = it->second;
         MIL_AutomateLOG& supplier = *(requestAffectations_[&request]);
-        bool bExternaltransfert = MIL_AutomateLOG::IsExternalTransaction( suppliedAutomate_, supplier);
+        bool bExternaltransfert = MIL_AutomateLOG::IsExternalTransaction( suppliedAutomate_, supplier );
 
         if( request.AffectAutomate( supplier, bExternaltransfert ) )
         {
@@ -298,12 +298,12 @@ void PHY_SupplyStockRequestContainer::ActivateSupply( PHY_SupplyStockState*& pSt
         if( !pStockSupplyState )
         {
             MIL_AutomateLOG* pConvoyer = 0;
-            if( !bPushedFlow_ )
+            if( requestDirection_ == eUpward )
                 pConvoyer = suppliedAutomate_.FindLogisticManager();
             if( !pConvoyer )
                 pConvoyer = request.GetSupplyingAutomate();
             assert( pConvoyer );
-            pStockSupplyState = new PHY_SupplyStockState( suppliedAutomate_, bPushedFlow_, *pConvoyer, !bManual_ );
+            pStockSupplyState = new PHY_SupplyStockState( suppliedAutomate_, *pConvoyer, !bManual_ );
             request.GetSupplyingAutomate()->SupplyHandleRequest( *pStockSupplyState, request.GetStockPion(), MIL_AutomateLOG::IsExternalTransaction( suppliedAutomate_, *pConvoyer ) );
         }
 

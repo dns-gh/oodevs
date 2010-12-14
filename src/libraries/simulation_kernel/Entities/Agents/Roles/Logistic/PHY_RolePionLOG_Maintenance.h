@@ -88,7 +88,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual MIL_AutomateLOG& GetAutomate() const;
     virtual const MIL_AgentPionLOG_ABC& GetPion() const;
     //@}
 

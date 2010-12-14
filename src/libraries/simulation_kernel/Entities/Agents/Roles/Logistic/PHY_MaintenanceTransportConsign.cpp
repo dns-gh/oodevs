@@ -243,7 +243,8 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
     pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     nTimer_ = 0;
 
-    if( GetPionMaintenance().GetAutomate().MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
+	MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
+    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
     {
         pComposanteState_ = 0;
         SetState( eFinished ); // Managed by a 'repair consign'

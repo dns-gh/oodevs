@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
+#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceRepairConsign )
@@ -146,7 +147,8 @@ bool PHY_MaintenanceRepairConsign::DoSearchForCarrier()
     assert( pComposanteState_ );
     assert( !pRepairer_ );
 
-    if( GetPionMaintenance().GetAutomate().MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
+	MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
+    if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
     {
         pComposanteState_ = 0;
         SetState( eFinished );

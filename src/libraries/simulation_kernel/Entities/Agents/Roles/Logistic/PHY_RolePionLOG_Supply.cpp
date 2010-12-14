@@ -156,8 +156,6 @@ PHY_ComposantePion* PHY_RolePionLOG_Supply::GetAvailableConvoyTransporter( const
 // -----------------------------------------------------------------------------
 double PHY_RolePionLOG_Supply::GetStockAvailablity( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const
 {
-
-
     if( !bSystemEnabled_ && !pion_.IsDead() ) // <== Stock à terre quand pion mort = libre service
         return 0.;
     return std::min( GetStockValue( dotationCategory ), rRequestedValue );

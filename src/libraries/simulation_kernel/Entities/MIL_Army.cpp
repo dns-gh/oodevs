@@ -95,8 +95,8 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
             >> xml::list( "object", *this, &MIL_Army::ReadObject, objectFactory )
         >> xml::end
         >> xml::start( "logistics" )
-            >> xml::list( "tc2", *this, &MIL_Army::ReadAutomat, automateFactory, formationFactory, trueTC2  )
-            >> xml::list( "logistic-base", *this, &MIL_Army::ReadAutomat, automateFactory, formationFactory, falseTC2  )
+            >> xml::list( "tc2", *this, &MIL_Army::ReadLogisticLink, automateFactory, formationFactory, trueTC2  )
+            >> xml::list( "logistic-base", *this, &MIL_Army::ReadLogisticLink, automateFactory, formationFactory, falseTC2  )
         >> xml::end
         >> xml::start( "populations" )
             >> xml::list( "population", *this, &MIL_Army::ReadPopulation, populationFactory )
@@ -433,10 +433,10 @@ void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& know
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::ReadAutomat
+// Name: MIL_Army::ReadLogisticLink
 // Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
-void MIL_Army::ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, bool isTC2 )
+void MIL_Army::ReadLogisticLink( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, bool isTC2 )
 {
     unsigned int id;
     xis >> xml::attribute( "id", id );

@@ -85,7 +85,6 @@ public:
     indicators::Primitives&          indicators_;
     indicators::GaugeTypes&          gaugeTypes_;
     SuccessFactorActionTypes&        successFactorActionTypes_;
-    prepa::LogisticLevel&            logisticLevels_;
     //@}
 
 private:

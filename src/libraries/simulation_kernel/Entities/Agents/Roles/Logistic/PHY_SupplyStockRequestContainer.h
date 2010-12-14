@@ -32,8 +32,18 @@ class MIL_AutomateLOG;
 class PHY_SupplyStockRequestContainer : private boost::noncopyable
 {
 public:
+    //! @name Operations
+    //@{
+    enum E_RequestDirection
+    {
+        eUpward,
+        eDownward
+    };
+    //@}
+
+public:
     explicit PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate );
-             PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const sword::MsgMissionParameter& asnStocks, bool pushedFlow=false );
+             PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const sword::MsgMissionParameter& asnStocks, E_RequestDirection  requestDirection );
     virtual  ~PHY_SupplyStockRequestContainer();
 
     //! @name Accessors
@@ -67,13 +77,13 @@ private:
     //@}
 
 private:
-    const bool             bManual_;
-    const bool             bPushedFlow_;
-          MIL_Automate   & suppliedAutomate_;
-          T_RequestMap     requests_;
-          bool             bAtLeastOneExplicitSupplySatisfied_;
-          bool             bAtLeastOneSupplySatisfied_;
-          bool             bExplicitSupplyFullSatisfied_;
+    const bool               bManual_;
+    const E_RequestDirection requestDirection_;
+          MIL_Automate&      suppliedAutomate_;
+          T_RequestMap       requests_;
+          bool               bAtLeastOneExplicitSupplySatisfied_;
+          bool               bAtLeastOneSupplySatisfied_;
+          bool               bExplicitSupplyFullSatisfied_;
           T_RequestAffectationMap requestAffectations_;
 };
 

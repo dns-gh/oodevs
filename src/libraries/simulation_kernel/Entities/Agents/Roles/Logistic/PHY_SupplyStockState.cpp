@@ -27,13 +27,11 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyStockState )
 // Name: PHY_SupplyStockState::PHY_SupplyStockState
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-PHY_SupplyStockState::PHY_SupplyStockState( MIL_Automate& suppliedAutomate, bool bPushedFlow
-        , MIL_AutomateLOG& convoyer, bool bConsumeQuota  )
+PHY_SupplyStockState::PHY_SupplyStockState( MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyer, bool bConsumeQuota )
     : PHY_SupplyState_ABC()
     , pSuppliedAutomate_ ( &suppliedAutomate )
     , pConvoyer_         ( &convoyer )
     , bConsumeQuota_     ( bConsumeQuota )
-    , bPushedFlow_       ( bPushedFlow )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
     , bRequestsChanged_  ( true )
@@ -51,7 +49,6 @@ PHY_SupplyStockState::PHY_SupplyStockState()
     , pSuppliedAutomate_ ( 0 )
     , pConvoyer_         ( 0 )
     , bConsumeQuota_     ( false )
-    , bPushedFlow_       ( false )
     , pConsign_          ( 0 )
     , bConsignChanged_   ( true )
     , bRequestsChanged_  ( true )
@@ -134,7 +131,7 @@ void PHY_SupplyStockState::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_SupplyState_ABC >( *this )
          & pSuppliedAutomate_
-         & const_cast< bool& >( bPushedFlow_ )
+         & const_cast< bool& >( bConsumeQuota_ )
          & pConsign_
          & requests_;
 }
@@ -199,7 +196,7 @@ void PHY_SupplyStockState::Supply() const
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {
         it->second.Supply();
-        if( !bPushedFlow_ )
+        if( bConsumeQuota_ )
             pSuppliedAutomate_->ConsumeQuota( pConsign_->GetSupplier(), it->second.GetDotationCategory(), it->second.GetTotalConvoyedValue() );
     }
 }
@@ -331,15 +328,6 @@ MIL_Automate& PHY_SupplyStockState::GetSuppliedAutomate() const
 {
     assert( pSuppliedAutomate_ );
     return *pSuppliedAutomate_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SupplyStockState::IsPushedFlow
-// Created: NLD 2005-12-16
-// -----------------------------------------------------------------------------
-bool PHY_SupplyStockState::IsPushedFlow() const
-{
-    return bPushedFlow_;
 }
 
 // -----------------------------------------------------------------------------

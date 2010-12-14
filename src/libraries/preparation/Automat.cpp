@@ -33,7 +33,7 @@ using namespace kernel;
 Automat::Automat( const AutomatType& type, Controller& controller, IdManager& idManager )
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
     , type_( type )
-    , logisticLevel_(&kernel::LogisticLevel::none_)
+    , logisticLevel_( &kernel::LogisticLevel::none_ )
 {
     name_ = type.GetName().c_str() + QString( " [%1]" ).arg( id_ );
     RegisterSelf( *this );
@@ -60,7 +60,6 @@ Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManag
     logisticLevel_ = const_cast< kernel::LogisticLevel* >( &kernel::LogisticLevel::Resolve( logLevelName ) );
 
     xis >> xml::optional >> xml::attribute( "color", color_ );
-
 }
 
 // -----------------------------------------------------------------------------

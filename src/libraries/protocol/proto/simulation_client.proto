@@ -19,35 +19,35 @@ enum EnumLogSupplyHandlingStatus {
     /** @brief Convoy is waiting for trucks.
         @todo translate into waiting_for_trucks
     */
-    convoi_en_attente_camions                  = 1;
+    convoi_en_attente_camions                  = 0;
     /** @brief Convoy is constituting.
         @todo translate into constituting_convoy
     */
-    convoi_constitution                        = 2;
+    convoi_constitution                        = 1;
     /** @brief Convoy is moving to loading point.
         @todo translate into moving_to_loading_point
     */
-    convoi_deplacement_vers_point_chargement   = 3;
+    convoi_deplacement_vers_point_chargement   = 2;
     /** @brief Convoy is loading.
         @todo translate into loading
     */
-    convoi_chargement                          = 4;
+    convoi_chargement                          = 3;
     /** @brief Convoy is moving to unloading point.
         @todo translate into moving_to_unloading_point
     */
-    convoi_deplacement_vers_point_dechargement = 5;
+    convoi_deplacement_vers_point_dechargement = 4;
     /** @brief Convoy is unloading.
         @todo translate into unloading
     */
-    convoi_dechargement                        = 6;
+    convoi_dechargement                        = 5;
     /** @brief Convoy is returning to starting point.
         @todo translate into returning
     */
-    convoi_deplacement_retour                  = 7;
+    convoi_deplacement_retour                  = 6;
     /** @brief Convoying operation is done.
         @todo translate into done
     */
-    termine                                    = 8;
+    termine                                    = 7;
 }
 
 /** @struct OrderAck

@@ -400,15 +400,6 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePionLOG_Maintenance::GetAutomate
-// Created: NLD 2004-12-28
-// -----------------------------------------------------------------------------
-MIL_AutomateLOG& PHY_RolePionLOG_Maintenance::GetAutomate() const
-{
-    return *pion_.FindLogisticManager();
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::ChangeWorkRate
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
