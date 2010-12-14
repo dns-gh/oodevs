@@ -170,7 +170,7 @@ void SupplyRouteAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) )
     {
-        asn.mutable_supply_route()->set_equipped( bEquipped_ );
+        SendFullState( asn );
         Reset( eOnUpdate );
     }
 }

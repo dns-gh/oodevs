@@ -77,7 +77,7 @@ void SupplyRouteAttribute::DoUpdate( const sword::ObjectUpdate& message )
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Supply route" ) )
+    displayer.Group( tools::translate( "Object", "Logistic route" ) )
                 .Display( tools::translate( "Object", "Equipped:" ), bLogRouteEquipped_ )
                 .Display( tools::translate( "Object", "Flow:" ), nLogRouteFlow_ * Units::vehiclesPerHour )
                 .Display( tools::translate( "Object", "Width:" ), nLogRouteWidth_ * Units::meters )
