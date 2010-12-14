@@ -106,7 +106,7 @@ void MessageLoader::LoadKeyFrame( unsigned int frameNumber, MessageHandler_ABC& 
     {
         if( !SwitchToFragment( frameNumber ) )
             return;
-        KeyFrame& keyFrame = *keyFrames_.begin();
+        KeyFrame keyFrame = *keyFrames_.begin();
         for( CIT_KeyFrames it = keyFrames_.begin(); it != keyFrames_.end(); ++it )
         {
             if( it->frameNumber_ > frameNumber )
