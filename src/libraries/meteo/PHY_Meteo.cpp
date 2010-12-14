@@ -151,17 +151,9 @@ void PHY_Meteo::Update( const sword::MsgWeatherAttributes& msg )
         pPrecipitation_ = &PHY_Precipitation::none_;
 
     // Lighting
-    /*
-    pLighting_ = PHY_Lighting::FindLighting( msg.lighting() );
-
+	pLighting_ = PHY_Lighting::FindLighting( msg.lighting() );
     if( !pLighting_ )
-    {
-        if( listener_ )
-            pLighting_ = &( listener_->GetLighting() );
-        else
-            pLighting_ = &PHY_Lighting::jourSansNuage_;
-    }
-    */
+		pLighting_ = &PHY_Lighting::jourSansNuage_;
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +209,7 @@ void PHY_Meteo::Update( const sword::MsgMissionParameters& msg )
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
 
-    // Lighting
+    // Lighting - $$$$ NLD ??????? C'est quoi ce sac de noeud ...
     if( listener_ )
         pLighting_ = &( listener_->GetLighting() );
     else
