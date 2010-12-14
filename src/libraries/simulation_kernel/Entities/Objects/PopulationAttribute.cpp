@@ -12,6 +12,8 @@
 #include "Object.h"
 #include <xeumeuleu/xml.hpp>
 
+BOOST_CLASS_EXPORT_IMPLEMENT( PopulationAttribute )
+
 // -----------------------------------------------------------------------------
 // Name: PopulationAttribute::PopulationAttribute
 // Created: JCR 2008-05-22

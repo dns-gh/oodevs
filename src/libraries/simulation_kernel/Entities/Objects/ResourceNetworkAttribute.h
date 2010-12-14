@@ -11,6 +11,7 @@
 #define __ResourceNetworkAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 namespace xml
 {
@@ -46,6 +47,11 @@ public:
     virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}
 
+	//! @name CheckPoint
+    //@{
+	template< typename Archive > void serialize( Archive&, const unsigned int ) {}
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -58,5 +64,7 @@ private:
     ResourceNetworkCapacity* capacity_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( ResourceNetworkAttribute )
 
 #endif // __ResourceNetworkAttribute_h_

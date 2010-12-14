@@ -11,6 +11,7 @@
 #define __PopulationAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include <boost/serialization/export.hpp>
 
 namespace xml
 {
@@ -65,5 +66,8 @@ private:
     double density_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( PopulationAttribute )
+
 
 #endif //__PopulationAttribute_h_

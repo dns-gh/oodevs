@@ -12,6 +12,8 @@
 #include "MIL_Object_ABC.h"
 #include "ResourceNetworkCapacity.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( ResourceNetworkAttribute )
+
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-08-31
