@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __protocol_Authentication_h__
-#define __protocol_Authentication_h__
+#ifndef __protocol_Launcher_h__
+#define __protocol_Launcher_h__
 
 #pragma warning( push, 0 )
 #include "protocol/proto/admin_launcher.pb.h"
 #include "protocol/proto/launcher_admin.pb.h"
 #pragma warning( pop )
 
-#endif // __protocol_Authentication_h__
+#endif // __protocol_Launcher_h__
