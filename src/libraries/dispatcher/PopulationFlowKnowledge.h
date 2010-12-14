@@ -16,10 +16,6 @@
 namespace sword
 {
     enum EnumCrowdAttitude;
-}
-
-namespace sword
-{
     class CrowdFlowKnowledgeCreation;
     class CrowdFlowKnowledgeUpdate;
 }

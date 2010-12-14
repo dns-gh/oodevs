@@ -20,10 +20,6 @@ namespace sword
 {
     class ObjectUpdate;
     class ObjectCreation;
-}
-
-namespace sword
-{
     class MsgLocatedQuantityList;
 }
 

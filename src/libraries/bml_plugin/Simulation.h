@@ -10,7 +10,7 @@
 #ifndef __Simulation_h_
 #define __Simulation_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace plugins
 {

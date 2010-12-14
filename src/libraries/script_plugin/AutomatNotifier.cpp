@@ -11,7 +11,7 @@
 #include "AutomatNotifier.h"
 #include "AgentEvents.h"
 #include "clients_kernel/Controller.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace plugins::script;
 

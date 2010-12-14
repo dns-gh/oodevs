@@ -13,26 +13,13 @@
 namespace sword
 {
     class ClientToSim;
-}
-
-namespace sword
-{
     class ClientToAuthentication;
-}
-
-namespace sword
-{
     class MsgChatTarget;
-}
-
-namespace sword
-{
     class ClientToReplay;
 }
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  Profile_ABC
     @brief  Profile definition

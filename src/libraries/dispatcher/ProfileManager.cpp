@@ -18,7 +18,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 #include "directia/brain/Brain.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "protocol/AuthenticationSenders.h"
 
 using namespace dispatcher;

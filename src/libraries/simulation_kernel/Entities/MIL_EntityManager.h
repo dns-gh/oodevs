@@ -29,16 +29,8 @@ namespace sword
     class AutomatChangeSuperior;
     class UnitChangeSuperior;
     class Tasker;
-}
-
-namespace sword
-{
     class KnowledgeGroupCreation;
     class KnowledgeGroupUpdate;
-}
-
-namespace sword
-{
     class FragOrder;
     class ObjectMagicAction;
     class SetAutomatMode;

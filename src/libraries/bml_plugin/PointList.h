@@ -10,7 +10,7 @@
 #ifndef __PointList_h_
 #define __PointList_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace xml
 {

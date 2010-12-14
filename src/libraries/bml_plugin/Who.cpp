@@ -15,7 +15,7 @@
 #include "dispatcher/Equipment.h"
 #include "dispatcher/Humans.h"
 #include "clients_kernel/Karma.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 

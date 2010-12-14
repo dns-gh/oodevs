@@ -28,6 +28,7 @@ namespace sword
 {
     class UnitAttributes;
 }
+
 // =============================================================================
 /** @class  Troops
     @brief  Troops

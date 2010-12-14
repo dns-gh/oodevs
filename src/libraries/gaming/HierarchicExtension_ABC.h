@@ -19,6 +19,9 @@ namespace sword
 {
     class UnitChangeSuperior;
     class AutomatChangeSuperior;
+    class AutomatCreation;
+    class FormationCreation;
+    class UnitCreation;
 }
 
 namespace kernel
@@ -27,13 +30,6 @@ namespace kernel
     class Automat_ABC;
     class Formation_ABC;
     class Team_ABC;
-}
-
-namespace sword
-{
-    class AutomatCreation;
-    class FormationCreation;
-    class UnitCreation;
 }
 
 // =============================================================================

@@ -9,7 +9,7 @@
 
 #include "actions_pch.h"
 #include "String.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace actions;

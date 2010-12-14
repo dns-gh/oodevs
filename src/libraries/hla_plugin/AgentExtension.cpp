@@ -22,7 +22,7 @@
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
 #include <boost/bind.hpp>
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace plugins::hla;
 using namespace hla;

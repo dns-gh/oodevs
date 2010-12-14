@@ -13,7 +13,7 @@
 #include "MessageHandler_ABC.h"
 #include "Config.h"
 #include "tools/InputBinaryStream.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
 

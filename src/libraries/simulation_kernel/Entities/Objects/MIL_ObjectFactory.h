@@ -19,10 +19,6 @@ namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
     class MsgMissionParameters;
-}
-
-namespace sword
-{
     enum ObjectMagicActionAck_ErrorCode;
 }
 

@@ -11,7 +11,7 @@
 #define __Drawing_h_
 
 #include <geometry/Types.h>
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace xml
 {

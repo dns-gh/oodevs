@@ -13,7 +13,7 @@
 #include "tools/Resolver.h"
 #include "dispatcher/Registrable_ABC.h"
 #include "dispatcher/Position.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace kernel
 {

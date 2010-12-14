@@ -15,10 +15,6 @@
 namespace sword
 {
     class EquipmentType;
-}
-
-namespace sword
-{
     class LogMaintenanceState;
     class LogMaintenanceEquipmentAvailability;
 }

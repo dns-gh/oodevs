@@ -40,7 +40,7 @@
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Decision/DEC_Tools.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_AgentPion )
 

@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include <deque>
 
 namespace sword
 {
@@ -21,8 +22,6 @@ namespace sword
     class UnitFireDamages;
     class CrowdFireDamages;
 }
-
-#include <deque>
 
 namespace kernel
 {

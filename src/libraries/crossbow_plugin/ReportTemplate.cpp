@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "crossbow_plugin_pch.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
 #include <xeumeuleu/xml.hpp>

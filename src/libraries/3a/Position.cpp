@@ -12,7 +12,7 @@
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
 #include <boost/bind.hpp>
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace sword;
 

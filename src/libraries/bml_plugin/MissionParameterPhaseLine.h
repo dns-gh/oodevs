@@ -11,7 +11,7 @@
 #define __MissionParameterPhaseLine_h_
 
 #include "MissionParameter_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace xml
 {

@@ -9,7 +9,7 @@
 
 #include "frontend_pch.h"
 #include "SimulationMonitor.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #pragma warning( push, 0 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )

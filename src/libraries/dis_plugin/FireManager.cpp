@@ -12,7 +12,7 @@
 #include "DetonationPDU.h"
 #include "UdpNetwork.h"
 #include "Time_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace plugins::dis;
 using namespace plugins::hla;

@@ -14,15 +14,6 @@
 #include "protocol/SimulationSenders.h"
 #include "protocol/DispatcherSenders.h"
 
-namespace sword
-{
-    class SimToClient;
-}
-namespace MsgsDispatcherToSim
-{
-    class MsgDispatcherToSim;
-}
-
 using namespace dispatcher;
 using namespace tools;
 

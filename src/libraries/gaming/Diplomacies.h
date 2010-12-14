@@ -20,10 +20,6 @@ namespace sword
 {
     class ChangeDiplomacyAck;
     class ChangeDiplomacy;
-}
-
-namespace sword
-{
     class PartyCreation;
 }
 

@@ -12,7 +12,7 @@
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

@@ -10,9 +10,8 @@
 #ifndef __Surface_h_
 #define __Surface_h_
 
-#include "clients_kernel/Types.h"
 #include "Sector.h"
-
+#include "clients_kernel/Types.h"
 #include "tools/Resolver_ABC.h"
 
 namespace sword

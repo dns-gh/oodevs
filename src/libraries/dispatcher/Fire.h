@@ -24,10 +24,6 @@ namespace sword
     class UnitId;
     class ResourceType;
     class MsgCoordLatLong;
-}
-
-namespace sword
-{
     class StartUnitFire;
 }
 

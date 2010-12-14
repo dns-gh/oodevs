@@ -17,21 +17,9 @@ namespace sword
 {
     class Profile;
     class ProfileDescription;
-}
-
-namespace sword
-{
     class ClientToSim;
-}
-
-namespace sword
-{
     class ProfileCreationRequest;
     class ProfileUpdateRequest;
-}
-
-namespace sword
-{
     class ClientToReplay;
 }
 

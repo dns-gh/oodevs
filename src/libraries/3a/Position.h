@@ -15,7 +15,7 @@
 #pragma warning (disable : 4702 )
 #include <geometry/Types.h>
 #pragma warning (pop)
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // =============================================================================
 /** @class  Position

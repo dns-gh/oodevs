@@ -12,7 +12,7 @@
 
 #include "ModelFunctionComposite.h"
 #include "dispatcher/MessageHandler_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 #pragma warning (push)
 #pragma warning (disable : 4702 )

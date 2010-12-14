@@ -18,16 +18,12 @@
 namespace sword
 {
     class ChangeLogisticLinks;
+    class LogSupplyQuotas;
 }
 
 namespace client
 {
     class ChangeLogisticLinks;
-    class LogSupplyQuotas;
-}
-
-namespace sword
-{
     class LogSupplyQuotas;
 }
 

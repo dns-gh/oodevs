@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Client.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "tools/MessageSender_ABC.h"
 
 using namespace dispatcher;

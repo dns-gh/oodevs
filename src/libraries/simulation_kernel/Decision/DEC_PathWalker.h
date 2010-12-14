@@ -19,10 +19,6 @@
 namespace sword
 {
     class MsgPath;
-}
-
-namespace sword
-{
     class UnitEnvironmentType;
 }
 

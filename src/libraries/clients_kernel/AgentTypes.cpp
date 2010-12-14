@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "AgentTypes.h"
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "AgentType.h"
 #include "AutomatType.h"
 #include "ComponentType.h"

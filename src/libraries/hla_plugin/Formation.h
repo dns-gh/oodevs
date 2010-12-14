@@ -10,7 +10,7 @@
 #ifndef __Formation_h_
 #define __Formation_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace hla
 {

@@ -16,7 +16,7 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )

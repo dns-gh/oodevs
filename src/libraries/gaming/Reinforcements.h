@@ -18,6 +18,7 @@ namespace sword
 {
     class UnitAttributes;
 }
+
 namespace kernel
 {
     class Agent_ABC;

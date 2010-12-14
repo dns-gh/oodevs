@@ -16,10 +16,6 @@
 namespace sword
 {
     class AutomatOrder;
-}
-
-namespace sword
-{
     class FragOrder;
 }
 

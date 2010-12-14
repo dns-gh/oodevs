@@ -10,7 +10,7 @@
 #ifndef __ModelFunction_ABC_h_
 #define __ModelFunction_ABC_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // =============================================================================
 /** @class  ModelFunction_ABC

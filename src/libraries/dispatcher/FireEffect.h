@@ -21,10 +21,6 @@ namespace kernel
 namespace sword
 {
     enum EnumFireEffectType;
-}
-
-namespace sword
-{
     class StartFireEffect;
 }
 

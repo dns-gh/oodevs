@@ -19,10 +19,6 @@
 namespace sword
 {
     class ObjectAttributes;
-}
-
-namespace sword
-{
     class ObjectCreation;
     class ObjectUpdate;
 }

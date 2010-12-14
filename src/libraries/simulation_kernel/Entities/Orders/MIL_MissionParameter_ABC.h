@@ -10,10 +10,9 @@
 #ifndef __MIL_MissionParameter_ABC_h_
 #define __MIL_MissionParameter_ABC_h_
 
+#include "MIL_ParameterType_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <vector>
-
-#include "MIL_ParameterType_ABC.h"
 
 namespace google
 {

@@ -13,15 +13,10 @@
 namespace sword
 {
     enum EnumSimulationState;
-}
-
-namespace sword
-{
     class ControlStopAck;
     class ControlPauseAck;
     class ControlResumeAck;
     class ControlChangeTimeFactorAck;
-
     class ControlInformation;
     class ControlBeginTick;
     class ControlEndTick;

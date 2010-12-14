@@ -11,7 +11,7 @@
 #define __TacticalLine_ABC_h_
 
 #include "Entity_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace kernel
 {

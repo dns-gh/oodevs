@@ -15,10 +15,6 @@
 namespace sword
 {
     class MsgMissionParameter_Value;
-}
-
-namespace sword
-{
     class MagicActionUpdateObject;
 }
 

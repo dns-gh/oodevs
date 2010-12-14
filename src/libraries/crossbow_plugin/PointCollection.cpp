@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "crossbow_plugin_pch.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "PointCollection.h"
 #include "Point.h"
 #include <gdal/ogr_geometry.h>

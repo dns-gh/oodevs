@@ -23,7 +23,7 @@
 #include "dispatcher/UrbanKnowledgeConverter.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.h>

@@ -15,10 +15,6 @@
 namespace sword
 {
     class UnitOrder;
-}
-
-namespace sword
-{
     class FragOrder;
 }
 

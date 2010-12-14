@@ -11,7 +11,7 @@
 #define __OrderReport_h_
 
 #include "tools/Resolver_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace kernel
 {

@@ -15,10 +15,6 @@
 namespace sword
 {
     enum EnumHumanWound;
-}
-
-namespace sword
-{
     class LogMedicalState;
     class LogMedicalEquipmentAvailability;
 }

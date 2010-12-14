@@ -17,10 +17,6 @@ namespace sword
 {
     class MsgLocation;
     class MsgMissionParameters;
-}
-
-namespace sword
-{
     enum ObjectMagicActionAck_ErrorCode;
 }
 

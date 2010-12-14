@@ -12,14 +12,13 @@
 
 #include "ObjectAttribute_ABC.h"
 
-namespace sword 
+namespace sword
 {
     class StockResource;
 }
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  StockAttribute
     @brief  StockAttribute

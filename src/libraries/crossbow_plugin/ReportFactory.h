@@ -10,7 +10,7 @@
 #ifndef __ReportFactory_h_
 #define __ReportFactory_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace xml
 {

@@ -12,8 +12,11 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace sword { class AdminToLauncher; }
-namespace sword { class LauncherToAdmin; }
+namespace sword
+{
+    class AdminToLauncher;
+    class LauncherToAdmin;
+}
 
 namespace tools
 {
@@ -22,16 +25,14 @@ namespace tools
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  LauncherPublisher
-    @brief  LauncherPublisher
+    @brief  Launcher publisher
 */
 // Created: SBO 2010-09-29
 // =============================================================================
 class LauncherPublisher : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

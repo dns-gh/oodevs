@@ -13,7 +13,7 @@
 #include "Config.h"
 #include "Plugin_ABC.h"
 #include "Services.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
 
 using namespace dispatcher;

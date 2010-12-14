@@ -20,7 +20,7 @@
 #include "DEC_Knowledge_Urban.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_Army )
 

@@ -11,7 +11,7 @@
 #define __FireManager_h_
 
 #include "hla_plugin/EntityIdentifier.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace plugins
 {

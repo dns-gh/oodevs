@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "ActivityTimeAttribute.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace dispatcher;
 

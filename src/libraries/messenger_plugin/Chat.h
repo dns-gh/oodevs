@@ -10,7 +10,7 @@
 #ifndef __Chat_h_
 #define __Chat_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace dispatcher
 {

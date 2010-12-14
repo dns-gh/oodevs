@@ -20,16 +20,16 @@ namespace sword
     class ObjectUpdate;
 }
 
-#define DECLARE_EXTENSION( extension )                                                      \
-class extension : public kernel::Extension_ABC                                              \
-                , public kernel::Displayable_ABC                                            \
+#define DECLARE_EXTENSION( extension )                                         \
+class extension : public kernel::Extension_ABC                                 \
+                , public kernel::Displayable_ABC                               \
                 , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate > \
                 , public kernel::Updatable_ABC< sword::ObjectUpdate >          \
-{                                                                                           \
-public:                                                                                     \
-             extension() {};                                                                \
-    virtual ~extension() {};                                                                \
-                                                                                            \
+{                                                                              \
+public:                                                                        \
+             extension() {}                                                    \
+    virtual ~extension() {}                                                    \
+                                                                               \
     virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& ) {}            \
     virtual void DoUpdate( const sword::ObjectUpdate& ) {}                     \
 };

@@ -10,7 +10,7 @@
 #ifndef __MissionParameter_ABC_h_
 #define __MissionParameter_ABC_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace kernel
 {

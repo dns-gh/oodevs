@@ -16,7 +16,6 @@
 #include <boost/multi_array.hpp>
 #pragma warning( pop )
 
-
 namespace kernel
 {
     class Controller;

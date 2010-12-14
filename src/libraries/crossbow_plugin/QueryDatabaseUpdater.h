@@ -17,10 +17,6 @@ namespace sword
     class MsgLocation;
     class LimaCreation;
     class LimitCreation;
-}
-
-namespace sword
-{
     class FormationCreation;
     class UnitCreation;
     class UnitKnowledgeCreation;

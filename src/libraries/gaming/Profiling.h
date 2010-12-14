@@ -11,14 +11,13 @@
 #define __Profiling_h_
 
 #include "protocol/SimulationSenders.h"
+#include <ctime>
 
 namespace sword
 {
     class ControlProfilingInformation;
     class ControlEndTick;
 }
-
-#include <ctime>
 
 // =============================================================================
 /** @class  Profiling

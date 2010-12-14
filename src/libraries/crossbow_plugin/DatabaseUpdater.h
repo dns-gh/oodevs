@@ -15,10 +15,6 @@
 namespace sword
 {
     class ObjectAttributes;
-}
-
-namespace sword
-{
     enum ObjectMagicActionAck_ErrorCode;
 }
 

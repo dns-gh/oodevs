@@ -15,10 +15,6 @@
 namespace sword
 {
     class MsgDotationStock;
-}
-
-namespace sword
-{
     class ResourceDotations_ResourceDotation;
 }
 

@@ -20,7 +20,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <time.h>
 
 using namespace geometry;

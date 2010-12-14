@@ -17,10 +17,6 @@
 namespace sword
 {
     class AutomatChangeKnowledgeGroup;
-}
-
-namespace sword
-{
     class AutomatCreation;
 }
 

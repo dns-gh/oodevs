@@ -17,10 +17,6 @@ namespace sword
     enum EnumHumanRank;
     enum EnumHumanWound;
     enum EnumLogMedicalHandlingStatus;
-}
-
-namespace sword
-{
     class LogMedicalHandlingCreation;
     class LogMedicalHandlingUpdate;
 }

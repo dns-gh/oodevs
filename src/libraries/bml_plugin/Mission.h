@@ -10,7 +10,7 @@
 #ifndef __Mission_h_
 #define __Mission_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace xml
 {

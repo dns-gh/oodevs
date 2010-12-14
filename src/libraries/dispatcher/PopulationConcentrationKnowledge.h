@@ -11,16 +11,12 @@
 #define __PopulationConcentrationKnowledge_h_
 
 #include "SimpleEntity.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace sword
 {
     class MsgCoordLatLong;
     enum EnumPopulationAttitude;
-}
-
-namespace sword
-{
     class CrowdConcentrationKnowledgeCreation;
     class CrowdConcentrationKnowledgeUpdate;
 }

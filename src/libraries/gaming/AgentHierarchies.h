@@ -21,10 +21,6 @@
 namespace sword
 {
     class UnitCreation;
-}
-
-namespace sword
-{
     class UnitChangeSuperior;
 }
 

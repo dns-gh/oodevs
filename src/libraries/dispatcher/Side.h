@@ -18,10 +18,6 @@ namespace sword
 {
     class ChangeDiplomacy;
     enum EnumDiplomacy;
-}
-
-namespace sword
-{
     class PartyCreation;
     class ChangeDiplomacyAck;
 }

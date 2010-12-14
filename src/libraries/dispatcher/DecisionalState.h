@@ -10,8 +10,6 @@
 #ifndef __DecisionalState_h_
 #define __DecisionalState_h_
 
-
-
 namespace sword
 {
     class DecisionalState;

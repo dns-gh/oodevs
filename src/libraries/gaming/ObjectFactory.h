@@ -16,10 +16,6 @@
 namespace sword
 {
     class ObjectAttributes;
-}
-
-namespace sword
-{
     class ObjectKnowledgeCreation;
 }
 

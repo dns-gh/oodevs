@@ -10,7 +10,6 @@
 #ifndef __MedicalStates_h_
 #define __MedicalStates_h_
 
-
 #include "Availability.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Types.h"

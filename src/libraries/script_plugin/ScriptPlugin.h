@@ -14,7 +14,7 @@
 #include "dispatcher/Registrable_ABC.h"
 #include "dispatcher/Position.h"
 #include "directia/tools/binders/ScriptRef.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace dispatcher

@@ -10,7 +10,7 @@
 #ifndef __crossbow_FolkUpdater_h_
 #define __crossbow_FolkUpdater_h_
 
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace plugins
 {

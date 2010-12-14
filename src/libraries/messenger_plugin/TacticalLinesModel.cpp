@@ -17,7 +17,7 @@
 #include "IdManager.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "tools/Iterator.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "protocol/MessengerSenders.h"
 #include <xeumeuleu/xml.hpp>
 

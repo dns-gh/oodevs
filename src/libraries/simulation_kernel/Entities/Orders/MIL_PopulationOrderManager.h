@@ -15,10 +15,6 @@
 namespace sword
 {
     class CrowdOrder;
-}
-
-namespace sword
-{
     class FragOrder;
 }
 

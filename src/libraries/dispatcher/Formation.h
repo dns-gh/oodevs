@@ -17,10 +17,6 @@ namespace sword
 {
     enum EnumNatureLevel;
     class ChangeLogisticLinks;
-}
-
-namespace sword
-{
     class FormationCreation;
 }
 

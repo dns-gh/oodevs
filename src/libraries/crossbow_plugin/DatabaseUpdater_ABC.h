@@ -31,10 +31,6 @@ namespace sword
     class PartyCreation;
     class ControlBeginTick;
     class ObjectMagicActionAck;
-}
-
-namespace sword
-{
     class LimitCreation;
     class LimaCreation;
 }
@@ -43,7 +39,6 @@ namespace plugins
 {
 namespace crossbow
 {
-
 // =============================================================================
 /** @class  DatabaseUpdater
     @brief  DatabaseUpdater

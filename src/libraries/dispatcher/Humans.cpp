@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Humans.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace dispatcher;
 

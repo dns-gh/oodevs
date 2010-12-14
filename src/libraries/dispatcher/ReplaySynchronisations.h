@@ -17,10 +17,6 @@ namespace sword
 {
     class LimaCreation;
     class LimitCreation;
-}
-
-namespace sword
-{
     class FormationCreation;
     class UnitCreation;
     class AutomatCreation;
@@ -51,10 +47,6 @@ namespace sword
     class ChangeDiplomacyAck;
     class UrbanCreation;
     class UrbanKnowledgeCreation;
-}
-
-namespace sword
-{
     class IntelligenceCreation;
     class ChangeDiplomacy;
 }

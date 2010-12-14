@@ -25,10 +25,6 @@ namespace sword
 {
     class ParentEntity;
     class MsgMissionParameters;
-}
-
-namespace sword
-{
     class UnitMagicAction;
 }
 

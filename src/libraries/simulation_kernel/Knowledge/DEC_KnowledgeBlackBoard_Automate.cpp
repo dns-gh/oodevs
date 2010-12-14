@@ -17,7 +17,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_Automate )
 

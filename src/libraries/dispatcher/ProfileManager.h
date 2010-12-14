@@ -16,18 +16,10 @@
 namespace sword
 {
     class SimToClient;
-}
-
-namespace sword
-{
     enum  ProfileCreationRequestAck_ErrorCode;
     enum  ProfileUpdateRequestAck_ErrorCode;
     enum  ProfileDestructionRequestAck_ErrorCode;
     class AuthenticationResponse;
-}
-
-namespace sword
-{
     class ProfileCreationRequest;
     class ProfileDestructionRequest;
     class ProfileUpdateRequest;

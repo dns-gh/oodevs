@@ -14,7 +14,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "hla_plugin/EntityIdentifier.h"
 #include "tic_plugin/PlatformVisitor_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace kernel
 {

@@ -15,7 +15,7 @@
 #include "dispatcher/Services.h"
 #include "protocol/AarSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/MessageDispatcher_ABC.h"

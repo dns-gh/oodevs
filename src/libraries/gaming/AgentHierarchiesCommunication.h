@@ -18,10 +18,6 @@ namespace sword
 {
     class UnitCreation;
     class UnitAttributes;
-}
-
-namespace sword
-{
     class UnitChangeSuperior;
 }
 

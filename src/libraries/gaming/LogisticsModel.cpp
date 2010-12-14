@@ -13,7 +13,7 @@
 #include "LogMedicalConsign.h"
 #include "LogSupplyConsign.h"
 #include "LogisticConsignFactory_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

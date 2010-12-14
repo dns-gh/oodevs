@@ -15,11 +15,6 @@
 #include "protocol/ClientSenders.h"
 #include "actions/ParameterList.h"
 
-namespace sword
-{
-    class MagicActionCreateObject;
-}
-
 using namespace kernel;
 using namespace gui;
 

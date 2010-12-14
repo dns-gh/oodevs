@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "BypassAttribute.h"
 
 using namespace dispatcher;

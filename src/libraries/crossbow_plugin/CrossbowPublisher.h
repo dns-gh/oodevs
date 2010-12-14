@@ -24,10 +24,6 @@ namespace dispatcher
 namespace sword
 {
     class SimToClient;
-}
-
-namespace sword
-{
     class MessengerToClient;
 }
 

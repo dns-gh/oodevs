@@ -19,25 +19,28 @@
 
 namespace google
 {
-    namespace protobuf
-    {
-        template< typename T > class RepeatedPtrField;
-    }
+namespace protobuf
+{
+    template< typename T > class RepeatedPtrField;
 }
+}
+
 namespace sword
 {
     class MsgMissionParameter_Value;
 }
+
 namespace kernel
 {
     class Entity_ABC;
 }
-namespace actions {
 
+namespace actions
+{
     class ParameterFactory_ABC;
 
-    namespace parameters {
-
+namespace parameters
+{
 // =============================================================================
 /** @class  ParameterList
     @brief  ParameterList

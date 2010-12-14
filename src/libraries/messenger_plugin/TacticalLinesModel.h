@@ -11,7 +11,7 @@
 #define __TacticalLinesModel_h_
 
 #include "tools/Resolver.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace dispatcher
 {

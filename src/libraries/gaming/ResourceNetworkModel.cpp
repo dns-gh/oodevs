@@ -15,7 +15,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/ResourceNetworkSelectionObserver.h"
 #include "StructuralStateAttribute.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 #pragma warning( disable : 4706 )
 

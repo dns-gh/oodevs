@@ -11,7 +11,7 @@
 #define __HlaPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 namespace xml
 {

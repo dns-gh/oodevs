@@ -16,11 +16,6 @@
 
 class DotationRequest;
 
-namespace sword
-{
-    class ParentEntity;
-}
-
 namespace kernel
 {
     class Agent_ABC;
@@ -34,6 +29,7 @@ namespace kernel
 
 namespace sword
 {
+    class ParentEntity;
     class LogSupplyHandlingCreation;
     class LogSupplyHandlingUpdate;
 }

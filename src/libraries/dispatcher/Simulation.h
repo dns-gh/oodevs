@@ -12,21 +12,16 @@
 
 #include "SimulationPublisher_ABC.h"
 
-
 namespace sword
 {
     class SimToClient;
+    class ClientToSim;
 }
+
 namespace MsgsDispatcherToSim
 {
     class MsgDispatcherToSim;
 }
-
-namespace sword
-{
-    class ClientToSim;
-}
-
 
 namespace tools
 {

@@ -21,10 +21,6 @@ namespace sword
 {
     class MsgMissionParameters;
     class UnitOrder;
-}
-
-namespace sword
-{
     class UnitMagicAction;
 }
 

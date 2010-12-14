@@ -17,10 +17,6 @@
 namespace sword
 {
     class SimToClient;
-}
-
-namespace sword
-{
     class ClientToSim;
 }
 

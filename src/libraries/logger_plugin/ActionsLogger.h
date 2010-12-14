@@ -25,10 +25,6 @@ namespace sword
     class AutomatOrder;
     class CrowdOrder;
     class UnitOrder;
-}
-
-namespace sword
-{
     class FragOrder;
 }
 

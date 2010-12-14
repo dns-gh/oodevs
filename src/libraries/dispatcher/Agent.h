@@ -23,10 +23,6 @@ namespace sword
     class LogMedicalState;
     class LogMaintenanceState;
     class LogSupplyState;
-}
-
-namespace sword
-{
     class UnitChangeSuperior;
     class UnitOrder;
     class MsgCoordLatLong;

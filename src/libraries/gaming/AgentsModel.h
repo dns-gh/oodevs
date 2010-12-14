@@ -16,15 +16,10 @@
 namespace sword
 {
     class CrowdCreation;
-}
-
-namespace sword
-{
     class AutomatCreation;
     class UnitCreation;
     class UnitDestruction;
 }
-
 
 namespace kernel
 {

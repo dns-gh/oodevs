@@ -30,7 +30,9 @@ namespace sword
 {
     class LogSupplyState;
 }
+
 class SupplyAvailability;
+
 // =============================================================================
 /** @class  SupplyStates
     @brief  SupplyStates

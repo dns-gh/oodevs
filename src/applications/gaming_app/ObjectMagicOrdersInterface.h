@@ -10,7 +10,6 @@
 #ifndef __ObjectMagicOrdersInterface_h_
 #define __ObjectMagicOrdersInterface_h_
 
-
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -23,10 +22,11 @@ namespace sword
 namespace actions
 {
     class ActionsModel;
-    namespace parameters
-    {
-        class ParameterList;
-    }
+
+namespace parameters
+{
+    class ParameterList;
+}
 }
 
 namespace kernel

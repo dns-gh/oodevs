@@ -16,10 +16,6 @@
 namespace sword
 {
     class UnitOrder;
-}
-
-namespace sword
-{
     class UnitAttributes;
     class UnitDetection;
 }

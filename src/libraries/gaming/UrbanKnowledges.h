@@ -15,7 +15,6 @@
 #include "tools/Resolver.h"
 #include "clients_kernel/Creatable.h"
 
-
 namespace kernel
 {
     class Controller;

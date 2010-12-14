@@ -29,6 +29,7 @@ namespace sword
 {
     class LogMaintenanceState;
 }
+
 // =============================================================================
 /** @class  MaintenanceStates
     @brief  MaintenanceStates

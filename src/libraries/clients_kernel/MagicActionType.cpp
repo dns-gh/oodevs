@@ -9,7 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "MagicActionType.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "Karma.h"
 #include "OrderParameter.h"
 #include "Tools.h"

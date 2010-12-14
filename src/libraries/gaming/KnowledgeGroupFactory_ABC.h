@@ -22,7 +22,6 @@ namespace sword
     class KnowledgeGroupDestruction;
 }
 
-
 // =============================================================================
 /** @class  KnowledgeGroupFactory_ABC
     @brief  KnowledgeGroupFactory_ABC
@@ -34,8 +33,8 @@ class KnowledgeGroupFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupFactory_ABC() {};
-    virtual ~KnowledgeGroupFactory_ABC() {};
+             KnowledgeGroupFactory_ABC() {}
+    virtual ~KnowledgeGroupFactory_ABC() {}
     //@}
 
     //! @name Operations

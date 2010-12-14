@@ -12,7 +12,7 @@
 #include "ReplayModel_ABC.h"
 #include "MessageLoader.h"
 #include "MessageHandler_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 using namespace dispatcher;
 

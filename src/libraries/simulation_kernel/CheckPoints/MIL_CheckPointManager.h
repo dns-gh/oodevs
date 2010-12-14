@@ -13,12 +13,10 @@
 #define __MIL_CheckPointManager_h_
 
 #include "MIL.h"
-
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )
 #include <boost/CRC.hpp>
 #pragma warning ( pop )
-
 #include <queue>
 
 namespace sword

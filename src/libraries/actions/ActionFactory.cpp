@@ -49,7 +49,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace actions;

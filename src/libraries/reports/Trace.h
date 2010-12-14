@@ -18,6 +18,7 @@ namespace kernel
     class Entity_ABC;
     class Time_ABC;
 }
+
 namespace sword
 {
     class Trace;

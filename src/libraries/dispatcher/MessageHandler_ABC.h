@@ -13,10 +13,6 @@
 namespace sword
 {
     class SimToClient;
-}
-
-namespace sword
-{
     class AarToClient;
 }
 

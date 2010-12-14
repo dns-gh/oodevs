@@ -20,15 +20,15 @@ namespace sword
     class UrbanCreation;
 }
 
-#define DECLARE_EXTENSION( extension )                                           \
-class extension : public kernel::Extension_ABC                                   \
-                , public kernel::Displayable_ABC                                 \
+#define DECLARE_EXTENSION( extension )                                 \
+class extension : public kernel::Extension_ABC                         \
+                , public kernel::Displayable_ABC                       \
                 , public kernel::Updatable_ABC< sword::UrbanUpdate >   \
                 , public kernel::Updatable_ABC< sword::UrbanCreation > \
-{                                                                                \
-public:                                                                          \
-             extension() {}                                                      \
-    virtual ~extension() {}                                                      \
+{                                                                      \
+public:                                                                \
+             extension() {}                                            \
+    virtual ~extension() {}                                            \
     virtual void DoUpdate( const sword::UrbanCreation& ) {}            \
     virtual void DoUpdate( const sword::UrbanUpdate& ) {}              \
 };

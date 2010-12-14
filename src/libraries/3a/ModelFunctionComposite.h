@@ -16,7 +16,7 @@
 #include <vector>
 #include <boost/shared_ptr.hpp>
 #pragma warning( pop )
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 // =============================================================================
 /** @class  ModelFunctionComposite

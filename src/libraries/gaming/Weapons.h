@@ -22,6 +22,7 @@ namespace kernel
     class EquipmentType;
     class WeaponSystemType;
 }
+
 namespace sword
 {
     class UnitAttributes;

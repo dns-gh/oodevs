@@ -19,10 +19,6 @@ namespace sword
 {
     class UnitPathFind;
     class UnitAttributes;
-}
-
-namespace sword
-{
     class UnitMagicAction;
 }
 

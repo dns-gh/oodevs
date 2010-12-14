@@ -13,10 +13,6 @@
 namespace sword
 {
     enum EnumHumanRank;
-}
-
-namespace sword
-{
     class HumanDotations_HumanDotation;
 }
 

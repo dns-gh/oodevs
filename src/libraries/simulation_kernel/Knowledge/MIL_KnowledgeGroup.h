@@ -42,16 +42,8 @@ class MIL_KnowledgeGroup;
 namespace sword
 {
     class MsgMissionParameters;
-}
-
-namespace sword
-{
     class KnowledgeGroupCreation;
     class KnowledgeGroupUpdate;
-}
-
-namespace sword
-{
     class KnowledgeGroupCreationRequest;
     class KnowledgeMagicAction;
 }

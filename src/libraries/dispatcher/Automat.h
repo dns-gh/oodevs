@@ -23,13 +23,8 @@ namespace sword
     class AutomatChangeSuperior;
     class AutomatChangeKnowledgeGroup;
     class AutomatOrder;
-}
-
-namespace sword
-{
     enum ForceRatio_Value;
     enum RulesOfEngagement_Value;
-
     class AutomatCreation;
     class DecisionalState;
     class AutomatAttributes;

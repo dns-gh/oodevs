@@ -16,7 +16,7 @@
 #include <xeumeuleu/xml.hpp>
 #include <geocoord/geodetic.h>
 #include <geocoord/mgrs.h>
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include "MockClientPublisher.h"
 
 using namespace sword;

@@ -37,8 +37,7 @@ namespace xml
 
 namespace actions
 {
-
-class ParameterVisitor_ABC;
+    class ParameterVisitor_ABC;
 
 // =============================================================================
 /** @class  Parameter_ABC

@@ -15,10 +15,6 @@
 namespace sword
 {
     enum EnumLogMaintenanceHandlingStatus;
-}
-
-namespace sword
-{
     class LogMaintenanceHandlingCreation;
     class LogMaintenanceHandlingUpdate;
 }

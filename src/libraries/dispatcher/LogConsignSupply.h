@@ -17,10 +17,6 @@
 namespace sword
 {
     class ParentEntity;
-}
-
-namespace sword
-{
     enum EnumLogSupplyHandlingStatus;
     class LogSupplyHandlingCreation;
     class LogSupplyHandlingUpdate;

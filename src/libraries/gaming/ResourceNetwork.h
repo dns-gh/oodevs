@@ -18,6 +18,9 @@ namespace sword
 {
     class ObjectAttributeResourceNetwork;
     class ResourceNetwork;
+    class ObjectUpdate;
+    class UrbanUpdate;
+    class UrbanAttributes_Infrastructures;
 }
 
 namespace gui
@@ -30,13 +33,6 @@ namespace kernel
     class ResourceNetworkType;
     class PropertiesDictionary;
     class Object_ABC;
-}
-
-namespace sword
-{
-    class ObjectUpdate;
-    class UrbanUpdate;
-    class UrbanAttributes_Infrastructures;
 }
 
 // =============================================================================

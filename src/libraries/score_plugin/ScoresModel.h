@@ -12,12 +12,12 @@
 
 #include "dispatcher/Registrable_ABC.h"
 #include <boost/shared_ptr.hpp>
-#include <map>
 #include <vector>
+#include <map>
 
-namespace sword { class SimToClient; }
 namespace sword
 {
+    class SimToClient;
     class PlotRequest;
     class Indicator;
 }

@@ -27,7 +27,7 @@
 #include "DEC_KS_Sharing.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/MIL_Army.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_KnowledgeGroup )

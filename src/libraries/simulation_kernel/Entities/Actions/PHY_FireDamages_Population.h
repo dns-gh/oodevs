@@ -12,7 +12,6 @@
 #ifndef __PHY_FireDamages_Population_h_
 #define __PHY_FireDamages_Population_h_
 
-
 namespace sword
 {
     class CrowdFireDamages;
