@@ -7620,7 +7620,7 @@
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Attaquer"/>
         <mission name="MELEE Barrer"/>
-        <mission name="MELEE Controler Secteur"/>
+        <mission name="MELEE Controler"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Harceler"/>
@@ -11608,4 +11608,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1987884779" -->
+<!-- signature="0038925696" -->

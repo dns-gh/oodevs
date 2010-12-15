@@ -3770,7 +3770,7 @@
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="objective" name="Destination" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" dia-type="net.masagroup.sword.france.military.company.tasks.Controler" id="1024" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" name="MELEE Controler Secteur" package="control">
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" dia-type="net.masagroup.sword.france.military.company.tasks.Controler" id="1024" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" name="MELEE Controler" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4128,4 +4128,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0983850032" -->
+<!-- signature="1156599816" -->
