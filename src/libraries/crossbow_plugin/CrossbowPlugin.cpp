@@ -14,7 +14,7 @@
 #include "tools/MessageDispatcher_ABC.h"
 #include "tools/ClientNetworker.h"
 #include "protocol/Protocol.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/AuthenticationSenders.h"
 
 using namespace plugins;

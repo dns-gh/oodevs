@@ -21,7 +21,7 @@
 #include "dispatcher/ObjectKnowledgeConverter.h"
 #include "dispatcher/UrbanKnowledgeConverter.h"
 #include "protocol/Protocol.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "tools/SessionConfig.h"
 #pragma warning( push, 0 )
 #include <boost/filesystem/path.hpp>
