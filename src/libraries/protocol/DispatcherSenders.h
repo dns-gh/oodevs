@@ -15,7 +15,7 @@
 
 namespace dispatcher
 {
-    GENERATE_NO_CONTEXT_MESSAGE( MsgsDispatcherToSim::MsgDispatcherToSim, MsgsDispatcherToSim, CtrlClientAnnouncement, control_client_announcement );
+    GENERATE_NO_CONTEXT_MESSAGE( sword::DispatcherToSim, sword, CtrlClientAnnouncement, control_client_announcement );
 
     GENERATE_NO_CONTEXT_MESSAGE( sword::DispatcherToClient, sword, ServicesDescription, services_description );
 }

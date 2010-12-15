@@ -10,9 +10,9 @@
 #ifndef __SimulationPublisher_ABC_h_
 #define __SimulationPublisher_ABC_h_
 
-namespace MsgsDispatcherToSim
+namespace sword
 {
-    class MsgDispatcherToSim;
+    class DispatcherToSim;
 }
 
 namespace sword
@@ -40,7 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual void Send( const sword::ClientToSim& msg ) = 0;
-    virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& msg ) = 0;
+    virtual void Send( const sword::DispatcherToSim& msg ) = 0;
     //@}
 };
 

@@ -20,9 +20,8 @@ namespace sword
 */
 // Created: LDC 2010-10-11
 // =============================================================================
-class Listener
+class Listener // $$$$ MCO : missing _ABC + file and class must have the same name
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

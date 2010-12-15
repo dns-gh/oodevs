@@ -53,7 +53,7 @@ void Simulation::OnReceive( const sword::SimToClient& asnMsg )
 // Name: Simulation::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void Simulation::Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg )
+void Simulation::Send( const sword::DispatcherToSim& asnMsg )
 {
     messageService_.Send( endpoint_, asnMsg );
 }

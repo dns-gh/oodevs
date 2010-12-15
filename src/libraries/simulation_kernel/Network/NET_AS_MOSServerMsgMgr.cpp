@@ -125,7 +125,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
 // Name: NET_AS_MOSServerMsgMgr::OnReceiveMiddle
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const MsgsDispatcherToSim::MsgDispatcherToSim& wrapper )
+void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const sword::DispatcherToSim& wrapper )
 {
     if( wrapper.message().has_control_client_announcement() )
         OnReceiveCtrlClientAnnouncement( from );

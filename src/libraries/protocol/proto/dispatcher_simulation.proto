@@ -7,13 +7,13 @@
 //
 // *****************************************************************************
 
-package MsgsDispatcherToSim;
+package sword;
 
 message CtrlClientAnnouncement {
     optional bool announce = 1;
 }
 
-message MsgDispatcherToSim {
+message DispatcherToSim {
     message Content {
        optional CtrlClientAnnouncement control_client_announcement = 1;
     }

@@ -45,7 +45,7 @@ public:
     //! @name Dispatching
     //@{
     virtual void Send( const sword::ClientToSim& asnMsg );
-    virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg );
+    virtual void Send( const sword::DispatcherToSim& asnMsg );
     //@}
 
 private:

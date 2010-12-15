@@ -18,11 +18,7 @@ namespace sword
 {
     class SimToClient;
     class ClientToSim;
-}
-
-namespace MsgsDispatcherToSim
-{
-    class MsgDispatcherToSim;
+    class DispatcherToSim;
 }
 
 class NET_AgentServer;
@@ -52,7 +48,7 @@ private:
     //! @name Msg callbacks
     //@{
     void OnReceiveClient( const std::string& from, const sword::ClientToSim& message );
-    void OnReceiveMiddle( const std::string& from, const MsgsDispatcherToSim::MsgDispatcherToSim& message );
+    void OnReceiveMiddle( const std::string& from, const sword::DispatcherToSim& message );
     void OnReceiveCtrlClientAnnouncement( const std::string& from );
     //@}
 

@@ -16,11 +16,7 @@ namespace sword
 {
     class SimToClient;
     class ClientToSim;
-}
-
-namespace MsgsDispatcherToSim
-{
-    class MsgDispatcherToSim;
+    class DispatcherToSim;
 }
 
 namespace tools
@@ -52,7 +48,7 @@ public:
     //@{
     void OnReceive( const sword::SimToClient& asnMsg );
 
-    virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg );
+    virtual void Send( const sword::DispatcherToSim& asnMsg );
     virtual void Send( const sword::ClientToSim& asnMsg );
     //@}
 

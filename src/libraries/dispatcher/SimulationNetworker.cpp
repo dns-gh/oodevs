@@ -107,7 +107,7 @@ void SimulationNetworker::Send( const sword::ClientToSim& asnMsg )
 // Name: SimulationNetworker::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void SimulationNetworker::Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg )
+void SimulationNetworker::Send( const sword::DispatcherToSim& asnMsg )
 {
     try
     {
