@@ -11,10 +11,11 @@
 #define __FloodHelper_h_
 
 #include <geometry/types.h>
+#include <boost/noncopyable.hpp>
 
 namespace flood
 {
-class ElevationGetter_ABC;
+    class ElevationGetter_ABC;
 
 // =============================================================================
 /** @class  FloodHelper
@@ -22,27 +23,20 @@ class ElevationGetter_ABC;
 */
 // Created: JSR 2010-12-08
 // =============================================================================
-class FloodHelper
+class FloodHelper : boost::noncopyable // $$$$ MCO : crappy name ! why "Helper" ?
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FloodHelper( const ElevationGetter_ABC& getter  );
+    explicit FloodHelper( const ElevationGetter_ABC& getter );
     virtual ~FloodHelper();
     //@}
 
-public:
     //! @name Operations
     //@{
-    void GenerateFlood( const geometry::Point2f& center, int depth, int refDist );
-    void Draw() const;
-    //@}
+    void GenerateFlood( const geometry::Point2f& center, int depth, int refDist ); // $$$$ MCO : where are the unit tests ?!
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    FloodHelper( const FloodHelper& );            //!< Copy constructor
-    FloodHelper& operator=( const FloodHelper& ); //!< Assignment operator
+    void Draw() const; // $$$$ MCO : separation of concerns
     //@}
 
 private:
@@ -50,7 +44,11 @@ private:
     //@{
     struct sCell
     {
-        sCell() : visited_( false ), polIndex_( 0 ), deep_( false ) {}
+        sCell()
+            : visited_( false )
+            , polIndex_( 0 )
+            , deep_( false )
+        {}
         bool visited_;
         int polIndex_;
         bool deep_;
@@ -62,6 +60,7 @@ private:
 private:
     //! @name Helpers
     //@{
+    // $$$$ MCO : so many methods -> code smell the class does to much things
     void Propagate( int floodElevation );
     bool FindFirstUnmarkedCell( int& xRet, int& yRet ) const;
     bool FindFirstMarkedCell( int& xRet, int& yRet, int index ) const;
@@ -79,6 +78,7 @@ private:
 private:
     //! @name Member data
     //@{
+    // $$$$ MCO : so many member data -> code smell the class is too big
     static const int cellWidth_;
     const ElevationGetter_ABC& getter_;
     geometry::Point2f center_;
@@ -92,6 +92,6 @@ private:
     //@}
 };
 
-} // end namespace flood
+}
 
 #endif // __FloodHelper_h_

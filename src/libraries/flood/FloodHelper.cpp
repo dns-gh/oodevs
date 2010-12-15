@@ -9,9 +9,9 @@
 
 #include "FloodHelper.h"
 #include "ElevationGetter_ABC.h"
-#include <queue>
 #include <windows.h>
 #include <gl/gl.h>
+#include <queue>
 
 using namespace flood;
 using namespace geometry;
@@ -101,8 +101,6 @@ void FloodHelper::Draw() const
     glDisable( GL_TEXTURE_2D );
 }
 
-#define MAKE_PAIR( x, y )  std::make_pair< unsigned short, unsigned short >( ( x ), ( y ) )
-
 // -----------------------------------------------------------------------------
 // Name: FloodHelper::Propagate
 // Created: JSR 2010-12-14
@@ -110,7 +108,7 @@ void FloodHelper::Draw() const
 void FloodHelper::Propagate( int floodElevation )
 {
     std::queue< std::pair< unsigned short, unsigned short > > queue;
-    queue.push( MAKE_PAIR( halfWidth_, halfWidth_ ) );
+    queue.push( std::make_pair( halfWidth_, halfWidth_ ) );
     while( !queue.empty() )
     {
         unsigned short x = queue.front().first;
@@ -127,13 +125,13 @@ void FloodHelper::Propagate( int floodElevation )
                 if( floodElevation - elevation > 1)
                     cell.deep_ = true;
                 if( x > 0 && !ppCells_[ x - 1 ][ y ].visited_ )
-                    queue.push( MAKE_PAIR( x - 1, y ) );
+                    queue.push( std::make_pair( x - 1, y ) );
                 if( x < 2 * halfWidth_ + 1 && !ppCells_[ x + 1 ][ y ].visited_ )
-                    queue.push( MAKE_PAIR( x + 1, y ) );
+                    queue.push( std::make_pair( x + 1, y ) );
                 if( y > 0 && !ppCells_[ x ][ y - 1 ].visited_ )
-                    queue.push( MAKE_PAIR( x, y - 1 ) );
+                    queue.push( std::make_pair( x, y - 1 ) );
                 if( y < 2 * halfWidth_ && !ppCells_[ x ][ y + 1 ].visited_ )
-                    queue.push( MAKE_PAIR( x, y + 1 ) );
+                    queue.push( std::make_pair( x, y + 1 ) );
             }
         }
         queue.pop();
@@ -163,7 +161,7 @@ bool FloodHelper::FindFirstMarkedCell( int& xRet, int& yRet, int index ) const
                 yRet = y;
                 return true;
             }
-    return false;    
+    return false;
 }
 
 // -----------------------------------------------------------------------------

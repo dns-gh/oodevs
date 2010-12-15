@@ -11,6 +11,7 @@
 #define __ElevationGetter_ABC_h_
 
 #include <geometry/types.h>
+#include <boost/noncopyable.hpp>
 
 namespace flood
 {
@@ -20,15 +21,21 @@ namespace flood
 */
 // Created: JSR 2010-12-15
 // =============================================================================
-class ElevationGetter_ABC
+class ElevationGetter_ABC : boost::noncopyable
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
+             ElevationGetter_ABC() {}
+    virtual ~ElevationGetter_ABC() {}
+    //@}
+
     //! @name Operations
     //@{
     virtual short GetElevationAt( const geometry::Point2f& point ) const = 0;
     //@}
 };
 
-} // end namespace flood
+}
 
 #endif // __ElevationGetter_ABC_h_

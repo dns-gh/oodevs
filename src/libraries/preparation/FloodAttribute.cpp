@@ -31,7 +31,7 @@ FloodAttribute::FloodAttribute( PropertiesDictionary& dico, const kernel::Detect
     , controllers_( controllers )
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
-    , floodHelper_( *new flood::FloodHelper( *this ) )
+    , floodHelper_( *new flood::FloodHelper( *this ) ) // $$$$ MCO use an std::auto_ptr because if anything throws before end of contructor => memory leak
 {
     controllers_.Register( *this );
     CreateDictionary( dico );
@@ -47,7 +47,7 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& 
     , controllers_( controllers )
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
-    , floodHelper_( *new flood::FloodHelper( *this ) )
+    , floodHelper_( *new flood::FloodHelper( *this ) ) // $$$$ MCO use an std::auto_ptr because if anything throws before end of contructor => memory leak
 {
     controllers_.Register( *this );
     xis >> xml::attribute( "depth", depth_.value_ )
