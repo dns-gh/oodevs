@@ -18,6 +18,7 @@ ElevationExtrema.cpp \
 ElevationPanel.cpp \
 FirePrototype_ABC.cpp \
 FixedLightWidget.cpp \
+FloodPrototype_ABC.cpp \
 GisToolbar.cpp \
 GradientWidget.cpp \
 GraphicPreferences.cpp \

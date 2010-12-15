@@ -46,8 +46,9 @@
     <object id="43" type="dirty bomb"/>
     <object id="44" type="hospital"/>
     <object id="45" type="weapon cache"/>
-	<object id="46" type="leaflet"/>
-    <object id="40" type="sensors"/>
-    <object id="41" type="sensorsDetectionZone"/>
+    <object id="46" type="leaflet"/>
+    <object id="47" type="sensors"/>
+    <object id="48" type="sensorsDetectionZone"/>
+    <object id="49" type="flood"/>
 </objects>
-<!-- signature="1411219607" -->
+<!-- signature="0548788936" -->

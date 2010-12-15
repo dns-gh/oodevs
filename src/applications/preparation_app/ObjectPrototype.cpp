@@ -21,6 +21,7 @@
 #include "ObstaclePrototype.h"
 #include "NBCPrototype.h"
 #include "FirePrototype.h"
+#include "FloodPrototype.h"
 #include "MedicalTreatmentPrototype.h"
 #include "MinePrototype.h"
 #include "LogisticPrototype.h"
@@ -56,6 +57,11 @@ namespace
     void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, Object_ABC*& object )
     {
         container.push_back( new LogisticPrototype( parent, controllers, object ) );
+    }
+
+    void FloodAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, const kernel::DetectionMap& detection, Object_ABC*& object )
+    {
+        container.push_back( new FloodPrototype( parent, object, controllers, detection ) );
     }
 
     void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, const tools::GeneralConfig& config, Object_ABC*& object )
@@ -98,7 +104,7 @@ namespace
     /*
     * Register capacity tag
     */
-    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, const tools::GeneralConfig& config, Object_ABC*& object )
+    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, const kernel::DetectionMap& detection, const tools::GeneralConfig& config, Object_ABC*& object )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"        , boost::bind( &::ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
@@ -108,6 +114,7 @@ namespace
         factory->Register( "bridging"           , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( object ) ) );
         factory->Register( "delay"              , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( object ) ) );
 
+        factory->Register( "flood"              , boost::bind( &::FloodAttribute, _2, _3, boost::ref( controllers ), boost::cref( detection ), boost::ref( object ) ) );
         factory->Register( "logistic"           , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "interact-with-enemy", boost::bind( &::InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "interference"       , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );
@@ -116,6 +123,7 @@ namespace
         factory->Register( "propagation"        , boost::bind( &::PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
 
         factory->Register( "contamination"      , boost::bind( &::ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+
         return *factory;
     }
 }
@@ -125,7 +133,7 @@ namespace
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer, const tools::GeneralConfig& config )
-    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, config, creation_ ) )
+    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, model.detection_, config, creation_ ) )
     , model_( teamsModel )
     , creation_( 0 )
 {

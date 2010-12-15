@@ -14,11 +14,6 @@
 #include "clients_kernel/KnowledgeGroupFactory_ABC.h"
 #include "ObjectFactory_ABC.h"
 
-namespace tools
-{
-    template< typename T > class SortedInterfaceContainer;
-}
-
 namespace kernel
 {
     class Controllers;
@@ -70,7 +65,7 @@ private:
 
     //! @name Helper
     //@{
-    void ReadAttributes( const std::string& attr, xml::xistream& xis, tools::SortedInterfaceContainer< kernel::Extension_ABC >& result, kernel::PropertiesDictionary& dico );
+    void ReadAttributes( const std::string& attr, xml::xistream& xis, kernel::Object_ABC& object, kernel::PropertiesDictionary& dico );
     //@}
 
 private:

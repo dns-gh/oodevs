@@ -338,5 +338,8 @@
     <sealoff/>
     <workable max-animator="10"/>
   </object>
+  <object geometry="point" name="Inondation" symbol="G*MPORC---****X" type="flood">
+    <flood/>
+  </object>
 </objects>
-<!-- signature="0256588482" -->
+<!-- signature="3797963398" -->

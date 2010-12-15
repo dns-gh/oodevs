@@ -11,11 +11,10 @@
 #define __ObjectAttributesContainer_h_
 
 #include "tools/SortedInterfaceContainer.h"
-#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Displayable_ABC.h"
-
 
 namespace xml
 {
@@ -33,6 +32,7 @@ class ObjectAttributesContainer
     , public kernel::Extension_ABC
     , public kernel::Serializable_ABC
     , public kernel::Displayable_ABC
+    , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -52,6 +52,11 @@ public:
     virtual void DisplayInList   ( kernel::Displayer_ABC& ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& ) const;
+    //@}
+
+    //! @name kernel::Drawable_ABC
+    //@{
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 };
 

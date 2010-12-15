@@ -52,6 +52,7 @@ namespace kernel
     DECLARE_EXTENSION( OccupantAttribute_ABC )
     DECLARE_EXTENSION( DelayAttribute_ABC )
     DECLARE_EXTENSION( SealOffAttribute_ABC )
+    DECLARE_EXTENSION( FloodAttribute_ABC )
 }
 
 #undef DECLARE_EXTENSION

@@ -73,7 +73,8 @@
       <xs:enumeration value="sensors"/>
       <xs:enumeration value="sensorsDetectionZone"/>
       <xs:enumeration value="urban block"/>
-            <xs:enumeration value="seal off area"/>
+      <xs:enumeration value="seal off area"/>
+      <xs:enumeration value="flood"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="T_ConsumptionMode">
@@ -365,6 +366,7 @@
           </xs:complexType>
         </xs:element>
         <xs:element name="crowd-obstacle" minOccurs="0"/>
+        <xs:element name="flood" minOccurs="0"/>
       </xs:all>
     </xs:complexType>
 

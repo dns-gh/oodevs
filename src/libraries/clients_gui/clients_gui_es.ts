@@ -180,6 +180,21 @@
     </message>
 </context>
 <context>
+    <name>FloodPrototype_ABC</name>
+    <message>
+        <source>Flood</source>
+        <translation>Inondation</translation>
+    </message>
+    <message>
+        <source>Depth:</source>
+        <translation>Profondeur:</translation>
+    </message>
+    <message>
+        <source>Reference distance:</source>
+        <translation>Distance de référence:</translation>
+    </message>
+</context>
+<context>
     <name>GisToolBar</name>
     <message>
         <source>GIS tools</source>

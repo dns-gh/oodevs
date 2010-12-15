@@ -126,6 +126,17 @@
     </message>
 </context>
 <context>
+    <name>FloodAttribute</name>
+    <message>
+        <source>Info/Flood parameters/Depth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Flood parameters/Reference distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Formation</name>
     <message>
         <source>Info/Identifier</source>
@@ -476,6 +487,14 @@
     </message>
     <message>
         <source>Info/Occupant attributes/Max Entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flood</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reference distance:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

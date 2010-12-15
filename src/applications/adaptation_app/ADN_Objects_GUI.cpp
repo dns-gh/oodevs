@@ -373,6 +373,11 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eBurnCapacityPresent ] = & burn->GetConnector();
     }
 
+    ADN_GroupBox* flood = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Flood" ), hBox );
+    {
+        vInfosConnectors[ eFloodCapacityPresent ] = & flood->GetConnector();
+    }
+
     // Connect the list to the interface.
     pList->SetItemConnectors( vInfosConnectors );
 

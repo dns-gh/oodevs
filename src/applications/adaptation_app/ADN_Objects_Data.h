@@ -160,6 +160,7 @@ public:
         eDelayCapacity,
         eSealOffCapacity,
         eFirePropagationModifierCapacity,
+        eFloodCapacity,
         eBurnCapacity
     };
 
@@ -193,6 +194,7 @@ public:
     typedef ADN_CapacityInfos_Default< eSupplyCapacity >            ADN_CapacityInfos_Supply;
     typedef ADN_CapacityInfos_Default< eTimeLimitedCapacity >       ADN_CapacityInfos_TimeLimited;
     typedef ADN_CapacityInfos_Default< eBurnCapacity >              ADN_CapacityInfos_Burn;
+    typedef ADN_CapacityInfos_Default< eFloodCapacity >             ADN_CapacityInfos_Flood;
 
     class ADN_CapacityInfos_Attrition
         : public ADN_CapacityInfos_Default< eAttritionCapacity >

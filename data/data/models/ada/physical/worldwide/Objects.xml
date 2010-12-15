@@ -364,5 +364,8 @@
     </constructor>
   </object>
   <object geometry="" name="Leaflet" symbol="" type="leaflet"/>
+  <object geometry="point" name="Flood" symbol="G*MPORC---****X" type="flood">
+    <flood/>
+  </object>
 </objects>
-<!-- signature="0949773180" -->
+<!-- signature="4286702667" -->

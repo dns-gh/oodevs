@@ -106,6 +106,7 @@ public:
         eFirePropagationModifier_Modifiers,
         eBurnCapacityPresent,
         eHeightInteraction,
+        eFloodCapacityPresent,
         eNbrGuiElements
     };
 

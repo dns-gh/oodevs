@@ -12,6 +12,7 @@ DelayAttribute.cpp \
 Diplomacies.cpp \
 Dotations.cpp \
 FireAttribute.cpp \
+FloodAttribute.cpp \
 Formation.cpp \
 InputToxicCloudAttribute.cpp \
 Intelligence.cpp \

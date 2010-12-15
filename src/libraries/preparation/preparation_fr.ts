@@ -126,6 +126,17 @@
     </message>
 </context>
 <context>
+    <name>FloodAttribute</name>
+    <message>
+        <source>Info/Flood parameters/Depth</source>
+        <translation>Info/Paramètres de l'inondation/Profondeur</translation>
+    </message>
+    <message>
+        <source>Info/Flood parameters/Reference distance</source>
+        <translation>Info/Paramètres de l'inondation/Distance de référence</translation>
+    </message>
+</context>
+<context>
     <name>Formation</name>
     <message>
         <source>Info/Identifier</source>
@@ -477,6 +488,14 @@
     <message>
         <source>Info/Occupant attributes/Max Entities</source>
         <translation>Info/Attributs animateurs/Animateurs max</translation>
+    </message>
+    <message>
+        <source>Flood</source>
+        <translation>Inondation</translation>
+    </message>
+    <message>
+        <source>Reference distance:</source>
+        <translation>Distance de référence:</translation>
     </message>
 </context>
 <context>

@@ -224,6 +224,8 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Burn >( ADN_Objects_GUI::eBurnCapacityPresent );
 
+    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Flood >( ADN_Objects_GUI::eFloodCapacityPresent );
+
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }
 

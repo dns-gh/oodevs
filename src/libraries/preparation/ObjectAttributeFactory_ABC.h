@@ -15,11 +15,6 @@ namespace xml
     class xistream;
 }
 
-namespace tools
-{
-    template< typename T > class SortedInterfaceContainer;
-}
-
 namespace kernel
 {
     class Extension_ABC;
@@ -39,7 +34,7 @@ public:
 
     //! @name Register
     //@{
-    virtual void Create( const std::string& attribute, tools::SortedInterfaceContainer< kernel::Extension_ABC >& result, kernel::PropertiesDictionary& dico, xml::xistream& xis ) = 0;
+    virtual void Create( const std::string& attribute, kernel::Object_ABC& object, kernel::PropertiesDictionary& dico, xml::xistream& xis ) = 0;
     //@}
 
 private:

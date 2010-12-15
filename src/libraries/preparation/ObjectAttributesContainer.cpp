@@ -7,11 +7,9 @@
 //
 // *****************************************************************************
 
-
 #include "preparation_pch.h"
 #include "ObjectAttributesContainer.h"
 #include "clients_kernel/Displayer_ABC.h"
-
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -87,4 +85,13 @@ void ObjectAttributesContainer::DisplayInTooltip( Displayer_ABC& displayer ) con
 void ObjectAttributesContainer::DisplayInSummary( Displayer_ABC& displayer ) const
 {
      Interface( *this ).Apply( & Displayable_ABC::DisplayInSummary, displayer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributesContainer::Draw
+// Created: JSR 2010-12-08
+// -----------------------------------------------------------------------------
+void ObjectAttributesContainer::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+{
+     Interface( *this ).Apply( & Drawable_ABC::Draw, where, viewport, tools );
 }
