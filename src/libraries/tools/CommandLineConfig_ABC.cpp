@@ -47,7 +47,7 @@ CommandLineConfig_ABC::~CommandLineConfig_ABC()
 // Name: CommandLineConfig_ABC::Parse
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-void CommandLineConfig_ABC::Parse( int argc, char** argv )
+void CommandLineConfig_ABC::Parse( int argc, char* argv[] )
 {
     po::store( po::command_line_parser( argc, argv ).options( *options_ ).allow_unregistered().run(), *values_ );
     po::notify( *values_ );

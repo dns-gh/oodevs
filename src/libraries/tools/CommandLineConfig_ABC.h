@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Parse( int argc, char** argv );
+    virtual void Parse( int argc, char* argv[] );
     //@}
 
 protected:
@@ -62,7 +62,7 @@ private:
     //! @name Member data
     //@{
     boost::program_options::options_description* options_;
-    boost::program_options::variables_map*       values_;
+    boost::program_options::variables_map* values_;
     //@}
 };
 

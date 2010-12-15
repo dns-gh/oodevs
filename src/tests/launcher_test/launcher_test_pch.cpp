@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "selftraining_test_pch.h"
+#include "launcher_test_pch.h"
 #include <google/protobuf/stubs/common.h>
 #include <iostream>
 #include <string>
