@@ -30,7 +30,7 @@ class SIM_NetworkLogger : public MT_Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SIM_NetworkLogger( unsigned int nPort, unsigned int nLogLevels = eLogLevel_All, unsigned int nLogLayers = eLogLayer_All );
+    explicit SIM_NetworkLogger( unsigned short nPort, int nLogLevels = eLogLevel_All );
     virtual ~SIM_NetworkLogger();
     //@}
 
@@ -46,7 +46,7 @@ private:
 private:
     //! @name Operations
     //@{
-    virtual void LogString( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
+    virtual void LogString( E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode );
     //@}
 
     //! @name Helpers

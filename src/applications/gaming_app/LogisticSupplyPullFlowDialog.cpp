@@ -31,6 +31,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "protocol/SimulationSenders.h"
+#include <boost/noncopyable.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -227,7 +228,7 @@ void LogisticSupplyPullFlowDialog::Reject()
 namespace
 {
 
-    struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>
+    struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>, boost::noncopyable
     {
         SupplyStatesVisitor( LogisticSupplyPullFlowDialog& dlg, void (LogisticSupplyPullFlowDialog::*pFunc)(const SupplyStates&) )
                 : dlg_(dlg), pFunc_ ( pFunc ) {}

@@ -9,11 +9,7 @@
 
 #include "MT_LogManager.h"
 
-//=============================================================================
-// STATICS
-//=============================================================================
 MT_LogManager* MT_LogManager::pInstance_ = 0;
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_LogManager constructor
@@ -23,7 +19,6 @@ MT_LogManager::MT_LogManager()
 {
     // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_LogManager destructor
@@ -35,10 +30,6 @@ MT_LogManager::~MT_LogManager()
         pInstance_ = 0;
 }
 
-//=============================================================================
-// LOGGER MANAGEMENT
-//=============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: MT_LogManager::RegisterLogger
 /**
@@ -49,9 +40,8 @@ MT_LogManager::~MT_LogManager()
 //-----------------------------------------------------------------------------
 bool MT_LogManager::RegisterLogger( MT_Logger_ABC& logger )
 {
-    return loggerSet_.insert( &logger ).second;    
+    return loggerSet_.insert( &logger ).second;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_LogManager::UnregisterLogger
@@ -66,15 +56,9 @@ bool MT_LogManager::UnregisterLogger( MT_Logger_ABC& logger )
     return loggerSet_.erase( &logger ) == 1;
 }
 
-//=============================================================================
-// LOG
-//=============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: MT_LogManager::Log
 /**
-    @param  nLayer       Log layer
-    @param  strLayerName Log layer name
     @param  nLevel       Log level
     @param  strMessage   Message
     @param  strContext   Context
@@ -82,8 +66,8 @@ bool MT_LogManager::UnregisterLogger( MT_Logger_ABC& logger )
 */
 // Created:  NLD 00-06-05 
 //-----------------------------------------------------------------------------
-void MT_LogManager::Log( unsigned int nLayer, const char* strLayerName, MT_Logger_ABC::E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode )
+void MT_LogManager::Log( MT_Logger_ABC::E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode )
 {
     for( IT_LoggerSet itLogger = loggerSet_.begin(); itLogger != loggerSet_.end(); ++itLogger )
-        (*itLogger)->Log( nLayer, strLayerName, nLevel, strMessage, strContext, nCode );
+        (*itLogger)->Log( nLevel, strMessage, strContext, nCode );
 }

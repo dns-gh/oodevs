@@ -23,7 +23,7 @@
     @code
         MT_ConsoleLogger logConsole;
 
-        MT_LogManager::Instance().RegisterLogger( logConsole );    
+        MT_LogManager::Instance().RegisterLogger( logConsole );
         MT_LogManager::Instance().UnregisterLogger( logConsole );
     
     @endcode
@@ -34,7 +34,7 @@ class MT_ConsoleLogger : public MT_Logger_ABC
 {
 
 public:
-    explicit MT_ConsoleLogger( unsigned int nLogLevels = eLogLevel_All, unsigned int nLayers = eLogLayer_All );
+    explicit MT_ConsoleLogger( int nLogLevels = eLogLevel_All );
     virtual ~MT_ConsoleLogger();
 
     void EnableTimeStamps( bool );
@@ -46,7 +46,7 @@ private:
     //@{
     const char* GetColorFromLogLevel( unsigned int nLogLevel );
 
-    virtual void LogString( const char* strLayerName, E_LogLevel level, const char* strMessage, const char* strContext, int nCode );
+    virtual void LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode );
     //@}
 
 private:

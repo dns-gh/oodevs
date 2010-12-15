@@ -58,7 +58,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
     , dispatcherOk_  ( true )
 {
     startupConfig_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
-    logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All, true ) );
+    logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, true ) );
     MT_LOG_REGISTER_LOGGER( *logger_ );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "Sword(tm) Simulation - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
@@ -68,7 +68,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
     {
         try
         {
-            pNetworkLogger_.reset( new SIM_NetworkLogger( startupConfig_->GetNetworkLoggerPort(),MT_Logger_ABC::eLogLevel_All, MT_Logger_ABC::eLogLayer_All ) );
+            pNetworkLogger_.reset( new SIM_NetworkLogger( startupConfig_->GetNetworkLoggerPort(),MT_Logger_ABC::eLogLevel_All ) );
             MT_LOG_REGISTER_LOGGER( *pNetworkLogger_ );
         }
         catch( MT_ScipioException& exception )

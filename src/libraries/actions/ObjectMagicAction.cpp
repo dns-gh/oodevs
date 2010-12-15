@@ -68,8 +68,8 @@ void ObjectMagicAction::Polish()
 // -----------------------------------------------------------------------------
 void ObjectMagicAction::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", GetType().GetName() );
-    xos << xml::attribute( "type", "magicobject" );
+    xos << xml::attribute( "id", GetType().GetName() )
+        << xml::attribute( "type", "magicobject" );
     if( objectId_ != 0 )
         xos << xml::attribute( "target", objectId_ );
     Action_ABC::Serialize( xos );
@@ -81,8 +81,7 @@ void ObjectMagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void ObjectMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
-    sword::ObjectMagicAction_Type type =
-        ( sword::ObjectMagicAction_Type ) GetType().GetId();
+    sword::ObjectMagicAction_Type type = ( sword::ObjectMagicAction_Type ) GetType().GetId();
     simulation::ObjectMagicAction message;
     message().mutable_object()->set_id( objectId_ );
     message().set_type( type );

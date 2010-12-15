@@ -66,7 +66,7 @@ namespace
         void ReceiveClientToReplay( const std::string& /*endpoint*/, const sword::ClientToReplay& /*message*/ ) {}
         void ReceiveClientToMessenger( const std::string& /*endpoint*/, const sword::ClientToMessenger& /*message*/ ) {}
 
-        void ReceiveClientToAuthentication( const std::string& endpoint, const sword::ClientToAuthentication& message )
+        void ReceiveClientToAuthentication( const std::string& /*endpoint*/, const sword::ClientToAuthentication& /*message*/ )
         {
             sword::AuthenticationToClient container;
             container.set_context( 0 );

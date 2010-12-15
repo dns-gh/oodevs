@@ -54,12 +54,12 @@ private:
 BOOST_CLASS_EXPORT_KEY( InhabitantFactory )
 
 template< typename Archive >
-void save_construct_data( Archive& archive, const InhabitantFactory* factory, const unsigned int /*version*/ )
+void save_construct_data( Archive& /*archive*/, const InhabitantFactory* /*factory*/, const unsigned int /*version*/ )
 {
 }
 
 template< typename Archive >
-void load_construct_data( Archive& archive, InhabitantFactory* factory, const unsigned int /*version*/ )
+void load_construct_data( Archive& /*archive*/, InhabitantFactory* factory, const unsigned int /*version*/ )
 {
     ::new( factory )InhabitantFactory();
 }

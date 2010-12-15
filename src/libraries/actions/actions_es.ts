@@ -87,14 +87,6 @@
     </message>
 </context>
 <context>
-    <name>ActionsModel</name>
-    <message>
-        <source>The order file contains error(s), some actions could not be loaded:
-%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FragOrder</name>
     <message>
         <source>Entity &apos;%1&apos; (id: %2) cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>

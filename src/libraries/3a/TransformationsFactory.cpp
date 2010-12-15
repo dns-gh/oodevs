@@ -96,7 +96,6 @@ void TransformationsFactory::Transform1( const std::string& name, xml::xistream&
     typedef FunctionConnector< typename T::Key_Type, typename T::Result_Type > Connector;
     boost::shared_ptr< Connector > connector( new Connector() );
     boost::shared_ptr< T > function( new T( xis, *connector ) );
-
     result.AddConnector( name, connector );
     result.AddFunction ( name, function );
 }
@@ -115,7 +114,6 @@ void TransformationsFactory::Transform2( const std::string& name, xml::xistream&
     boost::shared_ptr< Connector > connector( new Connector() );
     boost::shared_ptr< T > function( new T( xis, *connector ) );
     boost::shared_ptr< Marshaller > marshaller( new Marshaller( *function ) );
-
     result.AddConnector( name, connector );
     result.AddFunction ( function );
     result.AddFunction ( name, marshaller );
@@ -131,7 +129,6 @@ void TransformationsFactory::CreateElement( const std::string& type, xml::xistre
 {
     if( type != "transform" )
         return;
-
     TransformDispatcher functor( this );
     TypeDispatcher dispatcher( xis, result, true );
     dispatcher.Dispatch( functor );

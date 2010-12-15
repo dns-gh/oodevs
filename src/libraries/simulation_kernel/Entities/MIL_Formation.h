@@ -20,11 +20,6 @@ namespace xml
     class xistream;
 }
 
-namespace sword
-{
-    class UnitMagicAction;
-}
-
 class MIL_Army_ABC;
 class PHY_NatureLevel;
 class FormationFactory_ABC;

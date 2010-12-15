@@ -24,8 +24,8 @@ class Function_ABC : public Slot_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Function_ABC() {};
-    virtual ~Function_ABC() {};
+             Function_ABC() {}
+    virtual ~Function_ABC() {}
     //@}
 
     //! @name Operations
@@ -35,7 +35,6 @@ public:
     virtual void EndTick() = 0;
     //@}
 };
-
 
 // =============================================================================
 /** @class  Function1_ABC
@@ -56,8 +55,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Function1_ABC() {};
-    virtual ~Function1_ABC() {};
+             Function1_ABC() {}
+    virtual ~Function1_ABC() {}
     //@}
 
     //! @name Operations
@@ -89,8 +88,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Function2_ABC() {};
-    virtual ~Function2_ABC() {};
+             Function2_ABC() {}
+    virtual ~Function2_ABC() {}
     //@}
 
     //! @name Operations
@@ -101,6 +100,5 @@ public:
     virtual void EndTick() = 0;
     //@}
 };
-
 
 #endif // __Functions_h_

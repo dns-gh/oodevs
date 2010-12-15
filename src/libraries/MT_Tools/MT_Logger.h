@@ -16,21 +16,21 @@
 //=============================================================================
 // Internal macros
 //=============================================================================
-#define _MT_LOG_FATAL_ERROR( msg, code, ctx ) MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_FatalError, msg, ctx, code );
-#define _MT_LOG_FATAL_ERROR_MSG( msg )        MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_FatalError, msg );
-#define _MT_LOG_ERROR( msg, code, ctx )       MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Error,      msg, ctx, code );
-#define _MT_LOG_ERROR_MSG( msg )              MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Error,      msg );
-#define _MT_LOG_WARNING( msg, code, ctx )     MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Warning,    msg, ctx, code );
-#define _MT_LOG_WARNING_MSG( msg )            MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Warning,    msg );
-#define _MT_LOG_MESSAGE( msg, code, ctx )     MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Message,    msg, ctx, code );
-#define _MT_LOG_MESSAGE_MSG( msg )            MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Message,    msg );
-#define _MT_LOG_INFO( msg, code, ctx )        MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Info,       msg, ctx, code );
-#define _MT_LOG_INFO_MSG( msg )               MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Info,       msg );
-#define _MT_LOG_VERBOSE( msg, code, ctx )     MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Verbose,    msg, ctx, code );
-#define _MT_LOG_VERBOSE_MSG( msg )            MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Verbose,    msg );
-#define _MT_LOG_DEBUG( msg, code, ctx )       MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Debug,      msg, ctx, code );
-#define _MT_LOG_DEBUG_MSG( msg )              MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_Debug,      msg );
-#define _MT_LOG_STARTUP_MESSAGE( msg )        MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_None,       msg );
+#define _MT_LOG_FATAL_ERROR( msg, code, ctx ) MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_FatalError, msg, ctx, code );
+#define _MT_LOG_FATAL_ERROR_MSG( msg )        MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_FatalError, msg );
+#define _MT_LOG_ERROR( msg, code, ctx )       MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Error,      msg, ctx, code );
+#define _MT_LOG_ERROR_MSG( msg )              MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Error,      msg );
+#define _MT_LOG_WARNING( msg, code, ctx )     MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Warning,    msg, ctx, code );
+#define _MT_LOG_WARNING_MSG( msg )            MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Warning,    msg );
+#define _MT_LOG_MESSAGE( msg, code, ctx )     MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Message,    msg, ctx, code );
+#define _MT_LOG_MESSAGE_MSG( msg )            MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Message,    msg );
+#define _MT_LOG_INFO( msg, code, ctx )        MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Info,       msg, ctx, code );
+#define _MT_LOG_INFO_MSG( msg )               MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Info,       msg );
+#define _MT_LOG_VERBOSE( msg, code, ctx )     MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Verbose,    msg, ctx, code );
+#define _MT_LOG_VERBOSE_MSG( msg )            MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Verbose,    msg );
+#define _MT_LOG_DEBUG( msg, code, ctx )       MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Debug,      msg, ctx, code );
+#define _MT_LOG_DEBUG_MSG( msg )              MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_Debug,      msg );
+#define _MT_LOG_STARTUP_MESSAGE( msg )        MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_None,       msg );
 
 // Temporary string stream
 #define _MT_CREATE_SSTREAM( sstr, msg ) std::stringstream sstr; sstr << msg
@@ -65,7 +65,7 @@
 #endif
 
 // Misc
-#define MT_LOG_STARTUP_MESSAGE( msg )          MT_LogManager::Instance().Log( 0, 0, MT_Logger_ABC::eLogLevel_None, msg );
+#define MT_LOG_STARTUP_MESSAGE( msg )          MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_None, msg );
 #define MT_LOG_REGISTER_LOGGER( logger )       MT_LogManager::Instance().RegisterLogger( logger ); 
 #define MT_LOG_UNREGISTER_LOGGER( logger )     MT_LogManager::Instance().UnregisterLogger( logger ); 
 

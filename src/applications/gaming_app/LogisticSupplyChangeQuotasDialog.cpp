@@ -37,8 +37,9 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "protocol/SimulationSenders.h"
-#include <boost/bind.hpp>
+#include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -307,21 +308,20 @@ void LogisticSupplyChangeQuotasDialog::Reject()
 
 namespace
 {
-
-	struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>
-	{
-		SupplyStatesVisitor( LogisticSupplyChangeQuotasDialog& dlg, void (LogisticSupplyChangeQuotasDialog::*pFunc)(const SupplyStates&) )
-				: dlg_(dlg), pFunc_ ( pFunc ) {}
-
-		void Visit( const SupplyStates& extension )
-		{
-			(dlg_.*pFunc_)(extension);
-		}
-	private:
-		LogisticSupplyChangeQuotasDialog& dlg_;
-		void (LogisticSupplyChangeQuotasDialog::*pFunc_)(const SupplyStates&);
-
-	};
+    struct SupplyStatesVisitor : kernel::ExtensionVisitor_ABC<SupplyStates>, boost::noncopyable
+    {
+        SupplyStatesVisitor( LogisticSupplyChangeQuotasDialog& dlg, void (LogisticSupplyChangeQuotasDialog::*pFunc)(const SupplyStates&) )
+                : dlg_  ( dlg )
+                , pFunc_( pFunc )
+        {}
+        void Visit( const SupplyStates& extension )
+        {
+            (dlg_.*pFunc_)(extension);
+        }
+    private:
+        LogisticSupplyChangeQuotasDialog& dlg_;
+        void (LogisticSupplyChangeQuotasDialog::*pFunc_)(const SupplyStates&);
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -351,19 +351,19 @@ void LogisticSupplyChangeQuotasDialog::OnSelectionChanged()
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::AddDotation( const SupplyStates& states )
 {
-	tools::Iterator< const Dotation& > it = states.CreateIterator();
-	while( it.HasMoreElements() )
-	{
-		const Dotation& dotation = it.NextElement();
-		const QString type = dotation.type_->GetName().c_str();
-		Dotation& supply = supplies_[ type ];
-		if( ! supply.type_ )
-		{
-			dotationTypes_.append( type );
-			supply.type_ = dotation.type_;
-		}
-		supply.quantity_ += dotation.quantity_;
-	}
+    tools::Iterator< const Dotation& > it = states.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Dotation& dotation = it.NextElement();
+        const QString type = dotation.type_->GetName().c_str();
+        Dotation& supply = supplies_[ type ];
+        if( ! supply.type_ )
+        {
+            dotationTypes_.append( type );
+            supply.type_ = dotation.type_;
+        }
+        supply.quantity_ += dotation.quantity_;
+    }
 }
 
 // -----------------------------------------------------------------------------

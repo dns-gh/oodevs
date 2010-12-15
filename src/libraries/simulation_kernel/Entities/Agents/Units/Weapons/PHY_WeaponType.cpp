@@ -340,7 +340,7 @@ double PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PH
 // Name: PHY_WeaponType::GetMaxRangeToFire
 // Created: DDA 2010-05-03
 // -----------------------------------------------------------------------------
-double PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& pion, double rWantedPH ) const
+double PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& /*pion*/, double rWantedPH ) const
 {
     if( !pDirectFireData_ )
         return 0.;

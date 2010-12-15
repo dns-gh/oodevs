@@ -35,7 +35,7 @@ Logger::~Logger()
 
 namespace
 {
-    double ToMb( unsigned bytes )
+    double ToMb( unsigned long long bytes )
     {
         return bytes / 1048576.;
     }

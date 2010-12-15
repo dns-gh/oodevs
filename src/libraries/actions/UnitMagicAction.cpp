@@ -40,8 +40,8 @@ UnitMagicAction::UnitMagicAction( const kernel::Entity_ABC& entity, const kernel
 // -----------------------------------------------------------------------------
 UnitMagicAction::UnitMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity, const QString& name )
     : ActionWithTarget_ABC( xis, controller, magic, entity )
-    , controller_         ( controller )
-    , registered_         ( true )
+    , controller_( controller )
+    , registered_( true )
 {
     Rename( name );
 }
@@ -72,8 +72,8 @@ void UnitMagicAction::Polish()
 // -----------------------------------------------------------------------------
 void UnitMagicAction::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", GetType().GetName() );
-    xos << xml::attribute( "type", "magicunit" );
+    xos << xml::attribute( "id", GetType().GetName() )
+        << xml::attribute( "type", "magicunit" );
     ActionWithTarget_ABC::Serialize( xos );
 }
 
@@ -83,8 +83,7 @@ void UnitMagicAction::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
 {
-    sword::UnitMagicAction_Type type =
-        ( sword::UnitMagicAction_Type ) GetType().GetId();
+    sword::UnitMagicAction_Type type = ( sword::UnitMagicAction_Type ) GetType().GetId();
     simulation::UnitMagicAction message;
     const kernel::Entity_ABC& entity = GetEntity();
     if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
@@ -106,4 +105,3 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
         const_cast< kernel::Entity_ABC& >( GetEntity() ).Update( message() );
     message().Clear();
 }
-

@@ -23,11 +23,8 @@
     @par    Using example
     @code
         MT_FileLogger logFile( "file.log" );
-
-        MT_LogManager::Instance().RegisterLogger( logFile );    
-
+        MT_LogManager::Instance().RegisterLogger( logFile );
         MT_LOG_INFO_MSG( "test msg" );
-
         MT_LogManager::Instance().UnregisterLogger( logFile );
     @endcode
 */
@@ -37,10 +34,7 @@ class MT_FileLogger : public MT_Logger_ABC
 {
 
 public:
-    explicit MT_FileLogger( const char* strFileName
-                          , unsigned int nLogLevels = eLogLevel_All
-                          , unsigned int nLogLayers = eLogLayer_All
-                          , bool bClearPreviousLog = false );
+    explicit MT_FileLogger( const char* strFileName, int nLogLevels = eLogLevel_All, bool bClearPreviousLog = false );
 
     virtual ~MT_FileLogger();
 
@@ -49,7 +43,7 @@ protected:
     /** @name Main method */
     //-------------------------------------------------------------------------
     //@{
-    virtual void LogString( const char* strLayerName, E_LogLevel level, const char* strMessage, const char* strContext, int nCode );
+    virtual void LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode );
     //@}
 
 private:

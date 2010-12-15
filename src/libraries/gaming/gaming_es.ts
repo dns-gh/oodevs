@@ -971,7 +971,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Supply route</source>
+        <source>Logistic route</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

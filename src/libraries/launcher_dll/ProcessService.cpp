@@ -153,7 +153,7 @@ void ProcessService::NotifyStopped()
 // Name: ProcessService::NotifyError
 // Created: SBO 2010-12-09
 // -----------------------------------------------------------------------------
-void ProcessService::NotifyError( const std::string& error )
+void ProcessService::NotifyError( const std::string& /*error*/ )
 {
     // $$$$ SBO 2010-12-09: Log error message
     NotifyStopped();

@@ -45,12 +45,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const sword::SimToClient&                      message ) = 0;
+    virtual void Send( const sword::SimToClient&            message ) = 0;
     virtual void Send( const sword::AuthenticationToClient& message ) = 0;
-    virtual void Send( const sword::ReplayToClient&                message ) = 0;
-    virtual void Send( const sword::AarToClient&                       message ) = 0;
-    virtual void Send( const sword::MessengerToClient&          message ) = 0;
-    virtual void Send( const sword::DispatcherToClient&        message ) = 0;
+    virtual void Send( const sword::ReplayToClient&         message ) = 0;
+    virtual void Send( const sword::AarToClient&            message ) = 0;
+    virtual void Send( const sword::MessengerToClient&      message ) = 0;
+    virtual void Send( const sword::DispatcherToClient&     message ) = 0;
     //@}
 
     //! @name Accessors

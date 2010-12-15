@@ -18,14 +18,15 @@
 #include <boost/thread.hpp>
 #ifdef _MSC_VER
 #   pragma warning( pop )
+#   pragma warning( disable: 4503 )
 #endif
 
 // -----------------------------------------------------------------------------
 // Name: SIM_NetworkLogger constructor
 // Created: NLD 2004-02-11
 // -----------------------------------------------------------------------------
-SIM_NetworkLogger::SIM_NetworkLogger( unsigned int nPort, unsigned int nLogLevels, unsigned int nLogLayers )
-    : MT_Logger_ABC( nLogLevels, nLogLayers )
+SIM_NetworkLogger::SIM_NetworkLogger( unsigned short nPort, int nLogLevels )
+    : MT_Logger_ABC( nLogLevels )
     , acceptor_( service_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), nPort ) )
     , mutex_   ( new boost::mutex() )
 {
@@ -85,12 +86,10 @@ void SIM_NetworkLogger::OnWrite( T_Socket socket, const boost::system::error_cod
 // Name: SIM_NetworkLogger::LogString
 // Created: NLD 2004-02-11
 // -----------------------------------------------------------------------------
-void SIM_NetworkLogger::LogString( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode )
+void SIM_NetworkLogger::LogString( E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode )
 {
     std::stringstream s;
     s << "[" << GetTimestampAsString() << "]";
-    if( strLayerName )
-        s << " " << strLayerName << " -";
     if( nLevel != eLogLevel_None )
         s << " " << GetLogLevelAsString( nLevel ) << " -";
     s << " " << szMsg;

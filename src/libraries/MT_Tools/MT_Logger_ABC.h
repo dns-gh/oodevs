@@ -16,17 +16,11 @@
 //=============================================================================
 /**
     @class  MT_Logger_ABC
-    @brief  PUT THE COMMENTS ON THE CLASS HERE
-    @par    Using example
-    @code
-      PUT YOUR EXAMPLE CODE HERE
-    @endcode
 */
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //=============================================================================
 class MT_Logger_ABC : private boost::noncopyable
 {
-
 public:
     //-------------------------------------------------------------------------
     /** @name Types */
@@ -42,28 +36,23 @@ public:
         eLogLevel_Verbose    = 0x20, // Messages only enabled in verbose mode
         eLogLevel_Debug      = 0x40, // Messages only enabled in debug mode
         eLogLevel_None       = 0x60,
-        eLogLevel_All        = 0xFF  
-    };
-
-    enum E_LogLayer
-    {
-        eLogLayer_All = (unsigned int)-1
+        eLogLevel_All        = 0xFF
     };
     //@}
-    
+
 public:
-    explicit MT_Logger_ABC( unsigned int nLogLevels = eLogLevel_All, unsigned int nLogLayers = eLogLayer_All );
+    explicit MT_Logger_ABC( int nLogLevels = eLogLevel_All );
     virtual ~MT_Logger_ABC();
 
     //-------------------------------------------------------------------------
     /** @name Main */
     //-------------------------------------------------------------------------
     //@{
-    void Log   ( unsigned int nLayer, const char* strLayerName, E_LogLevel nLevel, const char* strMessage, const char* strContext = 0, int nCode = -1 );
+    void Log   ( E_LogLevel nLevel, const char* strMessage, const char* strContext = 0, int nCode = -1 );
     void Pause (); //!< Pause the logger : the message aren't logged anymore.
     void Resume(); //!< Resume the logger.
     //@}
-   
+
     //-------------------------------------------------------------------------
     /** @name Timestamp */
     //-------------------------------------------------------------------------
@@ -76,20 +65,7 @@ public:
     /** @name Log levels */
     //-------------------------------------------------------------------------
     //@{
-    void SetLogLevels  ( E_LogLevel nLevels ); //!< Set the log levels which are really logged. The others are ignored
-    void AddLogLevel   ( E_LogLevel nLevel  );   
-    void RemoveLogLevel( E_LogLevel nLevel  );
-    bool IsLogLevelSet ( E_LogLevel nLevel  ) const;
-    //@}
-
-    //-------------------------------------------------------------------------
-    /** @name Log sub levels */
-    //-------------------------------------------------------------------------
-    //@{
-    void SetLogLayers  ( unsigned int nLayers );  
-    void AddLogLayer   ( unsigned int nLayer  );
-    void RemoveLogLayer( unsigned int nLayer  );
-    bool IsLogLayerSet ( unsigned int nLayer  ) const;
+    bool IsLogLevelSet( E_LogLevel nLevel ) const;
     //@}
 
 protected:
@@ -97,7 +73,7 @@ protected:
     /** @name Log methods */
     //-------------------------------------------------------------------------
     //@{
-    virtual void LogString( const char* strLayerName, E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode ) = 0;
+    virtual void LogString( E_LogLevel nLevel, const char* szMsg, const char* strContext, int nCode ) = 0;
     //@}
 
     //-------------------------------------------------------------------------
@@ -105,17 +81,18 @@ protected:
     //-------------------------------------------------------------------------
     //@{
     const char* GetTimestampAsString();
-    const char* GetLogLevelAsString ( E_LogLevel nLevel);
+    const char* GetLogLevelAsString( E_LogLevel nLevel);
     //@}
 
 private:
+    //-------------------------------------------------------------------------
+    /** @name Member data */
+    //-------------------------------------------------------------------------
+    //@{
     bool        bPaused_;
     std::string strTimestamp_;
-    unsigned int        nLogLevels_;
-    unsigned int        nLogLayers_;
+    int         nLogLevels_;
+    //@}
 };
 
-#include "MT_Logger_ABC.inl"
-
 #endif // __MT_Logger_ABC_h_
-

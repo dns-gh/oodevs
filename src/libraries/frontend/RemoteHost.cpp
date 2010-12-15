@@ -125,7 +125,7 @@ void RemoteHost::Handle( const sword::ControlStartExerciseAck& message )
 // Name: RemoteHost::Handle
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void RemoteHost::Handle( const sword::ProfileDescriptionList& message )
+void RemoteHost::Handle( const sword::ProfileDescriptionList& /*message*/ )
 {
     // $$$$ SBO 2010-11-22: TODO, handle profile list
 }

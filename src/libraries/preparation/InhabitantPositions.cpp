@@ -31,33 +31,35 @@ namespace
     class IntersectionVisitor : public kernel::LocationVisitor_ABC
     {
     public:
-        IntersectionVisitor( const UrbanModel& model ): model_( model ){}
-        ~IntersectionVisitor(){}
-        
-        virtual void VisitPolygon   ( const T_PointVector& points )
+        IntersectionVisitor( const UrbanModel& model )
+            : model_( model )
+        {}
+        virtual ~IntersectionVisitor()
+        {}
+        virtual void VisitPolygon( const T_PointVector& points )
         {
             tools::Iterator< const gui::TerrainObjectProxy& > it = model_.tools::Resolver< gui::TerrainObjectProxy >::CreateIterator();
             while( it.HasMoreElements() )
             {
-                const gui::TerrainObjectProxy& object = it.NextElement(); 
+                const gui::TerrainObjectProxy& object = it.NextElement();
                 geometry::Polygon2f poly( points );
                 if( poly.IsInside( object.Barycenter() ) )
                     vect_.push_back( &object );
             }
-        };
+        }
 
-        virtual void VisitLines     ( const T_PointVector& ){};
-        virtual void VisitRectangle ( const T_PointVector& ){};
-        virtual void VisitCircle    ( const geometry::Point2f& , float  ){};
-        virtual void VisitPoint     ( const geometry::Point2f&  ){};
-        virtual void VisitPath      ( const geometry::Point2f& , const T_PointVector&  ){};
-        std::vector< const gui::TerrainObjectProxy* > GetVect(){ return vect_; };
+        virtual void VisitLines     ( const T_PointVector& ) {}
+        virtual void VisitRectangle ( const T_PointVector& ) {}
+        virtual void VisitCircle    ( const geometry::Point2f& , float  ) {}
+        virtual void VisitPoint     ( const geometry::Point2f&  ) {}
+        virtual void VisitPath      ( const geometry::Point2f& , const T_PointVector&  ) {}
+        std::vector< const gui::TerrainObjectProxy* > GetVect(){ return vect_; }
 
     private :
         IntersectionVisitor( const IntersectionVisitor& );            //!< Copy constructor
         IntersectionVisitor& operator=( const IntersectionVisitor& ); //!< Assignment operator
-    private :
 
+    private :
         const UrbanModel& model_;
         std::vector< const gui::TerrainObjectProxy* > vect_;
     };
@@ -68,10 +70,10 @@ namespace
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
 InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, UrbanModel& urbanModel )
-    : converter_( converter )
+    : converter_ ( converter )
     , urbanModel_( urbanModel )
 {
-    IntersectionVisitor visitor( urbanModel_ ); 
+    IntersectionVisitor visitor( urbanModel_ );
     location.Accept( visitor );
     livingUrbanObject_ = visitor.GetVect();
 }
@@ -81,7 +83,7 @@ InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC&
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
 InhabitantPositions::InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, UrbanModel& urbanModel )
-    : converter_( converter )
+    : converter_ ( converter )
     , urbanModel_( urbanModel )
 {
     ReadLocation( xis );
@@ -115,12 +117,13 @@ void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis )
 {
     unsigned long id;
     xis >> xml::attribute( "id", id );
-    gui::TerrainObjectProxy* urbanObject = urbanModel_.tools::Resolver< gui::TerrainObjectProxy >::Find( id );
-    if( !urbanObject )
+    gui::TerrainObjectProxy* pObject = urbanModel_.tools::Resolver< gui::TerrainObjectProxy >::Find( id );
+    if( !pObject )
         xis.error( "error in loading living urban block for population" );
     else
-        livingUrbanObject_.push_back( urbanObject );
+        livingUrbanObject_.push_back( pObject );
 }
+
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions::SerializeAttributes
 // Created: SLG 2010-11-25
@@ -128,10 +131,10 @@ void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis )
 void InhabitantPositions::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "living-area" );
-    for ( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); it++ )
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
         xos << xml::start( "urban-block" )
-            << xml::attribute( "id", ( *it )->GetId() )
+                << xml::attribute( "id", ( *it )->GetId() )
             << xml::end;
     }
        //TODO
@@ -145,11 +148,9 @@ void InhabitantPositions::SerializeAttributes( xml::xostream& xos ) const
 geometry::Point2f InhabitantPositions::GetPosition( bool /*aggregated*/ ) const
 {
     geometry::Polygon2f poly;
-    for ( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); it++ )
-    {
-        poly.Add( (*it )->Barycenter() );
-    }
-    return poly.Barycenter();                   
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+        poly.Add( (*it)->Barycenter() );
+    return poly.Barycenter();
 }
 
 // -----------------------------------------------------------------------------
@@ -159,38 +160,40 @@ geometry::Point2f InhabitantPositions::GetPosition( bool /*aggregated*/ ) const
 float InhabitantPositions::GetHeight( bool /*aggregated*/ ) const
 {
     return 0;
-
 }
+
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions::IsAt
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-bool InhabitantPositions::IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const
+bool InhabitantPositions::IsAt( const geometry::Point2f& /*pos*/, float /*precision*/, float /*adaptiveFactor*/ ) const
 {
     return false;
 }
+
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions::IsIn
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-bool InhabitantPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
+bool InhabitantPositions::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
 {
     return false;
 }
+
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions::GetBoundingBox
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f InhabitantPositions::GetBoundingBox() const
 {
-    return geometry::Rectangle2f(); 
+    return geometry::Rectangle2f();
 }
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions::Accept
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-void InhabitantPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+void InhabitantPositions::Accept( kernel::LocationVisitor_ABC& /*visitor*/ ) const
 {
     //NOTHING
 }
@@ -210,14 +213,11 @@ bool InhabitantPositions::CanAggregate() const
 // -----------------------------------------------------------------------------
 void InhabitantPositions::Draw( const kernel::GlTools_ABC& tools ) const
 {
-    for ( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
         const gui::TerrainObjectProxy& object = **it;
-        const geometry::Polygon2f* footprint =  object.GetFootprint();
+        const geometry::Polygon2f* footprint = object.GetFootprint();
         if( footprint )
-        {
-            const geometry::Polygon2f::T_Vertices& points = footprint->Vertices();
-            tools.DrawConvexPolygon( points );
-        }
+            tools.DrawConvexPolygon( footprint->Vertices() );
     }
 }

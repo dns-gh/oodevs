@@ -37,7 +37,7 @@ namespace
 }
 
 template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_Inhabitant* population, const unsigned int /*version*/ )
+void save_construct_data( Archive& /*archive*/, const MIL_Inhabitant* /*population*/, const unsigned int /*version*/ )
 {
     // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
     /*
@@ -46,7 +46,7 @@ void save_construct_data( Archive& archive, const MIL_Inhabitant* population, co
 }
 
 template< typename Archive >
-void load_construct_data( Archive& archive, MIL_Inhabitant* population, const unsigned int /*version*/ )
+void load_construct_data( Archive& /*archive*/, MIL_Inhabitant* /*population*/, const unsigned int /*version*/ )
 {
     // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
     /*unsigned int nTypeID;
@@ -109,7 +109,7 @@ MIL_Inhabitant::MIL_Inhabitant(const MIL_InhabitantType& type )
 // Name: MIL_Inhabitant constructor
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name )
+MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type, MIL_Army_ABC& army, const MT_Vector2D& /*point*/, int /*number*/, const std::string& name )
     : MIL_Entity_ABC          ( name )
     , pType_                  ( &type )
     , nID_                    ( idManager_.GetFreeId() )
@@ -135,7 +135,7 @@ MIL_Inhabitant::~MIL_Inhabitant()
 // Name: MIL_Inhabitant::load
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
+void MIL_Inhabitant::load( MIL_CheckPointInArchive& /*file*/, const unsigned int )
 {
      // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
     /*file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
@@ -148,7 +148,7 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
 // Name: MIL_Inhabitant::save
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void MIL_Inhabitant::save( MIL_CheckPointOutArchive& /*file*/, const unsigned int ) const
 {
     // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
     /*file << boost::serialization::base_object< MIL_Entity_ABC >( *this );

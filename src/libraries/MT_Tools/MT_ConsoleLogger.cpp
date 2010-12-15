@@ -14,9 +14,9 @@
 // Name: MT_ConsoleLogger constructor
 // Created:  NLD 00-06-05 
 //-----------------------------------------------------------------------------
-MT_ConsoleLogger::MT_ConsoleLogger( unsigned int nLogLevels, unsigned int nLayers )
-    : MT_Logger_ABC( nLogLevels, nLayers )
-    , bDumpTimeStamps_( true  )
+MT_ConsoleLogger::MT_ConsoleLogger( int nLogLevels )
+    : MT_Logger_ABC( nLogLevels )
+    , bDumpTimeStamps_( true )
 {
     // NOTHING 
 }
@@ -65,7 +65,7 @@ void MT_ConsoleLogger::EnableTimeStamps( bool bEnabled )
 // Name: MT_ConsoleLogger::LogString
 // Created:  NLD 00-06-05 
 //-----------------------------------------------------------------------------
-void MT_ConsoleLogger::LogString( const char* strLayerName, E_LogLevel level, const char* strMessage, const char* strContext, int nCode )
+void MT_ConsoleLogger::LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode )
 {
     boost::mutex::scoped_lock locker( mutex_ );
 
@@ -76,10 +76,6 @@ void MT_ConsoleLogger::LogString( const char* strLayerName, E_LogLevel level, co
     // Time
     if( bDumpTimeStamps_ )
         printf( "[%s]", GetTimestampAsString() );
-
-    // Sub level name
-    if( strLayerName != NULL )
-        printf( " %s -", strLayerName );
 
     // Log level name
     if( level != eLogLevel_None )

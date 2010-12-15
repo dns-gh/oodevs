@@ -89,7 +89,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
 
     _mkdir( "./Debug" );
     MT_FileLogger           fileLogger     ( "./Debug/Sim.log" );
-    MT_FileLogger           crashFileLogger( "./Debug/Crash " VERSION ".log", MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError, MT_Logger_ABC::eLogLayer_All );
+    MT_FileLogger           crashFileLogger( "./Debug/Crash " VERSION ".log", MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError );
     MT_LOG_REGISTER_LOGGER( fileLogger );
     MT_LOG_REGISTER_LOGGER( crashFileLogger );
 
