@@ -13,4 +13,6 @@
 #define WIN32_LEAN_AND_MEAN
 #include <wise/DriverBase.h>
 
+#pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
+
 #endif // __wise_driver_dll_pch_h_

@@ -33,10 +33,10 @@
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
 Model::Model( CWISEDriver& driver, const WISE_HANDLE& database, SwordMessagePublisher_ABC& publisher )
-    : driver_( driver )
-    , database_( database )
-    , publisher_( publisher )
-    , simulation_( new Simulation( publisher ) )
+    : driver_     ( driver )
+    , database_   ( database )
+    , publisher_  ( publisher )
+    , simulation_ ( new Simulation( publisher ) )
     , taskFactory_( new TaskFactory( *this, publisher ) )
 {
     // NOTHING

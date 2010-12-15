@@ -101,7 +101,7 @@ std::wstring WiseEntity::GetAttribute( const WISE_HANDLE& handle ) const
 // Name: WiseEntity::Update
 // Created: SEB 2010-12-13
 // -----------------------------------------------------------------------------
-void WiseEntity::Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& attribute, const CWISEValueUnion& value )
+void WiseEntity::Update( SwordMessagePublisher_ABC& /*publisher*/, const WISE_HANDLE& /*attribute*/, const CWISEValueUnion& /*value*/ )
 {
     // $$$$ SEB 2010-12-13: remove default implementation
 }
