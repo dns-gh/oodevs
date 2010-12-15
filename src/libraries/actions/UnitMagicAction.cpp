@@ -10,7 +10,7 @@
 #include "actions_pch.h"
 #include "UnitMagicAction.h"
 #include "protocol/SimulationSenders.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
