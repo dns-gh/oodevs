@@ -263,16 +263,19 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
         if( !bFirstMove ) //// $$$$$ !bFirstMove A REVOIR - PERMET DE SORTIR D'UN OBSTACLE PONCTUEL
         {
             if( movingEntity_.CanObjectInteractWith( object ) )
+			{
                 movingEntity_.NotifyMovingInsideObject( object );
-            if( rSpeedWithinObject == 0. )
-            {
-                rCurrentSpeed_ = 0;
-                vNewPos_           = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
-                movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07:
-                return false;
-            }
+				if( rSpeedWithinObject == 0. )
+				{
+					rCurrentSpeed_ = 0;
+					vNewPos_           = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
+					movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07:
+					return false;
+				}
+			}
         }
-        movingEntity_.NotifyMovingOutsideObject( object );
+		if( movingEntity_.CanObjectInteractWith( object ) )
+			movingEntity_.NotifyMovingOutsideObject( object );
     }
 
     double rMaxSpeedForStep = std::numeric_limits< double >::max();
@@ -280,21 +283,27 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     {
         MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
         if( movingEntity_.CanObjectInteractWith( object ) )
+		{
             movingEntity_.NotifyMovingInsideObject( object );
 
-        rMaxSpeedForStep = std::min( rMaxSpeedForStep, movingEntity_.GetSpeedWithReinforcement( environment_, object) );
-        if( rMaxSpeedForStep == 0. )
-        {
-            rCurrentSpeed_ = 0;
-            vNewPos_       = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
-            movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
-            return false;
-        }
+			rMaxSpeedForStep = std::min( rMaxSpeedForStep, movingEntity_.GetSpeedWithReinforcement( environment_, object) );
+			if( rMaxSpeedForStep == 0. )
+			{
+				rCurrentSpeed_ = 0;
+				vNewPos_       = ( itCurMoveStep->vPos_ + ( vNewDir_ * nDistanceBeforeBlockingObject ) );
+				movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
+				return false;
+			}
+		}
     }
 
     // itCurMoveStep a pu être dépassé => notification des objets dont on sort
     for( itObject = itNextMoveStep->objectsOutSet_.begin(); itObject != itNextMoveStep->objectsOutSet_.end(); ++itObject )
-        movingEntity_.NotifyMovingOutsideObject( const_cast< MIL_Object_ABC& >( **itObject ) );
+	{
+		MIL_Object_ABC& object = const_cast< MIL_Object_ABC& >( **itObject );
+		if( movingEntity_.CanObjectInteractWith( object ) )
+			movingEntity_.NotifyMovingOutsideObject( object );
+	}
 
     if( rMaxSpeedForStep != std::numeric_limits< double >::max() )
         rCurrentSpeed_ = rMaxSpeedForStep;
