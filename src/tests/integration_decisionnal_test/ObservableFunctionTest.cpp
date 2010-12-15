@@ -26,7 +26,7 @@ namespace
             brain[ "DEC_ConnaissanceObject_EstUnEnnemi" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref(this), _1  ) );
             brain[ "DEC_ConnaissanceObject_EstUnAllie" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref(this), _1  ) );
             brain[ "DEC_ConnaissanceObjet_NiveauDePerceptionCourant" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) );
-            brain[ "DEC_ConnaissanceAgent_NiveauDePerceptionCourant" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) );
+            brain[ "DEC_ConnaissanceAgent_PercoitUnite" ] = boost::function< bool ( const std::string& ) >( boost::bind( &BrainFixture::Mock_PerceiveUnit, boost::cref(this), _1  ) );
             brain[ "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant" ] = boost::function< float ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetRecceLevel, boost::cref(this), _1 ) );
         }
         int Mock_IsEnemy( const std::string& name )
@@ -55,6 +55,10 @@ namespace
             if( name == "enemyIdentified" )
                 return 3;
             return 0;
+        }
+		bool Mock_PerceiveUnit( const std::string& name )
+        {
+            return( name == "enemySeen" );
         }
         float Mock_GetRecceLevel( const std::string& name )
         {
@@ -130,9 +134,7 @@ BOOST_FIXTURE_TEST_CASE( ComputeRelationObject, BrainFixture )
 BOOST_FIXTURE_TEST_CASE( GetAgentPerceptionLevel, BrainFixture )
 {
     GetAgentPerceptionLevelTest( CreateAgent( "enemyNotSeen"    ), 0. );
-    GetAgentPerceptionLevelTest( CreateAgent( "enemyDetected"   ), 100. );
-    GetAgentPerceptionLevelTest( CreateAgent( "enemyRecognized" ), 100. );
-    GetAgentPerceptionLevelTest( CreateAgent( "enemyIdentified" ), 100. );
+    GetAgentPerceptionLevelTest( CreateAgent( "enemySeen"   ), 100. );
 }
 
 // -----------------------------------------------------------------------------
