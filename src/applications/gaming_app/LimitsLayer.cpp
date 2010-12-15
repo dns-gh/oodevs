@@ -104,7 +104,16 @@ void LimitsLayer::CreateLima( const T_PointVector& points )
 // -----------------------------------------------------------------------------
 void LimitsLayer::BeforeSelection()
 {
-    // NOTHING
+    NotifySelected( 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::Select
+// Created: SBO 2009-08-06
+// -----------------------------------------------------------------------------
+void LimitsLayer::Select( const kernel::TacticalLine_ABC& entity )
+{
+    NotifySelected( &entity );
 }
 
 // -----------------------------------------------------------------------------

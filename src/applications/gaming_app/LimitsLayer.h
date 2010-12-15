@@ -48,6 +48,7 @@ private:
     virtual void CreateLima( const T_PointVector& points );
 
     virtual void BeforeSelection();
+    virtual void Select( const kernel::TacticalLine_ABC& entity );
     virtual void Select( const kernel::Automat_ABC& entity );
     virtual void Select( const kernel::Formation_ABC& entity );
     virtual void AfterSelection();
