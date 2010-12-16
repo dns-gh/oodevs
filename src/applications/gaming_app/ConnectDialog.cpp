@@ -96,14 +96,12 @@ void ConnectDialog::Validate()
 void ConnectDialog::LoadDefaultConfig()
 {
     pPortSpinBox_->setValue( 10001 );
-
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/sword/Hosts" );
+    settings.beginGroup( "/Common/Hosts" );
     QStringList list = settings.readListEntry( "/hosts", ';' );
     int nIndex = settings.readNumEntry( "/index", 0 );
     settings.endGroup();
-
     if( list.empty() )
         list.push_back( "localhost" );
     const QString currentItem = nIndex < int( list.count() ) ? list[ nIndex ] : list[0];
@@ -124,8 +122,7 @@ void ConnectDialog::SaveConfig()
 {
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    settings.beginGroup( "/sword/Hosts" );
-
+    settings.beginGroup( "/Common/Hosts" );
     QStringList list;
     for( int n = 0; n < pHostNameComboBox_->count(); ++n )
         list.push_back( pHostNameComboBox_->text( n ) );
