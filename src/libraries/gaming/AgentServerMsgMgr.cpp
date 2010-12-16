@@ -2086,7 +2086,7 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
     else if( wrapper.message().has_limit_update() )
         OnReceiveLimitUpdate     ( wrapper.message().limit_update() );
     else if( wrapper.message().has_limit_destruction() )
-        OnReceiveMsgLimitDestruction ( wrapper.message().limit_destruction() );
+        OnReceiveLimitDestruction ( wrapper.message().limit_destruction() );
     else if( wrapper.message().has_lima_creation() )
         OnReceiveLimaCreation    ( wrapper.message().lima_creation() );
     else if( wrapper.message().has_lima_update() )
