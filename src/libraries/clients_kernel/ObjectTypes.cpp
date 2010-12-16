@@ -73,7 +73,7 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config, std::string& invali
         .Load( "weapon-systems", boost::bind( &ObjectTypes::ReadWeaponSystems, this, _1 ) )
         .Load( "components", boost::bind( &ObjectTypes::ReadEquipments, this, _1 ) )
         .Load( "nbc", boost::bind( &ObjectTypes::ReadNBC, this, _1 ) )
-        .Load( "fire", boost::bind( &ObjectTypes::ReadFire, this, _1 ) )
+        .Load( "fires", boost::bind( &ObjectTypes::ReadFires, this, _1 ) )
         .Load( "medical-treatment", boost::bind( &ObjectTypes::ReadMedicalTreatment, this, _1 ) )
         .Load( "breakdowns", boost::bind( &ObjectTypes::ReadBreakdowns, this, _1 ) )
         .Load( "resource-networks", boost::bind( &ObjectTypes::ReadResourceNetworks, this, _1 ) )
@@ -92,7 +92,7 @@ void ObjectTypes::Purge()
     tools::Resolver< WeaponSystemType, std::string >::DeleteAll();
     Resolver2< DotationType >::DeleteAll();
     tools::StringResolver< ObjectType >::DeleteAll();
-    Resolver2< FireClass >::DeleteAll();
+    tools::StringResolver< FireClass >::DeleteAll();
     Resolver2< MedicalTreatmentType >::DeleteAll();
     tools::Resolver< VolumeType >::DeleteAll();
     tools::StringResolver< ResourceNetworkType >::DeleteAll();
@@ -207,22 +207,22 @@ void ObjectTypes::ReadNBCAgent( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectTypes::ReadFire
+// Name: ObjectTypes::ReadFires
 // Created: RFT 2006-04-04
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadFire( xml::xistream& xis )
+void ObjectTypes::ReadFires( xml::xistream& xis )
 {
-    xis >> xml::start( "fire-classes" ) >> xml::list( "class", *this, &ObjectTypes::ReadFireClass );
+    xis >> xml::start( "fires" ) >> xml::list( "fire", *this, &ObjectTypes::ReadFireClasses );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectTypes::ReadFireClass
+// Name: ObjectTypes::ReadFireClasses
 // Created: RFT 2006-04-04
 // -----------------------------------------------------------------------------
-void ObjectTypes::ReadFireClass( xml::xistream& xis )
+void ObjectTypes::ReadFireClasses( xml::xistream& xis )
 {
     FireClass* fire = new FireClass( xis );
-    Resolver2< FireClass >::Register( fire->GetId(), fire->GetName(), *fire );
+    tools::StringResolver< FireClass >::Register( fire->GetName(), *fire );
 }
 
 // -----------------------------------------------------------------------------

@@ -13,10 +13,12 @@
 #include "MIL.h"
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include "MIL_FireClass.h"
+#include "MIL_BurnEffectManipulator.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/serialization/export.hpp>
+
+class MIL_FireClass;
 
 // =============================================================================
 /** @class  FireAttribute
@@ -26,11 +28,7 @@
 // =============================================================================
 class FireAttribute
     : public ObjectAttribute_ABC
-    , public UpdatableAttribute_ABC
 {
-public:
-    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< FireAttribute > T_KnowledgeProxyType;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -50,44 +48,33 @@ public:
 
     //! @name From ObjectAttribute_ABC
     //@{
-    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     virtual void Register( MIL_Object_ABC& object ) const;
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
-    virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
-    virtual void WriteODB( xml::xostream& xos ) const;
+    //@}
+
+    //@}
+
+    //! @name Accessors
+    //@{
+    int GetInitialHeat() const;
+    int GetDecreaseRate() const;
+    int GetIncreaseRate();
+    int GetMaxHeat() const;
+    int GetCellSize() const;
+    int GetMaxCombustionEnergy() const;
+    int GetWeatherDecreateRate( const MIL_Object_ABC& object ) const;
+    MIL_BurnEffectManipulator GetBurnEffect();
     //@}
 
     //! @name Operations
     //@{
-    void ComputeHeatEvolution( unsigned int initial, unsigned int time );
-    void ComputeHeatWhenExtinguishing( MIL_FireClass::E_FireExtinguisherAgent extinguisherAgent, int numberOfFireHoses );
-    void UpdateHeat( int heat, unsigned int time );
-    //@}
-
-    //! @name Operations
-    //@{
-    int                      GetHeat() const;
-    const MIL_FireClass&  GetClass() const;
-    unsigned int          GetWidth() const;
-    unsigned int          GetLength() const;
-    //@}
-
-    //! @name Operations
-    //@{
-    FireAttribute( const FireAttribute& ); //!< Copy operator
-    FireAttribute& operator=( const FireAttribute& ); //!< Assignment operator
-    bool Update( const FireAttribute& rhs );    
     //@}
 
 private:
     //! @name Member data
     //@{
-    //Fire temperature
-    const MIL_FireClass*  pClass_;
-    int                   heat_;
-    unsigned int          timeOfLastUpdate_;
-    unsigned int          width_;
-    unsigned int          length_;
+    const MIL_FireClass* pClass_;
+    int maxCombustionEnergy_;
     //@}
 };
 

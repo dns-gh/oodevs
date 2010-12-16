@@ -23,7 +23,7 @@ public:
     //! @name Functions
     //@{
     static float GetRangeToExtinguish( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
-    static unsigned int AnalyzeFireClass( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
+    //static unsigned int AnalyzeFireClass( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
     //@}
 };
 

@@ -124,6 +124,10 @@
         <source>Info/Fire attributes/Fire class</source>
         <translation>Info/Attributs d&apos;incendie/Classe d&apos;incendie</translation>
     </message>
+    <message>
+        <source>Info/Fire attributes/Max combustion energy_</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FloodAttribute</name>
@@ -488,6 +492,10 @@
     <message>
         <source>Info/Occupant attributes/Max Entities</source>
         <translation>Info/Attributs animateurs/Animateurs max</translation>
+    </message>
+    <message>
+        <source>Max combustion energy:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Flood</source>

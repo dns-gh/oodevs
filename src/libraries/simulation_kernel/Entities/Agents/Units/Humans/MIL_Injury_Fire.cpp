@@ -256,8 +256,10 @@ bool MIL_Injury_Fire::IsInjured( const PHY_ComposantePion& pComposante )
 // Name: MIL_Injury_Fire::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_Fire::SetInjury( unsigned int nNbrAliveHumans , double rDensity )
+void MIL_Injury_Fire::SetInjury( unsigned int /*nNbrAliveHumans*/ , double /*rDensity*/ )
 {
+    int todo = 0;
+    /*
     //Population doesn't have any protection
     //First we compute the number of persons caught in the fire
     const unsigned int nNbrOfPossibleCasualties = std::min( nNbrAliveHumans, static_cast< unsigned int >( std::max( 1., rDensity * MIL_FireClass::GetLength() * MIL_FireClass::GetWidth() ) ) );
@@ -281,7 +283,7 @@ void MIL_Injury_Fire::SetInjury( unsigned int nNbrAliveHumans , double rDensity 
             PHY_InjuredHuman::InitializeInjuredHuman( *this );
             injuryCategory_ = MIL_MedicalTreatmentType::eUR;
         }
-    }
+    }*/
 }
 
 // -----------------------------------------------------------------------------

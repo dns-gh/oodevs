@@ -16,7 +16,7 @@
 #ifndef __MIL_FireFunctor_h_
 #define __MIL_FireFunctor_h_
 
-#include "MIL_FireClass.h"
+/*#include "MIL_FireClass.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 
 class PHY_ComposantePion;
@@ -41,7 +41,7 @@ private:
     const MIL_FireClass& fireClass_;
     MIL_FireClass::T_EvaluationResult bestExtinguisherAgentandFireHoseRange_;
 
-};
+};*/
 
 #endif // __MIL_FireFunctor_h_
 

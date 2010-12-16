@@ -105,6 +105,7 @@ enum EnumDotationFamily {
    barbele                                          = 4;
    piece                                            = 5;
    ration                                           = 6;
+   agent_extincteur                                 = 7;
 }
 
 enum EnumAmmunitionFamily {
@@ -777,8 +778,14 @@ message ObjectAttributeToxicCloud {
 }
 
 message ObjectAttributeFire {
-   required int32                       class_id            = 1;
-   required int32                       heat                = 2;
+   required string class_name = 1;
+   required int32 max_combustion_energy = 2;
+}
+
+message ObjectAttributeBurn {
+   required int32 current_heat = 1;
+   required int32 combustion_energy_sum = 2;
+   required int32 combustion_energy_count = 3;
 }
 
 message MedicalTreatmentBedCapacity {
@@ -830,6 +837,7 @@ message ObjectAttributes {
    optional ObjectAttributeEffectDelay       effect_delay        = 16;
    optional ObjectAttributeSealOff           seal_off             = 17;
    optional ObjectAttributeResourceNetwork   resource_networks    = 18;     //not in scipio V1.stab
+   optional ObjectAttributeBurn              burn                 = 19;
 }
 
 message MsgMarker {

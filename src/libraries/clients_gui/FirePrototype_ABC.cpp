@@ -19,12 +19,16 @@ using namespace gui;
 // Name: FirePrototype_ABC constructor
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
-FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass >& resolver )
+FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass, std::string >& resolver )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "FirePrototype_ABC", "Fire parameters" ) )
     , resolver_( resolver )
 {
     new QLabel( tools::translate( "FirePrototype_ABC", "Fire Class:" ), this );
     fireClass_ = new ValuedComboBox< const kernel::FireClass* >( this );
+
+    new QLabel( tools::translate( "FirePrototype_ABC", "Max combustion energy:" ), this );
+    maxCombustionEnergy_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, this );
+
     FillTypes();
 }
 

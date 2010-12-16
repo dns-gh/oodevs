@@ -21,7 +21,6 @@
 				<xs:element name="decisional" type="FileReference"/>
 				<xs:element name="resource-natures" type="FileReference"/>
 				<xs:element name="resources" type="FileReference"/>
-				<xs:element name="fire" type="FileReference"/>
 				<xs:element name="fires" type="FileReference"/>
 				<xs:element name="health" type="FileReference"/>
 				<xs:element name="human-factors" type="FileReference"/>

@@ -91,14 +91,17 @@ namespace
 
     void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
-        std::string model( xis.attribute< std::string >( "model" ) );
+/*        std::string model( xis.attribute< std::string >( "model" ) );
         if( model == "input" )
         {
             // NOT ALLOWED DURING GAMING SESSION
             // container.push_back( new InputPropagationPrototype( parent, resolver, message ) );
-        }
-        if( model == "fire" )
-            container.push_back( new FirePrototype( parent, resolver, attributesList ) );
+        }*/
+    }
+
+    void BurnAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
+    {
+        container.push_back( new FirePrototype( parent, resolver, attributesList ) );
     }
 
     void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
@@ -137,6 +140,7 @@ namespace
         factory->Register( "propagation"    , boost::bind( &PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
 
         factory->Register( "contamination"  , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
+        factory->Register( "burn"    , boost::bind( &BurnAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         return factory;
     }
 }

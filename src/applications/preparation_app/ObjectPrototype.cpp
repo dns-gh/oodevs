@@ -69,10 +69,12 @@ namespace
         std::string model( xis.attribute< std::string >( "model" ) );
         if( model == "input" )
             container.push_back( new InputPropagationPrototype( parent, config, object ) );
-        else if( model == "fire" )
-            container.push_back( new FirePrototype( parent, resolver, object ) );
     }
 
+    void BurnAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, const tools::GeneralConfig& config, Object_ABC*& object )
+    {
+        container.push_back( new FirePrototype( parent, resolver, object ) );
+    }
     void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, Object_ABC*& object )
     {
         int toxic = xis.attribute< int >( "max-toxic" );
@@ -121,7 +123,7 @@ namespace
 
         factory->Register( "medical"            , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->Register( "propagation"        , boost::bind( &::PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
-
+        factory->Register( "burn"        , boost::bind( &::BurnAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
         factory->Register( "contamination"      , boost::bind( &::ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
 
         return *factory;

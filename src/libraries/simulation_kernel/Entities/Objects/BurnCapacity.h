@@ -28,7 +28,8 @@ class MIL_Agent_ABC;
 // Created: RFT 2008-06-02
 // =============================================================================
 
-class BurnCapacity : public ObjectCapacity_ABC, public MIL_InteractiveContainer_ABC
+class BurnCapacity : public ObjectCapacity_ABC
+                   , public MIL_InteractiveContainer_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -38,20 +39,21 @@ public:
     virtual ~BurnCapacity();
     //@}
 
-    //! @name Initialize Data
-    //@{
-    void InitializeData( xml::xistream& xis );
-    //@}
-
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     //@}
 
-    //! @name virtual
+    //! @name Capacity creation
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Finalize( MIL_Object_ABC& object );
+    //@}
+
+    //! @name Update
+    //@{
+    virtual void Update( MIL_Object_ABC& object, unsigned int time );
     //@}
 
     //! @name MIL_InteractiveContainer_ABC
@@ -64,15 +66,18 @@ public:
     //@}
 
 private:
-    //! @name Copy
+    //! @name Copy constructor
     //@{
-    BurnCapacity( const BurnCapacity& );
+    explicit BurnCapacity( const BurnCapacity& );
     //@}
 
-private:
+    //! @name Initialize Data
+    //@{
+    void InitializeData( xml::xistream& xis );
+    //@}
+
     //! @name Private member
     //@{
-    int injuryID_;
     //@}
 };
 

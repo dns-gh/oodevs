@@ -9,26 +9,29 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_FireClass.h"
+#include "UrbanType.h"
+#include <urban/StaticModel.h>
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Tools/MIL_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
+#include "meteo/PHY_Precipitation.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_FireClass::T_FireClassMap MIL_FireClass::classes_;
-unsigned int MIL_FireClass::length_;
-unsigned int MIL_FireClass::width_;
+unsigned int MIL_FireClass::cellSize_;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FireClass::ReadClass
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-void MIL_FireClass::ReadClass( xml::xistream& xis )
+void MIL_FireClass::ReadFireClasses( xml::xistream& xis )
 {
     std::string strName;
     xis >> xml::attribute( "name", strName );
@@ -45,18 +48,13 @@ void MIL_FireClass::ReadClass( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_FireClass::Initialize( xml::xistream& xis )
 {
-    std::set< unsigned int > ids;
     MT_LOG_INFO_MSG( "Initializing fire classes" );
-    xis >> xml::start( "fire-classes" )
-            >> xml::start( "fire-surface" )
-                >> xml::attribute( "length", length_ )
-                >> xml::attribute( "width", width_ )
+    xis >> xml::start( "fires" )
+            >> xml::start( "cell-size" )
+                >> xml::attribute( "value", cellSize_ )
             >> xml::end
-            >> xml::list( "class", &ReadClass )
+            >> xml::list( "fire", &ReadFireClasses )
         >> xml::end;
-    for( CIT_FireClassMap it = classes_.begin(); it != classes_.end(); ++it )
-        if( ! ids.insert( it->second->GetID() ).second )
-            throw std::runtime_error( "Fire Class id of " + it->second->GetName() + " already exists" );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,69 +62,122 @@ void MIL_FireClass::Initialize( xml::xistream& xis )
 // Created: RFT 24/04/2008
 // Modified: RFT 14/05/2008
 // -----------------------------------------------------------------------------
-MIL_FireClass::MIL_FireClass( const std::string& strName, xml::xistream& xis )
-    : strName_              ( strName )
-    , nID_                  ( 0 )
-    , tempThreshold_        ( 0 )
-    , defaultHeat_          ( 0 )
-    , heatMax_              ( 0 )
+MIL_FireClass::MIL_FireClass( const std::string& name, xml::xistream& xis )
+    : name_              ( name )
+    , maxHeat_              ( 0 )
     , increaseRate_         ( 0 )
     , decreaseRate_         ( 0 )
-    , propagationThreshold_ ( 0 )
 {
-    tools::ReadTimeAttribute( xis , "tempthreshold" , tempThreshold_ );
-    tempThreshold_ = ( unsigned int ) MIL_Tools::ConvertSecondsToSim( tempThreshold_ );
-
-    xis >> xml::attribute( "id"                     , nID_ )
-        >> xml::attribute( "defaultheat"            , defaultHeat_ )
-        >> xml::attribute( "heatmax"                , heatMax_ )
-        >> xml::attribute( "increaserate"           , increaseRate_ )
-        >> xml::attribute( "decreaserate"           , decreaseRate_ )
-        >> xml::attribute( "propagation-threshold"  , propagationThreshold_ )
+    xis >> xml::attribute( "decrease-rate"           , decreaseRate_ )
+        >> xml::attribute( "increase-rate"           , increaseRate_ )
+        >> xml::attribute( "initial-heat"            , initialHeat_ )
+        >> xml::attribute( "max-heat"                , maxHeat_ )
         >> xml::start( "extinguisher-agents" )
-            >> xml::list( "agent", *this, &MIL_FireClass::ReadExtinguisherAgentEffect )
+            >> xml::list( "extinguisher-agent", *this, &MIL_FireClass::ReadExtinguisherAgent )
+        >> xml::end
+        >> xml::start( "weather-effects" )
+            >> xml::list( "weather-effect", *this, &MIL_FireClass::ReadWeatherEffect )
+        >> xml::end
+        >> xml::start( "injuries" )
+            >> xml::list( "injury", *this, &MIL_FireClass::ReadInjury )
+        >> xml::end
+        >> xml::start( "urban-modifiers" )
+            >> xml::list( "urban-modifier", *this, &MIL_FireClass::ReadUrbanModifier )
+        >> xml::end
+        >> xml::start( "surfaces" )
+            >> xml::list( "surface", *this, &MIL_FireClass::ReadSurface )
         >> xml::end;
 }
 
-namespace
-{
-    MIL_FireClass::E_FireExtinguisherAgent StringToE_FireExtinguisherAgent( const std::string& nature )
-    {
-        MIL_FireClass::E_FireExtinguisherAgent extinguisherAgent = MIL_FireClass::eEauEnMasse;
-
-        if( nature == "EauEnMasse" )
-            extinguisherAgent = MIL_FireClass::eEauEnMasse;
-        else if( nature == "EauEnPulverisation" )
-            extinguisherAgent = MIL_FireClass::eEauEnPulverisation;
-        else if( nature == "Mousses" )
-            extinguisherAgent = MIL_FireClass::eMousses;
-        else if( nature == "Poudres" )
-            extinguisherAgent = MIL_FireClass::ePoudres;
-        else if( nature == "CO2" )
-            extinguisherAgent = MIL_FireClass::eCO2;
-        else if( nature == "Solide" )
-            extinguisherAgent = MIL_FireClass::eSolide;
-        else if( nature == "HydrocarburesHalogenes" )
-            extinguisherAgent = MIL_FireClass::eHydrocarburesHalogenes;
-       return extinguisherAgent;
-    }
-}
-
 // -----------------------------------------------------------------------------
-// Name: MIL_FireClass::ReadExtinguisherAgentEffect
+// Name: MIL_FireClass::ReadExtinguisherAgent
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-void MIL_FireClass::ReadExtinguisherAgentEffect( xml::xistream& xis )
+void MIL_FireClass::ReadExtinguisherAgent( xml::xistream& xis )
 {
-    unsigned int effect;
-    std::string nature;
-    E_FireExtinguisherAgent extinguisherAgent;
-    xis >> xml::attribute( "effect", effect )
-        >> xml::attribute( "nature", nature );
+    std::string agent;
+    ExtinguisherAgentEffect effect;
+    xis >> xml::attribute( "agent", agent )
+        >> xml::attribute( "heat-decrease-rate", effect.heatDecreaseRate_ );
 
-    extinguisherAgent = StringToE_FireExtinguisherAgent( nature );
-    extinguisherAgentEffect_.insert( std::make_pair( extinguisherAgent, effect ) );
+    const PHY_DotationCategory* pExtinguisherAgent = PHY_DotationType::FindDotationCategory( agent );
+    if( !pExtinguisherAgent )
+        throw std::runtime_error( "Unknow extinguisher agent " + agent );
+    extinguisherAgentEffects_.insert( std::make_pair( pExtinguisherAgent, effect ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::ReadWeatherEffect
+// Created: BCI 2010-12-08
+// -----------------------------------------------------------------------------
+void MIL_FireClass::ReadWeatherEffect( xml::xistream& xis )
+{
+    std::string weather;
+    WeatherEffect effect;
+    xis >> xml::attribute( "weather", weather )
+        >> xml::attribute( "heat-decrease-rate", effect.heatDecreaseRate_ );
+
+    const weather::PHY_Precipitation* pWeather = weather::PHY_Precipitation::FindPrecipitation( weather );
+    if( !pWeather )
+        throw std::runtime_error( "Unknow weather " + weather );
+
+    weatherEffects_.insert( std::make_pair( pWeather, effect ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::ReadInjury
+// Created: BCI 2010-12-08
+// -----------------------------------------------------------------------------
+void MIL_FireClass::ReadInjury( xml::xistream& xis )
+{
+    Injury injury;
+    std::string type;
+    xis >> xml::attribute( "type", type )
+        >> xml::attribute( "percentage", injury.percentage_ );
+
+    const PHY_HumanWound* pType = PHY_HumanWound::Find( type );
+    if( !pType )
+        xis.error( "Unknow injury type " + type );
+
+    injuries_.insert( std::make_pair( pType, injury ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::ReadUrbanModifier
+// Created: BCI 2010-12-08
+// -----------------------------------------------------------------------------
+void MIL_FireClass::ReadUrbanModifier( xml::xistream& xis )
+{
+    UrbanModifier urbanModifier;
+    std::string materialType;
+    xis >> xml::attribute( "material-type", materialType )
+        >> xml::attribute( "value", urbanModifier.factor_ );
+    
+    urban::MaterialCompositionType* pMaterial = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( materialType );
+    if( !pMaterial )
+        xis.error( "Unknow material type : " + materialType );
+
+    urbanModifiers_.insert( std::make_pair( pMaterial, urbanModifier ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::ReadSurface
+// Created: BCI 2010-12-08
+// -----------------------------------------------------------------------------
+void MIL_FireClass::ReadSurface( xml::xistream& xis )
+{
+    Surface surface;
+    std::string strTerrainType;
+    xis >> xml::attribute( "type", strTerrainType )
+        >> xml::attribute( "ignition-threshold", surface.ignitionThreshold_ )
+        >> xml::attribute( "max-combustion-energy", surface.maxCombustionEnergy_ );
+    
+    const TerrainData data = MIL_Tools::ConvertLandType( strTerrainType );
+    if( data.Area() == 0xFF )
+        xis.error( "Unknown terrain type '" + strTerrainType + "'" );
+
+    surfaces_.insert( std::make_pair( data.Area(), surface ) );    
 }
 
 // -----------------------------------------------------------------------------
@@ -156,21 +207,6 @@ const MIL_FireClass* MIL_FireClass::Find( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FireClass::Find
-// Created: RFT 19/05/2008
-// Modified: none
-// -----------------------------------------------------------------------------
-const MIL_FireClass* MIL_FireClass::Find( unsigned int nID )
-{
-    for( CIT_FireClassMap it = classes_.begin(); it != classes_.end(); ++it )
-    {
-        if( it->second->GetID() == nID )
-            return it->second;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_DynmaicFireClassA destructor
 // Created: RFT 24/04/2008
 // Modified: RFT 14/05/2008
@@ -181,33 +217,12 @@ MIL_FireClass::~MIL_FireClass()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FireClass::GetID
-// Created: RFT 19/05/2008
-// Modified: none
+// Name: MIL_FireClass::GetCellSize
+// Created: BCI 2010-12-09
 // -----------------------------------------------------------------------------
-unsigned int MIL_FireClass::GetID() const
+int MIL_FireClass::GetCellSize()
 {
-    return nID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FireClass::GetWidth
-// Created: RFT 19/05/2008
-// Modified: none
-// -----------------------------------------------------------------------------
-unsigned int MIL_FireClass::GetWidth()
-{
-    return width_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FireClass::GetLength
-// Created: RFT 19/05/2008
-// Modified: none
-// -----------------------------------------------------------------------------
-unsigned int MIL_FireClass::GetLength()
-{
-    return length_;
+    return cellSize_;
 }
 
 // -----------------------------------------------------------------------------
@@ -217,81 +232,86 @@ unsigned int MIL_FireClass::GetLength()
 // -----------------------------------------------------------------------------
 const std::string& MIL_FireClass::GetName() const
 {
-    return strName_;
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GetDefaultHeat()
-// Created: RFT 22/05/2008
-// Modified: none
+// Name: MIL_FireClass::GetInitialHeat
+// Created: BCI 2010-12-10
 // -----------------------------------------------------------------------------
-int MIL_FireClass::GetDefaultHeat() const
+int MIL_FireClass::GetInitialHeat() const
 {
-    return defaultHeat_;
+    return initialHeat_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: GetPropagationThreshold()
-// Created: RFT 22/05/2008
-// Modified: none
+// Name: MIL_FireClass::GetDecreaseRate
+// Created: BCI 2010-12-10
 // -----------------------------------------------------------------------------
-int MIL_FireClass::GetPropagationThreshold() const
+int MIL_FireClass::GetDecreaseRate() const
 {
-    return propagationThreshold_;
-}
-
-// =============================================================================
-// HEAT EVOLUTION
-// Created: RFT 19/05/2008
-// Modified: none
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// Name: ComputeHeatEvolution
-// Created: RFT 28/04/2008
-// Modified: none
-// -----------------------------------------------------------------------------
-int    MIL_FireClass::ComputeHeatEvolution( int heat, unsigned int timeOfCreation, unsigned int timeOflastUpdate ) const
-{
-    //Temporal informations acquisition
-    unsigned int time = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    unsigned int timeSinceCreation = time - timeOfCreation;
-
-    //New heat computation depending on fire phasis
-    if( timeSinceCreation < tempThreshold_ && heat < heatMax_ )
-        heat =  heat + ( int )( ( time - timeOflastUpdate )*increaseRate_ );
-    else if( timeSinceCreation > tempThreshold_ )
-        heat = heat - ( int )( ( time - timeOflastUpdate )*decreaseRate_ );
-
-    return heat;
+    return decreaseRate_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ComputeHeatEvolutionWhenTryingToExtinguish
-// Created: RFT 28/04/2008
-// Modified: none
+// Name: MIL_FireClass::GetIncreaseRate
+// Created: BCI 2010-12-10
 // -----------------------------------------------------------------------------
-int MIL_FireClass::ComputeHeatWhenExtinguishing( int heat, E_FireExtinguisherAgent extinguisherAgent, int numberOfFireHoses ) const
+int MIL_FireClass::GetIncreaseRate() const
 {
-    CIT_ExtinguisherAgentEffectMap iter = extinguisherAgentEffect_.find( extinguisherAgent );
-    if( iter != extinguisherAgentEffect_.end() )
-        heat -= numberOfFireHoses * iter->second;
-    return heat;
+    return increaseRate_;
 }
 
-
-MIL_FireClass::T_EvaluationResult MIL_FireClass::Evaluate( const PHY_Weapon& weapon ) const
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::GetMaxHeat
+// Created: BCI 2010-12-10
+// -----------------------------------------------------------------------------
+int MIL_FireClass::GetMaxHeat() const
 {
-    //If the extinguisher agent isn't found return extinguisher agent effect = -1
-    //If the extinguisher agent isn't found return fire hose range = -1
+    return maxHeat_;
+}
 
-    MIL_FireClass::T_EvaluationResult result;
-    result.agent_ = StringToE_FireExtinguisherAgent( weapon.GetDotationCategory().GetNature().GetName() );
-    CIT_ExtinguisherAgentEffectMap iter = extinguisherAgentEffect_.find( result.agent_ );
-    if( iter != extinguisherAgentEffect_.end() )
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::GetDefaultFireClass
+// Created: BCI 2010-11-30
+// -----------------------------------------------------------------------------
+const MIL_FireClass* MIL_FireClass::GetDefaultFireClass()
+{
+    if( !classes_.empty() )
+        return classes_.begin()->second;
+    else
+        throw std::runtime_error( "No default MIL_FireClass available" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::GetWeatherDecreateRate
+// Created: BCI 2010-12-13
+// -----------------------------------------------------------------------------
+int MIL_FireClass::GetWeatherDecreateRate( const weather::PHY_Precipitation& precipitation ) const
+{
+    T_WeatherEffectMap::const_iterator it = weatherEffects_.find( &precipitation );
+    if( it != weatherEffects_.end() )
+        return it->second.heatDecreaseRate_;
+    else
+        return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::ChooseRandomWound
+// Created: BCI 2010-12-14
+// -----------------------------------------------------------------------------
+const PHY_HumanWound& MIL_FireClass::ChooseRandomWound() const
+{
+    const double rRand = MIL_Random::rand_oi( MIL_Random::eWounds );
+
+    double rSumFactors = 0.;
+    for( T_InjuryMap::const_iterator it = injuries_.begin(); it != injuries_.end(); ++it )
     {
-        result.score_ = iter->second;
-        result.range_ = static_cast< int >( weapon.GetMaxRangeToIndirectFire() );
+        const PHY_HumanWound& wound = *it->first;
+        rSumFactors += it->second.percentage_;
+        if( rSumFactors >= rRand )
+            return wound;
     }
-    return result;
+    throw std::runtime_error( __FUNCTION__ ": cannot choose random fire wound. Check if the injuries of fire class " + name_ + " are valid" );
 }
+

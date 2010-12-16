@@ -15,7 +15,7 @@
   <units file="Pions.xml"/>
   <automats file="Automates.xml"/>
   <nbc file="NBC.xml"/>
-  <fire file="Fire.xml"/>
+  <fire file=""/>
   <fires file="Fires.xml"/>
   <medical-treatment file="MedicalTreatment.xml"/>
   <health file="Sante.xml"/>
@@ -35,4 +35,4 @@
   <urban file="Urban.xml"/>
   <resource-networks file="ResourceNetworks.xml"/>
 </physical>
-<!-- signature="3515045782" -->
+<!-- signature="0182862815" -->

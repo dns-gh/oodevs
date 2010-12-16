@@ -1247,8 +1247,14 @@ namespace
             ConvertObjectAttributeToxicCloud( from.toxic_cloud(), to->mutable_toxic_cloud() );
         if( from.has_fire() )
         {
-            to->mutable_fire()->set_class_id( from.fire().class_id() );
-            to->mutable_fire()->set_heat( from.fire().heat() );
+            to->mutable_fire()->set_class_name( from.fire().class_name() );
+            to->mutable_fire()->set_max_combustion_energy( from.fire().max_combustion_energy() );
+        }
+        if( from.has_burn() )
+        {
+            to->mutable_burn()->set_current_heat( from.burn().current_heat() );
+            to->mutable_burn()->set_combustion_energy_sum( from.burn().combustion_energy_sum() );
+            to->mutable_burn()->set_combustion_energy_count( from.burn().combustion_energy_count() );
         }
         if( from.has_medical_treatment() )
         {

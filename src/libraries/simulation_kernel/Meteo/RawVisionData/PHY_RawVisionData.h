@@ -94,6 +94,8 @@ public:
 
     double   GetCellSize() const;
 
+    const weather::PHY_Precipitation& GetPrecipitation( const MT_Vector2D& ) const;
+
     double GetAltitude( const MT_Vector2D& pos )     const;
     double GetAltitude( double rX_, double rY_ ) const;
 

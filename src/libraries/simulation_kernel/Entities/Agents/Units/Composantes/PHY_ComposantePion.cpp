@@ -407,11 +407,22 @@ void PHY_ComposantePion::ApplyPoisonous( const MIL_ToxicEffectManipulator& conta
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyBurn
+// Created: BCI 2010-12-13
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ApplyBurn( const MIL_BurnEffectManipulator& burn )
+{
+    assert( pHumans_ );
+    pHumans_->ApplyBurn( burn );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyInjury
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::ApplyInjury( MIL_Injury_ABC& injury )
 {
+
     assert( pHumans_ );
     pHumans_->ApplyInjury( injury );
 }

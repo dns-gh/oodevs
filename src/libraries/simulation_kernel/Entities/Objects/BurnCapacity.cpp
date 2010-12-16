@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "BurnCapacity.h"
 #include "FireAttribute.h"
+#include "BurnAttribute.h"
 #include "MIL_Object_ABC.h"
 #include "Entities\Agents\MIL_Agent_ABC.h"
 #include "Entities\Agents\Roles\Composantes\PHY_RoleInterface_Composantes.h"
@@ -50,7 +51,7 @@ BurnCapacity::~BurnCapacity()
 // Name: BurnCapacity constructor
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-BurnCapacity::BurnCapacity( const BurnCapacity& /*from*/ )
+BurnCapacity::BurnCapacity( const BurnCapacity& /*other*/ )
 {
     // NOTHING
 }
@@ -59,9 +60,10 @@ BurnCapacity::BurnCapacity( const BurnCapacity& /*from*/ )
 // Name: BurnCapacity::InitializeSpeed
 // Created: RFT 2008-06-02
 // -----------------------------------------------------------------------------
-void BurnCapacity::InitializeData( xml::xistream& xis )
+void BurnCapacity::InitializeData( xml::xistream& /*xis*/ )
 {
-    xis >> xml::attribute( "injury-id", injuryID_ );
+    int todo = 0;
+    //xis >> xml::attribute( "injury-id", injuryID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,6 +83,7 @@ void BurnCapacity::serialize( Archive& file, const unsigned int )
 void BurnCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +92,20 @@ void BurnCapacity::Register( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void BurnCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
-    object.AddCapacity( new BurnCapacity( *this ) );
+    BurnCapacity* pBurnCapacity = new BurnCapacity( *this );
+    object.AddCapacity( pBurnCapacity );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( pBurnCapacity ) );
+    object.SetAttribute< FireAttribute, FireAttribute >( FireAttribute() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BurnCapacity::Finalize
+// Created: BCI 2010-12-09
+// -----------------------------------------------------------------------------
+void BurnCapacity::Finalize( MIL_Object_ABC& object )
+{
+    BurnAttribute& burnAttribute = object.GetAttribute< BurnAttribute >();
+    burnAttribute.StartBurn( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,9 +114,7 @@ void BurnCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void BurnCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    FireAttribute& attr = object.GetAttribute< FireAttribute >();
-    MIL_Injury_Fire injury( attr.GetHeat() , attr.GetClass().GetName() , injuryID_ );
-    agent.GetRole< PHY_RoleInterface_Composantes >().ApplyInjury( injury );
+    agent.GetRole< PHY_RoleInterface_Composantes >().ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,9 +123,7 @@ void BurnCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_A
 // -----------------------------------------------------------------------------
 void BurnCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
 {
-    FireAttribute& attr = object.GetAttribute< FireAttribute >();
-    MIL_Injury_Fire injury( attr.GetHeat() , attr.GetClass().GetName() , injuryID_ );
-    agent.GetRole< PHY_RoleInterface_Composantes >().ApplyInjury( injury );
+    agent.GetRole< PHY_RoleInterface_Composantes >().ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +132,18 @@ void BurnCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& ag
 // -----------------------------------------------------------------------------
 void BurnCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
-    FireAttribute& attr = object.GetAttribute< FireAttribute >();
-    MIL_Injury_Fire injury( attr.GetHeat() , attr.GetClass().GetName() , injuryID_ );
-    population.ApplyInjury( injury );
+    population.ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+    //FireAttribute& attr = object.GetAttribute< FireAttribute >();
+    //MIL_Injury_Fire injury( attr.GetHeat() , attr.GetClass().GetName() , injuryID_ );
+    //population.ApplyInjury( injury );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: BurnCapacity::Update
+// Created: BCI 2010-12-09
+// -----------------------------------------------------------------------------
+void BurnCapacity::Update( MIL_Object_ABC& object, unsigned int time )
+{
+    object.GetAttribute< BurnAttribute >().Burn( object );
 }

@@ -12,26 +12,23 @@
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "MIL_AgentServer.h"
-#include "protocol/Protocol.h"
+#include "MIL_FireClass.h"
+#include "Meteo/PHY_MeteoDataManager.h"
+#include "Meteo/RawVisionData/PHY_RawVisionData.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FireAttribute )
-
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< FireAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< FireAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute constructor
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 FireAttribute::FireAttribute()
-    : heat_        ( 0 )
-    , pClass_    ( 0 )
-    , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-    , width_            ( 0 )
-    , length_           ( 0 )
+    : pClass_    ( MIL_FireClass::GetDefaultFireClass() )
+    , maxCombustionEnergy_( 0 )
 {
-    // NOTHING
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,19 +36,15 @@ FireAttribute::FireAttribute()
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
 FireAttribute::FireAttribute( xml::xistream& xis )
-    : heat_        ( 0 )
-    , pClass_    ( 0 )
-    , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-    , width_            ( MIL_FireClass::GetWidth() )
-    , length_           ( MIL_FireClass::GetLength() )
+    : maxCombustionEnergy_( 0 )
+    , pClass_( 0 )
 {
+
     std::string className( xml::attribute( xis, "class", std::string() ) );
     pClass_ = MIL_FireClass::Find( className );
     if( !pClass_ )
         xis.error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
-    heat_ = pClass_->GetDefaultHeat();
-    xis >> xml::optional
-        >> xml::attribute( "heat", heat_ );
+    xis >> xml::attribute( "max-combustion-energy", maxCombustionEnergy_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,31 +52,14 @@ FireAttribute::FireAttribute( xml::xistream& xis )
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
 FireAttribute::FireAttribute( const sword::MsgMissionParameter_Value& attributes )
-    : heat_        ( 0 )
-    , pClass_    ( 0 )
-    , width_    ( MIL_FireClass::GetWidth() )
-    , length_   ( MIL_FireClass::GetLength() )
-    , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    : maxCombustionEnergy_( 0 )
+    , pClass_   ( 0 )
 {
-    pClass_ = MIL_FireClass::Find( attributes.list( 1 ).identifier() );
+    int todo = 0; // $$$$ BCI 2010-12-07: à revoir...
+    pClass_ = MIL_FireClass::Find( attributes.list( 1 ).acharstr() );
     if( !pClass_ )
         throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );
-    heat_ = pClass_->GetDefaultHeat();
 //    asn.fire.heat
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute constructor
-// Created: JCR 2008-07-21
-// -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( const FireAttribute& attr )
-    : pClass_    ( attr.pClass_ )
-    , heat_        ( attr.pClass_->GetDefaultHeat() )
-    , width_    ( attr.width_ )
-    , length_   ( attr.length_ )
-    , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -96,21 +72,6 @@ FireAttribute::~FireAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireAttribute::operator=
-// Created: JCR 2008-05-30
-// -----------------------------------------------------------------------------
-FireAttribute& FireAttribute::operator=( const FireAttribute& rhs )
-{
-    timeOfLastUpdate_ = rhs.timeOfLastUpdate_;
-    heat_ = rhs.heat_;
-    pClass_ = rhs.pClass_;
-    width_ = rhs.width_;
-    length_ = rhs.length_;
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-    return *this;
-}
-
-// -----------------------------------------------------------------------------
 // Name: FireAttribute::load
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
@@ -119,10 +80,7 @@ void FireAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
     std::string className;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar >> className
-       >> heat_
-       >> timeOfLastUpdate_
-       >> width_
-       >> length_;
+       >> maxCombustionEnergy_;
     pClass_ = MIL_FireClass::Find( className );
     if( !pClass_ )
         throw std::runtime_error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
@@ -136,19 +94,7 @@ void FireAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << pClass_->GetName()
-       << heat_
-       << timeOfLastUpdate_
-       << width_
-       << length_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute::Instanciate
-// Created: JCR 2008-06-09
-// -----------------------------------------------------------------------------
-void FireAttribute::Instanciate( DEC_Knowledge_Object& object ) const
-{
-    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< FireAttribute > >( *new T_KnowledgeProxyType() );
+       << maxCombustionEnergy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -161,139 +107,80 @@ void FireAttribute::Register( MIL_Object_ABC& object ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireAttribute::GetInitialHeat
+// Created: BCI 2010-12-10
+// -----------------------------------------------------------------------------
+int FireAttribute::GetInitialHeat() const
+{
+    return pClass_->GetInitialHeat();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::GetDecreaseRate
+// Created: BCI 2010-12-10
+// -----------------------------------------------------------------------------
+int FireAttribute::GetDecreaseRate() const
+{
+    return pClass_->GetDecreaseRate();
+}
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::GetIncreaseRate
+// Created: BCI 2010-12-10
+// -----------------------------------------------------------------------------
+int FireAttribute::GetIncreaseRate()
+{
+    return pClass_->GetIncreaseRate();
+}
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::GetMaxHeat
+// Created: BCI 2010-12-10
+// -----------------------------------------------------------------------------
+int FireAttribute::GetMaxHeat() const
+{
+    return pClass_->GetMaxHeat();
+}
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::GetCellSize
+// Created: BCI 2010-12-10
+// -----------------------------------------------------------------------------
+int FireAttribute::GetCellSize() const
+{
+    return pClass_->GetCellSize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::GetMaxCombustionEnergy
+// Created: BCI 2010-12-10
+// -----------------------------------------------------------------------------
+int FireAttribute::GetMaxCombustionEnergy() const
+{
+    return maxCombustionEnergy_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireAttribute::SendFullState
-// Created: JCR 2008-06-18
+// Created: BCI 2010-12-13
 // -----------------------------------------------------------------------------
 void FireAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-//    asn.set_firePresent( 1 );
-    asn.mutable_fire()->set_heat( heat_ );
-    asn.mutable_fire()->set_class_id( pClass_->GetID() );
+    asn.mutable_fire()->set_class_name( pClass_->GetName() );
+    asn.mutable_fire()->set_max_combustion_energy( maxCombustionEnergy_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireAttribute::Send
-// Created: JCR 2008-06-09
+// Name: FireAttribute::GetWeatherDecreateRate
+// Created: BCI 2010-12-13
 // -----------------------------------------------------------------------------
-void FireAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+int FireAttribute::GetWeatherDecreateRate( const MIL_Object_ABC& object ) const
 {
-    if( NeedUpdate( eOnUpdate ) )
-    {
-        SendFullState( asn );
-        Reset( eOnUpdate );
-    }
+    return pClass_->GetWeatherDecreateRate( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetPrecipitation( object.GetLocalisation().GetCircleCenter() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireAttribute::WriteODB
-// Created: JCR 2008-06-09
+// Name: FireAttribute::GetBurnEffect
+// Created: BCI 2010-12-14
 // -----------------------------------------------------------------------------
-void FireAttribute::WriteODB( xml::xostream& xos ) const
+MIL_BurnEffectManipulator FireAttribute::GetBurnEffect()
 {
-    xos << xml::start( "fire" )
-            << xml::attribute( "heat", heat_ )
-            << xml::attribute( "class", pClass_->GetName() )
-        << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute::ComputeHeatNaturalEvolution
-// Created: JCR 2008-06-09
-// -----------------------------------------------------------------------------
-void FireAttribute::ComputeHeatEvolution( unsigned int initial, unsigned int time )
-{
-    //Compute the new temperature and send a notification if it has changed
-    int heat = pClass_->ComputeHeatEvolution( heat_, initial, timeOfLastUpdate_ );
-    UpdateHeat( heat, time );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute::UpdateHeat
-// Created: JCR 2008-06-09
-// -----------------------------------------------------------------------------
-void FireAttribute::ComputeHeatWhenExtinguishing( MIL_FireClass::E_FireExtinguisherAgent extinguisherAgent, int numberOfFireHoses )
-{
-    //Compute the new temperature and send a notification if it has changed
-    int heat = pClass_->ComputeHeatWhenExtinguishing( heat_, extinguisherAgent, numberOfFireHoses );
-    UpdateHeat( heat, MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute::UpdateHeat
-// Created: JCR 2008-06-09
-// -----------------------------------------------------------------------------
-void FireAttribute::UpdateHeat( int heat, unsigned int time )
-{
-    if( heat != heat_ )
-    {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-        heat_ = heat;
-    }
-    timeOfLastUpdate_ = time;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute::UpdateHeat
-// Created: JCR 2008-06-09
-// -----------------------------------------------------------------------------
-int FireAttribute::GetHeat() const
-{
-    return heat_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute::UpdateHeat
-// Created: RFT 2008-06-09
-// -----------------------------------------------------------------------------
-const MIL_FireClass& FireAttribute::GetClass() const
-{
-    return *pClass_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute::GetWidth
-// Created: RFT 2008-06-09
-// -----------------------------------------------------------------------------
-unsigned int FireAttribute::GetWidth() const
-{
-    return width_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute::GetLength
-// Created: RFT 2008-06-09
-// -----------------------------------------------------------------------------
-unsigned int FireAttribute::GetLength() const
-{
-    return length_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireAttribute::Update
-// Created: NLD 2010-10-26
-// -----------------------------------------------------------------------------
-bool FireAttribute::Update( const FireAttribute& rhs )
-{
-    if( pClass_ != rhs.pClass_ )
-    {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-        pClass_ = rhs.pClass_;
-    }
-    if( heat_ != rhs.heat_ )
-    {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-        heat_ = rhs.heat_;
-    }
-    if( width_ != rhs.width_ )
-    {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-        width_ = rhs.width_;
-    }
-    if( length_ != rhs.length_ )
-    {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-        length_ = rhs.length_;
-    }
-    timeOfLastUpdate_ = rhs.timeOfLastUpdate_;
-    return NeedUpdate( eOnUpdate );
+    return MIL_BurnEffectManipulator( *pClass_ );
 }

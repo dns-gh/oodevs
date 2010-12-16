@@ -18,6 +18,18 @@ namespace xml
 }
 
 class PHY_Weapon;
+class PHY_DotationCategory;
+class PHY_HumanWound;
+
+namespace weather
+{
+    class PHY_Precipitation;
+}
+
+namespace urban
+{
+    class MaterialCompositionType;
+}
 
 // =============================================================================
 // Created: RFT 22/04/2008
@@ -28,57 +40,35 @@ class PHY_Weapon;
 class MIL_FireClass : private boost::noncopyable
 {
 public:
-    enum E_FireExtinguisherAgent
-    {
-        eEauEnMasse = 0,
-        eEauEnPulverisation,
-        eMousses,
-        ePoudres,
-        eCO2,
-        eSolide,
-        eHydrocarburesHalogenes
-    };
-
     //! @name Factory
     //@{
     static void Initialize( xml::xistream& xis );
     static void Terminate();
 
     static const MIL_FireClass* Find( const std::string& strName );
-    static const MIL_FireClass* Find( unsigned int nID );
+    static const MIL_FireClass* GetDefaultFireClass();
     //@}
 
+    //! @name Accessors
+    //@{
+    const std::string& GetName() const;
+    int GetInitialHeat() const;
+    int GetDecreaseRate() const;
+    int GetIncreaseRate() const;
+    int GetMaxHeat() const;
+    int GetWeatherDecreateRate( const weather::PHY_Precipitation& ) const;
+    static int GetCellSize();
+    //@}
+
+    //! @name Operations
+    //@{
+    const PHY_HumanWound& ChooseRandomWound() const;
+    //@}
 private:
     //!@ Constructor and destructor
     //@{
      MIL_FireClass( const std::string& strName, xml::xistream& xis );
     ~MIL_FireClass();
-    //@}
-
-public:
-    //! @name
-    //@{
-    unsigned int GetID() const;
-    const std::string& GetName() const;
-    int GetDefaultHeat() const;
-    int GetPropagationThreshold() const;
-    static unsigned int GetWidth();
-    static unsigned int GetLength();
-    //@}
-
-    struct T_EvaluationResult
-    {
-        T_EvaluationResult() : agent_( eEauEnMasse ), score_( -1 ), range_( -1 ) {}
-        E_FireExtinguisherAgent agent_;
-        int score_; // Extinguisher agent effect on a specific fire
-        int range_; // fire hose range
-    };
-
-    //! @name Operations
-    //@{
-    int ComputeHeatEvolution( int heat, unsigned int timeOfCreation, unsigned int lastTimeSinceUpdate ) const;
-    int ComputeHeatWhenExtinguishing( int heat, E_FireExtinguisherAgent extinguisherAgent, int numberOfFireHoses ) const;
-    T_EvaluationResult Evaluate( const PHY_Weapon& weapon ) const;
     //@}
 
 private:
@@ -87,31 +77,61 @@ private:
     typedef std::map< std::string, const MIL_FireClass*, sCaseInsensitiveLess > T_FireClassMap;
     typedef T_FireClassMap::const_iterator                                    CIT_FireClassMap;
 
-    //The following map contains a extinguisher agent name and its effect on the fire
-    typedef std::map< E_FireExtinguisherAgent, int >       T_ExtinguisherAgentEffectMap;
-    typedef T_ExtinguisherAgentEffectMap::const_iterator CIT_ExtinguisherAgentEffectMap;
-    //@}
+    struct ExtinguisherAgentEffect
+    {
+        int heatDecreaseRate_;
+    };
+    typedef std::map< const PHY_DotationCategory*, ExtinguisherAgentEffect > T_ExtinguisherAgentEffectMap;
+
+    struct WeatherEffect
+    {
+        int heatDecreaseRate_;
+    };
+    typedef std::map< const weather::PHY_Precipitation*, WeatherEffect > T_WeatherEffectMap;
+
+    struct Injury
+    {
+        double percentage_;
+    };
+    typedef std::map< const PHY_HumanWound*, Injury > T_InjuryMap;
+
+    struct UrbanModifier
+    {
+        double factor_;
+    };
+    typedef std::map< const urban::MaterialCompositionType*, UrbanModifier > T_UrbanModifierMap;
+
+    struct Surface
+    {
+        int ignitionThreshold_;
+        int maxCombustionEnergy_;
+    };
+    typedef std::map< unsigned char/*terrain area*/, Surface > T_SurfaceMap;
 
 private:
     //! @name Helpers
     //@{
-    static void ReadClass( xml::xistream& xis );
-    void ReadExtinguisherAgentEffect( xml::xistream& xis );
+    static void ReadFireClasses( xml::xistream& xis );
+    void ReadExtinguisherAgent( xml::xistream& xis );
+    void ReadWeatherEffect( xml::xistream& xis );
+    void ReadInjury( xml::xistream& xis );
+    void ReadUrbanModifier( xml::xistream& xis );
+    void ReadSurface( xml::xistream& xis );
     //@}
 
 private:
-    const std::string strName_;
-    unsigned int nID_;
-    unsigned int tempThreshold_;
-    int defaultHeat_;
-    int heatMax_;
-    unsigned int increaseRate_;
-    unsigned int decreaseRate_;
-    T_ExtinguisherAgentEffectMap extinguisherAgentEffect_;
-    unsigned int propagationThreshold_;
+    T_ExtinguisherAgentEffectMap extinguisherAgentEffects_;
+    T_WeatherEffectMap weatherEffects_;
+    T_InjuryMap injuries_;
+    T_UrbanModifierMap urbanModifiers_;
+    T_SurfaceMap surfaces_;
+    const std::string name_;
+    int decreaseRate_;
+    int increaseRate_;
+    int initialHeat_;
+    int maxHeat_;
     static T_FireClassMap classes_;
-    static unsigned int length_;
-    static unsigned int width_;
+    static unsigned int cellSize_;
 };
 
 #endif // __MIL_FireClass_h_

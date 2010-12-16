@@ -31,14 +31,14 @@ class FireAttribute : public kernel::FireAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FireAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::FireClass >& resolver );
+             FireAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::FireClass, std::string >& resolver );
     virtual ~FireAttribute();
     //@}
 
-    //! @name Operations
+    //! @name Overrides
     //@{
-    virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display         ( kernel::Displayer_ABC& ) const;
+    virtual void DisplayInSummary( kernel::Displayer_ABC& ) const;
     //@}
 
 private:
@@ -61,9 +61,9 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const tools::Resolver_ABC< kernel::FireClass >& resolver_;
+    const tools::Resolver_ABC< kernel::FireClass, std::string >& resolver_;
     const kernel::FireClass* fireClass_;
-    int heat_;
+    int maxCombustionEnery_;
     //@}
 };
 

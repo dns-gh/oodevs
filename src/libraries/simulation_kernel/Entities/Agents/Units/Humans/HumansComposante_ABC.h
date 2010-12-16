@@ -19,6 +19,7 @@ class PHY_FireDamages_Agent;
 class PHY_RoleInterface_Composantes;
 class PHY_MedicalHumanState;
 class MIL_ToxicEffectManipulator;
+class MIL_BurnEffectManipulator;
 class MIL_AutomateLOG;
 class MIL_Time_ABC;
 class MIL_Injury_ABC;
@@ -50,6 +51,7 @@ public:
     virtual void ApplyPoisonous    ( const MIL_ToxicEffectManipulator& contamination ) = 0;
     virtual void ApplyInjury       ( MIL_Injury_ABC& injury ) = 0;
     virtual void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages ) = 0;
+    virtual void ApplyBurn         ( const MIL_BurnEffectManipulator& burn ) = 0;
     virtual unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound ) = 0;
     virtual unsigned int HealHumans ( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
     virtual void HealAllHumans     () = 0;

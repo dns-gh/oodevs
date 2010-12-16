@@ -21,6 +21,7 @@
 #include "DelayAttribute.h"
 #include "NBCAttribute.h"
 #include "FireAttribute.h"
+#include "BurnAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "Model.h"
 #include "AgentsModel.h"
@@ -90,6 +91,9 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
 
     if( attributes.has_fire() && entity.Retrieve< kernel::FireAttribute_ABC >() == 0 )
         entity.Attach< kernel::FireAttribute_ABC >( *new FireAttribute( controllers_.controller_, static_.objectTypes_ ) );
+
+    if( attributes.has_burn() && entity.Retrieve< kernel::BurnAttribute_ABC >() == 0 )
+        entity.Attach< kernel::BurnAttribute_ABC >( *new BurnAttribute( controllers_.controller_ ) );
 
     if( attributes.has_medical_treatment() && entity.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
         entity.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );

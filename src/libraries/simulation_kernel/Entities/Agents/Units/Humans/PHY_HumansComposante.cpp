@@ -210,11 +210,22 @@ void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& con
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::ApplyBurn
+// Created: BCI 2010-12-14
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::ApplyBurn( const MIL_BurnEffectManipulator& burn )
+{
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+        (**it).ApplyBurn( burn );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::ApplyInjury
 // Created: RFT
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::ApplyInjury( MIL_Injury_ABC& injury )
 {
+
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
     {
         if( injury.IsInjured( GetComposante() ) )

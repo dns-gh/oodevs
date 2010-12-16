@@ -18,8 +18,9 @@ using namespace dispatcher;
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
 FireAttribute::FireAttribute( const sword::ObjectAttributes& asnMsg )
-    : heat_( asnMsg.fire().heat() )
-    , nFireClass_( asnMsg.fire().class_id() )
+    : fireClass_( asnMsg.fire().class_name() )
+    , maxCombustionEnergy_( asnMsg.fire().max_combustion_energy() )
+        
 {
     // NOTHING
 }
@@ -41,8 +42,8 @@ void FireAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_fire() )
     {
-        heat_       = asnMsg.fire().heat();
-        nFireClass_ = asnMsg.fire().class_id();
+        fireClass_ = asnMsg.fire().class_name();
+        maxCombustionEnergy_ = asnMsg.fire().max_combustion_energy();
     }
 }
 
@@ -52,6 +53,6 @@ void FireAttribute::Update( const sword::ObjectAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void FireAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
-    asnMsg.mutable_fire()->set_heat( heat_ );
-    asnMsg.mutable_fire()->set_class_id( nFireClass_ );
+    asnMsg.mutable_fire()->set_class_name( fireClass_ );
+    asnMsg.mutable_fire()->set_max_combustion_energy( maxCombustionEnergy_ );
 }

@@ -72,7 +72,6 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "units", szUnits_);
     ReadFile( input, "automats", szAutomata_);
     ReadFile( input, "nbc", szNBC_);
-    ReadFile( input, "fire", szFire_ );
     ReadFile( input, "fires", szFireClasses_ );
     ReadFile( input, "medical-treatment", szMedicalTreatment_ );
     ReadFile( input, "health", szHealth_);

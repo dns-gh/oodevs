@@ -39,8 +39,8 @@ public:
 private:
     //! @name Data members
     //@{
-    int          heat_;
-    unsigned int nFireClass_; // XML reference - no resolved by dispatcher
+    std::string fireClass_;// XML reference - no resolved by dispatcher
+    int maxCombustionEnergy_;
     //@}
 };
 

@@ -955,10 +955,6 @@
         <translation>Tipo de fuego:</translation>
     </message>
     <message>
-        <source>Fire temperature:</source>
-        <translation>Temperatura de fuego:</translation>
-    </message>
-    <message>
         <source>Delay time:</source>
         <translation>Tiempo de retardo:</translation>
     </message>
@@ -972,6 +968,22 @@
     </message>
     <message>
         <source>Logistic route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max combustion energy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heat:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Combustion energy:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

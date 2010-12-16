@@ -19,11 +19,11 @@ using namespace kernel;
 // Name: FireAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( Controller& controller, const tools::Resolver_ABC< FireClass >& resolver )
+FireAttribute::FireAttribute( Controller& controller, const tools::Resolver_ABC< FireClass, std::string >& resolver )
     : controller_( controller )
     , resolver_  ( resolver )
     , fireClass_ ( 0 )
-    , heat_      ( 0 )
+    , maxCombustionEnery_( 0 )
 {
     // NOTHING
 }
@@ -46,8 +46,8 @@ void FireAttribute::UpdateData( const T& message )
 {
     if( message.has_fire()  )
     {
-        fireClass_  = & resolver_.Get( message.fire().class_id() );
-        heat_       = message.fire().heat();
+        fireClass_ = & resolver_.Get( message.fire().class_name() );
+        maxCombustionEnery_ = message.fire().max_combustion_energy();
         controller_.Update( *(FireAttribute_ABC*)this );
     }
 }
@@ -74,11 +74,11 @@ void FireAttribute::DoUpdate( const sword::ObjectUpdate& message )
 // Name: FireAttribute::Display
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-void FireAttribute::Display( Displayer_ABC& displayer ) const
+void FireAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Fire" ) )
         .Display( tools::translate( "Object", "Fire class:" ), fireClass_ )
-        .Display( tools::translate( "Object", "Fire temperature:" ), heat_ );
+        .Display( tools::translate( "Object", "Max combustion energy:" ), maxCombustionEnery_ );
 }
 
 // -----------------------------------------------------------------------------

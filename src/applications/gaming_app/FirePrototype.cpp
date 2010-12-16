@@ -21,7 +21,7 @@ using namespace gui;
 // Name: FirePrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireClass >& resolver, actions::parameters::ParameterList*& attributesList )
+FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireClass, std::string >& resolver, actions::parameters::ParameterList*& attributesList )
     : FirePrototype_ABC( parent, resolver )
     , attributesList_( attributesList )
 {
@@ -43,11 +43,11 @@ FirePrototype::~FirePrototype()
 // -----------------------------------------------------------------------------
 void FirePrototype::Commit()
 {
-    if( const kernel::FireClass* fire = fireClass_->GetValue() )
+    if( const kernel::FireClass* fireClass = fireClass_->GetValue() )
     {
         actions::parameters::ParameterList& list = attributesList_->AddList( "Fire" );
         list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_fire );
-        list.AddIdentifier( "ClassId", fire->GetId() );
-        list.AddQuantity( "Heat", fire->GetDefaultHeat() );
+        list.AddString( "ClassName", fireClass->GetName() );
+        list.AddQuantity( "MaxCombustionEnergy", maxCombustionEnergy_->value() );
     }
 }

@@ -55,6 +55,7 @@ public:
 
     void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
     void ApplyPoisonous    ( const MIL_ToxicEffectManipulator& contamination );
+    void ApplyBurn         ( const MIL_BurnEffectManipulator& burn );
     void ApplyInjury       ( MIL_Injury_ABC& injury );
     PHY_InjuredHuman* GetInjury();
     void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );

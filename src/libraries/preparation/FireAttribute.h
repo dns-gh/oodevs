@@ -52,6 +52,7 @@ public:
     //! @name Modifiers
     //@{
     void SetClass( const kernel::FireClass& fireClass );
+    void SetMaxCombustionEnergy( int );
     //@}
 
 private:
@@ -70,6 +71,7 @@ public:
     //! @name Member data
     //@{
     kernel::FireClass* fireClass_;
+    int maxCombustionEnergy_;
     //@}
 };
 

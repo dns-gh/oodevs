@@ -23,6 +23,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 FireAttribute::FireAttribute( kernel::PropertiesDictionary& dico )
     : fireClass_( 0 )
+    , maxCombustionEnergy_( 0 )
 {
     CreateDictionary( dico );
 }
@@ -34,7 +35,8 @@ FireAttribute::FireAttribute( kernel::PropertiesDictionary& dico )
 FireAttribute::FireAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::FireClass, std::string >& FireClasses, kernel::PropertiesDictionary& dico )
 {
     std::string type;
-    xis >> xml::attribute( "class", type );
+    xis >> xml::attribute( "class", type )
+        >> xml::attribute( "max-combustion-energy", maxCombustionEnergy_ );
     fireClass_ = FireClasses.Find( type );
     CreateDictionary( dico );
 }
@@ -55,9 +57,9 @@ FireAttribute::~FireAttribute()
 void FireAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Fire" ) )
-        .Display( tools::translate( "Object", "Fire class:" ), fireClass_ );
+        .Display( tools::translate( "Object", "Fire class:" ), fireClass_ )
+        .Display( tools::translate( "Object", "Max combustion energy:" ), maxCombustionEnergy_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute::SetAgent
@@ -69,6 +71,15 @@ void FireAttribute::SetClass( const kernel::FireClass& fireClass )
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireAttribute::SetMaxCombustionEnergy
+// Created: BCI 2010-12-07
+// -----------------------------------------------------------------------------
+void FireAttribute::SetMaxCombustionEnergy( int m )
+{
+    maxCombustionEnergy_ = m;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireAttribute::SerializeAttributes
 // Created: SBO 2006-09-15
 // -----------------------------------------------------------------------------
@@ -76,6 +87,7 @@ void FireAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "fire" )
             << xml::attribute( "class", fireClass_->GetName() )
+            << xml::attribute( "max-combustion-energy", maxCombustionEnergy_ )
         << xml::end;
 }
 
@@ -86,4 +98,5 @@ void FireAttribute::SerializeAttributes( xml::xostream& xos ) const
 void FireAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
     dico.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Fire class" ), fireClass_ );
+    dico.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Max combustion energy_" ), maxCombustionEnergy_ );
 }

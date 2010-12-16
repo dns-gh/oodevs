@@ -911,6 +911,20 @@ void PHY_RolePion_Composantes::ApplyUrbanObjectCrumbling( const MIL_Object_ABC& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ApplyBurn
+// Created: BCI 2010-12-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ApplyBurn( const MIL_BurnEffectManipulator& burn )
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.GetState().IsUsable() )
+            composante.ApplyBurn( burn );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ApplyIndirectFire
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
@@ -923,6 +937,7 @@ void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& do
         if( composante.CanBeFired() )
             composante.ApplyIndirectFire( dotationCategory, fireDamages, ratio );
     }
+
 }
 
 // -----------------------------------------------------------------------------

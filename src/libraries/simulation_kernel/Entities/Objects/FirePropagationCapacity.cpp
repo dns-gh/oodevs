@@ -109,29 +109,31 @@ void FirePropagationCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: FirePropagationCapacity::Update
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void FirePropagationCapacity::Update( MIL_Object_ABC& object, unsigned int time )
+void FirePropagationCapacity::Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ )
 {
-    FireAttribute& attr = object.GetAttribute< FireAttribute >();
-    const unsigned int timeSinceCreation = time - timeOfCreation_;
+    int todo = 0;
+    //FireAttribute& attr = object.GetAttribute< FireAttribute >();
+    //const unsigned int timeSinceCreation = time - timeOfCreation_;
 
-    if( needUpdate_ )
-        InitializeUpdate( object, attr );
-    attr.ComputeHeatEvolution( timeOfCreation_, time );
-    int heat = UpdateState( object, attr, time );
-    if( heat > 0 && heat * (int)timeSinceCreation > attr.GetClass().GetPropagationThreshold() )
-        Propagate( object );
+    //if( needUpdate_ )
+    //    InitializeUpdate( object, attr );
+    //attr.ComputeHeatEvolution( timeOfCreation_, time );
+    //int heat = UpdateState( object, attr, time );
+    //if( heat > 0 && heat * (int)timeSinceCreation > attr.GetClass().GetPropagationThreshold() )
+    //    Propagate( object );
 }
 
 void FirePropagationCapacity::InitializeUpdate( MIL_Object_ABC& object, const FireAttribute& attr )
 {
+    const int cellSize = attr.GetCellSize();
     // We get the coordinates of the fire and adjust them in order that they become divisible by length and width of the fire
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
-    vOrigin.rX_ = (int)vOrigin.rX_ - (int)vOrigin.rX_ % attr.GetLength();
-    vOrigin.rY_ = (int)vOrigin.rY_ - (int)vOrigin.rY_ % attr.GetWidth();
+    vOrigin.rX_ = (int)vOrigin.rX_ - (int)vOrigin.rX_ % cellSize;
+    vOrigin.rY_ = (int)vOrigin.rY_ - (int)vOrigin.rY_ % cellSize;
 
     //We define the origin vector of the fire
     object.UpdateLocalisation( GetLocalisation( vOrigin ) );
-    pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
+    pManager_->Flag( vOrigin , cellSize , cellSize );
     needUpdate_ = false;
 }
 
@@ -142,6 +144,7 @@ void FirePropagationCapacity::InitializeUpdate( MIL_Object_ABC& object, const Fi
 // -----------------------------------------------------------------------------
 int FirePropagationCapacity::UpdateState( MIL_Object_ABC& object, const FireAttribute& attr, unsigned int time )
 {
+    /*
     //Set the time of death of the fire as soon as its temperature is below
     //Used to block the propagation of the fire on a fire which just died one tick ago
     if( attr.GetHeat() >= 0 )
@@ -155,9 +158,11 @@ int FirePropagationCapacity::UpdateState( MIL_Object_ABC& object, const FireAttr
             timeOfDeath_ = time + 10;
         }
         if( time >= timeOfDeath_ )
-            pManager_->RemoveFlag( object.GetLocalisation().ComputeBarycenter() , attr.GetLength() , attr.GetWidth() );
+            pManager_->RemoveFlag( object.GetLocalisation().ComputeBarycenter() , attr.GetCellSize() , attr.GetCellSize() );
     }
-    return attr.GetHeat();
+    return attr.GetHeat();*/
+    int todo = 0;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -168,17 +173,18 @@ int FirePropagationCapacity::UpdateState( MIL_Object_ABC& object, const FireAttr
 void FirePropagationCapacity::Propagate( MIL_Object_ABC& object )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
+    const int cellSize = attr.GetCellSize();
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
     MT_Vector2D vPerpendicularToWind, vNormalizedWind;
 
     const weather::PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( vOrigin );
 
     //we normalize the wind vector and multiply it by length and width of the fire
-    vNormalizedWind.rX_ = attr.GetLength() * wind.vWindDirection_.rX_ / pow(wind.vWindDirection_.rY_ * wind.vWindDirection_.rY_ + wind.vWindDirection_.rX_ * wind.vWindDirection_.rX_ , 0.5);
-    vNormalizedWind.rY_ = attr.GetWidth() * wind.vWindDirection_.rY_ / pow(wind.vWindDirection_.rY_ * wind.vWindDirection_.rY_ + wind.vWindDirection_.rX_ * wind.vWindDirection_.rX_ , 0.5);
+    vNormalizedWind.rX_ = attr.GetCellSize() * wind.vWindDirection_.rX_ / pow(wind.vWindDirection_.rY_ * wind.vWindDirection_.rY_ + wind.vWindDirection_.rX_ * wind.vWindDirection_.rX_ , 0.5);
+    vNormalizedWind.rY_ = attr.GetCellSize() * wind.vWindDirection_.rY_ / pow(wind.vWindDirection_.rY_ * wind.vWindDirection_.rY_ + wind.vWindDirection_.rX_ * wind.vWindDirection_.rX_ , 0.5);
 
-    vNormalizedWind.rX_ = vNormalizedWind.rX_ - (int)vNormalizedWind.rX_ % attr.GetLength();
-    vNormalizedWind.rY_ = vNormalizedWind.rY_ - (int)vNormalizedWind.rY_ % attr.GetWidth();
+    vNormalizedWind.rX_ = vNormalizedWind.rX_ - (int)vNormalizedWind.rX_ % attr.GetCellSize();
+    vNormalizedWind.rY_ = vNormalizedWind.rY_ - (int)vNormalizedWind.rY_ % attr.GetCellSize();
 
     vPerpendicularToWind.rX_ = -vNormalizedWind.rY_;
     vPerpendicularToWind.rY_ = vNormalizedWind.rX_;
@@ -188,7 +194,7 @@ void FirePropagationCapacity::Propagate( MIL_Object_ABC& object )
     CheckPropagation( vOrigin + vPerpendicularToWind, object );
     CheckPropagation( vOrigin - vPerpendicularToWind, object );
     //Propagation taking in account wind speed and the length of the fire
-    for( int i = 2; i < wind.rWindSpeed_ / attr.GetLength() ; i++ )
+    for( int i = 2; i < wind.rWindSpeed_ / cellSize ; i++ )
         CheckPropagation( vOrigin - i * vNormalizedWind, object );
 }
 
@@ -229,9 +235,10 @@ namespace
 void FirePropagationCapacity::CheckPropagation( const MT_Vector2D& vOrigin, MIL_Object_ABC& object )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
+    const int cellSize = attr.GetCellSize();
     TER_Localisation location( GetLocalisation( vOrigin ) );
 
-    if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) )
+    if( !pManager_->IsFlagged( location , cellSize , cellSize ) )
     {
         MIL_FireBuilder builder( object, location );
         try
@@ -242,7 +249,7 @@ void FirePropagationCapacity::CheckPropagation( const MT_Vector2D& vOrigin, MIL_
         {
             MT_LOG_ERROR_MSG( e.what() );
         }
-        pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
+        pManager_->Flag( vOrigin , cellSize , cellSize );
     }
 }
 

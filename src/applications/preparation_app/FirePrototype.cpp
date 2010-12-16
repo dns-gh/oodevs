@@ -21,7 +21,7 @@ using namespace kernel;
 // Name: FirePrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireClass >& resolver, Object_ABC*& creation )
+FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireClass, std::string >& resolver, Object_ABC*& creation )
     : FirePrototype_ABC( parent, resolver )
     , creation_( creation )
 {
@@ -46,7 +46,8 @@ void FirePrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         FireAttribute* attribute = new FireAttribute( dico );
-                       attribute->SetClass( *fireClass_->GetValue() );
+        attribute->SetClass( *fireClass_->GetValue() );
+        attribute->SetMaxCombustionEnergy( maxCombustionEnergy_->value() );
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }

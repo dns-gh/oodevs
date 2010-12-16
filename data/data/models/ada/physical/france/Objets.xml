@@ -80,7 +80,10 @@
     <propagation model="input"/>
   </object>
   <object geometry="point" name="Incendie" symbol="O*VPA-----*****" type="fire">
-    <extinguishable/>
+    <burn/>
+  </object>
+  <object geometry="polygon" name="Feu sauvage" symbol="O*VPA-----*****" type="surface fire">
+    <burn/>
     <propagation model="fire"/>
   </object>
   <object geometry="polygon" name="Site de décontamination" symbol="G*MPNDP---****X" type="decontamination site">
@@ -342,4 +345,4 @@
     <flood/>
   </object>
 </objects>
-<!-- signature="3797963398" -->
+<!-- signature="3655081689" -->

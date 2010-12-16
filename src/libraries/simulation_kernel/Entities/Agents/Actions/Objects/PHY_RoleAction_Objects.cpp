@@ -301,6 +301,7 @@ int PHY_RoleAction_Objects::Bypass( boost::shared_ptr< DEC_Knowledge_Object >& p
     return eRunning;
 }
 
+/*
 namespace
 {
     // -----------------------------------------------------------------------------
@@ -321,7 +322,7 @@ namespace
         }
         return functor.GetNumberOfTheExtinguisherAgent();
     }
-}
+}*/
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::Extinguish
@@ -329,6 +330,7 @@ namespace
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
+    /*
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
         return eImpossible;
@@ -344,8 +346,8 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
     int bestExtinguisherAgent = GetBestExtinguisher( &pion_, functor );
     object().Extinguish( bestExtinguisherAgent, pion_.GetNumberOfFireHoses( bestExtinguisherAgent ) );
 
-    if( object.GetAttribute< FireAttribute >().GetHeat() <= 0 )
-        return eFinished;
+    if( object.GetAttribute< FireAttribute >().IsExtinguished() )
+        return eFinished;*/
     return eRunning;
 }
 

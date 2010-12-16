@@ -178,6 +178,10 @@
         <source>Fire Class:</source>
         <translation>Type de feu:</translation>
     </message>
+    <message>
+        <source>Max combustion energy:</source>
+        <translation>Energie de combustion max:</translation>
+    </message>
 </context>
 <context>
     <name>FloodPrototype_ABC</name>

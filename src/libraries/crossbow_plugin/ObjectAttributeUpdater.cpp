@@ -270,8 +270,8 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeFire& fire )
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Fire" ) );
     RowManipulator row( *table, session_, objectId_ );
     
-    row.SetField( "class_id", FieldVariant( fire.class_id() ) ); // int
-    row.SetField( "heat", FieldVariant( fire.heat() ) ); // int
+    row.SetField( "class_name", FieldVariant( fire.class_name() ) ); // string
+    row.SetField( "max_combustion_energy", FieldVariant( fire.max_combustion_energy() ) ); // int
 }
 
 namespace

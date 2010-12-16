@@ -17,6 +17,7 @@ DelayAttribute.cpp \
 Dotations.cpp \
 Equipments.cpp \
 FireAttribute.cpp \
+BurnAttribute.cpp \
 Formation.cpp \
 HumanFactors.cpp \
 Intelligence.cpp \

@@ -33,7 +33,7 @@ class FirePrototype_ABC : public ObjectAttributePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass >& resolver );
+    FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass, std::string >& resolver );
     virtual ~FirePrototype_ABC();
     //@}
 
@@ -58,8 +58,9 @@ private:
 protected:
     //! @name Member data
     //@{
-    const tools::Resolver_ABC< kernel::FireClass >& resolver_;
+    const tools::Resolver_ABC< kernel::FireClass, std::string >& resolver_;
     ValuedComboBox< const kernel::FireClass* >* fireClass_;
+    QSpinBox* maxCombustionEnergy_;
     //@}
 };
 

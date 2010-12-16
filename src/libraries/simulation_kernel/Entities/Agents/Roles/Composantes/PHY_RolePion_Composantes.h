@@ -171,6 +171,7 @@ public:
     virtual void     ApplyContamination               ( const MIL_ToxicEffectManipulator& contamination );
     virtual void     ApplyPoisonous                   ( const MIL_ToxicEffectManipulator& contamination );
     virtual void     ApplyUrbanObjectCrumbling        ( const MIL_Object_ABC& object );
+    virtual void     ApplyBurn                        ( const MIL_BurnEffectManipulator& burn );
 
     virtual double   GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const;
     virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, double rWantedPH ) const;

@@ -15,6 +15,7 @@
 #include "CrossingSiteAttribute.h"
 #include "DelayAttribute.h"
 #include "FireAttribute.h"
+#include "BurnAttribute.h"
 #include "LogisticAttribute.h"
 #include "KnowledgeGroup.h"
 #include "MedicalTreatmentAttribute.h"
@@ -111,6 +112,8 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< NBCAttribute >( message );
     if( message.has_fire() )
         CreateOrUpdate< FireAttribute >( message );
+    if( message.has_burn() )
+        CreateOrUpdate< BurnAttribute >( message );
     if( message.has_medical_treatment() )
         CreateOrUpdate< MedicalTreatmentAttribute >( message );
     if( message.has_effect_delay() )

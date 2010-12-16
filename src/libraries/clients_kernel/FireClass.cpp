@@ -19,9 +19,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 FireClass::FireClass( xml::xistream& input )
 {
-    input >> xml::attribute( "name", name_ )
-          >> xml::attribute( "id", id_ )
-          >> xml::attribute( "defaultheat", defaultHeat_ );
+    input >> xml::attribute( "name", name_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -34,28 +32,10 @@ FireClass::~FireClass()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireClass::GetId
-// Created: RFT 2006-04-04
-// -----------------------------------------------------------------------------
-unsigned long FireClass::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: FireClass::GetName
 // Created: RFT 2006-04-04
 // -----------------------------------------------------------------------------
 std::string FireClass::GetName() const
 {
     return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireClass::GetDefaultHeat
-// Created: JSR 2010-03-12
-// -----------------------------------------------------------------------------
-int FireClass::GetDefaultHeat() const
-{
-    return defaultHeat_;
 }

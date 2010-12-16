@@ -138,6 +138,7 @@ public:
     virtual void ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult ) = 0;
     virtual void ApplyExplosion             ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyUrbanObjectCrumbling  ( const MIL_Object_ABC& object ) = 0;
+    virtual void ApplyBurn                  ( const MIL_BurnEffectManipulator& burn ) = 0;
     virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const = 0;   
     virtual double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;

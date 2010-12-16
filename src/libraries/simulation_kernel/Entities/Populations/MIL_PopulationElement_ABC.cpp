@@ -182,11 +182,21 @@ void MIL_PopulationElement_ABC::ApplyInjury( MIL_Injury_ABC& injury )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ApplyBurn
+// Created: BCI 2010-12-15
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::ApplyBurn( const MIL_BurnEffectManipulator& burn )
+{
+    int todo = 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::UpdateCollisions
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::UpdateCollisions()
 {
+
     TER_Agent_ABC::T_AgentPtrVector agents;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocation(), agents, 100. ); //$$$ TEST
     collidingAgents_.clear(); collidingAgents_.reserve( agents.size() );

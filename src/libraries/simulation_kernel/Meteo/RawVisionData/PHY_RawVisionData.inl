@@ -57,6 +57,15 @@ PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double rCol, double rR
     return ( nCol < nNbrCol_ && nRow < nNbrRow_ ) ? ppCells_[ nCol ][ nRow ] : emptyCell_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RawVisionData::GetPrecipitation
+// Created: BCI 2010-12-13
+// -----------------------------------------------------------------------------
+inline
+const weather::PHY_Precipitation& PHY_RawVisionData::GetPrecipitation( const MT_Vector2D& vPos ) const
+{
+    return operator() ( vPos ).GetPrecipitation();    
+}
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetAltitude

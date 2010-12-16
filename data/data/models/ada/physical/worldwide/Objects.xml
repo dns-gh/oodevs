@@ -70,7 +70,10 @@
     <propagation model="cloud"/>
   </object>
   <object geometry="point" name="Arson/Fire" symbol="O*VPA-----*****" type="fire">
-    <extinguishable/>
+    <burn/>
+  </object>
+  <object geometry="polygon" name="Surface/Fire" symbol="O*VPA-----*****" type="surface fire">
+    <burn/>
     <propagation model="fire"/>
   </object>
   <object geometry="polygon" name="Decontamination Point" symbol="G*MPNDP---****X" type="decontamination site">
@@ -368,4 +371,4 @@
     <flood/>
   </object>
 </objects>
-<!-- signature="4286702667" -->
+<!-- signature="1884226108" -->

@@ -51,7 +51,7 @@ class ObjectTypes
     , public tools::Resolver< WeaponSystemType, std::string >
     , public tools::Resolver< EquipmentType >
     , public Resolver2< NBCAgent >
-    , public Resolver2< FireClass >
+    , public tools::StringResolver< FireClass >
     , public Resolver2< MedicalTreatmentType >
     , public tools::Resolver< BreakdownType >
     , public tools::Resolver< VolumeType >
@@ -94,8 +94,8 @@ private:
     void ReadEquipment( xml::xistream& xis );
     void ReadNBC( xml::xistream& xis );
     void ReadNBCAgent( xml::xistream& xis );
-    void ReadFire( xml::xistream& xis );
-    void ReadFireClass( xml::xistream& xis );
+    void ReadFires( xml::xistream& xis );
+    void ReadFireClasses( xml::xistream& xis );
     void ReadMedicalTreatment( xml::xistream& xis );
     void ReadMedicalTreatmentType( xml::xistream& xis );
     void ReadBreakdowns( xml::xistream& xis );

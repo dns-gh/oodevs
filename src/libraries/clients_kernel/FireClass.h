@@ -32,17 +32,13 @@ public:
 
     //! @name Operations
     //@{
-    unsigned long GetId() const;
     std::string GetName() const;
-    int GetDefaultHeat() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    unsigned long id_;
     std::string name_;
-    int defaultHeat_;
     //@}
 };
 

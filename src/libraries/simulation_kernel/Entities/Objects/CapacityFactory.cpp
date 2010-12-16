@@ -44,6 +44,7 @@
 #include "SupplyCapacity.h"
 #include "InteractIfHeightCapacity.h"
 #include "PopulationFilterCapacity.h"
+#include "BurnCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_PropagationManager.h"
 #include <xeumeuleu/xml.hpp>
@@ -81,7 +82,9 @@ namespace
         if( model == "input" )
             prototype.AddCapacity< PropagationCapacity_ABC >( new InputPropagationCapacity( xis ) );
         else if( model == "fire" )
-            prototype.AddCapacity< PropagationCapacity_ABC >( new FirePropagationCapacity( xis, propagation ) );
+        {
+            int todo = 0;
+        }
     }
 }
 
@@ -128,6 +131,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "resources", boost::bind( &AddBuilder< ResourceNetworkCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< ResourceNetworkCapacity >::Update, _1, _2 ) );
     DoRegister( "interaction-height", boost::bind( &AddBuilder< InteractIfHeightCapacity >::Add, _1, _2 ) );
 	DoRegister( "population-filter", boost::bind( &AddBuilder< PopulationFilterCapacity >::Add, _1, _2 ) );
+    DoRegister( "burn", boost::bind( &AddBuilder< BurnCapacity >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

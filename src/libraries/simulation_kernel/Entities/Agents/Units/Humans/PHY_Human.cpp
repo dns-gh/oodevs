@@ -18,6 +18,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
+#include "Entities/Objects/MIL_BurnEffectManipulator.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"
 
@@ -278,11 +279,21 @@ void PHY_Human::ApplyContamination( const MIL_ToxicEffectManipulator& /*contamin
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Human::ApplyBurn
+// Created: BCI 2010-12-14
+// -----------------------------------------------------------------------------
+void PHY_Human::ApplyBurn( const MIL_BurnEffectManipulator& burn )
+{
+    burn.ApplyRandomWound( boost::bind( &PHY_Human::ApplyWound, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Human::ApplyMentalDisease
 // Created: NLD 2005-01-14
 // -----------------------------------------------------------------------------
 void PHY_Human::ApplyMentalDisease()
 {
+
     if( !IsUsable() || IsWounded() || bMentalDiseased_ )
         return;
 

@@ -30,6 +30,7 @@ class MIL_PopulationType;
 class MIL_PopulationAttitude;
 class MIL_Time_ABC;
 class MIL_ToxicEffectManipulator;
+class MIL_BurnEffectManipulator;
 class PHY_InjuredHuman;
 class PHY_AttritionData;
 class PHY_Breakdown;
@@ -146,6 +147,7 @@ public:
     void ApplyPoisonous                 ( const MIL_ToxicEffectManipulator& contamination );
     void ApplyInjury                    ( MIL_Injury_ABC& injury );
     void ApplyUrbanObjectCrumbling      ( const MIL_Object_ABC& object );
+    void ApplyBurn                      ( const MIL_BurnEffectManipulator& burn );
 
     unsigned int GetNeutralizationTime      () const;
     void     ApplyHumansWounds              ( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );

@@ -43,6 +43,7 @@ public:
     static PHY_DotationType* barbele_;
     static PHY_DotationType* piece_;
     static PHY_DotationType* ration_;
+    static PHY_DotationType* agentExtincteur_;
     //@}
 
 public:
@@ -82,7 +83,8 @@ private:
         eMine      = 3,
         eBarbele   = 4,
         ePiece     = 5,
-        eRation    = 6
+        eRation    = 6,
+        eAgentExtincteur = 7
     };
 
     typedef std::map< std::string, const PHY_DotationType*, sCaseInsensitiveLess > T_DotationTypeMap;

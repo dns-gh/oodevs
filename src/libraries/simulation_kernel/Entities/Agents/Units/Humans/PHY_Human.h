@@ -51,6 +51,7 @@ public:
     bool ApplyWound           ( const PHY_HumanWound& newWound ); // Test 'usability'
     bool ApplyPoisonous       ( const MIL_ToxicEffectManipulator& nbcAgent ); // NBC effects
     void ApplyContamination   ( const MIL_ToxicEffectManipulator& nbcAgent ); // NBC effects
+    void ApplyBurn            ( const MIL_BurnEffectManipulator& burn );
     void ApplyMentalDisease   ();
     void CancelLogisticRequest();
     //@}
