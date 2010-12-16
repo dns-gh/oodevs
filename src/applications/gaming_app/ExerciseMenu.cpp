@@ -15,8 +15,7 @@
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
+#pragma warning( push, 0 )
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
 #pragma warning( pop )
