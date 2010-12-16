@@ -15,7 +15,7 @@
 // Created: SEB 2010-10-15
 // -----------------------------------------------------------------------------
 TaskFactory::TaskFactory( const Model& model, SwordMessagePublisher_ABC& publisher )
-    : model_( model )
+    : model_    ( model )
     , publisher_( publisher )
 {
     // NOTHING

@@ -10,7 +10,9 @@
 #ifndef __TaskFactory_h_
 #define __TaskFactory_h_
 
+#pragma warning( push, 0 )
 #include <wise/wiseinterfacetypes.h>
+#pragma warning( pop )
 
 class CWISEDriver;
 class Model;
