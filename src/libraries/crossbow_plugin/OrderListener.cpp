@@ -14,13 +14,13 @@
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
-#include "WorkingSession.h"
+#include "WorkingSession_ABC.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/noncopyable.hpp>
 
-using namespace dispatcher;
-using namespace plugins;
 using namespace plugins::crossbow;
-
 
 namespace 
 {
@@ -28,18 +28,38 @@ namespace
     {
         return workspace.GetDatabase( "flat" );
     }
+
+    
+    class CrossbowPublisher : public Publisher_ABC
+                            , private boost::noncopyable
+    {
+    public:
+        explicit CrossbowPublisher( dispatcher::SimulationPublisher_ABC& sim ) : sim_ ( sim ) {}
+
+        virtual void Send( const sword::ClientToSim& message )
+        {
+            sim_.Send( message );
+        }
+        virtual void Send( const sword::ClientToAuthentication&  ) {}
+        virtual void Send( const sword::ClientToReplay& ){}
+        virtual void Send( const sword::ClientToAar& ) {}
+        virtual void Send( const sword::ClientToMessenger& ) {}
+    
+    private:
+        dispatcher::SimulationPublisher_ABC& sim_;
+    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderListener constructor
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-OrderListener::OrderListener( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
-    : publisher_ ( publisher )
-    , dispatcher_( new OrderDispatcher( workspace, types, model ) )
-    , workspace_  ( workspace )
+OrderListener::OrderListener( const dispatcher::Model_ABC& model, Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session )
+    : publisher_    ( new CrossbowPublisher( publisher ) )
+    , workspace_    ( workspace )
+    , session_      ( session )
+    , dispatcher_   ( new OrderDispatcher( model, workspace, serializer ) )
     , ref_ ( 0 )
-    , session_ ( session )
 {
     Clean();
 }
@@ -138,7 +158,7 @@ bool OrderListener::ListenRow( const Row_ABC& row )
         {
             if ( dispatcher_->IsValidOrder( row ) )
             {
-                dispatcher_->Dispatch( publisher_, row );
+                dispatcher_->Dispatch( *publisher_, row );
                 MarkProcessed( orderid );
             }
         }
@@ -147,7 +167,7 @@ bool OrderListener::ListenRow( const Row_ABC& row )
     {
         if( orderid >= 0 )
             MarkProcessed( orderid );
-        MT_LOG_ERROR_MSG( "crossbow::ListenRow - unable to build order correctly: " << std::endl << ex.what() );
+        MT_LOG_ERROR_MSG( "crossbow::ListenRow - unable to build order correctly: " << ex.what() );
     }
     return orderid >= 0;
 }

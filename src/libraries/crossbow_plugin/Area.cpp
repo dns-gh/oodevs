@@ -112,10 +112,9 @@ void crossbow::Area::Serialize( std::ostream& geometry ) const
 
 // -----------------------------------------------------------------------------
 // Name: Area::Serialize
-// Created: JCR 2007-09-26
+// Created: JCR 2010-12-07
 // -----------------------------------------------------------------------------
-void crossbow::Area::Serialize( sword::MsgLocation& message ) const
+void crossbow::Area::Serialize( kernel::Location_ABC& message, const kernel::CoordinateConverter_ABC& converter ) const
 {
-    message.set_type( sword::MsgLocation_Geometry_polygon );
-    PointCollection::Serialize( message );
+    PointCollection::Serialize( message, converter );
 }

@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( sword::MsgLocation& message ) const;
+    virtual void Serialize( kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter ) const;
     //@}
 
     //! @name

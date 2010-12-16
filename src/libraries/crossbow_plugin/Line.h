@@ -45,7 +45,7 @@ public:
     //@{
     void Serialize( std::ostream& geometry ) const;
     void SerializeWkt( std::ostream& geometry ) const;
-    void Serialize( sword::MsgLocation& message ) const;
+    void Serialize( kernel::Location_ABC& message, const kernel::CoordinateConverter_ABC& converter ) const;
     //@}
 
     //! @name

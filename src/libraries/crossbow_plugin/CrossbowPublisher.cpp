@@ -15,13 +15,14 @@
 #include "DatabaseUpdater.h"
 #include "ReportUpdater.h"
 #include "FolkUpdater.h"
-#include "OrderTypes.h"
+#include "ActionSerializer.h"
 #include "OrderListener.h"
 #include "StatusListener.h"
 #include "ObjectListener.h"
 #include "ExtensionFactory.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Config.h"
+#include "clients_kernel/Controller.h"
 
 #include <boost/bind.hpp>
 
@@ -33,25 +34,25 @@ using namespace plugins::crossbow;
 // Name: CrossbowPublisher constructor
 // Created: JCR 2007-04-30
 // -----------------------------------------------------------------------------
-CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis )
+CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis )
     : model_           ( model )
     , workspace_       ( new OGR_Workspace() )
-    , orderTypes_      ( new OrderTypes( config ) )
+    , serializer_      ( new ActionSerializer( config, model, staticModel, *workspace_ ) )
+    , extensions_      ( new ExtensionFactory() )
     , modelLoaded_     ( false )
-    , factory_         ( new ExtensionFactory() )
 {
-    model.RegisterFactory( *factory_ );
+    model.RegisterFactory( *extensions_ );
 
     workspace_->Initialize( xis, config );
 
-    session_.reset( new WorkingSession( *workspace_, config ) );
-    databaseUpdater_.reset( new DatabaseUpdater( *workspace_, model, *session_ ) );
-    reportUpdater_.reset( new ReportUpdater( *workspace_, config, model, *session_ ) );
-    folkUpdater_.reset( new FolkUpdater( *workspace_, *session_ ) );
+    session_.reset          ( new WorkingSession( *workspace_, config ) );
+    databaseUpdater_.reset  ( new DatabaseUpdater( *workspace_, model, *session_ ) );
+    reportUpdater_.reset    ( new ReportUpdater( *workspace_, config, model, *session_ ) );
+    folkUpdater_.reset      ( new FolkUpdater( *workspace_, *session_ ) );
 
     // activate listeners
-    listeners_.push_back( T_SharedListener( new OrderListener( *workspace_, model, *orderTypes_, publisher, *session_ ) ) );
-    listeners_.push_back( T_SharedListener( new ObjectListener( *workspace_, publisher, *session_ ) ) );
+    listeners_.push_back( T_SharedListener( new OrderListener( model, *workspace_, *serializer_, publisher, *session_ ) ) );
+    listeners_.push_back( T_SharedListener( new ObjectListener( *workspace_, *serializer_, publisher, *session_ ) ) );
     // listeners_.push_back( T_SharedListener( new StatusListener( *workspace_, publisher, *session_ ) ) );
 }
 
@@ -61,7 +62,7 @@ CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatch
 // -----------------------------------------------------------------------------
 CrossbowPublisher::~CrossbowPublisher()
 {
-    model_.UnregisterFactory( *factory_ );
+    model_.UnregisterFactory( *extensions_ );
 }
 
 // -----------------------------------------------------------------------------

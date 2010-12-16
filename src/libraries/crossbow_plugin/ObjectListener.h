@@ -12,6 +12,9 @@
 
 #include "Listener_ABC.h"
 
+// protocol
+class Publisher_ABC;
+
 namespace dispatcher
 {
     class SimulationPublisher_ABC;
@@ -25,7 +28,8 @@ namespace crossbow
     class Database_ABC;
     class Row_ABC;
     class Table_ABC;
-    class WorkingSession;
+    class WorkingSession_ABC;
+    class ActionSerializer_ABC;
 
 // =============================================================================
 /** @class  ObjectListener
@@ -38,7 +42,7 @@ class ObjectListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListener( Workspace_ABC& workspace, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session );
+             ObjectListener( Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session );
     virtual ~ObjectListener();
     //@}
 
@@ -65,9 +69,10 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::SimulationPublisher_ABC& publisher_;
+    std::auto_ptr< Publisher_ABC > publisher_;
     Workspace_ABC& workspace_;
-    const WorkingSession& session_;
+    ActionSerializer_ABC& serializer_; 
+    const WorkingSession_ABC& session_;
     //@}
 };
 

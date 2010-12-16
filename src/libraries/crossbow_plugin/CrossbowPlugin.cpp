@@ -63,14 +63,15 @@ namespace
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
 CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis,
-                                dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher,
+                                dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel,
+                                dispatcher::SimulationPublisher_ABC& publisher,
                                 dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher,
                                 dispatcher::LinkResolver_ABC& /*links*/, dispatcher::CompositeRegistrable& /*registrables*/ )
     : clientNetworker_  ( new DummyClientNetworker() )
 {
     try
     {
-        crossbowPublisher_.reset( new CrossbowPublisher( config, model, publisher, xis ) );
+        crossbowPublisher_.reset( new CrossbowPublisher( config, model, staticModel, publisher, xis ) );
         MT_LOG_INFO_MSG( "CrossbowPlugin : registered." )
     }
     catch ( std::exception& ex )

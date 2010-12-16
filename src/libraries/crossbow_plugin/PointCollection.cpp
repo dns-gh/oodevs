@@ -102,12 +102,13 @@ void PointCollection::Serialize( std::ostream& geometry ) const
     geometry << "(" << ss.str() << ")";
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: PointCollection::Serialize
-// Created: JCR 2007-09-26
+// Created: JCR 2010-12-04
 // -----------------------------------------------------------------------------
-void PointCollection::Serialize( sword::MsgLocation& message ) const
+void PointCollection::Serialize( kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter ) const
 {
     for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
-        it->Serialize( *message.mutable_coordinates()->add_elem() );
+        it->Serialize( location, converter );
 }

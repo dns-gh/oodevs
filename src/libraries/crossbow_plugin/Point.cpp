@@ -10,6 +10,8 @@
 #include "crossbow_plugin_pch.h"
 #include "Point.h"
 #include "protocol/SimulationSenders.h"
+#include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include <gdal/ogr_feature.h>
 
 using namespace plugins;
@@ -106,22 +108,9 @@ std::ostream& crossbow::Point::SerializeCoordinates( std::ostream& geometry, cha
 
 // -----------------------------------------------------------------------------
 // Name: Point::Serialize
-// Created: SBO 2007-09-26
+// Created: JCR 2010-12-04
 // -----------------------------------------------------------------------------
-void crossbow::Point::Serialize( sword::MsgCoordLatLong& message ) const
+void crossbow::Point::Serialize( kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter ) const
 {
-    message.set_longitude( x_ );
-    message.set_latitude( y_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Point::Serialize
-// Created: SBO 2007-09-26
-// -----------------------------------------------------------------------------
-void crossbow::Point::Serialize( sword::MsgLocation& message ) const
-{
-    message.set_type( sword::MsgLocation_Geometry_point );
-    message.mutable_coordinates()->mutable_elem( 0 )->set_latitude( y_ );
-    message.mutable_coordinates()->mutable_elem( 0 )->set_longitude( x_ );
-    Serialize( *message.mutable_coordinates()->mutable_elem( 0 ) );
+    location.AddPoint( converter.ConvertFromGeo( geometry::Point2d( x_, y_ ) ) );
 }

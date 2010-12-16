@@ -42,7 +42,7 @@ AgentKnowledgeConverter::~AgentKnowledgeConverter()
 // Name: AgentKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner )
+const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::Agent_ABC& base, const kernel::Entity_ABC& owner ) const
 {
     const kernel::Entity_ABC& group = FindGroup( owner );
     tools::Iterator< const dispatcher::AgentKnowledge_ABC& > it = model_.AgentKnowledges().CreateIterator();
@@ -59,7 +59,7 @@ const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::A
 // Name: AgentKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner )
+const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::Population_ABC& base, const kernel::Entity_ABC& owner ) const
 {
     const kernel::Entity_ABC& group = FindGroup( owner );
     tools::Iterator< const dispatcher::PopulationKnowledge& > it = model_.PopulationKnowledges().CreateIterator();
@@ -76,7 +76,7 @@ const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kern
 // Name: AgentKnowledgeConverter::FindAgent
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned long id, const kernel::Entity_ABC& /*owner*/ )
+const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned long id, const kernel::Entity_ABC& /*owner*/ ) const
 {
     return model_.AgentKnowledges().Find( id );
 }
@@ -85,7 +85,7 @@ const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned l
 // Name: AgentKnowledgeConverter::FindPopulation
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( unsigned long id, const kernel::Entity_ABC& /*owner*/ )
+const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( unsigned long id, const kernel::Entity_ABC& /*owner*/ ) const
 {
     return model_.PopulationKnowledges().Find( id );
 }
@@ -94,7 +94,7 @@ const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( 
 // Name: AgentKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::AgentKnowledge_ABC& /*base*/, const kernel::Entity_ABC& /*owner*/ )
+const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::AgentKnowledge_ABC& /*base*/, const kernel::Entity_ABC& /*owner*/ ) const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
@@ -103,7 +103,7 @@ const kernel::AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::A
 // Name: AgentKnowledgeConverter::Find
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::PopulationKnowledge_ABC& /*base*/, const kernel::Entity_ABC& /*owner*/ )
+const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kernel::PopulationKnowledge_ABC& /*base*/, const kernel::Entity_ABC& /*owner*/ ) const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
@@ -112,7 +112,7 @@ const kernel::PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const kern
 // Name: AgentKnowledgeConverter::FindGroup
 // Created: SBO 2010-05-11
 // -----------------------------------------------------------------------------
-const kernel::Entity_ABC& AgentKnowledgeConverter::FindGroup( const kernel::Entity_ABC& owner )
+const kernel::Entity_ABC& AgentKnowledgeConverter::FindGroup( const kernel::Entity_ABC& owner ) const
 {
     if( const dispatcher::Automat_ABC* automat = dynamic_cast< const dispatcher::Automat_ABC* >( &owner ) )
         return automat->GetKnowledgeGroup();

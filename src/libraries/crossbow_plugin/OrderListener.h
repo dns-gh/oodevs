@@ -7,10 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef __OrderListener_h_
-#define __OrderListener_h_
+#ifndef __crossbow_OrderListener_h_
+#define __crossbow_OrderListener_h_
 
 #include "Listener_ABC.h"
+
+// protocol
+class Publisher_ABC;
 
 namespace dispatcher
 {
@@ -23,12 +26,11 @@ namespace plugins
 namespace crossbow
 {
     class Workspace_ABC;
-    class Database_ABC;
-    class Table_ABC;
-    class Row_ABC;
     class OrderDispatcher;
-    class OrderTypes;
-    class WorkingSession;
+    class WorkingSession_ABC;
+    class ActionSerializer_ABC;
+
+    class Row_ABC;
 
 // =============================================================================
 /** @class  OrderListener
@@ -41,7 +43,7 @@ class OrderListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( Workspace_ABC& workspace, const dispatcher::Model_ABC& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session );
+             OrderListener( const dispatcher::Model_ABC& model, Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session );
     virtual ~OrderListener();
     //@}
 
@@ -67,15 +69,15 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::SimulationPublisher_ABC& publisher_;
-    std::auto_ptr< OrderDispatcher >     dispatcher_;
-    Workspace_ABC&                       workspace_;
-    long                                 ref_;
-    const WorkingSession&                session_;
+    std::auto_ptr< Publisher_ABC >      publisher_;
+    Workspace_ABC&                      workspace_;
+    const WorkingSession_ABC&           session_;
+    std::auto_ptr< OrderDispatcher >    dispatcher_;
+    long                                ref_;
     //@}
 };
 
 }
 }
 
-#endif // __OrderListener_h_
+#endif // __crossbow_OrderListener_h_

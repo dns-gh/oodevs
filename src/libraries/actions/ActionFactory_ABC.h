@@ -10,6 +10,8 @@
 #ifndef __actions_ActionFactory_ABC_h_
 #define __actions_ActionFactory_ABC_h_
 
+#include <geometry/types.h>
+
 namespace sword
 {
     class UnitOrder;

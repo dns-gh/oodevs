@@ -13,9 +13,10 @@
 #include <gdal/ogr_geometry.h>
 #include <gdal/ogr_feature.h>
 
-namespace sword
+namespace kernel
 {
-    class MsgLocation;
+    class Location_ABC;
+    class CoordinateConverter_ABC;
 }
 
 namespace plugins
@@ -41,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( std::ostream& geometry ) const = 0;
-    virtual void Serialize( sword::MsgLocation& message ) const = 0;
+    virtual void Serialize( kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter ) const = 0;
     //@}
 
     //! @name

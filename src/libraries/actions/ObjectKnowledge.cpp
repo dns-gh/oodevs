@@ -48,7 +48,7 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, Controller& c
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long id, const ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
     : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, converter.Find( id, owner ), controller )
 {
     // NOTHING
@@ -58,7 +58,7 @@ ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, unsigned long
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const EntityResolver_ABC& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
+ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const EntityResolver_ABC& resolver, const ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
     : Knowledge_ABC< ObjectKnowledge_ABC >( OrderParameter( ReadName( xis ), "objectknowledge", false ), converter.Find( resolver.GetObject( ReadId( xis ) ), owner ), controller )
 {
     // NOTHING
@@ -68,7 +68,7 @@ ObjectKnowledge::ObjectKnowledge( xml::xistream& xis, const EntityResolver_ABC& 
 // Name: ObjectKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream& xis, const EntityResolver_ABC& resolver, ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
+ObjectKnowledge::ObjectKnowledge( const OrderParameter& parameter, xml::xistream& xis, const EntityResolver_ABC& resolver, const ObjectKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
     : Knowledge_ABC< ObjectKnowledge_ABC >( parameter, converter.Find( resolver.GetObject( ReadId( xis ) ), owner ), controller )
 {
     // NOTHING

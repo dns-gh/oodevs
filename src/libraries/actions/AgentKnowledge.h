@@ -43,9 +43,9 @@ public:
     //@{
              AgentKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
              AgentKnowledge( const kernel::OrderParameter& parameter, const kernel::AgentKnowledge_ABC& entity, kernel::Controller& controller );
-             AgentKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             AgentKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             AgentKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             AgentKnowledge( const kernel::OrderParameter& parameter, unsigned long id, const kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             AgentKnowledge( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, const kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             AgentKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, const kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~AgentKnowledge();
     //@}
 

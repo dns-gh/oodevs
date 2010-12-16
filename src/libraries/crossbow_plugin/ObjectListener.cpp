@@ -11,28 +11,49 @@
 #include "ObjectListener.h"
 #include "Workspace_ABC.h"
 #include "Database_ABC.h"
-#include "QueryBuilder.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
-#include "Line.h"
-#include "Point.h"
-#include "WorkingSession.h"
-#include "dispatcher/SimulationPublisher_ABC.h"
-#include "protocol/ClientSenders.h"
-#include "protocol/SimulationSenders.h"
 
+#include "WorkingSession_ABC.h"
+#include "ActionSerializer_ABC.h"
+#include "actions/Action_ABC.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
 
-using namespace plugins;
 using namespace plugins::crossbow;
+
+namespace
+{
+    class CrossbowPublisher : public Publisher_ABC
+                            , private boost::noncopyable
+    {
+    public:
+        explicit CrossbowPublisher( dispatcher::SimulationPublisher_ABC& sim ) : sim_ ( sim ) {}
+
+        virtual void Send( const sword::ClientToSim& message )
+        {
+            sim_.Send( message );
+        }
+        virtual void Send( const sword::ClientToAuthentication&  ) {}
+        virtual void Send( const sword::ClientToReplay& ){}
+        virtual void Send( const sword::ClientToAar& ) {}
+        virtual void Send( const sword::ClientToMessenger& ) {}
+    
+    private:
+        dispatcher::SimulationPublisher_ABC& sim_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListener constructor
 // Created: SBO 2007-09-23
 // -----------------------------------------------------------------------------
-ObjectListener::ObjectListener( Workspace_ABC& workspace, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
-    : publisher_ ( publisher )
+ObjectListener::ObjectListener( Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session )
+    : publisher_ ( new CrossbowPublisher( publisher ) )
     , workspace_ ( workspace )
+    , serializer_ ( serializer )
     , session_ ( session )
 {
 
@@ -128,9 +149,11 @@ void ObjectListener::ListenObjectCreationRequest( Database_ABC& database, const 
 // Name: ObjectListener::SendCreation
 // Created: SBO 2007-09-23
 // -----------------------------------------------------------------------------
-void ObjectListener::SendCreation( const Row_ABC& row )
-{
-    simulation::ObjectMagicAction message;
+void ObjectListener::SendCreation( const Row_ABC& /*row*/ )
+{   
+    std::auto_ptr< actions::Action_ABC > magic;
+
+    // serializer_->Serialize( publisher_, row );
     
     /*sword::MagicActionCreateObject* creation = message().mutable_action()->mutable_create_object();
     creation->set_team( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
@@ -138,20 +161,21 @@ void ObjectListener::SendCreation( const Row_ABC& row )
     creation->set_name( "" );
     row.GetGeometry().Serialize( *creation->mutable_location() );*/
     
-    message().mutable_object()->set_id( 0 );
-    message().set_type( sword::ObjectMagicAction_Type_create );
+    // message().mutable_object()->set_id( 0 );
+    // message().set_type( sword::ObjectMagicAction_Type_create );
     // team
-    message().mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_party()->set_id( GetField< int >( row, "team_id" ) );
+    // message().mutable_parameters()->add_elem()->mutable_value()->mutable_party()->set_id( GetField< int >( row, "team_id" ) );
     // type
-    message().mutable_parameters()->add_elem()->mutable_value()->Add()->set_acharstr( GetField< std::string >( row, "type" ) );
+    // message().mutable_parameters()->add_elem()->mutable_value()->set_acharstr( GetField< std::string >( row, "type" ) );
     // name
-    message().mutable_parameters()->add_elem()->mutable_value()->Add()->set_acharstr( GetField< std::string >( row, "name" ) );
+    // message().mutable_parameters()->add_elem()->mutable_value()->set_acharstr( GetField< std::string >( row, "name" ) );
 
     // location
-    row.GetGeometry().Serialize( *message().mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_location() );
+    // row.GetGeometry().Serialize( *message().mutable_parameters()->add_elem()->mutable_value()->mutable_location() );
     
     // list (unused but must be created)
-    message().mutable_parameters()->add_elem();
+    // message().mutable_parameters()->add_elem();
 
-    message.Send( publisher_ );
+    if ( magic.get() )
+        magic->Publish( *publisher_ );
 }

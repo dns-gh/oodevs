@@ -14,6 +14,8 @@
 #include <qstring.h>
 #pragma warning( pop )
 
+#include <geometry/types.h>
+
 namespace kernel
 {
     class LocationVisitor_ABC;

@@ -113,8 +113,7 @@ void crossbow::Line::Serialize( std::ostream& geometry ) const
 // Name: Line::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Line::Serialize( sword::MsgLocation& message ) const
+void crossbow::Line::Serialize( kernel::Location_ABC& message, const kernel::CoordinateConverter_ABC& converter ) const
 {
-    message.set_type( sword::MsgLocation_Geometry_line );
-    PointCollection::Serialize( message );
+    PointCollection::Serialize( message, converter );
 }
