@@ -42,9 +42,12 @@ AgentKnowledgeConverter::~AgentKnowledgeConverter()
 // Name: AgentKnowledgeConverter::FindAgent
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-const AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned long id, const kernel::Entity_ABC& owner )
+const AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned long id, const kernel::Entity_ABC& owner ) const
 {
-    const T_KnowledgeMap& knowledges = agents_[ FindKnowledgeGroup( owner ) ];
+    T_Knowledges::const_iterator it = agents_.find( FindKnowledgeGroup( owner ) );
+    if ( it == agents_.end() )
+        return 0;
+    const T_KnowledgeMap& knowledges = it->second;
     for( T_KnowledgeMap::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
         if( it->second && it->second->GetId() == id )
             return it->second;
@@ -55,9 +58,12 @@ const AgentKnowledge_ABC* AgentKnowledgeConverter::FindAgent( unsigned long id, 
 // Name: AgentKnowledgeConverter::FindPopulation
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-const PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( unsigned long id, const kernel::Entity_ABC& owner )
+const PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( unsigned long id, const kernel::Entity_ABC& owner ) const
 {
-    const T_PopulationKnowledgeMap& knowledges = populations_[ FindKnowledgeGroup( owner ) ];
+    T_PopulationKnowledges::const_iterator it = populations_.find( FindKnowledgeGroup( owner ) );
+    if ( it == populations_.end() )
+        return 0;
+    const T_PopulationKnowledgeMap& knowledges = it->second;
     for( T_PopulationKnowledgeMap::const_iterator it = knowledges.begin(); it != knowledges.end(); ++it )
         if( it->second && it->second->GetId() == id )
             return it->second;
@@ -68,7 +74,7 @@ const PopulationKnowledge_ABC* AgentKnowledgeConverter::FindPopulation( unsigned
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const AgentKnowledge_ABC& base, const Entity_ABC& owner )
+const AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const AgentKnowledge_ABC& base, const Entity_ABC& owner ) const
 {
     const Agent_ABC* real = base.GetEntity();
     if( real )
@@ -80,16 +86,22 @@ const AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const AgentKnowledge_AB
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const Agent_ABC& base, const Entity_ABC& owner )
+const AgentKnowledge_ABC* AgentKnowledgeConverter::Find( const Agent_ABC& base, const Entity_ABC& owner ) const
 {
-    return agents_[ FindKnowledgeGroup( owner ) ][ &base ];
+    T_Knowledges::const_iterator it = agents_.find( FindKnowledgeGroup( owner ) );
+    if ( it == agents_.end() )
+        return 0;
+    T_KnowledgeMap::const_iterator itMap = it->second.find( &base );
+    if ( itMap == it->second.end() )
+        return 0;
+    return itMap->second;
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const PopulationKnowledge_ABC& base, const Entity_ABC& owner )
+const PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const PopulationKnowledge_ABC& base, const Entity_ABC& owner ) const
 {
     const Population_ABC* real = base.GetEntity();
     if( real )
@@ -101,9 +113,15 @@ const PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const PopulationKn
 // Name: AgentKnowledgeConverter::Find
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-const PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const Population_ABC& base, const Entity_ABC& owner )
+const PopulationKnowledge_ABC* AgentKnowledgeConverter::Find( const Population_ABC& base, const Entity_ABC& owner ) const
 {
-    return populations_[ FindKnowledgeGroup( owner ) ][ &base ];
+    T_PopulationKnowledges::const_iterator it = populations_.find( FindKnowledgeGroup( owner ) );
+    if ( it == populations_.end() )
+        return 0;
+    T_PopulationKnowledgeMap::const_iterator itMap = it->second.find( &base );
+    if ( itMap == it->second.end() )
+        return 0;
+    return itMap->second;
 }
 
 // -----------------------------------------------------------------------------
