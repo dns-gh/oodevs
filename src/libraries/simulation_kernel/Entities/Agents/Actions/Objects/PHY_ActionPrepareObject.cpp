@@ -12,13 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionPrepareObject.h"
 #include "PHY_RoleAction_Objects.h"
-#include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/ConstructionAttribute.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "protocol/Protocol.h"
 
