@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class MsgLocation;
+    class Location;
 }
 
 namespace kernel
@@ -41,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::MsgLocation& message );
+             Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Location& message );
              Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
              Path( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Path();
@@ -49,9 +49,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
-    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
-    void CommitTo( sword::MsgLocation& message ) const;
+    virtual void CommitTo( sword::MissionParameter& message ) const;
+    virtual void CommitTo( sword::MissionParameter_Value& message ) const;
+    void CommitTo( sword::Location& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual bool IsSet() const;
     //@}
@@ -77,7 +77,7 @@ private:
     virtual void VisitCircle    ( const geometry::Point2f&, float ) {}
     virtual void VisitPoint     ( const geometry::Point2f& ) {}
     virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points );
-    void AddPoints( const sword::MsgLocation& message );
+    void AddPoints( const sword::Location& message );
     void ReadPoint( xml::xistream& xis );
     void AddPoint( const geometry::Point2f& p, unsigned i, unsigned count );
     //@}

@@ -25,7 +25,7 @@ namespace sword
     class LogSupplyState;
     class UnitChangeSuperior;
     class UnitOrder;
-    class MsgCoordLatLong;
+    class CoordLatLong;
 }
 
 namespace kernel

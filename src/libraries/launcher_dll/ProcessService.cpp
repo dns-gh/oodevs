@@ -63,7 +63,7 @@ void ProcessService::SendExerciseList( sword::ExercicesListResponse& message )
     for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
     {
         const std::string name = (*it).ascii();
-        sword::MsgExercise& exercise = *message.mutable_exercise()->Add();
+        sword::Exercise& exercise = *message.mutable_exercise()->Add();
         exercise.set_name( name );
         exercise.set_running( IsRunning( name ) );
         if( exercise.running() )

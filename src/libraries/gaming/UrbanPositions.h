@@ -28,7 +28,7 @@ class UrbanPositions : public LocationPositions
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( const urban::TerrainObject_ABC& object, const sword::MsgLocation& message, const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& message, const kernel::CoordinateConverter_ABC& converter );
     virtual ~UrbanPositions();
     //@}
 

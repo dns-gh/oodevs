@@ -47,7 +47,7 @@ namespace
             message.mutable_type()->set_id( "my_type" );
             message.set_name( "test" );
             message.mutable_party()->set_id( team.GetId() );
-            message.mutable_location()->set_type( sword::MsgLocation::point );
+            message.mutable_location()->set_type( sword::Location::point );
             message.mutable_location()->mutable_coordinates()->add_elem();
             message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
             message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
@@ -108,7 +108,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
         createObject();
         sword::ObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
         message.mutable_object()->set_id( 1 );
-        message.mutable_location()->set_type( sword::MsgLocation::line );
+        message.mutable_location()->set_type( sword::Location::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 42. );
@@ -127,7 +127,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
         message.mutable_type()->set_id( "my_type" );
         message.set_name( "test" );
         message.mutable_party()->set_id( team.GetId() );
-        message.mutable_location()->set_type( sword::MsgLocation::line );
+        message.mutable_location()->set_type( sword::Location::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 42. );
@@ -165,7 +165,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
         message.mutable_type()->set_id( "my_type" );
         message.set_name( "test" );
         message.mutable_party()->set_id( team.GetId() );
-        message.mutable_location()->set_type( sword::MsgLocation::point );
+        message.mutable_location()->set_type( sword::Location::point );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 42. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );

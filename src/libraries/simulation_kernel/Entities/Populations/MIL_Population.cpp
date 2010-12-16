@@ -880,11 +880,11 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicActi
         throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
-    const sword::MsgMissionParameter& parametre = asn.parameters().elem( 0 );
+    const sword::MissionParameter& parametre = asn.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_point() )
         throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
-    const sword::MsgPoint& point = parametre.value().Get(0).point();
-    if( point.location().type() != sword::MsgLocation::point
+    const sword::Point& point = parametre.value().Get(0).point();
+    if( point.location().type() != sword::Location::point
         || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
     MT_Vector2D vPosTmp;
@@ -923,7 +923,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& m
 {
     if( !msg.has_parameters() )
         throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
-    const sword::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
+    const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_enumeration() )
         throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parametre.value().Get(0).enumeration() );
@@ -977,7 +977,7 @@ void MIL_Population::OnReceiveMsgKill( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() )
         throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
-    const sword::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
+    const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_quantity() )
         throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
     unsigned int remainingKills = parametre.value().Get(0).quantity();
@@ -1003,7 +1003,7 @@ void MIL_Population::OnReceiveMsgResurrect( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() )
         throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
-    const sword::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
+    const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_quantity() )
         throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
     unsigned int remainingResurrections = parametre.value().Get(0).quantity();

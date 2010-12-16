@@ -90,7 +90,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , teams_( *new TeamsModel( teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( knowledgeGroupFactory_ ) )
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
-    , limits_( *new LimitsModel( tacticalLineFactory_  ) )
+    , limits_( *new LimitsModel( tacticalLineFactory_ ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
     , weather_( *new WeatherModel( controllers, *this ) )
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
@@ -156,7 +156,6 @@ Model::~Model()
     delete &agentKnowledgeConverter_;
     delete &objectKnowledgeFactory_;
     delete &agentsKnowledgeFactory_;
-
 }
 
 // -----------------------------------------------------------------------------

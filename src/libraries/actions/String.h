@@ -34,8 +34,8 @@ public:
     //! @name Operations
     //@{
     void CommitTo( std::string& asn ) const;
-    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
-    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MissionParameter& message ) const;
+    virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     //@}
 
 private:

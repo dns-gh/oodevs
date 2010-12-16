@@ -53,7 +53,7 @@ bool MIL_EnumerationParameter::ToId( int& value ) const
 // Name: MIL_EnumerationParameter::ToElement
 // Created: MGD 2010-11-19
 // -----------------------------------------------------------------------------
-bool MIL_EnumerationParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_EnumerationParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     elem.set_enumeration( value_ );
     return true;

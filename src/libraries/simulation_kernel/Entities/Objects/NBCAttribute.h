@@ -61,7 +61,7 @@ public:
     //@{
              NBCAttribute();
     explicit NBCAttribute( xml::xistream& xis );
-    explicit NBCAttribute( const sword::MsgMissionParameter_Value& attributes );
+    explicit NBCAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~NBCAttribute();
     //@}
 

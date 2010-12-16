@@ -115,7 +115,7 @@ BOOST_FIXTURE_TEST_CASE( ObjectKnowledge_CanBeUpdatedWithoutAttributes, Fixture 
         message.mutable_object()->set_id( 0 );
         message.mutable_attributes();
         message.set_relevance( 99 );
-        message.mutable_location()->set_type( sword::MsgLocation::point );
+        message.mutable_location()->set_type( sword::Location::point );
         message.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 42. );
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_longitude( 1. );
         message.set_perceived( true );

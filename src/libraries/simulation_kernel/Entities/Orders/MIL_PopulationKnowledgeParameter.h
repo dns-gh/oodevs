@@ -39,7 +39,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const;
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
 private:

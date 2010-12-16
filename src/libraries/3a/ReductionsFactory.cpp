@@ -84,7 +84,6 @@ void ReductionsFactory::ReduceFunction( const std::string& name, xml::xistream& 
     result.AddConnector( name, connector );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ReductionsFactory::ReduceFunction2
 // Created: AGE 2008-08-04

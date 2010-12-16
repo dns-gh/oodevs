@@ -26,7 +26,7 @@ class MIL_PlannedWorkParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PlannedWorkParameter( const sword::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
+             MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
     explicit MIL_PlannedWorkParameter( boost::shared_ptr< DEC_Gen_Object > param );   
     virtual ~MIL_PlannedWorkParameter();
     //@}
@@ -39,7 +39,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToGenObject( boost::shared_ptr< DEC_Gen_Object >& ) const;
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
 private:

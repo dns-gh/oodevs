@@ -52,8 +52,8 @@ public:
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
     void CommitTo( sword::LimaOrder& message ) const;
-    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
-    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MissionParameter& message ) const;
+    virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     void Clean( sword::LimaOrder& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}

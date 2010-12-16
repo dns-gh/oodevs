@@ -53,7 +53,7 @@ public:
     virtual float        GetDensity() const;
     virtual QString      GetAttitude() const;
 
-    virtual const sword::MsgCoordLatLong& GetPosition() const;
+    virtual const sword::CoordLatLong& GetPosition() const;
     //@}
 
 private:
@@ -68,7 +68,7 @@ private:
     //@{
     const Population&   population_;
     const unsigned long nID_;
-    const sword::MsgCoordLatLong position_;
+    const sword::CoordLatLong position_;
 
     unsigned long             nNbrAliveHumans_;
     unsigned long             nNbrDeadHumans_;

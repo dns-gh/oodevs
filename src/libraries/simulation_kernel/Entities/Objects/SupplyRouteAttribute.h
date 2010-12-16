@@ -37,7 +37,7 @@ public:
     //@{
              SupplyRouteAttribute();
     explicit SupplyRouteAttribute( xml::xistream& xis );
-    explicit SupplyRouteAttribute( const sword::MsgMissionParameter_Value& attributes );
+    explicit SupplyRouteAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~SupplyRouteAttribute();
     //@}
 

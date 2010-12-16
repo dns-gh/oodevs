@@ -82,7 +82,7 @@ void MaintenancePriorities::AddPriority( const EquipmentType& value )
 // Name: MaintenancePriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MaintenancePriorities::CommitTo( sword::MsgMissionParameter& message ) const
+void MaintenancePriorities::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -96,7 +96,7 @@ void MaintenancePriorities::CommitTo( sword::MsgMissionParameter& message ) cons
 // Name: MaintenancePriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MaintenancePriorities::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void MaintenancePriorities::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
     {

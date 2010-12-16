@@ -22,19 +22,19 @@
 
 namespace
 {
-    const Entity_ABC* ResolveSuperior( const Model& model, const sword::MsgTacticalLine::Diffusion& message )
+    const Entity_ABC* ResolveSuperior( const Model& model, const sword::TacticalLine::Diffusion& message )
     {
         if( message.has_automat() )
             return model.ResolveAutomat( message.automat().id() );
         return model.ResolveFormation( message.formation().id() );
     }
 
-    std::list< CWISEVec3 > ReadPoints( const sword::MsgLocation& message )
+    std::list< CWISEVec3 > ReadPoints( const sword::Location& message )
     {
         std::list< CWISEVec3 > points;
         for( int i = 0; i < message.coordinates().elem_size(); ++i )
         {
-            const sword::MsgCoordLatLong& point = message.coordinates().elem( i );
+            const sword::CoordLatLong& point = message.coordinates().elem( i );
             points.push_back( CWISEVec3( point.latitude(), point.longitude(), 0 ) );
         }
         return points;

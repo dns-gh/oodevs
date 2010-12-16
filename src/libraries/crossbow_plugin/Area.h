@@ -16,8 +16,7 @@ class OGRPolygon;
 
 namespace sword
 {
-    class MsgLocation;
-    class MsgCoordLatLongList;
+    class CoordLatLongList;
 }
 
 namespace plugins
@@ -35,21 +34,18 @@ public:
     //! @name Constructors/Destructor
     //@{
              Area();
-    explicit Area( const sword::MsgCoordLatLongList& message );
+    explicit Area( const sword::CoordLatLongList& message );
     explicit Area( const OGRPolygon& area );
     virtual ~Area();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( std::ostream& geometry ) const;
     void SerializeWkt( std::ostream& geometry ) const;
-    void Serialize( kernel::Location_ABC& message, const kernel::CoordinateConverter_ABC& converter ) const;
-    //@}
 
-    //! @name
-    //@{
-    void Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const;
+    virtual void Serialize( std::ostream& geometry ) const;
+    virtual void Serialize( kernel::Location_ABC& message, const kernel::CoordinateConverter_ABC& converter ) const;
+    virtual void Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const;
     //@}
 
 private:

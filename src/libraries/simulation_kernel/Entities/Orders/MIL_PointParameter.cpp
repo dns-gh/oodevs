@@ -17,10 +17,10 @@
 // Name: MIL_PointParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-MIL_PointParameter::MIL_PointParameter( const sword::MsgPoint& asn )
+MIL_PointParameter::MIL_PointParameter( const sword::Point& asn )
     : pPoint_( new MT_Vector2D() )
 {
-    if( asn.location().type() != sword::MsgLocation_Geometry_point )
+    if( asn.location().type() != sword::Location_Geometry_point )
         throw std::runtime_error( "Unexpected type passed for point" );
     if( asn.location().coordinates().elem_size() > 1 )
         throw std::runtime_error( "Too many points" );
@@ -72,7 +72,7 @@ bool MIL_PointParameter::ToPoint( boost::shared_ptr< MT_Vector2D >& result ) con
 // Name: MIL_PointParameter::ToElement
 // Created: MGD 2010-11-05
 // -----------------------------------------------------------------------------
-bool MIL_PointParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_PointParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     NET_ASN_Tools::WritePoint( *pPoint_, *elem.mutable_point() );
     return true;

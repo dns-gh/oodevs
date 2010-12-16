@@ -76,7 +76,7 @@ Drawing::~Drawing()
 // -----------------------------------------------------------------------------
 void Drawing::ReadPoint( xml::xistream& xis )
 {
-    sword::MsgCoordLatLong asn;
+    sword::CoordLatLong asn;
     geometry::Point2f point( xis.attribute< float >( "x" ), xis.attribute< float >( "y" ) );
     converter_.ConvertToGeo( point, asn );
     points_.push_back( asn );
@@ -122,9 +122,9 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_shape()->set_category( category_ );
     message().mutable_shape()->set_color( color_ );
     message().mutable_shape()->set_pattern( pattern_ );
-    ::sword::MsgCoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
+    ::sword::CoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
     for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
-        *points->add_elem() = *iter;        //const_cast< MsgCoordLatLong* >( &points_.front() );
+        *points->add_elem() = *iter;        //const_cast< CoordLatLong* >( &points_.front() );
     message.Send( publisher );
 }
 
@@ -184,7 +184,7 @@ void Drawing::Serialize( xml::xostream& xos ) const
 // Name: Drawing::SerializePoint
 // Created: SBO 2008-06-10
 // -----------------------------------------------------------------------------
-void Drawing::SerializePoint( const sword::MsgCoordLatLong& asn, xml::xostream& xos ) const
+void Drawing::SerializePoint( const sword::CoordLatLong& asn, xml::xostream& xos ) const
 {
     // $$$$ AGE 2008-07-09: serializer en mgrs ?
     const geometry::Point2f point( converter_.ConvertToXY( asn ) );

@@ -12,7 +12,7 @@ import "common.proto";
 package sword;
 
 message ControlDatetimeChange {
-   required MsgDateTime date_time = 1;
+   required DateTime date_time = 1;
 }
 
 message ControlCheckPointSaveNow {
@@ -20,9 +20,9 @@ message ControlCheckPointSaveNow {
 }
 
 message FragOrder {
-   required Tasker               tasker     = 1;
-   required FragOrderType        frag_order = 2;
-   optional MsgMissionParameters parameters = 3;
+   required Tasker            tasker     = 1;
+   required FragOrderType     frag_order = 2;
+   optional MissionParameters parameters = 3;
 }
 
 message SetAutomatMode {
@@ -31,9 +31,9 @@ message SetAutomatMode {
 }
 
 message UnitCreationRequest {
-   required UnitType        type     = 1;
-   required AutomatId       superior = 2;
-   required MsgCoordLatLong position = 3;
+   required UnitType     type     = 1;
+   required AutomatId    superior = 2;
+   required CoordLatLong position = 3;
 }
 
 // Magic Action
@@ -71,9 +71,9 @@ message UnitMagicAction {
         log_supply_pull_flow      = 29;
         create_wound              = 30;
     }
-   required Tasker               tasker     = 1;
-   required Type                 type       = 2;
-   required MsgMissionParameters parameters = 3;
+   required Tasker            tasker     = 1;
+   required Type              type       = 2;
+   required MissionParameters parameters = 3;
 }
 
 message KnowledgeMagicAction {
@@ -83,9 +83,9 @@ message KnowledgeMagicAction {
         update_party_parent = 2;
         update_type         = 3;
     }
-   required KnowledgeGroupId     knowledge_group = 1;
-   required Type                 type            = 2;
-   required MsgMissionParameters parameters      = 3;
+   required KnowledgeGroupId  knowledge_group = 1;
+   required Type              type            = 2;
+   required MissionParameters parameters      = 3;
 }
 
 message ObjectMagicAction {
@@ -114,9 +114,9 @@ message ObjectMagicAction {
         effect_delay       = 15;
    }
 
-   required ObjectId             object     = 1;
-   required Type                 type       = 2;
-   required MsgMissionParameters parameters = 3;
+   required ObjectId          object     = 1;
+   required Type              type       = 2;
+   required MissionParameters parameters = 3;
 }
 
 message MagicAction {
@@ -127,8 +127,8 @@ message MagicAction {
         create_knowledge_group              = 3;
         change_resource_network_properties  = 4;
     }
-   required Type                 type       = 1;
-   required MsgMissionParameters parameters = 2;
+   required Type              type       = 1;
+   required MissionParameters parameters = 2;
 }
 
 message ControlCheckPointSetFrequency {

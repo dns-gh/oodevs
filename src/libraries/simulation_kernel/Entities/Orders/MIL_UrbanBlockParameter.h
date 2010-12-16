@@ -49,7 +49,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const;
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
 private:

@@ -52,7 +52,7 @@ DelayAttribute::DelayAttribute( unsigned int nDelay )
 // Name: DelayAttribute constructor
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( const sword::MsgMissionParameter_Value& attributes )
+DelayAttribute::DelayAttribute( const sword::MissionParameter_Value& attributes )
     : nDelay_( attributes.list( 1 ).quantity() )
 {
     // NOTHING

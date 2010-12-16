@@ -10,9 +10,6 @@
 #include "edxlhave_plugin_pch.h"
 #include "PublisherActor.h"
 #include "ResponseHandler_ABC.h"
-
-#undef Yield
-#undef GetMessage
 #include "tools/thread/ThreadPool.h"
 #include <boost/bind.hpp>
 
@@ -23,7 +20,7 @@ using namespace plugins::edxl;
 // Created: AGE 2008-05-30
 // -----------------------------------------------------------------------------
 PublisherActor::PublisherActor( std::auto_ptr< Publisher_ABC > base )
-    : base_( base )
+    : base_  ( base )
     , thread_( new tools::thread::ThreadPool( 1 ) )
 {
     // NOTHING

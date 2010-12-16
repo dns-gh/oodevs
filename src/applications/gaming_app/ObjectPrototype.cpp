@@ -89,7 +89,7 @@ namespace
         container.push_back( new LogisticPrototype( parent, controllers, attributesList ) );
     }
 
-    void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
+    void PropagationAttribute( xml::xistream& /*xis*/, T_AttributeContainer& /*container*/, QWidget* /*parent*/, const kernel::ObjectTypes& /*resolver*/, ParameterList*& /*attributesList*/ )
     {
 /*        std::string model( xis.attribute< std::string >( "model" ) );
         if( model == "input" )
@@ -99,7 +99,7 @@ namespace
         }*/
     }
 
-    void BurnAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
+    void BurnAttribute( xml::xistream& /*xis*/, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         container.push_back( new FirePrototype( parent, resolver, attributesList ) );
     }

@@ -268,7 +268,7 @@ bool Profile::CheckRights( const sword::ClientToReplay& ) const
 // Name: Profile::CheckRights
 // Created: AGE 2008-06-10
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const sword::MsgChatTarget& source, const sword::MsgChatTarget& target ) const
+bool Profile::CheckRights( const sword::ChatTarget& source, const sword::ChatTarget& target ) const
 {
     const std::string t( target.profile() );
     const std::string s( source.profile() );

@@ -20,13 +20,13 @@ using namespace frontend;
 // Name: RemoteExercise constructor
 // Created: SBO 2010-10-01
 // -----------------------------------------------------------------------------
-RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory, const sword::MsgExercise& message, kernel::Controller& controller )
+RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory, const sword::Exercise& message, kernel::Controller& controller )
     : controller_( controller )
-    , host_( host )
-    , name_( message.name() )
-    , id_( factory.CreateIdentifier( name_ ) )
-    , port_( message.has_port() ? message.port() : 0 )
-    , running_( message.has_running() ? message.running() : false )
+    , host_      ( host )
+    , name_      ( message.name() )
+    , id_        ( factory.CreateIdentifier( name_ ) )
+    , port_      ( message.has_port() ? message.port() : 0 )
+    , running_   ( message.has_running() ? message.running() : false )
 {
     controller_.Create( *(Exercise_ABC*)this );
 }

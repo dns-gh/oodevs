@@ -34,7 +34,7 @@ public:
              TimeLimitedAttribute();
     explicit TimeLimitedAttribute( xml::xistream& xis );
     explicit TimeLimitedAttribute( unsigned int nActivityTime );
-    explicit TimeLimitedAttribute( const sword::MsgMissionParameter_Value& attributes );
+    explicit TimeLimitedAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~TimeLimitedAttribute();
     //@}
 

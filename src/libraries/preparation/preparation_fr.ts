@@ -133,11 +133,11 @@
     <name>FloodAttribute</name>
     <message>
         <source>Info/Flood parameters/Depth</source>
-        <translation>Info/Paramètres de l'inondation/Profondeur</translation>
+        <translation>Info/Paramètres de l&apos;inondation/Profondeur</translation>
     </message>
     <message>
         <source>Info/Flood parameters/Reference distance</source>
-        <translation>Info/Paramètres de l'inondation/Distance de référence</translation>
+        <translation>Info/Paramètres de l&apos;inondation/Distance de référence</translation>
     </message>
 </context>
 <context>

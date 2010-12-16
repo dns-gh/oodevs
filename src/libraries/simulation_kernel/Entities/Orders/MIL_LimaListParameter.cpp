@@ -94,7 +94,7 @@ bool MIL_LimaListParameter::ToLimaList( std::vector< boost::shared_ptr< TER_Loca
 // Name: MIL_LimaListParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_LimaListParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_LimaListParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     return ToLimaList( *elem.mutable_limasorder() );
 }

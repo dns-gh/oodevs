@@ -23,9 +23,9 @@ package sword;
 message LimaCreationRequest {
     /** @property tactical_line
         @brief The phase line data to use for creation.
-        @see MsgTacticalLine
+        @see TacticalLine
     */
-    required MsgTacticalLine tactical_line = 1;
+    required TacticalLine tactical_line = 1;
 }
 
 /** @struct LimaUpdateRequest
@@ -45,10 +45,10 @@ message LimaUpdateRequest {
     required TacticalLineId  id            = 1;
     /** @property tactical_line
         @brief Specifies the phase line data to use for update.
-        @see MsgTacticalLine
+        @see TacticalLine
         @bug should not be optional
     */
-    optional MsgTacticalLine tactical_line = 2;
+    optional TacticalLine    tactical_line = 2;
 }
 
 /** @struct LimaDestructionRequest
@@ -78,9 +78,9 @@ message LimaDestructionRequest {
 message LimitCreationRequest {
     /** @property tactical_line
         @brief The limit data to use for creation.
-        @see MsgTacticalLine
+        @see TacticalLine
     */
-    required MsgTacticalLine tactical_line = 1;
+    required TacticalLine tactical_line = 1;
 }
 
 /** @struct LimitUpdateRequest
@@ -98,10 +98,10 @@ message LimitUpdateRequest {
     required TacticalLineId  id            = 1;
     /** @property tactical_line
         @brief Specifies the limit data to use for update.
-        @see MsgTacticalLine
+        @see TacticalLine
         @bug should not be optional
     */
-    optional MsgTacticalLine tactical_line = 2;
+    optional TacticalLine    tactical_line = 2;
 }
 
 /** @struct LimitDestructionRequest
@@ -177,10 +177,10 @@ message IntelligenceUpdateRequest {
     optional bool            embarked     = 6;
     /** @property location
         @brief The new location of the intelligence.
-        @see MsgCoordLatLong
+        @see CoordLatLong
         @note Only needs to be set if data has changed.
     */
-    optional MsgCoordLatLong location     = 7;
+    optional CoordLatLong    location     = 7;
     /** @property diplomacy
         @brief The new diplomacy/alignment of the intelligence.
         @see EnumDiplomacy
@@ -256,10 +256,10 @@ message ShapeUpdateRequest {
     optional string              template = 4;
     /** @property points
         @brief The new points of the shape.
-        @see MsgCoordLatLongList
+        @see CoordLatLongList
         @note Only needs to be set if data has changed.
     */
-    optional MsgCoordLatLongList points   = 5;
+    optional CoordLatLongList    points   = 5;
 }
 
 /** @struct ShapeDestructionRequest

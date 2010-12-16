@@ -105,7 +105,7 @@ void FireManager::UpdateDetonations()
 // Name: FireManager::CreateFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::CreateFire( const sword::MsgCoordLatLong& /*position*/ )
+void FireManager::CreateFire( const sword::CoordLatLong& /*position*/ )
 {
     // $$$$ AGE 2008-05-05:  ?
 }

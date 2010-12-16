@@ -18,8 +18,8 @@
 
 namespace sword
 {
-    class MsgMissionParameter;
-    class MsgMissionParameter_Value;
+    class MissionParameter;
+    class MissionParameter_Value;
 }
 
 namespace kernel
@@ -72,8 +72,8 @@ public:
 
     virtual void AddParameter( Parameter_ABC& parameter );
     virtual void CommitTo( std::string& content ) const;
-    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
-    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MissionParameter& message ) const;
+    virtual void CommitTo( sword::MissionParameter_Value& message ) const;
 
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     void Set( bool isSet );

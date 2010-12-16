@@ -14,11 +14,13 @@
 
 namespace sword
 {
-    class MsgDateTime;
+    class DateTime;
 }
 
-namespace actions {
-    namespace parameters {
+namespace actions
+{
+namespace parameters
+{
 
 // =============================================================================
 /** @class  DateTime
@@ -32,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DateTime( const kernel::OrderParameter& parameter, xml::xistream& xis );
-             DateTime( const kernel::OrderParameter& parameter, const sword::MsgDateTime& date );
+             DateTime( const kernel::OrderParameter& parameter, const sword::DateTime& date );
              DateTime( const kernel::OrderParameter& parameter, const QDateTime& date );
     virtual ~DateTime();
     //@}
@@ -40,9 +42,9 @@ public:
     //! @name Operations
     //@{
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
-    void CommitTo( sword::MsgDateTime& message ) const;
-    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
-    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    void CommitTo( sword::DateTime& message ) const;
+    virtual void CommitTo( sword::MissionParameter& message ) const;
+    virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     //@}
 
 private:
@@ -63,7 +65,8 @@ private:
     std::string time_;
     //@}
 };
-    }
+
+}
 }
 
 #endif // __ActionParameterDateTime_h_

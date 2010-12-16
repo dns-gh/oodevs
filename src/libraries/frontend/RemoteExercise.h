@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgExercise;
+    class Exercise;
 }
 
 namespace kernel
@@ -39,7 +39,7 @@ class RemoteExercise : public Exercise_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory, const sword::MsgExercise& message, kernel::Controller& controller );
+             RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory, const sword::Exercise& message, kernel::Controller& controller );
     virtual ~RemoteExercise();
     //@}
 

@@ -34,7 +34,7 @@ TaskFactory::~TaskFactory()
 // Name: TaskFactory::OnCreate
 // Created: SEB 2010-10-15
 // -----------------------------------------------------------------------------
-void TaskFactory::OnCreate( CWISEDriver& driver, const WISE_HANDLE& database, const WISE_HANDLE& handle )
+void TaskFactory::OnCreate( CWISEDriver& /*driver*/, const WISE_HANDLE& /*database*/, const WISE_HANDLE& /*handle*/ )
 {
     // $$$$ SEB 2010-10-27: TODO: handle task creation
 }

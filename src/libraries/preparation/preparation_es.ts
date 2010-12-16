@@ -124,6 +124,10 @@
         <source>Info/Fire attributes/Fire class</source>
         <translation>Info/Atributos de fuego/Clase de fuego</translation>
     </message>
+    <message>
+        <source>Info/Fire attributes/Max combustion energy_</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FloodAttribute</name>
@@ -495,6 +499,10 @@
     </message>
     <message>
         <source>Reference distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max combustion energy:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

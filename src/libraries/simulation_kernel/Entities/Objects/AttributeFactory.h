@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgMissionParameter;
+    class MissionParameter;
 }
 
 class Object;
@@ -37,7 +37,7 @@ public:
     //! @name Operations
     //@{
     void Create( Object& object, const std::string& attribute, xml::xistream& xis ) const;
-    void Create( Object& object, const sword::MsgMissionParameter& parameter ) const;
+    void Create( Object& object, const sword::MissionParameter& parameter ) const;
 
     void Initialize( Object& object ) const;
     //@}

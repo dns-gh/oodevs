@@ -23,7 +23,6 @@ namespace plugins
 {
 namespace crossbow
 {
-
 // =============================================================================
 /** @class  Shape_ABC
     @brief  Shape_ABC
@@ -43,10 +42,6 @@ public:
     //@{
     virtual void Serialize( std::ostream& geometry ) const = 0;
     virtual void Serialize( kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter ) const = 0;
-    //@}
-
-    //! @name
-    //@{
     virtual void Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const = 0;
     //@}
 };

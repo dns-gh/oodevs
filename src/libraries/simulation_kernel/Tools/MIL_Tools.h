@@ -21,7 +21,7 @@
 
 namespace sword
 {
-    class MsgCoordLatLong;
+    class CoordLatLong;
 }
 
 class MIL_Time_ABC;
@@ -44,9 +44,9 @@ public:
     static double ConvertMeterToSim( double );
     static float ConvertSimToMeter( double );
     static void ConvertCoordMosToSim( const std::string& strMosPos, MT_Vector2D& vSimPos );
-    static void ConvertCoordMosToSim( const sword::MsgCoordLatLong& asnCoordUTM, MT_Vector2D& vSimPos );
+    static void ConvertCoordMosToSim( const sword::CoordLatLong& asnCoordUTM, MT_Vector2D& vSimPos );
     static std::string ConvertCoordSimToMos( const MT_Vector2D& vSimPos );
-    static void ConvertCoordSimToMos( const MT_Vector2D& vSimPos, sword::MsgCoordLatLong& asnCoordUTM );
+    static void ConvertCoordSimToMos( const MT_Vector2D& vSimPos, sword::CoordLatLong& asnCoordUTM );
 
     static double ConvertSpeedMosToSim( double ); // km/h         -> pixel/DeltaT
     static double ConvertSpeedSimToMos( double ); // pixel/DeltaT -> km/h

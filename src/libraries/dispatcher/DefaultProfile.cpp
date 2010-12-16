@@ -62,7 +62,7 @@ bool DefaultProfile::CheckRights( const sword::ClientToReplay& ) const
 // Name: DefaultProfile::CheckRights
 // Created: AGE 2008-06-10
 // -----------------------------------------------------------------------------
-bool DefaultProfile::CheckRights( const sword::MsgChatTarget& , const sword::MsgChatTarget& ) const
+bool DefaultProfile::CheckRights( const sword::ChatTarget& , const sword::ChatTarget& ) const
 {
     return false;
 }

@@ -29,7 +29,7 @@ class MSEllipse
 public:
     //! @name Constructors/Destructor
     //@{
-    MSEllipse( const sword::MsgLocation& localisation, const kernel::CoordinateConverter_ABC& converter );
+    MSEllipse( const sword::Location& localisation, const kernel::CoordinateConverter_ABC& converter );
     virtual ~MSEllipse();
     //@}
 

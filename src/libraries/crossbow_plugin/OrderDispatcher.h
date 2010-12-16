@@ -10,7 +10,6 @@
 #ifndef __crossbow_OrderDispatcher_h_
 #define __crossbow_OrderDispatcher_h_
 
-// protocol
 class Publisher_ABC;
 
 namespace dispatcher

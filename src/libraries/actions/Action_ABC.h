@@ -20,7 +20,7 @@
 
 namespace sword
 {
-    class MsgMissionParameters;
+    class MissionParameters;
 }
 
 namespace kernel
@@ -97,8 +97,8 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void CommitTo( sword::MsgMissionParameters& message ) const;
-    void Clean( sword::MsgMissionParameters& message ) const;
+    void CommitTo( sword::MissionParameters& message ) const;
+    void Clean( sword::MissionParameters& message ) const;
     //@}
 
 private:

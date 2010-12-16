@@ -86,7 +86,7 @@ void ResourceNetworkCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& 
 // Name: ResourceNetworkCapacity::Update
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::Update( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list )
+void ResourceNetworkCapacity::Update( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list )
 {
     nodeProperties_->Update( list );
 }

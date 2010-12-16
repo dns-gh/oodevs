@@ -195,7 +195,7 @@ void Model::ReadFormation( xml::xistream& xis )
     unsigned int id ;
     xis >> xml::attribute( "id", id );
 
-    sword::MsgTacticalLine_Diffusion diffusion;
+    sword::TacticalLine_Diffusion diffusion;
     sword::FormationId formation;
     formation.set_id( id );
     diffusion.mutable_formation()->set_id( id ) ;
@@ -214,7 +214,7 @@ void Model::ReadAutomat( xml::xistream& xis )
 {
     unsigned int id ;
     xis >> xml::attribute( "id", id );
-    sword::MsgTacticalLine_Diffusion diffusion;
+    sword::TacticalLine_Diffusion diffusion;
 
     diffusion.mutable_automat()->set_id( id );
     xis >> xml::list( "lima" , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )

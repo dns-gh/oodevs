@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class MsgPath;
+    class Path;
 }
 
 class DEC_PathPoint;
@@ -57,7 +57,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( sword::MsgPath& asn ) const;
+    void Serialize( sword::Path& asn ) const;
     //@}
 
 private:

@@ -24,7 +24,7 @@ namespace xml
 namespace sword
 {
     class ParentEntity;
-    class MsgMissionParameters;
+    class MissionParameters;
     class UnitMagicAction;
 }
 
@@ -143,7 +143,7 @@ public:
     virtual void SendFullState                    () const;
     virtual void WriteLogisticLinksODB            ( xml::xostream& xos ) const;
     virtual void OnReceiveChangeLogisticLinks  ( const sword::UnitMagicAction& msg );
-    virtual void OnReceiveLogSupplyChangeQuotas( const sword::MsgMissionParameters& msg );
+    virtual void OnReceiveLogSupplyChangeQuotas( const sword::MissionParameters& msg );
             void FillParentEntity                 (sword::ParentEntity& msg);
     //@}
 

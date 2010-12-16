@@ -87,11 +87,11 @@ message PopulationType        { required uint32 id = 1; }
 message MotivationType        { required uint32 id = 1; }
 
 // Helpers
-message MsgHeading {
+message Heading {
    required int32 heading = 1;
 }
 
-message MsgDateTime {
+message DateTime {
    required string data = 1;
 }
 
@@ -139,22 +139,22 @@ enum UnitFireType {
    indirect = 1;
 }
 
-message MsgDotationStock {
+message DotationStock {
    required ResourceType ressource_id        = 1;
    required int32        quantite_disponible = 2;
 }
 
 message SeqOfDotationStock {
-   repeated MsgDotationStock elem = 1;
+   repeated DotationStock elem = 1;
 }
 
-message MsgDotationQuota {
+message DotationQuota {
    required ResourceType ressource_id     = 1;
    required int32        quota_disponible = 2;
 }
 
 message SeqOfDotationQuota {
-   repeated MsgDotationQuota elem = 1;
+   repeated DotationQuota elem = 1;
 }
 
 enum EnumLightingType {
@@ -371,13 +371,13 @@ message ControlChangeTimeFactor {
    required int32 time_factor = 1;
 }
 
-message MsgExercise  {
+message Exercise  {
    required string name    = 1;
    optional bool   running = 2;
    optional uint32 port    = 3;
 }
 
-message MsgNetworkAddress  {
+message NetworkAddress  {
    required string  ip   = 1;
    required int32   port = 2 [default = 8080];
 }
@@ -399,38 +399,38 @@ message RgbaColor
 }
 
 // Geometry
-message MsgCoordLatLong {
+message CoordLatLong {
     required double latitude  = 1;
     required double longitude = 2;
 }
 
-message MsgCoordLatLongList {
-    repeated MsgCoordLatLong elem = 2;
+message CoordLatLongList {
+    repeated CoordLatLong elem = 2;
 }
 
-message MsgLocation {
+message Location {
     enum Geometry {
-        circle  = 0;
-        ellipse = 1;
-        line    = 2;
+        circle    = 0;
+        ellipse   = 1;
+        line      = 2;
         rectangle = 3;
-        polygon = 4;
-        point   = 5;
-        sector  = 6;
-        none    = 7;
+        polygon   = 4;
+        point     = 5;
+        sector    = 6;
+        none      = 7;
     }
-    required Geometry            type        = 1;
-    optional MsgCoordLatLongList coordinates = 2;
+    required Geometry         type        = 1;
+    optional CoordLatLongList coordinates = 2;
 }
 
-message MsgLine         { required MsgLocation location = 1; }
-message MsgLocationList { repeated MsgLocation elem = 1; }
-message MsgPath         { required MsgLocation location = 1; }
-message MsgPathList     { repeated MsgPath     elem = 1; }
-message MsgPoint        { required MsgLocation location = 1; }
-message MsgPointList    { repeated MsgPoint    elem = 1; }
-message MsgPolygon      { required MsgLocation location = 1; }
-message MsgPolygonList  { repeated MsgPolygon  elem = 1; }
+message Line         { required Location location = 1; }
+message LocationList { repeated Location elem = 1; }
+message Path         { required Location location = 1; }
+message PathList     { repeated Path     elem = 1; }
+message Point        { required Location location = 1; }
+message PointList    { repeated Point    elem = 1; }
+message Polygon      { required Location location = 1; }
+message PolygonList  { repeated Polygon  elem = 1; }
 
 // Order parameters
 message LogMedicalPriorities {
@@ -444,9 +444,9 @@ message ObstacleType {
     }
 }
 
-message MsgPlannedWork {
+message PlannedWork {
    required string                            type          = 1;
-   required MsgLocation                       position      = 2;
+   required Location                          position      = 2;
    optional ObstacleType.DemolitionTargetType type_obstacle = 3;
    optional float                             densite       = 4;
    optional AutomatId                         tc2           = 5;
@@ -454,21 +454,21 @@ message MsgPlannedWork {
    optional PlannedWorkId                     planned_work  = 7;
 }
 
-message MsgPlannedWorkList {
-   repeated MsgPlannedWork elem = 1;
+message PlannedWorkList {
+   repeated PlannedWork elem = 1;
 }
 
 message LogMaintenancePriorities {
    repeated EquipmentType elem = 1;
 }
 
-message MsgMissionObjective {
-   required MsgLocation localisation = 1;
-   required MsgDateTime horaire      = 2;
+message MissionObjective {
+   required Location localisation = 1;
+   required DateTime horaire      = 2;
 }
 
-message MsgMissionObjectiveList {
-   repeated MsgMissionObjective elem = 1;
+message MissionObjectiveList {
+   repeated MissionObjective elem = 1;
 }
 
 message LimaOrder {
@@ -484,9 +484,9 @@ message LimaOrder {
         ligne_fin_mission            = 8;
         ligne_identification_accueil = 9;
     }
-    required MsgLine     lima      = 1;
-    required MsgDateTime horaire   = 2;
-    repeated Function    fonctions = 3;
+    required Line     lima      = 1;
+    required DateTime horaire   = 2;
+    repeated Function fonctions = 3;
 }
 
 message LimasOrder {
@@ -498,7 +498,7 @@ message Intelligence {
    required string          nature    = 2;
    required EnumNatureLevel level     = 3;
    required bool            embarked  = 4;
-   required MsgCoordLatLong location  = 5;
+   required CoordLatLong    location  = 5;
    required EnumDiplomacy   diplomacy = 6;
    required FormationId     formation = 7;
 }
@@ -513,8 +513,8 @@ message ChangeDiplomacy {
    required EnumDiplomacy diplomatie = 3;
 }
 
-message MsgAtlasNature {
-   enum AtlasNature {
+message AtlasNature {
+   enum Nature {
         blinde           = 1;
         ass              = 2;
         pc               = 4;
@@ -529,18 +529,18 @@ message MsgAtlasNature {
    required int32 nature = 1;
 }
 
-message MsgMissionParameter {
+message MissionParameter {
     message Value {
         //parameters used for missions and magic actions:
         optional bool                     booleanValue             = 1;
         optional int32                    intValue                 = 2;
-        optional MsgHeading               heading                  = 3;
+        optional Heading                  heading                  = 3;
         optional int32                    enumeration              = 4;
-        optional MsgDateTime              dateTime                 = 5;
-        optional MsgPoint                 point                    = 6;
-        optional MsgPolygon               area                     = 7;
-        optional MsgPath                  path                     = 8;
-        optional MsgLine                  limit                    = 9;
+        optional DateTime                 dateTime                 = 5;
+        optional Point                    point                    = 6;
+        optional Polygon                  area                     = 7;
+        optional Path                     path                     = 8;
+        optional Line                     limit                    = 9;
         optional LimasOrder               phaseLine                = 10;
         optional AutomatId                automat                  = 11;
         optional UnitId                   agent                    = 12;
@@ -548,29 +548,29 @@ message MsgMissionParameter {
         optional CrowdKnowledgeId         crowdKnowledge           = 14;
         optional ObjectKnowledgeId        objectKnowledge          = 15;
         optional UrbanObjectKnowledgeId   urbanKnowledge           = 16;
-        optional MsgPlannedWork           plannedWork              = 17;
-        optional MsgAtlasNature           atlasNature              = 18;
+        optional PlannedWork              plannedWork              = 17;
+        optional AtlasNature              atlasNature              = 18;
         optional ResourceType             resourceType             = 19;
         optional LogMaintenancePriorities logMaintenancePriorities = 20;
         optional LogMedicalPriorities     logMedicalPriorities     = 21;
 
         //parameters used for magic actions only:
         optional float                    aReal                    = 22;
-        optional MsgPathList              pathList                 = 23;
-        optional MsgPointList             pointList                = 24;
-        optional MsgPolygonList           polygonList              = 25;
-        optional MsgLocation              location                 = 26;
-        optional MsgLocationList          locationList             = 27;
+        optional PathList                 pathList                 = 23;
+        optional PointList                pointList                = 24;
+        optional PolygonList              polygonList              = 25;
+        optional Location                 location                 = 26;
+        optional LocationList             locationList             = 27;
         optional UnitIdList               unitList                 = 28;
         optional AutomatIdList            automatList              = 29;
         optional UnitKnowledgeIdList      unitKnowledgeList        = 30;
         optional ObjectKnowledgeIdList    objectKnowledgeList      = 31;
-        optional MsgPlannedWorkList       plannedWorkList          = 32;
+        optional PlannedWorkList          plannedWorkList          = 32;
         optional EquipmentType            equipmentType            = 33;
         optional FireId                   tirIndirect              = 34;
         optional string                   aCharStr                 = 35;
-        optional MsgMissionObjective      missionObjective         = 36;
-        optional MsgMissionObjectiveList  missionObjectiveList     = 37;
+        optional MissionObjective         missionObjective         = 36;
+        optional MissionObjectiveList     missionObjectiveList     = 37;
         optional LimasOrder               limasOrder               = 38;
         optional IntelligenceList         intelligenceList         = 39;
         optional UrbanObjectId            urbanBlock               = 40;
@@ -585,35 +585,35 @@ message MsgMissionParameter {
     repeated Value value      = 2;
 }
 
-message MsgMissionParameters {
-   repeated MsgMissionParameter elem = 1;
+message MissionParameters {
+   repeated MissionParameter elem = 1;
 }
 
 message UnitOrder {
-    required UnitId               tasker         = 1;
-    required MissionType          type           = 2;
-    optional MsgMissionParameters parameters     = 3;
-    optional string               label          = 4;
-    optional MsgLocation          symbolLocation = 5;
-    optional MsgDateTime          start_time     = 6;
+    required UnitId            tasker         = 1;
+    required MissionType       type           = 2;
+    optional MissionParameters parameters     = 3;
+    optional string            label          = 4;
+    optional Location          symbolLocation = 5;
+    optional DateTime          start_time     = 6;
 }
 
 message AutomatOrder {
-    required AutomatId            tasker         = 1;
-    required MissionType          type           = 2;
-    optional MsgMissionParameters parameters     = 3;
-    optional string               label          = 4;
-    optional MsgLocation          symbolLocation = 5;
-    optional MsgDateTime          start_time     = 6;
+    required AutomatId         tasker         = 1;
+    required MissionType       type           = 2;
+    optional MissionParameters parameters     = 3;
+    optional string            label          = 4;
+    optional Location          symbolLocation = 5;
+    optional DateTime          start_time     = 6;
 }
 
 message CrowdOrder {
-    required CrowdId              tasker         = 1;
-    required MissionType          type           = 2;
-    optional MsgMissionParameters parameters     = 3;
-    optional string               label          = 4;
-    optional MsgLocation          symbolLocation = 5;
-    optional MsgDateTime          start_time     = 6;
+    required CrowdId           tasker         = 1;
+    required MissionType       type           = 2;
+    optional MissionParameters parameters     = 3;
+    optional string            label          = 4;
+    optional Location          symbolLocation = 5;
+    optional DateTime          start_time     = 6;
 }
 
 // Messenger common types
@@ -621,40 +621,40 @@ message CrowdOrder {
 message ClientObjectProperty {
     message Value {
         optional string string_value           = 1;
-        optional int32 integer_value           = 2;
+        optional int32  integer_value           = 2;
         optional uint32 unsigned_integer_value = 3;
-        optional float float_value             = 4;
-        optional bool bool_value               = 5;
+        optional float  float_value             = 4;
+        optional bool   bool_value               = 5;
     }
     required string name = 1;
     required Value value = 2;
 }
 
-message MsgTacticalLine {
+message TacticalLine {
     message Diffusion {
        optional AutomatId   automat   = 1;
        optional FormationId formation = 2;
     }
-    required string      name      = 1;
-    required MsgLocation geometry  = 2;
-    required Diffusion   diffusion = 3;
+    required string    name      = 1;
+    required Location  geometry  = 2;
+    required Diffusion diffusion = 3;
 }
 
 message Shape {
-   required string              category = 1;
-   required string              color    = 2;
-   required string              pattern  = 3;
-   required MsgCoordLatLongList points   = 4;
+   required string           category = 1;
+   required string           color    = 2;
+   required string           pattern  = 3;
+   required CoordLatLongList points   = 4;
 }
 
-message MsgChatTarget {
+message ChatTarget {
    required string profile = 1;
 }
 
 message TextMessage {
-    required MsgChatTarget source  = 1;
-    required MsgChatTarget target  = 2;
-    required string        message = 3;
+    required ChatTarget source  = 1;
+    required ChatTarget target  = 2;
+    required string     message = 3;
 }
 
 // Urban attributes
@@ -764,17 +764,17 @@ message ObjectAttributeSupplyRoute {
    required int32 flow_rate  = 5;
 }
 
-message MsgLocatedQuantity{
-   required MsgCoordLatLong coordinate = 1;
-   required float           quantity   = 2;
+message LocatedQuantity{
+   required CoordLatLong coordinate = 1;
+   required float        quantity   = 2;
 }
 
-message MsgLocatedQuantityList {
-   repeated MsgLocatedQuantity elem = 1;
+message LocatedQuantityList {
+   repeated LocatedQuantity elem = 1;
 }
 
 message ObjectAttributeToxicCloud {
-   required MsgLocatedQuantityList quantities = 1;
+   required LocatedQuantityList quantities = 1;
 }
 
 message ObjectAttributeFire {
@@ -848,10 +848,10 @@ message Marker {
 }
 
 // weather
-message MsgWeatherAttributes {
+message WeatherAttributes {
    required int32                 temperature    = 1;
    required int32                 wind_speed     = 2;
-   required MsgHeading            wind_direction = 3;
+   required Heading               wind_direction = 3;
    required int32                 cloud_floor    = 4;
    required int32                 cloud_ceiling  = 5;
    required int32                 cloud_density  = 6;

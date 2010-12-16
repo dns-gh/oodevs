@@ -77,7 +77,7 @@ namespace
 // Name: ReportTemplate::RenderMessage
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-std::string ReportTemplate::RenderMessage( const MsgMissionParameters& message ) const
+std::string ReportTemplate::RenderMessage( const MissionParameters& message ) const
 {
     std::string content( GetMessage() );
     unsigned int enums = 0;

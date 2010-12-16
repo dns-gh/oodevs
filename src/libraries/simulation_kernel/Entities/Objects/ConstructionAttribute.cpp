@@ -229,7 +229,7 @@ void ConstructionAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // Name: ConstructionAttribute::OnMagicActionUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::OnUpdate( const sword::MsgMissionParameter_Value& attribute )
+void ConstructionAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
 {
     if( attribute.list_size() > 4 )
         Set( attribute.list( 4 ).quantity() / 100. ); // four first parameters not used

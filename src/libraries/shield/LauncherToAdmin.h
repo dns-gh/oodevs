@@ -32,9 +32,9 @@ public:
     static void Convert( const sword::ExercicesListResponse& from, MsgsLauncherToAdmin::MsgExercicesListResponse* to );
     static void Convert( const sword::ControlStartExerciseAck& from, MsgsLauncherToAdmin::MsgControlStartAck* to );
     static void Convert( const sword::ControlStopExerciseAck& from, MsgsLauncherToAdmin::MsgControlStopAck* to );
-    static void Convert( const sword::MsgConnectedProfileList& from, MsgsLauncherToAdmin::MsgConnectedProfileList* to );
+    static void Convert( const sword::ConnectedProfileList& from, MsgsLauncherToAdmin::MsgConnectedProfileList* to );
     static void Convert( const sword::ProfileDescriptionList& from, MsgsAuthenticationToClient::MsgProfileDescriptionList* to );
-    static void Convert( const sword::MsgSimulationComponentState& from, MsgsLauncherToAdmin::MsgSimulationComponentState* to );
+    static void Convert( const sword::SimulationComponentState& from, MsgsLauncherToAdmin::MsgSimulationComponentState* to );
     //@}
 };
 

@@ -18,7 +18,7 @@
 
 namespace sword
 {
-    class MsgPath;
+    class Path;
     class UnitEnvironmentType;
 }
 
@@ -71,7 +71,7 @@ public:
     //! @name Network
     //@{
     void SerializeEnvironmentType( sword::UnitEnvironmentType& msg ) const;
-    bool SerializeCurrentPath( sword::MsgPath& asn ) const;
+    bool SerializeCurrentPath( sword::Path& asn ) const;
     //@}
 
 private:

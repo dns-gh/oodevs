@@ -19,10 +19,10 @@
 // Name: MIL_ListParameter constructor
 // Created: LDC 2010-09-21
 // -----------------------------------------------------------------------------
-MIL_ListParameter::MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& list )
+MIL_ListParameter::MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list )
     : resolver_ (resolver )
 {
-    for( ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it )
+    for( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it )
         list_.push_back( MIL_MissionParameterFactory::Create( *it, resolver_ ) );
 }
 
@@ -62,7 +62,7 @@ bool MIL_ListParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
 // Name: MIL_ListParameter::ToList
 // Created: MGD 2010-11-05
 // -----------------------------------------------------------------------------
-bool MIL_ListParameter::ToList( ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& message ) const
+bool MIL_ListParameter::ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& message ) const
 {
     for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
         if( !(*it)->ToElement( *message.Add() ) )
@@ -74,7 +74,7 @@ bool MIL_ListParameter::ToList( ::google::protobuf::RepeatedPtrField< ::sword::M
 // Name: MIL_ListParameter::ToElement
 // Created: MGD 2010-11-19
 // -----------------------------------------------------------------------------
-bool MIL_ListParameter::ToElement( sword::MsgMissionParameter_Value& message ) const
+bool MIL_ListParameter::ToElement( sword::MissionParameter_Value& message ) const
 {
     return ToList( *message.mutable_list() );
 }

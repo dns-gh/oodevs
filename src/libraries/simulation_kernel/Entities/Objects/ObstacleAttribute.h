@@ -43,7 +43,7 @@ public:
              ObstacleAttribute();
     explicit ObstacleAttribute( bool reserved );
     explicit ObstacleAttribute( xml::xistream& xis );
-    explicit ObstacleAttribute( const sword::MsgMissionParameter_Value& attributes );
+    explicit ObstacleAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~ObstacleAttribute();
     //@}
 
@@ -73,7 +73,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnUpdate( const sword::MsgMissionParameter_Value& attribute ); //<! Update from asn msg
+    virtual void OnUpdate( const sword::MissionParameter_Value& attribute ); //<! Update from asn msg
     ObstacleAttribute& operator=( const ObstacleAttribute& ); //!< Assignment operator
     bool Update( const ObstacleAttribute& rhs );
     //@}

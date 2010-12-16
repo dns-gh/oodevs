@@ -85,7 +85,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
 // Name: ObstacleAttribute::ObstacleAttribute
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( const sword::MsgMissionParameter_Value& attributes )
+ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attributes )
     : obstacle_      ( ( sword::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
     , bActivated_    ( attributes.list( 2 ).booleanvalue() )
     , activationTime_( attributes.list( 3 ).quantity() )
@@ -237,7 +237,7 @@ ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
 // Name: ObstacleAttribute::OnUpdate
 // Created: LDC 2009-03-16
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::OnUpdate( const sword::MsgMissionParameter_Value& attribute )
+void ObstacleAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
 {
     if( attribute.list_size() > 2 && bActivated_ != attribute.list( 2 ).booleanvalue() )
     {

@@ -27,7 +27,7 @@ namespace protobuf
 
 namespace sword
 {
-    class MsgMissionParameter_Value;
+    class MissionParameter_Value;
 }
 
 namespace kernel
@@ -53,7 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ParameterList( const kernel::OrderParameter& parameter );
-             ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC& entity );
+             ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC& entity );
     virtual ~ParameterList();
     //@}
 
@@ -63,7 +63,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MissionParameter_Value& message ) const;
 
     ParameterList& AddList      ( const std::string& name );
 

@@ -17,7 +17,7 @@
 // Name: DEC_Objective constructor
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-DEC_Objective::DEC_Objective( const sword::MsgMissionObjective& asn )
+DEC_Objective::DEC_Objective( const sword::MissionObjective& asn )
     : localisation_()
     , bFlag_       ( false )
 {
@@ -49,7 +49,7 @@ void DEC_Objective::operator=( const DEC_Objective& rhs )
 // Name: DEC_Objective::Serialize
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-void DEC_Objective::Serialize( sword::MsgMissionObjective& asn ) const
+void DEC_Objective::Serialize( sword::MissionObjective& asn ) const
 {
     NET_ASN_Tools::WriteTick    ( nSchedule_, *asn.mutable_horaire() );
     NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_localisation() );

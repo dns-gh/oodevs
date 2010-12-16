@@ -193,10 +193,10 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
 // Name: DEC_PathResult::Serialize
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void DEC_PathResult::Serialize( sword::MsgPath& asn ) const
+void DEC_PathResult::Serialize( sword::Path& asn ) const
 {
     assert( !resultList_.empty() );
-    asn.mutable_location()->set_type( sword::MsgLocation::line );
+    asn.mutable_location()->set_type( sword::Location::line );
     for( CIT_PathPointList it = resultList_.begin(); it != resultList_.end(); ++it )
         NET_ASN_Tools::WritePoint( (*it)->GetPos(), *asn.mutable_location()->mutable_coordinates()->add_elem() );
 }

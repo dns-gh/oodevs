@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgCoordLatLong;
+    class CoordLatLong;
 }
 
 namespace actions {
@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( sword::MsgCoordLatLong& message ) const;
+    void CommitTo( sword::CoordLatLong& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

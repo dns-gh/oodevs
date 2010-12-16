@@ -30,7 +30,7 @@ crossbow::Line::Line()
 // Name: Line constructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Line::Line( const sword::MsgCoordLatLongList& message )
+crossbow::Line::Line( const sword::CoordLatLongList& message )
     : PointCollection( message )
 {
     // NOTHING

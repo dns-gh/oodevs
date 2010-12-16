@@ -135,7 +135,7 @@ public:
         // For smoke
         ADN_Type_Int                                                          nMineNumber_;
 
-        //sword for effect or flares
+        // Common for effect or flares
         ADN_Type_Time                                                         lifeTime_;
 
         // For effect

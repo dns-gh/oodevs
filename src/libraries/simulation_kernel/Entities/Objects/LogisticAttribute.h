@@ -39,7 +39,7 @@ public:
     //@{
              LogisticAttribute();
     explicit LogisticAttribute( xml::xistream& xis );
-    explicit LogisticAttribute( const sword::MsgMissionParameter_Value& attributes );
+    explicit LogisticAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~LogisticAttribute();
     //@}
 

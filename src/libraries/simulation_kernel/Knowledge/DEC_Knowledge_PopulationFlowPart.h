@@ -17,7 +17,7 @@
 
 namespace sword
 {
-    class MsgFlowPart;
+    class FlowPart;
 }
 
 class DEC_Knowledge_PopulationFlowPerception;
@@ -56,7 +56,7 @@ public:
 
     //! @name Network operations
     //@{
-    void Serialize( sword::MsgFlowPart& asn );
+    void Serialize( sword::FlowPart& asn );
     //@}
 
 private:

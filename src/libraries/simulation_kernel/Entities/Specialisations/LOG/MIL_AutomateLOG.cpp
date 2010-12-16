@@ -569,7 +569,7 @@ void MIL_AutomateLOG::SendQuotas() const
         unsigned int i = 0;
         for( CIT_DotationQuotaMap it = stockQuotasSuperior_.begin(); it != stockQuotasSuperior_.end(); ++it, ++i )
         {
-            sword::MsgDotationQuota& dotQuota = *asn().mutable_quotas()->add_elem();
+            sword::DotationQuota& dotQuota = *asn().mutable_quotas()->add_elem();
             dotQuota.mutable_ressource_id()->set_id( it->first->GetMosID() );
             dotQuota.set_quota_disponible( (unsigned int)it->second.rQuota_ );
         }
@@ -615,7 +615,7 @@ void MIL_AutomateLOG::OnReceiveChangeLogisticLinks( const sword::UnitMagicAction
 // Name: MIL_AutomateLOG::OnReceiveLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveLogSupplyChangeQuotas( const sword::MsgMissionParameters& msg )
+void MIL_AutomateLOG::OnReceiveLogSupplyChangeQuotas( const sword::MissionParameters& msg )
 {
     unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
         msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();

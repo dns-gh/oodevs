@@ -19,7 +19,7 @@ std::auto_ptr< urban::Drawer_ABC > UrbanPositions::drawer_;
 // Name: UrbanPositions constructor
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const sword::MsgLocation& message, const kernel::CoordinateConverter_ABC& converter )
+UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& message, const kernel::CoordinateConverter_ABC& converter )
     : LocationPositions( converter )
     , object_( object )
 {

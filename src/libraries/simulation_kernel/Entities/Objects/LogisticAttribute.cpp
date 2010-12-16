@@ -45,7 +45,7 @@ LogisticAttribute::LogisticAttribute( xml::xistream& xis )
 // Name: LogisticAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( const sword::MsgMissionParameter_Value& attributes )
+LogisticAttribute::LogisticAttribute( const sword::MissionParameter_Value& attributes )
 {
     MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( attributes.list( 1 ).identifier() );
     if( !pTC2Tmp )

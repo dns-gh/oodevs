@@ -28,7 +28,7 @@ Dotation::Dotation( const sword::ResourceDotations_ResourceDotation& asnMsg )
 // Name: Dotation constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-Dotation::Dotation( const sword::MsgDotationStock & asnMsg )
+Dotation::Dotation( const sword::DotationStock & asnMsg )
    : nDotationType_( asnMsg.ressource_id().id() )
    , nNbr_         ( asnMsg.quantite_disponible() )
 {
@@ -57,7 +57,7 @@ void Dotation::Update( const sword::ResourceDotations_ResourceDotation& asnMsg )
 // Name: Dotation::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Dotation::Update( const sword::MsgDotationStock& asnMsg )
+void Dotation::Update( const sword::DotationStock& asnMsg )
 {
     nNbr_ = asnMsg.quantite_disponible();
 }
@@ -76,7 +76,7 @@ void Dotation::Send( sword::ResourceDotations_ResourceDotation& asnMsg ) const
 // Name: Dotation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Dotation::Send( sword::MsgDotationStock& asnMsg ) const
+void Dotation::Send( sword::DotationStock& asnMsg ) const
 {
     asnMsg.mutable_ressource_id()->set_id( nDotationType_ );
     asnMsg.set_quantite_disponible( nNbr_ );

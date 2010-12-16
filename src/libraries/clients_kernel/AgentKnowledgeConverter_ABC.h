@@ -10,6 +10,8 @@
 #ifndef __AgentKnowledgeConverter_ABC_h_
 #define __AgentKnowledgeConverter_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Entity_ABC;
@@ -24,13 +26,13 @@ namespace kernel
 */
 // Created: AGE 2006-05-18
 // =============================================================================
-class AgentKnowledgeConverter_ABC
+class AgentKnowledgeConverter_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentKnowledgeConverter_ABC() {};
-    virtual ~AgentKnowledgeConverter_ABC() {};
+             AgentKnowledgeConverter_ABC() {}
+    virtual ~AgentKnowledgeConverter_ABC() {}
     //@}
 
     //! @name Operations

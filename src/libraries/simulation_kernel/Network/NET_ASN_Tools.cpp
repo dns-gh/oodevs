@@ -29,7 +29,7 @@ namespace bpt = boost::posix_time;
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
 // static
-bool NET_ASN_Tools::ReadLocation( const MsgLocation& asnLocalisation, TER_Localisation& localisation )
+bool NET_ASN_Tools::ReadLocation( const Location& asnLocalisation, TER_Localisation& localisation )
 {
     //$$$$ ACCEDER DIRECTEMENT A LA LOCALISATION (EVITER COPIE)
     T_PointVector pointVector;
@@ -48,7 +48,7 @@ bool NET_ASN_Tools::ReadLocation( const MsgLocation& asnLocalisation, TER_Locali
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::ReadPoint( const MsgCoordLatLong& asnPoint, MT_Vector2D& vect )
+void NET_ASN_Tools::ReadPoint( const CoordLatLong& asnPoint, MT_Vector2D& vect )
 {
     MIL_Tools::ConvertCoordMosToSim( asnPoint, vect );
 }
@@ -58,9 +58,9 @@ void NET_ASN_Tools::ReadPoint( const MsgCoordLatLong& asnPoint, MT_Vector2D& vec
 // Created: NLD 2003-03-26
 //-----------------------------------------------------------------------------
 // static
-bool NET_ASN_Tools::ReadPoint( const MsgPoint& asnLocalisation, MT_Vector2D& vect )
+bool NET_ASN_Tools::ReadPoint( const Point& asnLocalisation, MT_Vector2D& vect )
 {
-    if( asnLocalisation.location().type() != MsgLocation_Geometry_point )
+    if( asnLocalisation.location().type() != Location_Geometry_point )
         return false;
     if( asnLocalisation.location().coordinates().elem_size() != 1 )
         return false;
@@ -72,9 +72,9 @@ bool NET_ASN_Tools::ReadPoint( const MsgPoint& asnLocalisation, MT_Vector2D& vec
 // Name: NET_ASN_Tools::ReadLine
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadLine( const MsgLine& asn, T_PointVector& points )
+bool NET_ASN_Tools::ReadLine( const Line& asn, T_PointVector& points )
 {
-    if( asn.location().type() != MsgLocation_Geometry_line || asn.location().coordinates().elem_size()< 2 )
+    if( asn.location().type() != Location_Geometry_line || asn.location().coordinates().elem_size()< 2 )
         return false;
     points.clear();
     points.reserve( asn.location().coordinates().elem_size());
@@ -91,9 +91,9 @@ bool NET_ASN_Tools::ReadLine( const MsgLine& asn, T_PointVector& points )
 // Name: NET_ASN_Tools::ReadLine
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadLine( const MsgLine& asn, TER_Localisation& localisation )
+bool NET_ASN_Tools::ReadLine( const Line& asn, TER_Localisation& localisation )
 {
-    if( asn.location().type() != MsgLocation_Geometry_line || asn.location().coordinates().elem_size()< 2 )
+    if( asn.location().type() != Location_Geometry_line || asn.location().coordinates().elem_size()< 2 )
         return false;
     return ReadLocation( asn.location(), localisation );
 }
@@ -102,9 +102,9 @@ bool NET_ASN_Tools::ReadLine( const MsgLine& asn, TER_Localisation& localisation
 // Name: NET_ASN_Tools::ReadPath
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadPath( const MsgPath& asn, T_PointVector& itineraire )
+bool NET_ASN_Tools::ReadPath( const Path& asn, T_PointVector& itineraire )
 {
-    if( asn.location().type() != MsgLocation_Geometry_line || asn.location().coordinates().elem_size()< 1 )
+    if( asn.location().type() != Location_Geometry_line || asn.location().coordinates().elem_size()< 1 )
         return false;
     itineraire.clear(); itineraire.reserve( asn.location().coordinates().elem_size());
     for( int i = 0; i < asn.location().coordinates().elem_size(); ++i )
@@ -120,9 +120,9 @@ bool NET_ASN_Tools::ReadPath( const MsgPath& asn, T_PointVector& itineraire )
 // Name: NET_ASN_Tools::ReadPolygon
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadPolygon( const MsgPolygon&      asn, TER_Localisation& localisation )
+bool NET_ASN_Tools::ReadPolygon( const Polygon&      asn, TER_Localisation& localisation )
 {
-    if( asn.location().type() != MsgLocation_Geometry_polygon || asn.location().coordinates().elem_size()< 3 )
+    if( asn.location().type() != Location_Geometry_polygon || asn.location().coordinates().elem_size()< 3 )
         return false;
     return ReadLocation( asn.location(), localisation );
 }
@@ -132,7 +132,7 @@ bool NET_ASN_Tools::ReadPolygon( const MsgPolygon&      asn, TER_Localisation& l
 // Created: NLD 2003-08-11
 // -----------------------------------------------------------------------------
 // static
-bool NET_ASN_Tools::ReadLocationList( const MsgLocationList& asnLocationList, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin )
+bool NET_ASN_Tools::ReadLocationList( const LocationList& asnLocationList, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin )
 {
     localisationVector.clear(); localisationVector.reserve( asnLocationList.elem_size() );
     for( int i = 0; i < asnLocationList.elem_size(); ++i )
@@ -153,11 +153,11 @@ bool NET_ASN_Tools::ReadLocationList( const MsgLocationList& asnLocationList, T_
 // Created: NLD 2003-08-11
 // -----------------------------------------------------------------------------
 // static
-bool NET_ASN_Tools::ReadPolygonList( const MsgPolygonList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin )
+bool NET_ASN_Tools::ReadPolygonList( const PolygonList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin )
 {
     for( int i = 0; i < asn.elem_size(); ++i )
     {
-        if( asn.elem(i).location().type() != MsgLocation_Geometry_polygon || asn.elem(i).location().coordinates().elem_size() < 3 )
+        if( asn.elem(i).location().type() != Location_Geometry_polygon || asn.elem(i).location().coordinates().elem_size() < 3 )
             return false;
     }
     localisationVector.clear(); localisationVector.reserve( asn.elem_size() );
@@ -179,7 +179,7 @@ bool NET_ASN_Tools::ReadPolygonList( const MsgPolygonList& asn, T_LocalisationPt
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
 // static
-bool NET_ASN_Tools::ReadPointList( const MsgPointList& asn, T_PointVector& pointVector )
+bool NET_ASN_Tools::ReadPointList( const PointList& asn, T_PointVector& pointVector )
 {
     pointVector.clear(); pointVector.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
@@ -195,7 +195,7 @@ bool NET_ASN_Tools::ReadPointList( const MsgPointList& asn, T_PointVector& point
 // Name: NET_ASN_Tools::ReadListItineraire
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::ReadPathList( const MsgPathList&   asn, T_ItinerairePtrVector& itineraireVector )
+bool NET_ASN_Tools::ReadPathList( const PathList&   asn, T_ItinerairePtrVector& itineraireVector )
 {
     itineraireVector.clear(); itineraireVector.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
@@ -290,7 +290,7 @@ DEC_Knowledge_Population* NET_ASN_Tools::ReadPopulationKnowledge( const CrowdKno
 // Name: NET_ASN_Tools::ReadGDH
 // Created: NLD 2004-01-15
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::ReadGDH( const MsgDateTime& asn, unsigned int& realTimeSec )
+void NET_ASN_Tools::ReadGDH( const DateTime& asn, unsigned int& realTimeSec )
 {
     bpt::ptime time = bpt::from_iso_string( asn.data() );
     realTimeSec = ( time - bpt::from_time_t( 0 ) ).total_seconds();
@@ -301,7 +301,7 @@ void NET_ASN_Tools::ReadGDH( const MsgDateTime& asn, unsigned int& realTimeSec )
 // Created: NLD 2003-05-13
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WriteDirection( const MT_Vector2D& vDir, MsgHeading& asnDir )
+void NET_ASN_Tools::WriteDirection( const MT_Vector2D& vDir, Heading& asnDir )
 {
     static const MT_Vector2D vNorth( 0, 1 );
     assert( !vDir.IsZero() );
@@ -316,10 +316,10 @@ void NET_ASN_Tools::WriteDirection( const MT_Vector2D& vDir, MsgHeading& asnDir 
 // Name: NET_ASN_Tools::WriteLocation
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteLocation( const TER_Localisation& localisation, MsgLocation& asnLocalisation )
+void NET_ASN_Tools::WriteLocation( const TER_Localisation& localisation, Location& asnLocalisation )
 {
     assert( localisation.GetType() != TER_Localisation::eNone );
-    asnLocalisation.set_type( (MsgLocation_Geometry)localisation.GetType() );
+    asnLocalisation.set_type( (Location_Geometry)localisation.GetType() );
     if( localisation.GetPoints().empty() )
         return;
     for( CIT_PointVector itPoint = localisation.GetPoints().begin(); itPoint != localisation.GetPoints().end(); ++itPoint )
@@ -331,7 +331,7 @@ void NET_ASN_Tools::WriteLocation( const TER_Localisation& localisation, MsgLoca
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, MsgCoordLatLong& asnCoordUTM )
+void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, CoordLatLong& asnCoordUTM )
 {
     MIL_Tools::ConvertCoordSimToMos( vPos, asnCoordUTM );
 }
@@ -341,9 +341,9 @@ void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, MsgCoordLatLong& asnCoo
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, MsgPoint& asnLocalisation )
+void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, Point& asnLocalisation )
 {
-    asnLocalisation.mutable_location()->set_type( MsgLocation_Geometry_point );
+    asnLocalisation.mutable_location()->set_type( Location_Geometry_point );
     WritePoint( vPos, *asnLocalisation.mutable_location()->mutable_coordinates()->add_elem() );
 }
 
@@ -351,7 +351,7 @@ void NET_ASN_Tools::WritePoint( const MT_Vector2D& vPos, MsgPoint& asnLocalisati
 // Name: NET_ASN_Tools::WriteLine
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteLine( const TER_Localisation& localisation, MsgLine& asn )
+void NET_ASN_Tools::WriteLine( const TER_Localisation& localisation, Line& asn )
 {
     WriteLocation( localisation, *asn.mutable_location() );
 }
@@ -360,7 +360,7 @@ void NET_ASN_Tools::WriteLine( const TER_Localisation& localisation, MsgLine& as
 // Name: NET_ASN_Tools::WriteCoordinates
 // Created: AGE 2007-07-06
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::WriteCoordinates( const T_PointVector& points , MsgCoordLatLongList& asn )
+bool NET_ASN_Tools::WriteCoordinates( const T_PointVector& points , CoordLatLongList& asn )
 {
     for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
         WritePoint( *it, *asn.add_elem() );
@@ -371,7 +371,7 @@ bool NET_ASN_Tools::WriteCoordinates( const T_PointVector& points , MsgCoordLatL
 // Name: NET_ASN_Tools::WriteCoordinates
 // Created: AHC 2009-07-30
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::WriteCoordinates( std::vector< boost::shared_ptr< MT_Vector2D > > points , MsgCoordLatLongList& asn )
+bool NET_ASN_Tools::WriteCoordinates( std::vector< boost::shared_ptr< MT_Vector2D > > points , CoordLatLongList& asn )
 {
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::iterator it = points.begin(); it != points.end(); ++it )
         WritePoint( **it, *asn.add_elem() );
@@ -382,9 +382,9 @@ bool NET_ASN_Tools::WriteCoordinates( std::vector< boost::shared_ptr< MT_Vector2
 // Name NET_ASN_Tools::WriteLine
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::WriteLine( const T_PointVector& points, MsgLine& asn )
+bool NET_ASN_Tools::WriteLine( const T_PointVector& points, Line& asn )
 {
-    asn.mutable_location()->set_type( sword::MsgLocation_Geometry_line );
+    asn.mutable_location()->set_type( sword::Location_Geometry_line );
     if( points.size() < 2 )
         return false;
     return WriteCoordinates( points, *asn.mutable_location()->mutable_coordinates() );
@@ -394,9 +394,9 @@ bool NET_ASN_Tools::WriteLine( const T_PointVector& points, MsgLine& asn )
 // Name: NET_ASN_Tools::WritePath
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WritePath( const T_PointVector& pointVector, MsgPath& asn )
+void NET_ASN_Tools::WritePath( const T_PointVector& pointVector, Path& asn )
 {
-    asn.mutable_location()->set_type( MsgLocation_Geometry_line );
+    asn.mutable_location()->set_type( Location_Geometry_line );
     if( pointVector.empty() )
         return;
     WriteCoordinates( pointVector, *asn.mutable_location()->mutable_coordinates() );
@@ -406,9 +406,9 @@ void NET_ASN_Tools::WritePath( const T_PointVector& pointVector, MsgPath& asn )
 // Name: NET_ASN_Tools::WritePath
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WritePath( const T_PointList& points, MsgPath& asn )
+void NET_ASN_Tools::WritePath( const T_PointList& points, Path& asn )
 {
-    asn.mutable_location()->set_type( MsgLocation_Geometry_line );
+    asn.mutable_location()->set_type( Location_Geometry_line );
     for( CIT_PointList itPoint = points.begin(); itPoint != points.end(); ++itPoint )
         WritePoint( *itPoint, *asn.mutable_location()->mutable_coordinates()->add_elem() );
 }
@@ -417,7 +417,7 @@ void NET_ASN_Tools::WritePath( const T_PointList& points, MsgPath& asn )
 // Name: NET_ASN_Tools::WritePolygon
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WritePolygon( const TER_Localisation& localisation, MsgPolygon& asn )
+void NET_ASN_Tools::WritePolygon( const TER_Localisation& localisation, Polygon& asn )
 {
     WriteLocation( localisation, *asn.mutable_location() );
 }
@@ -426,9 +426,9 @@ void NET_ASN_Tools::WritePolygon( const TER_Localisation& localisation, MsgPolyg
 // Name: NET_ASN_Tools::WriteEllipse
 // Created: JVT 04-03-25
 //-----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteEllipse( const MT_Ellipse& ellipse, MsgLocation& asnLocalisation )
+void NET_ASN_Tools::WriteEllipse( const MT_Ellipse& ellipse, Location& asnLocalisation )
 {
-    asnLocalisation.set_type( MsgLocation_Geometry_ellipse );
+    asnLocalisation.set_type( Location_Geometry_ellipse );
     WritePoint( ellipse.GetCenter(), *asnLocalisation.mutable_coordinates()->add_elem() );
     WritePoint( ellipse.GetMajorAxisHighPoint(), *asnLocalisation.mutable_coordinates()->add_elem() );
     WritePoint( ellipse.GetMinorAxisHighPoint(), *asnLocalisation.mutable_coordinates()->add_elem() );
@@ -439,7 +439,7 @@ void NET_ASN_Tools::WriteEllipse( const MT_Ellipse& ellipse, MsgLocation& asnLoc
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WritePointList( const T_PointVector& pointVector, MsgPointList& asn )
+void NET_ASN_Tools::WritePointList( const T_PointVector& pointVector, PointList& asn )
 {
     if( pointVector.empty() )
         return;
@@ -453,7 +453,7 @@ void NET_ASN_Tools::WritePointList( const T_PointVector& pointVector, MsgPointLi
 // Created: AGN 03-01-20
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WritePointList( const T_PointList& points, MsgPointList& asn )
+void NET_ASN_Tools::WritePointList( const T_PointList& points, PointList& asn )
 {
     if( points.empty() )
         return;
@@ -467,7 +467,7 @@ void NET_ASN_Tools::WritePointList( const T_PointList& points, MsgPointList& asn
 // Created: AGN 03-08-18
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WriteLocationList( const T_LocalisationPtrVector& locaList, MsgLocationList& asnList )
+void NET_ASN_Tools::WriteLocationList( const T_LocalisationPtrVector& locaList, LocationList& asnList )
 {
     if( locaList.empty() )
         return;
@@ -483,7 +483,7 @@ void NET_ASN_Tools::WriteLocationList( const T_LocalisationPtrVector& locaList, 
 // Created: AGN 03-08-18
 //-----------------------------------------------------------------------------
 // static
-void NET_ASN_Tools::WritePolygonList( const T_LocalisationPtrVector& locaList, MsgPolygonList& asnList )
+void NET_ASN_Tools::WritePolygonList( const T_LocalisationPtrVector& locaList, PolygonList& asnList )
 {
     if( locaList.empty() )
         return;
@@ -495,7 +495,7 @@ void NET_ASN_Tools::WritePolygonList( const T_LocalisationPtrVector& locaList, M
 // Name: NET_ASN_Tools::WriteListItineraire
 // Created: NLD 2004-04-22
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WritePathList( const T_ItinerairePtrVector& itineraireVector, MsgPathList&   asn )
+void NET_ASN_Tools::WritePathList( const T_ItinerairePtrVector& itineraireVector, PathList&   asn )
 {
     if( itineraireVector.empty() )
         return;
@@ -557,7 +557,7 @@ void NET_ASN_Tools::WriteObjectKnowledgeList( const T_KnowledgeObjectDiaIDVector
 // Name: NET_ASN_Tools::WriteGDH
 // Created: NLD 2004-01-15
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteGDH( unsigned int nRealTimeSec, MsgDateTime& asnGDH )
+void NET_ASN_Tools::WriteGDH( unsigned int nRealTimeSec, DateTime& asnGDH )
 {
     bpt::ptime time = bpt::from_time_t( 0 ) +  bpt::seconds( nRealTimeSec );
     asnGDH.set_data( bpt::to_iso_string( time ) );
@@ -567,7 +567,7 @@ void NET_ASN_Tools::WriteGDH( unsigned int nRealTimeSec, MsgDateTime& asnGDH )
 // Name: NET_ASN_Tools::ReadTick
 // Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::ReadTick( const MsgDateTime& asn, unsigned int& simTick )
+void NET_ASN_Tools::ReadTick( const DateTime& asn, unsigned int& simTick )
 {
     unsigned int value = 0;
     ReadGDH( asn, value );
@@ -578,7 +578,7 @@ void NET_ASN_Tools::ReadTick( const MsgDateTime& asn, unsigned int& simTick )
 // Name: NET_ASN_Tools::WriteTick
 // Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
-void NET_ASN_Tools::WriteTick( unsigned int simTick, MsgDateTime& asnGDH )
+void NET_ASN_Tools::WriteTick( unsigned int simTick, DateTime& asnGDH )
 {
     WriteGDH( MIL_AgentServer::GetWorkspace().TickToRealTime( simTick ), asnGDH );
 }
@@ -587,7 +587,7 @@ void NET_ASN_Tools::WriteTick( unsigned int simTick, MsgDateTime& asnGDH )
 // Name: NET_ASN_Tools::CopyNatureAtlas
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyNatureAtlas( const MsgAtlasNature& asn, int& value )
+bool NET_ASN_Tools::CopyNatureAtlas( const AtlasNature& asn, int& value )
 {
     value = asn.nature();
     return true;
@@ -597,7 +597,7 @@ bool NET_ASN_Tools::CopyNatureAtlas( const MsgAtlasNature& asn, int& value )
 // Name: NET_ASN_Tools::CopyNatureAtlas
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyNatureAtlas( int value, MsgAtlasNature& asn )
+bool NET_ASN_Tools::CopyNatureAtlas( int value, AtlasNature& asn )
 {
     asn.set_nature( value );
     return true;

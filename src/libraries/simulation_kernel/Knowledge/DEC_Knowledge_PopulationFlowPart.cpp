@@ -160,7 +160,7 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const double rMaxLifeTim
 // Name: DEC_Knowledge_PopulationFlowPart::Serialize
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlowPart::Serialize( sword::MsgFlowPart& asn )
+void DEC_Knowledge_PopulationFlowPart::Serialize( sword::FlowPart& asn )
 {
     NET_ASN_Tools::WritePath( shape_, *asn.mutable_forme() );
     asn.set_pertinence( static_cast< int >( rRelevance_ * 100 ) );

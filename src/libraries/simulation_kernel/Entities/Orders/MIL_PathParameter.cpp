@@ -26,9 +26,9 @@ MIL_PathParameter::MIL_PathParameter( boost::shared_ptr< MT_Vector2D > point )
 // Name: MIL_PathParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-MIL_PathParameter::MIL_PathParameter( const sword::MsgPath& asn )
+MIL_PathParameter::MIL_PathParameter( const sword::Path& asn )
 {
-    if( asn.location().type() != sword::MsgLocation_Geometry_line )
+    if( asn.location().type() != sword::Location_Geometry_line )
         throw std::runtime_error( "Unexpected type passed for path" );
     path_.reserve( asn.location().coordinates().elem_size());
     for( int i = 0; i < asn.location().coordinates().elem_size(); ++i )
@@ -81,9 +81,9 @@ bool MIL_PathParameter::ToPath( std::vector< boost::shared_ptr< MT_Vector2D > >&
 // Name: MIL_PathParameter::ToElement
 // Created: MGD 2010-11-05
 // -----------------------------------------------------------------------------
-bool MIL_PathParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_PathParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    elem.mutable_path()->mutable_location()->set_type( sword::MsgLocation_Geometry_line );
+    elem.mutable_path()->mutable_location()->set_type( sword::Location_Geometry_line );
     const unsigned int size = path_.size();
     for( unsigned int i = 0; i < size; ++i )
         MIL_Tools::ConvertCoordSimToMos( *path_[i], *elem.mutable_path()->mutable_location()->mutable_coordinates()->add_elem() );

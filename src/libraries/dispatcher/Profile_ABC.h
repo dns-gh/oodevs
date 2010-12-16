@@ -14,7 +14,7 @@ namespace sword
 {
     class ClientToSim;
     class ClientToAuthentication;
-    class MsgChatTarget;
+    class ChatTarget;
     class ClientToReplay;
 }
 
@@ -40,7 +40,7 @@ public:
     virtual bool CheckRights( const sword::ClientToSim& msg ) const = 0;
     virtual bool CheckRights( const sword::ClientToAuthentication& msg ) const = 0;
     virtual bool CheckRights( const sword::ClientToReplay& msg ) const = 0;
-    virtual bool CheckRights( const sword::MsgChatTarget& source, const sword::MsgChatTarget& target ) const = 0;
+    virtual bool CheckRights( const sword::ChatTarget& source, const sword::ChatTarget& target ) const = 0;
     //@}
 
     //! @name Accessors

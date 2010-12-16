@@ -316,7 +316,7 @@ void UrbanObjectWrapper::Serialize( HLA_UpdateFunctor& /*functor*/ ) const
 // Name: UrbanObjectWrapper::OnUpdate
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& /*attributes*/ )
+sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& /*attributes*/ )
 {
     return sword::ObjectMagicActionAck_ErrorCode_no_error;
 }

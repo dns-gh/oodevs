@@ -66,7 +66,7 @@ bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( DEC_Knowledge_Popu
 // Name: MIL_PopulationKnowledgeParameter::ToElement
 // Created: MGD 2010-11-19
 // -----------------------------------------------------------------------------
-bool MIL_PopulationKnowledgeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_PopulationKnowledgeParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     elem.mutable_crowdknowledge()->set_id( pKnowledgePopulation_->GetID() );
     return true;

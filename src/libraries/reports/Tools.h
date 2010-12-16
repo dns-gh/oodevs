@@ -16,7 +16,7 @@
 
 namespace tools
 {
-    QString ToString(  sword::MsgLocation::Geometry nType );
+    QString ToString(  sword::Location::Geometry nType );
 
     E_LocationType     LocationFromString        ( const QString& type );
     E_AmmunitionFamily AmmunitionFamilyFromString( const QString& type );

@@ -30,7 +30,7 @@ Polygon::Polygon( const OrderParameter& parameter, const CoordinateConverter_ABC
 // Name: Polygon constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-Polygon::Polygon( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::MsgLocation& message )
+Polygon::Polygon( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::Location& message )
     : Location( parameter, converter, message )
 {
     // NOTHING
@@ -59,7 +59,7 @@ Polygon::~Polygon()
 // Name: Polygon::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Polygon::CommitTo( sword::MsgMissionParameter& message ) const
+void Polygon::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -69,7 +69,7 @@ void Polygon::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: Polygon::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Polygon::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void Polygon::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         CommitTo( *message.mutable_area()->mutable_location() );
@@ -79,12 +79,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( sword::MsgLocation& message ) : message_( &message ) {}
+        explicit AsnSerializer( sword::Location& message ) : message_( &message ) {}
         virtual void Visit( const Location& param )
         {
             param.CommitTo( *message_ );
         }
-        sword::MsgLocation* message_;
+        sword::Location* message_;
     };
 }
 
@@ -92,9 +92,9 @@ namespace
 // Name: Path::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Polygon::CommitTo( sword::MsgLocation& message ) const
+void Polygon::CommitTo( sword::Location& message ) const
 {
-    message.set_type( sword::MsgLocation::polygon );
+    message.set_type( sword::Location::polygon );
     AsnSerializer serializer( message );
     Accept( serializer );
 }

@@ -72,7 +72,7 @@ bool MIL_AutomatParameter::ToAutomat( DEC_Decision_ABC*& value ) const
 // Name: MIL_AutomatParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_AutomatParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_AutomatParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     if( !pDecision_ )
         return false;

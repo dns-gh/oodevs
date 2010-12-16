@@ -68,7 +68,7 @@ SupplyRouteAttribute::SupplyRouteAttribute()
 // Name: SupplyRouteAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( const sword::MsgMissionParameter_Value& attributes )
+SupplyRouteAttribute::SupplyRouteAttribute( const sword::MissionParameter_Value& attributes )
     : bEquipped_       ( attributes.list( 1 ).booleanvalue() )
     , rWeightSupported_( attributes.list( 2 ).quantity() )
     , rWidth_          ( attributes.list( 3 ).quantity() )

@@ -12,19 +12,17 @@
 
 #include "Shape_ABC.h"
 
+class OGRPoint;
+
 namespace sword
 {
-    class MsgLocation;
-    class MsgCoordLatLong;
+    class CoordLatLong;
 }
-
-class OGRPoint;
 
 namespace plugins
 {
 namespace crossbow
 {
-
 // =============================================================================
 /** @class  Point
     @brief  Point
@@ -37,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Point();
-    explicit Point( const sword::MsgCoordLatLong& coord );
+    explicit Point( const sword::CoordLatLong& coord );
     explicit Point( const OGRPoint& point );
     virtual ~Point();
     //@}
@@ -46,15 +44,8 @@ public:
     //@{
     virtual void Serialize( std::ostream& geometry ) const;
     virtual void Serialize( kernel::Location_ABC& location, const kernel::CoordinateConverter_ABC& converter ) const;
-    //@}
-
-    //! @name
-    //@{
     virtual void Serialize( OGRFeature& feature, OGRSpatialReference* spatialReference ) const;
-    //@}
 
-    //! @name
-    //@{
     void Serialize( OGRPoint& point, OGRSpatialReference* spatialReference ) const;
     std::ostream& SerializeCoordinates( std::ostream& geometry, char sep ) const;
     //@}

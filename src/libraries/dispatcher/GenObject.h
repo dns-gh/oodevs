@@ -15,7 +15,7 @@
 namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
-    class MsgPlannedWork;
+    class PlannedWork;
 }
 
 namespace dispatcher
@@ -33,13 +33,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              GenObject();
-    explicit GenObject( const sword::MsgPlannedWork& asn );
+    explicit GenObject( const sword::PlannedWork& asn );
     virtual ~GenObject();
     //@}
 
     //! @name Operations
     //@{
-    void Send( sword::MsgPlannedWork& asn ) const;
+    void Send( sword::PlannedWork& asn ) const;
     //@}
 
 private:

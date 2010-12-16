@@ -67,7 +67,7 @@ bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( boost::shared_ptr< DEC_Kno
 // Name: MIL_ObjectKnowledgeParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_ObjectKnowledgeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_ObjectKnowledgeParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     elem.mutable_objectknowledge()->set_id( pKnowledgeObject_->GetID() );
     return true;

@@ -156,7 +156,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
     bg::correct( blockGeometry );
 
     std::vector< bg::polygon< bg::point_xy< double > > > polygonResult;
-    bg::intersection_inserter< boost::geometry::polygon< bg::point_xy< double > > >(attritionPolygon, blockGeometry, std::back_inserter( polygonResult ) );
+    bg::intersection_inserter< bg::polygon< bg::point_xy< double > > >(attritionPolygon, blockGeometry, std::back_inserter( polygonResult ) );
     double intersectArea = 0;
     for( std::vector< bg::polygon< bg::point_xy< double > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
         intersectArea += area( *it );

@@ -34,7 +34,7 @@ public:
              DelayAttribute();
     explicit DelayAttribute( xml::xistream& xis );
     explicit DelayAttribute( unsigned int nDelay );
-    explicit DelayAttribute( const sword::MsgMissionParameter_Value& attributes );
+    explicit DelayAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~DelayAttribute();
     //@}
 

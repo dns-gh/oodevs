@@ -683,7 +683,7 @@ void MIL_Army::SendKnowledge() const
 // Name: MIL_Army::OnReceiveChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Army::OnReceiveChangeDiplomacy( const sword::MsgMissionParameters& asnMsg )
+void MIL_Army::OnReceiveChangeDiplomacy( const sword::MissionParameters& asnMsg )
 {
     MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.elem( 1 ).value().Get(0).identifier() );
     if( !pArmy2 || *pArmy2 == *this )

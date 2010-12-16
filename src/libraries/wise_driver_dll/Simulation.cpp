@@ -39,7 +39,7 @@ Simulation::~Simulation()
 
 namespace
 {
-    std::wstring DateToWString( const sword::MsgDateTime& dateTime )
+    std::wstring DateToWString( const sword::DateTime& dateTime )
     {
         return std::wstring( dateTime.data().begin(), dateTime.data().end() );
     }

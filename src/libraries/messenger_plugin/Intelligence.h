@@ -94,7 +94,7 @@ private:
     bool embarked_;
     sword::EnumNatureLevel level_;
     sword::EnumDiplomacy diplomacy_;
-    sword::MsgCoordLatLong position_;
+    sword::CoordLatLong position_;
     //@}
 };
 

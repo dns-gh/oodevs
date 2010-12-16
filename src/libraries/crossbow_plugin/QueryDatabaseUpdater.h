@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgLocation;
+    class Location;
     class LimaCreation;
     class LimitCreation;
     class FormationCreation;
@@ -101,7 +101,7 @@ private:
 
     //! @name Helper
     //@{
-    void UpdateGeometry( QueryBuilder_ABC& builder, const sword::MsgLocation& location );
+    void UpdateGeometry( QueryBuilder_ABC& builder, const sword::Location& location );
     void UpdateObjectKnowledgeGeometry( const std::string& table, const sword::ObjectKnowledgeUpdate& msg );
     //@}
 

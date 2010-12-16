@@ -36,7 +36,7 @@ class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::Tactic
 public:
     //! @name Constructors/Destructor
     //@{
-    TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const sword::MsgTacticalLine::Diffusion& message
+    TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const sword::TacticalLine::Diffusion& message
                                     , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
              TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior
                                     , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
@@ -45,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    void WriteTo( sword::MsgTacticalLine::Diffusion& message ) const;
+    void WriteTo( sword::TacticalLine::Diffusion& message ) const;
     //@}
 
 private:
@@ -57,7 +57,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Update( const sword::MsgTacticalLine::Diffusion& message );
+    void Update( const sword::TacticalLine::Diffusion& message );
     virtual void DoUpdate( const sword::LimaUpdate& message );
     virtual void DoUpdate( const sword::LimitUpdate& message );
     //@}

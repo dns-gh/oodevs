@@ -77,7 +77,7 @@ void MedicalPriorities::AddMedicalPriority( E_HumanWound value )
 // Name: MedicalPriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MedicalPriorities::CommitTo( sword::MsgMissionParameter& message ) const
+void MedicalPriorities::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -91,7 +91,7 @@ void MedicalPriorities::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: MedicalPriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MedicalPriorities::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void MedicalPriorities::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
     {

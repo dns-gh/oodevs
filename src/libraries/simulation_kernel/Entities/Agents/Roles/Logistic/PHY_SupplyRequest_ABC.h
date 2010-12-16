@@ -62,7 +62,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( sword::MsgDotationQuery& asn ) const;
+    void Serialize( sword::DotationQuery& asn ) const;
     //@}
 
 protected:

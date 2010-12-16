@@ -85,7 +85,7 @@ namespace
 // Name: LimaList::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LimaList::CommitTo( sword::MsgMissionParameter& message ) const
+void LimaList::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -98,7 +98,7 @@ void LimaList::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: LimaList::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LimaList::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void LimaList::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
     {

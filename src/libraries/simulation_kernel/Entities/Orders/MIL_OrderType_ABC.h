@@ -12,7 +12,7 @@
 
 namespace sword
 {
-    class MsgMissionParameters;
+    class MissionParameters;
 }
 
 namespace xml
@@ -62,7 +62,7 @@ public:
     //@{
     void InitializeDefault( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters ) const;
 
-    bool Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, sword::MsgMissionParameters& to, const MIL_OrderContext& context ) const;
+    bool Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, sword::MissionParameters& to, const MIL_OrderContext& context ) const;
     //@}
 
 protected:

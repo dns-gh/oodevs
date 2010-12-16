@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgMissionParameter_Value;
+    class MissionParameter_Value;
     class MagicActionUpdateObject;
 }
 
@@ -57,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-    void Handle( xml::xistream& xis );
+    void Handle( xml::xisubstream xis );
     //@}
 
 private:
@@ -71,8 +71,8 @@ private:
     //@{
     void ReadHospitalStatus( xml::xistream& xis );
     void SendHospital( xml::xistream& xis );
-    void UpdateFacilityStatus( xml::xistream& xis, sword::MsgMissionParameter_Value& parameters );
-    void UpdateCapacityStatus( xml::xistream& xis, sword::MsgMissionParameter_Value& parameters );
+    void UpdateFacilityStatus( xml::xistream& xis, sword::MissionParameter_Value& parameters );
+    void UpdateCapacityStatus( xml::xistream& xis, sword::MissionParameter_Value& parameters );
     //@}
 
     //! @name

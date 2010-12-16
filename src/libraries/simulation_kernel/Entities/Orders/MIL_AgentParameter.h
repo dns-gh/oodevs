@@ -39,7 +39,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToAgent( DEC_Decision_ABC*& ) const;
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
 private:

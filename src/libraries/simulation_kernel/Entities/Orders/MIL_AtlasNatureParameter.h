@@ -23,7 +23,7 @@ class MIL_AtlasNatureParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_AtlasNatureParameter( const sword::MsgAtlasNature& );
+    explicit MIL_AtlasNatureParameter( const sword::AtlasNature& );
     explicit MIL_AtlasNatureParameter( int nature );
     virtual ~MIL_AtlasNatureParameter();
     //@}
@@ -35,7 +35,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     virtual bool ToNatureAtlas( int& atlas ) const;
     //@}
 

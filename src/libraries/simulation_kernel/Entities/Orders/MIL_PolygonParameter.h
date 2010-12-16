@@ -23,7 +23,7 @@ class MIL_PolygonParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_PolygonParameter( const sword::MsgPolygon& );
+    explicit MIL_PolygonParameter( const sword::Polygon& );
     virtual ~MIL_PolygonParameter();
     //@}
 
@@ -35,7 +35,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToPolygon( boost::shared_ptr< TER_Localisation >& ) const;
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
 private:

@@ -25,7 +25,7 @@ class MIL_DateTimeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_DateTimeParameter( const sword::MsgDateTime& asn );
+    explicit MIL_DateTimeParameter( const sword::DateTime& asn );
     virtual ~MIL_DateTimeParameter();
     //@}
 
@@ -37,7 +37,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToGDH( float& value ) const;
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
 private:

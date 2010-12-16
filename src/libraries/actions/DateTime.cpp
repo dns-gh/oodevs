@@ -38,7 +38,7 @@ DateTime::DateTime( const kernel::OrderParameter& parameter, xml::xistream& xis 
 // Name: DateTime constructor
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
-DateTime::DateTime( const OrderParameter& parameter, const sword::MsgDateTime& date )
+DateTime::DateTime( const OrderParameter& parameter, const sword::DateTime& date )
     : Parameter< QString >( parameter )
     , time_( date.data() )
 {
@@ -94,7 +94,7 @@ void DateTime::Serialize( xml::xostream& xos ) const
 // Name: DateTime::CommitTo
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void DateTime::CommitTo( sword::MsgDateTime& message ) const
+void DateTime::CommitTo( sword::DateTime& message ) const
 {
     message.set_data( time_ );
 }
@@ -103,7 +103,7 @@ void DateTime::CommitTo( sword::MsgDateTime& message ) const
 // Name: DateTime::CommitTo
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void DateTime::CommitTo( sword::MsgMissionParameter& message ) const
+void DateTime::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -113,7 +113,7 @@ void DateTime::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: DateTime::CommitTo
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void DateTime::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void DateTime::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         CommitTo( *message.mutable_datetime() );

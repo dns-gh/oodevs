@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class MsgLocation;
+    class Location;
 }
 
 namespace kernel
@@ -36,14 +36,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LocationSerializer( const kernel::CoordinateConverter_ABC& converter );
-             LocationSerializer( const kernel::CoordinateConverter_ABC& converter, sword::MsgLocation& localisation );
+             LocationSerializer( const kernel::CoordinateConverter_ABC& converter, sword::Location& localisation );
     virtual ~LocationSerializer();
     //@}
 
     //! @name Operations
     //@{
     void Serialize( const kernel::Location_ABC& location );
-    void Serialize( const kernel::Location_ABC& location, sword::MsgLocation& localisation );
+    void Serialize( const kernel::Location_ABC& location, sword::Location& localisation );
     //@}
 
     //! @name Operations
@@ -72,7 +72,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    sword::MsgLocation* location_;
+    sword::Location* location_;
     //@}
 };
 

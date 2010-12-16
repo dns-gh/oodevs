@@ -64,6 +64,7 @@ private:
     const kernel::Entity_ABC* FindKnowledgeGroup( const kernel::Entity_ABC& owner ) const;
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::map< const kernel::Agent_ABC*, const kernel::AgentKnowledge_ABC* >           T_KnowledgeMap;
@@ -76,7 +77,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_Knowledges           agents_;
+    T_Knowledges agents_;
     T_PopulationKnowledges populations_;
     //@}
 };

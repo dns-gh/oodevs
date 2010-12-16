@@ -96,7 +96,7 @@ void ObjectKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::CommitTo( sword::MsgMissionParameter& message ) const
+void ObjectKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -106,7 +106,7 @@ void ObjectKnowledge::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void ObjectKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         CommitTo( *message.mutable_objectknowledge() );

@@ -76,11 +76,11 @@ std::string ReportFactory::CreateMessage( const sword::Report& message ) const
 // Name: ReportFactory::RenderParameter
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-std::string ReportFactory::RenderParameter( const sword::MsgMissionParameter& value ) const
+std::string ReportFactory::RenderParameter( const sword::MissionParameter& value ) const
 {
     std::stringstream ss;
 
-    const sword::MsgMissionParameter_Value& param = value.value().Get(0);
+    const sword::MissionParameter_Value& param = value.value().Get(0);
     if( param.has_areal() )
         ss << param.areal();
     else if( param.has_agent() )

@@ -51,8 +51,8 @@ BOOST_FIXTURE_TEST_CASE( control_stop_ack_from_launcher_is_converted, ContextFix
 
 BOOST_FIXTURE_TEST_CASE( connected_profile_list_from_launcher_is_converted, ContextFixture< sword::LauncherToAdmin > )
 {
-    content.mutable_connected_profile_list()->set_error_code( sword::MsgConnectedProfileList::failure );
-    content.mutable_connected_profile_list()->set_context( sword::MsgConnectedProfileList::upon_request );
+    content.mutable_connected_profile_list()->set_error_code( sword::ConnectedProfileList::failure );
+    content.mutable_connected_profile_list()->set_context( sword::ConnectedProfileList::upon_request );
     FillProfile( content.mutable_connected_profile_list()->add_exercise() );
     FillProfile( content.mutable_connected_profile_list()->add_exercise() );
     MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { connected_profile_list { error_code: failure context: upon_request exercise { login: \"login\" password: \"password\" read_only_formations { elem { id: 3 } elem { id: 5 } } read_write_formations { elem { id: 6 } elem { id: 7 } } read_only_automates { elem { id: 8 } elem { id: 9 } } read_write_automates { elem { id: 10 } elem { id: 11 } } read_only_camps { elem { id: 12 } elem { id: 13 } } read_write_camps { elem { id: 14 } elem { id: 15 } } read_only_crowds { elem { id: 16 } elem { id: 17 } } read_write_crowds { elem { id: 18 } elem { id: 19 } } supervisor: true role { id: 77 } } exercise { login: \"login\" password: \"password\" read_only_formations { elem { id: 3 } elem { id: 5 } } read_write_formations { elem { id: 6 } elem { id: 7 } } read_only_automates { elem { id: 8 } elem { id: 9 } } read_write_automates { elem { id: 10 } elem { id: 11 } } read_only_camps { elem { id: 12 } elem { id: 13 } } read_write_camps { elem { id: 14 } elem { id: 15 } } read_only_crowds { elem { id: 16 } elem { id: 17 } } read_write_crowds { elem { id: 18 } elem { id: 19 } } supervisor: true role { id: 77 } } } }" ) );

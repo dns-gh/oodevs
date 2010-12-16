@@ -9,8 +9,7 @@
 
 #include "tools_pch.h"
 #include "WinArguments.h"
-#pragma warning( push )
-#pragma warning( disable: 4512 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 
@@ -42,6 +41,7 @@ const char* const* WinArguments::Argv() const
 {
     return cArgv_.empty() ? 0 : &cArgv_.front();
 }
+
 // -----------------------------------------------------------------------------
 // Name: WinArguments::Argc
 // Created: RDS 2008-07-22

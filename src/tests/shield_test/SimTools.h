@@ -17,7 +17,7 @@ namespace shield
     template< typename L >
     void FillLocation( L* l )
     {
-        l->set_type( sword::MsgLocation::rectangle );
+        l->set_type( sword::Location::rectangle );
         FillCoordLatLong( l->mutable_coordinates()->add_elem() );
         FillCoordLatLong( l->mutable_coordinates()->add_elem() );
     }

@@ -37,7 +37,7 @@ MissionParameterPhaseLines::~MissionParameterPhaseLines()
 // Name: MissionParameterPhaseLines::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLines::Serialize( sword::MsgMissionParameter& parameter ) const
+void MissionParameterPhaseLines::Serialize( sword::MissionParameter& parameter ) const
 {
     parameter.set_null_value( false );
     unsigned int i = 0;

@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( sword::MsgMissionParameter& parameter ) const;
+    virtual void Serialize( sword::MissionParameter& parameter ) const;
     void Serialize( sword::LimaOrder& asn ) const;
     //@}
 

@@ -21,7 +21,7 @@
 namespace sword
 {
     class AutomatOrder;
-    class MsgMissionParameters;
+    class MissionParameters;
     class FragOrder;
     class SetAutomatMode;
     class UnitCreationRequest;
@@ -191,9 +191,9 @@ public:
             void OnReceiveChangeKnowledgeGroup ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
             void OnReceiveChangeSuperior       ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Formation >& formations );
     virtual void OnReceiveChangeLogisticLinks  ( const sword::UnitMagicAction&     msg );
-    virtual void OnReceiveLogSupplyChangeQuotas( const sword::MsgMissionParameters&            msg );
-    virtual void OnReceiveLogSupplyPushFlow    ( const sword::MsgMissionParameters&            msg );
-    virtual void OnReceiveLogSupplyPullFlow    ( const sword::MsgMissionParameters&            msg );
+    virtual void OnReceiveLogSupplyChangeQuotas( const sword::MissionParameters&            msg );
+    virtual void OnReceiveLogSupplyPushFlow    ( const sword::MissionParameters&            msg );
+    virtual void OnReceiveLogSupplyPullFlow    ( const sword::MissionParameters&            msg );
     //@}
 
     //! @name Misc

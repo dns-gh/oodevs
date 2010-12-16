@@ -79,7 +79,7 @@ namespace
             }
             else if( const dispatcher::PopulationFlow_ABC* f = dynamic_cast< const dispatcher::PopulationFlow_ABC* >( &entity ) )
             {
-                sword::MsgLocation location;
+                sword::Location location;
                 f->GetLocation().Send( location );
                 for( int i = 0; i < location.coordinates().elem_size(); ++i )
                 {

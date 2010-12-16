@@ -64,7 +64,7 @@ bool MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities( T_Maintenan
 // Name: MIL_LogMaintenancePrioritiesParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_LogMaintenancePrioritiesParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_LogMaintenancePrioritiesParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     unsigned int size = priorities_.size();
     if( size )

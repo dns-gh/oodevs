@@ -341,11 +341,11 @@ const MIL_ObjectManipulator_ABC& Object::operator()() const
 // Name: Object::OnUpdate
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode Object::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& attributes )
+sword::ObjectMagicActionAck_ErrorCode Object::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
 {
     for( int i = 0; i < attributes.size(); ++i )
     {
-        const sword::MsgMissionParameter_Value& attribute = attributes.Get( i );
+        const sword::MissionParameter_Value& attribute = attributes.Get( i );
         if( attribute.list_size() == 0 ) // it should be a list of lists
             return sword::ObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
         const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type

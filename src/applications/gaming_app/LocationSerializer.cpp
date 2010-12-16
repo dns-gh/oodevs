@@ -31,7 +31,7 @@ LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter
 // Name: LocationSerializer constructor
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter, MsgLocation& localisation )
+LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter, Location& localisation )
     : converter_ ( converter )
     , location_  ( &localisation )
 {
@@ -60,7 +60,7 @@ void LocationSerializer::Serialize( const Location_ABC& location )
 // Name: LocationSerializer::Serialize
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-void LocationSerializer::Serialize( const Location_ABC& location, MsgLocation& localisation )
+void LocationSerializer::Serialize( const Location_ABC& location, Location& localisation )
 {
     location_ = &localisation;
     Serialize( location );
@@ -86,7 +86,7 @@ void LocationSerializer::SetPoints( const T_PointVector& points )
 void LocationSerializer::VisitLines( const T_PointVector& points )
 {
     SetPoints( points );
-    location_->set_type( MsgLocation_Geometry_line );
+    location_->set_type( Location_Geometry_line );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void LocationSerializer::VisitLines( const T_PointVector& points )
 void LocationSerializer::VisitRectangle( const T_PointVector& points )
 {
     SetPoints( points );
-    location_->set_type( MsgLocation_Geometry_rectangle );
+    location_->set_type( Location_Geometry_rectangle );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ void LocationSerializer::VisitRectangle( const T_PointVector& points )
 void LocationSerializer::VisitPolygon( const T_PointVector& points )
 {
     SetPoints( points );
-    location_->set_type( MsgLocation_Geometry_polygon );
+    location_->set_type( Location_Geometry_polygon );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ void LocationSerializer::VisitCircle( const geometry::Point2f& center, float rad
     points.push_back( center );
     points.push_back( geometry::Point2f( center.X(), center.Y() + radius ) ); // $$$$ AGE 2006-08-09: may go out of extent !
     SetPoints( points );
-    location_->set_type( MsgLocation_Geometry_circle );
+    location_->set_type( Location_Geometry_circle );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,5 +139,5 @@ void LocationSerializer::VisitPoint( const geometry::Point2f& point )
 {
     T_PointVector points( 1, point );
     SetPoints( points );
-    location_->set_type( MsgLocation_Geometry_point );
+    location_->set_type( Location_Geometry_point );
 }

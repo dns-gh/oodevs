@@ -18,7 +18,7 @@
 
 namespace sword
 {
-    class MsgMissionParameters;
+    class MissionParameters;
 }
 
 namespace xml
@@ -140,7 +140,7 @@ public:
     virtual void SendCreation() const;
     virtual void SendFullState() const;
     virtual void SendKnowledge() const;
-    virtual void OnReceiveChangeDiplomacy( const sword::MsgMissionParameters& msg );
+    virtual void OnReceiveChangeDiplomacy( const sword::MissionParameters& msg );
     //@}
 
 private:

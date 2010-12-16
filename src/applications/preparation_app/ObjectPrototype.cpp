@@ -64,17 +64,18 @@ namespace
         container.push_back( new FloodPrototype( parent, object, controllers, detection ) );
     }
 
-    void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, const tools::GeneralConfig& config, Object_ABC*& object )
+    void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& /*resolver*/, const tools::GeneralConfig& config, Object_ABC*& object )
     {
         std::string model( xis.attribute< std::string >( "model" ) );
         if( model == "input" )
             container.push_back( new InputPropagationPrototype( parent, config, object ) );
     }
 
-    void BurnAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, const tools::GeneralConfig& config, Object_ABC*& object )
+    void BurnAttribute( xml::xistream& /*xis*/, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, const tools::GeneralConfig& /*config*/, Object_ABC*& object )
     {
         container.push_back( new FirePrototype( parent, resolver, object ) );
     }
+
     void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, Object_ABC*& object )
     {
         int toxic = xis.attribute< int >( "max-toxic" );

@@ -33,7 +33,7 @@ using namespace kernel;
 // Name: PopulationFlowKnowledge::FlowPart::FlowPart
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::FlowPart::FlowPart( const sword::MsgFlowPart& message, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
+PopulationFlowKnowledge::FlowPart::FlowPart( const sword::FlowPart& message, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
      : relevance_ ( unsigned short( message.pertinence() ) )
 {
     for( int i = 0; i < message.forme().location().coordinates().elem_size(); ++i )

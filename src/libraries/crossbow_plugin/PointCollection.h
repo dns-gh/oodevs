@@ -14,8 +14,7 @@
 
 namespace sword
 {
-    class MsgLocation;
-    class MsgCoordLatLongList;
+    class CoordLatLongList;
 }
 
 class OGRLineString;
@@ -53,7 +52,7 @@ protected:
     //! @name Constructors/Destructor
     //@{
              PointCollection();
-    explicit PointCollection( const sword::MsgCoordLatLongList& message );
+    explicit PointCollection( const sword::CoordLatLongList& message );
     explicit PointCollection( const OGRLineString& geometry );
     //@}
 

@@ -21,7 +21,7 @@ namespace
     {
         QSettings settings;
         settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/sword/Language", QTextCodec::locale() );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
 }
 

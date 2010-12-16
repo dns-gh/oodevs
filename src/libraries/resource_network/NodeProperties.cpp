@@ -197,11 +197,11 @@ void NodeProperties::Serialize( sword::ObjectAttributeResourceNetwork& msg ) con
 // Name: NodeProperties::Update
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-void NodeProperties::Update( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list )
+void NodeProperties::Update( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list )
 {
     for( int i = 0; i< list.size(); ++i )
     {
-        sword::MsgMissionParameter_Value node = list.Get( i );
+        sword::MissionParameter_Value node = list.Get( i );
         unsigned int id = tools_->GetResourceId( node.list( 0 ).acharstr() );
         NodeElement* element = Find( id );
         if( element )

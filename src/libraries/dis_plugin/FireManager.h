@@ -53,12 +53,12 @@ private:
     void ReceiveFire( const sword::StopUnitFire& message );
     void UpdateFireEffect( const sword::StartFireEffect& message );
     void UpdateDetonations();
-    void CreateFire( const sword::MsgCoordLatLong& position );
+    void CreateFire( const sword::CoordLatLong& position );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< unsigned int, sword::MsgCoordLatLong > T_Fires;
+    typedef std::map< unsigned int, sword::CoordLatLong > T_Fires;
     typedef T_Fires::const_iterator                         CIT_Fires;
     //@}
 

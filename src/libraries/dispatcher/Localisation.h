@@ -12,9 +12,9 @@
 
 namespace sword
 {
-    class MsgLocation;
-    class MsgCoordLatLong;
-    enum MsgLocation_Geometry;
+    class Location;
+    class CoordLatLong;
+    enum Location_Geometry;
 }
 
 namespace dispatcher
@@ -34,24 +34,24 @@ public:
     //! @name Constructors/Destructor
     //@{
              Localisation();
-    explicit Localisation( const sword::MsgLocation& msg );
+    explicit Localisation( const sword::Location& msg );
     virtual ~Localisation();
     //@}
 
     //! @name Main
     //@{
-    void Update( const sword::MsgLocation& msg );
-    void Send( sword::MsgLocation& msg ) const;
+    void Update( const sword::Location& msg );
+    void Send( sword::Location& msg ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< sword::MsgCoordLatLong > T_PositionVector;
+    typedef std::vector< sword::CoordLatLong > T_PositionVector;
     //@}
 
 private:
-    sword::MsgLocation_Geometry nType_;
+    sword::Location_Geometry nType_;
     T_PositionVector points_;
 };
 

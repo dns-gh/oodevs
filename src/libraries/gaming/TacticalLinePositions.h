@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLinePositions( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
-             TacticalLinePositions( const sword::MsgLocation& message, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
+             TacticalLinePositions( const sword::Location& message, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
     virtual ~TacticalLinePositions();
     //@}
 
@@ -65,7 +65,7 @@ private:
     //@{
     virtual void DoUpdate( const sword::LimaUpdate&  message );
     virtual void DoUpdate( const sword::LimitUpdate& message );
-    void Update( const sword::MsgTacticalLine& message );
+    void Update( const sword::TacticalLine& message );
     //@}
 
 private:

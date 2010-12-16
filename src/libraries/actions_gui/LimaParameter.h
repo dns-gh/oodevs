@@ -14,11 +14,6 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include <qlistbox.h>
 
-namespace sword
-{
-    class MsgMissionParameter;
-}
-
 namespace kernel
 {
     class TacticalLine_ABC;

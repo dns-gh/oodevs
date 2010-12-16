@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class MsgAtlasNature;
+    class AtlasNature;
 }
 
 namespace kernel
@@ -38,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AtlasNature( const kernel::OrderParameter& parameter, const kernel::AtlasNature& nature );
-             AtlasNature( const kernel::OrderParameter& parameter, const sword::MsgAtlasNature& asn, const kernel::AtlasNatures& natures );
+             AtlasNature( const kernel::OrderParameter& parameter, const sword::AtlasNature& asn, const kernel::AtlasNatures& natures );
              AtlasNature( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::AtlasNatures& natures );
     virtual ~AtlasNature();
     //@}
@@ -46,8 +46,8 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void CommitTo( sword::MsgMissionParameter& asn ) const;
-    virtual void CommitTo( sword::MsgMissionParameter_Value& asn ) const;
+    virtual void CommitTo( sword::MissionParameter& asn ) const;
+    virtual void CommitTo( sword::MissionParameter_Value& asn ) const;
     //@}
 
 private:

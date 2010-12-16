@@ -66,8 +66,8 @@ public:
 
     //! @name xml read / write
     //@{
-    void ReadLima ( xml::xistream& xis, const sword::MsgTacticalLine_Diffusion& diffusion );
-    void ReadLimit( xml::xistream& xis, const sword::MsgTacticalLine_Diffusion& diffusion );
+    void ReadLima ( xml::xistream& xis, const sword::TacticalLine_Diffusion& diffusion );
+    void ReadLimit( xml::xistream& xis, const sword::TacticalLine_Diffusion& diffusion );
     void Write( xml::xostream& xos ) const;
     //@}
 

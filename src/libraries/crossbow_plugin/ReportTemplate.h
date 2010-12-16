@@ -17,7 +17,7 @@ namespace xml
 
 namespace sword
 {
-    class MsgMissionParameters;
+    class MissionParameters;
 }
 
 namespace plugins
@@ -46,7 +46,7 @@ public:
     unsigned long GetId() const;
     const std::string& GetMessage() const;
 
-    std::string RenderMessage( const sword::MsgMissionParameters& message ) const;
+    std::string RenderMessage( const sword::MissionParameters& message ) const;
     //@}
 
 private:

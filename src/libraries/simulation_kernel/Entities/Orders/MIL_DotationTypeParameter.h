@@ -38,7 +38,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const;
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
 private:

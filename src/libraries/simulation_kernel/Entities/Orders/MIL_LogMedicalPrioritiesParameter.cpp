@@ -64,7 +64,7 @@ bool MIL_LogMedicalPrioritiesParameter::ToMedicalPriorities( T_MedicalPriorityVe
 // Name: MIL_LogMedicalPrioritiesParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_LogMedicalPrioritiesParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_LogMedicalPrioritiesParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     unsigned int size = priorities_.size();
     if( size )

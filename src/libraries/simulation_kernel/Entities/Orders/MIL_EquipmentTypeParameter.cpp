@@ -63,7 +63,7 @@ bool MIL_EquipmentTypeParameter::ToEquipmentType( const PHY_ComposanteTypePion*&
 // Name: MIL_EquipmentTypeParameter::ToElement
 // Created: MGD 2010-11-19
 // -----------------------------------------------------------------------------
-bool MIL_EquipmentTypeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_EquipmentTypeParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     if( !pType_ )
         return false;

@@ -27,7 +27,7 @@ crossbow::Area::Area()
 // Name: Area constructor
 // Created: JCR 2008-04-25
 // -----------------------------------------------------------------------------
-crossbow::Area::Area( const sword::MsgCoordLatLongList& message )
+crossbow::Area::Area( const sword::CoordLatLongList& message )
     : PointCollection( message )
 {
     // NOTHING

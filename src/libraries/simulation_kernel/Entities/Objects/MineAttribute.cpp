@@ -53,7 +53,7 @@ MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int
 // Name: MineAttribute constructor
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( const sword::MsgMissionParameter_Value& attributes  )
+MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
     : dotation_           ( 0 )
     , nFullNbrDotation_   ( 0 )
     , nCurrentNbrDotation_( 0 )
@@ -196,7 +196,7 @@ void MineAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // Name: MineAttribute::OnUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void MineAttribute::OnUpdate( const sword::MsgMissionParameter_Value& attribute )
+void MineAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
 {
     if( attribute.list_size() > 4 )
     {

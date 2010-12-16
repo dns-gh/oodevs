@@ -49,7 +49,7 @@ Identifier::~Identifier()
 // Name: Identifier::CommitTo
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void Identifier::CommitTo( sword::MsgMissionParameter& message ) const
+void Identifier::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -59,7 +59,7 @@ void Identifier::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: Identifier::CommitTo
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void Identifier::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void Identifier::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         message.set_identifier( GetValue() );

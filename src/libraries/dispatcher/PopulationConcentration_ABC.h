@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class MsgCoordLatLong;
+    class CoordLatLong;
 }
 
 namespace dispatcher
@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual const sword::MsgCoordLatLong& GetPosition() const = 0;
+    virtual const sword::CoordLatLong& GetPosition() const = 0;
     //@}
 };
 

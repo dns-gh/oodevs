@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgMissionObjective;
+    class MissionObjective;
 }
 
 namespace dispatcher
@@ -32,13 +32,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              Objective();
-    explicit Objective( const sword::MsgMissionObjective& asn );
+    explicit Objective( const sword::MissionObjective& asn );
     virtual ~Objective();
     //@}
 
     //! @name Operations
     //@{
-    void Send( sword::MsgMissionObjective& asn ) const;
+    void Send( sword::MissionObjective& asn ) const;
     //@}
 
 private:

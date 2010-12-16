@@ -16,7 +16,7 @@
 
 namespace sword
 {
-    class MsgCoordLatLong;
+    class CoordLatLong;
 }
 
 namespace dispatcher
@@ -31,7 +31,7 @@ namespace dispatcher
     Position ToPosition( const geometry::Point2f& point );
     Zone ToZone( const std::vector< geometry::Point2f >& points );
 
-    Zone ToZone( const std::vector< sword::MsgCoordLatLong >& coordinates, const kernel::CoordinateConverter_ABC& converter );
+    Zone ToZone( const std::vector< sword::CoordLatLong >& coordinates, const kernel::CoordinateConverter_ABC& converter );
 }
 
 #endif // __Position_h_

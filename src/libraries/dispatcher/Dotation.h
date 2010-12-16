@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgDotationStock;
+    class DotationStock;
     class ResourceDotations_ResourceDotation;
 }
 
@@ -33,16 +33,16 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Dotation( const sword::ResourceDotations_ResourceDotation& asnMsg );
-    explicit Dotation( const sword::MsgDotationStock& asnMsg );
+    explicit Dotation( const sword::DotationStock& asnMsg );
     virtual ~Dotation();
     //@}
 
     //! @name Operations
     //@{
     void Update( const sword::ResourceDotations_ResourceDotation& asnMsg );
-    void Update( const sword::MsgDotationStock& asnMsg );
+    void Update( const sword::DotationStock& asnMsg );
     void Send( sword::ResourceDotations_ResourceDotation& asnMsg ) const ;
-    void Send( sword::MsgDotationStock& asnMsg ) const ;
+    void Send( sword::DotationStock& asnMsg ) const ;
     //@}
 
 private:

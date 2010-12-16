@@ -64,7 +64,7 @@ $$$$ MGD need mil_entitymanager singleton
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
 {
-    MsgMissionParameter asnIn;
+    MissionParameter asnIn;
     asnIn.mutable_value()->Add()->mutable_agentknowledge()->set_id( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     MockMIL_Time_ABC time;
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
     xisParam >> xml::end;
     boost::shared_ptr<MIL_MissionParameter_ABC> param = MIL_MissionParameterFactory::Create( orderType, asnIn, resolver ); 
     
-    MsgMissionParameter asnOut;
+    MissionParameter asnOut;
     BOOST_CHECK_EQUAL( true, param->ToList( *asnOut.mutable_value() ) );
     BOOST_CHECK_EQUAL( 1, asnOut.value_size() );
     BOOST_CHECK_EQUAL( true, asnOut.value().Get( 0 ).has_agentknowledge() );
@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeParameter_ToASN )
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent() ); // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
     MIL_AgentKnowledgeParameter param( asnIn, resolver );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_agentknowledge() );
     BOOST_CHECK_EQUAL( 0u, asnOut.agentknowledge().id() ); // $$$$ LDC: = knowledge's id
@@ -121,7 +121,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, 100, 100 ) );
     MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentParameter param( asnIn, entityManager );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_agent() );
     BOOST_CHECK_EQUAL( 12u, asnOut.agent().id() );
@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter_ToASN )
     //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
     MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_AutomatParameter param( asnIn, entityManager );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_automat() );
     BOOST_CHECK_EQUAL( 0u, asnOut.automat().id() );
@@ -152,16 +152,16 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AtlasNatureParameter_ToASN )
 {
-    MsgAtlasNature asnIn;
-    asnIn.set_nature( MsgAtlasNature::blinde | MsgAtlasNature::log | MsgAtlasNature::asa );
+    AtlasNature asnIn;
+    asnIn.set_nature( AtlasNature::blinde | AtlasNature::log | AtlasNature::asa );
 
     MIL_AtlasNatureParameter param( asnIn );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_atlasnature() );
-    BOOST_CHECK_EQUAL( MsgAtlasNature::blinde, asnOut.atlasnature().nature() & MsgAtlasNature::blinde );
-    BOOST_CHECK_EQUAL( MsgAtlasNature::log,    asnOut.atlasnature().nature() & MsgAtlasNature::log );
-    BOOST_CHECK_EQUAL( MsgAtlasNature::asa,    asnOut.atlasnature().nature() & MsgAtlasNature::asa );
+    BOOST_CHECK_EQUAL( AtlasNature::blinde, asnOut.atlasnature().nature() & AtlasNature::blinde );
+    BOOST_CHECK_EQUAL( AtlasNature::log,    asnOut.atlasnature().nature() & AtlasNature::log );
+    BOOST_CHECK_EQUAL( AtlasNature::asa,    asnOut.atlasnature().nature() & AtlasNature::asa );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,14 +172,14 @@ BOOST_AUTO_TEST_CASE( TestMIL_BoolParameter_ToASN )
 {
     {
         MIL_BoolParameter param( true );
-        MsgMissionParameter_Value asnOut;
+        MissionParameter_Value asnOut;
         BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
         BOOST_CHECK_EQUAL( true, asnOut.has_booleanvalue() );
         BOOST_CHECK_EQUAL( true, asnOut.booleanvalue() );
     }
     {
         MIL_BoolParameter param( false );
-        MsgMissionParameter_Value asnOut;
+        MissionParameter_Value asnOut;
         BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
         BOOST_CHECK_EQUAL( true, asnOut.has_booleanvalue() );
         BOOST_CHECK_EQUAL( false, asnOut.booleanvalue() );
@@ -192,10 +192,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_BoolParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_DateTimeParameter_ToASN )
 {
-    MsgDateTime asnIn;
+    DateTime asnIn;
     NET_ASN_Tools::WriteGDH( 42, asnIn );
     MIL_DateTimeParameter param( asnIn );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_datetime() );
     BOOST_CHECK_EQUAL( asnOut.datetime().data(), "19700101T000042" );
@@ -207,10 +207,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_DateTimeParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_DirectionParameter_ToASN )
 {
-    MsgHeading asnIn;
+    Heading asnIn;
     asnIn.set_heading( 42 );
     MIL_DirectionParameter param( asnIn );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_heading() );
     BOOST_CHECK_EQUAL( 42, asnOut.heading().heading() );
@@ -245,7 +245,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter_ToASN )
     ResourceType asnIn;
     asnIn.set_id( 42 );
     MIL_DotationTypeParameter param( asnIn );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_resourcetype() );
     BOOST_CHECK_EQUAL( 42u, asnOut.resourcetype().id() );
@@ -260,7 +260,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_EnumerationParameter_ToASN )
 {
     int asnIn = 42;
     MIL_EnumerationParameter param( asnIn );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_enumeration() );
     BOOST_CHECK_EQUAL( 42, asnOut.enumeration() );
@@ -291,24 +291,24 @@ BOOST_AUTO_TEST_CASE( TestMIL_EnumerationParameter_ToASN )
 
 namespace
 {
-    void FillRlyehLocation( MsgLocation& asnIn )
+    void FillRlyehLocation( Location& asnIn )
     {
-        asnIn.set_type( sword::MsgLocation_Geometry_point );
+        asnIn.set_type( sword::Location_Geometry_point );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 48.52f );
         asnIn.mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f );
     }
 
-    void CompareLocationToRlyeh( const MsgLocation& asnOut )
+    void CompareLocationToRlyeh( const Location& asnOut )
     {
-        BOOST_CHECK_EQUAL( sword::MsgLocation_Geometry_point, asnOut.type() );
+        BOOST_CHECK_EQUAL( sword::Location_Geometry_point, asnOut.type() );
         BOOST_CHECK_EQUAL( 1, asnOut.coordinates().elem_size() );
         BOOST_CHECK_CLOSE( 48.52, asnOut.coordinates().elem(0).latitude(), 1. );
         BOOST_CHECK_CLOSE( 2.17, asnOut.coordinates().elem(0).longitude(), 1. );
     }
 
-    void FillPolygonLocation( MsgLocation& asnIn, float offset )
+    void FillPolygonLocation( Location& asnIn, float offset )
     {
-        asnIn.set_type( sword::MsgLocation_Geometry_polygon );
+        asnIn.set_type( sword::Location_Geometry_polygon );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 50.f + offset );
         asnIn.mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f + offset );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 49.52f + offset );
@@ -317,9 +317,9 @@ namespace
         asnIn.mutable_coordinates()->mutable_elem(2)->set_longitude( 3.17f + offset );
     }
 
-    void CompareLocationToPolygon( const MsgLocation& asnOut, float offset )
+    void CompareLocationToPolygon( const Location& asnOut, float offset )
     {
-        BOOST_CHECK_EQUAL( sword::MsgLocation_Geometry_polygon, asnOut.type() );
+        BOOST_CHECK_EQUAL( sword::Location_Geometry_polygon, asnOut.type() );
         BOOST_CHECK_EQUAL( 4, asnOut.coordinates().elem_size() );
         BOOST_CHECK_CLOSE( 50. + offset, asnOut.coordinates().elem(0).latitude(), 1. );
         BOOST_CHECK_CLOSE( 2.17 + offset, asnOut.coordinates().elem(0).longitude(), 1. );
@@ -339,11 +339,11 @@ namespace
 BOOST_AUTO_TEST_CASE( TestMIL_LocationParameter_ToASN )
 {
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    MsgLocation asnIn;
+    Location asnIn;
     FillRlyehLocation( asnIn );
     MIL_LocationParameter param( asnIn );
     asnIn.mutable_coordinates()->clear_elem();
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_location() );
     CompareLocationToRlyeh( asnOut.location() );
@@ -375,7 +375,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_LogMaintenancePrioritiesParameter_ToASN )
     asnIn.add_elem( sword::blesse_urgence_2 );
     MIL_LogMedicalPrioritiesParameter param( asnIn );
     asnIn.clear_elem();
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_logmedicalpriorities() );
     BOOST_CHECK_EQUAL( 1, asnOut.logmedicalpriorities().elem_size() );
@@ -425,7 +425,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
     MOCK_EXPECT( resolver, ResolveKnowledgeObjectFromMessage ).once().returns( knowledge );
 
     MIL_ObjectKnowledgeParameter param( asnIn, resolver );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_objectknowledge() );
     BOOST_CHECK_EQUAL( 0u, asnOut.objectknowledge().id() ); // $$$$ LDC: = knowledge's id
@@ -439,7 +439,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
 BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_Throw )
 {
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    MsgPath asnIn;
+    Path asnIn;
     asnIn.mutable_location()->mutable_coordinates()->add_elem();
     FillRlyehLocation( *asnIn.mutable_location() );
     BOOST_CHECK_THROW( MIL_PathParameter param( asnIn ), std::runtime_error );
@@ -453,18 +453,18 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_Throw )
 BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_ToASN )
 {
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    MsgPath asnIn;
-    asnIn.mutable_location()->set_type( sword::MsgLocation_Geometry_line );
+    Path asnIn;
+    asnIn.mutable_location()->set_type( sword::Location_Geometry_line );
     asnIn.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 48.52f );
     asnIn.mutable_location()->mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f );
     asnIn.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 49.52f );
     asnIn.mutable_location()->mutable_coordinates()->mutable_elem(1)->set_longitude( 3.17f );
     MIL_PathParameter param( asnIn );
     asnIn.mutable_location()->mutable_coordinates()->clear_elem();
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_path() );
-    BOOST_CHECK_EQUAL( sword::MsgLocation_Geometry_line , asnOut.path().location().type() );
+    BOOST_CHECK_EQUAL( sword::Location_Geometry_line , asnOut.path().location().type() );
     BOOST_CHECK_EQUAL( 2, asnOut.path().location().coordinates().elem_size() );
     BOOST_CHECK_CLOSE( 48.52, asnOut.path().location().coordinates().elem(0).latitude(), 1. );
     BOOST_CHECK_CLOSE( 2.17, asnOut.path().location().coordinates().elem(0).longitude(), 1. );
@@ -482,7 +482,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
 
     const std::string typeName( "type" );
-    MsgPlannedWork asnIn;
+    PlannedWork asnIn;
     asnIn.set_type( typeName.c_str() );
     FillRlyehLocation( *asnIn.mutable_position() );
     asnIn.set_type_obstacle( ObstacleType_DemolitionTargetType_reserved );
@@ -497,7 +497,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
 //    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_PlannedWorkParameter param( asnIn, entityManager );
     asnIn.mutable_position()->mutable_coordinates()->Clear();
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_plannedwork() );
     BOOST_CHECK_EQUAL( typeName, asnOut.plannedwork().type() );
@@ -516,11 +516,11 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
 BOOST_AUTO_TEST_CASE( TestMIL_PointParameter_ToASN )
 {
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    MsgPoint asnIn;
+    Point asnIn;
     FillRlyehLocation( *asnIn.mutable_location() );
     MIL_PointParameter param( asnIn );
     asnIn.mutable_location()->mutable_coordinates()->clear_elem();
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_point() );
     CompareLocationToRlyeh( asnOut.point().location() );
@@ -534,11 +534,11 @@ BOOST_AUTO_TEST_CASE( TestMIL_PointParameter_ToASN )
 BOOST_AUTO_TEST_CASE( TestMIL_PolygonParameter_ToASN )
 {
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
-    MsgPolygon asnIn;
+    Polygon asnIn;
     FillPolygonLocation( *asnIn.mutable_location(), 0.f );
     MIL_PolygonParameter param( asnIn );
     asnIn.mutable_location()->mutable_coordinates()->clear_elem();
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_area() );
     CompareLocationToPolygon( asnOut.area().location(), 0.f );
@@ -559,7 +559,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PopulationKnowledgeParameter_ToASN )
     DEC_Knowledge_Population knowledge; // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgePopulationFromMessage ).once().returns( &knowledge );
     MIL_PopulationKnowledgeParameter param( asnIn, resolver );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_crowdknowledge() );
     BOOST_CHECK_EQUAL( 0u, asnOut.crowdknowledge().id() ); // $$$$ LDC: = knowledge's id
@@ -573,7 +573,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_RealParameter_ToASN )
 {
     float asnIn = 42;
     MIL_RealParameter param( asnIn );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_areal() );
     BOOST_CHECK_EQUAL( 42, asnOut.areal() );
@@ -587,7 +587,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_StringParameter_ToASN )
 {
     std::string asnIn( "value" );
     MIL_StringParameter param( asnIn );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_acharstr() );
     BOOST_CHECK_EQUAL( asnIn, asnOut.acharstr() );
@@ -602,7 +602,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_TirIndirectParameter_ToASN )
     FireId asnIn;
     asnIn.set_id( 33 );
     MIL_TirIndirectParameter param( asnIn );
-    MsgMissionParameter_Value asnOut;
+    MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_tirindirect() );
     BOOST_CHECK_EQUAL( 33u, asnOut.tirindirect().id() );
@@ -615,7 +615,7 @@ namespace
         order.mutable_parameters()->add_elem()->set_null_value( true );
     }
 
-    void AddPoint( sword::MsgLocation& location, const std::string& /*utm*/ ) // $$$$ _RC_ LGY 2010-08-10: ???
+    void AddPoint( sword::Location& location, const std::string& /*utm*/ ) // $$$$ _RC_ LGY 2010-08-10: ???
     {
         location.mutable_coordinates()->add_elem()->set_latitude( 0 );
         location.mutable_coordinates()->add_elem()->set_longitude( 0 );
@@ -633,7 +633,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_MissionWithNullParameters )
     order.mutable_tasker()->set_id( 159 );
     {
         // danger direction
-        sword::MsgMissionParameter& parameter = *order.mutable_parameters()->add_elem();
+        sword::MissionParameter& parameter = *order.mutable_parameters()->add_elem();
         parameter.set_null_value( false );
         parameter.mutable_value()->Add()->mutable_heading()->set_heading( 128 );
     }
@@ -643,10 +643,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_MissionWithNullParameters )
     AddNullParameter( order ); // intelligences
     {
         // polygon area
-        sword::MsgMissionParameter& parameter = *order.mutable_parameters()->add_elem();
+        sword::MissionParameter& parameter = *order.mutable_parameters()->add_elem();
         parameter.set_null_value( false );
-        sword::MsgLocation& location = *parameter.mutable_value()->Add()->mutable_area()->mutable_location();
-        location.set_type( sword::MsgLocation::polygon );
+        sword::Location& location = *parameter.mutable_value()->Add()->mutable_area()->mutable_location();
+        location.set_type( sword::Location::polygon );
         AddPoint( location, "35RPQ8696412999" );
         AddPoint( location, "35RPQ8729112778" );
         AddPoint( location, "35RPQ8755612970" );

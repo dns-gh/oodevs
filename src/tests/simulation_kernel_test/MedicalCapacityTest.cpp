@@ -178,14 +178,14 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
         object.GetAttribute< MedicalTreatmentAttribute >() = attribute;
         
         // Update
-        sword::MsgMissionParameter_Value parameters;
+        sword::MissionParameter_Value parameters;
         parameters.add_list(); // attributeId
         parameters.add_list(); // External ref
         parameters.add_list()->set_quantity( 5 ); // doctors
         parameters.add_list(); // eStatus
-        sword::MsgMissionParameter_Value& bed_capacities = *parameters.add_list();
+        sword::MissionParameter_Value& bed_capacities = *parameters.add_list();
         {
-            sword::MsgMissionParameter_Value& bed = *bed_capacities.add_list();
+            sword::MissionParameter_Value& bed = *bed_capacities.add_list();
             bed.add_list()->set_identifier( 0 );
             bed.add_list()->set_quantity( 3 ); // baseline
             bed.add_list()->set_quantity( 2 ); // available
@@ -193,7 +193,7 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
             // bed.add_list()->set_quantity( 3 );
         }
         {
-            sword::MsgMissionParameter_Value& bed = *bed_capacities.add_list();
+            sword::MissionParameter_Value& bed = *bed_capacities.add_list();
             bed.add_list()->set_identifier( 1 );
             bed.add_list()->set_quantity( 5 );
             bed.add_list()->set_quantity( 3 );

@@ -65,7 +65,7 @@ MIL_Object_ABC* MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MsgMissionParameters& msg, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value )
+MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const sword::MissionParameters& msg, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value )
 {
     MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateObject( msg, army, value );
     if( pObject )

@@ -60,7 +60,7 @@ private:
     //@{
     void ReadReport( xml::xistream& xis );
     friend class ReportTemplate;
-    std::string RenderParameter( const sword::MsgMissionParameter& value ) const;
+    std::string RenderParameter( const sword::MissionParameter& value ) const;
     //@}
 
     //! @name Types

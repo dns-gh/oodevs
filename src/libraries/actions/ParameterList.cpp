@@ -39,12 +39,12 @@ ParameterList::ParameterList( const kernel::OrderParameter& parameter )
 // Name: ParameterList constructor
 // Created: MGD 2010-11-09
 // -----------------------------------------------------------------------------
-ParameterList::ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC& entity )
+ParameterList::ParameterList( const kernel::OrderParameter& parameter, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list, const actions::ParameterFactory_ABC& factory, const kernel::Entity_ABC& entity )
     : Parameter< QString >( parameter )
     , parameter_( parameter )
 {
     int i = 0;
-    for( ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it, ++i )
+    for( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it, ++i )
         AddParameter( *factory.CreateParameter( OrderParameter( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i + 1 ).ascii(), "location", false ), *it, entity ) );
 }
 
@@ -100,13 +100,13 @@ void ParameterList::Serialize( xml::xostream& xos ) const
 // Name: ParameterList::CommitTo
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void ParameterList::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void ParameterList::CommitTo( sword::MissionParameter_Value& message ) const
 {
-    ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >* list = message.mutable_list();
+    ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >* list = message.mutable_list();
 
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        sword::MsgMissionParameter_Value* elementValue = list->Add();
+        sword::MissionParameter_Value* elementValue = list->Add();
         it->second->CommitTo( *elementValue );
     }
 }

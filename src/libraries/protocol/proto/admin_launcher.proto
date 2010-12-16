@@ -22,7 +22,7 @@ message ControlStartExercise {
         play  = 0;
         replay = 1;
     }
-   required MsgExercise exercise                  = 1;
+   required Exercise exercise                  = 1;
    required GameMode mode                      = 2;
    optional bool     use_after_action_analysis = 3;
    optional bool     use_external_systems      = 4;
@@ -30,7 +30,7 @@ message ControlStartExercise {
 }
 
 message ControlStopExercise {
-    required MsgExercise exercise = 1;
+    required Exercise exercise = 1;
 }
 
 message ExercicesListRequest {
@@ -41,26 +41,26 @@ message ProfilesListRequest {
     optional int32 context = 1;
 }
 
-message MsgConnectedProfilesListRequest {
+message ConnectedProfilesListRequest {
     optional int32 context = 1;
 }
 
-message MsgAdminDirectoryChangeNotification {
+message AdminDirectoryChangeNotification {
 }
 
 message AdminToLauncher {
     message Content {
-        optional ConnectionRequest                   connection_request                = 1;
-        optional ControlStartExercise                control_start                     = 2;
-        optional ControlStopExercise                 control_stop                      = 3;
-        optional ExercicesListRequest                exercise_list_request             = 4;
-        optional ProfilesListRequest                 profile_list_request              = 5;
-        optional MsgConnectedProfilesListRequest     connected_profile_list_request    = 6;
-        optional MsgAdminDirectoryChangeNotification notification                      = 7;
-        optional ControlCheckPointSetFrequency       control_checkpoint_set_frequency  = 8;
-        optional ControlCheckPointSaveNow            control_checkpoint_save_now       = 9;
-        optional ControlCheckPointListRequest        control_checkpoint_list_request   = 10;
-        optional ControlCheckPointDeleteRequest      control_checkpoint_delete_request = 11;
+        optional ConnectionRequest                connection_request                = 1;
+        optional ControlStartExercise             control_start                     = 2;
+        optional ControlStopExercise              control_stop                      = 3;
+        optional ExercicesListRequest             exercise_list_request             = 4;
+        optional ProfilesListRequest              profile_list_request              = 5;
+        optional ConnectedProfilesListRequest     connected_profile_list_request    = 6;
+        optional AdminDirectoryChangeNotification notification                      = 7;
+        optional ControlCheckPointSetFrequency    control_checkpoint_set_frequency  = 8;
+        optional ControlCheckPointSaveNow         control_checkpoint_save_now       = 9;
+        optional ControlCheckPointListRequest     control_checkpoint_list_request   = 10;
+        optional ControlCheckPointDeleteRequest   control_checkpoint_delete_request = 11;
     }
     optional int32   context = 1;
     required Content message = 2;

@@ -54,10 +54,10 @@ message AuthenticationResponse {
     required ProtocolVersion        server_version    = 4;
     /** @property restart_date_time
         @brief Date and time of the simulation when restarting on a checkpoint.
-        @see MsgDateTime
+        @see DateTime
         @todo not implemented
     */
-    optional MsgDateTime            restart_date_time = 5;
+    optional DateTime               restart_date_time = 5;
     /** @property terrain_name
         @brief Terrain name used by the simulation (from file "exercise/exercise.xml").
         @todo not implemented

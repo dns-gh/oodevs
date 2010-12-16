@@ -114,7 +114,7 @@ void InhabitantCreationPanel::Commit()
 // Name: InhabitantCreationPanel::showEvent
 // Created: AGE 2006-04-21
 // -----------------------------------------------------------------------------
-void InhabitantCreationPanel::showEvent( QShowEvent* e )
+void InhabitantCreationPanel::showEvent( QShowEvent* )
 {
     FillObjectTypes();
     OnTypeChanged();

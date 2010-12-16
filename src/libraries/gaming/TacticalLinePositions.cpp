@@ -32,7 +32,7 @@ TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, co
 // Name: TacticalLinePositions constructor
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-TacticalLinePositions::TacticalLinePositions( const sword::MsgLocation& message, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
+TacticalLinePositions::TacticalLinePositions( const sword::Location& message, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
     : converter_( converter )
     , owner_    ( owner )
 {
@@ -163,7 +163,7 @@ void TacticalLinePositions::DoUpdate( const sword::LimitUpdate& message )
 // Name: TacticalLinePositions::Update
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::Update( const sword::MsgTacticalLine& message )
+void TacticalLinePositions::Update( const sword::TacticalLine& message )
 {
     pointList_.clear();
     pointList_.reserve( message.geometry().coordinates().elem_size() );

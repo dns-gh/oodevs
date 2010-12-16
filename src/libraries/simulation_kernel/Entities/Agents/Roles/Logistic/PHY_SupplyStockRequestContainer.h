@@ -16,7 +16,7 @@
 
 namespace sword
 {
-    class MsgMissionParameter;
+    class MissionParameter;
 }
 
 class PHY_DotationCategory;
@@ -43,7 +43,7 @@ public:
 
 public:
     explicit PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate );
-             PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const sword::MsgMissionParameter& asnStocks, E_RequestDirection  requestDirection );
+             PHY_SupplyStockRequestContainer( MIL_Automate& suppliedAutomate, const sword::MissionParameter& asnStocks, E_RequestDirection  requestDirection );
     virtual  ~PHY_SupplyStockRequestContainer();
 
     //! @name Accessors

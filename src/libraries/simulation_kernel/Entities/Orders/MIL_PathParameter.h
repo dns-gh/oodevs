@@ -24,7 +24,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_PathParameter( boost::shared_ptr< MT_Vector2D > point );
-    explicit MIL_PathParameter( const sword::MsgPath& );
+    explicit MIL_PathParameter( const sword::Path& );
     explicit MIL_PathParameter( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList );
     virtual ~MIL_PathParameter();
     //@}
@@ -37,7 +37,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToPath( std::vector< boost::shared_ptr< MT_Vector2D > >& ) const;
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
 private:

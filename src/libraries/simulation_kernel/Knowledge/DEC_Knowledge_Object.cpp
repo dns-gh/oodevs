@@ -473,7 +473,7 @@ void DEC_Knowledge_Object::BuildMsgLocalisations( sword::ObjectKnowledgeUpdate& 
 {
     if( IsAttributeUpdated( eAttr_Localisation ) )
         // $$$$ FDS 2010-04-16: Dans le cas où le type de localiation est none, la Localisation n'est pas renseigné ( Dans Gaming cela entrainerait sinon un Throw )
-        if( localisation_.GetType() !=  sword::MsgLocation_Geometry_none )
+        if( localisation_.GetType() !=  sword::Location_Geometry_none )
             NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_location() );
 }
 

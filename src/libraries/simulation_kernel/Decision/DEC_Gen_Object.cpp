@@ -21,7 +21,7 @@
 // Name: DEC_Gen_Object constructor
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-DEC_Gen_Object::DEC_Gen_Object( const sword::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
+DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
     : type_              ( &entityManager.FindObjectType( asn.type() )? asn.type(): "" )
     , pObstacleType_     ( asn.type_obstacle() )
     , rDensity_          ( asn.densite() )
@@ -99,7 +99,7 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
 // Name: DEC_Gen_Object::Serialize
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-void DEC_Gen_Object::Serialize( sword::MsgPlannedWork& asn ) const
+void DEC_Gen_Object::Serialize( sword::PlannedWork& asn ) const
 {
     asn.set_type( type_.c_str() );
     asn.set_type_obstacle( pObstacleType_ );

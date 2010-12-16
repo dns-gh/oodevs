@@ -84,7 +84,7 @@ private:
 
     //! @name Member data
     //@{
-    sword::MsgLocation::Geometry nTypeLocalisation_;
+    sword::Location::Geometry nTypeLocalisation_;
     kernel::DotationType* construction_;
     kernel::DotationType* valorization_;
     kernel::OptionalValue< unsigned int > nDotationConstruction_;

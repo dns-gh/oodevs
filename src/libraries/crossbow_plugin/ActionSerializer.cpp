@@ -39,17 +39,18 @@
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include <boost/lexical_cast.hpp>
+#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 using namespace plugins::crossbow;
 
-namespace 
+namespace
 {
     Database_ABC& GetDatabase( Workspace_ABC& workspace )
     {
         return workspace.GetDatabase( "flat" );
     }
-
 
     template< typename Type >
     Type GetField( const Row_ABC& row, const std::string& name )
@@ -68,8 +69,8 @@ namespace
     {
         virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter&, xml::xistream&, const kernel::Entity_ABC& ) const { return 0; }
         virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter&, xml::xistream& ) const { return 0; }
-        virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter&, const sword::MsgMissionParameter&, const kernel::Entity_ABC& ) const { return 0; }
-        virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter&, const sword::MsgMissionParameter_Value&, const kernel::Entity_ABC& ) const { return 0; }
+        virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter&, const sword::MissionParameter&, const kernel::Entity_ABC& ) const { return 0; }
+        virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter&, const sword::MissionParameter_Value&, const kernel::Entity_ABC& ) const { return 0; }
     };
 }
 
@@ -219,7 +220,6 @@ void ActionSerializer::SetParameters( unsigned long orderId, const kernel::Entit
         {
             const std::string value( GetField< std::string >( *result, "value" ) );
             const std::string type( boost::algorithm::to_lower_copy( GetField< std::string >( *result, "type" ) ) );
-
             try
             {
                 actions::Parameter_ABC* parameter = CreateParameter( elem, result->GetID(), type, value, entity );

@@ -35,7 +35,7 @@ Path::Path( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
 // Name: Path constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-Path::Path( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::MsgLocation& message )
+Path::Path( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::Location& message )
     : Parameter< QString >( parameter )
     , converter_( converter )
 {
@@ -77,7 +77,7 @@ Path::~Path()
 // Name: Path::AddPoints
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void Path::AddPoints( const sword::MsgLocation& message )
+void Path::AddPoints( const sword::Location& message )
 {
     const unsigned int count = message.coordinates().elem_size();
     for( unsigned int i = 0; i < count; ++i )
@@ -132,7 +132,7 @@ void Path::ReadPoint( xml::xistream& xis )
 // Name: Path::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Path::CommitTo( sword::MsgMissionParameter& message ) const
+void Path::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -142,7 +142,7 @@ void Path::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: Path::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Path::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void Path::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         CommitTo( *message.mutable_path()->mutable_location() );
@@ -152,12 +152,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( sword::MsgLocation& message ) : message_( &message ) {}
+        explicit AsnSerializer( sword::Location& message ) : message_( &message ) {}
         virtual void Visit( const PathPoint& param )
         {
             param.CommitTo( *message_->mutable_coordinates()->add_elem() );
         }
-        sword::MsgLocation* message_;
+        sword::Location* message_;
     };
 }
 
@@ -165,9 +165,9 @@ namespace
 // Name: Path::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Path::CommitTo( sword::MsgLocation& message ) const
+void Path::CommitTo( sword::Location& message ) const
 {
-    message.set_type( sword::MsgLocation::line );
+    message.set_type( sword::Location::line );
     AsnSerializer serializer( message );
     Accept( serializer );
 }

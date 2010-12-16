@@ -402,7 +402,7 @@ void PHY_DotationStockContainer::SendChangedState( client::LogSupplyState& asn )
     for( CIT_StockSet itStock = stocksChanged_.begin(); itStock != stocksChanged_.end(); ++itStock )
     {
         const PHY_DotationStock& dotation = **itStock;
-        sword::MsgDotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
+        sword::DotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
         asnRessource.mutable_ressource_id()->set_id( dotation.GetCategory().GetMosID() );
         asnRessource.set_quantite_disponible( (unsigned int)dotation.GetValue() );
     }
@@ -420,7 +420,7 @@ void PHY_DotationStockContainer::SendFullState( client::LogSupplyState& asn ) co
     for( CIT_StockMap itStock = stocks_.begin(); itStock != stocks_.end(); ++itStock )
     {
         const PHY_DotationStock& dotationStock = *itStock->second;
-        sword::MsgDotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
+        sword::DotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
         asnRessource.mutable_ressource_id()->set_id( dotationStock.GetCategory().GetMosID() );
         asnRessource.set_quantite_disponible( (unsigned int)dotationStock.GetValue() );
     }

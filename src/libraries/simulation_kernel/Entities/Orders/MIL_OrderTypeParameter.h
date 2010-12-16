@@ -12,7 +12,7 @@
 
 namespace sword
 {
-    class MsgMissionParameter;
+    class MissionParameter;
 }
 
 namespace xml
@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    bool Copy( const MIL_MissionParameter_ABC& from, sword::MsgMissionParameter& to ) const;
+    bool Copy( const MIL_MissionParameter_ABC& from, sword::MissionParameter& to ) const;
     //@}
 
     //! @name Accessors

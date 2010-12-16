@@ -484,7 +484,7 @@ void MIL_AgentServer::SetTimeFactor( unsigned int timeFactor )
 void MIL_AgentServer::SetRealTime( const std::string& realTime )
 {
     unsigned int secs = 0;
-    sword::MsgDateTime datetime;
+    sword::DateTime datetime;
     datetime.set_data( realTime );
     NET_ASN_Tools::ReadGDH( datetime, secs );
     client::ControlDatetimeChangeAck ack;

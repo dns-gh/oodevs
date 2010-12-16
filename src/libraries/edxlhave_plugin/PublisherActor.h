@@ -11,7 +11,9 @@
 #define __edxlhave_PublisherActor_h_
 
 #include "Publisher_ABC.h"
+#pragma warning( push, 0 )
 #include <boost/thread/recursive_mutex.hpp>
+#pragma warning( pop )
 
 namespace tools
 {
@@ -34,7 +36,6 @@ namespace edxl
 // =============================================================================
 class PublisherActor : public Publisher_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

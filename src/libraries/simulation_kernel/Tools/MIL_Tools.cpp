@@ -113,7 +113,7 @@ void MIL_Tools::ConvertCoordMosToSim( const std::string& strMosPos, MT_Vector2D&
 // Name: MIL_Tools::ConvertCoordMosToSim
 // Created: NLD 2003-03-31
 //-----------------------------------------------------------------------------
-void MIL_Tools::ConvertCoordMosToSim( const sword::MsgCoordLatLong& asn, MT_Vector2D& vSimPos )
+void MIL_Tools::ConvertCoordMosToSim( const sword::CoordLatLong& asn, MT_Vector2D& vSimPos )
 {
     TER_World::GetWorld().MosToSimMgrsCoord( asn.latitude(), asn.longitude(), vSimPos );
 }
@@ -134,7 +134,7 @@ std::string MIL_Tools::ConvertCoordSimToMos( const MT_Vector2D& vSimPos )
 // Name: MIL_Tools::ConvertCoordSimToMos
 // Created: AGE 2008-04-02
 // -----------------------------------------------------------------------------
-void MIL_Tools::ConvertCoordSimToMos( const MT_Vector2D& vSimPos, sword::MsgCoordLatLong& asn )
+void MIL_Tools::ConvertCoordSimToMos( const MT_Vector2D& vSimPos, sword::CoordLatLong& asn )
 {
     double x, y;
     TER_World::GetWorld().SimToMosMgrsCoord( vSimPos, x, y );

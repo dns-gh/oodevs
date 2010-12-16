@@ -56,7 +56,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: MIL_MissionParameterFactory::Create
 // Created: LDC 2009-04-29
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MIL_OrderTypeParameter& type, const sword::MsgMissionParameter& message, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MIL_OrderTypeParameter& type, const sword::MissionParameter& message, const DEC_KnowledgeResolver_ABC& resolver )
 {
     if( message.null_value() )
     {
@@ -80,7 +80,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
 // Created: LDC 2010-09-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const sword::MsgMissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const sword::MissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver )
 {  
     MIL_MissionParameter_ABC* ptr = 0;
     MIL_EntityManager_ABC& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
@@ -303,7 +303,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: MIL_MissionParameterFactory::Copy
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::Copy( const MIL_OrderType_ABC& orderType, const sword::MsgMissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver )
+void MIL_MissionParameterFactory::Copy( const MIL_OrderType_ABC& orderType, const sword::MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver )
 {
     parameters.clear();
     int size = asn.elem_size();

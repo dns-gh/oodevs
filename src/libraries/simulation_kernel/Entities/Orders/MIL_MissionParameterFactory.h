@@ -14,9 +14,9 @@
 
 namespace sword
 {
-    class MsgMissionParameter;
-    class MsgMissionParameter_Value;
-    class MsgMissionParameters;
+    class MissionParameter;
+    class MissionParameter_Value;
+    class MissionParameters;
 }
 
 class DEC_AutomateDecision;
@@ -55,8 +55,8 @@ public:
     //! @name Operations
     //@{
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MIL_OrderTypeParameter& type );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MIL_OrderTypeParameter& type, const sword::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const sword::MsgMissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MIL_OrderTypeParameter& type, const sword::MissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const sword::MissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_DotationCategory* dotationType );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_ComposanteTypePion* equipmentType );
@@ -78,7 +78,7 @@ public:
     static void SetPawnParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, DEC_Decision_ABC* pion );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePawn( DEC_Decision_ABC* pion );
 
-//    static void Copy( const MsgMissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
+//    static void Copy( const MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
 
     static void SetAutomatParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, DEC_Decision_ABC* automat );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateAutomat( DEC_Decision_ABC* automat );
@@ -105,7 +105,7 @@ public:
     static void SetDotationTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_DotationCategory* type );
     static void SetNumericTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, float value );
 
-    static void Copy( const MIL_OrderType_ABC& orderType, const sword::MsgMissionParameters& asn, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
+    static void Copy( const MIL_OrderType_ABC& orderType, const sword::MissionParameters& asn, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
 
     //@}
 };

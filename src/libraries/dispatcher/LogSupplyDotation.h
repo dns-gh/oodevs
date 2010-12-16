@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgDotationQuery;
+    class DotationQuery;
 }
 
 namespace dispatcher
@@ -32,14 +32,14 @@ class LogSupplyDotation : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             LogSupplyDotation( const Model& model, const sword::MsgDotationQuery& asnMsg );
+             LogSupplyDotation( const Model& model, const sword::DotationQuery& asnMsg );
     virtual ~LogSupplyDotation();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const sword::MsgDotationQuery& asnMsg );
-    void Send  ( sword::MsgDotationQuery& asnMsg ) const ;
+    void Update( const sword::DotationQuery& asnMsg );
+    void Send  ( sword::DotationQuery& asnMsg ) const ;
     //@}
 
 private:

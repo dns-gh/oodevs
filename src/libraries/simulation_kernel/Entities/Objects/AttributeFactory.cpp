@@ -158,15 +158,15 @@ void AttributeFactory::Initialize( Object& object ) const
 // Name: AttributeFactory::Create
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void AttributeFactory::Create( Object& object, const sword::MsgMissionParameter& parameter ) const
+void AttributeFactory::Create( Object& object, const sword::MissionParameter& parameter ) const
 {
     Initialize( object );
     if( parameter.value_size() )
     {
-        const sword::MsgMissionParameter_Value& attributes = parameter.value().Get( 0 );
+        const sword::MissionParameter_Value& attributes = parameter.value().Get( 0 );
         for( int i = 0; i < attributes.list_size(); ++i )
         {
-            const sword::MsgMissionParameter_Value& attribute = attributes.list( i );
+            const sword::MissionParameter_Value& attribute = attributes.list( i );
             if( attribute.list_size() == 0 ) // it should be a list of lists
                 return;
             unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type

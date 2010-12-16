@@ -57,11 +57,11 @@ NBCAttribute::NBCAttribute()
 // Name: NBCAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( const sword::MsgMissionParameter_Value& attributes )
+NBCAttribute::NBCAttribute( const sword::MissionParameter_Value& attributes )
     : nForm_ ( eGas )
     , danger_( attributes.list( 1 ).quantity() )
 {
-    const sword::MsgMissionParameter_Value& agentsList = attributes.list( 2 );
+    const sword::MissionParameter_Value& agentsList = attributes.list( 2 );
     for( int i = 0; i < agentsList.list_size(); ++i )
     {
         const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( agentsList.list( i ).identifier() );

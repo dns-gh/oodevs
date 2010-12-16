@@ -534,7 +534,7 @@ actions::Action_ABC* ActionFactory::CreateKnowledgeGroupMagicAction( xml::xistre
 // Name: ActionFactory::AddParameters
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
-void ActionFactory::AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const sword::MsgMissionParameters& message ) const
+void ActionFactory::AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const sword::MissionParameters& message ) const
 {
     tools::Iterator< const kernel::OrderParameter& > it = order.CreateIterator();
     int i = 0;

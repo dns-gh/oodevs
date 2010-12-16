@@ -104,7 +104,7 @@ private:
     T ApplyThreshold( const T& value )
     {
         std::map< double, double >::const_iterator it = thresholds_.lower_bound( double( value ) );
-        return it != thresholds_.end() ? T( it->second ) : T();
+        return it != thresholds_.end() ? static_cast< T >( it->second ) : T();
     }
     //@}
 

@@ -66,7 +66,7 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgProfilesListRequest
 // Name: AdminToLauncher::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgConnectedProfilesListRequest& from, sword::MsgConnectedProfilesListRequest* to )
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgConnectedProfilesListRequest& from, sword::ConnectedProfilesListRequest* to )
 {
     CONVERT( context );
 }
@@ -75,7 +75,7 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgConnectedProfilesLi
 // Name: AdminToLauncher::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification& /*from*/, sword::MsgAdminDirectoryChangeNotification* /*to*/ )
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification& /*from*/, sword::AdminDirectoryChangeNotification* /*to*/ )
 {
     // NOTHING
 }

@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgFlowPart;
+    class FlowPart;
 }
 
 namespace dispatcher
@@ -31,13 +31,13 @@ class PopulationFlowPart
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationFlowPart( const sword::MsgFlowPart& asnMsg );
+    explicit PopulationFlowPart( const sword::FlowPart& asnMsg );
     virtual ~PopulationFlowPart();
     //@}
 
     //! @name Operations
     //@{
-    void Send( sword::MsgFlowPart& asnMsg ) const ;
+    void Send( sword::FlowPart& asnMsg ) const ;
     //@}
 
 private:

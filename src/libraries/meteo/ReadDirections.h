@@ -14,12 +14,12 @@
 
 namespace sword
 {
-    class MsgHeading;
+    class Heading;
 }
 
 namespace weather
 {
-    MT_Vector2D ReadDirection( const sword::MsgHeading& message );
+    MT_Vector2D ReadDirection( const sword::Heading& message );
 }
 
 #endif // __weather_ReadDirections_h_

@@ -50,7 +50,7 @@ TacticalLinesModel::~TacticalLinesModel()
 // Name: TacticalLinesModel::CreateLimit
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::ReadLimit( xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion)
+void TacticalLinesModel::ReadLimit( xml::xistream& xis, const TacticalLine_Diffusion& diffusion)
 {
     std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), xis, diffusion, converter_ ) );
     limits_.Register( limit->GetID(), *limit );
@@ -61,7 +61,7 @@ void TacticalLinesModel::ReadLimit( xml::xistream& xis, const MsgTacticalLine_Di
 // Name: TacticalLinesModel::CreateLima
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::ReadLima( xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion)
+void TacticalLinesModel::ReadLima( xml::xistream& xis, const TacticalLine_Diffusion& diffusion)
 {
     std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), xis, diffusion, converter_ ) );
     limas_.Register( lima->GetID(), *lima );

@@ -69,7 +69,7 @@ void PopulationKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( sword::MsgMissionParameter& message ) const
+void PopulationKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
@@ -79,7 +79,7 @@ void PopulationKnowledge::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void PopulationKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         Entity< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( *message.mutable_crowdknowledge() );

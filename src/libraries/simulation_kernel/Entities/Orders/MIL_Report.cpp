@@ -186,7 +186,7 @@ bool MIL_Report::DoSend( unsigned int nSenderId, E_Type nType, std::vector< boos
     {
         if( !params[ i ]->IsOfType( parameters_[i]->GetType() ) )
             return false;
-        sword::MsgMissionParameter& paramProtobuff = *message().mutable_parameters()->add_elem();
+        sword::MissionParameter& paramProtobuff = *message().mutable_parameters()->add_elem();
         if( !params[ i ]->ToElement( *paramProtobuff.mutable_value()->Add() ) )
             return false;
     }

@@ -18,7 +18,7 @@
 
 namespace sword
 {
-    class MsgMissionParameter_Value;
+    class MissionParameter_Value;
     class ResourceNetwork;
 }
 
@@ -65,7 +65,7 @@ public:
     //! @name Network
     //@{
     void Serialize( sword::ResourceNetwork& msg ) const;
-    void Update( const sword::MsgMissionParameter_Value& msg );
+    void Update( const sword::MissionParameter_Value& msg );
     //@}
 
     //! @name CheckPoints

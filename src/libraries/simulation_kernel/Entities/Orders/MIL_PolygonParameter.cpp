@@ -17,7 +17,7 @@
 // Name: MIL_PolygonParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-MIL_PolygonParameter::MIL_PolygonParameter( const sword::MsgPolygon& asn )
+MIL_PolygonParameter::MIL_PolygonParameter( const sword::Polygon& asn )
     : pPolygon_( new TER_Localisation() )
 {
     NET_ASN_Tools::ReadPolygon( asn, *pPolygon_ );
@@ -56,7 +56,7 @@ bool MIL_PolygonParameter::ToPolygon( boost::shared_ptr< TER_Localisation >& val
 // Name: MIL_PolygonParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_PolygonParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_PolygonParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     NET_ASN_Tools::WritePolygon( *pPolygon_, *elem.mutable_area() );
     return true;

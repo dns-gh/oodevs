@@ -19,7 +19,7 @@
 
 namespace sword
 {
-    class MsgMissionParameters;
+    class MissionParameters;
     class UnitOrder;
     class UnitMagicAction;
 }
@@ -156,16 +156,16 @@ private:
 
     //! @name Magic actions
     //@{
-    void OnReceiveChangeHumanFactors( const sword::MsgMissionParameters& msg );
+    void OnReceiveChangeHumanFactors( const sword::MissionParameters& msg );
     void OnReceiveResupplyHumans();
     void OnReceiveResupplyResources();
     void OnReceiveResupplyEquipement();
     void OnReceiveResupplyAll();
-    void OnReceiveResupply( const sword::MsgMissionParameters& msg );
+    void OnReceiveResupply( const sword::MissionParameters& msg );
     void OnReceiveDestroyAll();
     void OnReceiveDestroyComponent();
     void OnReceiveRecoverHumansTransporters();
-    void OnReceiveCreateWound( const sword::MsgMissionParameters& asn );
+    void OnReceiveCreateWound( const sword::MissionParameters& asn );
     //@}
 
     //! @name Serialization

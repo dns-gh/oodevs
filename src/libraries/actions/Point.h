@@ -14,9 +14,9 @@
 
 namespace sword
 {
-    class MsgCoordLatLong;
-    class MsgMissionParameter;
-    class MsgPoint;
+    class CoordLatLong;
+    class MissionParameter;
+    class Point;
 }
 
 namespace actions {
@@ -34,16 +34,16 @@ public:
     //! @name Constructors/Destructor
     //@{
              Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::MsgPoint& message );
+             Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::Point& message );
              Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Point();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
-    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
-    void CommitTo( sword::MsgCoordLatLong& message ) const;
+    virtual void CommitTo( sword::MissionParameter& message ) const;
+    virtual void CommitTo( sword::MissionParameter_Value& message ) const;
+    void CommitTo( sword::CoordLatLong& message ) const;
     //@}
 
 private:

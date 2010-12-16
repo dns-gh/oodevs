@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class MsgDotationType;
+    class DotationType;
 }
 
 namespace kernel
@@ -37,7 +37,7 @@ namespace actions
 */
 // Created: SBO 2006-08-09
 // =============================================================================
-        class ParamDotationDType : public ParamComboBox< int /*sword::MsgDotationType*/ >
+        class ParamDotationDType : public ParamComboBox< int /*sword::DotationType*/ >
 {
 public:
     //! @name Constructors/Destructor

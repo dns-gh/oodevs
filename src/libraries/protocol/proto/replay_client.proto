@@ -14,8 +14,8 @@ package sword;
 
 message ControlReplayInformation {
    required int32               current_tick      = 1;
-   required MsgDateTime         initial_date_time = 2;
-   required MsgDateTime         date_time         = 3;
+   required DateTime            initial_date_time = 2;
+   required DateTime            date_time         = 3;
    required int32               tick_duration     = 4;
    required int32               time_factor       = 5;
    required EnumSimulationState status            = 6;

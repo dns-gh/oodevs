@@ -767,8 +767,8 @@ message UrbanMagicActionAck {
 
 message ControlInformation {
    required int32               current_tick         = 1;
-   required MsgDateTime         initial_date_time    = 2;
-   required MsgDateTime         date_time            = 3;
+   required DateTime            initial_date_time    = 2;
+   required DateTime            date_time            = 3;
    required int32               tick_duration        = 4;
    required int32               time_factor          = 5;
    required int32               checkpoint_frequency = 6;
@@ -785,8 +785,8 @@ message ControlProfilingInformation {
 }
 
 message ControlBeginTick {
-   required int32       current_tick = 1;
-   required MsgDateTime date_time    = 2;
+   required int32    current_tick = 1;
+   required DateTime date_time    = 2;
 }
 
 message ControlEndTick {
@@ -1015,8 +1015,8 @@ message UnitAttributes {
     optional ResourceDotations           dotation_eff_ressource        = 4;
     optional LentEquipments              equipements_pretes            = 5;
     optional BorrowedEquipments          equipements_empruntes         = 6;
-    optional MsgCoordLatLong             position                      = 7;
-    optional MsgHeading                  direction                     = 8;
+    optional CoordLatLong             position                      = 7;
+    optional Heading                  direction                     = 8;
     optional int32                       hauteur                       = 9;
     optional int32                       altitude                      = 10;
     optional int32                       vitesse                       = 11;
@@ -1058,7 +1058,7 @@ message UnitAttributes {
 
 message UnitPathFind {
    required UnitId  unit       = 1;
-   required MsgPath itineraire = 2;
+   required Path itineraire = 2;
 }
 
 message UnitDestruction  {
@@ -1103,8 +1103,8 @@ message UnitKnowledgeUpdate {
     optional EnumUnitIdentificationLevel max_identification_level = 5;
     optional int32                       etat_op                  = 6;
     optional bool                        mort                     = 7;
-    optional MsgCoordLatLong             position                 = 8;
-    optional MsgHeading                  direction                = 9;
+    optional CoordLatLong             position                 = 8;
+    optional Heading                  direction                = 9;
     optional int32                       speed                    = 10;
     optional PartyId                     party                    = 11;
     optional bool                        nature_pc                = 12;
@@ -1122,7 +1122,7 @@ message UnitKnowledgeDestruction {
 message UnitFireTarget {
     optional UnitId          unit     = 1;
     optional CrowdId         crowd    = 2;
-    optional MsgCoordLatLong position = 3;
+    optional CoordLatLong position = 3;
 }
 message StartUnitFire {
     required FireId         fire        = 1;
@@ -1200,7 +1200,7 @@ message Explosion {
 
 message StartFireEffect {
     required FireEffectId       fire_effect = 1;
-    required MsgLocation        location    = 2;
+    required Location        location    = 2;
     required EnumFireEffectType type        = 3;
 }
 
@@ -1220,8 +1220,8 @@ message Report {
     required Tasker               source     = 2;
     required ReportType           type       = 3;
     required ReportCategory       category   = 4;
-    required MsgDateTime          time       = 5;
-    optional MsgMissionParameters parameters = 6;
+    required DateTime             time       = 5;
+    optional MissionParameters parameters = 6;
 }
 
 message InvalidateReport {
@@ -1242,22 +1242,22 @@ message DecisionalState {
 
 message DebugPoints {
    required Tasker              source      = 1;
-   required MsgCoordLatLongList coordinates = 2;
+   required CoordLatLongList coordinates = 2;
 }
 
 message SeqOfHeading {
-   repeated MsgHeading elem = 1;
+   repeated Heading elem = 1;
 }
 
-message MsgVisionCone {
-   required MsgCoordLatLong origin     = 1;
+message VisionCone {
+   required CoordLatLong origin     = 1;
    required int32           height     = 2;
    required string          sensor     = 3;
    required SeqOfHeading    directions = 4;
 }
 
 message SeqOfVisionCone {
-   repeated MsgVisionCone elem = 1;
+   repeated VisionCone elem = 1;
 }
 
 message UnitVisionCones {
@@ -1290,7 +1290,7 @@ message CrowdFlowDetection {
    required UnitId      observer       = 1;
    required CrowdId     detected_crowd = 2;
    required CrowdFlowId detected_flow  = 3;
-   required MsgPath     visible_flow   = 4;
+   required Path     visible_flow   = 4;
 }
 
 message ObjectCreation {
@@ -1298,7 +1298,7 @@ message ObjectCreation {
    required ObjectType       type       = 2;
    required string           name       = 3;
    required PartyId          party      = 4;
-   required MsgLocation      location   = 5;
+   required Location      location   = 5;
    required ObjectAttributes attributes = 6;
 }
 
@@ -1308,7 +1308,7 @@ message ObjectDestruction  {
 
 message ObjectUpdate {
    required ObjectId         object     = 1;
-   optional MsgLocation      location   = 2;
+   optional Location      location   = 2;
    required ObjectAttributes attributes = 3;
 }
 
@@ -1326,7 +1326,7 @@ message ObjectKnowledgeUpdate {
    required PartyId           party               = 2;
    optional ObjectId          object              = 3;
    optional int32             relevance           = 4;
-   optional MsgLocation       location            = 5;
+   optional Location       location            = 5;
    optional ObjectAttributes  attributes          = 6;
    optional bool              perceived           = 7;
    optional AutomatIdList     perceiving_automats = 8;
@@ -1459,7 +1459,7 @@ message LogSupplyHandlingCreation {
    optional SeqOfDotationQuery dotations     = 4;
 }
 
-message MsgDotationQuery {
+message DotationQuery {
    optional ResourceType resource            = 1;
    optional int32        quantite_demandee   = 2;
    optional int32        quantite_accordee   = 3;
@@ -1467,7 +1467,7 @@ message MsgDotationQuery {
 }
 
 message SeqOfDotationQuery {
-   repeated MsgDotationQuery elem = 1;
+   repeated DotationQuery elem = 1;
 }
 
 message LogSupplyHandlingUpdate {
@@ -1530,7 +1530,7 @@ message CrowdDestruction {
 message CrowdConcentrationCreation {
    required CrowdConcentrationId concentration = 1;
    required CrowdId              crowd         = 2;
-   required MsgCoordLatLong      position      = 3;
+   required CoordLatLong      position      = 3;
 }
 
 message CrowdConcentrationDestruction {
@@ -1559,9 +1559,9 @@ message CrowdFlowDestruction {
 message CrowdFlowUpdate {
    required CrowdFlowId       flow               = 1;
    required CrowdId           crowd              = 2;
-   optional MsgPath           itineraire         = 3;
-   optional MsgPath           parts              = 4;
-   optional MsgHeading        direction          = 5;
+   optional Path           itineraire         = 3;
+   optional Path           parts              = 4;
+   optional Heading        direction          = 5;
    optional int32             vitesse            = 6;
    optional int32             nb_humains_vivants = 7;
    optional int32             nb_humains_morts   = 8;
@@ -1591,7 +1591,7 @@ message CrowdConcentrationKnowledgeCreation {
     required CrowdKnowledgeId              crowd           = 2;
     required KnowledgeGroupId              knowledge_group = 3;
     required CrowdConcentrationId          concentration   = 4;
-    optional MsgCoordLatLong               position        = 5;
+    optional CoordLatLong               position        = 5;
 }
 
 message CrowdConcentrationKnowledgeUpdate {
@@ -1619,13 +1619,13 @@ message CrowdFlowKnowledgeCreation {
     required CrowdFlowId          flow            = 4;
 }
 
-message MsgFlowPart {
-   required MsgPath forme      = 1;
+message FlowPart {
+   required Path forme      = 1;
    required int32   pertinence = 2;
 }
 
 message SeqOfFlowPart {
-   repeated MsgFlowPart elem = 1;
+   repeated FlowPart elem = 1;
 }
 
 message CrowdFlowKnowledgeUpdate {
@@ -1634,7 +1634,7 @@ message CrowdFlowKnowledgeUpdate {
     required KnowledgeGroupId     knowledge_group    = 3;
     optional CrowdFlowId          flow               = 4;
     optional SeqOfFlowPart        portions_flux      = 5;
-    optional MsgHeading           direction          = 6;
+    optional Heading           direction          = 6;
     optional int32                vitesse            = 7;
     optional int32                nb_humains_vivants = 8;
     optional int32                nb_humains_morts   = 9;
@@ -1740,7 +1740,7 @@ message UrbanAttributes {
 message UrbanCreation {
    required UrbanObjectId   urban_object = 1;
    required string          name         = 2;
-   required MsgLocation     location     = 3;
+   required Location     location     = 3;
    optional UrbanAttributes attributes   = 4;
    optional UrbanObjectId   parent       = 5;
 }
@@ -1753,7 +1753,7 @@ message UrbanDetection {
 
 message UrbanUpdate {
    required UrbanObjectId   urban_object = 1;
-   optional MsgLocation     location     = 2;
+   optional Location     location     = 2;
    optional UrbanAttributes attributes   = 3;
 }
 
@@ -1814,14 +1814,14 @@ message ControlLocalWeatherAck {
 
 message ControlGlobalWeather {
     required WeatherId            weather    = 1;
-    required MsgWeatherAttributes attributes = 2;
+    required WeatherAttributes attributes = 2;
 }
 
 message ControlLocalWeatherCreation {
    required WeatherId            weather                 = 1;
-   optional MsgCoordLatLong      top_left_coordinate     = 2;
-   optional MsgCoordLatLong      bottom_right_coordinate = 3;
-   optional MsgWeatherAttributes attributes              = 4;
+   optional CoordLatLong      top_left_coordinate     = 2;
+   optional CoordLatLong      bottom_right_coordinate = 3;
+   optional WeatherAttributes attributes              = 4;
 
 }
 

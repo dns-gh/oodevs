@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class MsgCoordLatLong;
+    class CoordLatLong;
     enum EnumPopulationAttitude;
     class CrowdConcentrationKnowledgeCreation;
     class CrowdConcentrationKnowledgeUpdate;
@@ -81,7 +81,7 @@ private:
     //@{
     const kernel::PopulationKnowledge_ABC&     populationKnowledge_;
     unsigned int                               concentrationId_;
-    const sword::MsgCoordLatLong              position_;
+    const sword::CoordLatLong              position_;
     unsigned long                              nNbrAliveHumans_;
     unsigned long                              nNbrDeadHumans_;
     sword::EnumCrowdAttitude               nAttitude_;

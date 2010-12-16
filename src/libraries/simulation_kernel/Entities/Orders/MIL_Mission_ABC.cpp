@@ -37,7 +37,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::MsgMissionParameters& parameters )
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::MissionParameters& parameters )
     : type_             ( type )
     , knowledgeResolver_( knowledgeResolver )
 {
@@ -48,7 +48,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::MsgMissionParameters& parameters, const MT_Vector2D& refPosition )
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::MissionParameters& parameters, const MT_Vector2D& refPosition )
     : type_             ( type )
     , context_          ( parameters, refPosition )
     , knowledgeResolver_( knowledgeResolver )
@@ -104,7 +104,7 @@ const std::string& MIL_Mission_ABC::GetName() const
 // Name: MIL_Mission_ABC::Serialize
 // Created: NLD 2011-11-09
 // -----------------------------------------------------------------------------
-void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MsgMissionParameters& parameters )
+void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MissionParameters& parameters )
 {
     const MIL_OrderType_ABC::T_MissionParameterVector& parameterTypes = type_.GetParameters();
     int i = firstIndex;
@@ -126,7 +126,7 @@ void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MsgMissionPar
 // Name: MIL_Mission_ABC::Serialize
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_Mission_ABC::Serialize( sword::MsgMissionParameters& asn ) const
+void MIL_Mission_ABC::Serialize( sword::MissionParameters& asn ) const
 {
     if( type_.Copy( parameters_, asn, context_ ) )
         context_.Serialize( asn );

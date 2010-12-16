@@ -15,8 +15,8 @@
 
 namespace sword
 {
-    class MsgMissionParameter;
-    class MsgMissionParameters;
+    class MissionParameter;
+    class MissionParameters;
 }
 
 class MIL_LimaFunction;
@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_OrderContext( bool present = false );
-             MIL_OrderContext( const sword::MsgMissionParameters& asn, const MT_Vector2D& orientationReference );
+             MIL_OrderContext( const sword::MissionParameters& asn, const MT_Vector2D& orientationReference );
              MIL_OrderContext( const MIL_OrderContext& rhs );
     virtual ~MIL_OrderContext();
     //@}
@@ -55,7 +55,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( sword::MsgMissionParameters& asn ) const;
+    void Serialize( sword::MissionParameters& asn ) const;
     //@}
 
 private:
@@ -66,13 +66,13 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadDirection( const sword::MsgMissionParameter& asn );
-    void ReadPhaseLines( const sword::MsgMissionParameter& asn );
-    void ReadLimits( const sword::MsgMissionParameter& limit1, const sword::MsgMissionParameter& limit2, const MT_Vector2D& orientationReference );
+    void ReadDirection( const sword::MissionParameter& asn );
+    void ReadPhaseLines( const sword::MissionParameter& asn );
+    void ReadLimits( const sword::MissionParameter& limit1, const sword::MissionParameter& limit2, const MT_Vector2D& orientationReference );
 
-    void WriteDirection( sword::MsgMissionParameter& asn ) const;
-    void WritePhaseLines( sword::MsgMissionParameter& asn ) const;
-    void WriteLimits( sword::MsgMissionParameter& limit1, sword::MsgMissionParameter& limit2 ) const;
+    void WriteDirection( sword::MissionParameter& asn ) const;
+    void WritePhaseLines( sword::MissionParameter& asn ) const;
+    void WriteLimits( sword::MissionParameter& limit1, sword::MissionParameter& limit2 ) const;
     //@}
 
 private:

@@ -25,7 +25,7 @@ namespace
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/sword/Language", QTextCodec::locale() );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
 }
 
@@ -113,8 +113,8 @@ void OptionsPage::Commit()
 {
     QSettings settings;
     settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-    settings.writeEntry( "/sword/Language", selectedLanguage_.c_str() );
-    settings.writeEntry( "/sword/DataDirectory", dataDirectory_->text() );
+    settings.writeEntry( "/Common/Language", selectedLanguage_.c_str() );
+    settings.writeEntry( "/Common/DataDirectory", dataDirectory_->text() );
 }
 
 // -----------------------------------------------------------------------------

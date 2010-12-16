@@ -23,7 +23,7 @@ class MIL_PointParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_PointParameter( const sword::MsgPoint& );
+    explicit MIL_PointParameter( const sword::Point& );
     explicit MIL_PointParameter( const MT_Vector2D& point );
     virtual ~MIL_PointParameter();
     //@}
@@ -36,7 +36,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const;
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
 private:

@@ -29,7 +29,7 @@ PointCollection::PointCollection()
 // Name: PointCollection constructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-PointCollection::PointCollection( const sword::MsgCoordLatLongList& message )
+PointCollection::PointCollection( const sword::CoordLatLongList& message )
 {
     for( int i = 0; i < message.elem_size(); ++i )
         points_.push_back( crossbow::Point( message.elem(i) ) );

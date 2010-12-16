@@ -41,7 +41,7 @@ SurfaceFactory::~SurfaceFactory()
 // Name: SurfaceFactory::CreateSurface
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-Surface* SurfaceFactory::CreateSurface( const Agent_ABC& agent, const sword::MsgVisionCone& input, float elongation )
+Surface* SurfaceFactory::CreateSurface( const Agent_ABC& agent, const sword::VisionCone& input, float elongation )
 {
     return new Surface( agent, input, converter_, map_, resolver_, elongation, urbanModelMap_ );
 }

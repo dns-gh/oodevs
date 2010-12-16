@@ -44,19 +44,19 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weath
 // Name: PHY_LocalMeteo constructor
 // Created: JSR 2010-04-12
 // -----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MsgMissionParameters& msg, weather::MeteoManager_ABC* list )
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& msg, weather::MeteoManager_ABC* list )
     : PHY_Meteo( id, msg, list )
     , bIsPatched_( false )
 {
-    const sword::MsgMissionParameter& startTime = msg.elem( 7 );
+    const sword::MissionParameter& startTime = msg.elem( 7 );
     if( startTime.value_size() != 1 || !startTime.value().Get(0).has_datetime() )
         throw std::exception( "Meteo : bad attribute for StartTime" );
     startTime_ = ( bpt::from_iso_string( startTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
-    const sword::MsgMissionParameter& endTime = msg.elem( 8 );
+    const sword::MissionParameter& endTime = msg.elem( 8 );
     if( endTime.value_size() != 1 || !endTime.value().Get(0).has_datetime() )
         throw std::exception( "Meteo : bad attribute for EndTime" );
     endTime_ = ( bpt::from_iso_string( endTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
-    const sword::MsgMissionParameter& location = msg.elem( 9 );
+    const sword::MissionParameter& location = msg.elem( 9 );
     if( location.value_size() != 1 || !location.value().Get(0).has_location() )
         throw std::exception( "Meteo : bad attribute for Location" );
     NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 0 ), upLeft_    );
@@ -103,7 +103,7 @@ void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC&
 void PHY_LocalMeteo::SendCreation() const
 {
     client::ControlLocalWeatherCreation msg;
-    sword::MsgWeatherAttributes* att = msg().mutable_attributes();
+    sword::WeatherAttributes* att = msg().mutable_attributes();
     msg().mutable_weather()->set_id( id_ );
     att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
     NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
@@ -113,7 +113,7 @@ void PHY_LocalMeteo::SendCreation() const
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     att->set_lighting( pLighting_->GetAsnID() );
-    sword::MsgCoordLatLong longlat;
+    sword::CoordLatLong longlat;
     MIL_Tools::ConvertCoordSimToMos( downRight_, longlat);
     msg().mutable_bottom_right_coordinate()->set_latitude( longlat.latitude()  );
     msg().mutable_bottom_right_coordinate()->set_longitude( longlat.longitude()  );

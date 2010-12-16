@@ -70,7 +70,7 @@ Drawing::~Drawing()
 // Name: Drawing::SetLocation
 // Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void Drawing::SetLocation( const sword::MsgCoordLatLongList& list )
+void Drawing::SetLocation( const sword::CoordLatLongList& list )
 {
     std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
@@ -139,7 +139,7 @@ namespace
         {
             for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
             {
-                sword::MsgCoordLatLong latlong;
+                sword::CoordLatLong latlong;
                 converter_->ConvertToGeo( *it, latlong );
                 points_.push_back( latlong );
             }
@@ -165,7 +165,7 @@ namespace
         {
             VisitLines( points );
         }
-        std::vector< sword::MsgCoordLatLong > points_;
+        std::vector< sword::CoordLatLong > points_;
         const kernel::CoordinateConverter_ABC* converter_;
     };
 }
@@ -174,7 +174,7 @@ namespace
 // Name: Drawing::SerializeLocation
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void Drawing::SerializeLocation( sword::MsgCoordLatLongList& list ) const
+void Drawing::SerializeLocation( sword::CoordLatLongList& list ) const
 {
     Serializer serializer( converter_ );
     location_.Accept( serializer );

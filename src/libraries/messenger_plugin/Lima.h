@@ -46,7 +46,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Lima( unsigned int id, const sword::LimaCreationRequest& message );
-             Lima( unsigned int id, xml::xistream&, const sword::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
+             Lima( unsigned int id, xml::xistream&, const sword::TacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
     virtual ~Lima();
     //@}
 

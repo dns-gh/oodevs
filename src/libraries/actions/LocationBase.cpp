@@ -26,7 +26,7 @@ using namespace parameters;
 // Name: LocationBase constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, const sword::MsgLocation& message )
+LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, const sword::Location& message )
     : converter_( converter )
     , type_     ( E_LocationType( message.type() ) )
     , valid_    ( true )
@@ -241,9 +241,9 @@ void LocationBase::Draw( const kernel::GlTools_ABC& tools ) const
 // Name: LocationBase::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LocationBase::CommitTo( sword::MsgLocation& message ) const
+void LocationBase::CommitTo( sword::Location& message ) const
 {
-    message.set_type( sword::MsgLocation::Geometry( type_ ) );
+    message.set_type( sword::Location::Geometry( type_ ) );
     for( unsigned int i = 0; i < points_.size(); ++i )
         converter_.ConvertToGeo( points_[i], *message.mutable_coordinates()->add_elem() );
 }
@@ -254,9 +254,9 @@ void LocationBase::CommitTo( sword::MsgLocation& message ) const
 // -----------------------------------------------------------------------------
 void LocationBase::CommitTo( std::string& content ) const
 {
-    if( type_ == sword::MsgLocation::circle )
+    if( type_ == sword::Location::circle )
         content += "circle(";
-    else if( type_ == sword::MsgLocation::polygon )
+    else if( type_ == sword::Location::polygon )
         content += "polygon(";
     else
         return;  // $$$$ AGE 2007-10-10:
@@ -272,7 +272,7 @@ void LocationBase::CommitTo( std::string& content ) const
 // Name: LocationBase::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LocationBase::Clean( sword::MsgLocation& message ) const
+void LocationBase::Clean( sword::Location& message ) const
 {
     message.Clear();
 }
@@ -285,15 +285,15 @@ bool LocationBase::CheckValidity() const
 {
     switch( type_ )
     {
-    case sword::MsgLocation::polygon:
+    case sword::Location::polygon:
         return points_.size() > 2;
-    case sword::MsgLocation::line:
+    case sword::Location::line:
         return points_.size() > 1;
-    case sword::MsgLocation::circle:
+    case sword::Location::circle:
         return points_.size() == 2;
-    case sword::MsgLocation::point:
+    case sword::Location::point:
         return points_.size() == 1;
-    case sword::MsgLocation::rectangle:
+    case sword::Location::rectangle:
         return points_.size() == 2;
     }
     return false;

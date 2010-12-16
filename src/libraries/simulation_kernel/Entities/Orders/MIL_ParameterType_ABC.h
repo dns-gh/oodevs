@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class MsgMissionParameter;
+    class MissionParameter;
 }
 
 class MIL_OrderType_ABC;

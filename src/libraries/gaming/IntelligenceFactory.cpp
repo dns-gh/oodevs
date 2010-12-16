@@ -89,7 +89,7 @@ Intelligence_ABC* IntelligenceFactory::Create( Entity_ABC& superior, const std::
     message().mutable_intelligence()->set_level( (sword::EnumNatureLevel)level.GetId() );
     message().mutable_intelligence()->set_diplomacy( ConvertToDiplomacy( karma ) );
     message().mutable_intelligence()->set_embarked( mounted );
-    converter_.ConvertToGeo< sword::MsgCoordLatLong >( position, *message().mutable_intelligence()->mutable_location() );
+    converter_.ConvertToGeo< sword::CoordLatLong >( position, *message().mutable_intelligence()->mutable_location() );
     message().mutable_intelligence()->mutable_formation()->set_id( superior.GetId() );
     message.Send( publisher_ );
     return 0;

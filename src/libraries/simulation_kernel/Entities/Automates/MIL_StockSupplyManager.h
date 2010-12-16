@@ -23,7 +23,7 @@ template < typename T > class PHY_ActionLogistic;
 
 namespace sword
 {
-    class MsgMissionParameters;
+    class MissionParameters;
 }
 
 // =============================================================================
@@ -53,8 +53,8 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveLogSupplyPushFlow( const sword::MsgMissionParameters& msg );
-    void OnReceiveLogSupplyPullFlow( const sword::MsgMissionParameters& msg );
+    void OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg );
+    void OnReceiveLogSupplyPullFlow( const sword::MissionParameters& msg );
 
     void SendChangedState() const;
     void SendFullState   () const;

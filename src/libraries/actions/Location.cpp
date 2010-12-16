@@ -35,7 +35,7 @@ Location::Location( const OrderParameter& parameter, const CoordinateConverter_A
 // Name: Location constructor
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
-Location::Location( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::MsgLocation& message )
+Location::Location( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::Location& message )
     : Parameter< QString >( parameter )
     , LocationBase( converter, message )
 {
@@ -104,7 +104,7 @@ void Location::Serialize( xml::xostream& xos ) const
 // Name: Location::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Location::CommitTo( sword::MsgMissionParameter& message ) const
+void Location::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value ( !IsSet() );
     if( IsSet() )
@@ -114,7 +114,7 @@ void Location::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: Location::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Location::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void Location::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         LocationBase::CommitTo( *message.mutable_location() );

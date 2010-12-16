@@ -202,7 +202,7 @@ void MIL_StockSupplyManager::NotifyStockSupplyCanceled( const PHY_SupplyStockSta
 // Name: MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::MsgMissionParameters& msg )
+void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::MissionParameters& msg )
 {
     //$$$$ MIL_AgentServer::GetWorkspace().GetEntityManager().FindBrainLogistic( asn.oid_donneur ) pour simplifier ça ... comme dans Scipio ???
  	//$$$$ Et belle horreur, ce truc, au passage
@@ -235,7 +235,7 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::MsgMission
 // Name: MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow( const sword::MsgMissionParameters& msg)
+void MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg)
 {
     unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
             msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();

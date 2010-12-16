@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class MsgMissionObjective;
+    class MissionObjective;
 }
 
 // =============================================================================
@@ -29,7 +29,7 @@ class DEC_Objective
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_Objective( const sword::MsgMissionObjective& asn );
+    explicit DEC_Objective( const sword::MissionObjective& asn );
     virtual ~DEC_Objective();
     //@}
 
@@ -43,7 +43,7 @@ public:
     //! @name Operations
     //@{
     void operator=( const DEC_Objective& rhs );
-    void Serialize( sword::MsgMissionObjective& asn ) const;
+    void Serialize( sword::MissionObjective& asn ) const;
     void Flag     ( bool bValue );
 
     MT_Vector2D ComputerBarycenter() const;

@@ -74,7 +74,7 @@ public:
         //! @name Operations
         //@{
         void Update( const sword::MedicalTreatmentBedCapacity& capacity );
-        void Update( const sword::MsgMissionParameter_Value& capacity );
+        void Update( const sword::MissionParameter_Value& capacity );
         void Send( sword::MedicalTreatmentBedCapacity& capacity ) const;
         unsigned int Update( unsigned int doctors, float delay );
         bool operator==( const MedicalCapacity& rhs ) const
@@ -111,7 +111,7 @@ public:
     //@{
              MedicalTreatmentAttribute();
     explicit MedicalTreatmentAttribute( xml::xistream& xis );
-    explicit MedicalTreatmentAttribute( const sword::MsgMissionParameter_Value& attributes );
+    explicit MedicalTreatmentAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
@@ -135,7 +135,7 @@ public:
     void Register( MIL_Object_ABC& object ) const;
     void SendFullState( sword::ObjectAttributes& asn ) const;
     void SendUpdate( sword::ObjectAttributes& asn ) const;
-    void OnUpdate( const sword::MsgMissionParameter_Value& attribute );
+    void OnUpdate( const sword::MissionParameter_Value& attribute );
     void WriteODB( xml::xostream& xos ) const;
     void RegisterPatients( unsigned int injuryID, unsigned int category, int n );
     bool CanTreatPatient( unsigned int injuryID ) const;
@@ -162,7 +162,7 @@ private:
     //@}
 
 private:
-    //! @name Enumerate MsgMissionParameter_Values
+    //! @name Enumerate MissionParameter_Values
     //@{
     enum { eAttributeId, eExternalReferenceId, eDoctors, eStatus, eBedCapacities };
     enum { eTypeId, eBaseLineCount, eAvailableCount, eEmergencyCount };

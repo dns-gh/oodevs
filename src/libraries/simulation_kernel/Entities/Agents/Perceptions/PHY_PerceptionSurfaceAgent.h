@@ -11,7 +11,7 @@
 
 namespace sword
 {
-    class MsgVisionCone;
+    class VisionCone;
 }
 
 class PHY_SensorTypeAgent;
@@ -78,7 +78,7 @@ public:
 
     //! @name Network
     //@{
-    void SendFullState( sword::MsgVisionCone& msg ) const;
+    void SendFullState( sword::VisionCone& msg ) const;
     //@}
 
 private:

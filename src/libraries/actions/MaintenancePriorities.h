@@ -46,8 +46,8 @@ public:
     //! @name Operations
     //@{
     void AddPriority( const kernel::EquipmentType& value );
-    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
-    virtual void CommitTo( sword::MsgMissionParameter_Value& message ) const;
+    virtual void CommitTo( sword::MissionParameter& message ) const;
+    virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual void CommitTo( std::string& content ) const;
     virtual bool IsSet() const;
     //@}

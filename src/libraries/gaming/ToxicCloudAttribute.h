@@ -20,7 +20,7 @@ namespace sword
 {
     class ObjectUpdate;
     class ObjectCreation;
-    class MsgLocatedQuantityList;
+    class LocatedQuantityList;
 }
 
 namespace kernel
@@ -65,7 +65,7 @@ private:
 
     template< typename T >
     void UpdateData( const T& message );
-    void UpdateToxicCloud( const sword::MsgLocatedQuantityList& cloud );
+    void UpdateToxicCloud( const sword::LocatedQuantityList& cloud );
     void CreateTexture();
     void UpdateTexture() const;
     //@}

@@ -80,14 +80,14 @@ namespace shield
     template< typename From, typename To >
     void ConvertLocation( const From& from, To* to )
     {
-        CONVERT_ENUM( type, ( sword::MsgLocation::circle, Common::MsgLocation::circle )
-                            ( sword::MsgLocation::ellipse, Common::MsgLocation::ellipse )
-                            ( sword::MsgLocation::line, Common::MsgLocation::line )
-                            ( sword::MsgLocation::rectangle, Common::MsgLocation::rectangle )
-                            ( sword::MsgLocation::polygon, Common::MsgLocation::polygon )
-                            ( sword::MsgLocation::point, Common::MsgLocation::point )
-                            ( sword::MsgLocation::sector, Common::MsgLocation::sector )
-                            ( sword::MsgLocation::none, Common::MsgLocation::none ) );
+        CONVERT_ENUM( type, ( sword::Location::circle, Common::MsgLocation::circle )
+                            ( sword::Location::ellipse, Common::MsgLocation::ellipse )
+                            ( sword::Location::line, Common::MsgLocation::line )
+                            ( sword::Location::rectangle, Common::MsgLocation::rectangle )
+                            ( sword::Location::polygon, Common::MsgLocation::polygon )
+                            ( sword::Location::point, Common::MsgLocation::point )
+                            ( sword::Location::sector, Common::MsgLocation::sector )
+                            ( sword::Location::none, Common::MsgLocation::none ) );
         CONVERT_LIST( coordinates, elem, ConvertCoordLatLong );
     }
     template< typename From, typename To >

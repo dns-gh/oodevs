@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class MsgMissionParameters;
+    class MissionParameters;
 }
 
 namespace kernel
@@ -90,7 +90,7 @@ private:
     actions::Action_ABC* CreateMission( xml::xistream& xis, bool readonly, bool stub ) const;
     actions::Action_ABC* CreateFragOrder( xml::xistream& xis, bool readonly, bool stub ) const;
 
-    void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const sword::MsgMissionParameters& message ) const;
+    void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const sword::MissionParameters& message ) const;
     void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
     void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it ) const;
     void ReadStubParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;

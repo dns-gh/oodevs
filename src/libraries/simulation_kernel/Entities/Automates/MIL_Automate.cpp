@@ -969,17 +969,17 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
     if( !msg.has_parameters() || msg.parameters().elem_size() != 2)
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
-    const sword::MsgMissionParameter& id = msg.parameters().elem( 0 );
+    const sword::MissionParameter& id = msg.parameters().elem( 0 );
     if( id.value_size() != 1 || !id.value().Get(0).has_identifier() )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id.value().Get(0).identifier() );
     if( !pType )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
-    const sword::MsgMissionParameter& location = msg.parameters().elem( 1 );
+    const sword::MissionParameter& location = msg.parameters().elem( 1 );
     if( location.value_size() != 1 || !location.value().Get(0).has_point() )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
-    const sword::MsgPoint& point = location.value().Get(0).point();
-    if( point.location().type() != sword::MsgLocation::point || point.location().coordinates().elem_size() != 1 )
+    const sword::Point& point = location.value().Get(0).point();
+    if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
     MT_Vector2D position;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), position );
@@ -1037,11 +1037,11 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
-    const sword::MsgMissionParameter& parametre = msg.parameters().elem( 0 );
+    const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_point() )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
-    const sword::MsgPoint& point = parametre.value().Get(0).point();
-    if( point.location().type() != sword::MsgLocation::point || point.location().coordinates().elem_size() != 1 )
+    const sword::Point& point = parametre.value().Get(0).point();
+    if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), vPosTmp );
@@ -1147,7 +1147,7 @@ void MIL_Automate::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, c
 // Name: MIL_Automate::OnReceiveLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveLogSupplyChangeQuotas( const sword::MsgMissionParameters& /*msg*/ )
+void MIL_Automate::OnReceiveLogSupplyChangeQuotas( const sword::MissionParameters& /*msg*/ )
 {
     throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_receveur_pushflow );
 }
@@ -1156,7 +1156,7 @@ void MIL_Automate::OnReceiveLogSupplyChangeQuotas( const sword::MsgMissionParame
 // Name: MIL_Automate::OnReceiveLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveLogSupplyPushFlow( const sword::MsgMissionParameters& msg )
+void MIL_Automate::OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg )
 {
     assert( pStockSupplyManager_.get() );
     pStockSupplyManager_->OnReceiveLogSupplyPushFlow( msg );
@@ -1166,7 +1166,7 @@ void MIL_Automate::OnReceiveLogSupplyPushFlow( const sword::MsgMissionParameters
 // Name: MIL_Automate::OnReceiveLogSupplyPullFlow
 // Created: AHC 2010-09-28
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveLogSupplyPullFlow( const sword::MsgMissionParameters& msg )
+void MIL_Automate::OnReceiveLogSupplyPullFlow( const sword::MissionParameters& msg )
 {
     assert( pStockSupplyManager_.get() );
     pStockSupplyManager_->OnReceiveLogSupplyPullFlow( msg );

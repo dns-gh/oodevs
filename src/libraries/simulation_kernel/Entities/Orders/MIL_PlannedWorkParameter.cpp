@@ -16,7 +16,7 @@
 // Name: MIL_PlannedWorkParameter constructor
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
+MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
     : pGenObject_( new DEC_Gen_Object( asn, entityManager ) )
 {
     // NOTHING
@@ -64,7 +64,7 @@ bool MIL_PlannedWorkParameter::ToGenObject( boost::shared_ptr< DEC_Gen_Object >&
 // Name: MIL_PlannedWorkParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_PlannedWorkParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_PlannedWorkParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     pGenObject_->Serialize( *elem.mutable_plannedwork() );
     return true;

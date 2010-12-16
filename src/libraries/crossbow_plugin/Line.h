@@ -14,8 +14,7 @@
 
 namespace sword
 {
-    class MsgCoordLatLongList;
-    class MsgLocation;
+    class CoordLatLongList;
 }
 
 namespace plugins
@@ -36,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Line();
-    explicit Line( const sword::MsgCoordLatLongList& message );
+    explicit Line( const sword::CoordLatLongList& message );
     explicit Line( const OGRLineString& line );
     virtual ~Line();
     //@}

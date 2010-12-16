@@ -44,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( sword::MsgMissionParameter& message ) const;
-    virtual void CommitTo( sword::MsgMissionParameter_Value& asn ) const;
+    virtual void CommitTo( sword::MissionParameter& message ) const;
+    virtual void CommitTo( sword::MissionParameter_Value& asn ) const;
     virtual bool IsSet() const;
     //@}
 

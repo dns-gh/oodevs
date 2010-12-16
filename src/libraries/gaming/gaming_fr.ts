@@ -1165,6 +1165,10 @@
         <source>Unknown urban object</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Urban block[%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UserProfileFactory</name>

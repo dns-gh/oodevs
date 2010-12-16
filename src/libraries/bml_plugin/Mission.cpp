@@ -236,7 +236,7 @@ namespace
         return -1;
     }
 
-    void MarkParameters( sword::MsgMissionParameters& asn )
+    void MarkParameters( sword::MissionParameters& asn )
     {
         for( int i = 0; i < asn.elem_size(); ++i )
             asn.mutable_elem( i )->set_null_value( true );
@@ -247,7 +247,7 @@ namespace
 // Name: Mission::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void Mission::Serialize( sword::MsgMissionParameters& asn ) const
+void Mission::Serialize( sword::MissionParameters& asn ) const
 {
     MarkParameters( asn );
     SerializeDummyParameters( asn );
@@ -264,13 +264,13 @@ void Mission::Serialize( sword::MsgMissionParameters& asn ) const
 // Name: Mission::FillEmptyParameters
 // Created: AGE 2008-05-28
 // -----------------------------------------------------------------------------
-void Mission::FillEmptyParameters( sword::MsgMissionParameters& asn ) const
+void Mission::FillEmptyParameters( sword::MissionParameters& asn ) const
 {
     tools::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
     for( unsigned int i = 0; it.HasMoreElements(); ++i )
     {
         const kernel::OrderParameter& parameter = it.NextElement();
-        sword::MsgMissionParameter& asnParam = *asn.mutable_elem(i);
+        sword::MissionParameter& asnParam = *asn.mutable_elem(i);
         if( asnParam.null_value() )
         {
             const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
@@ -286,13 +286,13 @@ void Mission::FillEmptyParameters( sword::MsgMissionParameters& asn ) const
 // Name: Mission::SerializeDummyParameters
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void Mission::SerializeDummyParameters( sword::MsgMissionParameters& asn ) const
+void Mission::SerializeDummyParameters( sword::MissionParameters& asn ) const
 {
     tools::Iterator< const kernel::OrderParameter& > it( type_.CreateIterator() );
     for( unsigned int i = 0; it.HasMoreElements(); ++i )
     {
         const kernel::OrderParameter& parameter = it.NextElement();
-        sword::MsgMissionParameter& asnParam = *asn.mutable_elem(i);
+        sword::MissionParameter& asnParam = *asn.mutable_elem(i);
         asnParam.set_null_value( parameter.IsOptional() );
         const std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );
         if( type == "bool" )

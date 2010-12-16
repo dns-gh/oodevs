@@ -13,10 +13,10 @@
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/bind.hpp>
-#pragma warning( push, 1 )
+#pragma warning( push, 0 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
+#include <boost/bind.hpp>
 
 namespace bpt = boost::posix_time;
 using namespace plugins::edxl;
@@ -55,8 +55,8 @@ namespace
 // Created: JCR 2010-05-31
 // -----------------------------------------------------------------------------
 HospitalUpdateReport::HospitalUpdateReport( const std::string& name, const sword::ObjectAttributeMedicalTreatment& medical, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver )
-    : xos_ ( new xml::xostringstream() )
-    , resolver_ ( resolver )
+    : xos_     ( new xml::xostringstream() )
+    , resolver_( resolver )
 {
     BuildReport( name, medical );
 }
@@ -91,14 +91,12 @@ HospitalUpdateReport::~HospitalUpdateReport()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: HospitalUpdateReport::UpdateCapacityStatus
 // Created: JCR 2010-06-02
 // -----------------------------------------------------------------------------
 void HospitalUpdateReport::UpdateCapacityStatus( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& medical )
 {
-    // for each bed type
     for ( int i = 0; i < medical.bed_capacities_size(); ++i )
         UpdateBedStatus( xos, medical.bed_capacities( i ) );
 }
@@ -126,7 +124,6 @@ void HospitalUpdateReport::UpdateBedCapacity( xml::xostream& xos, const sword::M
     xos << xml::content( "CapacityStatus", ( bed.available_count() > 0 ) ? std::string( "Vacant/Available" ) : std::string( "NotAvailable" ) )
         << xml::content( "AvailableCount", bed.available_count() )
         << xml::content( "BaselineCount", bed.baseline_count() );
-    
     if ( bed.has_emergency_count() )
     {
         xos << xml::content( "AdditionalCapacityCount24Hr", bed.emergency_count() )
@@ -175,10 +172,9 @@ void HospitalUpdateReport::UpdateDecon( xml::xostream& xos, const sword::ObjectA
 void HospitalUpdateReport::UpdateEvacuation( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& /*object*/ )
 {
     xos << xml::start( "OperationalStatus" ) << "FullyOperational" << xml::end // "FullyOperational|LimitedOperation|Closed|N/A"
-         << xml::start( "EvacuationStatus" ) << "NoPlannedEvacuation" << xml::end // "Shelter|NoPlannedEvacuation|EvacuationPartial|EvacuationTotal|N/A"
-         << xml::start( "EvacuationAction" ) << "Anticipated" << xml::end; // "Anticipated|InProcess|Completed|N/A"
+        << xml::start( "EvacuationStatus" ) << "NoPlannedEvacuation" << xml::end // "Shelter|NoPlannedEvacuation|EvacuationPartial|EvacuationTotal|N/A"
+        << xml::start( "EvacuationAction" ) << "Anticipated" << xml::end; // "Anticipated|InProcess|Completed|N/A"
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: HospitalUpdateReport::Send

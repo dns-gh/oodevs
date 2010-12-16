@@ -49,7 +49,7 @@ MissionParameterPhaseLine::~MissionParameterPhaseLine()
 // Name: MissionParameterPhaseLine::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Serialize( MsgMissionParameter& ) const
+void MissionParameterPhaseLine::Serialize( MissionParameter& ) const
 {
     // NOTHING
 }
@@ -92,7 +92,7 @@ void MissionParameterPhaseLine::Serialize( LimaOrder& message ) const
     boost::algorithm::split( functions, functions_, boost::algorithm::is_any_of( "," ) );
     for( std::vector< std::string >::const_iterator it = functions.begin(); it != functions.end(); ++it )
         message.add_fonctions( ToPhaseLineType( *it ) );
-    message.mutable_lima()->mutable_location()->set_type( MsgLocation_Geometry_line );
+    message.mutable_lima()->mutable_location()->set_type( Location_Geometry_line );
     points_->Serialize( *message.mutable_lima()->mutable_location()->mutable_coordinates() );
     message.mutable_horaire()->set_data( bpt::to_iso_string( bpt::from_time_t( 0 ) ).c_str() );
 }

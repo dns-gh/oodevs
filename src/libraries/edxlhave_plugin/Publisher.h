@@ -11,13 +11,14 @@
 #define __edxl_Publisher_h_
 
 #include "Publisher_ABC.h"
+#pragma warning( push, 0 )
 #include <boost/thread/recursive_mutex.hpp>
+#pragma warning( pop )
 
 namespace xml
 {
     class xistream;
 }
-
 
 namespace plugins
 {
@@ -37,7 +38,7 @@ class Publisher : public Publisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Publisher( xml::xistream& xis );
+    explicit Publisher( xml::xistream& xis );
     virtual ~Publisher();
     //@}
 
@@ -63,10 +64,6 @@ private:
     std::string getURI_;
     std::string frequency_;
     bool useSsl_;
-    //@}
-
-    //! @name Logger
-    //@{
     bool log_;
     //@}
 };

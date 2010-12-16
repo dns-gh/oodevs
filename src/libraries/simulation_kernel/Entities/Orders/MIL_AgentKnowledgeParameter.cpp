@@ -68,7 +68,7 @@ bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( boost::shared_ptr< DEC_Knowl
 // Name: MIL_AgentKnowledgeParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_AgentKnowledgeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_AgentKnowledgeParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     elem.mutable_agentknowledge()->set_id( pKnowledgeAgent_->GetID() );
     return true;

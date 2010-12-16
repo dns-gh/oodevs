@@ -61,7 +61,7 @@ CrossingSiteAttribute::CrossingSiteAttribute()
 // Name: CrossingSiteAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( const sword::MsgMissionParameter_Value& attributes )
+CrossingSiteAttribute::CrossingSiteAttribute( const sword::MissionParameter_Value& attributes )
 {
     rWidth_         = attributes.list( 1 ).quantity();
     rDepth_         = attributes.list( 2 ).quantity();
@@ -154,7 +154,7 @@ void CrossingSiteAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // Name: CrossingSiteAttribute::OnUpdate
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::OnUpdate( const sword::MsgMissionParameter_Value& attribute )
+void CrossingSiteAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
 {
     if( attribute.list_size() > 4 )
     {

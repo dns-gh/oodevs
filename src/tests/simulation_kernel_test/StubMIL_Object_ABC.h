@@ -41,7 +41,7 @@ public:
     virtual void SetHLAView( HLA_Object_ABC& /*view*/ ) {}
     virtual void Deserialize( const hla::AttributeIdentifier& /*attributeID*/, hla::Deserializer /*deserializer*/ ) {}
     virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {}
-    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const sword::MsgMissionParameter_Value& /*asn*/ ) { throw; }
+    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const sword::MissionParameter_Value& /*asn*/ ) { throw; }
     virtual void SendCreation() const {}
     virtual void SendDestruction() const {}
     virtual void SendFullState() const {}

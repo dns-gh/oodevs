@@ -91,7 +91,7 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 // Created: LDC 2010-03-18
 // $$$$ AGE 2007-10-19: caca et ^c^v
 // -----------------------------------------------------------------------------
-QDateTime ReportFactory::GetTime( const sword::MsgDateTime& d ) const
+QDateTime ReportFactory::GetTime( const sword::DateTime& d ) const
 {
     const std::string date( (const char*)d.data().c_str() );
     QString extended( date.c_str() );
@@ -146,7 +146,7 @@ Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const sword
 // Name: ReportFactory::RenderParameter
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-QString ReportFactory::RenderParameter( const sword::MsgMissionParameter_Value& value ) const
+QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& value ) const
 {
     if( value.has_areal() )
         return QString::number( value.areal() );

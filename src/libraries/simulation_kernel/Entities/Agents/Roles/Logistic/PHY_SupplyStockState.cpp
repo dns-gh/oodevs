@@ -229,7 +229,7 @@ void PHY_SupplyStockState::SendMsgCreation() const
 
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {
-        sword::MsgDotationQuery& asnDemande = *asn().mutable_dotations()->add_elem();
+        sword::DotationQuery& asnDemande = *asn().mutable_dotations()->add_elem();
         it->second.Serialize( asnDemande );
     }
 
@@ -284,7 +284,7 @@ void PHY_SupplyStockState::SendChangedState() const
         assert( !requests_.empty() );
         for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
         {
-            sword::MsgDotationQuery& asnDemande = *asn().mutable_dotations()->add_elem();
+            sword::DotationQuery& asnDemande = *asn().mutable_dotations()->add_elem();
             it->second.Serialize( asnDemande );
         }
     }

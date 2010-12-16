@@ -29,7 +29,7 @@ Lima::Lima( unsigned int id, const sword::LimaCreationRequest& message )
 // Name: Lima constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-Lima::Lima( unsigned int id, xml::xistream& xis, const sword::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
+Lima::Lima( unsigned int id, xml::xistream& xis, const sword::TacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( id, xis, diffusion, converter)
 {
     // NOTHING

@@ -26,7 +26,7 @@ const QString localisations[] =
 // Name: tools::ToString
 // Created: AGE 2006-08-08
 // -----------------------------------------------------------------------------
-QString tools::ToString(  sword::MsgLocation::Geometry nType )
+QString tools::ToString(  sword::Location::Geometry nType )
 {
     if( nType >= 0 && nType < 6 )
         return localisations[ nType ];

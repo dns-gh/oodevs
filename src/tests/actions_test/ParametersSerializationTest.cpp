@@ -54,18 +54,18 @@ namespace bl = boost::lambda;
 namespace
 {
     template< typename Functor >
-    std::auto_ptr< sword::MsgMissionParameter > Serialize( const std::string& type, const std::string& xmlInput, Functor creator )
+    std::auto_ptr< sword::MissionParameter > Serialize( const std::string& type, const std::string& xmlInput, Functor creator )
     {
         const kernel::OrderParameter definition( "test", type, false );
         xml::xistringstream xis( xmlInput );
         xis >> xml::start( "parameter" );
         std::auto_ptr< actions::Parameter_ABC > parameter( creator( definition, xis ) );
-        std::auto_ptr< sword::MsgMissionParameter > message( new sword::MsgMissionParameter() );
+        std::auto_ptr< sword::MissionParameter > message( new sword::MissionParameter() );
         parameter->CommitTo( *message );
         return message;
     }
 
-    void CheckSet( const sword::MsgMissionParameter& message )
+    void CheckSet( const sword::MissionParameter& message )
     {
         BOOST_CHECK_EQUAL( false, message.null_value() );
         BOOST_REQUIRE( message.value_size() > 0 );
@@ -179,7 +179,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Bool )
 {
     const std::string input( "<parameter name='test' type='bool' value='true'/>" );
     xml::xistringstream xis( input ); xis >> xml::start( "parameter" );
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "bool", input, bl::new_ptr< actions::parameters::Bool >() ) );
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "bool", input, bl::new_ptr< actions::parameters::Bool >() ) );
     CheckSet( *message );
     BOOST_CHECK_EQUAL( true, message->value().Get( 0 ).booleanvalue() );
 }
@@ -191,7 +191,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Bool )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Numeric )
 {
     const std::string input( "<parameter name='test' type='numeric' value='1.5'/>" );
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "numeric", input, bl::new_ptr< actions::parameters::Numeric >() ) );
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "numeric", input, bl::new_ptr< actions::parameters::Numeric >() ) );
     CheckSet( *message );
     BOOST_CHECK_EQUAL( 1.5f, message->value().Get( 0 ).areal() );
 }
@@ -208,7 +208,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
     MOCK_EXPECT( agent, GetId ).returns( 42 );
     MockEntityResolver resolver;
     MOCK_EXPECT( resolver, GetAgent ).with( 42u ).returns( boost::ref( agent ) );
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "agent", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "agent", input,
         bl::bind( bl::new_ptr< actions::parameters::Agent >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
     BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).agent().id() );
@@ -216,7 +216,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Agent )
 
 namespace
 {
-    void CheckCoordinate( const kernel::CoordinateConverter_ABC& converter, const std::string& utm, const sword::MsgCoordLatLong& wgs )
+    void CheckCoordinate( const kernel::CoordinateConverter_ABC& converter, const std::string& utm, const sword::CoordLatLong& wgs )
     {
         const geometry::Point2f expected = converter.ConvertToXY( utm );
         const geometry::Point2f actual   = converter.ConvertToXY( wgs );
@@ -242,11 +242,11 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Polygon )
           "</location>"
         "</parameter>" );
     kernel::CoordinateConverter converter;
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "polygon", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "polygon", input,
         bl::bind( bl::new_ptr< actions::parameters::Polygon >(), bl::_1, bl::var( converter ), bl::_2 ) ) );
     CheckSet( *message );
-    const sword::MsgLocation& result = message->value().Get( 0 ).area().location();
-    BOOST_CHECK_EQUAL( sword::MsgLocation::polygon, result.type() );
+    const sword::Location& result = message->value().Get( 0 ).area().location();
+    BOOST_CHECK_EQUAL( sword::Location::polygon, result.type() );
     BOOST_REQUIRE_EQUAL( 5, result.coordinates().elem_size() );
     CheckCoordinate( converter, "30TYS1037476379", result.coordinates().elem( 0 ) );
     CheckCoordinate( converter, "30TYS1136976125", result.coordinates().elem( 1 ) );
@@ -275,11 +275,11 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Path )
             "</parameter>"
         "</parameter>" );
     kernel::CoordinateConverter converter;
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "path", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "path", input,
         bl::bind( bl::new_ptr< actions::parameters::Path >(), bl::_1, bl::var( converter ), bl::_2 ) ) );
     CheckSet( *message );
-    const sword::MsgLocation& result = message->value().Get( 0 ).path().location();
-    BOOST_CHECK_EQUAL( sword::MsgLocation::line, result.type() );
+    const sword::Location& result = message->value().Get( 0 ).path().location();
+    BOOST_CHECK_EQUAL( sword::Location::line, result.type() );
     BOOST_REQUIRE_EQUAL( 2, result.coordinates().elem_size() );
     CheckCoordinate( converter, "30TYS1037476379", result.coordinates().elem( 0 ) );
     CheckCoordinate( converter, "30UXU3889827121", result.coordinates().elem( 1 ) );
@@ -292,7 +292,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Path )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Direction )
 {
     const std::string input( "<parameter name='test' type='direction' value='21'/>" );
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "heading", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "heading", input,
         bl::bind( bl::new_ptr< actions::parameters::Direction >(), bl::_1, bl::_2 ) ) );
     BOOST_CHECK_EQUAL( 21, message->value().Get( 0 ).heading().heading() );
 }
@@ -309,7 +309,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
     MOCK_EXPECT( automat, GetId ).returns( 42 );
     MockEntityResolver resolver;
     MOCK_EXPECT( resolver, GetAutomat ).with( 42u ).returns( boost::ref( automat ) );
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "automate", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "automate", input,
         bl::bind( bl::new_ptr< actions::parameters::Automat >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
     CheckSet( *message );
     BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).automat().id() );
@@ -324,7 +324,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //    // $$$$ FHD 2009-10-30: TODO find a right formatted level order
 //    const std::string input( "<parameter name='test' type='level' value='42'/>" );
 //    kernel::FormationLevels levels;
-//    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "level", input,
+//    std::auto_ptr< sword::MissionParameter > message( Serialize( "level", input,
 //        bl::bind( bl::new_ptr< actions::parameters::Level >(), bl::_1, bl::_2, bl::var( levels ) ) ) );
 //    CheckSet( *message );
 //    //BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).oid() );
@@ -341,7 +341,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //    tools::Resolver< kernel::Formation_ABC > resolver;
 //    MockFormation formation;
 //    resolver.Register( formation.GetId(), formation );
-//    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "formation", input,
+//    std::auto_ptr< sword::MissionParameter > message( Serialize( "formation", input,
 //        bl::bind( bl::new_ptr< actions::parameters::Formation >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
 //    CheckSet( *message );
 //    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).unit().oid() );
@@ -356,7 +356,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 //    xml::xistringstream xis( input ); xis >> xml::start( "parameter" );
 //    tools::Resolver< kernel::DotationType > resolver;
 //    actions::parameters::DotationType parameter( kernel::OrderParameter("test", "dotationtype", false), xis, resolver );
-//    std::auto_ptr< sword::MsgMissionParameter > message( new sword::MsgMissionParameter() );
+//    std::auto_ptr< sword::MissionParameter > message( new sword::MissionParameter() );
 //    parameter.CommitTo( *message );
 //    CheckSet( *message );
 //    BOOST_CHECK_EQUAL( 42u, message->value().Get( 0 ).dotationtype().oid() );
@@ -369,7 +369,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Automat )
 BOOST_AUTO_TEST_CASE( ParametersSerialization_Datetime )
 {
     const std::string input( "<parameter name='Horaire' type='datetime' value='20081211T190022'/>" );
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "datetime", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "datetime", input,
         bl::bind( bl::new_ptr< actions::parameters::DateTime >(), bl::_1, bl::_2 ) ) );
     BOOST_CHECK_EQUAL( "20081211T190022", message->value().Get( 0 ).datetime().data() );
 }
@@ -382,10 +382,10 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AtlasNature )
 {
     const std::string input( "<parameter name='name' type='NatureAtlas' value='2113'/>" );
     kernel::AtlasNatures natures;
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "NatureAtlas", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "NatureAtlas", input,
         bl::bind( bl::new_ptr< actions::parameters::AtlasNature >(), bl::_1, bl::_2, bl::var( natures ) ) ) );
-    BOOST_CHECK_EQUAL( sword::MsgAtlasNature::blinde,   message->value().Get( 0 ).atlasnature().nature() & sword::MsgAtlasNature::blinde );
-    BOOST_CHECK_EQUAL( sword::MsgAtlasNature::vehicule, message->value().Get( 0 ).atlasnature().nature() & sword::MsgAtlasNature::vehicule );
+    BOOST_CHECK_EQUAL( sword::AtlasNature::blinde,   message->value().Get( 0 ).atlasnature().nature() & sword::AtlasNature::blinde );
+    BOOST_CHECK_EQUAL( sword::AtlasNature::vehicule, message->value().Get( 0 ).atlasnature().nature() & sword::AtlasNature::vehicule );
 }
 
 // -----------------------------------------------------------------------------
@@ -396,7 +396,6 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Enumeration )
 {
     const std::string input( "<parameter name='name' optional='false' type='Enumeration' value='2'/>");
     xml::xistringstream xis( input ); xis >> xml::start( "parameter" );
-
     const std::string enumeration(
         "<parameter name='my enumeration' optional='false' type='enumeration'>"
             "<value name='my value1' id='1'/>"
@@ -405,7 +404,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Enumeration )
     xml::xistringstream xisEnumeration( enumeration ); xisEnumeration >> xml::start( "parameter" );
     kernel::OrderParameter definition( xisEnumeration );
     actions::parameters::Enumeration parameter( definition, xis );
-    std::auto_ptr< sword::MsgMissionParameter > message( new sword::MsgMissionParameter() );
+    std::auto_ptr< sword::MissionParameter > message( new sword::MissionParameter() );
     parameter.CommitTo( *message );
     CheckSet( *message );
     BOOST_CHECK_EQUAL( 2, message->value().Get( 0 ).enumeration() );
@@ -432,7 +431,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Lima )
     xml::xistringstream xis( input ); xis >> xml::start( "parameter" );
     kernel::CoordinateConverter converter;
     actions::parameters::Lima parameter( converter, xis );
-    std::auto_ptr< sword::MsgMissionParameter > message( new sword::MsgMissionParameter() );
+    std::auto_ptr< sword::MissionParameter > message( new sword::MissionParameter() );
     parameter.CommitTo( *message->mutable_value()->Add()->mutable_limasorder()->add_elem() );
     CheckSet( *message );
     const sword::LimaOrder& lima = message->value().Get( 0 ).limasorder().elem(0);
@@ -462,9 +461,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Limit )
           "</location>"
         "</parameter>" );
     kernel::CoordinateConverter converter;
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "limit", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "limit", input,
         bl::bind( bl::new_ptr< actions::parameters::Limit >(), bl::_1, bl::var( converter ), bl::_2 ) ) );
-    const sword::MsgLocation& loc = message->value().Get( 0 ).limit().location();
+    const sword::Location& loc = message->value().Get( 0 ).limit().location();
     BOOST_CHECK_EQUAL( 2, loc.type() );
     BOOST_CHECK_EQUAL( 4, loc.coordinates().elem_size() );
     CheckCoordinate( converter, "30TXS2657258333", loc.coordinates().elem( 0 ) );
@@ -498,7 +497,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentList )
 //    MOCK_EXPECT( agent, GetId ).returns( 66 );
 //    resolver.Register( agent.GetId(), agent );
 //
-//    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "agentlist", input,
+//    std::auto_ptr< sword::MissionParameter > message( Serialize( "agentlist", input,
 //        bl::bind( bl::new_ptr< actions::parameters::AgentList >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( controller ) ) ) );
 //
 //    CheckSet( *message );
@@ -530,7 +529,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
 
     kernel::Controller controller;
     MOCK_EXPECT( knowledge, GetPopulationEntity ).returns( &population );
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "populationknowledge", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "populationknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
     BOOST_CHECK_EQUAL( 15u, message->value().Get( 0 ).crowdknowledge().id() );
 }
@@ -559,7 +558,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
     MOCK_EXPECT( knowledge, GetEntity ).returns( &object );
 
     kernel::Controller controller;
-    std::auto_ptr< sword::MsgMissionParameter > message( Serialize( "objectknowledge", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "objectknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::ObjectKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
     BOOST_CHECK_EQUAL( 15u, message->value().Get( 0 ).objectknowledge().id() );
 }

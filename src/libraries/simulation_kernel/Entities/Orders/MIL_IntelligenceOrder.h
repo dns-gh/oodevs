@@ -58,7 +58,7 @@ private:
     const std::string nature_;
     const sword::EnumNatureLevel level_;
     const bool embarked_;
-    const sword::MsgCoordLatLong position_;
+    const sword::CoordLatLong position_;
     const sword::EnumDiplomacy diplomacy_;
     const unsigned int formation_;
     //@}

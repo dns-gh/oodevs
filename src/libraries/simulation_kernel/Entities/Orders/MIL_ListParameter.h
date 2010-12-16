@@ -27,7 +27,7 @@ class MIL_ListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& list );
+             MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list );
              MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& paramList );
     virtual ~MIL_ListParameter();
     //@}
@@ -36,8 +36,8 @@ public:
     //@{
     virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     
-    virtual bool ToElement( sword::MsgMissionParameter_Value& ) const;
-    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& message ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& ) const;
+    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& message ) const;
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const;
 
     virtual bool ToPathList( std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& ) const;

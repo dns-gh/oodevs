@@ -67,7 +67,7 @@ void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
         int nSize = message.stocks().elem_size();
         while( nSize > 0 )
         {
-            const sword::MsgDotationStock& value = message.stocks().elem( --nSize );
+            const sword::DotationStock& value = message.stocks().elem( --nSize );
             DotationType& type = dotationResolver_.Get( value.ressource_id().id() );
             Dotation* dotation = Find( value.ressource_id().id() );
             if( dotation )

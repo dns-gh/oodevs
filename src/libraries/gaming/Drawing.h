@@ -28,7 +28,7 @@ namespace gui
 
 namespace sword
 {
-    class MsgCoordLatLongList;
+    class CoordLatLongList;
 }
 
 class Publisher_ABC;
@@ -71,8 +71,8 @@ private:
 
     //! @name Helpers
     //@{
-    void SetLocation( const sword::MsgCoordLatLongList& list );
-    void SerializeLocation( sword::MsgCoordLatLongList& list ) const;
+    void SetLocation( const sword::CoordLatLongList& list );
+    void SerializeLocation( sword::CoordLatLongList& list ) const;
     //@}
 
 private:

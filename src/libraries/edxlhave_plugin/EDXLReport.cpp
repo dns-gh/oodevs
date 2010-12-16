@@ -67,7 +67,7 @@ namespace
     };
 
     template< typename T >
-    manipulator< T > xml_bind( T& value )
+    manipulator< T > xml_bind( T value )
     {
         return manipulator< T >( value );
     }

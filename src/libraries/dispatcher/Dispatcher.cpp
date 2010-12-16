@@ -57,7 +57,7 @@ void Dispatcher::AddTranslations()
 {
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-    QString locale = settings.readEntry( "/sword/Language", QTextCodec::locale() );
+    QString locale = settings.readEntry( "/Common/Language", QTextCodec::locale() );
     qapp_->AddTranslator( locale, "messenger" );
 }
 

@@ -15,8 +15,8 @@
 
 namespace sword
 {
-    class MsgWeatherAttributes;
-    class MsgMissionParameters;
+    class WeatherAttributes;
+    class MissionParameters;
 }
 
 namespace actions
@@ -53,8 +53,8 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( sword::MsgWeatherAttributes& att ) const;
-    void Commit( sword::MsgMissionParameters& att ) const;
+    void Commit( sword::WeatherAttributes& att ) const;
+    void Commit( sword::MissionParameters& att ) const;
     void CreateParameters( actions::MagicAction& action, tools::Iterator< const kernel::OrderParameter& >& it );
     //@}
 

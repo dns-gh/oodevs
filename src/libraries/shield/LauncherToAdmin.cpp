@@ -81,12 +81,12 @@ void LauncherToAdmin::Convert( const sword::ControlStopExerciseAck& from, MsgsLa
 // Name: LauncherToAdmin::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void LauncherToAdmin::Convert( const sword::MsgConnectedProfileList& from, MsgsLauncherToAdmin::MsgConnectedProfileList* to )
+void LauncherToAdmin::Convert( const sword::ConnectedProfileList& from, MsgsLauncherToAdmin::MsgConnectedProfileList* to )
 {
-    CONVERT_ENUM( error_code, ( sword::MsgConnectedProfileList::success, MsgsLauncherToAdmin::MsgConnectedProfileList::success )
-                              ( sword::MsgConnectedProfileList::failure, MsgsLauncherToAdmin::MsgConnectedProfileList::failure ) );
-    CONVERT_ENUM( context, ( sword::MsgConnectedProfileList::spontaneous, MsgsLauncherToAdmin::MsgConnectedProfileList::spontaneous )
-                           ( sword::MsgConnectedProfileList::upon_request, MsgsLauncherToAdmin::MsgConnectedProfileList::upon_request ) );
+    CONVERT_ENUM( error_code, ( sword::ConnectedProfileList::success, MsgsLauncherToAdmin::MsgConnectedProfileList::success )
+                              ( sword::ConnectedProfileList::failure, MsgsLauncherToAdmin::MsgConnectedProfileList::failure ) );
+    CONVERT_ENUM( context, ( sword::ConnectedProfileList::spontaneous, MsgsLauncherToAdmin::MsgConnectedProfileList::spontaneous )
+                           ( sword::ConnectedProfileList::upon_request, MsgsLauncherToAdmin::MsgConnectedProfileList::upon_request ) );
     for( int i = 0; i < from.exercise().size(); ++i )
         ConvertProfile( from.exercise( i ), to->add_exercise() );
 }
@@ -105,7 +105,7 @@ void LauncherToAdmin::Convert( const sword::ProfileDescriptionList& from, MsgsAu
 // Name: LauncherToAdmin::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void LauncherToAdmin::Convert( const sword::MsgSimulationComponentState& from, MsgsLauncherToAdmin::MsgSimulationComponentState* to )
+void LauncherToAdmin::Convert( const sword::SimulationComponentState& from, MsgsLauncherToAdmin::MsgSimulationComponentState* to )
 {
     CONVERT_SIMULATION_STATE( simulation_state );
     CONVERT_ENUM( dispatcher_state, ( sword::available, Common::available )

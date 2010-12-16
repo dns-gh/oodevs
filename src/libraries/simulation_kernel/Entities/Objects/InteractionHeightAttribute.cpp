@@ -33,7 +33,7 @@ InteractionHeightAttribute::InteractionHeightAttribute()
 // Name: InteractionHeightAttribute constructor
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-InteractionHeightAttribute::InteractionHeightAttribute( const sword::MsgMissionParameter_Value& attributes )
+InteractionHeightAttribute::InteractionHeightAttribute( const sword::MissionParameter_Value& attributes )
     : height_( attributes.list( 1 ).quantity() )
 {
     // NOTHING

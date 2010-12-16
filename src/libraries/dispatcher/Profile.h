@@ -63,7 +63,7 @@ public:
     bool CheckRights( const sword::ClientToSim& msg ) const;
     bool CheckRights( const sword::ClientToAuthentication& msg ) const;
     bool CheckRights( const sword::ClientToReplay& msg ) const;
-    bool CheckRights( const sword::MsgChatTarget& source, const sword::MsgChatTarget& target ) const;
+    bool CheckRights( const sword::ChatTarget& source, const sword::ChatTarget& target ) const;
     //@}
 
     //! @name Accessors

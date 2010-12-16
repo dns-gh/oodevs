@@ -302,24 +302,24 @@ void DatabaseUpdater::Update( const sword::LimaCreation& msg )
 
 namespace
 {
-    std::string GetObjectTable( const sword::MsgLocation& location )
+    std::string GetObjectTable( const sword::Location& location )
     {
         std::string className = "TacticalObject_Area";
         switch ( location.type() )
         {
-        case sword::MsgLocation::point: className = "TacticalObject_Point"; break;
-        case sword::MsgLocation::line:  className = "TacticalObject_Line"; break;
+        case sword::Location::point: className = "TacticalObject_Point"; break;
+        case sword::Location::line:  className = "TacticalObject_Line"; break;
         }
         return className;
     }
 
-    std::string GetObjectKnowledgeTable( const sword::MsgLocation& location )
+    std::string GetObjectKnowledgeTable( const sword::Location& location )
     {
         std::string className = "KnowledgeObjects_Area";
         switch ( location.type() )
         {
-        case sword::MsgLocation::point: className = "KnowledgeObjects_Point"; break;
-        case sword::MsgLocation::line:  className = "KnowledgeObjects_Line"; break;
+        case sword::Location::point: className = "KnowledgeObjects_Point"; break;
+        case sword::Location::line:  className = "KnowledgeObjects_Line"; break;
         }
         return className;
     }
@@ -328,20 +328,20 @@ namespace
     // Name: QueryDatabaseUpdater::UpdateGeometry
     // Created: JCR 2009-11-02
     // -----------------------------------------------------------------------------
-    bool UpdateGeometry( Row_ABC& row, const sword::MsgLocation& location )
+    bool UpdateGeometry( Row_ABC& row, const sword::Location& location )
     {
          bool result = false;
         switch ( location.type() )
         {
-        case sword::MsgLocation::point:    
+        case sword::Location::point:    
             row.SetGeometry( Point( location.coordinates().elem( 0 ) ) ); 
             result = true;
             break;
-        case sword::MsgLocation::line:     
+        case sword::Location::line:     
             row.SetGeometry( Line( location.coordinates() ) ); 
             result = true;
             break;
-        case sword::MsgLocation::polygon:  
+        case sword::Location::polygon:  
             result = true;
             row.SetGeometry( Area( location.coordinates() ) );
             break;

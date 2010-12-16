@@ -73,12 +73,12 @@ private:
     //! @name Helpers
     //@{
     void ReadPoint( xml::xistream& xis );
-    void SerializePoint( const sword::MsgCoordLatLong& point, xml::xostream& xos ) const;
+    void SerializePoint( const sword::CoordLatLong& point, xml::xostream& xos ) const;
     //@}
 
     //! @name Helpers
     //@{
-    typedef std::vector< sword::MsgCoordLatLong > T_Points;
+    typedef std::vector< sword::CoordLatLong > T_Points;
     //@}
 
 public:

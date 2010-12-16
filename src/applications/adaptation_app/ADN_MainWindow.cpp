@@ -63,7 +63,7 @@ namespace
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/sword/DataDirectory", "" );
+        return settings.readEntry( "/Common/DataDirectory", "" );
     }
 
     std::string GetDefaultRoot( const std::string& appName )

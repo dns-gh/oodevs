@@ -33,8 +33,8 @@ public:
     static void Convert( const MsgsAdminToLauncher::MsgControlStop& from, sword::ControlStopExercise* to );
     static void Convert( const MsgsAdminToLauncher::MsgExercicesListRequest& from, sword::ExercicesListRequest* to );
     static void Convert( const MsgsAdminToLauncher::MsgProfilesListRequest& from, sword::ProfilesListRequest* to );
-    static void Convert( const MsgsAdminToLauncher::MsgConnectedProfilesListRequest& from, sword::MsgConnectedProfilesListRequest* to );
-    static void Convert( const MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification& from, sword::MsgAdminDirectoryChangeNotification* to );
+    static void Convert( const MsgsAdminToLauncher::MsgConnectedProfilesListRequest& from, sword::ConnectedProfilesListRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification& from, sword::AdminDirectoryChangeNotification* to );
     //@}
 };
 

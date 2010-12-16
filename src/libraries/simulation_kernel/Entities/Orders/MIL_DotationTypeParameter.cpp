@@ -65,7 +65,7 @@ bool MIL_DotationTypeParameter::ToDotationType( const PHY_DotationCategory*& val
 // Name: MIL_DotationTypeParameter::ToElement
 // Created: MGD 2010-11-19
 // -----------------------------------------------------------------------------
-bool MIL_DotationTypeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_DotationTypeParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     if( !pCategory_ )
         return false;

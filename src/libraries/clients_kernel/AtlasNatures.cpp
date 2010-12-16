@@ -21,16 +21,16 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 AtlasNatures::AtlasNatures()
 {
-    AddField( tools::translate( "AtlasNature", "Armored" )        , sword::MsgAtlasNature::blinde );
-    AddField( tools::translate( "AtlasNature", "SSA" )            , sword::MsgAtlasNature::ass );
-    AddField( tools::translate( "AtlasNature", "Command post" )   , sword::MsgAtlasNature::pc );
-    AddField( tools::translate( "AtlasNature", "Logistic" )       , sword::MsgAtlasNature::log );
-    AddField( tools::translate( "AtlasNature", "Mortar" )         , sword::MsgAtlasNature::mortier );
-    AddField( tools::translate( "AtlasNature", "Rocket launcher" ), sword::MsgAtlasNature::lance_roquette );
-    AddField( tools::translate( "AtlasNature", "Vehicle" )        , sword::MsgAtlasNature::vehicule );
-    AddField( tools::translate( "AtlasNature", "Footman")         , sword::MsgAtlasNature::personnel_a_pied );
-    AddField( tools::translate( "AtlasNature", "Helicopter" )     , sword::MsgAtlasNature::helicoptere );
-    AddField( tools::translate( "AtlasNature", "SAA" )            , sword::MsgAtlasNature::asa );
+    AddField( tools::translate( "AtlasNature", "Armored" )        , sword::AtlasNature::blinde );
+    AddField( tools::translate( "AtlasNature", "SSA" )            , sword::AtlasNature::ass );
+    AddField( tools::translate( "AtlasNature", "Command post" )   , sword::AtlasNature::pc );
+    AddField( tools::translate( "AtlasNature", "Logistic" )       , sword::AtlasNature::log );
+    AddField( tools::translate( "AtlasNature", "Mortar" )         , sword::AtlasNature::mortier );
+    AddField( tools::translate( "AtlasNature", "Rocket launcher" ), sword::AtlasNature::lance_roquette );
+    AddField( tools::translate( "AtlasNature", "Vehicle" )        , sword::AtlasNature::vehicule );
+    AddField( tools::translate( "AtlasNature", "Footman")         , sword::AtlasNature::personnel_a_pied );
+    AddField( tools::translate( "AtlasNature", "Helicopter" )     , sword::AtlasNature::helicoptere );
+    AddField( tools::translate( "AtlasNature", "SAA" )            , sword::AtlasNature::asa );
 }
 
 // -----------------------------------------------------------------------------

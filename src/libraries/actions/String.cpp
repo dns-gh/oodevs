@@ -58,7 +58,7 @@ void String::CommitTo( std::string& message ) const
 // Name: String::CommitTo
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-void String::CommitTo( sword::MsgMissionParameter& message ) const
+void String::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -68,7 +68,7 @@ void String::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: String::CommitTo
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-void String::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void String::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         message.set_acharstr( GetValue().ascii() );

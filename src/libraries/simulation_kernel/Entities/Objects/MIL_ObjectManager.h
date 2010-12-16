@@ -18,7 +18,7 @@
 namespace sword
 {
     enum ObstacleType_DemolitionTargetType;
-    class MsgMissionParameters;
+    class MissionParameters;
     class MagicAction;
     class ObjectMagicAction;
     enum ObjectMagicActionAck_ErrorCode;
@@ -106,7 +106,7 @@ private:
 private:
     //! @name Tools
     //@{
-    sword::ObjectMagicActionAck_ErrorCode CreateObject( const sword::MsgMissionParameters& asn, const tools::Resolver< MIL_Army_ABC >& armies );
+    sword::ObjectMagicActionAck_ErrorCode CreateObject( const sword::MissionParameters& asn, const tools::Resolver< MIL_Army_ABC >& armies );
     //@}
 
 private:

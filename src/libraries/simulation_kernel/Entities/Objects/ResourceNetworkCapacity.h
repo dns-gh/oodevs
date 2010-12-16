@@ -24,7 +24,7 @@ namespace protobuf
 
 namespace sword
 {
-    class MsgMissionParameter_Value;
+    class MissionParameter_Value;
     class ObjectAttributes;
     class UrbanAttributes;
 }
@@ -71,7 +71,7 @@ public:
     //! @name Operations
     //@{
     void Update( xml::xistream& xis, const MIL_Object_ABC& object );
-    void Update( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list );
+    void Update( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list );
 
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;

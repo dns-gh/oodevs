@@ -51,7 +51,7 @@ FireAttribute::FireAttribute( xml::xistream& xis )
 // Name: FireAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( const sword::MsgMissionParameter_Value& attributes )
+FireAttribute::FireAttribute( const sword::MissionParameter_Value& attributes )
     : maxCombustionEnergy_( 0 )
     , pClass_   ( 0 )
 {

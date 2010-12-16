@@ -291,7 +291,7 @@ void MIL_Object_ABC::MarkForDestruction()
 // Name: MIL_Object_ABC::OnUpdateResourceLinks
 // Created: JSR 2010-08-26
 // -----------------------------------------------------------------------------
-sword::MagicActionAck_ErrorCode MIL_Object_ABC::OnUpdateResourceLinks( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list )
+sword::MagicActionAck_ErrorCode MIL_Object_ABC::OnUpdateResourceLinks( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list )
 {
     ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >();
     if( !capacity )

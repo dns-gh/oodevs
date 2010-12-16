@@ -36,7 +36,7 @@ MIL_OrderContext::MIL_OrderContext( bool present /*= false */ )
 // Name: MIL_OrderContext constructor
 // Created: SBO 2008-03-03
 // -----------------------------------------------------------------------------
-MIL_OrderContext::MIL_OrderContext( const sword::MsgMissionParameters& asn, const MT_Vector2D& orientationReference )
+MIL_OrderContext::MIL_OrderContext( const sword::MissionParameters& asn, const MT_Vector2D& orientationReference )
     : hasContext_( true )
 {
     if( unsigned int( asn.elem_size() ) < Length() )
@@ -71,7 +71,7 @@ MIL_OrderContext::~MIL_OrderContext()
 // Name: MIL_OrderContext::Serialize
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::Serialize( sword::MsgMissionParameters& asn ) const
+void MIL_OrderContext::Serialize( sword::MissionParameters& asn ) const
 {
     if( hasContext_ )
     {
@@ -87,7 +87,7 @@ void MIL_OrderContext::Serialize( sword::MsgMissionParameters& asn ) const
 // Name: MIL_OrderContext::ReadLimits
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadLimits( const sword::MsgMissionParameter& limit1, const sword::MsgMissionParameter& limit2, const MT_Vector2D& orientationReference )
+void MIL_OrderContext::ReadLimits( const sword::MissionParameter& limit1, const sword::MissionParameter& limit2, const MT_Vector2D& orientationReference )
 {
     if( limit1.null_value() != limit2.null_value() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_limit );
@@ -116,7 +116,7 @@ void MIL_OrderContext::ReadLimits( const sword::MsgMissionParameter& limit1, con
 // Name: MIL_OrderContext::ReadPhaseLines
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadPhaseLines( const sword::MsgMissionParameter& asn )
+void MIL_OrderContext::ReadPhaseLines( const sword::MissionParameter& asn )
 {
     if( !asn.null_value() )
     {
@@ -131,7 +131,7 @@ void MIL_OrderContext::ReadPhaseLines( const sword::MsgMissionParameter& asn )
 // Name: MIL_OrderContext::ReadDirection
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadDirection( const sword::MsgMissionParameter& asn )
+void MIL_OrderContext::ReadDirection( const sword::MissionParameter& asn )
 {
     if( !asn.null_value() )
     {
@@ -145,7 +145,7 @@ void MIL_OrderContext::ReadDirection( const sword::MsgMissionParameter& asn )
 // Name: MIL_OrderContext::WritePhaseLines
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::WritePhaseLines( sword::MsgMissionParameter& asn ) const
+void MIL_OrderContext::WritePhaseLines( sword::MissionParameter& asn ) const
 {
     asn.set_null_value( limas_.empty() );
     for( CIT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
@@ -156,7 +156,7 @@ void MIL_OrderContext::WritePhaseLines( sword::MsgMissionParameter& asn ) const
 // Name: MIL_OrderContext::WriteLimits
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::WriteLimits( sword::MsgMissionParameter& limit1, sword::MsgMissionParameter& limit2 ) const
+void MIL_OrderContext::WriteLimits( sword::MissionParameter& limit1, sword::MissionParameter& limit2 ) const
 {
     const bool isValid = fuseau_.GetLeftLimit() && fuseau_.GetRightLimit();
     limit1.set_null_value( !isValid );
@@ -172,7 +172,7 @@ void MIL_OrderContext::WriteLimits( sword::MsgMissionParameter& limit1, sword::M
 // Name: MIL_OrderContext::WriteDirection
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::WriteDirection( sword::MsgMissionParameter& asn ) const
+void MIL_OrderContext::WriteDirection( sword::MissionParameter& asn ) const
 {
     asn.set_null_value( false );
     NET_ASN_Tools::WriteDirection( dirDanger_, *asn.mutable_value()->Add()->mutable_heading() );

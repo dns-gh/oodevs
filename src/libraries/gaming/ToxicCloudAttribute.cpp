@@ -80,14 +80,14 @@ void ToxicCloudAttribute::UpdateTexture() const
 // Name: ToxicCloudAttribute::UpdateToxicCloud
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::UpdateToxicCloud( const sword::MsgLocatedQuantityList& cloud )
+void ToxicCloudAttribute::UpdateToxicCloud( const sword::LocatedQuantityList& cloud )
 {
     cloud_.resize( cloud.elem_size() );
     boundaries_ = QuantityBoundaries();
     boundingBox_ = geometry::Rectangle2f();
     for( int i = 0; i < cloud.elem_size(); ++i )
     {
-        const sword::MsgLocatedQuantity& quantity = cloud.elem( i );
+        const sword::LocatedQuantity& quantity = cloud.elem( i );
         const geometry::Point2f position( float( quantity.coordinate().longitude() ), float( quantity.coordinate().latitude() ) );
         boundingBox_.Incorporate( position );
         boundaries_.Incorporate( quantity.quantity() );

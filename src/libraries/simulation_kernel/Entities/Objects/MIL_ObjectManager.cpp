@@ -163,7 +163,7 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies )
+sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies )
 {  //@TODO MGD Try to externalize ASN when protobuff will be merged
    //@HBD : Verify later that conversion from MIL_Army to MIL_Army_ABC was right
     if( message.elem_size() != 5 ) // type, location, name, team, attributes
@@ -323,7 +323,7 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
             nErrorCode = sword::ObjectMagicActionAck::error_invalid_object;
         else
         {
-            const sword::MsgMissionParameters& params = msg.parameters();
+            const sword::MissionParameters& params = msg.parameters();
             if( params.elem_size() && params.elem( 0 ).value_size() && params.elem( 0 ).value().Get( 0 ).list_size() )
                 nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
         }
@@ -340,7 +340,7 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
 void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx )
 {
     sword::MagicActionAck_ErrorCode nErrorCode = sword::MagicActionAck::no_error;
-    const sword::MsgMissionParameters& params = message.parameters();
+    const sword::MissionParameters& params = message.parameters();
     unsigned int id = params.elem( 0 ).value().Get( 0 ).identifier();
     bool urban = params.elem( 1 ).value().Get( 0 ).booleanvalue();
     MIL_Object_ABC* object = 0;

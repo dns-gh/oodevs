@@ -58,7 +58,7 @@ TimeLimitedAttribute::TimeLimitedAttribute()
 // Name: TimeLimitedAttribute constructor
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( const sword::MsgMissionParameter_Value& attributes )
+TimeLimitedAttribute::TimeLimitedAttribute( const sword::MissionParameter_Value& attributes )
     : nActivityTime_ ( attributes.list( 1 ).quantity() )
     , nDeathTimeStep_( 0 )
 {

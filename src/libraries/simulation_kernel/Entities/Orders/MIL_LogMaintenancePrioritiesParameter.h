@@ -35,7 +35,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToMaintenancePriorities( T_MaintenancePriorityVector& ) const;
-    virtual bool ToElement( sword::MsgMissionParameter_Value& elem ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
 private:

@@ -34,7 +34,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& ) const;
+    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& ) const;
 
     virtual bool ToBool( bool& ) const;
     virtual bool ToId( int& ) const;

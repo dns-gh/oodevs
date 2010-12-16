@@ -34,7 +34,7 @@ public:
     virtual bool CheckRights( const sword::ClientToSim& msg ) const;
     virtual bool CheckRights( const sword::ClientToAuthentication& msg ) const;
     virtual bool CheckRights( const sword::ClientToReplay& msg ) const;
-    virtual bool CheckRights( const sword::MsgChatTarget& source, const sword::MsgChatTarget& target ) const;
+    virtual bool CheckRights( const sword::ChatTarget& source, const sword::ChatTarget& target ) const;
     //@}
 
     //! @name Accessors

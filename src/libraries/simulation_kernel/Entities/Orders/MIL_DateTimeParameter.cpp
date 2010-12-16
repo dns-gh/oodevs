@@ -16,7 +16,7 @@
 // Name: MIL_DateTimeParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_DateTimeParameter::MIL_DateTimeParameter( const sword::MsgDateTime& asn )
+MIL_DateTimeParameter::MIL_DateTimeParameter( const sword::DateTime& asn )
 {
     NET_ASN_Tools::ReadGDH( asn, dateTime_ );
 }
@@ -53,7 +53,7 @@ bool MIL_DateTimeParameter::ToGDH( float& value ) const
 // Name: MIL_DateTimeParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_DateTimeParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_DateTimeParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     NET_ASN_Tools::WriteGDH( dateTime_, *elem.mutable_datetime() );
     return true;

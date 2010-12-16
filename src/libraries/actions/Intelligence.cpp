@@ -53,7 +53,7 @@ Intelligence::Intelligence( const CoordinateConverter_ABC& converter, xml::xistr
 
 namespace
 {
-    kernel::Point MakePoint( const CoordinateConverter_ABC& converter, const sword::MsgCoordLatLong& message )
+    kernel::Point MakePoint( const CoordinateConverter_ABC& converter, const sword::CoordLatLong& message )
     {
         kernel::Point point;
         point.AddPoint( converter.ConvertToXY( message ) );
@@ -115,7 +115,7 @@ void Intelligence::ReadParameter( xml::xistream& xis, const kernel::EntityResolv
 // Name: Lima::CommitTo
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-void Intelligence::CommitTo( sword::MsgMissionParameter& message ) const
+void Intelligence::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -127,7 +127,7 @@ void Intelligence::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: Lima::CommitTo
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-void Intelligence::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void Intelligence::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
     {

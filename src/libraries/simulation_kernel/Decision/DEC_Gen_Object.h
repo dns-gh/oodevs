@@ -18,7 +18,7 @@
 
 namespace sword
 {
-    class MsgPlannedWork;
+    class PlannedWork;
     enum ObstacleType_DemolitionTargetType;
 }
 
@@ -45,7 +45,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Gen_Object( const sword::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
+             DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
              DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
     virtual ~DEC_Gen_Object();
@@ -64,7 +64,7 @@ public:
     //! @name Operations
     //@{
     DEC_Gen_Object& operator=( const DEC_Gen_Object& rhs );
-    void Serialize( sword::MsgPlannedWork& asn ) const;
+    void Serialize( sword::PlannedWork& asn ) const;
     //@}
 
 private:

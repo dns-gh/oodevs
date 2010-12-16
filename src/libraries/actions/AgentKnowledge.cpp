@@ -90,7 +90,7 @@ void AgentKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: AgentKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AgentKnowledge::CommitTo( sword::MsgMissionParameter& message ) const
+void AgentKnowledge::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -100,7 +100,7 @@ void AgentKnowledge::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: AgentKnowledge::CommitTo
 // Created: MGD 2010-11-10
 // -----------------------------------------------------------------------------
-void AgentKnowledge::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void AgentKnowledge::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &sword::UnitKnowledgeId::set_id, boost::ref(*message.mutable_agentknowledge()), _1 ) );

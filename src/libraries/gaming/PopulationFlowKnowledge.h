@@ -19,7 +19,7 @@
 
 namespace sword
 {
-    class MsgFlowPart;
+    class FlowPart;
     class CrowdFlowKnowledgeCreation;
     class CrowdFlowKnowledgeUpdate;
 }
@@ -44,7 +44,7 @@ public:
     //@{
     struct FlowPart
     {
-        FlowPart( const sword::MsgFlowPart& message, const kernel::CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox );
+        FlowPart( const sword::FlowPart& message, const kernel::CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox );
         T_PointVector flowPart_;
         unsigned short relevance_;
     };

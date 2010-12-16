@@ -34,7 +34,7 @@ BypassAttribute::BypassAttribute()
 // Name: BypassAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( const sword::MsgMissionParameter_Value& attributes )
+BypassAttribute::BypassAttribute( const sword::MissionParameter_Value& attributes )
     : bypassPercentage_( attributes.list( 1 ).quantity() / 100., 0.05, 0., 1.)
 {
     // NOTHING
@@ -117,7 +117,7 @@ void BypassAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // Name: BypassAttribute::OnMagicActionUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::OnUpdate( const sword::MsgMissionParameter_Value& attribute )
+void BypassAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
 {
     if( attribute.list_size() > 1 )
     {

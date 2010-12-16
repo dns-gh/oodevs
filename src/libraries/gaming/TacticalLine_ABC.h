@@ -65,8 +65,8 @@ protected:
 
     //! @name Helpers
     //@{
-    void WriteGeometry( sword::MsgLocation& loc ) const;
-    void WriteDiffusion( sword::MsgTacticalLine::Diffusion& diffusion ) const;
+    void WriteGeometry( sword::Location& loc ) const;
+    void WriteDiffusion( sword::TacticalLine::Diffusion& diffusion ) const;
     virtual void UpdateToSim( E_State state ) = 0;
     template< typename Message >
     void Send( Message& message )

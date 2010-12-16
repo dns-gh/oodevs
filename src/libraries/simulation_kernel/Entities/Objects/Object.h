@@ -17,7 +17,7 @@
 
 namespace sword
 {
-    class MsgMissionParameter_Value;
+    class MissionParameter_Value;
     enum ObjectMagicActionAck_ErrorCode;
 }
 
@@ -104,7 +104,7 @@ public:
     //@{
     virtual void UpdateState();
 
-    sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& attributes );
+    sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
 
     void SendCreation() const;
     void SendDestruction() const;

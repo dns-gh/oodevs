@@ -66,7 +66,7 @@ MIL_OrderType_ABC::~MIL_OrderType_ABC()
 // Name: MIL_OrderType_ABC::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, sword::MsgMissionParameters& to, const MIL_OrderContext& context ) const
+bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, sword::MissionParameters& to, const MIL_OrderContext& context ) const
 {
     if( from.size() < (int)parameters_.size()  )//|| from.GetType() != *pDIAType_ )
         return false;

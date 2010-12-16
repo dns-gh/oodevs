@@ -667,11 +667,11 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& as
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_automate_embraye );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1)
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
-    const sword::MsgMissionParameter& parametre = asn.parameters().elem( 0 );
+    const sword::MissionParameter& parametre = asn.parameters().elem( 0 );
     if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_point() )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
-    const sword::MsgPoint& point = parametre.value().Get(0).point();
-    if( point.location().type() != sword::MsgLocation::point  || point.location().coordinates().elem_size() != 1 )
+    const sword::Point& point = parametre.value().Get(0).point();
+    if( point.location().type() != sword::Location::point  || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
@@ -683,7 +683,7 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& as
 // Name: MIL_AgentPion::OnReceiveChangeHumanFactors
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MsgMissionParameters& msg )
+void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value().Get(0).has_enumeration() )
     {
@@ -760,7 +760,7 @@ void MIL_AgentPion::OnReceiveResupplyAll()
 // Name: MIL_AgentPion::OnReceiveResupply
 // Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveResupply( const sword::MsgMissionParameters& msg )
+void MIL_AgentPion::OnReceiveResupply( const sword::MissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() > 0 ) // Equipments
     {
@@ -845,7 +845,7 @@ void  MIL_AgentPion::OnReceiveRecoverHumansTransporters()
 // Name: MIL_AgentPion::OnReceiveCreateWound
 // Created: LDC 2010-07-02
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveCreateWound( const sword::MsgMissionParameters& msg )
+void MIL_AgentPion::OnReceiveCreateWound( const sword::MissionParameters& msg )
 {
     if( msg.elem( 0 ).value_size() == 1 && msg.elem( 1 ).value_size() == 1 ) // injury_id && injury_type
     {

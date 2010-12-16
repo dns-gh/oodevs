@@ -76,7 +76,7 @@ public:
     //@{
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
     virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
-    virtual void OnUpdate( const sword::MsgMissionParameter_Value& attribute );
+    virtual void OnUpdate( const sword::MissionParameter_Value& attribute );
     //@}
 
     //! @name ODB

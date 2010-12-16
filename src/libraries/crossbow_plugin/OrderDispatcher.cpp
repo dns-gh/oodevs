@@ -23,11 +23,12 @@
 #include "actions/Action_ABC.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins;
 using namespace plugins::crossbow;
 
-namespace 
+namespace
 {
     Database_ABC& GetDatabase( Workspace_ABC& workspace )
     {
@@ -35,15 +36,14 @@ namespace
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
 OrderDispatcher::OrderDispatcher( const dispatcher::Model_ABC& model, Workspace_ABC& workspace, ActionSerializer_ABC& serializer )
-    : model_        ( model )
-    , workspace_    ( workspace )
-    , serializer_   ( serializer )
+    : model_     ( model )
+    , workspace_ ( workspace )
+    , serializer_( serializer )
 {
     // NOTHING
 }
@@ -103,8 +103,6 @@ bool OrderDispatcher::IsValidOrder( const Row_ABC& /*row*/ ) const
     return true;
 }
 
-#include <xeumeuleu/xml.hpp>
-
 namespace
 {
     void DebugOrder( const actions::Action_ABC& action )
@@ -112,7 +110,6 @@ namespace
         xml::xostringstream xos;
         xos << xml::start( "action" );
             action.Serialize( xos );
-
         MT_LOG_ERROR_MSG( xos.str() );
     }
 }
@@ -125,7 +122,6 @@ void OrderDispatcher::Dispatch( Publisher_ABC& publisher, const Row_ABC& row )
 {
     const int id = GetField< int >( row, "unit_id" );
     std::auto_ptr< actions::Action_ABC > mission;
-    
     if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( id ) )
     {
         if( agent->GetSuperior().IsEngaged() ) 
@@ -142,7 +138,6 @@ void OrderDispatcher::Dispatch( Publisher_ABC& publisher, const Row_ABC& row )
     DebugOrder( *mission );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: OrderDispatcher::DispatchFragOrder
 // Created: SBO 2007-06-07
@@ -150,7 +145,6 @@ void OrderDispatcher::Dispatch( Publisher_ABC& publisher, const Row_ABC& row )
 void OrderDispatcher::DispatchFragOrder( Publisher_ABC& publisher, unsigned long /*targetId*/, const Row_ABC& /*row*/ )
 {
     std::auto_ptr< actions::Action_ABC > action;
-
     if( action.get() )
         action->Publish( publisher );
     /*

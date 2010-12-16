@@ -916,7 +916,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const sword::UnitMagicAct
         if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
 
-        const sword::MsgMissionParameter& id = msg.parameters().elem( 0 );
+        const sword::MissionParameter& id = msg.parameters().elem( 0 );
         if( id.value_size() != 1 || !id.value().Get(0).has_identifier() )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
 
@@ -924,11 +924,11 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const sword::UnitMagicAct
         if( !pType )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
 
-        const sword::MsgMissionParameter& groupId = msg.parameters().elem( 1 );
+        const sword::MissionParameter& groupId = msg.parameters().elem( 1 );
         if( groupId.value_size() != 1  || !groupId.value().Get(0).has_identifier() )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
 
-        const sword::MsgMissionParameter& nameParam = msg.parameters().elem( 2 );
+        const sword::MissionParameter& nameParam = msg.parameters().elem( 2 );
         if( nameParam.value_size() != 1 || !nameParam.value().Get(0).has_acharstr() )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
         const std::string name = nameParam.value().Get(0).acharstr();
@@ -962,7 +962,7 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const sword::UnitMagicA
         ack().set_error_code( sword::MagicActionAck::error_invalid_attribute );
         return;
     }
-    const ::sword::MsgMissionParameters& parameters = message.parameters();
+    const ::sword::MissionParameters& parameters = message.parameters();
     int level = static_cast< int >( parameters.elem( 0 ).value().Get(0).areal() );
     std::string name = ( parameters.elem( 1 ).value_size() == 1 && parameters.elem( 1 ).value().Get(0).has_acharstr() ) ? parameters.elem( 1 ).value().Get(0).acharstr() : std::string();
     std::string logLevel = ( parameters.elem( 2 ).value_size() == 1 && parameters.elem( 2 ).value().Get(0).has_acharstr() ) ? parameters.elem( 2 ).value().Get(0).acharstr() : std::string();;
@@ -987,9 +987,9 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const sword::UnitMagicActio
         ack().set_error_code( sword::MagicActionAck::error_invalid_attribute );
         return;
     }
-    const ::sword::MsgMissionParameters& parameters = message.parameters();
+    const ::sword::MissionParameters& parameters = message.parameters();
     std::string type = parameters.elem( 0 ).value().Get(0).acharstr();
-    ::sword::MsgLocation location = parameters.elem( 1 ).value().Get(0).point().location();
+    ::sword::Location location = parameters.elem( 1 ).value().Get(0).point().location();
     if( !location.has_coordinates() )
     {
         ack().set_error_code( sword::MagicActionAck::error_invalid_attribute );
@@ -1474,7 +1474,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
             throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_reporter );
 
         // Target
-        const sword::MsgMissionParameter& target = msg.parameters().elem( 0 );
+        const sword::MissionParameter& target = msg.parameters().elem( 0 );
         if( target.value_size() != 1 || !target.value().Get(0).has_identifier() )
             throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
 
@@ -1483,7 +1483,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
             throw NET_AsnException< sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_target );
 
         // Ammo
-        const sword::MsgMissionParameter& ammo = msg.parameters().elem( 1 );
+        const sword::MissionParameter& ammo = msg.parameters().elem( 1 );
         if( ammo.value_size() != 1 || !ammo.value().Get(0).has_resourcetype() )
             throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
 
@@ -1495,7 +1495,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
             throw NET_AsnException< sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_target_no_illuminated );
 
         // Iterations
-        const sword::MsgMissionParameter& iterations = msg.parameters().elem( 2 );
+        const sword::MissionParameter& iterations = msg.parameters().elem( 2 );
         if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
             throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
 

@@ -10,9 +10,11 @@
 #ifndef __edxl_ResponseHandler_ABC_h_
 #define __edxl_ResponseHandler_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace xml
 {
-    class xistream;
+    class xisubstream;
 }
 
 namespace plugins
@@ -25,9 +27,8 @@ namespace edxl
 */
 // Created: SBO 2008-05-22
 // =============================================================================
-class ResponseHandler_ABC
+class ResponseHandler_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -37,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Handle( xml::xistream& response ) = 0;
+    virtual void Handle( xml::xisubstream response ) = 0;
     //@}
 };
 

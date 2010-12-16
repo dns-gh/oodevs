@@ -155,7 +155,7 @@ void Lima::CommitTo( sword::LimaOrder& message ) const
 // Name: Lima::CommitTo
 // Created: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-void Lima::CommitTo( sword::MsgMissionParameter& message ) const
+void Lima::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -167,7 +167,7 @@ void Lima::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: Lima::CommitTo
 // Created: MGD 2010-10-27
 // -----------------------------------------------------------------------------
-void Lima::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void Lima::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
     {

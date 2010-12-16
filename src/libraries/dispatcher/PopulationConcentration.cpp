@@ -144,7 +144,7 @@ QString PopulationConcentration::GetAttitude() const
 // Name: PopulationConcentration::GetPosition
 // Created: SBO 2010-06-10
 // -----------------------------------------------------------------------------
-const sword::MsgCoordLatLong& PopulationConcentration::GetPosition() const
+const sword::CoordLatLong& PopulationConcentration::GetPosition() const
 {
     return position_;
 }

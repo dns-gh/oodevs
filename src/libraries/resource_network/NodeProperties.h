@@ -77,7 +77,7 @@ public:
     //@{
     void Serialize( sword::UrbanAttributes_Infrastructures& msg ) const;
     void Serialize( sword::ObjectAttributeResourceNetwork& msg ) const;
-    void Update( const google::protobuf::RepeatedPtrField< sword::MsgMissionParameter_Value >& list );
+    void Update( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list );
     //@}
 
     //! @name CheckPoints

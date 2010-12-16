@@ -16,7 +16,7 @@
 // Name: MIL_LocationParameter constructor
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-MIL_LocationParameter::MIL_LocationParameter( const sword::MsgLocation& asn )
+MIL_LocationParameter::MIL_LocationParameter( const sword::Location& asn )
     : pLocalisation_( new TER_Localisation() )
 {
     NET_ASN_Tools::ReadLocation( asn, *pLocalisation_ );
@@ -91,7 +91,7 @@ bool MIL_LocationParameter::ToPoint( boost::shared_ptr< MT_Vector2D >& value ) c
 // Name: MIL_LocationParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_LocationParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_LocationParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     NET_ASN_Tools::WriteLocation( *pLocalisation_, *elem.mutable_location() );
     return true;

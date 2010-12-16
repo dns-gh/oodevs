@@ -22,7 +22,7 @@ using namespace actions::gui;
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
 ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver, const kernel::Entity_ABC& agent )
-: ParamComboBox< int /*sword::MsgDotationType*/ >( parameter )
+: ParamComboBox< int /*sword::DotationType*/ >( parameter )
     , resolver_( resolver )
     , parameter_( parameter )
     , agent_( agent )
@@ -60,7 +60,7 @@ QWidget* ParamDotationDType::BuildInterface( QWidget* parent )
             }
         }
     }
-    return ParamComboBox< int /*sword::MsgDotationType*/ >::BuildInterface( parent );
+    return ParamComboBox< int /*sword::DotationType*/ >::BuildInterface( parent );
 }
 
 // -----------------------------------------------------------------------------

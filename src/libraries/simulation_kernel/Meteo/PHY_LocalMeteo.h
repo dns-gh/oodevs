@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgMissionParameters;
+    class MissionParameters;
 }
 
 namespace xml
@@ -34,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor );
-             PHY_LocalMeteo( unsigned int id, const sword::MsgMissionParameters& message, weather::MeteoManager_ABC* list );
+             PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& message, weather::MeteoManager_ABC* list );
     virtual ~PHY_LocalMeteo();
     //@}
 

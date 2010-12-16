@@ -31,7 +31,7 @@ crossbow::Point::Point()
 // Name: Point constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Point::Point( const sword::MsgCoordLatLong& coord )
+crossbow::Point::Point( const sword::CoordLatLong& coord )
     : x_( coord.longitude() )
     , y_( coord.latitude() )
 {

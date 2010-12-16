@@ -18,13 +18,13 @@ using namespace sword;
 
 namespace
 {
-    bool Initialize( geocoord::PlanarCartesian::Parameters& parameters, const MsgCoordLatLong& coord  )
+    bool Initialize( geocoord::PlanarCartesian::Parameters& parameters, const CoordLatLong& coord  )
     {
         const double rPiOver180 = std::acos( -1. ) / 180.;
         parameters.SetOrigin( coord.latitude() * rPiOver180, coord.longitude() * rPiOver180);
         return true;
     }
-    geometry::Point2f ToPoint( const MsgCoordLatLong& coord )
+    geometry::Point2f ToPoint( const CoordLatLong& coord )
     {
         static geocoord::Geodetic geo_;
         static geocoord::PlanarCartesian::Parameters parameters_;
@@ -36,7 +36,7 @@ namespace
         planar_.SetCoordinates( geo_ );
         return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) );
     }
-    std::string ToMgrs( const MsgCoordLatLong& coord )
+    std::string ToMgrs( const CoordLatLong& coord )
     {
         static geocoord::Geodetic geo_;
         static geocoord::MGRS mgrs_;
@@ -47,7 +47,7 @@ namespace
         return mgrs_.GetString();
     }
 
-    MsgCoordLatLong ToCoord( const std::string& mgrs )
+    CoordLatLong ToCoord( const std::string& mgrs )
     {
         static geocoord::Geodetic geo_;
         static geocoord::MGRS mgrs_;
@@ -55,7 +55,7 @@ namespace
 
         mgrs_.SetString( mgrs );
         geo_.SetCoordinates( mgrs_ );
-        MsgCoordLatLong result;
+        CoordLatLong result;
         result.set_latitude( geo_.GetLatitude() / rPiOver180 );
         result.set_longitude( geo_.GetLongitude() / rPiOver180 );
         return result;
@@ -76,7 +76,7 @@ Position::Position()
 // Name: Position constructor
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-Position::Position( const MsgCoordLatLong& coord )
+Position::Position( const CoordLatLong& coord )
     : coord_( coord )
     , init_( false )
 {

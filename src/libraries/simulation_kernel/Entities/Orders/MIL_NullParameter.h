@@ -34,8 +34,8 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToElement( sword::MsgMissionParameter_Value& ) const;
-    virtual bool ToList( std::vector< sword::MsgMissionParameter_Value >& ) const;
+    virtual bool ToElement( sword::MissionParameter_Value& ) const;
+    virtual bool ToList( std::vector< sword::MissionParameter_Value >& ) const;
     //@}
 
 private:

@@ -34,7 +34,7 @@ public:
     //@{
              FireAttribute();
     explicit FireAttribute( xml::xistream& xis );
-    explicit FireAttribute( const sword::MsgMissionParameter_Value& attributes );
+    explicit FireAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~FireAttribute();
     //@}
 

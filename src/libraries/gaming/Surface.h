@@ -16,7 +16,7 @@
 
 namespace sword
 {
-    class MsgVisionCone;
+    class VisionCone;
 }
 
 namespace kernel
@@ -41,7 +41,7 @@ class Surface
 public:
     //! @name Constructor/Destructor
     //@{
-             Surface( const kernel::Agent_ABC& agent, const sword::MsgVisionCone& message, const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap );
+             Surface( const kernel::Agent_ABC& agent, const sword::VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap );
     virtual ~Surface();
     //@}
 

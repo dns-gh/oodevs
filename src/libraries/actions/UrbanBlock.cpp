@@ -96,7 +96,7 @@ void UrbanBlock::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: UrbanBlock::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void UrbanBlock::CommitTo( sword::MsgMissionParameter& message ) const
+void UrbanBlock::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
@@ -106,7 +106,7 @@ void UrbanBlock::CommitTo( sword::MsgMissionParameter& message ) const
 // Name: UrbanBlock::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void UrbanBlock::CommitTo( sword::MsgMissionParameter_Value& message ) const
+void UrbanBlock::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
         CommitTo( *message.mutable_urbanknowledge() );

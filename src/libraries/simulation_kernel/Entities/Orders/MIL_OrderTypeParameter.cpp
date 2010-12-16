@@ -71,7 +71,7 @@ MIL_OrderTypeParameter::~MIL_OrderTypeParameter()
 // Name: MIL_OrderTypeParameter::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, sword::MsgMissionParameter& to ) const
+bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, sword::MissionParameter& to ) const
 {
     if( !from.IsOfType( pParameter_->GetType() ) )
         return false;

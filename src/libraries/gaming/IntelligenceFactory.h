@@ -16,7 +16,7 @@
 namespace sword
 {
     class IntelligenceCreation;
-    class MsgCoordLatLong;
+    class CoordLatLong;
 }
 
 namespace kernel

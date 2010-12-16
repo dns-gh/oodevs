@@ -53,7 +53,7 @@ bool MIL_TirIndirectParameter::ToId( int& id ) const
 // Name: MIL_TirIndirectParameter::ToIndirectFire
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_TirIndirectParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_TirIndirectParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     elem.mutable_tirindirect()->set_id( data_ );
     return true;

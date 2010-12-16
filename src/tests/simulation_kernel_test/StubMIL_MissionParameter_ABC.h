@@ -42,13 +42,13 @@ public:
     { throw; }
     virtual bool ToId( int& ) const
     { throw; }
-    virtual bool ToPoint( sword::MsgPoint& ) const
+    virtual bool ToPoint( sword::Point& ) const
     { throw; }
-    virtual bool ToPointList( sword::MsgPointList& ) const
+    virtual bool ToPointList( sword::PointList& ) const
     { throw; }
-    virtual bool ToPolygon( sword::MsgPolygon& ) const
+    virtual bool ToPolygon( sword::Polygon& ) const
     { throw; }
-    virtual bool ToPolygonList( sword::MsgPolygonList& ) const
+    virtual bool ToPolygonList( sword::PolygonList& ) const
     { throw; }
     virtual bool ToAgent( sword::UnitId& ) const
     { throw; }
@@ -62,41 +62,41 @@ public:
     { throw; }
     virtual bool ToAutomatList( sword::AutomatIdList& ) const
     { throw; }
-    virtual bool ToDirection( sword::MsgHeading& ) const
+    virtual bool ToDirection( sword::Heading& ) const
     { throw; }
     virtual bool ToDotationType( sword::ResourceType& ) const
     { throw; }
     virtual bool ToEquipmentType( sword::EquipmentType& ) const
     { throw; }
-    virtual bool ToGDH( sword::MsgDateTime& ) const
+    virtual bool ToGDH( sword::DateTime& ) const
     { throw; }
-    virtual bool ToGenObject( sword::MsgPlannedWork& ) const
+    virtual bool ToGenObject( sword::PlannedWork& ) const
     { throw; }
-    virtual bool ToGenObjectList( sword::MsgPlannedWorkList& ) const
+    virtual bool ToGenObjectList( sword::PlannedWorkList& ) const
     { throw; }
     virtual bool ToIndirectFire( sword::FireId& ) const
     { throw; }
-    virtual bool ToLocation( sword::MsgLocation& ) const
+    virtual bool ToLocation( sword::Location& ) const
     { throw; }
-    virtual bool ToLocationList( sword::MsgLocationList& ) const
+    virtual bool ToLocationList( sword::LocationList& ) const
     { throw; }
     virtual bool ToMaintenancePriorities( sword::LogMaintenancePriorities& ) const
     { throw; }
     virtual bool ToMedicalPriorities( sword::LogMedicalPriorities& ) const
     { throw; }
-    virtual bool ToNatureAtlas( sword::MsgAtlasNature& ) const
+    virtual bool ToNatureAtlas( sword::AtlasNature& ) const
     { throw; }
     virtual bool ToNumeric( float& ) const
     { throw; }
-    virtual bool ToObjectiveList( sword::MsgMissionObjectiveList& ) const
+    virtual bool ToObjectiveList( sword::MissionObjectiveList& ) const
     { throw; }
     virtual bool ToObjectKnowledge( sword::ObjectKnowledgeId& ) const
     { throw; }
     virtual bool ToObjectKnowledgeList( sword::ObjectKnowledgeIdList& ) const
     { throw; }
-    virtual bool ToPath( sword::MsgPath& ) const
+    virtual bool ToPath( sword::Path& ) const
     { throw; }
-    virtual bool ToPathList( sword::MsgPathList& ) const
+    virtual bool ToPathList( sword::PathList& ) const
     { throw; }
     virtual bool ToPopulationKnowledge( sword::CrowdKnowledgeId& ) const
     { throw; }
@@ -167,9 +167,9 @@ public:
     { throw; }
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const
     { throw; }
-    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MsgMissionParameter_Value >& ) const
+    virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& ) const
     { throw; }
-    virtual bool ToElement( sword::MsgMissionParameter_Value& ) const
+    virtual bool ToElement( sword::MissionParameter_Value& ) const
     { throw; }
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const
     { throw; }

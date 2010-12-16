@@ -17,30 +17,30 @@
 
 namespace sword
 {
-    class MsgAtlasNature;
+    class AtlasNature;
     class AutomatId;
     class AutomatIdList;
-    class MsgCoordLatLong;
-    class MsgCoordLatLongList;
-    class MsgDateTime;
-    class MsgHeading;
-    class MsgLine;
-    class MsgLocation;
-    class MsgLocationList;
+    class CoordLatLong;
+    class CoordLatLongList;
+    class DateTime;
+    class Heading;
+    class Line;
+    class Location;
+    class LocationList;
     class LogMaintenancePriorities;
     class LogMedicalPriorities;
-    class MsgMissionObjective;
-    class MsgMissionObjectiveList;
+    class MissionObjective;
+    class MissionObjectiveList;
     class ObjectKnowledgeId;
     class ObjectKnowledgeIdList;
-    class MsgPath;
-    class MsgPathList;
-    class MsgPlannedWork;
-    class MsgPlannedWorkList;
-    class MsgPoint;
-    class MsgPointList;
-    class MsgPolygon;
-    class MsgPolygonList;
+    class Path;
+    class PathList;
+    class PlannedWork;
+    class PlannedWorkList;
+    class Point;
+    class PointList;
+    class Polygon;
+    class PolygonList;
     class CrowdKnowledgeId;
     class UnitId;
     class UnitKnowledgeId;
@@ -66,60 +66,60 @@ class NET_ASN_Tools
 {
 public:
 
-    static bool CopyNatureAtlas ( int value, sword::MsgAtlasNature& asn );
-    static bool CopyNatureAtlas ( const sword::MsgAtlasNature& asn, int& value );
+    static bool CopyNatureAtlas ( int value, sword::AtlasNature& asn );
+    static bool CopyNatureAtlas ( const sword::AtlasNature& asn, int& value );
     //@}
 
     // @name Misc tools
     //@{
-    static void Delete( sword::MsgMissionObjective& asn );
-    static void Delete( sword::MsgMissionObjectiveList& asn );
-    static void Delete( sword::MsgPlannedWork& asn );
-    static void Delete( sword::MsgPlannedWorkList& asn );
+    static void Delete( sword::MissionObjective& asn );
+    static void Delete( sword::MissionObjectiveList& asn );
+    static void Delete( sword::PlannedWork& asn );
+    static void Delete( sword::PlannedWorkList& asn );
     static void Delete( sword::UnitIdList& asn );
     static void Delete( sword::AutomatIdList& asn );
-    static void Delete( sword::MsgPolygon& asn );
-    static void Delete( sword::MsgPolygonList& asn );
-    static void Delete( sword::MsgPointList& asn );
-    static void Delete( sword::MsgPathList& asn );
-    static void Delete( sword::MsgLocationList& asn );
+    static void Delete( sword::Polygon& asn );
+    static void Delete( sword::PolygonList& asn );
+    static void Delete( sword::PointList& asn );
+    static void Delete( sword::PathList& asn );
+    static void Delete( sword::LocationList& asn );
     static void Delete( sword::UnitKnowledgeIdList& asn );
     static void Delete( sword::ObjectKnowledgeIdList& asn );
     static void Delete( sword::LogMedicalPriorities& asn );
     static void Delete( sword::LogMaintenancePriorities& asn );
-    static void Delete( sword::MsgCoordLatLongList& asn );
+    static void Delete( sword::CoordLatLongList& asn );
     //@}
 
     //! @name Decoding tools
     //@{
-    static bool ReadLine( const sword::MsgLine& asn, TER_Localisation& localisation );
-    static bool ReadLine( const sword::MsgLine& asn, T_PointVector& pointVector );
-    static bool ReadPoint( const sword::MsgPoint& asn, MT_Vector2D& vPoint );
-    static void ReadPoint( const sword::MsgCoordLatLong& asn, MT_Vector2D& vPoint );
-    static bool ReadPointList( const sword::MsgPointList& asn, T_PointVector& pointVector );
-    static bool ReadLocation( const sword::MsgLocation& asn, TER_Localisation& localisation );
-    static void ReadDirection( const sword::MsgHeading& asn, MT_Vector2D& vDir );
-    static void ReadGDH( const sword::MsgDateTime& asn, unsigned int& realTimeSec );
-    static void ReadTick( const sword::MsgDateTime& asn, unsigned int& simTick );
+    static bool ReadLine( const sword::Line& asn, TER_Localisation& localisation );
+    static bool ReadLine( const sword::Line& asn, T_PointVector& pointVector );
+    static bool ReadPoint( const sword::Point& asn, MT_Vector2D& vPoint );
+    static void ReadPoint( const sword::CoordLatLong& asn, MT_Vector2D& vPoint );
+    static bool ReadPointList( const sword::PointList& asn, T_PointVector& pointVector );
+    static bool ReadLocation( const sword::Location& asn, TER_Localisation& localisation );
+    static void ReadDirection( const sword::Heading& asn, MT_Vector2D& vDir );
+    static void ReadGDH( const sword::DateTime& asn, unsigned int& realTimeSec );
+    static void ReadTick( const sword::DateTime& asn, unsigned int& simTick );
     //@}
 
     //! @name Encoding tools
     //@{
-    static bool WriteCoordinates( const T_PointVector& points, sword::MsgCoordLatLongList& asn );
-    static bool WriteCoordinates( std::vector< boost::shared_ptr< MT_Vector2D > > points, sword::MsgCoordLatLongList& asn );
-    static bool WriteLine( const T_PointVector& points, sword::MsgLine& asn );
-    static void WriteLine( const TER_Localisation& localisation, sword::MsgLine& asn );
-    static void WriteDirection( const MT_Vector2D& vDir, sword::MsgHeading& asn );
-    static void WriteLocation( const TER_Localisation& localisation, sword::MsgLocation& asn );
-    static void WritePoint( const MT_Vector2D& vPoint, sword::MsgPoint& asn );
-    static void WritePoint( const MT_Vector2D& vPoint, sword::MsgCoordLatLong& asn );
-    static void WritePointList( const T_PointList& points, sword::MsgPointList& asn );
-    static void WriteEllipse( const MT_Ellipse& ellipse, sword::MsgLocation& asn );
-    static void WritePath( const T_PointList& points, sword::MsgPath& asn );
-    static void WritePath( const T_PointVector& points, sword::MsgPath& asn );
-    static void WriteGenObject( const DEC_Gen_Object& object, sword::MsgPlannedWork& asn );
-    static void WriteGDH( unsigned int nRealTimeSec, sword::MsgDateTime& asnGDH );
-    static void WriteTick( unsigned int simTick, sword::MsgDateTime& asnGDH );
+    static bool WriteCoordinates( const T_PointVector& points, sword::CoordLatLongList& asn );
+    static bool WriteCoordinates( std::vector< boost::shared_ptr< MT_Vector2D > > points, sword::CoordLatLongList& asn );
+    static bool WriteLine( const T_PointVector& points, sword::Line& asn );
+    static void WriteLine( const TER_Localisation& localisation, sword::Line& asn );
+    static void WriteDirection( const MT_Vector2D& vDir, sword::Heading& asn );
+    static void WriteLocation( const TER_Localisation& localisation, sword::Location& asn );
+    static void WritePoint( const MT_Vector2D& vPoint, sword::Point& asn );
+    static void WritePoint( const MT_Vector2D& vPoint, sword::CoordLatLong& asn );
+    static void WritePointList( const T_PointList& points, sword::PointList& asn );
+    static void WriteEllipse( const MT_Ellipse& ellipse, sword::Location& asn );
+    static void WritePath( const T_PointList& points, sword::Path& asn );
+    static void WritePath( const T_PointVector& points, sword::Path& asn );
+    static void WriteGenObject( const DEC_Gen_Object& object, sword::PlannedWork& asn );
+    static void WriteGDH( unsigned int nRealTimeSec, sword::DateTime& asnGDH );
+    static void WriteTick( unsigned int simTick, sword::DateTime& asnGDH );
     //@}
 
 private:
@@ -136,12 +136,12 @@ private:
 public:
     // @name Decoding tools
     //@{
-    static bool ReadPath( const sword::MsgPath& asn, T_PointVector& pointVector );
-    static bool ReadPolygon( const sword::MsgPolygon& asn, TER_Localisation& localisation );
+    static bool ReadPath( const sword::Path& asn, T_PointVector& pointVector );
+    static bool ReadPolygon( const sword::Polygon& asn, TER_Localisation& localisation );
 
-    static bool ReadLocationList( const sword::MsgLocationList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin = 0 );
-    static bool ReadPolygonList( const sword::MsgPolygonList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin = 0 );
-    static bool ReadPathList( const sword::MsgPathList& asn, T_ItinerairePtrVector& itineraireVector );
+    static bool ReadLocationList( const sword::LocationList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin = 0 );
+    static bool ReadPolygonList( const sword::PolygonList& asn, T_LocalisationPtrVector& localisationVector, unsigned int nNbrEltMin = 0 );
+    static bool ReadPathList( const sword::PathList& asn, T_ItinerairePtrVector& itineraireVector );
 
     static DEC_Decision_ABC*            ReadAgent              ( const sword::UnitId&               asn );
     static DEC_Decision_ABC*            ReadAutomate           ( const sword::UnitId&               asn );
@@ -154,11 +154,11 @@ public:
 
     // @name Encoding tools
     //@{
-    static void WritePolygon( const TER_Localisation& localisation, sword::MsgPolygon& asn );
-    static void WriteLocationList( const T_LocalisationPtrVector& localisationVector, sword::MsgLocationList& asn );
-    static void WritePolygonList( const T_LocalisationPtrVector& localisationVector, sword::MsgPolygonList& asn );
-    static void WritePathList( const T_ItinerairePtrVector& itineraireVector, sword::MsgPathList& asn );
-    static void WritePointList( const T_PointVector& pointVector, sword::MsgPointList& asn );
+    static void WritePolygon( const TER_Localisation& localisation, sword::Polygon& asn );
+    static void WriteLocationList( const T_LocalisationPtrVector& localisationVector, sword::LocationList& asn );
+    static void WritePolygonList( const T_LocalisationPtrVector& localisationVector, sword::PolygonList& asn );
+    static void WritePathList( const T_ItinerairePtrVector& itineraireVector, sword::PathList& asn );
+    static void WritePointList( const T_PointVector& pointVector, sword::PointList& asn );
 
     static void WriteAgent              ( const DEC_Decision_ABC&             pion      , sword::UnitId&     asn );
     static void WriteAutomate           ( const DEC_Decision_ABC&             automate  , sword::AutomatId&  asn );

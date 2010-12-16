@@ -39,7 +39,7 @@ MissionParameters::~MissionParameters()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MsgMissionParameters::UpdateMessage
+// Name: MissionParameters::UpdateMessage
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -61,7 +61,7 @@ void MissionParameters::UpdateMessage( const T& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MsgMissionParameters::DoUpdate
+// Name: MissionParameters::DoUpdate
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const sword::UnitOrder& message )
@@ -70,7 +70,7 @@ void MissionParameters::DoUpdate( const sword::UnitOrder& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MsgMissionParameters::DoUpdate
+// Name: MissionParameters::DoUpdate
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const sword::AutomatOrder& message )
@@ -79,7 +79,7 @@ void MissionParameters::DoUpdate( const sword::AutomatOrder& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MsgMissionParameters::DoUpdate
+// Name: MissionParameters::DoUpdate
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
 void MissionParameters::DoUpdate( const sword::CrowdOrder& message )
@@ -88,7 +88,7 @@ void MissionParameters::DoUpdate( const sword::CrowdOrder& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MsgMissionParameters::Draw
+// Name: MissionParameters::Draw
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
 void MissionParameters::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const

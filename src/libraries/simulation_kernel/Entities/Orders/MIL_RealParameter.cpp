@@ -53,7 +53,7 @@ bool MIL_RealParameter::ToNumeric( float& value ) const
 // Name: MIL_RealParameter::ToElement
 // Created: MGD 2010-11-19
 // -----------------------------------------------------------------------------
-bool MIL_RealParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_RealParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     elem.set_areal( value_ );
     return true;

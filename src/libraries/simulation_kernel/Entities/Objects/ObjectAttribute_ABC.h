@@ -15,7 +15,7 @@
 namespace sword
 {
     class ObjectAttributes;
-    class MsgMissionParameter_Value;
+    class MissionParameter_Value;
 }
 
 namespace hla
@@ -67,7 +67,7 @@ public:
     //@{
     virtual void SendFullState( sword::ObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
     virtual void SendUpdate( sword::ObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
-    virtual void OnUpdate( const sword::MsgMissionParameter_Value& /*attribute*/ ) {} //<! Update from asn msg
+    virtual void OnUpdate( const sword::MissionParameter_Value& /*attribute*/ ) {} //<! Update from asn msg
     virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {} //<! Send update to HLA client
     virtual void Deserialize( const hla::AttributeIdentifier& /*attributeID*/, hla::Deserializer /*deserializer*/ ) {} //<! Update from HLA
     //@}

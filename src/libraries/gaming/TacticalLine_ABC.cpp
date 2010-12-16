@@ -77,14 +77,14 @@ namespace
 {
     struct GeometrySerializer : public kernel::LocationVisitor_ABC
     {
-        GeometrySerializer( sword::MsgLocation& loc, const kernel::CoordinateConverter_ABC& converter )
+        GeometrySerializer( sword::Location& loc, const kernel::CoordinateConverter_ABC& converter )
             : loc_( loc )
             , converter_( converter )
         {}
 
         virtual void VisitLines( const T_PointVector& points )
         {
-            loc_.set_type( sword::MsgLocation_Geometry_line );
+            loc_.set_type( sword::Location_Geometry_line );
             for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
                 converter_.ConvertToGeo( *it, *loc_.mutable_coordinates()->add_elem() );
         }
@@ -99,7 +99,7 @@ namespace
         GeometrySerializer& operator=( const GeometrySerializer& );
 
         const kernel::CoordinateConverter_ABC& converter_;
-        sword::MsgLocation& loc_;
+        sword::Location& loc_;
     };
 }
 
@@ -107,7 +107,7 @@ namespace
 // Name: TacticalLine_ABC::WriteGeometry
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WriteGeometry( sword::MsgLocation& location ) const
+void TacticalLine_ABC::WriteGeometry( sword::Location& location ) const
 {
     GeometrySerializer serializer( location, converter_ );
     Get< kernel::Positions >().Accept( serializer );
@@ -117,7 +117,7 @@ void TacticalLine_ABC::WriteGeometry( sword::MsgLocation& location ) const
 // Name: TacticalLine_ABC::WriteDiffusion
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WriteDiffusion( sword::MsgTacticalLine::Diffusion& diffusion ) const
+void TacticalLine_ABC::WriteDiffusion( sword::TacticalLine::Diffusion& diffusion ) const
 {
     // $$$$ SBO 2006-11-06: visitor or something
     static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ).WriteTo( diffusion );

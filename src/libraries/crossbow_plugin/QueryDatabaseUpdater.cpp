@@ -243,24 +243,24 @@ void QueryDatabaseUpdater::Update( const sword::LimaCreation& msg )
 
 namespace
 {
-    std::string GetObjectTable( const sword::MsgLocation& location )
+    std::string GetObjectTable( const sword::Location& location )
     {
         std::string className = "TacticalObject_Area";
         switch ( location.type() )
         {
-        case sword::MsgLocation_Geometry_point: className = "TacticalObject_Point"; break;
-        case sword::MsgLocation_Geometry_line:  className = "TacticalObject_Line"; break;
+        case sword::Location_Geometry_point: className = "TacticalObject_Point"; break;
+        case sword::Location_Geometry_line:  className = "TacticalObject_Line"; break;
         }
         return className;
     }
 
-    std::string GetObjectKnowledgeTable( const sword::MsgLocation& location )
+    std::string GetObjectKnowledgeTable( const sword::Location& location )
     {
         std::string className = "KnowledgeObjects_Area";
         switch ( location.type() )
         {
-        case sword::MsgLocation_Geometry_point: className = "KnowledgeObjects_Point"; break;
-        case sword::MsgLocation_Geometry_line:  className = "KnowledgeObjects_Line"; break;
+        case sword::Location_Geometry_point: className = "KnowledgeObjects_Point"; break;
+        case sword::Location_Geometry_line:  className = "KnowledgeObjects_Line"; break;
         }
         return className;
     }
@@ -270,13 +270,13 @@ namespace
 // Name: QueryDatabaseUpdater::UpdateGeometry
 // Created: JCR 2009-11-02
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::UpdateGeometry( QueryBuilder_ABC& builder, const sword::MsgLocation& location )
+void QueryDatabaseUpdater::UpdateGeometry( QueryBuilder_ABC& builder, const sword::Location& location )
 {
     switch ( location.type() )
     {
-    case sword::MsgLocation_Geometry_point:    builder.SetGeometry( Point( location.coordinates().elem( 0 ) ) ); break;
-    case sword::MsgLocation_Geometry_line:     builder.SetGeometry( Line( location.coordinates() ) ); break;
-    case sword::MsgLocation_Geometry_polygon:  builder.SetGeometry( Area( location.coordinates() ) ); break;
+    case sword::Location_Geometry_point:    builder.SetGeometry( Point( location.coordinates().elem( 0 ) ) ); break;
+    case sword::Location_Geometry_line:     builder.SetGeometry( Line( location.coordinates() ) ); break;
+    case sword::Location_Geometry_polygon:  builder.SetGeometry( Area( location.coordinates() ) ); break;
     default:    break;
     }
 }

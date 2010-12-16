@@ -23,7 +23,7 @@ namespace sword
     class FireId;
     class UnitId;
     class ResourceType;
-    class MsgCoordLatLong;
+    class CoordLatLong;
     class StartUnitFire;
 }
 
@@ -73,7 +73,7 @@ private:
     int                           typeCible_;
     int                           oid_cible_;
     int                           population_cible_;
-    sword::MsgCoordLatLong       positionCible_;
+    sword::CoordLatLong       positionCible_;
     //@}
 };
 

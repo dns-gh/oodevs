@@ -29,7 +29,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( OrderTest_EmptyContextIsValid )
 {
-    sword::MsgMissionParameters parameters;
+    sword::MissionParameters parameters;
     for( unsigned int i = 0; i < contextSize; ++i )
         parameters.add_elem()->set_null_value( true );
     std::auto_ptr< MIL_OrderContext > context;

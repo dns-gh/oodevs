@@ -41,7 +41,7 @@ class MIL_KnowledgeGroup;
 
 namespace sword
 {
-    class MsgMissionParameters;
+    class MissionParameters;
     class KnowledgeGroupCreation;
     class KnowledgeGroupUpdate;
     class KnowledgeGroupCreationRequest;
@@ -164,9 +164,9 @@ public:
 private:
     //! @name Helpers
     //@{
-    bool OnReceiveKnowledgeGroupEnable        ( const sword::MsgMissionParameters& message );
-    bool OnReceiveKnowledgeGroupChangeSuperior( const sword::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
-    bool OnReceiveKnowledgeGroupSetType       ( const sword::MsgMissionParameters& message );
+    bool OnReceiveKnowledgeGroupEnable        ( const sword::MissionParameters& message );
+    bool OnReceiveKnowledgeGroupChangeSuperior( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
+    bool OnReceiveKnowledgeGroupSetType       ( const sword::MissionParameters& message );
 
     void CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent );
     void CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population );

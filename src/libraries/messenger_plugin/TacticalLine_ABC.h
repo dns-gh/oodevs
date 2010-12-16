@@ -39,42 +39,42 @@ class TacticalLine_ABC : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( unsigned int id, const sword::MsgTacticalLine& asn );
-             TacticalLine_ABC( unsigned int id, xml::xistream&, const sword::MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
+             TacticalLine_ABC( unsigned int id, const sword::TacticalLine& asn );
+             TacticalLine_ABC( unsigned int id, xml::xistream&, const sword::TacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
     virtual ~TacticalLine_ABC();
     //@}
 
     //! @name Network
     //@{
-    void Send( sword::MsgTacticalLine& asn ) const;
-    void Send( sword::MsgLocation& asn ) const;
+    void Send( sword::TacticalLine& asn ) const;
+    void Send( sword::Location& asn ) const;
     //@}
 
     //! @name Accessors
     //@{
     unsigned int GetID() const;
-    const sword::MsgTacticalLine_Diffusion&  GetDiffusion() const { return diffusion_; }
+    const sword::TacticalLine_Diffusion& GetDiffusion() const { return diffusion_; }
     //@}
 
 protected:
 
     //! @name types
     //@{
-    typedef std::vector< sword::MsgCoordLatLong > T_PositionVector;
+    typedef std::vector< sword::CoordLatLong > T_PositionVector;
     typedef T_PositionVector::const_iterator     CIT_PositionVector;
     //@}
 
     //! @name Network
     //@{
-    void Update        ( const sword::MsgTacticalLine& asn );
-    void UpdateGeometry( const sword::MsgLocation& asn );
+    void Update        ( const sword::TacticalLine& asn );
+    void UpdateGeometry( const sword::Location& asn );
     //@}
 
     //! @name xml read / write
     //@{
             void ReadPoint ( xml::xistream& xis, T_PositionVector& points, const kernel::CoordinateConverter_ABC& converter ) const;
     virtual void Write     ( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
-            void WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const sword::MsgCoordLatLong& point ) const;
+            void WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const sword::CoordLatLong& point ) const;
     //@}
 
 private:
@@ -90,7 +90,7 @@ private:
     const unsigned int id_;
     std::string strName_;
     T_PositionVector geometry_;
-    sword::MsgTacticalLine_Diffusion diffusion_;
+    sword::TacticalLine_Diffusion diffusion_;
     //@}
 
 

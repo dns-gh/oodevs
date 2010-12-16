@@ -53,7 +53,7 @@ bool MIL_StringParameter::ToString( std::string& value ) const
 // Name: MIL_StringParameter::ToElement
 // Created: MGD 2010-11-12
 // -----------------------------------------------------------------------------
-bool MIL_StringParameter::ToElement( sword::MsgMissionParameter_Value& elem ) const
+bool MIL_StringParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     elem.set_acharstr( value_ );
     return true;

@@ -656,7 +656,7 @@ void MIL_KnowledgeGroup::OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeMa
 // Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupEnable
 // Created: SLG 2009-12-17
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupEnable( const sword::MsgMissionParameters& message )
+bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupEnable( const sword::MissionParameters& message )
 {
     isActivated_ = message.elem( 0 ).value().Get( 0 ).booleanvalue();
     return true;
@@ -666,7 +666,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupEnable( const sword::MsgMissionP
 // Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior
 // Created: FHD 2009-12-17:
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent )
+bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent )
 {
     MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().Get( 0 ).party().id() );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
@@ -717,7 +717,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::Msg
 // Name: MIL_KnowledgeGroup::OnReceiveKnowledgeGroupSetType
 // Created: FHD 2009-12-17:
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupSetType( const sword::MsgMissionParameters& message )
+bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupSetType( const sword::MissionParameters& message )
 {
     const MIL_KnowledgeGroupType* pFoundType = MIL_KnowledgeGroupType::FindType( message.elem( 0 ).value().Get( 0 ).acharstr() );
     if( pFoundType && pFoundType->GetID() != GetType().GetID() )

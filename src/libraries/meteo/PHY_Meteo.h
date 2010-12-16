@@ -17,8 +17,8 @@
 
 namespace sword
 {
-    class MsgWeatherAttributes;
-    class MsgMissionParameters;
+    class WeatherAttributes;
+    class MissionParameters;
 }
 
 namespace dispatcher
@@ -63,8 +63,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-             PHY_Meteo( unsigned int id, const sword::MsgWeatherAttributes&, MeteoManager_ABC* listener );
-             PHY_Meteo( unsigned int id, const sword::MsgMissionParameters&, MeteoManager_ABC* listener );
+             PHY_Meteo( unsigned int id, const sword::WeatherAttributes&, MeteoManager_ABC* listener );
+             PHY_Meteo( unsigned int id, const sword::MissionParameters&, MeteoManager_ABC* listener );
              PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation );
     virtual ~PHY_Meteo();
     //@}
@@ -87,8 +87,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update( const sword::MsgWeatherAttributes& asn );
-    virtual void Update( const sword::MsgMissionParameters& asn );
+    virtual void Update( const sword::WeatherAttributes& asn );
+    virtual void Update( const sword::MissionParameters& asn );
     virtual void Update( const PHY_Lighting& /*PHY_Ephemeride&*/ );
     virtual void Update( const PHY_Precipitation& precipitation);
     virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision );

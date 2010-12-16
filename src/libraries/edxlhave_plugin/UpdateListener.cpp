@@ -57,7 +57,7 @@ namespace
     class manipulator
     {
     public:
-        explicit manipulator( const T& functor ) : functor_ ( functor ) {}
+        explicit manipulator( T functor ) : functor_ ( functor ) {}
 
         friend xml::xistream& operator >>( xml::xistream& xis, const manipulator< T >& m )
         {
@@ -69,7 +69,7 @@ namespace
     };
 
     template< typename T >
-    manipulator< T > xml_bind( T& value )
+    manipulator< T > xml_bind( T value )
     {
         return manipulator< T >( value );
     }
@@ -83,18 +83,14 @@ namespace
 */
 // Created: JCR 2010-06-05
 // -----------------------------------------------------------------------------
-void UpdateListener::Handle( xml::xistream& xis )
+void UpdateListener::Handle( xml::xisubstream xis )
 {
     // skip encapsulated information EDXL-ED
     xis >> xml::start( "EDXLDistribution" )
             >> xml::start( "contentObject" )
                 >> xml::start( "xmlContent" )
                     >> xml::start( "embeddedXMLContent" )
-                        >> xml_bind( boost::bind( &UpdateListener::ReadHospitalStatus, this, _1 ) )
-                    >> xml::end
-                >> xml::end
-            >> xml::end
-        >> xml::end;
+                        >> xml_bind( boost::bind( &UpdateListener::ReadHospitalStatus, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,13 +100,12 @@ void UpdateListener::Handle( xml::xistream& xis )
 void UpdateListener::ReadHospitalStatus( xml::xistream& xis )
 {
     xis >> xml::start( "HospitalStatus" )
-            >> xml::list( "Hospital", *this, &UpdateListener::SendHospital )
-        >> xml::end;
+            >> xml::list( "Hospital", *this, &UpdateListener::SendHospital );
 }
 
 namespace
 {
-    class ReferenceValidator : public dispatcher::NullClientPublisher
+    class ReferenceValidator : public dispatcher::NullClientPublisher, private boost::noncopyable
     {
     public:
         explicit ReferenceValidator( const std::string& id, const dispatcher::Object_ABC& checked ) 
@@ -166,7 +161,6 @@ namespace
         throw std::runtime_error( "unknown parameter : " + name );
     }
 }
-#include "protocol/proto/client_simulation.pb.h"
 
 // -----------------------------------------------------------------------------
 // Name: UpdateListener::SendHospital
@@ -182,12 +176,11 @@ void UpdateListener::SendHospital( xml::xistream& xis )
     if( hospital != 0 )
     {
         kernel::Controller controller;
-        const kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "update_object" );
         simulation::ObjectMagicAction magic;
         magic().mutable_object()->set_id( hospital->GetId() );
         magic().set_type( sword::ObjectMagicAction::update );
         magic().mutable_parameters()->add_elem()->mutable_value()->Add()->set_identifier( sword::ObjectMagicAction::medical_treatment );
-        sword::MsgMissionParameter_Value* parameters = magic().mutable_parameters()->add_elem()->mutable_value()->Add()->add_list();
+        sword::MissionParameter_Value* parameters = magic().mutable_parameters()->add_elem()->mutable_value()->Add()->add_list();
         xis >> xml::optional >> xml::start( "HospitalBedCapacityStatus" )
                 >> xml_bind( boost::bind( &UpdateListener::UpdateCapacityStatus, this, _1, boost::ref( *parameters ) ) )
             >> xml::end
@@ -218,7 +211,7 @@ namespace
 // Name: UpdateListener::UpdateFacilityStatus
 // Created: JCR 2010-06-06
 // -----------------------------------------------------------------------------
-void UpdateListener::UpdateFacilityStatus( xml::xistream& xis, sword::MsgMissionParameter_Value& parameters )
+void UpdateListener::UpdateFacilityStatus( xml::xistream& xis, sword::MissionParameter_Value& parameters )
 {
     std::string content( xis.content< std::string >( "EmergencyDepartmentStatus" ) );
 
@@ -245,13 +238,12 @@ namespace
     };
 
     template< typename T >
-    class content_check_manipulator
+    class content_check_manipulator : boost::noncopyable
     {
     public:
         explicit content_check_manipulator( const std::string& tag, T& content )
             : tag_ ( tag ), content_ ( content )
-        {
-        }
+        {}
 
         friend xml::xistream& operator >>( xml::xistream& xis, content_check_manipulator< T > m )
         {
@@ -298,15 +290,15 @@ namespace
         }
     };
 
-    void FillParameters( const std::vector< Capacity >& container, sword::MsgMissionParameter_Value& parameters )
+    void FillParameters( const std::vector< Capacity >& container, sword::MissionParameter_Value& parameters )
     {
         typedef std::vector< Capacity >::const_iterator const_iterator;
 
         int i = 0;
         for ( const_iterator it = container.begin(); it < container.end(); ++it, ++i )
         {
-            sword::MsgMissionParameter_Value& bed = *parameters.add_list(); // "BedCapacity"
-            sword::MsgMissionParameter_Value* param;
+            sword::MissionParameter_Value& bed = *parameters.add_list(); // "BedCapacity"
+            sword::MissionParameter_Value* param;
 
             bed.add_list()->set_identifier( it->typeId_ );
             param = bed.add_list();
@@ -330,7 +322,7 @@ namespace
 // Name: UpdateListener::UpdateCapacityStatus
 // Created: JCR 2010-06-06
 // -----------------------------------------------------------------------------
-void UpdateListener::UpdateCapacityStatus( xml::xistream& xis, sword::MsgMissionParameter_Value& parameters )
+void UpdateListener::UpdateCapacityStatus( xml::xistream& xis, sword::MissionParameter_Value& parameters )
 {
     // MedicalTreatmentCapacity
     std::vector< Capacity > container;

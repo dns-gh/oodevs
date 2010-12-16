@@ -72,7 +72,7 @@ void MedicalTreatmentAttribute::InitializeBedCapacity( xml::xistream& xis )
 // Name: MedicalTreatmentAttribute::MedicalTreatmentAttribute
 // Created: RFT 2008-06-05
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( const sword::MsgMissionParameter_Value& attributes )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( const sword::MissionParameter_Value& attributes )
     : doctors_         ( attributes.list( eDoctors ).quantity() ) // Doctors
     , availableDoctors_( 0 )
     , initialDoctors_  ( 0 )
@@ -80,10 +80,10 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const sword::MsgMissionPar
     , capacities_      ( MIL_MedicalTreatmentType::RegisteredCount() )
     , status_          ( sword::ObjectAttributeMedicalTreatment::normal )
 {
-    const sword::MsgMissionParameter_Value& capacities = attributes.list( eBedCapacities );
+    const sword::MissionParameter_Value& capacities = attributes.list( eBedCapacities );
     for( int i = 0; i < capacities.list_size(); ++i )
     {
-        const sword::MsgMissionParameter_Value& value = capacities.list( i );
+        const sword::MissionParameter_Value& value = capacities.list( i );
         const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( value.list( eTypeId ).identifier() );
         if( !pType )
             throw std::runtime_error( "Unknown Medical treatment type for medical treatment attribute" );
@@ -223,7 +223,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::Update( const sword::MedicalTre
 // Name: MedicalTreatmentAttribute::Update
 // Created: JCR 2010-10-08
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::MedicalCapacity::Update( const sword::MsgMissionParameter_Value& capacity )
+void MedicalTreatmentAttribute::MedicalCapacity::Update( const sword::MissionParameter_Value& capacity )
 {
     if( capacity.list( eTypeId ).has_identifier() )
         type_ = MIL_MedicalTreatmentType::Find( capacity.list( eTypeId ).identifier()  );
@@ -257,7 +257,7 @@ void MedicalTreatmentAttribute::MedicalCapacity::Send( sword::MedicalTreatmentBe
 // Name: MedicalTreatmentAttribute::OnUpdate
 // Created: JCR 2010-06-11
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::OnUpdate( const sword::MsgMissionParameter_Value& parameters )
+void MedicalTreatmentAttribute::OnUpdate( const sword::MissionParameter_Value& parameters )
 {
     // JCR TODO : Check if value is available ?
     if( parameters.list( eDoctors ).has_quantity() )
@@ -267,10 +267,10 @@ void MedicalTreatmentAttribute::OnUpdate( const sword::MsgMissionParameter_Value
     if( parameters.list( eStatus ).has_enumeration() )
         status_ = parameters.list( eStatus ).enumeration(); 
 
-    const sword::MsgMissionParameter_Value& capacities = parameters.list( eBedCapacities );
+    const sword::MissionParameter_Value& capacities = parameters.list( eBedCapacities );
     for( int i = 0; i < capacities.list_size(); ++i )
     {
-        const sword::MsgMissionParameter_Value& value = capacities.list( i );
+        const sword::MissionParameter_Value& value = capacities.list( i );
         if( value.list( eTypeId ).has_identifier() ) 
         {
             const unsigned int typeId = value.list( eTypeId ).identifier();

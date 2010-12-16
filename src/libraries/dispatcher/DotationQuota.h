@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgDotationQuota;
+    class DotationQuota;
 }
 
 namespace dispatcher
@@ -32,14 +32,14 @@ class DotationQuota : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             DotationQuota(  const sword::MsgDotationQuota& message );
+             DotationQuota(  const sword::DotationQuota& message );
     virtual ~DotationQuota();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const sword::MsgDotationQuota& message );
-    void Send( sword::MsgDotationQuota& message ) const;
+    void Update( const sword::DotationQuota& message );
+    void Send( sword::DotationQuota& message ) const;
     //@}
 
 private:

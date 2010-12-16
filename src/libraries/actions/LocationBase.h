@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class MsgLocation;
+    class Location;
 }
 
 namespace kernel
@@ -45,7 +45,7 @@ class LocationBase : public kernel::LocationVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             LocationBase( const kernel::CoordinateConverter_ABC& converter, const sword::MsgLocation& message );
+             LocationBase( const kernel::CoordinateConverter_ABC& converter, const sword::Location& message );
              LocationBase( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              LocationBase( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~LocationBase();
@@ -58,8 +58,8 @@ public:
     void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
 
     void CommitTo( std::string& content ) const;
-    void CommitTo( sword::MsgLocation& message ) const;
-    void Clean( sword::MsgLocation& message ) const;
+    void CommitTo( sword::Location& message ) const;
+    void Clean( sword::Location& message ) const;
     //@}
 
 protected:

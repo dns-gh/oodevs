@@ -45,7 +45,7 @@ private:
 private:
     //! @name Data member
     //@{
-    sword::MsgLocatedQuantityList quantities_;
+    sword::LocatedQuantityList quantities_;
     //@}
 };
 
