@@ -1,5 +1,169 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <fires xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Fires.xsd">
   <cell-size value="15"/>
+  <fire decrease-rate="1" increase-rate="3" initial-heat="0" max-heat="10000" name="Class A">
+    <extinguisher-agents>
+      <extinguisher-agent agent="h2o" heat-decrease-rate="1"/>
+    </extinguisher-agents>
+    <weather-effects>
+      <weather-effect heat-decrease-rate="0" weather="PasDePrecipitation"/>
+      <weather-effect heat-decrease-rate="0" weather="TempeteDeSable"/>
+      <weather-effect heat-decrease-rate="0" weather="Brouillard"/>
+      <weather-effect heat-decrease-rate="0" weather="Crachin"/>
+      <weather-effect heat-decrease-rate="0" weather="Pluie"/>
+      <weather-effect heat-decrease-rate="0" weather="Neige"/>
+      <weather-effect heat-decrease-rate="0" weather="Fumigene"/>
+    </weather-effects>
+    <injuries>
+      <injury percentage="0.2" type="u1"/>
+      <injury percentage="0.2" type="u2"/>
+      <injury percentage="0.2" type="u3"/>
+      <injury percentage="0.2" type="ue"/>
+      <injury percentage="0.2" type="dead"/>
+    </injuries>
+    <urban-modifiers>
+      <urban-modifier material-type="Bois" value="0"/>
+      <urban-modifier material-type="Beton" value="0"/>
+      <urban-modifier material-type="Brique" value="0"/>
+      <urban-modifier material-type="Metal" value="0"/>
+      <urban-modifier material-type="Torchis" value="0"/>
+      <urban-modifier material-type="Prefabrique" value="0"/>
+      <urban-modifier material-type="Vegetation" value="0"/>
+    </urban-modifiers>
+    <surfaces>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="inconnu"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="foret"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="plantation"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="marais"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="dune"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="urbain"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="etendue eau"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="glace"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="montagne"/>
+    </surfaces>
+  </fire>
+  <fire decrease-rate="1" increase-rate="3" initial-heat="0" max-heat="10000" name="Class B">
+    <extinguisher-agents>
+      <extinguisher-agent agent="h2o" heat-decrease-rate="1"/>
+    </extinguisher-agents>
+    <weather-effects>
+      <weather-effect heat-decrease-rate="0" weather="PasDePrecipitation"/>
+      <weather-effect heat-decrease-rate="0" weather="TempeteDeSable"/>
+      <weather-effect heat-decrease-rate="0" weather="Brouillard"/>
+      <weather-effect heat-decrease-rate="0" weather="Crachin"/>
+      <weather-effect heat-decrease-rate="0" weather="Pluie"/>
+      <weather-effect heat-decrease-rate="0" weather="Neige"/>
+      <weather-effect heat-decrease-rate="0" weather="Fumigene"/>
+    </weather-effects>
+    <injuries>
+      <injury percentage="0.2" type="u1"/>
+      <injury percentage="0.2" type="u2"/>
+      <injury percentage="0.2" type="u3"/>
+      <injury percentage="0.2" type="ue"/>
+      <injury percentage="0.2" type="dead"/>
+    </injuries>
+    <urban-modifiers>
+      <urban-modifier material-type="Bois" value="0"/>
+      <urban-modifier material-type="Beton" value="0"/>
+      <urban-modifier material-type="Brique" value="0"/>
+      <urban-modifier material-type="Metal" value="0"/>
+      <urban-modifier material-type="Torchis" value="0"/>
+      <urban-modifier material-type="Prefabrique" value="0"/>
+      <urban-modifier material-type="Vegetation" value="0"/>
+    </urban-modifiers>
+    <surfaces>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="inconnu"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="foret"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="plantation"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="marais"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="dune"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="urbain"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="etendue eau"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="glace"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="montagne"/>
+    </surfaces>
+  </fire>
+  <fire decrease-rate="1" increase-rate="3" initial-heat="0" max-heat="10000" name="Class C">
+    <extinguisher-agents>
+      <extinguisher-agent agent="h2o" heat-decrease-rate="1"/>
+    </extinguisher-agents>
+    <weather-effects>
+      <weather-effect heat-decrease-rate="0" weather="PasDePrecipitation"/>
+      <weather-effect heat-decrease-rate="0" weather="TempeteDeSable"/>
+      <weather-effect heat-decrease-rate="0" weather="Brouillard"/>
+      <weather-effect heat-decrease-rate="0" weather="Crachin"/>
+      <weather-effect heat-decrease-rate="0" weather="Pluie"/>
+      <weather-effect heat-decrease-rate="0" weather="Neige"/>
+      <weather-effect heat-decrease-rate="0" weather="Fumigene"/>
+    </weather-effects>
+    <injuries>
+      <injury percentage="0.2" type="u1"/>
+      <injury percentage="0.2" type="u2"/>
+      <injury percentage="0.2" type="u3"/>
+      <injury percentage="0.2" type="ue"/>
+      <injury percentage="0.2" type="dead"/>
+    </injuries>
+    <urban-modifiers>
+      <urban-modifier material-type="Bois" value="0"/>
+      <urban-modifier material-type="Beton" value="0"/>
+      <urban-modifier material-type="Brique" value="0"/>
+      <urban-modifier material-type="Metal" value="0"/>
+      <urban-modifier material-type="Torchis" value="0"/>
+      <urban-modifier material-type="Prefabrique" value="0"/>
+      <urban-modifier material-type="Vegetation" value="0"/>
+    </urban-modifiers>
+    <surfaces>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="inconnu"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="foret"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="plantation"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="marais"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="dune"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="urbain"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="etendue eau"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="glace"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="montagne"/>
+    </surfaces>
+  </fire>
+  <fire decrease-rate="1" increase-rate="3" initial-heat="0" max-heat="10000" name="Class D">
+    <extinguisher-agents>
+      <extinguisher-agent agent="h2o" heat-decrease-rate="1"/>
+    </extinguisher-agents>
+    <weather-effects>
+      <weather-effect heat-decrease-rate="0" weather="PasDePrecipitation"/>
+      <weather-effect heat-decrease-rate="0" weather="TempeteDeSable"/>
+      <weather-effect heat-decrease-rate="0" weather="Brouillard"/>
+      <weather-effect heat-decrease-rate="0" weather="Crachin"/>
+      <weather-effect heat-decrease-rate="0" weather="Pluie"/>
+      <weather-effect heat-decrease-rate="0" weather="Neige"/>
+      <weather-effect heat-decrease-rate="0" weather="Fumigene"/>
+    </weather-effects>
+    <injuries>
+      <injury percentage="0.2" type="u1"/>
+      <injury percentage="0.2" type="u2"/>
+      <injury percentage="0.2" type="u3"/>
+      <injury percentage="0.2" type="ue"/>
+      <injury percentage="0.2" type="dead"/>
+    </injuries>
+    <urban-modifiers>
+      <urban-modifier material-type="Bois" value="0"/>
+      <urban-modifier material-type="Beton" value="0"/>
+      <urban-modifier material-type="Brique" value="0"/>
+      <urban-modifier material-type="Metal" value="0"/>
+      <urban-modifier material-type="Torchis" value="0"/>
+      <urban-modifier material-type="Prefabrique" value="0"/>
+      <urban-modifier material-type="Vegetation" value="0"/>
+    </urban-modifiers>
+    <surfaces>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="inconnu"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="foret"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="plantation"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="marais"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="dune"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="urbain"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="etendue eau"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="glace"/>
+      <surface ignition-threshold="0" max-combustion-energy="0" type="montagne"/>
+    </surfaces>
+  </fire>
 </fires>
-<!-- signature="2060401004" -->
+<!-- signature="2557760904" -->
