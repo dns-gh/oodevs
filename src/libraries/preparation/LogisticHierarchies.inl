@@ -86,14 +86,19 @@ void LogisticHierarchies< Superior, I >::DrawLink( const geometry::Point2f& wher
 template< typename Superior, typename I >
 void LogisticHierarchies< Superior, I >::SerializeLogistics( xml::xostream& xos ) const
 {    
-    if(!tc2_)
+    tools::Iterator< const kernel::Entity_ABC& > children = CreateSubordinateIterator();
+    if( !children.HasMoreElements() )
         return;
+
     xos << xml::start( GetLinkType().ascii() )
-            << xml::attribute( "id", tc2_->GetId() )
-            << xml::start( "subordinate" )
-                << xml::attribute( "id", GetEntity().GetId());
-                SerializeQuotas( xos );
-            xos << xml::end
-        << xml::end;
+            << xml::attribute( "id", GetEntity().GetId());
+    while( children.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& entity = children.NextElement();
+        xos << xml::start( "subordinate" )
+                << xml::attribute( "id", entity.GetId())
+            << xml::end;
+    }
+    xos << xml::end;
 }
 
