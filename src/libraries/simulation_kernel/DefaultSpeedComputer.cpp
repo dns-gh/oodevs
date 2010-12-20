@@ -60,7 +60,7 @@ void BaseSpeedComputer::ApplyOnPopulation( const DEC_Knowledge_PopulationCollisi
 // -----------------------------------------------------------------------------
 double BaseSpeedComputer::GetSpeed() const
 {
-    return hasUsableComponent_ ? speedRatio_ * speed_ : 0.;
+    return hasUsableComponent_ ? std::min( std::max( speedRatio_ * speed_, 5.571 ), speed_ ) : 0.;//minimum speed is set to 2km ( 5.571 pixel/deltaT ) in case where component speed is greater than 2km and speedRatio is near 0.0
 }
 
 // -----------------------------------------------------------------------------
