@@ -2157,7 +2157,7 @@ du tireur</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ListView_UrbanMaterial_Type</name>
+    <name>ADN_ListView_UrbanAccommodation_Type</name>
     <message>
         <source>New</source>
         <translation>Nouveau</translation>
@@ -5398,7 +5398,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished"></translation>
+        <translation type>Populations</translation>
     </message>
     <message>
         <source>Fires</source>
@@ -5695,7 +5695,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Population types - Invalid Population type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Types Population - Type de population invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

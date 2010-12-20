@@ -118,8 +118,9 @@ void ADN_Urban_Data::ReadArchive( xml::xistream& input )
     ReadMaterials( input );
     ReadFacades( input );
     ReadRoofShapes( input );
-    input   >> xml::end()
-          >> xml::end();
+    input >> xml::end();
+    ReadAccommodations( input );
+    input >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -134,8 +135,9 @@ void ADN_Urban_Data::WriteArchive( xml::xostream& output )
     WriteMaterials( output );
     WriteFacades( output );
     WriteRoofShapes( output );
-    output  << xml::end
-            << xml::end;
+    output  << xml::end;
+    WriteAccommodations( output );
+    output  << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +213,6 @@ ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos()
 {
     strName_.SetDataName( "le nom du material" );
     strName_.SetParentNode( *this );
-    //vAttritionInfos_ = CreateDefaultAttritionInfos();
 }
 
 // -----------------------------------------------------------------------------
@@ -326,7 +327,7 @@ void ADN_Urban_Data::ReadRoofShape( xml::xistream& input )
     std::string strName = input.attribute< std::string >( "name" );
     T_UrbanInfos_Vector::iterator foundRoofShape = std::find_if( vRoofShapes_.begin(), vRoofShapes_.end(), ADN_String_Cmp( strName ) );
     if( foundRoofShape != vRoofShapes_.end() )
-        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "RoofShape - Duplicated roofShape type name '%1'" ).arg( strName.c_str() ).ascii() );
 
     UrbanInfos* pNewRoofShape = new UrbanInfos(strName);
     pNewRoofShape->SetDataName( "le nom du type de facade" );
@@ -341,13 +342,13 @@ void ADN_Urban_Data::WriteRoofShapes( xml::xostream& output ) const
 {
     // Check the sizes data for duplicates.
     if( HasDuplicates( vRoofShapes_, StringExtractor() ) )
-        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "Material - Duplicated volume type names" ).ascii() );
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "RoofShape - Duplicated roofShape type names" ).ascii() );
 
     output << xml::start( "roof-shape-types" );
     for( T_UrbanInfos_Vector::const_iterator itRoofShape = vRoofShapes_.begin(); itRoofShape != vRoofShapes_.end(); ++itRoofShape )
     {
         if( (*itRoofShape)->GetData().empty() )
-            throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "RoofShape - Invalid volume type name" ).ascii() );
+            throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "RoofShape - Invalid roofShape type name" ).ascii() );
         std::string strData = ( *itRoofShape )->GetData();
         output << xml::start( "roof-shape-type" )
             << xml::attribute( "name", trim( strData ) )
@@ -355,4 +356,103 @@ void ADN_Urban_Data::WriteRoofShapes( xml::xostream& output ) const
 
     }
     output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::ReadAccommodations
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::ReadAccommodations( xml::xistream& input )
+{
+    input >> xml::optional() >>xml::start( "accomodations" )
+        >> xml::list( "accomodation", *this, &ADN_Urban_Data::ReadAccommodation )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::ReadAccommodation
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::ReadAccommodation( xml::xistream& input  )
+{
+    vAccommodations_.AddItem( new AccommodationInfos( input ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::WriteAccommodations
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
+{
+    if( !vAccommodations_.empty() )
+    {
+        output << xml::start( "accomodations" );
+        for( CIT_AccommodationInfos_Vector it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
+            ( *it )->WriteAccommodation( output );
+        output << xml::end;
+    }  
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::WriteAccommodation
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& output )
+{
+    std::string strData = strName_.GetData();
+    output << xml::start( "accomodation" )
+        << xml::attribute( "role",  trim( strData ) )
+        << xml::attribute( "capacity", value_.GetData() )
+        << xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::AccommodationInfos constructor
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input )
+: strName_ ( "" )
+, value_( 0 )
+{
+    input >> xml::attribute( "role", strName_ )
+          >> xml::attribute( "capacity", value_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::AccommodationInfos
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::AccommodationInfos::AccommodationInfos()
+: strName_ ( "" )
+, value_( 0 )
+{
+    strName_.SetDataName( "le nom du material" );
+    strName_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::AccommodationInfos destructor
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::AccommodationInfos::~AccommodationInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::AccommodationInfos::GetNodeName
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+std::string ADN_Urban_Data::AccommodationInfos::GetNodeName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::AccommodationInfos::GetItemName
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+std::string ADN_Urban_Data::AccommodationInfos::GetItemName()
+{
+    return strName_.GetData();
 }

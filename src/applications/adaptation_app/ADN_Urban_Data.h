@@ -28,7 +28,34 @@ namespace xml { class xistream; }
 //*****************************************************************************
 class ADN_Urban_Data : public ADN_Data_ABC
 {
-        
+
+//*****************************************************************************
+public:
+    class AccommodationInfos : public ADN_Ref_ABC
+                            , public ADN_DataTreeNode_ABC
+    {
+    public:
+        AccommodationInfos();
+        explicit AccommodationInfos( xml::xistream& input );
+        virtual ~AccommodationInfos();
+
+        virtual std::string GetNodeName();
+        virtual std::string GetItemName();
+        bool operator==( const std::string& str );
+        void WriteAccommodation( xml::xostream& output );
+
+    public:
+        //! @name Member Data
+        //@{
+        ADN_Type_String strName_; 
+        ADN_Type_Double value_;
+        //@}
+    };   
+
+    typedef ADN_Type_Vector_ABC< AccommodationInfos >     T_AccommodationInfos_Vector;
+    typedef T_AccommodationInfos_Vector::iterator        IT_AccommodationInfos_Vector;
+    typedef T_AccommodationInfos_Vector::const_iterator CIT_AccommodationInfos_Vector;
+
 //*****************************************************************************
 public:
     class UrbanMaterialInfos : public ADN_Ref_ABC
@@ -85,6 +112,8 @@ public:
     UrbanInfos*                  FindFacade( const std::string& strName );
     T_UrbanInfos_Vector&         GetRoofShapesInfos();  
     UrbanInfos*                  FindRoofShape( const std::string& strName );
+    T_AccommodationInfos_Vector&  GetAccommodationsInfos();  
+    AccommodationInfos*           FindAccommodation( const std::string& strName );
 
 private:
     //! @name Helpers
@@ -100,6 +129,10 @@ private:
     void ReadRoofShape  ( xml::xistream& input );
     void ReadRoofShapes ( xml::xistream& input );
     void WriteRoofShapes( xml::xostream& output ) const;
+
+    void ReadAccommodation   ( xml::xistream& input );
+    void ReadAccommodations ( xml::xistream& input );
+    void WriteAccommodations( xml::xostream& output ) const;
     //@}
 
 private:
@@ -108,6 +141,7 @@ private:
     T_UrbanMaterialInfos_Vector vMaterials_;
     T_UrbanInfos_Vector vRoofShapes_;
     T_UrbanInfos_Vector vFacades_;
+    T_AccommodationInfos_Vector vAccommodations_;
     //@}
 };
 
@@ -186,6 +220,39 @@ ADN_Urban_Data::UrbanInfos* ADN_Urban_Data::FindRoofShape( const std::string& st
 {
     for( IT_UrbanInfos_Vector it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
         if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
+            return *it;
+    return 0;
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::GetAccommodationsInfos
+// Created: SLG 2010-12-20
+//-----------------------------------------------------------------------------
+inline
+ADN_Urban_Data::T_AccommodationInfos_Vector& ADN_Urban_Data::GetAccommodationsInfos()
+{
+    return vAccommodations_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::AccommodationInfos::operator==
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+inline
+bool ADN_Urban_Data::AccommodationInfos::operator==( const std::string& str )
+{
+    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::FindAccommodation
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+inline
+ADN_Urban_Data::AccommodationInfos* ADN_Urban_Data::FindAccommodation( const std::string& strName )
+{
+    for( IT_AccommodationInfos_Vector it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
+        if( **it == strName )
             return *it;
     return 0;
 }

@@ -99,6 +99,7 @@ ADN_ExtinguisherAgentInfos_Table.cpp \
 ADN_ListView_Sensors.cpp \
 ADN_ListView_Units.cpp \
 ADN_ListView_UrbanMaterial_Type.cpp \
+ADN_ListView_UrbanAccommodation_Type.cpp \
 ADN_ListView_Urban_Type.cpp \
 ADN_MainWindow.cpp \
 ADN_Maintenance_GUI.cpp \

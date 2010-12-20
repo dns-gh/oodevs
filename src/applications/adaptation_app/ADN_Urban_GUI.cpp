@@ -17,7 +17,8 @@
 #include "ADN_CommonGfx.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_ListView_Urban_Type.h"
-#include "ADN_ListView_UrbanMaterial_Type.h"
+#include "ADN_ListView_UrbanAccommodation_Type.h"
+#include "ADN_ListView_UrbanAccommodation_Type.h"
 #include "ADN_Urban_AttritionTable.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Tr.h"
@@ -65,7 +66,6 @@ void ADN_Urban_GUI::Build()
 {
     assert( pMainWidget_ == 0 );
 
-    ADN_GuiBuilder builder;
     ADN_EditLine_ABC* pEdit = 0;
 
     // Create the main widget.
@@ -77,7 +77,7 @@ void ADN_Urban_GUI::Build()
     pLayout->setSpacing( 20 );
     pLayout->setAutoAdd( true );
 
-    QVBox* pBox = new QVBox( pMainWidget_ );
+    QGroupBox* pBox = new QGroupBox( 2, Qt::Horizontal, pMainWidget_ );
 
     ///////////////////
     // Materials
@@ -86,7 +86,7 @@ void ADN_Urban_GUI::Build()
 
     // materials list
     T_ConnectorVector    vMaterialInfosConnectors(eNbrUrbanMaterialGuiElements,( ADN_Connector_ABC* ) 0 );
-    pListMaterial_= new ADN_ListView_UrbanMaterial_Type( pGroupMaterial, "Material" );
+    pListMaterial_= new ADN_ListView_UrbanAccommodation_Type( pGroupMaterial, "Material" );
     static_cast<ADN_Connector_Vector_ABC*>( &pListMaterial_->GetConnector() )->Connect( &data_.GetMaterialsInfos() );
 
     // material
@@ -133,8 +133,30 @@ void ADN_Urban_GUI::Build()
     pEdit = new ADN_EditLine_String(pGroupRoofShapes);
     vRoofShapeInfosConnectors[eUrbanName]=&pEdit->GetConnector();
 
+    ///////////////////
+    // Accommodations
+    QGroupBox* pGroupAccommodations = new QVGroupBox( tr( "Accommodations" ), pBox );
+    QHBox* pGroupAccommodation = new QHBox( pGroupAccommodations );
+
+    ADN_GuiBuilder builder;
+
+    // accommodations list
+    T_ConnectorVector    vAccommodationInfosConnectors(eNbrUrbanAccommodationGuiElements,(ADN_Connector_ABC*)0 );
+    pListAccommodation_= new ADN_ListView_UrbanAccommodation_Type( pGroupAccommodation, "Accommodation" );
+    static_cast<ADN_Connector_Vector_ABC*>( &pListAccommodation_->GetConnector() )->Connect( &data_.GetAccommodationsInfos() );
+
+    // accommodation
+    pGroupAccommodations = new QHGroupBox( tr( "Accommodation" ),pGroupAccommodations);
+    pGroupAccommodations->setInsideMargin(20);
+    pGroupAccommodations->setInsideSpacing(20);
+    QWidget* pHolder = builder.AddFieldHolder( pGroupAccommodations );
+
+    builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vAccommodationInfosConnectors[ eUrbanAccommodationName ] );
+    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationCapacity ] );
+
     // set auto connectors
     pListMaterial_->SetItemConnectors( vMaterialInfosConnectors );
     pListFacade_  ->SetItemConnectors( vFacadeInfosConnectors );
     pListRoofShape_->SetItemConnectors( vRoofShapeInfosConnectors );
+    pListAccommodation_->SetItemConnectors( vAccommodationInfosConnectors );
 }
