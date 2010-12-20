@@ -12,7 +12,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/WorldParameters.h"
+#include "tools/WorldParameters.h"
 #pragma warning( push )
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
@@ -92,7 +92,7 @@ QString UtmParser::Fill( QString value )
 // -----------------------------------------------------------------------------
 void UtmParser::NotifyUpdated( const kernel::ModelLoaded& model )
 {
-    kernel::WorldParameters parameters( model.config_ );
+    tools::WorldParameters parameters( model.config_ );
     if( ! parameters.utmZones_.empty() )
         zone_ = boost::lexical_cast< std::string, unsigned int >( parameters.utmZones_.front() );
 }

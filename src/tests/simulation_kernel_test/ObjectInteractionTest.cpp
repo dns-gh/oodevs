@@ -33,7 +33,7 @@
 #include "simulation_kernel/Entities/Orders/MIL_Mission_ABC.h"
 #include "simulation_kernel/Entities/Populations/MIL_PopulationConcentration.h"
 #include "simulation_kernel/Entities/Populations/MIL_PopulationAttitude.h"
-#include "simulation_terrain/TER_World.h"
+#include "StubTER_World.h"
 #include "StubMIL_Population.h"
 #include "StubMIL_PopulationType.h"
 #include "MockNET_Publisher_ABC.h"
@@ -76,7 +76,7 @@ namespace
     {
         ObjectCapacityFixture()
         {
-            TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+            WorldInitialize( "Paris" );
         }
         ~ObjectCapacityFixture()
         {

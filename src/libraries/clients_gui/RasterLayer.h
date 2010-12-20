@@ -12,7 +12,7 @@
 
 #include "Layer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "clients_kernel/WorldParameters.h"
+#include "tools/WorldParameters.h"
 
 namespace kernel
 {
@@ -34,7 +34,7 @@ namespace gui
 class RasterLayer : public Layer2d_ABC
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                  , private kernel::WorldParameters
+                  , private tools::WorldParameters
 {
 public:
     //! @name Constructors/Destructor

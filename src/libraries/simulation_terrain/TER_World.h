@@ -45,6 +45,13 @@ namespace tools
     {
         template< typename T > class MessageQueue_ABC;
     }
+
+    class WorldParameters;
+}
+
+namespace xml
+{
+    class xifstream;
 }
 
 // =============================================================================
@@ -63,7 +70,7 @@ public:
     //! @name Operations
     //@{
     static TER_World& GetWorld();
-    static void Initialize( const std::string& rootFile );
+    static void Initialize( const tools::WorldParameters& config );
     static void DestroyWorld();
     //@}
 
@@ -96,15 +103,10 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    explicit TER_World( const std::string& rootFile );
+    explicit TER_World( const tools::WorldParameters& config );
              TER_World( const TER_World& );            //!< Copy constructor
     virtual ~TER_World();
     TER_World& operator=( const TER_World& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ReadWorld( const std::string& strWorld, float& rLatitude, float& rLongitude, MT_Rect& extent ) const;
     //@}
 
 private:

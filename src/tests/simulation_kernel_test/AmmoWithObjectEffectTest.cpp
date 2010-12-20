@@ -26,7 +26,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/Role_ABC.h"
-#include "simulation_terrain/TER_World.h"
+#include "StubTER_World.h"
 #include "DotationComputer_ABC.h"
 #include "WeaponAvailabilityComputer_ABC.h"
 #include "UrbanType.h"
@@ -53,7 +53,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" ); // $$$$ because used in asn and in destructor of action!!!
+    WorldInitialize( "Paris" ); // $$$$ because used in asn and in destructor of action!!!
     MockNET_Publisher_ABC mockPublisher;
 
     {

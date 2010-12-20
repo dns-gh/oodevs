@@ -15,7 +15,11 @@
 #include "meteo/PHY_Meteo.h"
 #include "meteo/PHY_RawVisionData_ABC.h"
 
-class MIL_Config;
+namespace tools
+{
+    class WorldParameters;
+}
+
 class PHY_AmmoEffect;
 class MT_Ellipse;
 class PHY_IndirectFireDotationClass;
@@ -81,7 +85,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RawVisionData( weather::PHY_Meteo& globalMeteo, MIL_Config& config );
+             PHY_RawVisionData( weather::PHY_Meteo& globalMeteo, tools::WorldParameters& config );
     virtual ~PHY_RawVisionData();
     //@}
 

@@ -28,4 +28,9 @@ std::string BOOST_RESOLVE( const std::string& filename );
 #include <map>
 #include <set>
 
+#undef max
+#undef min
+
+#include <geometry/Types.h>
+
 #endif // __simulation_kernel_test_pch_h_

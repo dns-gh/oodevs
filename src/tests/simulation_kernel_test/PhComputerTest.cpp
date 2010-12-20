@@ -29,7 +29,7 @@
 #include "MockPHY_RoleInterface_HumanFactors.h"
 #include "MockRoleLocation.h"
 #include "TestPhDirectFire.h"
-#include "simulation_terrain/TER_World.h"
+#include "StubTER_World.h"
 #include <boost/assign/list_of.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <urban/CoordinateConverter.h>
@@ -61,7 +61,7 @@ namespace
             , coord( new urban::CoordinateConverter() )
             , urbanBlock( new urban::UrbanObject ( 0, "test", &poly, 0, *coord ) )
         {
-            TER_World::Initialize( "../../data/data/terrains/Drosoville/Terrain.xml" );
+            WorldInitialize( "Paris" );
         }
         ~Fixture()
         {

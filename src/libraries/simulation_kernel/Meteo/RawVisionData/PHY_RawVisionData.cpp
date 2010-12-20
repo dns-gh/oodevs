@@ -18,6 +18,7 @@
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
 #include "tools/InputBinaryStream.h"
+#include "tools/WorldParameters.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
@@ -48,19 +49,14 @@ const weather::PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
 // Created: JVT 02-11-05
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::PHY_RawVisionData( weather::PHY_Meteo& globalMeteo, MIL_Config& config )
+PHY_RawVisionData::PHY_RawVisionData( weather::PHY_Meteo& globalMeteo, tools::WorldParameters& config )
     : ppCells_( 0 )
     , nNbrCol_( 0 )
     , nNbrRow_( 0 )
 {
     MT_LOG_INFO_MSG( "Initializing vision data" );
-    xml::xifstream xis( config.GetTerrainFile() );
-    std::string strRawVisionDirectory;
-    xis >> xml::start( "Terrain" )
-        >> xml::content( "RawVision", strRawVisionDirectory );
-    std::string detection = config.BuildTerrainChildFile( strRawVisionDirectory + "/detection.dat" );
-    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( detection );
-    Read( detection );
+    MIL_AgentServer::GetWorkspace().GetConfig().AddFileToCRC( config.detection_ );
+    Read( config.detection_ );
     sCell::pGlobalMeteo_ = &globalMeteo;
 }
 

@@ -15,7 +15,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
-#include "simulation_terrain/TER_World.h"
+#include "StubTER_World.h"
 #include <urban/Model.h>
 #include <urban/UrbanObject.h>
 #include <urban/CoordinateConverter_ABC.h>
@@ -29,7 +29,7 @@
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
 {
-    TER_World::Initialize( "../../data/data/terrains/Drosoville/Terrain.xml" );
+    WorldInitialize( "BMDrosoville" );
 
     const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( "ammo" );
 

@@ -17,7 +17,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 #include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
 #include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
-#include "simulation_terrain/TER_World.h"
+#include "StubTER_World.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -26,7 +26,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    WorldInitialize( "Paris" );
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis(

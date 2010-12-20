@@ -15,6 +15,7 @@
 #include "meteo/PHY_Lighting.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
+#include "tools/WorldParameters.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
@@ -49,7 +50,8 @@ void PHY_MeteoDataManager::Initialize( xml::xistream& xis, MIL_Config& config )
     xis >> xml::start( "weather" );
     pEphemeride_ = new PHY_Ephemeride( xis );
     InitializeGlobalMeteo( xis );
-    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, config );
+    tools::WorldParameters terrainConfig = tools::WorldParameters( config );
+    pRawData_ = new PHY_RawVisionData( *pGlobalMeteo_, terrainConfig );
     InitializeLocalMeteos( xis );
     xis >> xml::end;
 }

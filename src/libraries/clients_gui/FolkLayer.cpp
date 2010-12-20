@@ -11,8 +11,8 @@
 #include "FolkLayer.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ModelLoaded.h"
-#include "clients_kernel/WorldParameters.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "tools/WorldParameters.h"
 #include <graphics/extensions.h>
 #include <shapelib/shapefil.h>
 #include <boost/shared_ptr.hpp>
@@ -153,7 +153,7 @@ void FolkLayer::Paint( const Rectangle2f& viewport )
 // -----------------------------------------------------------------------------
 void FolkLayer::NotifyUpdated( const ModelLoaded& modelLoaded )
 {
-    WorldParameters parameters( modelLoaded.config_ );
+    tools::WorldParameters parameters( modelLoaded.config_ );
     graphFile_ = parameters.populationGraph_;
 }
 

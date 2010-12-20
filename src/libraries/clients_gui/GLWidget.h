@@ -10,7 +10,7 @@
 #ifndef __GlWidget_h_
 #define __GlWidget_h_
 
-#include "clients_kernel/WorldParameters.h"
+#include "tools/WorldParameters.h"
 #include "SetGlOptions.h"
 #include "View_ABC.h"
 #include "GlToolsBase.h"
@@ -44,7 +44,7 @@ namespace gui
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class GlWidget : private kernel::WorldParameters
+class GlWidget : private tools::WorldParameters
                , private SetGlOptions
                , public MapWidget
                , public MapWidget_ABC

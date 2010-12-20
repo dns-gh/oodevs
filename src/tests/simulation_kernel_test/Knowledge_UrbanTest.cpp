@@ -15,7 +15,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Urban.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
-#include "simulation_terrain/TER_World.h"
+#include "StubTER_World.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
 #include <urban/CoordinateConverter.h>
@@ -44,7 +44,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    WorldInitialize( "Paris" );
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis( "<objects>"

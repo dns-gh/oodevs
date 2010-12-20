@@ -11,9 +11,9 @@
 #include "TerrainFeatureSearcher.h"
 #include "View_ABC.h"
 #include "clients_kernel/ModelLoaded.h"
-#include "clients_kernel/WorldParameters.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ApproximativeMap.h"
+#include "tools/WorldParameters.h"
 #include <graphics/NoVBOShapeLayer.h>
 #include <graphics/GraphicSetup_ABC.h>
 #pragma warning( disable : 4355 4512 )
@@ -131,7 +131,7 @@ void TerrainFeatureSearcher::NotifyUpdated( const kernel::ModelLoaded& model )
     index_ = 0;
     nameLocations_.reset( new T_NameLocations( 500 ) );
 
-    kernel::WorldParameters parameters( model.config_ );
+    tools::WorldParameters parameters( model.config_ );
     if( ! parameters.graphicsDirectory_.empty() )
     {
         const bfs::path dump = bfs::path( parameters.graphicsDirectory_, bfs::native ) / "shapes.dump";

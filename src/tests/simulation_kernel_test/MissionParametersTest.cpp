@@ -52,7 +52,7 @@
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
-#include "simulation_terrain/TER_World.h"
+#include "StubTER_World.h"
 
 using namespace sword;
 
@@ -338,7 +338,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_LocationParameter_ToASN )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    WorldInitialize( "Paris" );
     Location asnIn;
     FillRlyehLocation( asnIn );
     MIL_LocationParameter param( asnIn );
@@ -438,7 +438,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_Throw )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    WorldInitialize( "Paris" );
     Path asnIn;
     asnIn.mutable_location()->mutable_coordinates()->add_elem();
     FillRlyehLocation( *asnIn.mutable_location() );
@@ -452,7 +452,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_Throw )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_ToASN )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    WorldInitialize( "Paris" );
     Path asnIn;
     asnIn.mutable_location()->set_type( sword::Location_Geometry_line );
     asnIn.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 48.52f );
@@ -479,7 +479,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    WorldInitialize( "Paris" );
 
     const std::string typeName( "type" );
     PlannedWork asnIn;
@@ -515,7 +515,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PointParameter_ToASN )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    WorldInitialize( "Paris" );
     Point asnIn;
     FillRlyehLocation( *asnIn.mutable_location() );
     MIL_PointParameter param( asnIn );
@@ -533,7 +533,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PointParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_PolygonParameter_ToASN )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    WorldInitialize( "Paris" );
     Polygon asnIn;
     FillPolygonLocation( *asnIn.mutable_location(), 0.f );
     MIL_PolygonParameter param( asnIn );

@@ -13,11 +13,6 @@
 namespace tools
 {
     class ExerciseConfig;
-}
-
-namespace kernel
-{
-
 // =============================================================================
 /** @class  WorldParameters
     @brief  WorldParameters
@@ -46,6 +41,7 @@ private:
     //@{
     void ReadWorld( const std::string& world );
     void ReadExtent( const std::string& extent );
+    void InitExtent();
     //@}
 
 public:
@@ -53,10 +49,18 @@ public:
     //@{
     float latitude_, longitude_;
     float width_, height_;
-    std::string terrainDirectory_;
+    std::string terrainFile_;
     std::string graphicsDirectory_;
+    std::string pathfindGraph_;
+    std::string pathfindLinks_;
+    std::string pathfindNodes_;
     std::string detection_;
+    std::string urban_;
     std::string populationGraph_;
+    std::string xMin_;
+    std::string xMax_;
+    std::string yMin_;
+    std::string yMax_;
     std::vector< unsigned char > utmZones_;
     //@}
 };

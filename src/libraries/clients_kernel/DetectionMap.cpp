@@ -10,7 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "DetectionMap.h"
 #include "tools/InputBinaryStream.h"
-#include "WorldParameters.h"
+#include "tools/WorldParameters.h"
 #include <boost/static_assert.hpp>
 
 using namespace kernel;
@@ -59,7 +59,7 @@ void DetectionMap::Load( const tools::ExerciseConfig& config  )
     delete map_;
     delete[] environment_;
 
-    WorldParameters parameters( config );
+    tools::WorldParameters parameters( config );
     map_ = new ElevationMap( parameters.detection_ );
 
     tools::InputBinaryStream archive( parameters.detection_ );

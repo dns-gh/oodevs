@@ -15,5 +15,10 @@
 #include <string>
 #include "asio.h"
 
+#undef max
+#undef min
+
+#include <geometry/Types.h>
+
 #endif // __tools_pch_h_
 

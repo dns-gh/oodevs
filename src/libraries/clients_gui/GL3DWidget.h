@@ -10,7 +10,7 @@
 #ifndef __Gl3dWidget_h_
 #define __Gl3dWidget_h_
 
-#include "clients_kernel/WorldParameters.h"
+#include "tools/WorldParameters.h"
 #include "GlToolsBase.h"
 #include "View_ABC.h"
 #include "SetGlOptions.h"
@@ -40,7 +40,7 @@ namespace gui
 */
 // Created: AGE 2006-03-28
 // =============================================================================
-class Gl3dWidget : private kernel::WorldParameters
+class Gl3dWidget : private tools::WorldParameters
                  , private SetGlOptions
                  , public Widget3D
                  , public GlToolsBase

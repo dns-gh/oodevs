@@ -25,6 +25,7 @@
 #include "TER_PathFindManager.h"
 #include <pathfind/TerrainData.h>
 #include "MT_Tools/MT_Rect.h"
+#include "tools/WorldParameters.h"
 #include <geocoord/Geoid.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -42,10 +43,10 @@ TER_World*  TER_World::pInstance_ = 0;
 // Name: TER_World::Initialize
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_World::Initialize( const std::string& rootFile )
+void TER_World::Initialize( const tools::WorldParameters& config )
 {
     assert( ! pInstance_ );
-    pInstance_ = new TER_World( rootFile );
+    pInstance_ = new TER_World( config );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,41 +71,16 @@ namespace
 // Name: TER_World constructor
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------
-TER_World::TER_World( const std::string& rootFile )
+TER_World::TER_World( const tools::WorldParameters& config )
 {
-    std::string strWorld, strPathfind;
-    xml::xifstream xis( rootFile );
-    xis >> xml::start( "Terrain" )
-        >> xml::content( "World", strWorld )
-        >> xml::content( "Pathfind", strPathfind );
-
-    float rMiddleLatitude, rMiddleLongitude;
     MT_Rect extent;
-    ReadWorld( BuildChildFile( rootFile, strWorld ), rMiddleLatitude, rMiddleLongitude, extent );
+    extent.Set( MT_Vector2D( 0, 0 ), MT_Vector2D( config.width_, config.height_ ) );
 
     pAgentManager_      = new TER_AgentManager     ( extent );
     pObjectManager_     = new TER_ObjectManager    ( extent );
     pPopulationManager_ = new TER_PopulationManager( extent );
-    pCoordinateManager_ = new TER_CoordinateManager( rMiddleLatitude, rMiddleLongitude, extent );
-    pPathfindManager_   = new TER_PathFindManager( BuildChildFile( rootFile, strPathfind + "/graph.bin" )
-                                                 , BuildChildFile( rootFile, strPathfind + "/nodes.bin" )
-                                                 , BuildChildFile( rootFile, strPathfind + "/links.bin" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TER_World::ReadWorld
-// Created: AGE 2005-02-02
-// -----------------------------------------------------------------------------
-void TER_World::ReadWorld( const std::string& strWorld, float& rLatitude, float& rLongitude, MT_Rect& extent ) const
-{
-    double rWidth, rHeight;
-    xml::xifstream xis( strWorld );
-    xis >> xml::start( "World" )
-        >> xml::content( "Latitude", rLatitude )
-        >> xml::content( "Longitude", rLongitude )
-        >> xml::content( "Width", rWidth )
-        >> xml::content( "Height", rHeight );
-     extent.Set( MT_Vector2D( 0, 0 ), MT_Vector2D( rWidth, rHeight ) );
+    pCoordinateManager_ = new TER_CoordinateManager( config.latitude_, config.longitude_, extent );
+    pPathfindManager_   = new TER_PathFindManager( config.pathfindGraph_, config.pathfindNodes_, config.pathfindLinks_ );
 }
 
 // -----------------------------------------------------------------------------
