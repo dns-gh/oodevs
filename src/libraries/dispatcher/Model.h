@@ -27,13 +27,9 @@ namespace kernel
     class Entity_ABC;
 }
 
-namespace tools
-{
-    class ExerciseConfig;
-}
-
 namespace dispatcher
 {
+    class Config;
     class FolkModel;
     class MeteoModel;
     class SimulationModel;
@@ -50,7 +46,7 @@ class Model : public MessageHandler_ABC, public Model_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( const tools::ExerciseConfig& config, const kernel::StaticModel& staticModel );
+             Model( const Config& config, const kernel::StaticModel& staticModel );
     virtual ~Model();
     //@}
 

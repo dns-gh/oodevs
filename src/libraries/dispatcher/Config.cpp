@@ -26,6 +26,7 @@ Config::Config()
     , networkShieldParameters_ ( 0 )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )
+    , timeStep_                ( 0 )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
@@ -53,6 +54,11 @@ void Config::Parse( int argc, char** argv )
     xml::xifstream xis( GetSessionFile() );
     xis >> xml::start( "session" )
             >> xml::start( "config" )
+                >> xml::start( "simulation" )
+                    >> xml::start( "time" )
+                        >> xml::attribute( "step", timeStep_ )
+                    >> xml::end
+                >> xml::end
                 >> xml::start( "dispatcher" )
                     >> xml::start( "network" )
                         >> xml::attribute( "client", networkSimulationParameters_ )
@@ -112,4 +118,13 @@ unsigned int Config::GetKeyFramesFrequency() const
 unsigned int Config::GetReplayFragmentsFrequency() const
 {
     return replayFragmentsFrequency_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetTickDuration
+// Created: JSR 2010-12-20
+// -----------------------------------------------------------------------------
+unsigned int Config::GetTickDuration() const
+{
+    return timeStep_;
 }

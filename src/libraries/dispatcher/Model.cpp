@@ -12,6 +12,7 @@
 #include "Agent.h"
 #include "AgentKnowledge.h"
 #include "Automat.h"
+#include "Config.h"
 #include "Fire.h"
 #include "FireEffect.h"
 #include "FolkModel.h"
@@ -53,9 +54,9 @@ using namespace dispatcher;
 // Name: Model constructor
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-Model::Model( const tools::ExerciseConfig& config, const kernel::StaticModel& staticModel )
+Model::Model( const Config& config, const kernel::StaticModel& staticModel )
     : staticModel_     ( staticModel )
-    , simulation_      ( new SimulationModel() )
+    , simulation_      ( new SimulationModel( config ) )
     , compositeFactory_( new CompositeFactory() )
     , folk_            ( new FolkModel() )
     , meteoModel_      ( new MeteoModel( config, *this ) )

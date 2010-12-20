@@ -41,6 +41,7 @@ public:
     unsigned short GetNetworkShieldParameters() const;
     unsigned int GetKeyFramesFrequency() const;
     unsigned int GetReplayFragmentsFrequency() const;
+    unsigned int GetTickDuration() const;
     //@}
 
 private:
@@ -51,6 +52,7 @@ private:
     unsigned short networkShieldParameters_;
     unsigned int keyFramesFrequency_;
     unsigned int replayFragmentsFrequency_;
+    unsigned int timeStep_;
     //@}
 };
 

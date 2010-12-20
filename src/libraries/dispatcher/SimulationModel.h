@@ -25,6 +25,7 @@ namespace sword
 namespace dispatcher
 {
     class ClientPublisher_ABC;
+    class Config;
 
 // =============================================================================
 /** @class  SimulationModel
@@ -37,7 +38,7 @@ class SimulationModel
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationModel();
+    explicit SimulationModel( const Config& config );
     virtual ~SimulationModel();
     //@}
 

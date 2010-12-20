@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "SimulationModel.h"
+#include "Config.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/ReplaySenders.h"
@@ -19,9 +20,9 @@ using namespace dispatcher;
 // Name: SimulationModel constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-SimulationModel::SimulationModel()
+SimulationModel::SimulationModel( const Config& config )
     : nCurrentTick_        ( 0 )
-    , nTickDuration_       ( 0 )
+    , nTickDuration_       ( config.GetTickDuration() )
     , nTimeFactor_         ( 0 )
     , nCheckpointFrequency_( 0 )
     , nSimState_           ( sword::stopped )
