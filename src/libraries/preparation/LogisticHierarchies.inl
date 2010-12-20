@@ -96,8 +96,9 @@ void LogisticHierarchies< Superior, I >::SerializeLogistics( xml::xostream& xos 
     {
         const kernel::Entity_ABC& entity = children.NextElement();
         xos << xml::start( "subordinate" )
-                << xml::attribute( "id", entity.GetId())
-            << xml::end;
+                << xml::attribute( "id", entity.GetId());
+                SerializeQuotas( xos );
+        xos << xml::end;
     }
     xos << xml::end;
 }
