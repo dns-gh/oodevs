@@ -66,7 +66,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonABC">
@@ -126,7 +125,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PEI">
@@ -167,7 +165,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PIA">
@@ -228,7 +225,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PC">
@@ -267,7 +263,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
@@ -336,7 +331,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
@@ -378,7 +372,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer">
@@ -428,7 +421,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.terrorism.roles.Sniper" file="BMPion.bms" name="net.masagroup.sword.military.platoon.terrorism.roles.Sniper">
@@ -466,7 +458,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">
@@ -7645,7 +7636,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
@@ -7677,7 +7667,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" name="net.masagroup.sword.military.company.terrorism.roles.SniperCompany">
@@ -7707,7 +7696,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Groupe Assaut AIR">
@@ -7730,7 +7718,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
     <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" name="Groupe Chalands">
