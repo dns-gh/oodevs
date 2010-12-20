@@ -1712,31 +1712,25 @@ void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& outpu
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
-: ADN_Ref_ABC()
-, strName_()
-, strAdditionalComments_()
-, nMosId_( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetNextId() )
-, ptrArmor_(ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(),0)
-, ptrSize_(ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(),0)
-, rWeight_(0)
-, vSpeeds_( false )
-, vWeapons_()
-, vActiveProtections_()
-, vSensors_()
-, vRadars_ ()
-, vObjects_()
-, bTroopEmbarkingTimes_( false )
-, embarkingTimePerPerson_( "0s" )
-, disembarkingTimePerPerson_( "0s" )
-, bCanCarryCargo_( false )
-, rWeightTransportCapacity_( 0 )
-, embarkingTimePerTon_( "0s" )
-, disembarkingTimePerTon_( "0s" )
-, rMaxSpeed_( 0 )
-, attritionBreakdowns_( "attrition" )
-, randomBreakdowns_   ( "random" )
-, bMaxSlope_( false )
-, rMaxSlope_( 60 )
+    : ADN_Ref_ABC               ()
+    , nMosId_                   ( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetNextId() )
+    , equipmentCategory_        ( "Autres" )
+    , ptrArmor_                 ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), 0 )
+    , ptrSize_                  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
+    , rWeight_                  ( 0 )
+    , vSpeeds_                  ( false )
+    , bTroopEmbarkingTimes_     ( false )
+    , embarkingTimePerPerson_   ( "0s" )
+    , disembarkingTimePerPerson_( "0s" )
+    , bCanCarryCargo_           ( false )
+    , rWeightTransportCapacity_ ( 0 )
+    , embarkingTimePerTon_      ( "0s" )
+    , disembarkingTimePerTon_   ( "0s" )
+    , rMaxSpeed_                ( 0 )
+    , attritionBreakdowns_      ( "attrition" )
+    , randomBreakdowns_         ( "random" )
+    , bMaxSlope_                ( false )
+    , rMaxSlope_                ( 60 )
 {
     BindExistenceTo( &ptrArmor_ );
     BindExistenceTo( &ptrSize_ );
@@ -2021,8 +2015,6 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     attritionBreakdowns_.ReadArchive( input );
     
     input >> xml::optional >> xml::content( "equipment-category", equipmentCategory_ );
-    if ( equipmentCategory_ == "" )
-        equipmentCategory_ = "Autres";
 
     input >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ );
     if( rMaxSlope_ != 60. )
