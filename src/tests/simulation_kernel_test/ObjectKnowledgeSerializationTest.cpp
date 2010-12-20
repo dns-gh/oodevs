@@ -16,6 +16,7 @@
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
+#include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
 

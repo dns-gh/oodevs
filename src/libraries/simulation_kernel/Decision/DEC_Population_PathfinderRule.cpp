@@ -6,21 +6,11 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-03-08 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Population_PathfinderRule.cpp $
-// $Author: Nld $
-// $Modtime: 20/07/05 18:46 $
-// $Revision: 10 $
-// $Workfile: DEC_Population_PathfinderRule.cpp $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "DEC_Population_PathfinderRule.h"
-
 #include "DEC_Population_Path.h"
+#include <pathfind/TerrainData.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathfinderRule constructor
@@ -42,10 +32,6 @@ DEC_Population_PathfinderRule::~DEC_Population_PathfinderRule()
     // NOTHING
 }
 
-// =============================================================================
-// PATH FIND
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathfinderRule::EvaluateCost
 // Created: AGE 2005-03-08
@@ -65,10 +51,8 @@ double DEC_Population_PathfinderRule::GetChannelingCost( const MT_Vector2D& vFro
     if( channelers.empty() )
         return 0.;
     for( DEC_Population_Path::CIT_PopulationPathChannelerVector it = channelers.begin(); it != channelers.end(); ++it )
-    {
         if( it->ComputeCost( vFrom, vTo, terrainTo, terrainBetween ) != std::numeric_limits< double >::min() ) // Inside channel
             return 0;
-    }
     return path_.GetCostOutsideOfChanneling();
 }
 
@@ -84,10 +68,8 @@ float DEC_Population_PathfinderRule::GetCost( const geometry::Point2f& from, con
                                       .Merge( TerrainData::UrbanBorder() ) );
 
     const double rTerrainCost = terrainBetween.ContainsOne( preferedTerrain ) ? 0 : 10000.;
-
     MT_Vector2D vFrom( from.X(), from.Y() );
-    MT_Vector2D vTo  ( to  .X(), to  .Y() );
-
+    MT_Vector2D vTo( to.X(), to.Y() );
     const double rChannelingCost = GetChannelingCost( vFrom, vTo, terrainTo, terrainBetween );
-    return float( from.Distance( to ) * ( 1 + rChannelingCost + rTerrainCost ) );
+    return static_cast< float >( from.Distance( to ) * ( 1 + rChannelingCost + rTerrainCost ) );
 }

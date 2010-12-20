@@ -14,6 +14,7 @@
 #include "CrossingSiteAttribute.h"
 #include "DelayAttribute.h"
 #include "FireAttribute.h"
+#include "FloodAttribute.h"
 #include "InteractionHeightAttribute.h"
 #include "InputToxicCloudAttribute.h"
 #include "LogisticAttribute.h"
@@ -86,6 +87,15 @@ namespace
             object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( xis, object );
         }
     };
+
+    template<>
+    struct AddBuilder< FloodAttribute >
+    {
+        static void Add( Object& object, xml::xistream& xis )
+        {
+            object.GetAttribute< FloodAttribute >() = FloodAttribute( xis, object.GetLocalisation() );
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -111,6 +121,7 @@ AttributeFactory::AttributeFactory()
     Register( "max-size", boost::bind( &AddBuilder< OccupantAttribute >::Add, _1, _2 ) );
     Register( "delay", boost::bind( &AddBuilder< DelayAttribute >::Add, _1, _2 ) );
     Register( "resources", boost::bind( &AddBuilder< ResourceNetworkAttribute >::Add, _1, _2 ) );
+    Register( "flood", boost::bind( &AddBuilder< FloodAttribute >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,44 +183,47 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
             unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
             switch( actionId )
             {
-            case ObjectMagicAction_Attribute_obstacle:
+            case ObjectMagicAction::obstacle:
                 object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( attribute );
                 break;
-            case ObjectMagicAction_Attribute_mine:
+            case ObjectMagicAction::mine:
                 object.GetAttribute< MineAttribute >() = MineAttribute( attribute );
                 break;
-            case ObjectMagicAction_Attribute_activity_time:
+            case ObjectMagicAction::activity_time:
                 object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attribute );
                 break;
-            case ObjectMagicAction_Attribute_bypass:
+            case ObjectMagicAction::bypass:
                 object.GetAttribute< BypassAttribute >() = BypassAttribute( attribute );
                 break;
-            case ObjectMagicAction_Attribute_effect_delay:
+            case ObjectMagicAction::effect_delay:
                 object.GetAttribute< DelayAttribute >() = DelayAttribute( attribute );
                 break;
-            case ObjectMagicAction_Attribute_logistic:
+            case ObjectMagicAction::logistic:
                 object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attribute );
                 break;
-            case ObjectMagicAction_Attribute_nbc:
+            case ObjectMagicAction::nbc:
                 object.GetAttribute< NBCAttribute >() = NBCAttribute( attribute );
                 break;
-            case ObjectMagicAction_Attribute_crossing_site:
+            case ObjectMagicAction::crossing_site:
                 object.GetAttribute< CrossingSiteAttribute >() = CrossingSiteAttribute( attribute );
                 break;
-            case ObjectMagicAction_Attribute_supply_route:
+            case ObjectMagicAction::supply_route:
                 object.GetAttribute< SupplyRouteAttribute >() = SupplyRouteAttribute( attribute );
                 break;
-            /*case ObjectMagicAction_Attribute_toxic_cloud:
+            /*case ObjectMagicAction::toxic_cloud:
                 object.GetAttribute< ??? >() = ???( attribute );
                 break;*/
-            case ObjectMagicAction_Attribute_fire:
+            case ObjectMagicAction::fire:
                 object.GetAttribute< FireAttribute >() = FireAttribute( attribute );
                 break;
-            case ObjectMagicAction_Attribute_medical_treatment:
+            case ObjectMagicAction::medical_treatment:
                 object.GetAttribute< MedicalTreatmentAttribute >() = MedicalTreatmentAttribute( attribute );
                 break;
-            case ObjectMagicAction_Attribute_interaction_height:
+            case ObjectMagicAction::interaction_height:
                 object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attribute );
+                break;
+            case ObjectMagicAction::flood:
+                object.GetAttribute< FloodAttribute >() = FloodAttribute( attribute, object.GetLocalisation() );
                 break;
             default:
                 break;

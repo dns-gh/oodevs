@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-03-08 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Decision/Path/DEC_Agent_PathfinderRule.h $
-// $Author: Age $
-// $Modtime: 24/06/05 11:42 $
-// $Revision: 5 $
-// $Workfile: DEC_Agent_PathfinderRule.h $
-//
-// *****************************************************************************
 
 #ifndef __DEC_Agent_PathfinderRule_h_
 #define __DEC_Agent_PathfinderRule_h_

@@ -18,6 +18,7 @@ Dotations.cpp \
 Equipments.cpp \
 FireAttribute.cpp \
 BurnAttribute.cpp \
+FloodAttribute.cpp \
 Formation.cpp \
 HumanFactors.cpp \
 Intelligence.cpp \

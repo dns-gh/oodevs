@@ -11,6 +11,9 @@
 #include "DEC_Agent_Path.h"
 #include "DEC_Agent_PathSection.h"
 #include "DEC_Agent_PathClass.h"
+#include "DEC_Path_KnowledgeAgent.h"
+#include "DEC_Path_KnowledgeObject.h"
+#include "DEC_Path_KnowledgePopulation.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_PathType.h"
@@ -19,22 +22,17 @@
 #include "Decision/DEC_Rep_PathPoint_Special.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
-#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "simulation_terrain/TER_ObjectManager.h"
-#include "simulation_terrain/TER_World.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::Initialize
@@ -52,7 +50,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
 {
-    fuseau_         = queryMaker.GetOrderManager().GetFuseau();
+    fuseau_= queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     pathPoints_.reserve( 1 + points.size() );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -64,7 +62,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
 // Name: DEC_Agent_Path constructor
 // Created: LDC 2009-06-18
 // -----------------------------------------------------------------------------
-DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType )
+DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points, const DEC_PathType& pathType )
     : DEC_PathResult           ()
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
@@ -76,7 +74,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< bo
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
 {
-    fuseau_         = queryMaker.GetOrderManager().GetFuseau();
+    fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     pathPoints_.reserve( 1 + points.size() );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -101,7 +99,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_       ( false )
 {
-    fuseau_         = queryMaker.GetOrderManager().GetFuseau();
+    fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     pathPoints_.reserve( 2 );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -126,7 +124,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
 {
-    fuseau_         = queryMaker.GetOrderManager().GetFuseau();
+    fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     pathPoints_.reserve( 2 );
     pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -152,7 +150,7 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     , bDecPointsInserted_      ( false )
     , pathPoints_              ( rhs.pathPoints_ )
 {
-    fuseau_         = rhs.fuseau_;
+    fuseau_ = rhs.fuseau_;
     automateFuseau_ = rhs.automateFuseau_;
     Initialize( pathPoints_ );
 }
@@ -165,10 +163,8 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
 DEC_Agent_Path::~DEC_Agent_Path()
 {
     for( IT_PathPointList it = resultList_.begin(); it!= resultList_.end(); it++ )
-    {
-        if( (*it)->GetType() != DEC_PathPoint::eTypePointPath )
-            (*it)->RemoveFromDIA( *it );
-    }
+        if( ( *it )->GetType() != DEC_PathPoint::eTypePointPath )
+            ( *it )->RemoveFromDIA( *it );
     fuseau_.Reset();
     automateFuseau_.Reset();
 }
@@ -189,10 +185,9 @@ void DEC_Agent_Path::Initialize( const T_PointVector& points )
             DEC_Agent_PathSection* pSection = new DEC_Agent_PathSection( *this, *pLastPoint, *itPoint );
             RegisterPathSection( *pSection );
         }
-        pLastPoint = &*itPoint;
+        pLastPoint = &( *itPoint );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::GetUnitMaxSlope
@@ -305,14 +300,15 @@ inline
 DEC_Agent_Path::IT_PathPointList DEC_Agent_Path::GetPreviousPathPointOnDifferentLocation( IT_PathPointList itCurrent )
 {
     assert( itCurrent != resultList_.end() );
-    const MT_Vector2D& vPosition = (*itCurrent)->GetPos();
-    while ( itCurrent != resultList_.begin() && (*itCurrent)->GetPos() == vPosition )
+    const MT_Vector2D& vPosition = ( *itCurrent )->GetPos();
+    while ( itCurrent != resultList_.begin() && ( *itCurrent )->GetPos() == vPosition )
         --itCurrent;
     return itCurrent;
 }
 
 #pragma warning( push )
 #pragma warning( disable : 4127 ) // conditional expression is constant
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: NLD 2005-08-11
@@ -322,11 +318,9 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
     double rDistanceLeft = spottedPathPoint->GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
                              queryMaker_.GetType().GetDistanceAvantLima() :
                              queryMaker_.GetType().GetDistanceAvantPoint( spottedPathPoint->GetTypeTerrain() );
-
     while( true )
     {
-        const MT_Vector2D& vCurrentPos = (*itCurrent)->GetPos();
-
+        const MT_Vector2D& vCurrentPos = ( *itCurrent )->GetPos();
         if( itCurrent == resultList_.begin() )
         {
             boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vCurrentPos, spottedPathPoint ) );
@@ -336,22 +330,20 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
 
         // remise en position des itérateurs
         IT_PathPointList itPrev = GetPreviousPathPointOnDifferentLocation( itCurrent );
-
         itCurrent = itPrev;
         ++itCurrent;
-        assert( (*itCurrent)->GetPos() == vCurrentPos );
+        assert( ( *itCurrent )->GetPos() == vCurrentPos );
 
         // calcul de la distance "mangée" par le parcours de ce segment
-        const MT_Vector2D& vPreviousPos = (*itPrev)->GetPos();
-              MT_Vector2D  vTmp         = vPreviousPos - vCurrentPos;
-        const double     vTmpMag      = vTmp.Magnitude();
+        const MT_Vector2D& vPreviousPos = ( *itPrev )->GetPos();
+        MT_Vector2D vTmp = vPreviousPos - vCurrentPos;
+        const double vTmpMag = vTmp.Magnitude();
 
         rDistanceLeft -= vTmpMag;
         if( rDistanceLeft == 0. )
         {
             // Positionnement du point avant au même endroit qu'un autre point
             boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vPreviousPos, spottedPathPoint ) );
-
             resultList_.insert( itPrev, pNewPoint );
             break;
         }
@@ -361,9 +353,7 @@ void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > 
             vTmp /= vTmpMag;
             vTmp *= rDistanceLeft;
             vTmp += vPreviousPos;
-
             boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vTmp, spottedPathPoint ) );
-
             resultList_.insert( itCurrent, pNewPoint );
             break;
         }
@@ -421,16 +411,12 @@ void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint 
 void DEC_Agent_Path::InsertPointAvants()
 {
     double rDistSinceLastPointAvant = std::numeric_limits< double >::max();
-    double rDistSinceLastPoint      = std::numeric_limits< double >::max();
-
+    double rDistSinceLastPoint = std::numeric_limits< double >::max();
     TerrainData nObjectTypesBefore;
-
     DEC_PathPoint* pPrevPoint = 0;
-
     for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
     {
         DEC_PathPoint& current = **itPoint;
-
         if( pPrevPoint )
         {
             if( rDistSinceLastPointAvant != std::numeric_limits< double >::max() )
@@ -447,37 +433,36 @@ void DEC_Agent_Path::InsertPointAvants()
         }
 
         TerrainData nObjectTypesToNextPoint = current.GetObjectTypesToNextPoint();
-
         if( nObjectTypesBefore == TerrainData() )
         {
-            pPrevPoint         = &current;
+            pPrevPoint = &current;
             nObjectTypesBefore = nObjectTypesToNextPoint;
             continue;
         }
 
         // Village
         if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( ( *itPoint )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
+        // Urban
         else if( IsPointAvantOut( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            InsertPoint( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint( (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Urban() ) ), itPoint, rDistSinceLastPoint );
+            InsertPoint( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint( ( *itPoint )->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Urban() ) ), itPoint, rDistSinceLastPoint );
 
         // Forest
         else if( IsPointAvant( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Forest() ) )
-            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint( (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Forest() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint( ( *itPoint )->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Forest() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Cross roads
         else if( current.GetObjectTypes().ContainsOne( TerrainData::Crossroad() ) )
-            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( ( *itPoint )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Pont
         else if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Bridge() )
                 || ( !current.GetObjectTypes().ContainsOne( TerrainData::SmallRiver() ) && current.GetObjectTypes().ContainsOne( TerrainData::Bridge() ) && !nObjectTypesBefore.ContainsOne( TerrainData::Bridge() ) && !nObjectTypesToNextPoint.ContainsOne( TerrainData::Bridge() ) )
                 )
-            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( ( *itPoint )->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         nObjectTypesBefore = nObjectTypesToNextPoint;
-
         pPrevPoint = &current;
     }
 }
@@ -492,8 +477,7 @@ void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
     for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
     {
         boost::shared_ptr< DEC_PathPoint > pCurrentPoint = *itPoint;
-        assert ( pCurrentPoint );
-
+        assert( pCurrentPoint );
         if( pLastPoint.get() && ( pCurrentPoint->GetPos() != pLastPoint->GetPos() ) )
         {
             MT_Line segment( pLastPoint->GetPos(), pCurrentPoint->GetPos() );
@@ -622,10 +606,7 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 {
     float weight = static_cast< float >( GetUnitMajorWeight() );
     for( CIT_PointVector it = pathPoints_.begin(); it != pathPoints_.end(); ++it )
-    {
         if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
             return false;
-    }
     return true;
 }
-

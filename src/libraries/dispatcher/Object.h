@@ -14,11 +14,9 @@
 #include "Object_ABC.h"
 #include "ObjectAttributeContainer.h"
 #include "tools/Resolver.h"
-#include <boost/ptr_container/ptr_vector.hpp>
 
 namespace sword
 {
-    class ObjectAttributes;
     class ObjectCreation;
     class ObjectUpdate;
 }
@@ -26,7 +24,6 @@ namespace sword
 namespace dispatcher
 {
     class Model_ABC;
-    class ObjectAttribute_ABC;
 
 // =============================================================================
 /** @class  Object
@@ -34,7 +31,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class Object : public dispatcher::Object_ABC
+class Object : public Object_ABC
              , public kernel::Extension_ABC
              , public kernel::Updatable_ABC< sword::ObjectUpdate >
 {
@@ -48,14 +45,13 @@ public:
     //! @name Operations
     //@{
     virtual void DoUpdate( const sword::ObjectUpdate& msg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual const kernel::ObjectType& GetType() const;
-    virtual const dispatcher::Team_ABC& GetTeam() const;
+    virtual const Team_ABC& GetTeam() const;
     //@}
 
 private:
@@ -79,7 +75,7 @@ private:
 private:
     const kernel::ObjectType& type_;
     Localisation localisation_;
-    dispatcher::Team_ABC& side_;
+    Team_ABC& side_;
     ObjectAttributeContainer attributes_;
     T_Optionals optionals_;
 };

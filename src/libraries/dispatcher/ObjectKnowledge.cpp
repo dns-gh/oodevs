@@ -8,27 +8,15 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "Automat.h"
-#include "BypassAttribute.h"
-#include "ConstructionAttribute.h"
-#include "CrossingSiteAttribute.h"
-#include "DelayAttribute.h"
-#include "FireAttribute.h"
-#include "LogisticAttribute.h"
-#include "KnowledgeGroup.h"
-#include "MedicalTreatmentAttribute.h"
-#include "MineAttribute.h"
-#include "Model.h"
-#include "NBCAttribute.h"
 #include "ObjectKnowledge.h"
-#include "ObstacleAttribute.h"
+#include "Automat.h"
+#include "KnowledgeGroup.h"
+#include "Model.h"
 #include "Object.h"
 #include "Side.h"
-#include "SupplyRouteAttribute.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <boost/bind.hpp>
 
 using namespace dispatcher;
 
@@ -37,7 +25,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
 ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKnowledgeCreation& message )
-    : dispatcher::ObjectKnowledge_ABC( message.knowledge().id() )
+    : ObjectKnowledge_ABC( message.knowledge().id() )
     , model_                         ( model )
     , owner_                         ( model.Sides().Get( message.party().id() ) )
     , pObject_                       ( model.Objects().Find( message.object().id() ) )

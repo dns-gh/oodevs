@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: DelayAttribute constructor
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( kernel::Controller& controller )
+DelayAttribute::DelayAttribute( Controller& controller )
     : controller_ ( controller )
     , delay_ ( 0 )
 {
@@ -40,7 +40,7 @@ DelayAttribute::~DelayAttribute()
 // Name: DelayAttribute::Display
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::Display( kernel::Displayer_ABC& displayer ) const
+void DelayAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
              .Display( tools::translate( "Object", "Delay time:" ), delay_ / 3600. * Units::hours );
@@ -50,7 +50,7 @@ void DelayAttribute::Display( kernel::Displayer_ABC& displayer ) const
 // Name: DelayAttribute::DisplayInTooltip
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
+void DelayAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     Display( displayer );
 }
@@ -59,7 +59,7 @@ void DelayAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // Name: DelayAttribute::DisplayInSummary
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
-void DelayAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+void DelayAttribute::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     Display( displayer );
 }

@@ -31,7 +31,6 @@ namespace kernel
 namespace dispatcher
 {
     class Model_ABC;
-    class ObjectAttribute_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================

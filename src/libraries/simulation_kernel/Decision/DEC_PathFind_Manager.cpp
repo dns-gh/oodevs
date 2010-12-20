@@ -15,11 +15,9 @@
 #include "DEC_PathType.h"
 #include "DEC_PathFactory.h"
 #include "clients_kernel/PhysicalFileLoader.h"
-#include "simulation_terrain/TER_PathfinderThread.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"
-#include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -155,11 +153,9 @@ void DEC_PathFind_Manager::AddPendingJob( boost::shared_ptr< DEC_Path_ABC > pPat
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage()
 {
-    unsigned int nIndex = 0;
-    for( ; nIndex < pathFindThreads_.size(); ++nIndex )
+    for( unsigned int nIndex = 0 ; nIndex < pathFindThreads_.size(); ++nIndex )
         if( pathFindThreads_[ nIndex ]->IsCurrent() )
             break;
-
     return GetMessage( nIndex );
 }
 
@@ -262,7 +258,6 @@ void DEC_PathFind_Manager::CleanPathAfterComputation( const boost::shared_ptr< T
 void DEC_PathFind_Manager::Update()
 {
     boost::mutex::scoped_lock locker( cleanAndDestroyMutex_ );
-
     while( ! requestsToCleanAfterComputation_.empty() )
     {
         boost::shared_ptr< TER_PathFindRequest_ABC > pRequest = requestsToCleanAfterComputation_.back();
@@ -278,7 +273,6 @@ void DEC_PathFind_Manager::Update()
 void DEC_PathFind_Manager::UpdateInSimulationThread()
 {
     if( bUseInSameThread_ ) // Pathfind in same thread than simulation
-    {
         while( ! shortRequests_.empty() || ! longRequests_.empty() )
         {
             T_Requests& requests = GetRequests();
@@ -287,5 +281,4 @@ void DEC_PathFind_Manager::UpdateInSimulationThread()
             pathFindThreads_[ 0 ]->ProcessInSimulationThread( pRequest );
             ++treatedRequests_;
         }
-    }
 }

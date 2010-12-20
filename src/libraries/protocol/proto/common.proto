@@ -764,6 +764,11 @@ message ObjectAttributeSupplyRoute {
    required int32 flow_rate  = 5;
 }
 
+message ObjectAttributeFlood {
+   required int32 depth              = 1;
+   required int32 reference_distance = 2;
+}
+
 message LocatedQuantity{
    required CoordLatLong coordinate = 1;
    required float        quantity   = 2;
@@ -837,7 +842,8 @@ message ObjectAttributes {
    optional ObjectAttributeEffectDelay       effect_delay       = 16;
    optional ObjectAttributeSealOff           seal_off           = 17;
    optional ObjectAttributeResourceNetwork   resource_networks  = 18; // not in scipio V1.stab
-   optional ObjectAttributeBurn              burn = 19;
+   optional ObjectAttributeBurn              burn               = 19;
+   optional ObjectAttributeFlood             flood              = 20;
 }
 
 message Marker {

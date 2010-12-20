@@ -12,9 +12,8 @@
 #include "Decision/DEC_Agent_PathClass.h"
 #include "Decision/DEC_Population_PathClass.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include <xeumeuleu/xml.hpp>
 
-DEC_PathFactory* DEC_PathFactory::pInstance_;
+DEC_PathFactory* DEC_PathFactory::pInstance_ = 0;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFactory::Initialize

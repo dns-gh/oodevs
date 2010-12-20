@@ -13,18 +13,16 @@
 #define __DEC_PathFind_Manager_h_
 
 #pragma warning( push, 1 )
-#pragma warning( disable : 4244 4275 )
-#include "tools/thread/MessageQueue_ABC.h"
+#include <tools/thread/MessageQueue_ABC.h>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>
-#pragma warning( pop )
-#include <boost/shared_ptr.hpp>
 #include <deque>
 
 class DEC_Path_ABC;
 class TER_PathFinderThread;
 class TER_PathFindRequest_ABC;
 class MIL_Config;
+
 namespace xml
 {
     class xistream;
@@ -79,6 +77,8 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     mutable boost::mutex mutex_;
     boost::condition condition_;
     T_Requests shortRequests_;
@@ -90,6 +90,7 @@ private:
     boost::mutex cleanAndDestroyMutex_;
     T_Requests requestsToCleanAfterComputation_;
     bool bUseInSameThread_;
+    //@}
 };
 
 #include "DEC_PathFind_Manager.inl"

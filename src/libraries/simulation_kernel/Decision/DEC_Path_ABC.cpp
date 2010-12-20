@@ -57,7 +57,7 @@ void DEC_Path_ABC::Cancel()
 {
     bJobCanceled_ = true;
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
-        (**itPathSection).Cancel();
+        ( *itPathSection )->Cancel();
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ double DEC_Path_ABC::GetLength() const
 {
     double rLength = 0.;
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
-        rLength += (**itPathSection).GetLength();
+        rLength += ( *itPathSection )->GetLength();
     return rLength;
 }
 
@@ -139,7 +139,7 @@ std::string DEC_Path_ABC::GetStateAsString() const
         case eImpossible : return "Impossible";
         case ePartial    : return "Partial";
         case eCanceled   : return "Canceled";
-        default:           return "UNKNOWN";
+        default          : return "UNKNOWN";
     }
 }
 
@@ -152,6 +152,6 @@ std::string DEC_Path_ABC::GetPathAsString() const
     std::stringstream strTmp;
     strTmp << "   Path points : " << pathSections_.front()->GetPosStart();
     for( CIT_PathSectionVector itSection = pathSections_.begin(); itSection != pathSections_.end(); ++itSection )
-        strTmp << " -> " << (**itSection).GetPosEnd();
+        strTmp << " -> " << ( *itSection )->GetPosEnd();
     return strTmp.str();
 }

@@ -986,6 +986,14 @@
         <source>Combustion energy:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Flood</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reference distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

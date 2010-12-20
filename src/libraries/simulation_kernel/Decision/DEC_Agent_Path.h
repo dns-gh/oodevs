@@ -10,19 +10,17 @@
 #ifndef __DEC_Agent_Path_h_
 #define __DEC_Agent_Path_h_
 
-#include "DEC_Path_KnowledgeAgent.h"
-#include "DEC_Path_KnowledgeObject.h"
-#include "DEC_Path_KnowledgePopulation.h"
 #include "Decision/DEC_PathResult.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "MT_Tools/MT_Profiler.h"
-#include <boost/shared_ptr.hpp>
 
-class DEC_Rep_PathPoint;
+class DEC_Path_KnowledgeAgent;
+class DEC_Path_KnowledgeObject;
+class DEC_Path_KnowledgePopulation;
 class DEC_PathType;
 class MIL_LimaOrder;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class DEC_Agent_PathClass;
 
@@ -49,35 +47,38 @@ public:
     //@}
 
 public:
-     DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType );
-     DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType, bool loaded  );
-     DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType );
-     DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
-     DEC_Agent_Path( const DEC_Agent_Path& rhs ); // Copy only query parameters, not the result !
+    //! @name Constructors/Destructor
+    //@{
+             DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType );
+             DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded  );
+             DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType );
+             DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
+             DEC_Agent_Path( const DEC_Agent_Path& rhs ); // Copy only query parameters, not the result !
     virtual ~DEC_Agent_Path();
+    //@}
 
     //! @name Path calculation
     //@{
-    virtual void Execute              ( TerrainPathfinder& pathfind );
+    virtual void Execute( TerrainPathfinder& pathfind );
     virtual void CleanAfterComputation();
-    virtual bool NeedRefine           () const;
-    virtual bool UseStrictClosest     () const;
+    virtual bool NeedRefine() const;
+    virtual bool UseStrictClosest() const;
     //@}
 
     //! @name Accessors
     //@{
-    const MIL_Fuseau&                         GetFuseau                   () const;
-    const MIL_Fuseau&                         GetAutomataFuseau           () const;
-    const PHY_Speeds&                         GetUnitSpeeds               () const;
-          double                            GetUnitMaxSlope             () const;
-    const MT_Vector2D&                        GetDirDanger                () const;
-    const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects     () const;
-          double                            GetCostOutsideOfAllObjects  () const;
-    const T_PathKnowledgeAgentVector&         GetPathKnowledgeAgents      () const;
-    const T_PathKnowledgePopulationVector&    GetPathKnowledgePopulations () const;
-    const DEC_PathType&                       GetPathType                 () const;
-    const DEC_Agent_PathClass&                GetPathClass                () const;
-          double                            GetUnitMajorWeight          () const;
+    const MIL_Fuseau& GetFuseau() const;
+    const MIL_Fuseau& GetAutomataFuseau() const;
+    const PHY_Speeds& GetUnitSpeeds() const;
+    double GetUnitMaxSlope() const;
+    const MT_Vector2D& GetDirDanger() const;
+    const T_PathKnowledgeObjectByTypesVector& GetPathKnowledgeObjects() const;
+    double GetCostOutsideOfAllObjects() const;
+    const T_PathKnowledgeAgentVector& GetPathKnowledgeAgents() const;
+    const T_PathKnowledgePopulationVector& GetPathKnowledgePopulations() const;
+    const DEC_PathType& GetPathType() const;
+    const DEC_Agent_PathClass& GetPathClass() const;
+    double GetUnitMajorWeight() const;
     //@}
 
     //! @name Tools
@@ -89,7 +90,7 @@ public:
 private:
     //! @name Init
     //@{
-    void Initialize              ( const T_PointVector& pathPoints );
+    void Initialize( const T_PointVector& pathPoints );
     void InitializePathKnowledges( const T_PointVector& pathPoints );
     //@}
 
@@ -100,13 +101,13 @@ private:
 
     //! @name Points insertion Tools
     //@{
-    int  IsPointAvant     ( DEC_PathPoint* pBefore, DEC_PathPoint& current, DEC_PathPoint* pAfter, const TerrainData& nTypeTerrain ) const;
-    bool IsPointAvant     ( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
-    bool IsPointAvantOut  ( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
-    bool IsPointAvantIn   ( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
+    int IsPointAvant( DEC_PathPoint* pBefore, DEC_PathPoint& current, DEC_PathPoint* pAfter, const TerrainData& nTypeTerrain ) const;
+    bool IsPointAvant( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
+    bool IsPointAvantOut( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
+    bool IsPointAvantIn( const TerrainData& nObjectTypesBefore, const TerrainData& nObjectTypesToNextPoint, const TerrainData& nTypeTerrain ) const;
 
     void InsertPointAvants();
-    void InsertLimas      ();
+    void InsertLimas();
 
     void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent );
     void InsertPointAvant        ( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, double& rDistSinceLastPointAvant );
@@ -122,21 +123,21 @@ private:
     //@{
     const MIL_Agent_ABC& queryMaker_;
     // Path calculation parameters
-    const DEC_PathType&                      pathType_; //$$$ A VIRER
-    const DEC_Agent_PathClass&               pathClass_;
-          bool                               bRefine_;
-          T_PointVector                      pathPoints_;
-          MIL_Fuseau                         fuseau_;
-          MIL_Fuseau                         automateFuseau_;
-          MT_Vector2D                        vDirDanger_;
-          PHY_Speeds                         unitSpeeds_;
-          double                           rMaxSlope_;
-          T_PathKnowledgeAgentVector         pathKnowledgeAgents_;
-          T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
-          double                           rCostOutsideOfAllObjects_;
-          T_PathKnowledgePopulationVector    pathKnowledgePopulations_;
-          MT_Profiler                        profiler_;
-          bool bDecPointsInserted_;
+    const DEC_PathType& pathType_; //$$$ A VIRER
+    const DEC_Agent_PathClass& pathClass_;
+    bool bRefine_;
+    T_PointVector pathPoints_;
+    MIL_Fuseau fuseau_;
+    MIL_Fuseau automateFuseau_;
+    MT_Vector2D vDirDanger_;
+    PHY_Speeds unitSpeeds_;
+    double rMaxSlope_;
+    T_PathKnowledgeAgentVector pathKnowledgeAgents_;
+    T_PathKnowledgeObjectByTypesVector pathKnowledgeObjects_;
+    double rCostOutsideOfAllObjects_;
+    T_PathKnowledgePopulationVector pathKnowledgePopulations_;
+    MT_Profiler profiler_;
+    bool bDecPointsInserted_;
     //@}
 };
 

@@ -11,24 +11,10 @@
 #include "Object.h"
 #include "Model.h"
 #include "Side.h"
-#include "ConstructionAttribute.h"
-#include "DelayAttribute.h"
-#include "ObstacleAttribute.h"
-#include "BypassAttribute.h"
-#include "CrossingSiteAttribute.h"
-#include "MineAttribute.h"
-#include "NBCAttribute.h"
-#include "FireAttribute.h"
-#include "MedicalTreatmentAttribute.h"
-#include "SupplyRouteAttribute.h"
-#include "LogisticAttribute.h"
-#include "ToxicCloudAttribute.h"
-#include "ResourceNetworkAttribute.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "protocol/ClientSenders.h"
-#include <boost/bind.hpp>
 
 using namespace dispatcher;
 
@@ -37,11 +23,11 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Object::Object( Model_ABC& model, const sword::ObjectCreation& msg, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types )
-    : dispatcher::Object_ABC( msg.object().id(), QString( msg.name().c_str() ) )
-    , type_                 ( types.Get( msg.type().id() ) )
-    , localisation_         ( msg.location() )
-    , side_                 ( model.Sides().Get( msg.party().id() ) )
-    , attributes_           ( model )
+    : Object_ABC   ( msg.object().id(), QString( msg.name().c_str() ) )
+    , type_        ( types.Get( msg.type().id() ) )
+    , localisation_( msg.location() )
+    , side_        ( model.Sides().Get( msg.party().id() ) )
+    , attributes_  ( model )
 {
     side_.Register( *this );
     RegisterSelf( *this );
@@ -143,7 +129,7 @@ const kernel::ObjectType& Object::GetType() const
 // Name: Object::GetTeam
 // Created: SBO 2010-06-07
 // -----------------------------------------------------------------------------
-const dispatcher::Team_ABC& Object::GetTeam() const
+const Team_ABC& Object::GetTeam() const
 {
     return side_;
 }

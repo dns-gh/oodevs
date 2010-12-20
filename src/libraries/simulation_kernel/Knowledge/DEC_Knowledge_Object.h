@@ -16,7 +16,6 @@
 #include "Tristate.h"
 #include "DEC_Knowledge_ABC.h"
 #include "DEC_Knowledge_IObjectAttributeProxy.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/Extendable.h"
 #include "Tools/MIL_IDManager.h"
@@ -102,15 +101,15 @@ public:
     bool IsReservedObstacle() const;
     bool IsReservedObstacleActivated() const;
     unsigned int GetID() const;
-    const std::string&  GetName() const;
+    const std::string& GetName() const;
     MIL_Object_ABC* GetObjectKnown() const;
     const MIL_ObjectType_ABC& GetType() const;
     const TER_Localisation& GetLocalisation() const;
     const TER_Localisation& GetAvoidanceLocalisation() const;
     const MIL_Army_ABC& GetArmy() const;
     double GetMaxInteractionHeight() const;
-    E_Tristate IsAnEnemy ( const MIL_Army_ABC& army ) const;
-    E_Tristate IsAFriend ( const MIL_Army_ABC& army ) const;
+    E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const;
+    E_Tristate IsAFriend( const MIL_Army_ABC& army ) const;
 
     template< typename T > 
     const T* RetrieveAttribute() const;
@@ -121,15 +120,15 @@ protected:
     //@{
     enum E_Attributes
     {
-        eAttr_Nothing                   = 0x00000000,
-        eAttr_Localisation              = 0x00000001,
-        eAttr_RealObject                = 0x00000040,
-        eAttr_PerceptionSources         = 0x00000080,
-        eAttr_Relevance                 = 0x00000100,
-        eAttr_CurrentPerceptionLevel    = 0x00000200,
-        eAttr_MaxPerceptionLevel        = 0x00000400,
-        eAttr_Attributes                = 0x00000800,
-        eAttr_AllAttributes             = 0xFFFFFFFF
+        eAttr_Nothing                = 0x00000000,
+        eAttr_Localisation           = 0x00000001,
+        eAttr_RealObject             = 0x00000040,
+        eAttr_PerceptionSources      = 0x00000080,
+        eAttr_Relevance              = 0x00000100,
+        eAttr_CurrentPerceptionLevel = 0x00000200,
+        eAttr_MaxPerceptionLevel     = 0x00000400,
+        eAttr_Attributes             = 0x00000800,
+        eAttr_AllAttributes          = 0xFFFFFFFF
     };
     //@}
 
@@ -139,13 +138,12 @@ private:
     void NotifyAttributeUpdated( E_Attributes nAttribute );
     bool IsAttributeUpdated( E_Attributes nAttribute ) const;
     const MIL_Army_ABC& GetArmyKnowing() const;
-
     //@}
 
     //! @name Internal updaters
     //@{
     void UpdateLocalisations();
-    void UpdateLocalisationPartially ( const DEC_Knowledge_ObjectCollision& collision );
+    void UpdateLocalisationPartially( const DEC_Knowledge_ObjectCollision& collision );
     void UpdatePerceptionSources( const DEC_Knowledge_ObjectPerception& perception );
     void UpdateCurrentPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
     bool UpdateMaxPerceptionLevel( const PHY_PerceptionLevel& perceptionLevel );
@@ -187,7 +185,7 @@ private:
     MIL_Object_ABC* pObjectKnown_; // Objet réel (peut ne plus exister...)
     const MIL_ObjectType_ABC* pObjectType_;
     const unsigned int  nID_;
-    std::string         name_;
+    std::string name_;
     int nAttributesUpdated_;
     // Attributes
     const MIL_Army_ABC* pOwnerArmy_;
@@ -216,20 +214,17 @@ template< typename Functor>
 void DEC_Knowledge_Object::UpdateAttributes( Functor functor )
 {    
     for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
-    {
         if( *it && functor( *it ) )
             NotifyAttributeUpdated( eAttr_Attributes );
-    }
 }
 
 template< typename T > 
 const T* DEC_Knowledge_Object::RetrieveAttribute() const
 {
-    const DEC_Knowledge_ObjectAttributeProxy_ABC<T>* pAttr = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC<T> >();
+    const DEC_Knowledge_ObjectAttributeProxy_ABC< T >* pAttr = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< T > >();
     if( !pAttr )
         return 0;
     return pAttr->GetAttribute();
 }
-
 
 #endif // __DEC_Knowledge_Object_h_

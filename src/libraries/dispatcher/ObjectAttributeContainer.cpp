@@ -16,6 +16,7 @@
 #include "DelayAttribute.h"
 #include "FireAttribute.h"
 #include "BurnAttribute.h"
+#include "FloodAttribute.h"
 #include "LogisticAttribute.h"
 #include "KnowledgeGroup.h"
 #include "MedicalTreatmentAttribute.h"
@@ -132,6 +133,8 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< ResourceNetworkAttribute >( message );
     if( message.has_nbc_agent() )
         CreateOrUpdate< NBCTypeAttribute >( message );
+    if( message.has_flood() )
+        CreateOrUpdate< FloodAttribute >( message );
 }
 
 // -----------------------------------------------------------------------------

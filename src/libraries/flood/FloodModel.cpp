@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "FloodHelper.h"
+#include "FloodModel.h"
 #include "ElevationGetter_ABC.h"
 #include <windows.h>
 #include <gl/gl.h>
@@ -16,13 +16,13 @@
 using namespace flood;
 using namespace geometry;
 
-const int FloodHelper::cellWidth_ = 100;
+const int FloodModel::cellWidth_ = 100;
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper constructor
+// Name: FloodModel constructor
 // Created: JSR 2010-12-10
 // -----------------------------------------------------------------------------
-FloodHelper::FloodHelper( const ElevationGetter_ABC& getter )
+FloodModel::FloodModel( const ElevationGetter_ABC& getter )
     : getter_   ( getter)
     , refDist_  ( 0 )
     , oldDepth_ ( -1 )
@@ -34,19 +34,19 @@ FloodHelper::FloodHelper( const ElevationGetter_ABC& getter )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper destructor
+// Name: FloodModel destructor
 // Created: JSR 2010-12-10
 // -----------------------------------------------------------------------------
-FloodHelper::~FloodHelper()
+FloodModel::~FloodModel()
 {
     Reset();
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::ComputePolygons
+// Name: FloodModel::ComputePolygons
 // Created: JSR 2010-12-08
 // -----------------------------------------------------------------------------
-void FloodHelper::GenerateFlood( const Point2f& center, int depth, int refDist )
+void FloodModel::GenerateFlood( const Point2f& center, int depth, int refDist )
 {
     if( depth == oldDepth_ && refDist == refDist_ )
         return;
@@ -77,13 +77,13 @@ void FloodHelper::GenerateFlood( const Point2f& center, int depth, int refDist )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::Draw
+// Name: FloodModel::Draw
 // Created: JSR 2010-12-14
 // -----------------------------------------------------------------------------
-void FloodHelper::Draw() const
+void FloodModel::Draw() const
 {
     if( textureId_ == 0 )
-        const_cast< FloodHelper* >( this )->RenderTexture();
+        const_cast< FloodModel* >( this )->RenderTexture();
     glEnable( GL_TEXTURE_2D );
     glBindTexture( GL_TEXTURE_2D, textureId_ );
     glColor4f( 1, 1, 1, 1 );
@@ -102,10 +102,10 @@ void FloodHelper::Draw() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::Propagate
+// Name: FloodModel::Propagate
 // Created: JSR 2010-12-14
 // -----------------------------------------------------------------------------
-void FloodHelper::Propagate( int floodElevation )
+void FloodModel::Propagate( int floodElevation )
 {
     std::queue< std::pair< unsigned short, unsigned short > > queue;
     queue.push( std::make_pair( halfWidth_, halfWidth_ ) );
@@ -139,19 +139,19 @@ void FloodHelper::Propagate( int floodElevation )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::FindFirstUnmarkedCell
+// Name: FloodModel::FindFirstUnmarkedCell
 // Created: JSR 2010-12-10
 // -----------------------------------------------------------------------------
-bool FloodHelper::FindFirstUnmarkedCell( int& xRet, int& yRet ) const
+bool FloodModel::FindFirstUnmarkedCell( int& xRet, int& yRet ) const
 {
     return FindFirstMarkedCell( xRet, yRet, -1 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::FindFirstMarkedCell
+// Name: FloodModel::FindFirstMarkedCell
 // Created: JSR 2010-12-10
 // -----------------------------------------------------------------------------
-bool FloodHelper::FindFirstMarkedCell( int& xRet, int& yRet, int index ) const
+bool FloodModel::FindFirstMarkedCell( int& xRet, int& yRet, int index ) const
 {
     for( int y = 0; y < 2 * halfWidth_ + 1; ++y )
         for( int x = 0; x < 2 * halfWidth_ + 1; ++x )
@@ -165,10 +165,10 @@ bool FloodHelper::FindFirstMarkedCell( int& xRet, int& yRet, int index ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::MarkAdjacentCells
+// Name: FloodModel::MarkAdjacentCells
 // Created: JSR 2010-12-10
 // -----------------------------------------------------------------------------
-int FloodHelper::MarkAdjacentCells( int x, int y, bool deep, int nPolygonIndex )
+int FloodModel::MarkAdjacentCells( int x, int y, bool deep, int nPolygonIndex )
 {
     ppCells_[ x ][ y ].polIndex_ = nPolygonIndex;
     while( ++x < 2 * halfWidth_ + 1 && ppCells_[ x ][ y ].polIndex_ == -1 && ppCells_[ x ][ y ].deep_ == deep )
@@ -177,10 +177,10 @@ int FloodHelper::MarkAdjacentCells( int x, int y, bool deep, int nPolygonIndex )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::MarkCells
+// Name: FloodModel::MarkCells
 // Created: JSR 2010-12-10
 // -----------------------------------------------------------------------------
-void FloodHelper::MarkCells( int xStart, int yStart, int nPolygonIndex )
+void FloodModel::MarkCells( int xStart, int yStart, int nPolygonIndex )
 {
     bool deep = ppCells_[ xStart ][ yStart ].deep_;
     while( xStart != -1 && yStart < 2 * halfWidth_ + 1 )
@@ -192,10 +192,10 @@ void FloodHelper::MarkCells( int xStart, int yStart, int nPolygonIndex )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::CreatePolygon
+// Name: FloodModel::CreatePolygon
 // Created: JSR 2010-12-14
 // -----------------------------------------------------------------------------
-void FloodHelper::CreatePolygon( int nPolygonIndex )
+void FloodModel::CreatePolygon( int nPolygonIndex )
 {
     static const float halfCellWidth = static_cast< float >( 0.5 * cellWidth_ );
     static const Vector2f vBottomLeft( -halfCellWidth, -halfCellWidth );
@@ -250,10 +250,10 @@ void FloodHelper::CreatePolygon( int nPolygonIndex )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::FindUnmarkedOnNextLine
+// Name: FloodModel::FindUnmarkedOnNextLine
 // Created: JSR 2010-12-10
 // -----------------------------------------------------------------------------
-int FloodHelper::FindUnmarkedOnNextLine( int xStart, int xEnd, int y, bool deep ) const
+int FloodModel::FindUnmarkedOnNextLine( int xStart, int xEnd, int y, bool deep ) const
 {
     if( ++y < 2 * halfWidth_ + 1 )
         for( int x = xStart; x <= xEnd; ++x )
@@ -267,10 +267,10 @@ int FloodHelper::FindUnmarkedOnNextLine( int xStart, int xEnd, int y, bool deep 
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::FindFirstMarkedOnLine
+// Name: FloodModel::FindFirstMarkedOnLine
 // Created: JSR 2010-12-10
 // -----------------------------------------------------------------------------
-int FloodHelper::FindFirstMarkedOnLine( int y, int index ) const
+int FloodModel::FindFirstMarkedOnLine( int y, int index ) const
 {
     int x = -1;
     while( ++x < 2 * halfWidth_ + 1 )
@@ -280,10 +280,10 @@ int FloodHelper::FindFirstMarkedOnLine( int y, int index ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::FindLastMarkedOnLine
+// Name: FloodModel::FindLastMarkedOnLine
 // Created: JSR 2010-12-10
 // -----------------------------------------------------------------------------
-int FloodHelper::FindLastMarkedOnLine( int y, int index ) const
+int FloodModel::FindLastMarkedOnLine( int y, int index ) const
 {
     int x = 2 * halfWidth_ + 1;
     while( --x >= 0 )
@@ -293,10 +293,10 @@ int FloodHelper::FindLastMarkedOnLine( int y, int index ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::Reset
+// Name: FloodModel::Reset
 // Created: JSR 2010-12-14
 // -----------------------------------------------------------------------------
-void FloodHelper::Reset()
+void FloodModel::Reset()
 {
     for( unsigned int i = 0; i < deepAreas_.size(); ++i )
         delete deepAreas_.at( i );
@@ -312,10 +312,10 @@ void FloodHelper::Reset()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::RenderTexture
+// Name: FloodModel::RenderTexture
 // Created: JSR 2010-12-14
 // -----------------------------------------------------------------------------
-void FloodHelper::RenderTexture()
+void FloodModel::RenderTexture()
 {
     // TODO voir si on peut créer la texture une fois pour toute au début?
     // TODO créer la texture totalement offscreen?
@@ -358,10 +358,10 @@ void FloodHelper::RenderTexture()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodHelper::DrawPolygons
+// Name: FloodModel::DrawPolygons
 // Created: JSR 2010-12-14
 // -----------------------------------------------------------------------------
-void FloodHelper::DrawPolygons( const T_Polygons& polygons ) const
+void FloodModel::DrawPolygons( const T_Polygons& polygons ) const
 {
     float factor = 256.f / refDist_; // 512 / ( 2 * refDist_ )
     float offsetX = center_.X() - refDist_;

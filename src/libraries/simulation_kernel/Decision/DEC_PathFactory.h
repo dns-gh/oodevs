@@ -10,7 +10,6 @@
 #ifndef __DEC_PathFactory_h_
 #define __DEC_PathFactory_h_
 
-
 namespace xml
 {
     class xistream;
@@ -24,8 +23,8 @@ class DEC_PathFactory
 public:
     //! @name Singleton
     //@{
-    static void  Initialize( xml::xistream& xis );
-    static void  Terminate ();
+    static void Initialize( xml::xistream& xis );
+    static void Terminate ();
     static const DEC_PathFactory& GetInstance();
     //@}
 

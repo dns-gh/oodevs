@@ -16,7 +16,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "flood/FloodHelper.h"
+#include "flood/FloodModel.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -31,7 +31,7 @@ FloodAttribute::FloodAttribute( PropertiesDictionary& dico, const kernel::Detect
     , controllers_( controllers )
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
-    , floodHelper_( *new flood::FloodHelper( *this ) ) // $$$$ MCO use an std::auto_ptr because if anything throws before end of contructor => memory leak
+    , floodModel_ ( new flood::FloodModel( *this ) )
 {
     controllers_.Register( *this );
     CreateDictionary( dico );
@@ -47,13 +47,13 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& 
     , controllers_( controllers )
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
-    , floodHelper_( *new flood::FloodHelper( *this ) ) // $$$$ MCO use an std::auto_ptr because if anything throws before end of contructor => memory leak
+    , floodModel_ ( new flood::FloodModel( *this ) )
 {
     controllers_.Register( *this );
     xis >> xml::attribute( "depth", depth_.value_ )
         >> xml::attribute( "reference-distance", refDist_.value_ );
     CreateDictionary( dico );
-    floodHelper_.GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
+    floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,6 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& 
 // -----------------------------------------------------------------------------
 FloodAttribute::~FloodAttribute()
 {
-    delete &floodHelper_;
     controllers_.Unregister( *this );
 }
 
@@ -104,7 +103,7 @@ void FloodAttribute::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, const GlTools_ABC& /*tools*/ ) const
 {
-    floodHelper_.Draw();
+    floodModel_->Draw();
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +113,7 @@ void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const Viewport_AB
 void FloodAttribute::NotifyUpdated( const FloodAttribute& attribute )
 {
     if( &attribute == this )
-        floodHelper_.GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
+        floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,6 +122,8 @@ void FloodAttribute::NotifyUpdated( const FloodAttribute& attribute )
 // -----------------------------------------------------------------------------
 short FloodAttribute::GetElevationAt( const geometry::Point2f& point ) const
 {
+    if( detection_.Extent().IsOutside( point ) )
+        return std::numeric_limits< short >::max();
     return detection_.ElevationAt( point );
 }
 
@@ -134,7 +135,7 @@ void FloodAttribute::SetValues( int depth, int refDist )
 {
     depth_.value_ = depth;
     refDist_.value_ = refDist;
-    floodHelper_.GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
+    floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
 }
 
 // -----------------------------------------------------------------------------

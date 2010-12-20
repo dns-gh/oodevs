@@ -24,6 +24,7 @@
 #include "DetectionCapacity.h"
 #include "ExtinguishableCapacity.h"
 #include "FirePropagationCapacity.h"
+#include "FloodCapacity.h"
 #include "MedicalCapacity.h"
 #include "InteractIfEquippedCapacity.h"
 #include "InteractWithEnemyCapacity.h"
@@ -132,6 +133,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "interaction-height", boost::bind( &AddBuilder< InteractIfHeightCapacity >::Add, _1, _2 ) );
 	DoRegister( "population-filter", boost::bind( &AddBuilder< PopulationFilterCapacity >::Add, _1, _2 ) );
     DoRegister( "burn", boost::bind( &AddBuilder< BurnCapacity >::Add, _1, _2 ) );
+    DoRegister( "flood", boost::bind( &AddBuilder< FloodCapacity >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

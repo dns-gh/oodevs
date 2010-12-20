@@ -8,45 +8,50 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "DelayAttribute.h"
+#include "FloodAttribute.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute constructor
-// Created: JSR 2010-07-06
+// Name: FloodAttribute constructor
+// Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( const sword::ObjectAttributes& asnMsg )
-    : nDelay_( 0 )
+FloodAttribute::FloodAttribute( const sword::ObjectAttributes& asnMsg )
+    : depth_  ( 0 )
+    , refDist_( 0 )
 {
     Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute destructor
-// Created: JSR 2010-07-06
+// Name: FloodAttribute destructor
+// Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
-DelayAttribute::~DelayAttribute()
+FloodAttribute::~FloodAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::Update
-// Created: JSR 2010-07-06
+// Name: FloodAttribute::Update
+// Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
-void DelayAttribute::Update( const sword::ObjectAttributes& asnMsg )
+void FloodAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
-    if( asnMsg.has_effect_delay() )
-        nDelay_ = asnMsg.effect_delay().value();
+    if( asnMsg.has_flood() )
+    {
+        depth_ = asnMsg.flood().depth();
+        refDist_ = asnMsg.flood().reference_distance();
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::Send
-// Created: JSR 2010-07-06
+// Name: FloodAttribute::Send
+// Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
-void DelayAttribute::Send( sword::ObjectAttributes& asnMsg ) const
+void FloodAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
-    asnMsg.mutable_effect_delay()->set_value( nDelay_ );
+    asnMsg.mutable_flood()->set_depth( depth_ );
+    asnMsg.mutable_flood()->set_reference_distance( refDist_ );
 }

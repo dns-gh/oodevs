@@ -986,6 +986,14 @@
         <source>Max combustion energy:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Flood</source>
+        <translation>Inondation</translation>
+    </message>
+    <message>
+        <source>Reference distance:</source>
+        <translation>Distance de référence:</translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

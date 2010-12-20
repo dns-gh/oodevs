@@ -22,6 +22,7 @@
 #include "NBCAttribute.h"
 #include "FireAttribute.h"
 #include "BurnAttribute.h"
+#include "FloodAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "Model.h"
 #include "AgentsModel.h"
@@ -30,6 +31,7 @@
 #include "ResourceNetworkModel.h"
 #include "StaticModel.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 
 // -----------------------------------------------------------------------------
@@ -103,6 +105,7 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
 
     if( attributes.has_resource_networks() && entity.Retrieve< kernel::ResourceNetwork_ABC >() == 0 )
         model_.resourceNetwork_.Create( entity, attributes.resource_networks() );
+
+    if( attributes.has_flood() && entity.Retrieve< kernel::FloodAttribute_ABC >() == 0 )
+        entity.Attach< kernel::FloodAttribute_ABC >( *new FloodAttribute( controllers_.controller_, static_.detection_, entity.Get< kernel::Positions >() ) );
 }
-
-

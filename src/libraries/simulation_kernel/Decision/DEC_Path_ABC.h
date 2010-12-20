@@ -42,19 +42,19 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void Execute              ( TerrainPathfinder& pathfind );
-            void Cancel               ();
+    virtual void Execute( TerrainPathfinder& pathfind );
+    void Cancel();
     virtual void CleanAfterComputation();
 
-            double GetLength     () const;
-    virtual bool     NeedRefine    () const = 0;
-    virtual bool     UseStrictClosest() const = 0;
-    virtual void     AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
+    double GetLength() const;
+    virtual bool NeedRefine() const = 0;
+    virtual bool UseStrictClosest() const = 0;
+    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
     //@}
 
     //! @name Accessors
     //@{
-    unsigned int    GetID   () const;
+    unsigned int GetID() const;
     E_State GetState() const;
     //@}
 
@@ -73,27 +73,27 @@ protected:
 
     //! @name Tools
     //@{
-    void         RegisterPathSection( DEC_PathSection_ABC& section );
-    std::string  GetStateAsString   () const;
-    std::string  GetPathAsString    () const;
+    void RegisterPathSection( DEC_PathSection_ABC& section );
+    std::string GetStateAsString() const;
+    std::string GetPathAsString() const;
     virtual void NotifySectionEnded() = 0;
-    void         DoExecute( TerrainPathfinder& pathfind );
+    void DoExecute( TerrainPathfinder& pathfind );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< DEC_PathSection_ABC* > T_PathSectionVector;
+    typedef std::vector< DEC_PathSection_ABC* >   T_PathSectionVector;
     typedef T_PathSectionVector::const_iterator CIT_PathSectionVector;
     //@}
 
 private:
-    const unsigned int                nID_;
-          T_PathSectionVector pathSections_;
-          unsigned int                nNbrRefs_;              // nb of references on path
-          unsigned int                nNbrDIARefs_;           // nb of references by DIA on path
-          E_State             nState_;
-          bool                bJobCanceled_;
+    const unsigned int nID_;
+    T_PathSectionVector pathSections_;
+    unsigned int nNbrRefs_;              // nb of references on path
+    unsigned int nNbrDIARefs_;           // nb of references by DIA on path
+    E_State nState_;
+    bool bJobCanceled_;
 
 private:
     static unsigned int nIDIdx_;

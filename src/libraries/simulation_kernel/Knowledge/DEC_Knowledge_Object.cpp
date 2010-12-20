@@ -13,19 +13,17 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_ObjectCollision.h"
-#include "DEC_Knowledge_ObjectAttributeProxy_ABC.h"
 #include "DEC_Knowledge_ObjectMagicPerception.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
 #include "Entities/Objects/ActivableCapacity.h"
-#include "Entities/Objects/ContaminationCapacity.h"
 #include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/InteractionHeightAttribute.h"
 #include "Entities/Objects/ConstructionAttribute.h"
+#include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/ObstacleAttribute.h"
-
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -34,9 +32,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <boost/serialization/vector.hpp>
 #include <boost/serialization/set.hpp>
-#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Object )
 
@@ -186,7 +182,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
     // récupération des noms des types
     unsigned int nSize;
     file >> nSize;
-    while ( nSize-- )
+    while( nSize-- )
     {
         unsigned int nID;
         file >> nID;
@@ -197,7 +193,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
     std::vector< DEC_Knowledge_IObjectAttributeProxy* > attributes;
     file >> attributes;
     for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = attributes.begin(); it != attributes.end(); ++it )
-        (*it)->Register( *this );
+        ( *it )->Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,17 +228,15 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
     file << size;
     for( CIT_AgentTypeSet it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
     {
-        unsigned int id = (*it)->GetID();
+        unsigned int id = ( *it )->GetID();
         file << id;
     }
 
     // Attributes
     std::vector< DEC_Knowledge_IObjectAttributeProxy* > attributes;
     for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
-    {
         if( *it )
             attributes.push_back( *it );
-    }
     file << attributes;
 }
 
@@ -268,8 +262,9 @@ void DEC_Knowledge_Object::UpdateLocalisations()
 {
     if( !pObjectKnown_ )
         return;
-    const TER_Localisation& localisation = pObjectKnown_->GetLocalisation();
-    if( !(localisation_ == localisation) )
+    const FloodAttribute* flood = pObjectKnown_->RetrieveAttribute< FloodAttribute >();
+    const TER_Localisation& localisation = flood ? flood->GetLocalisation() : pObjectKnown_->GetLocalisation();
+    if( !( localisation_ == localisation ) )
     {
         localisation_.Reset( localisation );
         NotifyAttributeUpdated( eAttr_Localisation );
@@ -278,7 +273,7 @@ void DEC_Knowledge_Object::UpdateLocalisations()
     if( capacity )
     {
         const TER_Localisation& avoidanceLocalisation = capacity->GetLocalisation();
-        if( !(avoidanceLocalisation_ == avoidanceLocalisation) )
+        if( !( avoidanceLocalisation_ == avoidanceLocalisation ) )
             avoidanceLocalisation_.Reset( avoidanceLocalisation );
     }
 }
@@ -353,7 +348,7 @@ void DEC_Knowledge_Object::Update( const PHY_PerceptionLevel& currentPerceptionL
 void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& perception )
 {
     nTimeLastUpdate_ = GetCurrentTimeStep();
-    const PHY_PerceptionLevel&  currentPerceptionLevel = perception.GetCurrentPerceptionLevel();
+    const PHY_PerceptionLevel& currentPerceptionLevel = perception.GetCurrentPerceptionLevel();
     UpdateCurrentPerceptionLevel( currentPerceptionLevel );
     UpdateMaxPerceptionLevel( currentPerceptionLevel );
     // NB - Quand nPerceptionLevel vaut eNotPerceived => l'agent associé vient juste d'être perdu de vue
@@ -396,7 +391,7 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
     UpdateCurrentPerceptionLevel( PHY_PerceptionLevel::identified_ );
     UpdateMaxPerceptionLevel( PHY_PerceptionLevel::identified_ );
     //$$$ TMP BULLSHIT
-    if( !(localisation_ == pObjectKnown_->GetLocalisation() ) )
+    if( !( localisation_ == pObjectKnown_->GetLocalisation() ) )
     {
         TER_Localisation::E_LocationType type = pObjectKnown_->GetLocalisation().GetType();
         if( type == TER_Localisation::ePoint || type == TER_Localisation::eLine )
@@ -449,10 +444,7 @@ void DEC_Knowledge_Object::BuildMsgPerceptionSources( sword::ObjectKnowledgeUpda
     if( !IsAttributeUpdated( eAttr_PerceptionSources ) )
         return;
     for( CIT_PerceptionSourceSet it = perceptionPerAutomateSet_.begin(); it != perceptionPerAutomateSet_.end(); ++it )
-    {
-        sword::AutomatId& data = *asn.mutable_perceiving_automats()->add_elem();
-        data.set_id( (*it)->GetID() );
-    }
+        asn.mutable_perceiving_automats()->add_elem()->set_id( ( *it )->GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -462,7 +454,7 @@ void DEC_Knowledge_Object::BuildMsgPerceptionSources( sword::ObjectKnowledgeUpda
 void DEC_Knowledge_Object::BuildMsgRelevance( sword::ObjectKnowledgeUpdate& asn ) const
 {
     if( IsAttributeUpdated( eAttr_Relevance ) )
-        asn.set_relevance( (unsigned int)( rRelevance_ * 100. ) );
+        asn.set_relevance( static_cast< unsigned int >( rRelevance_ * 100. ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -473,7 +465,7 @@ void DEC_Knowledge_Object::BuildMsgLocalisations( sword::ObjectKnowledgeUpdate& 
 {
     if( IsAttributeUpdated( eAttr_Localisation ) )
         // $$$$ FDS 2010-04-16: Dans le cas où le type de localiation est none, la Localisation n'est pas renseigné ( Dans Gaming cela entrainerait sinon un Throw )
-        if( localisation_.GetType() !=  sword::Location_Geometry_none )
+        if( localisation_.GetType() != sword::Location_Geometry_none )
             NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_location() );
 }
 
@@ -484,7 +476,7 @@ void DEC_Knowledge_Object::BuildMsgLocalisations( sword::ObjectKnowledgeUpdate& 
 void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( sword::ObjectKnowledgeUpdate& asn ) const
 {
     if( IsAttributeUpdated( eAttr_CurrentPerceptionLevel ) )
-        asn.set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+        asn.set_perceived( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -498,12 +490,12 @@ void DEC_Knowledge_Object::BuildMsgAttributes( sword::ObjectKnowledgeUpdate& asn
     {
         for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
             if( *it )
-                (*it)->SendFullState( *asn.mutable_attributes() );
+                ( *it )->SendFullState( *asn.mutable_attributes() );
     }
     else if( IsAttributeUpdated( eAttr_Attributes ) )
         for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
             if( *it )
-                (*it)->SendChangedState( *asn.mutable_attributes() );
+                ( *it )->SendChangedState( *asn.mutable_attributes() );
 }
 
 // -----------------------------------------------------------------------------
@@ -577,7 +569,6 @@ void DEC_Knowledge_Object::SendMsgDestruction() const
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::SendStateToNewClient
 // Created: NLD 2004-03-18
@@ -595,15 +586,10 @@ void DEC_Knowledge_Object::SendStateToNewClient()
 // -----------------------------------------------------------------------------
 double DEC_Knowledge_Object::GetMaxInteractionHeight() const
 {
-    const InteractionHeightAttribute* height = RetrieveAttribute< InteractionHeightAttribute >();
-    if( height )
+    if( const InteractionHeightAttribute* height = RetrieveAttribute< InteractionHeightAttribute >() )
         return height->Get();
     return 0;
 }
-
-// =============================================================================
-// OEPRATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::GetName() const
@@ -629,8 +615,7 @@ void DEC_Knowledge_Object::Recon( const MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::IsBypassed() const
 {
-    const BypassAttribute* bypass = RetrieveAttribute< BypassAttribute >();
-    if( bypass )
+    if( const BypassAttribute* bypass = RetrieveAttribute< BypassAttribute >() )
         return bypass->IsBypassed();
     return false;
 }
@@ -641,8 +626,7 @@ bool DEC_Knowledge_Object::IsBypassed() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::IsConstructed() const
 {
-    const ConstructionAttribute* construction = RetrieveAttribute< ConstructionAttribute >();
-    if( construction )
+    if( const ConstructionAttribute* construction = RetrieveAttribute< ConstructionAttribute >() )
         return construction->IsConstructed();
     return false;
 }
@@ -661,8 +645,7 @@ bool DEC_Knowledge_Object::IsReservedObstacle() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
 {
-    const ObstacleAttribute* activable = RetrieveAttribute< ObstacleAttribute >();
-    if( activable )
+    if( const ObstacleAttribute* activable = RetrieveAttribute< ObstacleAttribute >() )
         return activable->IsActivated();
     return false;
 }
@@ -844,7 +827,7 @@ E_Tristate DEC_Knowledge_Object::IsAFriend( const MIL_Army_ABC& army ) const
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& DEC_Knowledge_Object::GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const
 {
-    CIT_PerceptionAgentSourceMap  itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
+    CIT_PerceptionAgentSourceMap itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
     if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )
         return *( itPerceptionLevel->second );
     return PHY_PerceptionLevel::notSeen_;
