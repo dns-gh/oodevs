@@ -3166,16 +3166,16 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
 <context>
     <name>WeatherWidget</name>
     <message>
-        <source>Wind direction/speed:</source>
-        <translation>Dirección/velocidad del viento:</translation>
-    </message>
-    <message>
         <source>Clouds floor/ceiling/density:</source>
         <translation>Capa de nubes/techo/densidad:</translation>
     </message>
     <message>
         <source>Weather type:</source>
         <translation>Tipo de clima:</translation>
+    </message>
+    <message>
+        <source>Wind speed/direction:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

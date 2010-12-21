@@ -1435,8 +1435,8 @@ Voulez-vous sauvegarder malgré tout?</translation>
 <context>
     <name>WeatherWidget</name>
     <message>
-        <source>Wind direction/speed:</source>
-        <translation>Vitesse/direction du vent:</translation>
+        <source>Wind speed/direction:</source>
+        <translation>Direction du vent/vitesse:</translation>
     </message>
     <message>
         <source>Clouds floor/ceiling/density:</source>
@@ -1445,6 +1445,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Weather type:</source>
         <translation>Type de temps:</translation>
+    </message>
+    <message>
+        <source>Temperature:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

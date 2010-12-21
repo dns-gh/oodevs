@@ -1435,8 +1435,8 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
 <context>
     <name>WeatherWidget</name>
     <message>
-        <source>Wind direction/speed:</source>
-        <translation>Dirección del viento/velocidad:</translation>
+        <source>Wind speed/direction:</source>
+        <translation>Velocidad del viento/dirección:</translation>
     </message>
     <message>
         <source>Clouds floor/ceiling/density:</source>
@@ -1445,6 +1445,10 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
     <message>
         <source>Weather type:</source>
         <translation>Tipo de clima:</translation>
+    </message>
+    <message>
+        <source>Temperature:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

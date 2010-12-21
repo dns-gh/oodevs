@@ -3166,16 +3166,16 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>WeatherWidget</name>
     <message>
-        <source>Wind direction/speed:</source>
-        <translation>Vitesse/direction du vent:</translation>
-    </message>
-    <message>
         <source>Clouds floor/ceiling/density:</source>
         <translation>Plancher/plafond/densité nuages:</translation>
     </message>
     <message>
         <source>Weather type:</source>
         <translation>Type de temps:</translation>
+    </message>
+    <message>
+        <source>Wind speed/direction:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

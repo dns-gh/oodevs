@@ -25,10 +25,10 @@ WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
 {
     new QLabel( tr( "Wind direction/speed:" ), this );
     QHBox* box = new QHBox( this );
-    windDirection_ = new QSpinBox( 0, 359, 1, box );
-    windDirection_->setSuffix( Units::degrees.AsString() );
     windSpeed_     = new QSpinBox( 0, 300, 5, box );
     windSpeed_->setSuffix( Units::kilometersPerHour.AsString() );
+    windDirection_ = new QSpinBox( 0, 359, 1, box );
+    windDirection_->setSuffix( Units::degrees.AsString() );
     new QLabel( tr( "Clouds floor/ceiling/density:" ), this );
     box = new QHBox( this );
     cloudFloor_   = new QSpinBox( 0, 100000, 100, box );
