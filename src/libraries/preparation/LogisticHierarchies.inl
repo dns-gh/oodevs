@@ -7,7 +7,8 @@
 //
 // *****************************************************************************
 
- #include  <boost/type_traits/remove_const.hpp>
+#include  <boost/type_traits/remove_const.hpp>
+
 
 // -----------------------------------------------------------------------------
 // Name: LogisticHierarchies constructor
@@ -97,7 +98,10 @@ void LogisticHierarchies< Superior, I >::SerializeLogistics( xml::xostream& xos 
         const kernel::Entity_ABC& entity = children.NextElement();
         xos << xml::start( "subordinate" )
                 << xml::attribute( "id", entity.GetId());
-                SerializeQuotas( xos );
+        //$$$ Ca me parait bien compliqué et bien foireux...
+        const LogisticHierarchies< Superior, I >* tmp = dynamic_cast< const LogisticHierarchies< Superior, I > * >( entity.Retrieve< kernel::LogisticBaseHierarchies >() );
+        if( tmp )
+            tmp->SerializeQuotas( xos );
         xos << xml::end;
     }
     xos << xml::end;

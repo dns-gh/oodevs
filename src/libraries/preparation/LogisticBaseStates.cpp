@@ -43,8 +43,10 @@ LogisticBaseStates::~LogisticBaseStates()
 // Name: MaintenanceStates::CreateDictionary
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& )
+void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& entity )
 {
+    item_ = new DotationsItem( controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *(Resolver< Dotation >*)this );
+    dico.Register( entity, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), item_ );
     dico.Register( *(const kernel::LogisticBaseHierarchies*)this, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), tc2_, *this, &LogisticBaseStates::SetSuperior );
 }
 
@@ -97,6 +99,7 @@ void LogisticBaseStates::ReadDotation( xml::xistream& xis )
     Dotation* dotation = new Dotation( xis, resolver_ );
     item_->AddDotation( *dotation );
     tools::Resolver< Dotation >::Register( dotation->type_->GetId(), *dotation );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
