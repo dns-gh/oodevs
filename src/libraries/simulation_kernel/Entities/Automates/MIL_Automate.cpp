@@ -922,6 +922,9 @@ void MIL_Automate::SendLogisticLinks() const
             message().mutable_logistic_base()->mutable_formation()->set_id( pBrainLogistic_->GetSuperior()->GetID() );
     }
     message.Send( NET_Publisher_ABC::Publisher() );
+
+    if( pBrainLogistic_.get() )
+        pBrainLogistic_->SendFullState();
 }
 
 // -----------------------------------------------------------------------------
