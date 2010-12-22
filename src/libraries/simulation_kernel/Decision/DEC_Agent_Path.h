@@ -16,7 +16,7 @@
 #include "MT_Tools/MT_Profiler.h"
 
 class DEC_Path_KnowledgeAgent;
-class DEC_Path_KnowledgeObject;
+class DEC_Path_KnowledgeObject_ABC;
 class DEC_Path_KnowledgePopulation;
 class DEC_PathType;
 class MIL_LimaOrder;
@@ -36,7 +36,7 @@ public:
     typedef std::vector< DEC_Path_KnowledgeAgent >       T_PathKnowledgeAgentVector;
     typedef T_PathKnowledgeAgentVector::const_iterator CIT_PathKnowledgeAgentVector;
 
-    typedef std::vector< DEC_Path_KnowledgeObject >       T_PathKnowledgeObjectVector;
+    typedef std::vector< DEC_Path_KnowledgeObject_ABC* >  T_PathKnowledgeObjectVector;
     typedef T_PathKnowledgeObjectVector::const_iterator CIT_PathKnowledgeObjectVector;
 
     typedef std::vector< T_PathKnowledgeObjectVector >           T_PathKnowledgeObjectByTypesVector;

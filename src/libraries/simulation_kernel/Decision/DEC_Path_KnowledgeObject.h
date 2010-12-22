@@ -10,16 +10,16 @@
 #ifndef __DEC_Path_KnowledgeObject_h_
 #define __DEC_Path_KnowledgeObject_h_
 
+#include "DEC_Path_KnowledgeObject_ABC.h"
 #include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Knowledge_Object;
 class DEC_Agent_PathClass;
-class TerrainData;
 
 // =============================================================================
 // Created: NLD 2004-04-06
 // =============================================================================
-class DEC_Path_KnowledgeObject
+class DEC_Path_KnowledgeObject : public DEC_Path_KnowledgeObject_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -28,16 +28,10 @@ public:
     virtual ~DEC_Path_KnowledgeObject();
     //@}
 
-    //! @name Copy/Assignment
+public:    //! @name Operations
     //@{
-    DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObject& );            //!< Copy constructor
-    DEC_Path_KnowledgeObject& operator=( const DEC_Path_KnowledgeObject& ); //!< Assignment operator
-    //@}
-
-    //! @name Operations
-    //@{
-    double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
-    double GetCostOut() const;
+    virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    virtual double GetCostOut() const;
     //@}
 
 private:

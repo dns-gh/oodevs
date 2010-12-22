@@ -16,6 +16,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "flood/FloodDrawer.h"
 #include "flood/FloodModel.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -32,6 +33,7 @@ FloodAttribute::FloodAttribute( PropertiesDictionary& dico, const kernel::Detect
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
     , floodModel_ ( new flood::FloodModel( *this ) )
+    , floodDrawer_( new flood::FloodDrawer( *floodModel_ ) )
 {
     controllers_.Register( *this );
     CreateDictionary( dico );
@@ -48,6 +50,7 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const kernel::DetectionMap& 
     , depth_      ( 0, Units::meters )
     , refDist_    ( 0, Units::meters )
     , floodModel_ ( new flood::FloodModel( *this ) )
+    , floodDrawer_( new flood::FloodDrawer( *floodModel_ ) )
 {
     controllers_.Register( *this );
     xis >> xml::attribute( "depth", depth_.value_ )
@@ -103,7 +106,7 @@ void FloodAttribute::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, const GlTools_ABC& /*tools*/ ) const
 {
-    floodModel_->Draw();
+    floodDrawer_->Draw();
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +116,10 @@ void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const Viewport_AB
 void FloodAttribute::NotifyUpdated( const FloodAttribute& attribute )
 {
     if( &attribute == this )
+    {
         floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
+        floodDrawer_->ResetTexture();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -133,9 +139,13 @@ short FloodAttribute::GetElevationAt( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 void FloodAttribute::SetValues( int depth, int refDist )
 {
-    depth_.value_ = depth;
-    refDist_.value_ = refDist;
-    floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
+    if( depth_.value_ != depth || refDist_.value_ != refDist )
+    {
+        depth_.value_ = depth;
+        refDist_.value_ = refDist;
+        floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
+        floodDrawer_->ResetTexture();
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -12,7 +12,7 @@
 #include "DEC_Agent_Path.h"
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Path_KnowledgeAgent.h"
-#include "DEC_Path_KnowledgeObject.h"
+#include "DEC_Path_KnowledgeObject_ABC.h"
 #include "DEC_Path_KnowledgePopulation.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
@@ -158,12 +158,12 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
         const DEC_Agent_Path::T_PathKnowledgeObjectVector& knowledges = *itType;
         for( DEC_Agent_Path::CIT_PathKnowledgeObjectVector itKnowledge = knowledges.begin(); itKnowledge != knowledges.end(); ++itKnowledge )
         {
-            double rCurrentObjectCost = itKnowledge->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
+            double rCurrentObjectCost = ( *itKnowledge )->ComputeCost( from, to, nToTerrainType, nLinkTerrainType );
             if( rCurrentObjectCost != std::numeric_limits< double >::min()  )
             {
                 if( !bInsideObjectType )
                 {
-                    rObjectCost -= itKnowledge->GetCostOut();
+                    rObjectCost -= ( *itKnowledge )->GetCostOut();
                     bInsideObjectType = true;
                 }
                 if( rCurrentObjectCost < 0. ) // Impossible move (for example destroyed bridge)
@@ -232,6 +232,9 @@ double DEC_Agent_PathfinderRule::GetAltitudeCost( double rAltitudeTo ) const
 //#define DEBUG_IMPOSSIBLE_PATHFIND
 
 #ifdef DEBUG_IMPOSSIBLE_PATHFIND
+
+#include "MT_Tools/MT_Logger.h"
+
 namespace
 {
     double LogImpossible( const MT_Vector2D& from, const MT_Vector2D& to, const char* reason )
@@ -303,7 +306,7 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     //urban blocks
     const double rUrbanBlockCost = GetUrbanBlockCost( from, to );
     if( rUrbanBlockCost < 0. )
-        return -1.;
+        return IMPOSSIBLE_WAY( "Urban" );
     rDynamicCost += rUrbanBlockCost;
 
     // objects

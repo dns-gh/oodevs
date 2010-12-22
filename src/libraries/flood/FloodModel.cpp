@@ -9,8 +9,6 @@
 
 #include "FloodModel.h"
 #include "ElevationGetter_ABC.h"
-#include <windows.h>
-#include <gl/gl.h>
 #include <queue>
 
 using namespace flood;
@@ -27,7 +25,6 @@ FloodModel::FloodModel( const ElevationGetter_ABC& getter )
     , refDist_  ( 0 )
     , oldDepth_ ( -1 )
     , ppCells_  ( 0 )
-    , textureId_( 0 )
     , halfWidth_( 0 )
 {
     // NOTHING
@@ -48,6 +45,7 @@ FloodModel::~FloodModel()
 // -----------------------------------------------------------------------------
 void FloodModel::GenerateFlood( const Point2f& center, int depth, int refDist )
 {
+    // TODO faire un proxy?
     if( depth == oldDepth_ && refDist == refDist_ )
         return;
     Reset();
@@ -77,28 +75,12 @@ void FloodModel::GenerateFlood( const Point2f& center, int depth, int refDist )
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodModel::Draw
-// Created: JSR 2010-12-14
+// Name: FloodModel::GenerateFlood
+// Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-void FloodModel::Draw() const
+void FloodModel::GenerateFlood( const Point2d& center, int depth, int refDist )
 {
-    if( textureId_ == 0 )
-        const_cast< FloodModel* >( this )->RenderTexture();
-    glEnable( GL_TEXTURE_2D );
-    glBindTexture( GL_TEXTURE_2D, textureId_ );
-    glColor4f( 1, 1, 1, 1 );
-    glBegin( GL_QUADS );
-        glTexCoord2f( 0, 0 );
-        glVertex3f( center_.X() - refDist_, center_.Y() - refDist_, 0 );
-        glTexCoord2f( 1, 0 );
-        glVertex3f( center_.X() + refDist_, center_.Y() - refDist_, 0 );
-        glTexCoord2f( 1, 1 );
-        glVertex3f( center_.X() + refDist_, center_.Y() + refDist_, 0 );
-        glTexCoord2f( 0, 1 );
-        glVertex3f( center_.X() - refDist_, center_.Y() + refDist_, 0 );
-    glEnd();
-    glBindTexture( GL_TEXTURE_2D, 0 );
-    glDisable( GL_TEXTURE_2D );
+    GenerateFlood( Point2f( static_cast< float >( center.X() ), static_cast< float >( center.Y() ) ), depth, refDist );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,84 +286,4 @@ void FloodModel::Reset()
         delete lowAreas_.at( i );
     deepAreas_.clear();
     lowAreas_.clear();
-    if( textureId_ )
-    {
-        glDeleteTextures( 1, &textureId_ );
-        textureId_ = 0;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: FloodModel::RenderTexture
-// Created: JSR 2010-12-14
-// -----------------------------------------------------------------------------
-void FloodModel::RenderTexture()
-{
-    // TODO voir si on peut créer la texture une fois pour toute au début?
-    // TODO créer la texture totalement offscreen?
-    // create texture
-    glGenTextures( 1, &textureId_ );
-    glBindTexture( GL_TEXTURE_2D, textureId_ );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    glTexImage2D( GL_TEXTURE_2D, 0, 4, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
-    glBindTexture( GL_TEXTURE_2D, 0 );
-    // push
-    glPushMatrix();
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity();
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    GLint coords[ 4 ];
-    glGetIntegerv( GL_VIEWPORT, coords );
-    // draw scene
-    glViewport( 0, 0, 512, 512 );
-    glOrtho( 0.0f, 512, 0.0f, 512, 0, 1); 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    glEnable(GL_TEXTURE_2D); 
-    glDisable(GL_LIGHTING);     
-    glEnable( GL_STENCIL_TEST );
-    glColor4f( 0, 0, 1.f, 0.7f );
-    DrawPolygons( deepAreas_ );
-    glColor4f( 0.3f, 0.3f, 1.f, 0.7f );
-    DrawPolygons( lowAreas_ );
-    glDisable( GL_STENCIL_TEST );
-    // copy texture
-    glBindTexture( GL_TEXTURE_2D, textureId_ );
-    glCopyTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA , 0, 0, 512, 512, 0 );
-    glBindTexture( GL_TEXTURE_2D, 0 );
-    // pop
-    glPopMatrix();
-    glViewport( coords[ 0 ], coords[ 1 ], coords[ 2 ], coords[ 3 ] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FloodModel::DrawPolygons
-// Created: JSR 2010-12-14
-// -----------------------------------------------------------------------------
-void FloodModel::DrawPolygons( const T_Polygons& polygons ) const
-{
-    float factor = 256.f / refDist_; // 512 / ( 2 * refDist_ )
-    float offsetX = center_.X() - refDist_;
-    float offsetY = center_.Y() - refDist_;
-    for( CIT_Polygons it = polygons.begin(); it != polygons.end(); ++it )
-        if( !( *it )->Vertices().empty() )
-        {
-            glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE ); // disable writing to color buffer
-            glStencilFunc( GL_ALWAYS, 0x1, 0x1 );
-            glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-            glBegin( GL_TRIANGLE_FAN );
-            for( Polygon2f::CIT_Vertices it2 = ( *it )->Vertices().begin(); it2 != ( *it )->Vertices().end(); ++it2 )
-                glVertex2d( ( it2->X() - offsetX ) * factor, ( it2->Y() - offsetY ) * factor );
-            glEnd();
-            glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );    // enable writing to color buffer
-            glStencilFunc( GL_EQUAL, 0x1, 0x1 );                  // test if it is odd(1)
-            glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-            glBegin( GL_TRIANGLE_FAN );
-            for( Polygon2f::CIT_Vertices it2 = ( *it )->Vertices().begin(); it2 != ( *it )->Vertices().end(); ++it2 )
-                glVertex2d( ( it2->X() - offsetX ) * factor, ( it2->Y() - offsetY ) * factor );
-            glEnd();
-        }
 }

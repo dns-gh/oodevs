@@ -753,6 +753,37 @@ bool DEC_Knowledge_Object::IsReconBy( const MIL_AgentType_ABC& agentType ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsObjectInsidePathPoint
+// Created: JSR 2010-12-22
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoints ) const
+{
+    if( pObjectKnown_ )
+        if( const FloodAttribute* flood = pObjectKnown_->RetrieveAttribute< FloodAttribute >() )
+        {
+            const std::vector< geometry::Polygon2f* >& deepAreas = flood->GetDeepAreas();
+            const std::vector< geometry::Polygon2f* >& lowAreas = flood->GetLowAreas();
+            for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
+                if( localisation_.IsInside( *it ) )
+                {
+                    geometry::Point2f point( static_cast< float>( ( *it ).rX_ ), static_cast< float >( ( *it ).rY_ ) );
+                    std::vector< geometry::Polygon2f* >::const_iterator polygonIt;
+                    for( polygonIt = deepAreas.begin(); polygonIt != deepAreas.end(); ++polygonIt )
+                        if( ( *polygonIt )->BoundingBox().IsInside( point ) && ( *polygonIt )->IsInside( point ) )
+                            return true;
+                    for( polygonIt = lowAreas.begin(); polygonIt != lowAreas.end(); ++polygonIt )
+                        if( ( *polygonIt )->BoundingBox().IsInside( point ) && ( *polygonIt )->IsInside( point ) )
+                            return true;
+                }
+            return false;    
+        }
+    for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
+        if( localisation_.IsInside( *it ) )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::IsRecon
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------

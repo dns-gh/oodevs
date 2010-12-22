@@ -39,32 +39,6 @@ DEC_Path_KnowledgeObject::~DEC_Path_KnowledgeObject()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObject constructor
-// Created: NLD 2004-04-06
-// -----------------------------------------------------------------------------
-DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Path_KnowledgeObject& copy )
-    : localisation_         ( copy.localisation_ )
-    , rCostOut_             ( copy.rCostOut_ )
-    , rCostIn_              ( copy.rCostIn_ )
-    , rObstructionThreshold_( copy.rObstructionThreshold_ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Path_KnowledgeObject::operator=
-// Created: NLD 2004-04-06
-// -----------------------------------------------------------------------------
-DEC_Path_KnowledgeObject& DEC_Path_KnowledgeObject::operator=( const DEC_Path_KnowledgeObject& copy )
-{
-    localisation_.Reset( copy.localisation_ );
-    rCostIn_ = copy.rCostIn_;
-    rCostOut_ = copy.rCostOut_;
-    rObstructionThreshold_ = copy.rObstructionThreshold_;
-    return *this;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Path_KnowledgeObject::ComputeCost
 // Created: AGE 2005-02-01
 // -----------------------------------------------------------------------------

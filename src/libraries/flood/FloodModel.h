@@ -26,6 +26,13 @@ namespace flood
 class FloodModel : boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::vector< geometry::Polygon2f* > T_Polygons;
+    typedef T_Polygons::const_iterator        CIT_Polygons;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
     explicit FloodModel( const ElevationGetter_ABC& getter );
@@ -34,9 +41,12 @@ public:
 
     //! @name Operations
     //@{
-    void GenerateFlood( const geometry::Point2f& center, int depth, int refDist ); // $$$$ MCO : where are the unit tests ?!
-
-    void Draw() const; // $$$$ MCO : separation of concerns
+    void GenerateFlood( const geometry::Point2f& center, int depth, int refDist );
+    void GenerateFlood( const geometry::Point2d& center, int depth, int refDist );
+    const geometry::Point2f& GetCenter() const { return center_; }
+    int GetReferenceDistance() const { return refDist_; }
+    const T_Polygons& GetDeepAreas() const { return deepAreas_; }
+    const T_Polygons& GetLowAreas() const { return lowAreas_; }
     //@}
 
 private:
@@ -53,8 +63,6 @@ private:
         int polIndex_;
         bool deep_;
     };
-    typedef std::vector< geometry::Polygon2f* > T_Polygons;
-    typedef T_Polygons::const_iterator        CIT_Polygons;
     //@}
 
 private:
@@ -70,8 +78,6 @@ private:
     int FindFirstMarkedOnLine( int y, int index ) const;
     int FindLastMarkedOnLine( int y, int index ) const;
     void Reset();
-    void RenderTexture();
-    void DrawPolygons( const T_Polygons& polygons ) const;
     //@}
 
 private:
@@ -85,7 +91,6 @@ private:
     int refDist_;
     int oldDepth_;
     sCell** ppCells_;
-    unsigned int textureId_;
     unsigned short halfWidth_;
     //@}
 };

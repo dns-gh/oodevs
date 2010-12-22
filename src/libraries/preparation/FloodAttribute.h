@@ -19,6 +19,7 @@
 
 namespace flood
 {
+    class FloodDrawer;
     class FloodModel;
 }
 
@@ -92,6 +93,7 @@ private:
     kernel::UnitedValue< int > depth_;
     kernel::UnitedValue< int > refDist_;
     std::auto_ptr< flood::FloodModel > floodModel_;
+    std::auto_ptr< flood::FloodDrawer > floodDrawer_;
     //@}
 };
 

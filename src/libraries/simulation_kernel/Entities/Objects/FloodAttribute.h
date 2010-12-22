@@ -11,8 +11,19 @@
 #define __FloodAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include "UpdatableAttribute_ABC.h"
+#include "flood/ElevationGetter_ABC.h"
+#include "knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include <boost/serialization/export.hpp>
+
+namespace flood
+{
+    class FloodModel;
+}
+
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  FloodAttribute
@@ -21,7 +32,12 @@
 // Created: JSR 2010-12-15
 // =============================================================================
 class FloodAttribute : public ObjectAttribute_ABC
+                     , private UpdatableAttribute_ABC
+                     , public flood::ElevationGetter_ABC
 {
+public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute > T_KnowledgeProxyType;
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -34,16 +50,25 @@ public:
     //! @name Copy/Assignment
     //@{
     FloodAttribute& operator=( const FloodAttribute& ); //!< Assignment operator
+    bool Update( const FloodAttribute& rhs );
     //@}
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name From ObjectAttribute_ABC
     //@{
     virtual void Register( MIL_Object_ABC& object ) const;
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
+    //@}
+
+    //! @name From ElevationGetter_ABC
+    //@{
+    virtual short GetElevationAt( const geometry::Point2f& point ) const;
     //@}
 
     //! @name ODB
@@ -59,6 +84,8 @@ public:
     //! @name Accessors
     //@{
     const TER_Localisation& GetLocalisation() const;
+    const std::vector< geometry::Polygon2f* >& GetDeepAreas() const;
+    const std::vector< geometry::Polygon2f* >& GetLowAreas() const;
     //@}
 
 private:
@@ -74,6 +101,7 @@ private:
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< flood::FloodModel > floodModel_;
     int depth_;
     int refDist_;
     TER_Localisation location_;

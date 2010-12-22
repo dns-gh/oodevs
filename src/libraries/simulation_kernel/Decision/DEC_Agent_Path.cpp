@@ -13,6 +13,7 @@
 #include "DEC_Agent_PathClass.h"
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject.h"
+#include "DEC_Path_KnowledgeObjectFlood.h"
 #include "DEC_Path_KnowledgePopulation.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_GeometryFunctions.h"
@@ -26,6 +27,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Objects/FloodCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -162,6 +164,9 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::~DEC_Agent_Path()
 {
+    for( CIT_PathKnowledgeObjectByTypesVector itTypes = pathKnowledgeObjects_.begin(); itTypes != pathKnowledgeObjects_.end(); ++itTypes )
+        for( CIT_PathKnowledgeObjectVector it = itTypes->begin(); it != itTypes->end(); ++it )
+            delete *it;
     for( IT_PathPointList it = resultList_.begin(); it!= resultList_.end(); it++ )
         if( ( *it )->GetType() != DEC_PathPoint::eTypePointPath )
             ( *it )->RemoveFromDIA( *it );
@@ -199,20 +204,6 @@ double DEC_Agent_Path::GetUnitMajorWeight() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: IsObjectInsidePathPoint
-// Created: NLD 2005-07-21
-// -----------------------------------------------------------------------------
-static
-bool IsObjectInsidePathPoint( const DEC_Knowledge_Object& knowledge, const T_PointVector& pathPoints )
-{
-    const TER_Localisation& loc = knowledge.GetLocalisation();
-    for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
-        if( loc.IsInside( *it ) )
-            return true;
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::InitializePathKnowledges
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
@@ -237,16 +228,19 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-            if( knowledge.CanCollideWith( queryMaker_ ) && !IsObjectInsidePathPoint( knowledge, pathPoints ) ) //$$$ BOF
+            if( knowledge.CanCollideWith( queryMaker_ ) && !knowledge.IsObjectInsidePathPoint( pathPoints ) ) //$$$ BOF
             {
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
                 assert( pathKnowledgeObjects_.size() > knowledge.GetType().GetID() );
 
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
-                pathKnowledges.push_back( DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
-                if( pathKnowledges.size() == 1 && pathKnowledges.front().GetCostOut() > 0 )
-                    rCostOutsideOfAllObjects_ += pathKnowledges.front().GetCostOut();
+                if( knowledge.GetType().GetCapacity< FloodCapacity >() )
+                    pathKnowledges.push_back( new DEC_Path_KnowledgeObjectFlood( knowledge ) );
+                else
+                    pathKnowledges.push_back( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
+                if( pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
+                    rCostOutsideOfAllObjects_ += pathKnowledges.front()->GetCostOut();
             }
         }
     }
@@ -539,8 +533,11 @@ double DEC_Agent_Path::GetSpeedWithReinforcement( const TerrainData& environment
 void DEC_Agent_Path::CleanAfterComputation()
 {
     DEC_Path_ABC::CleanAfterComputation();
-    pathKnowledgeAgents_.clear();
+    for( CIT_PathKnowledgeObjectByTypesVector itTypes = pathKnowledgeObjects_.begin(); itTypes != pathKnowledgeObjects_.end(); ++itTypes )
+        for( CIT_PathKnowledgeObjectVector it = itTypes->begin(); it != itTypes->end(); ++it )
+            delete *it;
     pathKnowledgeObjects_.clear();
+    pathKnowledgeAgents_.clear();
     pathKnowledgePopulations_.clear();
 }
 

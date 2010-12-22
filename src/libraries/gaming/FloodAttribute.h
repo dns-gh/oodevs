@@ -16,6 +16,7 @@
 
 namespace flood
 {
+    class FloodDrawer;
     class FloodModel;
 }
 
@@ -75,6 +76,7 @@ private:
     const kernel::DetectionMap& detection_;
     const kernel::Positions& positions_;
     std::auto_ptr< flood::FloodModel > floodModel_;
+    std::auto_ptr< flood::FloodDrawer > floodDrawer_;
     int depth_;
     int refDist_;
     //@}
