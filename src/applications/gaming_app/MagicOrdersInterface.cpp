@@ -12,6 +12,7 @@
 #include "UnitMagicOrdersInterface.h"
 #include "PopulationMagicOrdersInterface.h"
 #include "ObjectMagicOrdersInterface.h"
+#include "UrbanMagicOrdersInterface.h"
 // LTO begin
 #include "KnowledgeGroupMagicOrdersInterface.h"
 #include "clients_kernel/AgentTypes.h"
@@ -28,6 +29,7 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, kernel::Controllers
     new PopulationMagicOrdersInterface( parent, controllers, actionsModel, staticModel, simulation, layer, profile );
     new ObjectMagicOrdersInterface( parent, controllers, actionsModel, staticModel, simulation, profile );
     new KnowledgeGroupMagicOrdersInterface( parent, controllers, actionsModel, staticModel, simulation, profile, staticModel.types_ ); // LTO
+    new UrbanMagicOrdersInterface( parent, controllers, actionsModel, staticModel, simulation, profile );
 }
 
 // -----------------------------------------------------------------------------

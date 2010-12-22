@@ -93,6 +93,7 @@ private:
     Localisation localisation_;
     bool hasInfrastructures_;
     bool hasResourceNetwork_;
+    bool hasStructure_;
     T_UrbanObjectAttributes attributes_;
     T_Optionals optionals_;
     //@}

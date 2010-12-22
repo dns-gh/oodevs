@@ -31,6 +31,7 @@ namespace simulation
     GENERATE_MESSAGE( sword::ClientToSim, sword, KnowledgeMagicAction         , knowledge_magic_action )
     GENERATE_MESSAGE( sword::ClientToSim, sword, ObjectMagicAction            , object_magic_action )
     GENERATE_MESSAGE( sword::ClientToSim, sword, UnitMagicAction              , unit_magic_action )
+    GENERATE_MESSAGE( sword::ClientToSim, sword, UrbanMagicAction             , urban_magic_action )
     GENERATE_MESSAGE( sword::ClientToSim, sword, MagicAction                  , magic_action )
     GENERATE_MESSAGE( sword::ClientToSim, sword, FragOrder                    , frag_order )
     GENERATE_MESSAGE( sword::ClientToSim, sword, SetAutomatMode               , set_automat_mode )

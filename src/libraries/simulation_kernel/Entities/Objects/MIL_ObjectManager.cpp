@@ -334,6 +334,24 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::OnReceiveUrbanMagicAction
+// Created: SLG 2010-12-22
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::OnReceiveUrbanMagicAction( const sword::UrbanMagicAction& msg, unsigned int nCtx )
+{
+    sword::MagicActionAck_ErrorCode nErrorCode = sword::MagicActionAck::no_error;
+    UrbanObjectWrapper* object = FindUrbanWrapper( msg.id().id() );
+    if( !object )
+        nErrorCode = sword::MagicActionAck::error_invalid_attribute;
+    else
+        nErrorCode = object->OnUpdateStructuralState( msg.structural_state() );
+
+    client::MagicActionAck asnReplyMsg;
+    asnReplyMsg().set_error_code( nErrorCode );
+    asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::OnReceiveChangeResourceLinks
 // Created: JSR 2010-08-25
 // -----------------------------------------------------------------------------

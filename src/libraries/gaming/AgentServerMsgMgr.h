@@ -40,6 +40,7 @@ namespace sword
     class PartyCreation;
     class UnitAttributes;
     class UnitMagicActionAck;
+    class UrbanMagicActionAck;
     class UnitPathFind;
     class AutomatAttributes;
     class LogMaintenanceHandlingCreation;
@@ -317,6 +318,8 @@ private:
     void OnReceiveUnitMagicActionAck ( const sword::UnitMagicActionAck&     message, unsigned long nCtx );
     void OnReceiveUnitPathFind       ( const sword::UnitPathFind&           message );
     void OnReceiveAutomatAttributes  ( const sword::AutomatAttributes&      message );
+    void OnReceiveUrbanMagicActionAck( const sword::UrbanMagicActionAck&     message, unsigned long nCtx );
+
 
     // Log maintenance
     void OnReceiveLogMaintenanceHandlingCreation   ( const sword::LogMaintenanceHandlingCreation&       message );

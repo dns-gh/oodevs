@@ -254,6 +254,16 @@ unsigned int StructuralCapacity::GetStructuralState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: StructuralCapacity::SetStructuralState
+// Created: SLG 2010-12-22
+// -----------------------------------------------------------------------------
+void StructuralCapacity::SetStructuralState( int state )
+{
+    structuralState_ = state;
+    //lastStructuralState_ = state;
+}
+
+// -----------------------------------------------------------------------------
 // Name: StructuralCapacity::ProcessAgentEntering
 // Created: SLG 2010-06-29
 // -----------------------------------------------------------------------------

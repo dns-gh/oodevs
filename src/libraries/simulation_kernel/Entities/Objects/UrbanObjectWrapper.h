@@ -92,6 +92,7 @@ public:
     virtual void    Serialize  ( HLA_UpdateFunctor& functor ) const;
     //@}
 
+    sword::MagicActionAck_ErrorCode OnUpdateStructuralState( int state );
     //! @name Network
     //@{
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );

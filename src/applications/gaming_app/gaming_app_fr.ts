@@ -3035,6 +3035,25 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>UrbanMagicOrdersInterface</name>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
+    </message>
+    <message>
+        <source>Change Urban state</source>
+        <translation>Changer l&apos;état structurel</translation>
+    </message>
+    <message>
+        <source>Enter value</source>
+        <translation>Saisir une valeur</translation>
+    </message>
+    <message>
+        <source>Type-in value then press &apos;Enter&apos;</source>
+        <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
+    </message>
+</context>
+<context>
     <name>UserProfileDialog</name>
     <message>
         <source>User profiles</source>

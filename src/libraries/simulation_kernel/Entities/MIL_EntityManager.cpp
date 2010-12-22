@@ -901,6 +901,14 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const sword::UnitMagicAction& 
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveUrbanMagicAction
+// Created: SLG 2010-12-21
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveUrbanMagicAction( const sword::UrbanMagicAction& message, unsigned int nCtx )
+{
+    pObjectManager_->OnReceiveUrbanMagicAction( message, nCtx );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessAutomatCreationRequest

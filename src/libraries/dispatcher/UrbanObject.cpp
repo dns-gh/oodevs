@@ -31,6 +31,7 @@ UrbanObject::UrbanObject( Model_ABC& /*model*/, const sword::UrbanCreation& msg 
     , localisation_              ( msg.location() )
     , hasInfrastructures_        ( false )
     , hasResourceNetwork_        ( false )
+    , hasStructure_              ( false )
 {
     Initialize( msg.attributes() );
     RegisterSelf( *this );
@@ -132,11 +133,16 @@ void UrbanObject::DoUpdate( const sword::UrbanUpdate& msg )
                 hasResourceNetwork_ = true;
                 AddAttribute( new ResourceNetworkAttribute( msg.attributes() ) );
             }
-            if( hasInfrastructures_ )
+            if( !hasInfrastructures_ )
             {
                 hasInfrastructures_ = true;
                 AddAttribute( new InfrastructuresAttribute( msg.attributes() ) );
             }
+        }
+        if( msg.attributes().has_structure() && !hasStructure_ )
+        {
+            hasStructure_ = true;
+            AddAttribute( new StructureAttribute( msg.attributes() ) );
         }
         optionals_.attributesPresent = 1;
         std::for_each( attributes_.begin(), attributes_.end(),

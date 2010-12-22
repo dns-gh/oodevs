@@ -65,6 +65,7 @@ public:
     void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
     void SendState( sword::UrbanAttributes& message );
     unsigned int GetStructuralState() const;
+    void SetStructuralState( int state );
     const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
     //@}
 

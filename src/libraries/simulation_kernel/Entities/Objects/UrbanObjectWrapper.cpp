@@ -385,7 +385,19 @@ void UrbanObjectWrapper::SendDestruction() const
 // -----------------------------------------------------------------------------
 void UrbanObjectWrapper::SendFullState() const
 {
-    // NOTHING
+    if( object_->HasChild() )
+        return;
+    if( pView_ && pView_->HideObject() )
+        return;
+    const StructuralCapacity* capacity = Retrieve< StructuralCapacity >();
+    if( capacity )
+    {
+        client::UrbanUpdate message;
+        message().mutable_urban_object()->set_id( object_->GetId() );
+        message().mutable_attributes()->mutable_structure()->set_state( capacity->GetStructuralState() );
+        if ( message().attributes().has_structure() )
+            message.Send( NET_Publisher_ABC::Publisher() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -467,4 +479,17 @@ void UrbanObjectWrapper::Register( ObjectAttribute_ABC* /*attribute*/ )
 void UrbanObjectWrapper::Register( ObjectCapacity_ABC* capacity )
 {
     capacities_.push_back( capacity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::OnUpdateStructuralState
+// Created: SLG 2010-12-22
+// -----------------------------------------------------------------------------
+sword::MagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateStructuralState( int state )
+{
+    StructuralCapacity* capacity = Retrieve< StructuralCapacity >();
+    if( !capacity )
+        return sword::MagicActionAck::error_invalid_attribute;
+    capacity->SetStructuralState( state );
+    return sword::MagicActionAck::no_error;
 }

@@ -36,6 +36,7 @@ namespace sword
     class SetAutomatMode;
     class UnitCreationRequest;
     class UnitMagicAction;
+    class UrbanMagicAction;
     class KnowledgeMagicAction;
     class MagicAction;
 }
@@ -155,6 +156,7 @@ public:
     //! @name Network
     //@{
     void OnReceiveUnitMagicAction             ( const sword::UnitMagicAction&               message, unsigned int nCtx );
+    void OnReceiveUrbanMagicAction            ( const sword::UrbanMagicAction&              message, unsigned int nCtx );
     void OnReceiveObjectMagicAction           ( const sword::ObjectMagicAction&             message, unsigned int nCtx );
     void OnReceiveUnitOrder                   ( const sword::UnitOrder&                              message, unsigned int nCtx );
     void OnReceiveAutomatOrder                ( const sword::AutomatOrder&                           message, unsigned int nCtx );

@@ -21,6 +21,7 @@ namespace sword
     class MissionParameters;
     class MagicAction;
     class ObjectMagicAction;
+    class UrbanMagicAction;
     enum ObjectMagicActionAck_ErrorCode;
 }
 
@@ -85,6 +86,7 @@ public:
     void SendCreation();
     void SendFullState();
     void OnReceiveObjectMagicAction( const sword::ObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveUrbanMagicAction( const sword::UrbanMagicAction& asnMsg, unsigned int nCtx );
     void OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx );
     //@}
 
