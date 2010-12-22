@@ -478,7 +478,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::bind( &DEC_PerceptionFunctions::DisableSensors, boost::ref( GetPion() ) );
     brain[ "DEC_Perception_ActiverSenseurs" ] =
         boost::bind( &DEC_PerceptionFunctions::EnableSensors, boost::ref( GetPion() ) );
-    brain[ "DEC_Identification_DistanceMinCompMajeure" ] =
+    brain[ "DEC_Identification_DistanceMaxCompMajeure" ] =
         boost::bind( &DEC_AgentFunctions::GetIdentificationDistance, boost::ref( GetPion() ) );
     brain[ "DEC_Reconnoissance_MajorComponentMinDistance" ] =
         boost::bind( &DEC_AgentFunctions::GetReconnoissanceDistance, boost::ref( GetPion() ) );
