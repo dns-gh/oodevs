@@ -24,12 +24,14 @@ namespace
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
-        return settings.readEntry( "/sword/Components/Terrain/RootDirectory", "" );
+        return settings.readEntry( "/Common/Components/Terrain/RootDirectory", "noValue" );
     }
 
     std::string GetExecutable()
     {
-        const std::string directory = GetDirectory().ascii();
+        std::string directory = GetDirectory().ascii();
+        if( directory == "noValue" )
+            directory = ( bfs::current_path().branch_path() / "Terrain" / "applications" ).string();
         return bfs::path( bfs::path( directory ) / "terrain_workshop_app.exe" ).native_file_string();
     }
 }
