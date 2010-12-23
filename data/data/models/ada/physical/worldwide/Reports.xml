@@ -456,6 +456,7 @@
   <report category="operational" id="316" message="Urban bloc control finished"/>
   <report category="operational" id="317" message="Point control started"/>
   <report category="operational" id="318" message="Point control finished"/>
+  <report category="operational" id="319" message="No launcher with capacity to use specify munition"/>
   <report category="operational" id="3000" message="Embarkment - started"/>
   <report category="operational" id="3001" message="Embarkment - interrupted"/>
   <report category="operational" id="3002" message="Embarkment - resumed"/>
@@ -482,4 +483,4 @@
   <report category="operational" id="3018" message="need police backup"/>
   <report category="operational" id="3019" message="need medical backup"/>
 </reports>
-<!-- signature="2282058199" -->
+<!-- signature="1854724497" -->

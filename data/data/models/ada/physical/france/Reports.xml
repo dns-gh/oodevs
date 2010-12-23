@@ -456,6 +456,7 @@
   <report category="operational" id="316" message="fin controle bloc urbain"/>
   <report category="operational" id="317" message="debut controle point"/>
   <report category="operational" id="318" message="fin controle point"/>
+  <report category="operational" id="319" message="aucun lanceur adapté à la munition spécifiée"/>
   <report category="operational" id="3000" message="Embarquement - début"/>
   <report category="operational" id="3001" message="Embarquement - interruption"/>
   <report category="operational" id="3002" message="Embarquement - reprise"/>
@@ -482,4 +483,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="2633282992" -->
+<!-- signature="3088988156" -->
