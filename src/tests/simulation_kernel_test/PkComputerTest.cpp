@@ -14,6 +14,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectLoader.h"
 #include "StubTER_World.h"
 #include <urban/Model.h>
@@ -51,6 +52,7 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
     xisModel >> xml::start( "urban-object" );
     std::auto_ptr< urban::UrbanObject > urbanBlock;
     urbanBlock.reset( new urban::UrbanObject ( xisModel, 0, coord ) );
+    xisModel >> xml::end;
     MIL_ObjectLoader loader;
     {
         xml::xistringstream xis(
@@ -59,9 +61,7 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
             "</objects>" );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
-    MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
-
-    xisModel >> xml::end;
+    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( *urbanBlock ) );
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( firer );
 
     urbanRole->NotifyMovingInsideObject( *pObject );
@@ -69,5 +69,6 @@ BOOST_FIXTURE_TEST_CASE( PkComputerUrbanProtectionTest, TestPK )
 
     BOOST_CHECK_CLOSE( 0.48, urbanRole->ComputeUrbanProtection( *pCategory ), 1. );
 
+    pObject.reset();
     TER_World::DestroyWorld();
 }
