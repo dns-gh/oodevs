@@ -20,8 +20,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( FloodAttribute )
 
 using namespace geometry;
 
-// $$$$ JSR 2010-12-22:  TODO créer un proxy pour les flood model pour pas recalculer tout à chaque fois
-
 // -----------------------------------------------------------------------------
 // Name: FloodAttribute constructor
 // Created: JSR 2010-12-15
@@ -80,8 +78,7 @@ FloodAttribute& FloodAttribute::operator=( const FloodAttribute& from )
     depth_ = from.depth_;
     refDist_ = from.refDist_;
     location_.Reset( from.location_ );
-    MT_Vector2D center = location_.ComputeBarycenter();
-    floodModel_->GenerateFlood( Point2d( center.rX_, center.rY_ ), depth_, refDist_ );
+    *floodModel_ = *from.floodModel_;
     return *this;
 }
 
@@ -97,8 +94,7 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
         depth_ = rhs.depth_;
         refDist_ = rhs.refDist_;
         location_.Reset( rhs.location_ );
-        MT_Vector2D center = location_.ComputeBarycenter();
-        floodModel_->GenerateFlood( Point2d( center.rX_, center.rY_ ), depth_, refDist_ );
+        *floodModel_ = *rhs.floodModel_;
     }
     return NeedUpdate( eOnUpdate );
 }

@@ -11,7 +11,6 @@
 #define __FloodModel_h_
 
 #include <geometry/types.h>
-#include <boost/noncopyable.hpp>
 
 namespace flood
 {
@@ -23,7 +22,7 @@ namespace flood
 */
 // Created: JSR 2010-12-08
 // =============================================================================
-class FloodModel : boost::noncopyable
+class FloodModel
 {
 public:
     //! @name Types
@@ -37,6 +36,11 @@ public:
     //@{
     explicit FloodModel( const ElevationGetter_ABC& getter );
     virtual ~FloodModel();
+    //@}
+
+    //! @name Copy/Assignment
+    //@{
+    FloodModel& operator=( const FloodModel& ); //!< Assignment operator
     //@}
 
     //! @name Operations
@@ -63,6 +67,12 @@ private:
         int polIndex_;
         bool deep_;
     };
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    FloodModel( const FloodModel& );            //!< Copy constructor
     //@}
 
 private:

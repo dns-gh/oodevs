@@ -33,20 +33,18 @@ DEC_Path_KnowledgeObjectFlood::DEC_Path_KnowledgeObjectFlood( const DEC_Knowledg
             vector.clear();
             const Polygon2f::T_Vertices& vertices = ( *it )->Vertices();
             for( Polygon2f::CIT_Vertices vertexIt = vertices.begin(); vertexIt != vertices.end(); ++vertexIt )
-                vector.push_back( MT_Vector2D( ( *vertexIt ).X(), ( *vertexIt ).Y() ) );
-            TER_Polygon polygon;
-            polygon.Reset( vector );
-            deepAreas_.push_back( polygon );
+                vector.push_back( MT_Vector2D( vertexIt->X(), vertexIt->Y() ) );
+            deepAreas_.push_back( TER_Polygon() );
+            deepAreas_.back().Reset( vector );
         }
         for( it = lowAreas.begin(); it != lowAreas.end(); ++it )
         {
             vector.clear();
             const Polygon2f::T_Vertices& vertices = ( *it )->Vertices();
             for( Polygon2f::CIT_Vertices vertexIt = vertices.begin(); vertexIt != vertices.end(); ++vertexIt )
-                vector.push_back( MT_Vector2D( ( *vertexIt ).X(), ( *vertexIt ).Y() ) );
-            TER_Polygon polygon;
-            polygon.Reset( vector );
-            lowAreas_.push_back( polygon );
+                vector.push_back( MT_Vector2D( vertexIt->X(), vertexIt->Y() ) );
+            lowAreas_.push_back( TER_Polygon() );
+            lowAreas_.back().Reset( vector );
         }
     }
 }

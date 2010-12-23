@@ -11,11 +11,9 @@
 #define __DEC_Path_KnowledgeObjectFlood_h_
 
 #include "DEC_Path_KnowledgeObject_ABC.h"
-#include <geometry/Types.h>
 #include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Knowledge_Object;
-class DEC_Agent_PathClass;
 
 // =============================================================================
 /** @class  DEC_Path_KnowledgeObjectFlood
@@ -48,8 +46,6 @@ private:
 private:
     //! @name Member data
     //@{
-    //std::vector< geometry::Polygon2f > deepAreas_;
-    //std::vector< geometry::Polygon2f > lowAreas_;
     std::vector< TER_Polygon > deepAreas_;
     std::vector< TER_Polygon > lowAreas_;
     TER_Localisation localisation_;

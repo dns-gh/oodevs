@@ -40,12 +40,30 @@ FloodModel::~FloodModel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FloodModel::operator=
+// Created: JSR 2010-12-23
+// -----------------------------------------------------------------------------
+FloodModel& FloodModel::operator=( const FloodModel& from )
+{
+    Reset();
+    center_ = from.center_;
+    refDist_= from.refDist_;
+    oldDepth_ = from.oldDepth_;
+    halfWidth_ = from.halfWidth_;
+    CIT_Polygons it;
+    for( it = from.deepAreas_.begin(); it != from.deepAreas_.end(); ++it )
+        deepAreas_.push_back( new Polygon2f( **it ) );
+    for( it = from.lowAreas_.begin(); it != from.lowAreas_.end(); ++it )
+        lowAreas_.push_back( new Polygon2f( **it ) );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FloodModel::ComputePolygons
 // Created: JSR 2010-12-08
 // -----------------------------------------------------------------------------
 void FloodModel::GenerateFlood( const Point2f& center, int depth, int refDist )
 {
-    // TODO faire un proxy?
     if( depth == oldDepth_ && refDist == refDist_ )
         return;
     Reset();
