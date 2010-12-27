@@ -26,7 +26,7 @@ namespace
 {
     const unsigned short defaultPort = 33000;
     const std::string    defaultHost = "127.0.0.1";
-    const unsigned int   timeOut     = 1000;
+    const unsigned int   timeOut     = 5000;
 
     int   argc = 2;
     char* argv[] = { "", "--root-dir=../../data" };
