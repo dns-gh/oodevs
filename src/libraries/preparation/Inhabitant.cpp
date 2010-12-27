@@ -30,7 +30,7 @@ Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QS
     , wounded_( 0 )
 {
     extensions_[ "nationality" ] = "";
-    extensions_[ "ethnic" ] = "";
+    extensions_[ "ethnicity" ] = "";
     extensions_[ "religion" ] = "";
     text_ = "";
 
