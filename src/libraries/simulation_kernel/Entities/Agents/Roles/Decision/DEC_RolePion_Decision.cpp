@@ -73,7 +73,6 @@
 #include "Entities/Agents/Actions/Emergency/PHY_ActionTriggerActivityInArea.h"
 #include "Entities/Agents/Actions/Emergency/PHY_ActionUnloadActivity.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/vector.hpp>
 #include <directia/tools/binders/ScriptRef.h>
@@ -1081,7 +1080,6 @@ void DEC_RolePion_Decision::NotifyRoePopulationChanged( const PHY_RoePopulation&
 void DEC_RolePion_Decision::SendFullState( client::UnitAttributes& msg ) const
 {
     assert( pRoePopulation_ );
-
     msg().set_rapport_de_force              ( sword::ForceRatio_Value( nForceRatioState_ ) );
     msg().set_combat_de_rencontre           ( sword::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
     msg().set_etat_operationnel             ( sword::EnumOperationalStatus( nOperationalState_ ) );

@@ -15,7 +15,7 @@
 #include "MIL.h"
 #include "PHY_RoleInterface_HumanFactors.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 
 namespace xml
 {
@@ -53,7 +53,7 @@ class PHY_RolePion_HumanFactors : public PHY_RoleInterface_HumanFactors
                                 , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
                                 , public tools::AlgorithmModifier_ABC< moving::SpeedComputer_ABC >
                                 , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
-                                , public network::NetworkUnitMessageNotificationHandler_ABC
+                                , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
     explicit PHY_RolePion_HumanFactors( MIL_Entity_ABC& entity );
@@ -66,7 +66,6 @@ public:
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
-
 
     //! @name Operations
     //@{
@@ -94,14 +93,13 @@ public:
 
      //! @name Operations
      //@{
-    double ModifyPH                    ( double rPH       ) const;
+    double ModifyPH( double rPH ) const;
      //@}
 
     //! @name Network
     //@{
-
-    void SendChangedState( client::UnitAttributes& msg ) const;
-    void SendFullState   ( client::UnitAttributes& msg ) const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
 private:

@@ -15,7 +15,7 @@
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 #include <boost/serialization/export.hpp>
 
@@ -50,7 +50,7 @@ class PHY_RoleAction_Moving : public tools::Role_ABC
                             , private boost::noncopyable
                             , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                             , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
-                            , public network::NetworkUnitMessageNotificationHandler_ABC
+                            , public network::NetworkMessageSender_ABC
 {
 public:
     //! @name Types
@@ -94,8 +94,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const;
-    virtual void SendFullState( client::UnitAttributes& asnMsg ) const;
+    virtual void SendChangedState() const;
+    virtual void SendFullState   () const;
     //@}
 
     //! @name Tools

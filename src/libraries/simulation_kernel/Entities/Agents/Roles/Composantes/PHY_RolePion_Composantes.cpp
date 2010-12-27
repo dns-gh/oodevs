@@ -1077,20 +1077,20 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( PHY_ComposantePion::
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::SendLogisticChangedState
+// Name: PHY_RolePion_Composantes::SendChangedState
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendLogisticChangedState() const
+void PHY_RolePion_Composantes::SendChangedState() const
 {
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
         (**it).SendChangedState();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::SendLogisticFullState
+// Name: PHY_RolePion_Composantes::SendFullState
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendLogisticFullState() const
+void PHY_RolePion_Composantes::SendFullState() const
 {
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
         (**it).SendFullState();
@@ -1174,12 +1174,9 @@ void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) cons
         }
     }
 
-
     msg().set_etat_operationnel_brut( (unsigned int)( rOperationalState_ * 100. ) );
 
     SendLoans( msg );
-
-    SendLogisticFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1209,14 +1206,10 @@ void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) c
     }
 
     if( bOperationalStateChanged_ )
-    {
         msg().set_etat_operationnel_brut( (unsigned int)( rOperationalState_ * 100. ) );
-    }
 
     if( bLoansChanged_ )
         SendLoans( msg );
-
-    SendLogisticChangedState();
 }
 
 // -----------------------------------------------------------------------------

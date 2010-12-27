@@ -11,7 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "NET_RolePion_Dotations.h"
-#include "NetworkUnitMessageNotificationHandler_ABC.h"
+#include "NetworkUnitAttributesMessageSender_ABC.h"
+#include "NetworkMessageSender_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -41,10 +42,10 @@ void load_construct_data( Archive& archive, NET_RolePion_Dotations* role, const 
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
 NET_RolePion_Dotations::NET_RolePion_Dotations( MIL_AgentPion& pion )
-    : pion_                     ( pion )
-    , bLastStateDead_            ( false )
-    , bLastStateNeutralized_     ( false )
-    , bExternalMustUpdateData_    ( false )
+    : pion_                   ( pion )
+    , bLastStateDead_         ( false )
+    , bLastStateNeutralized_  ( false )
+    , bExternalMustUpdateData_( false )
 {
     // NOTHING
 }
@@ -71,25 +72,10 @@ void NET_RolePion_Dotations::serialize( Archive& file, const unsigned int )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::DataUpdated
-// Created: NLD 2006-10-04
-// -----------------------------------------------------------------------------
-bool NET_RolePion_Dotations::DataUpdated() const
-{
-//@TODO Remove HasChanged in interface and hla
-    if( bExternalMustUpdateData_
-        || pion_.IsDead()        != bLastStateDead_
-        || pion_.IsNeutralized() != bLastStateNeutralized_ )
-        return true;
-
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_RolePion_Dotations::SendMsg
+// Name: NET_RolePion_Dotations::SendMsgUnitAttributes
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendMsg( client::UnitAttributes& asnMsg ) const
+void NET_RolePion_Dotations::SendMsgUnitAttributes( client::UnitAttributes& asnMsg ) const
 {
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
@@ -124,28 +110,31 @@ void NET_RolePion_Dotations::SendMsg( client::UnitAttributes& asnMsg ) const
 // -----------------------------------------------------------------------------
 void NET_RolePion_Dotations::SendChangedState() const
 {
-    if( !DataUpdated() )
-        return;
-
-    client::UnitAttributes msg;
-    msg().mutable_unit()->set_id( pion_.GetID() );
-    pion_.Apply( &network::NetworkUnitMessageNotificationHandler_ABC::SendChangedState, msg );
-
-    bool bIsDead = pion_.IsDead();
-    if( bLastStateDead_ != bIsDead )
+    // UnitAttributes message
+    if( bExternalMustUpdateData_
+        || pion_.IsDead()        != bLastStateDead_
+        || pion_.IsNeutralized() != bLastStateNeutralized_ )
     {
-        msg().set_mort( bIsDead );
-        bLastStateDead_ = bIsDead;
+        client::UnitAttributes msg;
+        msg().mutable_unit()->set_id( pion_.GetID() );
+        bool bIsDead = pion_.IsDead();
+        if( bLastStateDead_ != bIsDead )
+        {
+            msg().set_mort( bIsDead );
+            bLastStateDead_ = bIsDead;
+        }
+        bool bIsNeutralized = pion_.IsNeutralized();
+        if( bLastStateNeutralized_ != bIsNeutralized )
+        {
+            msg().set_neutralise( bIsNeutralized );
+            bLastStateNeutralized_              = bIsNeutralized;
+        }
+        pion_.Apply( &network::NetworkUnitAttributesMessageSender_ABC::SendChangedState, msg );
+        SendMsgUnitAttributes( msg );
     }
 
-    bool bIsNeutralized = pion_.IsNeutralized();
-    if( bLastStateNeutralized_ != bIsNeutralized )
-    {
-        msg().set_neutralise( bIsNeutralized );
-        bLastStateNeutralized_              = bIsNeutralized;
-    }
-
-    SendMsg( msg );
+    // 'standalones' messages
+    pion_.Apply( &network::NetworkMessageSender_ABC::SendChangedState );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,15 +144,15 @@ void NET_RolePion_Dotations::SendChangedState() const
 void NET_RolePion_Dotations::SendFullState() const
 {
     // UnitAttributes
-
     client::UnitAttributes msg;
     msg().mutable_unit()->set_id( pion_.GetID() );
     msg().set_mort      ( bLastStateDead_ = pion_.IsDead() );
     msg().set_neutralise( bLastStateNeutralized_ = pion_.IsNeutralized() );
+    pion_.Apply( &network::NetworkUnitAttributesMessageSender_ABC::SendFullState, msg );
+    SendMsgUnitAttributes( msg );
 
-    pion_.Apply( &network::NetworkUnitMessageNotificationHandler_ABC::SendFullState, msg );
-
-    SendMsg( msg );
+    // 'standalones' messages
+    pion_.Apply( &network::NetworkMessageSender_ABC::SendFullState );
 }
 
 // -----------------------------------------------------------------------------

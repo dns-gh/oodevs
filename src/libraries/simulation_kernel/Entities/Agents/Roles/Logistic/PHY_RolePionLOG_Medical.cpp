@@ -685,8 +685,6 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::Update( bool /*bIsDead*/ )
 {
-    if( bHasChanged_ )
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
 // -----------------------------------------------------------------------------
@@ -818,7 +816,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, swor
 // Name: PHY_RolePionLOG_Medical::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::SendFullState( client::UnitAttributes& /*asnUnit*/ ) const
+void PHY_RolePionLOG_Medical::SendFullState() const
 {
     client::LogMedicalState asn;
     asn().mutable_unit()->set_id( pion_.GetID() );
@@ -858,10 +856,10 @@ void PHY_RolePionLOG_Medical::SendFullState( client::UnitAttributes& /*asnUnit*/
 // Name: PHY_RolePionLOG_Medical::SendChangedState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::SendChangedState( client::UnitAttributes& asnUnit ) const
+void PHY_RolePionLOG_Medical::SendChangedState() const
 {
     if( bHasChanged_ || bExternalMustChangeState_ )
-        SendFullState( asnUnit );
+        SendFullState();
 }
 
 // -----------------------------------------------------------------------------

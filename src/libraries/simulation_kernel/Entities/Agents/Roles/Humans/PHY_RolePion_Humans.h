@@ -14,7 +14,8 @@
 
 #include "PHY_RoleInterface_Humans.h"
 #include "HumansActionsNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
+#include "simulation_kernel/NetworkMessageSender_ABC.h"
 
 namespace xml
 {
@@ -32,7 +33,8 @@ namespace human
 // =============================================================================
 class PHY_RolePion_Humans : public PHY_RoleInterface_Humans
                           , public HumansActionsNotificationHandler_ABC
-                          , public network::NetworkUnitMessageNotificationHandler_ABC
+                          , public network::NetworkUnitAttributesMessageSender_ABC
+                          , public network::NetworkMessageSender_ABC
 {
 public:
     explicit PHY_RolePion_Humans( MIL_AgentPion& pion );
@@ -80,8 +82,10 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( client::UnitAttributes& asn ) const;
-    virtual void SendFullState( client::UnitAttributes& asn ) const;
+    virtual void SendChangedState ( client::UnitAttributes& asn ) const;
+    virtual void SendFullState    ( client::UnitAttributes& asn ) const;
+    virtual void SendChangedState () const;
+    virtual void SendFullState    () const;
     //@}
 
 private:
@@ -89,9 +93,6 @@ private:
     //@{
     void UpdateDataWhenHumanRemoved( const Human_ABC& human );
     void UpdateDataWhenHumanAdded( const Human_ABC& human );
-
-    void SendLogisticChangedState() const;
-    void SendLogisticFullState() const;
     //@}
 
 private:

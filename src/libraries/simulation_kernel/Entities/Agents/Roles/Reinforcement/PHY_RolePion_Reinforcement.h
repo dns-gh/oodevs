@@ -17,7 +17,7 @@
 #include "simulation_kernel/TransportNotificationHandler_ABC.h"
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
@@ -38,7 +38,7 @@ class PHY_RolePion_Reinforcement : public PHY_RoleInterface_Reinforcement
                                  , public dotation::ConsumptionChangeRequestHandler_ABC
                                  , public transport::TransportNotificationHandler_ABC
                                  , public terrain::ObjectCollisionNotificationHandler_ABC
-                                 , public network::NetworkUnitMessageNotificationHandler_ABC
+                                 , public network::NetworkUnitAttributesMessageSender_ABC
                                  , public transport::TransportChangeNotificationHandler_ABC
 {
 public:
@@ -89,9 +89,8 @@ public:
 
     //! @name Network
     //@{
-
-    void SendChangedState( client::UnitAttributes& msg ) const;
-    void SendFullState   ( client::UnitAttributes& msg ) const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
     //! @name Accessors

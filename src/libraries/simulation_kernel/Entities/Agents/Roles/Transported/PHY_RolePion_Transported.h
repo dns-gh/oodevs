@@ -16,7 +16,7 @@
 #include "PHY_RoleInterface_Transported.h"
 #include "TransportNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 
 class MIL_AgentPion;
 
@@ -32,11 +32,11 @@ namespace transport
 // @class  PHY_RolePion_Transported
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_RolePion_Transported : public PHY_RoleInterface_Transported,
-    public tools::AlgorithmModifier_ABC<TransportPermissionComputer_ABC>,
-    public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>,
-    public TransportNotificationHandler_ABC,
-    public network::NetworkUnitMessageNotificationHandler_ABC
+class PHY_RolePion_Transported : public PHY_RoleInterface_Transported
+                               , public tools::AlgorithmModifier_ABC<TransportPermissionComputer_ABC>
+                               , public tools::AlgorithmModifier_ABC<moving::MoveComputer_ABC>
+                               , public TransportNotificationHandler_ABC
+                               , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
     explicit PHY_RolePion_Transported( MIL_AgentPion& pion );

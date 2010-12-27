@@ -596,12 +596,9 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( const PHY_Mainte
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::Update( bool /*bIsDead*/ )
 {
-    if( bHasChanged_ )
-        pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     if( nWorkRateWarningRCTick_ != 0 && MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() > nWorkRateWarningRCTick_ )
     {
         nWorkRateWarningRCTick_ = 0;
-
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_MaintenanceWorkRateExceeded );
     }
 }
@@ -666,7 +663,7 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, swor
 // Name: PHY_RolePionLOG_Maintenance::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::SendFullState( client::UnitAttributes& /*asnUnit*/ ) const
+void PHY_RolePionLOG_Maintenance::SendFullState() const
 {
     client::LogMaintenanceState asn;
     asn().mutable_unit()->set_id( pion_.GetID() );
@@ -708,10 +705,10 @@ void PHY_RolePionLOG_Maintenance::SendFullState( client::UnitAttributes& /*asnUn
 // Name: PHY_RolePionLOG_Maintenance::SendChangedState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::SendChangedState( client::UnitAttributes& asnUnit ) const
+void PHY_RolePionLOG_Maintenance::SendChangedState() const
 {
     if( bHasChanged_ || bExternalMustChangeState_ )
-        SendFullState( asnUnit );
+        SendFullState();
 }
 
 // -----------------------------------------------------------------------------

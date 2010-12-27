@@ -13,7 +13,7 @@
 #define __PHY_RoleAction_Loading_h_
 
 #include "TransportNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
@@ -39,7 +39,7 @@ class PHY_RoleAction_Loading : public tools::Role_ABC
                              , private boost::noncopyable
                              , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
                              , public transport::TransportNotificationHandler_ABC
-                             , public network::NetworkUnitMessageNotificationHandler_ABC
+                             , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
     //! @name Types
@@ -87,9 +87,8 @@ public:
 
     //! @name Network
     //@{
-
-    void SendChangedState( client::UnitAttributes& msg ) const;
-    void SendFullState   ( client::UnitAttributes& msg ) const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
     //! @name Accessors

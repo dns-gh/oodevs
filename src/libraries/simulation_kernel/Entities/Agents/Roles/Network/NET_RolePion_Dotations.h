@@ -57,8 +57,7 @@ public:
 private:
     //! @name Tools
     //@{
-    bool DataUpdated() const;
-    void SendMsg    ( client::UnitAttributes& asnMsg ) const;
+    void SendMsgUnitAttributes( client::UnitAttributes& asnMsg ) const;
     //@}
 
 private:

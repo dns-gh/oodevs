@@ -15,7 +15,7 @@
 #include "Decision/DEC_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 
 namespace client
 {
@@ -41,7 +41,7 @@ enum E_RulesOfEngagementState;
 // Created: JVT 2004-08-03
 // =============================================================================
 class DEC_RolePion_Decision : public DEC_Decision< MIL_AgentPion >
-                            , public network::NetworkUnitMessageNotificationHandler_ABC
+                            , public network::NetworkUnitAttributesMessageSender_ABC
                             , private boost::noncopyable
 {
 
@@ -150,8 +150,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( client::UnitAttributes& msg ) const;
-    void SendFullState   ( client::UnitAttributes& msg ) const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
     //! @name Notifications

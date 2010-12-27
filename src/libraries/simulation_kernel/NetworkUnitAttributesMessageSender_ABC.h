@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __NetworkUnitMessageNotificationHandler_ABC_H__
-#define __NetworkUnitMessageNotificationHandler_ABC_H__
+#ifndef __NetworkUnitAttributesMessageSender_ABC_H__
+#define __NetworkUnitAttributesMessageSender_ABC_H__
 
 namespace client
 {
@@ -18,18 +18,18 @@ namespace client
 namespace network
 {
 // =============================================================================
-/** @class  NetworkUnitMessageNotificationHandler_ABC
-    @brief  NetworkUnitMessageNotificationHandler_ABC
+/** @class  NetworkUnitAttributesMessageSender_ABC
+    @brief  NetworkUnitAttributesMessageSender_ABC
 */
 // Created: MGD 2009-10-14
 // =============================================================================
-class NetworkUnitMessageNotificationHandler_ABC
+class NetworkUnitAttributesMessageSender_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NetworkUnitMessageNotificationHandler_ABC() {}
-    virtual ~NetworkUnitMessageNotificationHandler_ABC() {}
+             NetworkUnitAttributesMessageSender_ABC() {}
+    virtual ~NetworkUnitAttributesMessageSender_ABC() {}
     //@}
 
     //! @name Operations
@@ -41,4 +41,4 @@ public:
 
 } // namespace network
 
-#endif /* __NetworkUnitMessageNotificationHandler_ABC_H__ */
+#endif /* __NetworkUnitAttributesMessageSender_ABC_H__ */

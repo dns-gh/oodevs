@@ -96,14 +96,6 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 
     asn().mutable_request()->set_id( GetId() );
     asn().mutable_unit()->set_id( agent_.GetId() );
-
-//    asn.set_oid_pion_log_traitantPresent( 1 );
-//    asn.set_blesse_mentalPresent( 1 );
-//    asn.set_blessurePresent( 1 );
-//    asn.set_contamine_nbcPresent( 1 );
-//    asn.set_diagnostique_effectuePresent( 1 );
-//    asn.set_etatPresent( 1 );
-
     asn().mutable_provider()->set_id( pTreatingAgent_ ? pTreatingAgent_->GetId() : 0);
     asn().set_blesse_mental         ( bMentalDiseased_);
     asn().set_blessure              ( nWound_);

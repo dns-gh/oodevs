@@ -167,15 +167,6 @@ public:
     virtual const MIL_Agent_ABC& GetPion                 () const = 0;
     //@}
 
-    //! @name Network
-    //@{
-//    virtual void SendChangedState( client::UnitAttributes& asn ) const = 0;
-//    virtual void SendFullState   ( client::UnitAttributes& asn ) const = 0;
-
-    virtual void SendLogisticChangedState() const = 0;
-    virtual void SendLogisticFullState   () const = 0;
-    //@}
-
     //! @name HLA
     //@{
     virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;

@@ -14,7 +14,7 @@
 
 #include "PHY_RoleInterface_Supply.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkMessageSender_ABC.h"
 
 namespace xml
 {
@@ -32,7 +32,7 @@ class PHY_ComposantePion;
 // =============================================================================
 class PHY_RolePionLOG_Supply : public PHY_RoleInterface_Supply
                              , public component::ComponentsChangedNotificationHandler_ABC
-                             , public network::NetworkUnitMessageNotificationHandler_ABC
+                             , public network::NetworkMessageSender_ABC
 {
 public:
     explicit PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion, bool fromArchive = false );
@@ -74,7 +74,6 @@ public:
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
     virtual void StopUsingForLogistic ( PHY_ComposantePion& composante );
 
-
     virtual void NotifyComponentHasChanged();
     //@}
 
@@ -88,8 +87,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( client::UnitAttributes& asnUnit ) const;
-    virtual void SendFullState   ( client::UnitAttributes& asnUnit ) const;
+    virtual void SendChangedState() const;
+    virtual void SendFullState   () const;
     //@}
 
 private:

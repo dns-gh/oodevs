@@ -14,7 +14,7 @@
 
 #include "TransportNotificationHandler_ABC.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
 
 namespace client
@@ -37,7 +37,7 @@ class PHY_RoleAction_Transport : public tools::Role_ABC
                                , private boost::noncopyable
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
-                               , public network::NetworkUnitMessageNotificationHandler_ABC
+                               , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
     //! @name Types
@@ -125,8 +125,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( client::UnitAttributes& msg ) const;
-    void SendFullState   ( client::UnitAttributes& msg ) const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
 private:

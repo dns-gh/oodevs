@@ -513,9 +513,7 @@ void PHY_RoleAction_Transport::Update( bool /*bIsDead*/ )
         nState_ = eNothing;
 
     if( HasChanged() )
-    {
         transporter_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-    }
 }
 
 // -----------------------------------------------------------------------------

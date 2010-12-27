@@ -16,7 +16,7 @@
 #include "PHY_RoleInterface_Location.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
@@ -34,7 +34,7 @@ class MIL_AgentPion;
 class PHY_RolePion_Location : public PHY_RoleInterface_Location
                             , public population::PopulationCollisionNotificationHandler_ABC
                             , public terrain::ObjectCollisionNotificationHandler_ABC
-                            , public network::NetworkUnitMessageNotificationHandler_ABC
+                            , public network::NetworkUnitAttributesMessageSender_ABC
                             , public location::LocationActionNotificationHandler_ABC
                             , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
 {

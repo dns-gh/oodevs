@@ -13,7 +13,7 @@
 #define __PHY_RolePion_Communications_h_
 
 #include "PHY_RoleInterface_Communications.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
 namespace xml
@@ -40,7 +40,7 @@ namespace moving
 class PHY_RolePion_Communications : public PHY_RoleInterface_Communications
                                   , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
                                   , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
-                                  , public network::NetworkUnitMessageNotificationHandler_ABC
+                                  , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
     //! @name Static
@@ -89,8 +89,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( client::UnitAttributes& msg ) const;
-    void SendFullState   ( client::UnitAttributes& msg ) const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
     //! @name Accessors

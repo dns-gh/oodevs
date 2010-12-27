@@ -14,7 +14,7 @@
 #include "PHY_RoleInterface_Posture.h"
 #include "MIL_Random.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 
 class MIL_Agent_ABC;
 class HLA_UpdateFunctor;
@@ -44,7 +44,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
-                           , public network::NetworkUnitMessageNotificationHandler_ABC
+                           , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -106,8 +106,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( client::UnitAttributes& asnMsg ) const;
-    void SendFullState( client::UnitAttributes& asnMsg ) const;
+    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const;
+    virtual void SendFullState( client::UnitAttributes& asnMsg ) const;
     //@}
 
     //! @name HLA

@@ -16,7 +16,7 @@
 
 #include "PHY_RoleInterface_Maintenance.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include <boost/serialization/export.hpp>
 
 class MIL_AgentPionLOG_ABC;
@@ -34,7 +34,7 @@ class PHY_ComposanteUsePredicate;
 // =============================================================================
 class PHY_RolePionLOG_Maintenance : public PHY_RoleInterface_Maintenance
                                   , public component::ComponentsChangedNotificationHandler_ABC
-                                  , public network::NetworkUnitMessageNotificationHandler_ABC
+                                  , public network::NetworkMessageSender_ABC
 {
 public:
     //! @name Constructor/Destructor
@@ -93,8 +93,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( client::UnitAttributes& asnUnit ) const;
-    virtual void SendFullState( client::UnitAttributes& asnUnit ) const;
+    virtual void SendChangedState() const;
+    virtual void SendFullState   () const;
     //@}
 
 private:

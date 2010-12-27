@@ -424,9 +424,7 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
     pDotations_->ConsumeFireReservations();
 
     if( HasChanged() )
-    {
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-    }
 }
 
 // -----------------------------------------------------------------------------

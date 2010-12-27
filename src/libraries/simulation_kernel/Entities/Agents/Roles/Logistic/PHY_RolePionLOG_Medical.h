@@ -15,7 +15,7 @@
 #include "MIL.h"
 #include "PHY_RoleInterface_Medical.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 
 namespace client
@@ -41,7 +41,7 @@ class PHY_ComposanteUsePredicate;
 // =============================================================================
 class PHY_RolePionLOG_Medical : public PHY_RoleInterface_Medical
                               , public component::ComponentsChangedNotificationHandler_ABC
-                              , public network::NetworkUnitMessageNotificationHandler_ABC
+                              , public network::NetworkMessageSender_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -112,8 +112,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( client::UnitAttributes& asnUnit ) const;
-    virtual void SendFullState( client::UnitAttributes& asnUnit ) const;
+    virtual void SendChangedState() const;
+    virtual void SendFullState   () const;
     //@}
 
 public:

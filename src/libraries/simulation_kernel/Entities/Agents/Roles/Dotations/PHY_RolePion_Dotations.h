@@ -19,7 +19,7 @@
 #include "ConsumeDotationNotificationHandler_ABC.h"
 #include "DotationsActionsNotificationHandler_ABC.h"
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 
 class MIL_AgentPion;
 class PHY_DotationGroupContainer;
@@ -47,7 +47,7 @@ class PHY_RolePion_Dotations : public PHY_RoleInterface_Dotations
                              , public surrender::SurrenderNotificationHandler_ABC
                              , public ConsumeDotationNotificationHandler_ABC
                              , public DotationsActionsNotificationHandler_ABC
-                             , public network::NetworkUnitMessageNotificationHandler_ABC
+                             , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
     explicit PHY_RolePion_Dotations( MIL_AgentPion& pion, bool fromArchive = false );

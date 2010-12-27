@@ -19,7 +19,8 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 #include "simulation_kernel/HumansChangedNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
+#include "simulation_kernel/NetworkMessageSender_ABC.h"
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
 class MIL_Injury_ABC;
@@ -68,10 +69,9 @@ class PHY_RolePion_Composantes : public PHY_RoleInterface_Composantes
                                , public transport::LoadingChangeNotificationHandler_ABC
                                , public surrender::SurrenderNotificationHandler_ABC
                                , public human::HumansChangedNotificationHandler_ABC
-                               , public network::NetworkUnitMessageNotificationHandler_ABC
+                               , public network::NetworkUnitAttributesMessageSender_ABC
+                               , public network::NetworkMessageSender_ABC
 {
-
-
 public:
     explicit PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool initialise = true );
     virtual ~PHY_RolePion_Composantes();
@@ -109,7 +109,6 @@ public:
     virtual void Update( bool bIsDead );
     virtual void Clean ();
     //@}
-
 
     //! @name Humans management
     //@{
@@ -220,6 +219,9 @@ public:
     //@{
     virtual void SendChangedState( client::UnitAttributes& message ) const;
     virtual void SendFullState   ( client::UnitAttributes& message ) const;
+
+    virtual void SendChangedState() const;
+    virtual void SendFullState   () const;
     //@}
 
     //! @name HLA
@@ -290,9 +292,6 @@ private:
     void UpdateDataWhenComposanteAdded  ( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
 
     void SendLoans( client::UnitAttributes& message ) const;
-
-    void SendLogisticChangedState() const;
-    void SendLogisticFullState   () const;
     //@}
     //! @name Helpers
     //@{
@@ -300,7 +299,6 @@ private:
     void ReadEquipement ( xml::xistream& xis );
     void ReadPersonnels ( xml::xistream& xis );
     void ReadPersonnel  ( xml::xistream& xis );
-
     //@}
 
 private:

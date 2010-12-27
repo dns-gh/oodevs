@@ -78,12 +78,6 @@ public:
 private:
     //! @name Serialization
     //@{
-    virtual void SendChangedState( client::UnitAttributes& asn ) const = 0;
-    virtual void SendFullState( client::UnitAttributes& asn ) const = 0;
-
-    virtual void SendLogisticChangedState() const = 0;
-    virtual void SendLogisticFullState() const = 0;
-
     friend class boost::serialization::access;
     template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {

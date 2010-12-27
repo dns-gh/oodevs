@@ -500,7 +500,6 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& message ) co
         personnel.set_nb_utilises_pour_maintenance ( humanData.nNbrInLogisticMaintenance_ );
         personnel.set_nb_blesses_non_evacues       ( 0 );   //$$$ RPD TO IMPLEMENT
     }
-    SendLogisticChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -526,25 +525,24 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
         personnel.set_nb_utilises_pour_maintenance ( humanData.nNbrInLogisticMaintenance_ );
         personnel.set_nb_blesses_non_evacues       ( 0 );   //$$$ RPD TO IMPLEMENT
     }
-    SendLogisticFullState();
 }
 
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::SendLogisticChangedState
+// Name: PHY_RolePion_Humans::SendChangedState
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::SendLogisticChangedState() const
+void PHY_RolePion_Humans::SendChangedState() const
 {
     for( CIT_MedicalHumanStateSet it = medicalHumanStates_.begin(); it != medicalHumanStates_.end(); ++it )
         (**it).SendChangedState();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Humans::SendLogisticFullState
+// Name: PHY_RolePion_Humans::SendFullState
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::SendLogisticFullState() const
+void PHY_RolePion_Humans::SendFullState() const
 {
     for( CIT_MedicalHumanStateSet it = medicalHumanStates_.begin(); it != medicalHumanStates_.end(); ++it )
         (**it).SendFullState();

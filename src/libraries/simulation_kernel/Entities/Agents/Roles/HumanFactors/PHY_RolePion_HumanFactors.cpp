@@ -193,9 +193,7 @@ void PHY_RolePion_HumanFactors::SendChangedState( client::UnitAttributes& msg ) 
 void PHY_RolePion_HumanFactors::Update( bool /*bIsDead*/ )
 {
     if( HasChanged() )
-    {
         entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-    }
 }
 
 // -----------------------------------------------------------------------------

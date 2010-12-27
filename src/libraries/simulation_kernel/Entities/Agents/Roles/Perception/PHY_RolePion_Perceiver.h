@@ -14,7 +14,7 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/SurrenderNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 #include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
@@ -45,7 +45,7 @@ class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
                              , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
                              , public component::ComponentsChangedNotificationHandler_ABC
                              , public surrender::SurrenderNotificationHandler_ABC
-                             , public network::NetworkUnitMessageNotificationHandler_ABC
+                             , public network::NetworkUnitAttributesMessageSender_ABC
                              , public network::VisionConeNotificationHandler_ABC
                              , public transport::TransportChangeNotificationHandler_ABC
                              , public transport::LoadingChangeNotificationHandler_ABC
