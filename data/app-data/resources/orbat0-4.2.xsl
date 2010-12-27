@@ -43,22 +43,27 @@
 		</xsl:copy>
 	</xsl:template>
 	<xsl:template match="automat" mode="logistic">
-	<xsl:element name="tc2">
-    <xsl:attribute name="id">
-        <xsl:value-of select="@id"/>
-    </xsl:attribute>
-    <xsl:for-each select="subordinate">
-        <xsl:element name="subordinate">
+	    <xsl:element name="tc2">
             <xsl:attribute name="id">
                 <xsl:value-of select="@id"/>
             </xsl:attribute>
-        </xsl:element>  
-    </xsl:for-each>    
-    <xsl:element name="subordinate">
-            <xsl:attribute name="id">
-                <xsl:value-of select="@id"/>
-            </xsl:attribute>
-    </xsl:element>
-</xsl:element>
+            <xsl:for-each select="subordinate">
+                <xsl:element name="subordinate">
+                    <xsl:attribute name="id">
+                        <xsl:value-of select="@id"/>
+                    </xsl:attribute>
+                </xsl:element>  
+            </xsl:for-each>    
+            <xsl:element name="subordinate">
+                <xsl:attribute name="id">
+                    <xsl:value-of select="@id"/>
+                </xsl:attribute>
+            </xsl:element>
+        </xsl:element>
 	</xsl:template>
+    <xsl:template match="dotation">
+        <xsl:element name="resource">
+            <xsl:apply-templates select="node()|@*"/>
+        </xsl:element>
+    </xsl:template>
 </xsl:stylesheet>
