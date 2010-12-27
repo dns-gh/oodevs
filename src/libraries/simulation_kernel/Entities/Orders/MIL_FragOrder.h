@@ -26,6 +26,7 @@ class MIL_FragOrderType;
 class MIL_MissionParameter_ABC;
 class MIL_ParameterType_MedicalPriorities;
 class MIL_ParameterType_MaintenancePriorities;
+class MIL_Population;
 class MT_Vector2D;
 class TER_Localisation;
 class PHY_ComposanteTypePion;
@@ -66,6 +67,7 @@ public:
     static void Register( directia::brain::Brain& brain );
     void Send( MIL_AgentPion& pion ) const;
     void Send( MIL_Automate& automat ) const;
+    void Send( MIL_Population& population ) const;
     //@}
 
     //! @name Types

@@ -876,6 +876,8 @@ void AgentServerMsgMgr::OnReceiveFragOrder( const sword::FragOrder& message )
         GetModel().agents_.GetAgent( message.tasker().unit().id() ).Update( message );
     else if( message.tasker().has_automat() )
         GetModel().agents_.GetAutomat( message.tasker().automat().id() ).Update( message );
+    else if( message.tasker().has_crowd() )
+        GetModel().agents_.GetPopulation( message.tasker().crowd().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

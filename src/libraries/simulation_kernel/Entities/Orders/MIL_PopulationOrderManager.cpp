@@ -66,6 +66,7 @@ void MIL_PopulationOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn
     DEC_Representations& representation = population_.GetRole<DEC_Representations>();
     boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, population_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );
+    pFragOrder->Send( population_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -16,6 +16,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "MIL_MissionParameter_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -483,6 +484,17 @@ void MIL_FragOrder::Send( MIL_Automate& automat ) const
 {
     client::FragOrder message;
     message().mutable_tasker()->mutable_automat()->set_id( automat.GetID() );
+    Send( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::Send
+// Created: MGD 2010-12-27
+// -----------------------------------------------------------------------------
+void MIL_FragOrder::Send( MIL_Population& population ) const
+{
+    client::FragOrder message;
+    message().mutable_tasker()->mutable_crowd()->set_id( population.GetID() );
     Send( message );
 }
 
