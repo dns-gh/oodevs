@@ -1029,15 +1029,17 @@ namespace
     std::map< std::string, boost::shared_ptr< directia::brain::Brain > > brainTable;
 }
 
-bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool& isMasalife, const std::string& type, const std::string& groupName )
+bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool& isMasalife, const std::string& type )
 {
     pArchetypeBrain = brainTable[brainFile];
-    isMasalife = false;
+    isMasalife = ( (brainFile == "BMAutomat.bms" || brainFile == "BMPion.bms" || brainFile == "BMCrowd.bms") );
+    if( isMasalife )
+        pArchetypeBrain = brainTable[type];
 
     if( !pArchetypeBrain.get() )
     {
         std::string plugins;
-        if(brainFile == "BMAutomat.bms" || brainFile == "BMPion.bms" || brainFile == "BMCrowd.bms")
+        if( isMasalife )
         {
             plugins = std::string( "plugins={" )
                 + PLUGIN( "masalife_brain" )
@@ -1047,34 +1049,27 @@ bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, b
                 + PLUGIN( "default_engine" );
             std::string brainInit = plugins
                 + "} cwd='" + includePath + "'";
-            pBrain.reset( new directia::brain::Brain( brainInit ) );
-            pArchetypeBrain = pBrain;
-            DEC_DecisionImpl::IncludeFile( *pArchetypeBrain, brainFile ,includePath, type, groupName );
-            isMasalife = true;
-            return true;
+            pArchetypeBrain.reset( new directia::brain::Brain( brainInit ) );
+            (*pArchetypeBrain)["include"]( brainFile ,includePath, type );
+            brainTable[type] = pArchetypeBrain;
         }
         else
         {
             plugins = std::string( "plugins={" )
                 + PLUGIN46( "eventmanager" )
                 + PLUGIN46( "motivation" );
-        std::string brainInit = plugins
-            + "} cwd='" + includePath + "'";
-        pArchetypeBrain.reset( new directia::brain::Brain( brainInit ) );
-        DEC_DecisionImpl::IncludeFile( *pArchetypeBrain, brainFile ,includePath, type, groupName );
-        brainTable[brainFile] = pArchetypeBrain;
+            std::string brainInit = plugins
+                + "} cwd='" + includePath + "'";
+            pArchetypeBrain.reset( new directia::brain::Brain( brainInit ) );
+            (*pArchetypeBrain)["include"]( brainFile ,includePath, type );
+            brainTable[brainFile] = pArchetypeBrain;
+        }
         pBrain.reset( new directia::brain::Brain( *pArchetypeBrain ) );
         return true;
-        }
     }
     else
         pBrain.reset( new directia::brain::Brain( *pArchetypeBrain ) );
     return false;
-}
-
-void IncludeFile( directia::brain::Brain& brain, const std::string& brainFile ,const std::string& includePath,const std::string& type,const std::string& groupName )
-{
-    brain[ "include" ]( brainFile ,includePath, type, groupName );
 }
 
 }
