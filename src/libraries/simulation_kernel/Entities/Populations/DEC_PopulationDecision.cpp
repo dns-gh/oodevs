@@ -21,10 +21,13 @@
 #include "Decision/DEC_PopulationFunctions.h"
 #include "Decision/DEC_ActionFunctions.h"
 #include "Decision/DEC_MiscFunctions.h"
+#include "Decision/DEC_GeometryFunctions.h"
+#include "Decision/DEC_OrdersFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
 #include <boost/serialization/vector.hpp>
+#include <boost/lambda/lambda.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationDecision )
 
@@ -33,15 +36,14 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationDecision )
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
 DEC_PopulationDecision::DEC_PopulationDecision( MIL_Population& population, unsigned int gcPause, unsigned int gcMult )
-    : DEC_Decision             ( population, gcPause, gcMult )
-    , rDominationState_        ( 0. )
-    , rLastDominationState_    ( 0. )
-    , bStateHasChanged_        ( true )
+    : DEC_Decision( population, gcPause, gcMult )
+    , rDominationState_    ( 0. )
+    , rLastDominationState_( 0. )
+    , bStateHasChanged_    ( true )
 {
     const DEC_Model_ABC& model = population.GetType().GetModel();
     SetModel( model );
     //GetVariable( nDIANameIdx_    ).SetValue( population.GetName() ); // $$$$ LDC: FIXME Use member data
-
     StartDefaultBehavior();
 }
 
@@ -106,6 +108,7 @@ void DEC_PopulationDecision::SetModel( const DEC_Model_ABC& model )
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::EndCleanStateAfterCrash()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -215,6 +218,12 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     brain[ "DEC_Population_Positions" ] =
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >() >(boost::bind( &DEC_PopulationFunctions::GetCurrentLocations, boost::cref( GetPopulation() ) ) );
 
+    // Move
+    brain[ "DEC_IsPointInUrbanBlockTrafficable" ] = boost::function< bool( MT_Vector2D&, bool ) >( boost::lambda::constant( true ) ); // $$$$ _RC_ LGY 2010-12-27: Pour une population, un point dans un block urbain est toujours accessible?
+    brain[ "DEC_IsPointInCity" ] = &DEC_GeometryFunctions::IsPointInCity;
+    brain[ "DEC_Agent_NiveauInstallation" ] = boost::bind( &DEC_PopulationFunctions::GetMovingState, boost::ref( GetPopulation() ) );
+    brain[ "DEC_HasFlow" ] = boost::function< bool() >( boost::bind( &DEC_PopulationFunctions::HasFlow, boost::ref( GetPopulation() ) ) );
+
     // Etats decisionnel
     brain[ "DEC_Population_ChangeEtatDomination" ] =
         boost::function<void (double)>(boost::bind(&DEC_PopulationFunctions::NotifyDominationStateChanged, boost::ref( GetPopulation() ), _1 ) );
@@ -236,6 +245,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     // Former szName_, mission_, automate_:
     brain[ "DEC_SetMission" ] =
         boost::function< void ( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_PopulationFunctions::SetMission, _1, _2 ) );
+    brain[ "DEC_FinMission" ] = boost::bind( &DEC_OrdersFunctions::FinishMission< MIL_Population >, boost::ref( GetPopulation() ) );
 }
 
 /*
@@ -519,7 +529,5 @@ void DEC_PopulationDecision::RegisterSelf( directia::brain::Brain& brain, bool i
 {
     brain[ "myself" ] = (DEC_Decision_ABC*)this;
     if( isMasalife )
-    {
         brain[ "InitMe" ](  brain[ "net.masagroup.sword.military.world.CrowdAlly" ], brain[ "myself" ], groupName );
-    }
 }

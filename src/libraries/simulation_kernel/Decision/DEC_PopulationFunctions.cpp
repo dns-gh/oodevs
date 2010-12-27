@@ -17,6 +17,7 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
@@ -37,7 +38,7 @@ void DEC_PopulationFunctions::DecisionalState( const MIL_Population& callerPopul
 {
     client::DecisionalState msg;
     msg().mutable_source()->mutable_crowd()->set_id( callerPopulation.GetID() );
-    msg().set_key  ( key.c_str() );
+    msg().set_key( key.c_str() );
     msg().set_value( value.c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -68,7 +69,7 @@ namespace
     {
     public:
         explicit PopulationVisitor( std::vector< boost::shared_ptr< TER_Localisation > >& locations )
-            : locations_ ( locations ) 
+            : locations_ ( locations )
         {
             // NOTHING
         }
@@ -90,7 +91,7 @@ namespace
 std::vector< boost::shared_ptr< TER_Localisation > > DEC_PopulationFunctions::GetCurrentLocations( const MIL_Population& callerPopulation )
 {
     std::vector< boost::shared_ptr< TER_Localisation > > locations;
-    PopulationVisitor       visitor( locations );
+    PopulationVisitor visitor( locations );
 
     callerPopulation.Apply( visitor );
     return locations;
@@ -138,6 +139,23 @@ const TER_Localisation* DEC_PopulationFunctions::GetKnowledgeObjectLocalisation(
     if( pKnowledge && pKnowledge->IsValid() )
         return &pKnowledge->GetLocalisation();
     return 0;
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::HasFlow
+// Created: LGY 2010-12-27
+// -----------------------------------------------------------------------------
+bool DEC_PopulationFunctions::HasFlow( MIL_Population& population )
+{
+    return population.HasFlow();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetMovingState
+// Created: LGY 2010-12-27
+// -----------------------------------------------------------------------------
+int DEC_PopulationFunctions::GetMovingState( MIL_Population& population )
+{
+    return HasFlow( population ) ? PHY_Posture::mouvement_.GetID() : PHY_Posture::poste_.GetID();
 }
 
 // -----------------------------------------------------------------------------

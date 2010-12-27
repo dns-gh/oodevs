@@ -49,7 +49,8 @@ public:
     static float GetKnowledgeObjectDistance( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge ) ;
     static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectClosestPoint( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge ) ;
     static int IsEnemy( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
-    
+    static int GetMovingState( MIL_Population& population );
+    static bool HasFlow( MIL_Population& population );
 
     // Etat decisionnel
     static void NotifyDominationStateChanged( MIL_Population& callerPopulation, double dominationState );

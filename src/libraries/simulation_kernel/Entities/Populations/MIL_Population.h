@@ -75,6 +75,7 @@ public:
     bool HasDoneMagicMove() const;
     unsigned int GetNbrAliveHumans() const;
     unsigned int GetNbrDeadHumans() const;
+    bool HasFlow() const;
     //@}
 
     //! @name Geometry
