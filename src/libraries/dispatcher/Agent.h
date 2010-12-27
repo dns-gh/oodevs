@@ -10,6 +10,7 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
+#include "Localisation.h"
 #include "Agent_ABC.h"
 #include "DecisionalState.h"
 #include "tools/Resolver.h"
@@ -64,6 +65,7 @@ class Agent : public dispatcher::Agent_ABC
             , public kernel::Updatable_ABC< sword::LogSupplyState >
             , public kernel::Updatable_ABC< sword::UnitChangeSuperior >
             , public kernel::Updatable_ABC< sword::UnitOrder >
+            , public kernel::Updatable_ABC< sword::UnitPathFind >
 {
 public:
     //! @name Constructors/Destructor
@@ -80,8 +82,9 @@ public:
     virtual void DoUpdate( const sword::LogMedicalState&     asnMsg );
     virtual void DoUpdate( const sword::LogMaintenanceState& asnMsg );
     virtual void DoUpdate( const sword::LogSupplyState&      asnMsg );
-    virtual void DoUpdate( const sword::UnitChangeSuperior&           asnMsg );
-    virtual void DoUpdate( const sword::UnitOrder&                    asnMsg );
+    virtual void DoUpdate( const sword::UnitChangeSuperior&  asnMsg );
+    virtual void DoUpdate( const sword::UnitOrder&           asnMsg );
+    virtual void DoUpdate( const sword::UnitPathFind&        asnMsg );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -152,15 +155,15 @@ private:
     bool                                                    bRadarEnabled_;
     tools::Resolver< const kernel::Agent_ABC >              transportedAgents_;
     kernel::Agent_ABC*                                      pTransporter_;
-    sword::ForceRatio_Value                       nForceRatioState_;
-    sword::EnumMeetingEngagementStatus                     nCloseCombatState_;
-    sword::EnumOperationalStatus                           nOperationalState_;
-    sword::UnitAttributes_FireAvailability     nIndirectFireAvailability_;
-    sword::RulesOfEngagement_Value                nRoe_;
-    sword::UnitAttributes_CrowdRoe             nPopulationRoe_;
-    sword::EnumUnitTiredness                               nTiredness_;
-    sword::EnumUnitMorale                                  nMorale_;
-    sword::EnumUnitExperience                              nExperience_;
+    sword::ForceRatio_Value                                 nForceRatioState_;
+    sword::EnumMeetingEngagementStatus                      nCloseCombatState_;
+    sword::EnumOperationalStatus                            nOperationalState_;
+    sword::UnitAttributes_FireAvailability                  nIndirectFireAvailability_;
+    sword::RulesOfEngagement_Value                          nRoe_;
+    sword::UnitAttributes_CrowdRoe                          nPopulationRoe_;
+    sword::EnumUnitTiredness                                nTiredness_;
+    sword::EnumUnitMorale                                   nMorale_;
+    sword::EnumUnitExperience                               nExperience_;
     const kernel::Team_ABC*                                 pSideSurrenderedTo_;
     bool                                                    bPrisonner_;
     bool                                                    bRefugeeManaged_;
@@ -178,6 +181,8 @@ private:
 
     std::auto_ptr< AgentOrder >                             order_;
     std::map< std::string, std::string >                    extensions_;
+
+    Localisation                                            currentPath_;
 };
 
 }

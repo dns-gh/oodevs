@@ -366,6 +366,15 @@ void Agent::DoUpdate( const sword::UnitOrder& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::DoUpdate
+// Created: NLD 2010-12-27
+// -----------------------------------------------------------------------------
+void Agent::DoUpdate( const sword::UnitPathFind& asnMsg )
+{
+    currentPath_.Update( asnMsg.itineraire().location() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::SendCreation
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
@@ -505,6 +514,15 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         AgentOrder::SendNoMission( *this, publisher );
 
     decisionalInfos_.Send( GetId(), publisher );
+
+    // Path
+    if( !currentPath_.IsEmpty() )
+    { 
+        client::UnitPathFind msg;
+        msg().mutable_unit()->set_id( GetId() );
+        currentPath_.Send( *msg().mutable_itineraire()->mutable_location() );
+        msg.Send( publisher );
+    }
 }
 
 // -----------------------------------------------------------------------------

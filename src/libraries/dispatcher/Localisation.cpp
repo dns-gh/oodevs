@@ -65,3 +65,13 @@ void Localisation::Send( sword::Location& msg ) const
     for( T_PositionVector::const_iterator it = points_.begin(); it != points_.end(); ++it )
         *msg.mutable_coordinates()->add_elem() = *it;
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: Localisation::Send
+// Created: NLD 2010-12-27
+// -----------------------------------------------------------------------------
+bool Localisation::IsEmpty() const
+{
+    return points_.empty();
+}
