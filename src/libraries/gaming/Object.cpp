@@ -13,6 +13,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
@@ -29,23 +30,10 @@ Object::Object( const sword::ObjectCreation& message, Controller& controller, co
     : EntityImplementation< Object_ABC >( controller, message.object().id(), QString( message.name().c_str() ) )
     , converter_        ( converter )
     , type_             ( typeResolver.Get( message.type().id() ) )
-    , nTypeLocalisation_( message.location().type() )
-    , construction_     ( 0 )
-    , valorization_     ( 0 )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.object().id() );
     RegisterSelf( *this );
-    if( message.attributes().has_obstacle()  )
-    {
-        if( message.attributes().obstacle().type() == sword::ObstacleType_DemolitionTargetType_reserved )
-        {
-            obstacleType_ = eDemolitionTargetType_Reserved;
-            reservedObstacleActivated_ = message.attributes().obstacle().activated() ? true : false;
-        }
-        else
-            obstacleType_ = eDemolitionTargetType_Preliminary;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +91,8 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 bool Object::IsReservedObstacle() const
 {
-    return obstacleType_.IsSet() && obstacleType_ == eDemolitionTargetType_Reserved;
+    const kernel::ObstacleAttribute_ABC* attribute = Retrieve< kernel::ObstacleAttribute_ABC >();
+    return attribute && attribute->IsReservedObstacle();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +101,8 @@ bool Object::IsReservedObstacle() const
 // -----------------------------------------------------------------------------
 bool Object::IsReservedObstacleActivated() const
 {
-    return reservedObstacleActivated_.IsSet() && reservedObstacleActivated_;
+    const kernel::ObstacleAttribute_ABC* attribute = Retrieve< kernel::ObstacleAttribute_ABC >();
+    return attribute && attribute->IsReservedObstacleActivated();
 }
 
 // -----------------------------------------------------------------------------

@@ -25,6 +25,9 @@ ObjectType::ObjectType( xml::xistream& xis )
     , canBeValorized_ ( false )
     , canBeBypassed_ ( false )
 {
+    xis >> xml::optional() >> xml::start( "constructor" )
+            >> xml::list( "improvable", *this, &ObjectType::SetValorizable )
+        >> xml::end();
     xis >> xml::list( *this, &ObjectType::ReadCapacities );
 }
 
@@ -35,6 +38,15 @@ ObjectType::ObjectType( xml::xistream& xis )
 ObjectType::~ObjectType()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::SetValorizable
+// Created: LDC 2010-12-27
+// -----------------------------------------------------------------------------
+void ObjectType::SetValorizable( xml::xistream& /*xis*/ )
+{
+    canBeValorized_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +190,7 @@ bool ObjectType::CanBeValorized() const
 // -----------------------------------------------------------------------------
 bool ObjectType::CanBeBypassed() const
 {
-    return canBeBypassed_;
+    return capacities_.find( "bypassable" ) != capacities_.end();
 }
 
 // -----------------------------------------------------------------------------

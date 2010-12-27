@@ -20,42 +20,43 @@ namespace sword
     class ObjectUpdate;
 }
 
-#define DECLARE_EXTENSION( extension )                                         \
-class extension : public kernel::Extension_ABC                                 \
-                , public kernel::Displayable_ABC                               \
-                , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate > \
-                , public kernel::Updatable_ABC< sword::ObjectUpdate >          \
-{                                                                              \
-public:                                                                        \
-             extension() {}                                                    \
-    virtual ~extension() {}                                                    \
-                                                                               \
-    virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& ) {}            \
-    virtual void DoUpdate( const sword::ObjectUpdate& ) {}                     \
-};
-
 namespace kernel
 {
-    DECLARE_EXTENSION( ConstructionAttribute_ABC )
-    DECLARE_EXTENSION( MineAttribute_ABC )
-    DECLARE_EXTENSION( ActivityTimeAttribute_ABC )
-    DECLARE_EXTENSION( NBCAttribute_ABC )
-    DECLARE_EXTENSION( BypassAttribute_ABC )
-    DECLARE_EXTENSION( ObstacleAttribute_ABC )
-    DECLARE_EXTENSION( LogisticAttribute_ABC )
-    DECLARE_EXTENSION( CrossingSiteAttribute_ABC )
-    DECLARE_EXTENSION( SupplyRouteAttribute_ABC )
-    DECLARE_EXTENSION( ToxicCloudAttribute_ABC )
-    DECLARE_EXTENSION( FireAttribute_ABC )
-    DECLARE_EXTENSION( BurnAttribute_ABC )
-    DECLARE_EXTENSION( MedicalTreatmentAttribute_ABC )
-    DECLARE_EXTENSION( StockAttribute_ABC )
-    DECLARE_EXTENSION( OccupantAttribute_ABC )
-    DECLARE_EXTENSION( DelayAttribute_ABC )
-    DECLARE_EXTENSION( SealOffAttribute_ABC )
-    DECLARE_EXTENSION( FloodAttribute_ABC )
+    class ObjectExtension : public kernel::Extension_ABC                           
+                    , public kernel::Displayable_ABC                               
+                    , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate > 
+                    , public kernel::Updatable_ABC< sword::ObjectUpdate >          
+    {                                                                              
+    public:                                                                        
+                 ObjectExtension() {}                                                    
+        virtual ~ObjectExtension() {}                                                    
+                                                                                   
+        virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& ) {}            
+        virtual void DoUpdate( const sword::ObjectUpdate& ) {}                     
+    };
+    class ConstructionAttribute_ABC : public ObjectExtension {};
+    class MineAttribute_ABC : public ObjectExtension {};
+    class ActivityTimeAttribute_ABC : public ObjectExtension {};
+    class NBCAttribute_ABC : public ObjectExtension {};
+    class BypassAttribute_ABC : public ObjectExtension {};
+    class ObstacleAttribute_ABC : public ObjectExtension
+    {
+    public:
+        virtual bool IsReservedObstacle() const = 0;
+        virtual bool IsReservedObstacleActivated() const = 0;
+    };
+    class LogisticAttribute_ABC : public ObjectExtension {};
+    class CrossingSiteAttribute_ABC : public ObjectExtension {};
+    class SupplyRouteAttribute_ABC : public ObjectExtension {};
+    class ToxicCloudAttribute_ABC : public ObjectExtension {};
+    class FireAttribute_ABC : public ObjectExtension {};
+    class BurnAttribute_ABC : public ObjectExtension {};
+    class MedicalTreatmentAttribute_ABC : public ObjectExtension {};
+    class StockAttribute_ABC : public ObjectExtension {};
+    class OccupantAttribute_ABC : public ObjectExtension {};
+    class DelayAttribute_ABC : public ObjectExtension {};
+    class SealOffAttribute_ABC : public ObjectExtension {};
+    class FloodAttribute_ABC : public ObjectExtension {};
 }
-
-#undef DECLARE_EXTENSION
 
 #endif // __ObjectExtensions_h_

@@ -78,6 +78,7 @@ private:
     //! @name Helper
     //@{
     void ReadCapacities( const std::string& capacity, xml::xistream& xis );
+    void SetValorizable( xml::xistream& xis );
     xml::xistream* FindCapacity( const std::string& capacity ) const;
     //@}
 

@@ -142,3 +142,21 @@ void ObstacleAttribute::SetActivationTime( int time )
 {
     activationTime_ = time;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::IsReservedObstacle
+// Created: LDC 2010-12-27
+// -----------------------------------------------------------------------------
+bool ObstacleAttribute::IsReservedObstacle() const
+{
+    return type_.GetValue() == eDemolitionTargetType_Preliminary;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::IsReservedObstacleActivated
+// Created: LDC 2010-12-27
+// -----------------------------------------------------------------------------
+bool ObstacleAttribute::IsReservedObstacleActivated() const
+{
+    return bActivated_;
+}

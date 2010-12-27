@@ -115,3 +115,21 @@ void ObstacleAttribute::Draw( const geometry::Point2f& where, const Viewport_ABC
         glPopAttrib();
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::IsReservedObstacle
+// Created: LDC 2010-12-27
+// -----------------------------------------------------------------------------
+bool ObstacleAttribute::IsReservedObstacle() const
+{
+    return obstacleType_.IsSet() && obstacleType_ == eDemolitionTargetType_Reserved;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::IsReservedObstacleActivated
+// Created: LDC 2010-12-27
+// -----------------------------------------------------------------------------
+bool ObstacleAttribute::IsReservedObstacleActivated() const
+{
+    return reservedObstacleActivated_.IsSet() && reservedObstacleActivated_;
+}

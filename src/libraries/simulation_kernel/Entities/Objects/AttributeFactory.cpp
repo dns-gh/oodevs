@@ -172,58 +172,56 @@ void AttributeFactory::Initialize( Object& object ) const
 void AttributeFactory::Create( Object& object, const sword::MissionParameter& parameter ) const
 {
     Initialize( object );
-    if( parameter.value_size() )
+    for( int i = 0; i < parameter.value_size(); ++i )
     {
-        const sword::MissionParameter_Value& attributes = parameter.value().Get( 0 );
-        for( int i = 0; i < attributes.list_size(); ++i )
+        const sword::MissionParameter_Value& attributes = parameter.value().Get( i );
+        if( attributes.list_size() > 0 )
         {
-            const sword::MissionParameter_Value& attribute = attributes.list( i );
-            if( attribute.list_size() == 0 ) // it should be a list of lists
-                return;
-            unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
+            const sword::MissionParameter_Value& attribute = attributes.list( 0 );
+            unsigned int actionId = attribute.identifier(); // first element is the type
             switch( actionId )
             {
             case ObjectMagicAction::obstacle:
-                object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( attribute );
+                object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( attributes );
                 break;
             case ObjectMagicAction::mine:
-                object.GetAttribute< MineAttribute >() = MineAttribute( attribute );
+                object.GetAttribute< MineAttribute >() = MineAttribute( attributes );
                 break;
             case ObjectMagicAction::activity_time:
-                object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attribute );
+                object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attributes );
                 break;
             case ObjectMagicAction::bypass:
-                object.GetAttribute< BypassAttribute >() = BypassAttribute( attribute );
+                object.GetAttribute< BypassAttribute >() = BypassAttribute( attributes );
                 break;
             case ObjectMagicAction::effect_delay:
-                object.GetAttribute< DelayAttribute >() = DelayAttribute( attribute );
+                object.GetAttribute< DelayAttribute >() = DelayAttribute( attributes );
                 break;
             case ObjectMagicAction::logistic:
-                object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attribute );
+                object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attributes );
                 break;
             case ObjectMagicAction::nbc:
-                object.GetAttribute< NBCAttribute >() = NBCAttribute( attribute );
+                object.GetAttribute< NBCAttribute >() = NBCAttribute( attributes );
                 break;
             case ObjectMagicAction::crossing_site:
-                object.GetAttribute< CrossingSiteAttribute >() = CrossingSiteAttribute( attribute );
+                object.GetAttribute< CrossingSiteAttribute >() = CrossingSiteAttribute( attributes );
                 break;
             case ObjectMagicAction::supply_route:
-                object.GetAttribute< SupplyRouteAttribute >() = SupplyRouteAttribute( attribute );
+                object.GetAttribute< SupplyRouteAttribute >() = SupplyRouteAttribute( attributes );
                 break;
             /*case ObjectMagicAction::toxic_cloud:
-                object.GetAttribute< ??? >() = ???( attribute );
+                object.GetAttribute< ??? >() = ???( attributes );
                 break;*/
             case ObjectMagicAction::fire:
-                object.GetAttribute< FireAttribute >() = FireAttribute( attribute );
+                object.GetAttribute< FireAttribute >() = FireAttribute( attributes );
                 break;
             case ObjectMagicAction::medical_treatment:
-                object.GetAttribute< MedicalTreatmentAttribute >() = MedicalTreatmentAttribute( attribute );
+                object.GetAttribute< MedicalTreatmentAttribute >() = MedicalTreatmentAttribute( attributes );
                 break;
             case ObjectMagicAction::interaction_height:
-                object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attribute );
+                object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attributes );
                 break;
             case ObjectMagicAction::flood:
-                object.GetAttribute< FloodAttribute >() = FloodAttribute( attribute, object.GetLocalisation() );
+                object.GetAttribute< FloodAttribute >() = FloodAttribute( attributes, object.GetLocalisation() );
                 break;
             default:
                 break;

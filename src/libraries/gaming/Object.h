@@ -74,21 +74,6 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::ObjectType& type_;
-
-    kernel::OptionalValue< float > rConstructionPercentage_;
-    kernel::OptionalValue< float > rValorizationPercentage_;
-    kernel::OptionalValue< float > rBypassConstructionPercentage_;
-    kernel::OptionalValue< E_DemolitionTargetType > obstacleType_;
-    kernel::OptionalValue< bool > reservedObstacleActivated_;
-    //@}
-
-    //! @name Member data
-    //@{
-    sword::Location::Geometry nTypeLocalisation_;
-    kernel::DotationType* construction_;
-    kernel::DotationType* valorization_;
-    kernel::OptionalValue< unsigned int > nDotationConstruction_;
-    kernel::OptionalValue< unsigned int > nDotationValorization_;
     //@}
 };
 

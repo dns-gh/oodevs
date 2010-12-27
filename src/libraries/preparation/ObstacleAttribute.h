@@ -56,6 +56,8 @@ public:
     //@{
     void Activate( bool activate );
     void SetActivationTime( int time );
+    virtual bool IsReservedObstacle() const;
+    virtual bool IsReservedObstacleActivated() const;
     //@}
 
 private:
