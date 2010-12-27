@@ -539,11 +539,11 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
                         intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
                     double rDistanceModificator = urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
-                    if( rDistanceModificator <= epsilon )
+                    double occupationFactor = std::sqrt( architecture->GetOccupation() );
+                    if( occupationFactor == 1. && rDistanceModificator <= epsilon )
                         rVisionNRJ = -1 ;
                     else
                     {
-                        double occupationFactor = std::sqrt( architecture->GetOccupation() );
                         double referenceDistance = 200; // $$$$ LDC Hard coded 200m. reference distance
                         double distanceFactor = std::min( ( intersectionDistance / referenceDistance ) * occupationFactor * ( 1 - rDistanceModificator ), 1. );
                         rVisionNRJ -= rVisionNRJ * distanceFactor + intersectionDistance;
