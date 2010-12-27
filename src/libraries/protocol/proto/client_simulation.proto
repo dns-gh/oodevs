@@ -19,12 +19,6 @@ message ControlCheckPointSaveNow {
    optional string name = 1;
 }
 
-message FragOrder {
-   required Tasker            tasker     = 1;
-   required FragOrderType     frag_order = 2;
-   optional MissionParameters parameters = 3;
-}
-
 message SetAutomatMode {
    required AutomatId       automate = 1;
    required EnumAutomatMode mode     = 2;

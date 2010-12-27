@@ -616,6 +616,15 @@ message CrowdOrder {
     optional DateTime          start_time     = 6;
 }
 
+message FragOrder {
+   required Tasker            tasker         = 1;
+   required FragOrderType     type           = 2;
+   optional MissionParameters parameters     = 3;
+   optional string            label          = 4;
+   optional Location          symbolLocation = 5;
+   optional DateTime          start_time     = 6;
+}
+
 // Messenger common types
 
 message ClientObjectProperty {

@@ -82,7 +82,7 @@ void MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_unit_surrendered );
     if( pion_.GetAutomate().IsEngaged() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_unit_cannot_receive_order );
-    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order().id() );
+    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.type().id() );
     if( !pType )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_order_conduite );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
@@ -90,6 +90,7 @@ void MIL_PionOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
     DEC_Representations& representation = pion_.GetRole<DEC_Representations>();
     boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, pion_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );
+    pFragOrder->Send( pion_ );
 }
 
 // -----------------------------------------------------------------------------

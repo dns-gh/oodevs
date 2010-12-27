@@ -2010,6 +2010,7 @@ message SimToClient {
         optional PopulationUpdate                       population_update                         = 135;
         optional ChangePopulationMagicActionAck         change_population_magic_action_ack        = 136;
         optional UrbanMagicActionAck                    urban_magic_action_ack                    = 137;
+        optional FragOrder                              frag_order                                = 138;
     }
     optional int32   context = 1;
     required Content message = 2;

@@ -102,7 +102,7 @@ void FragOrder::Publish( Publisher_ABC& publisher, int ) const
         message().mutable_tasker()->mutable_crowd()->set_id( GetEntity().GetId() );
     else if( GetEntity().GetTypeName() == "agent" )
         message().mutable_tasker()->mutable_unit()->set_id( GetEntity().GetId() );
-    message().mutable_frag_order()->set_id( GetType().GetId() );
+    message().mutable_type()->set_id( GetType().GetId() );
     CommitTo( *message().mutable_parameters() );
     message.Send( publisher );
     message().Clear();

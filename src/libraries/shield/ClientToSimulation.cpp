@@ -119,7 +119,8 @@ void ClientToSimulation::Convert( const Common::MsgCrowdOrder& from, sword::Crow
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgFragOrder& from, sword::FragOrder* to )
 {
     ConvertTasker( from.tasker(), to->mutable_tasker() );
-    CONVERT_ID( frag_order );
+    if( from.has_frag_order() )
+        to->mutable_type()->set_id( from.frag_order().id() );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 

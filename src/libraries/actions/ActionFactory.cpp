@@ -261,7 +261,7 @@ namespace
 actions::Action_ABC* ActionFactory::CreateAction( const sword::FragOrder& message ) const
 {
     const kernel::Entity_ABC& tasker = FindTasker( message, entities_ );
-    const kernel::FragOrderType& order = fragOrders_.Get( message.frag_order().id() );
+    const kernel::FragOrderType& order = fragOrders_.Get( message.type().id() );
     std::auto_ptr< actions::Action_ABC > action( new actions::FragOrder( tasker, order, controller_, true ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &tasker ) );

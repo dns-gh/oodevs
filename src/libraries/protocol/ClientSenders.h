@@ -25,6 +25,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitOrder                              , unit_order                                )
     GENERATE_MESSAGE( sword::SimToClient, sword, AutomatOrder                           , automat_order                             )
     GENERATE_MESSAGE( sword::SimToClient, sword, CrowdOrder                             , crowd_order                               )
+    GENERATE_MESSAGE( sword::SimToClient, sword, FragOrder                              , frag_order                               )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlInformation                     , control_information                       )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlBeginTick                       , control_begin_tick                        )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlEndTick                         , control_end_tick                          )

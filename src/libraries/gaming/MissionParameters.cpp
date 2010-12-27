@@ -88,6 +88,15 @@ void MissionParameters::DoUpdate( const sword::CrowdOrder& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MissionParameters::DoUpdate
+// Created: MGD 2010-12-27
+// -----------------------------------------------------------------------------
+void MissionParameters::DoUpdate( const sword::FragOrder& message )
+{
+    UpdateMessage( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MissionParameters::Draw
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------

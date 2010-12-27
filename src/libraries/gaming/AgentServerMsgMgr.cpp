@@ -867,6 +867,18 @@ void AgentServerMsgMgr::OnReceiveFragOrderAck( const sword::FragOrderAck& messag
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveFragOrder
+// Created: MGD 2010-12-27
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveFragOrder( const sword::FragOrder& message )
+{
+    if( message.tasker().has_unit() )
+        GetModel().agents_.GetAgent( message.tasker().unit().id() ).Update( message );
+    else if( message.tasker().has_automat() )
+        GetModel().agents_.GetAutomat( message.tasker().automat().id() ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveUnitCreationRequestAck
 // Created: SBO 2007-06-20
 // -----------------------------------------------------------------------------
@@ -1850,7 +1862,9 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
     else if( wrapper.message().has_automat_order() )
         OnReceiveAutomatOrder              ( wrapper.message().automat_order() );
     else if( wrapper.message().has_crowd_order() )
-        OnReceiveCrowdOrder           ( wrapper.message().crowd_order() );
+        OnReceiveCrowdOrder                ( wrapper.message().crowd_order() );
+    else if( wrapper.message().has_frag_order() )
+        OnReceiveFragOrder                 ( wrapper.message().frag_order() );
     else if( wrapper.message().has_object_creation() )
         OnReceiveObjectCreation            ( wrapper.message().object_creation() );
     else if( wrapper.message().has_object_update() )

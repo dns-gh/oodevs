@@ -31,6 +31,7 @@ namespace sword
     class UnitOrder;
     class AutomatOrder;
     class CrowdOrder;
+    class FragOrder;
 }
 
 // =============================================================================
@@ -43,6 +44,7 @@ class MissionParameters : public kernel::Extension_ABC
                         , public kernel::Updatable_ABC< sword::UnitOrder >
                         , public kernel::Updatable_ABC< sword::AutomatOrder >
                         , public kernel::Updatable_ABC< sword::CrowdOrder >
+                        , public kernel::Updatable_ABC< sword::FragOrder >
                         , public tools::Resolver< actions::Action_ABC >
                         , public kernel::Drawable_ABC
 {
@@ -71,6 +73,7 @@ private:
     virtual void DoUpdate( const sword::UnitOrder& message );
     virtual void DoUpdate( const sword::AutomatOrder& message );
     virtual void DoUpdate( const sword::CrowdOrder& message );
+    virtual void DoUpdate( const sword::FragOrder& message );
     template< typename T >
     void UpdateMessage( const T& message );
     //@}

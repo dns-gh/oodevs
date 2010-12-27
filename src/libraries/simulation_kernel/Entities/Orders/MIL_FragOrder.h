@@ -13,12 +13,15 @@
 namespace sword
 {
     class FragOrder;
+    class MissionParameters;
 }
 
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class DEC_KnowledgeResolver_ABC;
 class DEC_Representations;
+class MIL_AgentPion;
+class MIL_Automate;
 class MIL_FragOrderType;
 class MIL_MissionParameter_ABC;
 class MIL_ParameterType_MedicalPriorities;
@@ -35,6 +38,11 @@ namespace directia
     {
         class Brain;
     }
+}
+
+namespace client
+{
+    class FragOrder;
 }
 
 // =============================================================================
@@ -56,6 +64,8 @@ public:
     //! @name Operations
     //@{
     static void Register( directia::brain::Brain& brain );
+    void Send( MIL_AgentPion& pion ) const;
+    void Send( MIL_Automate& automat ) const;
     //@}
 
     //! @name Types
@@ -96,6 +106,13 @@ public:
     //@}
 
 private:
+
+    //! @name Helpers
+    //@{
+    void Serialize( sword::MissionParameters& asn ) const;
+    void Send( client::FragOrder& message ) const;
+    //@}
+
     //! @name Member data
     //@{
     const MIL_FragOrderType& type_;

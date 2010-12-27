@@ -148,6 +148,6 @@ void ActionsLogger::Log( const sword::CrowdOrder& message )
 // -----------------------------------------------------------------------------
 void ActionsLogger::Log( const sword::FragOrder& message )
 {
-    if( message.has_frag_order() && message.frag_order().id() != 0 )
+    if( message.has_type() && message.type().id() != 0 )
         LogAction( message );
 }

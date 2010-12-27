@@ -58,7 +58,7 @@ void MIL_PopulationOrderManager::OnReceiveMission( const sword::CrowdOrder& asnM
 // -----------------------------------------------------------------------------
 void MIL_PopulationOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn )
 {
-    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order().id() );
+    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.type().id() );
     if( !pType )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_order_conduite );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )

@@ -15,10 +15,11 @@
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
-#include "protocol/Protocol.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "MIL_MissionParameter_ABC.h"
-#include <directia/brain/Brain.h>
-
+#include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
@@ -461,6 +462,51 @@ DEC_Decision_ABC* MIL_FragOrder::GetAgent() const
 {
   static const std::string parameterName( "agent_" );
   return GetAgentParameter( parameterName, parameters_, type_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::Send
+// Created: MGD 2010-12-27
+// -----------------------------------------------------------------------------
+void MIL_FragOrder::Send( MIL_AgentPion& pion ) const
+{
+    client::FragOrder message;
+    message().mutable_tasker()->mutable_unit()->set_id( pion.GetID() );
+    Send( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::Send
+// Created: MGD 2010-12-27
+// -----------------------------------------------------------------------------
+void MIL_FragOrder::Send( MIL_Automate& automat ) const
+{
+    client::FragOrder message;
+    message().mutable_tasker()->mutable_automat()->set_id( automat.GetID() );
+    Send( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::Send
+// Created: MGD 2010-12-27
+// -----------------------------------------------------------------------------
+void MIL_FragOrder::Send( client::FragOrder& message ) const
+{
+    message().mutable_type()->set_id( type_.GetID() );
+    Serialize( *message().mutable_parameters() );
+    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *message().mutable_start_time() );
+    message.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::Serialize
+// Created: MGD 2010-12-27
+// -----------------------------------------------------------------------------
+void MIL_FragOrder::Serialize( sword::MissionParameters& asn ) const
+{
+    //@TODO try to merge FragOrder with Mission_ABC
+    if( !type_.Copy( parameters_, asn, MIL_OrderContext(false) ) )
+        throw std::runtime_error( std::string( "Frag Order " ) + type_.GetName() + " impossible to serialize parameters" );
 }
 
 

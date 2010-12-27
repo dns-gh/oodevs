@@ -137,6 +137,7 @@ namespace sword
     class ChangeDiplomacy;
     class AutomatOrder;
     class UnitOrder;
+    class FragOrder;
     class UnitChangeSuperior;
     class AutomatChangeSuperior;
     class AutomatChangeKnowledgeGroup;
@@ -392,6 +393,7 @@ private:
     void OnReceiveAutomatOrderAck       ( const sword::AutomatOrderAck&        message, unsigned long nCtx );
     void OnReceiveUnitOrder             ( const sword::UnitOrder&                       message );
     void OnReceiveUnitOrderAck          ( const sword::UnitOrderAck&           message, unsigned long nCtx );
+    void OnReceiveFragOrder             ( const sword::FragOrder& message );
     void OnReceiveFragOrderAck          ( const sword::FragOrderAck&           message, unsigned long nCtx );
     void OnReceiveUnitCreationRequestAck( const sword::UnitCreationRequestAck& message );
 
