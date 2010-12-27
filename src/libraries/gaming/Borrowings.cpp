@@ -42,7 +42,7 @@ Borrowings::~Borrowings()
 // -----------------------------------------------------------------------------
 void Borrowings::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( ! message.has_equipements_pretes()  )
+    if( ! message.has_equipements_empruntes()  )
         return;
 
     borrowings_.clear();
