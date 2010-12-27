@@ -183,9 +183,7 @@ void PHY_MaintenanceComposanteState::SendFullState() const
     client::LogMaintenanceHandlingUpdate asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
-
-//    asn().set_diagnostique_effectuePresent( 1 );
-//    asn().set_diagnostique_effectuePresent( bDiagnosed_ );
+    asn().set_diagnostique_effectue( bDiagnosed_ );
 
     if( pConsign_ )
         pConsign_->SendFullState( asn );
@@ -211,9 +209,7 @@ void PHY_MaintenanceComposanteState::SendChangedState() const
     client::LogMaintenanceHandlingUpdate asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
-
-//    asn().set_diagnostique_effectuePresent( 1 );
-//    asn().set_diagnostique_effectuePresent( bDiagnosed_ );
+    asn().set_diagnostique_effectue( bDiagnosed_ );
 
     if( pConsign_ )
         pConsign_->SendChangedState( asn );
