@@ -88,7 +88,6 @@ void MIL_AgentPionLOGConvoy::load( MIL_CheckPointInArchive& file, const unsigned
 
     PHY_RolePionLOGConvoy_Supply *pRole;
     file >> pRole;
-    RegisterRole( *pRole );
 }
 
 // -----------------------------------------------------------------------------

@@ -51,6 +51,7 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Medical* role, const
     MIL_AgentPionLOG_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RolePionLOG_Medical( *pion );
+    pion->RegisterRole( *role );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +65,6 @@ PHY_RolePionLOG_Medical::PHY_RolePionLOG_Medical( MIL_AgentPionLOG_ABC& pion )
     , bSystemEnabled_          ( false )
     , bSortingFunctionEnabled_ ( false )
     , bHealingFunctionEnabled_ ( false )
-
 {
     priorities_.reserve( 5 );
     priorities_.push_back( & PHY_HumanWound::woundedUE_ );
