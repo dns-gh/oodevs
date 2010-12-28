@@ -106,6 +106,37 @@ function Polygon.create( name, type, points )
     return new
 end
 
+function Polygon.create( type, points )
+    local new = {}
+    setmetatable( new, Polygon )
+    new.type = type
+    new.children = { Location.create( "polygon", "1" ) }
+    for _,v in ipairs( points ) do
+        new.children[1]:AddPoint( v )
+    end
+    return new
+end
+
+--------------------------------------------------------------------------------
+-- LocationComposite
+--------------------------------------------------------------------------------
+LocationComposite = {}
+LocationComposite.__index = LocationComposite
+
+function LocationComposite.create( name, type, points )
+    local new = {}
+    setmetatable( new, LocationComposite )
+    new.type = type
+    new.name = name
+    Trace(points)
+	if type == "polygon" then
+		new.children = { Polygon.create( "polygon", points ) }
+	elseif type == "point" then
+		new.children = { Point.create( points ) }
+    end
+	return new
+end
+
 --------------------------------------------------------------------------------
 -- PolygonList
 --------------------------------------------------------------------------------
@@ -138,6 +169,32 @@ function GenObject.create( name, points )
     new.children = {}
     new.children[1] = { name="Obstacle type", type="obstacletype", value="0" }
     new.children[2] = Polygon.create( "Location", "location", points )
+    return new
+end
+
+function GenObject.create( name, type, value, point )
+    local new = {}
+    setmetatable( new, GenObject )
+    new.type = type
+    new.value = value
+    new.name = name
+    new.children = { Location.create( "polygon", "1" ) }
+    new.children[1]:AddPoint( point )
+    return new
+end
+
+--------------------------------------------------------------------------------
+-- PlannedWork
+--------------------------------------------------------------------------------
+PlannedWork = {}
+PlannedWork.__index = PlannedWork
+
+function PlannedWork.create( name, point, truc )
+    local new = {}
+    setmetatable( new, PlannedWork )
+    new.type = "plannedwork"
+    new.name = name
+    new.children = { GenObject.create( "Travaux (élément 1)", "obstacle", "barricade", point ) }
     return new
 end
 
@@ -357,5 +414,6 @@ FragOrder = {}
 FragOrder.__index = FragOrder
 
 function FragOrder.create( target, id )
-    return Order.create( target, id, "fragorder" )
+    Trace ( "pop" )
+	return Order.create( target, id, "fragorder" )
 end
