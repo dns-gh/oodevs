@@ -32,7 +32,8 @@ struct IdentifierValue : public InstantValue< NumericValue >
     //@{
     void Receive( const sword::SimToClient& wrapper )
     {
-            SET_OID( unit_order_ack, tasker().id );
+            if( wrapper.message().has_order_ack() && wrapper.message().order_ack().tasker().has_unit() )
+                Set( wrapper.message().order_ack().tasker().unit().id() );
             SET_OID( unit_creation, unit().id );
             SET_OID( unit_attributes, unit().id );
             SET_OID( unit_pathfind, unit().id );

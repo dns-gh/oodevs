@@ -123,6 +123,7 @@ namespace sword
     class KnowledgeGroupUpdate;
     class KnowledgeGroupUpdateAck;
     class KnowledgeGroupDestruction;
+    class TaskCreationRequestAck;
     class UrbanCreation;
     class UrbanUpdate;
     class UrbanDetection;
@@ -389,13 +390,13 @@ private:
     void OnReceiveCrowdFlowKnowledgeDestruction         ( const sword::CrowdFlowKnowledgeDestruction&          message );
 
     // Orders
-    void OnReceiveAutomatOrder          ( const sword::AutomatOrder&                    message );
-    void OnReceiveAutomatOrderAck       ( const sword::AutomatOrderAck&        message, unsigned long nCtx );
-    void OnReceiveUnitOrder             ( const sword::UnitOrder&                       message );
-    void OnReceiveUnitOrderAck          ( const sword::UnitOrderAck&           message, unsigned long nCtx );
-    void OnReceiveFragOrder             ( const sword::FragOrder& message );
-    void OnReceiveFragOrderAck          ( const sword::FragOrderAck&           message, unsigned long nCtx );
+    void OnReceiveAutomatOrder          ( const sword::AutomatOrder&    message );
+    void OnReceiveUnitOrder             ( const sword::UnitOrder&       message );
+    void OnReceiveOrderAck              ( const sword::TaskCreationRequestAck& message, unsigned long nCtx );
+    void OnReceiveFragOrder             ( const sword::FragOrder&       message );
+    void OnReceiveFragOrderAck          ( const sword::FragOrderAck&    message, unsigned long nCtx );
     void OnReceiveUnitCreationRequestAck( const sword::UnitCreationRequestAck& message );
+    void OnReceiveCrowdOrder            ( const sword::CrowdOrder&             message );
 
     // Automate mode
     void OnReceiveSetAutomatModeAck( const sword::SetAutomatModeAck& message, unsigned long nCtx );
@@ -442,8 +443,6 @@ private:
     void OnCrowdFlowDestruction         ( const sword::CrowdFlowDestruction&          message );
     void OnCrowdFlowUpdate              ( const sword::CrowdFlowUpdate&               message );
     void OnReceiveCrowdMagicActionAck   ( const sword::CrowdMagicActionAck&           message, unsigned long nCtx );
-    void OnReceiveCrowdOrderAck         ( const sword::CrowdOrderAck&                 message, unsigned long nCtx );
-    void OnReceiveCrowdOrder            ( const sword::CrowdOrder&                      message );
 
     // Folk
     void OnReceiveFolkCreation               ( const sword::FolkCreation&    message );

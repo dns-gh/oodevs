@@ -131,61 +131,21 @@ message OrderAck {
     }
 }
 
-/** @struct UnitOrderAck
+/** @struct TaskCreationRequestAck
     @brief An agent order execution request acknowledgement message.
     
     This message is sent when an agent order is issued in response to a client request (UnitOrder).
     @todo rename into TaskCreationRequestAck, gather UnitOrder, AutomatOrder and CrowdOrder into one message
 */
-message UnitOrderAck {
+message TaskCreationRequestAck {
     /** @property tasker
-        @brief Identifier of the agent on which the order was issued.
+        @brief Identifier of the agent, automat, crowd on which the order was issued.
         @see UnitId
     */
-    required UnitId             tasker     = 1;
+    required Tasker             tasker     = 1;
     /** @property error_code
         @brief Enumeration indicating the success of failure (with reason) of
                an agent order execution operation.
-        @see OrderAck.ErrorCode
-    */
-    required OrderAck.ErrorCode error_code = 2;
-}
-
-/** @struct AutomatOrderAck
-    @brief An automat order execution request acknowledgement message.
-    
-    This message is sent when an automat order is issued in response to a client request (AutomatOrder).
-    @todo rename into TaskCreationRequestAck, gather UnitOrder, AutomatOrder and CrowdOrder into one message
-*/
-message AutomatOrderAck {
-    /** @property tasker
-        @brief Identifier of the automat on which the order was issued.
-        @see AutomatId
-    */
-    required AutomatId          tasker     = 1;
-    /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
-               an automat order execution operation.
-        @see OrderAck.ErrorCode
-    */
-    required OrderAck.ErrorCode error_code = 2;
-}
-
-/** @struct CrowdOrderAck
-    @brief A crowd order execution request acknowledgement message.
-    
-    This message is sent when an crowd order is issued in response to a client request (CrowdOrder).
-    @todo rename into TaskCreationRequestAck, gather UnitOrder, AutomatOrder and CrowdOrder into one message
-*/
-message CrowdOrderAck {
-    /** @property tasker
-        @brief Identifier of the crowd on which the order was issued.
-        @see CrowdId
-    */
-    required CrowdId            tasker     = 1;
-    /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
-               an crowd order execution operation.
         @see OrderAck.ErrorCode
     */
     required OrderAck.ErrorCode error_code = 2;
@@ -1873,9 +1833,7 @@ message PopulationUpdate {
 // Message container
 message SimToClient {
     message Content {
-        optional UnitOrderAck                         unit_order_ack                              = 1;
-        optional AutomatOrderAck                      automat_order_ack                           = 2;
-        optional CrowdOrderAck                        crowd_order_ack                             = 3;
+        optional TaskCreationRequestAck               order_ack                                   = 1;
         optional FragOrderAck                         frag_order_ack                              = 4;
         optional SetAutomatModeAck                    set_automat_mode_ack                        = 5;
         optional UnitCreationRequestAck               unit_creation_request_ack                   = 6;

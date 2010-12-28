@@ -29,9 +29,7 @@ class SimulationToClient
 public:
     //! @name Operations
     //@{
-    static void Convert( const sword::UnitOrderAck& from, MsgsSimToClient::MsgUnitOrderAck* to );
-    static void Convert( const sword::AutomatOrderAck& from, MsgsSimToClient::MsgAutomatOrderAck* to );
-    static void Convert( const sword::CrowdOrderAck& from, MsgsSimToClient::MsgCrowdOrderAck* to );
+    static void ConvertOrderAckToSpecificOrderAck( const sword::TaskCreationRequestAck& from, MsgsSimToClient::MsgSimToClient_Content* to );
     static void Convert( const sword::FragOrderAck& from, MsgsSimToClient::MsgFragOrderAck* to );
     static void Convert( const sword::SetAutomatModeAck& from, MsgsSimToClient::MsgSetAutomatModeAck* to );
     static void Convert( const sword::UnitCreationRequestAck& from, MsgsSimToClient::MsgUnitCreationRequestAck* to );

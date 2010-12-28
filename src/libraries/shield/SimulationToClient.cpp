@@ -55,33 +55,26 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-09
+// Name: SimulationToClient::ConvertOrderAckToSpecificOrderAck
+// Created: MGD 2010-12-27
 // -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::UnitOrderAck& from, MsgsSimToClient::MsgUnitOrderAck* to )
+void SimulationToClient::ConvertOrderAckToSpecificOrderAck( const sword::TaskCreationRequestAck& from, MsgsSimToClient::MsgSimToClient_Content* to )
 {
-    CONVERT_ID( tasker );
-    ConvertOrderAckErrorCode( from, to );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-09
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::AutomatOrderAck& from, MsgsSimToClient::MsgAutomatOrderAck* to )
-{
-    CONVERT_ID( tasker );
-    ConvertOrderAckErrorCode( from, to );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-09
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::CrowdOrderAck& from, MsgsSimToClient::MsgCrowdOrderAck* to )
-{
-    CONVERT_ID( tasker );
-    ConvertOrderAckErrorCode( from, to );
+    if( from.tasker().has_unit() )
+    {
+        to->mutable_unit_order_ack()->mutable_tasker()->set_id( from.tasker().unit().id() );
+        ConvertOrderAckErrorCode( from, to->mutable_unit_order_ack() );
+    }
+    else if( from.tasker().has_automat() )
+    {
+        to->mutable_automat_order_ack()->mutable_tasker()->set_id( from.tasker().automat().id() );
+        ConvertOrderAckErrorCode( from, to->mutable_automat_order_ack() );
+    }
+    else if( from.tasker().has_crowd() )
+    {
+        to->mutable_crowd_order_ack()->mutable_tasker()->set_id( from.tasker().crowd().id() );
+        ConvertOrderAckErrorCode( from, to->mutable_crowd_order_ack() );
+    } 
 }
 
 // -----------------------------------------------------------------------------

@@ -751,8 +751,8 @@ void MIL_EntityManager::SendStateToNewClient() const
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveUnitOrder( const sword::UnitOrder& message, unsigned int nCtx )
 {
-    client::UnitOrderAck ack;
-    ack().mutable_tasker()->set_id( message.tasker().id() );
+    client::TaskCreationRequestAck ack;
+    ack().mutable_tasker()->mutable_unit()->set_id( message.tasker().id() );
     ack().set_error_code( sword::OrderAck::no_error );
     try
     {
@@ -774,8 +774,8 @@ void MIL_EntityManager::OnReceiveUnitOrder( const sword::UnitOrder& message, uns
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveAutomatOrder( const sword::AutomatOrder& message, unsigned int nCtx )
 {
-    client::AutomatOrderAck ack;
-    ack().mutable_tasker()->set_id( message.tasker().id() );
+    client::TaskCreationRequestAck ack;
+    ack().mutable_tasker()->mutable_automat()->set_id( message.tasker().id() );
     ack().set_error_code( sword::OrderAck::no_error );
     try
     {
@@ -1048,8 +1048,8 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const sword::KnowledgeMag
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveCrowdOrder( const sword::CrowdOrder& message, unsigned int nCtx )
 {
-    client::CrowdOrderAck ack;
-    ack().mutable_tasker()->set_id( message.tasker().id() );
+    client::TaskCreationRequestAck ack;
+    ack().mutable_tasker()->mutable_crowd()->set_id( message.tasker().id() );
     ack().set_error_code( sword::OrderAck::no_error );
     try
     {

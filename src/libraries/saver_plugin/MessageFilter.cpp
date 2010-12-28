@@ -73,9 +73,7 @@ bool MessageFilter::IsRelevant( const sword::SimToClient& wrapper )
         wrapper.message().has_automat_order() ||
         wrapper.message().has_crowd_order() )
         return true;
-    if( wrapper.message().has_unit_order_ack() ||
-        wrapper.message().has_automat_order_ack() ||
-        wrapper.message().has_crowd_order_ack() ||
+    if( wrapper.message().has_order_ack() ||
         wrapper.message().has_frag_order_ack() ||
         wrapper.message().has_set_automat_mode_ack() ||
         wrapper.message().has_change_diplomacy_ack() )

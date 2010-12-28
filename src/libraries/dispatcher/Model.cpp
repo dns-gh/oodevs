@@ -122,9 +122,7 @@ void Model::Receive( const sword::SimToClient& wrapper )
 // -----------------------------------------------------------------------------
 void Model::Update( const sword::SimToClient& wrapper )
 {
-    if( wrapper.message().has_unit_order_ack() ||
-        wrapper.message().has_automat_order_ack() ||
-        wrapper.message().has_crowd_order_ack() ||
+    if( wrapper.message().has_order_ack() ||
         wrapper.message().has_frag_order_ack() ||
         wrapper.message().has_set_automat_mode_ack() ||
         wrapper.message().has_unit_magic_action_ack() ||

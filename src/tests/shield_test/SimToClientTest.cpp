@@ -14,24 +14,24 @@ using namespace shield;
 
 BOOST_FIXTURE_TEST_CASE( unit_order_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_unit_order_ack()->mutable_tasker()->set_id( 7 );
-    content.mutable_unit_order_ack()->set_error_code( sword::OrderAck::error_invalid_unit );
+    content.mutable_order_ack()->mutable_tasker()->mutable_unit()->set_id( 7 );
+    content.mutable_order_ack()->set_error_code( sword::OrderAck::error_invalid_unit );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_order_ack { tasker { id: 7 } error_code: error_invalid_unit } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( automat_order_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_automat_order_ack()->mutable_tasker()->set_id( 7 );
-    content.mutable_automat_order_ack()->set_error_code( sword::OrderAck::error_invalid_unit );
+    content.mutable_order_ack()->mutable_tasker()->mutable_automat()->set_id( 7 );
+    content.mutable_order_ack()->set_error_code( sword::OrderAck::error_invalid_unit );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_order_ack { tasker { id: 7 } error_code: error_invalid_unit } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( crowd_order_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_crowd_order_ack()->mutable_tasker()->set_id( 7 );
-    content.mutable_crowd_order_ack()->set_error_code( sword::OrderAck::error_invalid_unit );
+    content.mutable_order_ack()->mutable_tasker()->mutable_crowd()->set_id( 7 );
+    content.mutable_order_ack()->set_error_code( sword::OrderAck::error_invalid_unit );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_order_ack { tasker { id: 7 } error_code: error_invalid_unit } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

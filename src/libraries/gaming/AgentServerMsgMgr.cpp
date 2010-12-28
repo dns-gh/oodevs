@@ -829,23 +829,25 @@ void AgentServerMsgMgr::OnReceiveAutomatOrder( const sword::AutomatOrder& messag
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveAutomatOrderAck
-// Created: NLD 2002-08-07
+// Name: AgentServerMsgMgr::OnReceiveOrderAck
+// Created: MGD 2010-12-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveAutomatOrderAck( const sword::AutomatOrderAck& message, unsigned long /*nCtx*/ )
+void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& message, unsigned long /*nCtx*/ )
 {
-    if( CheckAcknowledge( logger_, message, "AutomatOrderAck" ) )
-        GetModel().agents_.GetAutomat( message.tasker().id() ).Update( message );
-}
-
-//-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveUnitOrderAck
-// Created: NLD 2002-08-07
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveUnitOrderAck( const sword::UnitOrderAck& message, unsigned long /*nCtx*/ )
-{
-    if( CheckAcknowledge( logger_, message, "UnitOrderAck" ) )
-        GetModel().agents_.GetAgent( message.tasker().id() ).Update( message );
+    if( message.tasker().has_automat() )
+    {
+        if( CheckAcknowledge( logger_, message, "AutomatOrderAck" ) )
+            GetModel().agents_.GetAutomat( message.tasker().automat().id() ).Update( message );
+    }
+    else if( message.tasker().has_unit() )
+    {
+        if( CheckAcknowledge( logger_, message, "UnitOrderAck" ) )
+            GetModel().agents_.GetAgent( message.tasker().unit().id() ).Update( message );
+    }
+    else if ( message.tasker().has_crowd() )
+    {
+        CheckAcknowledge( logger_, message, "PopulationOrderAck" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1386,15 +1388,6 @@ void AgentServerMsgMgr::OnReceiveCrowdMagicActionAck( const sword::CrowdMagicAct
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveCrowdOrderAck
-// Created: SBO 2006-11-29
-// -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveCrowdOrderAck( const sword::CrowdOrderAck& message, unsigned long )
-{
-    CheckAcknowledge( logger_, message, "PopulationOrderAck" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveCrowdOrder
 // Created: AGE 2007-02-16
 // -----------------------------------------------------------------------------
@@ -1731,10 +1724,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
 {
     if( host_.empty() )
         return;
-    if( wrapper.message().has_automat_order_ack() )
-        OnReceiveAutomatOrderAck( wrapper.message().automat_order_ack() , wrapper.context() );
-    else if( wrapper.message().has_unit_order_ack() )
-        OnReceiveUnitOrderAck( wrapper.message().unit_order_ack() , wrapper.context() );
+    if( wrapper.message().has_order_ack() )
+        OnReceiveOrderAck( wrapper.message().order_ack() , wrapper.context() );
     else if( wrapper.message().has_frag_order_ack() )
         OnReceiveFragOrderAck( wrapper.message().frag_order_ack() , wrapper.context() );
     else if( wrapper.message().has_unit_magic_action_ack() )
@@ -1769,8 +1760,6 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         OnReceiveMsgLogRavitaillementChangeQuotaAck(  wrapper.message().log_supply_change_quotas_ack() , wrapper.context() );
     else if( wrapper.message().has_crowd_magic_action_ack() )
         OnReceiveCrowdMagicActionAck( wrapper.message().crowd_magic_action_ack() , wrapper.context() );
-    else if( wrapper.message().has_crowd_order_ack() )
-        OnReceiveCrowdOrderAck( wrapper.message().crowd_order_ack() , wrapper.context() );
     else if( wrapper.message().has_control_information() )
         OnReceiveControlInformation( wrapper.message().control_information() );
     else if( wrapper.message().has_control_profiling_information() )
