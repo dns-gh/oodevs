@@ -18,9 +18,11 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_ListView_Urban_Type.h"
 #include "ADN_ListView_UrbanAccommodation_Type.h"
-#include "ADN_ListView_UrbanAccommodation_Type.h"
+#include "ADN_ListView_UrbanInfrastructure_Type.h"
+#include "ADN_ListView_UrbanMaterial_Type.h"
 #include "ADN_Urban_AttritionTable.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
 #include "ADN_Equipement_Data.h"
@@ -86,7 +88,7 @@ void ADN_Urban_GUI::Build()
 
     // materials list
     T_ConnectorVector    vMaterialInfosConnectors(eNbrUrbanMaterialGuiElements,( ADN_Connector_ABC* ) 0 );
-    pListMaterial_= new ADN_ListView_UrbanAccommodation_Type( pGroupMaterial, "Material" );
+    pListMaterial_= new ADN_ListView_UrbanMaterial_Type( pGroupMaterial, "Material" );
     static_cast<ADN_Connector_Vector_ABC*>( &pListMaterial_->GetConnector() )->Connect( &data_.GetMaterialsInfos() );
 
     // material
@@ -154,9 +156,38 @@ void ADN_Urban_GUI::Build()
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vAccommodationInfosConnectors[ eUrbanAccommodationName ] );
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationCapacity ] );
 
+    ///////////////////
+    // Infrastructures
+    QGroupBox* pGroupInfrastructures = new QVGroupBox( tr( "Infrastructures" ), pBox );
+    QHBox* pGroupInfrastructure = new QHBox( pGroupInfrastructures );
+
+
+    // infrastructures list
+    T_ConnectorVector    vInfrastructureInfosConnectors(eNbrUrbanInfrastructureGuiElements,(ADN_Connector_ABC*)0 );
+    pListInfrastructure_= new ADN_ListView_UrbanInfrastructure_Type( pGroupInfrastructure, "Infrastructure" );
+    static_cast<ADN_Connector_Vector_ABC*>( &pListInfrastructure_->GetConnector() )->Connect( &data_.GetInfrastructuresInfos() );
+
+    // infrastructures
+    pGroupInfrastructures = new QHGroupBox( tr( "Infrastructure" ),pGroupInfrastructures);
+    pGroupInfrastructures->setInsideMargin(20);
+    pGroupInfrastructures->setInsideSpacing(20);
+    pHolder = builder.AddFieldHolder( pGroupInfrastructures );
+
+    builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vInfrastructureInfosConnectors[ eUrbanInfrastructureName ] );
+    builder.AddField< ADN_EditLine_String >( pHolder, tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
+
+    ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ), pGroupInfrastructures );
+    {
+        vInfrastructureInfosConnectors[ eMedicalCapacityPresent ] = & medical->GetConnector();
+        builder.AddField< ADN_EditLine_Int >( medical, tr( "Doctor night rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_NightRate ], tr( "" ) );
+        builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency doctor rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_EmergencyDoctorRate ], tr( "" ) );
+        builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency bed rate" ), vInfrastructureInfosConnectors[ eMedicalCapacity_EmergencyBedRate ], tr( "" ) );
+    }
+
     // set auto connectors
     pListMaterial_->SetItemConnectors( vMaterialInfosConnectors );
     pListFacade_  ->SetItemConnectors( vFacadeInfosConnectors );
     pListRoofShape_->SetItemConnectors( vRoofShapeInfosConnectors );
     pListAccommodation_->SetItemConnectors( vAccommodationInfosConnectors );
+    pListInfrastructure_->SetItemConnectors( vInfrastructureInfosConnectors );
 }

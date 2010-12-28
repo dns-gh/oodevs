@@ -260,7 +260,6 @@ unsigned int StructuralCapacity::GetStructuralState() const
 void StructuralCapacity::SetStructuralState( int state )
 {
     structuralState_ = state;
-    //lastStructuralState_ = state;
 }
 
 // -----------------------------------------------------------------------------

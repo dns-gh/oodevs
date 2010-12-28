@@ -17,7 +17,8 @@ class ADN_Table;
 class ADN_Urban_Data;
 class ADN_ListView_Urban_Type;
 class ADN_ListView_UrbanAccommodation_Type;
-class ADN_ListView_UrbanAccommodation_Type;
+class ADN_ListView_UrbanMaterial_Type;
+class ADN_ListView_UrbanInfrastructure_Type;
 class ADN_Urban_AttritionTable;
 
 // =============================================================================
@@ -53,6 +54,17 @@ public:
         eNbrUrbanAccommodationGuiElements
     };
 
+    enum E_UrbanInfrastructureGuiElements
+    {
+        eUrbanInfrastructureName,
+        eUrbanInfrastructureSymbol,
+        eMedicalCapacityPresent,
+        eMedicalCapacity_NightRate,
+        eMedicalCapacity_EmergencyDoctorRate,
+        eMedicalCapacity_EmergencyBedRate,
+        eNbrUrbanInfrastructureGuiElements
+    };
+
 public:
     explicit ADN_Urban_GUI( ADN_Urban_Data& data );
     virtual ~ADN_Urban_GUI();
@@ -62,10 +74,12 @@ public:
 private:
     ADN_Urban_Data& data_;
 
-    ADN_ListView_UrbanAccommodation_Type*        pListMaterial_;
+    ADN_ListView_UrbanMaterial_Type*        pListMaterial_;
     ADN_ListView_Urban_Type*                pListFacade_;
     ADN_ListView_Urban_Type*                pListRoofShape_;
     ADN_ListView_UrbanAccommodation_Type*   pListAccommodation_;
+    ADN_ListView_UrbanInfrastructure_Type*   pListInfrastructure_;
+
 
     ADN_Urban_AttritionTable*     pAttritionTable_;
 };

@@ -109,7 +109,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Buildable::ADN_CapacityInfos_Buildable()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 
     xis >> xml::optional
         >> xml::start( "resources" )
@@ -174,7 +174,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Improvable::ADN_CapacityInfos_Improvable()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 
     xis >> xml::optional
          >> xml::start( "resources" )
@@ -328,7 +328,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Bypassable::ADN_CapacityInfos_Bypassable()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Bypassable::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     xis >> xml::attribute( "bypass-speed", rSpeed_ );
 }
 
@@ -402,7 +402,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
 
 void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     std::string dotation( xis.attribute< std::string >( "category" ) );
     if( dotation != "" )
     {
@@ -435,7 +435,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Contamination::ADN_CapacityInfos_Contaminati
 
 void ADN_Objects_Data::ADN_CapacityInfos_Contamination::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     xis >> xml::attribute( "max-toxic", max_toxic_ );
 }
 
@@ -456,7 +456,7 @@ ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::ADN_CapacityInfos_Interac
 
 void ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     xis >> xml::attribute( "height", height_ );
 }
 
@@ -477,7 +477,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ADN_CapacityInfos_Intoxication
 
 void ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     xis >> xml::attribute( "max-toxic", max_toxic_ );
 }
 
@@ -495,7 +495,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Decontamination::ADN_CapacityInfos_Decontami
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Decontamination::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Decontamination::WriteArchive( xml::xostream& /* xos */ )
 {
@@ -512,7 +512,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Population::ADN_CapacityInfos_Population()
 
 void ADN_Objects_Data::ADN_CapacityInfos_Population::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     xis >> xml::attribute( "density", density_ );
 }
 
@@ -536,7 +536,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Propagation::ADN_CapacityInfos_Propagation()
 
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     model_ = xis.attribute< std::string >( "model" );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::WriteArchive( xml::xostream& xos )
@@ -563,7 +563,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Protection::ADN_CapacityInfos_Protection()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Protection::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     max_size_ = xis.attribute< int >( "max-size" );
     geniePrepared_ = xis.attribute< bool >( "geniePrepared" );
 }
@@ -594,7 +594,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Workable::ADN_CapacityInfos_Workable()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Workable::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     worker_ = xis.attribute< int >( "max-animator" );
 }
 
@@ -621,7 +621,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Medical::ADN_CapacityInfos_Medical()
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Medical::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 
     xis >> xml::attribute( "night-doctors-rate", nightDoctorsRate_ )
         >> xml::start( "emergency-plan" )
@@ -647,7 +647,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Occupable::ADN_CapacityInfos_Occupable()
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Occupable::ReadArchive( xml::xistream& /*xis*/ )
 {
-//    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+//    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Occupable::WriteArchive( xml::xostream& /*xos*/ )
 {
@@ -663,7 +663,7 @@ ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ADN_CapacityInfos_TerrainH
 
 void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 
     xis >> xml::list( "terrain", *this, &ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadTerrain );
 }
@@ -689,7 +689,7 @@ ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::ADN_CapacityInfos_SupplyRoute()
 }
 void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::WriteArchive( xml::xostream& /*xos*/ )
 {
@@ -704,7 +704,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::WriteArchive( xml::xostrea
 //}
 //void ADN_Objects_Data::ADN_CapacityInfos_TimeLimited::ReadArchive( xml::xistream& xis )
 //{
-//    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+//    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 //}
 //void ADN_Objects_Data::ADN_CapacityInfos_TimeLimited::WriteArchive( xml::xostream& xos )
 //{
@@ -717,7 +717,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Bridging::ADN_CapacityInfos_Bridging()
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Bridging::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Bridging::WriteArchive( xml::xostream& /*xos*/ )
 {
@@ -732,7 +732,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Toxic::ADN_CapacityInfos_Toxic()
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Toxic::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 void ADN_Objects_Data::ADN_CapacityInfos_Toxic::WriteArchive( xml::xostream& xos )
 {
@@ -1013,7 +1013,7 @@ ADN_Objects_Data::ADN_CapacityInfos_SealOff::ADN_CapacityInfos_SealOff()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_SealOff::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_SealOff
@@ -1040,7 +1040,7 @@ ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ADN_CapacityInfos_F
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadArchive( xml::xistream& xis )
 {
-    ADN_Objects_Data::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     xis >> xml::list( "modifier", *this, &ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier );
 }
 

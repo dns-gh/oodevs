@@ -13,10 +13,10 @@
 
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
+#include "ADN_Objects_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
-#include "ADN_SaveFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
 
@@ -31,13 +31,19 @@ ADN_Urban_Data::ADN_Urban_Data()
     , vMaterials_ ()
     , vFacades_   ()
     , vRoofShapes_()
+    , vAccommodations_()
+    , vInfrastructures_()
 {
     vMaterials_.SetNodeName( "la liste des types de matériau" );
     vMaterials_.SetItemTypeName( "le type matériau" );
     vFacades_.SetNodeName( "la liste des types de facade" );
     vFacades_.SetItemTypeName( "le type facade" );
     vRoofShapes_.SetNodeName( "la liste des types de toit" );
-    vRoofShapes_.SetItemTypeName( "le type toir" );
+    vRoofShapes_.SetItemTypeName( "le type toit" );
+    vAccommodations_.SetNodeName( "la liste des types de motivations" );
+    vAccommodations_.SetItemTypeName( "le type motivation" );
+    vInfrastructures_.SetNodeName( "la liste des types d'infrastructure" );
+    vInfrastructures_.SetItemTypeName( "le type infrastructure" );
 }
 
 //-----------------------------------------------------------------------------
@@ -67,6 +73,8 @@ void ADN_Urban_Data::Reset()
     vMaterials_.Reset();
     vFacades_.Reset();
     vRoofShapes_.Reset();
+    vAccommodations_.Reset();
+    vInfrastructures_.Reset();
 }
 
 class ADN_String_Cmp : public std::unary_function< ADN_Type_String* , bool >
@@ -120,6 +128,7 @@ void ADN_Urban_Data::ReadArchive( xml::xistream& input )
     ReadRoofShapes( input );
     input >> xml::end();
     ReadAccommodations( input );
+    ReadInfrastructures( input );
     input >> xml::end();
 }
 
@@ -137,6 +146,7 @@ void ADN_Urban_Data::WriteArchive( xml::xostream& output )
     WriteRoofShapes( output );
     output  << xml::end;
     WriteAccommodations( output );
+    WriteInfrastructures( output );
     output  << xml::end;
 }
 
@@ -426,7 +436,7 @@ ADN_Urban_Data::AccommodationInfos::AccommodationInfos()
 : strName_ ( "" )
 , value_( 0 )
 {
-    strName_.SetDataName( "le nom du material" );
+    strName_.SetDataName( "le nom de la motivation" );
     strName_.SetParentNode( *this );
 }
 
@@ -453,6 +463,135 @@ std::string ADN_Urban_Data::AccommodationInfos::GetNodeName()
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
 std::string ADN_Urban_Data::AccommodationInfos::GetItemName()
+{
+    return strName_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::ReadInfrastructures
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::ReadInfrastructures( xml::xistream& input )
+{
+    input >> xml::optional() >>xml::start( "infrastructures" )
+        >> xml::list( "infrastructure", *this, &ADN_Urban_Data::ReadInfrastructure )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::ReadInfrastructure
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::ReadInfrastructure( xml::xistream& input  )
+{
+    vInfrastructures_.AddItem( new InfrastructureInfos( input ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::WriteInfrastrucutures
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::WriteInfrastructures( xml::xostream& output ) const
+{
+    if( !vInfrastructures_.empty() )
+    {
+        output << xml::start( "infrastructures" );
+        for( CIT_InfrastructureInfos_Vector it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
+            ( *it )->WriteInfrastructure( output );
+        output << xml::end;
+    }  
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::AccommodationInfos::WriteInfrastructure
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& output )
+{
+    std::string strData = strName_.GetData();
+    output << xml::start( "infrastructure" )
+        << xml::attribute( "name",  trim( strData ) )
+        << xml::attribute( "symbol", symbol_.GetData() );
+    if( !capacities_.empty() )
+    {
+        output << xml::start( "capacities" );
+        for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
+        {
+            if( it->second->bPresent_.GetData() )
+            {
+                output << xml::start( it->first );
+                it->second->WriteArchive( output );
+                output << xml::end;
+            }
+        }
+        output << xml::end;
+    }
+    output << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ReadCapacityArchive
+// Created: JCR 2008-07-15
+// -----------------------------------------------------------------------------
+void ADN_Urban_Data::InfrastructureInfos::ReadCapacityArchive( const std::string& type, xml::xistream& xis )
+{
+    IT_CapacityMap it = capacities_.find( type );
+    if( it != capacities_.end() )
+        it->second->ReadArchive( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::InfrastructureInfos constructor
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
+: strName_ ( "" )
+, symbol_( "" )
+{
+    capacities_[ "medical" ].reset( new ADN_Objects_Data::ADN_CapacityInfos_Medical() );
+    input >> xml::attribute( "name", strName_ )
+        >> xml::attribute( "symbol", symbol_ )
+        >> xml::start( "capacities" )
+        >> xml::list( *this, &ADN_Urban_Data::InfrastructureInfos::ReadCapacityArchive )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::InfrastructureInfos
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos()
+: strName_ ( "" )
+, symbol_( "" )
+{
+    strName_.SetDataName( "le nom de l'infrastructure" );
+    strName_.SetParentNode( *this );
+    capacities_[ "medical" ].reset( new ADN_Objects_Data::ADN_CapacityInfos_Medical() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::InfrastructureInfos destructor
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+ADN_Urban_Data::InfrastructureInfos::~InfrastructureInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::InfrastructureInfos::GetNodeName
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+std::string ADN_Urban_Data::InfrastructureInfos::GetNodeName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::InfrastructureInfos::GetItemName
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+std::string ADN_Urban_Data::InfrastructureInfos::GetItemName()
 {
     return strName_.GetData();
 }

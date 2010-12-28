@@ -20,8 +20,16 @@
 #include "ADN_Tools.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_AttritionInfos.h"
+#include "ADN_CapacityInfos.h"
+
+
+#include <string>
+#include <map>
+#include <boost/shared_ptr.hpp>
 
 namespace xml { class xistream; }
+class ADN_Objects_Data;
+class ADN_TypeCapacity_Infos;
 
 //*****************************************************************************
 // Created: JDY 03-08-27
@@ -55,6 +63,42 @@ public:
     typedef ADN_Type_Vector_ABC< AccommodationInfos >     T_AccommodationInfos_Vector;
     typedef T_AccommodationInfos_Vector::iterator        IT_AccommodationInfos_Vector;
     typedef T_AccommodationInfos_Vector::const_iterator CIT_AccommodationInfos_Vector;
+
+
+//*****************************************************************************
+public:
+    class InfrastructureInfos : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+    public:
+        InfrastructureInfos();
+        explicit InfrastructureInfos( xml::xistream& input );
+        virtual ~InfrastructureInfos();
+
+        virtual std::string GetNodeName();
+        virtual std::string GetItemName();
+        bool operator==( const std::string& str );
+        void WriteInfrastructure( xml::xostream& output );
+
+        typedef std::map< std::string, boost::shared_ptr< helpers::ADN_TypeCapacity_Infos > > T_CapacityMap;
+        typedef T_CapacityMap::iterator IT_CapacityMap;
+        typedef T_CapacityMap::const_iterator CIT_CapacityMap;
+
+    private:
+        void ReadCapacityArchive( const std::string& type, xml::xistream& xis );
+
+    public:
+        //! @name Member Data
+        //@{
+        ADN_Type_String strName_; 
+        ADN_Type_String symbol_;
+        T_CapacityMap capacities_;
+        //@}
+    };   
+
+    typedef ADN_Type_Vector_ABC< InfrastructureInfos >      T_InfrastructureInfos_Vector;
+    typedef T_InfrastructureInfos_Vector::iterator        IT_InfrastructureInfos_Vector;
+    typedef T_InfrastructureInfos_Vector::const_iterator CIT_InfrastructureInfos_Vector;
 
 //*****************************************************************************
 public:
@@ -114,6 +158,8 @@ public:
     UrbanInfos*                  FindRoofShape( const std::string& strName );
     T_AccommodationInfos_Vector&  GetAccommodationsInfos();  
     AccommodationInfos*           FindAccommodation( const std::string& strName );
+    T_InfrastructureInfos_Vector&  GetInfrastructuresInfos();  
+    InfrastructureInfos*           FindInfrastructure( const std::string& strName );
 
 private:
     //! @name Helpers
@@ -133,6 +179,10 @@ private:
     void ReadAccommodation   ( xml::xistream& input );
     void ReadAccommodations ( xml::xistream& input );
     void WriteAccommodations( xml::xostream& output ) const;
+    
+    void ReadInfrastructure  ( xml::xistream& input );
+    void ReadInfrastructures ( xml::xistream& input );
+    void WriteInfrastructures( xml::xostream& output ) const;
     //@}
 
 private:
@@ -142,6 +192,7 @@ private:
     T_UrbanInfos_Vector vRoofShapes_;
     T_UrbanInfos_Vector vFacades_;
     T_AccommodationInfos_Vector vAccommodations_;
+    T_InfrastructureInfos_Vector vInfrastructures_;
     //@}
 };
 
@@ -252,6 +303,39 @@ inline
 ADN_Urban_Data::AccommodationInfos* ADN_Urban_Data::FindAccommodation( const std::string& strName )
 {
     for( IT_AccommodationInfos_Vector it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
+        if( **it == strName )
+            return *it;
+    return 0;
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::GetInfrastructuresInfos
+// Created: SLG 2010-12-20
+//-----------------------------------------------------------------------------
+inline
+ADN_Urban_Data::T_InfrastructureInfos_Vector& ADN_Urban_Data::GetInfrastructuresInfos()
+{
+    return vInfrastructures_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::InfrastructureInfos::operator==
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+inline
+bool ADN_Urban_Data::InfrastructureInfos::operator==( const std::string& str )
+{
+    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::FindInfrastructure
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+inline
+ADN_Urban_Data::InfrastructureInfos* ADN_Urban_Data::FindInfrastructure( const std::string& strName )
+{
+    for( IT_InfrastructureInfos_Vector it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
         if( **it == strName )
             return *it;
     return 0;
