@@ -11,9 +11,11 @@
 #define __ADN_People_GUI_h_
 
 #include "ADN_GUI_ABC.h"
+#include "ADN_EditLine.h"
 
 class ADN_People_Data;
 class ADN_Table;
+class ADN_People_ListView;
 
 // =============================================================================
 /** @class  ADN_People_GUI
@@ -23,8 +25,11 @@ class ADN_Table;
 // =============================================================================
 class ADN_People_GUI : public ADN_GUI_ABC
 {
+    Q_OBJECT
 
 public:
+    //! @name Types
+    //@{
     enum E_GuiElements
     {
         eName,
@@ -34,6 +39,7 @@ public:
         eChildren,
         eNbrGuiElements
     };
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -47,10 +53,20 @@ public:
     void Build();
     //@}
 
+private slots:
+    //! @name slots
+    //@{
+    void PercentageChanged();
+    //@}
+
 private:
     //! @name Member data
     //@{
     ADN_People_Data& data_;
+    ADN_People_ListView* pPeopleList_;
+    ADN_EditLine_Int* pMaleEditLine_;
+    ADN_EditLine_Int* pFemaleEditLine_;
+    ADN_EditLine_Int* pChildrenEditLine_;
     //@}
 };
 
