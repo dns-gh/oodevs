@@ -982,7 +982,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="blessuresTraitees_" name="Blessures traitees" optional="false" type="MedicalPriorities"/>
+      <parameter dia-name="blessuresTraitees_" name="Blessures traitees" optional="true" type="MedicalPriorities"/>
       <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_TrierBlesses" dia-type="T_Mission_Pion_LOG_TrierBlesses" id="116" name="LOG Trier Blesses" package="support">
@@ -997,7 +997,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="blessuresTraitees_" name="Blessures traitees" optional="false" type="MedicalPriorities"/>
+      <parameter dia-name="blessuresTraitees_" name="Blessures traitees" optional="true" type="MedicalPriorities"/>
       <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="MIS_Pion_LOG_PrendreEnCompteReactionsMentales" dia-type="T_Mission_Pion_LOG_PrendreEnCompteReactionsMentales" id="118" name="LOG Prendre En Compte Reactions Mentales" package="support">
@@ -4136,4 +4136,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3628629942" -->
+<!-- signature="0415337812" -->
