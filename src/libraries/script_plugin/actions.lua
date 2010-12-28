@@ -414,6 +414,5 @@ FragOrder = {}
 FragOrder.__index = FragOrder
 
 function FragOrder.create( target, id )
-    Trace ( "pop" )
 	return Order.create( target, id, "fragorder" )
 end
