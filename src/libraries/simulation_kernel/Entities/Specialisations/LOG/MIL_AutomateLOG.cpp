@@ -608,7 +608,7 @@ void MIL_AutomateLOG::OnReceiveChangeLogisticLinks( const sword::UnitMagicAction
     if( !pCurrentSuperior_ )
         pNominalSuperior_ = 0;
     if( !pNominalSuperior_ && pCurrentSuperior_ )
-    	pNominalSuperior_ = pCurrentSuperior_;
+        pNominalSuperior_ = pCurrentSuperior_;
 }
 
 // -----------------------------------------------------------------------------
@@ -853,10 +853,10 @@ const PHY_LogisticLevel& MIL_AutomateLOG::GetLogisticLevel() const
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::FillParentEntity(sword::ParentEntity& msg)
 {
-	if( pAssociatedAutomate_ )
-		msg.mutable_automat()->set_id(pAssociatedAutomate_->GetID());
-	else if( pAssociatedFormation_ )
-		msg.mutable_formation()->set_id(pAssociatedFormation_->GetID());
-	else
-		msg.mutable_automat()->set_id( 0 );
+    if( pAssociatedAutomate_ )
+        msg.mutable_automat()->set_id(pAssociatedAutomate_->GetID());
+    else if( pAssociatedFormation_ )
+        msg.mutable_formation()->set_id(pAssociatedFormation_->GetID());
+    else
+        msg.mutable_automat()->set_id( 0 );
 }

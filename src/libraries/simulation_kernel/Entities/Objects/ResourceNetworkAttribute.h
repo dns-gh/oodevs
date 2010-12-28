@@ -47,9 +47,9 @@ public:
     virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}
 
-	//! @name CheckPoint
+    //! @name CheckPoint
     //@{
-	template< typename Archive > void serialize( Archive&, const unsigned int ) {}
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 
 private:

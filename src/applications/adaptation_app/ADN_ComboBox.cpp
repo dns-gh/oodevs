@@ -50,7 +50,7 @@ ADN_ComboBox::~ADN_ComboBox()
 //-----------------------------------------------------------------------------
 void ADN_ComboBox::ConnectItem()
 {
-	// NOTHING
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void ADN_ComboBox::ConnectItem()
 //-----------------------------------------------------------------------------
 void ADN_ComboBox::DisconnectItem()
 {
-	// NOTHING
+    // NOTHING
 }
 
 inline void SetAutoClear(T_ConnectorVector& v,bool b)
@@ -102,7 +102,7 @@ void ADN_ComboBox::setCurrentItem( int index )
             newIndex = index;
         else
             for( std::vector< int >::const_iterator it = vItemsEnum_.begin(); it != vItemsEnum_.end(); ++it, ++newIndex )
-      		    if( *it == index )
+                if( *it == index )
                     break;
         fromView_ = true;
         QComboBox::setCurrentItem( newIndex );
@@ -136,7 +136,7 @@ void ADN_ComboBox::insertItem( const QString& txt, int index )
         for( index = 0; index < this->count(); ++index )
             if( txt.compare( this->text( index ) ) < 0 )
                 break;
-	// Insert index value in model at view place.
+    // Insert index value in model at view place.
     vItemsEnum_.insert( vItemsEnum_.begin() + index, vItemsEnum_.size() );
     QComboBox::insertItem( txt, index );
 }
@@ -171,7 +171,7 @@ void ADN_ComboBox::removeItem ( int index )
     ADN_ComboBoxItem* item = vItems_[ index ];
     vItems_.erase( vItems_.begin() + index );
     if( !vItemsEnum_.empty() )
-		vItemsEnum_.erase( vItemsEnum_.begin() + index );
+        vItemsEnum_.erase( vItemsEnum_.begin() + index );
     delete item;
     QComboBox::removeItem(index);
 }

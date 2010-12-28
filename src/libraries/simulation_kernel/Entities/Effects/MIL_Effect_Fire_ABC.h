@@ -17,7 +17,7 @@
 #include "tools/MIL_IDManager.h"
 
 namespace sword {
-	enum EnumFireEffectType;
+    enum EnumFireEffectType;
 }
 
 class PHY_IndirectFireDotationClass;
@@ -35,7 +35,7 @@ public:
 protected:
     //! @name Network
     //@{
-	void SendMsgStartEffect( sword::EnumFireEffectType fireEffectType ) const;
+    void SendMsgStartEffect( sword::EnumFireEffectType fireEffectType ) const;
     void SendMsgStopEffect () const;
     //@}
 

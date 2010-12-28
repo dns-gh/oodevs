@@ -59,7 +59,7 @@ private:
     RestClient& operator=( const RestClient& ); //!< Assignment operator
     //@}
 
-	//! @name Helpers
+    //! @name Helpers
     //@{
     void ProceedRequest( boost::asio::streambuf& response, std::string& contentß );
     void ReadHeader( boost::asio::streambuf& response );

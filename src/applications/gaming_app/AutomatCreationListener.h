@@ -59,10 +59,6 @@ private:
     AutomatCreationListener& operator=( const AutomatCreationListener& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

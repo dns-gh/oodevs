@@ -75,10 +75,6 @@ private:
     //@{
     void InitializeData( xml::xistream& xis );
     //@}
-
-    //! @name Private member
-    //@{
-    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( BurnCapacity )

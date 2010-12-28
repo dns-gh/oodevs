@@ -42,7 +42,7 @@ void ObjectConditions::RegisterIn( directia::brain::Brain& brain )
 {
     brain[ "events.objects"] = this;
     brain.Register( "ObjectDestroyed", &ObjectConditions::ObjectDestroyed );
-	brain.Register( "ObjectKnowledgeCreated", &ObjectConditions::ObjectKnowledgeCreated );
+    brain.Register( "ObjectKnowledgeCreated", &ObjectConditions::ObjectKnowledgeCreated );
 }
 
 namespace directia

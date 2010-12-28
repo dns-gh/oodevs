@@ -66,10 +66,10 @@ namespace script
         DECLARE_AUTOMAT_EVENT( AutomatMissionStarted );
 
         DECLARE_OBJECT_EVENT( ObjectDestroyed );
-		DECLARE_OBJECT_KNOWLEDGE_EVENT( ObjectKnowledgeCreated );
+        DECLARE_OBJECT_KNOWLEDGE_EVENT( ObjectKnowledgeCreated );
         
         DECLARE_POPULATION_EVENT( PopulationMoved );
-		DECLARE_POPULATION_KNOWLEDGE_EVENT( PopulationKnowledgeCreated );
+        DECLARE_POPULATION_KNOWLEDGE_EVENT( PopulationKnowledgeCreated );
     }
 }
 }

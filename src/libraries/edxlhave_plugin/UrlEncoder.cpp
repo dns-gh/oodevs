@@ -57,60 +57,60 @@ void UrlEncoder::Encode( const std::string& message )
     for( unsigned i = 0; i < message.length(); i++ )
         switch( message[i] )
         {
-	        case '%':
-		        res += "%25";
-		        break;
-	        case ' ':
-		        res += "%20";
-		        break;
-	        case '^':
-		        res += "%5E";
-		        break;
-	        case '&':
-		        res += "%26";
-		        break;
-	        case '`':
-		        res += "%60";
-		        break;
-	        case '{':
-		        res+="%7B";
-		        break;
-	        case '}':
-		        res+="%7D";
-		        break;
-	        case '|':
-		        res+="%7C";
-		        break;
-	        case ']':
-		        res+="%5D";
-		        break;
-	        case '[':
-		        res+="%5B";
-		        break;
-	        case '"':
-		        res+="%22";
-		        break;
-	        case '<':
-		        res+="%3C";
-		        break;
-	        case '>':
-		        res+="%3E";
-		        break;
-	        case '\\':
-		        res+="%5C";
-		        break;
-	        case '#':
-		        res+="%23";
-		        break;
-	        case '?':
-		        res+="%3F";
-		        break;
-	        case '/':
-		        res+="%2F";
-		        break;
-	        default:
-		        res += message[i];
-		        break;
+            case '%':
+                res += "%25";
+                break;
+            case ' ':
+                res += "%20";
+                break;
+            case '^':
+                res += "%5E";
+                break;
+            case '&':
+                res += "%26";
+                break;
+            case '`':
+                res += "%60";
+                break;
+            case '{':
+                res+="%7B";
+                break;
+            case '}':
+                res+="%7D";
+                break;
+            case '|':
+                res+="%7C";
+                break;
+            case ']':
+                res+="%5D";
+                break;
+            case '[':
+                res+="%5B";
+                break;
+            case '"':
+                res+="%22";
+                break;
+            case '<':
+                res+="%3C";
+                break;
+            case '>':
+                res+="%3E";
+                break;
+            case '\\':
+                res+="%5C";
+                break;
+            case '#':
+                res+="%23";
+                break;
+            case '?':
+                res+="%3F";
+                break;
+            case '/':
+                res+="%2F";
+                break;
+            default:
+                res += message[i];
+                break;
         }
     message_.swap( res );
 }

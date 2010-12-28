@@ -45,10 +45,6 @@ private:
     Resource& operator=( const Resource& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

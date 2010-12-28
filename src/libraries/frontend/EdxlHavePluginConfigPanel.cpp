@@ -47,18 +47,18 @@ EdxlHavePluginConfigPanel::EdxlHavePluginConfigPanel( QWidget* parent, const too
         Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Host: " ), box ) );
         host_ = Style( new QLineEdit( "localhost", box ) );
     }
-	{
+    {
         QHBox* box = Style( new QHBox( box_ ) );
-		Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Use SSL: " ), box ) );
-		ssl_ = Style( new QCheckBox( box ) );
-		ssl_->setChecked( false );
-	}
-	{
+        Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Use SSL: " ), box ) );
+        ssl_ = Style( new QCheckBox( box ) );
+        ssl_->setChecked( false );
+    }
+    {
         QHBox* box = Style( new QHBox( box_ ) );
-		Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Log: " ), box ) );
-		log_ = Style( new QCheckBox( box ) );
-		log_->setChecked( false );
-	}
+        Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Log: " ), box ) );
+        log_ = Style( new QCheckBox( box ) );
+        log_->setChecked( false );
+    }
     {
         QGroupBox* services = new QGroupBox( 2, Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Services configuration:" ), box_ );
         {

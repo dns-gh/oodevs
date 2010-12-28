@@ -186,7 +186,7 @@ void ClientObject::ReadProperty( xml::xistream& xis )
     std::string key = xis.attribute< std::string >( "key" );
     std::string type = xis.attribute< std::string >( "type" );
     std::string value = xis.attribute< std::string >( "value" );
-	if( type == "string" )
+    if( type == "string" )
         Register( key, *new ClientObjectProperty< std::string >( value, key ) );
     else if( type == "integer" )
         Register( key, *new ClientObjectProperty< int >( boost::lexical_cast< int >( value ), key ) );

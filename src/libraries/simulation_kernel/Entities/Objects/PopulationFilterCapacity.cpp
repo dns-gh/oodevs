@@ -71,5 +71,5 @@ void PopulationFilterCapacity::Register( MIL_Object_ABC& object )
 void PopulationFilterCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new PopulationFilterCapacity( *this ) );
-	object.GetAttribute< PopulationAttribute >() = PopulationAttribute( density_ );
+    object.GetAttribute< PopulationAttribute >() = PopulationAttribute( density_ );
 }

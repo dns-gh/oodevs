@@ -45,10 +45,6 @@ private:
     Personnel& operator=( const Personnel& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

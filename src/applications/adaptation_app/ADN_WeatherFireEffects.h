@@ -54,7 +54,7 @@ public:
     {
     public:
         Cmp( E_SensorWeatherModifiers val ) : val_( val ){}
-        bool operator()( ADN_WeatherFireEffects* other ) const 
+        bool operator()( ADN_WeatherFireEffects* other ) const
         { return val_ == other->weatherType_; }
 
     private:

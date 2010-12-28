@@ -58,7 +58,7 @@ void AgentManipulator::Registrar::RegisterIn( directia::brain::Brain& brain )
 
     brain.Register( "Teleport",   &AgentManipulator::Teleport );
     brain.Register( "RecoverAll", &AgentManipulator::RecoverAll );
-	brain.Register( "Wound", &AgentManipulator::Wound );
+    brain.Register( "Wound", &AgentManipulator::Wound );
 }
 
 // -----------------------------------------------------------------------------

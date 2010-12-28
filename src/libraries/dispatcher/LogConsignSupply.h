@@ -70,10 +70,10 @@ private:
     LogConsignSupply& operator=( const LogConsignSupply& ); //!< Assignment operator
     //@}
     //! @name Tools
-	//@{
-	kernel::Entity_ABC* FindLogEntity(const sword::ParentEntity& msg) const;
-	void FillLogEntityID(sword::ParentEntity& msg, const kernel::Entity_ABC* entity) const;
-	//@}
+    //@{
+    kernel::Entity_ABC* FindLogEntity(const sword::ParentEntity& msg) const;
+    void FillLogEntityID(sword::ParentEntity& msg, const kernel::Entity_ABC* entity) const;
+    //@}
 
 private:
     const Model&               model_;

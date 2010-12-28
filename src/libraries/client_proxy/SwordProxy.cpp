@@ -35,7 +35,7 @@ private:
 SwordProxy::SwordProxy( const std::string& host, unsigned short port, const std::string& profile )
     : pimpl_( new SwordProxyImplementation( host, port, profile ) )
 {
-	// NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ SwordProxy::SwordProxy( const std::string& host, unsigned short port, const std:
 // -----------------------------------------------------------------------------
 SwordProxy::~SwordProxy()
 {
-	delete pimpl_;
+    delete pimpl_;
 }
     
 // -----------------------------------------------------------------------------

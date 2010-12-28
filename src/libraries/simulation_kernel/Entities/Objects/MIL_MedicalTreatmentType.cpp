@@ -56,7 +56,7 @@ void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis, const MIL_Time_AB
 // Modified: RFT 14/05/2008
 // -----------------------------------------------------------------------------
 MIL_MedicalTreatmentType::MIL_MedicalTreatmentType( const std::string& name, xml::xistream& xis, const MIL_Time_ABC& time )
-	: name_            ( name )
+    : name_            ( name )
     , treatments_      ( static_cast< int >( eDead ) + 1 )
     , deathThreshold_  ( -1 )
     , time_            ( time )

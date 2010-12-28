@@ -56,7 +56,7 @@ namespace
                 return 3;
             return 0;
         }
-		bool Mock_PerceiveUnit( const std::string& name )
+        bool Mock_PerceiveUnit( const std::string& name )
         {
             return( name == "enemySeen" );
         }

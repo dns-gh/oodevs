@@ -14,8 +14,8 @@
 #include "clients_kernel/ValueEditor.h"
 
 namespace kernel {
-	class Entity_ABC;
-	class LogisticLevel;
+    class Entity_ABC;
+    class LogisticLevel;
 }
 
 // =============================================================================

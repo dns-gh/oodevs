@@ -140,6 +140,7 @@ const TER_Localisation* DEC_PopulationFunctions::GetKnowledgeObjectLocalisation(
         return &pKnowledge->GetLocalisation();
     return 0;
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::HasFlow
 // Created: LGY 2010-12-27

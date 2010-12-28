@@ -151,9 +151,9 @@ void PHY_Meteo::Update( const sword::WeatherAttributes& msg )
         pPrecipitation_ = &PHY_Precipitation::none_;
 
     // Lighting
-	pLighting_ = PHY_Lighting::FindLighting( msg.lighting() );
+    pLighting_ = PHY_Lighting::FindLighting( msg.lighting() );
     if( !pLighting_ )
-		pLighting_ = &PHY_Lighting::jourSansNuage_;
+        pLighting_ = &PHY_Lighting::jourSansNuage_;
 }
 
 // -----------------------------------------------------------------------------

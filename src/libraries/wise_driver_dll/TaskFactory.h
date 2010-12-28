@@ -46,10 +46,6 @@ private:
     TaskFactory& operator=( const TaskFactory& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

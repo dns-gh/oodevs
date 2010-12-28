@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-	void Connect( SwordConnectionHandler_ABC* handler );
+    void Connect( SwordConnectionHandler_ABC* handler );
     void RegisterMessageHandler( SwordMessageHandler_ABC& handler );
     void UnregisterMessageHandler( SwordMessageHandler_ABC& handler );
     void SendMessage( const sword::ClientToSim& message ) const;
@@ -62,14 +62,14 @@ private:
 
     //! @name Connection handlers
     //@{
-	virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void ConnectionSucceeded( const std::string& endpoint );
     virtual void ConnectionFailed( const std::string& endpoint, const std::string& error );
     virtual void ConnectionError( const std::string& endpoint, const std::string& error );
     //@}
 
     //! @name Message handlers
     //@{
-	void HandleAarToClient( const std::string& endpoint, const sword::AarToClient& message );
+    void HandleAarToClient( const std::string& endpoint, const sword::AarToClient& message );
     void HandleAuthenticationToClient( const std::string& endpoint, const sword::AuthenticationToClient& message );
     void HandleDispatcherToClient( const std::string& endpoint, const sword::DispatcherToClient& message );
     void HandleMessengerToClient( const std::string& endpoint, const sword::MessengerToClient& message );
@@ -87,7 +87,7 @@ private:
     //@{
     const std::string host_;
     const unsigned short port_;
-	const std::string profile_;
+    const std::string profile_;
     std::auto_ptr< MessageSender > publisher_;
     bool loggedIn_;
     std::auto_ptr< ConnectionHandlerProxy > connectionHandler_;

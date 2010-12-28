@@ -64,11 +64,11 @@ EditorFactory::~EditorFactory()
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( TC2* const& value )
 {
-	if( !selected_ )
-		return;
-	LogisticSuperiorEditor< TC2 >* editor = new LogisticSuperiorEditor< TC2 >( parent_, controllers_, model_.agents_, *selected_ );
-	editor->SetCurrentItem( (TC2&)*value );
-	result_ = editor;
+    if( !selected_ )
+        return;
+    LogisticSuperiorEditor< TC2 >* editor = new LogisticSuperiorEditor< TC2 >( parent_, controllers_, model_.agents_, *selected_ );
+    editor->SetCurrentItem( (TC2&)*value );
+    result_ = editor;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,11 +77,11 @@ void EditorFactory::Call( TC2* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( LogisticBaseSuperior* const& value )
 {
-	if( !selected_ )
-		return;
-	LogisticSuperiorEditor< LogisticBaseSuperior >* editor = new LogisticSuperiorEditor< LogisticBaseSuperior >( parent_, controllers_, model_.formations_, *selected_ );
-	editor->SetCurrentItem( (LogisticBaseSuperior&)*value );
-	result_ = editor;
+    if( !selected_ )
+        return;
+    LogisticSuperiorEditor< LogisticBaseSuperior >* editor = new LogisticSuperiorEditor< LogisticBaseSuperior >( parent_, controllers_, model_.formations_, *selected_ );
+    editor->SetCurrentItem( (LogisticBaseSuperior&)*value );
+    result_ = editor;
 }
 
 // -----------------------------------------------------------------------------
@@ -160,11 +160,11 @@ void EditorFactory::Call( IntelligenceKarma* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( kernel::LogisticLevel** const& value )
 {
-	if( !selected_ )
-		return;
-	LogisticLevelEditor* editor = new LogisticLevelEditor( parent_, *selected_ );
-	editor->SetCurrentItem( *value );
-	result_ = editor;
+    if( !selected_ )
+        return;
+    LogisticLevelEditor* editor = new LogisticLevelEditor( parent_, *selected_ );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
 }
 
 // -----------------------------------------------------------------------------

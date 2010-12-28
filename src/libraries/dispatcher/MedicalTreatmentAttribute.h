@@ -68,11 +68,11 @@ private:
 private:
     //! @name Data members
     //@{
-    std::string                	referenceID_;
+    std::string                 referenceID_;
     EnumMedicalTreatmentStatus  status_;
-    T_TreatmentCapacityVector  	capacities_;
-    int              			doctors_;
-    int              			availableDoctors_;
+    T_TreatmentCapacityVector   capacities_;
+    int                         doctors_;
+    int                         availableDoctors_;
     //@}
 };
 

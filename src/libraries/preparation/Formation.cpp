@@ -115,7 +115,7 @@ void Formation::SerializeAttributes( xml::xostream& xos ) const
     if (nature_.length() > 0)
         xos << xml::attribute( "nature", nature_ );
     if( *logisticLevel_ != kernel::LogisticLevel::none_ )
-    	xos << xml::attribute( "logistic-level", logisticLevel_->GetName());
+        xos << xml::attribute( "logistic-level", logisticLevel_->GetName());
     if (color_.length() > 0)
         xos << xml::attribute( "color", color_ );
 }

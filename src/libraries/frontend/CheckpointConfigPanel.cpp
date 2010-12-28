@@ -53,7 +53,7 @@ CheckpointConfigPanel::CheckpointConfigPanel( QWidget* parent, const tools::Gene
             QHBox* frequencyBox = Style( new QHBox( checkpointsGroup_ ) );
             Style( new QLabel( tools::translate( "CheckpointConfigPanel", "Frequency:" ), frequencyBox ) );
             frequency_ = Style( new QTimeEdit( frequencyBox ) );
-			frequency_->setDisplay ( QTimeEdit::Hours | QTimeEdit::Minutes | QTimeEdit::Seconds  );
+            frequency_->setDisplay ( QTimeEdit::Hours | QTimeEdit::Minutes | QTimeEdit::Seconds  );
             frequency_->setTime( QTime().addSecs( 3600 ) );
         }
         {

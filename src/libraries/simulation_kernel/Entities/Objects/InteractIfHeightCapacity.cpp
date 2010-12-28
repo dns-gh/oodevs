@@ -83,7 +83,7 @@ void InteractIfHeightCapacity::Instanciate( MIL_Object_ABC& object ) const
     InteractIfHeightCapacity* capacity = new InteractIfHeightCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
-	object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( height_ );
+    object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( height_ );
 }
 
 // -----------------------------------------------------------------------------

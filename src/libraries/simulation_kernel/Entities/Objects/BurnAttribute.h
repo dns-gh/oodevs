@@ -61,7 +61,7 @@ public:
     //@{
     BurnAttribute( const BurnAttribute& ); //!< Copy operator
     BurnAttribute& operator=( const BurnAttribute& ); //!< Assignment operator
-    bool Update( const BurnAttribute& rhs );    
+    bool Update( const BurnAttribute& rhs );
     //@}
 
 private:

@@ -53,9 +53,9 @@ LogConsignSupply::~LogConsignSupply()
 void LogConsignSupply::Update( const sword::LogSupplyHandlingUpdate& msg )
 {
     if( msg.has_supplier() )
-    	pTreatingEntity_ = FindLogEntity( msg.supplier() );
+        pTreatingEntity_ = FindLogEntity( msg.supplier() );
     if( msg.has_convoy_provider() )
-    	pConvoyingEntity_ = FindLogEntity( msg.convoy_provider() );
+        pConvoyingEntity_ = FindLogEntity( msg.convoy_provider() );
     if( msg.has_convoying_unit() )
         pConvoy_ = ( msg.convoying_unit().id() == 0 ) ? 0 : &model_.Agents().Get( msg.convoying_unit().id() );
     if( msg.has_etat() )
@@ -153,12 +153,12 @@ void LogConsignSupply::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* LogConsignSupply::FindLogEntity(const sword::ParentEntity& msg) const
 {
-	kernel::Entity_ABC* retval = 0;
-	if( msg.has_automat() )
-		retval = model_.Automats().Find( msg.automat().id() );
-	else if( msg.has_formation() )
-		retval = model_.Formations().Find( msg.formation().id() );
-	return retval;
+    kernel::Entity_ABC* retval = 0;
+    if( msg.has_automat() )
+        retval = model_.Automats().Find( msg.automat().id() );
+    else if( msg.has_formation() )
+        retval = model_.Formations().Find( msg.formation().id() );
+    return retval;
 }
 
 // -----------------------------------------------------------------------------
@@ -167,10 +167,10 @@ kernel::Entity_ABC* LogConsignSupply::FindLogEntity(const sword::ParentEntity& m
 // -----------------------------------------------------------------------------
 void LogConsignSupply::FillLogEntityID(sword::ParentEntity& msg, const kernel::Entity_ABC* entity) const
 {
-	if( entity == 0 )
-		msg.mutable_automat()->set_id( 0 );
-	else if( dynamic_cast<const kernel::Automat_ABC*>( entity) )
-		msg.mutable_automat()->set_id( entity->GetId() );
-	else if( dynamic_cast<const kernel::Formation_ABC*>( entity) )
-		msg.mutable_formation()->set_id( entity->GetId() );
+    if( entity == 0 )
+        msg.mutable_automat()->set_id( 0 );
+    else if( dynamic_cast<const kernel::Automat_ABC*>( entity) )
+        msg.mutable_automat()->set_id( entity->GetId() );
+    else if( dynamic_cast<const kernel::Formation_ABC*>( entity) )
+        msg.mutable_formation()->set_id( entity->GetId() );
 }

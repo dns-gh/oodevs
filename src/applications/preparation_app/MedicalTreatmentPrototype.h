@@ -45,7 +45,7 @@ public:
     virtual void CommitShapeObject( const kernel::ShapeObject& importObject );
     virtual kernel::ShapeObjectLoader_ABC* LoadObjects( const std::string& filename, const kernel::CoordinateConverter_ABC& coordinatesConverter );
 */  
-  	//@}
+    //@}
 
 private:
     //! @name Copy/Assignment

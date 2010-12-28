@@ -190,15 +190,15 @@ void LogisticSupplyPushFlowDialog::Validate()
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     if( selectedAutomat_ )
     {
-    	assert( dynamic_cast<const Automat_ABC*>( (const Entity_ABC*)selected_) );
-    	action->AddParameter( *new parameters::Automat( it.NextElement(), *dynamic_cast<const Automat_ABC*>( (const Entity_ABC*)selected_),
-    			controllers_.controller_ ) );
+        assert( dynamic_cast<const Automat_ABC*>( (const Entity_ABC*)selected_) );
+        action->AddParameter( *new parameters::Automat( it.NextElement(), *dynamic_cast<const Automat_ABC*>( (const Entity_ABC*)selected_),
+                controllers_.controller_ ) );
     }
     else
     {
-    	assert( dynamic_cast<const Formation_ABC*>( (const Entity_ABC*)selected_) );
-    	action->AddParameter( *new parameters::Formation( it.NextElement(), *dynamic_cast<const Formation_ABC*>( (const Entity_ABC*)selected_),
-    			controllers_.controller_ ) );
+        assert( dynamic_cast<const Formation_ABC*>( (const Entity_ABC*)selected_) );
+        action->AddParameter( *new parameters::Formation( it.NextElement(), *dynamic_cast<const Formation_ABC*>( (const Entity_ABC*)selected_),
+                controllers_.controller_ ) );
     }
 
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
@@ -245,19 +245,19 @@ namespace
 
     struct SupplyStatesVisitor : private boost::noncopyable
                                , public kernel::ExtensionVisitor_ABC<SupplyStates>
-	{
-		SupplyStatesVisitor( LogisticSupplyPushFlowDialog& dlg, void (LogisticSupplyPushFlowDialog::*pFunc)(const SupplyStates&) )
-				: dlg_(dlg), pFunc_ ( pFunc ) {}
+    {
+        SupplyStatesVisitor( LogisticSupplyPushFlowDialog& dlg, void (LogisticSupplyPushFlowDialog::*pFunc)(const SupplyStates&) )
+                : dlg_(dlg), pFunc_ ( pFunc ) {}
 
-		void Visit( const SupplyStates& extension )
-		{
-			(dlg_.*pFunc_)(extension);
-		}
-	private:
-		LogisticSupplyPushFlowDialog& dlg_;
-		void (LogisticSupplyPushFlowDialog::*pFunc_)(const SupplyStates&);
+        void Visit( const SupplyStates& extension )
+        {
+            (dlg_.*pFunc_)(extension);
+        }
+    private:
+        LogisticSupplyPushFlowDialog& dlg_;
+        void (LogisticSupplyPushFlowDialog::*pFunc_)(const SupplyStates&);
 
-	};
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -271,12 +271,12 @@ void LogisticSupplyPushFlowDialog::OnSelectionChanged()
     dotationTypes_.append( "" );
     if( selected_ )
     {
-    	SupplyStatesVisitor visitor( *this, &LogisticSupplyPushFlowDialog::AddDotation );
-    	selected_->Get< kernel::TacticalHierarchies >().Accept<SupplyStates>(visitor);
+        SupplyStatesVisitor visitor( *this, &LogisticSupplyPushFlowDialog::AddDotation );
+        selected_->Get< kernel::TacticalHierarchies >().Accept<SupplyStates>(visitor);
     }
-	table_->setNumRows( 0 );
+    table_->setNumRows( 0 );
     if( ! dotationTypes_.empty() )
-    	AddItem();
+        AddItem();
 }
 
 // -----------------------------------------------------------------------------
@@ -285,19 +285,19 @@ void LogisticSupplyPushFlowDialog::OnSelectionChanged()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::AddDotation( const SupplyStates& states )
 {
-	tools::Iterator< const Dotation& > it = states.CreateIterator();
-	while( it.HasMoreElements() )
-	{
-		const Dotation& dotation = it.NextElement();
-		const QString type = dotation.type_->GetName().c_str();
-		Dotation& supply = supplies_[ type ];
-		if( ! supply.type_ )
-		{
-			dotationTypes_.append( type );
-			supply.type_ = dotation.type_;
-		}
-		supply.quantity_ += dotation.quantity_;
-	}
+    tools::Iterator< const Dotation& > it = states.CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Dotation& dotation = it.NextElement();
+        const QString type = dotation.type_->GetName().c_str();
+        Dotation& supply = supplies_[ type ];
+        if( ! supply.type_ )
+        {
+            dotationTypes_.append( type );
+            supply.type_ = dotation.type_;
+        }
+        supply.quantity_ += dotation.quantity_;
+    }
 }
 
 // -----------------------------------------------------------------------------

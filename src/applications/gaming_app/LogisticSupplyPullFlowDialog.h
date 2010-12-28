@@ -50,8 +50,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              LogisticSupplyPullFlowDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
-            		 const StaticModel& staticModel, const kernel::Time_ABC& simulation, const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
-            		 const tools::Resolver_ABC< kernel::Formation_ABC >& formations, const kernel::Profile_ABC& profile );
+                     const StaticModel& staticModel, const kernel::Time_ABC& simulation, const tools::Resolver_ABC< kernel::Automat_ABC >& automats,
+                     const tools::Resolver_ABC< kernel::Formation_ABC >& formations, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyPullFlowDialog();
     //@}
 

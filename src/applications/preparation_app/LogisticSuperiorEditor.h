@@ -20,9 +20,9 @@
 template <typename Superior>
 struct LogisticSuperiorTraits
 {
-	typedef typename Superior::BaseType BaseType;
-	typedef typename boost::remove_pointer<BaseType>::type BaseTypeNP;
-	typedef typename boost::remove_const<BaseTypeNP>::type BaseTypeNCNP;
+    typedef typename Superior::BaseType BaseType;
+    typedef typename boost::remove_pointer<BaseType>::type BaseTypeNP;
+    typedef typename boost::remove_const<BaseTypeNP>::type BaseTypeNCNP;
 };
 
 // =============================================================================
@@ -38,7 +38,7 @@ class LogisticSuperiorEditor : public gui::ValuedComboBox< typename LogisticSupe
                              , public tools::ElementObserver_ABC< typename LogisticSuperiorTraits<Superior>::BaseTypeNCNP >
 {
 public:
-	typedef typename LogisticSuperiorTraits<Superior>::BaseTypeNCNP SuperiorEntityType;
+    typedef typename LogisticSuperiorTraits<Superior>::BaseTypeNCNP SuperiorEntityType;
     //! @name Constructors/Destructor
     //@{
              LogisticSuperiorEditor( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< SuperiorEntityType >& resolver, const kernel::Entity_ABC& selected );

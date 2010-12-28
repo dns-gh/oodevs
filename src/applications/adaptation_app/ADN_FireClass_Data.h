@@ -80,7 +80,7 @@ public:
             ~Cmp() {}
 
             bool operator()( FireSurfaceInfos* infos ) const
-            { 
+            {
                 return infos->strName_ == strName_;
             }
         private:

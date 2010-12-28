@@ -706,4 +706,3 @@ actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::Pop
     action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
     return action;
 }
-    

@@ -147,7 +147,7 @@ bool PHY_MaintenanceRepairConsign::DoSearchForCarrier()
     assert( pComposanteState_ );
     assert( !pRepairer_ );
 
-	MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
+    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
     {
         pComposanteState_ = 0;

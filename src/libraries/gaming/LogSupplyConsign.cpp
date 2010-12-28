@@ -39,7 +39,7 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
     : controller_           ( controller )
     , resolver_             ( resolver )
     , agentResolver_        ( agentResolver )
-	, formationResolver_    ( formationResolver )
+    , formationResolver_    ( formationResolver )
     , dotationResolver_     ( dotationResolver )
     , nID_                  ( message.request().id() )
     , consumer_             ( resolver.Get( message.consumer().id() ) )
@@ -65,7 +65,7 @@ LogSupplyConsign::~LogSupplyConsign()
 {
     consumer_.Get< LogSupplyConsigns >().RemoveConsign( *this );
     if( pLogHandlingEntity_ )
-    	pLogHandlingEntity_->Get< LogSupplyConsigns >().TerminateConsign( *this );
+        pLogHandlingEntity_->Get< LogSupplyConsigns >().TerminateConsign( *this );
     if( pPionLogConvoying_ )
         pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
     DeleteAll();
@@ -80,10 +80,10 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
     if( message.has_supplier() && ( !pLogHandlingEntity_ || FindLogEntityID( message.supplier() ) != int( pLogHandlingEntity_ ->GetId() ) ) )
     {
         if( pLogHandlingEntity_ )
-        	pLogHandlingEntity_->Get< LogSupplyConsigns >().TerminateConsign( *this );
+            pLogHandlingEntity_->Get< LogSupplyConsigns >().TerminateConsign( *this );
         pLogHandlingEntity_ = FindLogEntity( message.supplier() );
         if( pLogHandlingEntity_ )
-        	pLogHandlingEntity_->Get< LogSupplyConsigns >().HandleConsign( *this );
+            pLogHandlingEntity_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
     if( message.has_convoying_unit() && ( !pPionLogConvoying_ || message.convoying_unit().id() != int( pPionLogConvoying_->GetId() ) ) )
     {
@@ -94,7 +94,7 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
             pPionLogConvoying_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
     if( message.has_convoy_provider()  )
-    	pLogProvidingConvoyResourcesEntity_ = FindLogEntity( message.convoy_provider() );
+        pLogProvidingConvoyResourcesEntity_ = FindLogEntity( message.convoy_provider() );
     if( message.has_etat()  )
         nState_ = E_LogSupplyHandlingStatus( message.etat() );
     if( message.has_dotations()  )
@@ -165,12 +165,12 @@ void LogSupplyConsign::Draw( const Point2f& , const kernel::Viewport_ABC& viewpo
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* LogSupplyConsign::FindLogEntity(const sword::ParentEntity& msg)
 {
-	kernel::Entity_ABC* retval = 0;
-	if( msg.has_automat() )
-		retval = resolver_.Find( msg.automat().id() );
-	else if( msg.has_formation() )
-		retval = formationResolver_.Find( msg.formation().id() );
-	return retval;
+    kernel::Entity_ABC* retval = 0;
+    if( msg.has_automat() )
+        retval = resolver_.Find( msg.automat().id() );
+    else if( msg.has_formation() )
+        retval = formationResolver_.Find( msg.formation().id() );
+    return retval;
 }
 
 // -----------------------------------------------------------------------------
@@ -179,10 +179,10 @@ kernel::Entity_ABC* LogSupplyConsign::FindLogEntity(const sword::ParentEntity& m
 // -----------------------------------------------------------------------------
 unsigned int LogSupplyConsign::FindLogEntityID(const sword::ParentEntity& msg)
 {
-	unsigned int retval = 0;
-	if( msg.has_automat() )
-		retval = msg.automat().id() ;
-	else if( msg.has_formation() )
-		retval = msg.formation().id() ;
-	return retval;
+    unsigned int retval = 0;
+    if( msg.has_automat() )
+        retval = msg.automat().id() ;
+    else if( msg.has_formation() )
+        retval = msg.formation().id() ;
+    return retval;
 }

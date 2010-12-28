@@ -309,11 +309,11 @@ public:
     virtual void Visit( const urban::TerrainObject_ABC& object )
     {
             const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
-        	if( architecture && ( !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() ) || !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::RoofShapeType >( architecture->GetRoofShape() ) ) )
-        	{
-            	MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
-            	return;
-        	}
+            if( architecture && ( !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() ) || !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::RoofShapeType >( architecture->GetRoofShape() ) ) )
+            {
+                MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
+                return;
+            }
         manager_.CreateUrbanObject( object );
     }
 private:

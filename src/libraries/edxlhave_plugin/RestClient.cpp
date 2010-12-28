@@ -44,7 +44,7 @@ RestClient::~RestClient()
 // -----------------------------------------------------------------------------
 void RestClient::DoPost( const std::string& message, std::string& response )
 {
-	boost::asio::streambuf request;
+    boost::asio::streambuf request;
     std::ostream request_stream( &request );
     request_stream << "POST " << path_ << " HTTP/1.0\r\n";
     request_stream << "Host: " << host_ << "\r\n";
@@ -94,7 +94,7 @@ void RestClient::ProceedRequest( boost::asio::streambuf& request, std::string& c
 // -----------------------------------------------------------------------------
 void RestClient::ReadHeader( boost::asio::streambuf& response )
 {
-	socket_.ReadUntil( response, "\r\n" );
+    socket_.ReadUntil( response, "\r\n" );
 
     // Check that response is OK.
     std::istream response_stream( &response );
@@ -108,7 +108,7 @@ void RestClient::ReadHeader( boost::asio::streambuf& response )
     // LOG( status_message );
 
     // Read the response headers, which are terminated by a blank line.
-	socket_.ReadUntil( response, "\r\n\r\n" );
+    socket_.ReadUntil( response, "\r\n\r\n" );
 
     // Proceed header
     std::string header;

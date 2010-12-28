@@ -110,4 +110,3 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindSafetyP
 {
     return threads_.back()->FindSafetyPositionsWithinCircle( center, radius, safetyDistance );
 }
-    

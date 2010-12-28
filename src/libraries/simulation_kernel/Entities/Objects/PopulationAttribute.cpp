@@ -39,9 +39,9 @@ PopulationAttribute::PopulationAttribute( xml::xistream& xis )
 // Created: NLD 2010-11-24
 // -----------------------------------------------------------------------------
 PopulationAttribute::PopulationAttribute( double density )
-	: density_( density )
+    : density_( density )
 {
-	// NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

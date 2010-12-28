@@ -94,10 +94,6 @@ private:
     FloodAttribute( const FloodAttribute& );            //!< Copy constructor
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

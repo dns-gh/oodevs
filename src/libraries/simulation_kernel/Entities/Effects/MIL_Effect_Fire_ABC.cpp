@@ -30,7 +30,7 @@ MIL_Effect_Fire_ABC::MIL_Effect_Fire_ABC( const MT_Ellipse& surface, const PHY_I
     , surface_     ( surface )
     , ammoCategory_( ammoCategory )
 {
-	
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -144,6 +144,6 @@ void IndicatorExportDialog::OnAccept()
     }
     catch ( exception* e)
     {
-        QMessageBox::critical( this, tr( "Can not save indicator file :" ), tr("Error message")  + e->what() );    	
+        QMessageBox::critical( this, tr( "Can not save indicator file :" ), tr("Error message")  + e->what() );
     }
 }

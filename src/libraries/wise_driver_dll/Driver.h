@@ -41,7 +41,7 @@ protected:
                             const WALOwnershipMode& eModeOwnership,
                             const WALAttributeQualityMode& eModeAttributeQuality,
                             const WALAttributeTimeMode& eModeAttributeTime );
-	virtual WISE_RESULT OnCloseDatabase( const WISE_HANDLE& hDatabase );
+    virtual WISE_RESULT OnCloseDatabase( const WISE_HANDLE& hDatabase );
     virtual WISE_RESULT OnAddObject( 
                             const timeb& timeStamp,
                             const WISE_HANDLE& hDatabase, 

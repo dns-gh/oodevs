@@ -203,9 +203,9 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> rOverloadedPionMaxSpeed_
          >> pKnowledge_
          >> bHasDoneMagicMove_;
-	MT_Vector2D tmp;
-	file >> tmp;
-	vBarycenter_.reset( new MT_Vector2D( tmp ) );
+    MT_Vector2D tmp;
+    file >> tmp;
+    vBarycenter_.reset( new MT_Vector2D( tmp ) );
     {
         DEC_PopulationDecision* pRole;
         file >> pRole;
@@ -234,7 +234,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << rOverloadedPionMaxSpeed_
          << pKnowledge_
          << bHasDoneMagicMove_
-		 << (*vBarycenter_);
+         << (*vBarycenter_);
     SaveRole< DEC_PopulationDecision >( *this, file );
 }
 

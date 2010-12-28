@@ -160,8 +160,8 @@ public:
     double GetMaxRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     double GetMinRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     double GetMaxRangeToFire                ( const MIL_Agent_ABC& pion, double rWantedPH ) const;
-	PHY_InjuredHuman* GetInjury() const;
-	//@}
+    PHY_InjuredHuman* GetInjury() const;
+    //@}
 
     //! @name Accessors
     //@{

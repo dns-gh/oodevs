@@ -174,7 +174,7 @@ void ADN_FireClass_Data::FireSurfaceInfos::CopyFrom( FireSurfaceInfos& infos )
     ignitionThreshold_ = infos.ignitionThreshold_.GetData();
     maxCombustionEnergy_ = infos.maxCombustionEnergy_.GetData();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_FireClass_Data::FireSurfaceInfos::ReadArchive
 // Created: JSR 2010-12-03
@@ -184,7 +184,7 @@ void ADN_FireClass_Data::FireSurfaceInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "ignition-threshold", ignitionThreshold_ )
           >> xml::attribute( "max-combustion-energy", maxCombustionEnergy_ );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_FireClass_Data::FireSurfaceInfos::WriteArchive
 // Created: JSR 2010-12-03
@@ -227,7 +227,7 @@ ADN_FireClass_Data::FireClassInfos::FireClassInfos()
     }
 
     isSurface_.SetParentNode( *this );
-    surfaceInfos_.SetParentNode( *this );    
+    surfaceInfos_.SetParentNode( *this );
     surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Unknown ) );
     surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Forest ) );
     surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Plantation ) );
@@ -283,7 +283,7 @@ ADN_FireClass_Data::FireClassInfos* ADN_FireClass_Data::FireClassInfos::CreateCo
     pCopy->isSurface_ = isSurface_.GetData();
     for( uint n = 0; n < agents_.size(); ++n )
         pCopy->agents_[ n ]->CopyFrom( *agents_[ n ] );
-    
+
     for( uint i=0; i<weatherEffects_.size(); ++i )
         pCopy->weatherEffects_[i]->CopyFrom( *weatherEffects_[i] );
 
@@ -291,7 +291,7 @@ ADN_FireClass_Data::FireClassInfos* ADN_FireClass_Data::FireClassInfos::CreateCo
         pCopy->surfaceInfos_[ n ]->CopyFrom( *surfaceInfos_[ n ] );
     return pCopy;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_FireClass_Data::FireClassInfos::ReadArchive
 // Created: JSR 2010-12-01

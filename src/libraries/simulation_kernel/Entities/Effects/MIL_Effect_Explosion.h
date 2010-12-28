@@ -30,10 +30,10 @@ public:
     //@}
 
 private:
-	bool neutralization_;
+    bool neutralization_;
     bool started_;
 
-	const unsigned int nLifeLastTimeStep_;
+    const unsigned int nLifeLastTimeStep_;
 };
 
 #endif // __MIL_Effect_Explosion_h_

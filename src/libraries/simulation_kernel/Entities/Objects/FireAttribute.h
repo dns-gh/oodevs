@@ -66,10 +66,6 @@ public:
     MIL_BurnEffectManipulator GetBurnEffect();
     //@}
 
-    //! @name Operations
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
