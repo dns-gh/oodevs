@@ -81,16 +81,16 @@ void WorldParameters::Load( const tools::ExerciseConfig& config )
                     >> xml::end
                 >> xml::end
                 >> xml::start( "pathfind" )
-                    >> xml::attribute( "path", pathfind )
+                    >> xml::attribute( "directory", pathfind )
                 >> xml::end
                 >> xml::start( "detection" )
-                    >> xml::attribute( "path", detection )
+                    >> xml::attribute( "directory", detection )
                 >> xml::end
                 >> xml::start( "graphics" )
-                    >> xml::attribute( "path", graphics )
+                    >> xml::attribute( "directory", graphics )
                 >> xml::end
                 >> xml::start( "urban" )
-                    >> xml::attribute( "path", urban )
+                    >> xml::attribute( "file", urban )
                 >> xml::end
             >> xml::end
         >> xml::end;
