@@ -457,21 +457,22 @@
   <report category="operational" id="317" message="debut controle point"/>
   <report category="operational" id="318" message="fin controle point"/>
   <report category="operational" id="319" message="aucun lanceur adapté à la munition spécifiée"/>
-  <report category="operational" id="3000" message="Embarquement - début"/>
-  <report category="operational" id="3001" message="Embarquement - interruption"/>
-  <report category="operational" id="3002" message="Embarquement - reprise"/>
-  <report category="operational" id="3003" message="Embarquement - fin"/>
-  <report category="operational" id="3004" message="Débarquement - début"/>
-  <report category="operational" id="3005" message="Débarquement - interruption"/>
-  <report category="operational" id="3006" message="Débarquement - reprise"/>
-  <report category="operational" id="3007" message="Débarquement - fin"/>
-  <report category="operational" id="3008" message="Protection active réussie"/>
-  <report category="operational" id="3009" message="Protection active hard kill réussie"/>
-  <report category="operational" id="3010" message="Empoisonné"/>
-  <report category="operational" id="3011" message="Contaminé"/>
-  <report category="operational" id="3012" message="tir sur camp ennemi"/>
-  <report category="operational" id="3013" message="tire par camp ennemi"/>
-  <report category="operational" id="3014" message="le drone doit être mis en oeuvre"/>
+  <report category="operational" id="320" message="Silence Radio Partiel"/>
+  <report category="operational" id="321" message="Embarquement - début"/>
+  <report category="operational" id="322" message="Embarquement - interruption"/>
+  <report category="operational" id="323" message="Embarquement - reprise"/>
+  <report category="operational" id="324" message="Embarquement - fin"/>
+  <report category="operational" id="325" message="Débarquement - début"/>
+  <report category="operational" id="326" message="Débarquement - interruption"/>
+  <report category="operational" id="327" message="Débarquement - reprise"/>
+  <report category="operational" id="328" message="Débarquement - fin"/>
+  <report category="operational" id="329" message="Protection active réussie"/>
+  <report category="operational" id="330" message="Protection active hard kill réussie"/>
+  <report category="operational" id="331" message="Empoisonné"/>
+  <report category="operational" id="332" message="Contaminé"/>
+  <report category="operational" id="333" message="tir sur camp ennemi"/>
+  <report category="operational" id="334" message="tire par camp ennemi"/>
+  <report category="operational" id="335" message="le drone doit être mis en oeuvre"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -483,4 +484,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="3088988156" -->
+<!-- signature="1069997994" -->
