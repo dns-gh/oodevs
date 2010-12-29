@@ -573,3 +573,12 @@ unsigned int Model::TaskerToId( const sword::Tasker& tasker ) const
         return tasker.formation().id();
     throw std::runtime_error( __FUNCTION__ " Misformed tasker in protocol message" );
 }
+ 
+// -----------------------------------------------------------------------------
+// Name: Model::GetExtensionTypes
+// Created: RPD 2010-12-28
+// -----------------------------------------------------------------------------
+const kernel::ExtensionTypes& Model::GetExtensionTypes() const
+{
+    return staticModel_.extensionTypes_;
+}

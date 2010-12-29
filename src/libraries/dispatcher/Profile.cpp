@@ -15,6 +15,9 @@
 #include "Model.h"
 #include "Population.h"
 #include "Side.h"
+#include "clients_kernel/DictionaryType.h"
+#include "clients_kernel/DictionaryEntryType.h"
+#include "clients_kernel/ExtensionTypes.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/AuthenticationSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -23,6 +26,7 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace dispatcher;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Profile constructor
@@ -33,11 +37,12 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
     , clients_     ( clients )
     , strLogin_    ( strLogin )
     , bSupervision_( false )
-    , role_        ( -1 )
+    , roleId_        ( -1 )
 {
+    std::string role;
     xis >> xml::attribute( "password", strPassword_ )
         >> xml::attribute( "supervision", bSupervision_ )
-        >> xml::optional >> xml::attribute( "role", role_ )
+        >> xml::optional >> xml::attribute( "role", role )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
@@ -52,6 +57,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
                 >> xml::list( "crowd", *this, &Profile::ReadPopulationRights, readWritePopulations_ )
             >> xml::end
         >> xml::end;
+    SetRoleIdFromString( role );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,12 +65,12 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
 Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const sword::ProfileCreationRequest& message )
-    : model_       ( model )
-    , clients_     ( clients )
-    , strLogin_    ( message.profile().login() )
-    , strPassword_ ( message.profile().has_password() ? message.profile().password() : "" )
-    , bSupervision_( message.profile().supervisor() )
-    , role_        ( message.profile().has_role() ? message.profile().role().id() : -1 )
+    : model_        ( model )
+    , clients_      ( clients )
+    , strLogin_     ( message.profile().login() )
+    , strPassword_  ( message.profile().has_password() ? message.profile().password() : "" )
+    , bSupervision_ ( message.profile().supervisor() )
+    , roleId_       ( message.profile().has_role() ? message.profile().role().id() : -1 )
 {
     ReadRights( message.profile() );
     SendCreation( clients_ );
@@ -294,8 +300,8 @@ void Profile::Send( sword::Profile& message ) const
 {
     message.set_login( strLogin_ );
     message.set_supervisor( bSupervision_ );
-    if( role_ != -1 )
-        message.mutable_role()->set_id( role_ );
+    if( roleId_ != -1 )
+        message.mutable_role()->set_id( roleId_ );
     Serialize( *message.mutable_read_only_automates(), readOnlyAutomats_ );
     Serialize( *message.mutable_read_write_automates(), readWriteAutomats_ );
     Serialize( *message.mutable_read_only_camps(), readOnlySides_ );
@@ -315,8 +321,8 @@ void Profile::Send( sword::ProfileDescription& message ) const
     message.set_login( strLogin_ );
     message.set_password( !strPassword_.empty() );
     message.set_supervisor( bSupervision_ );
-    if( role_ != -1 )
-        message.mutable_role()->set_id( role_ );
+    if( roleId_ != -1 )
+        message.mutable_role()->set_id( roleId_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -348,7 +354,7 @@ void Profile::Update( const sword::ProfileUpdateRequest& message )
     if( updatemessage().profile().has_password()  )
         updatemessage().mutable_profile()->set_password( strPassword_ );
     if( updatemessage().profile().has_role()  )
-        updatemessage().mutable_profile()->mutable_role()->set_id( role_ );
+        updatemessage().mutable_profile()->mutable_role()->set_id( roleId_ );
     Send( *updatemessage().mutable_profile() );
     updatemessage.Send( clients_ );
 }
@@ -381,4 +387,22 @@ void Profile::SetRight( const kernel::Automat_ABC& entity, bool readonly, bool r
     updatemessage().set_login( strLogin_ );
     Send( *updatemessage().mutable_profile() );
     updatemessage.Send( clients_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::SetRoleIdFromString
+// Created: RPD 2010-12-28
+// -----------------------------------------------------------------------------
+void Profile::SetRoleIdFromString( const std::string& role )
+{
+    roleId_ = -1;
+    DictionaryType* dictionary = model_.GetExtensionTypes().tools::StringResolver< DictionaryType >::Find( "T_User_Role" );
+    if ( dictionary )
+    {
+        DictionaryEntryType* entry = dictionary->Find( role );
+        if ( entry )
+        {
+            roleId_ = entry->GetId();
+        }
+    }
 }

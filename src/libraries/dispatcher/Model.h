@@ -24,6 +24,7 @@ namespace kernel
     class ObjectType;
     class ObjectTypes;
     class StaticModel;
+    class ExtensionTypes;
     class Entity_ABC;
 }
 
@@ -104,6 +105,7 @@ public:
 
     virtual void SetToTasker( sword::Tasker& tasker, unsigned int id ) const;
     unsigned int TaskerToId( const sword::Tasker& tasker ) const;
+    const kernel::ExtensionTypes& GetExtensionTypes() const;
     //@}
 
 private:

@@ -38,8 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    std::string GetKey() const;
-    std::string GetLabel( const std::string& kind, const std::string& language ) const;
+    std::string  GetKey() const;
+    unsigned int GetId() const;
+    std::string  GetLabel( const std::string& kind, const std::string& language ) const;
     //@}
 
 private:
@@ -64,9 +65,10 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string key_;
+    const std::string            key_;
+    const unsigned int           id_;
     OptionalValue< std::string > alias_;
-    T_Labels labels_;
+    T_Labels                     labels_;
     //@}
 };
 

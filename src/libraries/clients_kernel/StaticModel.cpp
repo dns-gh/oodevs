@@ -15,6 +15,8 @@
 #include "CoordinateSystems.h"
 #include "FormationLevels.h"
 #include "ObjectTypes.h"
+#include "ExtensionTypes.h"
+#include "tools/ExerciseConfig.h"
 
 using namespace kernel;
 
@@ -28,6 +30,7 @@ StaticModel::StaticModel()
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
     , levels_             ( *new FormationLevels() )
+    , extensionTypes_    ( *new ExtensionTypes() )
     , atlasNatures_       ( *new AtlasNatures() )
 {
     // NOTHING
@@ -40,6 +43,7 @@ StaticModel::StaticModel()
 StaticModel::~StaticModel()
 {
     delete &atlasNatures_;
+    delete &extensionTypes_;
     delete &levels_;
     delete &objectTypes_;
     delete &types_;
@@ -56,6 +60,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     Purge();
     types_.Load( config );
     objectTypes_.Load( config );
+    extensionTypes_.Load( tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ) );
     static_cast< kernel::CoordinateConverter& >( coordinateConverter_ ).Load( config );
 }
 
@@ -66,5 +71,6 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 void StaticModel::Purge()
 {
     types_.Purge();
+    extensionTypes_.Purge();
     objectTypes_.Purge();
 }

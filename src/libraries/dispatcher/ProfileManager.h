@@ -65,8 +65,6 @@ public:
     sword::ProfileCreationRequestAck_ErrorCode    Create ( const sword::ProfileCreationRequest&    message );
     sword::ProfileUpdateRequestAck_ErrorCode      Update ( const sword::ProfileUpdateRequest&      message );
     sword::ProfileDestructionRequestAck_ErrorCode Destroy( const sword::ProfileDestructionRequest& message );
-
-    static void RegisterRoles();
     //@}
 
 private:
@@ -79,7 +77,6 @@ private:
     //! @name Helpers
     //@{
     void ReadProfile( xml::xistream& xis );
-    static void RegisterRole( const std::string roleName );
 
     virtual void RegisterIn( directia::brain::Brain& brain );
     void SetAutomatRight( const std::string& profile, unsigned int automat, bool readonly, bool readwrite );
@@ -90,8 +87,6 @@ private:
     //@{
     typedef std::map< std::string, Profile* >           T_ProfileMap;
     typedef T_ProfileMap::const_iterator                CIT_ProfileMap;
-    typedef std::map< const std::string, unsigned >     T_RoleMap;
-    typedef T_RoleMap::const_iterator                   CIT_RoleMap;
     //@}
 
 private:
@@ -99,7 +94,6 @@ private:
     Model&                  model_;
     ClientPublisher_ABC&    clients_;
     T_ProfileMap            profiles_;
-    static T_RoleMap        roles_;
 };
 
 }

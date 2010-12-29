@@ -19,8 +19,9 @@ using namespace kernel;
 // Created: JSR 2010-10-01
 // -----------------------------------------------------------------------------
 DictionaryEntryType::DictionaryEntryType( xml::xistream& xis )
-    : key_( xis.attribute< std::string >( "name" ) )
-    , alias_( xis.attribute< std::string >( "alias", std::string() ) )
+    : key_      ( xis.attribute< std::string >( "name" ) )
+    , id_       ( xis.attribute< unsigned int >( "id" ) )
+    , alias_    ( xis.attribute< std::string >( "alias", std::string() ) )
 {
     xis >> xml::optional >> xml::start( "labels" )
             >> xml::list( "label", *this, &DictionaryEntryType::ReadLabel )
@@ -58,6 +59,15 @@ std::string DictionaryEntryType::GetLabel( const std::string& kind, const std::s
 std::string DictionaryEntryType::GetKey() const
 {
     return key_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DictionaryEntryType::GetId
+// Created: RPD 2010-12-29
+// -----------------------------------------------------------------------------
+unsigned int DictionaryEntryType::GetId() const
+{
+    return id_;
 }
 
 // -----------------------------------------------------------------------------

@@ -22,6 +22,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class CoordinateSystems;
     class FormationLevels;
+    class ExtensionTypes;
     class AtlasNatures;
 
 // =============================================================================
@@ -60,6 +61,7 @@ public:
     kernel::AgentTypes&              types_;
     kernel::ObjectTypes&             objectTypes_;
     kernel::FormationLevels&         levels_;
+    kernel::ExtensionTypes&          extensionTypes_;
     kernel::AtlasNatures&            atlasNatures_;
     //@}
 };
