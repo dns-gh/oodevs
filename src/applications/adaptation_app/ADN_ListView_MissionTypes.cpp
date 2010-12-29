@@ -57,6 +57,14 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Missions_GUI::eDoctrineDescription]->Connect( &pInfos->doctrineDescription_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eUsageDescription]->Connect( &pInfos->usageDescription_, bConnect );
     vItemConnectors_[ADN_Missions_GUI::eParameters]->Connect( &pInfos->parameters_, bConnect );
+    vItemConnectors_[ADN_Missions_GUI::eDiaType]->Connect( &pInfos->diaType_, bConnect );
+    if( vItemConnectors_[ADN_Missions_GUI::eBehavior] )
+        vItemConnectors_[ADN_Missions_GUI::eBehavior]->Connect( &pInfos->diaBehavior_, bConnect );
+    if( vItemConnectors_[ADN_Missions_GUI::eMRTBehavior] )
+    {
+        vItemConnectors_[ADN_Missions_GUI::eMRTBehavior]->Connect( &pInfos->mrtDiaBehavior_, bConnect );
+        vItemConnectors_[ADN_Missions_GUI::eCDTBehavior]->Connect( &pInfos->cdtDiaBehavior_, bConnect );
+    }
 }
 
 // -----------------------------------------------------------------------------

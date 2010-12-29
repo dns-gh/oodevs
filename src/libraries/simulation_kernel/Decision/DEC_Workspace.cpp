@@ -270,21 +270,16 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, 
     if( pModel )
         xis.error( "Duplicate model name" );
 
-
-    //Extract namespace from name
-    std::vector<std::string> namespaceComponent;
-    boost::split( namespaceComponent, strName, boost::is_any_of( "." ) );
-
-    //Key base on two first part
-    std::string key = "none";
-    if( namespaceComponent.size() >= 2 )
-        key = namespaceComponent[0] + "." + namespaceComponent[1];
+    bool isMasalife = false;
+    xis >> xml::optional >> xml::attribute( "masalife", isMasalife );
+    //Key is net.masagroup for masalife, none for others.
+    std::string key = isMasalife ? "net.masagroup" : "none";
 
     const std::map< std::string, std::string >::const_iterator itFind = strSourcePaths.find( key );
     if( itFind == strSourcePaths.end() )
-        xis.error( "Model name correspond to an unknown namespace" );
+        xis.error( "Model corresponds to an unknown namespace" );
 
-    pModel = new DEC_Model( strName, xis, itFind->second, strEntityType, missionTypes );
+    pModel = new DEC_Model( strName, xis, itFind->second, missionTypes, isMasalife );
 }
 
 //-----------------------------------------------------------------------------

@@ -32,6 +32,10 @@ public:
         eParameterValues,
         eFragOrderAvailableWithoutMission,
         eChoiceValues,
+        eDiaType,
+        eMRTBehavior,
+        eCDTBehavior,
+        eBehavior,
         eNbrGuiElements
     };
 
@@ -50,7 +54,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( QGroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions );
+    QWidget* BuildMissions( QGroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, bool automat );
     QWidget* BuildUnitMissions( QWidget* parent );
     QWidget* BuildAutomatMissions( QWidget* parent );
     QWidget* BuildPopulationMissions( QWidget* parent );

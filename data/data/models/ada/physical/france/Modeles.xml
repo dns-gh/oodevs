@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Models.xsd">
   <units>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonINF">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PlatoonINF">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -68,7 +68,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonABC">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PlatoonABC">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -127,7 +127,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PEI">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PEI">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -167,7 +167,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PIA">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PIA">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -227,7 +227,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PC">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PC">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -265,7 +265,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
+    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
       <missions>
         <mission name="TEST Advance"/>
         <mission name="TEST AnimateObjects"/>
@@ -333,7 +333,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
+    <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
       <missions>
         <mission name="ASS Assurer la Mise En Oeuvre">
           <fragorder name="Appliquer les feux"/>
@@ -374,7 +374,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" file="BMPion.bms" name="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer">
+    <unit dia-type="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -423,7 +423,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.terrorism.roles.Sniper" file="BMPion.bms" name="net.masagroup.sword.military.platoon.terrorism.roles.Sniper">
+    <unit dia-type="net.masagroup.sword.military.platoon.terrorism.roles.Sniper" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.terrorism.roles.Sniper">
       <missions>
         <mission name="Embuscade"/>
         <mission name="COMMUNES Decrocher"/>
@@ -460,7 +460,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
-    <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">
+    <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="Patrouille AIR Assaut">
       <missions>
         <mission name="JOINT AIR Effectuer Raid"/>
         <mission name="Faire Mouvement"/>
@@ -489,7 +489,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="AirCP" file="Air\Pions\PC\model.bms" name="PC AIR">
+    <unit dia-type="AirCP" file="Air\Pions\PC\model.bms" masalife="false" name="PC AIR">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
@@ -517,7 +517,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.bms" name="Chalands de Debarquement">
+    <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.bms" masalife="false" name="Chalands de Debarquement">
       <missions>
         <mission name="Transporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -553,7 +553,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="MarineCP" file="Marine\Pions\PC\model.bms" name="PC Marine">
+    <unit dia-type="MarineCP" file="Marine\Pions\PC\model.bms" masalife="false" name="PC Marine">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -585,7 +585,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\model.bms" name="PC Alat">
+    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\model.bms" masalife="false" name="PC Alat">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Se Faire Decontaminer"/>
@@ -617,7 +617,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hah\model.bms" name="Patrouille HAH">
+    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hah\model.bms" masalife="false" name="Patrouille HAH">
       <missions>
         <mission name="ALAT Appuyer Direct Au Contact"/>
         <mission name="ALAT Couvrir"/>
@@ -663,7 +663,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" name="Patrouille HAC">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" masalife="false" name="Patrouille HAC">
       <missions>
         <mission name="ALAT Appuyer Direct Au Contact"/>
         <mission name="ALAT Couvrir"/>
@@ -708,7 +708,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" name="Patrouille HAM">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HAM">
       <missions>
         <mission name="ALAT Couvrir"/>
         <mission name="ALAT Detruire Aeromobile"/>
@@ -752,7 +752,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" name="Patrouille HM">
+    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM">
       <missions>
         <mission name="ALAT Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -795,7 +795,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" name="Patrouille HM Log">
+    <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM Log">
       <missions>
         <mission name="ALAT Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -836,7 +836,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\model.bms" name="Patrouille Tigre">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\model.bms" masalife="false" name="Patrouille Tigre">
       <missions>
         <mission name="ALAT Appuyer Direct Au Contact"/>
         <mission name="ALAT Couvrir"/>
@@ -883,7 +883,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" name="SACP CAROL">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" masalife="false" name="SACP CAROL">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Zone A Partir Position"/>
@@ -925,7 +925,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" name="SACP ROLAND">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" masalife="false" name="SACP ROLAND">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Zone A Partir Position"/>
@@ -968,7 +968,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" name="SATCP MISTRAL">
+    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="SATCP MISTRAL">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -1010,7 +1010,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.bms" name="PC MISTRAL">
+    <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.bms" masalife="false" name="PC MISTRAL">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -1047,7 +1047,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" name="PC ROLAND CAROL">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" masalife="false" name="PC ROLAND CAROL">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -1084,7 +1084,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.bms" name="PC HAWK">
+    <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.bms" masalife="false" name="PC HAWK">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -1121,7 +1121,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="Section GEN">
+    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section GEN">
       <missions>
         <mission name="GEN Ameliorer Mobilite"/>
         <mission name="GEN Realiser Travaux Appui Deploiement"/>
@@ -1176,7 +1176,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionPCGenie" file="Appui\Genie\Pions\Model.bms" name="PC GEN">
+    <unit dia-type="SectionPCGenie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="PC GEN">
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
@@ -1213,7 +1213,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionPFM" file="Appui\Genie\Pions\Model.bms" name="Section PFM">
+    <unit dia-type="SectionPFM" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section PFM">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Franchir"/>
@@ -1251,52 +1251,14 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionDeminageLourd" file="Appui\Genie\Pions\Model.bms" name="Section Deminage Lourd">
+    <unit dia-type="SectionDeminageLourd" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section Deminage Lourd">
       <missions>
         <mission name="Franchir"/>
-        <mission name="GEN Renforcer"/>
-        <mission name="Faire Mouvement"/>
-        <mission name="Soutenir En Mesure De"/>
-        <mission name="Soutenir sur position en mesure de"/>
-        <mission name="Suivre"/>
-        <mission name="Se Faire Decontaminer"/>
-        <mission name="Se Faire Transporter"/>
-        <mission name="Stationner"/>
-        <mission name="Decrocher"/>
-        <mission name="Orienter Refugies"/>
-        <mission name="Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les règles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="GroupeMADEZ" file="Appui\Genie\Pions\Model.bms" name="Groupe MADEZ">
-      <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
         <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
-        <mission name="Franchir"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Stationner"/>
@@ -1327,7 +1289,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeOT" file="Appui\Genie\Pions\Model.bms" name="Groupe OT">
+    <unit dia-type="GroupeMADEZ" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe MADEZ">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1365,7 +1327,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeMFRD" file="Appui\Genie\Pions\Model.bms" name="Groupe MFRD">
+    <unit dia-type="GroupeOT" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe OT">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1403,7 +1365,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeEFA" file="Appui\Genie\Pions\Model.bms" name="Groupe EFA">
+    <unit dia-type="GroupeMFRD" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe MFRD">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1441,7 +1403,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeEBG" file="Appui\Genie\Pions\Model.bms" name="Groupe EBG">
+    <unit dia-type="GroupeEFA" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe EFA">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1449,7 +1411,6 @@
         <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Franchir"/>
-        <mission name="GEN Realiser Travaux Protection"/>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Stationner"/>
@@ -1480,7 +1441,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeMPG" file="Appui\Genie\Pions\Model.bms" name="Groupe MPG">
+    <unit dia-type="GroupeEBG" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe EBG">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1519,7 +1480,46 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupePAA" file="Appui\Genie\Pions\Model.bms" name="Groupe PAA">
+    <unit dia-type="GroupeMPG" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe MPG">
+      <missions>
+        <mission name="GEN Renforcer"/>
+        <mission name="Faire Mouvement"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
+        <mission name="Suivre"/>
+        <mission name="Franchir"/>
+        <mission name="GEN Realiser Travaux Protection"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="Se Faire Transporter"/>
+        <mission name="Stationner"/>
+        <mission name="Decrocher"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les règles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer Regles Engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="GroupePAA" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe PAA">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1557,7 +1557,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeDISP" file="Appui\Genie\Pions\Model.bms" name="Groupe DISP">
+    <unit dia-type="GroupeDISP" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe DISP">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1595,7 +1595,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionSOUVIM" file="Appui\Genie\Pions\Model.bms" name="Section SOUVIM">
+    <unit dia-type="SectionSOUVIM" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section SOUVIM">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1633,7 +1633,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="DLRG" file="Appui\Genie\Pions\Model.bms" name="DLRG">
+    <unit dia-type="DLRG" file="Appui\Genie\Pions\Model.bms" masalife="false" name="DLRG">
       <missions>
         <mission name="GEN Reconnaitre Site Franchissement"/>
         <mission name="GEN Reconnaitre Itineraire"/>
@@ -1673,7 +1673,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupePAT" file="Appui\Genie\Pions\Model.bms" name="Groupe PAT">
+    <unit dia-type="GroupePAT" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe PAT">
       <missions>
         <mission name="GEN Reconnaitre Site Franchissement"/>
         <mission name="GEN Reconnaitre Zone"/>
@@ -1712,7 +1712,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeEnfouisseur" file="Appui\Genie\Pions\Model.bms" name="Groupe Enfouisseur">
+    <unit dia-type="GroupeEnfouisseur" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe Enfouisseur">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1750,7 +1750,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeMLF" file="Appui\Genie\Pions\Model.bms" name="Groupe MLF">
+    <unit dia-type="GroupeMLF" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe MLF">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1788,7 +1788,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeChantier" file="Appui\Genie\Pions\Model.bms" name="Groupe Chantier">
+    <unit dia-type="GroupeChantier" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe Chantier">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -1826,7 +1826,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" name="Section INF">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" masalife="false" name="Section INF">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Contre Attaquer"/>
@@ -1899,7 +1899,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.bms" name="Section INF MILAN">
+    <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.bms" masalife="false" name="Section INF MILAN">
       <missions>
         <mission name="INF Barrer"/>
         <mission name="INF Appuyer"/>
@@ -1941,7 +1941,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.bms" name="Section INF HOT">
+    <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.bms" masalife="false" name="Section INF HOT">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Barrer"/>
@@ -1983,7 +1983,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie_Appui" file="Melee\Inf\Pions\Son Appui\Model.bms" name="Section Appui">
+    <unit dia-type="SectionInfanterie_Appui" file="Melee\Inf\Pions\Son Appui\Model.bms" masalife="false" name="Section Appui">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Interdire"/>
@@ -2024,7 +2024,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.bms" name="Groupe Appui Mortier">
+    <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.bms" masalife="false" name="Groupe Appui Mortier">
       <missions>
         <mission name="INF Appuyer">
           <fragorder name="Pion Appliquer Feux"/>
@@ -2064,7 +2064,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="PC INF">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" masalife="false" name="PC INF">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -2107,7 +2107,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" name="Peloton XL">
+    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" masalife="false" name="Peloton XL">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2176,7 +2176,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Peloton_AMX" file="Melee\Abc\Pions\Pel AMX-ERC\model.bms" name="Peloton AMX_ERC">
+    <unit dia-type="Peloton_AMX" file="Melee\Abc\Pions\Pel AMX-ERC\model.bms" masalife="false" name="Peloton AMX_ERC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2249,7 +2249,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Peloton_AD" file="Melee\Abc\Pions\Pel AD\model.bms" name="Peloton AD">
+    <unit dia-type="Peloton_AD" file="Melee\Abc\Pions\Pel AD\model.bms" masalife="false" name="Peloton AD">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2294,7 +2294,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_EI_Milan" file="Melee\Abc\Pions\Pat Milan\model.bms" name="Patrouille Milan">
+    <unit dia-type="Patrouille_EI_Milan" file="Melee\Abc\Pions\Pat Milan\model.bms" masalife="false" name="Patrouille Milan">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2345,7 +2345,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="Patrouille EI">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" masalife="false" name="Patrouille EI">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2394,7 +2394,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.bms" name="PC ABC">
+    <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.bms" masalife="false" name="PC ABC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2432,7 +2432,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" name="PC ASS Tir">
+    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" masalife="false" name="PC ASS Tir">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2469,7 +2469,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PC_Peloton_PIR" file="Melee\Abc\Pions\Pel PIR\model.bms" name="PC Peloton PIR">
+    <unit dia-type="PC_Peloton_PIR" file="Melee\Abc\Pions\Pel PIR\model.bms" masalife="false" name="PC Peloton PIR">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2507,7 +2507,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Groupe_RASIT" file="Melee\Abc\Pions\Grp Rasit\Model.bms" name="Groupe RASIT ABC">
+    <unit dia-type="Groupe_RASIT" file="Melee\Abc\Pions\Grp Rasit\Model.bms" masalife="false" name="Groupe RASIT ABC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2545,7 +2545,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Equipe_NBC_Dec" file="Appui\Nbc\Pions\Pat Dec\model.bms" name="Equipe Decontamination NBC">
+    <unit dia-type="Equipe_NBC_Dec" file="Appui\Nbc\Pions\Pat Dec\model.bms" masalife="false" name="Equipe Decontamination NBC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2584,7 +2584,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" name="Patrouille Reco NBC">
+    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" masalife="false" name="Patrouille Reco NBC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2623,7 +2623,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_NBC_RE" file="Appui\Nbc\Pions\Pat RE\model.bms" name="Patrouille RE">
+    <unit dia-type="Patrouille_NBC_RE" file="Appui\Nbc\Pions\Pat RE\model.bms" masalife="false" name="Patrouille RE">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2661,7 +2661,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PC_NBC" file="Appui\Nbc\Pions\PC NBC\model.bms" name="PC NBC">
+    <unit dia-type="PC_NBC" file="Appui\Nbc\Pions\PC NBC\model.bms" masalife="false" name="PC NBC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -2698,7 +2698,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.bms" name="PC TC2">
+    <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.bms" masalife="false" name="PC TC2">
       <missions>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Decrocher"/>
@@ -2741,7 +2741,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.bms" name="Section Maintenance">
+    <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.bms" masalife="false" name="Section Maintenance">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Regime Travail Maintenance"/>
@@ -2788,7 +2788,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.bms" name="Groupe Maintenance Evacuation">
+    <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.bms" masalife="false" name="Groupe Maintenance Evacuation">
       <missions>
         <mission name="LOG Se Deployer">
           <fragorder name="Modifier Regime Travail Maintenance"/>
@@ -2838,7 +2838,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionTriage" file="Appui\Log\Pions\Model.bms" name="Section Triage Modulaire">
+    <unit dia-type="SectionTriage" file="Appui\Log\Pions\Model.bms" masalife="false" name="Section Triage Modulaire">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -2883,7 +2883,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="ACA" file="Appui\Log\Pions\Model.bms" name="ACA">
+    <unit dia-type="ACA" file="Appui\Log\Pions\Model.bms" masalife="false" name="ACA">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -2933,7 +2933,7 @@
         <fragorder name="Appliquer les feux"/>
       </fragorders>
     </unit>
-    <unit dia-type="UniteSoin" file="Appui\Log\Pions\Model.bms" name="Unite de soin">
+    <unit dia-type="UniteSoin" file="Appui\Log\Pions\Model.bms" masalife="false" name="Unite de soin">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -2978,7 +2978,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="DecontaminationNBC" file="Appui\Log\Pions\Model.bms" name="Decontamination NBC">
+    <unit dia-type="DecontaminationNBC" file="Appui\Log\Pions\Model.bms" masalife="false" name="Decontamination NBC">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -3023,7 +3023,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="UniteSpy" file="Appui\Log\Pions\Model.bms" name="Unite PSY">
+    <unit dia-type="UniteSpy" file="Appui\Log\Pions\Model.bms" masalife="false" name="Unite PSY">
       <missions>
         <mission name="LOG Preparer Bascule">
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
@@ -3068,7 +3068,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.bms" name="Groupe Ramassage">
+    <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.bms" masalife="false" name="Groupe Ramassage">
       <missions>
         <mission name="LOG Se Deployer">
           <fragorder name="Pion Renforcer En VSRAM"/>
@@ -3119,7 +3119,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionLOG" file="Appui\Log\Pions\Model.bms" name="PC Log">
+    <unit dia-type="SectionLOG" file="Appui\Log\Pions\Model.bms" masalife="false" name="PC Log">
       <missions>
         <mission name="LOG Se Deployer"/>
         <mission name="Suivre"/>
@@ -3156,7 +3156,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.bms" name="Convoi">
+    <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.bms" masalife="false" name="Convoi">
       <missions>
         <mission name="LOG Convoyer"/>
         <mission name="Suivre"/>
@@ -3194,7 +3194,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.bms" name="Peloton Transport">
+    <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.bms" masalife="false" name="Peloton Transport">
       <missions>
         <mission name="LOG Se Deployer"/>
         <mission name="LOG Preparer Bascule"/>
@@ -3233,7 +3233,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PionStock" file="Appui\Log\Pions\Model.bms" name="Stock">
+    <unit dia-type="PionStock" file="Appui\Log\Pions\Model.bms" masalife="false" name="Stock">
       <missions>
         <mission name="LOG Se Deployer"/>
         <mission name="LOG Preparer Bascule"/>
@@ -3272,7 +3272,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionTravaux" file="Appui\Genie\Pions\Model.bms" name="Section Travaux">
+    <unit dia-type="SectionTravaux" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section Travaux">
       <missions>
         <mission name="GEN Ameliorer Mobilite"/>
         <mission name="GEN Realiser Travaux Appui Deploiement"/>
@@ -3313,7 +3313,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" name="Section AUF1">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="Section AUF1">
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
@@ -3357,7 +3357,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.bms" name="Section Reco AUF1">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.bms" masalife="false" name="Section Reco AUF1">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -3395,7 +3395,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1\Model.bms" name="Section TRF1">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1\Model.bms" masalife="false" name="Section TRF1">
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
@@ -3439,7 +3439,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco TRF1\Model.bms" name="Section Reco TRF1">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco TRF1\Model.bms" masalife="false" name="Section Reco TRF1">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -3477,7 +3477,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" name="Lanceur LRM">
+    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" masalife="false" name="Lanceur LRM">
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
@@ -3520,7 +3520,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco LRM\Model.bms" name="Equipe Reco LRM">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco LRM\Model.bms" masalife="false" name="Equipe Reco LRM">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -3558,7 +3558,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\SAM\Model.bms" name="SAM">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\SAM\Model.bms" masalife="false" name="SAM">
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre">
           <fragorder name="Pion Appliquer Feux"/>
@@ -3600,7 +3600,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco SAM\Model.bms" name="Equipe Reco SAM">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco SAM\Model.bms" masalife="false" name="Equipe Reco SAM">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -3638,7 +3638,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco COBRA\Model.bms" name="Equipe Reco COBRA">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco COBRA\Model.bms" masalife="false" name="Equipe Reco COBRA">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -3676,7 +3676,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.bms" name="Radar COBRA">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.bms" masalife="false" name="Radar COBRA">
       <missions>
         <mission name="ASS Acquerir Lanceurs Eni"/>
         <mission name="Faire Mouvement"/>
@@ -3714,7 +3714,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeASS_RATAC" file="Appui\ArtFdp\Pions\Grp RATAC\Model.bms" name="Groupe RATAC">
+    <unit dia-type="GroupeASS_RATAC" file="Appui\ArtFdp\Pions\Grp RATAC\Model.bms" masalife="false" name="Groupe RATAC">
       <missions>
         <mission name="ASS RATAC Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -3752,7 +3752,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" name="EO">
+    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" masalife="false" name="EO">
       <missions>
         <mission name="ASS EO Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -3790,7 +3790,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EOP\Model.bms" name="EOP">
+    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EOP\Model.bms" masalife="false" name="EOP">
       <missions>
         <mission name="ASS EOP Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -3829,7 +3829,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche blindee\Model.bms" name="Pat recherche blindee">
+    <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche blindee\Model.bms" masalife="false" name="Pat recherche blindee">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3869,7 +3869,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_RBRR_Moto" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche motorisee\Model.bms" name="Pat recherche moto">
+    <unit dia-type="Patrouille_RBRR_Moto" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche motorisee\Model.bms" masalife="false" name="Pat recherche moto">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3908,7 +3908,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_RBRR_Nautique" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche nautique\Model.bms" name="Pat recherche nautique">
+    <unit dia-type="Patrouille_RBRR_Nautique" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche nautique\Model.bms" masalife="false" name="Pat recherche nautique">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3948,7 +3948,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_RBRR_RASIT" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche RASIT\Model.bms" name="Pat recherche RASIT">
+    <unit dia-type="Patrouille_RBRR_RASIT" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche RASIT\Model.bms" masalife="false" name="Pat recherche RASIT">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -3987,7 +3987,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" name="Pat URH">
+    <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" masalife="false" name="Pat URH">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4027,7 +4027,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Section_Coge" file="Appui\Rens\Pions\Roem\Coge\Model.bms" name="Coge">
+    <unit dia-type="Section_Coge" file="Appui\Rens\Pions\Roem\Coge\Model.bms" masalife="false" name="Coge">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4065,7 +4065,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Stations_Lynx" file="Appui\Rens\Pions\Roem\Stations Lynx\Model.bms" name="Stations Linx">
+    <unit dia-type="Stations_Lynx" file="Appui\Rens\Pions\Roem\Stations Lynx\Model.bms" masalife="false" name="Stations Linx">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4103,7 +4103,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Stations_Horizon" file="Appui\Rens\Pions\Radint\Stations Horizon\Model.bms" name="Stations Horizon">
+    <unit dia-type="Stations_Horizon" file="Appui\Rens\Pions\Radint\Stations Horizon\Model.bms" masalife="false" name="Stations Horizon">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4138,7 +4138,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Cougar_Horizon" file="Appui\Rens\Pions\Radint\Cougar Horizon\Model.bms" name="Cougar Horizon">
+    <unit dia-type="Cougar_Horizon" file="Appui\Rens\Pions\Radint\Cougar Horizon\Model.bms" masalife="false" name="Cougar Horizon">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Decrocher"/>
@@ -4169,7 +4169,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Section_CL289_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre CL289\Model.bms" name="Sections mise en oeuvre CL289">
+    <unit dia-type="Section_CL289_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre CL289\Model.bms" masalife="false" name="Sections mise en oeuvre CL289">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4205,7 +4205,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Drone_CL289" file="Appui\Rens\Pions\Roim\Drone CL289\Model.bms" name="Drone CL289">
+    <unit dia-type="Drone_CL289" file="Appui\Rens\Pions\Roim\Drone CL289\Model.bms" masalife="false" name="Drone CL289">
       <missions>
         <mission name="RENS ROIM CL289 Renseigner Sur"/>
         <mission name="Suivre"/>
@@ -4233,7 +4233,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Section_SDTI_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre SDTI\Model.bms" name="Sections mise en oeuvre SDTI">
+    <unit dia-type="Section_SDTI_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre SDTI\Model.bms" masalife="false" name="Sections mise en oeuvre SDTI">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4268,7 +4268,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone SDTI\Model.bms" name="Drone SDTI">
+    <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone SDTI\Model.bms" masalife="false" name="Drone SDTI">
       <missions>
         <mission name="RENS ROIM SDTI Renseigner Sur"/>
         <mission name="Suivre"/>
@@ -4296,7 +4296,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Stations_MrodELodee" file="Appui\Rens\Pions\Roem\Stations MROD_ELODEE\Model.bms" name="Stations MROD_ELODEE">
+    <unit dia-type="Stations_MrodELodee" file="Appui\Rens\Pions\Roem\Stations MROD_ELODEE\Model.bms" masalife="false" name="Stations MROD_ELODEE">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4332,45 +4332,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Systeme_Stair" file="Appui\Rens\Pions\Roem\Systeme STAIR\Model.bms" name="Systeme STAIR">
-      <missions>
-        <mission name="Decrocher"/>
-        <mission name="Faire Mouvement"/>
-        <mission name="Soutenir En Mesure De"/>
-        <mission name="Soutenir sur position en mesure de"/>
-        <mission name="Suivre"/>
-        <mission name="RENS ROEM Renseigner Sur"/>
-        <mission name="Se Faire Decontaminer"/>
-        <mission name="Se Faire Transporter"/>
-        <mission name="Stationner"/>
-        <mission name="Orienter Refugies"/>
-        <mission name="Prendre En Compte Prisonniers"/>
-        <mission name="Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les règles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Systeme_Start" file="Appui\Rens\Pions\Roem\Systeme START_\Model.bms" name="Systeme_START">
+    <unit dia-type="Systeme_Stair" file="Appui\Rens\Pions\Roem\Systeme STAIR\Model.bms" masalife="false" name="Systeme STAIR">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4408,7 +4370,45 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="section_Elge" file="Appui\Rens\Pions\Roem\ELGE\Model.bms" name="Groupe ELGE">
+    <unit dia-type="Systeme_Start" file="Appui\Rens\Pions\Roem\Systeme START_\Model.bms" masalife="false" name="Systeme_START">
+      <missions>
+        <mission name="Decrocher"/>
+        <mission name="Faire Mouvement"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
+        <mission name="Suivre"/>
+        <mission name="RENS ROEM Renseigner Sur"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="Se Faire Transporter"/>
+        <mission name="Stationner"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="Franchir"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les règles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer Regles Engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="section_Elge" file="Appui\Rens\Pions\Roem\ELGE\Model.bms" masalife="false" name="Groupe ELGE">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4447,7 +4447,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="section_Brovab" file="Appui\Rens\Pions\Roem\BROVAB\Model.bms" name="Groupe BROVAB">
+    <unit dia-type="section_Brovab" file="Appui\Rens\Pions\Roem\BROVAB\Model.bms" masalife="false" name="Groupe BROVAB">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -4485,7 +4485,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" name="Peloton Transport Blindes">
+    <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" masalife="false" name="Peloton Transport Blindes">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -4524,7 +4524,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.bms" name="Patrouille Circulation">
+    <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.bms" masalife="false" name="Patrouille Circulation">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -4574,7 +4574,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Refugie" file="Population\Refugies\Pions\Refugie\Model.bms" name="Refugie">
+    <unit dia-type="Refugie" file="Population\Refugies\Pions\Refugie\Model.bms" masalife="false" name="Refugie">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -4609,7 +4609,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Milice" file="Population\Milices\Pion\Model.bms" name="Milice">
+    <unit dia-type="Milice" file="Population\Milices\Pion\Model.bms" masalife="false" name="Milice">
       <missions>
         <mission name="MILICE Prendre Et Tenir"/>
         <mission name="MILICE Detruire Embuscade"/>
@@ -4653,7 +4653,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeMATS" file="Appui\Genie\Pions\Model.bms" name="Groupe MATS">
+    <unit dia-type="GroupeMATS" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe MATS">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -4691,7 +4691,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeEnergie" file="Appui\Genie\Pions\Model.bms" name="Groupe Energie">
+    <unit dia-type="GroupeEnergie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe Energie">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -4729,7 +4729,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeEquipementPoser" file="Appui\Genie\Pions\Model.bms" name="Section Equipement zone de poser">
+    <unit dia-type="GroupeEquipementPoser" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section Equipement zone de poser">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -4767,7 +4767,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionEquipementPlage" file="Appui\Genie\Pions\Model.bms" name="Section Equipement Plage">
+    <unit dia-type="SectionEquipementPlage" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section Equipement Plage">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -4805,7 +4805,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionEau" file="Appui\Genie\Pions\Model.bms" name="Section Traitement Eau">
+    <unit dia-type="SectionEau" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section Traitement Eau">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -4843,7 +4843,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_Viviane" file="Appui\Rens\Pions\Radint\Pat Viviane\Model.bms" name="Patrouille Viviane">
+    <unit dia-type="Patrouille_Viviane" file="Appui\Rens\Pions\Radint\Pat Viviane\Model.bms" masalife="false" name="Patrouille Viviane">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Decrocher"/>
@@ -4874,7 +4874,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PCDIV" file="Appui\Trans\Pions\Model.bms" name="PC DIV">
+    <unit dia-type="PCDIV" file="Appui\Trans\Pions\Model.bms" masalife="false" name="PC DIV">
       <missions>
         <mission name="TRANS Etablir Gerer Liaison"/>
         <mission name="Se Faire Transporter"/>
@@ -4903,7 +4903,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PCTAC" file="Appui\Trans\Pions\Model.bms" name="PC TAC">
+    <unit dia-type="PCTAC" file="Appui\Trans\Pions\Model.bms" masalife="false" name="PC TAC">
       <missions>
         <mission name="TRANS Etablir Gerer Liaison"/>
         <mission name="Se Faire Transporter"/>
@@ -4932,7 +4932,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PCBIA" file="Appui\Trans\Pions\Model.bms" name="PC BIA">
+    <unit dia-type="PCBIA" file="Appui\Trans\Pions\Model.bms" masalife="false" name="PC BIA">
       <missions>
         <mission name="TRANS Etablir Gerer Liaison"/>
         <mission name="Se Faire Transporter"/>
@@ -4961,7 +4961,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionTRANS" file="Appui\Trans\Pions\Model.bms" name="Section TRANS">
+    <unit dia-type="SectionTRANS" file="Appui\Trans\Pions\Model.bms" masalife="false" name="Section TRANS">
       <missions>
         <mission name="TRANS Etablir Gerer Liaison"/>
         <mission name="Se Faire Transporter"/>
@@ -4991,7 +4991,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeInfanterie_Commando" file="Melee\Inf\Pions\Grp Commando\Model.bms" name="Groupe Commando">
+    <unit dia-type="GroupeInfanterie_Commando" file="Melee\Inf\Pions\Grp Commando\Model.bms" masalife="false" name="Groupe Commando">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -5030,7 +5030,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SampHawk" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" name="SAMP HAWK">
+    <unit dia-type="SampHawk" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" masalife="false" name="SAMP HAWK">
       <missions>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -5072,7 +5072,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PCAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" name="PC Appui Mob">
+    <unit dia-type="PCAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" masalife="false" name="PC Appui Mob">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -5108,49 +5108,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="Patrouille BRDM2">
-      <missions>
-        <mission name="Decrocher"/>
-        <mission name="Faire Mouvement"/>
-        <mission name="Soutenir En Mesure De"/>
-        <mission name="Soutenir sur position en mesure de"/>
-        <mission name="Franchir"/>
-        <mission name="Suivre"/>
-        <mission name="Stationner"/>
-        <mission name="Se Faire Decontaminer"/>
-        <mission name="ABC Controler Zone"/>
-        <mission name="ABC Eclairer"/>
-        <mission name="ABC Jalonner"/>
-        <mission name="ABC Ouvrir Itineraire"/>
-        <mission name="ABC Renseigner Sur"/>
-        <mission name="Se Faire Transporter"/>
-        <mission name="Orienter Refugies"/>
-        <mission name="Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les règles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="Patrouille BRM1">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" masalife="false" name="Patrouille BRDM2">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -5192,7 +5150,49 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" name="Terroriste">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" masalife="false" name="Patrouille BRM1">
+      <missions>
+        <mission name="Decrocher"/>
+        <mission name="Faire Mouvement"/>
+        <mission name="Soutenir En Mesure De"/>
+        <mission name="Soutenir sur position en mesure de"/>
+        <mission name="Franchir"/>
+        <mission name="Suivre"/>
+        <mission name="Stationner"/>
+        <mission name="Se Faire Decontaminer"/>
+        <mission name="ABC Controler Zone"/>
+        <mission name="ABC Eclairer"/>
+        <mission name="ABC Jalonner"/>
+        <mission name="ABC Ouvrir Itineraire"/>
+        <mission name="ABC Renseigner Sur"/>
+        <mission name="Se Faire Transporter"/>
+        <mission name="Orienter Refugies"/>
+        <mission name="Prendre En Compte Prisonniers"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les règles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer Regles Engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" masalife="false" name="Terroriste">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -5229,7 +5229,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" name="Patrouille HR">
+    <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HR">
       <missions>
         <mission name="ALAT Eclairer"/>
         <mission name="ALAT Jalonner"/>
@@ -5269,7 +5269,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\Model.bms" name="GLAISE ABC section char lourd">
+    <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\Model.bms" masalife="false" name="GLAISE ABC section char lourd">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -5328,7 +5328,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" name="GLAISE INF section inf">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" masalife="false" name="GLAISE INF section inf">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Contre Attaquer"/>
@@ -5395,7 +5395,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.bms" name="GLAISE ABC PC">
+    <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.bms" masalife="false" name="GLAISE ABC PC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -5432,7 +5432,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="GLAISE ABC patrouille EI">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" masalife="false" name="GLAISE ABC patrouille EI">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -5479,7 +5479,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" name="GLAISE ASA section tcp">
+    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="GLAISE ASA section tcp">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -5521,7 +5521,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" name="GLAISE ASS SAM">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="GLAISE ASS SAM">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -5561,7 +5561,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" name="GLAISE GEN section combat">
+    <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GLAISE GEN section combat">
       <missions>
         <mission name="GEN Ameliorer Mobilite"/>
         <mission name="GEN Realiser Travaux Appui Deploiement"/>
@@ -5616,7 +5616,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" name="GLAISE INF PC inf">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" masalife="false" name="GLAISE INF PC inf">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -5653,7 +5653,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.bms" name="GLAISE INF groupe appui mortier">
+    <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.bms" masalife="false" name="GLAISE INF groupe appui mortier">
       <missions>
         <mission name="INF Appuyer">
           <fragorder name="Pion Appliquer Feux"/>
@@ -5693,7 +5693,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" name="GLAISE ASS section tractee">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="GLAISE ASS section tractee">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -5734,7 +5734,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" name="GLAISE ASS section automoteur">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="GLAISE ASS section automoteur">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -5775,7 +5775,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" name="GLAISE ASS section LRM">
+    <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" masalife="false" name="GLAISE ASS section LRM">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -5815,7 +5815,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" name="GLAISE ASS PC ART">
+    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" masalife="false" name="GLAISE ASS PC ART">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -5852,7 +5852,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" name="GLAISE ASA section cp">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" masalife="false" name="GLAISE ASA section cp">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Zone A Partir Position"/>
@@ -5895,7 +5895,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.bms" name="GLAISE AC section sur vehicule">
+    <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.bms" masalife="false" name="GLAISE AC section sur vehicule">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Barrer"/>
@@ -5937,7 +5937,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeEnfouisseur" file="Appui\Genie\Pions\Model.bms" name="GLAISE GEN groupe enfouisseur">
+    <unit dia-type="GroupeEnfouisseur" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GLAISE GEN groupe enfouisseur">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -5975,7 +5975,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeMPG" file="Appui\Genie\Pions\Model.bms" name="GLAISE GEN groupe amenagement terrain">
+    <unit dia-type="GroupeMPG" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GLAISE GEN groupe amenagement terrain">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -6013,7 +6013,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeEFA" file="Appui\Genie\Pions\Model.bms" name="GLAISE GEN groupe franchissement">
+    <unit dia-type="GroupeEFA" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GLAISE GEN groupe franchissement">
       <missions>
         <mission name="GEN Renforcer"/>
         <mission name="Faire Mouvement"/>
@@ -6051,7 +6051,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" name="GLAISE ASA groupe tcp">
+    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="GLAISE ASA groupe tcp">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -6093,7 +6093,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" name="GLAISE NBC Groupe Reco">
+    <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" masalife="false" name="GLAISE NBC Groupe Reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -6132,7 +6132,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionPCGenie" file="Appui\Genie\Pions\Model.bms" name="GLAISE GEN PC">
+    <unit dia-type="SectionPCGenie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GLAISE GEN PC">
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
@@ -6169,7 +6169,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" name="GLAISE RENS Pat URH">
+    <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" masalife="false" name="GLAISE RENS Pat URH">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -6207,7 +6207,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Peloton_AMX" file="Melee\Abc\Pions\Pel AMX-ERC\model.bms" name="GLAISE ABC Peloton Reco">
+    <unit dia-type="Peloton_AMX" file="Melee\Abc\Pions\Pel AMX-ERC\model.bms" masalife="false" name="GLAISE ABC Peloton Reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -6274,7 +6274,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" name="GLAISE ASA  Section MP">
+    <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" masalife="false" name="GLAISE ASA  Section MP">
       <missions>
         <mission name="Se Faire Decontaminer"/>
         <mission name="Se Faire Transporter"/>
@@ -6316,7 +6316,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.bms" name="Groupe AC MILAN">
+    <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.bms" masalife="false" name="Groupe AC MILAN">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -6356,7 +6356,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" name="PC peloton ERIAC">
+    <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" masalife="false" name="PC peloton ERIAC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -6396,7 +6396,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" name="GLAISE ASS EO">
+    <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" masalife="false" name="GLAISE ASS EO">
       <missions>
         <mission name="ASS EO Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -6434,7 +6434,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.bms" name="GLAISE ASS RECO">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.bms" masalife="false" name="GLAISE ASS RECO">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -6472,7 +6472,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" name="GLAISE ASA PC">
+    <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" masalife="false" name="GLAISE ASA PC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -6509,7 +6509,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\Model.bms" name="GLAISE ALFT Patrouille UH">
+    <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
       <missions>
         <mission name="ALAT Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -6552,7 +6552,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\Model.bms" name="GLAISE ALFT Patrouille A">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\Model.bms" masalife="false" name="GLAISE ALFT Patrouille A">
       <missions>
         <mission name="ALAT Appuyer Direct Au Contact"/>
         <mission name="ALAT Couvrir"/>
@@ -6597,7 +6597,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\Model.bms" name="GLAISE ALFT Patrouille R">
+    <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\Model.bms" masalife="false" name="GLAISE ALFT Patrouille R">
       <missions>
         <mission name="ALAT Eclairer"/>
         <mission name="ALAT Jalonner"/>
@@ -6637,7 +6637,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\Model.bms" name="GLAISE ALFT PC">
+    <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\Model.bms" masalife="false" name="GLAISE ALFT PC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Se Faire Decontaminer"/>
@@ -6669,7 +6669,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son ProTerre\Model.bms" name="Section PROTERRE">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son ProTerre\Model.bms" masalife="false" name="Section PROTERRE">
       <missions>
         <mission name="INF Interdire"/>
         <mission name="INF Organiser Un Check Point"/>
@@ -6723,7 +6723,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Grp ProTerre\Model.bms" name="Groupe PROTERRE">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Grp ProTerre\Model.bms" masalife="false" name="Groupe PROTERRE">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Couvrir"/>
@@ -6781,7 +6781,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Groupe TE\Model.bms" name="Groupe TE">
+    <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Groupe TE\Model.bms" masalife="false" name="Groupe TE">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Couvrir"/>
@@ -6831,7 +6831,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.bms" name="PL Civil">
+    <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.bms" masalife="false" name="PL Civil">
       <missions>
         <mission name="Suivre"/>
         <mission name="Se Faire Decontaminer"/>
@@ -6863,7 +6863,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="ChalandsDeDebarquement" file="Marine\Pions\Chalands de Debarquement\model.bms" name="Pion Groupe marine">
+    <unit dia-type="ChalandsDeDebarquement" file="Marine\Pions\Chalands de Debarquement\model.bms" masalife="false" name="Pion Groupe marine">
       <missions>
         <mission name="Faire Mouvement"/>
       </missions>
@@ -6887,7 +6887,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PatrouilleAssaut" file="Air\Pions\Patrouille Assaut\model.bms" name="Missile balistique">
+    <unit dia-type="PatrouilleAssaut" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="Missile balistique">
       <missions>
         <mission name="Faire Mouvement"/>
       </missions>
@@ -6911,7 +6911,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" name="Glaise porteur SCUD">
+    <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" masalife="false" name="Glaise porteur SCUD">
       <missions>
         <mission name="Faire Mouvement"/>
       </missions>
@@ -6935,7 +6935,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone DRAC\Model.bms" name="Drone DRAC">
+    <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone DRAC\Model.bms" masalife="false" name="Drone DRAC">
       <missions>
         <mission name="RENS ROIM SDTI Renseigner Sur"/>
         <mission name="Suivre"/>
@@ -6960,7 +6960,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Section_SDTI_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre DRAC\Model.bms" name="Sections mise en oeuvre DRAC">
+    <unit dia-type="Section_SDTI_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre DRAC\Model.bms" masalife="false" name="Sections mise en oeuvre DRAC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -6990,7 +6990,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\URB\Section ROHUM\Model.bms" name="Section ROHUM">
+    <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\URB\Section ROHUM\Model.bms" masalife="false" name="Section ROHUM">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -7025,7 +7025,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1 SIC\Model.bms" name="Section AUF1 Pour SIC">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1 SIC\Model.bms" masalife="false" name="Section AUF1 Pour SIC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
@@ -7061,7 +7061,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1 SIC\Model.bms" name="Section TRF1 Pour SIC">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1 SIC\Model.bms" masalife="false" name="Section TRF1 Pour SIC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
@@ -7097,7 +7097,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\SAM SIC\Model.bms" name="SAM Pour SIC">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\SAM SIC\Model.bms" masalife="false" name="SAM Pour SIC">
       <missions>
         <mission name="ASS Assurer Mise En Oeuvre2Zones">
           <fragorder name="Pion Appliquer Feux"/>
@@ -7133,7 +7133,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco CAESAR\Model.bms" name="Equipe Reco CAESAR">
+    <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco CAESAR\Model.bms" masalife="false" name="Equipe Reco CAESAR">
       <missions>
         <mission name="ASS Reconnaitre Zone Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -7166,7 +7166,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son CAESAR SIC\Model.bms" name="Section CAESAR Pour SIC">
+    <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son CAESAR SIC\Model.bms" masalife="false" name="Section CAESAR Pour SIC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
@@ -7202,7 +7202,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Humus\Humus_Melee\Inf\Pions\PC\Model.bms" name="HUMUS INF PC">
+    <unit dia-type="SectionInfanterie" file="Humus\Humus_Melee\Inf\Pions\PC\Model.bms" masalife="false" name="HUMUS INF PC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Se Faire Transporter"/>
@@ -7232,7 +7232,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Humus\Humus_Melee\Inf\Pions\Sec Inf\Model.bms" name="HUMUS INF Section VTT">
+    <unit dia-type="SectionInfanterie" file="Humus\Humus_Melee\Inf\Pions\Sec Inf\Model.bms" masalife="false" name="HUMUS INF Section VTT">
       <missions>
         <mission name="INF Defendre"/>
         <mission name="INF Interdire"/>
@@ -7274,7 +7274,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie" file="Humus\Humus_Melee\Inf\Pions\Sec Cdo\Model.bms" name="HUMUS INF Section CDO">
+    <unit dia-type="SectionInfanterie" file="Humus\Humus_Melee\Inf\Pions\Sec Cdo\Model.bms" masalife="false" name="HUMUS INF Section CDO">
       <missions>
         <mission name="INF Defendre"/>
         <mission name="INF Interdire"/>
@@ -7317,7 +7317,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Terroriste" file="Humus\Humus_Population\Asymetriques\Terroriste\Pion\Model.bms" name="HUMUS Activiste">
+    <unit dia-type="Terroriste" file="Humus\Humus_Population\Asymetriques\Terroriste\Pion\Model.bms" masalife="false" name="HUMUS Activiste">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="ASY Renseigner"/>
@@ -7348,7 +7348,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_RBRR_Blindee" file="Humus\Humus_Rens\Pions\SMP\Model.bms" name="HUMUS RENS SMP">
+    <unit dia-type="Patrouille_RBRR_Blindee" file="Humus\Humus_Rens\Pions\SMP\Model.bms" masalife="false" name="HUMUS RENS SMP">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -7380,7 +7380,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Peloton_AMX" file="Humus\Humus_Melee\Abc\Pions\Pel T55\Model.bms" name="HUMUS ABC Peloton T55">
+    <unit dia-type="Peloton_AMX" file="Humus\Humus_Melee\Abc\Pions\Pel T55\Model.bms" masalife="false" name="HUMUS ABC Peloton T55">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Franchir"/>
@@ -7414,7 +7414,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="GroupeInfanterie_Mortier" file="Humus\Humus_Melee\Inf\Pions\Grp Mortier\Model.bms" name="HUMUS INF Groupe Appui Mortier">
+    <unit dia-type="GroupeInfanterie_Mortier" file="Humus\Humus_Melee\Inf\Pions\Grp Mortier\Model.bms" masalife="false" name="HUMUS INF Groupe Appui Mortier">
       <missions>
         <mission name="INF Appuyer">
           <fragorder name="Pion Appliquer Feux"/>
@@ -7447,7 +7447,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionInfanterie_MILAN" file="Humus\Humus_Melee\Inf\Pions\Grp AC\Model.bms" name="HUMUS Groupe AC">
+    <unit dia-type="SectionInfanterie_MILAN" file="Humus\Humus_Melee\Inf\Pions\Grp AC\Model.bms" masalife="false" name="HUMUS Groupe AC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -7484,7 +7484,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="Patrouille_EI" file="Humus\Humus_Melee\Abc\Pions\Pat Ecl\Model.bms" name="HUMUS ABC Patrouille Reco">
+    <unit dia-type="Patrouille_EI" file="Humus\Humus_Melee\Abc\Pions\Pat Ecl\Model.bms" masalife="false" name="HUMUS ABC Patrouille Reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -7525,7 +7525,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="PC_ABC" file="Humus\Humus_Melee\Abc\Pions\PC\Model.bms" name="HUMUS ABC PC">
+    <unit dia-type="PC_ABC" file="Humus\Humus_Melee\Abc\Pions\PC\Model.bms" masalife="false" name="HUMUS ABC PC">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Se Faire Transporter"/>
@@ -7555,7 +7555,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionEquipementMontagne" file="Appui\Genie\Pions\Model.bms" name="GEN Section Equipt Montagne">
+    <unit dia-type="SectionEquipementMontagne" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GEN Section Equipt Montagne">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
@@ -7596,7 +7596,7 @@
     </unit>
   </units>
   <automats>
-    <automat dia-type="net.masagroup.sword.military.company.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.roles.Company">
+    <automat dia-type="net.masagroup.sword.military.company.roles.Company" file="BMAutomat.bms" masalife="true" name="net.masagroup.sword.military.company.roles.Company">
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
@@ -7638,7 +7638,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </automat>
-    <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
+    <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" masalife="true" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
       <missions>
         <mission name="ASS SeDeployer"/>
         <mission name="ASS Illumination et Tir Synchronisé"/>
@@ -7669,7 +7669,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </automat>
-    <automat dia-type="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" name="net.masagroup.sword.military.company.terrorism.roles.SniperCompany">
+    <automat dia-type="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="net.masagroup.sword.military.company.terrorism.roles.SniperCompany">
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Decrocher"/>
@@ -7698,7 +7698,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </automat>
-    <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Groupe Assaut AIR">
+    <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="Groupe Assaut AIR">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Suivre"/>
@@ -7720,7 +7720,7 @@
         <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </automat>
-    <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" name="Groupe Chalands">
+    <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" masalife="false" name="Groupe Chalands">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -7750,7 +7750,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" name="Sgpt Satcp Mistral">
+    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="Sgpt Satcp Mistral">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -7787,7 +7787,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" name="Sgpt Sacp Carol">
+    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" masalife="false" name="Sgpt Sacp Carol">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Site"/>
@@ -7824,7 +7824,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" name="Sgpt Sacp Roland">
+    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" masalife="false" name="Sgpt Sacp Roland">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Site"/>
@@ -7861,7 +7861,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" name="Sgpt Hap Mixte">
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" masalife="false" name="Sgpt Hap Mixte">
       <missions>
         <mission name="ALAT Reconnaitre"/>
         <mission name="ALAT Jalonner"/>
@@ -7907,7 +7907,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Tigre\model.bms" name="Sgpt Tigre">
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Tigre\model.bms" masalife="false" name="Sgpt Tigre">
       <missions>
         <mission name="ALAT Reconnaitre"/>
         <mission name="ALAT Jalonner"/>
@@ -7951,7 +7951,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" name="Sgpt Hm">
+    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" masalife="false" name="Sgpt Hm">
       <missions>
         <mission name="ALAT Heliporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -7988,7 +7988,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="Compagnie GEN">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" masalife="false" name="Compagnie GEN">
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
@@ -8032,7 +8032,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Appui\Model.bms" name="Compagnie GEN APPUI">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Appui\Model.bms" masalife="false" name="Compagnie GEN APPUI">
       <missions>
         <mission name="Franchir"/>
         <mission name="GEN Se Deployer"/>
@@ -8066,7 +8066,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" name="Escadron XL">
+    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" masalife="false" name="Escadron XL">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8130,7 +8130,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Escadron_AMX" file="Melee\Abc\Automates\Esc AMX-ERC\model.bms" name="Escadron AMX-ERC">
+    <automat dia-type="Escadron_AMX" file="Melee\Abc\Automates\Esc AMX-ERC\model.bms" masalife="false" name="Escadron AMX-ERC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8197,7 +8197,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="SSGroupeBlindeEcl" file="Melee\Abc\Automates\Sgpt Blindes Ecl\model.bms" name="Sous groupement Blinde Ecl">
+    <automat dia-type="SSGroupeBlindeEcl" file="Melee\Abc\Automates\Sgpt Blindes Ecl\model.bms" masalife="false" name="Sous groupement Blinde Ecl">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8241,7 +8241,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="SSGroupeBlindeInf" file="Melee\Abc\Automates\Sgpt Blindes Inf\model.bms" name="Sous groupement Blinde Inf">
+    <automat dia-type="SSGroupeBlindeInf" file="Melee\Abc\Automates\Sgpt Blindes Inf\model.bms" masalife="false" name="Sous groupement Blinde Inf">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8284,7 +8284,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="SSGroupeCharsEcl" file="Melee\Abc\Automates\Sgpt Chars Ecl\model.bms" name="Sous groupement Chars Ecl">
+    <automat dia-type="SSGroupeCharsEcl" file="Melee\Abc\Automates\Sgpt Chars Ecl\model.bms" masalife="false" name="Sous groupement Chars Ecl">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8327,7 +8327,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="SSGroupeCharsInf" file="Melee\Abc\Automates\Sgpt Chars Inf\model.bms" name="Sous groupement Chars Inf">
+    <automat dia-type="SSGroupeCharsInf" file="Melee\Abc\Automates\Sgpt Chars Inf\model.bms" masalife="false" name="Sous groupement Chars Inf">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8369,7 +8369,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="SSGroupeEclBlinde" file="Melee\Abc\Automates\Sgpt Ecl Blindes\model.bms" name="Sous groupement Ecl Blindes">
+    <automat dia-type="SSGroupeEclBlinde" file="Melee\Abc\Automates\Sgpt Ecl Blindes\model.bms" masalife="false" name="Sous groupement Ecl Blindes">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8402,7 +8402,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\Pel EEI\model.bms" name="Peloton EI">
+    <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\Pel EEI\model.bms" masalife="false" name="Peloton EI">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8447,7 +8447,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Peloton_PIR" file="Melee\Abc\Automates\Pel PIR\model.bms" name="Peloton PIR">
+    <automat dia-type="Peloton_PIR" file="Melee\Abc\Automates\Pel PIR\model.bms" masalife="false" name="Peloton PIR">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8481,7 +8481,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Section_NBC_Dec" file="Appui\Nbc\Automates\Son Dec\model.bms" name="Section dec">
+    <automat dia-type="Section_NBC_Dec" file="Appui\Nbc\Automates\Son Dec\model.bms" masalife="false" name="Section dec">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8516,7 +8516,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.bms" name="Section reco">
+    <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.bms" masalife="false" name="Section reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8551,7 +8551,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Section_NBC_RE" file="Appui\Nbc\Automates\Son RE\model.bms" name="Section RE">
+    <automat dia-type="Section_NBC_RE" file="Appui\Nbc\Automates\Son RE\model.bms" masalife="false" name="Section RE">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -8585,7 +8585,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" name="Compagnie INF">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" masalife="false" name="Compagnie INF">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Attaquer Souplesse">
@@ -8649,7 +8649,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Sgpt Inf Abc\Model.bms" name="SsGrpt INF ABC">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Sgpt Inf Abc\Model.bms" masalife="false" name="SsGrpt INF ABC">
       <missions>
         <mission name="INF Attaquer Souplesse">
           <fragorder name="Deboucher"/>
@@ -8705,7 +8705,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Sgpt Inf Ac\Model.bms" name="SsGrpt INF AC">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Sgpt Inf Ac\Model.bms" masalife="false" name="SsGrpt INF AC">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Barrer Direction"/>
@@ -8754,7 +8754,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.bms" name="Compagnie HOT">
+    <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.bms" masalife="false" name="Compagnie HOT">
       <missions>
         <mission name="INF Barrer Direction"/>
         <mission name="INF Couvrir"/>
@@ -8797,7 +8797,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieLogTC2" file="Appui\Log\Automates\Model.bms" name="TC2">
+    <automat dia-type="CompagnieLogTC2" file="Appui\Log\Automates\Model.bms" masalife="false" name="TC2">
       <missions>
         <mission name="LOG Se Deployer">
           <fragorder name="Modifier Regime Travail Maintenance"/>
@@ -8836,7 +8836,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieLog" file="Appui\Log\Automates\Model.bms" name="Log">
+    <automat dia-type="CompagnieLog" file="Appui\Log\Automates\Model.bms" masalife="false" name="Log">
       <missions>
         <mission name="LOG Se Deployer"/>
         <mission name="Se Faire Decontaminer"/>
@@ -8868,7 +8868,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.bms" name="Escadron Transport Blindes">
+    <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.bms" masalife="false" name="Escadron Transport Blindes">
       <missions>
         <mission name="Se Recompleter"/>
         <mission name="Faire Mouvement"/>
@@ -8902,7 +8902,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.bms" name="Peloton Circulation">
+    <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.bms" masalife="false" name="Peloton Circulation">
       <missions>
         <mission name="Se Recompleter"/>
         <mission name="Faire Mouvement"/>
@@ -8947,7 +8947,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" name="Batterie Tir AUF1">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" masalife="false" name="Batterie Tir AUF1">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -8981,7 +8981,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco AUF1\Model.bms" name="Batterie Reco AUF1">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco AUF1\Model.bms" masalife="false" name="Batterie Reco AUF1">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -9015,7 +9015,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir LRM\Model.bms" name="Batterie Tir LRM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir LRM\Model.bms" masalife="false" name="Batterie Tir LRM">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -9049,7 +9049,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco LRM\Model.bms" name="Batterie Reco LRM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco LRM\Model.bms" masalife="false" name="Batterie Reco LRM">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -9083,7 +9083,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir TRF1\Model.bms" name="Batterie Tir TRF1">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir TRF1\Model.bms" masalife="false" name="Batterie Tir TRF1">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -9117,7 +9117,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.bms" name="Batterie Reco TRF1">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.bms" masalife="false" name="Batterie Reco TRF1">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -9151,7 +9151,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir SAM\Model.bms" name="Batterie Tir SAM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir SAM\Model.bms" masalife="false" name="Batterie Tir SAM">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -9185,7 +9185,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco SAM\Model.bms" name="Batterie Reco SAM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco SAM\Model.bms" masalife="false" name="Batterie Reco SAM">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -9219,7 +9219,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat COBRA\Model.bms" name="Batterie COBRA">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat COBRA\Model.bms" masalife="false" name="Batterie COBRA">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -9253,7 +9253,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.bms" name="Batterie Reco COBRA">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.bms" masalife="false" name="Batterie Reco COBRA">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -9287,7 +9287,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Section RATAC\Model.bms" name="Section RATAC">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Section RATAC\Model.bms" masalife="false" name="Section RATAC">
       <missions>
         <mission name="ASS Acquerir Objectifs"/>
         <mission name="Faire Mouvement"/>
@@ -9321,7 +9321,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" name="DLO">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" masalife="false" name="DLO">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -9356,7 +9356,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLOP\Model.bms" name="DLOP">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLOP\Model.bms" masalife="false" name="DLOP">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -9389,7 +9389,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Cl289" file="Appui\Rens\Automates\Roim\CL289\Model.bms" name="CL289">
+    <automat dia-type="Cl289" file="Appui\Rens\Automates\Roim\CL289\Model.bms" masalife="false" name="CL289">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9423,7 +9423,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.bms" name="SDTI">
+    <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.bms" masalife="false" name="SDTI">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9456,7 +9456,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" name="CDER RBRR">
+    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" masalife="false" name="CDER RBRR">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9492,7 +9492,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.bms" name="URH">
+    <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.bms" masalife="false" name="URH">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9527,7 +9527,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Brovab" file="Appui\Rens\Automates\Roem\BROVAB\Model.bms" name="BROVAB">
+    <automat dia-type="Brovab" file="Appui\Rens\Automates\Roem\BROVAB\Model.bms" masalife="false" name="BROVAB">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9561,7 +9561,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Elge" file="Appui\Rens\Automates\Roem\ELGE\Model.bms" name="ELGE">
+    <automat dia-type="Elge" file="Appui\Rens\Automates\Roem\ELGE\Model.bms" masalife="false" name="ELGE">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9596,7 +9596,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.bms" name="START_">
+    <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.bms" masalife="false" name="START_">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9630,7 +9630,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Stair" file="Appui\Rens\Automates\Roem\Systeme STAIR\Model.bms" name="STAIR">
+    <automat dia-type="Stair" file="Appui\Rens\Automates\Roem\Systeme STAIR\Model.bms" masalife="false" name="STAIR">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9664,7 +9664,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.bms" name="MROD_ELODEE">
+    <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.bms" masalife="false" name="MROD_ELODEE">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9698,7 +9698,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Linx" file="Appui\Rens\Automates\Roem\Systeme LINX\Model.bms" name="Systeme Linx">
+    <automat dia-type="Linx" file="Appui\Rens\Automates\Roem\Systeme LINX\Model.bms" masalife="false" name="Systeme Linx">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9732,7 +9732,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.bms" name="Escadrille Horizon">
+    <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.bms" masalife="false" name="Escadrille Horizon">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -9763,7 +9763,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Refugies" file="Population\Refugies\Automates\Refugie\Model.bms" name="Refugies">
+    <automat dia-type="Refugies" file="Population\Refugies\Automates\Refugie\Model.bms" masalife="false" name="Refugies">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -9794,7 +9794,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" name="DIV">
+    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" masalife="false" name="DIV">
       <missions>
         <mission name="TRANS Commander"/>
         <mission name="Se Faire Transporter"/>
@@ -9819,7 +9819,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" name="TAC">
+    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" masalife="false" name="TAC">
       <missions>
         <mission name="TRANS Commander"/>
         <mission name="Se Faire Transporter"/>
@@ -9844,7 +9844,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" name="BIA">
+    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" masalife="false" name="BIA">
       <missions>
         <mission name="TRANS Commander"/>
         <mission name="Se Faire Transporter"/>
@@ -9869,7 +9869,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" name="Compagnie TRANS">
+    <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" masalife="false" name="Compagnie TRANS">
       <missions>
         <mission name="TRANS Commander"/>
         <mission name="Se Faire Transporter"/>
@@ -9894,7 +9894,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Viviane" file="Appui\Rens\Automates\Radint\Pat Viviane\Model.bms" name="Viviane">
+    <automat dia-type="Viviane" file="Appui\Rens\Automates\Radint\Pat Viviane\Model.bms" masalife="false" name="Viviane">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -9923,7 +9923,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Population\Milices\Automate\Model.bms" name="Milices">
+    <automat dia-type="T_AutomateModeleDEC" file="Population\Milices\Automate\Model.bms" masalife="false" name="Milices">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -9958,7 +9958,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.bms" name="Section Commando">
+    <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.bms" masalife="false" name="Section Commando">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -9991,7 +9991,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" name="Sgpt Samp Hawk">
+    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" masalife="false" name="Sgpt Samp Hawk">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -10027,7 +10027,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" name="Peloton RASIT">
+    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" masalife="false" name="Peloton RASIT">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -10060,7 +10060,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.bms" name="Terroristes">
+    <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.bms" masalife="false" name="Terroristes">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Soutenir En Mesure De"/>
@@ -10086,7 +10086,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" name="GLAISE ABC cie char lourd">
+    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" masalife="false" name="GLAISE ABC cie char lourd">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -10150,7 +10150,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" name="GLAISE INF cie inf">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" masalife="false" name="GLAISE INF cie inf">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Attaquer Souplesse">
@@ -10214,7 +10214,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\Pel EEI\model.bms" name="GLAISE ABC peloton EI">
+    <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\Pel EEI\model.bms" masalife="false" name="GLAISE ABC peloton EI">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -10259,7 +10259,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" name="GLAISE GEN cie combat">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" masalife="false" name="GLAISE GEN cie combat">
       <missions>
         <mission name="Franchir"/>
         <mission name="Faire Mouvement"/>
@@ -10303,7 +10303,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" name="GLAISE ASS batterie automoteur">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" masalife="false" name="GLAISE ASS batterie automoteur">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -10336,7 +10336,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" name="GLAISE ASS batterie tractee">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" masalife="false" name="GLAISE ASS batterie tractee">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -10369,7 +10369,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir LRM\Model.bms" name="GLAISE ASS batterie LRM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir LRM\Model.bms" masalife="false" name="GLAISE ASS batterie LRM">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -10402,7 +10402,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.bms" name="GLAISE AC cie AC">
+    <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.bms" masalife="false" name="GLAISE AC cie AC">
       <missions>
         <mission name="INF Barrer Direction"/>
         <mission name="INF Couvrir"/>
@@ -10445,7 +10445,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" name="GLAISE ASA batterie TCP">
+    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="GLAISE ASA batterie TCP">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -10482,7 +10482,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" name="GLAISE ASA batterie CP">
+    <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" masalife="false" name="GLAISE ASA batterie CP">
       <missions>
         <mission name="ASA Defendre Zone"/>
         <mission name="ASA Defendre Site"/>
@@ -10519,7 +10519,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Appui\Model.bms" name="GLAISE GEN compagnie appui">
+    <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Appui\Model.bms" masalife="false" name="GLAISE GEN compagnie appui">
       <missions>
         <mission name="Franchir"/>
         <mission name="GEN Se Deployer"/>
@@ -10552,7 +10552,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" name="GLAISE ASA section tcp independante">
+    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="GLAISE ASA section tcp independante">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -10589,7 +10589,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.bms" name="GLAISE NBC section reco">
+    <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.bms" masalife="false" name="GLAISE NBC section reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -10624,7 +10624,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="SSGroupeBlindeEcl" file="Melee\Abc\Automates\Sgpt Blindes Ecl\model.bms" name="GLAISE ABC Escadron Reco">
+    <automat dia-type="SSGroupeBlindeEcl" file="Melee\Abc\Automates\Sgpt Blindes Ecl\model.bms" masalife="false" name="GLAISE ABC Escadron Reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -10671,7 +10671,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" name="GLAISE ASA Batterie MP">
+    <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" masalife="false" name="GLAISE ASA Batterie MP">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -10707,7 +10707,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.bms" name="GLAISE URH">
+    <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.bms" masalife="false" name="GLAISE URH">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -10741,7 +10741,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" name="Section AC MILAN">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" masalife="false" name="Section AC MILAN">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -10782,7 +10782,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" name="Peloton ERIAC">
+    <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" masalife="false" name="Peloton ERIAC">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -10831,7 +10831,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" name="GLAISE ASS DLO">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" masalife="false" name="GLAISE ASS DLO">
       <missions>
         <mission name="ASS Se Deployer"/>
         <mission name="Faire Mouvement"/>
@@ -10864,7 +10864,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco AUF1\Model.bms" name="GLAISE ASS Bat RECO">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco AUF1\Model.bms" masalife="false" name="GLAISE ASS Bat RECO">
       <missions>
         <mission name="ASS Reconnaitre Zones Deploiement"/>
         <mission name="Faire Mouvement"/>
@@ -10897,7 +10897,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\Model.bms" name="GLAISE ALFT esc UH et UM">
+    <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\Model.bms" masalife="false" name="GLAISE ALFT esc UH et UM">
       <missions>
         <mission name="ALAT Heliporter">
           <fragorder name="Changer Position Debarquement"/>
@@ -10933,7 +10933,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\Model.bms" name="GLAISE ALFT Esc A et Reco">
+    <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\Model.bms" masalife="false" name="GLAISE ALFT Esc A et Reco">
       <missions>
         <mission name="ALAT Reconnaitre"/>
         <mission name="ALAT Jalonner"/>
@@ -10976,7 +10976,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie ProTerre\Model.bms" name="Compagnie PROTERRE">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie ProTerre\Model.bms" masalife="false" name="Compagnie PROTERRE">
       <missions>
         <mission name="INF Barrer Direction"/>
         <mission name="INF Controler"/>
@@ -11021,7 +11021,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Son ProTerre\Model.bms" name="Section PROTERRE">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Son ProTerre\Model.bms" masalife="false" name="Section PROTERRE">
       <missions>
         <mission name="INF Interdire"/>
         <mission name="INF Tenir"/>
@@ -11065,7 +11065,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="T_AutomateModeleDEC" file="appui\PC de CIE\automates\model.bms" name="PC CIE">
+    <automat dia-type="T_AutomateModeleDEC" file="appui\PC de CIE\automates\model.bms" masalife="false" name="PC CIE">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -11111,7 +11111,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="EscadrilleAssaut" file="Air\Automates\Escadrille Assaut\Model.bms" name="GLAISE ASS SCUD">
+    <automat dia-type="EscadrilleAssaut" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="GLAISE ASS SCUD">
       <missions>
         <mission name="Faire Mouvement"/>
       </missions>
@@ -11133,7 +11133,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Escadron_XL" file="Glaise\glaise_Melee\Abc\Automates\cieCharLourd\model.bms" name="GLAISE porteur SCUD">
+    <automat dia-type="Escadron_XL" file="Glaise\glaise_Melee\Abc\Automates\cieCharLourd\model.bms" masalife="false" name="GLAISE porteur SCUD">
       <missions>
         <mission name="Faire Mouvement"/>
       </missions>
@@ -11155,7 +11155,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" name="Automate Groupe marine">
+    <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" masalife="false" name="Automate Groupe marine">
       <missions>
         <mission name="Faire Mouvement"/>
       </missions>
@@ -11177,7 +11177,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Section TE\Model.bms" name="Section TE">
+    <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Section TE\Model.bms" masalife="false" name="Section TE">
       <missions>
         <mission name="INF Appuyer"/>
         <mission name="INF Controler"/>
@@ -11215,7 +11215,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.bms" name="GTIA">
+    <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.bms" masalife="false" name="GTIA">
       <missions>
         <mission name="ABC GTIA Attaquer">
           <fragorder name="Poursuivre"/>
@@ -11250,7 +11250,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\DRAC\Model.bms" name="DRAC">
+    <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\DRAC\Model.bms" masalife="false" name="DRAC">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -11280,7 +11280,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\section ROHUM\Model.bms" name="AutomateSection ROHUM">
+    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\section ROHUM\Model.bms" masalife="false" name="AutomateSection ROHUM">
       <missions>
         <mission name="Se Faire Transporter"/>
         <mission name="Faire Mouvement"/>
@@ -11312,7 +11312,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir AUF1\Model.bms" name="Batterie Reco et Tir AUF1">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir AUF1\Model.bms" masalife="false" name="Batterie Reco et Tir AUF1">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Decrocher"/>
@@ -11346,7 +11346,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir TRF1\Model.bms" name="Batterie Reco et Tir TRF1">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir TRF1\Model.bms" masalife="false" name="Batterie Reco et Tir TRF1">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Decrocher"/>
@@ -11380,7 +11380,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir SAM\Model.bms" name="Batterie Reco et Tir SAM">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir SAM\Model.bms" masalife="false" name="Batterie Reco et Tir SAM">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Decrocher"/>
@@ -11414,7 +11414,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir CAESAR\Model.bms" name="Batterie Reco et Tir CAESAR">
+    <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir CAESAR\Model.bms" masalife="false" name="Batterie Reco et Tir CAESAR">
       <missions>
         <mission name="Faire Mouvement"/>
         <mission name="Decrocher"/>
@@ -11448,7 +11448,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Humus\Humus_Melee\Inf\Automates\Cie Inf\Model.bms" name="HUMUS INF Cie">
+    <automat dia-type="CompagnieInfanterie" file="Humus\Humus_Melee\Inf\Automates\Cie Inf\Model.bms" masalife="false" name="HUMUS INF Cie">
       <missions>
         <mission name="INF Barrer Direction"/>
         <mission name="INF Defendre Ferme"/>
@@ -11483,7 +11483,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="CompagnieInfanterie" file="Humus\Humus_Melee\Inf\Automates\Cie Inf Cdo\Model.bms" name="HUMUS INF Cie Cdo">
+    <automat dia-type="CompagnieInfanterie" file="Humus\Humus_Melee\Inf\Automates\Cie Inf Cdo\Model.bms" masalife="false" name="HUMUS INF Cie Cdo">
       <missions>
         <mission name="INF Attaquer Souplesse">
           <fragorder name="Deboucher"/>
@@ -11526,7 +11526,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="Peloton_EEI" file="Humus\Humus_Melee\Abc\Automates\Pel Reco\Model.bms" name="HUMUS Reco">
+    <automat dia-type="Peloton_EEI" file="Humus\Humus_Melee\Abc\Automates\Pel Reco\Model.bms" masalife="false" name="HUMUS Reco">
       <missions>
         <mission name="Decrocher"/>
         <mission name="Faire Mouvement"/>
@@ -11565,7 +11565,7 @@
     </automat>
   </automats>
   <crowd>
-    <crowd dia-type="T_Population" file="Population\Populations\Model.bms" name="Population">
+    <crowd dia-type="T_Population" file="Population\Populations\Model.bms" masalife="false" name="Population">
       <missions>
         <mission name="Faire Mouvement">
           <fragorder name="Population Changer Attitude"/>
@@ -11587,7 +11587,7 @@
         <fragorder name="Population Changer Attitude"/>
       </fragorders>
     </crowd>
-    <crowd dia-type="net.masagroup.sword.military.crowd.roles.Crowd" file="BMCrowd.bms" name="net.masagroup.sword.military.crowd.roles.Crowd">
+    <crowd dia-type="net.masagroup.sword.military.crowd.roles.Crowd" file="BMCrowd.bms" masalife="true" name="net.masagroup.sword.military.crowd.roles.Crowd">
       <missions>
         <mission name="COMMUNES Faire Mouvement"/>
       </missions>
@@ -11595,4 +11595,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1732661973" -->
+<!-- signature="2676475874" -->

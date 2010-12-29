@@ -2168,6 +2168,17 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_UrbanMaterial_Type</name>
+    <message>
+        <source>New</source>
+        <translation type="unfinished">Nouveau</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Supprimer</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_Urban_Type</name>
     <message>
         <source>New</source>
@@ -2381,6 +2392,10 @@ du tireur</translation>
         <source>New parameter</source>
         <translation>Nouveau paramètre</translation>
     </message>
+    <message>
+        <source>DirectIA name</source>
+        <translation>Nom DirectIA</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Mission_ConfigurationDlg</name>
@@ -2478,6 +2493,18 @@ du tireur</translation>
         <source>Crowd missions</source>
         <translation>Missions foules</translation>
     </message>
+    <message>
+        <source>MRT Behavior</source>
+        <translation>Comportement MRT</translation>
+    </message>
+    <message>
+        <source>CDT Behavior</source>
+        <translation>Comportement CDT</translation>
+    </message>
+    <message>
+        <source>Behavior</source>
+        <translation>Comportement</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Model_Wizard</name>
@@ -2531,6 +2558,10 @@ du tireur</translation>
     <message>
         <source>Crowds models</source>
         <translation>Modèles de foules</translation>
+    </message>
+    <message>
+        <source>Masalife</source>
+        <translation>Masalife</translation>
     </message>
 </context>
 <context>
@@ -2943,10 +2974,6 @@ du tireur</translation>
         <translation>Fréquence de rotation des médecins de nuit</translation>
     </message>
     <message>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Emergency doctor rate</source>
         <translation>Fréquence de rotation des médecins en phase d&apos;alerte</translation>
     </message>
@@ -2964,11 +2991,11 @@ du tireur</translation>
     </message>
     <message>
         <source>Height interaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauteur d'interaction</translation>
     </message>
     <message>
         <source>Interaction max height</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauteur d'interaction maximale</translation>
     </message>
     <message>
         <source>Flood</source>
@@ -3080,7 +3107,7 @@ Assurez vous que le fichier existe.</translation>
     <name>ADN_People_Wizard</name>
     <message>
         <source>New population creation</source>
-        <translation type="unfinished">Création d&apos;une nouvelle population</translation>
+        <translation>Création d&apos;une nouvelle population</translation>
     </message>
     <message>
         <source>Population</source>
@@ -3088,7 +3115,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Creation finished</source>
-        <translation type="unfinished">Création terminée</translation>
+        <translation>Création terminée</translation>
     </message>
     <message>
         <source>Click &quot;Done&quot; to create the new population.</source>
@@ -4125,10 +4152,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>bord de montagne</translation>
     </message>
     <message>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Parked, engine stopped</source>
         <translation>à l&apos;arrêt, moteur éteint</translation>
     </message>
@@ -4302,7 +4325,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Commander, Combined Arms</source>
-        <translation type="unfinished">Commandant, SGTIA</translation>
+        <translation>Commandant, SGTIA</translation>
     </message>
     <message>
         <source>Commander, Infantry</source>
@@ -4975,6 +4998,50 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>RoofShape</source>
         <translation>Forme de toit</translation>
     </message>
+    <message>
+        <source>Accommodations</source>
+        <translation>Accomodations</translation>
+    </message>
+    <message>
+        <source>Accommodation</source>
+        <translation>Accomodation</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Capacity</source>
+        <translation>Capacité</translation>
+    </message>
+    <message>
+        <source>Infrastructures</source>
+        <translation>Infrastructures</translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
+        <translation>Infrastructure</translation>
+    </message>
+    <message>
+        <source>Symbol</source>
+        <translation>Symbole</translation>
+    </message>
+    <message>
+        <source>Medical</source>
+        <translation>Médical</translation>
+    </message>
+    <message>
+        <source>Doctor night rate</source>
+        <translation>Fréquence de rotation des médecins de nuit</translation>
+    </message>
+    <message>
+        <source>Emergency doctor rate</source>
+        <translation>Fréquence de rotation des médecins en phase d&apos;alerte</translation>
+    </message>
+    <message>
+        <source>Emergency bed rate</source>
+        <translation>Fréquence de rotation des lits en phase d&apos;alerte</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Weapon_Wizard</name>
@@ -5398,7 +5465,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Populations</source>
-        <translation type>Populations</translation>
+        <translation>Populations</translation>
     </message>
     <message>
         <source>Fires</source>
@@ -5407,10 +5474,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
 </context>
 <context>
     <name>ActiveProtections_Data</name>
-    <message>
-        <source>Active Protection weapons</source>
-        <translation>Armes de protection active</translation>
-    </message>
     <message>
         <source>Invalid data</source>
         <translation>Donnée invalide</translation>

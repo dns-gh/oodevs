@@ -117,7 +117,7 @@ void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
 ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfosWeapons()
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
-    , strName_    ( tools::translate( "ActiveProtections_Data", "Active Protection weapons" ).ascii() )
+    , strName_    ( "" )
     , ptrWeapon_  ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0 )
     , coefficient_( 0 )
 {

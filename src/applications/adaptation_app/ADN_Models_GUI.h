@@ -35,6 +35,7 @@ public:
         eFile,
         eMissions,
         eFragOrders,
+        eMasalife,
         eNbrGuiElements
     };
 

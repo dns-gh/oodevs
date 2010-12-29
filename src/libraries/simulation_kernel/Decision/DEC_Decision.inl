@@ -42,7 +42,7 @@ namespace DEC_DecisionImpl
 {
     void RegisterCommonUserFunctions( directia::brain::Brain& brain , bool isMasalife );
     void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission, bool isMasalife );
-    bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool& isMasalife, const std::string& type );
+    bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type );
 }
 
 namespace directia
@@ -56,11 +56,12 @@ namespace directia
 // Created: MGD 2010-01-27
 // -----------------------------------------------------------------------------
 template< class T >
-void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName )
+void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName, bool isMasalife )
 {
     brainFile_ = brainFile;
     modelName_ = type;
     includePath_ = includePath;
+    isMasalife_ = isMasalife;
     std::size_t lookHere = 0;
     std::size_t foundHere;
     while( ( foundHere = includePath_.find( "\\", lookHere ) ) != std::string::npos )
@@ -105,7 +106,7 @@ template< class T >
 void DEC_Decision< T >::SetModel( const DEC_Model_ABC& model )
 {
     diaType_ = model.GetDIAType();
-    InitBrain( model.GetScriptFile(), diaType_, model.GetIncludePath(), GetAutomate().GetName() );
+    InitBrain( model.GetScriptFile(), diaType_, model.GetIncludePath(), GetAutomate().GetName(), model.IsMasalife() );
 }
 
 // -----------------------------------------------------------------------------

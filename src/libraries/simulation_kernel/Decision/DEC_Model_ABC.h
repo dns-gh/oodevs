@@ -35,6 +35,7 @@ public:
     const std::string& GetScriptFile() const;
     const std::string& GetIncludePath() const;
     const std::string& GetDIAType() const;
+    const bool IsMasalife() const;
     //@}
 
     //! @name Operations
@@ -52,7 +53,7 @@ public:
 protected:
     //! @name Constructors
     //@{
-    DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::string& strPrefix, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
+    DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes, bool isMasalife );
     //@}
 
 private:
@@ -87,6 +88,7 @@ private:
     //! @name Member data
     //@{
     const std::string strModel_;
+    const bool isMasalife_;
     std::string strDIAType_;
     std::string strScript_;
     std::string strIncludePath_;

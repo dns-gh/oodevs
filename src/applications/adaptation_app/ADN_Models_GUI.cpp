@@ -86,7 +86,7 @@ QWidget* ADN_Models_GUI::BuildPage( QVGroupBox*& pGroup, QWidget* pParent, ADN_M
     QWidget* pMainWidget = new QWidget( pParent );
 
     // Model listview
-    T_ConnectorVector vInfosConnectors( 5,(ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors( eNbrGuiElements,(ADN_Connector_ABC*)0 );
     ADN_ListView_Models* pListModels = new ADN_ListView_Models( eEntityType, pMainWidget);
     if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat )
         pListModels->GetConnector().Connect( &data_.GetAutomataModelsInfos() );
@@ -102,6 +102,7 @@ QWidget* ADN_Models_GUI::BuildPage( QVGroupBox*& pGroup, QWidget* pParent, ADN_M
     builder.AddField<ADN_EditLine_String>( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddField<ADN_EditLine_String>( pParamHolder, tr( "DIA type" ), vInfosConnectors[eDiaType] );
     builder.AddFileField( pParamHolder, tr( "File" ), vInfosConnectors[eFile] );
+    builder.AddField<ADN_CheckBox>( pParamHolder, tr( "Masalife" ), vInfosConnectors[eMasalife] );
 
     // Missions
     QGroupBox* pMissionsGroup = new QHGroupBox( tr( "Missions" ), pGroup );

@@ -479,7 +479,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
+    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false );
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType );
 
@@ -520,7 +520,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
+    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false );
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType );
 
@@ -561,7 +561,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionScattering )
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis.start( "main" );
     std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
+    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false );
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType );
 

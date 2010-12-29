@@ -213,7 +213,7 @@ ADN_Models_Data::ModelInfos::ModelInfos()
     : ADN_Ref_ABC()
     , missions_ ( dummy )
 {
-    // NOTHING
+    isMasalife_ = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -226,6 +226,7 @@ ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_Vector& mi
 {
     strDiaType_ = "T_Pion";
     strFile_ = "DEC\\For Tests\\Empty\\Files.hal";
+    isMasalife_ = false;
 
     strName_.SetDataName( "le nom" );
     strName_.SetParentNode( *this );
@@ -233,6 +234,8 @@ ADN_Models_Data::ModelInfos::ModelInfos( ADN_Missions_Data::T_Mission_Vector& mi
     strDiaType_.SetParentNode( *this );
     strFile_.SetDataName( "le fichier de script" );
     strFile_.SetParentNode( *this );
+    isMasalife_.SetDataName( "is masalife" );
+    isMasalife_.SetParentNode( *this );
 
     vMissions_.SetParentNode( *this );
     vMissions_.SetItemTypeName( "une mission" );
@@ -299,6 +302,7 @@ ADN_Models_Data::ModelInfos* ADN_Models_Data::ModelInfos::CreateCopy()
     ModelInfos* pNewInfo = new ModelInfos( missions_ );
     pNewInfo->strDiaType_ = strDiaType_.GetData();
     pNewInfo->strFile_ = strFile_.GetData();
+    pNewInfo->isMasalife_ = isMasalife_.GetData();
 
     pNewInfo->vMissions_.reserve( vMissions_.size() );
     for( T_MissionInfos_Vector::iterator itMission = vMissions_.begin(); itMission != vMissions_.end(); ++itMission )
@@ -346,6 +350,7 @@ void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", strDiaType_ )
           >> xml::attribute( "file", strFile_ )
+          >> xml::optional() >> xml::attribute( "masalife", isMasalife_ )
           >> xml::start( "missions" )
             >> xml::list( "mission", *this, &ADN_Models_Data::ModelInfos::ReadMission )
         >> xml::end
@@ -368,6 +373,7 @@ void ADN_Models_Data::ModelInfos::WriteArchive( const std::string& type, xml::xo
             <<  xml::attribute( "name", strName_ )
             <<  xml::attribute( "dia-type", strDiaType_ )
             <<  xml::attribute( "file", strFileName )
+            <<  xml::attribute( "masalife", isMasalife_ )
             <<  xml::start( "missions" );
     for( IT_MissionInfos_Vector it = vMissions_.begin(); it != vMissions_.end(); ++it )
         (*it)->WriteArchive( output );

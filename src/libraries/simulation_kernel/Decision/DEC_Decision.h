@@ -145,7 +145,7 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName );
+    void InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName, bool isMasalife );
     void CleanStateAfterCrash     ();
 
     void StartDefaultBehavior     ();

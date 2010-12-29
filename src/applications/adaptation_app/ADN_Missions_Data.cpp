@@ -275,9 +275,8 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
 // Name: ADN_Missions_Data::Mission::Mission
 // Created: SBO 2009-11-16
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::Mission::Mission( bool isAutomat /*= false*/ )
+ADN_Missions_Data::Mission::Mission()
     : id_( ADN_Missions_Data::idFactory_.Create() )
-    , isAutomat_( isAutomat )
 {
     // NOTHING
 }
@@ -286,9 +285,8 @@ ADN_Missions_Data::Mission::Mission( bool isAutomat /*= false*/ )
 // Name: ADN_Missions_Data::Mission::Mission
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-ADN_Missions_Data::Mission::Mission( unsigned int id, bool isAutomat /*= false*/ )
+ADN_Missions_Data::Mission::Mission( unsigned int id )
     : id_( id )
-    , isAutomat_( isAutomat )
 {
     ADN_Missions_Data::idFactory_.Reserve( id );
 }
@@ -317,7 +315,7 @@ std::string ADN_Missions_Data::Mission::GetItemName()
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 {
-    Mission* newMission         = new Mission( ADN_Missions_Data::idFactory_.Create(), isAutomat_.GetData() );
+    Mission* newMission         = new Mission( ADN_Missions_Data::idFactory_.Create() );
     newMission->strName_        = strName_.GetData();
     newMission->diaType_        = diaType_.GetData();
     newMission->diaBehavior_    = diaBehavior_.GetData();
@@ -391,7 +389,8 @@ namespace
 void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context )
 {
     output << xml::start( "mission" );
-    const QString typeName = type == "units" ? "Pion" : (type == "automats" ? "Automate" : "Population");
+    bool isAutomat = type == "automats";
+    const QString typeName = type == "units" ? "Pion" : (isAutomat ? "Automate" : "Population");
     const QString diaName  = BuildDiaMissionType( strName_.GetData().c_str() );
     if( diaType_.GetData().empty() )
         diaType_ = QString( "T_Mission_%1_%2" ).arg( typeName ).arg( diaName ).ascii();
@@ -403,7 +402,7 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     if ( ! strPackage_.GetData().empty() )
         output << xml::attribute( "package", strPackage_);
 
-    if( !isAutomat_.GetData() )
+    if( !isAutomat )
     {
         if( diaBehavior_.GetData().empty() )
             diaBehavior_ = QString( "MIS_%1_%2" ).arg( typeName ).arg( diaName ).ascii();
@@ -669,13 +668,13 @@ void ADN_Missions_Data::ReadArchive( xml::xistream& input )
 
     input >> xml::start( "missions" )
             >> xml::start( "units" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), (const bool&)false, unitContext_.size() ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( unitMissions_ ), unitContext_.size() ) )
             >> xml::end
             >> xml::start( "automats" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), (const bool&)true, automatContext_.size() ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( automatMissions_ ), automatContext_.size() ) )
             >> xml::end
             >> xml::start( "populations" )
-                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), (const bool&)false, populationContext_.size() ) )
+                >> xml::list( "mission", boost::bind( &ADN_Missions_Data::ReadMission, this, _1, boost::ref( populationMissions_ ), populationContext_.size() ) )
             >> xml::end
             >> xml::start( "fragorders" )
                 >> xml::list( "fragorder", *this, &ADN_Missions_Data::ReadFragOrder )
@@ -698,9 +697,9 @@ void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 // Name: ADN_Missions_Data::ReadMission
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, const bool& isAutomat, unsigned int contextLength )
+void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, unsigned int contextLength )
 {
-    std::auto_ptr< ADN_Missions_Data::Mission > spNew( new Mission( xis.attribute< unsigned int >( "id" ), isAutomat ) );
+    std::auto_ptr< ADN_Missions_Data::Mission > spNew( new Mission( xis.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( xis, contextLength );
     missions.AddItem( spNew.release() );
 }

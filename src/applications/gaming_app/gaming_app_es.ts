@@ -3035,6 +3035,25 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>UrbanMagicOrdersInterface</name>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Urban state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter value</source>
+        <translation type="unfinished">Ingresar valor</translation>
+    </message>
+    <message>
+        <source>Type-in value then press &apos;Enter&apos;</source>
+        <translation type="unfinished">Ingrese un valor y luego presione &apos;enter&apos;</translation>
+    </message>
+</context>
+<context>
     <name>UserProfileDialog</name>
     <message>
         <source>User profiles</source>

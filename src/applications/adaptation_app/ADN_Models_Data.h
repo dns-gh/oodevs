@@ -118,6 +118,7 @@ public:
         ADN_Type_String                     strName_;
         ADN_Type_String                     strDiaType_;
         ADN_Type_String                     strFile_;
+        ADN_Type_Bool                       isMasalife_;
         T_MissionInfos_Vector               vMissions_;
         T_OrderInfos_Vector                 vFragOrders_;
     };

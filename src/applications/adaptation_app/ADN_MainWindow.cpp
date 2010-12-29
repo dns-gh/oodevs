@@ -394,19 +394,14 @@ void ADN_MainWindow::OpenProject()
 // Name: ADN_MainWindow::OpenProject
 // Created: APE 2005-04-14
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isNormalMode )
+void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAdminMode )
 {
-
-    if (isNormalMode){
-        workspace_.SetOpenMode( eOpenMode_Normal );
+    if (isAdminMode){
+        workspace_.SetOpenMode( eOpenMode_Admin );
         emit OpenModeToggled();
     }
     else if( ! SelectOpenMode() )
         return;
-/*
-    workspace_.SetOpenMode( eOpenMode_Admin );
-    emit OpenModeToggled();
-    */
 
     SetMenuEnabled( false );
     pTab_->hide();
@@ -425,7 +420,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isNo
     setCaption( tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() ) );
     SetMenuEnabled( true );
     pTab_->show();
-    if( !isNormalMode && !invalidSignedFiles.empty() )
+    if( !isAdminMode && !invalidSignedFiles.empty() )
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );

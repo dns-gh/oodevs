@@ -1029,12 +1029,9 @@ namespace
     std::map< std::string, boost::shared_ptr< directia::brain::Brain > > brainTable;
 }
 
-bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool& isMasalife, const std::string& type )
+bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type )
 {
-    pArchetypeBrain = brainTable[brainFile];
-    isMasalife = ( (brainFile == "BMAutomat.bms" || brainFile == "BMPion.bms" || brainFile == "BMCrowd.bms") );
-    if( isMasalife )
-        pArchetypeBrain = brainTable[type];
+    pArchetypeBrain = isMasalife ? brainTable[type] : brainTable[brainFile];
 
     if( !pArchetypeBrain.get() )
     {

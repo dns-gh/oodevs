@@ -111,8 +111,8 @@ public:
                   , public ADN_DataTreeNode_ABC
     {
     public:
-        explicit Mission( bool isAutomat = false );
-        explicit Mission( unsigned int id, bool isAutomat = false );
+                 Mission();
+        explicit Mission( unsigned int id );
         virtual ~Mission();
 
         std::string GetItemName();
@@ -125,7 +125,6 @@ public:
     public:
         ADN_Type_Int              id_;
         ADN_Type_String           strName_;
-        ADN_Type_Bool             isAutomat_;
         T_MissionParameter_Vector parameters_;
 
         ADN_Type_String           diaType_;
@@ -201,7 +200,7 @@ public:
 private:
     void ReadArchive( xml::xistream& input );
     void ReadFragOrder( xml::xistream& input );
-    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, const bool& automat, unsigned int contextLength );
+    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, unsigned int contextLength );
     void ReadContext( xml::xistream& input, T_MissionParameter_Vector& context );
     void ReadContextParameter( xml::xistream& input, T_MissionParameter_Vector& context );
     void WriteArchive( xml::xostream& output );

@@ -20,8 +20,9 @@
 // Name: DEC_Model_ABC constructor
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
-DEC_Model_ABC::DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::string& /*strPrefix*/, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes )
+DEC_Model_ABC::DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes, bool isMasalife )
     : strModel_      ( strModel )
+    , isMasalife_    ( isMasalife )
     , strIncludePath_( strSourcePath )
 {
     xis >> xml::attribute( "dia-type", strDIAType_ )
@@ -202,4 +203,13 @@ const std::string& DEC_Model_ABC::GetIncludePath() const
 const std::string& DEC_Model_ABC::GetDIAType() const
 {
     return strDIAType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Model_ABC::IsMasalife
+// Created: LDC 2010-12-28
+// -----------------------------------------------------------------------------
+const bool DEC_Model_ABC::IsMasalife() const
+{
+    return isMasalife_;
 }

@@ -14,14 +14,14 @@ public:
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis.start( "main" );
         std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-        model_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes ) );
+        model_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false ) );
         SetModel( *model_ );
     }
     virtual ~StubDEC_Decision() {}
 
     void SetModel( const DEC_Model_ABC& model )
     {
-        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubAutomate" );
+        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubAutomate", false );
         diaType_ = model.GetDIAType();
     }
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }

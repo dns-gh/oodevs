@@ -69,7 +69,7 @@ void ADN_Missions_GUI::Build()
 // Name: ADN_Missions_GUI::BuildMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions )
+QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, bool automat )
 {
     ADN_GuiBuilder builder;
 
@@ -87,10 +87,17 @@ QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, A
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
+    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Type" ), vInfosConnectors[eDiaType] );
+    if( automat )
+    {
+        builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "MRT Behavior" ), vInfosConnectors[eMRTBehavior] );
+        builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "CDT Behavior" ), vInfosConnectors[eCDTBehavior] );
+    }
+    else
+        builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Behavior" ), vInfosConnectors[eBehavior] );
 
-    QHGroupBox* pParameters = new QHGroupBox( tr( "Parameters" ), pGroup );
+    QGroupBox* pParameters = new QGroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pGroup );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );
-
     vInfosConnectors[eParameters] = &paramList->GetConnector();
     QGroupBox* pEnum = new QGroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
@@ -118,7 +125,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QGroupBox*& pGroup, QWidget* parent, A
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildUnitMissions( QWidget* parent )
 {
-    return BuildMissions( pUnitMissionsGroup_, parent, data_.unitMissions_ );
+    return BuildMissions( pUnitMissionsGroup_, parent, data_.unitMissions_, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +134,7 @@ QWidget* ADN_Missions_GUI::BuildUnitMissions( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildAutomatMissions( QWidget* parent )
 {
-    return BuildMissions( pAutomatMissionsGroup_, parent, data_.automatMissions_ );
+    return BuildMissions( pAutomatMissionsGroup_, parent, data_.automatMissions_, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +143,7 @@ QWidget* ADN_Missions_GUI::BuildAutomatMissions( QWidget* parent )
 // -----------------------------------------------------------------------------
 QWidget* ADN_Missions_GUI::BuildPopulationMissions( QWidget* parent )
 {
-    return BuildMissions( pPopulationMissionsGroup_, parent, data_.populationMissions_ );
+    return BuildMissions( pPopulationMissionsGroup_, parent, data_.populationMissions_, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,6 +168,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
     builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
+    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Type" ), vInfosConnectors[eDiaType] );
     QCheckBox* available = builder.AddField< ADN_CheckBox >( pParamHolder, tr( "Available without mission" ) , vInfosConnectors[eFragOrderAvailableWithoutMission] );
     connect( available, SIGNAL( toggled ( bool ) ), listFragOrders, SLOT( OnToogled( bool ) ) );
 

@@ -51,39 +51,6 @@ public:
     void SetModel( const DEC_Model_ABC& model );
     void Clean         ();
 
-    /*
-    virtual int GeteEtatDecPrudence() const;
-    virtual void SeteEtatDecPrudence(int value );
-    virtual int GeteEtatNbc() const;
-    virtual void SeteEtatNbc(int value );
-    virtual int GeteEtatDestruction() const;
-    virtual void SeteEtatDestruction(int value );
-    virtual int GeteEtatFeu() const;
-    virtual void SeteEtatFeu(int value );
-    virtual int GeteEtatAmbiance() const;
-    virtual void SeteEtatAmbiance(int value );
-    virtual int GeteEtatRadio() const;
-    virtual void SeteEtatRadio(int value );
-    virtual int GeteEtatRadar() const;
-    virtual void SeteEtatRadar(int value );
-    virtual int GeteEtatDeplacement() const;
-    virtual void SeteEtatDeplacement(int value );
-    virtual int GeteEtatOrdreCoordination() const;
-    virtual void SeteEtatOrdreCoordination(int value );
-    virtual int GeteConsigneTir() const;
-    virtual void SeteConsigneTir(int value );
-    virtual int GeteConsigneTirPopulation() const;
-    virtual void SeteConsigneTirPopulation(int value );
-    virtual int GeteEtatSoutien() const;
-    virtual void SeteEtatSoutien(int value );
-    virtual int GeteEtatSituationEnnemi() const;
-    virtual void SeteEtatSituationEnnemi(int value );
-    virtual int GeteTypeContact() const;
-    virtual void SeteTypeContact(int value );
-    virtual int GeteNiveauAction() const;
-    virtual void SeteNiveauAction(int value );
-    */
-
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
     //@}
