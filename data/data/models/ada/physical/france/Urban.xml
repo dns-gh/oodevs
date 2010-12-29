@@ -92,6 +92,7 @@
     </roof-shape-types>
   </urban-block-types>
   <accomodations>
+    <accomodation capacity="0.5" role="leisure"/>
     <accomodation capacity="0.5" role="study"/>
     <accomodation capacity="0.07" role="home"/>
     <accomodation capacity="0.2" role="office"/>
@@ -119,4 +120,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="3673610042" -->
+<!-- signature="3751094997" -->
