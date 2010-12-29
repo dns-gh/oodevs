@@ -161,7 +161,7 @@ void ADN_MissionParameters_Table::SetItemConnectors( const T_ConnectorVector& it
 // -----------------------------------------------------------------------------
 void ADN_MissionParameters_Table::OnSelectionChanged()
 {
-    ADN_MissionParameterType* current = static_cast< ADN_MissionParameterType* >( item( currentRow(), 1 ) );
+    ADN_MissionParameterType* current = static_cast< ADN_MissionParameterType* >( item( currentRow(), 2 ) );
     if( current_ && current_ != current )
         current_->Disconnect();
     if( current )
