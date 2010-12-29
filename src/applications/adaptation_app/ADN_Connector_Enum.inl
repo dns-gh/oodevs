@@ -89,7 +89,7 @@ bool ADN_Connector_Enum<T>::AddItemPrivate(void *obj,bool /*bInConnection*/)
     if( obj == 0 )
         return false;
     ++nNb_;
-    pGfx_->insertItem(QString(GetItem(obj).c_str()));
+    pGfx_->insertItem( QString(GetItem(obj).c_str()), *(int*)obj );
     return true;
 }
 
