@@ -6,7 +6,6 @@
 #include "SensorType.h"
 #include "Tools.h"
 #include "Agent_ABC.h"
-#include "gaming/UrbanBlockDetectionMap.h"
 #include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
