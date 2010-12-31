@@ -304,6 +304,15 @@
     <detection>
       <acquisition-times/>
     </detection>
+    <heuristic>
+      <terrain type="autoroute" value="1"/>
+      <terrain type="departementale" value="3"/>
+      <terrain type="carrefour" value="10"/>
+      <terrain type="nationale" value="2"/>
+      <terrain type="voie ferree" value="5"/>
+      <terrain type="pont" value="8"/>
+    </heuristic>
+    <population-filter density="0.5"/>
     <workable max-animator="1"/>
   </object>
   <object geometry="polygon" name="Terrain de largage" symbol="G*GPGAD---****X" type="dropping area"/>
@@ -345,4 +354,4 @@
     <flood/>
   </object>
 </objects>
-<!-- signature="3655081689" -->
+<!-- signature="1068282251" -->
