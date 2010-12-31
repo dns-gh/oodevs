@@ -107,6 +107,8 @@ public:
         eBurnCapacityPresent,
         eHeightInteraction,
         eFloodCapacityPresent,
+        ePopulationCapacityPresent,
+        ePopulationFilter_Density,
         eNbrGuiElements
     };
 

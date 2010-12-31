@@ -306,9 +306,9 @@
     </detection>
     <heuristic>
       <terrain type="autoroute" value="1"/>
+      <terrain type="nationale" value="2"/>
       <terrain type="departementale" value="3"/>
       <terrain type="carrefour" value="10"/>
-      <terrain type="nationale" value="2"/>
       <terrain type="voie ferree" value="5"/>
       <terrain type="pont" value="8"/>
     </heuristic>
@@ -354,4 +354,4 @@
     <flood/>
   </object>
 </objects>
-<!-- signature="1068282251" -->
+<!-- signature="1133109748" -->

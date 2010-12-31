@@ -161,6 +161,9 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     ADN_Objects_Data::ADN_CapacityInfos_Intoxication& intoxication = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Intoxication >( ADN_Objects_GUI::eIntoxicationCapacityPresent );
     vItemConnectors_[ADN_Objects_GUI::eIntoxicationCapacity_MaxToxic]->Connect( &intoxication.max_toxic_, bConnect );
 
+    ADN_Objects_Data::ADN_CapacityInfos_Population& populationFilter = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Population >( ADN_Objects_GUI::ePopulationCapacityPresent );
+    vItemConnectors_[ADN_Objects_GUI::ePopulationFilter_Density]->Connect( &populationFilter.density_, bConnect );
+
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Decontamination >( ADN_Objects_GUI::eDecontaminationCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Extinguishable >( ADN_Objects_GUI::eExtinguishableCapacityPresent );
     ADN_Objects_Data::ADN_CapacityInfos_Medical& medical = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Medical >( ADN_Objects_GUI::eMedicalCapacityPresent );

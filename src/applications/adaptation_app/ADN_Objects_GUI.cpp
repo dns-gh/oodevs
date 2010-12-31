@@ -244,6 +244,13 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eDecontaminationCapacityPresent ] = & decontamination->GetConnector();
     }
 
+    // Population filter
+    ADN_GroupBox* populationFilter = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Population" ), hBox );
+    {
+        vInfosConnectors[ ePopulationCapacityPresent ] = & populationFilter->GetConnector();
+        builder.AddField< ADN_EditLine_Double >( populationFilter, tr( "Density: " ), vInfosConnectors[ ePopulationFilter_Density ] );
+    }
+
     // Detection
     ADN_GroupBox* detection = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Detection::DISPLAY_NAME.c_str() ), hBox );
     {
