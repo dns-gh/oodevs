@@ -18,9 +18,9 @@
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
+#include <boost/foreach.hpp>
 
 using namespace geometry;
 using namespace kernel;
@@ -51,7 +51,7 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& c
     {
         int id = message.blocks( i ).id(); 
         gui::TerrainObjectProxy& urbanObject = model.GetObject( id );
-        livingUrbanObject_.push_back( &urbanObject );
+        livingUrbanObject_[ id ] = &urbanObject;
     }
     CreateDictionary( controllers.controller_ );
     RegisterSelf( *this );
@@ -68,7 +68,6 @@ Inhabitant::~Inhabitant()
     Destroy();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Agent::CreateDictionary
 // Created: SLG 2010-12-05
@@ -80,10 +79,10 @@ void Inhabitant::CreateDictionary( kernel::Controller& controller )
     const Inhabitant& self = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), self.id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), self.name_ );
-    for( DictionaryExtensions::CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
+    BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
     {
-        std::string info = "Details/" + it->first;
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", info.c_str() ), it->second );
+        std::string info = "Details/" + extension.first;
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", info.c_str() ), extension.second );
     }
 }
 // -----------------------------------------------------------------------------
@@ -92,12 +91,20 @@ void Inhabitant::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 {
-    if( msg.has_healthy()  )
+    if( msg.has_healthy() )
         nNbrHealthyHumans_ = msg.healthy();
-    if( msg.has_dead()  )
+    if( msg.has_dead() )
         nNbrDeadHumans_ = msg.dead();
-    if( msg.has_wounded()  )
+    if( msg.has_wounded() )
         nNbrWoundedHumans_ = msg.wounded();
+    for( int i = 0; i < msg.occupations_size(); ++i )
+    {
+        const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
+        unsigned int id = occupation.block().id();
+        CIT_UrbanObjectVector it = livingUrbanObject_.find( id );
+        if( it != livingUrbanObject_.end() )
+            it->second->UpdateHumans( name_.ascii(), occupation.number() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -115,6 +122,7 @@ void Inhabitant::Draw( const geometry::Point2f& /*where*/, const kernel::Viewpor
 // -----------------------------------------------------------------------------
 void Inhabitant::ComputeCenter()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +133,7 @@ geometry::Point2f Inhabitant::GetPosition( bool ) const
 {
     geometry::Polygon2f poly;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        poly.Add( (*it)->Barycenter() );
+        poly.Add( it->second->Barycenter() );
     return poly.Barycenter();
 }
 
@@ -228,7 +236,7 @@ void Inhabitant::Draw( const kernel::GlTools_ABC& tools ) const
 {
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        const gui::TerrainObjectProxy& object = **it;
+        const gui::TerrainObjectProxy& object = *it->second;
         const geometry::Polygon2f* footprint = object.GetFootprint();
         if( footprint )
             tools.DrawConvexPolygon( footprint->Vertices() );

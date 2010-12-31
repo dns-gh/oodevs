@@ -12,6 +12,8 @@
 
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
+#include <vector>
+#include <map>
 
 namespace xml
 {
@@ -24,10 +26,8 @@ namespace urban
     class TerrainObject_ABC;
 }
 
-class MIL_Formation;
 class MIL_Army_ABC;
 class MIL_InhabitantType;
-
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -64,10 +64,6 @@ public:
     void WriteODB( xml::xostream& xos ) const;
     //@}
 
-    //! @name Visitor
-    //@{
-    //@}
-
 protected:
     //! @name Constructor
     //@{
@@ -85,30 +81,38 @@ private:
     //@{
     void SendDestruction() const;
     void ReadExtension( xml::xistream& xis );
-    void ReadUrbanBlock( xml::xistream& xis );
+    void ReadUrbanBlock( xml::xistream& xis, float& totalArea );
+    //@}
+
+    //! @name Helpers
+    //@{
+    void DistributeHumans( float area );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< const urban::TerrainObject_ABC* >   T_livingUrbanBlockVector;
-    typedef T_livingUrbanBlockVector::iterator              IT_livingUrbanBlockVector;
-    typedef T_livingUrbanBlockVector::const_iterator       CIT_livingUrbanBlockVector;
+    typedef std::pair< const urban::TerrainObject_ABC*, unsigned int > T_UrbanBlock;
+    typedef std::vector< T_UrbanBlock >                                T_UrbanBlocks;
+    typedef T_UrbanBlocks::iterator                                   IT_UrbanBlocks;
+    typedef T_UrbanBlocks::const_iterator                            CIT_UrbanBlocks;
+
+    typedef std::map< std::string, std::string > T_Extensions;
     //@}
 
 private:
+    //! @name Member Data
+    //@{
     const MIL_InhabitantType* pType_;
     const unsigned int nID_;
     MIL_Army_ABC* pArmy_;
-    unsigned long                 healthy_;
-    unsigned long                 wounded_;
-    unsigned long                 dead_;
-    std::string                   text_;
-    T_livingUrbanBlockVector      livingUrbanObject_;
-
-
-    // Misc
-    std::map< std::string, std::string > extensions_;
+    std::string text_;
+    unsigned long nNbrHealthyHumans_;
+    unsigned long nNbrDeadHumans_;
+    unsigned long nNbrWoundedHumans_;
+    T_UrbanBlocks urbanBlocks_;
+    T_Extensions extensions_;
+    //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Inhabitant* inhabitant, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Inhabitant* inhabitant, const unsigned int /*version*/ );

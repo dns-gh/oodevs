@@ -14,12 +14,14 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
 
 namespace kernel
 {
     class GlTools_ABC;
     class PropertiesDictionary;
     class Viewport_ABC;
+    class Displayer_ABC;
 }
 
 namespace sword
@@ -36,8 +38,8 @@ namespace urban
 namespace gui
 {
 // =============================================================================
-/** @class  UrbanModel
-    @brief  Urban model
+/** @class  TerrainObjectProxy
+    @brief  Terrain object proxy
 */
 // Created: SLG 2009-02-10
 // =============================================================================
@@ -45,6 +47,8 @@ class TerrainObjectProxy : public kernel::Extension_ABC
                          , public kernel::EntityImplementation< kernel::Entity_ABC >
                          , public kernel::Updatable_ABC< sword::UrbanUpdate >
                          , public kernel::Creatable< TerrainObjectProxy >
+                         , public kernel::Displayable_ABC
+                         , public tools::Observer_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -54,41 +58,60 @@ public:
     virtual ~TerrainObjectProxy();
     //@}
 
-    //! @name Operations
+    //! @name Copy/Assignment
     //@{
-    virtual void DoUpdate( const sword::UrbanUpdate& msg );
+    TerrainObjectProxy( const TerrainObjectProxy& );           //!< Copy constructor
+    TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignment operator
+    //@}
+
+    //! @name Operators
+    //@{
+    bool operator==( const TerrainObjectProxy& ) const;
+    //@}
+
+    //! @name Accessors
+    //@{
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
-    virtual void Select( kernel::ActionController& /*controller*/ ) const;
-    virtual void ContextMenu( kernel::ActionController& /*controller*/,  const QPoint& /*where*/) const {}
-    virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
-
-    virtual void SetSelected( bool selected ) const;
-    virtual void Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
+
     geometry::Point2f Barycenter() const;
     const geometry::Polygon2f* GetFootprint() const;
     const urban::TerrainObject_ABC* GetObject() const;
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void DoUpdate( const sword::UrbanUpdate& msg );
+    virtual void Select( kernel::ActionController& controller ) const;
+    virtual void ContextMenu( kernel::ActionController& /*controller*/, const QPoint& /*where*/) const {}
+    virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
+    virtual void SetSelected( bool selected ) const;
+    virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+
+    void UpdateHumans( const std::string& inhabitant, unsigned int number );
+    //@}
+
+private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
     void AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< std::string, unsigned int > T_Humans;
+    typedef T_Humans::const_iterator            CIT_Humans;
+    //@}
+
 private:
     //! @name Member data
     //@{
     urban::TerrainObject_ABC* object_;
-    //@}
-
-public:
-    //! @name Copy/Assignment
-    //@{
-    TerrainObjectProxy( const TerrainObjectProxy& );           //!< Copy constructor
-    TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignment operator
-    bool operator==( const TerrainObjectProxy& ) const;
+    kernel::Controller& controller_;
+    T_Humans humans_;
     //@}
 };
 

@@ -14,6 +14,8 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include <urban/Architecture.h>
 #include <urban/TerrainObject_ABC.h>
+#include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace gui;
 
@@ -27,10 +29,12 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
                                         unsigned int id, const QString& name )
     : EntityImplementation< kernel::Entity_ABC >( controller, id, name )
     , Creatable< TerrainObjectProxy >( controller, this )
-    , object_( &object )
+    , object_    ( &object )
+    , controller_( controller )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,10 +44,12 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
 TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object )
     : EntityImplementation< kernel::Entity_ABC >( controller, object.GetId(), QString( object.GetName().c_str() ) )
     , Creatable< TerrainObjectProxy >( controller, this )
-    , object_( &object )
+    , object_    ( &object )
+    , controller_( controller )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +58,7 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
 // -----------------------------------------------------------------------------
 TerrainObjectProxy::~TerrainObjectProxy()
 {
+    controller_.Unregister( *this );
     Destroy();
 }
 
@@ -124,12 +131,12 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
     urban::Architecture* architecture = object_->Retrieve< urban::Architecture >();
     if( architecture )
     {
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" )               , architecture->GetHeight() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" )          , architecture->GetFloorNumber() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" )            , architecture->GetRoofShape() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" )             , architecture->GetMaterial() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" )           , architecture->GetOccupation() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" )       , architecture->GetTrafficability() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" )        , architecture->GetHeight() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" )   , architecture->GetFloorNumber() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" )     , architecture->GetRoofShape() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" )      , architecture->GetMaterial() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" )    , architecture->GetOccupation() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), architecture->GetTrafficability() );
     }
 }
 
@@ -140,6 +147,32 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
 void TerrainObjectProxy::SetSelected( bool selected ) const
 {
     object_->SetSelected( selected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::DisplayInSummary
+// Created: LGY 2010-12-30
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    if( !humans_.empty() )
+    {
+        displayer.Display( "Populations:", "" );
+        BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
+        {
+            const std::string name = " - " + boost::lexical_cast< std::string >( human.first ) + ":";
+            displayer.Display( name.c_str(), human.second );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::UpdateHumans
+// Created: LGY 2010-12-30
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number )
+{
+    humans_[ inhabitant ] = number;
 }
 
 // -----------------------------------------------------------------------------

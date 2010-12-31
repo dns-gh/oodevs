@@ -14,7 +14,6 @@
 
 namespace sword
 {
-    class CrowdOrder;
     class PopulationCreation;
     class PopulationUpdate;
 }
@@ -43,10 +42,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const sword::PopulationUpdate&                 msg );
-
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void DoUpdate( const sword::PopulationUpdate& msg );
+    virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
@@ -63,6 +61,13 @@ private:
     Inhabitant& operator=( const Inhabitant& ); //!< Assignment operator
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< unsigned int, unsigned int > T_UrbanBlocks;
+    typedef std::map< std::string, std::string > T_Extensions;
+    typedef std::vector< int > T_UrbanObjectId;
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -71,13 +76,12 @@ private:
     const std::string strName_;
     const std::string text_;
     dispatcher::Team_ABC& side_;
-    std::vector< int > urbanObjectId_;
-    std::map< std::string, std::string > extensions_;
-
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;
-
+    T_UrbanObjectId urbanObjectId_;
+    T_UrbanBlocks urbanBlocks_;
+    T_Extensions extensions_;
     //@}
 };
 

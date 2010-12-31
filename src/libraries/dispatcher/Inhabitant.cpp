@@ -11,11 +11,11 @@
 #include "Inhabitant.h"
 #include "Model.h"
 #include "Side.h"
-#include "EntityPublisher.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -66,6 +66,11 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         nNbrDeadHumans_ = msg.dead();
     if( msg.has_wounded() )
         nNbrWoundedHumans_ = msg.wounded();
+    for( int i = 0; i < msg.occupations_size(); ++i )
+    {
+        const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
+        urbanBlocks_[ occupation.block().id() ] = occupation.number();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -74,26 +79,24 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 // -----------------------------------------------------------------------------
 void Inhabitant::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationCreation asn;
-    asn().mutable_id()->set_id( GetId() );
-    asn().mutable_party()->set_id( side_.GetId() );
-    asn().mutable_type()->set_id( nType_ );
-    asn().set_text( text_ );
-    asn().set_name( strName_ );
-    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    client::PopulationCreation msg;
+    msg().mutable_id()->set_id( GetId() );
+    msg().mutable_party()->set_id( side_.GetId() );
+    msg().mutable_type()->set_id( nType_ );
+    msg().set_text( text_ );
+    msg().set_name( strName_ );
+    BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
     {
-        sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
-        entry->set_name( it->first );
-        entry->set_value( it->second );
+        sword::Extension_Entry* entry = msg().mutable_extension()->add_entries();
+        entry->set_name( extension.first );
+        entry->set_value( extension.second );
     }
-
-    for( std::vector< int >::const_iterator it = urbanObjectId_.begin(); it != urbanObjectId_.end(); ++it )
+    BOOST_FOREACH( int id, urbanObjectId_ )
     {
-        sword::UrbanObjectId* blockId = asn().add_blocks();
-        blockId->set_id( *it );
+        sword::UrbanObjectId* blockId = msg().add_blocks();
+        blockId->set_id( id );
     }
-
-    asn.Send( publisher );
+    msg.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,12 +105,18 @@ void Inhabitant::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::PopulationUpdate asn;
-    asn().mutable_id()->set_id( GetId() );
-    asn().set_healthy( nNbrHealthyHumans_ );
-    asn().set_wounded( nNbrWoundedHumans_ );
-    asn().set_dead( nNbrDeadHumans_ );
-    asn.Send( publisher );
+    client::PopulationUpdate msg;
+    msg().mutable_id()->set_id( GetId() );
+    msg().set_healthy( nNbrHealthyHumans_ );
+    msg().set_wounded( nNbrWoundedHumans_ );
+    msg().set_dead( nNbrDeadHumans_ );
+    BOOST_FOREACH( const T_UrbanBlocks::value_type& urbanBlock, urbanBlocks_ )
+    {
+        sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
+        block.mutable_block()->set_id( urbanBlock.first );
+        block.set_number( urbanBlock.second );
+    }
+    msg.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
