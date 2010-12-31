@@ -66,6 +66,8 @@ void DEC_CommunicationFunctions::Register( directia::brain::Brain& brain )
     brain[ "F_Pion_SetbOrdreTenir" ] = &F_SetbOrdreTenir;
     brain[ "F_Pion_GetbPasserSurLC" ] = &F_Pion_GetbPasserSurLC;
     brain[ "F_Pion_SetbPasserSurLC" ] = &F_Pion_SetbPasserSurLC;
+    brain[ "F_Pion_GetNewEscorted" ] = &F_Pion_GetNewEscorted;
+    brain[ "F_Pion_SetNewEscorted" ] = &F_Pion_SetNewEscorted;
     brain[ "F_Pion_GetpionEnEscorte" ] = &F_Pion_GetpionEnEscorte;
     brain[ "F_Pion_SetpionEnEscorte" ] = &F_Pion_SetpionEnEscorte;
     brain[ "F_Pion_GetitMvt" ] = &F_Pion_GetitMvt;
@@ -519,6 +521,24 @@ bool DEC_CommunicationFunctions::F_Pion_GetbPasserSurLC( DEC_Decision_ABC* pPion
 void DEC_CommunicationFunctions::F_Pion_SetbPasserSurLC( DEC_Decision_ABC* pPion, bool value )
 {
     dynamic_cast< DEC_RolePion_Decision* >( pPion )->SetbPasserSurLC( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_CommunicationFunctions::F_Pion_GetNewEscorted
+// Created: LDC 2010-30-12
+// -----------------------------------------------------------------------------
+bool DEC_CommunicationFunctions::F_Pion_GetNewEscorted( DEC_Decision_ABC* pPion )
+{
+    return pPion->GetVariable< bool >( "g_bNewEscorted" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_CommunicationFunctions::F_Pion_SetNewEscorted
+// Created: LDC 2010-30-12
+// -----------------------------------------------------------------------------
+void DEC_CommunicationFunctions::F_Pion_SetNewEscorted( DEC_Decision_ABC* pPion, bool value )
+{
+    pPion->SetVariable( "g_bNewEscorted" ,value );
 }
 
 // -----------------------------------------------------------------------------

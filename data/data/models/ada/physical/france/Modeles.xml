@@ -21,6 +21,7 @@
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Escorter"/>
         <mission name="MELEE Fixer"/>
         <mission name="MELEE Freiner"/>
         <mission name="MELEE Harceler"/>
@@ -90,6 +91,7 @@
         <mission name="MELEE Controler"/>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Escorter"/>
         <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner"/>
@@ -141,6 +143,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Escorter"/>
         <mission name="MELEE Jalonner"/>
         <mission name="MELEE Surveiller"/>
       </missions>
@@ -181,7 +184,9 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler"/>
-        <mission name="MELEE Attaquer"/>
+        <mission name="MELEE Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
         <mission name="MELEE Contre Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -189,6 +194,7 @@
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
+        <mission name="MELEE Escorter"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Barrer"/>
@@ -11595,4 +11601,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2676475874" -->
+<!-- signature="1212819814" -->
