@@ -251,11 +251,11 @@
   <report category="operational" id="189" message="reddition annulee"/>
   <report category="operational" id="190" message="tir dans zone interdite"/>
   <report category="operational" id="191" message="tir sur camp ami"/>
-  <report category="operational" id="192" message="tire par camp ami"/>
+  <report category="operational" id="192" message="pris à partie par camp ami"/>
   <report category="operational" id="193" message="tir sur camp neutre"/>
-  <report category="operational" id="194" message="tire par camp neutre"/>
+  <report category="operational" id="194" message="pris à partie par camp neutre"/>
   <report category="operational" id="195" message="tir sur civil"/>
-  <report category="operational" id="196" message="tire par civil"/>
+  <report category="operational" id="196" message="pris à partie par civil"/>
   <report category="operational" id="197" message="tir indirect fratricide"/>
   <report category="operational" id="198" message="tir indirect sur population"/>
   <report category="operational" id="199" message="destruction pc"/>
