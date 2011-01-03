@@ -33,6 +33,7 @@ protected:
     virtual void DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTarget );
 
     virtual bool AddItemPrivate(void *obj,bool bInConnection=false);
+    virtual void SetNextItemIndex( int index );
     virtual bool RemItemPrivate(void *item);
     virtual void ClearPrivate(bool bInConnection=false);
     virtual void SetDataPrivate(void *data);
@@ -40,8 +41,9 @@ protected:
     virtual std::string GetItem(void * obj)=0;
 
 protected:
-    T*                  pGfx_;
-    int                 nNb_;
+    T*   pGfx_;
+    int  nNb_;
+    int  nextItem_;
     bool bIsConnected_;
 };
 

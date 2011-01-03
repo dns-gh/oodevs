@@ -2991,15 +2991,23 @@ du tireur</translation>
     </message>
     <message>
         <source>Height interaction</source>
-        <translation>Hauteur d'interaction</translation>
+        <translation>Hauteur d&apos;interaction</translation>
     </message>
     <message>
         <source>Interaction max height</source>
-        <translation>Hauteur d'interaction maximale</translation>
+        <translation>Hauteur d&apos;interaction maximale</translation>
     </message>
     <message>
         <source>Flood</source>
         <translation>Inondation</translation>
+    </message>
+    <message>
+        <source>Population</source>
+        <translation type="unfinished">Population</translation>
+    </message>
+    <message>
+        <source>Density: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4711,6 +4719,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>CrowdKnowledge</source>
         <translation>Connaissance population</translation>
     </message>
+    <message>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Unit_Wizard</name>
@@ -5911,8 +5923,16 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Façade - Type de volume invalide</translation>
     </message>
     <message>
-        <source>RoofShape - Invalid volume type name</source>
-        <translation>Forme de toit - Type de volume invalide</translation>
+        <source>RoofShape - Duplicated roofShape type name &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape - Duplicated roofShape type names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape - Invalid roofShape type name</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

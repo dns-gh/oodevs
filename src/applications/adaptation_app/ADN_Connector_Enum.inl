@@ -19,6 +19,7 @@ ADN_Connector_Enum<T>::ADN_Connector_Enum(T* pGfx)
 : ADN_Connector_Vector_ABC()
 , pGfx_(pGfx)
 , nNb_(0)
+, nextItem_( -1 )
 , bIsConnected_( false )
 {
     assert(pGfx_);
@@ -89,10 +90,19 @@ bool ADN_Connector_Enum<T>::AddItemPrivate(void *obj,bool /*bInConnection*/)
     if( obj == 0 )
         return false;
     ++nNb_;
-    pGfx_->insertItem( QString(GetItem(obj).c_str()), *(int*)obj );
+    pGfx_->insertItem( QString(GetItem(obj).c_str()), nextItem_ );
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Connector_Enum::SetNextItemIndex
+// Created: LDC 2011-01-03
+// -----------------------------------------------------------------------------
+template<class T>
+void ADN_Connector_Enum< T >::SetNextItemIndex( int index )
+{
+    nextItem_ = index;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum::RemItemPrivate

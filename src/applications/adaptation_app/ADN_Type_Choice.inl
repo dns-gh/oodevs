@@ -155,8 +155,11 @@ template < typename T >
 void ADN_Type_Choice< T >::Initialize( ADN_Connector_Vector_ABC& dest ) const
 {
     // send all the elements of the enum
-    for ( CIT_ChoicesVector it = choices_.begin(); it < choices_.end(); ++it )    
-        dest.AddItemNoEmit( (void*)&(*it) );    
+    int index = 0;
+    for ( CIT_ChoicesVector it = choices_.begin(); it < choices_.end(); ++it )
+    {
+        dest.AddItemNoEmit( (void*)&(*it), index++ );    
+    }
     dest.AddItemNoEmit( 0 );
     dest.SetData( & const_cast< ADN_Type_Choice< T >* >( this )->data_ );
 }
