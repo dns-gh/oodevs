@@ -11,85 +11,293 @@ import "common.proto";
 
 package sword;
 
+/** @struct ControlDatetimeChange
+    @brief A date and/or time change request.
+    
+    This message is sent by a client to change the current date and/or time.
+    
+    @see ControlDatetimeChangeAck 
+*/
 message ControlDatetimeChange {
+    /** @property date_time
+        @brief The new date and/or time.
+        @see DateTime
+    */
    required DateTime date_time = 1;
 }
 
+/** @struct ControlCheckPointSaveNow
+    @brief A checkpoint save request.
+    
+    This message is sent by a client to trigger a checkpoint save.
+    
+    @see ControlCheckPointSaveEnd 
+*/
 message ControlCheckPointSaveNow {
+    /** @property name
+        @brief The checkpoint name.
+    */
    optional string name = 1;
 }
 
+/** @struct SetAutomatMode
+    @brief An automate mode change request.
+    
+    This message is sent by a client to activate or deactivate an automate.
+    
+    @see SetAutomatModeAck
+*/
 message SetAutomatMode {
-   required AutomatId       automate = 1;
-   required EnumAutomatMode mode     = 2;
+    /** @property automate
+        @brief The automate identifier.
+        @see AutomatId
+    */
+    required AutomatId       automate = 1;
+    /** @property mode
+        @brief The new mode.
+        @see EnumAutomatMode
+    */
+    required EnumAutomatMode mode     = 2;
 }
 
+/** @struct UnitCreationRequest
+    @brief An agent creation request.
+    
+    This message is sent by a client to create an agent.
+    
+    @see UnitCreationRequestAck
+    @todo rename into AgentCreationRequest
+    @todo no clue what the fields are exactly...
+*/
 message UnitCreationRequest {
-   required UnitType     type     = 1;
-   required AutomatId    superior = 2;
-   required CoordLatLong position = 3;
+    /** @property type
+        @brief The agent type.
+        @see UnitType
+    */
+    required UnitType     type     = 1;
+    /** @property superior
+        @brief The superior identifier.
+        @see AutomatId
+    */
+    required AutomatId    superior = 2;
+    /** @property position
+        @brief The position.
+        @see CoordLatLong
+    */
+    required CoordLatLong position = 3;
 }
 
-// Magic Action
+/** @struct UnitMagicAction
+    @brief An agent magic action request.
+    
+    This message is sent by a client to perform a magic action.
+    
+    @see UnitMagicActionAck
+    @todo rename into AgentMagicAction
+*/
 message UnitMagicAction {
+    /** @enum Type
+        @brief The type of magic action.
+        
+        Specific parameters are expected for each type.
+
+        @todo Explain what parameters are expected for each type
+    */
    enum Type {
+        /** @brief A move to magic action.
+        */
         move_to                   = 0;
+        /** @brief A surrender to magic action.
+        */
         surrender_to              = 1;
+        /** @brief A cancel surrender magic action.
+        */
         cancel_surrender          = 2;
+        /** @brief A recover transporters magic action.
+        */
         recover_transporters      = 3;
+        /** @brief A destroy component magic action.
+        */
         destroy_component         = 4;
+        /** @brief A recover all magic action.
+        */
         recover_all               = 5;
+        /** @brief A recover troops magic action.
+        */
         recover_troops            = 6;
+        /** @brief A recover equiments magic action.
+        */
         recover_equipments        = 7;
+        /** @brief A recover resources magic action.
+        */
         recover_resources         = 8;
+        /** @brief A destroy all magic action.
+        */
         destroy_all               = 9;
+        /** @brief A change human factors magic action.
+        */
         change_human_factors      = 10;
+        /** @brief A partial recovery magic action.
+        */
         partial_recovery          = 11;
+        /** @brief A unit creation magic action.
+        */
         unit_creation             = 12;
+        /** @brief A create fire order magic action.
+        */
         create_fire_order         = 13;
+        /** @brief A crowd total destruction magic action.
+        */
         crowd_total_destruction   = 14;
+        /** @brief A crowd kill magic action.
+        */
         crowd_kill                = 15;
+        /** @brief A crowd resurrect magic action.
+        */
         crowd_resurrect           = 16;
+        /** @brief A crowd change attitude magic action.
+        */
         crowd_change_attitude     = 17;
+        /** @brief A change knowledge group magic action.
+        */
         change_knowledge_group    = 18;
+        /** @brief A change logistic links magic action.
+        */
         change_logistic_links     = 19;
+        /** @brief A unit change superior magic action.
+        */
         unit_change_superior      = 20;
+        /** @brief A change automate superior magic action.
+        */
         change_automat_superior   = 21;
+        /** @brief A change formation superior magic action.
+        */
         change_formation_superior = 22;
+        /** @brief A knowledge group update magic action.
+        */
         knowledge_group_update    = 23;
+        /** @brief A log supply push flow magic action.
+        */
         log_supply_push_flow      = 24;
+        /** @brief A log supply change quotas magic action.
+        */
         log_supply_change_quotas  = 25;
+        /** @brief An automate creation magic action.
+        */
         automat_creation          = 26;
+        /** @brief A formation creation magic action.
+        */
         formation_creation        = 27;
+        /** @brief A crowd creation magic action.
+        */
         crowd_creation            = 28;
+        /** @brief A log supply pull flow magic action.
+        */
         log_supply_pull_flow      = 29;
+        /** @brief A create wound magic action.
+        */
         create_wound              = 30;
     }
-   required Tasker            tasker     = 1;
-   required Type              type       = 2;
-   required MissionParameters parameters = 3;
+    /** @property tasker
+        @brief The tasker.
+        @see Tasker
+        @todo Explain what is a "tasker"
+    */
+    required Tasker            tasker     = 1;
+    /** @property type
+        @brief The magic action type.
+        @see Type
+    */
+    required Type              type       = 2;
+    /** @property parameters
+        @brief The magic action parameters, depending on the magic action type.
+        @see MissionParameters
+    */
+    required MissionParameters parameters = 3;
 }
 
+/** @struct KnowledgeMagicAction
+    @brief A knowledge magic action request.
+    
+    This message is sent by a client to perform a magic action.
+    
+    @todo no corresponding ack message ?
+*/
 message KnowledgeMagicAction {
+    /** @enum Type
+        @brief The type of magic action.
+        
+        Specific parameters are expected for each type.
+        
+        @todo Explain what parameters are expected for each type
+    */
    enum Type {
+        /** @brief A enable knowledge magic action.
+        */
         enable              = 0;
+        /** @brief A update party knowledge magic action.
+        */
         update_party        = 1;
+        /** @brief A update party parent knowledge magic action.
+        */
         update_party_parent = 2;
+        /** @brief A update type knowledge magic action.
+        */
         update_type         = 3;
     }
-   required KnowledgeGroupId  knowledge_group = 1;
-   required Type              type            = 2;
-   required MissionParameters parameters      = 3;
+    /** @property knowledge_group
+        @brief The knowledge group identifier.
+        @see KnowledgeGroupId
+    */
+    required KnowledgeGroupId  knowledge_group = 1;
+    /** @property type
+        @brief The magic action type.
+        @see KnowledgeGroupId
+    */
+    required Type              type            = 2;
+    /** @property parameters
+        @brief The magic action parameters, depending on the magic action type.
+        @see MissionParameters
+    */
+    required MissionParameters parameters      = 3;
 }
 
+/** @struct ObjectMagicAction
+    @brief An object magic action request.
+    
+    This message is sent by a client to perform a magic action.
+    
+    @see ObjectMagicActionAck
+*/
 message ObjectMagicAction {
-   enum Type {
+    /** @enum Type
+        @brief The type of magic action.
+        
+        Specific parameters are expected for each type.
+        
+        @todo Explain what parameters are expected for each type
+    */
+    enum Type {
+        /** @brief A create object magic action.
+        */
         create  = 0;
+        /** @brief An update object magic action.
+        */
         update  = 1;
+        /** @brief A destroy object magic action.
+        */
         destroy = 2;
-   }
-
-   enum Attribute {
+    }
+    /** @enum Attribute
+        @brief The type of object.
+        
+        The first parameter among the parameters actually is of type
+        MissionParameter::Value::identifier and must be reinterpreted as a value
+        of this enumeration.
+        
+        @todo This must be a joke !
+    */
+    enum Attribute {
         construction       = 0;
         obstacle           = 1;
         mine               = 2;
@@ -107,11 +315,22 @@ message ObjectMagicAction {
         nbc_agent          = 14;
         effect_delay       = 15;
         flood              = 16;
-   }
-
-   required ObjectId          object     = 1;
-   required Type              type       = 2;
-   required MissionParameters parameters = 3;
+    }
+    /** @property object
+        @brief The object identifier
+        @see ObjectId
+    */
+    required ObjectId          object     = 1;
+    /** @property type
+        @brief The type of magic action
+        @see Type
+    */
+    required Type              type       = 2;
+    /** @property parameters
+        @brief The parameters of the magic action
+        @see MissionParameters
+    */
+    required MissionParameters parameters = 3;
 }
 
 message MagicAction {
@@ -142,12 +361,12 @@ message ControlEnableVisionCones {
 }
 
 message ChangePopulationMagicAction {
-  required PopulationId   tasker     = 1;
-  repeated PartyAdhesion  adhesions  = 2;
-  optional int32          healthy    = 3;
-  optional int32          wounded    = 4;
-  optional int32          dead       = 5;
-  optional MotivationType motivation = 6;
+    required PopulationId   tasker     = 1;
+    repeated PartyAdhesion  adhesions  = 2;
+    optional int32          healthy    = 3;
+    optional int32          wounded    = 4;
+    optional int32          dead       = 5;
+    optional MotivationType motivation = 6;
 }
 
 message UrbanMagicAction {
@@ -155,10 +374,10 @@ message UrbanMagicAction {
         optional bool  active    = 1;
         optional float threshold = 2;
     }
-  required UrbanObjectId  id               = 1;
-  repeated UrbanUsage     usages           = 2;
-  optional Infrastructure infrastructure   = 3;
-  optional uint32         structural_state = 4;
+    required UrbanObjectId  id               = 1;
+    repeated UrbanUsage     usages           = 2;
+    optional Infrastructure infrastructure   = 3;
+    optional uint32         structural_state = 4;
 }
 
 message ClientToSim {
