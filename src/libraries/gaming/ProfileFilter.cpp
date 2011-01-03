@@ -88,7 +88,7 @@ bool ProfileFilter::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
         knowledgeToCheckGroup = superior->Retrieve< AgentKnowledges >();
     if( filteredGroup == knowledgeToCheckGroup && filteredGroup )
         return true;
-    if( !knowledgeToCheckGroup && &knowledge.GetOwner() == &cHierarchies_->GetTop() && !cHierarchies_->IsJammed() )
+    if( !knowledgeToCheckGroup && &knowledge.GetOwner() == &cHierarchies_->GetTop() )
         return true;
     if( &cHierarchies_->GetTop() == entity_ )
         return IsVisibleFromTeam( knowledge, entity_ );
