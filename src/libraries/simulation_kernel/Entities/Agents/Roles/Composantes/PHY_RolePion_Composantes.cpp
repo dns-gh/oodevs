@@ -1111,20 +1111,18 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
         T_LoanCountMap loanData;
         for( CIT_LoanMap it = lentComposantes_.begin(); it != lentComposantes_.end(); ++it )
         {
-            const MIL_Agent_ABC&          pion        = it->first->GetPion();
+            const MIL_Agent_ABC& pion = it->first->GetPion();
             const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
             for( PHY_ComposantePion::CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
                 ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
         }
-        if( !loanData.empty() )
+        sword::LentEquipments& lentEquipements = *message().mutable_equipements_pretes();
+        for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
         {
-            for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
-            {
-                sword::LentEquipments_LentEquipment& loan = *message().mutable_equipements_pretes()->add_elem();
-                loan.mutable_borrower()->set_id( it->first.first ->GetID() );
-                loan.mutable_type()->set_id( it->first.second->GetMosID().id() );
-                loan.set_nombre              ( it->second );
-            }
+            sword::LentEquipments_LentEquipment& loan = *lentEquipements.add_elem();
+            loan.mutable_borrower()->set_id( it->first.first ->GetID() );
+            loan.mutable_type()->set_id( it->first.second->GetMosID().id() );
+            loan.set_nombre( it->second );
         }
     }
 
@@ -1133,20 +1131,18 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
         T_LoanCountMap loanData;
         for( CIT_LoanMap it = borrowedComposantes_.begin(); it != borrowedComposantes_.end(); ++it )
         {
-            const MIL_Agent_ABC&          pion        = it->first->GetPion();
+            const MIL_Agent_ABC& pion = it->first->GetPion();
             const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
             for( PHY_ComposantePion::CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
                 ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
         }
-        if( !loanData.empty() )
+        sword::BorrowedEquipments& borrowedEquipements = *message().mutable_equipements_empruntes();
+        for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
         {
-            for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
-            {
-                sword::BorrowedEquipments_BorrowedEquipment& loan = *message().mutable_equipements_empruntes()->add_elem();
-                loan.mutable_owner()->set_id(  it->first.first ->GetID() );
-                loan.mutable_type()->set_id(  it->first.second->GetMosID().id() );
-                loan.set_nombre           ( it->second );
-            }
+            sword::BorrowedEquipments_BorrowedEquipment& loan = *borrowedEquipements.add_elem();
+            loan.mutable_owner()->set_id(  it->first.first ->GetID() );
+            loan.mutable_type()->set_id(  it->first.second->GetMosID().id() );
+            loan.set_nombre( it->second );
         }
     }
 }
