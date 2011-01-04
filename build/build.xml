@@ -868,7 +868,6 @@
             <property name="GENERATE_TREEVIEW" value="YES"/>
             <property name="DISABLE_INDEX" value="NO"/>
             <property name="WARNINGS" value="YES"/>
-            <property name="ALIASES" value="message=struct"/>
             <property name="WARN_LOGFILE" value="${reports.dir}/doxygen.log"/>
         </doxygen-report>
         <fail message="documentation contains errors, see ${reports.dir}/doxygen.log">

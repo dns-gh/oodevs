@@ -9,7 +9,7 @@
 
 package sword;
 
-/** @message ServicesDescription
+/** @struct ServicesDescription
     @brief A message sent by the Dispatcher to announce available services.
     
     This message is sent just after a client connection request. It provides
@@ -25,13 +25,13 @@ message ServicesDescription {
     repeated string services = 1;
 }
 
-/** @message DispatcherToClient
+/** @struct DispatcherToClient
     @brief A facade for all available messages going from Dispatcher to client.
     
     This is the actual message sent over the network.
 */
 message DispatcherToClient {
-    /** @message Content
+    /** @struct Content
         @brief The possible messages contained in a Dispatcher to client message.
         @warning Each Content message must contain exactly one of the possible messages.
     */

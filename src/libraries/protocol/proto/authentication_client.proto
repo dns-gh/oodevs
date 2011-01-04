@@ -12,7 +12,7 @@ import "version.proto";
 
 package sword;
 
-/** @message AuthenticationResponse
+/** @struct AuthenticationResponse
     @brief A response message to an @ref AuthenticationRequest.
     
     This message is sent in response to an authentication request. It contains 
@@ -32,7 +32,7 @@ message AuthenticationResponse {
         mismatched_protocol_version = 4; //!< Authentication failed because of a mismatched protocol version between client and server.
     }
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                an authentication operation.
         @see ErrorCode
     */
@@ -65,7 +65,7 @@ message AuthenticationResponse {
     optional string                 terrain_name      = 6;
 }
 
-/** @message ProfileCreation
+/** @struct ProfileCreation
     @brief A profile creation message.
     
     This message is sent when a profile is created. This can occur:
@@ -80,7 +80,7 @@ message ProfileCreation {
     required Profile profile = 1;
 }
 
-/** @message ProfileCreationRequestAck
+/** @struct ProfileCreationRequestAck
     @brief A profile creation request acknowledgement message.
     
     This message is sent when a profile is created manually by an authorised user (supervisor).
@@ -101,14 +101,14 @@ message ProfileCreationRequestAck {
     */
     required string    login      = 1;
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                a profile creation operation.
         @see ErrorCode
     */
     required ErrorCode error_code = 2;
 }
 
-/** @message ProfileUpdateRequestAck
+/** @struct ProfileUpdateRequestAck
     @brief A profile update request acknowledgement message.
     
     This message is sent when a profile is updated manually by an authorised user (supervisor).
@@ -130,14 +130,14 @@ message ProfileUpdateRequestAck {
     */
     required string    login      = 1;
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                a profile update operation.
         @see ErrorCode
     */
     required ErrorCode error_code = 2;
 }
 
-/** @message ProfileUpdate
+/** @struct ProfileUpdate
     @brief A profile update message.
     
     This message is sent when a profile is updated during the game by 
@@ -155,7 +155,7 @@ message ProfileUpdate {
     required Profile profile = 2;
 }
 
-/** @message ProfileDestruction
+/** @struct ProfileDestruction
     @brief A profile destruction message.
     
     This message is sent:
@@ -169,7 +169,7 @@ message ProfileDestruction {
     optional string login = 1;
 }
 
-/** @message ProfileDestructionRequestAck
+/** @struct ProfileDestructionRequestAck
     @brief A profile destruction request acknowledgement message.
     
     This message is sent when a profile is destroyed manually by an authorised user (supervisor).
@@ -185,7 +185,7 @@ message ProfileDestructionRequestAck {
         failure         = 2; //!< @deprecated never used
     }
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                a profile destruction operation.
         @see ErrorCode
     */
@@ -196,7 +196,7 @@ message ProfileDestructionRequestAck {
     required string    login      = 2;
 }
 
-/** @message RoleType
+/** @struct RoleType
     @brief Defines a role played by a profile during the game.
     
     Profile roles are listed in file "resources/Extensions.xml" (profile-attributes).
@@ -208,7 +208,7 @@ message RoleType {
     required uint32 id = 1;
 }
 
-/** @message Profile
+/** @struct Profile
     @brief Profile data: login, password, access-rights...
     
     The profile information can be set :
@@ -318,7 +318,7 @@ message Profile {
     optional RoleType        role                    = 12;
 }
 
-/** @message ProfileDescriptionList
+/** @struct ProfileDescriptionList
     @brief A list of ProfileDescription.
     @todo should be integrated to AuthenticationResponse fields
 */
@@ -329,7 +329,7 @@ message ProfileDescriptionList {
     repeated ProfileDescription elem = 1;
 }
 
-/** @message ProfileDescription
+/** @struct ProfileDescription
     @brief A short profile description.
     
     This description is when authentication fail in order to provide
@@ -356,13 +356,13 @@ message ProfileDescription {
     optional RoleType role       = 4;
 }
 
-/** @message AuthenticationToClient
+/** @struct AuthenticationToClient
     @brief A facade for all available messages going from authentication to client.
     
     This is the actual message sent over the network.
 */
 message AuthenticationToClient {
-    /** @message Content
+    /** @struct Content
         @brief The possible messages contained in an authentication to client message.
         @warning Each Content message must contain exactly one of the possible messages.
     */

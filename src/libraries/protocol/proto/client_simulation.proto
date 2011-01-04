@@ -11,7 +11,7 @@ import "common.proto";
 
 package sword;
 
-/** @message ControlDatetimeChange
+/** @struct ControlDatetimeChange
     @brief A date and/or time change request.
     
     This message is sent by a client to change the current date and/or time.
@@ -26,7 +26,7 @@ message ControlDatetimeChange {
    required DateTime date_time = 1;
 }
 
-/** @message ControlCheckPointSaveNow
+/** @struct ControlCheckPointSaveNow
     @brief A checkpoint save request.
     
     This message is sent by a client to trigger a checkpoint save.
@@ -40,7 +40,7 @@ message ControlCheckPointSaveNow {
    optional string name = 1;
 }
 
-/** @message SetAutomatMode
+/** @struct SetAutomatMode
     @brief An automate mode change request.
     
     This message is sent by a client to activate or deactivate an automate.
@@ -60,7 +60,7 @@ message SetAutomatMode {
     required EnumAutomatMode mode     = 2;
 }
 
-/** @message UnitCreationRequest
+/** @struct UnitCreationRequest
     @brief An agent creation request.
     
     This message is sent by a client to create an agent.
@@ -87,7 +87,7 @@ message UnitCreationRequest {
     required CoordLatLong position = 3;
 }
 
-/** @message UnitMagicAction
+/** @struct UnitMagicAction
     @brief An agent magic action request.
     
     This message is sent by a client to perform a magic action.
@@ -216,7 +216,7 @@ message UnitMagicAction {
     required MissionParameters parameters = 3;
 }
 
-/** @message KnowledgeMagicAction
+/** @struct KnowledgeMagicAction
     @brief A knowledge magic action request.
     
     This message is sent by a client to perform a magic action.
@@ -262,7 +262,7 @@ message KnowledgeMagicAction {
     required MissionParameters parameters      = 3;
 }
 
-/** @message ObjectMagicAction
+/** @struct ObjectMagicAction
     @brief An object magic action request.
     
     This message is sent by a client to perform a magic action.
@@ -333,7 +333,7 @@ message ObjectMagicAction {
     required MissionParameters parameters = 3;
 }
 
-/** @message MagicAction
+/** @struct MagicAction
     @brief A magic action request.
     
     This message is sent by a client to perform a magic action.
@@ -377,7 +377,7 @@ message MagicAction {
     required MissionParameters parameters = 2;
 }
 
-/** @message ControlCheckPointSetFrequency
+/** @struct ControlCheckPointSetFrequency
     @brief A checkpoint frequency change request.
     
     This message is sent by a client to change the frequency of automatic checkpoints.
@@ -392,7 +392,7 @@ message ControlCheckPointSetFrequency {
    required int32 frequency = 1;
 }
 
-/** @message ControlCheckPointDeleteRequest
+/** @struct ControlCheckPointDeleteRequest
     @brief A checkpoint deletion request.
     
     This message is sent by a client to delete a checkpoint.
@@ -407,7 +407,7 @@ message ControlCheckPointDeleteRequest {
     required string checkpoint = 1;
 }
 
-/** @message ControlCheckPointListRequest
+/** @struct ControlCheckPointListRequest
     @brief A checkpoint list request.
     
     This message is sent by a client to retrieve the list of checkpoints.
@@ -418,7 +418,7 @@ message ControlCheckPointDeleteRequest {
 message ControlCheckPointListRequest {
 }
 
-/** @message ControlEnableVisionCones
+/** @struct ControlEnableVisionCones
     @brief A vision cones toggle request.
     
     This message is sent by a client to toggle the sending of vision cones.
@@ -432,7 +432,7 @@ message ControlEnableVisionCones {
    required bool vision_cones = 1;
 }
 
-/** @message ChangePopulationMagicAction
+/** @struct ChangePopulationMagicAction
     @brief A change population magic action.
     
     This message is sent by a client to alter a population with a magic action.
@@ -471,7 +471,7 @@ message ChangePopulationMagicAction {
     optional MotivationType motivation = 6;
 }
 
-/** @message UrbanMagicAction
+/** @struct UrbanMagicAction
     @brief A urban magic action.
     
     This message is sent by a client to alter a urban object with a magic action.
@@ -479,7 +479,7 @@ message ChangePopulationMagicAction {
     @see UrbanMagicActionAck
 */
 message UrbanMagicAction {
-    /** @message Infrastructure
+    /** @struct Infrastructure
         @brief An infrastructure.
     */
     message Infrastructure {
@@ -517,13 +517,13 @@ message UrbanMagicAction {
     optional uint32         structural_state = 4;
 }
 
-/** @message ClientToSim
+/** @struct ClientToSim
     @brief A facade for all messages from clients to the simulation.
     
     This is the actual message sent over the network.
 */
 message ClientToSim {
-    /** @message Content
+    /** @struct Content
         @brief The possible messages contained in a client to simulation message.
         @warning Each Content message must contain exactly one of the possible messages.
     */

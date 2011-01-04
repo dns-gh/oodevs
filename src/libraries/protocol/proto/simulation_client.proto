@@ -50,7 +50,7 @@ enum EnumLogSupplyHandlingStatus {
     termine                                    = 7;
 }
 
-/** @message OrderAck
+/** @struct OrderAck
     @brief A container for order acknowledgement error message.
 */
 message OrderAck {
@@ -131,7 +131,7 @@ message OrderAck {
     }
 }
 
-/** @message TaskCreationRequestAck
+/** @struct TaskCreationRequestAck
     @brief An agent order execution request acknowledgement message.
     
     This message is sent when an agent order is issued in response to a client request (UnitOrder).
@@ -144,14 +144,14 @@ message TaskCreationRequestAck {
     */
     required Tasker             tasker     = 1;
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                an agent order execution operation.
         @see OrderAck.ErrorCode
     */
     required OrderAck.ErrorCode error_code = 2;
 }
 
-/** @message FragOrderAck
+/** @struct FragOrderAck
     @brief A fragmentary order execution request acknowledgement message.
     
     This message is sent when a fragmentary order is issued in response to a client request (FragOrder).
@@ -164,14 +164,14 @@ message FragOrderAck {
     */
     required Tasker             tasker     = 1;
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                a fragmentary order execution operation.
         @see OrderAck.ErrorCode
     */
     required OrderAck.ErrorCode error_code = 2;
 }
 
-/** @message SetAutomatModeAck
+/** @struct SetAutomatModeAck
     @brief An automat mode change request acknowledgement message.
     
     This message is sent when an automat mode change is executed in response to a 
@@ -205,14 +205,14 @@ message SetAutomatModeAck {
     */
     required AutomatId automate   = 1;
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the automat mode changing operation.
         @see ErrorCode
     */
     required ErrorCode error_code = 2;
 }
 
-/** @message UnitActionAck
+/** @struct UnitActionAck
     @brief A container for agent action acknowledgement error message.
     @todo rename to AgentActionAck
 */
@@ -249,7 +249,7 @@ message UnitActionAck {
     }
 }
 
-/** @message UnitCreationRequestAck
+/** @struct UnitCreationRequestAck
     @brief An agent creation request acknowledgement message.
     
     This message is sent in response to an agent creation request.
@@ -259,14 +259,14 @@ message UnitActionAck {
 */
 message UnitCreationRequestAck {
     /** @property error
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the agent creation operation.
         @see UnitActionAck.ErrorCode
     */
     required UnitActionAck.ErrorCode error = 1;
 }
 
-/** @message UnitMagicActionAck
+/** @struct UnitMagicActionAck
     @brief An agent magic action execution request acknowledgement message.
     
     This message is sent in response to an agent magic action request
@@ -280,14 +280,14 @@ message UnitMagicActionAck {
     */
     required UnitId                  unit       = 1;
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the agent magic action execution operation.
         @see UnitActionAck.ErrorCode
     */
     required UnitActionAck.ErrorCode error_code = 2;
 }
 
-/** @message MagicActionAck
+/** @struct MagicActionAck
     @brief A magic action execution request acknowledgement message.
     
     This message is sent when a magic action is issued in response to a client request.
@@ -310,14 +310,14 @@ message MagicActionAck {
         error_invalid_attribute = 1;
     }
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the magic action execution operation.
         @see ErrorCode
     */
     required ErrorCode error_code = 1;
 }
 
-/** @message ObjectMagicActionAck
+/** @struct ObjectMagicActionAck
     @brief An object magic action execution request acknowledgement message.
     
     This message is sent when an object magic action is issued in response to a client request
@@ -363,14 +363,14 @@ message ObjectMagicActionAck {
         error_invalid_specific_attributes = 6;
     }
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the object magic action execution operation.
         @see ErrorCode
     */
     required ErrorCode error_code = 1;
 }
 
-/** @message CrowdMagicActionAck
+/** @struct CrowdMagicActionAck
     @brief An crowd magic action execution request acknowledgement message.
     
     This message is sent when a crowd magic action is issued in response to a client request (CrowdMagicAction).
@@ -400,14 +400,14 @@ message CrowdMagicActionAck {
     */
     required CrowdId   crowd      = 1;
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the crowd magic action execution operation.
         @see ErrorCode
     */
     required ErrorCode error_code = 2;
 }
 
-/** @message ChangeDiplomacyAck
+/** @struct ChangeDiplomacyAck
     @brief A diplomacy change request acknowledgement message.
     
     This message is sent when a diplomacy change is realized in response to a client request (ChangeDiplomacy).
@@ -446,14 +446,14 @@ message ChangeDiplomacyAck {
     */
     required EnumDiplomacy                diplomatie = 3;
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the diplomacy change operation.
         @see EnumChangeDiplomacyErrorCode
     */
     required EnumChangeDiplomacyErrorCode error_code = 4;
 }
 
-/** @message HierarchyModificationAck
+/** @struct HierarchyModificationAck
     @brief A container for hierarchy modification action acknowledgement error message.
     @todo split into different types
 */
@@ -519,7 +519,7 @@ message HierarchyModificationAck {
     }
 }
 
-/** @message AutomatChangeKnowledgeGroupAck
+/** @struct AutomatChangeKnowledgeGroupAck
     @brief An acknowledgement message to an automat's knowledge group change request.
     
     This message is sent when an automat's knowledge group change is realized in response to a client request 
@@ -528,14 +528,14 @@ message HierarchyModificationAck {
 */
 message AutomatChangeKnowledgeGroupAck  {
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the automat knowledge group change operation.
         @see HierarchyModificationAck.ErrorCode
     */
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
-/** @message ChangeLogisticLinksAck
+/** @struct ChangeLogisticLinksAck
     @brief An acknowledgement message to an automat's logistic links change request.
     
     This message is sent when an automat's logistic links change is realized in response to a client request 
@@ -544,14 +544,14 @@ message AutomatChangeKnowledgeGroupAck  {
 */
 message ChangeLogisticLinksAck  {
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the automat logistic links change operation.
         @see HierarchyModificationAck.ErrorCode
     */
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
-/** @message AutomatChangeSuperiorAck
+/** @struct AutomatChangeSuperiorAck
     @brief An acknowledgement message to an automat's superior change request.
     
     This message is sent when an automat's superior change is realized in response to a client request 
@@ -560,14 +560,14 @@ message ChangeLogisticLinksAck  {
 */
 message AutomatChangeSuperiorAck  {
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the automat superior change operation.
         @see HierarchyModificationAck.ErrorCode
     */
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
-/** @message UnitChangeSuperiorAck
+/** @struct UnitChangeSuperiorAck
     @brief An acknowledgement message to an agent's superior change request.
     
     This message is sent when an agent's superior change is realized in response to a client request 
@@ -576,14 +576,14 @@ message AutomatChangeSuperiorAck  {
 */
 message UnitChangeSuperiorAck  {
     /** @property error_code
-        @brief Enumeration indicating the success of failure (with reason) of
+        @brief Enumeration indicating the success or failure (with reason) of
                the agent superior change operation.
         @see HierarchyModificationAck.ErrorCode
     */
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
-/** @message LogSupplyPushFlowAck
+/** @struct LogSupplyPushFlowAck
     @brief An acknowledgement message to a logistic pushed flow request.
     
     This message is sent when a logistic pushed flow is realized in response to a client request 
@@ -614,15 +614,15 @@ message LogSupplyPushFlowAck  {
         error_invalid_receveur_pushflow = 2;
     }
     /** @property ack
-        @brief Enumeration indicating the success of failure (with reason) of
-               the pushed flow.
+        @brief Enumeration indicating the success or failure (with reason) of
+               the request.
         @see EnumLogSupplyPushFlow
         @todo rename to error_code
     */
     optional EnumLogSupplyPushFlow ack = 1;
 }
 
-/** @message LogSupplyPullFlowAck
+/** @struct LogSupplyPullFlowAck
     @brief An acknowledgement message to a logistic pulled flow request.
     
     This message is sent when a logistic pulled flow is realized in response to a client request 
@@ -653,15 +653,15 @@ message LogSupplyPullFlowAck  {
         error_invalid_receiver_pullflow = 2;
     }
     /** @property ack
-        @brief Enumeration indicating the success of failure (with reason) of
-               the pulled flow.
+        @brief Enumeration indicating the success or failure (with reason) of
+               the request.
         @see EnumLogSupplyPushFlow
         @todo rename to error_code
     */
     optional EnumLogSupplyPullFlow ack = 1;
 }
 
-/** @message LogSupplyChangeQuotasAck
+/** @struct LogSupplyChangeQuotasAck
     @brief An acknowledgement message to a quota allocation change request.
     
     This message is sent when a quota allocation is changed in response to a client request 
@@ -692,40 +692,65 @@ message LogSupplyChangeQuotasAck {
         error_invalid_receveur_quotas = 2;
     }
     /** @property ack
-        @brief Enumeration indicating the success of failure (with reason) of
-               the pulled flow.
+        @brief Enumeration indicating the success or failure (with reason) of
+               the request.
         @see LogSupplyChangeQuotas
         @todo rename to error_code
     */
     optional LogSupplyChangeQuotas ack = 1;
 }
 
-/** @message ActionCreateFireOrderAck
+/** @struct ActionCreateFireOrderAck
     @brief An acknowledgement message to a creation fire order request.
-    
-    This message is sent when a quota allocation is changed in response to a client request
-    (UnitMagicAction of UnitMagiAction.Type.log_supply_change_quotas).
-    @todo gather magic action acks
+    @see ActionCreateFireOrder
 */
 message ActionCreateFireOrderAck {
+    /** @enum EnumActionCreateFireOrderErrorCode
+        @brief Enumeration indicating the success or failure (with reasons) of 
+               the create fire order.
+        @todo rename to ErrorCode
+    */
     enum EnumActionCreateFireOrderErrorCode {
+        /** @brief Operation succeeded
+            @todo make error_code optional and remove no_error
+        */
         no_error                    = 0;
+        /** @brief Operation failed because of an invalid reporter.
+            No existing reporter with the provided identifier can be found.
+        */
         error_invalid_reporter      = 1;
+        /** @brief Operation failed because of an invalid target.
+            No existing target with the provided identifier can be found.
+        */
         error_invalid_target        = 2;
+        /** @brief Operation failed because of an invalid ammunition.
+            No existing ammunition with the provided identifier can be found.
+            @todo rename to error_invalid_ammunition
+        */
         error_invalid_munition      = 3;
+        /** @brief Operation failed because of the target not being illuminated.
+            @todo explain a bit more what illuminated means and how to illuminate a target
+            @todo rename to error_target_not_illuminated
+        */
         error_target_no_illuminated = 4;
     }
+    /** @property error_code
+        @brief Enumeration indicating the success or failure (with reason) of
+               the request.
+        @see EnumActionCreateFireOrderErrorCode
+        @todo change field index to 1
+    */
     required EnumActionCreateFireOrderErrorCode error_code = 2;
 }
 
 message ChangePopulationMagicActionAck {
     enum ErrorCode {
-       no_error                 = 0;
-       error_invalid_population = 1;
-       error_invalid_adhesion   = 2; // unknown party for instance
-       error_invalid_number     = 3; // negative number of dead for instance?
+        no_error                 = 0;
+        error_invalid_population = 1;
+        error_invalid_adhesion   = 2; // unknown party for instance
+        error_invalid_number     = 3; // negative number of dead for instance?
     }
-  required ErrorCode error_code = 1;
+    required ErrorCode error_code = 1;
 }
 
 message UrbanMagicActionAck {
