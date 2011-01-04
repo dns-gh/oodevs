@@ -683,10 +683,6 @@
         <translation>en attente de médecin</translation>
     </message>
     <message>
-        <source>looking for triange area</source>
-        <translation>recherche de zone de tri</translation>
-    </message>
-    <message>
         <source>waiting for triage</source>
         <translation>en attente de tri</translation>
     </message>
@@ -845,6 +841,10 @@
     <message>
         <source>extinguisher agent</source>
         <translation>Agent extincteur</translation>
+    </message>
+    <message>
+        <source>looking for triage area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

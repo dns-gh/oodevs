@@ -1167,7 +1167,7 @@
     </message>
     <message>
         <source>Known blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocs connus</translation>
     </message>
     <message>
         <source>Unknown urban object</source>

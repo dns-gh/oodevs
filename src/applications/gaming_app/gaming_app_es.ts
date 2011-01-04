@@ -1994,6 +1994,13 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>Object</name>
+    <message>
+        <source>Known objects</source>
+        <translation>Objetos conocidos</translation>
+    </message>
+</context>
+<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
@@ -2009,10 +2016,6 @@ Motivo: %3
     <message>
         <source>Object knowledges</source>
         <translation>Conocimiento de objetos</translation>
-    </message>
-    <message>
-        <source>Known objects</source>
-        <translation>Objetos conocidos</translation>
     </message>
     <message>
         <source>Identifier:</source>
@@ -2996,6 +2999,13 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>Urban</name>
+    <message>
+        <source>Known blocks</source>
+        <translation>Bloques conocidos</translation>
+    </message>
+</context>
+<context>
     <name>UrbanKnowledgePanel</name>
     <message>
         <source>Urban knowledges</source>
@@ -3020,10 +3030,6 @@ Motivo: %3
     <message>
         <source>Agent</source>
         <translation>Agente</translation>
-    </message>
-    <message>
-        <source>Known blocks</source>
-        <translation>Bloques conocidos</translation>
     </message>
     <message>
         <source>Associated block:</source>

@@ -1994,6 +1994,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>Object</name>
+    <message>
+        <source>Known objects</source>
+        <translation>Objets connus</translation>
+    </message>
+</context>
+<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
@@ -2009,10 +2016,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Object knowledges</source>
         <translation>Connaissances d&apos;objet</translation>
-    </message>
-    <message>
-        <source>Known objects</source>
-        <translation>Objets connus</translation>
     </message>
     <message>
         <source>Identifier:</source>
@@ -2996,6 +2999,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>Urban</name>
+    <message>
+        <source>Known blocks</source>
+        <translation>Blocs connus</translation>
+    </message>
+</context>
+<context>
     <name>UrbanKnowledgePanel</name>
     <message>
         <source>Urban knowledges</source>
@@ -3020,10 +3030,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Agent</source>
         <translation>Agent</translation>
-    </message>
-    <message>
-        <source>Known blocks</source>
-        <translation>Blocs connus</translation>
     </message>
     <message>
         <source>Associated block:</source>

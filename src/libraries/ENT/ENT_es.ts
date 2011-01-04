@@ -683,10 +683,6 @@
         <translation>esperando por médico</translation>
     </message>
     <message>
-        <source>looking for triange area</source>
-        <translation>buscando area de triaje(clasificación)</translation>
-    </message>
-    <message>
         <source>waiting for triage</source>
         <translation>esperando por triaje(clasificación)</translation>
     </message>
@@ -844,6 +840,10 @@
     </message>
     <message>
         <source>c</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>looking for triage area</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

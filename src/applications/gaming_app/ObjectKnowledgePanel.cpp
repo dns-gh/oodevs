@@ -19,6 +19,7 @@
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "gaming/ObjectKnowledges.h"
 #include "gaming/ObjectPerceptions.h"
 
@@ -36,7 +37,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     , subSelected_ ( controllers )
 {
     pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( tr( "Known objects" ) );
+    pKnowledgeListView_->AddColumn( tools::translate( "Object", "Known objects" ) );
 
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tr( "Information" ) )

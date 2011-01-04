@@ -16,6 +16,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/UrbanKnowledge_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/ListDisplayer.h"
 #include "gaming/UrbanKnowledges.h"
@@ -35,7 +36,7 @@ UrbanKnowledgePanel::UrbanKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , subSelected_ ( controllers )
 {
     pKnowledgeListView_ = new ListDisplayer< UrbanKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( tr( "Known blocks" ) );
+    pKnowledgeListView_->AddColumn( tools::translate( "Urban", "Known blocks" ) );
 
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tr( "Details" ) )
