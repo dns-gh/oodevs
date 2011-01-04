@@ -9,7 +9,7 @@
 
 package sword;
 
-/** @struct ProtocolVersion
+/** @message ProtocolVersion
     @brief A message containing the current protocol version.
     
     This message is meant to be used when the client/server needs to 

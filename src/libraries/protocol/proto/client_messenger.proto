@@ -11,7 +11,7 @@ import "common.proto";
 
 package sword;
 
-/** @struct LimaCreationRequest
+/** @message LimaCreationRequest
     @brief A message to request phase line creation.
     
     This message requests the creation of a phase line.
@@ -28,7 +28,7 @@ message LimaCreationRequest {
     required TacticalLine tactical_line = 1;
 }
 
-/** @struct LimaUpdateRequest
+/** @message LimaUpdateRequest
     @brief A message to request phase line update.
     
     This message requests the update of an existing phase line.
@@ -51,7 +51,7 @@ message LimaUpdateRequest {
     optional TacticalLine    tactical_line = 2;
 }
 
-/** @struct LimaDestructionRequest
+/** @message LimaDestructionRequest
     @brief A message to request phase line destruction.
     
     This message requests the destruction of an existing phase line.
@@ -68,7 +68,7 @@ message LimaDestructionRequest {
     required TacticalLineId id = 1;
 }
 
-/** @struct LimitCreationRequest
+/** @message LimitCreationRequest
     @brief A message to request limit creation.
     
     This message requests the creation of a limit.
@@ -83,7 +83,7 @@ message LimitCreationRequest {
     required TacticalLine tactical_line = 1;
 }
 
-/** @struct LimitUpdateRequest
+/** @message LimitUpdateRequest
     @brief A message to request limit update.
     
     This message requests the update of an existing limit.
@@ -104,7 +104,7 @@ message LimitUpdateRequest {
     optional TacticalLine    tactical_line = 2;
 }
 
-/** @struct LimitDestructionRequest
+/** @message LimitDestructionRequest
     @brief A message to request limit destruction.
     
     This message requests the destruction of an existing limit.
@@ -119,7 +119,7 @@ message LimitDestructionRequest {
     required TacticalLineId id = 1;
 }
 
-/** @struct IntelligenceCreationRequest
+/** @message IntelligenceCreationRequest
     @brief A message to request intelligence creation.
     
     This message requests the creation of an intelligence.
@@ -134,7 +134,7 @@ message IntelligenceCreationRequest {
     required Intelligence intelligence = 1;
 }
 
-/** @struct IntelligenceUpdateRequest
+/** @message IntelligenceUpdateRequest
     @brief A message to request intelligence update.
     
     This message requests the update of an existing intelligence.
@@ -189,7 +189,7 @@ message IntelligenceUpdateRequest {
     optional EnumDiplomacy   diplomacy    = 8;
 }
 
-/** @struct IntelligenceDestructionRequest
+/** @message IntelligenceDestructionRequest
     @brief A message to request intelligence destruction.
     
     This message requests the destruction of an existing intelligence.
@@ -204,7 +204,7 @@ message IntelligenceDestructionRequest {
     required IntelligenceId id = 1;
 }
 
-/** @struct ShapeCreationRequest
+/** @message ShapeCreationRequest
     @brief A message to request shape creation.
     
     This message requests the creation of a shape.
@@ -221,7 +221,7 @@ message ShapeCreationRequest {
     required Shape shape = 1;
 }
 
-/** @struct ShapeUpdateRequest
+/** @message ShapeUpdateRequest
     @brief A message to request shape update.
     
     This message requests the update of an existing shape.
@@ -263,7 +263,7 @@ message ShapeUpdateRequest {
     optional CoordLatLongList    points   = 5;
 }
 
-/** @struct ShapeDestructionRequest
+/** @message ShapeDestructionRequest
     @brief A message to request shape destruction.
     
     This message requests the destruction of an existing shape.
@@ -280,7 +280,7 @@ message ShapeDestructionRequest {
     required DrawingId id = 1;
 }
 
-/** @struct MarkerCreationRequest
+/** @message MarkerCreationRequest
     @brief A message to request marker creation.
     
     This message requests the creation of a marker.
@@ -295,7 +295,7 @@ message MarkerCreationRequest {
     required Marker marker = 1;
 }
 
-/** @struct MarkerUpdateRequest
+/** @message MarkerUpdateRequest
     @brief A message to request marker update.
     
     This message requests the update of an existing marker.
@@ -332,7 +332,7 @@ message MarkerUpdateRequest {
     optional MarkerId parent      = 5;
 }
 
-/** @struct MarkerDestructionRequest
+/** @message MarkerDestructionRequest
     @brief A message to request marker destruction.
     
     This message requests the destruction of an existing marker.
@@ -355,7 +355,7 @@ message MarkerDestructionRequest {
     required bool     delete_all = 2;
 }
 
-/** @struct ClientObjectCreationRequest
+/** @message ClientObjectCreationRequest
     @brief A message to request client object creation.
     
     This message requests the creation of a client object.
@@ -380,7 +380,7 @@ message ClientObjectCreationRequest {
     optional bool                 persistent = 3;
 }
 
-/** @struct ClientObjectUpdateRequest
+/** @message ClientObjectUpdateRequest
     @brief A message to request client object update.
     
     This message requests the update of an existing client object.
@@ -407,7 +407,7 @@ message ClientObjectUpdateRequest {
     repeated ClientObjectProperty properties = 3;
 }
 
-/** @struct ClientObjectDestructionRequest
+/** @message ClientObjectDestructionRequest
     @brief A message to request client object destruction.
     
     This message requests the destruction of an existing client object.
@@ -423,13 +423,13 @@ message ClientObjectDestructionRequest {
     required ClientObjectId object = 1;
 }
 
-/** @struct ClientToMessenger
+/** @message ClientToMessenger
     @brief A facade for all available messages going from client to messenger.
     
     This is the actual message sent over the network.
 */
 message ClientToMessenger {
-    /** @struct Content
+    /** @message Content
         @brief The possible messages contained in a client to messenger message.
         @warning Each Content message must contain exactly one of the possible messages.
     */

@@ -12,7 +12,7 @@ import "version.proto";
 
 package sword;
 
-/** @struct AuthenticationRequest
+/** @message AuthenticationRequest
     @brief A message sent to request authentication.
     
     This message is sent to request profile authentication.
@@ -49,7 +49,7 @@ message AuthenticationRequest {
     required ProtocolVersion version  = 3;
 }
 
-/** @struct ProfileCreationRequest
+/** @message ProfileCreationRequest
     @brief Message sent to request profile creation.
     
     This message is sent to request profile creation.
@@ -67,7 +67,7 @@ message ProfileCreationRequest {
     required Profile profile = 1;
 }
 
-/** @struct ProfileUpdateRequest
+/** @message ProfileUpdateRequest
     @brief A message sent to request profile update.
 
     This message is sent to request profile update.
@@ -90,7 +90,7 @@ message ProfileUpdateRequest {
     required Profile profile = 2;
 }
 
-/** @struct ProfileDestructionRequest
+/** @message ProfileDestructionRequest
     @brief A message sent to request profile destruction.
 
     This message is sent to request profile destruction.
@@ -107,13 +107,13 @@ message ProfileDestructionRequest {
     required string login = 1;
 }
 
-/** @struct ClientToAuthentication
+/** @message ClientToAuthentication
     @brief A facade for all available messages going from client to authentication.
     
     This is the actual message sent over the network.
 */
 message ClientToAuthentication {
-    /** @struct Content
+    /** @message Content
         @brief The possible messages contained in a client to authentication message.
         @warning Each Content message must contain exactly one of the possible messages.
     */

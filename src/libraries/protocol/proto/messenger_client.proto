@@ -11,7 +11,7 @@ import "common.proto";
 
 package sword;
 
-/** @struct TacticalLineAck
+/** @message TacticalLineAck
     @brief A container for limit/phase line acknowledgement error message.
 */
 message TacticalLineAck {
@@ -48,7 +48,7 @@ message TacticalLineAck {
     }
 }
 
-/** @struct LimitCreation
+/** @message LimitCreation
     @brief A limit creation message.
     
     This message is sent when a limit is created. This can occur:
@@ -68,7 +68,7 @@ message LimitCreation {
     required TacticalLine   tactical_line = 2;
 }
 
-/** @struct LimitUpdate
+/** @message LimitUpdate
     @brief A limit update message.
     
     This message is sent when a limit is updated during the game upon client request.
@@ -86,7 +86,7 @@ message LimitUpdate {
     required TacticalLine tactical_line = 2;
 }
 
-/** @struct LimitDestruction
+/** @message LimitDestruction
     @brief A limit destruction message.
     
     This message is sent:
@@ -101,7 +101,7 @@ message LimitDestruction {
     required TacticalLineId id = 1;
 }
 
-/** @struct LimitCreationRequestAck
+/** @message LimitCreationRequestAck
     @brief A limit creation request acknowledgement message.
     
     This message is sent when a limit is created in response to a client request.
@@ -115,7 +115,7 @@ message LimitCreationRequestAck {
     optional TacticalLineAck.ErrorCode error_code = 1;
 }
 
-/** @struct LimitUpdateRequestAck
+/** @message LimitUpdateRequestAck
     @brief A limit update request acknowledgement message.
     
     This message is sent when a limit is updated in response to a client request.
@@ -129,7 +129,7 @@ message LimitUpdateRequestAck {
     optional TacticalLineAck.ErrorCode error_code = 1;
 }
 
-/** @struct LimitDestructionRequestAck
+/** @message LimitDestructionRequestAck
     @brief A limit destruction request acknowledgement message.
     
     This message is sent when a limit is destroyed in response to a client request.
@@ -143,7 +143,7 @@ message LimitDestructionRequestAck {
     optional TacticalLineAck.ErrorCode error_code = 1;
 }
 
-/** @struct LimaCreation
+/** @message LimaCreation
     @brief A phase line creation message.
     
     This message is sent when a phase line is created. This can occur:
@@ -165,7 +165,7 @@ message LimaCreation {
     required TacticalLine   tactical_line = 2;
 }
 
-/** @struct LimaDestruction
+/** @message LimaDestruction
     @brief A phase line destruction message.
     
     This message is sent:
@@ -182,7 +182,7 @@ message LimaDestruction {
     required TacticalLineId id = 1;
 }
 
-/** @struct LimaUpdate
+/** @message LimaUpdate
     @brief A phase line update message.
     
     This message is sent when a phase line is updated during the game upon client request.
@@ -202,7 +202,7 @@ message LimaUpdate {
     required TacticalLine   tactical_line = 2;
 }
 
-/** @struct LimaCreationRequestAck
+/** @message LimaCreationRequestAck
     @brief A phase line creation request acknowledgement message.
     
     This message is sent when a phase line is created in response to a client request.
@@ -218,7 +218,7 @@ message LimaCreationRequestAck {
     optional TacticalLineAck.ErrorCode error_code = 1;
 }
 
-/** @struct LimaUpdateRequestAck
+/** @message LimaUpdateRequestAck
     @brief A phase line update request acknowledgement message.
     
     This message is sent when a phase line is updated in response to a client request.
@@ -234,7 +234,7 @@ message LimaUpdateRequestAck {
     optional TacticalLineAck.ErrorCode error_code = 1;
 }
 
-/** @struct LimaDestructionRequestAck
+/** @message LimaDestructionRequestAck
     @brief A phase line destruction request acknowledgement message.
     
     This message is sent when a phase line is destroyed in response to a client request.
@@ -250,7 +250,7 @@ message LimaDestructionRequestAck {
     optional TacticalLineAck.ErrorCode error_code = 1;
 }
 
-/** @struct IntelligenceCreation
+/** @message IntelligenceCreation
     @brief An intelligence creation message.
     
     This message is sent when an intelligence is created. This can occur:
@@ -270,7 +270,7 @@ message IntelligenceCreation {
     required Intelligence   intelligence = 2;
 }
 
-/** @struct IntelligenceUpdate
+/** @message IntelligenceUpdate
     @brief An intelligence update message.
     
     This message is sent when an intelligence is updated during the game upon client request.
@@ -322,7 +322,7 @@ message IntelligenceUpdate {
     optional EnumDiplomacy   diplomacy = 8;
 }
 
-/** @struct IntelligenceDestruction
+/** @message IntelligenceDestruction
     @brief An intelligence destruction message.
     
     This message is sent:
@@ -337,7 +337,7 @@ message IntelligenceDestruction {
     required IntelligenceId id = 1;
 }
 
-/** @struct IntelligenceRequestAck
+/** @message IntelligenceRequestAck
     @brief A container for intelligence acknowledgement error message.
 */
 message IntelligenceRequestAck {
@@ -371,7 +371,7 @@ message IntelligenceRequestAck {
     }
 }
 
-/** @struct IntelligenceCreationRequestAck
+/** @message IntelligenceCreationRequestAck
     @brief An intelligence creation request acknowledgement message.
     
     This message is sent when an intelligence is created in response to a client request.
@@ -385,7 +385,7 @@ message IntelligenceCreationRequestAck {
     optional IntelligenceRequestAck.ErrorCode error_code = 1;
 }
 
-/** @struct IntelligenceUpdateRequestAck
+/** @message IntelligenceUpdateRequestAck
     @brief An intelligence update request acknowledgement message.
     
     This message is sent when an intelligence is updated in response to a client request.
@@ -399,7 +399,7 @@ message IntelligenceUpdateRequestAck {
     optional IntelligenceRequestAck.ErrorCode error_code = 1;
 }
 
-/** @struct IntelligenceDestructionRequestAck
+/** @message IntelligenceDestructionRequestAck
     @brief An intelligence destruction request acknowledgement message.
     
     This message is sent when an intelligence is destroyed in response to a client request.
@@ -413,7 +413,7 @@ message IntelligenceDestructionRequestAck {
     optional IntelligenceRequestAck.ErrorCode error_code = 1;
 }
 
-/** @struct ShapeCreation
+/** @message ShapeCreation
     @brief A shape creation message.
     
     This message is sent when a shape is created. This can occur:
@@ -434,7 +434,7 @@ message ShapeCreation {
     required Shape     shape = 2;
 }
 
-/** @struct ShapeUpdate
+/** @message ShapeUpdate
     @brief A shape update message.
     
     This message is sent when a shape is updated during the game upon client request.
@@ -472,7 +472,7 @@ message ShapeUpdate {
     optional CoordLatLongList points   = 5;
 }
 
-/** @struct ShapeDestruction
+/** @message ShapeDestruction
     @brief A shape destruction message.
     
     This message is sent:
@@ -488,7 +488,7 @@ message ShapeDestruction {
     required DrawingId id = 1;
 }
 
-/** @struct ShapeRequestAck
+/** @message ShapeRequestAck
     @brief A container for shape acknowledgement error message.
     @todo rename into Drawing/Graphics
 */
@@ -516,7 +516,7 @@ message ShapeRequestAck {
     }
 }
 
-/** @struct ShapeCreationRequestAck
+/** @message ShapeCreationRequestAck
     @brief A shape creation request acknowledgement message.
     
     This message is sent when a shape is created in response to a client request.
@@ -531,7 +531,7 @@ message ShapeCreationRequestAck {
     required ShapeRequestAck.ErrorCode error_code = 1;
 }
 
-/** @struct ShapeUpdateRequestAck
+/** @message ShapeUpdateRequestAck
     @brief A shape update request acknowledgement message.
     
     This message is sent when a shape is updated in response to a client request.
@@ -545,7 +545,7 @@ message ShapeUpdateRequestAck {
     optional ShapeRequestAck.ErrorCode error_code = 1;
 }
 
-/** @struct ShapeDestructionRequestAck
+/** @message ShapeDestructionRequestAck
     @brief A shape destruction request acknowledgement message.
     
     This message is sent when a shape is destroyed in response to a client request.
@@ -559,7 +559,7 @@ message ShapeDestructionRequestAck {
     required ShapeRequestAck.ErrorCode error_code = 1;
 }
 
-/** @struct MarkerCreation
+/** @message MarkerCreation
     @brief A marker creation message.
     
     This message is sent when a marker is created. This can occur:
@@ -586,7 +586,7 @@ message MarkerCreation {
     required DateTime date       = 3;
 }
 
-/** @struct MarkerUpdate
+/** @message MarkerUpdate
     @brief A marker update message.
     
     This message is sent when a marker is updated during the game upon client request.
@@ -628,7 +628,7 @@ message MarkerUpdate {
     optional string   number      = 6;
 }
 
-/** @struct MarkerDestruction
+/** @message MarkerDestruction
     @brief A marker destruction message.
     
     This message is sent:
@@ -644,7 +644,7 @@ message MarkerDestruction {
     required MarkerId marker = 1;
 }
 
-/** @struct MarkerRequestAck
+/** @message MarkerRequestAck
     @brief A container for marker acknowledgement error message.
 */
 message MarkerRequestAck {
@@ -671,7 +671,7 @@ message MarkerRequestAck {
     }
 }
 
-/** @struct MarkerCreationRequestAck
+/** @message MarkerCreationRequestAck
     @brief A marker creation request acknowledgement message.
     
     This message is sent when a marker is created in response to a client request.
@@ -687,7 +687,7 @@ message MarkerCreationRequestAck {
     required MarkerRequestAck.ErrorCode error_code = 1;
 }
 
-/** @struct MarkerUpdateRequestAck
+/** @message MarkerUpdateRequestAck
     @brief A marker update request acknowledgement message.
     
     This message is sent when a marker is updated in response to a client request.
@@ -702,7 +702,7 @@ message MarkerUpdateRequestAck {
     optional MarkerRequestAck.ErrorCode error_code = 1;
 }
 
-/** @struct MarkerDestructionRequestAck
+/** @message MarkerDestructionRequestAck
     @brief A marker destruction request acknowledgement message.
     
     This message is sent when a marker is destroyed in response to a client request.
@@ -717,7 +717,7 @@ message MarkerDestructionRequestAck {
     required MarkerRequestAck.ErrorCode error_code = 1;
 }
 
-/** @struct ClientObjectCreation
+/** @message ClientObjectCreation
     @brief A client object creation message.
     
     This message is sent when a client object is created. This can occur:
@@ -743,7 +743,7 @@ message ClientObjectCreation {
     repeated ClientObjectProperty properties = 3;
 }
 
-/** @struct ClientObjectUpdate
+/** @message ClientObjectUpdate
     @brief A client object update message.
     
     This message is sent when a client object is updated during the game upon client request.
@@ -768,7 +768,7 @@ message ClientObjectUpdate {
     repeated ClientObjectProperty properties = 3;
 }
 
-/** @struct ClientObjectDestruction
+/** @message ClientObjectDestruction
     @brief A client object destruction message.
     
     This message is sent:
@@ -784,7 +784,7 @@ message ClientObjectDestruction {
     required ClientObjectId object = 1;
 }
 
-/** @struct ClientObjectAck
+/** @message ClientObjectAck
     @brief A container for client object acknowledgement error message.
 
     @todo rename into ClientObjectRequestAck
@@ -816,7 +816,7 @@ message ClientObjectAck {
     }
 }
 
-/** @struct ClientObjectCreationRequestAck
+/** @message ClientObjectCreationRequestAck
     @brief A client object creation request acknowledgement message.
     
     This message is sent when a client object is created in response to a client request.
@@ -834,7 +834,7 @@ message ClientObjectCreationRequestAck {
     required ClientObjectAck.ErrorCode error_code = 2;
 }
 
-/** @struct ClientObjectUpdateRequestAck
+/** @message ClientObjectUpdateRequestAck
     @brief A client object update request acknowledgement message.
     
     This message is sent when a client object is updated in response to a client request.
@@ -853,7 +853,7 @@ message ClientObjectUpdateRequestAck {
     required ClientObjectAck.ErrorCode error_code = 2;
 }
 
-/** @struct ClientObjectDestructionRequestAck
+/** @message ClientObjectDestructionRequestAck
     @brief A client object destruction request acknowledgement message.
     
     This message is sent when a client object is destroyed in response to a client request.
@@ -872,13 +872,13 @@ message ClientObjectDestructionRequestAck {
     required ClientObjectAck.ErrorCode error_code = 2;
 }
 
-/** @struct MessengerToClient
+/** @message MessengerToClient
     @brief A facade for all messages from messenger to client.
     
     This is the actual message sent over the network.
 */
 message MessengerToClient {
-    /** @struct Content
+    /** @message Content
         @brief The possible messages contained in a messenger to client message.
         @warning Each Content message must contain exactly one of the possible messages.
     */

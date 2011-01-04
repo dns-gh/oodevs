@@ -50,7 +50,7 @@ enum EnumLogSupplyHandlingStatus {
     termine                                    = 7;
 }
 
-/** @struct OrderAck
+/** @message OrderAck
     @brief A container for order acknowledgement error message.
 */
 message OrderAck {
@@ -131,7 +131,7 @@ message OrderAck {
     }
 }
 
-/** @struct TaskCreationRequestAck
+/** @message TaskCreationRequestAck
     @brief An agent order execution request acknowledgement message.
     
     This message is sent when an agent order is issued in response to a client request (UnitOrder).
@@ -151,7 +151,7 @@ message TaskCreationRequestAck {
     required OrderAck.ErrorCode error_code = 2;
 }
 
-/** @struct FragOrderAck
+/** @message FragOrderAck
     @brief A fragmentary order execution request acknowledgement message.
     
     This message is sent when a fragmentary order is issued in response to a client request (FragOrder).
@@ -171,7 +171,7 @@ message FragOrderAck {
     required OrderAck.ErrorCode error_code = 2;
 }
 
-/** @struct SetAutomatModeAck
+/** @message SetAutomatModeAck
     @brief An automat mode change request acknowledgement message.
     
     This message is sent when an automat mode change is executed in response to a 
@@ -212,7 +212,7 @@ message SetAutomatModeAck {
     required ErrorCode error_code = 2;
 }
 
-/** @struct UnitActionAck
+/** @message UnitActionAck
     @brief A container for agent action acknowledgement error message.
     @todo rename to AgentActionAck
 */
@@ -249,7 +249,7 @@ message UnitActionAck {
     }
 }
 
-/** @struct UnitCreationRequestAck
+/** @message UnitCreationRequestAck
     @brief An agent creation request acknowledgement message.
     
     This message is sent in response to an agent creation request.
@@ -266,7 +266,7 @@ message UnitCreationRequestAck {
     required UnitActionAck.ErrorCode error = 1;
 }
 
-/** @struct UnitMagicActionAck
+/** @message UnitMagicActionAck
     @brief An agent magic action execution request acknowledgement message.
     
     This message is sent in response to an agent magic action request
@@ -287,7 +287,7 @@ message UnitMagicActionAck {
     required UnitActionAck.ErrorCode error_code = 2;
 }
 
-/** @struct MagicActionAck
+/** @message MagicActionAck
     @brief A magic action execution request acknowledgement message.
     
     This message is sent when a magic action is issued in response to a client request.
@@ -317,7 +317,7 @@ message MagicActionAck {
     required ErrorCode error_code = 1;
 }
 
-/** @struct ObjectMagicActionAck
+/** @message ObjectMagicActionAck
     @brief An object magic action execution request acknowledgement message.
     
     This message is sent when an object magic action is issued in response to a client request
@@ -370,7 +370,7 @@ message ObjectMagicActionAck {
     required ErrorCode error_code = 1;
 }
 
-/** @struct CrowdMagicActionAck
+/** @message CrowdMagicActionAck
     @brief An crowd magic action execution request acknowledgement message.
     
     This message is sent when a crowd magic action is issued in response to a client request (CrowdMagicAction).
@@ -407,7 +407,7 @@ message CrowdMagicActionAck {
     required ErrorCode error_code = 2;
 }
 
-/** @struct ChangeDiplomacyAck
+/** @message ChangeDiplomacyAck
     @brief A diplomacy change request acknowledgement message.
     
     This message is sent when a diplomacy change is realized in response to a client request (ChangeDiplomacy).
@@ -453,7 +453,7 @@ message ChangeDiplomacyAck {
     required EnumChangeDiplomacyErrorCode error_code = 4;
 }
 
-/** @struct HierarchyModificationAck
+/** @message HierarchyModificationAck
     @brief A container for hierarchy modification action acknowledgement error message.
     @todo split into different types
 */
@@ -519,7 +519,7 @@ message HierarchyModificationAck {
     }
 }
 
-/** @struct AutomatChangeKnowledgeGroupAck
+/** @message AutomatChangeKnowledgeGroupAck
     @brief An acknowledgement message to an automat's knowledge group change request.
     
     This message is sent when an automat's knowledge group change is realized in response to a client request 
@@ -535,7 +535,7 @@ message AutomatChangeKnowledgeGroupAck  {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
-/** @struct ChangeLogisticLinksAck
+/** @message ChangeLogisticLinksAck
     @brief An acknowledgement message to an automat's logistic links change request.
     
     This message is sent when an automat's logistic links change is realized in response to a client request 
@@ -551,7 +551,7 @@ message ChangeLogisticLinksAck  {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
-/** @struct AutomatChangeSuperiorAck
+/** @message AutomatChangeSuperiorAck
     @brief An acknowledgement message to an automat's superior change request.
     
     This message is sent when an automat's superior change is realized in response to a client request 
@@ -567,7 +567,7 @@ message AutomatChangeSuperiorAck  {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
-/** @struct UnitChangeSuperiorAck
+/** @message UnitChangeSuperiorAck
     @brief An acknowledgement message to an agent's superior change request.
     
     This message is sent when an agent's superior change is realized in response to a client request 
@@ -583,7 +583,7 @@ message UnitChangeSuperiorAck  {
     required HierarchyModificationAck.ErrorCode error_code = 1;
 }
 
-/** @struct LogSupplyPushFlowAck
+/** @message LogSupplyPushFlowAck
     @brief An acknowledgement message to a logistic pushed flow request.
     
     This message is sent when a logistic pushed flow is realized in response to a client request 
@@ -622,7 +622,7 @@ message LogSupplyPushFlowAck  {
     optional EnumLogSupplyPushFlow ack = 1;
 }
 
-/** @struct LogSupplyPullFlowAck
+/** @message LogSupplyPullFlowAck
     @brief An acknowledgement message to a logistic pulled flow request.
     
     This message is sent when a logistic pulled flow is realized in response to a client request 
@@ -661,7 +661,7 @@ message LogSupplyPullFlowAck  {
     optional EnumLogSupplyPullFlow ack = 1;
 }
 
-/** @struct LogSupplyChangeQuotasAck
+/** @message LogSupplyChangeQuotasAck
     @brief An acknowledgement message to a quota allocation change request.
     
     This message is sent when a quota allocation is changed in response to a client request 
@@ -700,6 +700,13 @@ message LogSupplyChangeQuotasAck {
     optional LogSupplyChangeQuotas ack = 1;
 }
 
+/** @message ActionCreateFireOrderAck
+    @brief An acknowledgement message to a creation fire order request.
+    
+    This message is sent when a quota allocation is changed in response to a client request
+    (UnitMagicAction of UnitMagiAction.Type.log_supply_change_quotas).
+    @todo gather magic action acks
+*/
 message ActionCreateFireOrderAck {
     enum EnumActionCreateFireOrderErrorCode {
         no_error                    = 0;
