@@ -74,8 +74,7 @@ namespace frontend
         bool IsValidTerrain( const bfs::path& dir )
         {
             return bfs::is_directory( dir )
-                && bfs::exists( dir / "terrain.xml" )
-                && bfs::exists( dir / "world.xml" );
+                && bfs::exists( dir / "terrain.xml" );
         }
 
         QStringList ListTerrains( const tools::GeneralConfig& config )
