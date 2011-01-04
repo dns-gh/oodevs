@@ -21,7 +21,6 @@ namespace kernel
 
 namespace urban
 {
-    class Drawer_ABC;
     class TerrainObject_ABC;
 }
 
@@ -37,7 +36,7 @@ class UrbanPositions : public kernel::Positions
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( const urban::TerrainObject_ABC& object/*, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location*/ );
+    explicit UrbanPositions( const urban::TerrainObject_ABC& object );
     virtual ~UrbanPositions();
     //@}
 
@@ -64,7 +63,6 @@ private:
     //! @name Member data
     //@{
     const urban::TerrainObject_ABC& object_;
-    static std::auto_ptr< urban::Drawer_ABC > drawer_;
     //@}
 };
 

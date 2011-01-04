@@ -10,10 +10,7 @@
 #include "gaming_pch.h"
 #include "UrbanPositions.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_gui/UrbanDrawer.h"
 #include "urban/TerrainObject_ABC.h"
-
-std::auto_ptr< urban::Drawer_ABC > UrbanPositions::drawer_;
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions constructor
@@ -41,9 +38,7 @@ UrbanPositions::~UrbanPositions()
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    if( drawer_.get() == 0 )
-        drawer_.reset( new gui::UrbanDrawer( tools ) );
-    object_.Draw( *drawer_ );
+    tools.DrawDecoratedPolygon( *object_.GetFootprint(), object_.GetDecoration() );
 }
 
 // -----------------------------------------------------------------------------

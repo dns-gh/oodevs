@@ -12,11 +12,6 @@
 
 #include "LocationPositions.h"
 
-namespace urban
-{
-    class Drawer_ABC;
-}
-
 // =============================================================================
 /** @class  UrbanPositions
     @brief  UrbanPositions
@@ -48,7 +43,6 @@ private:
 private:
     //! @name Member data
     //@{
-    static std::auto_ptr< urban::Drawer_ABC > drawer_;
     const urban::TerrainObject_ABC& object_;
     //@}
 };

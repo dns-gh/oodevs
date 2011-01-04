@@ -87,7 +87,6 @@ public:
     virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
     virtual void SetSelected( bool selected ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
-    virtual void Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
 
     void UpdateHumans( const std::string& inhabitant, unsigned int number );
     //@}

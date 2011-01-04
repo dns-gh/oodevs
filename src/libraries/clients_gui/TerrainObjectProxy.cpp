@@ -175,15 +175,6 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned i
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::Draw
-// Created: FDS 2010-01-15
-// -----------------------------------------------------------------------------
-void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& /*tools*/ ) const
-{
-    object_.Draw( drawer );
-}
-
-// -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::IsInside
 // Created: FDS 2010-01-15
 // -----------------------------------------------------------------------------
