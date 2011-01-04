@@ -1059,8 +1059,8 @@
   <automat decisional-model="net.masagroup.sword.military.company.roles.Company" id="673" name="SGTIA ABC" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton . LECLERC CDT ESC"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton . LECLERC CDP SOFF"/>
-    <unit max-occurs="1" min-occurs="2" type="Peloton . LECLERC CDP OFF"/>
-    <unit max-occurs="1" min-occurs="2" type="Section . CBT INF VAB CDS SOFF"/>
+    <unit max-occurs="2" min-occurs="1" type="Peloton . LECLERC CDP OFF"/>
+    <unit max-occurs="2" min-occurs="1" type="Section . CBT INF VAB CDS SOFF"/>
     <unit max-occurs="1" type="Peloton . d appui direct"/>
     <unit max-occurs="1" type="Groupe GEN . EBG"/>
     <unit max-occurs="3" type="PIA Dominante ABC"/>
@@ -1068,4 +1068,4 @@
     <unit max-occurs="3" type="PIA Dominante Reco"/>
   </automat>
 </automats>
-<!-- signature="1291886654" -->
+<!-- signature="2846094066" -->
