@@ -49,6 +49,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    void Update( xml::xistream& xis );
     //@}
 
     //! @name Modifiers

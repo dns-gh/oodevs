@@ -118,7 +118,7 @@ void MedicalTreatmentAttribute::UpdateData( const sword::ObjectAttributeMedicalT
             const kernel::MedicalTreatmentType* type = resolver_.Find( capacity.type_id() );
             if ( !type )
                 throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( capacity.type_id() ) );
-            ::UpdateCapacity( *type, capacity, capacities_[ capacity.type_id() ] );
+            ::UpdateCapacity( *type, capacity, capacities_[ capacity.type_id() - 1 ] );
         }
     }
     controller_.Update( *(MedicalTreatmentAttribute_ABC*)this );

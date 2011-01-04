@@ -53,6 +53,18 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::Update
+// Created: SLG 2010-12-30
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::Update( xml::xistream& xis )
+{
+    xis >> xml::attribute( "doctors", doctors_ )
+        >> xml::optional >> xml::attribute( "reference", referenceID_ );
+    xis >> xml::start( "bed-capacities" )
+        >> list( "bed-capacity", *this, &MedicalTreatmentAttribute::ReadBedCapacity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::ReadTreatment
 // Created: JCR 2009-04-15
 // -----------------------------------------------------------------------------

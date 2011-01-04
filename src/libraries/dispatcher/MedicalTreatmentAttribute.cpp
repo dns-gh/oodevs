@@ -101,9 +101,9 @@ void MedicalTreatmentAttribute::Update( const sword::ObjectAttributeMedicalTreat
         const sword::MedicalTreatmentBedCapacity& bed_capacity = message.bed_capacities( i );
         if( bed_capacity.has_type_id() )
         {
-            if( capacities_.size() <= static_cast< unsigned int >( bed_capacity.type_id() ) )
+            if( capacities_.size() < static_cast< unsigned int >( bed_capacity.type_id() ) || !bed_capacity.type_id() )
                 throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( bed_capacity.type_id() ) );
-            capacities_[ bed_capacity.type_id() ].Update( bed_capacity );
+            capacities_[ bed_capacity.type_id() - 1 ].Update( bed_capacity );
         }
     }
 }

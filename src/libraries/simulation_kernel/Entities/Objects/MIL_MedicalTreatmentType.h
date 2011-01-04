@@ -22,6 +22,11 @@ namespace xml
 
 class MIL_Time_ABC;
 
+namespace tools
+{
+    template< typename T > class Visitor_ABC;
+}
+
 // =============================================================================
 // Created: RFT 22/04/2008
 // MIL_MedicalTreatmentType.h
@@ -48,6 +53,7 @@ public:
     static const MIL_MedicalTreatmentType* Find( const std::string& strName );
     static const MIL_MedicalTreatmentType* Find( unsigned int nID );
     static unsigned                        RegisteredCount();
+    static void Accept( tools::Visitor_ABC< MIL_MedicalTreatmentType >& visitor );
     //@}
 
 private:

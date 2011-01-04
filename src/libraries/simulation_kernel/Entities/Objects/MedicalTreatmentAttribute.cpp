@@ -43,6 +43,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
     : capacities_( MIL_MedicalTreatmentType::RegisteredCount() )
     , status_    ( sword::ObjectAttributeMedicalTreatment::normal )
 {
+    MIL_MedicalTreatmentType::Accept( *this );
     xis >> xml::attribute( "doctors", doctors_ )
         >> xml::optional >> xml::attribute( "reference", referenceID_ )
         >> xml::start( "bed-capacities" )
@@ -50,6 +51,16 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
         >> xml::end;
     initialDoctors_ = doctors_;
     availableDoctors_ = doctors_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::Visit
+// Created: LDC 2011-01-04
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::Visit( const MIL_MedicalTreatmentType& type )
+{
+    MedicalCapacity& capacity = capacities_[ type.GetID() -1 ];
+    capacity.type_ = &type;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +73,7 @@ void MedicalTreatmentAttribute::InitializeBedCapacity( xml::xistream& xis )
     const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( typeName );
     if( !pType )
         xis.error( "Unknown 'Medical treatment type' '" + typeName + "' for medical treatment attribute" );
-    MedicalCapacity& capacity = capacities_[ pType->GetID() ];    
+    MedicalCapacity& capacity = capacities_[ pType->GetID() - 1 ];    // $$$$ RC LDC 2011-01-04 Will crash if ids are not consecutive starting at 1.
     capacity.type_ = pType;
     capacity.baseline_ = xml::attribute< unsigned int >( xis, "baseline" );
     // capacity.occupied_ = xml::attribute< unsigned >( xis, "occupied" );
@@ -87,7 +98,7 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const sword::MissionParame
         const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( value.list( eTypeId ).identifier() );
         if( !pType )
             throw std::runtime_error( "Unknown Medical treatment type for medical treatment attribute" );
-        MedicalCapacity& capacity = capacities_[ pType->GetID() ];        
+        MedicalCapacity& capacity = capacities_[ pType->GetID() -1 ];        
         capacity.baseline_ = value.list( eBaseLineCount ).quantity();
         // TODO $$$$ : capacity.occupied_ = capacity.baseline_ - value.list( 2 ).quantity();
         // capacity.emergency_ = value.list( 3 ).quantity();
@@ -274,9 +285,9 @@ void MedicalTreatmentAttribute::OnUpdate( const sword::MissionParameter_Value& p
         if( value.list( eTypeId ).has_identifier() ) 
         {
             const unsigned int typeId = value.list( eTypeId ).identifier();
-            if( capacities_.size() <= typeId )
+            if( capacities_.size() < typeId )
                 throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( typeId ) );
-            capacities_[ typeId ].Update( value );
+            capacities_[ typeId -1 ].Update( value );
         }
     }
 }
@@ -306,7 +317,7 @@ void MedicalTreatmentAttribute::Update( const sword::ObjectAttributeMedicalTreat
         {
             if( capacities_.size() <= static_cast< unsigned int >( bed_capacity.type_id() ) )
                 throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( bed_capacity.type_id() ) );
-            capacities_[ bed_capacity.type_id() ].Update( bed_capacity );
+            capacities_[ bed_capacity.type_id() - 1 ].Update( bed_capacity );
         }
     }
     NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
@@ -368,11 +379,11 @@ void MedicalTreatmentAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::RegisterPatients( unsigned int injuryID, unsigned int category, int n )
 {
-    if( capacities_.size() <= injuryID )
+    if( capacities_.size() < injuryID || !injuryID )
         throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( injuryID ) );
-    if( capacities_[ injuryID ].occupied_.size() < category )
+    if( capacities_[ injuryID - 1 ].occupied_.size() < category )
         throw std::runtime_error( std::string( __FUNCTION__ ) + " Unknown category id: " + boost::lexical_cast< std::string >( category ) );
-    capacities_[ injuryID ].occupied_[ category ] += n;
+    capacities_[ injuryID - 1 ].occupied_[ category ] += n;
     NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 }
 
@@ -382,9 +393,9 @@ void MedicalTreatmentAttribute::RegisterPatients( unsigned int injuryID, unsigne
 // -----------------------------------------------------------------------------
 bool MedicalTreatmentAttribute::CanTreatPatient( unsigned int injuryID ) const
 {
-    if( capacities_.size() <= injuryID )
+    if( capacities_.size() <= injuryID || !injuryID )
         throw std::runtime_error( std::string( __FUNCTION__ ) + " Unknown injury id: " + boost::lexical_cast< std::string >( injuryID ) );
-    return ( capacities_[ injuryID ].baseline_ - std::accumulate( capacities_[ injuryID ].occupied_.begin(), capacities_[ injuryID ].occupied_.end(), 0 ) ) > 0;
+    return ( capacities_[ injuryID - 1 ].baseline_ - std::accumulate( capacities_[ injuryID - 1 ].occupied_.begin(), capacities_[ injuryID - 1 ].occupied_.end(), 0 ) ) > 0;
 }
 
 namespace
