@@ -31,10 +31,9 @@ unsigned long Inhabitant::nMaxId_ = 200;
 // Name: Inhabitant constructor
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver, UrbanModel& model )
+Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver, UrbanModel& model )
     : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
     , controllers_      ( controllers )
-    , converter_        ( converter )
     , type_             ( typeResolver.Get( message.type().id() ) )
     , nNbrHealthyHumans_( 0 )
     , nNbrDeadHumans_   ( 0 )

@@ -267,6 +267,4 @@ kernel::Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, kernel::T
         popus->AddInhabitant( *result );
     result->Polish();
     return result;
-   
-    return 0;
 }

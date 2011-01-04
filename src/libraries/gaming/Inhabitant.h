@@ -28,7 +28,6 @@ namespace kernel
 {
     class Controller;
     class InhabitantType;
-    class CoordinateConverter_ABC;
     class Displayer_ABC;
     class GlTools_ABC;
 }
@@ -48,7 +47,7 @@ class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             Inhabitant( const sword::PopulationCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
+             Inhabitant( const sword::PopulationCreation& message, kernel::Controllers& controllers,
                          const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver, UrbanModel& model );
     virtual ~Inhabitant();
     //@}
@@ -95,7 +94,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::CoordinateConverter_ABC& converter_;
     const kernel::InhabitantType& type_;
     static unsigned long nMaxId_;
     std::set< kernel::Displayer_ABC* > displayers_;
