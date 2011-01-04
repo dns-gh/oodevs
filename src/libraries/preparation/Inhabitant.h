@@ -14,6 +14,7 @@
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 #include "EnumTypes.h"
 
 namespace kernel
@@ -39,16 +40,8 @@ class IdManager;
 class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
                  , public kernel::Extension_ABC
                  , public kernel::Serializable_ABC
+                 , public kernel::Drawable_ABC
 {
-
-public:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, QString >     T_Extensions;
-    typedef T_Extensions::iterator              IT_Extensions;
-    typedef T_Extensions::const_iterator       CIT_Extensions;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -59,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Draw( const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -76,14 +69,21 @@ private:
     void ReadExtension( xml::xistream& xis );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< std::string, QString > T_Extensions;
+    typedef T_Extensions::iterator          IT_Extensions;
+    typedef T_Extensions::const_iterator   CIT_Extensions;
+    //@}
+
 private:
     //! @name Member data
     //@{
     const kernel::InhabitantType& type_;
-    unsigned long                 healthy_;
-    unsigned long                 wounded_;
-    unsigned long                 dead_;
-    QString                       text_;
+    unsigned long healthy_;
+    unsigned long wounded_;
+    unsigned long dead_;
+    QString text_;
     T_Extensions extensions_;
     //@}
 };

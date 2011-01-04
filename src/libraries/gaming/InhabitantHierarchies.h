@@ -15,7 +15,7 @@
 
 // =============================================================================
 /** @class  InhabitantHierarchies
-    @brief  InhabitantHierarchies
+    @brief  Inhabitant hierarchies
 */
 // Created: SLG 2010-11-30
 // =============================================================================

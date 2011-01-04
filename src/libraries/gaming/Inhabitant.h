@@ -17,6 +17,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "Simulation.h"
+#include "tools/Resolver.h"
 
 namespace gui
 {
@@ -65,8 +66,6 @@ public:
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
-
-    virtual void Draw( const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -80,7 +79,6 @@ private:
     //@{
     void DoUpdate( const sword::PopulationUpdate& message );
     void CreateDictionary( kernel::Controller& controller );
-    void ComputeCenter();
     virtual void NotifyUpdated( const Simulation::sEndTick& tick );
     //@}
 

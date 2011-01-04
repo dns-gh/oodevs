@@ -10,12 +10,8 @@
 #ifndef __InhabitantLayer_h_
 #define __InhabitantLayer_h_
 
-#include "Layer_ABC.h"
-#include "tools/Observer_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
-#include "clients_kernel/ActivationObserver_ABC.h"
+#include "EntityLayer.h"
 #include "clients_kernel/Inhabitant_ABC.h"
-#include "clients_kernel/Controllers.h"
 
 namespace kernel
 {
@@ -32,14 +28,11 @@ namespace gui
 
 // =============================================================================
 /** @class  InhabitantLayer
-@brief  InhabitantLayer
+    @brief  Inhabitant layer
 */
 // Created: SLG 2006-03-23
 // =============================================================================
-class InhabitantLayer : public Layer_ABC
-                      , public tools::Observer_ABC
-                      , public tools::SelectionObserver< kernel::Inhabitant_ABC >
-                      , public kernel::ActivationObserver_ABC< kernel::Inhabitant_ABC >
+class InhabitantLayer : public EntityLayer< kernel::Inhabitant_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -49,37 +42,11 @@ public:
     virtual ~InhabitantLayer();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Paint( kernel::Viewport_ABC& viewport );
-    virtual void Reset2d();
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    virtual void NotifySelected( const kernel::Inhabitant_ABC* object );
-    virtual void NotifyActivated( const kernel::Inhabitant_ABC& element );
-    virtual void NotifyDeleted( const kernel::Inhabitant_ABC& element );
-    virtual void BeforeSelection();
-    virtual void AfterSelection();
-    virtual void Select( const kernel::Inhabitant_ABC& element );
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
     InhabitantLayer( const InhabitantLayer& );            //!< Copy constructor
     InhabitantLayer& operator=( const InhabitantLayer& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const kernel::GlTools_ABC& tools_;
-    ColorStrategy_ABC& strategy_;
-    View_ABC& view_;
-    const kernel::Inhabitant_ABC* selectedInhab_;
     //@}
 };
 

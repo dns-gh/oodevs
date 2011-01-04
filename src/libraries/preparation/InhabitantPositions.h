@@ -47,25 +47,22 @@ class InhabitantPositions : public kernel::Positions
 public:
     //! @name Constructors/Destructor
     //@{
-    InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, UrbanModel& urbanModel );
-    InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, UrbanModel& urbanModel );
+             InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, UrbanModel& urbanModel );
+             InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, UrbanModel& urbanModel );
     virtual ~InhabitantPositions();
     //@}
 
     //! @name Operations
     //@{
     virtual geometry::Point2f GetPosition( bool aggregated ) const;
-    virtual float             GetHeight( bool aggregated ) const;
+    virtual float GetHeight( bool aggregated ) const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
-
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-
     void Draw( const kernel::GlTools_ABC& tools ) const;
-
     //@}
 
 private:

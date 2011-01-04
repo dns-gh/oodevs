@@ -11,11 +11,12 @@
 #define __InhabitantPositions_h_
 
 #include "clients_kernel/Positions.h"
+
 class Inhabitant;
 
 // =============================================================================
 /** @class  InhabitantPositions
-    @brief  InhabitantPositions
+    @brief  Inhabitant positions
 */
 // Created: SLG 2010-11-30
 // =============================================================================
@@ -24,7 +25,7 @@ class InhabitantPositions : public kernel::Positions
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit InhabitantPositions( const Inhabitant& inhab ); // $$$$ AGE 2006-04-10:
+    explicit InhabitantPositions( const Inhabitant& inhabitant ); // $$$$ AGE 2006-04-10:
     virtual ~InhabitantPositions();
     //@}
 

@@ -11,7 +11,6 @@
 #define __Inhabitant_ABC_h_
 
 #include "Entity_ABC.h"
-#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -45,8 +44,6 @@ public:
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
-
-    virtual void Draw( const kernel::GlTools_ABC& tools ) const = 0;
     //@}
 
 private:

@@ -20,10 +20,8 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
-#include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Knowledge_ABC.h"
-#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
@@ -195,8 +193,14 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Inhabitant_ABC& inhabitant )
 {
-    Process( inhabitant );
+    QColor base = FindColor( inhabitant );
+    QColor color = ApplyModifiers( inhabitant, base );
+    if( base == color )
+        ApplyColor( color, 0 );
+    else
+        ApplyColor( color );
 }
+
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-05-17
@@ -270,6 +274,18 @@ void ColorStrategy::ApplyColor( const QColor& color ) const
                             color.green() / 255.f,
                             color.blue()  / 255.f,
                             alpha_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::ApplyColor
+// Created: LGY 2011-01-04
+// -----------------------------------------------------------------------------
+void ColorStrategy::ApplyColor( const QColor& color, float alpha ) const
+{
+    tools_.SetCurrentColor( color.red()   / 255.f,
+                            color.green() / 255.f,
+                            color.blue()  / 255.f,
+                            alpha );
 }
 
 namespace

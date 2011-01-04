@@ -345,7 +345,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationP
     glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main" );
     glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main" );
     glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main" );
-    glProxy_->Register( inhabitantLayer );                                                                          inhabitantLayer     .SetPasses( "main" ); 
+    glProxy_->Register( inhabitantLayer );          preferences.AddLayer( tr( "Inhabitants" ), inhabitantLayer );   inhabitantLayer     .SetPasses( "main" ); 
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main" );
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowd" ), populations );             populations         .SetPasses( "main" );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main" );

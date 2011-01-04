@@ -84,7 +84,9 @@ private:
 
     QColor RandomColor() const;
     QColor KnowledgeColor( const QColor& base ) const;
+
     void ApplyColor( const QColor& color ) const;
+    void ApplyColor( const QColor& color, float alpha ) const;
     QColor FindTeamColor( const kernel::Entity_ABC& team );
     void Process( const kernel::Entity_ABC& entity );
     QColor ApplyModifiers( const kernel::Entity_ABC& entity, const QColor& color );
@@ -102,12 +104,12 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::GlTools_ABC& tools_;
-    T_Modifiers  modifiers_;
+    T_Modifiers modifiers_;
     T_TeamColors teamColors_;
-    T_Colors     friendlyAvailable_;
-    T_Colors     enemyAvailable_;
-    T_Colors     neutralAvailable_;
-    float        alpha_;
+    T_Colors friendlyAvailable_;
+    T_Colors enemyAvailable_;
+    T_Colors neutralAvailable_;
+    float alpha_;
     //@}
 };
 

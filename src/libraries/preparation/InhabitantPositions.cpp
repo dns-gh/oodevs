@@ -195,7 +195,7 @@ geometry::Rectangle2f InhabitantPositions::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void InhabitantPositions::Accept( kernel::LocationVisitor_ABC& /*visitor*/ ) const
 {
-    //NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

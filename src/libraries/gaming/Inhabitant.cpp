@@ -111,18 +111,15 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 // Name: Inhabitant::Draw
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-void Inhabitant::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const GlTools_ABC& /*tools*/ ) const
+void Inhabitant::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
-    //NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::ComputeCenter
-// Created: SLG 2010-12-05
-// -----------------------------------------------------------------------------
-void Inhabitant::ComputeCenter()
-{
-    // NOTHING
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    {
+        const gui::TerrainObjectProxy& object = *it->second;
+        const geometry::Polygon2f* footprint = object.GetFootprint();
+        if( footprint )
+            tools.DrawConvexPolygon( footprint->Vertices() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +149,7 @@ float Inhabitant::GetHeight( bool ) const
 // -----------------------------------------------------------------------------
 bool Inhabitant::IsAt( const geometry::Point2f& /*pos*/, float /*precision*/, float /*adaptiveFactor*/ ) const
 {
-    return false; //TODO
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +158,7 @@ bool Inhabitant::IsAt( const geometry::Point2f& /*pos*/, float /*precision*/, fl
 // -----------------------------------------------------------------------------
 bool Inhabitant::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
 {
-    return false; //TODO
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -170,7 +167,7 @@ bool Inhabitant::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f Inhabitant::GetBoundingBox() const
 {
-    return geometry::Rectangle2f(); //TODO
+    return geometry::Rectangle2f();
 }
 
 // -----------------------------------------------------------------------------
@@ -179,7 +176,7 @@ geometry::Rectangle2f Inhabitant::GetBoundingBox() const
 // -----------------------------------------------------------------------------
 void Inhabitant::Accept( kernel::LocationVisitor_ABC& /*visitor*/ ) const
 {
-    //TODO
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -226,19 +223,4 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
 bool Inhabitant::CanAggregate() const
 {
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::Draw
-// Created: SLG 2010-12-05
-// -----------------------------------------------------------------------------
-void Inhabitant::Draw( const kernel::GlTools_ABC& tools ) const
-{
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-    {
-        const gui::TerrainObjectProxy& object = *it->second;
-        const geometry::Polygon2f* footprint = object.GetFootprint();
-        if( footprint )
-            tools.DrawConvexPolygon( footprint->Vertices() );
-    }
 }

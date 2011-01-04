@@ -10,14 +10,13 @@
 #include "gaming_pch.h"
 #include "InhabitantPositions.h"
 #include "Inhabitant.h"
-#include "clients_kernel/LocationVisitor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions constructor
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------
-InhabitantPositions::InhabitantPositions( const Inhabitant& inhab )
-    : inhabitant_( inhab )
+InhabitantPositions::InhabitantPositions( const Inhabitant& inhabitant )
+    : inhabitant_( inhabitant )
 {
     // NOTHING
 }
@@ -46,7 +45,7 @@ geometry::Point2f InhabitantPositions::GetPosition( bool aggregated ) const
 // -----------------------------------------------------------------------------
 bool InhabitantPositions::IsAt( const geometry::Point2f& /*pos*/, float /*precision*/ /*= 100.f*/, float /*adaptiveFactor*/ ) const
 {
-   throw std::runtime_error( __FUNCTION__ " not implemented" );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

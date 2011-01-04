@@ -134,14 +134,13 @@ void Inhabitant::SerializeAttributes( xml::xostream& xos ) const
 
 // -----------------------------------------------------------------------------
 // Name: Inhabitant::Draw
-// Created: SLG 2010-11-26
+// Created: LGY 2011-01-04
 // -----------------------------------------------------------------------------
-void Inhabitant::Draw( const kernel::GlTools_ABC& tools ) const
+void Inhabitant::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
     const InhabitantPositions* pos = static_cast< const InhabitantPositions* >( Retrieve< kernel::Positions >() );
     pos->Draw( tools );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Inhabitant::ReadExtension
