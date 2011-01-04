@@ -61,7 +61,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MedicalCapacity >  T_TreatmentCapacityVector;
+    typedef std::map< int, MedicalCapacity >  T_TreatmentCapacityVector;
     typedef sword::ObjectAttributeMedicalTreatment_EnumMedicalTreatmentStatus EnumMedicalTreatmentStatus;
     //@}
 

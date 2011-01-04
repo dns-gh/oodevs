@@ -54,15 +54,13 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
         object.GetAttribute< MedicalTreatmentAttribute >() = attribute;
         sword::ObjectAttributes asn;
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
-        unsigned int woundNumber = 0;
-        BOOST_CHECK_EQUAL( 2, asn.medical_treatment().bed_capacities().size() );
-        BOOST_CHECK( ! asn.medical_treatment().bed_capacities( woundNumber ).has_type_id() );
-        BOOST_CHECK( ! asn.medical_treatment().bed_capacities( woundNumber ).has_available_count() );
+        BOOST_CHECK_EQUAL( 1, asn.medical_treatment().bed_capacities().size() );
         
-        woundNumber = 1;
-        BOOST_CHECK( asn.medical_treatment().bed_capacities( woundNumber ).has_type_id() );
-        BOOST_CHECK( asn.medical_treatment().bed_capacities( woundNumber ).has_available_count() );
-        BOOST_CHECK_EQUAL( 1u, asn.medical_treatment().bed_capacities( woundNumber ).available_count() );
+        unsigned int woundNumber = 1;
+        BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 ).has_type_id() );
+        BOOST_CHECK_EQUAL( woundNumber, asn.medical_treatment().bed_capacities( 0 ).type_id() );
+        BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 ).has_available_count() );
+        BOOST_CHECK_EQUAL( 1u, asn.medical_treatment().bed_capacities( 0 ).available_count() );
 
         MOCK_EXPECT( time, GetCurrentTick ).returns( 2 );
         {
@@ -71,7 +69,8 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
             capacity.Update( object, 1 );
             sword::ObjectAttributes asnAfter;
             object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asnAfter );
-            BOOST_CHECK_EQUAL( 1u, asn.medical_treatment().bed_capacities( woundNumber ).available_count() );
+            BOOST_CHECK_EQUAL( woundNumber, asn.medical_treatment().bed_capacities( 0 ).type_id() );
+            BOOST_CHECK_EQUAL( 1u, asn.medical_treatment().bed_capacities( 0 ).available_count() );
         }
         {
             Mock_MIL_Injury_ABC abstractInjury;
@@ -83,7 +82,8 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
             capacity.Update( object, 1 );
             sword::ObjectAttributes asnAfter;
             object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asnAfter );
-            BOOST_CHECK_EQUAL( 0u, asnAfter.medical_treatment().bed_capacities( woundNumber ).available_count() );
+            BOOST_CHECK_EQUAL( woundNumber, asnAfter.medical_treatment().bed_capacities( 0 ).type_id() );
+            BOOST_CHECK_EQUAL( 0u, asnAfter.medical_treatment().bed_capacities( 0 ).available_count() );
         }
     }    
     MIL_MedicalTreatmentType::Terminate();
@@ -128,14 +128,11 @@ BOOST_AUTO_TEST_CASE( VerifyInitialization )
         sword::ObjectAttributes asn;
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
         BOOST_CHECK_EQUAL( 3u, asn.medical_treatment().doctors() );
-        BOOST_CHECK( ! asn.medical_treatment().bed_capacities( 0 /*id Wound1*/ ).has_type_id() );
-        BOOST_CHECK( ! asn.medical_treatment().bed_capacities( 0 /*id Wound1*/ ).has_available_count() );
-        BOOST_CHECK( ! asn.medical_treatment().bed_capacities( 0 /*id Wound1*/ ).has_baseline_count() );
-        BOOST_CHECK_EQUAL( 1, asn.medical_treatment().bed_capacities( 1 /*id Wound1*/ ).type_id() );
-        BOOST_CHECK( asn.medical_treatment().bed_capacities( 1 /*id Wound1*/ ).has_available_count() );
-        BOOST_CHECK_EQUAL( 5u, asn.medical_treatment().bed_capacities( 1 /*id Wound2*/ ).available_count() );
-        BOOST_CHECK( asn.medical_treatment().bed_capacities( 1 /*id Wound1*/ ).has_baseline_count() );
-        BOOST_CHECK_EQUAL( 5u, asn.medical_treatment().bed_capacities( 1 /*id Wound1*/ ).baseline_count() );
+        BOOST_CHECK_EQUAL( 1 /*id Wound1*/, asn.medical_treatment().bed_capacities( 0 ).type_id() );
+        BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 ).has_available_count() );
+        BOOST_CHECK_EQUAL( 5u, asn.medical_treatment().bed_capacities( 0 ).available_count() );
+        BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 ).has_baseline_count() );
+        BOOST_CHECK_EQUAL( 5u, asn.medical_treatment().bed_capacities( 0 ).baseline_count() );
     }
     MIL_MedicalTreatmentType::Terminate();
 }

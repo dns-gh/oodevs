@@ -43,10 +43,9 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 // Name: MedicalTreatmentAttribute::FillData
 // Created: JCR 2010-06-28
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::FillCapacities( std::vector< MedicalTreatmentCapacity >& data ) const
+void MedicalTreatmentAttribute::FillCapacities( T_TreatmentCapacities& data ) const
 {
-    std::vector< MedicalTreatmentCapacity > value( capacities_ );
-    data.swap( value );
+    data = capacities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,8 +107,6 @@ void MedicalTreatmentAttribute::UpdateData( const sword::ObjectAttributeMedicalT
         referenceID_ = message.external_reference_id();
     if( message.has_facility_status() )
         status_ = message.facility_status();
-    if( static_cast< std::size_t >( message.bed_capacities_size() ) > capacities_.size() )
-        T_TreatmentCapacities( message.bed_capacities_size() ).swap( capacities_ );
     for( int i = 0 ; i < message.bed_capacities_size(); i++ )
     {
         const sword::MedicalTreatmentBedCapacity& capacity = message.bed_capacities( i );
@@ -118,7 +115,7 @@ void MedicalTreatmentAttribute::UpdateData( const sword::ObjectAttributeMedicalT
             const kernel::MedicalTreatmentType* type = resolver_.Find( capacity.type_id() );
             if ( !type )
                 throw std::runtime_error( std::string( __FUNCTION__  )+ " Unknown injury id: " + boost::lexical_cast< std::string >( capacity.type_id() ) );
-            ::UpdateCapacity( *type, capacity, capacities_[ capacity.type_id() - 1 ] );
+            ::UpdateCapacity( *type, capacity, capacities_[ capacity.type_id() ] );
         }
     }
     controller_.Update( *(MedicalTreatmentAttribute_ABC*)this );
@@ -160,9 +157,9 @@ void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
     displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment services (Available(Baseline)):" ) );
     for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
     {
-        if ( it->type_ )
-            displayer.Display( std::string( it->name_ + ": " ).c_str(),
-                           std::string( boost::lexical_cast<std::string>( it->available_ ) + " (" + boost::lexical_cast<std::string>( it->baseline_ ) + ")" ) );
+        if ( it->second.type_ )
+            displayer.Display( std::string( it->second.name_ + ": " ).c_str(),
+                           std::string( boost::lexical_cast<std::string>( it->second.available_ ) + " (" + boost::lexical_cast<std::string>( it->second.baseline_ ) + ")" ) );
     }
 }
 

@@ -39,12 +39,17 @@ public:
     virtual ~MedicalTreatmentAttribute();
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< int, MedicalTreatmentCapacity > T_TreatmentCapacities;
+    //@}
+
     //! @name Accessors
     //@{
     int GetDoctors() const;
     int GetAvailableDoctors() const;
     const std::string& GetReferenceId() const;
-    void FillCapacities( std::vector< MedicalTreatmentCapacity >& data ) const;
+    void FillCapacities( T_TreatmentCapacities& data ) const;
     //@}
 
     //! @name Operations
@@ -69,12 +74,6 @@ private:
     //@{
     virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
     virtual void DoUpdate( const sword::ObjectUpdate& message );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< MedicalTreatmentCapacity > T_TreatmentCapacities;
     //@}
 
 public:

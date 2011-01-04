@@ -105,7 +105,7 @@ public:
         const MIL_MedicalTreatmentType* type_;
         //@}
     };
-    typedef std::vector< MedicalCapacity > T_TreatmentCapacityVector;
+    typedef std::map< int, MedicalCapacity > T_TreatmentCapacityVector;
     //@}
 
 public:
