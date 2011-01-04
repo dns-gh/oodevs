@@ -244,7 +244,8 @@ message ShapeUpdateRequest {
     optional string              category = 2;
     /** @property color
         @brief The new color of the shape.
-              Format is hexadecimal #rrggbb.
+        
+        Format is hexadecimal \#rrggbb.
         @note Only needs to be set if data has changed.
     */
     optional string              color    = 3;
@@ -546,7 +547,7 @@ message ClientToMessenger {
     */
     optional int32   context = 1;
     /** @property message
-        @brief A field containing one of the message to be sent.
+        @brief A field containing one of the messages to be sent.
     */
     required Content message = 2;
 }

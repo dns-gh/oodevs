@@ -128,13 +128,14 @@ message ClientToAuthentication {
         
         This field is used to fill the "context" fields in the response message
         (from AuthenticationToClient).
+        
         This context allows the client application to put an unique identifier 
         (based for instance on MAC address), thus allowing to track response 
         message matching a specific request emitted by the client.
     */
     optional int32   context = 1;
     /** @property message
-        @brief A field containing one of the message to be sent.
+        @brief A field containing one of the messages to be sent.
     */
     required Content message = 2;
 }

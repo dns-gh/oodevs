@@ -211,8 +211,8 @@ message RoleType {
 /** @struct Profile
     @brief Profile data: login, password, access-rights...
     
-    @noref Profile information can be set:
-    @li During exercise prepartation, creating "exercise/profiles.xml" loaded by Dispatcher at runtime.
+    The profile information can be set :
+    @li During exercise preparation, creating "exercise/profiles.xml" loaded by Dispatcher at runtime.
     @li During exercise gaming, manually creating or editing profile information.
 */
 message Profile {
@@ -243,7 +243,7 @@ message Profile {
         specified units and control them.
     */
     optional FormationIdList read_write_formations   = 4;
-    /** @property read_only_automats
+    /** @property read_only_automates
         @brief A list of "automat" identifiers which can be viewed by this profile.
         @see AutomatIdList
         
@@ -253,7 +253,7 @@ message Profile {
         @todo translation
     */
     optional AutomatIdList   read_only_automates     = 5;
-    /** @property read_write_automats
+    /** @property read_write_automates
         @brief A list of "automat" identifiers which can be viewed and controlled by this profile.
         @see AutomatIdList
         
@@ -386,7 +386,7 @@ message AuthenticationToClient {
     */
     optional int32   context = 1;
     /** @property message
-        @brief A field containing one of the message to be sent.
+        @brief A field containing one of the messages to be sent.
     */
     required Content message = 2;
 }

@@ -453,7 +453,8 @@ message ShapeUpdate {
     optional string           category = 2;
     /** @property color
         @brief The updated color of the shape.
-              Format is hexadecimal #rrggbb.
+        
+        Format is hexadecimal \#rrggbb.
         @note Only set if data has changed.
     */
     optional string           color    = 3;
@@ -821,7 +822,7 @@ message ClientObjectAck {
     This message is sent when a client object is created in response to a client request.
 */
 message ClientObjectCreationRequestAck {
-    /** @propertry name
+    /** @property name
         @brief The name of the client object for which creation has been requested.
     */
     required string                    name       = 1;
@@ -872,7 +873,7 @@ message ClientObjectDestructionRequestAck {
 }
 
 /** @struct MessengerToClient
-    @brief A facade for all available messages going from messenger to client.
+    @brief A facade for all messages from messenger to client.
     
     This is the actual message sent over the network.
 */
@@ -1049,18 +1050,18 @@ message MessengerToClient {
             @see ClientObjectDestruction
         */
         optional ClientObjectDestruction           client_object_destruction            = 31;
-        /** @property client_object_creation_request_ack
-            @brief A client object creation request acknowledgement message.
+        /** @property client_object_creation_ack
+            @brief A client object creation acknowledgement message.
             @see ClientObjectCreationRequestAck
         */
         optional ClientObjectCreationRequestAck    client_object_creation_ack           = 32;
-        /** @property client_object_update_request_ack
-            @brief A client object update request acknowledgement message.
+        /** @property client_object_update_ack
+            @brief A client object update acknowledgement message.
             @see ClientObjectUpdateRequestAck
         */
         optional ClientObjectUpdateRequestAck      client_object_update_ack             = 33;
-        /** @property client_object_destruction_request_ack
-            @brief A client object destruction request acknowledgement message.
+        /** @property client_object_destruction_ack
+            @brief A client object destruction acknowledgement message.
             @see ClientObjectDestructionRequestAck
         */
         optional ClientObjectDestructionRequestAck client_object_destruction_ack        = 34;

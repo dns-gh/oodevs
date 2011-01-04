@@ -258,7 +258,7 @@ message UnitActionAck {
     @todo rename to AgentCreationRequestAck
 */
 message UnitCreationRequestAck {
-    /** @property error_code
+    /** @property error
         @brief Enumeration indicating the success of failure (with reason) of
                the agent creation operation.
         @see UnitActionAck.ErrorCode
@@ -290,7 +290,9 @@ message UnitMagicActionAck {
 /** @struct MagicActionAck
     @brief A magic action execution request acknowledgement message.
     
-    This message is sent when a magic action is issued in response to a client request (MagicAction).
+    This message is sent when a magic action is issued in response to a client request.
+    
+    @see MagicAction
     @todo rename to MagicActionRequestAck
 */
 message MagicActionAck {
@@ -456,7 +458,7 @@ message ChangeDiplomacyAck {
     @todo split into different types
 */
 message HierarchyModificationAck {
-    /** @enum EnumChangeDiplomacyErrorCode
+    /** @enum ErrorCode
         @brief Enumeration indicating the success or failure (with reasons) of 
                a hierarchy modification operation.
     */
