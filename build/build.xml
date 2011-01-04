@@ -856,15 +856,25 @@
     documentation
     ============================================================================
     -->
-    <target name="documentation" description="generate documentation">
-        <doxygen-report name="SWORD_Connection_SDK" input="${src.dir}/libraries/protocol/proto">
+    <target name="documentation" description="generate SWORD SDK documentation">
+        <doxygen-report name="sword" input="${src.dir}/libraries/protocol/proto">
+            <property name="PROJECT_NAME" value="SWORD - API Reference"/>
             <property name="PROJECT_NUMBER" value="${version.major}"/>
             <property name="FILE_PATTERNS" value="*.proto"/>
-            <property name="HIDE_UNDOC_CLASSES" value="FALSE"/>
-            <property name="HIDE_UNDOC_MEMBERS" value="FALSE"/>
-            <property name="GENERATE_TREEVIEW" value="YES"/>
             <property name="FILTER_PATTERNS" value="*.proto=protofilter.py"/>
+            <property name="HIDE_UNDOC_CLASSES" value="NO"/>
+            <property name="HIDE_UNDOC_MEMBERS" value="NO"/>
+            <property name="COLLABORATION_GRAPH" value="NO"/>
+            <property name="GENERATE_TREEVIEW" value="YES"/>
+            <property name="DISABLE_INDEX" value="NO"/>
+            <property name="WARNINGS" value="YES"/>
+            <property name="WARN_LOGFILE" value="${reports.dir}/doxygen.log"/>
         </doxygen-report>
+        <fail message="documentation contains errors, see ${reports.dir}/doxygen.log">
+            <condition>
+                <length file="${reports.dir}/doxygen.log" when="greater" length="0"/>
+            </condition>
+        </fail>
     </target>
 
     <!--
