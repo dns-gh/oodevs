@@ -78,14 +78,13 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     try
     {
         type.RegisterRoles( *pPion, gcPause_, gcMult_ );
-
         Initialize( *pPion, vPosition );
         tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
         return pPion;
     }
     catch( ... )
     {
-        delete pPion;
+        delete pPion; // $$$$ MCO : use auto_ptr
         return 0;
     }
 }
