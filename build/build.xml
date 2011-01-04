@@ -867,6 +867,7 @@
             <property name="COLLABORATION_GRAPH" value="NO"/>
             <property name="GENERATE_TREEVIEW" value="YES"/>
             <property name="DISABLE_INDEX" value="NO"/>
+            <property name="ENUM_VALUES_PER_LINE" value="1"/>
             <property name="WARNINGS" value="YES"/>
             <property name="WARN_LOGFILE" value="${reports.dir}/doxygen.log"/>
         </doxygen-report>
