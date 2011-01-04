@@ -74,7 +74,6 @@ public:
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
-
     geometry::Point2f Barycenter() const;
     const geometry::Polygon2f* GetFootprint() const;
     const urban::TerrainObject_ABC* GetObject() const;
@@ -109,7 +108,7 @@ private:
 private:
     //! @name Member data
     //@{
-    urban::TerrainObject_ABC* object_;
+    urban::TerrainObject_ABC& object_;
     kernel::Controller& controller_;
     T_Humans humans_;
     //@}

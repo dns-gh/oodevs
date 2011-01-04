@@ -19,6 +19,7 @@
 #include "FirePrototype.h"
 #include "ActivityTimePrototype.h"
 #include "DelayPrototype.h"
+#include "FloodPrototype.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Location.h"
@@ -133,14 +134,12 @@ namespace
         factory->Register( "delay"          , boost::bind( &Capacity< DelayPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "supply-route"   , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "bridging"       , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
-
+        factory->Register( "flood"          , boost::bind( &Capacity< FloodPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "logistic"       , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );
-
-        factory->Register( "medical"       , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
+        factory->Register( "medical"        , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "propagation"    , boost::bind( &PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
-
         factory->Register( "contamination"  , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
-        factory->Register( "burn"    , boost::bind( &BurnAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
+        factory->Register( "burn"           , boost::bind( &BurnAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         return factory;
     }
 }

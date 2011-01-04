@@ -15,6 +15,8 @@
 
 using namespace gui;
 
+// $$$$ _RC_ JSR 2010-12-23: Classe à virer, ça sert à rien.
+
 // -----------------------------------------------------------------------------
 // Name: UrbanDrawer::UrbanDrawer
 // Created: SLG 2009-03-23

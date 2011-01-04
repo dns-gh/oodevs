@@ -25,11 +25,10 @@ using namespace gui;
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object,
-                                        unsigned int id, const QString& name )
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name )
     : EntityImplementation< kernel::Entity_ABC >( controller, id, name )
     , Creatable< TerrainObjectProxy >( controller, this )
-    , object_    ( &object )
+    , object_    ( object )
     , controller_( controller )
 {
     RegisterSelf( *this );
@@ -44,7 +43,7 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
 TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object )
     : EntityImplementation< kernel::Entity_ABC >( controller, object.GetId(), QString( object.GetName().c_str() ) )
     , Creatable< TerrainObjectProxy >( controller, this )
-    , object_    ( &object )
+    , object_    ( object )
     , controller_( controller )
 {
     RegisterSelf( *this );
@@ -68,7 +67,7 @@ TerrainObjectProxy::~TerrainObjectProxy()
 // -----------------------------------------------------------------------------
 bool TerrainObjectProxy::operator==( const TerrainObjectProxy& object ) const
 {
-    return object_ == object.object_;
+    return &object_ == &object.object_;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +85,7 @@ void TerrainObjectProxy::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
 // -----------------------------------------------------------------------------
 QString TerrainObjectProxy::GetName() const
 {
-    return QString( object_->GetName().c_str() );
+    return object_.GetName().c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +96,7 @@ unsigned long TerrainObjectProxy::GetId() const
 {
     // $$$$ _RC_ JSR 2010-08-20: la méthode n'est "quasiment" pas appelée, mais ça peut causer des conflits d'id si on appelle
     // la méthode en tant que Entity_ABC. L'id sera sûrement le même qu'un agent ou un objet. 
-    return object_->GetId();
+    return object_.GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +105,7 @@ unsigned long TerrainObjectProxy::GetId() const
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::Select( kernel::ActionController& controller ) const
 {
-    controller.Select( *this, *(const Entity_ABC*)this );
+    controller.Select( *this, *static_cast< const Entity_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,8 +116,8 @@ void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
 {
     kernel::PropertiesDictionary& dictionary = *new kernel::PropertiesDictionary( controller );
     EntityImplementation< kernel::Entity_ABC >::Attach( dictionary );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Identifier" ), EntityImplementation< kernel::Entity_ABC >::id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Entity_ABC >::name_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), EntityImplementation< kernel::Entity_ABC >::id_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Entity_ABC >::name_ );
     AddDictionaryForArchitecture( dictionary );
 }
 
@@ -128,15 +127,15 @@ void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary )
 {
-    urban::Architecture* architecture = object_->Retrieve< urban::Architecture >();
+    urban::Architecture* architecture = object_.Retrieve< urban::Architecture >();
     if( architecture )
     {
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" )        , architecture->GetHeight() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" )   , architecture->GetFloorNumber() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" )     , architecture->GetRoofShape() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" )      , architecture->GetMaterial() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" )    , architecture->GetOccupation() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), architecture->GetTrafficability() );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), architecture->GetHeight() );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), architecture->GetFloorNumber() );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), architecture->GetRoofShape() );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), architecture->GetMaterial() );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), architecture->GetOccupation() );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), architecture->GetTrafficability() );
     }
 }
 
@@ -146,7 +145,7 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::SetSelected( bool selected ) const
 {
-    object_->SetSelected( selected );
+    object_.SetSelected( selected );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +180,7 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned i
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& /*tools*/ ) const
 {
-    object_->Draw( drawer );
+    object_.Draw( drawer );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +189,7 @@ void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer, const kernel::Viewport
 // -----------------------------------------------------------------------------
 bool TerrainObjectProxy::IsInside( const geometry::Point2f& point ) const
 {
-    return object_->GetFootprint()->IsInside( point );
+    return object_.GetFootprint()->IsInside( point );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,7 +198,7 @@ bool TerrainObjectProxy::IsInside( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 geometry::Point2f TerrainObjectProxy::Barycenter() const
 {
-    return object_->GetFootprint()->Barycenter();
+    return object_.GetFootprint()->Barycenter();
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +207,7 @@ geometry::Point2f TerrainObjectProxy::Barycenter() const
 // -----------------------------------------------------------------------------
 const geometry::Polygon2f* TerrainObjectProxy::GetFootprint() const
 {
-    return object_->GetFootprint();
+    return object_.GetFootprint();
 }
 
 // -----------------------------------------------------------------------------
@@ -219,5 +218,5 @@ const urban::TerrainObject_ABC* TerrainObjectProxy::GetObject() const
 {
     // $$$$ JSR 2010-11-30: Utilisé pour le display dans UrbanKnowledge pour kernel::Formatter< TerrainObject_ABC >
     // A supprimer quand TerrainObjectProxy sera passé dans clients_kernel
-    return object_;
+    return &object_;
 }
