@@ -25,6 +25,8 @@ AutomatComposition::AutomatComposition( xml::xistream& input, const tools::Resol
 {
     input >> xml::optional >> xml::attribute( "min-occurs", min_ )
           >> xml::optional >> xml::attribute( "max-occurs", max_ );
+    if ( min_ > max_ )
+        std::swap( min_, max_ );
 }
 
 // -----------------------------------------------------------------------------
