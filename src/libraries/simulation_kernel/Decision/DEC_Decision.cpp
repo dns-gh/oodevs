@@ -12,6 +12,7 @@
 #include "DEC_Tools.h"
 #include "Entities/Orders/MIL_MissionParameter_ABC.h"
 #include "Entities/Orders/MIL_ParameterType_ABC.h"
+#include "Decision/DEC_AutomateFunctions.h"
 #include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_DIAFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
@@ -75,6 +76,7 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
 // -----------------------------------------------------------------------------
 void RegisterGeometryFunctions( directia::brain::Brain& brain)
 {
+    brain[ "DEC_Automate_Position" ] = &DEC_AutomateFunctions::GetBarycenter;
     brain[ "DEC_Agent_PositionPtr" ] = &DEC_AgentFunctions::GetAgentPositionPtr;
     brain[ "DEC_Geometrie_DecouperListePoints" ] = &DEC_GeometryFunctions::SplitListPoints;
     brain[ "DEC_Geometrie_CalculerPositionCouverture" ] = &DEC_GeometryFunctions::ComputeCoverPosition;

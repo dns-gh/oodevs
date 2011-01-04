@@ -16,11 +16,23 @@
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "DEC_KnowledgeUrbanFunctions.h"
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetBarycenter
+// Created: LMT 2011-01-04
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetBarycenter( const DEC_Decision_ABC * automat )
+{
+    boost::shared_ptr< MT_Vector2D > barycenter( new MT_Vector2D() );
+    automat->GetAutomate().GetAlivePionsBarycenter( *barycenter );
+    return barycenter;
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::IsParentAutomateEngaged
