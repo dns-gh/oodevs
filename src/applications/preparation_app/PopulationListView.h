@@ -32,12 +32,6 @@ public:
     virtual ~PopulationListView();
     //@}
 
-private slots:
-    //! @name Slots
-    //@{
-    virtual void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -57,7 +51,6 @@ private:
     //! @name Member data
     //@{
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    ModelBuilder& modelBuilder_;
     //@}
 };
 

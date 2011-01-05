@@ -22,9 +22,8 @@
 PopulationListView::PopulationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
     : gui::PopulationListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
     , selected_    ( controllers )
-    , modelBuilder_( modelBuilder )
 {
-    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,21 +54,6 @@ void PopulationListView::NotifySelected( const kernel::Entity_ABC* element )
 {
     selected_ = element;
     gui::PopulationListView::NotifySelected( element );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationListView::OnContextMenuRequested
-// Created: SBO 2007-03-23
-// -----------------------------------------------------------------------------
-void PopulationListView::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int index )
-{
-    gui::PopulationListView::OnContextMenuRequested( item, pos, index );
-    if( item || !isVisible() )
-        return;
-    modelBuilder_.ClearSelection();
-    QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
-    menu->exec( pos, index );
 }
 
 // -----------------------------------------------------------------------------

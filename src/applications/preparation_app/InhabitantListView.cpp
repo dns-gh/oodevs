@@ -22,9 +22,8 @@
 InhabitantListView::InhabitantListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
     : gui::InhabitantListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
     , selected_    ( controllers )
-    , modelBuilder_( modelBuilder )
 {
-    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,21 +54,6 @@ void InhabitantListView::NotifySelected( const kernel::Entity_ABC* element )
 {
     selected_ = element;
     gui::InhabitantListView::NotifySelected( element );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InhabitantListView::OnContextMenuRequested
-// Created: SLG 2010-11-23
-// -----------------------------------------------------------------------------
-void InhabitantListView::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int index )
-{
-    gui::InhabitantListView::OnContextMenuRequested( item, pos, index );
-    if( item || !isVisible() )
-        return;
-    modelBuilder_.ClearSelection();
-    QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
-    menu->exec( pos, index );
 }
 
 // -----------------------------------------------------------------------------
