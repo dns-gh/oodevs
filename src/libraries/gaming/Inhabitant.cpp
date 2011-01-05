@@ -25,8 +25,6 @@
 using namespace geometry;
 using namespace kernel;
 
-unsigned long Inhabitant::nMaxId_ = 200;
-
 // -----------------------------------------------------------------------------
 // Name: Inhabitant constructor
 // Created: SLG 2010-12-05

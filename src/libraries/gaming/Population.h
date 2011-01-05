@@ -120,7 +120,6 @@ private:
     //@}
 
 private:
-    static unsigned long nMaxId_;
     std::set< kernel::Displayer_ABC* > displayers_;
 };
 

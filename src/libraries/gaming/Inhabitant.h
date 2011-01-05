@@ -95,7 +95,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::InhabitantType& type_;
-    static unsigned long nMaxId_;
     std::set< kernel::Displayer_ABC* > displayers_;
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;

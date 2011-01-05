@@ -25,8 +25,6 @@
 using namespace geometry;
 using namespace kernel;
 
-unsigned long Population::nMaxId_ = 200;
-
 // -----------------------------------------------------------------------------
 // Name: Population constructor
 // Created: HME 2005-09-29
