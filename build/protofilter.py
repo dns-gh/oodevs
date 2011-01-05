@@ -18,13 +18,14 @@ def filter( filename ):
         line = line.replace( "}", "};" )
         # replace enumeration ; with ,
         line = re.sub( r"^(\s*\S+\s*\=\s*\S+);", r"\1,", line )
-        #field indexes
-        line = re.sub( r"^(\s*\S+\s+\S+\s+\S+\s*)\=\s+([0-9]+)", r"\1 /** This field's index in the message is #\2. */", line )
-        #field keywords
-        line = re.sub( r"^(\s*)required", r"\1required /** @invariant This field is required. */", line )
-        line = re.sub( r"^(\s*)optional", r"\1optional /** @invariant This field is optional. */", line )
+        # field indexes
+        line = re.sub( r"^(\s*\S+\s+\S+\s+\S+\s*)\=\s+([0-9]+)", r"\1 /** @index \2 */", line )
+        # field rules
+        line = re.sub( r"^(\s*)required", r"\1required /** @rule Required */", line )
+        line = re.sub( r"^(\s*)optional", r"\1optional /** @rule Optional */", line )
+        line = re.sub( r"^(\s*)repeated", r"\1repeated /** @rule Repeated */", line )
         # default values
-        line = re.sub( r"\[\s*default\s*=\s*(\S+)\s*\];", r"/** @invariant This field's default value is \1. */ = \1;", line )
+        line = re.sub( r"\[\s*default\s*=\s*(\S+)\s*\];", r"/** @default \1 */ = \1;", line )
         lines = lines + line
     # strip last , of enumerations
     lines = re.sub( r",([\r\n]+\})", r"\1", lines )

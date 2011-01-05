@@ -869,6 +869,7 @@
             <property name="DISABLE_INDEX" value="NO"/>
             <property name="ENUM_VALUES_PER_LINE" value="1"/>
             <property name="WARNINGS" value="YES"/>
+            <property name="ALIASES" value='""rule=@par Rule:\n" "index=@par Index:\n" "default=@par Default value:\n""'/>
             <property name="WARN_LOGFILE" value="${reports.dir}/doxygen.log"/>
         </doxygen-report>
         <fail message="documentation contains errors, see ${reports.dir}/doxygen.log">
