@@ -22,7 +22,7 @@ package sword;
 */
 message AuthenticationResponse {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
+        @brief Reason for the failure of
                an authentication operation.
     */
     enum ErrorCode {
@@ -32,7 +32,7 @@ message AuthenticationResponse {
         mismatched_protocol_version = 4; //!< Authentication failed because of a mismatched protocol version between client and server.
     }
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                an authentication operation.
         @see ErrorCode
     */
@@ -87,7 +87,7 @@ message ProfileCreation {
 */
 message ProfileCreationRequestAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
+        @brief Reason for the failure of
                a profile creation operation.
     */
     enum ErrorCode {
@@ -101,7 +101,7 @@ message ProfileCreationRequestAck {
     */
     required string    login      = 1;
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a profile creation operation.
         @see ErrorCode
     */
@@ -115,7 +115,7 @@ message ProfileCreationRequestAck {
 */
 message ProfileUpdateRequestAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
+        @brief Reason for the failure of
                a profile update operation.
     */
     enum ErrorCode {
@@ -130,7 +130,7 @@ message ProfileUpdateRequestAck {
     */
     required string    login      = 1;
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a profile update operation.
         @see ErrorCode
     */
@@ -176,7 +176,7 @@ message ProfileDestruction {
 */
 message ProfileDestructionRequestAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
+        @brief Reason for the failure of
                a profile destruction operation.
     */
     enum ErrorCode {
@@ -185,7 +185,7 @@ message ProfileDestructionRequestAck {
         failure         = 2; //!< @deprecated never used
     }
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a profile destruction operation.
         @see ErrorCode
     */

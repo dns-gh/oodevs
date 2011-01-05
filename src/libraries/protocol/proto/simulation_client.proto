@@ -16,765 +16,423 @@ package sword;
     @todo move into LogSupplyHandlingUpdate, rename to ConvoyState
 */
 enum EnumLogSupplyHandlingStatus {
-    /** @brief Convoy is waiting for trucks.
-        @todo translate into waiting_for_trucks
-    */
-    convoi_en_attente_camions                  = 0;
-    /** @brief Convoy is constituting.
-        @todo translate into constituting_convoy
-    */
-    convoi_constitution                        = 1;
-    /** @brief Convoy is moving to loading point.
-        @todo translate into moving_to_loading_point
-    */
-    convoi_deplacement_vers_point_chargement   = 2;
-    /** @brief Convoy is loading.
-        @todo translate into loading
-    */
-    convoi_chargement                          = 3;
-    /** @brief Convoy is moving to unloading point.
-        @todo translate into moving_to_unloading_point
-    */
-    convoi_deplacement_vers_point_dechargement = 4;
-    /** @brief Convoy is unloading.
-        @todo translate into unloading
-    */
-    convoi_dechargement                        = 5;
-    /** @brief Convoy is returning to starting point.
-        @todo translate into returning
-    */
-    convoi_deplacement_retour                  = 6;
-    /** @brief Convoying operation is done.
-        @todo translate into done
-    */
-    termine                                    = 7;
+    convoi_en_attente_camions                  = 0; //!< Convoy is waiting for trucks @todo translate into waiting_for_trucks
+    convoi_constitution                        = 1; //!< Convoy is constituting @todo translate into constituting_convoy
+    convoi_deplacement_vers_point_chargement   = 2; //!< Convoy is moving to loading point @todo translate into moving_to_loading_point
+    convoi_chargement                          = 3; //!< Convoy is loading @todo translate into loading
+    convoi_deplacement_vers_point_dechargement = 4; //!< Convoy is moving to unloading point @todo translate into moving_to_unloading_point
+    convoi_dechargement                        = 5; //!< Convoy is unloading @todo translate into unloading
+    convoi_deplacement_retour                  = 6; //!< Convoy is returning to starting point @todo translate into returning
+    termine                                    = 7; //!< Convoying operation is done @todo translate into done
 }
 
 /** @struct OrderAck
-    @brief A container for order acknowledgement error message.
+    @brief A container for order acknowledgement error message
+    @see UnitOrder
+    @see AutomatOrder
+    @see CrowdOrder
+    @see FragOrder
 */
 message OrderAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
-               order/mission assignment.
+        @brief Reason for the failure of order/mission assignment.
+        @todo Move long descriptions to the corresponding field in BlablaOrder and use @@see tags here
     */
     enum ErrorCode {
-        /** @brief Operation succeeded
-            @todo As error codes are optional, no_error should not exist
-        */
-        no_error                                = 0;
-        /** @brief Operation failed because of an invalid tasker.
-            When issuing an order, the client must provide a valid tasker,
-            that is an existing agent/automat/crowd identifier.
-            @todo rename to error_invalid_tasker
-        */
-        error_invalid_unit                      = 1;
-        /** @brief Operation failed because of an invalid limit.
-            When issuing an order, the client can provide limit parameters which 
-            are required for automat missions.
-            @deprecated should be handled using invalid_mission_parameters
-        */
-        error_invalid_limit                     = 2;
-        /** @brief Operation failed because of an invalid phase line.
-            When issuing an order, the client can provide phase line parameters which 
-            are required for some missions.
-            @deprecated should be handled using invalid_mission_parameters
-        */
-        error_invalid_lima                      = 3;
-        /** @brief Operation failed because of an invalid mission.
-            When issuing an order, the client must provide the identifier of the mission
-            to issue. This mission must be available for the specified tasker unit.
-        */
-        error_invalid_mission                   = 4;
-        /** @brief Operation failed because of an invalid parameter.
-            When issuing an order, the client must provide mission parameters as defined
-            in the file "Missions.xml".
-            @todo rename to error_invalid_parameter
-        */
-        error_invalid_mission_parameters        = 5;
-        /** @brief Operation failed because the unit is not in a state where it can 
-                   execute the order.
-            The tasker must be alive and if it is an agent, it must be disengaged.
-            @todo rename to error_tasker_unable_cannot_receive_order
-        */
-        error_unit_cannot_receive_order         = 6;
-        /** @brief Operation failed because of an invalid fragmentary order identifier.
-            When issuing an order, the client must provide the identifier of the fragmentary
-            order to be executed. This identifier can be found in the file "Missions.xml".
-            @todo rename to error_invalid_fragorder
-        */
-        error_invalid_order_conduite            = 7;
-        /** @brief Operation failed because of an invalid mission identifier.
-            When issuing an order, the client must provide the identifier of the mission
-            to be executed. This identifier can be found in the file "Missions.xml".
-        */
-        error_invalid_order_mission             = 8;
-        /** @deprecated never used
-        */
-        error_invalid_order_initial             = 9;
-        /** @deprecated never used
-        */
-        error_invalid_order_conduite_parameters = 10;
-        /** @brief Operation failed because the unit is not in a state where it can 
-                   execute the order.
-            The tasker must not be surrendered to be able to receive orders.
-            @todo rename to error_tasker_surrendered
-        */
-        error_unit_surrendered                  = 11;
-        /** @brief Operation failed because of an invalid phase line function.
-            When issuing an order, the client can provide phase line parameters which 
-            are required for some missions. Each phase line is assigned one or more
-            functions in the context of the mission.
-            @deprecated should be handled using invalid_mission_parameters
-        */
-        error_invalid_lima_function             = 12;
+        no_error                                = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
+        error_invalid_unit                      = 1; //!< Operation failed because of an invalid tasker identifier e.g. an existing agent/automat/crowd identifier @todo rename to error_invalid_tasker
+        error_invalid_limit                     = 2; //!< Operation failed because of an invalid limit : limit parameters are required for automat missions @deprecated should be handled using invalid_mission_parameters
+        error_invalid_lima                      = 3; //!< Operation failed because of an invalid phase line : phase line parameters are required for some missions @deprecated should be handled using invalid_mission_parameters
+        error_invalid_mission                   = 4; //!< Operation failed because of an invalid mission identifier : the mission must exist and be available for the specified tasker unit
+        error_invalid_mission_parameters        = 5; //!< Operation failed because of an invalid mission parameter : parameters are defined in the file "Missions.xml" @todo rename to error_invalid_parameter
+        error_unit_cannot_receive_order         = 6; //!< Operation failed because the unit is not in a state where it can execute the order : it must be alive and disengaged (for an agent) @todo rename to error_tasker_unable_cannot_receive_order
+        error_invalid_order_conduite            = 7; //!< Operation failed because of an invalid fragmentary order identifier : valid identifiers can be found in the file "Missions.xml" @todo rename to error_invalid_fragorder
+        error_invalid_order_mission             = 8; //!< Operation failed because of an invalid mission identifier : valid identifiers can be found in the file "Missions.xml"
+        error_invalid_order_initial             = 9; //!< @deprecated never used
+        error_invalid_order_conduite_parameters = 10; //!< @deprecated never used
+        error_unit_surrendered                  = 11; //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered and be able to receive orders @todo rename to error_tasker_surrendered
+        error_invalid_lima_function             = 12; //!< Operation failed because of an invalid phase line function : phase line parameters are required for some missions, each phase line is assigned one or more functions in the context of the mission @deprecated should be handled using invalid_mission_parameters
     }
 }
 
 /** @struct TaskCreationRequestAck
     @brief An agent order execution request acknowledgement message.
-    
+
     This message is sent when an agent order is issued in response to a client request (UnitOrder).
     @todo rename to TaskCreationRequestAck, gather UnitOrder, AutomatOrder and CrowdOrder into one message
 */
 message TaskCreationRequestAck {
-    /** @property tasker
-        @brief Identifier of the agent, automat, crowd on which the order was issued.
-        @see UnitId
-    */
-    required Tasker             tasker     = 1;
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               an agent order execution operation.
-        @see OrderAck.ErrorCode
-    */
-    required OrderAck.ErrorCode error_code = 2;
+    required Tasker             tasker     = 1; //!< Identifier of the agent, automat, crowd on which the order was issued @see Tasker
+    required OrderAck.ErrorCode error_code = 2; //!< Reason for the failure of an agent order execution operation @see OrderAck.ErrorCode
 }
 
 /** @struct FragOrderAck
     @brief A fragmentary order execution request acknowledgement message.
-    
+
     This message is sent when a fragmentary order is issued in response to a client request (FragOrder).
     @todo gather with UnitOrder, AutomatOrder and CrowdOrder into one message ?
 */
 message FragOrderAck {
-    /** @property tasker
-        @brief Identifier of the agent, automat or crowd on which the fragmentary order was issued.
-        @see Tasker
-    */
-    required Tasker             tasker     = 1;
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               a fragmentary order execution operation.
-        @see OrderAck.ErrorCode
-    */
-    required OrderAck.ErrorCode error_code = 2;
+    required Tasker             tasker     = 1; //!< Identifier of the agent, automat or crowd on which the fragmentary order was issued @see Tasker
+    required OrderAck.ErrorCode error_code = 2; //!< Reason for the failure of a fragmentary order execution operation @see OrderAck.ErrorCode
 }
 
 /** @struct SetAutomatModeAck
     @brief An automat mode change request acknowledgement message.
-    
-    This message is sent when an automat mode change is executed in response to a 
+
+    This message is sent when an automat mode change is executed in response to a
     client request.
-    
+
     @see SetAutomatMode
 */
 message SetAutomatModeAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
-               automat mode change.
+        @brief Reason for the failure of automat mode change
     */
     enum ErrorCode {
-        /** @brief Operation succeeded
-        */
-        no_error           = 0;
-        /** @brief Operation failed because of an invalid automat.
-            When changing automat mode, the client must provide a valid automat,
-            for which to change mode.
-            @todo rename to error_invalid_automat
-        */
-        error_invalid_unit = 1;
-        /** @deprecated never used
-        */
-        error_not_allowed  = 2;
+        no_error           = 0; //!< Operation succeeded @todo make error_code field optional instead
+        error_invalid_unit = 1; //!< Operation failed because of an invalid automat identifier @todo rename to error_invalid_automat
+        error_not_allowed  = 2; //!< @deprecated never used
     }
-    /** @property automate
-        @brief Identifier of the automat for which to change mode.
-        @see AutomatId
-        @todo rename to automat
-    */
-    required AutomatId automate   = 1;
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the automat mode changing operation.
-        @see ErrorCode
-    */
-    required ErrorCode error_code = 2;
+    required AutomatId automate   = 1; //!< Identifier of the automat for which to change mode @see AutomatId @todo rename to automat
+    required ErrorCode error_code = 2; //!< Reason for the failure of the automat mode changing operation @see ErrorCode
 }
 
 /** @struct UnitActionAck
-    @brief A container for agent action acknowledgement error message.
+    @brief A container for agent action acknowledgement error message
     @todo rename to AgentActionAck
 */
 message UnitActionAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of 
-               agent action operation.
+        @brief Reason for the failure of agent action operation
     */
     enum ErrorCode {
-        /** @brief Operation succeeded
-        */
-        no_error                = 0;
-        /** @brief Operation failed because of an invalid agent.
-            When issuing an agent action, the client must provide a valid agent,
-            that is an existing agent identifier.
-            @todo rename to error_invalid_agent
-        */
-        error_invalid_unit      = 1;
-        /** @brief Operation failed because the target agent is currently controlled
-            by its parent automat.
-            @todo rename to error_automation_enabled
-        */
-        error_automate_embraye  = 2;
-        /** @brief Operation failed because the provided action parameters were invalid.
-            @todo rename to error_invalid_parameter
-        */
-        error_invalid_attribute = 3;
-        /** @brief Operation failed because the agent is not in a state where it can 
-                   execute the order.
-            The agent must not be surrendered to be able to receive orders.
-            @todo rename to error_agent_surrendered
-        */
-        error_unit_surrendered  = 4;
+        no_error                = 0; //!< Operation succeeded
+        error_invalid_unit      = 1; //!< Operation failed because of an invalid agent identifier @todo rename to error_invalid_agent
+        error_automate_embraye  = 2; //!< @brief Operation failed because the target agent is currently controlled by its parent automat @todo rename to error_automation_enabled
+        error_invalid_attribute = 3; //!< Operation failed because the provided action parameters were invalid @todo rename to error_invalid_parameter
+        error_unit_surrendered  = 4; //!< Operation failed because the agent is not in a state where it can execute the order : it must not have surrendered to be able to receive orders @todo rename to error_agent_surrendered
     }
 }
 
 /** @struct UnitCreationRequestAck
-    @brief An agent creation request acknowledgement message.
-    
+    @brief An agent creation request acknowledgement message
+
     This message is sent in response to an agent creation request.
-    
+
     @see UnitCreationRequest
     @todo rename to AgentCreationRequestAck
 */
 message UnitCreationRequestAck {
-    /** @property error
-        @brief Enumeration indicating the success or failure (with reason) of
-               the agent creation operation.
-        @see UnitActionAck.ErrorCode
-    */
-    required UnitActionAck.ErrorCode error = 1;
+    required UnitActionAck.ErrorCode error = 1; //!< Reason for the failure of the agent creation operation @see UnitActionAck.ErrorCode
 }
 
 /** @struct UnitMagicActionAck
     @brief An agent magic action execution request acknowledgement message.
-    
+
     This message is sent in response to an agent magic action request
     @see UnitMagicAction
     @todo rename to AgentMagicActionRequestAck
 */
 message UnitMagicActionAck {
-    /** @property unit
-        @brief Identifier of the agent on which the magic action was requested to be executed.
-        @todo rename to agent
-    */
-    required UnitId                  unit       = 1;
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the agent magic action execution operation.
-        @see UnitActionAck.ErrorCode
-    */
-    required UnitActionAck.ErrorCode error_code = 2;
+    required UnitId                  unit       = 1; //!< Identifier of the agent on which the magic action was requested to be executed @todo rename to agent
+    required UnitActionAck.ErrorCode error_code = 2; //!< Reason for the failure of the agent magic action execution operation. @see UnitActionAck.ErrorCode
 }
 
 /** @struct MagicActionAck
-    @brief A magic action execution request acknowledgement message.
-    
+    @brief A magic action execution request acknowledgement message
+
     This message is sent when a magic action is issued in response to a client request.
-    
+
     @see MagicAction
     @todo rename to MagicActionRequestAck
 */
 message MagicActionAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of 
-               the magic action operation.
+        @brief Reason for the failure of the magic action operation
     */
     enum ErrorCode {
-        /** @brief Operation succeeded
-        */
-        no_error                = 0;
-        /** @brief Operation failed because the provided action parameters were invalid.
-            @todo rename to error_invalid_parameter
-        */
-        error_invalid_attribute = 1;
+        no_error                = 0; //!< Operation succeeded
+        error_invalid_attribute = 1; //!< Operation failed because the provided action parameters were invalid @todo rename to error_invalid_parameter
     }
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the magic action execution operation.
-        @see ErrorCode
-    */
-    required ErrorCode error_code = 1;
+    required ErrorCode error_code = 1; //!< Reason for the failure of the magic action execution operation @see ErrorCode
 }
 
 /** @struct ObjectMagicActionAck
-    @brief An object magic action execution request acknowledgement message.
-    
+    @brief An object magic action execution request acknowledgement message
+
     This message is sent when an object magic action is issued in response to a client request
-    
+
     @see ObjectMagicAction
     @todo rename to ObjectMagicActionRequestAck
 */
 message ObjectMagicActionAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of 
-               the object magic action operation.
+        @brief Reason for the failure of the object magic action operation
     */
     enum ErrorCode {
-        /** @brief Operation succeeded
-        */
-        no_error                          = 0;
-        /** @brief Operation failed because the provided object identifier was not valid.
-                   Provided object identifier must reference an existing object.
-            @todo rename to error_invalid_id
-        */
-        error_invalid_object              = 1;
-        /** @deprecated never used
-        */
-        error_invalid_id                  = 2;
-        /** @brief Operation failed because the provided party identifier was not valid.
-                   Provided party identifier must reference an existing party.
-            @todo rename to error_invalid_party
-        */
-        error_invalid_camp                = 3;
-        /** @brief Operation failed because the provided location was not valid.
-                   Provided location must meet the restriction defined for the object geometry.
-                   Restrictions are defined in file "Object.xml".
-            @todo rename to error_invalid_location
-        */
-        error_invalid_localisation        = 4;
-        /** @brief Operation failed because object specific attributes are missing.
-                   Provided object attributes must meet the requirements associated with the object type.
-        */
-        error_missing_specific_attributes = 5;
-        /** @brief Operation failed because object specific attributes are invalid.
-                   Provided object attributes must meet the requirements associated with the object type.
-        */
-        error_invalid_specific_attributes = 6;
+        no_error                          = 0; //!< Operation succeeded
+        error_invalid_object              = 1; //!< Operation failed because the provided object identifier was invalid @todo rename to error_invalid_id
+        error_invalid_id                  = 2; //!< @deprecated never used
+        error_invalid_camp                = 3; //!< Operation failed because the provided party identifier was invalid @todo rename to error_invalid_party
+        error_invalid_localisation        = 4; //!< Operation failed because the provided location was invalid : provided location must meet the restriction for the object geometry as defined in the file "Object.xml" @todo rename to error_invalid_location
+        error_missing_specific_attributes = 5; //!< Operation failed because object specific attributes are missing : they must meet the requirements associated with the object type
+        error_invalid_specific_attributes = 6; //!< Operation failed because object specific attributes are invalid : they must meet the requirements associated with the object type
     }
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the object magic action execution operation.
-        @see ErrorCode
-    */
-    required ErrorCode error_code = 1;
+    required ErrorCode error_code = 1; //!< Reason for the failure of the object magic action execution operation @see ErrorCode
 }
 
 /** @struct CrowdMagicActionAck
-    @brief An crowd magic action execution request acknowledgement message.
-    
-    This message is sent when a crowd magic action is issued in response to a client request (CrowdMagicAction).
+    @brief A crowd magic action execution request acknowledgement message
+
+    This message is sent when a crowd magic action is issued in response to a client request.
+
+    @see CrowdMagicAction
     @todo rename to CrowdMagicActionRequestAck
 */
 message CrowdMagicActionAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of 
-               the crowd magic action operation.
+        @brief Reason for the failure of the crowd magic action operation
     */
     enum ErrorCode {
-        /** @brief Operation succeeded
-        */
-        no_error                = 0;
-        /** @brief Operation failed because the provided crowd identifier was not valid.
-                   Provided crowd identifier must reference an existing crowd.
-            @todo rename to error_invalid_crowd
-        */
-        error_invalid_unit      = 1;
-        /** @brief Operation failed because the provided action parameters were invalid.
-            @todo rename to error_invalid_parameter
-        */
-        error_invalid_attribute = 2;
+        no_error                = 0; //!< Operation succeeded
+        error_invalid_unit      = 1; //!< Operation failed because the provided crowd identifier was invalid @todo rename to error_invalid_crowd
+        error_invalid_attribute = 2; //!< Operation failed because the provided action parameters were invalid @todo rename to error_invalid_parameter
     }
-    /** @property crowd
-        @brief Identifier of the crowd on which the magic action was requested to be executed.
-    */
-    required CrowdId   crowd      = 1;
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the crowd magic action execution operation.
-        @see ErrorCode
-    */
-    required ErrorCode error_code = 2;
+    required CrowdId   crowd      = 1; //!< Identifier of the crowd on which the magic action was requested to be executed
+    required ErrorCode error_code = 2; //!< Reason for the failure of the crowd magic action execution operation @see ErrorCode
 }
 
 /** @struct ChangeDiplomacyAck
-    @brief A diplomacy change request acknowledgement message.
-    
-    This message is sent when a diplomacy change is realized in response to a client request (ChangeDiplomacy).
+    @brief A diplomacy change request acknowledgement message
+
+    This message is sent when a diplomacy change is realized in response to a client request.
+
+    @see ChangeDiplomacy
     @todo rename to DiplomacyChangeRequestAck
 */
 message ChangeDiplomacyAck {
     /** @enum EnumChangeDiplomacyErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of 
-               the diplomacy change operation.
+        @brief Reason for the failure of the diplomacy change operation
         @todo rename to ErrorCode
     */
     enum EnumChangeDiplomacyErrorCode {
-        /** @brief Operation succeeded
-            @todo rename to no_error
-        */
-        no_error_diplomacy           = 0;
-        /** @brief Operation failed because the provided diplomacy is invalid.
-            @todo rename to error_invalid_party_diplomacy
-        */
-        error_invalid_camp_diplomacy = 1;
+        no_error_diplomacy           = 0; //!< Operation succeeded @todo rename to no_error
+        error_invalid_camp_diplomacy = 1; //!< Operation failed because the provided diplomacy is invalid @todo rename to error_invalid_party_diplomacy
     }
-    /** @property party1
-        @brief Identifier of the party from which the diplomacy is defined.
-        @see PartyId
-    */
-    required PartyId                      party1     = 1;
-    /** @property party2
-        @brief Identifier of the party to which the diplomacy is defined.
-        @see PartyId
-    */
-    required PartyId                      party2     = 2;
-    /** @property diplomatie
-        @brief Definition of the diplomacy between specified parties.
-        @see EnumDiplomacy
-        @todo rename to diplomacy
-    */
-    required EnumDiplomacy                diplomatie = 3;
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the diplomacy change operation.
-        @see EnumChangeDiplomacyErrorCode
-    */
-    required EnumChangeDiplomacyErrorCode error_code = 4;
+    required PartyId                      party1     = 1; //!< Identifier of the party from which the diplomacy is defined @see PartyId
+    required PartyId                      party2     = 2; //!< Identifier of the party to which the diplomacy is defined @see PartyId
+    required EnumDiplomacy                diplomatie = 3; //!< Definition of the diplomacy between specified parties @see EnumDiplomacy @todo rename to diplomacy
+    required EnumChangeDiplomacyErrorCode error_code = 4; //!< Reason for the failure of the diplomacy change operation @see EnumChangeDiplomacyErrorCode
 }
 
 /** @struct HierarchyModificationAck
-    @brief A container for hierarchy modification action acknowledgement error message.
+    @brief A container for hierarchy modification action acknowledgement error message
     @todo split into different types
 */
 message HierarchyModificationAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of 
-               a hierarchy modification operation.
+        @brief Reason for the failure of a hierarchy modification operation
     */
     enum ErrorCode {
-        /** @brief Operation succeeded
-            @todo rename to no_error
-        */
-        no_error_hierarchy                 = 0;
-        /** @brief Operation failed because of an invalid agent.
-            No existing agent with the provided identifier can be found.
-            @todo rename to error_invalid_agent
-        */
-        error_invalid_pion                 = 1;
-        /** @brief Operation failed because of an invalid automat.
-            No existing automat with the provided identifier can be found.
-            @todo rename to error_invalid_automat
-        */
-        error_invalid_automate             = 2;
-        /** @brief Operation failed because of an invalid formation.
-            No existing formation with the provided identifier can be found.
-            @todo rename to error_invalid_agent
-        */
-        error_invalid_formation            = 3;
-        /** @brief Operation failed because of an invalid logistics automat.
-            No existing logistics automat with the provided identifier can be found.
-            @todo rename to error_invalid_supply_automat
-        */
-        error_invalid_automate_tc2         = 4;
-        /** @deprecated never used
-        */
-        error_invalid_automate_maintenance = 5;
-        /** @deprecated never used
-        */
-        error_invalid_automate_sante       = 6;
-        /** @deprecated never used
-        */
-        error_invalid_automate_supply      = 7;
-        /** @brief Operation failed because the unit is not in a state where it can 
-                   execute the order.
-            The tasker must not be surrendered to be able to receive orders.
-            @todo rename to error_agent_surrendered
-        */
-        error_unit_surrendered_hierarchy   = 8;
-        /** @brief Operation failed because of an invalid party.
-            No existing party with the provided identifier can be found.
-            @todo rename to error_invalid_party
-        */
-        error_invalid_party_hierarchy      = 9;
-        /** @brief Operation failed because of an invalid knowledge group.
-            No existing knowledge group with the provided identifier can be found.
-            @todo rename to error_invalid_knowledge_group
-        */
-        error_invalid_knowledge_group      = 10;
-        /** @brief Operation failed because of a party mismatch.
-            An agent cannot be moved from a party to another.
-        */
-        error_parties_mismatched           = 11;
+        no_error_hierarchy                 = 0; //!< Operation succeeded @todo rename to no_error
+        error_invalid_pion                 = 1; //!< Operation failed because no existing agent with the provided identifier could be found @todo rename to error_invalid_agent
+        error_invalid_automate             = 2; //!< Operation failed because no existing automat with the provided identifier could be found @todo rename to error_invalid_automat
+        error_invalid_formation            = 3; //!< Operation failed because no existing formation with the provided identifier could be found @todo rename to error_invalid_agent
+        error_invalid_automate_tc2         = 4; //!< Operation failed because no existing logistics automat with the provided identifier could be found @todo rename to error_invalid_supply_automat
+        error_invalid_automate_maintenance = 5; //!< @deprecated never used
+        error_invalid_automate_sante       = 6; //!< deprecated never used
+        error_invalid_automate_supply      = 7; //!< @deprecated never used
+        error_unit_surrendered_hierarchy   = 8; //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered to be able to receive orders @todo rename to error_agent_surrendered
+        error_invalid_party_hierarchy      = 9; //!< Operation failed because no existing party with the provided identifier could be found @todo rename to error_invalid_party
+        error_invalid_knowledge_group      = 10; //!< Operation failed because no existing knowledge group with the provided identifier could be found @todo rename to error_invalid_knowledge_group
+        error_parties_mismatched           = 11; //!< Operation failed because an agent cannot be moved from a party to another
     }
 }
 
 /** @struct AutomatChangeKnowledgeGroupAck
-    @brief An acknowledgement message to an automat's knowledge group change request.
-    
-    This message is sent when an automat's knowledge group change is realized in response to a client request 
-    (UnitMagicAction of type "change_knowledge_group").
+    @brief An acknowledgement message to an automat's knowledge group change request
+
+    This message is sent when an automat's knowledge group change is realized in response to a client request.
+
+    @see UnitMagicAction of type "change_knowledge_group"
     @todo gather magic action acks
 */
 message AutomatChangeKnowledgeGroupAck  {
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the automat knowledge group change operation.
-        @see HierarchyModificationAck.ErrorCode
-    */
-    required HierarchyModificationAck.ErrorCode error_code = 1;
+    required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat knowledge group change operation @see HierarchyModificationAck.ErrorCode
 }
 
 /** @struct ChangeLogisticLinksAck
-    @brief An acknowledgement message to an automat's logistic links change request.
-    
-    This message is sent when an automat's logistic links change is realized in response to a client request 
-    (UnitMagicAction of type UnitMagiAction.Type.change_logistic_links).
+    @brief An acknowledgement message to an automat's logistic links change request
+
+    This message is sent when an automat's logistic links change is realized in response to a client request.
+
+    @see UnitMagicAction of type UnitMagiAction.Type.change_logistic_links
     @todo gather magic action acks
 */
 message ChangeLogisticLinksAck  {
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the automat logistic links change operation.
-        @see HierarchyModificationAck.ErrorCode
-    */
-    required HierarchyModificationAck.ErrorCode error_code = 1;
+    required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat logistic links change operation @see HierarchyModificationAck.ErrorCode
 }
 
 /** @struct AutomatChangeSuperiorAck
-    @brief An acknowledgement message to an automat's superior change request.
-    
-    This message is sent when an automat's superior change is realized in response to a client request 
-    (UnitMagicAction of UnitMagiAction.Type.change_automat_superior).
+    @brief An acknowledgement message to an automat's superior change request
+
+    This message is sent when an automat's superior change is realized in response to a client request.
+
+    @see UnitMagicAction of UnitMagiAction.Type.change_automat_superior
     @todo gather magic action acks
 */
 message AutomatChangeSuperiorAck  {
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the automat superior change operation.
-        @see HierarchyModificationAck.ErrorCode
-    */
-    required HierarchyModificationAck.ErrorCode error_code = 1;
+    required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat superior change operation @see HierarchyModificationAck.ErrorCode
 }
 
 /** @struct UnitChangeSuperiorAck
-    @brief An acknowledgement message to an agent's superior change request.
-    
-    This message is sent when an agent's superior change is realized in response to a client request 
-    (UnitMagicAction of UnitMagiAction.Type.unit_change_superior).
+    @brief An acknowledgement message to an agent's superior change request
+
+    This message is sent when an agent's superior change is realized in response to a client request.
+
+    @see UnitMagicAction of UnitMagiAction.Type.unit_change_superior
     @todo gather magic action acks
 */
 message UnitChangeSuperiorAck  {
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the agent superior change operation.
-        @see HierarchyModificationAck.ErrorCode
-    */
-    required HierarchyModificationAck.ErrorCode error_code = 1;
+    required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the agent superior change operation @see HierarchyModificationAck.ErrorCode
 }
 
 /** @struct LogSupplyPushFlowAck
-    @brief An acknowledgement message to a logistic pushed flow request.
-    
-    This message is sent when a logistic pushed flow is realized in response to a client request 
-    (UnitMagicAction of UnitMagiAction.Type.log_supply_push_flow).
+    @brief An acknowledgement message to a logistic pushed flow request
+
+    This message is sent when a logistic pushed flow is realized in response to a client request.
+
+    @see UnitMagicAction of UnitMagiAction.Type.log_supply_push_flow
     @todo gather magic action acks
 */
 message LogSupplyPushFlowAck  {
     /** @enum EnumLogSupplyPushFlow
-        @brief Enumeration indicating the success or failure (with reasons) of 
-               the pushed flow creation.
+        @brief Reason for the failure of the pushed flow creation
         @todo rename to ErrorCode
     */
     enum EnumLogSupplyPushFlow {
-        /** @brief Operation succeeded
-            @todo rename to no_error
-            @todo As error codes are optional, no_error should not exist
-        */
-        no_error_pushflow               = 0;
-        /** @brief Operation failed because of an invalid supplier.
-            No existing supplying automat with the provided identifier can be found.
-            @todo rename to error_invalid_supplier
-        */
-        error_invalid_donneur_pushflow  = 1;
-        /** @brief Operation failed because of an invalid receiver.
-            No existing receiving automat with the provided identifier can be found.
-            @todo rename to error_invalid_receiver
-        */
-        error_invalid_receveur_pushflow = 2;
+        no_error_pushflow               = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
+        error_invalid_donneur_pushflow  = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found @todo rename to error_invalid_supplier
+        error_invalid_receveur_pushflow = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found @todo rename to error_invalid_receiver
     }
-    /** @property ack
-        @brief Enumeration indicating the success or failure (with reason) of
-               the request.
-        @see EnumLogSupplyPushFlow
-        @todo rename to error_code
-    */
-    optional EnumLogSupplyPushFlow ack = 1;
+    optional EnumLogSupplyPushFlow ack = 1; //!< Reason for the failure of the request @see EnumLogSupplyPushFlow @todo rename to error_code
 }
 
 /** @struct LogSupplyPullFlowAck
-    @brief An acknowledgement message to a logistic pulled flow request.
-    
-    This message is sent when a logistic pulled flow is realized in response to a client request 
-    (UnitMagicAction of UnitMagiAction.Type.log_supply_pull_flow).
+    @brief An acknowledgement message to a logistic pulled flow request
+
+    This message is sent when a logistic pulled flow is realized in response to a client request.
+
+    @see UnitMagicAction of UnitMagiAction.Type.log_supply_pull_flow
     @todo gather magic action acks
 */
 message LogSupplyPullFlowAck  {
     /** @enum EnumLogSupplyPullFlow
-        @brief Enumeration indicating the success or failure (with reasons) of 
-               the pulled flow creation.
-        @todo rename to ErrorCode
+        @brief Reason for the failure of the pulled flow creation @todo rename to ErrorCode
     */
     enum EnumLogSupplyPullFlow {
-        /** @brief Operation succeeded
-            @todo rename to no_error
-            @todo As error codes are optional, no_error should not exist
-        */
-        no_error_pullflow               = 0;
-        /** @brief Operation failed because of an invalid supplier.
-            No existing supplying automat with the provided identifier can be found.
-            @todo rename to error_invalid_supplier
-        */
-        error_invalid_provider_pullflow = 1;
-        /** @brief Operation failed because of an invalid receiver.
-            No existing receiving automat with the provided identifier can be found.
-            @todo rename to error_invalid_receiver
-        */
-        error_invalid_receiver_pullflow = 2;
+        no_error_pullflow               = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
+        error_invalid_provider_pullflow = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found @todo rename to error_invalid_supplier
+        error_invalid_receiver_pullflow = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found @todo rename to error_invalid_receiver
     }
-    /** @property ack
-        @brief Enumeration indicating the success or failure (with reason) of
-               the request.
-        @see EnumLogSupplyPushFlow
-        @todo rename to error_code
-    */
-    optional EnumLogSupplyPullFlow ack = 1;
+    optional EnumLogSupplyPullFlow ack = 1; //!< Reason for the failure of the request @see EnumLogSupplyPushFlow @todo rename to error_code
 }
 
 /** @struct LogSupplyChangeQuotasAck
-    @brief An acknowledgement message to a quota allocation change request.
-    
-    This message is sent when a quota allocation is changed in response to a client request 
-    (UnitMagicAction of UnitMagiAction.Type.log_supply_change_quotas).
+    @brief An acknowledgement message to a quota allocation change request
+
+    This message is sent when a quota allocation is changed in response to a client request.
+
+    @see UnitMagicAction of UnitMagiAction.Type.log_supply_change_quotas
     @todo gather magic action acks
 */
 message LogSupplyChangeQuotasAck {
     /** @enum LogSupplyChangeQuotas
-        @brief Enumeration indicating the success or failure (with reasons) of 
-               the quota allocation.
+        @brief Reason for the failure of the quota allocation.
         @todo rename to ErrorCode
     */
     enum LogSupplyChangeQuotas {
-        /** @brief Operation succeeded
-            @todo rename to no_error
-            @todo As error codes are optional, no_error should not exist
-        */
-        no_error_quotas               = 0;
-        /** @brief Operation failed because of an invalid supplier.
-            No existing supplying automat with the provided identifier can be found.
-            @todo rename to error_invalid_supplier
-        */
-        error_invalid_donneur_quotas  = 1;
-        /** @brief Operation failed because of an invalid receiver.
-            No existing receiving automat with the provided identifier can be found.
-            @todo rename to error_invalid_receiver
-        */
-        error_invalid_receveur_quotas = 2;
+        no_error_quotas               = 0; //!< Operation succeeded @todo rename to no_error @todo As error codes are optional, no_error should not exist
+        error_invalid_donneur_quotas  = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found @todo rename to error_invalid_supplier
+        error_invalid_receveur_quotas = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found @todo rename to error_invalid_receiver
     }
-    /** @property ack
-        @brief Enumeration indicating the success or failure (with reason) of
-               the request.
-        @see LogSupplyChangeQuotas
-        @todo rename to error_code
-    */
-    optional LogSupplyChangeQuotas ack = 1;
+    optional LogSupplyChangeQuotas ack = 1; //!< Reason for the failure of the request @see LogSupplyChangeQuotas @todo rename to error_code
 }
 
 /** @struct ActionCreateFireOrderAck
-    @brief An acknowledgement message to a creation fire order request.
+    @brief An acknowledgement message to a creation fire order request
     @see ActionCreateFireOrder
 */
 message ActionCreateFireOrderAck {
     /** @enum EnumActionCreateFireOrderErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of 
-               the create fire order.
+        @brief Reason for the failure of the create fire order.
         @todo rename to ErrorCode
     */
     enum EnumActionCreateFireOrderErrorCode {
-        /** @brief Operation succeeded
-            @todo make error_code optional and remove no_error
-        */
-        no_error                    = 0;
-        /** @brief Operation failed because of an invalid reporter.
-            No existing reporter with the provided identifier can be found.
-        */
-        error_invalid_reporter      = 1;
-        /** @brief Operation failed because of an invalid target.
-            No existing target with the provided identifier can be found.
-        */
-        error_invalid_target        = 2;
-        /** @brief Operation failed because of an invalid ammunition.
-            No existing ammunition with the provided identifier can be found.
-            @todo rename to error_invalid_ammunition
-        */
-        error_invalid_munition      = 3;
-        /** @brief Operation failed because of the target not being illuminated.
-            @todo explain a bit more what illuminated means and how to illuminate a target
-            @todo rename to error_target_not_illuminated
-        */
-        error_target_no_illuminated = 4;
+        no_error                    = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
+        error_invalid_reporter      = 1; //!< Operation failed because no existing reporter with the provided identifier could be found
+        error_invalid_target        = 2; //!< Operation failed because no existing target with the provided identifier could be found
+        error_invalid_munition      = 3; //!< Operation failed because no existing ammunition with the provided identifier could be found @todo rename to error_invalid_ammunition
+        error_target_no_illuminated = 4; //!< Operation failed because of the target not being illuminated @todo explain a bit more what illuminated means and how to illuminate a target @todo rename to error_target_not_illuminated
     }
-    /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
-               the request.
-        @see EnumActionCreateFireOrderErrorCode
-        @todo change field index to 1
-    */
-    required EnumActionCreateFireOrderErrorCode error_code = 2;
+    required EnumActionCreateFireOrderErrorCode error_code = 2; //!< Reason for the failure of the request @see EnumActionCreateFireOrderErrorCode @todo change field index to 1
 }
 
+/** @struct ChangePopulationMagicActionAck
+    @brief An acknowledgement message to a population change magic action request
+    @see ChangePopulationMagicAction
+*/
 message ChangePopulationMagicActionAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the population change magic action
+    */
     enum ErrorCode {
-        no_error                 = 0;
-        error_invalid_population = 1;
-        error_invalid_adhesion   = 2; // unknown party for instance
-        error_invalid_number     = 3; // negative number of dead for instance?
+        no_error                 = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
+        error_invalid_population = 1; //!< Operation failed because no existing population with the provided identifier could be found.
+        error_invalid_adhesion   = 2; //!< Operation failed because no existing party with the provided identifier could be found
+        error_invalid_number     = 3; //!< Operation failed because of an invalid number (for instance a negative number of dead was provided) @todo change numbers to unsigned integers ?
     }
-    required ErrorCode error_code = 1;
+    required ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
 }
 
+/** @struct UrbanMagicActionAck
+    @brief An acknowledgement message to a urban magic action request
+    @see UrbanMagicAction
+*/
 message UrbanMagicActionAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the urban magic action
+    */
     enum ErrorCode {
-       no_error                 = 0;
-       error_invalid_urbanblock = 1;
-       error_invalid_role       = 2;
-       error_invalid_threshold  = 3;
+       no_error                 = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
+       error_invalid_urbanblock = 1; //!< Operation failed no existing urban block with the provided identifier could be found @todo rename to error_invalid_urban_block or error_invalid_block
+       error_invalid_role       = 2; //!< Operation failed because no existing motivation type with the provided identifier could be found
+       error_invalid_threshold  = 3; //!< Operation failed because of an invalid threshold @todo Find how a threshold can be invalid
     }
-  required ErrorCode error_code = 1;
+    required ErrorCode error_code = 1; //!< Reason for the failure of the request
 }
 
+/** @struct ControlInformation
+    @brief A control information message containing various global informations
+    @todo Find when and why this is sent (probably when a client connects ?)
+*/
 message ControlInformation {
-   required int32               current_tick         = 1;
-   required DateTime            initial_date_time    = 2;
-   required DateTime            date_time            = 3;
-   required int32               tick_duration        = 4;
-   required int32               time_factor          = 5;
-   required int32               checkpoint_frequency = 6;
-   required EnumSimulationState status               = 7;
-   required bool                send_vision_cones    = 8;
-   required bool                profiling_enabled    = 9;
+   required int32               current_tick         = 1; //!< The current tick number
+   required DateTime            initial_date_time    = 2; //!< The initial date and time @see DateTime
+   required DateTime            date_time            = 3; //!< The current date and time @see DateTime @see ControlDatetimeChange
+   required int32               tick_duration        = 4; //!< The duration of a simulation tick in seconds
+   required int32               time_factor          = 5; //!< The simulation time multiplier @see ControlChangeTimeFactor
+   required int32               checkpoint_frequency = 6; //!< The number of seconds between automatic checkpoints saves @see ControlCheckPointSetFrequency @see ControlCheckPointSaveNow
+   required EnumSimulationState status               = 7; //!< The current status of the simulation @see EnumSimulationState @see ControlStop ControlPause ControlResume
+   required bool                send_vision_cones    = 8; //!< Whether the vision cones for units is currently being sent or not @see SimToClient::Content::unit_vision_cones
+   required bool                profiling_enabled    = 9; //!< Whether the profiling information is currently being sent or not @see SimToClient::Content::control_profiling_information
 }
 
+/** @struct ControlProfilingInformation
+    @brief A control profiling information message
+    @deprecated The message seems to never be actually sent by the simulation
+*/
 message ControlProfilingInformation {
    required float perception = 1;
    required float decision   = 2;
@@ -782,59 +440,102 @@ message ControlProfilingInformation {
    required float main_loop  = 4;
 }
 
+/** @struct ControlBeginTick
+    @brief A control begin tick message
+    @see ControlEndTick
+*/
 message ControlBeginTick {
-   required int32    current_tick = 1;
-   required DateTime date_time    = 2;
+   required int32    current_tick = 1; //<! The current tick number
+   required DateTime date_time    = 2; //<! The current date and time @see DateTime
 }
 
+/** @struct ControlEndTick
+    @brief A control end tick message
+    @see ControlBeginTick
+*/
 message ControlEndTick {
-   required int32 current_tick    = 1;
-   required int32 tick_duration   = 2;
-   required int32 long_pathfinds  = 3;
-   required int32 short_pathfinds = 4;
-   required int32 memory          = 5;
-   required int32 virtual_memory  = 6;
+   required int32 current_tick    = 1; //<! The current tick number
+   required int32 tick_duration   = 2; //<! The current tick duration in seconds
+   required int32 long_pathfinds  = 3; //<! The number of pending long path finding requests @todo explain how and why is a path considered long
+   required int32 short_pathfinds = 4; //<! The number of pending short path finding requests @todo explain how and why is a path considered short
+   required int32 memory          = 5; //<! The memory size in use in bytes
+   required int32 virtual_memory  = 6; //<! The virtual memory size in use in bytes
 }
 
+/** @struct ControlAck
+    @brief A control acknowledgement message
+    @see ControlStop ControlPause ControlResume
+    @see ControlChangeTimeFactor
+    @see ControlDatetimeChange
+    @todo split into different acks
+*/
 message ControlAck {
+    /** @enum ErrorCode
+        @brief Reason for the failure of the control request
+    */
     enum ErrorCode {
-       no_error                  = 0;
-       error_already_started     = 1;
-       error_not_started         = 2;
-       error_not_paused          = 3;
-       error_already_paused      = 4;
-       error_invalid_time_factor = 5;
-       error_invalid_date_time   = 6;
+       no_error                  = 0; //<! Operation succeeded
+       error_already_started     = 1; //<! @deprecated never used
+       error_not_started         = 2; //<! Stop request failed because the simulation is already stopped @rename to error_already_stopped
+       error_not_paused          = 3; //<! Resume request failed because the simulation is running
+       error_already_paused      = 4; //<! Pause request failed because the simulation is already paused
+       error_invalid_time_factor = 5; //<! The time factor must be strictly positive
+       error_invalid_date_time   = 6; //<! The new date/time must be after the current date/time
     }
 }
 
+/** @struct ControlDatetimeChangeAck
+    @brief A data time change acknowledgement message
+    @see ControlDatetimeChange
+    @todo rename to ControlDateTimeChangeAck
+*/
 message ControlDatetimeChangeAck {
-    required ControlAck.ErrorCode error_code = 1;
+    required ControlAck.ErrorCode error_code = 1; //!< Reason for the failure of the request
 }
 
+/** @struct ControlChangeTimeFactorAck
+    @brief A time factor change acknowledgement message
+    @see ControlChangeTimeFactor
+*/
 message ControlChangeTimeFactorAck {
-   required int32                time_factor = 1;
-   required ControlAck.ErrorCode error_code  = 2;
+   required int32                time_factor = 1; //!< The simulation time multiplier
+   required ControlAck.ErrorCode error_code  = 2; //!< Reason for the failure of the request
 }
 
+/** @struct ControlStopAck
+    @brief A stop acknowledgement message
+    @see ControlStop
+*/
 message ControlStopAck {
-   required ControlAck.ErrorCode error_code = 1;
+   required ControlAck.ErrorCode error_code = 1; //!< Reason for the failure of the request
 }
 
+/** @struct ControlPauseAck
+    @brief A pause acknowledgement message
+    @see ControlPause
+*/
 message ControlPauseAck {
-   required ControlAck.ErrorCode error_code = 1;
+   required ControlAck.ErrorCode error_code = 1; //!< Reason for the failure of the request
 }
 
+/** @struct ControlResumeAck
+    @brief A resume acknowledgement message
+    @see ControlResume
+*/
 message ControlResumeAck {
-   required ControlAck.ErrorCode error_code = 1;
+   required ControlAck.ErrorCode error_code = 1; //!< Reason for the failure of the request
 }
 
+/** @struct PartyCreation
+    @brief A party creation message
+    @see ControlResume
+*/
 message PartyCreation {
-   required PartyId       party     = 1;
-   required string        name      = 2;
-   required EnumDiplomacy type      = 3;
-   optional Extension     extension = 4;
-   optional RgbColor      color     = 5;
+   required PartyId       party     = 1; //!< The party identifier @see PartyId
+   required string        name      = 2; //!< The party name
+   required EnumDiplomacy type      = 3; //!< @todo Relation to what ?
+   optional Extension     extension = 4; //!< @todo What is that ?
+   optional RgbColor      color     = 5; //!< The party color as \#rrggbb
 }
 
 message FormationCreation {
@@ -1013,8 +714,8 @@ message UnitAttributes {
     optional ResourceDotations           dotation_eff_ressource        = 4;
     optional LentEquipments              equipements_pretes            = 5;
     optional BorrowedEquipments          equipements_empruntes         = 6;
-    optional CoordLatLong             position                      = 7;
-    optional Heading                  direction                     = 8;
+    optional CoordLatLong                position                      = 7;
+    optional Heading                     direction                     = 8;
     optional int32                       hauteur                       = 9;
     optional int32                       altitude                      = 10;
     optional int32                       vitesse                       = 11;
@@ -1101,8 +802,8 @@ message UnitKnowledgeUpdate {
     optional EnumUnitIdentificationLevel max_identification_level = 5;
     optional int32                       etat_op                  = 6;
     optional bool                        mort                     = 7;
-    optional CoordLatLong             position                 = 8;
-    optional Heading                  direction                = 9;
+    optional CoordLatLong                position                 = 8;
+    optional Heading                     direction                = 9;
     optional int32                       speed                    = 10;
     optional PartyId                     party                    = 11;
     optional bool                        nature_pc                = 12;
@@ -1198,7 +899,7 @@ message Explosion {
 
 message StartFireEffect {
     required FireEffectId       fire_effect = 1;
-    required Location        location    = 2;
+    required Location           location    = 2;
     required EnumFireEffectType type        = 3;
 }
 
@@ -1214,11 +915,11 @@ enum EnumReportType {
 }
 
 message Report {
-    required ReportId             report     = 1;
-    required Tasker               source     = 2;
-    required ReportType           type       = 3;
-    required ReportCategory       category   = 4;
-    required DateTime             time       = 5;
+    required ReportId          report     = 1;
+    required Tasker            source     = 2;
+    required ReportType        type       = 3;
+    required ReportCategory    category   = 4;
+    required DateTime          time       = 5;
     optional MissionParameters parameters = 6;
 }
 
@@ -1239,7 +940,7 @@ message DecisionalState {
 }
 
 message DebugPoints {
-   required Tasker              source      = 1;
+   required Tasker           source      = 1;
    required CoordLatLongList coordinates = 2;
 }
 
@@ -1249,9 +950,9 @@ message SeqOfHeading {
 
 message VisionCone {
    required CoordLatLong origin     = 1;
-   required int32           height     = 2;
-   required string          sensor     = 3;
-   required SeqOfHeading    directions = 4;
+   required int32        height     = 2;
+   required string       sensor     = 3;
+   required SeqOfHeading directions = 4;
 }
 
 message SeqOfVisionCone {
@@ -1288,7 +989,7 @@ message CrowdFlowDetection {
    required UnitId      observer       = 1;
    required CrowdId     detected_crowd = 2;
    required CrowdFlowId detected_flow  = 3;
-   required Path     visible_flow   = 4;
+   required Path        visible_flow   = 4;
 }
 
 message ObjectCreation {
@@ -1296,7 +997,7 @@ message ObjectCreation {
    required ObjectType       type       = 2;
    required string           name       = 3;
    required PartyId          party      = 4;
-   required Location      location   = 5;
+   required Location         location   = 5;
    required ObjectAttributes attributes = 6;
 }
 
@@ -1306,7 +1007,7 @@ message ObjectDestruction  {
 
 message ObjectUpdate {
    required ObjectId         object     = 1;
-   optional Location      location   = 2;
+   optional Location         location   = 2;
    required ObjectAttributes attributes = 3;
 }
 
@@ -1324,7 +1025,7 @@ message ObjectKnowledgeUpdate {
    required PartyId           party               = 2;
    optional ObjectId          object              = 3;
    optional int32             relevance           = 4;
-   optional Location       location            = 5;
+   optional Location          location            = 5;
    optional ObjectAttributes  attributes          = 6;
    optional bool              perceived           = 7;
    optional AutomatIdList     perceiving_automats = 8;
@@ -1505,7 +1206,7 @@ message LogSupplyState {
 
 message LogSupplyQuotas {
     required ParentEntity       supplied = 1;
-    required SeqOfDotationQuota quotas  = 2;
+    required SeqOfDotationQuota quotas   = 2;
 }
 
 message CrowdCreation {
@@ -1528,7 +1229,7 @@ message CrowdDestruction {
 message CrowdConcentrationCreation {
    required CrowdConcentrationId concentration = 1;
    required CrowdId              crowd         = 2;
-   required CoordLatLong      position      = 3;
+   required CoordLatLong         position      = 3;
 }
 
 message CrowdConcentrationDestruction {
@@ -1557,9 +1258,9 @@ message CrowdFlowDestruction {
 message CrowdFlowUpdate {
    required CrowdFlowId       flow               = 1;
    required CrowdId           crowd              = 2;
-   optional Path           itineraire         = 3;
-   optional Path           parts              = 4;
-   optional Heading        direction          = 5;
+   optional Path              itineraire         = 3;
+   optional Path              parts              = 4;
+   optional Heading           direction          = 5;
    optional int32             vitesse            = 6;
    optional int32             nb_humains_vivants = 7;
    optional int32             nb_humains_morts   = 8;
@@ -1589,7 +1290,7 @@ message CrowdConcentrationKnowledgeCreation {
     required CrowdKnowledgeId              crowd           = 2;
     required KnowledgeGroupId              knowledge_group = 3;
     required CrowdConcentrationId          concentration   = 4;
-    optional CoordLatLong               position        = 5;
+    optional CoordLatLong                  position        = 5;
 }
 
 message CrowdConcentrationKnowledgeUpdate {
@@ -1632,7 +1333,7 @@ message CrowdFlowKnowledgeUpdate {
     required KnowledgeGroupId     knowledge_group    = 3;
     optional CrowdFlowId          flow               = 4;
     optional SeqOfFlowPart        portions_flux      = 5;
-    optional Heading           direction          = 6;
+    optional Heading              direction          = 6;
     optional int32                vitesse            = 7;
     optional int32                nb_humains_vivants = 8;
     optional int32                nb_humains_morts   = 9;

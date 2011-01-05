@@ -16,7 +16,7 @@ package sword;
 */
 message TacticalLineAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
+        @brief Reason for the failure of
                tactical line (limits and phase lines) creation, update and 
                destruction operations.
     */
@@ -108,7 +108,7 @@ message LimitDestruction {
 */
 message LimitCreationRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a limit creation operation.
         @see TacticalLineAck.ErrorCode
     */
@@ -122,7 +122,7 @@ message LimitCreationRequestAck {
 */
 message LimitUpdateRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a limit update operation.
         @see TacticalLineAck.ErrorCode
     */
@@ -136,7 +136,7 @@ message LimitUpdateRequestAck {
 */
 message LimitDestructionRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a limit update operation.
         @see TacticalLineAck.ErrorCode
     */
@@ -211,7 +211,7 @@ message LimaUpdate {
 */
 message LimaCreationRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a phase line creation operation.
         @see TacticalLineAck.ErrorCode
     */
@@ -227,7 +227,7 @@ message LimaCreationRequestAck {
 */
 message LimaUpdateRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a phase line update operation.
         @see TacticalLineAck.ErrorCode
     */
@@ -243,7 +243,7 @@ message LimaUpdateRequestAck {
 */
 message LimaDestructionRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a phase line destruction operation.
         @see TacticalLineAck.ErrorCode
     */
@@ -342,7 +342,7 @@ message IntelligenceDestruction {
 */
 message IntelligenceRequestAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
+        @brief Reason for the failure of
                intelligence creation, update and destruction operations.
     */
     enum ErrorCode {
@@ -378,7 +378,7 @@ message IntelligenceRequestAck {
 */
 message IntelligenceCreationRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                an intelligence creation operation.
         @see IntelligenceRequestAck.ErrorCode
     */
@@ -392,7 +392,7 @@ message IntelligenceCreationRequestAck {
 */
 message IntelligenceUpdateRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                an intelligence update operation.
         @see IntelligenceRequestAck.ErrorCode
     */
@@ -406,7 +406,7 @@ message IntelligenceUpdateRequestAck {
 */
 message IntelligenceDestructionRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                an intelligence destruction operation.
         @see IntelligenceRequestAck.ErrorCode
     */
@@ -494,7 +494,7 @@ message ShapeDestruction {
 */
 message ShapeRequestAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
+        @brief Reason for the failure of
                shape creation, update and destruction operations.
     */
     enum ErrorCode {
@@ -523,7 +523,7 @@ message ShapeRequestAck {
 */
 message ShapeCreationRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a shape creation operation.
         @see ShapeRequestAck.ErrorCode
         @bug should not be required
@@ -538,7 +538,7 @@ message ShapeCreationRequestAck {
 */
 message ShapeUpdateRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a shape update operation.
         @see ShapeRequestAck.ErrorCode
     */
@@ -552,7 +552,7 @@ message ShapeUpdateRequestAck {
 */
 message ShapeDestructionRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a shape destruction operation.
         @see ShapeRequestAck.ErrorCode
     */
@@ -649,7 +649,7 @@ message MarkerDestruction {
 */
 message MarkerRequestAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
+        @brief Reason for the failure of
                marker creation, update and destruction operations.
     */
     enum ErrorCode {
@@ -679,7 +679,7 @@ message MarkerRequestAck {
 */
 message MarkerCreationRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a marker creation operation.
         @see MarkerRequestAck.ErrorCode
         @bug should not be required
@@ -695,7 +695,7 @@ message MarkerCreationRequestAck {
 */
 message MarkerUpdateRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a marker update operation.
         @see MarkerRequestAck.ErrorCode
     */
@@ -710,7 +710,7 @@ message MarkerUpdateRequestAck {
 */
 message MarkerDestructionRequestAck {
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a marker destruction operation.
         @see MarkerRequestAck.ErrorCode
     */
@@ -791,7 +791,7 @@ message ClientObjectDestruction {
 */
 message ClientObjectAck {
     /** @enum ErrorCode
-        @brief Enumeration indicating the success or failure (with reasons) of
+        @brief Reason for the failure of
                client object creation, update and destruction operations.
     */
     enum ErrorCode {
@@ -827,7 +827,7 @@ message ClientObjectCreationRequestAck {
     */
     required string                    name       = 1;
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a client object creation operation.
         @see ClienObjectAck.ErrorCode
     */
@@ -846,7 +846,7 @@ message ClientObjectUpdateRequestAck {
     */
     required ClientObjectId            object     = 1;
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a client object update operation.
         @see ClienObjectAck.ErrorCode
     */
@@ -865,7 +865,7 @@ message ClientObjectDestructionRequestAck {
     */
     required ClientObjectId            object     = 1;
     /** @property error_code
-        @brief Enumeration indicating the success or failure (with reason) of
+        @brief Reason for the failure of
                a client object destruction operation.
         @see ClienObjectAck.ErrorCode
     */

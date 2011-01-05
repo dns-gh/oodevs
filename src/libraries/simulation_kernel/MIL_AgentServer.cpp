@@ -301,8 +301,8 @@ void MIL_AgentServer::SendMsgEndTick() const
     client::ControlEndTick msgEndTick;
     msgEndTick().set_current_tick( GetCurrentTimeStep() );
     msgEndTick().set_tick_duration ( static_cast< int >( pProfilerMgr_->GetLastTickDuration() ) );
+    msgEndTick().set_long_pathfinds( pPathFindManager_->GetNbrLongRequests() );
     msgEndTick().set_short_pathfinds( pPathFindManager_->GetNbrShortRequests() );
-    msgEndTick().set_long_pathfinds( pPathFindManager_->GetNbrLongRequests () );
     msgEndTick().set_memory( static_cast< int >( pProcessMonitor_->GetMemory() ) );
     msgEndTick().set_virtual_memory( static_cast< int >( pProcessMonitor_->GetVirtualMemory() ) );
     msgEndTick.Send( NET_Publisher_ABC::Publisher() );
