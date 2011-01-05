@@ -463,6 +463,8 @@ public:
         eRC_TirSurCampEnnemi,
         eRC_TireParCampEnnemi,
         eRC_DroneDoitEtreMisEnOeuvre,
+        eRC_ReussiteRenforcementPion,
+        eRC_EchecRenforcementPion,
         eLast
     };
     //@}

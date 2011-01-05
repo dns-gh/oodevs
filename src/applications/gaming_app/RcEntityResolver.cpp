@@ -9,7 +9,8 @@
 
 #include "gaming_app_pch.h"
 #include "RcEntityResolver.h"
-#include "gaming/Agent.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
@@ -55,6 +56,24 @@ void RcEntityResolver::NotifyCreated( const Agent_ABC& element )
 void RcEntityResolver::NotifyDeleted( const Agent_ABC& element )
 {
     tools::Resolver< Agent_ABC >::Remove( element.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RcEntityResolver::NotifyCreated
+// Created: MGD 2011-01-05
+// -----------------------------------------------------------------------------
+void RcEntityResolver::NotifyCreated( const Automat_ABC& element )
+{
+    tools::Resolver< Automat_ABC >::Register( element.GetId(), const_cast< Automat_ABC& >( element ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RcEntityResolver::NotifyDeleted
+// Created: MGD 2011-01-05
+// -----------------------------------------------------------------------------
+void RcEntityResolver::NotifyDeleted( const Automat_ABC& element )
+{
+    tools::Resolver< Automat_ABC >::Remove( element.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,8 +136,10 @@ void RcEntityResolver::NotifyDeleted( const PopulationKnowledge_ABC& element )
 // -----------------------------------------------------------------------------
 QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) const
 {
-    if( type == Agent::typeName_ )
+    if( type == Agent_ABC::typeName_ )
         return CreateLink< Agent_ABC >( id );
+    else if( type == Automat_ABC::typeName_ )
+        return CreateLink< Automat_ABC >( id );
     else if( type == ObjectKnowledge_ABC::typeName_ )
         return CreateLink< ObjectKnowledge_ABC >( id );
     else if( type == AgentKnowledge_ABC::typeName_ )

@@ -58,6 +58,7 @@ public:
     template< typename T > static void ReportObjectKnoweldge    ( T& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     template< typename T > static void ReportPion               ( T& caller, int type, int reportId, DEC_Decision_ABC* pion );
     template< typename T > static void ReportPionAutomate       ( T& caller, int type, int reportId, DEC_Decision_ABC* pion, DEC_Decision_ABC* automate );
+    template< typename T > static void ReportPionPion           ( T& caller, int type, int reportId, DEC_Decision_ABC* pion1, DEC_Decision_ABC* pion2 );
     template< typename T > static void ReportPopulationKnowledge( T& caller, int type, int reportId, int populationKnowledge );
     template< typename T > static void ReportTirPion            ( T& caller, int type, int reportId, int id );
     template< typename T > static void ReportString             ( T& caller, int type, int reportId, const std::string& message );

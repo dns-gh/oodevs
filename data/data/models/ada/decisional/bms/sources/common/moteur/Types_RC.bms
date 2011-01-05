@@ -351,7 +351,9 @@ eRC_Contamine = 332
 eRC_TirSurCampEnnemi = 333
 eRC_TireParCampEnnemi = 334
 eRC_DroneDoitEtreMisEnOeuvre = 335
-eNbr = 336
+eRC_ReussiteRenforcementPion = 336
+eRC_EchecRenforcementPion = 337
+eNbr = 338
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

@@ -912,6 +912,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void ( int, int, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPion< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_RC_Pion_Automate" ] =
         boost::function< void ( int, int, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3, _4 ) );
+    brain[ "DEC_RC_Pion_Pion" ] =
+        boost::function< void ( int, int, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionPion< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3, _4 ) );
     brain[ "DEC_RC_PopulationKnowledge" ] =
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_RC_TirPion" ] =

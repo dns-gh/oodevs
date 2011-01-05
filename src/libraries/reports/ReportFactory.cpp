@@ -14,6 +14,7 @@
 #include "Tools.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/DotationType.h"
@@ -152,6 +153,8 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
         return QString::number( value.areal() );
     if( value.has_agent() )
         return rcResolver_.CreateLink( Agent_ABC::typeName_, value.agent().id() );
+    if( value.has_automat() )
+        return rcResolver_.CreateLink( Automat_ABC::typeName_, value.automat().id() );
     if( value.has_agentknowledge() )
         return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.agentknowledge().id() );
     if( value.has_objectknowledge() )

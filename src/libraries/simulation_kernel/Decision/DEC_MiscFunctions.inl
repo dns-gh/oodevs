@@ -184,6 +184,27 @@ void DEC_MiscFunctions::ReportPionAutomate( T& caller, int type, int reportId, D
 }
 
 // -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_MiscFunctions::ReportPionPion
+// Created: MGD 2010-06-16
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_MiscFunctions::ReportPionPion( T& caller, int type, int reportId, DEC_Decision_ABC* pion1, DEC_Decision_ABC* pion2 )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+        DEC_RolePion_Decision* pionDec = static_cast< DEC_RolePion_Decision* >( pion1 ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam1( MIL_MissionParameterFactory::Create( pionDec ) );
+        DEC_RolePion_Decision* pionDec2 = static_cast< DEC_RolePion_Decision* >( pion2 ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam2( MIL_MissionParameterFactory::Create( pionDec2 ) );
+        params.push_back( missionParam1 );
+        params.push_back( missionParam2 );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_MiscFunctions::ReportPopulationKnowledge
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
