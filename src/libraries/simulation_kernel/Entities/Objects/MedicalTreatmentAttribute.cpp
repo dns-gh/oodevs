@@ -83,7 +83,8 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( const sword::MissionParame
         const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( value.list( eTypeId ).identifier() );
         if( !pType )
             throw std::runtime_error( "Unknown Medical treatment type for medical treatment attribute" );
-        MedicalCapacity& capacity = capacities_[ pType->GetID() ];        
+        MedicalCapacity& capacity = capacities_[ pType->GetID() ];
+        capacity.type_ = pType;
         capacity.baseline_ = value.list( eBaseLineCount ).quantity();
         // TODO $$$$ : capacity.occupied_ = capacity.baseline_ - value.list( 2 ).quantity();
         // capacity.emergency_ = value.list( 3 ).quantity();
