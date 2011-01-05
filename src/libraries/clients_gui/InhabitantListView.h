@@ -7,19 +7,17 @@
 //
 // *****************************************************************************
 
-#ifndef __gui_InhabitantListView_h_
-#define __gui_InhabitantListView_h_
+#ifndef gui_InhabitantListView_h
+#define gui_InhabitantListView_h
 
+#include "EntityListView.h"
 #include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
-#include "ListView.h"
 
 namespace kernel
 {
     class Controllers;
     class Inhabitant_ABC;
     class Profile_ABC;
-    class Entity_ABC;
 }
 
 namespace gui
@@ -28,45 +26,18 @@ namespace gui
 
 // =============================================================================
 /** @class  InhabitantListView
-    @brief  InhabitantListView
+    @brief  Inhabitant list view
 */
 // Created: HME 2005-10-03
 // =============================================================================
-class InhabitantListView : public ListView< InhabitantListView >
-                         , public tools::Observer_ABC
+class InhabitantListView : public EntityListView
                          , public tools::ElementObserver_ABC< kernel::Inhabitant_ABC >
-                         , public tools::ElementObserver_ABC< kernel::Profile_ABC >
-                         , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                         , public tools::ElementObserver_ABC< kernel::Team_ABC >
-                         , public tools::SelectionObserver< kernel::Entity_ABC >
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
              InhabitantListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~InhabitantListView();
-    //@}
-
-protected slots:
-    //! @name Slots
-    //@{
-    virtual void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnSelectionChange( QListViewItem* item );
-    void OnRequestCenter();
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
-    virtual void NotifyCreated( const kernel::Team_ABC& team );
     //@}
 
 private:
@@ -79,11 +50,8 @@ private:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const kernel::Inhabitant_ABC& popu );
-    virtual void NotifyUpdated( const kernel::Entity_ABC& element );
-    virtual void NotifyDeleted( const kernel::Inhabitant_ABC& popu );
-    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
-    virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    virtual void NotifyCreated( const kernel::Inhabitant_ABC& inhabitant );
+    virtual void NotifyDeleted( const kernel::Inhabitant_ABC& inhabitant );
     //@}
 
 private:
@@ -97,4 +65,4 @@ private:
 
 }
 
-#endif // __gui_InhabitantListView_h_
+#endif // gui_InhabitantListView_h

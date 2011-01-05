@@ -285,6 +285,27 @@ private:
     const kernel::Intelligence_ABC* value_;
 };
 
+template< >
+class ValueContainer< const kernel::Inhabitant_ABC > : public ValueContainer< const kernel::Entity_ABC >
+{
+public:
+    ValueContainer( kernel::Inhabitant_ABC const* value )
+        : ValueContainer< const kernel::Entity_ABC >( value ), value_( value ) {};
+    virtual const type_info& typeinfo() const {
+        return typeid( const kernel::Inhabitant_ABC );
+    }
+    kernel::Inhabitant_ABC const* GetValue() const {
+        return value_;
+    };
+    void SetValue( kernel::Inhabitant_ABC const* value ) {
+        value_ = value;
+        ValueContainer< const kernel::Entity_ABC >::SetValue( value );
+    }
+private:
+    const kernel::Inhabitant_ABC* value_;
+};
+
+
 // -----------------------------------------------------------------------------
 // Name: ValuedListItem::IsA
 // Created: AGE 2005-09-15

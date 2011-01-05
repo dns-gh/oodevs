@@ -17,7 +17,7 @@ class ModelBuilder;
 
 // =============================================================================
 /** @class  InhabitantListView
-    @brief  InhabitantListView
+    @brief  Inhabitant list view
 */
 // Created: SLG 2010-11-23
 // =============================================================================
@@ -35,7 +35,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
+    virtual void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
     //@}
 
 private:

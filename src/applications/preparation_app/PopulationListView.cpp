@@ -21,7 +21,7 @@
 // -----------------------------------------------------------------------------
 PopulationListView::PopulationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
     : gui::PopulationListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
-    , selected_( controllers )
+    , selected_    ( controllers )
     , modelBuilder_( modelBuilder )
 {
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
@@ -78,7 +78,7 @@ void PopulationListView::OnContextMenuRequested( QListViewItem* item, const QPoi
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyCreated( const kernel::Team_ABC& team )
 {
-    gui::PopulationListView::NotifyCreated( team );
+    gui::PopulationListView::EntityListView::NotifyCreated( team );
     gui::ValuedListItem* item = gui::FindSibling( (const kernel::Entity_ABC*)&team, firstChild() );
     if( item )
         item->setRenameEnabled( 0, true );

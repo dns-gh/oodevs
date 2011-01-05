@@ -7,20 +7,16 @@
 //
 // *****************************************************************************
 
-#ifndef __gui_ObjectListView_h_
-#define __gui_ObjectListView_h_
+#ifndef gui_ObjectListView_h
+#define gui_ObjectListView_h
 
-#include "ListView.h"
+#include "EntityListView.h"
 #include "tools/ElementObserver_ABC.h"
-#include "tools/SelectionObserver_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
-#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
     class Object_ABC;
     class Controllers;
-    class Team_ABC;
     class Profile_ABC;
 }
 
@@ -30,19 +26,13 @@ namespace gui
 
 // =============================================================================
 /** @class  ObjectListView
-    @brief  ObjectListView
+    @brief  Object list view
 */
 // Created: APE 2004-08-05
 // =============================================================================
-class ObjectListView : public ListView< ObjectListView >
-                     , public tools::Observer_ABC
+class ObjectListView : public EntityListView
                      , public tools::ElementObserver_ABC< kernel::Object_ABC >
-                     , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                     , public tools::SelectionObserver< kernel::Entity_ABC >
-                     , public kernel::ActivationObserver_ABC< kernel::Entity_ABC >
-                     , public tools::ElementObserver_ABC< kernel::Profile_ABC >
 {
-    Q_OBJECT;
 public:
     //! @name Constructors/Destructor
     //@{
@@ -52,21 +42,7 @@ public:
 
     //! @name Operations
     //@{
-     QSize sizeHint() const;
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnSelectionChange( QListViewItem* item );
-    void OnRequestCenter();
-    void OnContextMenuRequested( QListViewItem* i, const QPoint& pos, int );
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    QSize sizeHint() const;
     //@}
 
 private:
@@ -76,14 +52,11 @@ private:
     ObjectListView& operator=( const ObjectListView );
     //@}
 
+private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
-    virtual void NotifyUpdated( const kernel::Entity_ABC& object );
-    virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
-
-    virtual void NotifyActivated( const kernel::Entity_ABC& element );
     //@}
 
 private:
@@ -97,4 +70,4 @@ private:
 
 }
 
-#endif // __gui_ObjectListView_h_
+#endif // gui_ObjectListView_h

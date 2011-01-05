@@ -17,7 +17,7 @@ class ModelBuilder;
 
 // =============================================================================
 /** @class  PopulationListView
-    @brief  PopulationListView
+    @brief  Population list view
 */
 // Created: SBO 2006-10-16
 // =============================================================================
@@ -35,7 +35,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
+    virtual void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
     //@}
 
 private:
