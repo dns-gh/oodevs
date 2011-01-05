@@ -452,6 +452,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Populations</source>
         <translation>Populations</translation>
     </message>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished">Populations</translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>
@@ -1435,10 +1439,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
 <context>
     <name>WeatherWidget</name>
     <message>
-        <source>Wind speed/direction:</source>
-        <translation>Direction du vent/vitesse:</translation>
-    </message>
-    <message>
         <source>Clouds floor/ceiling/density:</source>
         <translation>Plancher/plafond/densité nuages:</translation>
     </message>
@@ -1447,7 +1447,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Type de temps:</translation>
     </message>
     <message>
-        <source>Temperature:</source>
+        <source>Wind direction/speed:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

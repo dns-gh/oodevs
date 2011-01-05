@@ -13,7 +13,7 @@
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BurnAttribute )
 
@@ -99,7 +99,7 @@ void BurnAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 // -----------------------------------------------------------------------------
 void BurnAttribute::Instanciate( DEC_Knowledge_Object& /*object*/ ) const
 {
-    int todo = 0;
+    // $$$$ BCI 2010-12-21: todo
     /*object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< BurnAttribute > >( *new T_KnowledgeProxyType() );*/
 }
 
@@ -149,30 +149,6 @@ void BurnAttribute::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "combustion-energy-sum", combustionEnergySum_ )
             << xml::attribute( "combustion-energy-count", combustionEnergyCount_ )
         << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: BurnAttribute::Update
-// Created: BCI 2010-12-09
-// -----------------------------------------------------------------------------
-bool BurnAttribute::Update( const BurnAttribute& rhs )
-{
-    if( currentHeat_ != rhs.currentHeat_ )
-    {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-        currentHeat_ = rhs.currentHeat_;
-    }
-    if( combustionEnergySum_ != rhs.combustionEnergySum_ )
-    {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-        combustionEnergySum_ = rhs.combustionEnergySum_;
-    }
-    if( combustionEnergyCount_ != rhs.combustionEnergyCount_ )
-    {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-        combustionEnergyCount_ = rhs.combustionEnergyCount_;
-    }
-    return NeedUpdate( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------

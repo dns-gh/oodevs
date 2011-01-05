@@ -357,6 +357,13 @@ enum EnumLogisticLevel {
    logistic_base = 2;
 }
 
+enum EnumBurningCellPhase {
+	pre_ignition = 0;
+	combustion = 1;
+	decline = 2;
+	extinguished = 3;
+}
+
 // Control messages
 message ControlStop {
 }
@@ -802,6 +809,32 @@ message ObjectAttributeBurn {
    required int32 combustion_energy_count = 3;
 }
 
+message ObjectAttributeBurnSurface {
+	message BurningCell {
+		message PreIgnition {
+			required int32 ignition_energy = 1;
+			required int32 ignition_threshold = 2;
+		}
+		message Combustion {
+		   required int32 current_heat = 1;
+		   required int32 combustion_energy_sum = 2;
+		   required int32 combustion_energy_count = 3;
+		   required int32 max_combustion_energy = 4;
+		}
+		message Decline {
+		   required int32 current_heat = 1;
+		}		
+		required int32 origin_x = 1;
+		required int32 origin_y = 2;
+		required EnumBurningCellPhase phase = 3;
+		optional PreIgnition pre_ignition = 4;
+		optional Combustion combustion = 5;
+		optional Decline decline = 6;
+	}
+	required int32 cell_size = 1;
+	repeated BurningCell burningCells = 2;
+}
+
 message MedicalTreatmentBedCapacity {
     required int32 type_id          = 1;  // Cf. Data/MedicalTreatment.xml
     optional uint32 baseline_count  = 2;
@@ -853,6 +886,7 @@ message ObjectAttributes {
    optional ObjectAttributeResourceNetwork   resource_networks  = 18; // not in scipio V1.stab
    optional ObjectAttributeBurn              burn               = 19;
    optional ObjectAttributeFlood             flood              = 20;
+   optional ObjectAttributeBurnSurface       burn_surface = 21;
 }
 
 message Marker {

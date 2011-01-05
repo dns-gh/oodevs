@@ -7,30 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __BurnAttribute_h_
-#define __BurnAttribute_h_
+#ifndef __BurnSurfaceAttribute_h_
+#define __BurnSurfaceAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
+class MIL_BurningCells;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
+namespace sword
+{
+	enum EnumBurningCellPhase;
+}
+
 // =============================================================================
-/** @class  BurnAttribute
-    @see "Incendie" in 4311340-Modèles de feu.doc
+/** @class  BurnSurfaceAttribute
+    @see "Feu sauvage" in 4311340-Modèles de feu.doc
 */
 // Created: BCI 2010-12-09
 // =============================================================================
-class BurnAttribute : public ObjectAttribute_ABC
+class BurnSurfaceAttribute : public ObjectAttribute_ABC
                     , public UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             BurnAttribute();
-    virtual ~BurnAttribute();
+             BurnSurfaceAttribute( MIL_Object_ABC* pObject = 0 );
+    virtual ~BurnSurfaceAttribute();
     //@}
 
     //! @name CheckPoints
@@ -50,28 +56,26 @@ public:
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
-    //! @name Operations
+    //! @name Notifications
     //@{
-    void StartBurn( MIL_Object_ABC& object );
-    void Burn( MIL_Object_ABC& object );
-    //@}
+	void NotifyCellsUpdated();
+	//@}
 
     //! @name Operations
     //@{
-    BurnAttribute( const BurnAttribute& ); //!< Copy operator
-    BurnAttribute& operator=( const BurnAttribute& ); //!< Assignment operator
+    BurnSurfaceAttribute( const BurnSurfaceAttribute& ); //!< Copy operator
+    BurnSurfaceAttribute& operator=( const BurnSurfaceAttribute& ); //!< Assignment operator
     //@}
 
 private:
-    //! @name Member data
+
+	//! @name Member data
     //@{
-    int currentHeat_;
-    int combustionEnergySum_;
-    int combustionEnergyCount_;
-    int currentCombustionEnergy_;
+	MIL_BurningCells& burningCells_;
+	MIL_Object_ABC* pObject_;
     //@}
 };
 
-BOOST_CLASS_EXPORT_KEY( BurnAttribute )
+BOOST_CLASS_EXPORT_KEY( BurnSurfaceAttribute )
 
-#endif // __BurnAttribute_h_
+#endif // __BurnSurfaceAttribute_h_

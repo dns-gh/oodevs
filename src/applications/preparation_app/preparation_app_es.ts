@@ -452,6 +452,10 @@ Do you want to save anyway?</source>
         <source>Crowd</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>
@@ -1435,10 +1439,6 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
 <context>
     <name>WeatherWidget</name>
     <message>
-        <source>Wind speed/direction:</source>
-        <translation>Velocidad del viento/dirección:</translation>
-    </message>
-    <message>
         <source>Clouds floor/ceiling/density:</source>
         <translation>Capa de nubes/techo/densidad:</translation>
     </message>
@@ -1447,7 +1447,7 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
         <translation>Tipo de clima:</translation>
     </message>
     <message>
-        <source>Temperature:</source>
+        <source>Wind direction/speed:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -47,9 +47,11 @@ StatusBar::StatusBar( QStatusBar* parent, TerrainPicker& picker, const Detection
     pMenu_->insertSeparator();
     pElevation_   = AddField( parent, 50, tr( "Elevation" ), true );
     pTerrainType_ = AddField( parent, 150, tr( "Terrain type" ), true );
+    pObjectInfos_ = AddField( parent, 150, tr( "Object infos" ), true );
 
     connect( pMenu_, SIGNAL( activated( int ) ), this, SLOT( ParameterSelected( int ) ) );
     connect( &terrainPicker_, SIGNAL( TerrainPicked( const QString& ) ), SLOT( TerrainPicked( const QString& ) ) );
+    connect( &terrainPicker_, SIGNAL( ObjectPicked( const QStringList& ) ), SLOT( ObjectPicked( const QStringList& ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,4 +160,13 @@ void StatusBar::ParameterSelected( int index )
 void StatusBar::TerrainPicked( const QString& type )
 {
     pTerrainType_->setText( type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::BurningCellPicked
+// Created: BCI 2011-01-05
+// -----------------------------------------------------------------------------
+void StatusBar::ObjectPicked( const QStringList& infos )
+{
+    pObjectInfos_->setText( infos.join( " " ) );
 }

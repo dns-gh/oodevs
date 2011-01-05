@@ -51,6 +51,7 @@ namespace kernel
     class ToxicCloudAttribute_ABC : public ObjectExtension {};
     class FireAttribute_ABC : public ObjectExtension {};
     class BurnAttribute_ABC : public ObjectExtension {};
+	class BurnSurfaceAttribute_ABC : public ObjectExtension {};
     class MedicalTreatmentAttribute_ABC : public ObjectExtension {};
     class StockAttribute_ABC : public ObjectExtension {};
     class OccupantAttribute_ABC : public ObjectExtension {};

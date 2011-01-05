@@ -897,12 +897,12 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
 
-        std::set< const urban::TerrainObject_ABC* > perceivableUrbanBlock;
+        std::vector< const urban::TerrainObject_ABC* > perceivableUrbanBlock;
         MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( perceiverPosition_->rX_ ),
                                                                                                            static_cast< float >( perceiverPosition_->rY_ ) ),
                                                                                         maxBlockPerceptionDistance,
                                                                                         perceivableUrbanBlock );
-        for( std::set< const urban::TerrainObject_ABC* >::const_iterator itUrban = perceivableUrbanBlock.begin(); itUrban != perceivableUrbanBlock.end(); ++itUrban )
+        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator itUrban = perceivableUrbanBlock.begin(); itUrban != perceivableUrbanBlock.end(); ++itUrban )
             NotifyPerception( **itUrban, PHY_PerceptionLevel::identified_ );
 
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations;

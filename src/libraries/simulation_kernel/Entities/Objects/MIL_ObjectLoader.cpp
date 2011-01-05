@@ -102,6 +102,7 @@ void MIL_ObjectLoader::ReadObjectPrototype( xml::xistream& xis )
         throw std::runtime_error( __FUNCTION__ " - Object type redefinition: " + type );
     prototype.reset( new ObjectPrototype( type, prototypes_.size() ) );
     xis >> xml::list( *this, &MIL_ObjectLoader::ReadCapacity, *prototype );
+    factory_->FinalizeCreate( *prototype );
 }
 
 // -----------------------------------------------------------------------------

@@ -1457,6 +1457,10 @@ Motivo: %3
         <source>Crowds</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceConsignsWidget</name>

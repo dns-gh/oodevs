@@ -9,7 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectsLayer.h"
+#include "TerrainPicker.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_kernel/Pickable_ABC.h"
 #include <boost/noncopyable.hpp>
 
 using namespace kernel;
@@ -19,10 +21,10 @@ using namespace gui;
 // Name: ObjectsLayer constructor
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
+ObjectsLayer::ObjectsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, TerrainPicker& picker )
     : EntityLayer< Object_ABC >( controllers, tools, strategy, view, profile )
 {
-    // NOTHING
+    picker.RegisterLayer( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,4 +78,33 @@ void ObjectsLayer::Paint( Viewport_ABC& viewport )
     // dessin des extensions(en deux temps pour les afficher par dessus les objets)
     DrawExtensionsFunctor functor( viewport, tools_ );
     Apply( functor );
+}
+
+namespace
+{
+    struct TerrainPickFunctor : boost::noncopyable
+    {
+        TerrainPickFunctor( const geometry::Point2f& terrainCoordinates )
+            : terrainCoordinates_( terrainCoordinates )
+        {}
+
+        void operator()( const Entity_ABC& object )
+        {
+			object.Interface().Apply( &Pickable_ABC::TerrainPicked, terrainCoordinates_, infos_ );
+        }
+
+        QStringList infos_;
+        const geometry::Point2f& terrainCoordinates_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectsLayer::TerrainPick
+// Created: BCI 2011-01-04
+// -----------------------------------------------------------------------------
+QStringList ObjectsLayer::TerrainPick( const geometry::Point2f& terrainCoordinates )
+{
+	TerrainPickFunctor functor( terrainCoordinates );
+	Apply( functor );
+    return functor.infos_;
 }

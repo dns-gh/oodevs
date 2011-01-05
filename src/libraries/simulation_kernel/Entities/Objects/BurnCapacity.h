@@ -23,7 +23,7 @@ class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  BurnCapacity
-    @brief  Burn capacity
+    @brief  @see "Incendie" in 4311340-Modèles de feu.doc
 */
 // Created: RFT 2008-06-02
 // =============================================================================
@@ -34,7 +34,6 @@ class BurnCapacity : public ObjectCapacity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit BurnCapacity( xml::xistream& xis );
              BurnCapacity();
     virtual ~BurnCapacity();
     //@}
@@ -71,9 +70,8 @@ private:
     explicit BurnCapacity( const BurnCapacity& );
     //@}
 
-    //! @name Initialize Data
+    //! @name Private member
     //@{
-    void InitializeData( xml::xistream& xis );
     //@}
 };
 

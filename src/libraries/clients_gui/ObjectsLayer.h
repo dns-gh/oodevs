@@ -16,6 +16,8 @@
 namespace gui
 {
 
+	class TerrainPicker;
+
 // =============================================================================
 /** @class  ObjectsLayer
     @brief  ObjectsLayer
@@ -27,10 +29,14 @@ class ObjectsLayer : public EntityLayer< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
+             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, TerrainPicker& picker );
     virtual ~ObjectsLayer();
     //@}
 
+    //! @name Operations
+    //@{
+	QStringList TerrainPick( const geometry::Point2f& terrainCoordinates );
+    //@}
 private:
     //! @name Copy/Assignment
     //@{

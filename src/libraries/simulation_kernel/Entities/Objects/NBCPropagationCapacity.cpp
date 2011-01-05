@@ -39,8 +39,8 @@ NBCPropagationCapacity::NBCPropagationCapacity( MIL_PropagationManager& manager 
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 NBCPropagationCapacity::NBCPropagationCapacity()
-    : pManager_        ( MIL_ObjectLoader::GetLoader().GetCapacityFactory().GetPropagationManager() )
-    , timeOfLastUpdate_( 0 )
+: pManager_( &MIL_AgentServer::GetWorkspace().GetPropagationManager() )
+, timeOfLastUpdate_( 0 )
 {
     // NOTHING
 }

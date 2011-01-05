@@ -228,6 +228,28 @@ resource::ResourceTools_ABC& MIL_AgentServer::GetResourceTools() const
     return *pResourceTools_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetBurningCells
+// Created: BCI 2010-12-22
+// -----------------------------------------------------------------------------
+inline
+MIL_BurningCells& MIL_AgentServer::GetBurningCells() const
+{
+	assert( pBurningCells_ );
+	return *pBurningCells_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentServer::GetPropagationManager
+// Created: BCI 2010-12-22
+// -----------------------------------------------------------------------------
+inline
+MIL_PropagationManager& MIL_AgentServer::GetPropagationManager() const
+{
+	assert( pPropagationManager_ );
+	return *pPropagationManager_;
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetWorkspace
 // Created: DFT 02-03-13

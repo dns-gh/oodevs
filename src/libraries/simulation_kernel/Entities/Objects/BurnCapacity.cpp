@@ -24,15 +24,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( BurnCapacity )
 // Name: BurnCapacity::BurnCapacity
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-BurnCapacity::BurnCapacity( xml::xistream& xis )
-{
-    InitializeData( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BurnCapacity::BurnCapacity
-// Created: RFT 2008-05-22
-// -----------------------------------------------------------------------------
 BurnCapacity::BurnCapacity()
 {
     // NOTHING
@@ -54,16 +45,6 @@ BurnCapacity::~BurnCapacity()
 BurnCapacity::BurnCapacity( const BurnCapacity& /*other*/ )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: BurnCapacity::InitializeSpeed
-// Created: RFT 2008-06-02
-// -----------------------------------------------------------------------------
-void BurnCapacity::InitializeData( xml::xistream& /*xis*/ )
-{
-    int todo = 0;
-    //xis >> xml::attribute( "injury-id", injuryID_ );
 }
 
 // -----------------------------------------------------------------------------

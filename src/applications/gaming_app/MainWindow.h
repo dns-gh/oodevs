@@ -43,6 +43,7 @@ namespace gui
     class TerrainLayer;
     class Layer_ABC;
     class Picker;
+	class TerrainPicker;
     class ElevationResolver_ABC;
 }
 
@@ -115,7 +116,7 @@ private:
 
    void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locationsLayer,
        gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
-        gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation );
+        gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker );
 
     //! @name Copy/Assignment
     //@{

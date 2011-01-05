@@ -110,3 +110,12 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindSafetyP
 {
     return threads_.back()->FindSafetyPositionsWithinCircle( center, radius, safetyDistance );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TerrainData TER_PathFindManager::FindTerrainDataWithinCircle
+// Created: BCI 2010-12-20
+// -----------------------------------------------------------------------------
+TerrainData TER_PathFindManager::FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius )
+{
+    return threads_.back()->FindTerrainDataWithinCircle( center, radius );
+}

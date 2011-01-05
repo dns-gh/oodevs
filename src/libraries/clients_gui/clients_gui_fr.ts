@@ -1193,6 +1193,10 @@ Voulez-vous le supprimer?</translation>
         <source>Terrain type</source>
         <translation>Type de terrain</translation>
     </message>
+    <message>
+        <source>Object infos</source>
+        <translation>Infos objets</translation>
+    </message>
 </context>
 <context>
     <name>gui::UnitPreviewIcon</name>

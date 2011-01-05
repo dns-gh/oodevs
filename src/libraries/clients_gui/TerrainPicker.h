@@ -14,6 +14,7 @@ namespace gui
 {
     class TerrainLayer;
     class WeatherLayer_ABC;
+	class ObjectsLayer;
 
 // =============================================================================
 /** @class  TerrainPicker
@@ -36,6 +37,7 @@ public:
     //@{
     void RegisterLayer( TerrainLayer& terrain );
     void RegisterLayer( WeatherLayer_ABC& terrain );
+	void RegisterLayer( ObjectsLayer& objects );
     void Pick( int x, int y, const geometry::Point2f& terrainCoordinates );
     //@}
 
@@ -44,6 +46,7 @@ signals:
     //@{
     void TerrainPicked( const QString& type );
     void WeatherPicked( const QString& precipitation, const QString& lighting );
+    void ObjectPicked( const QStringList& infos );
     //@}
 
 private slots:
@@ -64,6 +67,7 @@ private:
     //@{
     TerrainLayer* terrain_;
     WeatherLayer_ABC* weather_;
+	ObjectsLayer* objects_;
     QTimer* timer_;
     int x_;
     int y_;

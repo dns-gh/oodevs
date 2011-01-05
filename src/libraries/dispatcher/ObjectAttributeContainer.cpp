@@ -17,6 +17,7 @@
 #include "FireAttribute.h"
 #include "BurnAttribute.h"
 #include "FloodAttribute.h"
+#include "BurnSurfaceAttribute.h"
 #include "LogisticAttribute.h"
 #include "KnowledgeGroup.h"
 #include "MedicalTreatmentAttribute.h"
@@ -115,6 +116,8 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< FireAttribute >( message );
     if( message.has_burn() )
         CreateOrUpdate< BurnAttribute >( message );
+    if( message.has_burn_surface() )
+        CreateOrUpdate< BurnSurfaceAttribute >( message );
     if( message.has_medical_treatment() )
         CreateOrUpdate< MedicalTreatmentAttribute >( message );
     if( message.has_effect_delay() )

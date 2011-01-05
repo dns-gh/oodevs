@@ -16,8 +16,6 @@
 namespace kernel
 {
     class Controller;
-    class Displayer_ABC;
-    class FireClass;
 }
 
 // =============================================================================

@@ -15,7 +15,7 @@
 #include "MIL_FireClass.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
-#include "protocol/protocol.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FireAttribute )
@@ -183,4 +183,15 @@ int FireAttribute::GetWeatherDecreateRate( const MIL_Object_ABC& object ) const
 MIL_BurnEffectManipulator FireAttribute::GetBurnEffect()
 {
     return MIL_BurnEffectManipulator( *pClass_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::GetSurfaceFirePotentials
+// Created: BCI 2010-12-20
+// -----------------------------------------------------------------------------
+void FireAttribute::GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const
+{
+	pClass_->GetSurfaceFirePotentials( terrainData, ignitionThreshold, maxCombustionEnergy );
+	if( maxCombustionEnergy > maxCombustionEnergy_ )
+		maxCombustionEnergy = maxCombustionEnergy_;
 }

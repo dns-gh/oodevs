@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <fires xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Fires.xsd">
-  <cell-size value="15"/>
-  <fire decrease-rate="1" increase-rate="3" initial-heat="0" max-heat="10000" name="Class A">
+  <cell-size value="1000"/>
+  <fire decrease-rate="10" increase-rate="20" initial-heat="0" max-heat="10000" name="Class A">
     <extinguisher-agents>
       <extinguisher-agent agent="h2o" heat-decrease-rate="1"/>
     </extinguisher-agents>
@@ -31,18 +31,18 @@
       <urban-modifier material-type="Vegetation" value="0"/>
     </urban-modifiers>
     <surfaces>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="inconnu"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="foret"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="plantation"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="marais"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="dune"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="urbain"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="etendue eau"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="glace"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="montagne"/>
+      <surface ignition-threshold="300" max-combustion-energy="1000" type="inconnu"/>
+      <surface ignition-threshold="200" max-combustion-energy="1000" type="foret"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="plantation"/>
+      <surface ignition-threshold="1000" max-combustion-energy="1000" type="marais"/>
+      <surface ignition-threshold="10000" max-combustion-energy="1000" type="dune"/>
+      <surface ignition-threshold="500" max-combustion-energy="1000" type="urbain"/>
+      <surface ignition-threshold="100000" max-combustion-energy="1000" type="etendue eau"/>
+      <surface ignition-threshold="100000" max-combustion-energy="1000" type="glace"/>
+      <surface ignition-threshold="300" max-combustion-energy="1000" type="montagne"/>
     </surfaces>
   </fire>
-  <fire decrease-rate="1" increase-rate="3" initial-heat="0" max-heat="10000" name="Class B">
+  <fire decrease-rate="10" increase-rate="20" initial-heat="0" max-heat="10000" name="Class B">
     <extinguisher-agents>
       <extinguisher-agent agent="h2o" heat-decrease-rate="1"/>
     </extinguisher-agents>
@@ -72,18 +72,18 @@
       <urban-modifier material-type="Vegetation" value="0"/>
     </urban-modifiers>
     <surfaces>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="inconnu"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="foret"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="plantation"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="marais"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="dune"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="urbain"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="etendue eau"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="glace"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="montagne"/>
+      <surface ignition-threshold="200" max-combustion-energy="1000" type="inconnu"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="foret"/>
+      <surface ignition-threshold="200" max-combustion-energy="1000" type="plantation"/>
+      <surface ignition-threshold="300" max-combustion-energy="1000" type="marais"/>
+      <surface ignition-threshold="400" max-combustion-energy="1000" type="dune"/>
+      <surface ignition-threshold="500" max-combustion-energy="1000" type="urbain"/>
+      <surface ignition-threshold="600" max-combustion-energy="1000" type="etendue eau"/>
+      <surface ignition-threshold="700" max-combustion-energy="1000" type="glace"/>
+      <surface ignition-threshold="800" max-combustion-energy="1000" type="montagne"/>
     </surfaces>
   </fire>
-  <fire decrease-rate="1" increase-rate="3" initial-heat="0" max-heat="10000" name="Class C">
+  <fire decrease-rate="10" increase-rate="20" initial-heat="0" max-heat="10000" name="Class C">
     <extinguisher-agents>
       <extinguisher-agent agent="h2o" heat-decrease-rate="1"/>
     </extinguisher-agents>
@@ -113,18 +113,18 @@
       <urban-modifier material-type="Vegetation" value="0"/>
     </urban-modifiers>
     <surfaces>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="inconnu"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="foret"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="plantation"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="marais"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="dune"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="urbain"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="etendue eau"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="glace"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="montagne"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="inconnu"/>
+      <surface ignition-threshold="200" max-combustion-energy="1000" type="foret"/>
+      <surface ignition-threshold="300" max-combustion-energy="1000" type="plantation"/>
+      <surface ignition-threshold="400" max-combustion-energy="1000" type="marais"/>
+      <surface ignition-threshold="500" max-combustion-energy="1000" type="dune"/>
+      <surface ignition-threshold="600" max-combustion-energy="1000" type="urbain"/>
+      <surface ignition-threshold="700" max-combustion-energy="1000" type="etendue eau"/>
+      <surface ignition-threshold="800" max-combustion-energy="1000" type="glace"/>
+      <surface ignition-threshold="900" max-combustion-energy="1000" type="montagne"/>
     </surfaces>
   </fire>
-  <fire decrease-rate="1" increase-rate="3" initial-heat="0" max-heat="10000" name="Class D">
+  <fire decrease-rate="10" increase-rate="20" initial-heat="0" max-heat="10000" name="Class D">
     <extinguisher-agents>
       <extinguisher-agent agent="h2o" heat-decrease-rate="1"/>
     </extinguisher-agents>
@@ -154,16 +154,16 @@
       <urban-modifier material-type="Vegetation" value="0"/>
     </urban-modifiers>
     <surfaces>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="inconnu"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="foret"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="plantation"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="marais"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="dune"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="urbain"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="etendue eau"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="glace"/>
-      <surface ignition-threshold="0" max-combustion-energy="0" type="montagne"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="inconnu"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="foret"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="plantation"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="marais"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="dune"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="urbain"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="etendue eau"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="glace"/>
+      <surface ignition-threshold="100" max-combustion-energy="1000" type="montagne"/>
     </surfaces>
   </fire>
 </fires>
-<!-- signature="2557760904" -->
+<!-- signature="1696531459" -->

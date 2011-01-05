@@ -45,6 +45,8 @@ class MIL_TacticalLineManager;
 class NET_AgentServer;
 class PHY_MeteoDataManager;
 class ProcessMonitor;
+class MIL_BurningCells;
+class MIL_PropagationManager;
 
 //*****************************************************************************
 // Created: DFT 02-02-28
@@ -118,6 +120,8 @@ public:
     resource::ResourceTools_ABC& GetResourceTools() const;
     E_SimState GetSimState() const;
     MIL_Config& GetConfig();
+	MIL_BurningCells& GetBurningCells() const;
+	MIL_PropagationManager& GetPropagationManager() const;
     //@}
 
     //! @name Workspace management
@@ -188,6 +192,8 @@ private:
     urban::Model* pUrbanModel_;
     resource::ResourceNetworkModel* pResourceNetworkModel_;
     resource::ResourceTools_ABC* pResourceTools_;
+	MIL_BurningCells* pBurningCells_;
+	MIL_PropagationManager* pPropagationManager_;
     ProcessMonitor* pProcessMonitor_;
     long lastStep_;
     //@}

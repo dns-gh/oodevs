@@ -20,6 +20,7 @@
 #include "MT_Tools/MT_FormatString.h"
 #include <pathfind/TerrainPathfinder.h>
 #include <pathfind/TerrainRule_ABC.h>
+#include <pathfind/TerrainHeuristic.h>
 #include <pathfind/Node.h>
 #include <pathfind/SpatialContainerTraits.h>
 #include <boost/filesystem/convenience.hpp>
@@ -234,6 +235,27 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindSafety
     for( std::vector< geometry::Point2f >::const_iterator it = result.begin(); it != result.end(); ++it )
         points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( it->X() ), static_cast< double >( it->Y() ) ) ) );
     return points;
+}
+
+struct FindTerrainDataWithinCircleFunctor
+{
+	bool operator()( const pathfind::Node< TerrainData >& node )
+	{
+		result.Merge( TerrainHeuristic::BuildData( node ) );
+		return true;
+	}
+	TerrainData result;
+};
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< TerrainData > TER_PathFinderThread::FindTerrainDataWithinCircle
+// Created: BCI 2010-12-20
+// -----------------------------------------------------------------------------
+TerrainData TER_PathFinderThread::FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius )
+{
+	FindTerrainDataWithinCircleFunctor functor;
+	pPathfinder_->ApplyOnNodesInCircle( MakePoint( center ), radius, functor );
+	return functor.result;
 }
 
 // -----------------------------------------------------------------------------

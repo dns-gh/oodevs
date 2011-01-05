@@ -315,3 +315,22 @@ const PHY_HumanWound& MIL_FireClass::ChooseRandomWound() const
     throw std::runtime_error( __FUNCTION__ ": cannot choose random fire wound. Check if the injuries of fire class " + name_ + " are valid" );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::GetSurfaceModifier
+// Created: BCI 2010-12-20
+// -----------------------------------------------------------------------------
+void MIL_FireClass::GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const
+{
+	ignitionThreshold = 0;
+	maxCombustionEnergy = std::numeric_limits< int >::max();
+	for( T_SurfaceMap::const_iterator it = surfaces_.begin(); it != surfaces_.end(); ++it )
+	{
+		if( it->first & terrainData.Area() )
+		{
+			ignitionThreshold = std::max( ignitionThreshold, it->second.ignitionThreshold_ );
+			maxCombustionEnergy = std::min( maxCombustionEnergy, it->second.maxCombustionEnergy_ );
+		}
+	}
+	if( maxCombustionEnergy == std::numeric_limits< int >::max() )
+		maxCombustionEnergy = 0;
+}

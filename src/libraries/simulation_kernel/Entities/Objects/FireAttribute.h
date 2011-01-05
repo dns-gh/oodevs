@@ -19,6 +19,7 @@
 #include <boost/serialization/export.hpp>
 
 class MIL_FireClass;
+class TerrainData;
 
 // =============================================================================
 /** @class  FireAttribute
@@ -63,6 +64,7 @@ public:
     int GetCellSize() const;
     int GetMaxCombustionEnergy() const;
     int GetWeatherDecreateRate( const MIL_Object_ABC& object ) const;
+	void GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const;
     MIL_BurnEffectManipulator GetBurnEffect();
     //@}
 

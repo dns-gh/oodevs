@@ -994,6 +994,30 @@
         <source>Reference distance:</source>
         <translation>Distance de référence:</translation>
     </message>
+    <message>
+        <source>Cell ignition:  %1/%2</source>
+        <translation>Cellule en ignition: %1/%2</translation>
+    </message>
+    <message>
+        <source>Cell combustion: %1/%2, heat %3</source>
+        <translation>Cellule en combustion: %1/%2, température %3</translation>
+    </message>
+    <message>
+        <source>Cell decline: heat %1</source>
+        <translation>Cellule en extinction: température %1</translation>
+    </message>
+    <message>
+        <source>Cell extinguished</source>
+        <translation>Cellule éteinte</translation>
+    </message>
+    <message>
+        <source>Burn surface</source>
+        <translation>Feu sauvage</translation>
+    </message>
+    <message>
+        <source>Nb burning cells:</source>
+        <translation>Nb cellules</translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

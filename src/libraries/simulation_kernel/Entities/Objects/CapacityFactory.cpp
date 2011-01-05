@@ -23,7 +23,6 @@
 #include "DelayCapacity.h"
 #include "DetectionCapacity.h"
 #include "ExtinguishableCapacity.h"
-#include "FirePropagationCapacity.h"
 #include "FloodCapacity.h"
 #include "MedicalCapacity.h"
 #include "InteractIfEquippedCapacity.h"
@@ -46,8 +45,8 @@
 #include "InteractIfHeightCapacity.h"
 #include "PopulationFilterCapacity.h"
 #include "BurnCapacity.h"
+#include "BurnSurfaceCapacity.h"
 #include "MIL_Object_ABC.h"
-#include "MIL_PropagationManager.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -77,16 +76,42 @@ namespace
         xis >> xml::list( constructor, &ConstructionCapacity::AddCapacity );
     }
 
-    void AddPropagation( ObjectPrototype& prototype, xml::xistream& xis, MIL_PropagationManager& propagation )
+    class FinalizableBuilders
     {
-        const std::string model( xis.attribute< std::string >( "model", std::string() ) );
-        if( model == "input" )
-            prototype.AddCapacity< PropagationCapacity_ABC >( new InputPropagationCapacity( xis ) );
-        else if( model == "fire" )
+    public:
+        FinalizableBuilders()
+            : bHasBurn_( false )
+            , bHasFirePropagation_( false )
         {
-            int todo = 0;
         }
-    }
+
+        void AddBurn()
+        {
+            bHasBurn_ = true;
+        }
+
+        void AddPropagation( ObjectPrototype& prototype, xml::xistream& xis )
+        {
+            const std::string model( xis.attribute< std::string >( "model", std::string() ) );
+            if( model == "input" )
+                prototype.AddCapacity< PropagationCapacity_ABC >( new InputPropagationCapacity( xis ) );
+            else if( model == "fire" )
+            {
+                bHasFirePropagation_ = true;
+                prototype.AddCapacity< BurnSurfaceCapacity >( new BurnSurfaceCapacity( xis ) );
+            }
+        }
+
+        void Finalize( ObjectPrototype& prototype )
+        {
+            if( bHasBurn_ && !bHasFirePropagation_ )
+                prototype.AddCapacity( new BurnCapacity() );
+        }
+
+    private:
+        bool bHasBurn_;
+        bool bHasFirePropagation_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +119,6 @@ namespace
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 CapacityFactory::CapacityFactory()
-    : propagation_ ( new MIL_PropagationManager() )
 {
     DoRegister( "activable", boost::bind( &AddBuilder< ActivableCapacity >::Add, _1, _2 ) );
     DoRegister( "attrition", boost::bind( &AddBuilder< AttritionCapacity >::Add, _1, _2 ) );
@@ -114,7 +138,6 @@ CapacityFactory::CapacityFactory()
     // logistic is not needed except during prepa
     DoRegister( "supply-route", boost::bind( &AddBuilder< InteractIfEquippedCapacity >::Add, _1, _2 ) );
     DoRegister( "mobility", boost::bind( &AddBuilder< MobilityCapacity >::Add, _1, _2 ) );
-    DoRegister( "propagation", boost::bind( &AddPropagation, _1, _2, boost::ref( *propagation_ ) ) );
     DoRegister( "protection", boost::bind( &AddBuilder< ProtectionCapacity >::Add, _1, _2 ) );
     DoRegister( "time-limited", boost::bind( &AddBuilder< TimeLimitedCapacity >::Add, _1, _2 ) );
     DoRegister( "workable", boost::bind( &AddBuilder< WorkableCapacity >::Add, _1, _2 ) );
@@ -132,7 +155,12 @@ CapacityFactory::CapacityFactory()
     DoRegister( "resources", boost::bind( &AddBuilder< ResourceNetworkCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< ResourceNetworkCapacity >::Update, _1, _2 ) );
     DoRegister( "interaction-height", boost::bind( &AddBuilder< InteractIfHeightCapacity >::Add, _1, _2 ) );
     DoRegister( "population-filter", boost::bind( &AddBuilder< PopulationFilterCapacity >::Add, _1, _2 ) );
-    DoRegister( "burn", boost::bind( &AddBuilder< BurnCapacity >::Add, _1, _2 ) );
+
+    // $$$$ BCI 2011-01-05: comment faire plus simple?
+    boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );
+    DoRegister( "burn", boost::bind( &FinalizableBuilders::AddBurn, pFinalizableBuilders ) );
+    DoRegister( "propagation", boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1, _2 ) );
+    RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders, _1 ) );
     DoRegister( "flood", boost::bind( &AddBuilder< FloodCapacity >::Add, _1, _2 ) );
 }
 
@@ -196,6 +224,26 @@ void CapacityFactory::Create( ObjectPrototype& prototype, const std::string& cap
 }
 
 // -----------------------------------------------------------------------------
+// Name: CapacityFactory::FinalizeCreate
+// Created: BCI 2011-01-05
+// -----------------------------------------------------------------------------
+void CapacityFactory::FinalizeCreate( ObjectPrototype& prototype )
+{
+    for( FinalizePrototype_CallBacks::iterator it = finalizePrototypeCallbacks_.begin(); it != finalizePrototypeCallbacks_.end(); ++it )
+        (*it)( prototype );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CapacityFactory::RegisterFinalizeCreate
+// Created: BCI 2011-01-05
+// -----------------------------------------------------------------------------
+void CapacityFactory::RegisterFinalizeCreate( FinalizePrototype_CallBack finalizePrototypeCallback )
+{
+    finalizePrototypeCallbacks_.push_back( finalizePrototypeCallback );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: CapacityFactory::Update
 // Created: JSR 2010-08-12
 // -----------------------------------------------------------------------------
@@ -204,13 +252,4 @@ void CapacityFactory::Update( MIL_Object_ABC& object, const std::string& capacit
     const CIObject_Callbacks it = objectCallbacks_.find( capacity );
     if( it != objectCallbacks_.end() )
         it->second( object, xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: CapacityFactory::GetPropagationManager
-// Created: JSR 2010-03-12
-// -----------------------------------------------------------------------------
-MIL_PropagationManager* CapacityFactory::GetPropagationManager() const
-{
-    return propagation_.get();
 }

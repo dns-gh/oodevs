@@ -9,6 +9,8 @@
 #include "Decision/DEC_Workspace.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Objects/MIL_BurningCells.h"
+#include "Entities/Objects/MIL_PropagationManager.h"
 #include "Entities/Objects/ResourceTools.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "hla/HLA_Federate.h"
@@ -60,6 +62,8 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pFederate_            ( 0 )
     , pUrbanModel_          ( new urban::Model() )
     , pResourceTools_       ( new ResourceTools() )
+	, pBurningCells_        ( new MIL_BurningCells() )
+	, pPropagationManager_  ( new MIL_PropagationManager() )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
     , lastStep_             ( clock() )
@@ -99,6 +103,8 @@ MIL_AgentServer::~MIL_AgentServer()
     delete pFederate_;
     MT_LOG_INFO_MSG( "Terminating pathfind threads" );
     delete pPathFindManager_;
+	delete pPropagationManager_;
+	delete pBurningCells_;
     // $$$$ AGE 2005-02-21:
 //    MT_LOG_INFO_MSG( "Cleaning up simulation data" );
 //    delete pEntityManager_;

@@ -12,6 +12,7 @@
 #include "moc_TerrainPicker.cpp"
 #include "TerrainLayer.h"
 #include "WeatherLayer_ABC.h"
+#include "ObjectsLayer.h"
 #include "clients_kernel/tools.h"
 #include "meteo/PHY_Meteo.h"
 #include "meteo/PHY_Lighting.h"
@@ -27,6 +28,7 @@ using namespace gui;
 TerrainPicker::TerrainPicker( QObject* parent )
     : QObject( parent )
     , terrain_( 0 )
+	, objects_( 0 )
     , weather_( 0 )
     , timer_  ( new QTimer( parent ) )
 {
@@ -49,6 +51,15 @@ TerrainPicker::~TerrainPicker()
 void TerrainPicker::RegisterLayer( TerrainLayer& terrain )
 {
     terrain_ = &terrain;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainPicker::RegisterLayer
+// Created: BCI 2011-01-04
+// -----------------------------------------------------------------------------
+void TerrainPicker::RegisterLayer( ObjectsLayer& objects )
+{
+	objects_ = &objects;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +88,13 @@ void TerrainPicker::OnTimeOut()
     if( weather_ )
         if( const weather::PHY_Meteo* weather = weather_->Pick( terrainCoordinates_ ) )
             emit WeatherPicked( tools::ToDisplayedString( weather->GetLighting().GetID() ), tools::ToDisplayedString( weather->GetPrecipitation().GetID() ) );
+
+	if( objects_ )
+    {
+		QStringList infos = objects_->TerrainPick( terrainCoordinates_ );
+        emit ObjectPicked( infos );
+        timer_->start( 250, true );
+    }
 }
 
 // -----------------------------------------------------------------------------

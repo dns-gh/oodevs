@@ -20,6 +20,7 @@ namespace xml
 class PHY_Weapon;
 class PHY_DotationCategory;
 class PHY_HumanWound;
+class TerrainData;
 
 namespace weather
 {
@@ -57,6 +58,7 @@ public:
     int GetIncreaseRate() const;
     int GetMaxHeat() const;
     int GetWeatherDecreateRate( const weather::PHY_Precipitation& ) const;
+	void GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const;
     static int GetCellSize();
     //@}
 

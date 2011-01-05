@@ -1457,6 +1457,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Populations</source>
         <translation>Populations</translation>
     </message>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceConsignsWidget</name>
