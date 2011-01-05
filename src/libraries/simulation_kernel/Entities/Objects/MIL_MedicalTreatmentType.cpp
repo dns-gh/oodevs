@@ -11,7 +11,6 @@
 #include "MIL_MedicalTreatmentType.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/Visitor_ABC.h"
 #include "tools/xmlcodecs.h"
 #include "MIL_Time_ABC.h"
 #include <boost/bind.hpp>
@@ -169,16 +168,6 @@ const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( unsigned int nID
 unsigned MIL_MedicalTreatmentType::RegisteredCount()
 {
     return types_.size();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_MedicalTreatmentType::Accept
-// Created: LDC 2011-01-04
-// -----------------------------------------------------------------------------
-void MIL_MedicalTreatmentType::Accept( tools::Visitor_ABC< MIL_MedicalTreatmentType >& visitor )
-{
-    for( CIT_MedicalTreatmentTypeMap it = types_.begin(); it != types_.end(); ++it )
-        visitor.Visit( *it->second );
 }
 
 // -----------------------------------------------------------------------------

@@ -14,7 +14,6 @@
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
-#include "tools/Visitor_ABC.h"
 
 class MIL_MedicalTreatmentType;
 
@@ -38,7 +37,6 @@ namespace sword
 class MedicalTreatmentAttribute
     : public ObjectAttribute_ABC
     , public UpdatableAttribute_ABC
-    , public tools::Visitor_ABC< MIL_MedicalTreatmentType >
 {
 public:
     //! @name Types
@@ -160,7 +158,6 @@ private:
     //! @name
     //@{
     void InitializeBedCapacity( xml::xistream& xis );
-    void Visit( const MIL_MedicalTreatmentType& );
     void Update( const sword::ObjectAttributeMedicalTreatment& asn );
     //@}
 

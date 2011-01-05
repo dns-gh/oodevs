@@ -41,7 +41,6 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute()
 MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
     : status_    ( sword::ObjectAttributeMedicalTreatment::normal )
 {
-    //MIL_MedicalTreatmentType::Accept( *this );
     xis >> xml::attribute( "doctors", doctors_ )
         >> xml::optional >> xml::attribute( "reference", referenceID_ )
         >> xml::start( "bed-capacities" )
@@ -49,16 +48,6 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
         >> xml::end;
     initialDoctors_ = doctors_;
     availableDoctors_ = doctors_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::Visit
-// Created: LDC 2011-01-04
-// -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Visit( const MIL_MedicalTreatmentType& type )
-{
-    MedicalCapacity& capacity = capacities_[ type.GetID() ];
-    capacity.type_ = &type;
 }
 
 // -----------------------------------------------------------------------------
