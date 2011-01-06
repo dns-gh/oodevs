@@ -802,6 +802,17 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::InhabitantPanel</name>
+    <message>
+        <source>Colors</source>
+        <translation>Couleurs</translation>
+    </message>
+    <message>
+        <source>Change urban blocks color based on population density</source>
+        <translation>Changez la couleur des blocs urbain en fonction de la densité de population</translation>
+    </message>
+</context>
+<context>
     <name>gui::FixedLightWidget</name>
     <message>
         <source>Light direction</source>
@@ -1165,6 +1176,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Visualisation Scales</source>
         <translation>Echelles de Visualisation</translation>
+    </message>
+    <message>
+        <source>2D/Inhabitant</source>
+        <translation>2D/Population couvrante</translation>
     </message>
 </context>
 <context>

@@ -20,6 +20,7 @@
 #include "VisualisationScalesPanel.h"
 #include "LightingPanel.h"
 #include "LayersPanel.h"
+#include "InhabitantPanel.h"
 #include "resources.h"
 #include "ElevationPanel.h"
 #include "Elevation2dLayer.h"
@@ -77,6 +78,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" )        , *layersPanel_ );
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
+    AddPage( tr( "2D/Inhabitant" ), *new InhabitantPanel( this, controllers ) );
 
     box = new QHBox( this );
     box->setMargin( 5 );
@@ -137,7 +139,6 @@ void PreferencesDialog::reject()
 {
     OnCancel();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PreferencesDialog::GetPreferences
