@@ -540,7 +540,6 @@ node "BEH_Feu_Pion_INF_TirAppui"
         self.eAction = self.eAction or eActionEnCours
         self.eActionFixer = self.eActionFixer or eActionEnCours
         self.bSpontanee = self.bSpontanee or true
-        local sDemandeTir = DEC_GetCategory( "demande_tir_appui" )
         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
         if( self.eAction == eActionImpossible and not self.bSpontanee ) then
             self:SendFeedback( eActionImpossible )
