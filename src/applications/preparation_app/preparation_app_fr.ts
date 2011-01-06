@@ -332,13 +332,6 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
 </context>
 <context>
-    <name>InhabitantListView</name>
-    <message>
-        <source>Create side</source>
-        <translation type="unfinished">Créer un camp</translation>
-    </message>
-</context>
-<context>
     <name>LocalWeathersList</name>
     <message>
         <source>Local patch</source>
@@ -671,13 +664,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Extensions</source>
         <translation>Extensions</translation>
-    </message>
-</context>
-<context>
-    <name>PopulationListView</name>
-    <message>
-        <source>Create side</source>
-        <translation>Créer un camp</translation>
     </message>
 </context>
 <context>

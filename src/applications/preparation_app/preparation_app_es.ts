@@ -332,13 +332,6 @@ Por favor seleccione un archivo de orden de batalla para importar.</translation>
     </message>
 </context>
 <context>
-    <name>InhabitantListView</name>
-    <message>
-        <source>Create side</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LocalWeathersList</name>
     <message>
         <source>Local patch</source>
@@ -671,13 +664,6 @@ Do you want to save anyway?</source>
     <message>
         <source>Extensions</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PopulationListView</name>
-    <message>
-        <source>Create side</source>
-        <translation>Crear un bando</translation>
     </message>
 </context>
 <context>
