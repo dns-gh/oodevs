@@ -718,6 +718,7 @@ message HumanDotations {
         required int32         nb_blesses                   = 5;  //!< The number of wounded persons @todo uint32 translate
         required int32         nb_blesses_mentaux           = 6;  //!< The number of mentally wounded persons @todo uint32 translate
         required int32         nb_contamines_nbc            = 7;  //!< The number of NBC contaminated persons @todo uint32 translate
+        required int32         nb_dans_chaine_sante         = 8;  //!< The number of persons being treated by medical services @todo uint32 translate
         required int32         nb_utilises_pour_maintenance = 9;  //!< The number of persons performing maintenance @todo uint32 translate
         required int32         nb_blesses_non_evacues       = 10; //!< The number of non-evacuated wounded persons @todo uint32 translate
     }
