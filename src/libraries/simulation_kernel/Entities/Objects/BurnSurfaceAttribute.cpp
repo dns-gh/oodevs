@@ -89,10 +89,9 @@ void BurnSurfaceAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned in
 // Name: BurnSurfaceAttribute::Instanciate
 // Created: BCI 2010-12-09
 // -----------------------------------------------------------------------------
-void BurnSurfaceAttribute::Instanciate( DEC_Knowledge_Object& /*object*/ ) const
+void BurnSurfaceAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
-     // $$$$ BCI 2010-12-21: todo
-    /*object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< BurnSurfaceAttribute > >( *new T_KnowledgeProxyType() );*/
+    object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< BurnSurfaceAttribute > >( *new T_KnowledgeProxyType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,4 +145,28 @@ void BurnSurfaceAttribute::WriteODB( xml::xostream& xos ) const
 void BurnSurfaceAttribute::NotifyCellsUpdated()
 {
 	NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BurnSurfaceAttribute::ComputePathCost
+// Created: BCI 2011-01-05
+// -----------------------------------------------------------------------------
+double BurnSurfaceAttribute::ComputePathCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
+{
+    return burningCells_.ComputePathCost( from, to );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BurnSurfaceAttribute::Update
+// Created: BCI 2011-01-06
+// -----------------------------------------------------------------------------
+bool BurnSurfaceAttribute::Update( const BurnSurfaceAttribute& rhs )
+{
+    // $$$$ BCI 2011-01-06: pas trop compris le but de cette méthode...
+    if( pObject_ != rhs.pObject_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        pObject_ = rhs.pObject_;
+    }
+    return NeedUpdate( eOnUpdate );
 }

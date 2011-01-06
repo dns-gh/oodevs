@@ -12,11 +12,13 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
 class MIL_BurningCells;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
+class MT_Vector2D;
 
 namespace sword
 {
@@ -63,11 +65,15 @@ public:
 
     //! @name Operations
     //@{
+    bool Update( const BurnSurfaceAttribute& rhs );
+    double ComputePathCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     BurnSurfaceAttribute( const BurnSurfaceAttribute& ); //!< Copy operator
     BurnSurfaceAttribute& operator=( const BurnSurfaceAttribute& ); //!< Assignment operator
     //@}
 
 private:
+
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute > T_KnowledgeProxyType;
 
 	//! @name Member data
     //@{

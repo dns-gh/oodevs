@@ -63,11 +63,12 @@ MIL_BurningCells::BurningCell* MIL_BurningCells::FindCell( const BurningCellOrig
 // Name: MIL_BurningCells::ComputeCellOriginFromPoint
 // Created: BCI 2010-12-22
 // -----------------------------------------------------------------------------
-MIL_BurningCells::BurningCellOrigin MIL_BurningCells::ComputeCellOriginFromPoint( double x, double y, int cellSize )
+MIL_BurningCells::BurningCellOrigin MIL_BurningCells::ComputeCellOriginFromPoint( double x, double y )
 {
     //Compute cell aligned coordinates
 	int alignedX = (int) x;
     int alignedY = (int) y;
+    int cellSize = MIL_FireClass::GetCellSize();
 	alignedX = alignedX - alignedX % cellSize;
     alignedY = alignedY - alignedY % cellSize;
 	return BurningCellOrigin( alignedX, alignedY );
@@ -84,9 +85,9 @@ void MIL_BurningCells::StartBurn( MIL_Object_ABC& object )
 	double minY = boundingBox.GetBottom();
 	double maxX = boundingBox.GetRight();
 	double maxY = boundingBox.GetTop();
-	int cellSize = object.GetAttribute< FireAttribute >().GetCellSize();
-	BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( minX, minY, cellSize );
-	BurningCellOrigin maxOrigin = ComputeCellOriginFromPoint( maxX, maxY, cellSize );
+	int cellSize = MIL_FireClass::GetCellSize();
+	BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( minX, minY );
+	BurningCellOrigin maxOrigin = ComputeCellOriginFromPoint( maxX, maxY );
 	for( int x = minOrigin.X(); x < maxOrigin.X(); x += cellSize )
 		for( int y = minOrigin.Y(); y < maxOrigin.Y(); y += cellSize )
 			StartBurn( BurningCellOrigin( x, y ), object );
@@ -98,7 +99,7 @@ void MIL_BurningCells::StartBurn( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void MIL_BurningCells::StartBurn( const BurningCellOrigin& cellOrigin, MIL_Object_ABC& object )
 {
-	int cellSize = object.GetAttribute< FireAttribute >().GetCellSize();
+	int cellSize = MIL_FireClass::GetCellSize();
 
 	//init cell and his neighbours
 	InitCell( cellOrigin, object, sword::combustion );
@@ -189,7 +190,7 @@ void MIL_BurningCells::Update( MIL_Object_ABC& object, unsigned int time )
     typedef bg::polygon< MT_Vector2D > polygon_2d;
     typedef bg::multi_polygon< polygon_2d > multi_polygon_2d;
     typedef bg::box< MT_Vector2D > box_2d;
-    int cellSize = object.GetAttribute< FireAttribute >().GetCellSize();
+    int cellSize = MIL_FireClass::GetCellSize();
     const BurningCellsVector& cells = burningCellsByObjects_[ &object ];
     polygon_2d poly;
     bg::assign( poly, object.GetLocalisation().GetPoints() );
@@ -213,7 +214,7 @@ void MIL_BurningCells::Update( MIL_Object_ABC& object, unsigned int time )
 // -----------------------------------------------------------------------------
 void MIL_BurningCells::UpdatePreIgnition( BurningCell& cell, unsigned int time )
 {
-	int cellSize = cell.pObject_->GetAttribute< FireAttribute >().GetCellSize();
+	int cellSize = MIL_FireClass::GetCellSize();
 	unsigned int timeElapsed = time - cell.lastUpdateTime_;
     int oldIgnitionEnergy_ = cell.ignitionEnergy_;
 	PropagateIgnition( BurningCellOrigin( cell.origin_.X() - cellSize, cell.origin_.Y() - cellSize ), cell, timeElapsed );
@@ -394,4 +395,46 @@ void MIL_BurningCells::SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& 
 void MIL_BurningCells::WriteODB( xml::xostream&, MIL_Object_ABC& ) const
 {
 	// $$$$ BCI 2010-12-21: todo
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::ComputePathCost
+// Created: BCI 2011-01-05
+// -----------------------------------------------------------------------------
+double MIL_BurningCells::ComputePathCost( const MT_Vector2D& from, const MT_Vector2D& to ) const
+{
+    if( IsTrafficable( from, to ) )
+        return std::numeric_limits< double >::min();
+    else
+        return -1.;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::IsTrafficable
+// Created: BCI 2011-01-06
+// -----------------------------------------------------------------------------
+bool MIL_BurningCells::IsTrafficable( const MT_Vector2D& from, const MT_Vector2D& to ) const
+{
+    const MT_Line line( from, to );
+    int cellSize = MIL_FireClass::GetCellSize();
+    BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( std::min( from.rX_, to.rX_ ), std::min( from.rY_, to.rY_ ) );
+    BurningCellOrigin maxOrigin = ComputeCellOriginFromPoint( std::max( from.rX_, to.rX_ ), std::max( from.rY_, to.rY_ ) );
+	for( int x = minOrigin.X(); x <= maxOrigin.X(); x += cellSize )
+    {
+		for( int y = minOrigin.Y(); y <= maxOrigin.Y(); y += cellSize )
+        {
+            BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( BurningCellOrigin( x, y ) );
+            if( it != burningCellsByCoordinates_.end() )
+            {
+                if( it->second->phase_ == sword::combustion || it->second->phase_ == sword::decline )
+                {
+                    MT_Rect rect( x, y, x + cellSize, y + cellSize );
+                    if( rect.Intersect2D( line ) )
+                        return false;
+                }
+            }
+        }
+    }
+    return true;
 }

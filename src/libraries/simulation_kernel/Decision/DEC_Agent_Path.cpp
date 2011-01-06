@@ -14,6 +14,7 @@
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject.h"
 #include "DEC_Path_KnowledgeObjectFlood.h"
+#include "DEC_Path_KnowledgeObjectBurnSurface.h"
 #include "DEC_Path_KnowledgePopulation.h"
 #include "MIL_AgentServer.h"
 #include "Decision/DEC_GeometryFunctions.h"
@@ -29,7 +30,9 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/FloodCapacity.h"
+#include "Entities/Objects/BurnSurfaceCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_BurningCells.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -238,6 +241,8 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
                 if( knowledge.GetType().GetCapacity< FloodCapacity >() )
                     pathKnowledges.push_back( new DEC_Path_KnowledgeObjectFlood( knowledge ) );
+                else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
+                    pathKnowledges.push_back( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) );
                 else
                     pathKnowledges.push_back( new DEC_Path_KnowledgeObject( pathClass_, knowledge ) );
                 if( pathKnowledges.size() == 1 && pathKnowledges.front()->GetCostOut() > 0 )
@@ -604,8 +609,14 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 {
     float weight = static_cast< float >( GetUnitMajorWeight() );
     for( CIT_PointVector it = pathPoints_.begin(); it != pathPoints_.end(); ++it )
+    {
         if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
             return false;
+
+        if( it != pathPoints_.begin() && !MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *(it-1), *it ) )
+            return false;
+    }
+
     T_KnowledgeObjectVector knowledgesObject;
     queryMaker_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
     for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )

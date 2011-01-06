@@ -16,6 +16,7 @@
 class MIL_Object_ABC;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
+class MT_Vector2D;
 
 namespace sword
 {
@@ -42,6 +43,8 @@ public:
     //@{
 	void StartBurn( MIL_Object_ABC& object );
 	void Update( MIL_Object_ABC& object, unsigned int time );
+    double ComputePathCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    bool IsTrafficable( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     //@}
 
 	//! @name CheckPoints
@@ -94,7 +97,7 @@ private:
     
 	//! @name Helpers
     //@{
-	static BurningCellOrigin ComputeCellOriginFromPoint( double x, double y, int cellSize );
+	static BurningCellOrigin ComputeCellOriginFromPoint( double x, double y );
 	BurningCell* FindCell( const BurningCellOrigin& coords ) const;
     void StartBurn( const BurningCellOrigin& cellOrigin, MIL_Object_ABC& object );
 	void InitCell( const BurningCellOrigin& cellOrigin, MIL_Object_ABC& object, sword::EnumBurningCellPhase phase );
