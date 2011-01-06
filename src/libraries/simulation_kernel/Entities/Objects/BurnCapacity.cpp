@@ -114,9 +114,6 @@ void BurnCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& ag
 void BurnCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     population.ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
-    //FireAttribute& attr = object.GetAttribute< FireAttribute >();
-    //MIL_Injury_Fire injury( attr.GetHeat() , attr.GetClass().GetName() , injuryID_ );
-    //population.ApplyInjury( injury );
 }
 
 

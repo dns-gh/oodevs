@@ -14,6 +14,8 @@
 #include <geometry/types.h>
 
 class MIL_Object_ABC;
+class MIL_Agent_ABC;
+class MIL_PopulationElement_ABC;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 class MT_Vector2D;
@@ -59,6 +61,13 @@ public:
 	void SendUpdate( sword::ObjectAttributes& asn, MIL_Object_ABC& object ) const;
 	void WriteODB( xml::xostream& xos, MIL_Object_ABC& ) const;
 	//@}
+
+    //! @name Attrition
+    //@{
+    void BurnAgent( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    void BurnPopulation( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population );
+    //@}
+
 private:
 	//! @name Types
     //@{

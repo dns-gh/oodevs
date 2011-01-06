@@ -84,6 +84,8 @@ void BurnSurfaceCapacity::serialize( Archive& file, const unsigned int )
 void BurnSurfaceCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -94,6 +96,7 @@ void BurnSurfaceCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     BurnSurfaceCapacity* pBurnSurfaceCapacity = new BurnSurfaceCapacity( *this );
     object.AddCapacity( pBurnSurfaceCapacity );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( pBurnSurfaceCapacity ) );
     object.SetAttribute< FireAttribute, FireAttribute >( FireAttribute() );
     object.SetAttribute< BurnSurfaceAttribute, BurnSurfaceAttribute >( BurnSurfaceAttribute( &object ) );
 }
@@ -114,4 +117,29 @@ void BurnSurfaceCapacity::Finalize( MIL_Object_ABC& object )
 void BurnSurfaceCapacity::Update( MIL_Object_ABC& object, unsigned int time )
 {
 	burningCells_.Update( object, time );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BurnSurfaceCapacity::ProcessAgentMovingInside
+// Created: BCI 2011-01-06
+// -----------------------------------------------------------------------------
+void BurnSurfaceCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
+{
+    burningCells_.BurnAgent( object, agent );
+}
+// -----------------------------------------------------------------------------
+// Name: BurnSurfaceCapacity::ProcessAgentInside
+// Created: BCI 2011-01-06
+// -----------------------------------------------------------------------------
+void BurnSurfaceCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
+{
+    burningCells_.BurnAgent( object, agent );
+}
+// -----------------------------------------------------------------------------
+// Name: BurnSurfaceCapacity::ProcessPopulationInside
+// Created: BCI 2011-01-06
+// -----------------------------------------------------------------------------
+void BurnSurfaceCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& agent )
+{
+    burningCells_.BurnPopulation( object, agent );
 }

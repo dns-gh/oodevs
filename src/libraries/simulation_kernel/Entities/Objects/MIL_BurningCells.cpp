@@ -18,6 +18,10 @@
 #include "meteo/PHY_Meteo.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/Protocol.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include <pathfind/TerrainData.h>
 #include <boost/geometry/geometry.hpp>
 #include <boost/geometry/geometries/cartesian2d.hpp>
@@ -437,4 +441,46 @@ bool MIL_BurningCells::IsTrafficable( const MT_Vector2D& from, const MT_Vector2D
         }
     }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::BurnAgent
+// Created: BCI 2011-01-06
+// -----------------------------------------------------------------------------
+void MIL_BurningCells::BurnAgent( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
+{
+    MT_Vector2D position = agent.GetRole< PHY_RolePion_Location >().GetPosition();
+    BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( ComputeCellOriginFromPoint( position.rX_, position.rY_ ) );
+    if( it != burningCellsByCoordinates_.end() )
+        agent.GetRole< PHY_RoleInterface_Composantes >().ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+}
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::BurnPopulation
+// Created: BCI 2011-01-06
+// -----------------------------------------------------------------------------
+void MIL_BurningCells::BurnPopulation( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
+{
+	const MT_Rect& boundingBox = population.GetLocation().GetBoundingBox();
+	double minX = boundingBox.GetLeft();
+	double minY = boundingBox.GetBottom();
+	double maxX = boundingBox.GetRight();
+	double maxY = boundingBox.GetTop();
+	int cellSize = MIL_FireClass::GetCellSize();
+	BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( minX, minY );
+	BurningCellOrigin maxOrigin = ComputeCellOriginFromPoint( maxX, maxY );
+	for( int x = minOrigin.X(); x <= maxOrigin.X(); x += cellSize )
+    {
+		for( int y = minOrigin.Y(); y <= maxOrigin.Y(); y += cellSize )
+        {
+            BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( BurningCellOrigin( x, y ) );
+            if( it != burningCellsByCoordinates_.end() )
+            {
+                if( it->second->phase_ == sword::combustion || it->second->phase_ == sword::decline )
+                {
+                    population.ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+                    return;
+                }
+            }
+        }
+    }
 }
