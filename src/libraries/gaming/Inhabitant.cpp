@@ -82,6 +82,7 @@ void Inhabitant::CreateDictionary( kernel::Controller& controller )
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", info.c_str() ), extension.second );
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: Inhabitant::DoUpdate
 // Created: SLG 2010-12-05
@@ -164,7 +165,15 @@ bool Inhabitant::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f Inhabitant::GetBoundingBox() const
 {
-    return geometry::Rectangle2f();
+    geometry::Rectangle2f box;
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    {
+        const geometry::Polygon2f* polygon = it->second->GetFootprint();
+        if( polygon )
+            BOOST_FOREACH( const geometry::Polygon2f::T_Vertices::value_type& point, polygon->Vertices() )
+                box.Incorporate( point );
+    }
+    return box;
 }
 
 // -----------------------------------------------------------------------------

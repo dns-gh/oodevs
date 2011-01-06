@@ -72,7 +72,7 @@ float InhabitantPositions::GetHeight( bool /*aggregated*/ ) const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f InhabitantPositions::GetBoundingBox() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    return inhabitant_.GetBoundingBox();
 }
 
 // -----------------------------------------------------------------------------
