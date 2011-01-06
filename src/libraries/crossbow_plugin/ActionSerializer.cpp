@@ -117,7 +117,7 @@ void ActionSerializer::SerializeMission( const dispatcher::Agent_ABC& agent, con
         try
         {
             action.reset( factory_->CreateAction( agent, mission->GetType() ) );
-            SetParameters( orderRow.GetID(), agent, *action );
+            SetParameters( orderRow.GetID(), &agent, *action );
         }
         catch ( std::exception& e )
         {
@@ -143,7 +143,7 @@ void ActionSerializer::SerializeMission( const dispatcher::Automat_ABC& automat,
         try 
         {
             action.reset( factory_->CreateAction( automat, mission->GetType() ) );
-            SetParameters( orderRow.GetID(), automat, *action );
+            SetParameters( orderRow.GetID(), &automat, *action );
         }
         catch ( std::exception& e )
         {
@@ -167,6 +167,23 @@ void ActionSerializer::SerializeFragOrder( const kernel::Entity_ABC& /*target*/,
     SetParameters( row.GetID(), *action );
     */
     // $$$$ JCR 2010-12-07: TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionSerializer::SerializeObjectMagicCreation
+// Created: JCR 2011-01-04
+// -----------------------------------------------------------------------------
+void ActionSerializer::SerializeObjectMagicCreation( const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action )
+{
+    try 
+    {
+        action.reset( factory_->CreateObjectMagicAction( "create_object" ) );
+        SetParameters( row.GetID(), static_cast< const kernel::Entity_ABC *>( 0 ), *action );
+    }
+    catch ( std::exception& e )
+    {
+        throw std::runtime_error( std::string( "Object creation failed:\n" ) + e.what() );
+    }
 }
 
 namespace
@@ -204,13 +221,13 @@ namespace
 // Name: ActionSerializer::SetParameters
 // Created: JCR 2010-12-07
 // -----------------------------------------------------------------------------
-void ActionSerializer::SetParameters( unsigned long orderId, const kernel::Entity_ABC& entity, actions::Action_ABC& action )
+void ActionSerializer::SetParameters( unsigned long actionId, const kernel::Entity_ABC* entity, actions::Action_ABC& action )
 {
     ErrorLogger error;
-    std::auto_ptr< Table_ABC > params_( GetDatabase( workspace_ ).OpenTable( "OrderParameters" ) );
+    std::auto_ptr< Table_ABC > params_( GetDatabase( workspace_ ).OpenTable( "actionparameters" ) );
 
     tools::Iterator< const kernel::OrderParameter& > it = action.GetType().CreateIterator();
-    Row_ABC* result = params_->Find( "order_id=" + boost::lexical_cast< std::string >( orderId ) );
+    Row_ABC* result = params_->Find( "reference_id=" + boost::lexical_cast< std::string >( actionId ) );
     while( it.HasMoreElements() && result )
     {
         const std::string name( GetField< std::string >( *result, "name" ) );
@@ -249,14 +266,16 @@ void ActionSerializer::SetParameters( unsigned long orderId, const kernel::Entit
 // Name: ActionSerializer::SetParameters
 // Created: JCR 2010-12-07
 // -----------------------------------------------------------------------------
-actions::Parameter_ABC* ActionSerializer::CreateParameter( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& type, const std::string& value, const kernel::Entity_ABC& entity ) const
+actions::Parameter_ABC* ActionSerializer::CreateParameter( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& type, const std::string& value, const kernel::Entity_ABC* entity ) const
 {
     const std::string lowType( parameter.CompatibleType( type ) );
     
     if( lowType == "" )
-        throw std::runtime_error( "Unknown parameter type '" + type + "'" );
+        throw std::runtime_error( "Mismatch parameter type [" + type + "] waiting '" + parameter.GetType() + "'" );
     std::auto_ptr< actions::Parameter_ABC > param;
-    bool found = serializer_->Serialize( parameter, value, entity, param );
+    bool found = false;
+    if( entity )
+        found = serializer_->Serialize( parameter, value, *entity, param );
     if( found == false )
         found = serializer_->Serialize( parameter, parameterId, value, param );
     if( found == false )

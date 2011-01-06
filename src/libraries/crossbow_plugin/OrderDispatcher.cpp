@@ -105,7 +105,7 @@ bool OrderDispatcher::IsValidOrder( const Row_ABC& /*row*/ ) const
 
 namespace
 {
-    void DebugOrder( const actions::Action_ABC& action )
+    void DebugAction( const actions::Action_ABC& action )
     {
         xml::xostringstream xos;
         xos << xml::start( "action" );
@@ -135,7 +135,7 @@ void OrderDispatcher::Dispatch( Publisher_ABC& publisher, const Row_ABC& row )
         throw std::runtime_error( "Unable to resolve order for the target unit: " + boost::lexical_cast< std::string >( id ) );
     if ( mission->IsValid() )
         mission->Publish( publisher );
-    DebugOrder( *mission );
+    DebugAction( *mission );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,17 +145,7 @@ void OrderDispatcher::Dispatch( Publisher_ABC& publisher, const Row_ABC& row )
 void OrderDispatcher::DispatchFragOrder( Publisher_ABC& publisher, unsigned long /*targetId*/, const Row_ABC& /*row*/ )
 {
     std::auto_ptr< actions::Action_ABC > action;
+    // $$$$ TODO
     if( action.get() )
         action->Publish( publisher );
-    /*
-    const kernel::OrderType* type = types_.FindFragOrder( GetField< std::string >( row, "OrderName" ) );
-    if( !type )
-        return; // $$$$ SBO 2007-06-07:
-    simulation::FragOrder message;
-    model_.SetToTasker( *message().mutable_tasker(), targetId );
-    //message().set_id( targetId );
-    message().mutable_frag_order()->set_id( type->GetId() );
-    message().mutable_parameters(); // $$$$ SBO 2007-06-07: parameters not supported !
-    message.Send( publisher, 0 );
-    */
 }

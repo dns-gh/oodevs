@@ -45,7 +45,10 @@
 #include "actions/Enumeration.h"
 #include "actions/Bool.h"
 #include "actions/String.h"
+#include "actions/Army.h"
 #include "actions/Numeric.h"
+#include "actions/Quantity.h"
+#include "actions/Identifier.h"
 #include "actions/Direction.h"
 #include "actions/Intelligence.h"
 #include "actions/Limit.h"
@@ -150,14 +153,14 @@ ActionParameterSerializer::~ActionParameterSerializer()
 void ActionParameterSerializer::DoRegistration()
 {
     factory_->Register( "pointlist",      boost::bind( &ActionParameterSerializer::SerializeLocationList< actions::parameters::Point, kernel::Point >, this, _1, _2, _3, _4 ) );
-    factory_->Register( "polygonlist",    boost::bind( &ActionParameterSerializer::SerializeLocationList< actions::parameters::Location, kernel::Polygon >, this, _1, _2, _3, _4 ) );
+    factory_->Register( "polygonlist",    boost::bind( &ActionParameterSerializer::SerializeLocationList< actions::parameters::Polygon, kernel::Polygon >, this, _1, _2, _3, _4 ) );
     factory_->Register( "locationlist",   boost::bind( &ActionParameterSerializer::SerializeLocationList< actions::parameters::Location, kernel::Polygon >, this, _1, _2, _3, _4 ) );
     factory_->Register( "pathlist",       boost::bind( &ActionParameterSerializer::SerializeLocationList< actions::parameters::Path, kernel::Lines >, this, _1, _2, _3, _4 ) );
     factory_->Register( "limitlist",      boost::bind( &ActionParameterSerializer::SerializeLocationList< actions::parameters::Limit, kernel::Lines >, this, _1, _2, _3, _4 ) );
 
     factory_->Register( "point",          boost::bind( &ActionParameterSerializer::SerializeLocation< actions::parameters::Point, kernel::Point >, this, _1, _2, _3, _4 ) );
-    factory_->Register( "polygon",        boost::bind( &ActionParameterSerializer::SerializeLocation< actions::parameters::Location, kernel::Polygon >, this, _1, _2, _3, _4 ) );
-    factory_->Register( "location",       boost::bind( &ActionParameterSerializer::SerializeLocation< actions::parameters::Location, kernel::Polygon >, this, _1, _2, _3, _4 ) );
+    factory_->Register( "polygon",        boost::bind( &ActionParameterSerializer::SerializeLocation< actions::parameters::Polygon, kernel::Polygon >, this, _1, _2, _3, _4 ) );
+    factory_->Register( "location",       boost::bind( &ActionParameterSerializer::SerializeLocation, this, _1, _2, _3, _4 ) );
     factory_->Register( "path",           boost::bind( &ActionParameterSerializer::SerializeLocation< actions::parameters::Path, kernel::Lines >, this, _1, _2, _3, _4 ) );
     factory_->Register( "limit",          boost::bind( &ActionParameterSerializer::SerializeLocation< actions::parameters::Limit, kernel::Lines >, this, _1, _2, _3, _4 ) );
     factory_->Register( "phaselines",     boost::bind( &ActionParameterSerializer::SerializePhaseLines, this, _1, _2, _3, _4 ) );
@@ -165,12 +168,17 @@ void ActionParameterSerializer::DoRegistration()
     factory_->Register( "bool",           boost::bind( &ActionParameterSerializer::SerializeRaw< actions::parameters::Bool, bool >, this, _1, _3, _4 ) );
     factory_->Register( "heading",        boost::bind( &ActionParameterSerializer::SerializeRaw< actions::parameters::Direction, int >, this, _1, _3, _4 ) );
     factory_->Register( "numeric",        boost::bind( &ActionParameterSerializer::SerializeRaw< actions::parameters::Numeric, float >, this, _1, _3, _4 ) );
+    factory_->Register( "quantity",       boost::bind( &ActionParameterSerializer::SerializeRaw< actions::parameters::Quantity, int >, this, _1, _3, _4 ) );
+    factory_->Register( "identifier",     boost::bind( &ActionParameterSerializer::SerializeRaw< actions::parameters::Identifier, unsigned int >, this, _1, _3, _4 ) );
+    factory_->Register( "string",         boost::bind( &ActionParameterSerializer::SerializeRaw< actions::parameters::String, std::string >, this, _1, _3, _4 ) );
+    factory_->Register( "army",           boost::bind( &ActionParameterSerializer::SerializeId< actions::parameters::Army >, this, _1, _3, _4 ) );
     factory_->Register( "enumeration",    boost::bind( &ActionParameterSerializer::SerializeRaw< actions::parameters::Enumeration, int >, this, _1, _3, _4 ) );
     factory_->Register( "intelligence",   boost::bind( &ActionParameterSerializer::SerializeIntelligence, this, _1, _3, _4 ) );
 
     factory_->Register( "agent",          boost::bind( &ActionParameterSerializer::SerializeId< actions::parameters::Agent >, this, _1, _3, _4 ) );
     factory_->Register( "automate",       boost::bind( &ActionParameterSerializer::SerializeId< actions::parameters::Automat >, this, _1, _3, _4 ) );
 
+    factory_->Register( "list",           boost::bind( &ActionParameterSerializer::SerializeList, this, _1, _2, _4 ) );
     
     /* JCR: TODO
     case T_MissionParameter_value_atlasNature:
@@ -308,6 +316,27 @@ namespace
 // Name: ActionParameterSerializer::SerializeLocation
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
+void ActionParameterSerializer::SerializeLocation( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& tablename, std::auto_ptr< actions::Parameter_ABC >& param ) const
+{
+    std::auto_ptr< kernel::Location_ABC > location;
+    std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( tablename ) );
+    
+    const std::string query( "parameter_id=" + boost::lexical_cast< std::string >( parameterId ) );
+    std::string geometry( tablename, tablename.find_last_of( "_" ) + 1 );
+    if( geometry == "point" )
+        ::SerializeLocation< kernel::Point >( table->Find( query ), converter_, location );
+    else if( geometry == "line" )
+        ::SerializeLocation< kernel::Lines >( table->Find( query ), converter_, location );
+    else if( geometry == "area" )
+        ::SerializeLocation< kernel::Polygon >( table->Find( query ), converter_, location );
+    if ( location.get() )
+        param.reset( new actions::parameters::Location( parameter, converter_, *location ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterSerializer::SerializeLocation
+// Created: JCR 2009-10-15
+// -----------------------------------------------------------------------------
 template< typename ParameterType, typename GeometryType >
 void ActionParameterSerializer::SerializeLocation( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& tablename, std::auto_ptr< actions::Parameter_ABC >& param ) const
 {
@@ -369,6 +398,41 @@ void ActionParameterSerializer::SerializePhaseLines( const kernel::OrderParamete
     }
 }
 
+namespace
+{
+    template< typename Type >
+    Type GetField( const Row_ABC& row, const std::string& name )
+    {
+        return boost::get< Type >( row.GetField( name ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterSerializer::SerializeList
+// Created: JCR 2010-12-13
+// -----------------------------------------------------------------------------
+void ActionParameterSerializer::SerializeList( const kernel::OrderParameter& parameter, unsigned long parameterId, std::auto_ptr< actions::Parameter_ABC >& list ) const
+{
+    boost::shared_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "actionparameters" ) );
+    const std::string query( "reference_id=" + boost::lexical_cast< std::string >( parameterId ) );
+    
+    list.reset( new actions::parameters::ParameterList( parameter ) );
+    int i = 1;
+    const Row_ABC* result = table->Find( query );
+    while( result != 0 && ++i )
+    {
+        std::auto_ptr< actions::Parameter_ABC > param;
+        const std::string value( GetField< std::string >( *result, "value" ) );
+        const std::string type( GetField< std::string >( *result, "type" ) );
+        kernel::OrderParameter child( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i ).ascii(), type, false );
+        
+        Serialize( child, result->GetID(), value, param );
+        if ( param.get() != 0 )
+            list->AddParameter( *param.release() );
+        result = table->GetNextRow();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionParameterSerializer::SerializeList
 // Created: JCR 2010-12-13
@@ -386,7 +450,7 @@ void ActionParameterSerializer::SerializeList( const kernel::OrderParameter& par
         kernel::OrderParameter child( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i ).ascii(), parameter.GetType(), false );
         Serialize( child, parameterId, *it, param );
         if ( param.get() != 0 )
-            list->AddParameter( *param );
+            list->AddParameter( *param.release() );
     }
 }
 
@@ -407,6 +471,6 @@ void ActionParameterSerializer::SerializeList( const kernel::OrderParameter& par
         kernel::OrderParameter child( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i ).ascii(), parameter.GetType(), false );
         Serialize( child, *it, entity, param );
         if ( param.get() != 0 )
-            list->AddParameter( *param );
+            list->AddParameter( *param.release() );
     }
 }

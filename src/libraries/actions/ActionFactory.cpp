@@ -505,6 +505,28 @@ actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis,
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateObjectMagicAction
+// Created: JCR 2011-01-04
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateObjectMagicAction( const std::string& magicAction, unsigned long targetId  ) const
+{
+    std::auto_ptr< actions::ObjectMagicAction > action;   
+    kernel::Entity_ABC* target = 0;
+
+    if( magicAction != "create_object" )
+    {
+        target = entities_.FindObject( targetId );
+        if( !target )
+            throw TargetNotFound( targetId );
+    }
+    action.reset( new actions::ObjectMagicAction( target, magicActions_.Get( magicAction ), controller_, true ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( 0, false ) );
+    action->Polish();
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateKnowledgeGroupMagicAction
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------

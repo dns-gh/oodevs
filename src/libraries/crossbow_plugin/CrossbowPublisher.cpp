@@ -185,7 +185,7 @@ void CrossbowPublisher::Receive( const sword::SimToClient& asn )
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "ERROR CATCHED :" << __FUNCTION__ << std::string( e.what() ) );
+        MT_LOG_ERROR_MSG( "ERROR CATCHED (" << __FUNCTION__ << ") : " << std::string( e.what() ) );
     }
 }
 

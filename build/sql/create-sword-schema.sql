@@ -145,7 +145,7 @@ CREATE TABLE sword.formations
   id            SERIAL PRIMARY KEY,
   public_oid    INTEGER NOT NULL,
   parent_oid    INTEGER NOT NULL,
-  type             INTEGER,
+  type          INTEGER,
   engaged       INTEGER,
   name          VARCHAR(255),
   symbol_id     CHARACTER(15),
@@ -216,10 +216,10 @@ CREATE TABLE sword.knowledgeobjects_point
  
 CREATE TABLE sword.knowledgeobjects_area
 (
-  id         SERIAL NOT NULL, -- dummy column to have SDE+GEOTOOLS working
-  public_oid INTEGER NOT NULL ,
-  session_id INTEGER NOT NULL,
-  shape st_geometry
+  id            SERIAL NOT NULL, -- dummy column to have SDE+GEOTOOLS working
+  public_oid    INTEGER NOT NULL ,
+  session_id    INTEGER NOT NULL,
+  shape         st_geometry
  );
  
 CREATE TABLE sword.knowledgeobjects_line
@@ -241,7 +241,7 @@ CREATE TABLE sword.serial_grid
 
 -- Mission Orders & parameters -----------------------
 
-CREATE TABLE sword.orders
+CREATE TABLE sword.create_orders
 (
   id          SERIAL PRIMARY KEY,
   name        VARCHAR(255),
@@ -252,41 +252,51 @@ CREATE TABLE sword.orders
   session_id  INTEGER 
 );
 
-CREATE TABLE sword.orderparameters
+-- Tactical objects creation -----------------------
+
+CREATE TABLE sword.create_objects
 (
-  id       SERIAL PRIMARY KEY,
-  type     VARCHAR(255),
-  name     VARCHAR(255),
-  value    VARCHAR(255),
-  order_id INTEGER NOT NULL -- REFERENCES sword.orders(id) ON DELETE CASCADE
+  id         SERIAL PRIMARY KEY,
+  team_id    INTEGER,
+  name       VARCHAR(255),
+  type       VARCHAR(75),
+  "date"     TIMESTAMP WITHOUT TIME ZONE,
+  checked    INTEGER,                         --TODO: set as boolean
+  session_id INTEGER
 );
 
 
--- WARNING!
--- Due to a strange behaviour of SDE Features, it is impossible
--- to create a FeatureBuffer without a field named 'id', so we
--- provide an id without needing it
-CREATE TABLE sword.orderparameters_area
+CREATE TABLE sword.actionparameters
 (
-  id            INTEGER PRIMARY KEY,
-  parameter_id  INTEGER NOT NULL, -- REFERENCES sword.orderparameters(id) ON DELETE CASCADE,
+  id            SERIAL PRIMARY KEY,
+  type          VARCHAR(255),
+  name          VARCHAR(255),
+  value         VARCHAR(255),
+  reference_id  INTEGER NOT NULL -- REFERENCES sword.create_orders(id) or sword.create_objects(id) ON DELETE CASCADE
+);
+
+CREATE TABLE sword.actionparameters_area
+(
+  id            SERIAL PRIMARY KEY,
+  parameter_id  INTEGER NOT NULL,-- REFERENCES sword.actionparameters( id ) ON DELETE CASCADE,
   shape         st_geometry
 );
 
-CREATE TABLE sword.orderparameters_line
+CREATE TABLE sword.actionparameters_line
 (
-  id            INTEGER PRIMARY KEY,
-  parameter_id  INTEGER NOT NULL, -- REFERENCES sword.orderparameters(id) ON DELETE CASCADE,
+  id            SERIAL PRIMARY KEY,
+  parameter_id  INTEGER NOT NULL,-- REFERENCES sword.actionparameters( id ) ON DELETE CASCADE,
   shape         st_geometry
 );
 
-CREATE TABLE sword.orderparameters_point
+CREATE TABLE sword.actionparameters_point
 (
-  id            INTEGER PRIMARY KEY,
-  parameter_id  INTEGER NOT NULL, -- REFERENCES sword.orderparameters(id) ON DELETE CASCADE,
+  id            SERIAL PRIMARY KEY,
+  parameter_id  INTEGER NOT NULL,-- REFERENCES sword.actionparameters( id ) ON DELETE CASCADE,
   shape         st_geometry
 );
 
+-----------------------------------------
 CREATE TABLE sword.phase_lines
 (
   id            INTEGER PRIMARY KEY,
@@ -346,41 +356,6 @@ CREATE TABLE sword.tacticallines
   shape         st_geometry,
 -- ADD diffusion              -- type donné au moment de la mission
   session_id    INTEGER
-);
-
--- Tactical objects creation -----------------------
-
-CREATE TABLE sword.create_tacticalobject_area
-(
-  id         SERIAL PRIMARY KEY,
-  team_id    INTEGER,
-  name       VARCHAR(255),
-  type       VARCHAR(75),
-  shape      st_geometry,
-  
-  session_id INTEGER
-);
-
-CREATE TABLE sword.create_tacticalobject_line
-(
-  id         SERIAL  PRIMARY KEY,
-  team_id    INTEGER,
-  name       VARCHAR(255),
-  type       VARCHAR(75),
-  shape      st_geometry,
-  
-  session_id INTEGER
-);
-
-CREATE TABLE sword.create_tacticalobject_point
-(
-  id         SERIAL PRIMARY KEY,
-  team_id    INTEGER,
-  name       VARCHAR(255),
-  type       VARCHAR(75),
-  shape      st_geometry,
-  
-  session_id INTEGER
 );
 
 -- Tactical objects instances -----------------------
@@ -600,19 +575,17 @@ ALTER TABLE sword.emergencies OWNER TO sword;
 ALTER TABLE sword.population OWNER TO sword;
 ALTER TABLE sword.population_attributes OWNER TO sword;
 ALTER TABLE sword.terrain_grid OWNER TO sword;
-ALTER TABLE sword.orders OWNER TO sword;
-ALTER TABLE sword.orderparameters OWNER TO sword;
+ALTER TABLE sword.create_orders OWNER TO sword;
+ALTER TABLE sword.create_objects OWNER TO sword;
+ALTER TABLE sword.actionparameters OWNER TO sword;
+ALTER TABLE sword.actionparameters_area OWNER TO sword;
+ALTER TABLE sword.actionparameters_line OWNER TO sword;
+ALTER TABLE sword.actionparameters_point OWNER TO sword;
 ALTER TABLE sword.phase_lines OWNER TO sword;
-ALTER TABLE sword.orderparameters_area OWNER TO sword;
-ALTER TABLE sword.orderparameters_line OWNER TO sword;
-ALTER TABLE sword.orderparameters_point OWNER TO sword;
 ALTER TABLE sword.reports OWNER TO sword;
 ALTER TABLE sword.boundarylimits OWNER TO sword;
 ALTER TABLE sword.boundarylimits_creation OWNER TO sword;
 ALTER TABLE sword.tacticallines OWNER TO sword;
-ALTER TABLE sword.create_tacticalobject_area OWNER TO sword;
-ALTER TABLE sword.create_tacticalobject_line OWNER TO sword;
-ALTER TABLE sword.create_tacticalobject_point OWNER TO sword;
 ALTER TABLE sword.tacticalobject_area OWNER TO sword;
 ALTER TABLE sword.tacticalobject_line OWNER TO sword;
 ALTER TABLE sword.tacticalobject_point OWNER TO sword;
@@ -660,19 +633,17 @@ GRANT ALL ON TABLE sword.formations TO sword;
 GRANT ALL ON TABLE sword.unitforces TO sword;
 GRANT ALL ON TABLE sword.emergencies TO sword;
 GRANT ALL ON TABLE sword.knowledgeunits TO sword;
-GRANT ALL ON TABLE sword.orders TO sword;
-GRANT ALL ON TABLE sword.orderparameters TO sword;
+GRANT ALL ON TABLE sword.create_orders TO sword;
+GRANT ALL ON TABLE sword.create_objects TO sword;
+GRANT ALL ON TABLE sword.actionparameters TO sword;
 GRANT ALL ON TABLE sword.phase_lines TO sword;
-GRANT ALL ON TABLE sword.orderparameters_area TO sword;
-GRANT ALL ON TABLE sword.orderparameters_line TO sword;
-GRANT ALL ON TABLE sword.orderparameters_point TO sword;
+GRANT ALL ON TABLE sword.actionparameters_area TO sword;
+GRANT ALL ON TABLE sword.actionparameters_line TO sword;
+GRANT ALL ON TABLE sword.actionparameters_point TO sword;
 GRANT ALL ON TABLE sword.reports TO sword;
 GRANT ALL ON TABLE sword.boundarylimits TO sword;
 GRANT ALL ON TABLE sword.boundarylimits_creation TO sword;
 GRANT ALL ON TABLE sword.tacticallines TO sword;
-GRANT ALL ON TABLE sword.create_tacticalobject_area TO sword;
-GRANT ALL ON TABLE sword.create_tacticalobject_line TO sword;
-GRANT ALL ON TABLE sword.create_tacticalobject_point TO sword;
 GRANT ALL ON TABLE sword.tacticalobject_area TO sword;
 GRANT ALL ON TABLE sword.tacticalobject_line TO sword;
 GRANT ALL ON TABLE sword.tacticalobject_point TO sword;

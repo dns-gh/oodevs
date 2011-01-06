@@ -22,16 +22,13 @@ call set_sword_var.bat
 %COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.knowledgeunits,shape -C id,SDE -e p -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
 %COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.emergencies,shape -C id,SDE -e a -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
 
-%COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.orderparameters_line,shape -C id,SDE -e s -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
-%COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.orderparameters_point,shape -C id,SDE -e p -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
-%COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.orderparameters_area,shape -C id,SDE -e a -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
+%COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.actionparameters_line,shape -C id,SDE -e s -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
+%COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.actionparameters_point,shape -C id,SDE -e p -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
+%COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.actionparameters_area,shape -C id,SDE -e a -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
 
 %COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.boundarylimits,shape -C id,SDE -e s -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
 %COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.tacticallines,shape -C id,SDE -e s -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
 
-%COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.create_tacticalobject_area,shape -C id,SDE -e a -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
-%COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.create_tacticalobject_line,shape -C id,SDE -e s -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
-%COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.create_tacticalobject_point,shape -C id,SDE -e p -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
 
 %COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.tacticalobject_area,shape -C id,SDE -e a -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
 %COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.tacticalobject_line,shape -C id,SDE -e s -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
@@ -39,9 +36,6 @@ call set_sword_var.bat
 
 %COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.population,shape -C id,SDE -e s -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
 %COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.terrain_grid,shape -C id,SDE -e a -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
-
-%COMMAND_SDE_TABLE% -o register -t %DB%.%SPACE%.exercises -c id -C USER -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
-%COMMAND_SDE_TABLE% -o register -t %DB%.%SPACE%.sessions -c id -C USER -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
 
 %COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.knowledgeobjects_area,shape -C id,SDE -e a -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%
 %COMMAND_SDE_LAYER% -o register -l %DB%.%SPACE%.knowledgeobjects_line,shape -C id,SDE -e s -t ST_GEOMETRY -i %SERVICE_NAME% -u %USR% -p %PWD% -D %DB%

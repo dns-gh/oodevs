@@ -328,6 +328,8 @@ message ObjectMagicAction {
     required Type              type       = 2;
     /** @property parameters
         @brief The parameters of the magic action
+               The first parameter must be the object type name
+               The second parameter must be the object location
         @see MissionParameters
     */
     required MissionParameters parameters = 3;

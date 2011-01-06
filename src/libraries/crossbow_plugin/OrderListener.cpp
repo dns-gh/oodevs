@@ -93,7 +93,7 @@ void OrderListener::Clean()
             table->DeleteRows( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
         }
         */
-        std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "Orders" ) );
+        std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "create_orders" ) );
         Row_ABC* row = table->Find( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
         while( row != 0 )
         {
@@ -128,7 +128,7 @@ void OrderListener::Listen()
     {
         std::stringstream ss;
         ss << "checked=-1 AND session_id=" << session_.GetId(); // OBJECTID
-        std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "Orders" ) );
+        std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "create_orders" ) );
         const Row_ABC* row = table->Find( ss.str() );
         while( row != 0 )
         {
@@ -181,7 +181,7 @@ void OrderListener::MarkProcessed( long orderid ) const
     std::stringstream ss;
     ss << "id=" << orderid << " AND checked=-1" << " AND session_id=" << session_.GetId(); // OBJECTID
 
-    std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "Orders" ) );
+    std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "create_orders" ) );
     Row_ABC* row = table->Find( ss.str() );
     if( row == NULL )
         throw std::runtime_error( "unable to process requested order: " + ss.str() );

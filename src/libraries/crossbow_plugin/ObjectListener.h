@@ -63,7 +63,6 @@ private:
     //@{
     void Clean();
     void SendCreation( const Row_ABC& row );
-    void ListenObjectCreationRequest( Database_ABC& database, const std::string& tablename, const std::string& query );
     //@}
 
 private:

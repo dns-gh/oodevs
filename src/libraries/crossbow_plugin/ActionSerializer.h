@@ -74,6 +74,7 @@ public:
     virtual void SerializeMission( const dispatcher::Agent_ABC& agent, const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action );
     virtual void SerializeMission( const dispatcher::Automat_ABC& automat, const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action );
     virtual void SerializeFragOrder( const kernel::Entity_ABC& target, const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action );
+    virtual void SerializeObjectMagicCreation( const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action );
     //@}
 
 private:
@@ -85,8 +86,8 @@ private:
 
     //! @name Helpers
     //@{
-    void                    SetParameters( unsigned long orderId, const kernel::Entity_ABC& entity, actions::Action_ABC& mission );
-    actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& type, const std::string& value, const kernel::Entity_ABC& entity ) const;
+    void                    SetParameters( unsigned long actionId, const kernel::Entity_ABC* entity, actions::Action_ABC& mission );
+    actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& type, const std::string& value, const kernel::Entity_ABC* entity ) const;
     //@}
 
 private:

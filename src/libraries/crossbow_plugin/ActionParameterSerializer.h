@@ -86,6 +86,7 @@ private:
     void SerializeList( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value, std::auto_ptr< actions::Parameter_ABC >& list ) const;
     void SerializeList( const kernel::OrderParameter& parameter, const std::string& value, const kernel::Entity_ABC& entity, std::auto_ptr< actions::Parameter_ABC >& list ) const;
 
+    void SerializeLocation( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& tablename, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     template< typename ParameterType, typename GeometryType >
     void SerializeLocation( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& tablename, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     template< typename T, typename GeometryType >
@@ -96,6 +97,11 @@ private:
     //@{
     void SerializeIntelligence( const kernel::OrderParameter& parameter, const std::string& value, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     void SerializePhaseLines( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& tablename, std::auto_ptr< actions::Parameter_ABC >& param ) const;
+    //@}
+
+    //! @name 
+    //@{
+    void SerializeList( const kernel::OrderParameter& parameter, unsigned long parameterId, std::auto_ptr< actions::Parameter_ABC >& list ) const;
     //@}
 
 private:
