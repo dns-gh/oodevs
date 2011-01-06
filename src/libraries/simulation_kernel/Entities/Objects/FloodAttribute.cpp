@@ -18,6 +18,9 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FloodAttribute )
 
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< FloodAttribute > )
+
 using namespace geometry;
 
 // -----------------------------------------------------------------------------

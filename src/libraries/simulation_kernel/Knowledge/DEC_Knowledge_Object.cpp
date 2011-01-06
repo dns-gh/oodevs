@@ -756,7 +756,7 @@ bool DEC_Knowledge_Object::IsReconBy( const MIL_AgentType_ABC& agentType ) const
 // Name: DEC_Knowledge_Object::IsObjectInsidePathPoint
 // Created: JSR 2010-12-22
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoints ) const
+bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC& agent ) const
 {
     if( pObjectKnown_ )
         if( const FloodAttribute* flood = pObjectKnown_->RetrieveAttribute< FloodAttribute >() )
@@ -766,6 +766,7 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
             for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
                 if( localisation_.IsInside( *it ) )
                 {
+                    // TODO vérifier ici la capacité de hauteur de franchissement de l'agent
                     geometry::Point2f point( static_cast< float>( ( *it ).rX_ ), static_cast< float >( ( *it ).rY_ ) );
                     std::vector< geometry::Polygon2f* >::const_iterator polygonIt;
                     for( polygonIt = deepAreas.begin(); polygonIt != deepAreas.end(); ++polygonIt )

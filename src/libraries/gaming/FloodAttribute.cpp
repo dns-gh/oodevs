@@ -89,7 +89,7 @@ short FloodAttribute::GetElevationAt( const geometry::Point2f& point ) const
     // TODO rajouter les objets digue
     if( detection_.Extent().IsOutside( point ) )
         return std::numeric_limits< short >::max();
-    return detection_.ElevationAt( point );
+    return detection_.InterpolatedElevationAt( point );
 }
 
 // -----------------------------------------------------------------------------

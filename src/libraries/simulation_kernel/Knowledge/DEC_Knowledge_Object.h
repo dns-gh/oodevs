@@ -79,7 +79,7 @@ public:
     void Invalidate();
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
     bool IsReconBy( const MIL_AgentType_ABC& agentType ) const;
-    bool IsObjectInsidePathPoint( const T_PointVector& pathPoints ) const;
+    bool IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC& agent ) const;
     //@}
 
     //! @name Relevance management

@@ -11,6 +11,8 @@
 #include "FloodCapacity.h"
 #include "MIL_Object_ABC.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( FloodCapacity )
+
 // -----------------------------------------------------------------------------
 // Name: FloodCapacity constructor
 // Created: JSR 2010-12-15
@@ -52,7 +54,7 @@ FloodCapacity::~FloodCapacity()
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void FloodCapacity::serialize( Archive&, const unsigned int )
+void FloodCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );

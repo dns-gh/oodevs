@@ -23,6 +23,7 @@ DEC_Path_KnowledgeObjectFlood::DEC_Path_KnowledgeObjectFlood( const DEC_Knowledg
     if( attribute )
     {
         localisation_ = attribute->GetLocalisation();
+
         // conversion to MT instead of geometry, more efficient. To optimize.
         const std::vector< Polygon2f* >& deepAreas = attribute->GetDeepAreas();
         const std::vector< Polygon2f* >& lowAreas = attribute->GetLowAreas();
@@ -69,10 +70,10 @@ double DEC_Path_KnowledgeObjectFlood::ComputeCost( const MT_Vector2D& from, cons
     {
         std::vector< TER_Polygon >::const_iterator it;
         for( it = deepAreas_.begin(); it != deepAreas_.end(); ++ it )
-            if( it->Intersect2D( line, 0 ) || it->IsInside( to ) )
+            if( it->Intersect2D( line, 0 ) )
                 return -1;
         for( it = lowAreas_.begin(); it != lowAreas_.end(); ++ it )
-            if( it->Intersect2D( line, 0 ) || it->IsInside( to )  )
+            if( it->Intersect2D( line, 0 ) )
                 return -1;
     }
     return std::numeric_limits< double >::min();

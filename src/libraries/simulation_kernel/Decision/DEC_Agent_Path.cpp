@@ -27,6 +27,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
+#include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/FloodCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -228,7 +229,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
         for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-            if( knowledge.CanCollideWith( queryMaker_ ) && !knowledge.IsObjectInsidePathPoint( pathPoints ) ) //$$$ BOF
+            if( knowledge.CanCollideWith( queryMaker_ ) && !knowledge.IsObjectInsidePathPoint( pathPoints, queryMaker_ ) ) //$$$ BOF
             {
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
@@ -605,5 +606,13 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
     for( CIT_PointVector it = pathPoints_.begin(); it != pathPoints_.end(); ++it )
         if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
             return false;
+    T_KnowledgeObjectVector knowledgesObject;
+    queryMaker_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+    for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+    {
+        const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
+        if( knowledge.RetrieveAttribute< FloodAttribute >() != 0 && knowledge.IsObjectInsidePathPoint( pathPoints_, queryMaker_ ) )
+            return false;
+    }
     return true;
 }
