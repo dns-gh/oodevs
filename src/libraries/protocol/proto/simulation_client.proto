@@ -528,95 +528,132 @@ message ControlResumeAck {
 
 /** @struct PartyCreation
     @brief A party creation message
-    @see ControlResume
 */
 message PartyCreation {
    required PartyId       party     = 1; //!< The party identifier @see PartyId
    required string        name      = 2; //!< The party name
    required EnumDiplomacy type      = 3; //!< @todo Relation to what ?
    optional Extension     extension = 4; //!< @todo What is that ?
-   optional RgbColor      color     = 5; //!< The party color as \#rrggbb
+   optional RgbColor      color     = 5; //!< The party color @see RgbColor
 }
 
+/** @struct FormationCreation
+    @brief A formation creation message
+*/
 message FormationCreation {
-    required FormationId       formation             = 1;
-    required PartyId           party                 = 2;
-    optional FormationId       parent                = 3;
-    required EnumNatureLevel   level                 = 4;
-    required string            name                  = 5;
-    optional Extension         extension             = 6;
-    required string            app6symbol            = 7;
-    required EnumLogisticLevel logistic_level        = 8;
-    optional RgbColor          color                 = 9;
-    optional ParentEntity      logistic_base_organic = 10;
+    required FormationId       formation             = 1;  //!< The formation identifier @see FormationId
+    required PartyId           party                 = 2;  //!< The party identifier @see PartyId
+    optional FormationId       parent                = 3;  //!< The parent formation identifier @see FormationId
+    required EnumNatureLevel   level                 = 4;  //!< @todo What's this ?
+    required string            name                  = 5;  //!< The formation name
+    optional Extension         extension             = 6;  //!< @todo What's this ?
+    required string            app6symbol            = 7;  //!< The formation APP-6 symbol
+    required EnumLogisticLevel logistic_level        = 8;  //!< @todo What's this ?
+    optional RgbColor          color                 = 9;  //!< The formation color @see RgbColor
+    optional ParentEntity      logistic_base_organic = 10; //!< @todo What's this ?
 }
 
+/** @struct FormationDestruction
+    @brief A formation destruction message
+*/
 message FormationDestruction {
    required FormationId formation = 1;
 }
 
+/** @struct AutomatCreation
+    @brief An automat creation message
+*/
 message AutomatCreation {
-    required AutomatId         automat         = 1;
-    required AutomatType       type            = 2;
-    required string            nom             = 3;
-    required ParentEntity      parent          = 4;
-    required PartyId           party           = 5;
-    optional KnowledgeGroupId  knowledge_group = 6;
-    optional Extension         extension       = 7;
-    required string            app6symbol      = 8;
-    required EnumLogisticLevel logistic_level  = 9;
-    optional RgbColor          color           = 10;
+    required AutomatId         automat         = 1;  //!< The automat identifier @see AutomatId
+    required AutomatType       type            = 2;  //!< The automat type @see AutomatType
+    required string            nom             = 3;  //!< The automat name @todo rename to name
+    required ParentEntity      parent          = 4;  //!< The automat parent @see ParentEntity
+    required PartyId           party           = 5;  //!< The automat party @see PartyId
+    optional KnowledgeGroupId  knowledge_group = 6;  //!< The automat knowledge group @see KnowledgeGroupId
+    optional Extension         extension       = 7;  //!< @todo What's this ?
+    required string            app6symbol      = 8;  //!< The automat APP-6 symbol
+    required EnumLogisticLevel logistic_level  = 9;  //!< @todo What's this ?
+    optional RgbColor          color           = 10; //!< The automat color @see RgbColor
 }
 
+/** @struct RulesOfEngagement
+    @brief A rules of engagement message
+*/
 message RulesOfEngagement {
+    /** @enum Value
+        @brief Value of the rules of engagement
+        @todo make RulesOfEngagement the enum
+    */
     enum Value {
-       none_roe        = 0;
-       tir_libre       = 1;
-       tir_sur_riposte = 2;
-       tir_interdit    = 3;
+       none_roe        = 0; //!< No rule of engagement @todo rename to no_roe ?
+       tir_libre       = 1; //!< Fire permitted @todo rename to fire_permitted
+       tir_sur_riposte = 2; //!< Fire back @todo rename to fire_back
+       tir_interdit    = 3; //!< Fire forbidden @todo rename to fire_forbidden
     }
 }
 
+/** @struct ForceRatio
+    @brief A force ratio message
+*/
 message ForceRatio {
+    /** @enum Value
+        @brief Value of the force ratio
+        @todo make ForceRatio the enum
+    */
     enum Value {
-        none_force_ratio = 0;
-        neutre           = 1;
-        favorable        = 2;
-        defavorable      = 3;
+        none_force_ratio = 0; //!< No force ratio @todo rename to no_force_ratio
+        neutre           = 1; //!< Neutral @todo rename to neutral
+        favorable        = 2; //!< Favorable
+        defavorable      = 3; //!< Unfavorable @todo rename to unfavorable
     }
 }
 
+/** @struct AutomatAttributes
+    @brief An automat attributes update message
+*/
 message AutomatAttributes {
-   required AutomatId                   automat               = 1;
-   optional EnumAutomatMode             etat_automate         = 2;
-   optional ForceRatio.Value            rapport_de_force      = 3;
-   optional EnumMeetingEngagementStatus combat_de_rencontre   = 4;
-   optional EnumOperationalStatus       etat_operationnel     = 5;
-   optional RulesOfEngagement.Value     roe                   = 6;
-   optional AutomatId                   tc2_organic           = 7;
-   optional ParentEntity                logistic_base_organic = 8;
+   required AutomatId                   automat               = 1; //!< The automat identifier @see AutomatId
+   optional EnumAutomatMode             etat_automate         = 2; //!< The automat mode @see EnumAutomatMode @todo translate
+   optional ForceRatio.Value            rapport_de_force      = 3; //!< The automat force ratio @see ForceRatio @todo translate
+   optional EnumMeetingEngagementStatus combat_de_rencontre   = 4; //!< @todo What's this ?
+   optional EnumOperationalStatus       etat_operationnel     = 5; //!< The automat operational status @todo translate
+   optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement @see RulesOfEngagement
+   optional AutomatId                   tc2_organic           = 7; //!< @todo What's this ?
+   optional ParentEntity                logistic_base_organic = 8; //!< @todo What's this ?
 }
 
+/** @struct AutomatDestruction
+    @brief An automat destruction message
+*/
 message AutomatDestruction {
-   required AutomatId automat = 1;
+   required AutomatId automat = 1; //!< The automat identifier @see AutomatId
 }
 
+/** @struct UnitCreation
+    @brief A unit creation message
+*/
 message UnitCreation {
-   required UnitId    unit    = 1;
-   required UnitType  type    = 2;
-   required string    nom     = 3;
-   required AutomatId automat = 4;
-   required bool      pc      = 5;
-   optional RgbColor  color   = 6;
+   required UnitId    unit    = 1; //!< The unit identifier @see UnitId
+   required UnitType  type    = 2; //!< The unit type @see UnitType
+   required string    nom     = 3; //!< The unit name @todo rename to name
+   required AutomatId automat = 4; //!< @todo What's this ?
+   required bool      pc      = 5; //!< @todo What's this ?
+   optional RgbColor  color   = 6; //!< The unit color @see RgbColor
 }
 
+/** @struct BorrowedEquipments
+    @brief A borrowed equipments message
+*/
 message BorrowedEquipments {
+    /** @struct BorrowedEquipment
+        @brief A borrowed equipment message
+    */
     message BorrowedEquipment {
-        required UnitId        owner  = 1;
-        required EquipmentType type   = 2;
-        required int32         nombre = 3;
+        required UnitId        owner  = 1; //!< The owner identifier @see UnitId
+        required EquipmentType type   = 2; //!< The equipment type @see EquipmentType
+        required int32         nombre = 3; //!< The amount of equipment @todo rename to amount
     }
-    repeated BorrowedEquipment elem = 1;
+    repeated BorrowedEquipment elem = 1; //!< The equipments @see BorrowedEquipment
 }
 
 message LentEquipments {
