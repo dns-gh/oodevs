@@ -347,6 +347,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< float( const MIL_Fuseau*, const std::vector< DEC_Decision_ABC* >&, const std::vector< DEC_Objective* >& ) >( boost::bind( &DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) );
     brain[ "DEC_Geometrie_AdvanceAlongFuseau" ] =
         boost::function< double( DEC_Decision_ABC* ) >( boost::bind( &DEC_GeometryFunctions::ComputeAdvanceAlongFuseau, boost::ref( GetAutomate() ), _1 ) );
+    brain[ "DEC_Geometrie_GetPointsLimas" ] =
+        boost::function< std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >(int, int) >( boost::bind( &DEC_GeometryFunctions::GetPointsOnLimasInFuseau, boost::ref( GetAutomate() ), _1, _2 ) );
 
     // Orders
     brain[ "DEC_NouvelleMission" ] =

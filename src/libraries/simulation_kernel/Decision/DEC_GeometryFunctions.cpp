@@ -22,6 +22,7 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Fuseau.h"
+#include "Entities/Orders/MIL_LimaFunction.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -1593,6 +1594,53 @@ double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau( MIL_AgentPion& 
         return 0.;
     MIL_Automate& callerAutomate = pion.GetAutomate();
     return callerAutomate.GetOrderManager().GetFuseau().ComputeAdvance( *point );
+}
+
+namespace
+{
+    bool SortPredicate( const std::vector< boost::shared_ptr< MT_Vector2D > >& d1, const std::vector< boost::shared_ptr< MT_Vector2D > >& d2, const MT_Vector2D& direction )
+    {
+        return DotProduct( direction, *(d2[0]) - *(d1[0]) ) > 0.;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< MT_Vector2D > > DEC_GeometryFunctions::GetPointsOnLimasInFuseau
+// Created: LDC 2011-01-06
+// -----------------------------------------------------------------------------
+std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunctions::GetPointsOnLimasInFuseau( MIL_Automate& callerAutomate, int limaType, int divider )
+{
+    std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > result;
+    if( divider > 0 )
+    {
+        const MIL_Fuseau& fuseau = callerAutomate.GetOrderManager().GetFuseau();
+        const MT_Line line = fuseau.GetGlobalDirection();
+        MT_Vector2D direction = line.GetPosEnd() - line.GetPosStart();
+        const T_LimaVector& limas = callerAutomate.GetOrderManager().GetLimas();
+        for( CIT_LimaVector it = limas.begin(); it != limas.end(); ++it )
+        {
+            const MIL_LimaOrder::T_LimaFunctions& functions = it->GetFunctions();
+            for( MIL_LimaOrder::CIT_LimaFunctions fit = functions.begin(); fit != functions.end(); ++fit )
+            {
+                if( (*fit)->GetID() == limaType )
+                {
+                    std::vector< MT_Vector2D > nextPoints;
+                    // Divide lima inside fuseau in divider sections and pick one point per section.
+                    fuseau.ComputePointsBeforeLima( *it, 0., divider, nextPoints );
+                    std::vector< boost::shared_ptr< MT_Vector2D > > sharedVector;
+                    for( std::vector< MT_Vector2D >::const_iterator vit = nextPoints.begin(); vit != nextPoints.end(); ++vit )
+                    {
+                        boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( *vit ) );
+                        sharedVector.push_back( point );
+                    }
+                    result.push_back( sharedVector );
+                    break;
+                }
+            }
+        }
+        std::sort( result.begin(), result.end(), boost::bind( &SortPredicate, _1, _2, direction ) );
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
