@@ -434,10 +434,10 @@ message ControlInformation {
     @deprecated The message seems to never be actually sent by the simulation
 */
 message ControlProfilingInformation {
-   required float perception = 1;
-   required float decision   = 2;
-   required float action     = 3;
-   required float main_loop  = 4;
+   required float perception = 1; //!< The amount of time spent for computing perceptions @todo unit ?
+   required float decision   = 2; //!< The amount of time spent for computing decisions @todo unit ?
+   required float action     = 3; //!< The amount of time spent for performing actions @todo unit ?
+   required float main_loop  = 4; //!< The amount of time spent for the whole tick @todo unit ?
 }
 
 /** @struct ControlBeginTick
@@ -656,73 +656,119 @@ message BorrowedEquipments {
     repeated BorrowedEquipment elem = 1; //!< The equipments @see BorrowedEquipment
 }
 
+/** @struct LentEquipments
+    @brief A lent equipments message
+*/
 message LentEquipments {
+    /** @struct LentEquipment
+        @brief A lent equipment message
+    */
     message LentEquipment {
-        required UnitId        borrower = 1;
-        required EquipmentType type     = 2;
-        required int32         nombre    = 3;
+        required UnitId        borrower = 1; //!< The borrower identifier @see UnitId
+        required EquipmentType type     = 2; //!< The equipment type @see EquipmentType
+        required int32         nombre   = 3; //!< The amount of equipment @todo rename to amount
     }
-    repeated LentEquipment elem = 1;
+    repeated LentEquipment elem = 1; //!< The equipments @see LentEquipment
 }
 
+/** @struct ResourceDotations
+    @brief A resource dotations message
+*/
 message ResourceDotations {
+    /** @struct ResourceDotation
+        @brief A resource dotation message
+    */
     message ResourceDotation {
-        required ResourceType type                = 1;
-        required int32        quantite_disponible = 2;
+        required ResourceType type                = 1; //!< The resource type @see ResourceType
+        required int32        quantite_disponible = 2; //!< The amount available @todo rename to available_amount
     }
-    repeated ResourceDotation elem = 1;
+    repeated ResourceDotation elem = 1; //!< The resource dotations @see ResourceDotation
 }
 
+/** @struct EquipmentDotations
+    @brief An equipment dotations message
+*/
 message EquipmentDotations {
+    /** @struct EquipmentDotation
+        @brief An equipment dotation message
+    */
     message EquipmentDotation {
-        required EquipmentType type                       = 1;
-        required int32         nb_disponibles             = 2;
-        required int32         nb_indisponibles           = 3;
-        required int32         nb_reparables              = 4;
-        required int32         nb_dans_chaine_maintenance = 5;
-        required int32         nb_prisonniers             = 6;
+        required EquipmentType type                       = 1; //!< The equipment type @see EquipmentType
+        required int32         nb_disponibles             = 2; //!< The amount of equipment available @todo uint32 translate
+        required int32         nb_indisponibles           = 3; //!< The amount of equipment unavailable @todo uint32 translate
+        required int32         nb_reparables              = 4; //!< The amount of equipment fixable @todo uint32 translate
+        required int32         nb_dans_chaine_maintenance = 5; //!< The amount of equipment under maintenance @todo uint32 translate
+        required int32         nb_prisonniers             = 6; //!< The amount of equipment captured @todo uint32 translate
     }
-    repeated EquipmentDotation elem = 1;
+    repeated EquipmentDotation elem = 1; //!< The equipment dotations @see EquipmentDotation
 }
 
+/** @struct HumanDotations
+    @brief A human dotations message
+*/
 message HumanDotations {
+    /** @struct HumanDotation
+        @brief A human dotation message
+    */
     message HumanDotation {
-        required EnumHumanRank rang                         = 1;
-        required int32         nb_total                     = 2;
-        required int32         nb_operationnels             = 3;
-        required int32         nb_morts                     = 4;
-        required int32         nb_blesses                   = 5;
-        required int32         nb_blesses_mentaux           = 6;
-        required int32         nb_contamines_nbc            = 7;
-        required int32         nb_dans_chaine_sante         = 8;
-        required int32         nb_utilises_pour_maintenance = 9;
-        required int32         nb_blesses_non_evacues       = 10;
+        required EnumHumanRank rang                         = 1;  //!< The rank @see EnumHumanRank
+        required int32         nb_total                     = 2;  //!< The total number of persons @todo uint32
+        required int32         nb_operationnels             = 3;  //!< The number of persons operational @todo uint32 translate
+        required int32         nb_morts                     = 4;  //!< The number of deads @todo uint32 translate
+        required int32         nb_blesses                   = 5;  //!< The number of wounded persons @todo uint32 translate
+        required int32         nb_blesses_mentaux           = 6;  //!< The number of mentally wounded persons @todo uint32 translate
+        required int32         nb_contamines_nbc            = 7;  //!< The number of NBC contaminated persons @todo uint32 translate
+        required int32         nb_utilises_pour_maintenance = 9;  //!< The number of persons performing maintenance @todo uint32 translate
+        required int32         nb_blesses_non_evacues       = 10; //!< The number of non-evacuated wounded persons @todo uint32 translate
     }
-    repeated HumanDotation elem = 1;
+    repeated HumanDotation elem = 1; //!< The human dotations @see HumanDotation
 }
 
+/** @struct ContaminationState
+    @brief A contamination state message
+    @todo move into UnitAttributes
+*/
 message ContaminationState {
-   optional int32 percentage = 1;
-   optional float quantity   = 2;
+   optional int32 percentage = 1; //!< @todo What's this ?
+   optional float quantity   = 2; //!< @todo What's this ?
 }
 
+/** @struct NBCAgents
+    @brief A NBC agents message
+    @todo rename to NbcAgents
+    @todo move into UnitAttributes
+*/
 message NBCAgents {
-    repeated NBCAgentType elem = 1;
+    repeated NBCAgentType elem = 1; //!< The list of NBC agents @see NBCAgentType
 }
 
+/** @struct Communication
+    @brief A communication message
+    @todo move into UnitAttributes
+*/
 message Communication {
-    optional bool              jammed          = 1;
-    optional KnowledgeGroupId  knowledge_group = 2;
+    optional bool              jammed          = 1; //!< Whether the communication is jammed or not
+    optional KnowledgeGroupId  knowledge_group = 2; //!< The knowledge group identifier @see KnowledgeGroupId
 }
 
+/** @struct Extension
+    @brief An extension message
+    @todo What's this ?
+*/
 message Extension {
+    /** @struct Entry
+        @brief An extension entry message
+    */
     message Entry {
-        required string name  = 1;
-        required string value = 2;
+        required string name  = 1; //!< The entry name
+        required string value = 2; //!< The entry value
     }
-    repeated Entry entries = 1;
+    repeated Entry entries = 1; //!< The extension entries @see Entry
 }
 
+/** @struct UnitAttributes
+    @brief A unit attributes message
+*/
 message UnitAttributes {
     enum Posture {
         mouvement           = 0;
@@ -831,6 +877,7 @@ message AutomatPerception {
 message SeqOfAutomatPerception {
     repeated AutomatPerception elem = 1;
 }
+
 message UnitKnowledgeUpdate {
     required UnitKnowledgeId             knowledge                = 1;
     required KnowledgeGroupId            knowledge_group          = 2;
