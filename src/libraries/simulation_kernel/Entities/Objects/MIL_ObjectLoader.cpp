@@ -157,16 +157,16 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& message, MIL_Army_ABC& army, sword::ObjectMagicActionAck_ErrorCode& value ) const
 {
-    CIT_Prototypes it = prototypes_.find( message.elem( 0 ).value().Get(0).acharstr() );
+    CIT_Prototypes it = prototypes_.find( message.elem( 0 ).value( 0 ).acharstr() );
     if( it == prototypes_.end() )
     {
         value = sword::ObjectMagicActionAck_ErrorCode_error_invalid_object;
         return 0;
     }
     TER_Localisation location;
-    if( ! NET_ASN_Tools::ReadLocation( message.elem( 1 ).value().Get(0).location(), location ) )
+    if( ! NET_ASN_Tools::ReadLocation( message.elem( 1 ).value( 0 ).location(), location ) )
         return 0;
-    Object* pObject = new Object( *it->second, army, &location, message.elem( 2 ).value().Get(0).acharstr() );
+    Object* pObject = new Object( *it->second, army, &location, message.elem( 2 ).value( 0 ).acharstr() );
     attributes_->Create( *pObject, message.elem( 4 ) );
     pObject->Finalize();
     return pObject;
