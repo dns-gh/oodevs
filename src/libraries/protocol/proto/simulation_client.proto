@@ -771,72 +771,82 @@ message Extension {
     @brief A unit attributes message
 */
 message UnitAttributes {
+    /** @struct Posture
+        @brief Posture states
+    */
     enum Posture {
-        mouvement           = 0;
-        mouvement_discret   = 1;
-        arret               = 2;
-        poste_reflexe       = 3;
-        poste               = 4;
-        poste_amenage       = 5;
-        poste_prepare_genie = 6;
+        mouvement           = 0; //!< Moving @todo translate
+        mouvement_discret   = 1; //!< Moving discreetly @todo translate
+        arret               = 2; //!< Stopped @todo translate
+        poste_reflexe       = 3; //!< ? @todo translate
+        poste               = 4; //!< ? @todo translate
+        poste_amenage       = 5; //!< ? @todo translate
+        poste_prepare_genie = 6; //!< ? @todo translate
     }
+    /** @struct FireAvailability
+        @brief Fire availability states
+    */
     enum FireAvailability {
-        none_fire_available = 0;
-        pret_au_tir         = 1;
-        indisponible        = 2;
+        none_fire_available = 0; //!< No fire available @todo rename to no_fire_available
+        pret_au_tir         = 1; //!< Fire ready @todo rename to fire_ready
+        indisponible        = 2; //!< Fire unavailable @todo rename to fire_unavailable
     }
+    /** @struct CrowdRoe
+        @brief Rules of engagement against crowds
+        @todo rename to RulesOfEngagementAgainstCrowds or something along
+    */
     enum CrowdRoe {
-        none                                      = 0;
-        emploi_force_interdit                     = 1;
-        maintien_a_distance_par_moyens_non_letaux = 2;
-        dispersion_par_moyens_de_defense_actifs   = 3;
-        armes_letales_autorisees                  = 4;
+        none                                      = 0; //!< No rule @todo rename to no_rule
+        emploi_force_interdit                     = 1; //!< Coercion forbidden @todo rename to coercion_forbidden
+        maintien_a_distance_par_moyens_non_letaux = 2; //!< @todo translate
+        dispersion_par_moyens_de_defense_actifs   = 3; //!< @todo translate
+        armes_letales_autorisees                  = 4; //!< Lethal weapons allowed @todo translate
     }
-    required UnitId                      unit                          = 1;
-    optional HumanDotations              dotation_eff_personnel        = 2;
-    optional EquipmentDotations          dotation_eff_materiel         = 3;
-    optional ResourceDotations           dotation_eff_ressource        = 4;
-    optional LentEquipments              equipements_pretes            = 5;
-    optional BorrowedEquipments          equipements_empruntes         = 6;
-    optional CoordLatLong                position                      = 7;
-    optional Heading                     direction                     = 8;
-    optional int32                       hauteur                       = 9;
-    optional int32                       altitude                      = 10;
-    optional int32                       vitesse                       = 11;
-    optional int32                       etat_operationnel_brut        = 12;
-    optional UnitIdList                  reinforcements                = 13;
-    optional UnitId                      reinforced_unit               = 14;
-    optional bool                        mort                          = 15;
-    optional bool                        neutralise                    = 16;
-    optional bool                        mode_furtif_actif             = 17;
-    optional bool                        embarque                      = 18;
-    optional bool                        transporteurs_disponibles     = 19;
-    optional Posture                     posture_old                   = 20;
-    optional Posture                     posture_new                   = 21;
-    optional int32                       posture_pourcentage           = 22;
-    optional int32                       etat_installation             = 23;
-    optional bool                        en_tenue_de_protection_nbc    = 24;
-    optional NBCAgents                   contamine_par_agents_nbc      = 25;
-    optional ContaminationState          etat_contamination            = 26;
-    optional Communication               communications                = 27;
-    optional bool                        radio_emitter_disabled        = 28;
-    optional bool                        radio_receiver_disabled       = 29;
-    optional bool                        radar_actif                   = 30;
-    optional UnitIdList                  transported_units             = 31;
-    optional UnitId                      transporting_unit             = 32;
-    optional ForceRatio.Value            rapport_de_force              = 33;
-    optional EnumMeetingEngagementStatus combat_de_rencontre           = 34;
-    optional EnumOperationalStatus       etat_operationnel             = 35;
-    optional FireAvailability            disponibilite_au_tir_indirect = 36;
-    optional RulesOfEngagement.Value     roe                           = 37;
-    optional CrowdRoe                    roe_crowd                     = 38;
-    optional EnumUnitTiredness           fatigue                       = 39;
-    optional EnumUnitMorale              moral                         = 40;
-    optional EnumUnitExperience          experience                    = 41;
-    optional UnitId                      surrendered_unit              = 42;
-    optional bool                        prisonnier                    = 43;
-    optional bool                        refugie_pris_en_compte        = 44;
-    optional Extension                   extension                     = 45;
+    required UnitId                      unit                          = 1;  //!< The unit identifier @see UnitId
+    optional HumanDotations              dotation_eff_personnel        = 2;  //!< The human dotations @see HumanDotations @todo _eff_ ?
+    optional EquipmentDotations          dotation_eff_materiel         = 3;  //!< The equipment dotations @see EquipmentDotations @todo _eff_ ?
+    optional ResourceDotations           dotation_eff_ressource        = 4;  //!< The resource dotations @see ResourceDotations @todo _eff_ ?
+    optional LentEquipments              equipements_pretes            = 5;  //!< The lent equipments @see LentEquipments @todo translate
+    optional BorrowedEquipments          equipements_empruntes         = 6;  //!< The borrowed equipments @see LentEquipments @todo translate
+    optional CoordLatLong                position                      = 7;  //!< The current position @see CoordLatLong
+    optional Heading                     direction                     = 8;  //!< The current heading @see CoordLatLong @todo rename to heading
+    optional int32                       hauteur                       = 9;  //!< The current height from the ground in meters
+    optional int32                       altitude                      = 10; //!< The current altitude on the geoid model of the earth in meters
+    optional int32                       vitesse                       = 11; //!< The current speed in kilometers per hour @todo rename to speed
+    optional int32                       etat_operationnel_brut        = 12; //!< @todo What's this ?
+    optional UnitIdList                  reinforcements                = 13; //!< The reinforcements @see UnitIdList
+    optional UnitId                      reinforced_unit               = 14; //!< The reinforced unit @see UnitId
+    optional bool                        mort                          = 15; //!< Whether the unit is dead or not @todo rename to dead
+    optional bool                        neutralise                    = 16; //!< Whether the unit has been neutralized or not @todo rename to neutralized
+    optional bool                        mode_furtif_actif             = 17; //!< Whether the unit is in stealth mode @todo rename to stealth
+    optional bool                        embarque                      = 18; //!< Whether the unit has been embarked or not @todo rename to embarked
+    optional bool                        transporteurs_disponibles     = 19; //!< Whether the unit has carriers available @todo rename to carriers_available
+    optional Posture                     posture_old                   = 20; //!< The posture which the unit is transitioning from @see Posture @todo rename to old_posture
+    optional Posture                     posture_new                   = 21; //!< The posture which the unit is transitioning to @see Posture @todo rename to new_posture
+    optional int32                       posture_pourcentage           = 22; //!< The completion of the posture transition in percent
+    optional int32                       etat_installation             = 23; //!< @todo What's this ?
+    optional bool                        en_tenue_de_protection_nbc    = 24; //!< Whether the unit is wearing NBC protective suits or not @todo translate
+    optional NBCAgents                   contamine_par_agents_nbc      = 25; //!< The NBC contamination @see NBCAgents
+    optional ContaminationState          etat_contamination            = 26; //!< The contamination state @todo Is this more than NBC ? @todo translate
+    optional Communication               communications                = 27; //!< The communication state @todo rename to communication without the s
+    optional bool                        radio_emitter_disabled        = 28; //!< Whether the radio emitter is disabled or not @todo change this to enabled ?
+    optional bool                        radio_receiver_disabled       = 29; //!< Whether the radio receiver is disabled or not @todo change this to enabled ?
+    optional bool                        radar_actif                   = 30; //!< Whether the radar is active or not @todo rename to radar_active
+    optional UnitIdList                  transported_units             = 31; //!< The transported units @see UnitIdList
+    optional UnitId                      transporting_unit             = 32; //!< The transporting unit @see UnitId
+    optional ForceRatio.Value            rapport_de_force              = 33; //!< The force ratio @see ForceRatio @todo translate to force_ratio
+    optional EnumMeetingEngagementStatus combat_de_rencontre           = 34; //!< The meeting engagement status @see EnumMeetingEngagementStatus @todo translate
+    optional EnumOperationalStatus       etat_operationnel             = 35; //!< The operational state @see EnumOperationalStatus @todo translate
+    optional FireAvailability            disponibilite_au_tir_indirect = 36; //!< The indirect fire availability @see FireAvailability @todo translate
+    optional RulesOfEngagement.Value     roe                           = 37; //!< The rules of engagement @see RulesOfEngagement @todo rename to rules_of_engagement
+    optional CrowdRoe                    roe_crowd                     = 38; //!< The rules of engagement against crowds @see CrowdRoe @todo rename to ?
+    optional EnumUnitTiredness           fatigue                       = 39; //!< The tiredness @see EnumUnitTiredness @todo rename to tiredness
+    optional EnumUnitMorale              moral                         = 40; //!< The moral @see EnumUnitMorale @todo rename to morale
+    optional EnumUnitExperience          experience                    = 41; //!< The experience @see EnumUnitExperience
+    optional UnitId                      surrendered_unit              = 42; //!< The unit to which this unit has surrendered @see UnitId
+    optional bool                        prisonnier                    = 43; //!< Whether the unit has been made prisonner @todo rename prisonner
+    optional bool                        refugie_pris_en_compte        = 44; //!< @todo What's this ? @todo translate
+    optional Extension                   extension                     = 45; //!< @todo What's this ?
 }
 
 message UnitPathFind {
