@@ -263,9 +263,9 @@ void MedicalCapacityUpdateDialog::Send( actions::parameters::ParameterList& attr
 void MedicalCapacityUpdateDialog::FillAttributes( actions::parameters::ParameterList& attribute ) const
 {
     attribute.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_medical_treatment );
-    // attribute.AddQuantity( "Available Doctors", doctors_->value() ); 
+    attribute.AddString( "ExternalReferenceId", referenceID_->text().ascii() );
     attribute.AddQuantity( "Doctors", doctors_->value() ); 
-    // attribute.AddEnumeration( "FacilityStatus", status_->GetItemIndex( status_->GetValue() ); 
+    attribute.AddIdentifier( "Status", 0 ); // JCR TODO : Check status available ?
     
     actions::parameters::ParameterList& capacities = attribute.AddList( "BedCapacities" ); 
     int i = 0;
@@ -273,9 +273,9 @@ void MedicalCapacityUpdateDialog::FillAttributes( actions::parameters::Parameter
     {
         actions::parameters::ParameterList& capacity = capacities.AddList( "Capacity" );
         capacity.AddIdentifier( "TypeId", it->id_ );
-        // capacity.AddQuantity( "BaselineCount", it->baseline_->value() );
+        capacity.AddQuantity( "BaseLineCount", it->baseline_->value() );
         capacity.AddQuantity( "AvailableCount", it->baseline_->value() - it->patients_->value() );
-        // capacity.AddQuantity( "EmergencyCount", 0 );
+        capacity.AddQuantity( "EmergencyCount", 0 );
     }
 }
 

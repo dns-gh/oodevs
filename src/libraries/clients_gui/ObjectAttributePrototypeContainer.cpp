@@ -101,7 +101,8 @@ bool ObjectAttributePrototypeContainer::CheckValidity() const
 void ObjectAttributePrototypeContainer::Commit()
 {
     if( current_.get() )
-        std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::Commit, _1 ) );
+        for( T_AttributeContainer::iterator it = current_->begin(); it != current_->end(); ++it )
+            (*it)->Commit();
 }
 
 // -----------------------------------------------------------------------------
