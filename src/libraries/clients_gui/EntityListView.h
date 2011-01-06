@@ -74,7 +74,6 @@ private:
     virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
-    virtual void focusInEvent( QFocusEvent* event );
     //@}
 
 private:
@@ -83,7 +82,6 @@ private:
     kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
     ItemFactory_ABC& factory_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 

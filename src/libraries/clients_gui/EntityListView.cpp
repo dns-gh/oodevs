@@ -26,7 +26,6 @@ EntityListView::EntityListView( QWidget* pParent, Controllers& controllers, Item
     , controllers_( controllers )
     , profile_    ( profile )
     , factory_    ( factory )
-    , selected_   ( controllers )
 {
     setMinimumSize( 1, 1 );
     setRootIsDecorated( true );
@@ -90,7 +89,6 @@ void EntityListView::NotifySelected( const kernel::Entity_ABC* entity )
     ValuedListItem* item = entity ? FindItem( entity, firstChild() ) : 0;
     if( item )
     {
-        selected_ = entity;
         if( item != selectedItem() )
         {
             selectAll( false );
@@ -98,6 +96,8 @@ void EntityListView::NotifySelected( const kernel::Entity_ABC* entity )
         }
         ensureItemVisible( selectedItem() );
     }
+    else
+        clearSelection();
 }
 
 // -----------------------------------------------------------------------------
@@ -160,19 +160,4 @@ void EntityListView::NotifyCreated( const kernel::Team_ABC& team )
 void EntityListView::NotifyDeleted( const kernel::Team_ABC& team )
 {
     delete FindSibling( (const Entity_ABC*)&team, firstChild() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityListView::focusInEvent
-// Created: LGY 2011-01-05
-// -----------------------------------------------------------------------------
-void EntityListView::focusInEvent( QFocusEvent* event )
-{
-    ListView< EntityListView >::focusInEvent( event );
-    if( selected_ )
-    {
-        ValuedListItem* item = FindItem( &*selected_, firstChild() );
-        if( item )
-            item->Select( controllers_.actions_ );
-    }
 }
