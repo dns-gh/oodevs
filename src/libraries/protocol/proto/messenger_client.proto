@@ -444,8 +444,8 @@ message ShapeUpdate {
         @note Only set if data has changed.
     */
     optional string           color    = 3;
-    /** @property template
-        @brief The updated template of the shape.
+    /** @property pattern
+        @brief The updated pattern of the shape.
         @note Only set if data has changed.
     */
     optional string           pattern = 4;
