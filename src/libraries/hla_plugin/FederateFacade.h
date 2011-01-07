@@ -36,7 +36,6 @@ namespace hla
 {
     class AggregateEntityClass;
     class ExtensionFactory;
-    class ObjectClass_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -49,26 +48,13 @@ class FederateFacade : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, unsigned int timeStepDuration );
+             FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, unsigned int lookAhead );
     virtual ~FederateFacade();
     //@}
 
     //! @name Operations
     //@{
     void Step();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void AddClass( ObjectClass_ABC& objectClass );
-    bool Join( const std::string& name );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< ObjectClass_ABC* > T_Classes;
     //@}
 
 private:
@@ -82,7 +68,6 @@ private:
     std::auto_ptr< ::hla::TimeIntervalFactory_ABC > intervalFactory_;
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
     std::auto_ptr< ::hla::Federate > federate_;
-    T_Classes classes_;
     //@}
 };
 

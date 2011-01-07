@@ -29,7 +29,7 @@ using namespace hla;
 // Name: FederateFacade constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, unsigned int timeStepDuration )
+FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, unsigned int lookAhead )
     : joined_         ( false )
     , model_          ( model )
     , agentClass_     ( new AggregateEntityClass() )
@@ -37,11 +37,19 @@ FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& mod
     , timeFactory_    ( new SimpleTimeFactory() )
     , intervalFactory_( new SimpleTimeIntervalFactory() )
     , ambassador_     ( RtiAmbassador_ABC::CreateAmbassador( *timeFactory_, *intervalFactory_, RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host" ), xis.attribute< std::string >( "port", "8989" ) ) )
-    , federate_       ( new Federate( *ambassador_, xis.attribute< std::string >( "name" ), SimpleTime(), SimpleTimeInterval( timeStepDuration ) ) )
+    , federate_       ( new Federate( *ambassador_, xis.attribute< std::string >( "name" ), SimpleTime(), SimpleTimeInterval( lookAhead ) ) )
 {
     model_.RegisterFactory( *factory_ );
-    Join( xis.attribute< std::string >( "federation" ) );
-    AddClass( *agentClass_ );
+    const std::string name = xis.attribute< std::string >( "federation" );
+    try
+    {
+        joined_ = federate_->Join( name, false, true );
+    }
+    catch( HLAException& e )
+    {
+        MT_LOG_ERROR_MSG( "Error joining federation '" << name << "' : " << e.what() );
+    } 
+    agentClass_->RegisterTo( *federate_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,35 +59,6 @@ FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& mod
 FederateFacade::~FederateFacade()
 {
     model_.UnregisterFactory( *factory_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FederateFacade::Join
-// Created: SBO 2008-02-18
-// -----------------------------------------------------------------------------
-bool FederateFacade::Join( const std::string& name )
-{
-    try
-    {
-        if( !federate_->Join( name, false, true ) )
-            return joined_ = false;
-        return joined_ = true;
-    }
-    catch( HLAException& e )
-    {
-        MT_LOG_ERROR_MSG( "Error joining federation '" << name << "' : " << e.what() );
-        return joined_ = false;
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: FederateFacade::AddClass
-// Created: AGE 2008-02-22
-// -----------------------------------------------------------------------------
-void FederateFacade::AddClass( ObjectClass_ABC& objectClass )
-{
-    if( joined_ )
-        objectClass.RegisterTo( *federate_ );
 }
 
 // -----------------------------------------------------------------------------
