@@ -129,11 +129,11 @@ function LocationComposite.create( name, type, points )
     new.type = type
     new.name = name
     if type == "polygon" then
-		new.children = { Polygon.creat( "polygon", { points } ) }
-	elseif type == "point" then
-		new.children = { Point.create( points ) }
+        new.children = { Polygon.creat( "polygon", { points } ) }
+    elseif type == "point" then
+        new.children = { Point.create( points ) }
     end
-	return new
+    return new
 end
 
 --------------------------------------------------------------------------------
@@ -189,7 +189,7 @@ function GenObject.creat( name, type, value, point )
     new.value = value
     new.name = name
     new.children = { Location.create( "polygon", "1" ) }
-	PointLocation.creat( point )
+    PointLocation.creat( point )
     return new
 end
 
