@@ -36,15 +36,12 @@ message TacticalLineAck {
             a valid geometry (list of at least 2 points).
         */
         error_invalid_geometry      = 2;
-        /** @deprecated never used
-        */
-        error_invalid_lima_function = 3;
         /** @brief Operation failed because of an invalid diffusion.
             When creating or updating a limit/phase line, the client must provide
             a valid diffusion, that is an existing automat or formation to act as
             the container for the limit/phase line.
         */
-        error_invalid_diffusion     = 4;
+        error_invalid_diffusion     = 3;
     }
 }
 

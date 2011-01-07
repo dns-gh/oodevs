@@ -57,7 +57,6 @@ namespace
         CONVERT_ENUM( error_code, ( sword::TacticalLineAck::no_error, MsgsMessengerToClient::TacticalLineAck::no_error )
                                   ( sword::TacticalLineAck::error_invalid_id, MsgsMessengerToClient::TacticalLineAck::error_invalid_id )
                                   ( sword::TacticalLineAck::error_invalid_geometry, MsgsMessengerToClient::TacticalLineAck::error_invalid_geometry )
-                                  ( sword::TacticalLineAck::error_invalid_lima_function, MsgsMessengerToClient::TacticalLineAck::error_invalid_lima_function )
                                   ( sword::TacticalLineAck::error_invalid_diffusion, MsgsMessengerToClient::TacticalLineAck::error_invalid_diffusion ) );
     }
 }
