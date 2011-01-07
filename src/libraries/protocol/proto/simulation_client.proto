@@ -17,7 +17,7 @@ package sword;
 */
 message OrderAck {
     /** @enum ErrorCode
-        @brief Reason for the failure of order/mission assignment.
+        @brief Reason for the failure of order/mission assignment
         @todo Move long descriptions to the corresponding field in BlablaOrder and use @@see tags here
     */
     enum ErrorCode {
@@ -38,9 +38,7 @@ message OrderAck {
 }
 
 /** @struct TaskCreationRequestAck
-    @brief An agent order execution request acknowledgement message.
-
-    This message is sent when an agent order is issued in response to a client request
+    @brief An agent order execution request acknowledgement message
 
     @see UnitOrder
     @todo rename to TaskCreationRequestAck, gather UnitOrder, AutomatOrder and CrowdOrder into one message
@@ -51,9 +49,9 @@ message TaskCreationRequestAck {
 }
 
 /** @struct FragOrderAck
-    @brief A fragmentary order execution request acknowledgement message.
+    @brief A fragmentary order execution request acknowledgement message
 
-    This message is sent when a fragmentary order is issued in response to a client request (FragOrder).
+    @see FragOrder
     @todo gather with UnitOrder, AutomatOrder and CrowdOrder into one message ?
 */
 message FragOrderAck {
@@ -62,10 +60,7 @@ message FragOrderAck {
 }
 
 /** @struct SetAutomatModeAck
-    @brief An automat mode change request acknowledgement message.
-
-    This message is sent when an automat mode change is executed in response to a
-    client request.
+    @brief An automat mode change request acknowledgement message
 
     @see SetAutomatMode
 */
@@ -78,7 +73,7 @@ message SetAutomatModeAck {
         error_invalid_unit = 1; //!< Operation failed because of an invalid automat identifier @todo rename to error_invalid_automat
         error_not_allowed  = 2; //!< @deprecated never used
     }
-    required AutomatId automate   = 1; //!< Identifier of the automat for which to change mode @see AutomatId @todo rename to automat
+    required AutomatId automate   = 1; //!< Identifier of the automat for which to change mode @see AutomatId
     required ErrorCode error_code = 2; //!< Reason for the failure of the automat mode changing operation @see ErrorCode
 }
 
@@ -93,7 +88,7 @@ message UnitActionAck {
     enum ErrorCode {
         no_error                = 0; //!< Operation succeeded
         error_invalid_unit      = 1; //!< Operation failed because of an invalid agent identifier @todo rename to error_invalid_agent
-        error_automate_embraye  = 2; //!< @brief Operation failed because the target agent is currently controlled by its parent automat @todo rename to error_automation_enabled
+        error_automate_embraye  = 2; //!< Operation failed because the target agent is currently controlled by its parent automat @todo rename to error_automate_enabled
         error_invalid_attribute = 3; //!< Operation failed because the provided action parameters were invalid @todo rename to error_invalid_parameter
         error_unit_surrendered  = 4; //!< Operation failed because the agent is not in a state where it can execute the order : it must not have surrendered to be able to receive orders @todo rename to error_agent_surrendered
     }
