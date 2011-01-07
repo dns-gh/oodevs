@@ -107,10 +107,10 @@ void Model::OnReceiveMessage( const sword::MessengerToClient& message )
         Create( boundaryLimits_, message.message().limit_creation() );
     else if( message.message().has_limit_destruction() )
         Destroy( boundaryLimits_, message.message().limit_destruction().id().id() );
-    else if( message.message().has_lima_creation() )
-        Create( phaseLines_, message.message().lima_creation() );
-    else if( message.message().has_lima_destruction() )
-        Destroy( phaseLines_, message.message().lima_destruction().id().id() );
+    else if( message.message().has_phase_line_creation() )
+        Create( phaseLines_, message.message().phase_line_creation() );
+    else if( message.message().has_phase_line_destruction() )
+        Destroy( phaseLines_, message.message().phase_line_destruction().id().id() );
 }
 
 namespace

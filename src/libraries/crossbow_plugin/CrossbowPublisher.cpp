@@ -306,7 +306,7 @@ void CrossbowPublisher::UpdateDatabase( const sword::MessengerToClient& wrapper 
     else if( wrapper.message().has_limit_creation() )
         databaseUpdater_->Update( wrapper.message().limit_creation() );
 //  else if( wrapper.message().has_limit_destruction() )
-//      databaseUpdater_->Update( wrapper.message().lima_destruction() );
+//      databaseUpdater_->Update( wrapper.message().phase_line_destruction() );
 }
 
 

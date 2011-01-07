@@ -13,82 +13,52 @@ import "version.proto";
 package sword;
 
 /** @struct AuthenticationResponse
-    @brief A response message to an @ref AuthenticationRequest.
+    @brief A response message to an authentication request
+
+    @see AuthenticationRequest
 
     This message is sent in response to an authentication request. It contains
-    an error code indicating the success of the operation or failure with reason.
+    an error code indicating the success of the operation or failure with the reason for it.
     In case of failure, it contains a short description of available profiles so
     that client applications can prompt the user with a list of profiles.
 */
 message AuthenticationResponse {
     /** @enum ErrorCode
-        @brief Reason for the failure of
-               an authentication operation.
+        @brief Reason for the failure of an authentication operation
     */
     enum ErrorCode {
-        success                     = 0; //!< Authentication succeeded.
-        invalid_login               = 1; //!< Authentication failed because the provided login does not exist (in file "exercise/profiles.xml").
-        too_many_connections        = 2; //!< Authentication failed because there are too many connections (depends on licensing).
-        mismatched_protocol_version = 4; //!< Authentication failed because of a mismatched protocol version between client and server.
+        success                     = 0; //!< Authentication succeeded
+        invalid_login               = 1; //!< Authentication failed because the provided login does not exist (in file "exercise/profiles.xml")
+        too_many_connections        = 2; //!< Authentication failed because there are too many connections (depends on licensing)
+        mismatched_protocol_version = 4; //!< Authentication failed because of a mismatched protocol version between client and server
     }
-    /** @property error_code
-        @brief Reason for the failure of
-               an authentication operation.
-        @see ErrorCode
-    */
-    required ErrorCode              error_code        = 1;
-    /** @property profile
-        @brief Contains authenticated profile information when operation is successful.
-        @see Profile
-    */
-    optional Profile                profile           = 2;
-    /** @property profiles
-        @brief Contains list of available profiles when authentication has failed.
-        @see ProfileDescriptionList
-    */
-    optional ProfileDescriptionList profiles          = 3;
-    /** @property server_version
-        @brief Server protocol version.
-        @see ProtocolVersion
-    */
-    required ProtocolVersion        server_version    = 4;
-    /** @property restart_date_time
-        @brief Date and time of the simulation when restarting on a checkpoint.
-        @see DateTime
-        @todo not implemented
-    */
-    optional DateTime               restart_date_time = 5;
-    /** @property terrain_name
-        @brief Terrain name used by the simulation (from file "exercise/exercise.xml").
-        @todo not implemented
-    */
-    optional string                 terrain_name      = 6;
+    required ErrorCode              error_code        = 1; //!< Reason for the failure of an authentication operation @see ErrorCode
+    optional Profile                profile           = 2; //!< Contains authenticated profile information when operation is successful @see Profile
+    optional ProfileDescriptionList profiles          = 3; //!< Contains list of available profiles when authentication has failed @see ProfileDescriptionList
+    required ProtocolVersion        server_version    = 4; //!< Server protocol version @see ProtocolVersion
+    optional DateTime               restart_date_time = 5; //!< Date and time of the simulation when restarting on a checkpoint @see DateTime @todo not implemented
+    optional string                 terrain_name      = 6; //!< Terrain name used by the simulation (from file "exercise/exercise.xml"). @todo not implemented
 }
 
 /** @struct ProfileCreation
-    @brief A profile creation message.
+    @brief A profile creation message
 
-    This message is sent when a profile is created. This can occur:
+    This message is sent when a profile is created :
     @li When connecting to a running exercise; creation of all available profiles are notified to client
     @li During the game, upon manual creation of a profile by an authorised user (supervisor)
 */
 message ProfileCreation {
-    /** @property profile
-        @brief Information about the created profile.
-        @see Profile
-    */
-    required Profile profile = 1;
+    required Profile profile = 1; //!< Information about the created profile @see Profile
 }
 
 /** @struct ProfileCreationRequestAck
-    @brief A profile creation request acknowledgement message.
+    @brief A profile creation request acknowledgement message
 
     This message is sent when a profile is created manually by an authorised user (supervisor).
 */
 message ProfileCreationRequestAck {
     /** @enum ErrorCode
-        @brief Reason for the failure of
-               a profile creation operation.
+        @brief Reason for the failure of a profile creation operation
     */
     enum ErrorCode {
         success          = 0; //!< Profile creation succeeded.
@@ -96,116 +66,76 @@ message ProfileCreationRequestAck {
         invalid_password = 2; //!< @deprecated Profile creation failed because of an invalid password.
         duplicate_login  = 3; //!< Profile creation failed because provided login already exists.
     }
-    /** @property login
-        @brief Login provided on profile creation request.
-    */
-    required string    login      = 1;
-    /** @property error_code
-        @brief Reason for the failure of
-               a profile creation operation.
-        @see ErrorCode
-    */
-    required ErrorCode error_code = 2;
+    required string    login      = 1; //!< Login provided on profile creation request
+    required ErrorCode error_code = 2; //!< Reason for the failure of a profile creation operation
 }
 
 /** @struct ProfileUpdateRequestAck
-    @brief A profile update request acknowledgement message.
+    @brief A profile update request acknowledgement message
 
     This message is sent when a profile is updated manually by an authorised user (supervisor).
 */
 message ProfileUpdateRequestAck {
     /** @enum ErrorCode
-        @brief Reason for the failure of
-               a profile update operation.
+        @brief Reason for the failure of a profile update operation
     */
     enum ErrorCode {
-        success          = 0; //!< Profile update succeeded.
-        invalid_profile  = 1; //!< Profile update failed because of an invalid profile (non existing).
-        invalid_login    = 2; //!< Profile update failed because of an invalid (empty) login.
-        invalid_password = 3; //!< @deprecated Profile update failed because of an invalid password.
-        duplicate_login  = 4; //!< Profile update failed because the provided new login already exists.
+        success          = 0; //!< Profile update succeeded
+        invalid_profile  = 1; //!< Profile update failed because of an invalid profile (non existing)
+        invalid_login    = 2; //!< Profile update failed because of an invalid (empty) login
+        invalid_password = 3; //!< Profile update failed because of an invalid password @deprecated 
+        duplicate_login  = 4; //!< Profile update failed because the provided new login already exists
     }
-    /** @property login
-        @brief Login provided on profile update request.
-    */
-    required string    login      = 1;
-    /** @property error_code
-        @brief Reason for the failure of
-               a profile update operation.
-        @see ErrorCode
-    */
-    required ErrorCode error_code = 2;
+    required string    login      = 1; //!< Login provided on profile update request
+    required ErrorCode error_code = 2; //!< Reason for the failure of a profile update operation @see ErrorCode
 }
 
 /** @struct ProfileUpdate
-    @brief A profile update message.
+    @brief A profile update message
 
-    This message is sent when a profile is updated during the game by
-    an authorised user (supervisor).
+    This message is sent when a profile is updated during the game by an authorised user (supervisor).
 */
 message ProfileUpdate {
-    /** @property login
-        @brief Login of the updated profile.
-    */
-    required string  login   = 1;
-    /** @property profile
-        @brief Updated profile information.
-        @see Profile
-    */
-    required Profile profile = 2;
+    required string  login   = 1; //!< Login of the updated profile
+    required Profile profile = 2; //!< Updated profile information @see Profile
 }
 
 /** @struct ProfileDestruction
-    @brief A profile destruction message.
+    @brief A profile destruction message
 
-    This message is sent:
+    This message is sent :
     @li When a profile is destroyed during the game by an authorised user (supervisor).
     @li When the exercise terminates.
 */
 message ProfileDestruction {
-    /** @property login
-        @brief Login of the destroyed profile.
-    */
-    optional string login = 1;
+    optional string login = 1; //!< Login of the destroyed profile
 }
 
 /** @struct ProfileDestructionRequestAck
-    @brief A profile destruction request acknowledgement message.
+    @brief A profile destruction request acknowledgement message
 
     This message is sent when a profile is destroyed manually by an authorised user (supervisor).
 */
 message ProfileDestructionRequestAck {
     /** @enum ErrorCode
-        @brief Reason for the failure of
-               a profile destruction operation.
+        @brief Reason for the failure of a profile destruction operation
     */
     enum ErrorCode {
         success         = 0; //!< Profile destruction succeeded.
         invalid_profile = 1; //!< Profile destruction failed because the specified profile does not exist.
         failure         = 2; //!< @deprecated never used
     }
-    /** @property error_code
-        @brief Reason for the failure of
-               a profile destruction operation.
-        @see ErrorCode
-    */
-    required ErrorCode error_code = 1;
-    /** @property login
-        @brief Login provided on profile destruction request.
-    */
-    required string    login      = 2;
+    required ErrorCode error_code = 1; //!< Reason for the failure of a profile destruction operation @see ErrorCode
+    required string    login      = 2; //!< Login provided on profile destruction request
 }
 
 /** @struct RoleType
-    @brief Defines a role played by a profile during the game.
+    @brief Defines a role played by a profile during the game
 
     Profile roles are listed in file "resources/Extensions.xml" (profile-attributes).
 */
 message RoleType {
-    /** @property id
-        @brief Role type identifier as defined in file "resources/Extensions.xml".
-    */
-    required uint32 id = 1;
+    required uint32 id = 1; //!< Role type identifier as defined in file "resources/Extensions.xml"
 }
 
 /** @struct Profile
