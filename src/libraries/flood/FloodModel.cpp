@@ -126,7 +126,7 @@ void FloodModel::Propagate( int floodElevation )
                     cell.deep_ = true;
                 if( x > 0 && !ppCells_[ x - 1 ][ y ].visited_ )
                     queue.push( std::make_pair( x - 1, y ) );
-                if( x < 2 * halfWidth_ + 1 && !ppCells_[ x + 1 ][ y ].visited_ )
+                if( x < 2 * halfWidth_ && !ppCells_[ x + 1 ][ y ].visited_ )
                     queue.push( std::make_pair( x + 1, y ) );
                 if( y > 0 && !ppCells_[ x ][ y - 1 ].visited_ )
                     queue.push( std::make_pair( x, y - 1 ) );

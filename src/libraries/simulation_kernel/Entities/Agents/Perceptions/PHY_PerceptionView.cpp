@@ -181,6 +181,9 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const DEC_Knowledge_Obje
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Object_ABC& target ) const
 {
+    if( target.IsUniversal() )
+        return PHY_PerceptionLevel::identified_;
+
     if( !bIsEnabled_ || !target().CanBePerceived() )
         return PHY_PerceptionLevel::notSeen_;
 

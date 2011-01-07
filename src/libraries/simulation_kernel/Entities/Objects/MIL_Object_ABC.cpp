@@ -16,6 +16,7 @@
 #include "MIL_ObjectFactory.h"
 #include "MIL_ObjectType_ABC.h"
 #include "ResourceNetworkCapacity.h"
+#include "UniversalCapacity.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
@@ -244,6 +245,15 @@ void MIL_Object_ABC::ApplyStructuralState( unsigned int structuralState ) const
 {
     if( const ResourceNetworkCapacity* network = Retrieve< ResourceNetworkCapacity >() )
         network->SetModifier( structuralState );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::IsUniversal
+// Created: JSR 2011-01-07
+// -----------------------------------------------------------------------------
+bool MIL_Object_ABC::IsUniversal() const
+{
+    return tools::Extendable< ObjectCapacity_ABC >::Retrieve< UniversalCapacity >() != 0;
 }
 
 // -----------------------------------------------------------------------------

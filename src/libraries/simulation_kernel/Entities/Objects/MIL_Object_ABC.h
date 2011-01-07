@@ -151,7 +151,8 @@ public:
     //! @name Accessors
     //@{
     bool IsMarkedForDestruction() const;
-    bool IsReadyForDeletion    () const;
+    bool IsReadyForDeletion() const;
+    virtual bool IsUniversal() const;
     //@}
 
     //! @name HLA

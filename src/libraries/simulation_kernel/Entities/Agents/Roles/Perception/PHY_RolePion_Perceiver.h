@@ -30,6 +30,7 @@ class PHY_PerceptionRecoUrbanBlock;
 class PHY_PerceptionRadar;
 class PHY_PerceptionAlat;
 class PHY_PerceptionFlyingShell;
+class TER_Object_ABC;
 
 namespace detection
 {
@@ -208,15 +209,14 @@ private:
     //@{
     bool HasChanged() const;
     bool HasRadarStateChanged() const;
-    bool CanPerceive                   () const;
-    void PreparePerceptionData         ();
-    void PrepareRadarData              ();
-    void UpdatePeriphericalVisionState ();
+    bool CanPerceive() const;
+    void PreparePerceptionData();
+    void PrepareRadarData();
+    void UpdatePeriphericalVisionState();
     void ComputeMainPerceptionDirection( MT_Vector2D& vMainPerceptionDirection ) const;
-
     double GetMaxObjectPerceptionDistance() const;
-
     void EnsurePerceptionRecoLocalisation();
+    void AppendUniversalObjects( std::vector< TER_Object_ABC* >& objects ) const;
     //@}
 
 private:
@@ -225,19 +225,16 @@ private:
     MIL_Agent_ABC& pion_;
     const MT_Vector2D* perceiverPosition_;
     const MT_Vector2D* perceiverDirection_;
-
     MT_Vector2D lastPerceiverPosition_;
-
-    bool          bPeriphericalVisionEnabled_;
-    unsigned int  nNextPeriphericalVisionStep_;
-    bool          bRecordModeEnabled_;
-
+    bool bPeriphericalVisionEnabled_;
+    unsigned int nNextPeriphericalVisionStep_;
+    bool bRecordModeEnabled_;
     // Perceptions
     T_RadarsPerClassMap radars_;
-    T_SurfaceAgentMap   surfacesAgent_;
-    T_SurfaceObjectMap  surfacesObject_;
-    double            rMaxAgentPerceptionDistance_;
-    double            rMaxObjectPerceptionDistance_;
+    T_SurfaceAgentMap surfacesAgent_;
+    T_SurfaceObjectMap surfacesObject_;
+    double rMaxAgentPerceptionDistance_;
+    double rMaxObjectPerceptionDistance_;
 
     PHY_PerceptionView*             pPerceptionView_;
     PHY_PerceptionCoupDeSonde*      pPerceptionCoupDeSonde_;

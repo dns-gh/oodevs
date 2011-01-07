@@ -894,6 +894,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
 
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( *perceiverPosition_, GetMaxObjectPerceptionDistance(), perceivableObjects );
+        AppendUniversalObjects( perceivableObjects );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
 
@@ -1451,4 +1452,17 @@ void PHY_RolePion_Perceiver::NotifyIsUnLoadedInVab()
 {
     bExternalMustChangePerception_ = true;
     bExternalMustChangeRadar_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::AppendUniversalObjects
+// Created: JSR 2011-01-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::AppendUniversalObjects( TER_Object_ABC::T_ObjectVector& perceivableObjects ) const
+{
+    TER_Object_ABC::T_ObjectVector allObjects;
+    TER_World::GetWorld().GetObjectManager().GetAllObjects( allObjects );
+    for( TER_Object_ABC::CIT_ObjectVector it = allObjects.begin(); it != allObjects.end(); ++it )
+        if( ( *it )->IsUniversal() && std::find( perceivableObjects.begin(), perceivableObjects.end(), *it ) == perceivableObjects.end() )
+            perceivableObjects.push_back( *it );
 }

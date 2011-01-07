@@ -29,3 +29,13 @@ void TER_Object_ABC::save( Archive& file, const unsigned int ) const
 {
     file << location_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_Object_ABC::IsUniversal
+// Created: JSR 2011-01-07
+// -----------------------------------------------------------------------------
+inline
+bool TER_Object_ABC::IsUniversal() const
+{
+    return false;
+}

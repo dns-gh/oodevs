@@ -39,6 +39,7 @@
 #include "StructuralCapacity.h"
 #include "TerrainHeuristicCapacity.h"
 #include "TimeLimitedCapacity.h"
+#include "UniversalCapacity.h"
 #include "WorkableCapacity.h"
 #include "SealOffCapacity.h"
 #include "SupplyCapacity.h"
@@ -162,6 +163,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "propagation", boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1, _2 ) );
     RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders, _1 ) );
     DoRegister( "flood", boost::bind( &AddBuilder< FloodCapacity >::Add, _1, _2 ) );
+    DoRegister( "universal", boost::bind( &AddBuilder< UniversalCapacity >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

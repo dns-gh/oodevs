@@ -65,6 +65,7 @@ public:
     //@{
     const TER_Localisation& GetLocalisation() const;
     TER_Localisation  GetLocalisation();
+    virtual bool IsUniversal() const;
     //@}
 
     //! @name Modifiers

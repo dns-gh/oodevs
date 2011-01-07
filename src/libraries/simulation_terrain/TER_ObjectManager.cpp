@@ -102,6 +102,21 @@ void TER_ObjectManager::GetListWithinLocalisation( const TER_Localisation& local
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_ObjectManager::GetAllObjects
+// Created: JSR 2011-01-06
+// -----------------------------------------------------------------------------
+void TER_ObjectManager::GetAllObjects( T_ObjectVector& objects ) const
+{
+    T_Objects::View view = objects_.CreateView();
+    while( view.HasMoreElements() )
+    {
+        TER_Object_ABC* pObject = view.NextElement();
+        if( pObject )
+            objects.push_back( pObject );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_ObjectManager::UpdatePosition
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------

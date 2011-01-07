@@ -115,9 +115,9 @@ float DetectionMap::GetCellSize() const
 
 namespace
 {
-    double Interpolate( const double& x1, const double& y1, const double& x2, const double& y2, const double& x )
+    short Interpolate( const double& x1, const double& y1, const double& x2, const double& y2, const double& x )
     {
-        return y2 + ( y1 - y2 ) * ( x2 - x ) / ( x2 - x1 );
+        return static_cast< short >( y2 + ( y1 - y2 ) * ( x2 - x ) / ( x2 - x1 ) );
     }
 }
 
@@ -133,9 +133,11 @@ short DetectionMap::InterpolatedElevationAt( const geometry::Point2f& point ) co
     unsigned int nCol = p.first;
     unsigned int nRow = p.second;
     double rScaledX = point.X() / cellsize_;
-    return static_cast< short >( Interpolate( nRow, 
+    if( nCol + 1 >= map_->Width() || nRow + 1 >= map_->Height() )
+        return *Data( nCol, nRow );
+    return Interpolate( nRow, 
         Interpolate( nCol, *Data( nCol, nRow ), nCol + 1, *Data( nCol + 1, nRow ), rScaledX ),
         nRow + 1,
         Interpolate( nCol, *Data( nCol, nRow + 1 ), nCol + 1, *Data( nCol + 1, nRow + 1 ), rScaledX ),
-        point.Y() / cellsize_ ) );
+        point.Y() / cellsize_ );
 }

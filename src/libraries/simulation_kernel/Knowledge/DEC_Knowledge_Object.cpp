@@ -763,12 +763,12 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
         {
             const std::vector< geometry::Polygon2f* >& deepAreas = flood->GetDeepAreas();
             const std::vector< geometry::Polygon2f* >& lowAreas = flood->GetLowAreas();
+            std::vector< geometry::Polygon2f* >::const_iterator polygonIt;
             for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
                 if( localisation_.IsInside( *it ) )
                 {
                     // TODO vérifier ici la capacité de hauteur de franchissement de l'agent
                     geometry::Point2f point( static_cast< float>( ( *it ).rX_ ), static_cast< float >( ( *it ).rY_ ) );
-                    std::vector< geometry::Polygon2f* >::const_iterator polygonIt;
                     for( polygonIt = deepAreas.begin(); polygonIt != deepAreas.end(); ++polygonIt )
                         if( ( *polygonIt )->BoundingBox().IsInside( point ) && ( *polygonIt )->IsInside( point ) )
                             return true;
