@@ -125,7 +125,7 @@ void AgentExtension::UpdateEntityIdentifier( UpdateFunctor_ABC& functor ) const
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateSpatial( UpdateFunctor_ABC& functor ) const
 {
-    Spatial spatial( holder_.GetPosition().X(), holder_.GetPosition().Y(), (float)holder_.GetAltitude(), (float)holder_.GetSpeed(), (unsigned short)holder_.GetDirection() );
+    Spatial spatial( holder_.GetPosition().X(), holder_.GetPosition().Y(), static_cast< float >( holder_.GetAltitude() ), static_cast< float >( holder_.GetSpeed() ), static_cast< unsigned int >( holder_.GetDirection() ) );
     Serializer archive;
     spatial.Serialize( archive );
     functor.Visit( AttributeIdentifier( "Spatial" ), archive );

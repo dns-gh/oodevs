@@ -70,8 +70,8 @@ void Formation::SerializeFormation( UpdateFunctor_ABC& functor ) const
 // -----------------------------------------------------------------------------
 void Formation::SerializeDimension( UpdateFunctor_ABC& functor ) const
 {
-    Dimension dim( (onRoad_ ? 200.f : 100.f),
-                   (onRoad_ ?  50.f : 100.f),
+    Dimension dim( ( onRoad_ ? 200.f : 100.f ),
+                   ( onRoad_ ?  50.f : 100.f ),
                    3.f );
     Serializer serializer;
     dim.Serialize( serializer );
