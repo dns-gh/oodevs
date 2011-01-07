@@ -7,8 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef __FederateFacade_h_
-#define __FederateFacade_h_
+#ifndef plugins_hla_FederateFacade_h
+#define plugins_hla_FederateFacade_h
+
+#include <boost/noncopyable.hpp>
+
+namespace xml
+{
+    class xisubstream;
+}
 
 namespace hla
 {
@@ -18,10 +25,17 @@ namespace hla
     class Federate;
 }
 
+namespace dispatcher
+{
+    class Model_ABC;
+}
+
 namespace plugins
 {
 namespace hla
 {
+    class AggregateEntityClass;
+    class ExtensionFactory;
     class ObjectClass_ABC;
 
 // =============================================================================
@@ -30,30 +44,28 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class FederateFacade
+class FederateFacade : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             FederateFacade( const std::string& name, unsigned int timeStepDuration );
+             FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, unsigned int timeStepDuration );
     virtual ~FederateFacade();
     //@}
 
     //! @name Operations
     //@{
-    void AddClass( ObjectClass_ABC& objectClass );
-    bool Join( const std::string& name );
-
     void Step();
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    FederateFacade( const FederateFacade& );            //!< Copy constructor
-    FederateFacade& operator=( const FederateFacade& ); //!< Assignment operator
+    void AddClass( ObjectClass_ABC& objectClass );
+    bool Join( const std::string& name );
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::vector< ObjectClass_ABC* > T_Classes;
@@ -63,6 +75,9 @@ private:
     //! @name Member data
     //@{
     bool joined_;
+    dispatcher::Model_ABC& model_;
+    std::auto_ptr< AggregateEntityClass > agentClass_;
+    std::auto_ptr< ExtensionFactory > factory_;
     std::auto_ptr< ::hla::TimeFactory_ABC > timeFactory_;
     std::auto_ptr< ::hla::TimeIntervalFactory_ABC > intervalFactory_;
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
@@ -74,4 +89,4 @@ private:
 }
 }
 
-#endif // __FederateFacade_h_
+#endif // plugins_hla_FederateFacade_h

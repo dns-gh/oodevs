@@ -28,9 +28,7 @@ namespace plugins
 {
 namespace hla
 {
-    class AggregateEntityClass;
     class FederateFacade;
-    class ExtensionFactory;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -65,9 +63,6 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model_ABC& model_;
-    std::auto_ptr< AggregateEntityClass > agentClass_;
-    std::auto_ptr< ExtensionFactory > factory_;
     std::auto_ptr< FederateFacade > federate_;
     //@}
 };

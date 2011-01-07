@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual void RegisterTo( ::hla::Federate& federate );
-    void Register( HlaExtension_ABC& localObject );
+    void Register( HlaExtension_ABC& localObject, unsigned int id );
     //@}
 
 private:

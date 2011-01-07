@@ -10,14 +10,17 @@
 #include "hla_plugin_pch.h"
 #include "FederateFacade.h"
 #include "AgentExtension.h"
+#include "AggregateEntityClass.h"
+#include "ExtensionFactory.h"
 #include "dispatcher/Agent.h"
-#include "ObjectClass_ABC.h"
+#include "dispatcher/Model_ABC.h"
+#include "MT_Tools/MT_Logger.h"
 #include <hla/hla_lib.h>
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
 #include <hla/SimpleTime.h>
 #include <hla/SimpleTimeInterval.h>
-#include "MT_Tools/MT_Logger.h"
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
 using namespace hla;
@@ -26,14 +29,19 @@ using namespace hla;
 // Name: FederateFacade constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-FederateFacade::FederateFacade( const std::string& name, unsigned int timeStepDuration )
+FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, unsigned int timeStepDuration )
     : joined_         ( false )
+    , model_          ( model )
+    , agentClass_     ( new AggregateEntityClass() )
+    , factory_        ( new ExtensionFactory( *agentClass_ ) )
     , timeFactory_    ( new SimpleTimeFactory() )
     , intervalFactory_( new SimpleTimeIntervalFactory() )
-    , ambassador_     ( RtiAmbassador_ABC::CreateAmbassador( *timeFactory_, *intervalFactory_ ) )
-    , federate_       ( new Federate( *ambassador_, name, SimpleTime(), SimpleTimeInterval( timeStepDuration ) ) )
+    , ambassador_     ( RtiAmbassador_ABC::CreateAmbassador( *timeFactory_, *intervalFactory_, RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host" ), xis.attribute< std::string >( "port", "8989" ) ) )
+    , federate_       ( new Federate( *ambassador_, xis.attribute< std::string >( "name" ), SimpleTime(), SimpleTimeInterval( timeStepDuration ) ) )
 {
-    // NOTHING
+    model_.RegisterFactory( *factory_ );
+    Join( xis.attribute< std::string >( "federation" ) );
+    AddClass( *agentClass_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +50,7 @@ FederateFacade::FederateFacade( const std::string& name, unsigned int timeStepDu
 // -----------------------------------------------------------------------------
 FederateFacade::~FederateFacade()
 {
-    // NOTHING
+    model_.UnregisterFactory( *factory_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,10 +61,8 @@ bool FederateFacade::Join( const std::string& name )
 {
     try
     {
-        if( ! federate_->Join( name, false, true ) )
+        if( !federate_->Join( name, false, true ) )
             return joined_ = false;
-        for( T_Classes::iterator it = classes_.begin(); it != classes_.end(); ++it )
-            (*it)->RegisterTo( *federate_ );
         return joined_ = true;
     }
     catch( HLAException& e )
@@ -73,7 +79,7 @@ bool FederateFacade::Join( const std::string& name )
 void FederateFacade::AddClass( ObjectClass_ABC& objectClass )
 {
     if( joined_ )
-        classes_.push_back( &objectClass );
+        objectClass.RegisterTo( *federate_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -44,7 +44,7 @@ void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
     EntityIdentifier id( 1, 1, id_ ); // site, application, id
     std::auto_ptr< AgentExtension > extension( new AgentExtension( entity, id ) );
-    agentClass_.Register( *extension );
+    agentClass_.Register( *extension, id_ );
     entity.Attach( *extension.release() );
     ++id_;
 }

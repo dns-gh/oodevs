@@ -15,6 +15,7 @@
 #include <hla/Federate.h>
 #include <hla/ClassIdentifier.h>
 #include <hla/Deserializer.h>
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 using namespace hla;
@@ -73,7 +74,7 @@ void AggregateEntityClass::RegisterTo( Federate& federate )
 // Name: AggregateEntityClass::Register
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-void AggregateEntityClass::Register( HlaExtension_ABC& localObject )
+void AggregateEntityClass::Register( HlaExtension_ABC& localObject, unsigned int id )
 {
-    hlaClass_->Register( localObject );
+    hlaClass_->Register( localObject, boost::lexical_cast< std::string >( id ) );
 }

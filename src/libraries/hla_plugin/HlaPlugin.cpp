@@ -10,10 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "HlaPlugin.h"
 #include "FederateFacade.h"
-#include "ExtensionFactory.h"
-#include "AggregateEntityClass.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/Model_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
@@ -36,14 +33,9 @@ namespace
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
-    : model_     ( model )
-    , agentClass_( new AggregateEntityClass() )
-    , factory_   ( new ExtensionFactory( *agentClass_ ) )
-    , federate_  ( new FederateFacade( xis.attribute< std::string >( "name" ), ReadTimeStep( config.GetSessionFile() ) ) )
+    : federate_  ( new FederateFacade( xis, model, ReadTimeStep( config.GetSessionFile() ) ) )
 {
-    model_.RegisterFactory( *factory_ );
-    federate_->AddClass( *agentClass_ );
-    federate_->Join( xis.attribute< std::string >( "federation" ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +44,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& co
 // -----------------------------------------------------------------------------
 HlaPlugin::~HlaPlugin()
 {
-    model_.UnregisterFactory( *factory_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
