@@ -95,7 +95,7 @@ void TacticalLinesModel::Write( xml::xostream& xos ) const
 void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitCreationRequest& asn )
 {
     plugins::messenger::LimitCreationRequestAck ack ;
-    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck::no_error );
     std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), asn ) );
     limits_.Register( limit->GetID(), *limit );
     limit->SendCreation( clients_ );
@@ -110,7 +110,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitUpdateRequest& asn )
 {
     plugins::messenger::LimitUpdateRequestAck ack;
-    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck::no_error );
     Limit* limit = limits_.Find( asn.id().id() );
     if( limit )
     {
@@ -118,7 +118,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
         limit->SendUpdate( clients_ );
     }
     else
-        ack().set_error_code( sword::TacticalLineAck_ErrorCode_error_invalid_id );
+        ack().set_error_code( sword::TacticalLineAck::error_invalid_id );
     ack.Send( publisher );
 }
 
@@ -129,7 +129,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitDestructionRequest& asn )
 {
     plugins::messenger::LimitDestructionRequestAck ack;
-    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck::no_error );
     Limit* limit = limits_.Find( asn.id().id() );
     if( limit )
     {
@@ -138,7 +138,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
         limits_.Remove( asn.id().id() );
     }
     else
-        ack().set_error_code( sword::TacticalLineAck_ErrorCode_error_invalid_id );
+        ack().set_error_code( sword::TacticalLineAck::error_invalid_id );
     ack.Send( publisher );
 }
 
@@ -149,7 +149,7 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineCreationRequest& asn )
 {
     plugins::messenger::PhaseLineCreationAck ack ;
-    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck::no_error );
     std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), asn ) );
     limas_.Register( lima->GetID(), *lima );
     lima->SendCreation( clients_ );
@@ -164,7 +164,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineUpdateRequest& asn )
 {
     plugins::messenger::PhaseLineUpdateRequestAck ack ;
-    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck::no_error );
     Lima* lima = limas_.Find( asn.id().id() );
     if( lima )
     {
@@ -172,7 +172,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
         lima->SendUpdate( clients_ );
     }
     else
-        ack().set_error_code( sword::TacticalLineAck_ErrorCode_error_invalid_id );
+        ack().set_error_code( sword::TacticalLineAck::error_invalid_id );
     ack.Send( publisher );
 }
 
@@ -183,7 +183,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineDestructionRequest& asn)
 {
     plugins::messenger::PhaseLineDestructionRequestAck ack ;
-    ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
+    ack().set_error_code( sword::TacticalLineAck::no_error );
     Lima* lima = limas_.Find( asn.id().id() );
     if( lima )
     {
@@ -192,7 +192,7 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
         limas_.Remove( asn.id().id() );
     }
     else
-        ack().set_error_code( sword::TacticalLineAck_ErrorCode_error_invalid_id );
+        ack().set_error_code( sword::TacticalLineAck::error_invalid_id );
     ack.Send( publisher );
 }
 

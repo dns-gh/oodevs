@@ -154,14 +154,14 @@ sword::ProfileCreationRequestAck_ErrorCode ProfileManager::Create( const sword::
 {
     const std::string login = message.has_profile() ? message.profile().login():"";
     if( login.empty() )
-        return sword::ProfileCreationRequestAck_ErrorCode_invalid_login;
+        return sword::ProfileCreationRequestAck::invalid_login;
     // $$$$ SBO 2007-01-22: check password if needed (maybe add a way to specify password constraints...)
     Profile*& pProfile = profiles_[ login ];
     if( pProfile )
-        return sword::ProfileCreationRequestAck_ErrorCode_duplicate_login;
+        return sword::ProfileCreationRequestAck::duplicate_login;
     MT_LOG_INFO_MSG( "New profile created : '" << login << "'" );
     pProfile = new Profile( model_, clients_, message );
-    return sword::ProfileCreationRequestAck_ErrorCode_success;
+    return sword::ProfileCreationRequestAck::success;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,12 +172,12 @@ sword::ProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const sword::Pr
 {
     Profile*& pProfile = profiles_[ message.login() ];
     if( !pProfile )
-        return sword::ProfileUpdateRequestAck_ErrorCode_invalid_profile;
+        return sword::ProfileUpdateRequestAck::invalid_profile;
     const std::string newLogin = message.profile().login();
     if( newLogin.empty() )
-        return sword::ProfileUpdateRequestAck_ErrorCode_invalid_login;
+        return sword::ProfileUpdateRequestAck::invalid_login;
     if( newLogin != message.login() && profiles_.find( newLogin ) != profiles_.end() )
-        return sword::ProfileUpdateRequestAck_ErrorCode_duplicate_login;
+        return sword::ProfileUpdateRequestAck::duplicate_login;
     // $$$$ SBO 2007-01-22: check password id needed
     pProfile->Update( message );
     if( newLogin != message.login() )
@@ -185,7 +185,7 @@ sword::ProfileUpdateRequestAck_ErrorCode ProfileManager::Update( const sword::Pr
         profiles_[ newLogin ] = pProfile;
         profiles_.erase( message.login() );
     }
-    return sword::ProfileUpdateRequestAck_ErrorCode_success;
+    return sword::ProfileUpdateRequestAck::success;
 }
 
 // -----------------------------------------------------------------------------
@@ -196,10 +196,10 @@ sword::ProfileDestructionRequestAck_ErrorCode ProfileManager::Destroy( const swo
 {
     T_ProfileMap::iterator it = profiles_.find( message.login() );
     if( it == profiles_.end() )
-        return sword::ProfileDestructionRequestAck_ErrorCode_invalid_profile;
+        return sword::ProfileDestructionRequestAck::invalid_profile;
     delete it->second;
     profiles_.erase( it );
-    return sword::ProfileDestructionRequestAck_ErrorCode_success;
+    return sword::ProfileDestructionRequestAck::success;
 }
 
 namespace directia

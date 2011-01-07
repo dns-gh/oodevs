@@ -602,7 +602,7 @@ void MIL_AutomateLOG::OnReceiveChangeLogisticLinks( const sword::UnitMagicAction
     unsigned int formationId = msg.parameters().elem( 2 ).value().Get(0).identifier();
     if( ( automatId == ( unsigned int ) -1 ) && (formationId == ( unsigned int ) -1) )
     {
-        throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck_ErrorCode_error_invalid_party_hierarchy );
+        throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_party_hierarchy );
     }
     pCurrentSuperior_ = automatId!=0 ? GetLogisticAutomate(automatId) : GetLogisticAutomate(formationId);
     if( !pCurrentSuperior_ )

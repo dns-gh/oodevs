@@ -40,7 +40,7 @@ MIL_OrderContext::MIL_OrderContext( const sword::MissionParameters& asn, const M
     : hasContext_( true )
 {
     if( unsigned int( asn.elem_size() ) < Length() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
     ReadDirection( asn.elem(0) );
     ReadPhaseLines( asn.elem(1) );
     ReadLimits( asn.elem(2), asn.elem(3), orientationReference );
@@ -90,24 +90,24 @@ void MIL_OrderContext::Serialize( sword::MissionParameters& asn ) const
 void MIL_OrderContext::ReadLimits( const sword::MissionParameter& limit1, const sword::MissionParameter& limit2, const MT_Vector2D& orientationReference )
 {
     if( limit1.null_value() != limit2.null_value() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_limit );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_limit );
     if( limit1.null_value() )
         return;
     if( !limit1.value().Get( 0 ).has_limit() || !limit2.value().Get( 0 ).has_limit() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
 
     T_PointVector limit1Data, limit2Data;
     if( !NET_ASN_Tools::ReadLine( limit1.value().Get( 0 ).limit(), limit1Data )
         || !NET_ASN_Tools::ReadLine( limit2.value().Get( 0 ).limit(), limit2Data ) )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_limit );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_limit );
 
     const bool equal  = limit1Data == limit2Data;
     const bool empty1 = limit1Data.empty();
     const bool empty2 = limit1Data.empty();
     if( ( empty1 || empty2 ) && !equal )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_limit );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_limit );
     if( !empty1 && equal )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_limit );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_limit );
     if( !empty1 && !empty2 )
         fuseau_.Reset( orientationReference, limit1Data, limit2Data, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
 }
@@ -121,7 +121,7 @@ void MIL_OrderContext::ReadPhaseLines( const sword::MissionParameter& asn )
     if( !asn.null_value() )
     {
         if( !asn.value_size() || !asn.value().Get( 0 ).has_limasorder() )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
+            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
         for( int i = 0; i < asn.value().Get( 0 ).limasorder().elem_size(); ++i )
             limas_.push_back( MIL_LimaOrder( asn.value().Get( 0 ).limasorder().elem(i) ) );
     }
@@ -136,7 +136,7 @@ void MIL_OrderContext::ReadDirection( const sword::MissionParameter& asn )
     if( !asn.null_value() )
     {
         if( !asn.value_size() || !asn.value().Get( 0 ).has_heading() )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
+            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
         dirDanger_ = weather::ReadDirection( asn.value().Get( 0 ).heading() );
     }
 }

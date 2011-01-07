@@ -139,7 +139,7 @@ void DrawingsModel::Save( const std::string& directory ) const
 void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeCreationRequest& message )
 {
     plugins::messenger::ShapeCreationRequestAck ack ;
-    ack().set_error_code( sword::ShapeRequestAck_ErrorCode_no_error );
+    ack().set_error_code( sword::ShapeRequestAck::no_error );
     try
     {
         std::auto_ptr< Drawing > drawing( new Drawing( idManager_.NextId(), message, converter_ ) );
@@ -149,7 +149,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
     }
     catch( ... )
     {
-        ack().set_error_code( sword::ShapeRequestAck_ErrorCode_error_invalid_oid ); // $$$$ SBO 2008-06-09:
+        ack().set_error_code( sword::ShapeRequestAck::error_invalid_oid ); // $$$$ SBO 2008-06-09:
     }
     ack.Send( publisher );
 }
@@ -161,7 +161,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
 void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeUpdateRequest& message )
 {
     plugins::messenger::ShapeUpdateRequestAck ack ;
-    ack().set_error_code( sword::ShapeRequestAck_ErrorCode_no_error );
+    ack().set_error_code( sword::ShapeRequestAck::no_error );
 
     Drawing* drawing = Find( message.shape().id() );
     if( drawing )
@@ -170,7 +170,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
         drawing->SendUpdate( clients_ );
     }
     else
-        ack().set_error_code( sword::ShapeRequestAck_ErrorCode_error_invalid_oid );
+        ack().set_error_code( sword::ShapeRequestAck::error_invalid_oid );
     ack.Send( publisher );
 }
 
@@ -181,7 +181,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
 void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::ShapeDestructionRequest& message )
 {
     plugins::messenger::ShapeDestructionRequestAck ack ;
-    ack().set_error_code( sword::ShapeRequestAck_ErrorCode_no_error );
+    ack().set_error_code( sword::ShapeRequestAck::no_error );
 
     Drawing* drawing = Find( message.id().id() );
     if( drawing )
@@ -191,7 +191,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
         Remove( message.id().id() );
     }
     else
-        ack().set_error_code( sword::ShapeRequestAck_ErrorCode_error_invalid_oid );
+        ack().set_error_code( sword::ShapeRequestAck::error_invalid_oid );
     ack.Send( publisher );
 }
 

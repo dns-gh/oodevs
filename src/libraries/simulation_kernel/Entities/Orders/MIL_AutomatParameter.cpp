@@ -36,7 +36,7 @@ MIL_AutomatParameter::MIL_AutomatParameter( const sword::AutomatId& asn, MIL_Ent
     if( pAutomate )
         pDecision_ = &pAutomate->GetDecision();
     if( !pDecision_ )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck_ErrorCode_error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
 }
 
 // -----------------------------------------------------------------------------

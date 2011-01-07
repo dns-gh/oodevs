@@ -167,11 +167,11 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
 {  //@TODO MGD Try to externalize ASN when protobuff will be merged
    //@HBD : Verify later that conversion from MIL_Army to MIL_Army_ABC was right
     if( message.elem_size() != 5 ) // type, location, name, team, attributes
-        return sword::ObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
+        return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
     MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).party().id() );
     if( !pArmy )
-        return sword::ObjectMagicActionAck_ErrorCode_error_invalid_camp;
-    sword::ObjectMagicActionAck_ErrorCode value = sword::ObjectMagicActionAck_ErrorCode_no_error;
+        return sword::ObjectMagicActionAck::error_invalid_camp;
+    sword::ObjectMagicActionAck_ErrorCode value = sword::ObjectMagicActionAck::no_error;
     RegisterObject( builder_->BuildObject( message, *pArmy, value ) );
     return value;
 }

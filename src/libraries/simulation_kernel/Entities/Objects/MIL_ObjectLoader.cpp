@@ -160,7 +160,7 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& 
     CIT_Prototypes it = prototypes_.find( message.elem( 0 ).value( 0 ).acharstr() );
     if( it == prototypes_.end() )
     {
-        value = sword::ObjectMagicActionAck_ErrorCode_error_invalid_object;
+        value = sword::ObjectMagicActionAck::error_invalid_object;
         return 0;
     }
     TER_Localisation location;
@@ -218,7 +218,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectLoader::InitializeLocation( Obje
 {
     TER_Localisation location;
     if( ! NET_ASN_Tools::ReadLocation( asn, location ) )
-        return sword::ObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
+        return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
     object.Initialize( location );
-    return sword::ObjectMagicActionAck_ErrorCode_no_error;
+    return sword::ObjectMagicActionAck::no_error;
 }

@@ -152,10 +152,10 @@ void ReplayPlugin::ChangeTimeFactor( unsigned factor )
     {
         factor_ = factor;
         MT_Timer_ABC::Start( (int)( 10000 / factor ) );
-        message().set_error_code( sword::ControlAck_ErrorCode_no_error);
+        message().set_error_code( sword::ControlAck::no_error);
     }
     else
-        message().set_error_code( sword::ControlAck_ErrorCode_error_invalid_time_factor );
+        message().set_error_code( sword::ControlAck::error_invalid_time_factor );
     message().set_time_factor( factor_ );
     message.Send( clients_ );
 }
@@ -167,7 +167,7 @@ void ReplayPlugin::ChangeTimeFactor( unsigned factor )
 void ReplayPlugin::Pause()
 {
     ::replay::ControlPauseAck asn;
-    asn().set_error_code( running_ ? sword::ControlAck_ErrorCode_no_error: sword::ControlAck_ErrorCode_error_already_paused );
+    asn().set_error_code( running_ ? sword::ControlAck::no_error: sword::ControlAck::error_already_paused );
     asn.Send( clients_ );
     running_ = false;
 }
@@ -179,7 +179,7 @@ void ReplayPlugin::Pause()
 void ReplayPlugin::Resume()
 {
     ::replay::ControlResumeAck asn;
-    asn().set_error_code( running_ ? sword::ControlAck_ErrorCode_error_not_paused : sword::ControlAck_ErrorCode_no_error );
+    asn().set_error_code( running_ ? sword::ControlAck::error_not_paused : sword::ControlAck::no_error );
     asn.Send( clients_ );
     running_ = true;
 }
@@ -195,11 +195,11 @@ void ReplayPlugin::SkipToFrame( unsigned frame )
     if( frame < loader_.GetTickNumber() )
     {
         asn().set_tick( frame );
-        asn().set_error_code( sword::ControlAck_ErrorCode_no_error );
+        asn().set_error_code( sword::ControlAck::no_error );
         MT_LOG_INFO_MSG( "Skipping to frame " << frame );
     }
     else
-        asn().set_error_code( sword::ControlAck_ErrorCode_error_invalid_time_factor );
+        asn().set_error_code( sword::ControlAck::error_invalid_time_factor );
     asn.Send( clients_ );
     if( frame < loader_.GetTickNumber() )
         loader_.SkipToFrame( frame );

@@ -73,7 +73,7 @@ void SimulationModel::Update( const sword::ControlInformation& msg )
 // -----------------------------------------------------------------------------
 void SimulationModel::Update_Stop( const sword::ControlStopAck& msg )
 {
-    if( msg.error_code() == sword::ControlAck_ErrorCode_no_error )
+    if( msg.error_code() == sword::ControlAck::no_error )
         nSimState_ = sword::stopped;
 }
 
@@ -83,7 +83,7 @@ void SimulationModel::Update_Stop( const sword::ControlStopAck& msg )
 // -----------------------------------------------------------------------------
 void SimulationModel::Update_Pause( const sword::ControlPauseAck& msg )
 {
-    if( msg.error_code() == sword::ControlAck_ErrorCode_no_error )
+    if( msg.error_code() == sword::ControlAck::no_error )
         nSimState_ = sword::paused;
 }
 
@@ -93,7 +93,7 @@ void SimulationModel::Update_Pause( const sword::ControlPauseAck& msg )
 // -----------------------------------------------------------------------------
 void SimulationModel::Update_Resume( const sword::ControlResumeAck& msg )
 {
-    if( msg.error_code() == sword::ControlAck_ErrorCode_no_error )
+    if( msg.error_code() == sword::ControlAck::no_error )
         nSimState_ = sword::running;
 }
 
@@ -103,7 +103,7 @@ void SimulationModel::Update_Resume( const sword::ControlResumeAck& msg )
 // -----------------------------------------------------------------------------
 void SimulationModel::Update( const sword::ControlChangeTimeFactorAck& msg )
 {
-    if( msg.error_code() == sword::ControlAck_ErrorCode_no_error )
+    if( msg.error_code() == sword::ControlAck::no_error )
         nTimeFactor_ = msg.time_factor();
 }
 

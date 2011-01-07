@@ -714,7 +714,7 @@ void DatabaseUpdater::Update( const sword::PartyCreation& msg )
 void DatabaseUpdater::Log( const sword::ObjectMagicActionAck& msg )
 {
     // TODO (MPT): a rapid hack. Should extract Log function and allow to either dump to DB or write to console
-    if( msg.error_code() != sword::ObjectMagicActionAck_ErrorCode_no_error )
+    if( msg.error_code() != sword::ObjectMagicActionAck::no_error )
     {
         MT_LOG_ERROR_MSG( __FUNCTION__ + std::string( ": ObjectMagicActionAck indicates error: " ) + Error( msg.error_code() ) );
     }
@@ -728,17 +728,17 @@ std::string DatabaseUpdater::Error( const sword::ObjectMagicActionAck_ErrorCode&
 {
     switch ( error_code )
     {
-    case sword::ObjectMagicActionAck_ErrorCode_no_error:
+    case sword::ObjectMagicActionAck::no_error:
         return "no_error";
-    case sword::ObjectMagicActionAck_ErrorCode_error_invalid_camp:
+    case sword::ObjectMagicActionAck::error_invalid_camp:
         return "error_invalid_camp";
-    case sword::ObjectMagicActionAck_ErrorCode_error_invalid_id:
+    case sword::ObjectMagicActionAck::error_invalid_id:
         return "error_invalid_id";
-    case sword::ObjectMagicActionAck_ErrorCode_error_invalid_localisation:
+    case sword::ObjectMagicActionAck::error_invalid_localisation:
         return "error_invalid_location";
-    case sword::ObjectMagicActionAck_ErrorCode_error_invalid_object:
+    case sword::ObjectMagicActionAck::error_invalid_object:
         return "error_invalid_object";
-    case sword::ObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes:
+    case sword::ObjectMagicActionAck::error_invalid_specific_attributes:
         return "error_invalid_specific_attributes";
     default:
         return "unknown error code";

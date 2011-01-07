@@ -347,7 +347,7 @@ sword::ObjectMagicActionAck_ErrorCode Object::OnUpdate( const google::protobuf::
     {
         const sword::MissionParameter_Value& attribute = attributes.Get( i );
         if( attribute.list_size() == 0 ) // it should be a list of lists
-            return sword::ObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
+            return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
         const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
         switch( actionId )
         {
@@ -376,7 +376,7 @@ sword::ObjectMagicActionAck_ErrorCode Object::OnUpdate( const google::protobuf::
             break;
         }
     }
-    return sword::ObjectMagicActionAck_ErrorCode_no_error;
+    return sword::ObjectMagicActionAck::no_error;
 }
 
 // -----------------------------------------------------------------------------

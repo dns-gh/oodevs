@@ -118,14 +118,14 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     ack().mutable_server_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
     if( !checker.CheckCompatibility() )
     {
-        ack().set_error_code( sword::AuthenticationResponse_ErrorCode_mismatched_protocol_version );
+        ack().set_error_code( sword::AuthenticationResponse::mismatched_protocol_version );
         profiles_->Send( ack() );
         ack.Send( client );
         return;
     }
     if( maxConnections_ && maxConnections_ <= currentConnections_ )
     {
-        ack().set_error_code( sword::AuthenticationResponse_ErrorCode_too_many_connections );
+        ack().set_error_code( sword::AuthenticationResponse::too_many_connections );
         profiles_->Send( ack() );
         ack.Send( client );
         return;
@@ -133,13 +133,13 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     Profile* profile = profiles_->Authenticate( message.login(), message.password() );
     if( !profile )
     {
-        ack().set_error_code( sword::AuthenticationResponse_ErrorCode_invalid_login );
+        ack().set_error_code( sword::AuthenticationResponse::invalid_login );
         profiles_->Send( ack() );
         ack.Send( client );
     }
     else
     {
-        ack().set_error_code( sword::AuthenticationResponse_ErrorCode_success );
+        ack().set_error_code( sword::AuthenticationResponse::success );
         profile->Send( *ack().mutable_profile() );
         ack.Send( client );
         authenticated_[ link ] = profile;
@@ -180,7 +180,7 @@ void RightsPlugin::OnReceiveProfileDestructionRequest( ClientPublisher_ABC& clie
 {
     authentication::ProfileDestructionRequestAck ack;
     if( IsAuthenticated( message.login() ) )
-        ack().set_error_code( sword::ProfileDestructionRequestAck_ErrorCode_invalid_profile );
+        ack().set_error_code( sword::ProfileDestructionRequestAck::invalid_profile );
     else
         ack().set_error_code( profiles_->Destroy( message ) );
     ack().set_login( message.login() );
