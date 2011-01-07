@@ -191,18 +191,17 @@ message CrowdMagicActionAck {
     @todo rename to DiplomacyChangeRequestAck
 */
 message ChangeDiplomacyAck {
-    /** @enum EnumChangeDiplomacyErrorCode
+    /** @enum ErrorCode
         @brief Reason for the failure of the diplomacy change operation
-        @todo rename to ErrorCode
     */
-    enum EnumChangeDiplomacyErrorCode {
+    enum ErrorCode {
         no_error_diplomacy           = 0; //!< Operation succeeded @todo rename to no_error
         error_invalid_camp_diplomacy = 1; //!< Operation failed because the provided diplomacy is invalid @todo rename to error_invalid_party_diplomacy
     }
-    required PartyId                      party1     = 1; //!< Identifier of the party from which the diplomacy is defined @see PartyId
-    required PartyId                      party2     = 2; //!< Identifier of the party to which the diplomacy is defined @see PartyId
-    required EnumDiplomacy                diplomatie = 3; //!< Definition of the diplomacy between specified parties @see EnumDiplomacy @todo rename to diplomacy
-    required EnumChangeDiplomacyErrorCode error_code = 4; //!< Reason for the failure of the diplomacy change operation @see EnumChangeDiplomacyErrorCode
+    required PartyId       party1     = 1; //!< Identifier of the party from which the diplomacy is defined @see PartyId
+    required PartyId       party2     = 2; //!< Identifier of the party to which the diplomacy is defined @see PartyId
+    required EnumDiplomacy diplomatie = 3; //!< Definition of the diplomacy between specified parties @see EnumDiplomacy @todo rename to diplomacy
+    required ErrorCode     error_code = 4; //!< Reason for the failure of the diplomacy change operation @see ErrorCode
 }
 
 /** @struct HierarchyModificationAck

@@ -1168,15 +1168,15 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
     ack().mutable_party1()->set_id( message.parameters().elem( 0 ).value().Get(0).identifier() );
     ack().mutable_party2()->set_id( message.parameters().elem( 1 ).value().Get(0).identifier() );
     ack().set_diplomatie( ( sword::EnumDiplomacy ) message.parameters().elem( 2 ).value().Get(0).enumeration() );
-    ack().set_error_code( sword::ChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_no_error_diplomacy );
+    ack().set_error_code( sword::ChangeDiplomacyAck::no_error_diplomacy );
     try
     {
         MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.parameters().elem( 0 ).value().Get(0).identifier() );
         if( !pArmy1 )
-            throw NET_AsnException< sword::ChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( sword::ChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
+            throw NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >( sword::ChangeDiplomacyAck::error_invalid_camp_diplomacy );
         pArmy1->OnReceiveChangeDiplomacy( message.parameters() );
     }
-    catch( NET_AsnException< sword::ChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >& e )
+    catch( NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }

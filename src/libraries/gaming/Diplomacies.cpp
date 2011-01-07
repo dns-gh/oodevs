@@ -76,7 +76,7 @@ void Diplomacies::UpdateData( const T& message )
 // -----------------------------------------------------------------------------
 void Diplomacies::DoUpdate( const sword::ChangeDiplomacyAck& message )
 {
-    if( message.error_code() == sword::ChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_no_error_diplomacy )
+    if( message.error_code() == sword::ChangeDiplomacyAck::no_error_diplomacy )
         UpdateData( message );
 }
 
