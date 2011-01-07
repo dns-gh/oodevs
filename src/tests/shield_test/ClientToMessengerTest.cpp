@@ -120,10 +120,10 @@ BOOST_FIXTURE_TEST_CASE( shape_update_request_from_client_is_converted, ContextF
     content.mutable_shape_update_request()->mutable_shape()->set_id( 12 );
     content.mutable_shape_update_request()->set_category( "category" );
     content.mutable_shape_update_request()->set_color( "color" );
-    content.mutable_shape_update_request()->set_template_( "template" );
+    content.mutable_shape_update_request()->set_template_( "pattern" );
     FillCoordLatLong( content.mutable_shape_update_request()->mutable_points()->add_elem() );
     FillCoordLatLong( content.mutable_shape_update_request()->mutable_points()->add_elem() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_update_request { shape { id: 12 } category: \"category\" color: \"color\" template: \"template\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } }" ) );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_update_request { shape { id: 12 } category: \"category\" color: \"color\" pattern: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } }" ) );
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 

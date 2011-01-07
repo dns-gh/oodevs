@@ -34,8 +34,10 @@ namespace shield
     }
 }
 
+#define CONVERT_TO( from_field, to_field ) \
+    if( from.has_##from_field() ) to->set_##to_field( from.from_field() )
 #define CONVERT( field ) \
-    if( from.has_##field() ) to->set_##field( from.field() )
+    CONVERT_TO( field, field )
 
 #define CONVERT_ENUM( field, mapping ) \
     if( from.has_##field() ) to->set_##field( ConvertEnum( from.field(), boost::assign::map_list_of mapping ) )

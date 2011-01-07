@@ -200,7 +200,7 @@ void MessengerToClient::Convert( const sword::ShapeUpdate& from, MsgsMessengerTo
     CONVERT_ID( id );
     CONVERT( category );
     CONVERT( color );
-    CONVERT( template_ );
+    CONVERT_TO( pattern, template_ );
     CONVERT_LIST( points, elem, ConvertCoordLatLong );
 }
 

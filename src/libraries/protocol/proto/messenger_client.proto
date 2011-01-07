@@ -447,9 +447,8 @@ message ShapeUpdate {
     /** @property template
         @brief The updated template of the shape.
         @note Only set if data has changed.
-        @todo rename into pattern
     */
-    optional string           template = 4;
+    optional string           pattern = 4;
     /** @property points
         @brief The updated points of the shape.
         @see CoordLatLongList
