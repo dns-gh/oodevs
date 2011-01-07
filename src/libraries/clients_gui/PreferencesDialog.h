@@ -29,7 +29,7 @@ namespace gui
     class PreferencesList;
     class PreferencePanel_ABC;
     class CoordinateSystemsPanel;
-    class ElevationResolver_ABC;
+    class Painter_ABC;
 // =============================================================================
 /** @class  PreferencesDialog
     @brief  PreferencesDialog
@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
-                                const ElevationResolver_ABC& resolver );
+                                const Painter_ABC& painter );
     virtual ~PreferencesDialog();
     //@}
 
@@ -88,7 +88,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const ElevationResolver_ABC& resolver_;
+    const Painter_ABC& painter_;
     T_Pages pages_;
     PreferencesList* list_;
     LayersPanel* layersPanel_;

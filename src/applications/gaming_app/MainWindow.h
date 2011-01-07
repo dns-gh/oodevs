@@ -44,7 +44,7 @@ namespace gui
     class Layer_ABC;
     class Picker;
 	class TerrainPicker;
-    class ElevationResolver_ABC;
+    class Painter_ABC;
 }
 
 class Services;
@@ -135,7 +135,7 @@ private:
     tools::SessionConfig& config_;
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
-    std::auto_ptr< gui::ElevationResolver_ABC > pResolver_;
+    std::auto_ptr< gui::Painter_ABC > pPainter_;
     gui::GlProxy* glProxy_;
     gui::ColorStrategy* strategy_;
     gui::LightingProxy* lighting_;

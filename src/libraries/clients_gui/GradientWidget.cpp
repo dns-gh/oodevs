@@ -30,7 +30,7 @@ using namespace gui;
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
 GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preferences, kernel::Controllers& controllers,
-                                const ElevationResolver_ABC& resolver )
+                                const Painter_ABC& painter )
     : QVBox( parent )
     , controllers_( controllers )
     , options_    ( controllers_.options_ )
@@ -58,7 +58,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     box = new QHBox( this );
     box->layout()->setAlignment( Qt::AlignCenter );
     box->setMaximumHeight( 100 );
-    gradientEditor_ = new GradientButton( box, resolver );
+    gradientEditor_ = new GradientButton( box, painter, true );
     color_ = new ColorButton( box );
     color_->setMaximumHeight( 30 );
 

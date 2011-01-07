@@ -89,7 +89,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/resources.h"
-#include "clients_gui/ElevationResolver.h"
+#include "clients_gui/ElevationPainter.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -138,7 +138,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , config_       ( config )
     , forward_      ( new CircularEventStrategy() )
     , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
-    , pRevolver_    ( new ElevationResolver( staticModel_.detection_ ) )
+    , pPainter_     ( new ElevationPainter( staticModel_.detection_ ) )
     , glProxy_      ( 0 )
     , menu_         ( 0 )
     , fileToolBar_  ( 0 )
@@ -148,7 +148,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
 
     lighting_ = new LightingProxy( this );
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pRevolver_ );
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pPainter_ );
     new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile() );
 
     glProxy_ = new GlProxy();

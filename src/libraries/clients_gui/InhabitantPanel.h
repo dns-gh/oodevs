@@ -21,6 +21,7 @@ namespace kernel
 namespace gui
 {
     class CheckBox;
+    class DensityWidget;
 
 // =============================================================================
 /** @class  InhabitantPanel
@@ -48,8 +49,9 @@ private slots:
 private:
     //! @name Member Data
     //@{
-    CheckBox* density_;
     kernel::Options& options_;
+    CheckBox* density_;
+    DensityWidget* widget_;
     //@}
 };
 

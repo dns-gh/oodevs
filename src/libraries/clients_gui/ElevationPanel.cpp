@@ -28,7 +28,7 @@ using namespace gui;
 // Created: AGE 2007-01-17
 // -----------------------------------------------------------------------------
 ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel::Controllers& controllers,
-                                const ElevationResolver_ABC& resolver )
+                                const Painter_ABC& painter )
     : PreferencePanel_ABC( parent, "ElevationPanel" )
     , layer_              ( layer )
     , controllers_        ( controllers )
@@ -48,7 +48,7 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         fitColorGradienttoViewPort_ = new CheckBox( tr( "Fit color gradient to viewport" ), hBox );
         fitColorGradienttoViewPort_->setChecked( true );
 
-        gradient_ = new GradientWidget( new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), box ), preferences_, controllers, resolver );
+        gradient_ = new GradientWidget( new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), box ), preferences_, controllers, painter );
 
         connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), SLOT( OnEnableVariableGradient( bool ) ) );
         connect( fitColorGradienttoViewPort_, SIGNAL( toggled( bool ) ), gradient_, SLOT( OnEnableVariableGradient( bool ) ) );

@@ -41,7 +41,7 @@ namespace gui
     class PreferencesDialog;
     class TerrainLayer;
     class Layer_ABC;
-    class ElevationResolver_ABC;
+    class Painter_ABC;
 	class TerrainPicker;
 }
 
@@ -131,7 +131,7 @@ private:
     tools::ExerciseConfig& config_;
     std::auto_ptr< gui::CircularEventStrategy > forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
-    std::auto_ptr< gui::ElevationResolver_ABC > pRevolver_;
+    std::auto_ptr< gui::Painter_ABC > pPainter_;
     gui::GlProxy* glProxy_;
     gui::ColorStrategy* strategy_;
     gui::LightingProxy* lighting_;

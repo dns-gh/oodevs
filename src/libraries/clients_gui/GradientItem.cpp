@@ -9,9 +9,8 @@
 
 #include "clients_gui_pch.h"
 #include "GradientItem.h"
-#include "ElevationResolver_ABC.h"
+#include "Painter_ABC.h"
 #include <qpainter.h>
-#include <boost/lexical_cast.hpp>
 
 using namespace gui;
 
@@ -19,13 +18,13 @@ using namespace gui;
 // Name: GradientItem constructor
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-GradientItem::GradientItem( QCanvas* canvas, const ElevationResolver_ABC& resolver,
-                            unsigned short percentage, const QColor& color )
+GradientItem::GradientItem( QCanvas* canvas, const Painter_ABC& painter,
+                            unsigned short percentage, const QColor& color, bool disableState )
     : QCanvasLine( canvas )
-    , resolver_    ( resolver )
+    , painter_     ( painter )
     , percentage_  ( percentage )
     , color_       ( color )
-    , disableState_( true )
+    , disableState_( disableState )
 {
     UpdatePosition();
     show();
@@ -100,12 +99,7 @@ void GradientItem::draw( QPainter& painter )
     QCanvasLine::draw( painter );
     painter.fillRect( startPoint().x() - 3, startPoint().y(), 7, 7, pen().color() );
     if( ! disableState_ )
-    {
-        QFont font( "Normal", 8, QFont::Light );
-        painter.setFont( font );
-        const unsigned int elevation = static_cast< unsigned int >( resolver_.Compute( percentage_ ) );
-        painter.drawText( GetX(), canvas()->rect().height() - 20, boost::lexical_cast< std::string >( elevation ).c_str() );
-    }
+        painter_.Draw( painter, percentage_, GetX(), canvas()->rect().height() - 20 );
 }
 
 // -----------------------------------------------------------------------------

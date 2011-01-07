@@ -25,7 +25,7 @@ namespace gui
     class ColorButton;
     class GradientPreferences;
     class GradientsCombo;
-    class ElevationResolver_ABC;
+    class Painter_ABC;
 // =============================================================================
 /** @class  GradientWidget
     @brief  GradientWidget
@@ -42,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              GradientWidget( QWidget* parent, GradientPreferences& preferences, kernel::Controllers& controllers,
-                             const ElevationResolver_ABC& resolver );
+                             const Painter_ABC& painter );
     virtual ~GradientWidget();
     //@}
 

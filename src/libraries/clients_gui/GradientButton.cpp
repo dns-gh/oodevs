@@ -118,11 +118,11 @@ namespace
 // Name: GradientButton constructor
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-GradientButton::GradientButton( QWidget* parent, const ElevationResolver_ABC& resolver )
+GradientButton::GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState )
     : QCanvasView( new GradientCanvas( parent, colors_ ), parent )
-    , resolver_    ( resolver )
+    , painter_     ( painter )
     , selected_    ( 0 )
-    , disableState_( true )
+    , disableState_( disableState )
 {
     setFrameStyle( QFrame::Raised | QFrame::Box );
 
@@ -132,6 +132,27 @@ GradientButton::GradientButton( QWidget* parent, const ElevationResolver_ABC& re
 
     AddItem( 0, Qt::white );
     AddItem( 100, Qt::black );
+    setFocusPolicy( QWidget::StrongFocus );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientButton constructor
+// Created: LGY 2011-01-06
+// -----------------------------------------------------------------------------
+GradientButton::GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin, QColor end )
+    : QCanvasView( new GradientCanvas( parent, colors_ ), parent )
+    , painter_     ( painter )
+    , selected_    ( 0 )
+    , disableState_( disableState )
+{
+    setFrameStyle( QFrame::Raised | QFrame::Box );
+
+    setFixedHeight( 80 );
+    setHScrollBarMode( QScrollView::AlwaysOff );
+    setVScrollBarMode( QScrollView::AlwaysOff );
+
+    AddItem( 0, begin );
+    AddItem( 100, end );
     setFocusPolicy( QWidget::StrongFocus );
 }
 
@@ -310,7 +331,7 @@ void GradientButton::Update()
 // -----------------------------------------------------------------------------
 GradientItem* GradientButton::AddItem( unsigned int percentage, const QColor& color )
 {
-    GradientItem* item = new GradientItem( canvas(), resolver_, unsigned short( percentage ), color );
+    GradientItem* item = new GradientItem( canvas(), painter_, unsigned short( percentage ), color, disableState_ );
     colors_.push_back( item );
     std::sort( colors_.begin(), colors_.end(), sComparator() );
     return item;
