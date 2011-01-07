@@ -121,7 +121,7 @@ void BurnCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_Populati
 // Name: BurnCapacity::Update
 // Created: BCI 2010-12-09
 // -----------------------------------------------------------------------------
-void BurnCapacity::Update( MIL_Object_ABC& object, unsigned int time )
+void BurnCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 {
     object.GetAttribute< BurnAttribute >().Burn( object );
 }
