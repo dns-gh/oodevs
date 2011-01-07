@@ -1554,13 +1554,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongAgentList" id="2049" name="TEST MoveAlongAgentList">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Agent"/>
-    </mission>
     <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongPointList" id="2055" name="TEST MoveAlongPointList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4143,4 +4136,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3297529725" -->
+<!-- signature="2105531320" -->
