@@ -47,7 +47,7 @@ signals:
     //! @name Signals
     //@{
     void SelectionChanged( const QColor& );
-    void GradientChanged( const Gradient& );
+    void GradientChanged( Gradient& );
     //@}
 
 private slots:

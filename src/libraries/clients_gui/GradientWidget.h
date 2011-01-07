@@ -66,7 +66,7 @@ private slots:
     void OnSelectionChanged( const QColor& color );
     void OnEnableVariableGradient( bool state );
     void OnColorChanged( const QColor& color );
-    void OnGradientEdited( const Gradient& gradient );
+    void OnGradientEdited( Gradient& gradient );
 
     void OnPresetChanged();
     void OnPresetCopied();

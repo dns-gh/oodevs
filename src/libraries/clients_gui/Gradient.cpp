@@ -275,12 +275,12 @@ unsigned Gradient::FindBaseDistance() const
 // Name: Gradient::Save
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void Gradient::Save( kernel::Options& options ) const
+void Gradient::Save( kernel::Options& options, const std::string& group ) const
 {
     QStringList colors;
     for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
         colors.append( QString::number( it->first ) + "," + it->second.name() );
-    options.Change( std::string( "Gradients/" ) + name_.ascii(), colors.join( ";" ) );
+    options.Change( group + name_.ascii(), colors.join( ";" ) );
 }
 
 // -----------------------------------------------------------------------------

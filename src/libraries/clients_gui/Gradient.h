@@ -63,7 +63,7 @@ public:
     void MakeGlTexture( float alpha );
     unsigned Length() const;
     float UsedRatio() const;
-    void Save( kernel::Options& options ) const;
+    void Save( kernel::Options& options, const std::string& group ) const;
     void Accept( GradientVisitor_ABC& visitor ) const;
     void LoadValues( const QString& values );
     Gradient& operator=( const Gradient& rhs );

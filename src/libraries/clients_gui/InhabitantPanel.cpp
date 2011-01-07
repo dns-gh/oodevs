@@ -30,7 +30,7 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controll
     density_ = new CheckBox( tr( "Change urban blocks color based on population density" ), hBox );
     connect( density_, SIGNAL( toggled( bool ) ), SLOT( OnChanged( bool ) ) );
     QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), hBox );
-    widget_ = new DensityWidget( group );
+    widget_ = new DensityWidget( group, controllers );
 }
 
 // -----------------------------------------------------------------------------

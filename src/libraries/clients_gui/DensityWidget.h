@@ -10,11 +10,21 @@
 #ifndef gui_DensityWidget_h
 #define gui_DensityWidget_h
 
+#include "tools/Observer_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
+
+namespace kernel
+{
+    class Controllers;
+    class Options;
+}
+
 namespace gui
 {
     class GradientButton;
     class ColorButton;
     class Painter_ABC;
+    class Gradient;
 
 // =============================================================================
 /** @class  DensityWidget
@@ -23,14 +33,21 @@ namespace gui
 // Created: LGY 2011-06-01
 // =============================================================================
 class DensityWidget : public QVBox
+                    , public tools::Observer_ABC
+                    , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DensityWidget( QWidget* parent );
+             DensityWidget( QWidget* parent, kernel::Controllers& controllers );
     virtual ~DensityWidget();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
 private:
@@ -45,14 +62,18 @@ private slots:
     //@{
     void OnSelectionChanged( const QColor& color );
     void OnColorChanged( const QColor& color );
+    void OnGradientEdited( Gradient& gradient );
     //@}
 
 private:
     //! @name Member Data
     //@{
     std::auto_ptr< Painter_ABC > pPainter_;
+    kernel::Controllers& controllers_;
+    kernel::Options& options_;
     GradientButton* densityEditor_;
     ColorButton* color_;
+    bool loaded_;
     //@}
 };
 

@@ -57,7 +57,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnGradientChanged( const Gradient& gradient );
+    void OnGradientChanged( Gradient& gradient );
     void OnEnableVariableGradient( bool );
     void OnEnableHillshade( bool );
     void OnHillShadeDirection( int );

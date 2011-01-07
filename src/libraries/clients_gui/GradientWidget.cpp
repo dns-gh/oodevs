@@ -63,7 +63,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     color_->setMaximumHeight( 30 );
 
     connect( gradientEditor_, SIGNAL( SelectionChanged( const QColor& ) ), SLOT( OnSelectionChanged( const QColor& ) ) );
-    connect( gradientEditor_, SIGNAL( GradientChanged( const Gradient& ) ), SLOT( OnGradientEdited( const Gradient& ) ) );
+    connect( gradientEditor_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientEdited( Gradient& ) ) );
     connect( this, SIGNAL( ToggleVariableGradient( bool ) ), gradientEditor_, SLOT( OnEnableVariableGradient( bool ) ) );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
 
@@ -107,7 +107,7 @@ void GradientWidget::OnSelectionChanged( const QColor& color )
 // Name: GradientWidget::OnGradientEdited
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void GradientWidget::OnGradientEdited( const Gradient& gradient )
+void GradientWidget::OnGradientEdited( Gradient& gradient )
 {
     if( Gradient* current = CurrentPreset() )
         *current = gradient;
