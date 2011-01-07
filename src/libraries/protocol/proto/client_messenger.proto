@@ -37,7 +37,6 @@ message PhaseLineUpdateRequest {
 
     @see PhaseLineDestructionRequestAck
     @see PhaseLineDestruction
-    @todo translation: rename into PhaseLineDestructionRequest
 */
 message PhaseLineDestructionRequest {
     required TacticalLineId id = 1; //!< The identifier of the phase line to destroy @see TacticalLineId
