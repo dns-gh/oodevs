@@ -1201,7 +1201,7 @@ BOOST_FIXTURE_TEST_CASE( log_supply_handling_update_to_client_is_converted, Cont
     content.mutable_log_supply_handling_update()->mutable_convoy_provider()->mutable_automat()->set_id( 11 );
     content.mutable_log_supply_handling_update()->mutable_convoy_provider()->mutable_formation()->set_id( 12 );
     content.mutable_log_supply_handling_update()->mutable_convoying_unit()->set_id( 13 );
-    content.mutable_log_supply_handling_update()->set_etat( sword::convoi_chargement );
+    content.mutable_log_supply_handling_update()->set_etat( sword::LogSupplyHandlingUpdate::convoy_loading );
     FillDotationQuery( content.mutable_log_supply_handling_update()->mutable_dotations()->add_elem() );
     FillDotationQuery( content.mutable_log_supply_handling_update()->mutable_dotations()->add_elem() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_update { request { id: 7 } consumer { id: 8 } supplier { automat { id: 9 } formation { id: 10 } } convoy_provider { automat { id: 11 } formation { id: 12 } } convoying_unit { id: 13 } etat: convoi_chargement dotations { elem { resource { id: 10 } quantite_demandee: 11 quantite_accordee: 12 quantite_en_transit: 13 } elem { resource { id: 10 } quantite_demandee: 11 quantite_accordee: 12 quantite_en_transit: 13 } } } }" ) );

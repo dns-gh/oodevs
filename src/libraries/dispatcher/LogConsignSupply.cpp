@@ -16,7 +16,6 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "LogSupplyDotation.h"
-#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
@@ -32,7 +31,7 @@ LogConsignSupply::LogConsignSupply( const Model& model, const sword::LogSupplyHa
     , pTreatingEntity_  ( 0 )
     , pConvoyingEntity_ ( 0 )
     , pConvoy_          ( 0 )
-    , nState_           ( sword::convoi_deplacement_vers_point_chargement )
+    , nState_           ( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point )
 {
     // NOTHING
 }
@@ -60,7 +59,6 @@ void LogConsignSupply::Update( const sword::LogSupplyHandlingUpdate& msg )
         pConvoy_ = ( msg.convoying_unit().id() == 0 ) ? 0 : &model_.Agents().Get( msg.convoying_unit().id() );
     if( msg.has_etat() )
         nState_ = msg.etat();
-
     if( msg.has_dotations() )
         for( int i = 0; i < msg.dotations().elem_size(); ++i )
         {

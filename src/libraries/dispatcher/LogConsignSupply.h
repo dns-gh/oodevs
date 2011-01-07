@@ -10,17 +10,9 @@
 #ifndef __LogConsignSupply_h_
 #define __LogConsignSupply_h_
 
-
 #include "SimpleEntity.h"
 #include "tools/Resolver.h"
-
-namespace sword
-{
-    class ParentEntity;
-    enum EnumLogSupplyHandlingStatus;
-    class LogSupplyHandlingCreation;
-    class LogSupplyHandlingUpdate;
-}
+#include "protocol/ClientSenders.h"
 
 namespace kernel
 {
@@ -83,7 +75,7 @@ private:
     const kernel::Entity_ABC*        pTreatingEntity_;
     const kernel::Entity_ABC*        pConvoyingEntity_;
     const kernel::Agent_ABC*          pConvoy_;
-    sword::EnumLogSupplyHandlingStatus nState_;
+    sword::LogSupplyHandlingUpdate::EnumConvoyState nState_;
     tools::Resolver< LogSupplyDotation > dotations_;
 };
 

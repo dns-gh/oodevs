@@ -1539,14 +1539,14 @@ void SimulationToClient::Convert( const sword::LogSupplyHandlingUpdate& from, Ms
     if( from.has_convoy_provider() )
         ConvertParentEntity( from.convoy_provider(), to->mutable_convoy_provider() );
     CONVERT_ID( convoying_unit );
-    CONVERT_ENUM( etat, ( sword::convoi_en_attente_camions, MsgsSimToClient::convoi_en_attente_camions )
-                           ( sword::convoi_constitution, MsgsSimToClient::convoi_constitution )
-                           ( sword::convoi_deplacement_vers_point_chargement, MsgsSimToClient::convoi_deplacement_vers_point_chargement )
-                           ( sword::convoi_chargement, MsgsSimToClient::convoi_chargement )
-                           ( sword::convoi_deplacement_vers_point_dechargement, MsgsSimToClient::convoi_deplacement_vers_point_dechargement )
-                           ( sword::convoi_dechargement, MsgsSimToClient::convoi_dechargement )
-                           ( sword::convoi_deplacement_retour, MsgsSimToClient::convoi_deplacement_retour )
-                           ( sword::termine, MsgsSimToClient::termine ) );
+    CONVERT_ENUM( etat, ( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters, MsgsSimToClient::convoi_en_attente_camions )
+                        ( sword::LogSupplyHandlingUpdate::convoy_forming, MsgsSimToClient::convoi_constitution )
+                        ( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point, MsgsSimToClient::convoi_deplacement_vers_point_chargement )
+                        ( sword::LogSupplyHandlingUpdate::convoy_loading, MsgsSimToClient::convoi_chargement )
+                        ( sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point, MsgsSimToClient::convoi_deplacement_vers_point_dechargement )
+                        ( sword::LogSupplyHandlingUpdate::convoy_unloading, MsgsSimToClient::convoi_dechargement )
+                        ( sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point, MsgsSimToClient::convoi_deplacement_retour )
+                        ( sword::LogSupplyHandlingUpdate::convoy_finished, MsgsSimToClient::termine ) );
     CONVERT_LIST( dotations, elem, ConvertDotationQuery );
 }
 

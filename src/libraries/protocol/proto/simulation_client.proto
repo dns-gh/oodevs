@@ -11,21 +11,6 @@ import "common.proto";
 
 package sword;
 
-/** @enum EnumLogSupplyHandlingStatus
-    @brief List of states a supply request can go through.
-    @todo move into LogSupplyHandlingUpdate, rename to ConvoyState
-*/
-enum EnumLogSupplyHandlingStatus {
-    convoi_en_attente_camions                  = 0; //!< Convoy is waiting for trucks @todo translate into waiting_for_trucks
-    convoi_constitution                        = 1; //!< Convoy is constituting @todo translate into constituting_convoy
-    convoi_deplacement_vers_point_chargement   = 2; //!< Convoy is moving to loading point @todo translate into moving_to_loading_point
-    convoi_chargement                          = 3; //!< Convoy is loading @todo translate into loading
-    convoi_deplacement_vers_point_dechargement = 4; //!< Convoy is moving to unloading point @todo translate into moving_to_unloading_point
-    convoi_dechargement                        = 5; //!< Convoy is unloading @todo translate into unloading
-    convoi_deplacement_retour                  = 6; //!< Convoy is returning to starting point @todo translate into returning
-    termine                                    = 7; //!< Convoying operation is done @todo translate into done
-}
-
 /** @struct OrderAck
     @brief A container for order acknowledgement error message
     @see UnitOrder AutomatOrder CrowdOrder FragOrder
@@ -36,16 +21,16 @@ message OrderAck {
         @todo Move long descriptions to the corresponding field in BlablaOrder and use @@see tags here
     */
     enum ErrorCode {
-        no_error                                = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
-        error_invalid_unit                      = 1; //!< Operation failed because of an invalid tasker identifier e.g. an existing agent/automat/crowd identifier @todo rename to error_invalid_tasker
-        error_invalid_limit                     = 2; //!< Operation failed because of an invalid limit : limit parameters are required for automat missions @deprecated should be handled using invalid_mission_parameters
-        error_invalid_lima                      = 3; //!< Operation failed because of an invalid phase line : phase line parameters are required for some missions @deprecated should be handled using invalid_mission_parameters
-        error_invalid_mission                   = 4; //!< Operation failed because of an invalid mission identifier : the mission must exist and be available for the specified tasker unit
-        error_invalid_mission_parameters        = 5; //!< Operation failed because of an invalid mission parameter : parameters are defined in the file "Missions.xml" @todo rename to error_invalid_parameter
-        error_unit_cannot_receive_order         = 6; //!< Operation failed because the unit is not in a state where it can execute the order : it must be alive and disengaged (for an agent) @todo rename to error_tasker_unable_cannot_receive_order
-        error_invalid_order_conduite            = 7; //!< Operation failed because of an invalid fragmentary order identifier : valid identifiers can be found in the file "Missions.xml" @todo rename to error_invalid_fragorder
-        error_invalid_order_mission             = 8; //!< Operation failed because of an invalid mission identifier : valid identifiers can be found in the file "Missions.xml"
-        error_invalid_order_initial             = 9; //!< @deprecated never used
+        no_error                                = 0;  //!< Operation succeeded @todo As error codes are optional, no_error should not exist
+        error_invalid_unit                      = 1;  //!< Operation failed because of an invalid tasker identifier e.g. an existing agent/automat/crowd identifier @todo rename to error_invalid_tasker
+        error_invalid_limit                     = 2;  //!< Operation failed because of an invalid limit : limit parameters are required for automat missions @deprecated should be handled using invalid_mission_parameters
+        error_invalid_lima                      = 3;  //!< Operation failed because of an invalid phase line : phase line parameters are required for some missions @deprecated should be handled using invalid_mission_parameters
+        error_invalid_mission                   = 4;  //!< Operation failed because of an invalid mission identifier : the mission must exist and be available for the specified tasker unit
+        error_invalid_mission_parameters        = 5;  //!< Operation failed because of an invalid mission parameter : parameters are defined in the file "Missions.xml" @todo rename to error_invalid_parameter
+        error_unit_cannot_receive_order         = 6;  //!< Operation failed because the unit is not in a state where it can execute the order : it must be alive and disengaged (for an agent) @todo rename to error_tasker_unable_cannot_receive_order
+        error_invalid_order_conduite            = 7;  //!< Operation failed because of an invalid fragmentary order identifier : valid identifiers can be found in the file "Missions.xml" @todo rename to error_invalid_fragorder
+        error_invalid_order_mission             = 8;  //!< Operation failed because of an invalid mission identifier : valid identifiers can be found in the file "Missions.xml"
+        error_invalid_order_initial             = 9;  //!< @deprecated never used
         error_invalid_order_conduite_parameters = 10; //!< @deprecated never used
         error_unit_surrendered                  = 11; //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered and be able to receive orders @todo rename to error_tasker_surrendered
         error_invalid_lima_function             = 12; //!< Operation failed because of an invalid phase line function : phase line parameters are required for some missions, each phase line is assigned one or more functions in the context of the mission @deprecated should be handled using invalid_mission_parameters
@@ -957,22 +942,22 @@ message UnitFireDamages {
 }
 
 message UnitsFireDamages {
-   repeated UnitFireDamages elem = 1;
+    repeated UnitFireDamages elem = 1;
 }
 
 message CrowdFireDamages {
-   required CrowdId target   = 1;
-   required int32   dead_nbr = 2;
+    required CrowdId target   = 1;
+    required int32   dead_nbr = 2;
 }
 
 message CrowdsFireDamages {
-   repeated CrowdFireDamages elem = 1;
+    repeated CrowdFireDamages elem = 1;
 }
 
 message StopUnitFire {
-   required FireId            fire           = 1;
-   optional UnitsFireDamages  units_damages  = 2;
-   optional CrowdsFireDamages crowds_damages = 3;
+    required FireId            fire           = 1;
+    optional UnitsFireDamages  units_damages  = 2;
+    optional CrowdsFireDamages crowds_damages = 3;
 }
 
 message StartCrowdFire {
@@ -981,14 +966,14 @@ message StartCrowdFire {
 }
 
 message StopCrowdFire {
-   required FireId           fire          = 1;
-   required UnitsFireDamages units_damages = 2;
+    required FireId           fire          = 1;
+    required UnitsFireDamages units_damages = 2;
 }
 
 message Explosion {
-   required ObjectId          object         = 1;
-   optional UnitsFireDamages  units_damages  = 2;
-   optional CrowdsFireDamages crowds_damages = 3;
+    required ObjectId          object         = 1;
+    optional UnitsFireDamages  units_damages  = 2;
+    optional CrowdsFireDamages crowds_damages = 3;
 }
 
 message StartFireEffect {
@@ -1002,10 +987,10 @@ message StopFireEffect  {
 }
 
 enum EnumReportType {
-  information       = 0;
-  operational       = 1;
-  exceptional_event = 2;
-  warning           = 3;
+    information       = 0;
+    operational       = 1;
+    exceptional_event = 2;
+    warning           = 3;
 }
 
 message Report {
@@ -1023,76 +1008,76 @@ message InvalidateReport {
 }
 
 message Trace {
-   required Tasker source  = 1;
-   required string message = 2;
+    required Tasker source  = 1;
+    required string message = 2;
 }
 
 message DecisionalState {
-   required Tasker source = 1;
-   required string key    = 2;
-   required string value  = 3;
+    required Tasker source = 1;
+    required string key    = 2;
+    required string value  = 3;
 }
 
 message DebugPoints {
-   required Tasker           source      = 1;
-   required CoordLatLongList coordinates = 2;
+    required Tasker           source      = 1;
+    required CoordLatLongList coordinates = 2;
 }
 
 message SeqOfHeading {
-   repeated Heading elem = 1;
+    repeated Heading elem = 1;
 }
 
 message VisionCone {
-   required CoordLatLong origin     = 1;
-   required int32        height     = 2;
-   required string       sensor     = 3;
-   required SeqOfHeading directions = 4;
+    required CoordLatLong origin     = 1;
+    required int32        height     = 2;
+    required string       sensor     = 3;
+    required SeqOfHeading directions = 4;
 }
 
 message SeqOfVisionCone {
-   repeated VisionCone elem = 1;
+    repeated VisionCone elem = 1;
 }
 
 message UnitVisionCones {
-   required UnitId          unit       = 1;
-   required SeqOfVisionCone cones      = 2;
-   required float           elongation = 3;
+    required UnitId          unit       = 1;
+    required SeqOfVisionCone cones      = 2;
+    required float           elongation = 3;
 }
 
 message UnitDetection {
-   required UnitId             observer           = 1;
-   required UnitId             detected_unit      = 2;
-   required EnumUnitVisibility current_visibility = 3;
-   required EnumUnitVisibility max_visibility     = 4;
+    required UnitId             observer           = 1;
+    required UnitId             detected_unit      = 2;
+    required EnumUnitVisibility current_visibility = 3;
+    required EnumUnitVisibility max_visibility     = 4;
 }
 
 message ObjectDetection {
-   required UnitId             observer        = 1;
-   required ObjectId           detected_object = 2;
-   required EnumUnitVisibility visibility      = 3;
+    required UnitId             observer        = 1;
+    required ObjectId           detected_object = 2;
+    required EnumUnitVisibility visibility      = 3;
 }
 
 message CrowdConcentrationDetection {
-   required UnitId               observer               = 1;
-   required CrowdId              detected_crowd         = 2;
-   required CrowdConcentrationId detected_concentration = 3;
-   required EnumUnitVisibility   visibility             = 4;
+    required UnitId               observer               = 1;
+    required CrowdId              detected_crowd         = 2;
+    required CrowdConcentrationId detected_concentration = 3;
+    required EnumUnitVisibility   visibility             = 4;
 }
 
 message CrowdFlowDetection {
-   required UnitId      observer       = 1;
-   required CrowdId     detected_crowd = 2;
-   required CrowdFlowId detected_flow  = 3;
-   required Path        visible_flow   = 4;
+    required UnitId      observer       = 1;
+    required CrowdId     detected_crowd = 2;
+    required CrowdFlowId detected_flow  = 3;
+    required Path        visible_flow   = 4;
 }
 
 message ObjectCreation {
-   required ObjectId         object     = 1;
-   required ObjectType       type       = 2;
-   required string           name       = 3;
-   required PartyId          party      = 4;
-   required Location         location   = 5;
-   required ObjectAttributes attributes = 6;
+    required ObjectId         object     = 1;
+    required ObjectType       type       = 2;
+    required string           name       = 3;
+    required PartyId          party      = 4;
+    required Location         location   = 5;
+    required ObjectAttributes attributes = 6;
 }
 
 message ObjectDestruction  {
@@ -1100,35 +1085,35 @@ message ObjectDestruction  {
 }
 
 message ObjectUpdate {
-   required ObjectId         object     = 1;
-   optional Location         location   = 2;
-   required ObjectAttributes attributes = 3;
+    required ObjectId         object     = 1;
+    optional Location         location   = 2;
+    required ObjectAttributes attributes = 3;
 }
 
 message ObjectKnowledgeCreation {
-   required ObjectKnowledgeId knowledge       = 1;
-   required PartyId           party           = 2;
-   required ObjectId          object          = 3;
-   required ObjectType        type            = 4;
-   required ObjectAttributes  attributes      = 5;
-   optional KnowledgeGroupId  knowledge_group = 6;
+    required ObjectKnowledgeId knowledge       = 1;
+    required PartyId           party           = 2;
+    required ObjectId          object          = 3;
+    required ObjectType        type            = 4;
+    required ObjectAttributes  attributes      = 5;
+    optional KnowledgeGroupId  knowledge_group = 6;
 }
 
 message ObjectKnowledgeUpdate {
-   required ObjectKnowledgeId knowledge           = 1;
-   required PartyId           party               = 2;
-   optional ObjectId          object              = 3;
-   optional int32             relevance           = 4;
-   optional Location          location            = 5;
-   optional ObjectAttributes  attributes          = 6;
-   optional bool              perceived           = 7;
-   optional AutomatIdList     perceiving_automats = 8;
-   optional KnowledgeGroupId  knowledge_group     = 9;
+    required ObjectKnowledgeId knowledge           = 1;
+    required PartyId           party               = 2;
+    optional ObjectId          object              = 3;
+    optional int32             relevance           = 4;
+    optional Location          location            = 5;
+    optional ObjectAttributes  attributes          = 6;
+    optional bool              perceived           = 7;
+    optional AutomatIdList     perceiving_automats = 8;
+    optional KnowledgeGroupId  knowledge_group     = 9;
 }
 
 message ObjectKnowledgeDestruction {
-   required ObjectKnowledgeId knowledge = 1;
-   required PartyId           party     = 2;
+    required ObjectKnowledgeId knowledge = 1;
+    required PartyId           party     = 2;
 }
 
 message UrbanKnowledgeCreation {
@@ -1153,13 +1138,13 @@ message UrbanKnowledgeDestruction {
 }
 
 message LogMedicalHandlingCreation {
-   required MedicalRequestId request       = 1;
-   required UnitId           unit          = 2;
-   required int32            tick_creation = 3;
-   required EnumHumanRank    rang          = 4;
-   required EnumHumanWound   blessure      = 5;
-   optional bool             blesse_mental = 6;
-   optional bool             contamine_nbc = 7;
+    required MedicalRequestId request       = 1;
+    required UnitId           unit          = 2;
+    required int32            tick_creation = 3;
+    required EnumHumanRank    rang          = 4;
+    required EnumHumanWound   blessure      = 5;
+    optional bool             blesse_mental = 6;
+    optional bool             contamine_nbc = 7;
 }
 
 message LogMedicalHandlingUpdate {
@@ -1174,21 +1159,21 @@ message LogMedicalHandlingUpdate {
 }
 
 message LogMedicalHandlingDestruction {
-   required MedicalRequestId request = 1;
-   required UnitId           unit    = 2;
+    required MedicalRequestId request = 1;
+    required UnitId           unit    = 2;
 }
 
 message LogMedicalEquipmentAvailability{
-   required EquipmentType equipment_type = 1;
-   required int32         nbr_total       = 2;
-   required int32         nbr_disponibles = 3;
-   required int32         nbr_au_travail  = 4;
-   optional int32         nbr_pretes      = 5;
-   optional int32         nbr_au_repos    = 6;
+    required EquipmentType equipment_type = 1;
+    required int32         nbr_total       = 2;
+    required int32         nbr_disponibles = 3;
+    required int32         nbr_au_travail  = 4;
+    optional int32         nbr_pretes      = 5;
+    optional int32         nbr_au_repos    = 6;
 }
 
 message SeqOfLogMedicalEquipmentAvailability {
-   repeated LogMedicalEquipmentAvailability elem = 1;
+    repeated LogMedicalEquipmentAvailability elem = 1;
 }
 
 message LogMedicalState {
@@ -1202,93 +1187,106 @@ message LogMedicalState {
 }
 
 message LogMaintenanceHandlingCreation {
-   required MaintenanceRequestId request       = 1;
-   required UnitId               unit          = 2;
-   required int32                tick_creation = 3;
-   required EquipmentType        equipement    = 4;
-   required BreakdownType        breakdown     = 5;
+    required MaintenanceRequestId request       = 1;
+    required UnitId               unit          = 2;
+    required int32                tick_creation = 3;
+    required EquipmentType        equipement    = 4;
+    required BreakdownType        breakdown     = 5;
 }
 
 message LogMaintenanceHandlingUpdate {
-   required MaintenanceRequestId             request               = 1;
-   required UnitId                           unit                  = 2;
-   required UnitId                           provider              = 3;
-   optional EnumLogMaintenanceHandlingStatus etat                  = 4;
-   optional bool                             diagnostique_effectue = 5;
+    required MaintenanceRequestId             request               = 1;
+    required UnitId                           unit                  = 2;
+    required UnitId                           provider              = 3;
+    optional EnumLogMaintenanceHandlingStatus etat                  = 4;
+    optional bool                             diagnostique_effectue = 5;
 }
 
 message LogMaintenanceHandlingDestruction {
-   required MaintenanceRequestId request = 1;
-   required UnitId               unit    = 2;
+    required MaintenanceRequestId request = 1;
+    required UnitId               unit    = 2;
 }
 
 message LogMaintenanceEquipmentAvailability {
-   required EquipmentType equipment_type  = 1;
-   required int32 nbr_total               = 2;
-   required int32 nbr_disponibles         = 3;
-   required int32 nbr_au_travail          = 4;
-   optional int32 nbr_pretes              = 5;
-   optional int32 nbr_au_repos            = 6;
+    required EquipmentType equipment_type  = 1;
+    required int32 nbr_total               = 2;
+    required int32 nbr_disponibles         = 3;
+    required int32 nbr_au_travail          = 4;
+    optional int32 nbr_pretes              = 5;
+    optional int32 nbr_au_repos            = 6;
 }
 
 message SeqOfLogMaintenanceEquipmentAvailability {
-   repeated LogMaintenanceEquipmentAvailability elem = 1;
+    repeated LogMaintenanceEquipmentAvailability elem = 1;
 }
 
 message LogMaintenanceState {
-   required UnitId                                   unit                       = 1;
-   optional bool                                     chaine_activee             = 2;
-   optional EnumLogMaintenanceRegimeTravail          regime_travail             = 3;
-   optional LogMaintenancePriorities                 priorites                  = 4;
-   optional AutomatIdList                            priorites_tactiques        = 5;
-   optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_remorqueurs = 6;
-   optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_reparateurs = 7;
+    required UnitId                                   unit                       = 1;
+    optional bool                                     chaine_activee             = 2;
+    optional EnumLogMaintenanceRegimeTravail          regime_travail             = 3;
+    optional LogMaintenancePriorities                 priorites                  = 4;
+    optional AutomatIdList                            priorites_tactiques        = 5;
+    optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_remorqueurs = 6;
+    optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_reparateurs = 7;
 }
 
 message LogSupplyHandlingCreation {
-   optional SupplyRequestId    request       = 1;
-   optional AutomatId          consumer      = 2;
-   optional int32              tick_creation = 3;
-   optional SeqOfDotationQuery dotations     = 4;
+    optional SupplyRequestId    request       = 1;
+    optional AutomatId          consumer      = 2;
+    optional int32              tick_creation = 3;
+    optional SeqOfDotationQuery dotations     = 4;
 }
 
 message DotationQuery {
-   optional ResourceType resource            = 1;
-   optional int32        quantite_demandee   = 2;
-   optional int32        quantite_accordee   = 3;
-   optional int32        quantite_en_transit = 4;
+    optional ResourceType resource            = 1;
+    optional int32        quantite_demandee   = 2;
+    optional int32        quantite_accordee   = 3;
+    optional int32        quantite_en_transit = 4;
 }
 
 message SeqOfDotationQuery {
-   repeated DotationQuery elem = 1;
+    repeated DotationQuery elem = 1;
 }
 
 message LogSupplyHandlingUpdate {
-   optional SupplyRequestId             request         = 1;
-   optional AutomatId                   consumer        = 2;
-   optional ParentEntity                supplier        = 3;
-   optional ParentEntity                convoy_provider = 4;
-   optional UnitId                      convoying_unit  = 5;
-   optional EnumLogSupplyHandlingStatus etat            = 6;
-   optional SeqOfDotationQuery          dotations       = 7;
+    /** @enum EnumConvoyState
+        @brief List of states a supply request can go through
+    */
+    enum EnumConvoyState {
+        convoy_waiting_for_transporters     = 0; //!< Convoy is waiting for transporters
+        convoy_forming                      = 1; //!< Convoy is forming
+        convoy_moving_to_loading_point      = 2; //!< Convoy is moving to loading point
+        convoy_loading                      = 3; //!< Convoy is loading
+        convoy_moving_to_unloading_point    = 4; //!< Convoy is moving to unloading point
+        convoy_unloading                    = 5; //!< Convoy is unloading
+        convoy_moving_back_to_loading_point = 6; //!< Convoy is returning to forming point
+        convoy_finished                     = 7; //!< Convoying operation is finished
+    }
+    optional SupplyRequestId    request         = 1;
+    optional AutomatId          consumer        = 2;
+    optional ParentEntity       supplier        = 3;
+    optional ParentEntity       convoy_provider = 4;
+    optional UnitId             convoying_unit  = 5;
+    optional EnumConvoyState    etat            = 6;
+    optional SeqOfDotationQuery dotations       = 7;
 }
 
 message LogSupplyHandlingDestruction {
-   required SupplyRequestId request  = 1;
-   required AutomatId       consumer = 2;
+    required SupplyRequestId request  = 1;
+    required AutomatId       consumer = 2;
 }
 
 message LogSupplyEquimentAvailability {
-   optional EquipmentType equipment       = 1;
-   optional int32         nbr_total       = 2;
-   optional int32         nbr_disponibles = 3;
-   optional int32         nbr_au_travail  = 4;
-   optional int32         nbr_pretes      = 5;
-   optional int32         nbr_au_repos    = 6;
+    optional EquipmentType equipment       = 1;
+    optional int32         nbr_total       = 2;
+    optional int32         nbr_disponibles = 3;
+    optional int32         nbr_au_travail  = 4;
+    optional int32         nbr_pretes      = 5;
+    optional int32         nbr_au_repos    = 6;
 }
 
 message SeqOfLogSupplyEquimentAvailability {
-   repeated LogSupplyEquimentAvailability elem = 1;
+    repeated LogSupplyEquimentAvailability elem = 1;
 }
 
 message LogSupplyState {
