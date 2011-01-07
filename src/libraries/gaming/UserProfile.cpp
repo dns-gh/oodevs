@@ -129,8 +129,8 @@ void UserProfile::RequestUpdate( const QString& newLogin )
     profile.set_supervisor( supervision_ );
     if( role_ != -1 )
         profile.mutable_role()->set_id( role_ );
-    CopyList( readSides_, *profile.mutable_read_only_camps() );
-    CopyList( writeSides_, *profile.mutable_read_write_camps() );
+    CopyList( readSides_, *profile.mutable_read_only_parties() );
+    CopyList( writeSides_, *profile.mutable_read_write_parties() );
     CopyList( readFormations_, *profile.mutable_read_only_formations() );
     CopyList( writeFormations_, *profile.mutable_read_write_formations() );
     CopyList( readAutomats_, *profile.mutable_read_only_automates() );
@@ -175,8 +175,8 @@ void UserProfile::SetProfile( const sword::Profile& profile )
     supervision_ = profile.supervisor();
     if( profile.has_role() )
         role_ = profile.role().id();
-    if( profile.has_read_only_camps()  )
-        CopyList( profile.read_only_camps(), readSides_);
+    if( profile.has_read_only_parties()  )
+        CopyList( profile.read_only_parties(), readSides_);
     if( profile.has_read_only_formations()  )
         CopyList( profile.read_only_formations(), readFormations_ );
     if( profile.has_read_only_automates()  )
@@ -184,8 +184,8 @@ void UserProfile::SetProfile( const sword::Profile& profile )
     if( profile.has_read_only_crowds()  )
         CopyList( profile.read_only_crowds(), readPopulations_ );
 
-    if( profile.has_read_write_camps()  )
-        CopyList( profile.read_write_camps(), writeSides_);
+    if( profile.has_read_write_parties()  )
+        CopyList( profile.read_write_parties(), writeSides_);
     if( profile.has_read_write_formations()  )
         CopyList( profile.read_write_formations(), writeFormations_ );
     if( profile.has_read_write_automates()  )

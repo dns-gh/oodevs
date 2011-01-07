@@ -160,16 +160,16 @@ void Profile::ReadRights( const sword::Profile& message )
 {
     if( message.has_read_only_automates() )
         SetRights( message.read_only_automates(), readOnlyAutomats_, model_.Automats() );
-    if( message.has_read_only_camps() )
-        SetRights( message.read_only_camps(), readOnlySides_, model_.Sides() );
+    if( message.has_read_only_parties() )
+        SetRights( message.read_only_parties(), readOnlySides_, model_.Sides() );
     if( message.has_read_only_formations() )
         SetRights( message.read_only_formations(), readOnlyFormations_, model_.Formations() );
     if( message.has_read_only_crowds() )
         SetRights( message.read_only_crowds(), readOnlyPopulations_, model_.Populations() );
     if( message.has_read_write_automates() )
         SetRights( message.read_write_automates(), readWriteAutomats_, model_.Automats() );
-    if( message.has_read_write_camps() )
-        SetRights( message.read_write_camps(), readWriteSides_, model_.Sides() );
+    if( message.has_read_write_parties() )
+        SetRights( message.read_write_parties(), readWriteSides_, model_.Sides() );
     if( message.has_read_write_formations() )
         SetRights( message.read_write_formations(), readWriteFormations_, model_.Formations() );
     if( message.has_read_write_crowds() )
@@ -304,8 +304,8 @@ void Profile::Send( sword::Profile& message ) const
         message.mutable_role()->set_id( roleId_ );
     Serialize( *message.mutable_read_only_automates(), readOnlyAutomats_ );
     Serialize( *message.mutable_read_write_automates(), readWriteAutomats_ );
-    Serialize( *message.mutable_read_only_camps(), readOnlySides_ );
-    Serialize( *message.mutable_read_write_camps(), readWriteSides_ );
+    Serialize( *message.mutable_read_only_parties(), readOnlySides_ );
+    Serialize( *message.mutable_read_write_parties(), readWriteSides_ );
     Serialize( *message.mutable_read_only_formations(), readOnlyFormations_ );
     Serialize( *message.mutable_read_write_formations(), readWriteFormations_ );
     Serialize( *message.mutable_read_only_crowds(), readOnlyPopulations_ );

@@ -170,7 +170,7 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
         return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
     MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).party().id() );
     if( !pArmy )
-        return sword::ObjectMagicActionAck::error_invalid_camp;
+        return sword::ObjectMagicActionAck::error_invalid_party;
     sword::ObjectMagicActionAck_ErrorCode value = sword::ObjectMagicActionAck::no_error;
     RegisterObject( builder_->BuildObject( message, *pArmy, value ) );
     return value;

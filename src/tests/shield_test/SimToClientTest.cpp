@@ -94,7 +94,7 @@ BOOST_FIXTURE_TEST_CASE( change_diplomacy_ack_to_client_is_converted, ContextFix
     content.mutable_change_diplomacy_ack()->mutable_party1()->set_id( 7 );
     content.mutable_change_diplomacy_ack()->mutable_party2()->set_id( 8 );
     content.mutable_change_diplomacy_ack()->set_diplomatie( sword::friend_diplo );
-    content.mutable_change_diplomacy_ack()->set_error_code( sword::ChangeDiplomacyAck::error_invalid_camp_diplomacy );
+    content.mutable_change_diplomacy_ack()->set_error_code( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { change_diplomacy_ack { party1 { id: 7 } party2 { id: 8 } diplomatie: friend_diplo error_code: error_invalid_camp_diplomacy } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

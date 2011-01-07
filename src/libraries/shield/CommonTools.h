@@ -116,19 +116,6 @@ namespace shield
         CONVERT_ID( role );
     }
     template< typename From, typename To >
-    void ConvertProfile( const From& from, To* to )
-    {
-        ConvertProfileDescription( from, to );
-        CONVERT_LIST( read_only_formations, elem, ConvertIdentifier );
-        CONVERT_LIST( read_write_formations, elem, ConvertIdentifier );
-        CONVERT_LIST( read_only_automates, elem, ConvertIdentifier );
-        CONVERT_LIST( read_write_automates, elem, ConvertIdentifier );
-        CONVERT_LIST( read_only_camps, elem, ConvertIdentifier );
-        CONVERT_LIST( read_write_camps, elem, ConvertIdentifier );
-        CONVERT_LIST( read_only_crowds, elem, ConvertIdentifier );
-        CONVERT_LIST( read_write_crowds, elem, ConvertIdentifier );
-    }
-    template< typename From, typename To >
     void ConvertDiffusion( const From& from, To* to )
     {
         CONVERT_ID( automat );

@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "SimulationToClient.h"
-#include "Common.h"
+#include "CommonTools.h"
 
 using namespace shield;
 
@@ -145,7 +145,7 @@ void SimulationToClient::Convert( const sword::ObjectMagicActionAck& from, MsgsS
     CONVERT_ENUM( error_code, ( sword::ObjectMagicActionAck::no_error, MsgsSimToClient::MsgObjectMagicActionAck::no_error )
                               ( sword::ObjectMagicActionAck::error_invalid_object, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_object )
                               ( sword::ObjectMagicActionAck::error_invalid_id, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_id )
-                              ( sword::ObjectMagicActionAck::error_invalid_camp, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_camp )
+                              ( sword::ObjectMagicActionAck::error_invalid_party, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_camp )
                               ( sword::ObjectMagicActionAck::error_invalid_localisation, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_localisation )
                               ( sword::ObjectMagicActionAck::error_missing_specific_attributes, MsgsSimToClient::MsgObjectMagicActionAck::error_missing_specific_attributes )
                               ( sword::ObjectMagicActionAck::error_invalid_specific_attributes, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_specific_attributes ) );
@@ -173,7 +173,7 @@ void SimulationToClient::Convert( const sword::ChangeDiplomacyAck& from, MsgsSim
     CONVERT_ID( party2 );
     CONVERT_DIPLOMACY( diplomatie );
     CONVERT_ENUM( error_code, ( sword::ChangeDiplomacyAck::no_error_diplomacy, MsgsSimToClient::MsgChangeDiplomacyAck::no_error_diplomacy )
-                              ( sword::ChangeDiplomacyAck::error_invalid_camp_diplomacy, MsgsSimToClient::MsgChangeDiplomacyAck::error_invalid_camp_diplomacy ) );
+                              ( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy, MsgsSimToClient::MsgChangeDiplomacyAck::error_invalid_camp_diplomacy ) );
 }
 
 namespace
@@ -2090,7 +2090,7 @@ namespace
         CONVERT_ENUM( error_code, ( sword::KnowledgeGroupAck::no_error, MsgsSimToClient::KnowledgeGroupAck::no_error )
                                   ( sword::KnowledgeGroupAck::error_invalid_unit, MsgsSimToClient::KnowledgeGroupAck::error_invalid_unit )
                                   ( sword::KnowledgeGroupAck::error_invalid_superior, MsgsSimToClient::KnowledgeGroupAck::error_invalid_superior )
-                                  ( sword::KnowledgeGroupAck::error_invalid_camp, MsgsSimToClient::KnowledgeGroupAck::error_invalid_camp )
+                                  ( sword::KnowledgeGroupAck::error_invalid_party, MsgsSimToClient::KnowledgeGroupAck::error_invalid_camp )
                                   ( sword::KnowledgeGroupAck::error_invalid_knowledgegroup, MsgsSimToClient::KnowledgeGroupAck::error_invalid_knowledgegroup )
                                   ( sword::KnowledgeGroupAck::error_invalid_type, MsgsSimToClient::KnowledgeGroupAck::error_invalid_type ) );
     }

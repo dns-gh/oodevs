@@ -687,7 +687,7 @@ void MIL_Army::OnReceiveChangeDiplomacy( const sword::MissionParameters& asnMsg 
 {
     MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.elem( 1 ).value().Get(0).identifier() );
     if( !pArmy2 || *pArmy2 == *this )
-        throw NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >( sword::ChangeDiplomacyAck::error_invalid_camp_diplomacy );
+        throw NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
     E_Diplomacy nDiplomacy = eUnknown;
     switch( asnMsg.elem( 2 ).value().Get(0).enumeration() )
     {

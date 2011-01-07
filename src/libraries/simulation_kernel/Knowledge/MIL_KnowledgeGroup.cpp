@@ -670,7 +670,7 @@ bool MIL_KnowledgeGroup::OnReceiveKnowledgeGroupChangeSuperior( const sword::Mis
 {
     MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().Get( 0 ).party().id() );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
-        throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_camp );
+        throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_party );
     MIL_KnowledgeGroup* pNewParent = 0;
     if( hasParent )
     {

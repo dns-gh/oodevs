@@ -32,6 +32,27 @@ namespace shield
         i->set_diplomacy( sword::friend_diplo );
         i->mutable_formation()->set_id( 77 );
     }
+    template< typename P >
+    void FillProfile( P* p )
+    {
+        FillProfileDescription( p );
+        p->mutable_read_only_formations()->add_elem()->set_id( 3 );
+        p->mutable_read_only_formations()->add_elem()->set_id( 5 );
+        p->mutable_read_write_formations()->add_elem()->set_id( 6 );
+        p->mutable_read_write_formations()->add_elem()->set_id( 7 );
+        p->mutable_read_only_automates()->add_elem()->set_id( 8 );
+        p->mutable_read_only_automates()->add_elem()->set_id( 9 );
+        p->mutable_read_write_automates()->add_elem()->set_id( 10 );
+        p->mutable_read_write_automates()->add_elem()->set_id( 11 );
+        p->mutable_read_only_parties()->add_elem()->set_id( 12 );
+        p->mutable_read_only_parties()->add_elem()->set_id( 13 );
+        p->mutable_read_write_parties()->add_elem()->set_id( 14 );
+        p->mutable_read_write_parties()->add_elem()->set_id( 15 );
+        p->mutable_read_only_crowds()->add_elem()->set_id( 16 );
+        p->mutable_read_only_crowds()->add_elem()->set_id( 17 );
+        p->mutable_read_write_crowds()->add_elem()->set_id( 18 );
+        p->mutable_read_write_crowds()->add_elem()->set_id( 19 );
+    }
 }
 
 #endif // shield_test_SimTools_h

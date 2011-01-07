@@ -730,8 +730,8 @@ std::string DatabaseUpdater::Error( const sword::ObjectMagicActionAck_ErrorCode&
     {
     case sword::ObjectMagicActionAck::no_error:
         return "no_error";
-    case sword::ObjectMagicActionAck::error_invalid_camp:
-        return "error_invalid_camp";
+    case sword::ObjectMagicActionAck::error_invalid_party:
+        return "error_invalid_party";
     case sword::ObjectMagicActionAck::error_invalid_id:
         return "error_invalid_id";
     case sword::ObjectMagicActionAck::error_invalid_localisation:

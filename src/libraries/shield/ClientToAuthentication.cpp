@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "ClientToAuthentication.h"
-#include "Common.h"
+#include "ClientTools.h"
 
 using namespace shield;
 

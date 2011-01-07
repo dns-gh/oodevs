@@ -1173,7 +1173,7 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
     {
         MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.parameters().elem( 0 ).value().Get(0).identifier() );
         if( !pArmy1 )
-            throw NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >( sword::ChangeDiplomacyAck::error_invalid_camp_diplomacy );
+            throw NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
         pArmy1->OnReceiveChangeDiplomacy( message.parameters() );
     }
     catch( NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >& e )

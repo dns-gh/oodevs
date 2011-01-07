@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "ClientToMessenger.h"
-#include "Common.h"
+#include "CommonTools.h"
 
 using namespace shield;
 

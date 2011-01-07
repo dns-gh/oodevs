@@ -158,7 +158,7 @@ message Profile {
     */
     optional string          password                = 2;
     /** @property read_only_formations
-        @brief A list of "formation" identifiers which can be viewed by this profile.
+        @brief A list of formation identifiers which can be viewed by this profile.
         @see FormationIdList
 
         Profile with read-only permissions can only see the situation from the
@@ -166,7 +166,7 @@ message Profile {
     */
     optional FormationIdList read_only_formations    = 3;
     /** @property read_write_formations
-        @brief A list of "Formation" identifiers which can be viewed and controlled by this profile.
+        @brief A list of formation identifiers which can be viewed and controlled by this profile.
         @see FormationIdList
 
         Profile with read-write permissions can see the situation from the
@@ -174,47 +174,39 @@ message Profile {
     */
     optional FormationIdList read_write_formations   = 4;
     /** @property read_only_automates
-        @brief A list of "automat" identifiers which can be viewed by this profile.
+        @brief A list of automat identifiers which can be viewed by this profile.
         @see AutomatIdList
 
         Profile with read-only permissions can only see the situation from the
         specified units but cannot control them.
-
-        @todo translation
     */
     optional AutomatIdList   read_only_automates     = 5;
     /** @property read_write_automates
-        @brief A list of "automat" identifiers which can be viewed and controlled by this profile.
+        @brief A list of automat identifiers which can be viewed and controlled by this profile.
         @see AutomatIdList
 
         Profile with read-write permissions can see the situation from the
         specified units and control them.
-
-        @todo translation
     */
     optional AutomatIdList   read_write_automates    = 6;
-    /** @property read_only_camps
-        @brief A list of "party" identifiers which can be viewed by this profile.
+    /** @property read_only_parties
+        @brief A list of party identifiers which can be viewed by this profile.
         @see PartyIdList
 
         Profile with read-only permissions can only see the situation from the
         specified units but cannot control them.
-
-        @todo translation
     */
-    optional PartyIdList     read_only_camps         = 7;
-    /** @property read_write_camps
-        @brief A list of "party" identifiers which can be viewed and controlled by this profile.
+    optional PartyIdList     read_only_parties         = 7;
+    /** @property read_write_parties
+        @brief A list of party identifiers which can be viewed and controlled by this profile.
         @see PartyIdList
 
         Profile with read-write permissions can see the situation from the
         specified units and control them.
-
-        @todo translation
     */
-    optional PartyIdList     read_write_camps        = 8;
+    optional PartyIdList     read_write_parties      = 8;
     /** @property read_only_crowds
-        @brief A list of "crowd" identifiers which can be viewed by this profile.
+        @brief A list of crowd identifiers which can be viewed by this profile.
         @see CrowdIdList
 
         Profile with read-only permissions can only see the situation from the
@@ -222,7 +214,7 @@ message Profile {
     */
     optional CrowdIdList     read_only_crowds        = 9;
     /** @property read_write_crowds
-        @brief A list of "crowd" identifiers which can be viewed and controlled by this profile.
+        @brief A list of crowd identifiers which can be viewed and controlled by this profile.
         @see CrowdIdList
 
         Profile with read-write permissions can see the situation from the

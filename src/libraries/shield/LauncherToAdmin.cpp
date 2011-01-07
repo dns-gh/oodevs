@@ -8,8 +8,7 @@
 // *****************************************************************************
 
 #include "LauncherToAdmin.h"
-#include "Common.h"
-#include "Tools.h"
+#include "SimulationTools.h"
 
 using namespace shield;
 

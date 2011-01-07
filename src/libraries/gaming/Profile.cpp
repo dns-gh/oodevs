@@ -153,10 +153,10 @@ void Profile::Update( const sword::Profile& profile )
         password_ = "";
     supervision_ = profile.supervisor();
 
-    if( profile.has_read_only_camps()  )
-        ReadList( profile.read_only_camps(), readTeams_ );
-    if( profile.has_read_write_camps()  )
-        ReadList( profile.read_write_camps(), writeTeams_ );
+    if( profile.has_read_only_parties()  )
+        ReadList( profile.read_only_parties(), readTeams_ );
+    if( profile.has_read_write_parties()  )
+        ReadList( profile.read_write_parties(), writeTeams_ );
 
     if( profile.has_read_only_automates()  )
         ReadList( profile.read_only_automates(), readAutomats_ );

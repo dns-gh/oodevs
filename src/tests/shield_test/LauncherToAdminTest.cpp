@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "shield_test_pch.h"
-#include "Tools.h"
+#include "SimTools.h"
 
 using namespace shield;
 

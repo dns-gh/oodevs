@@ -190,7 +190,7 @@ void Converter::ReceiveSimToClient( const std::string& /*from*/, const sword::Si
         out.set_context( msg.context() );
 
     if( msg.message().has_order_ack() )
-        SimulationToClient::ConvertOrderAckToSpecificOrderAck( msg.message().order_ack(),  out.mutable_message() );
+        SimulationToClient::ConvertOrderAckToSpecificOrderAck( msg.message().order_ack(), out.mutable_message() );
     FORWARD( SimulationToClient, frag_order_ack )
     FORWARD( SimulationToClient, set_automat_mode_ack )
     FORWARD( SimulationToClient, unit_creation_request_ack )

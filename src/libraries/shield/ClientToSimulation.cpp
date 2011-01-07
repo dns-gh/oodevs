@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "ClientToSimulation.h"
-#include "Common.h"
+#include "CommonTools.h"
 #include <google/protobuf/descriptor.h>
 
 using namespace shield;
