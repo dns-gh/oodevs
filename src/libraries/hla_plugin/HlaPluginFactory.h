@@ -7,23 +7,23 @@
 //
 // *****************************************************************************
 
-#ifndef __HlaPluginFactory_h_
-#define __HlaPluginFactory_h_
+#ifndef plugins_hla_HlaPluginFactory_h
+#define plugins_hla_HlaPluginFactory_h
 
 #include "dispatcher/PluginFactory_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace plugins
 {
 namespace hla
 {
-
 // =============================================================================
 /** @class  HlaPluginFactory
     @brief  Hla plugin factory
 */
 // Created: SBO 2008-02-28
 // =============================================================================
-class HlaPluginFactory : public dispatcher::PluginFactory_ABC
+class HlaPluginFactory : public dispatcher::PluginFactory_ABC, private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -39,16 +39,9 @@ public:
                                                             dispatcher::ClientPublisher_ABC& clients, tools::MessageDispatcher_ABC& client, dispatcher::LinkResolver_ABC& resolver,
                                                             dispatcher::CompositeRegistrable& registrables ) const ;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    HlaPluginFactory( const HlaPluginFactory& );            //!< Copy constructor
-    HlaPluginFactory& operator=( const HlaPluginFactory& ); //!< Assignment operator
-    //@}
 };
 
 }
 }
 
-#endif // __HlaPluginFactory_h_
+#endif // plugins_hla_HlaPluginFactory_h

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __SerializationTools_h_
-#define __SerializationTools_h_
+#ifndef hla_SerializationTools_h
+#define hla_SerializationTools_h
 
 #include <hla/Serializer.h>
 
@@ -23,4 +23,4 @@ namespace hla
     }
 }
 
-#endif // __SerializationTools_h_
+#endif // hla_SerializationTools_h
