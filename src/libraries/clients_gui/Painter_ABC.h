@@ -7,44 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __ElevationResolver_h_
-#define __ElevationResolver_h_
+#ifndef gui_Painter_ABC_h
+#define gui_Painter_ABC_h
 
-#include "ElevationResolver_ABC.h"
+#include <boost/noncopyable.hpp>
 
-namespace kernel
-{
-    class DetectionMap;
-}
+class QPainter;
 
 namespace gui
 {
 // =============================================================================
-/** @class  ElevationResolver
-    @brief  Elevation resolver
+/** @class  Painter_ABC
+    @brief  Painter declaration
 */
-// Created: LGY 2010-09-27
+// Created: LGY 2010-01-06
 // =============================================================================
-class ElevationResolver : public ElevationResolver_ABC
+class Painter_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ElevationResolver( const kernel::DetectionMap& elevation );
-    virtual ~ElevationResolver();
+             Painter_ABC() {}
+    virtual ~Painter_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual float Compute( unsigned int pourcentage ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-     const kernel::DetectionMap& elevation_;
+    virtual void Draw( QPainter& painter, unsigned int pourcentage, int x, int y ) const = 0;
     //@}
 };
+
 }
 
-#endif // __ElevationResolver_h_
+#endif // gui_Painter_ABC_h
