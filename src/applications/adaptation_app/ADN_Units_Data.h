@@ -208,6 +208,7 @@ public:
         ADN_Type_Int                                                nNbNCOfficer_;      // non-commisioned officer
         ADN_Type_Time                                               decontaminationDelay_;
         ADN_Type_Bool                                               bCanFly_;
+        ADN_Type_Enum<E_CrossingHeight,eNbrCrossingHeight>          eCrossingHeight_;
         ADN_Type_Bool                                               bIsAutonomous_;
 
         T_ComposanteInfos_Vector                                    vComposantes_;

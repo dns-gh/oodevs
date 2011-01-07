@@ -190,6 +190,14 @@ enum E_SpeedImpact
     eNbrSpeedImpact
 };
 
+enum E_CrossingHeight
+{
+    eCrossingHeight_Never,
+    eCrossingHeight_LowAreas,
+    eCrossingHeight_Always,
+    eNbrCrossingHeight
+};
+
 enum E_SensorWeatherModifiers
 {
     eSensorWeatherModifiers_PasDePrecipitation,

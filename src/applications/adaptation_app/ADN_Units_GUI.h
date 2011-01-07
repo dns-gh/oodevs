@@ -62,6 +62,7 @@ public:
         eHasTC1,
         eHasStrengthRatioFeedbackTime,
         eCanFly,
+        eCrossingHeight,
         eIsAutonomous,
         eHasInstallation,
         eInstallationDelay,

@@ -38,7 +38,6 @@
 #include <qhbox.h>
 #include <qbuttongroup.h>
 #include <qgrid.h>
-#include <qwhatsthis.h>
 
 
 //-----------------------------------------------------------------------------
@@ -383,6 +382,11 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* flood = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Flood" ), hBox );
     {
         vInfosConnectors[ eFloodCapacityPresent ] = & flood->GetConnector();
+    }
+
+    ADN_GroupBox* universal = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Universal" ), hBox );
+    {
+        vInfosConnectors[ eUniversalCapacityPresent ] = & universal->GetConnector();
     }
 
     // Connect the list to the interface.

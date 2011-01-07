@@ -437,6 +437,7 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     , rProbeWidth_( 0 )
     , rProbeLength_( 0 )
     , bCanFly_( false )
+    , eCrossingHeight_( static_cast< E_CrossingHeight >( 0 ) )
     , bIsAutonomous_( false )
     , bInstallationDelay_( false )
     , installationDelay_( "0s" )
@@ -484,6 +485,10 @@ ADN_Units_Data::UnitInfos::UnitInfos()
 
     strNature_.SetDataName( "la nature, les arbres et les oiseaux" );
     strNature_.SetParentNode( *this );
+
+    ADN_Type_Enum< E_CrossingHeight, eNbrCrossingHeight >::SetConverter( &ADN_Tr::ConvertFromCrossingHeight );
+    eCrossingHeight_.SetDataName( "la hauteur de franchisssement" );
+    eCrossingHeight_.SetParentNode( *this );
 
     // postures initialization
     for( int i = ePostureNeedTimeStart; i < eNbrUnitPosture; ++i )
@@ -537,6 +542,7 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->nNbNCOfficer_ = nNbNCOfficer_.GetData();
     pCopy->decontaminationDelay_ = decontaminationDelay_.GetData();
     pCopy->bCanFly_ = bCanFly_.GetData();
+    pCopy->eCrossingHeight_ = eCrossingHeight_.GetData();
     pCopy->bIsAutonomous_ = bIsAutonomous_.GetData();
 
     for( T_ComposanteInfos_Vector::iterator itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
@@ -715,6 +721,17 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
             >> xml::end;
 
+    std::string crossingHeight( ADN_Tr::ConvertFromCrossingHeight( eCrossingHeight_Never ) ) ;
+    input >> xml::optional
+            >> xml::start( "crossing-height" )
+                >> xml::attribute( "height", crossingHeight )
+            >> xml::end;
+
+    E_CrossingHeight eCrossingHeight = ADN_Tr::ConvertToCrossingHeight( crossingHeight );
+    if( eCrossingHeight == ( E_CrossingHeight )-1 )
+        throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).ascii(), tools::translate( "Units_Data", "Unit types - Invalid crossing height '%1'" ).arg( crossingHeight.c_str() ).ascii() );
+    eCrossingHeight_ = eCrossingHeight;
+
     input >> xml::optional >> xml::attribute( "can-fly", bCanFly_ );
     input >> xml::optional >> xml::attribute( "is-autonomous", bIsAutonomous_ );
 }
@@ -806,7 +823,11 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
             << xml::attribute( "protection-support", nProtectionSupportEfficiency_ )
             << xml::attribute( "engineering-support", nEngineeringReconEfficiency_ )
             << xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
-           << xml::end; 
+           << xml::end;
+
+    output << xml::start( "crossing-height" )
+            << xml::attribute( "height", ADN_Tr::ConvertFromCrossingHeight( eCrossingHeight_.GetData() ) )
+           << xml::end;
 
     if( bCanFly_.GetData() )
         output << xml::attribute( "can-fly", bCanFly_ );

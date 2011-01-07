@@ -352,6 +352,7 @@
   </object>
   <object geometry="point" name="Inondation" symbol="G*MPORC---****X" type="flood">
     <flood/>
+    <universal/>
   </object>
 </objects>
-<!-- signature="4216562023" -->
+<!-- signature="3943736716" -->

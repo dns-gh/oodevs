@@ -34,6 +34,7 @@ public:
     static const std::string& ConvertFromAgentTypeAutomate( E_AgentTypeAutomate, E_Conversion = eToSim );
     static const std::string& ConvertFromNatureAtlasType( E_NatureAtlasType, E_Conversion = eToSim );
     static const std::string& ConvertFromSpeedImpact( E_SpeedImpact, E_Conversion = eToSim );
+    static const std::string& ConvertFromCrossingHeight( E_CrossingHeight, E_Conversion = eToSim );
     static const std::string& ConvertFromSensorWeatherModifiers( E_SensorWeatherModifiers, E_Conversion = eToSim );
     static const std::string& ConvertFromDoctorSkills( E_DoctorSkills, E_Conversion = eToSim );
     static const std::string& ConvertFromProtectionType( E_ProtectionType, E_Conversion = eToSim );
@@ -58,6 +59,7 @@ public:
     static E_AgentTypeAutomate   ConvertToAgentTypeAutomate( const std::string& );
     static E_NatureAtlasType ConvertToNatureAtlasType  ( const std::string& );
     static E_SpeedImpact     ConvertToSpeedImpact      ( const std::string& );
+    static E_CrossingHeight  ConvertToCrossingHeight   ( const std::string& );
     static E_SensorWeatherModifiers ConvertToSensorWeatherModifiers( const std::string& );
     static E_DoctorSkills    ConvertToDoctorSkills     ( const std::string& );
     static E_ProtectionType  ConvertToProtectionType   ( const std::string& );
@@ -85,6 +87,7 @@ public:
     typedef converter<E_AgentTypeAutomate>          T_ConverterAgentTypeAutomate;
     typedef converter<E_NatureAtlasType>            T_ConverterNatureAtlasType;
     typedef converter<E_SpeedImpact>                T_ConverterSpeedImpact;
+    typedef converter<E_CrossingHeight>             T_ConverterCrossingHeight;
     typedef converter<E_SensorWeatherModifiers>     T_ConverterSensorWeatherModifiers;
     typedef converter<E_DoctorSkills>               T_ConverterDoctorSkills;
     typedef converter<E_ProtectionType>             T_ConverterProtectionType;
@@ -109,6 +112,7 @@ public:
     static T_ConverterAgentTypeAutomate agentTypeAutomateConverter_[];
     static T_ConverterNatureAtlasType   natureAtlasTypeConverter_[];
     static T_ConverterSpeedImpact       speedImpactConverter_[];
+    static T_ConverterCrossingHeight    crossingHeightConverter_[];
     static T_ConverterSensorWeatherModifiers sensorWeatherModifiersConverter_[];
     static T_ConverterDoctorSkills      doctorSkillsConverter_[];
     static T_ConverterProtectionType    protectionTypeConverter_[];

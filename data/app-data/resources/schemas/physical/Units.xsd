@@ -166,6 +166,11 @@
 									<xs:attribute name="urban-area" type="T_IntegralPercentage" use="required"/>
 								</xs:complexType>
 							</xs:element>
+							<xs:element name="crossing-height" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="height" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
 						</xs:sequence>
 						<xs:attribute name="decisional-model" type="xs:string" use="required"/>
 						<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>

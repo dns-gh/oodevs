@@ -109,6 +109,9 @@ void ADN_Units_GUI::Build()
     // Can fly
     builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Can fly" ), vInfosConnectors[eCanFly] );
 
+    // Crossing height
+    builder.AddEnumField< E_CrossingHeight >( pParamGroup, tr( "Crossing height" ), vInfosConnectors[ eCrossingHeight ], &ADN_Tr::ConvertFromCrossingHeight );
+
     // Is autonomous
     builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Is autonomous (UAV)" ), vInfosConnectors[eIsAutonomous] );
 

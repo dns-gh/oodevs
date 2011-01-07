@@ -72,7 +72,8 @@ enum E_Capacities
     eSealOffCapacity,
     eFirePropagationModifierCapacity,
     eFloodCapacity,
-    eBurnCapacity
+    eBurnCapacity,
+    eUniversalCapacity
 };
 
 template< E_Capacities T, typename DefaultFieldsHolderType = NullType >

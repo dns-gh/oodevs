@@ -3009,6 +3009,10 @@ du tireur</translation>
         <source>Density: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Universal</source>
+        <translation>Universel</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>
@@ -4721,7 +4725,19 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source>0m</source>
+        <translation>0m</translation>
+    </message>
+    <message>
+        <source>1m</source>
+        <translation>1m</translation>
+    </message>
+    <message>
+        <source>&gt;1m</source>
+        <translation>&gt;1m</translation>
     </message>
 </context>
 <context>
@@ -4923,6 +4939,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Urban area efficiency</source>
         <translation>Efficacité zone urbaine</translation>
+    </message>
+    <message>
+        <source>Crossing height</source>
+        <translation>Hauteur de franchissement</translation>
     </message>
 </context>
 <context>
@@ -5902,6 +5922,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Unit types - Invalid &apos;Atlas&apos; attribute &apos;%1&apos;</source>
         <translation>Type de pion - Type ATLAS &quot;%1&quot; invalide</translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid crossing height &apos;%1&apos;</source>
+        <translation>Type de pion - Hauteur de franchissement invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

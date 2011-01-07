@@ -206,6 +206,15 @@ ADN_Tr::T_ConverterSpeedImpact ADN_Tr::speedImpactConverter_[] =
 };
 
 
+ADN_Tr::T_ConverterCrossingHeight ADN_Tr::crossingHeightConverter_[] =
+{
+    T_ConverterCrossingHeight( "0m",  QT_TRANSLATE_NOOP( "ADN_Tr", "0m" ),  eCrossingHeight_Never ),
+    T_ConverterCrossingHeight( "1m",  QT_TRANSLATE_NOOP( "ADN_Tr", "1m" ),  eCrossingHeight_LowAreas ),
+    T_ConverterCrossingHeight( ">1m", QT_TRANSLATE_NOOP( "ADN_Tr", ">1m" ), eCrossingHeight_Always ),
+    T_ConverterCrossingHeight( "", "", (E_CrossingHeight)-1 )
+};
+
+
 ADN_Tr::T_ConverterSensorWeatherModifiers ADN_Tr::sensorWeatherModifiersConverter_[] =
 {
     T_ConverterSensorWeatherModifiers( "PasDePrecipitation", QT_TRANSLATE_NOOP( "ADN_Tr", "No rainfall" ),eSensorWeatherModifiers_PasDePrecipitation ),
@@ -411,6 +420,16 @@ const std::string& ADN_Tr::ConvertFromSpeedImpact( E_SpeedImpact nValue, E_Conve
 
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromCrossingHeight
+// Created: JSR 2011-01-03
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromCrossingHeight( E_CrossingHeight nValue, E_Conversion nConversion )
+{
+    return ADN_Tr::InverseFindInConverter( crossingHeightConverter_, nValue, nConversion );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromSensorWeatherModifiers
 // Created: APE 2005-03-07
 // -----------------------------------------------------------------------------
@@ -597,6 +616,16 @@ E_SpeedImpact ADN_Tr::ConvertToSpeedImpact( const std::string& strName )
 
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToCrossingHeight
+// Created: JSR 2011-01-03
+// -----------------------------------------------------------------------------
+E_CrossingHeight ADN_Tr::ConvertToCrossingHeight( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( crossingHeightConverter_, strName );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToSensorWeatherModifiers
 // Created: APE 2005-03-07
 // -----------------------------------------------------------------------------
@@ -715,6 +744,7 @@ void ADN_Tr::InitTranslations()
     InitTr( agentTypeAutomateConverter_, "ADN_Tr" );
     InitTr( natureAtlasTypeConverter_, "ADN_Tr" );
     InitTr( speedImpactConverter_, "ADN_Tr" );
+    InitTr( crossingHeightConverter_, "ADN_Tr" );
     InitTr( sensorWeatherModifiersConverter_, "ADN_Tr" );
     InitTr( doctorSkillsConverter_, "ADN_Tr" );
     InitTr( protectionTypeConverter_, "ADN_Tr" );

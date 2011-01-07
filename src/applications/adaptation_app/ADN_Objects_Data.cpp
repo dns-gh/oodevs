@@ -1162,6 +1162,7 @@ INIT_DATA( ADN_CapacityInfos_SealOff         , "SealOff",           "sealoff" );
 INIT_DATA( ADN_CapacityInfos_FirePropagationModifier, "FirePropagationModifier", "fire-propagation-modifier" );
 INIT_DATA( ADN_CapacityInfos_Burn            , "Burn",              "burn" );
 INIT_DATA( ADN_CapacityInfos_Flood           , "Flood",             "flood" );
+INIT_DATA( ADN_CapacityInfos_Universal       , "Universal",         "universal" );
 
 #pragma warning( pop )
 
@@ -1242,6 +1243,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_FirePropagationModifier::TAG ].reset( new ADN_CapacityInfos_FirePropagationModifier() );
     capacities_[ ADN_CapacityInfos_Burn::TAG ].reset( new ADN_CapacityInfos_Burn() );
     capacities_[ ADN_CapacityInfos_Flood::TAG ].reset( new ADN_CapacityInfos_Flood() );
+    capacities_[ ADN_CapacityInfos_Universal::TAG ].reset( new ADN_CapacityInfos_Universal() );
 }
 
 // -----------------------------------------------------------------------------

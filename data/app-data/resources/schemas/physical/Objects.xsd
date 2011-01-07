@@ -368,6 +368,7 @@
         <xs:element name="crowd-obstacle" minOccurs="0"/>
         <xs:element name="burn" minOccurs="0"/>
         <xs:element name="flood" minOccurs="0"/>
+        <xs:element name="universal" minOccurs="0"/>
       </xs:all>
     </xs:complexType>
 
