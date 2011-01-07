@@ -106,7 +106,7 @@ function Polygon.create( name, type, points )
     return new
 end
 
-function Polygon.create( type, points )
+function Polygon.creat( type, points )
     local new = {}
     setmetatable( new, Polygon )
     new.type = type
@@ -128,9 +128,8 @@ function LocationComposite.create( name, type, points )
     setmetatable( new, LocationComposite )
     new.type = type
     new.name = name
-    Trace(points)
-	if type == "polygon" then
-		new.children = { Polygon.create( "polygon", points ) }
+    if type == "polygon" then
+		new.children = { Polygon.creat( "polygon", { points } ) }
 	elseif type == "point" then
 		new.children = { Point.create( points ) }
     end
@@ -183,18 +182,29 @@ function GenObject.create( name, type, value, point )
     return new
 end
 
+function GenObject.creat( name, type, value, point )
+    local new = {}
+    setmetatable( new, GenObject )
+    new.type = type
+    new.value = value
+    new.name = name
+    new.children = { Location.create( "polygon", "1" ) }
+	PointLocation.creat( point )
+    return new
+end
+
 --------------------------------------------------------------------------------
 -- PlannedWork
 --------------------------------------------------------------------------------
 PlannedWork = {}
 PlannedWork.__index = PlannedWork
 
-function PlannedWork.create( name, point, truc )
+function PlannedWork.create( name, point )
     local new = {}
     setmetatable( new, PlannedWork )
     new.type = "plannedwork"
     new.name = name
-    new.children = { GenObject.create( "Travaux (élément 1)", "obstacle", "barricade", point ) }
+    new.children = { GenObject.creat( "Travaux (U+00E9lU+00E9ment 1)", "obstacle", "barricade", point ) }
     return new
 end
 
@@ -257,6 +267,27 @@ end
 
 
 --------------------------------------------------------------------------------
+-- ObjectKnowledgeList
+--------------------------------------------------------------------------------
+ObjectKnowledgeList = {}
+ObjectKnowledgeList.__index = ObjectKnowledgeList
+
+function ObjectKnowledgeList.Create( name, objectKnowledges )
+    local new = {}
+    setmetatable( new, ObjectKnowledgeList )
+    new.type = "objectknowledge"
+    new[ "min-occurs" ] = "1"
+    new[ "max-occurs" ] = "unbounded"
+    new.name = name
+    new.children = {}
+    for _, v in ipairs( objectKnowledges ) do
+        new.children[#new.children + 1] = { name = name, type = "objectknowledge", value = v }
+    end
+    return new
+end
+
+
+--------------------------------------------------------------------------------
 -- Line
 --------------------------------------------------------------------------------
 Line = {}
@@ -307,6 +338,15 @@ function PointLocation.create( name, coordinates, type )
     setmetatable( new, PointLocation )
     new.name = name
     new.type = type
+    new.children = { Point.create( coordinates ) }
+    return new
+end
+
+function PointLocation.creat( coordinates )
+    local new = {}
+    setmetatable( new, PointLocation )
+    new.name = "Location"
+    new.type = "location"
     new.children = { Point.create( coordinates ) }
     return new
 end
@@ -414,5 +454,5 @@ FragOrder = {}
 FragOrder.__index = FragOrder
 
 function FragOrder.create( target, id )
-	return Order.create( target, id, "fragorder" )
+    return Order.create( target, id, "fragorder" )
 end
