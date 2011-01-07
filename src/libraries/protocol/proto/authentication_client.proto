@@ -14,10 +14,10 @@ package sword;
 
 /** @struct AuthenticationResponse
     @brief A response message to an @ref AuthenticationRequest.
-    
-    This message is sent in response to an authentication request. It contains 
+
+    This message is sent in response to an authentication request. It contains
     an error code indicating the success of the operation or failure with reason.
-    In case of failure, it contains a short description of available profiles so 
+    In case of failure, it contains a short description of available profiles so
     that client applications can prompt the user with a list of profiles.
 */
 message AuthenticationResponse {
@@ -67,7 +67,7 @@ message AuthenticationResponse {
 
 /** @struct ProfileCreation
     @brief A profile creation message.
-    
+
     This message is sent when a profile is created. This can occur:
     @li When connecting to a running exercise; creation of all available profiles are notified to client
     @li During the game, upon manual creation of a profile by an authorised user (supervisor)
@@ -82,7 +82,7 @@ message ProfileCreation {
 
 /** @struct ProfileCreationRequestAck
     @brief A profile creation request acknowledgement message.
-    
+
     This message is sent when a profile is created manually by an authorised user (supervisor).
 */
 message ProfileCreationRequestAck {
@@ -110,7 +110,7 @@ message ProfileCreationRequestAck {
 
 /** @struct ProfileUpdateRequestAck
     @brief A profile update request acknowledgement message.
-    
+
     This message is sent when a profile is updated manually by an authorised user (supervisor).
 */
 message ProfileUpdateRequestAck {
@@ -139,8 +139,8 @@ message ProfileUpdateRequestAck {
 
 /** @struct ProfileUpdate
     @brief A profile update message.
-    
-    This message is sent when a profile is updated during the game by 
+
+    This message is sent when a profile is updated during the game by
     an authorised user (supervisor).
 */
 message ProfileUpdate {
@@ -157,7 +157,7 @@ message ProfileUpdate {
 
 /** @struct ProfileDestruction
     @brief A profile destruction message.
-    
+
     This message is sent:
     @li When a profile is destroyed during the game by an authorised user (supervisor).
     @li When the exercise terminates.
@@ -171,7 +171,7 @@ message ProfileDestruction {
 
 /** @struct ProfileDestructionRequestAck
     @brief A profile destruction request acknowledgement message.
-    
+
     This message is sent when a profile is destroyed manually by an authorised user (supervisor).
 */
 message ProfileDestructionRequestAck {
@@ -198,7 +198,7 @@ message ProfileDestructionRequestAck {
 
 /** @struct RoleType
     @brief Defines a role played by a profile during the game.
-    
+
     Profile roles are listed in file "resources/Extensions.xml" (profile-attributes).
 */
 message RoleType {
@@ -210,7 +210,7 @@ message RoleType {
 
 /** @struct Profile
     @brief Profile data: login, password, access-rights...
-    
+
     The profile information can be set :
     @li During exercise preparation, creating "exercise/profiles.xml" loaded by Dispatcher at runtime.
     @li During exercise gaming, manually creating or editing profile information.
@@ -218,36 +218,36 @@ message RoleType {
 message Profile {
     /** @property login
         @brief The login is the profile unique identifier.
-        
+
         Profile login is the only mandatory parameter during authentication process.
     */
     required string          login                   = 1;
     /** @property password
-        @brief The password is optional and allows the protection of a profile 
+        @brief The password is optional and allows the protection of a profile
                during the authentication process.
     */
     optional string          password                = 2;
     /** @property read_only_formations
         @brief A list of "formation" identifiers which can be viewed by this profile.
         @see FormationIdList
-        
-        Profile with read-only permissions can only see the situation from the 
+
+        Profile with read-only permissions can only see the situation from the
         specified units but cannot control them.
     */
     optional FormationIdList read_only_formations    = 3;
     /** @property read_write_formations
         @brief A list of "Formation" identifiers which can be viewed and controlled by this profile.
         @see FormationIdList
-        
-        Profile with read-write permissions can see the situation from the 
+
+        Profile with read-write permissions can see the situation from the
         specified units and control them.
     */
     optional FormationIdList read_write_formations   = 4;
     /** @property read_only_automates
         @brief A list of "automat" identifiers which can be viewed by this profile.
         @see AutomatIdList
-        
-        Profile with read-only permissions can only see the situation from the 
+
+        Profile with read-only permissions can only see the situation from the
         specified units but cannot control them.
 
         @todo translation
@@ -256,53 +256,53 @@ message Profile {
     /** @property read_write_automates
         @brief A list of "automat" identifiers which can be viewed and controlled by this profile.
         @see AutomatIdList
-        
-        Profile with read-write permissions can see the situation from the 
+
+        Profile with read-write permissions can see the situation from the
         specified units and control them.
-        
+
         @todo translation
     */
     optional AutomatIdList   read_write_automates    = 6;
     /** @property read_only_camps
         @brief A list of "party" identifiers which can be viewed by this profile.
         @see PartyIdList
-        
-        Profile with read-only permissions can only see the situation from the 
+
+        Profile with read-only permissions can only see the situation from the
         specified units but cannot control them.
-        
+
         @todo translation
     */
     optional PartyIdList     read_only_camps         = 7;
     /** @property read_write_camps
         @brief A list of "party" identifiers which can be viewed and controlled by this profile.
         @see PartyIdList
-        
-        Profile with read-write permissions can see the situation from the 
+
+        Profile with read-write permissions can see the situation from the
         specified units and control them.
-        
+
         @todo translation
     */
     optional PartyIdList     read_write_camps        = 8;
     /** @property read_only_crowds
         @brief A list of "crowd" identifiers which can be viewed by this profile.
         @see CrowdIdList
-        
-        Profile with read-only permissions can only see the situation from the 
+
+        Profile with read-only permissions can only see the situation from the
         specified units but cannot control them.
     */
     optional CrowdIdList     read_only_crowds        = 9;
     /** @property read_write_crowds
         @brief A list of "crowd" identifiers which can be viewed and controlled by this profile.
         @see CrowdIdList
-        
-        Profile with read-write permissions can see the situation from the 
+
+        Profile with read-write permissions can see the situation from the
         specified units and control them.
     */
     optional CrowdIdList     read_write_crowds       = 10;
     /** @property supervisor
         @brief A flag indicating whether the profile is granted supervisor access.
-        
-        Supervisor access grants a profile the right to execute "magic actions" such as 
+
+        Supervisor access grants a profile the right to execute "magic actions" such as
         Teleporting or recompleting a unit. It can also edit profiles and control the
         simulation (pause, resume, changing speed factor).
     */
@@ -310,8 +310,8 @@ message Profile {
     /** @property role
         @brief A role associated with the profile.
         @see RoleType
-        
-        The role has no impact on the simulation, it is purely intended for exercise 
+
+        The role has no impact on the simulation, it is purely intended for exercise
         organisation purpose, so that the different roles can be identified (DIREX, ENIEX...).
         The list of roles can be customized from the file "resources/Extensions.xml".
     */
@@ -331,10 +331,10 @@ message ProfileDescriptionList {
 
 /** @struct ProfileDescription
     @brief A short profile description.
-    
+
     This description is when authentication fail in order to provide
     the client with a short list of available profiles without access rights.
-    
+
     @todo should be nested inside AuthenticationResponse
 */
 message ProfileDescription {
@@ -358,7 +358,7 @@ message ProfileDescription {
 
 /** @struct AuthenticationToClient
     @brief A facade for all available messages going from authentication to client.
-    
+
     This is the actual message sent over the network.
 */
 message AuthenticationToClient {
@@ -377,11 +377,11 @@ message AuthenticationToClient {
     }
     /** @property context
         @brief Identifies the request matching the response.
-        
-        This field is filled using the "context" fields provided in the request 
+
+        This field is filled using the "context" fields provided in the request
         message (from ClientToAuthentication).
-        This context allows the client application to put an unique identifier 
-        (based for instance on MAC address), thus allowing to track response 
+        This context allows the client application to put an unique identifier
+        (based for instance on MAC address), thus allowing to track response
         message matching a specific request emitted by the client.
     */
     optional int32   context = 1;
