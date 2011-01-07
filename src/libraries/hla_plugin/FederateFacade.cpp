@@ -58,6 +58,9 @@ FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& mod
 // -----------------------------------------------------------------------------
 FederateFacade::~FederateFacade()
 {
+    agentClass_.release();
+    if( joined_ )
+        federate_->Resign();
     model_.UnregisterFactory( *factory_ );
 }
 
