@@ -28,10 +28,7 @@ enum EnumLogSupplyHandlingStatus {
 
 /** @struct OrderAck
     @brief A container for order acknowledgement error message
-    @see UnitOrder
-    @see AutomatOrder
-    @see CrowdOrder
-    @see FragOrder
+    @see UnitOrder AutomatOrder CrowdOrder FragOrder
 */
 message OrderAck {
     /** @enum ErrorCode
@@ -58,7 +55,9 @@ message OrderAck {
 /** @struct TaskCreationRequestAck
     @brief An agent order execution request acknowledgement message.
 
-    This message is sent when an agent order is issued in response to a client request (UnitOrder).
+    This message is sent when an agent order is issued in response to a client request
+
+    @see UnitOrder
     @todo rename to TaskCreationRequestAck, gather UnitOrder, AutomatOrder and CrowdOrder into one message
 */
 message TaskCreationRequestAck {

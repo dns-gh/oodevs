@@ -32,7 +32,7 @@ namespace sword
     class ControlBeginTick;
     class ObjectMagicActionAck;
     class LimitCreation;
-    class LimaCreation;
+    class PhaseLineCreation;
 }
 
 namespace plugins
@@ -62,7 +62,7 @@ public:
     //! @name sword
     //@{
     virtual void Update( const sword::LimitCreation& msg ) = 0;
-    virtual void Update( const sword::LimaCreation& msg ) = 0;
+    virtual void Update( const sword::PhaseLineCreation& msg ) = 0;
     //@}
     
 

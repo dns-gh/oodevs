@@ -160,15 +160,15 @@ namespace sword
     class LimitCreationRequestAck;
     class LimitUpdateRequestAck;
     class LimitDestructionRequestAck;
-    class LimaCreationRequestAck;
-    class LimaUpdateRequestAck;
-    class LimaDestructionRequestAck;
+    class PhaseLineCreationAck;
+    class PhaseLineUpdateRequestAck;
+    class PhaseLineDestructionRequestAck;
     class LimitCreation;
     class LimitUpdate;
     class LimitDestruction;
-    class LimaCreation;
-    class LimaUpdate;
-    class LimaDestruction;
+    class PhaseLineCreation;
+    class PhaseLineUpdate;
+    class PhaseLineDestruction;
     class MessengerToClient;
     class IntelligenceCreation;
     class IntelligenceUpdate;
@@ -349,15 +349,15 @@ private:
     void OnReceiveLimitCreationRequestAck    ( const sword::LimitCreationRequestAck&    message);
     void OnReceiveLimitUpdateRequestAck      ( const sword::LimitUpdateRequestAck&      message);
     void OnReceiveLimitDestructionRequestAck ( const sword::LimitDestructionRequestAck& message);
-    void OnReceiveLimaCreationRequestAck     ( const sword::LimaCreationRequestAck&     message);
-    void OnReceiveLimaUpdateRequestAck       ( const sword::LimaUpdateRequestAck&       message);
-    void OnReceiveLimaDestructionRequestAck  ( const sword::LimaDestructionRequestAck&  message);
+    void OnReceiveLimaCreationRequestAck     ( const sword::PhaseLineCreationAck&     message);
+    void OnReceiveLimaUpdateRequestAck       ( const sword::PhaseLineUpdateRequestAck&       message);
+    void OnReceiveLimaDestructionRequestAck  ( const sword::PhaseLineDestructionRequestAck&  message);
     void OnReceiveLimitCreation              ( const sword::LimitCreation&              message );
     void OnReceiveLimitUpdate                ( const sword::LimitUpdate&                message );
     void OnReceiveLimitDestruction           ( const sword::LimitDestruction&           message );
-    void OnReceiveLimaCreation               ( const sword::LimaCreation&               message );
-    void OnReceiveLimaUpdate                 ( const sword::LimaUpdate&                 message );
-    void OnReceiveLimaDestruction            ( const sword::LimaDestruction&            message );
+    void OnReceiveLimaCreation               ( const sword::PhaseLineCreation&               message );
+    void OnReceiveLimaUpdate                 ( const sword::PhaseLineUpdate&                 message );
+    void OnReceiveLimaDestruction            ( const sword::PhaseLineDestruction&            message );
 
     // Magic
     void OnReceiveMagicActionAck( const sword::MagicActionAck& message, unsigned long nCtx );

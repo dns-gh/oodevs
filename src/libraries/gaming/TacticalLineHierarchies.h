@@ -30,7 +30,7 @@ namespace kernel
 // Created: SBO 2006-11-14
 // =============================================================================
 class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
-                              , public kernel::Updatable_ABC< sword::LimaUpdate >
+                              , public kernel::Updatable_ABC< sword::PhaseLineUpdate >
                               , public kernel::Updatable_ABC< sword::LimitUpdate >
 {
 public:
@@ -58,7 +58,7 @@ private:
     //! @name Helpers
     //@{
     void Update( const sword::TacticalLine::Diffusion& message );
-    virtual void DoUpdate( const sword::LimaUpdate& message );
+    virtual void DoUpdate( const sword::PhaseLineUpdate& message );
     virtual void DoUpdate( const sword::LimitUpdate& message );
     //@}
 

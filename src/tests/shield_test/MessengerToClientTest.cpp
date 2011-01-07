@@ -68,46 +68,46 @@ BOOST_FIXTURE_TEST_CASE( limit_update_request_ack_to_client_is_converted, Contex
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( lima_creation_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
+BOOST_FIXTURE_TEST_CASE( phase_line_creation_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
 {
-    content.mutable_lima_creation()->mutable_id()->set_id( 12 );
-    FillTacticalLine( content.mutable_lima_creation()->mutable_tactical_line() );
+    content.mutable_phase_line_creation()->mutable_id()->set_id( 12 );
+    FillTacticalLine( content.mutable_phase_line_creation()->mutable_tactical_line() );
     MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_creation { id { id: 12 } tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( lima_update_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
+BOOST_FIXTURE_TEST_CASE( phase_line_update_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
 {
-    content.mutable_lima_update()->mutable_id()->set_id( 12 );
-    FillTacticalLine( content.mutable_lima_update()->mutable_tactical_line() );
+    content.mutable_phase_line_update()->mutable_id()->set_id( 12 );
+    FillTacticalLine( content.mutable_phase_line_update()->mutable_tactical_line() );
     MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_update { id { id: 12 } tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( lima_destruction_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
+BOOST_FIXTURE_TEST_CASE( phase_line_destruction_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
 {
-    content.mutable_lima_destruction()->mutable_id()->set_id( 12 );
+    content.mutable_phase_line_destruction()->mutable_id()->set_id( 12 );
     MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_destruction { id { id: 12 } } }" ) );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( lima_creation_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
+BOOST_FIXTURE_TEST_CASE( phase_line_creation_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
 {
-    content.mutable_lima_creation_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
+    content.mutable_phase_line_creation_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
     MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_creation_request_ack { error_code: error_invalid_geometry } }" ) );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( lima_destruction_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
+BOOST_FIXTURE_TEST_CASE( phase_line_destruction_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
 {
-    content.mutable_lima_destruction_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
+    content.mutable_phase_line_destruction_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
     MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_destruction_request_ack { error_code: error_invalid_geometry } }" ) );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( lima_update_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
+BOOST_FIXTURE_TEST_CASE( phase_line_update_request_ack_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
 {
-    content.mutable_lima_update_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
+    content.mutable_phase_line_update_request_ack()->set_error_code( sword::TacticalLineAck::error_invalid_geometry );
     MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { lima_update_request_ack { error_code: error_invalid_geometry } }" ) );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }

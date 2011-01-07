@@ -127,7 +127,7 @@ void TacticalLine_ABC::WriteDiffusion( sword::TacticalLine::Diffusion& diffusion
 // Name: TacticalLine_ABC::DoUpdate
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::DoUpdate( const sword::LimaUpdate& message )
+void TacticalLine_ABC::DoUpdate( const sword::PhaseLineUpdate& message )
 {
     name_ = message.tactical_line().name().c_str();
 }

@@ -93,7 +93,7 @@ void MessengerToClient::Convert( const sword::LimitDestructionRequestAck& from, 
 // Name: MessengerToClient::Convert
 // Created: MCO 2010-11-08
 // -----------------------------------------------------------------------------
-void MessengerToClient::Convert( const sword::LimaCreation& from, MsgsMessengerToClient::MsgLimaCreation* to )
+void MessengerToClient::Convert( const sword::PhaseLineCreation& from, MsgsMessengerToClient::MsgLimaCreation* to )
 {
     ConvertLimit( from, to );
 }
@@ -102,7 +102,7 @@ void MessengerToClient::Convert( const sword::LimaCreation& from, MsgsMessengerT
 // Name: MessengerToClient::Convert
 // Created: MCO 2010-11-08
 // -----------------------------------------------------------------------------
-void MessengerToClient::Convert( const sword::LimaUpdate& from, MsgsMessengerToClient::MsgLimaUpdate* to )
+void MessengerToClient::Convert( const sword::PhaseLineUpdate& from, MsgsMessengerToClient::MsgLimaUpdate* to )
 {
     ConvertLimit( from, to );
 }
@@ -111,7 +111,7 @@ void MessengerToClient::Convert( const sword::LimaUpdate& from, MsgsMessengerToC
 // Name: MessengerToClient::Convert
 // Created: MCO 2010-11-08
 // -----------------------------------------------------------------------------
-void MessengerToClient::Convert( const sword::LimaDestruction& from, MsgsMessengerToClient::MsgLimaDestruction* to )
+void MessengerToClient::Convert( const sword::PhaseLineDestruction& from, MsgsMessengerToClient::MsgLimaDestruction* to )
 {
     CONVERT_ID( id );
 }
@@ -120,7 +120,7 @@ void MessengerToClient::Convert( const sword::LimaDestruction& from, MsgsMesseng
 // Name: MessengerToClient::Convert
 // Created: MCO 2010-11-08
 // -----------------------------------------------------------------------------
-void MessengerToClient::Convert( const sword::LimaCreationRequestAck& from, MsgsMessengerToClient::MsgLimaCreationRequestAck* to )
+void MessengerToClient::Convert( const sword::PhaseLineCreationAck& from, MsgsMessengerToClient::MsgLimaCreationRequestAck* to )
 {
     ConvertTacticalLineErrorCode( from, to );
 }
@@ -129,7 +129,7 @@ void MessengerToClient::Convert( const sword::LimaCreationRequestAck& from, Msgs
 // Name: MessengerToClient::Convert
 // Created: MCO 2010-11-08
 // -----------------------------------------------------------------------------
-void MessengerToClient::Convert( const sword::LimaUpdateRequestAck& from, MsgsMessengerToClient::MsgLimaUpdateRequestAck* to )
+void MessengerToClient::Convert( const sword::PhaseLineUpdateRequestAck& from, MsgsMessengerToClient::MsgLimaUpdateRequestAck* to )
 {
     ConvertTacticalLineErrorCode( from, to );
 }
@@ -138,7 +138,7 @@ void MessengerToClient::Convert( const sword::LimaUpdateRequestAck& from, MsgsMe
 // Name: MessengerToClient::Convert
 // Created: MCO 2010-11-08
 // -----------------------------------------------------------------------------
-void MessengerToClient::Convert( const sword::LimaDestructionRequestAck& from, MsgsMessengerToClient::MsgLimaDestructionRequestAck* to )
+void MessengerToClient::Convert( const sword::PhaseLineDestructionRequestAck& from, MsgsMessengerToClient::MsgLimaDestructionRequestAck* to )
 {
     ConvertTacticalLineErrorCode( from, to );
 }

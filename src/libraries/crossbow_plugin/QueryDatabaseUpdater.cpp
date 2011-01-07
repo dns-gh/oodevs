@@ -229,7 +229,7 @@ void QueryDatabaseUpdater::Update( const sword::LimitCreation& msg )
 // Name: QueryDatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const sword::LimaCreation& msg )
+void QueryDatabaseUpdater::Update( const sword::PhaseLineCreation& msg )
 {
     InsertQueryBuilder builder( database_.GetTableName( "BoundaryLimits" ) );
 

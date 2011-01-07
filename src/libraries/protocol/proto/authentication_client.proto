@@ -380,6 +380,7 @@ message AuthenticationToClient {
 
         This field is filled using the "context" fields provided in the request
         message (from ClientToAuthentication).
+
         This context allows the client application to put an unique identifier
         (based for instance on MAC address), thus allowing to track response
         message matching a specific request emitted by the client.

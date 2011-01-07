@@ -11,37 +11,35 @@ import "common.proto";
 
 package sword;
 
-/** @struct LimaCreationRequest
+/** @struct PhaseLineCreationRequest
     @brief A message to request the creation of a phase line
 
-    @see LimaCreationRequestAck
-    @see LimaCreation
-    @todo translation: rename into PhaseLineCreationRequest
+    @see PhaseLineCreationAck
+    @see PhaseLineCreation
 */
-message LimaCreationRequest {
+message PhaseLineCreationRequest {
     required TacticalLine tactical_line = 1; //!< The phase line data to use for creation @see TacticalLine
 }
 
-/** @struct LimaUpdateRequest
+/** @struct PhaseLineUpdateRequest
     @brief A message to request the update of a phase line
 
-    @see LimaUpdateRequestAck
-    @see LimaUpdate
-    @todo translation: rename into PhaseLineUpdateRequest
+    @see PhaseLineUpdateRequestAck
+    @see PhaseLineUpdate
 */
-message LimaUpdateRequest {
+message PhaseLineUpdateRequest {
     required TacticalLineId id            = 1; //!< The identifier of the phase line to update @see TacticalLineId
     optional TacticalLine   tactical_line = 2; //!< Specifies the phase line data to use for update @see TacticalLine @bug should not be optional
 }
 
-/** @struct LimaDestructionRequest
+/** @struct PhaseLineDestructionRequest
     @brief A message to request the destruction of a phase line
 
-    @see LimaDestructionRequestAck
-    @see LimaDestruction
+    @see PhaseLineDestructionRequestAck
+    @see PhaseLineDestruction
     @todo translation: rename into PhaseLineDestructionRequest
 */
-message LimaDestructionRequest {
+message PhaseLineDestructionRequest {
     required TacticalLineId id = 1; //!< The identifier of the phase line to destroy @see TacticalLineId
 }
 
@@ -106,117 +104,69 @@ message IntelligenceUpdateRequest {
 }
 
 /** @struct IntelligenceDestructionRequest
-    @brief A message to request intelligence destruction.
+    @brief A message to request the destruction of an intelligence
 
-    This message requests the destruction of an existing intelligence.
-    @li A IntelligenceDestructionRequestAck message is sent to acknowledge the intelligence destruction.
-    @li A IntelligenceDestruction message is sent to all clients to notify the actual destruction of the intelligence.
+    @see IntelligenceDestructionRequestAck
+    @see IntelligenceDestruction
 */
 message IntelligenceDestructionRequest {
-    /** @property id
-        @brief The identifier of the intelligence to destroy.
-        @see IntelligenceId
-    */
-    required IntelligenceId id = 1;
+    required IntelligenceId id = 1; //!< The identifier of the intelligence to destroy @see IntelligenceId
 }
 
 /** @struct ShapeCreationRequest
-    @brief A message to request shape creation.
+    @brief A message to request the creation of a shape
 
-    This message requests the creation of a shape.
-    @li A ShapeCreationRequestAck message is sent to acknowledge the shape creation.
-    @li A ShapeCreation message is sent to all clients to notify the actual creation of the shape.
-
+    @see ShapeCreationRequestAck
+    @see ShapeCreation
     @todo rename into Drawing/Graphics
 */
 message ShapeCreationRequest {
-    /** @property shape
-        @brief The shape data to use for creation.
-        @see Shape
-    */
-    required Shape shape = 1;
+    required Shape shape = 1; //!< The shape data to use for creation @see Shape
 }
 
 /** @struct ShapeUpdateRequest
-    @brief A message to request shape update.
+    @brief A message to request the update of a shape
 
-    This message requests the update of an existing shape.
-    @li A ShapeUpdateRequestAck message is sent to acknowledge the shape update.
-    @li A ShapeUpdate message is sent to all clients to notify the actual update of the shape.
+    Optional fields need only be set if the data needs to be updated.
 
+    @see ShapeUpdateRequestAck
+    @see ShapeUpdate
     @todo rename into Drawing/Graphics
 */
 message ShapeUpdateRequest {
-    /** @property shape
-        @brief The identifier of the shape to update.
-        @see DrawingId
-        @todo should be named "id" instead of "shape" (coherence)
-    */
-    required DrawingId           shape    = 1;
-    /** @property category
-        @brief The new category of the shape.
-        @note Only needs to be set if data has changed.
-    */
-    optional string              category = 2;
-    /** @property color
-        @brief The new color of the shape.
-
-        Format is hexadecimal \#rrggbb.
-        @note Only needs to be set if data has changed.
-    */
-    optional string              color    = 3;
-    /** @property template
-        @brief The new template of the shape.
-        @note Only needs to be set if data has changed.
-        @todo rename into pattern
-    */
-    optional string              template = 4;
-    /** @property points
-        @brief The new points of the shape.
-        @see CoordLatLongList
-        @note Only needs to be set if data has changed.
-    */
-    optional CoordLatLongList    points   = 5;
+    required DrawingId        shape    = 1; //!< The identifier of the shape to update @see DrawingId @todo should be named "id" instead of "shape" (coherence)
+    optional string           category = 2; //!< The new category of the shape
+    optional string           color    = 3; //!< The new color of the shape as hexadecimal \#rrggbb @todo should be a Color message
+    optional string           template = 4; //!< The new template of the shape @todo rename into pattern
+    optional CoordLatLongList points   = 5; //!< The new points of the shape @see CoordLatLongList
 }
 
 /** @struct ShapeDestructionRequest
-    @brief A message to request shape destruction.
+    @brief A message to request the destruction of a shape
 
-    This message requests the destruction of an existing shape.
-    @li A ShapeDestructionRequestAck message is sent to acknowledge the shape destruction.
-    @li A ShapeDestruction message is sent to all clients to notify the actual destruction of the shape.
-
+    @see ShapeDestructionRequestAck
+    @see ShapeDestruction
     @todo rename into Drawing/Graphics
 */
 message ShapeDestructionRequest {
-    /** @property id
-        @brief The identifier of the shape to destroy.
-        @see DrawingId
-    */
-    required DrawingId id = 1;
+    required DrawingId id = 1; //!< The identifier of the shape to destroy @see DrawingId
 }
 
 /** @struct MarkerCreationRequest
-    @brief A message to request marker creation.
+    @brief A message to request the creation of a marker
 
-    This message requests the creation of a marker.
-    @li A MarkerCreationRequestAck message is sent to acknowledge the marker creation.
-    @li A MarkerCreation message is sent to all clients to notify the actual creation of the marker.
+    @see MarkerCreationRequestAck
+    @see MarkerCreation
 */
 message MarkerCreationRequest {
-    /** @property marker
-        @brief The marker data to use for creation.
-        @see Marker
-    */
-    required Marker marker = 1;
+    required Marker marker = 1; //!< The marker data to use for creation @see Marker
 }
 
 /** @struct MarkerUpdateRequest
-    @brief A message to request marker update.
+    @brief A message to request the update of a marker
 
-    This message requests the update of an existing marker.
-    @li A MarkerUpdateRequestAck message is sent to acknowledge the marker update.
-    @li A MarkerUpdate message is sent to all clients to notify the actual update of the marker.
+    @see MarkerUpdateRequestAck
+    @see MarkerUpdate
 */
 message MarkerUpdateRequest {
     /** @property marker
@@ -350,116 +300,36 @@ message ClientToMessenger {
         @warning Each Content message must contain exactly one of the possible messages.
     */
     message Content {
-        /** @property limit_creation_request
-            @brief A limit creation request message.
-            @see LimitCreationRequest
-        */
-        optional LimitCreationRequest           limit_creation_request            = 1;
-        /** @property limit_destruction_request
-            @brief A limit destruction request message.
-            @see LimitDestructionRequest
-        */
-        optional LimitDestructionRequest        limit_destruction_request         = 2;
-        /** @property limit_update_request
-            @brief A limit update request message.
-            @see LimitUpdateRequest
-        */
-        optional LimitUpdateRequest             limit_update_request              = 3;
-        /** @property lima_creation_request
-            @brief A lima creation request message.
-            @see LimaCreationRequest
-            @todo rename into phase_line_creation_request
-        */
-        optional LimaCreationRequest            lima_creation_request             = 4;
-        /** @property lima_destruction_request
-            @brief A lima destruction request message.
-            @see LimaDestructionRequest
-            @todo rename into phase_line_destruction_request
-        */
-        optional LimaDestructionRequest         lima_destruction_request          = 5;
-        /** @property lima_update_request
-            @brief A lima update request message.
-            @see LimaUpdateRequest
-            @todo rename into phase_line_update_request
-        */
-        optional LimaUpdateRequest              lima_update_request               = 6;
-        /** @property intelligence_creation_request
-            @brief A intelligence creation request message.
-            @see IntelligenceCreationRequest
-        */
-        optional IntelligenceCreationRequest    intelligence_creation_request     = 7;
-        /** @property intelligence_update_request
-            @brief A intelligence update request message.
-            @see IntelligenceUpdateRequest
-        */
-        optional IntelligenceUpdateRequest      intelligence_update_request       = 8;
-        /** @property intelligence_destruction_request
-            @brief A intelligence destruction request message.
-            @see IntelligenceDestructionRequest
-        */
-        optional IntelligenceDestructionRequest intelligence_destruction_request  = 9;
-        /** @property shape_creation_request
-            @brief A shape creation request message.
-            @see ShapeCreationRequest
-            @todo rename into drawings/graphics_creation_request
-        */
-        optional ShapeCreationRequest           shape_creation_request            = 10;
-        /** @property shape_destruction_request
-            @brief A shape destruction request message.
-            @see ShapeDestructionRequest
-            @todo rename into drawings/graphics_destruction_request
-        */
-        optional ShapeDestructionRequest        shape_destruction_request         = 11;
-        /** @property shape_update_request
-            @brief A shape update request message.
-            @see ShapeUpdateRequest
-            @todo rename into drawings/graphics_update_request
-        */
-        optional ShapeUpdateRequest             shape_update_request              = 12;
-        /** @property text_message
-            @brief A text message.
-            @see TextMessage
-        */
-        optional TextMessage                    text_message                      = 13;
-        /** @property marker_creation_request
-            @brief A marker creation request message.
-            @see MarkerCreationRequest
-        */
-        optional MarkerCreationRequest          marker_creation_request           = 14;
-        /** @property marker_update_request
-            @brief A marker update request message.
-            @see MarkerUpdateRequest
-        */
-        optional MarkerUpdateRequest            marker_update_request             = 15;
-        /** @property marker_destruction_request
-            @brief A marker destruction request message.
-            @see MarkerDestructionRequest
-        */
-        optional MarkerDestructionRequest       marker_destruction_request        = 16;
-        /** @property client_object_creation_request
-            @brief A client object creation request message.
-            @see ClientObjectCreationRequest
-        */
-        optional ClientObjectCreationRequest    client_object_creation_request    = 17;
-        /** @property client_object_update_request
-            @brief A client object update request message.
-            @see ClientObjectUpdateRequest
-        */
-        optional ClientObjectUpdateRequest      client_object_update_request      = 18;
-        /** @property client_object_destruction_request
-            @brief A client object destruction request message.
-            @see ClientObjectDestructionRequest
-        */
-        optional ClientObjectDestructionRequest client_object_destruction_request = 19;
+        optional LimitCreationRequest           limit_creation_request            = 1;  //!< @copybrief LimitCreationRequest @see LimitCreationRequest
+        optional LimitDestructionRequest        limit_destruction_request         = 2;  //!< @copybrief LimitDestructionRequest @see LimitDestructionRequest
+        optional LimitUpdateRequest             limit_update_request              = 3;  //!< @copybrief LimitUpdateRequest @see LimitUpdateRequest
+        optional PhaseLineCreationRequest       phase_line_creation_request       = 4;  //!< @copybrief PhaseLineCreationRequest @see PhaseLineCreationRequest
+        optional PhaseLineDestructionRequest    phase_line_destruction_request    = 5;  //!< @copybrief PhaseLineDestructionRequest @see PhaseLineDestructionRequest
+        optional PhaseLineUpdateRequest         phase_line_update_request         = 6;  //!< @copybrief PhaseLineUpdateRequest @see PhaseLineUpdateRequest
+        optional IntelligenceCreationRequest    intelligence_creation_request     = 7;  //!< @copybrief IntelligenceCreationRequest @see IntelligenceCreationRequest
+        optional IntelligenceUpdateRequest      intelligence_update_request       = 8;  //!< @copybrief IntelligenceUpdateRequest @see IntelligenceUpdateRequest
+        optional IntelligenceDestructionRequest intelligence_destruction_request  = 9;  //!< @copybrief IntelligenceDestructionRequest @see IntelligenceDestructionRequest
+        optional ShapeCreationRequest           shape_creation_request            = 10; //!< @copybrief ShapeCreationRequest @see ShapeCreationRequest @todo rename into drawings/graphics_creation_request
+        optional ShapeDestructionRequest        shape_destruction_request         = 11; //!< @copybrief ShapeDestructionRequest @see ShapeDestructionRequest @todo rename into drawings/graphics_destruction_request
+        optional ShapeUpdateRequest             shape_update_request              = 12; //!< @copybrief ShapeUpdateRequest @see ShapeUpdateRequest @todo rename into drawings/graphics_update_request
+        optional TextMessage                    text_message                      = 13; //!< @copybrief TextMessage @see TextMessage
+        optional MarkerCreationRequest          marker_creation_request           = 14; //!< @copybrief MarkerCreationRequest @see MarkerCreationRequest
+        optional MarkerUpdateRequest            marker_update_request             = 15; //!< @copybrief MarkerUpdateRequest @see MarkerUpdateRequest
+        optional MarkerDestructionRequest       marker_destruction_request        = 16; //!< @copybrief MarkerDestructionRequest @see MarkerDestructionRequest
+        optional ClientObjectCreationRequest    client_object_creation_request    = 17; //!< @copybrief ClientObjectCreationRequest @see ClientObjectCreationRequest
+        optional ClientObjectUpdateRequest      client_object_update_request      = 18; //!< @copybrief ClientObjectUpdateRequest @see ClientObjectUpdateRequest
+        optional ClientObjectDestructionRequest client_object_destruction_request = 19; //!< @copybrief ClientObjectDestructionRequest @see ClientObjectDestructionRequest
     }
     /** @property context
         @brief Identifies the request matching the response.
 
-        This field is used to fill the "context" fields in the response message
-        (from MessengerToClient).
+        This field is used to fill the "context" fields in the response message.
+
         This context allows the client application to put an unique identifier
         (based for instance on MAC address), thus allowing to track response
         message matching a specific request emitted by the client.
+
+        @see MessengerToClient
     */
     optional int32   context = 1;
     /** @property message

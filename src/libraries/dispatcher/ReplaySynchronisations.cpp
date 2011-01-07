@@ -107,7 +107,7 @@ DO_UPDATE( sword::KnowledgeGroupCreation );
 DO_UPDATE( sword::Report );
 DO_UPDATE( sword::PartyCreation );
 DO_UPDATE( sword::ObjectCreation );
-DO_UPDATE( sword::LimaCreation );
+DO_UPDATE( sword::PhaseLineCreation );
 DO_UPDATE( sword::LimitCreation );
 DO_UPDATE( sword::CrowdCreation );
 DO_UPDATE( sword::CrowdConcentrationCreation );

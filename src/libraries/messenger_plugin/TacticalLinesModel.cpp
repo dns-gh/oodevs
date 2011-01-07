@@ -146,9 +146,9 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // Name: TacticalLinesModel::HandleLimaRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaCreationRequest& asn )
+void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineCreationRequest& asn )
 {
-    plugins::messenger::LimaCreationRequestAck ack ;
+    plugins::messenger::PhaseLineCreationAck ack ;
     ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
     std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), asn ) );
     limas_.Register( lima->GetID(), *lima );
@@ -161,9 +161,9 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 // Name: TacticalLinesModel::HandleLimaRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaUpdateRequest& asn )
+void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineUpdateRequest& asn )
 {
-    plugins::messenger::LimaUpdateRequestAck ack ;
+    plugins::messenger::PhaseLineUpdateRequestAck ack ;
     ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
     Lima* lima = limas_.Find( asn.id().id() );
     if( lima )
@@ -180,9 +180,9 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 // Name: TacticalLinesModel::HandleLimaRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaDestructionRequest& asn)
+void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineDestructionRequest& asn)
 {
-    plugins::messenger::LimaDestructionRequestAck ack ;
+    plugins::messenger::PhaseLineDestructionRequestAck ack ;
     ack().set_error_code( sword::TacticalLineAck_ErrorCode_no_error );
     Lima* lima = limas_.Find( asn.id().id() );
     if( lima )

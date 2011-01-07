@@ -21,7 +21,7 @@ namespace kernel
 
 namespace sword
 {
-    class LimaCreation;
+    class PhaseLineCreation;
     class LimitCreation;
 }
 
@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    TacticalLine_ABC* Create( const sword::LimaCreation&  message );
+    TacticalLine_ABC* Create( const sword::PhaseLineCreation&  message );
     TacticalLine_ABC* Create( const sword::LimitCreation& message );
 
     void CreateLimit( const T_PointVector& points, const kernel::Entity_ABC& superior );

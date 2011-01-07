@@ -45,7 +45,7 @@ namespace
 // Name: PhaseLine constructor
 // Created: SEB 2010-10-27
 // -----------------------------------------------------------------------------
-PhaseLine::PhaseLine( const Model& model, const sword::LimaCreation& message )
+PhaseLine::PhaseLine( const Model& model, const sword::PhaseLineCreation& message )
     : WiseEntity( message.id().id(), L"phase-line" )
     , name_( message.tactical_line().name().begin(), message.tactical_line().name().end() )
     , superior_( ResolveSuperior( model, message.tactical_line().diffusion() ) )

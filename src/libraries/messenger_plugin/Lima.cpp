@@ -19,7 +19,7 @@ using namespace plugins::messenger;
 // Name: Lima constructor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-Lima::Lima( unsigned int id, const sword::LimaCreationRequest& message )
+Lima::Lima( unsigned int id, const sword::PhaseLineCreationRequest& message )
     : TacticalLine_ABC( id, message.tactical_line() )
 {
     // NOTHING
@@ -48,7 +48,7 @@ Lima::~Lima()
 // Name: Lima::Update
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void Lima::Update( const sword::LimaUpdateRequest& message )
+void Lima::Update( const sword::PhaseLineUpdateRequest& message )
 {
     TacticalLine_ABC::Update( message.tactical_line() );
 }
@@ -59,10 +59,10 @@ void Lima::Update( const sword::LimaUpdateRequest& message )
 // -----------------------------------------------------------------------------
 void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 {
-    sword::LimaCreation creation ;
+    sword::PhaseLineCreation creation ;
     creation.mutable_id()->set_id( GetID() );
     TacticalLine_ABC::Send( *creation.mutable_tactical_line() );
-    plugins::messenger::LimaCreation message;
+    plugins::messenger::PhaseLineCreation message;
     message() = creation;
     message.Send( client );
 }
@@ -73,10 +73,10 @@ void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 // -----------------------------------------------------------------------------
 void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 {
-    sword::LimaUpdate update;
+    sword::PhaseLineUpdate update;
     update.mutable_id()->set_id( GetID() );
     TacticalLine_ABC::Send( *update.mutable_tactical_line() );
-    plugins::messenger::LimaUpdate message( update );
+    plugins::messenger::PhaseLineUpdate message( update );
     message.Send( client );
 }
 
@@ -86,9 +86,9 @@ void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 // -----------------------------------------------------------------------------
 void Lima::SendDestruction( dispatcher::ClientPublisher_ABC& client ) const
 {
-    sword::LimaDestruction destruction;
+    sword::PhaseLineDestruction destruction;
     destruction.mutable_id()->set_id( GetID() );
-    plugins::messenger::LimaDestruction message( destruction );
+    plugins::messenger::PhaseLineDestruction message( destruction );
     message.Send( client );
 }
 

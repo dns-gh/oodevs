@@ -33,7 +33,7 @@ Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kern
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const sword::LimaCreation& message )
+Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const sword::PhaseLineCreation& message )
     : TacticalLine_ABC( QString( message.tactical_line().name().c_str() ) , message.id().id(), publisher, converter )
     , controller_     ( controller )
 {
@@ -60,7 +60,7 @@ void Lima::UpdateToSim( E_State state )
     {
     case eStateCreated:
         {
-            plugins::messenger::LimaCreationRequest message;
+            plugins::messenger::PhaseLineCreationRequest message;
             message().mutable_tactical_line()->set_name( GetName() );
             WriteGeometry ( *message().mutable_tactical_line()->mutable_geometry() );
             WriteDiffusion( *message().mutable_tactical_line()->mutable_diffusion() );
@@ -69,7 +69,7 @@ void Lima::UpdateToSim( E_State state )
         break;
     case eStateModified:
         {
-            plugins::messenger::LimaUpdateRequest message;
+            plugins::messenger::PhaseLineUpdateRequest message;
             message().mutable_id()->set_id( GetId() );
             message().mutable_tactical_line()->set_name( GetName() );
             WriteGeometry ( *message().mutable_tactical_line()->mutable_geometry() );
@@ -78,7 +78,7 @@ void Lima::UpdateToSim( E_State state )
         }
         break;
     case eStateDeleted:
-        plugins::messenger::LimaDestructionRequest message;
+        plugins::messenger::PhaseLineDestructionRequest message;
         message().mutable_id()->set_id( GetId() );
         Send( message );
         break;

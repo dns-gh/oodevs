@@ -55,7 +55,7 @@ public:
     //! @name sword
     //@{
     void Update( const sword::LimitCreation& msg );
-    void Update( const sword::LimaCreation& msg );
+    void Update( const sword::PhaseLineCreation& msg );
     //@}
     
 

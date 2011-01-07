@@ -742,7 +742,7 @@ void AgentServerMsgMgr::OnReceiveLimitDestructionRequestAck( const sword::LimitD
 // Name: AgentServerMsgMgr::OnReceiveLimaCreationAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveLimaCreationRequestAck( const sword::LimaCreationRequestAck& message)
+void AgentServerMsgMgr::OnReceiveLimaCreationRequestAck( const sword::PhaseLineCreationAck& message)
 {
     CheckAcknowledge( logger_, message, "LimaCreationAck" );
 }
@@ -751,7 +751,7 @@ void AgentServerMsgMgr::OnReceiveLimaCreationRequestAck( const sword::LimaCreati
 // Name: AgentServerMsgMgr::OnReceiveLimaUpdateAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveLimaUpdateRequestAck( const sword::LimaUpdateRequestAck& message)
+void AgentServerMsgMgr::OnReceiveLimaUpdateRequestAck( const sword::PhaseLineUpdateRequestAck& message)
 {
     CheckAcknowledge( logger_, message, "LimaUpdateAck" );
 }
@@ -760,7 +760,7 @@ void AgentServerMsgMgr::OnReceiveLimaUpdateRequestAck( const sword::LimaUpdateRe
 // Name: AgentServerMsgMgr::OnReceiveLimaDestructionAck
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveLimaDestructionRequestAck( const sword::LimaDestructionRequestAck& message)
+void AgentServerMsgMgr::OnReceiveLimaDestructionRequestAck( const sword::PhaseLineDestructionRequestAck& message)
 {
     CheckAcknowledge( logger_, message, "LimaDestructionAck" );
 }
@@ -796,7 +796,7 @@ void AgentServerMsgMgr::OnReceiveLimitDestruction( const sword::LimitDestruction
 // Name: AgentServerMsgMgr::OnReceiveLimaCreation
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveLimaCreation( const sword::LimaCreation& message )
+void AgentServerMsgMgr::OnReceiveLimaCreation( const sword::PhaseLineCreation& message )
 {
     GetModel().limits_.Create( message );
 }
@@ -805,7 +805,7 @@ void AgentServerMsgMgr::OnReceiveLimaCreation( const sword::LimaCreation& messag
 // Name: AgentServerMsgMgr::OnReceiveLimaUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveLimaUpdate( const sword::LimaUpdate& message )
+void AgentServerMsgMgr::OnReceiveLimaUpdate( const sword::PhaseLineUpdate& message )
 {
     GetModel().limits_.Get( message.id().id() ).Update( message );
 }
@@ -814,7 +814,7 @@ void AgentServerMsgMgr::OnReceiveLimaUpdate( const sword::LimaUpdate& message )
 // Name: AgentServerMsgMgr::OnReceiveLimaDestruction
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveLimaDestruction( const sword::LimaDestruction& message )
+void AgentServerMsgMgr::OnReceiveLimaDestruction( const sword::PhaseLineDestruction& message )
 {
     GetModel().limits_.DeleteLima( message.id().id() );
 }
@@ -2091,24 +2091,24 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
         OnReceiveLimitUpdateRequestAck     ( wrapper.message().limit_update_request_ack() );
     else if( wrapper.message().has_limit_destruction_request_ack() )
         OnReceiveLimitDestructionRequestAck( wrapper.message().limit_destruction_request_ack() );
-    else if( wrapper.message().has_lima_creation_request_ack() )
-        OnReceiveLimaCreationRequestAck    ( wrapper.message().lima_creation_request_ack() );
-    else if( wrapper.message().has_lima_update_request_ack() )
-        OnReceiveLimaUpdateRequestAck      ( wrapper.message().lima_update_request_ack() );
-    else if( wrapper.message().has_lima_destruction_request_ack() )
-        OnReceiveLimaDestructionRequestAck ( wrapper.message().lima_destruction_request_ack() );
+    else if( wrapper.message().has_phase_line_creation_request_ack() )
+        OnReceiveLimaCreationRequestAck    ( wrapper.message().phase_line_creation_request_ack() );
+    else if( wrapper.message().has_phase_line_update_request_ack() )
+        OnReceiveLimaUpdateRequestAck      ( wrapper.message().phase_line_update_request_ack() );
+    else if( wrapper.message().has_phase_line_destruction_request_ack() )
+        OnReceiveLimaDestructionRequestAck ( wrapper.message().phase_line_destruction_request_ack() );
     else if( wrapper.message().has_limit_creation() )
         OnReceiveLimitCreation   ( wrapper.message().limit_creation() );
     else if( wrapper.message().has_limit_update() )
         OnReceiveLimitUpdate     ( wrapper.message().limit_update() );
     else if( wrapper.message().has_limit_destruction() )
         OnReceiveLimitDestruction ( wrapper.message().limit_destruction() );
-    else if( wrapper.message().has_lima_creation() )
-        OnReceiveLimaCreation    ( wrapper.message().lima_creation() );
-    else if( wrapper.message().has_lima_update() )
-        OnReceiveLimaUpdate      ( wrapper.message().lima_update() );
-    else if( wrapper.message().has_lima_destruction() )
-        OnReceiveLimaDestruction ( wrapper.message().lima_destruction() );
+    else if( wrapper.message().has_phase_line_creation() )
+        OnReceiveLimaCreation    ( wrapper.message().phase_line_creation() );
+    else if( wrapper.message().has_phase_line_update() )
+        OnReceiveLimaUpdate      ( wrapper.message().phase_line_update() );
+    else if( wrapper.message().has_phase_line_destruction() )
+        OnReceiveLimaDestruction ( wrapper.message().phase_line_destruction() );
     else if( wrapper.message().has_intelligence_creation_request_ack() )
         OnReceiveIntelligenceCreationRequestAck   ( wrapper.message().intelligence_creation_request_ack() );
     else if( wrapper.message().has_intelligence_update_request_ack() )

@@ -11,10 +11,10 @@
 #define __PhaseLine_h_
 
 #include "WiseEntity.h"
-#include <list>
 #include <wise/wisevec3.h>
+#include <list>
 
-namespace sword { class LimaCreation; }
+namespace sword { class PhaseLineCreation; }
 
 class Model;
 
@@ -30,7 +30,7 @@ class PhaseLine : public WiseEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             PhaseLine( const Model& model, const sword::LimaCreation& message );
+             PhaseLine( const Model& model, const sword::PhaseLineCreation& message );
     virtual ~PhaseLine();
     //@}
 

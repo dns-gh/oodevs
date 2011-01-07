@@ -73,7 +73,7 @@ void TacticalLineHierarchies::Update( const sword::TacticalLine::Diffusion& mess
 // Name: TacticalLineHierarchies::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::DoUpdate( const sword::LimaUpdate& message )
+void TacticalLineHierarchies::DoUpdate( const sword::PhaseLineUpdate& message )
 {
     Update( message.tactical_line().diffusion() );
 }

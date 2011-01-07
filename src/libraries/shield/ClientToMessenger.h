@@ -31,9 +31,9 @@ public:
     static void Convert( const MsgsClientToMessenger::MsgLimitCreationRequest& from, sword::LimitCreationRequest* to );
     static void Convert( const MsgsClientToMessenger::MsgLimitUpdateRequest& from, sword::LimitUpdateRequest* to );
     static void Convert( const MsgsClientToMessenger::MsgLimitDestructionRequest& from, sword::LimitDestructionRequest* to );
-    static void Convert( const MsgsClientToMessenger::MsgLimaCreationRequest& from, sword::LimaCreationRequest* to );
-    static void Convert( const MsgsClientToMessenger::MsgLimaUpdateRequest& from, sword::LimaUpdateRequest* to );
-    static void Convert( const MsgsClientToMessenger::MsgLimaDestructionRequest& from, sword::LimaDestructionRequest* to );
+    static void Convert( const MsgsClientToMessenger::MsgLimaCreationRequest& from, sword::PhaseLineCreationRequest* to );
+    static void Convert( const MsgsClientToMessenger::MsgLimaUpdateRequest& from, sword::PhaseLineUpdateRequest* to );
+    static void Convert( const MsgsClientToMessenger::MsgLimaDestructionRequest& from, sword::PhaseLineDestructionRequest* to );
     static void Convert( const MsgsClientToMessenger::MsgIntelligenceCreationRequest& from, sword::IntelligenceCreationRequest* to );
     static void Convert( const MsgsClientToMessenger::MsgIntelligenceUpdateRequest& from, sword::IntelligenceUpdateRequest* to );
     static void Convert( const MsgsClientToMessenger::MsgIntelligenceDestructionRequest& from, sword::IntelligenceDestructionRequest* to );

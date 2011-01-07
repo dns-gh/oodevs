@@ -42,9 +42,11 @@
 
 using namespace shield;
 
+#define RENAME( type, from, to ) \
+        if( msg.message().has_##from() ) \
+            type::Convert( msg.message().from(), out.mutable_message()->mutable_##to() );
 #define FORWARD( type, accessor ) \
-        if( msg.message().has_##accessor() ) \
-            type::Convert( msg.message().accessor(), out.mutable_message()->mutable_##accessor() );
+        RENAME( type, accessor, accessor )
 
 // -----------------------------------------------------------------------------
 // Name: Converter constructor
@@ -131,12 +133,12 @@ void Converter::ReceiveMessengerToClient( const std::string& /*from*/, const swo
     FORWARD( MessengerToClient, limit_creation_request_ack )
     FORWARD( MessengerToClient, limit_destruction_request_ack )
     FORWARD( MessengerToClient, limit_update_request_ack )
-    FORWARD( MessengerToClient, lima_creation )
-    FORWARD( MessengerToClient, lima_update )
-    FORWARD( MessengerToClient, lima_destruction )
-    FORWARD( MessengerToClient, lima_creation_request_ack )
-    FORWARD( MessengerToClient, lima_destruction_request_ack )
-    FORWARD( MessengerToClient, lima_update_request_ack )
+    RENAME( MessengerToClient, phase_line_creation, lima_creation )
+    RENAME( MessengerToClient, phase_line_update, lima_update )
+    RENAME( MessengerToClient, phase_line_destruction, lima_destruction )
+    RENAME( MessengerToClient, phase_line_creation_request_ack, lima_creation_request_ack )
+    RENAME( MessengerToClient, phase_line_destruction_request_ack, lima_destruction_request_ack )
+    RENAME( MessengerToClient, phase_line_update_request_ack, lima_update_request_ack )
     FORWARD( MessengerToClient, intelligence_creation )
     FORWARD( MessengerToClient, intelligence_update )
     FORWARD( MessengerToClient, intelligence_destruction )
@@ -407,9 +409,9 @@ void Converter::ReceiveClientToMessenger( const std::string& from, const MsgsCli
         FORWARD( ClientToMessenger, limit_creation_request )
         FORWARD( ClientToMessenger, limit_update_request )
         FORWARD( ClientToMessenger, limit_destruction_request )
-        FORWARD( ClientToMessenger, lima_creation_request )
-        FORWARD( ClientToMessenger, lima_update_request )
-        FORWARD( ClientToMessenger, lima_destruction_request )
+        RENAME( ClientToMessenger, lima_creation_request, phase_line_creation_request )
+        RENAME( ClientToMessenger, lima_update_request, phase_line_update_request )
+        RENAME( ClientToMessenger, lima_destruction_request, phase_line_destruction_request )
         FORWARD( ClientToMessenger, intelligence_creation_request )
         FORWARD( ClientToMessenger, intelligence_update_request )
         FORWARD( ClientToMessenger, intelligence_destruction_request )

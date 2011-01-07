@@ -44,7 +44,7 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimitDestructio
 // Name: ClientToMessenger::Convert
 // Created: SBO 2010-11-24
 // -----------------------------------------------------------------------------
-void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimaCreationRequest& from, sword::LimaCreationRequest* to )
+void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimaCreationRequest& from, sword::PhaseLineCreationRequest* to )
 {
     ConvertTacticalLine( from, to );
 }
@@ -53,7 +53,7 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimaCreationReq
 // Name: ClientToMessenger::Convert
 // Created: SBO 2010-11-24
 // -----------------------------------------------------------------------------
-void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimaUpdateRequest& from, sword::LimaUpdateRequest* to )
+void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimaUpdateRequest& from, sword::PhaseLineUpdateRequest* to )
 {
     CONVERT_ID( id );
     ConvertTacticalLine( from, to );
@@ -63,7 +63,7 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimaUpdateReque
 // Name: ClientToMessenger::Convert
 // Created: SBO 2010-11-24
 // -----------------------------------------------------------------------------
-void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimaDestructionRequest& from, sword::LimaDestructionRequest* to )
+void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimaDestructionRequest& from, sword::PhaseLineDestructionRequest* to )
 {
     CONVERT_ID( id );
 }

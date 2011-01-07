@@ -58,9 +58,9 @@ public:
     void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitCreationRequest&    message );
     void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitDestructionRequest& message );
     void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const sword::LimitUpdateRequest&      message );
-    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaCreationRequest&     message );
-    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaDestructionRequest&  message );
-    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::LimaUpdateRequest&       message );
+    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineCreationRequest&     message );
+    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineDestructionRequest&  message );
+    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const sword::PhaseLineUpdateRequest&       message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
     //@}
 

@@ -115,11 +115,11 @@ bool CrossbowPublisher::IsRelevant( const sword::SimToClient& wrapper ) const
 // -----------------------------------------------------------------------------
 bool CrossbowPublisher::IsRelevant( const sword::MessengerToClient& wrapper ) const
 {
-    if( wrapper.message().has_lima_destruction() ||
+    if( wrapper.message().has_phase_line_destruction() ||
         wrapper.message().has_limit_destruction() )
         return modelLoaded_;
 
-    if( wrapper.message().has_lima_creation() ||
+    if( wrapper.message().has_phase_line_creation() ||
         wrapper.message().has_limit_creation() )
         return true;
 
@@ -296,12 +296,12 @@ void CrossbowPublisher::UpdateDatabase( const sword::SimToClient& wrapper )
 // -----------------------------------------------------------------------------
 void CrossbowPublisher::UpdateDatabase( const sword::MessengerToClient& wrapper )
 {
-    if( wrapper.message().has_lima_creation() )
-        databaseUpdater_->Update( wrapper.message().lima_creation() );
-//  else if( wrapper.message().has_lima_update() )
-//      databaseUpdater_->Update( wrapper.message().lima_update() );
-//  else if( wrapper.message().has_lima_destruction() )
-//      databaseUpdater_->Update( wrapper.message().lima_destruction() );
+    if( wrapper.message().has_phase_line_creation() )
+        databaseUpdater_->Update( wrapper.message().phase_line_creation() );
+//  else if( wrapper.message().has_phase_line_update() )
+//      databaseUpdater_->Update( wrapper.message().phase_line_update() );
+//  else if( wrapper.message().has_phase_line_destruction() )
+//      databaseUpdater_->Update( wrapper.message().phase_line_destruction() );
 
     else if( wrapper.message().has_limit_creation() )
         databaseUpdater_->Update( wrapper.message().limit_creation() );

@@ -102,12 +102,12 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
     if( wrapper.message().has_limit_update_request() )
         model_->tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_update_request() );
     // Lima
-    if( wrapper.message().has_lima_creation_request() )
-        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_creation_request() );
-    if( wrapper.message().has_lima_destruction_request() )
-        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_destruction_request() );
-    if( wrapper.message().has_lima_update_request() )
-        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_update_request() );
+    if( wrapper.message().has_phase_line_creation_request() )
+        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().phase_line_creation_request() );
+    if( wrapper.message().has_phase_line_destruction_request() )
+        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().phase_line_destruction_request() );
+    if( wrapper.message().has_phase_line_update_request() )
+        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().phase_line_update_request() );
     // Intelligence
     if( wrapper.message().has_intelligence_creation_request() )
         model_->intelligences_.HandleRequest( publisher, wrapper.message().intelligence_creation_request() );

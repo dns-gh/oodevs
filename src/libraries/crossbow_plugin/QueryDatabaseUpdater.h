@@ -15,7 +15,7 @@
 namespace sword
 {
     class Location;
-    class LimaCreation;
+    class PhaseLineCreation;
     class LimitCreation;
     class FormationCreation;
     class UnitCreation;
@@ -74,7 +74,7 @@ public:
     void Update( const sword::UnitCreation& msg );
     void Update( const sword::UnitKnowledgeCreation& msg );
     void Update( const sword::LimitCreation& msg );
-    void Update( const sword::LimaCreation& msg );
+    void Update( const sword::PhaseLineCreation& msg );
     void Update( const sword::ObjectCreation& msg );
     void Update( const sword::Report& msg );
     void Update( const sword::FormationCreation& message );

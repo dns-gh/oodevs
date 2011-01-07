@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class LimaCreation;
+    class PhaseLineCreation;
     class LimitCreation;
     class FormationCreation;
     class UnitCreation;
@@ -37,7 +37,7 @@ namespace sword
     class Report;
     class PartyCreation;
     class ObjectCreation;
-    class LimaCreation;
+    class PhaseLineCreation;
     class CrowdCreation;
     class CrowdConcentrationCreation;
     class CrowdFlowCreation;
@@ -75,7 +75,7 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::Report >
                              , public kernel::Updatable_ABC< sword::PartyCreation >
                              , public kernel::Updatable_ABC< sword::ObjectCreation >
-                             , public kernel::Updatable_ABC< sword::LimaCreation >
+                             , public kernel::Updatable_ABC< sword::PhaseLineCreation >
                              , public kernel::Updatable_ABC< sword::LimitCreation >
                              , public kernel::Updatable_ABC< sword::CrowdCreation >
                              , public kernel::Updatable_ABC< sword::CrowdConcentrationCreation >
@@ -117,7 +117,7 @@ public:
     virtual void DoUpdate( const sword::Report& msg );
     virtual void DoUpdate( const sword::PartyCreation& msg );
     virtual void DoUpdate( const sword::ObjectCreation& msg );
-    virtual void DoUpdate( const sword::LimaCreation& msg );
+    virtual void DoUpdate( const sword::PhaseLineCreation& msg );
     virtual void DoUpdate( const sword::LimitCreation& msg );
     virtual void DoUpdate( const sword::CrowdCreation& msg );
     virtual void DoUpdate( const sword::CrowdConcentrationCreation& msg );

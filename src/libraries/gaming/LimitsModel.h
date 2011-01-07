@@ -34,7 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual void Create( const sword::LimitCreation& message );
-    virtual void Create( const sword::LimaCreation& message );
+    virtual void Create( const sword::PhaseLineCreation& message );
 
     void DeleteLimit( unsigned long id );
     void DeleteLima( unsigned long id );

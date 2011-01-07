@@ -35,12 +35,12 @@ public:
     static void Convert( const sword::LimitUpdateRequestAck& from, MsgsMessengerToClient::MsgLimitUpdateRequestAck* to );
     static void Convert( const sword::LimitDestructionRequestAck& from, MsgsMessengerToClient::MsgLimitDestructionRequestAck* to );
 
-    static void Convert( const sword::LimaCreation& from, MsgsMessengerToClient::MsgLimaCreation* to );
-    static void Convert( const sword::LimaUpdate& from, MsgsMessengerToClient::MsgLimaUpdate* to );
-    static void Convert( const sword::LimaDestruction& from, MsgsMessengerToClient::MsgLimaDestruction* to );
-    static void Convert( const sword::LimaCreationRequestAck& from, MsgsMessengerToClient::MsgLimaCreationRequestAck* to );
-    static void Convert( const sword::LimaUpdateRequestAck& from, MsgsMessengerToClient::MsgLimaUpdateRequestAck* to );
-    static void Convert( const sword::LimaDestructionRequestAck& from, MsgsMessengerToClient::MsgLimaDestructionRequestAck* to );
+    static void Convert( const sword::PhaseLineCreation& from, MsgsMessengerToClient::MsgLimaCreation* to );
+    static void Convert( const sword::PhaseLineUpdate& from, MsgsMessengerToClient::MsgLimaUpdate* to );
+    static void Convert( const sword::PhaseLineDestruction& from, MsgsMessengerToClient::MsgLimaDestruction* to );
+    static void Convert( const sword::PhaseLineCreationAck& from, MsgsMessengerToClient::MsgLimaCreationRequestAck* to );
+    static void Convert( const sword::PhaseLineUpdateRequestAck& from, MsgsMessengerToClient::MsgLimaUpdateRequestAck* to );
+    static void Convert( const sword::PhaseLineDestructionRequestAck& from, MsgsMessengerToClient::MsgLimaDestructionRequestAck* to );
 
     static void Convert( const sword::IntelligenceCreation& from, MsgsMessengerToClient::MsgIntelligenceCreation* to );
     static void Convert( const sword::IntelligenceUpdate& from, MsgsMessengerToClient::MsgIntelligenceUpdate* to );

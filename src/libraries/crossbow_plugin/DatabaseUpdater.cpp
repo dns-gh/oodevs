@@ -289,7 +289,7 @@ void DatabaseUpdater::Update( const sword::LimitCreation& msg )
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const sword::LimaCreation& msg )
+void DatabaseUpdater::Update( const sword::PhaseLineCreation& msg )
 {
     std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "TacticalLines" ) );
     Row_ABC& row = table->CreateRow();

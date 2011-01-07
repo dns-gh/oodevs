@@ -31,7 +31,7 @@ class TacticalLine_ABC;
 // =============================================================================
 class TacticalLinePositions : public kernel::Positions
                             , public kernel::Drawable_ABC
-                            , public kernel::Updatable_ABC< sword::LimaUpdate >
+                            , public kernel::Updatable_ABC< sword::PhaseLineUpdate >
                             , public kernel::Updatable_ABC< sword::LimitUpdate >
 {
 public:
@@ -63,7 +63,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const sword::LimaUpdate&  message );
+    virtual void DoUpdate( const sword::PhaseLineUpdate&  message );
     virtual void DoUpdate( const sword::LimitUpdate& message );
     void Update( const sword::TacticalLine& message );
     //@}

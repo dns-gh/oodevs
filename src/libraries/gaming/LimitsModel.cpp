@@ -54,7 +54,7 @@ void LimitsModel::Create( const sword::LimitCreation& message )
 // Name: LimitsModel::Create
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LimitsModel::Create( const sword::LimaCreation& message )
+void LimitsModel::Create( const sword::PhaseLineCreation& message )
 {
     TacticalLine_ABC* line = factory_.Create( message );
     Register( message.id().id(), *line );

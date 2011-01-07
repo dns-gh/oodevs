@@ -29,7 +29,7 @@ class Publisher_ABC;
 // =============================================================================
 class TacticalLine_ABC : public kernel::TacticalLine_ABC
                        , public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< sword::LimaUpdate >
+                       , public kernel::Updatable_ABC< sword::PhaseLineUpdate >
                        , public kernel::Updatable_ABC< sword::LimitUpdate >
 {
 public:
@@ -74,7 +74,7 @@ protected:
         message.Send( publisher_);
     }
 
-    virtual void DoUpdate( const sword::LimaUpdate& message );
+    virtual void DoUpdate( const sword::PhaseLineUpdate& message );
     virtual void DoUpdate( const sword::LimitUpdate&  message );
     //@}
 

@@ -145,7 +145,7 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
 // Name: TacticalLinePositions::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::DoUpdate( const sword::LimaUpdate& message )
+void TacticalLinePositions::DoUpdate( const sword::PhaseLineUpdate& message )
 {
     Update( message.tactical_line() );
 }

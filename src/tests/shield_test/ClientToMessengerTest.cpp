@@ -67,7 +67,7 @@ BOOST_FIXTURE_TEST_CASE( limit_destruction_request_from_client_is_converted, Con
 BOOST_FIXTURE_TEST_CASE( lima_creation_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
 {
     FillTacticalLine( content.mutable_lima_creation_request()->mutable_tactical_line() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { lima_creation_request { tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { phase_line_creation_request { tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 
@@ -75,14 +75,14 @@ BOOST_FIXTURE_TEST_CASE( lima_update_request_from_client_is_converted, ContextFi
 {
     content.mutable_lima_update_request()->mutable_id()->set_id( 12 );
     FillTacticalLine( content.mutable_lima_update_request()->mutable_tactical_line() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { lima_update_request { id { id: 12 } tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { phase_line_update_request { id { id: 12 } tactical_line { name: \"name\" geometry { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } diffusion { automat { id: 12 } formation { id: 13 } } } } }" ) );
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( lima_destruction_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
 {
     content.mutable_lima_destruction_request()->mutable_id()->set_id( 12 );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { lima_destruction_request { id { id: 12 } } }" ) );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { phase_line_destruction_request { id { id: 12 } } }" ) );
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 
