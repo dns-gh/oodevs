@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="408" name="Emergency - evacuate wounded" target="123" time="2009-06-19T17:38:49" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline" value="not set"/>
+    <parameter name="Limit 1" type="limit" value="not set"/>
+    <parameter name="Limit 2" type="limit" value="not set"/>
+    <parameter name="Wounded" type="agent" value="29"/>
+    <parameter name="Hospitals" type="objectknowledge">
+      <parameter name="Hospitals (item 1)" type="location" value="126"/>
+    </parameter>
+    <parameter name="Garage" type="point">
+      <location type="point">
+        <point coordinates="31UEP0955389057"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

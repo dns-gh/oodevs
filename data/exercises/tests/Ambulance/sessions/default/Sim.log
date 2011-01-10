@@ -1,0 +1,173 @@
+[16:35:19] ----------------------------------------------------------------
+[16:35:19] Sword(tm) Simulation - dev version - Debug - Fri Dec 17 18:05:47 2010
+[16:35:19] Starting simulation - 2011-Jan-10 16:35:19
+[16:35:19] ----------------------------------------------------------------
+[16:35:19] Info - Starting simulation GUI
+[16:35:19] Info - Starting embedded dispatcher
+[16:35:19] Info - Profiling mode not enabled at startup time : dec functions won't be profiled
+[16:35:20] Info - Simulation tick duration : 10 seconds
+[16:35:20] Info - Simulation acceleration factor : 10
+[16:35:20] Info - Initializing terrain
+[16:35:20] Info - Terrain: ..\..\data\data\terrains\Paris_Est\terrain.xml
+[16:35:20] Info - Terrain size (w x h): 103.27km x 134.05km
+[16:35:20] Info - Initializing vision data
+[16:35:21] Info - Initializing decision
+[16:35:21] Info - Initializing pion mission types
+[16:35:21] Info - Initializing automate mission types
+[16:35:21] Info - Initializing population mission types
+[16:35:21] Info - Initializing frag orders types
+[16:35:22] Info - Initializing unit DIA models
+[16:35:22] Info - Initializing automat DIA models
+[16:35:22] Info - Initializing population DIA models
+[16:35:23] Info - Initializing composante states
+[16:35:23] Info - Initializing human ranks
+[16:35:23] Info - Initializing human wounds
+[16:35:23] Info - Initializing consumption types
+[16:35:23] Info - Initializing postures
+[16:35:23] Info - Initializing indirect ammo effects
+[16:35:23] Info - Initializing ammo dotation classes
+[16:35:23] Info - Initializing morales
+[16:35:23] Info - Initializing population attitudes
+[16:35:23] Info - Initializing logistic dotation types
+[16:35:23] Info - Initializing lima functions
+[16:35:23] Info - Initializing urban types
+[16:35:23] Info - Initializing reports types
+[16:35:23] Info - Initializing maintenance resources alarms
+[16:35:23] Info - Initializing experiences
+[16:35:23] Info - Initializing tirenesses
+[16:35:23] Info - Initializing volumes
+[16:35:23] Info - Initializing protections
+[16:35:23] Info - Initializing dotation natures
+[16:35:23] Info - Initializing dotation types
+[16:35:23] Info - Initializing resource networks
+[16:35:23] Info - Initializing breakdown types
+[16:35:24] Info - Initializing launcher types
+[16:35:24] Info - Initializing weapon types
+[16:35:24] Info - Initializing sensor types
+[16:35:26] Info - Initializing composante types
+[16:35:28] Info - Initializing agent types
+[16:35:28] Info - Initializing automate types
+[16:35:29] Info - Initializing knowledge groups types
+[16:35:29] Info - Initializing nbc types
+[16:35:29] Info - Initializing fire classes
+[16:35:29] Info - Initializing Medical Treatment Types
+[16:35:29] Info - Initializing supply resources alarms
+[16:35:29] Info - Initializing convoys
+[16:35:29] Info - Initializing medical resources alarms
+[16:35:29] Info - Initializing population types
+[16:35:29] Info - Initializing inhabitant types
+[16:35:29] Info - Initializing medical data
+[16:35:29] Info - Starting 1 pathfind thread(s)
+[16:35:42] --------------------------------
+[16:35:42] ----  Loading UrbanModel    ----
+[16:35:42] --------------------------------
+[16:35:42] Info - Loading Urban Model from path '../../data/data/terrains/Paris_Est'
+[16:35:42] Warning - The signature for the file urban.xml is invalid.
+[16:35:42] Info - Initializing armies diplomacies
+[16:35:42] Info - Automatic checkpoint every 360000000 seconds
+[16:35:42] Info - Automatic checkpoint max number is 1
+[16:35:42] Info - Next automatic checkpoint at tick #36000000
+[16:35:42] Info - UrbanState file name : '..\..\data\exercises\TestAmbulance\urbanstate.xml'
+[16:35:42] -------------------------
+[16:35:42] ----  Loading ODB    ----
+[16:35:42] -------------------------
+[16:35:42] Info - ODB file name : '..\..\data\exercises\TestAmbulance\orbat.xml'
+[16:35:42] Info - Initializing resources
+[16:35:42] Info - Initializing armies
+[16:35:53] Info - Initializing diplomacy
+[16:35:53] Info -  => 1 automates
+[16:35:53] Info -  => 6 pions
+[16:35:53] Info -  => 0 populations
+[16:35:53] Info -  => 0 inhabitants
+[16:35:53] Info - Simulation resumed
+[16:35:53] -------------------------
+[16:35:53] ---- SIM Initialized ----
+[16:35:53] -------------------------
+[16:35:53] Info - Breakdowns preprocessed
+[16:35:53] Info - **************** Time tick 1 - Profiling (K/D/A/E/S) : 31.08ms 88.31ms (A:21.38 P:66.93 Pop:0.00) 0.02ms 0.13ms 0.02ms - PathFind : 0 short 0 long 0 done - RAM : 130.730 MB / 440.348 MB (VM)
+[16:35:53] Info - Connection received from client '127.0.0.1:10028'
+[16:35:53] Info - Announcement from client 127.0.0.1:10028
+[16:35:54] Info - **************** Time tick 2 - Profiling (K/D/A/E/S) : 8.53ms 48.09ms (A:9.94 P:38.16 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 130.730 MB / 440.348 MB (VM)
+[16:35:55] Info - **************** Time tick 3 - Profiling (K/D/A/E/S) : 3.87ms 46.51ms (A:8.87 P:37.63 Pop:0.01) 0.03ms 0.12ms 0.04ms - PathFind : 0 short 0 long 0 done - RAM : 130.730 MB / 440.348 MB (VM)
+[16:35:56] Info - **************** Time tick 4 - Profiling (K/D/A/E/S) : 6.05ms 38.80ms (A:7.68 P:31.12 Pop:0.00) 0.02ms 0.12ms 0.04ms - PathFind : 0 short 0 long 0 done - RAM : 130.730 MB / 440.348 MB (VM)
+[16:35:57] Info - **************** Time tick 5 - Profiling (K/D/A/E/S) : 4.39ms 40.87ms (A:7.86 P:33.01 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 130.730 MB / 440.348 MB (VM)
+[16:35:58] Info - **************** Time tick 6 - Profiling (K/D/A/E/S) : 4.46ms 40.41ms (A:7.90 P:32.51 Pop:0.00) 0.02ms 0.12ms 0.02ms - PathFind : 0 short 0 long 0 done - RAM : 130.730 MB / 440.348 MB (VM)
+[16:35:59] Info - **************** Time tick 7 - Profiling (K/D/A/E/S) : 3.56ms 40.40ms (A:10.09 P:30.31 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:00] Info - **************** Time tick 8 - Profiling (K/D/A/E/S) : 8.46ms 39.57ms (A:7.76 P:31.80 Pop:0.00) 0.02ms 0.12ms 0.04ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:01] Info - **************** Time tick 9 - Profiling (K/D/A/E/S) : 4.35ms 41.47ms (A:8.06 P:33.40 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:02] Info - **************** Time tick 10 - Profiling (K/D/A/E/S) : 3.99ms 42.24ms (A:7.90 P:34.34 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:03] Info - **************** Time tick 11 - Profiling (K/D/A/E/S) : 4.22ms 41.29ms (A:10.48 P:30.82 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:04] Info - **************** Time tick 12 - Profiling (K/D/A/E/S) : 4.71ms 41.36ms (A:10.94 P:30.41 Pop:0.00) 0.02ms 0.12ms 0.01ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:05] Info - **************** Time tick 13 - Profiling (K/D/A/E/S) : 4.18ms 41.22ms (A:8.04 P:33.18 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:06] Info - **************** Time tick 14 - Profiling (K/D/A/E/S) : 4.02ms 39.64ms (A:8.10 P:31.54 Pop:0.00) 0.02ms 0.12ms 0.02ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:07] Info - **************** Time tick 15 - Profiling (K/D/A/E/S) : 5.05ms 40.81ms (A:10.46 P:30.35 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:08] Info - **************** Time tick 16 - Profiling (K/D/A/E/S) : 6.37ms 38.50ms (A:7.81 P:30.69 Pop:0.00) 0.02ms 0.12ms 0.04ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:09] Info - **************** Time tick 17 - Profiling (K/D/A/E/S) : 4.25ms 39.61ms (A:7.49 P:32.12 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:10] Info - **************** Time tick 18 - Profiling (K/D/A/E/S) : 4.09ms 41.43ms (A:8.22 P:33.21 Pop:0.00) 0.02ms 0.13ms 0.02ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:11] Info - **************** Time tick 19 - Profiling (K/D/A/E/S) : 4.58ms 41.10ms (A:9.69 P:31.41 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:12] Info - **************** Time tick 20 - Profiling (K/D/A/E/S) : 9.42ms 38.84ms (A:7.78 P:31.05 Pop:0.00) 0.02ms 0.12ms 0.04ms - PathFind : 0 short 0 long 0 done - RAM : 131.730 MB / 441.348 MB (VM)
+[16:36:13] Info - **************** Time tick 21 - Profiling (K/D/A/E/S) : 4.19ms 39.79ms (A:7.87 P:31.92 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:14] Info - **************** Time tick 22 - Profiling (K/D/A/E/S) : 3.56ms 40.14ms (A:7.73 P:32.41 Pop:0.00) 0.02ms 0.12ms 0.05ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:15] Info - **************** Time tick 23 - Profiling (K/D/A/E/S) : 3.77ms 42.72ms (A:10.40 P:32.32 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:16] Info - **************** Time tick 24 - Profiling (K/D/A/E/S) : 3.10ms 41.19ms (A:9.97 P:31.22 Pop:0.00) 0.02ms 0.12ms 0.02ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:17] Info - **************** Time tick 25 - Profiling (K/D/A/E/S) : 4.43ms 49.40ms (A:9.75 P:39.65 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:18] Info - **************** Time tick 26 - Profiling (K/D/A/E/S) : 4.77ms 39.07ms (A:7.43 P:31.64 Pop:0.00) 0.02ms 0.12ms 0.05ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:19] Info - **************** Time tick 27 - Profiling (K/D/A/E/S) : 4.41ms 41.17ms (A:7.97 P:33.19 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:20] Info - **************** Time tick 28 - Profiling (K/D/A/E/S) : 4.59ms 42.05ms (A:10.65 P:31.39 Pop:0.01) 0.02ms 0.12ms 0.01ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:21] Info - **************** Time tick 29 - Profiling (K/D/A/E/S) : 8.39ms 38.46ms (A:7.77 P:30.68 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:22] Info - **************** Time tick 30 - Profiling (K/D/A/E/S) : 3.71ms 40.43ms (A:7.75 P:32.68 Pop:0.00) 0.02ms 0.12ms 0.01ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:23] Info - **************** Time tick 31 - Profiling (K/D/A/E/S) : 4.07ms 39.83ms (A:8.03 P:31.80 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:24] Info - **************** Time tick 32 - Profiling (K/D/A/E/S) : 4.47ms 41.57ms (A:11.30 P:30.26 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:25] Info - **************** Time tick 33 - Profiling (K/D/A/E/S) : 4.74ms 42.42ms (A:10.67 P:31.75 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:26] Info - **************** Time tick 34 - Profiling (K/D/A/E/S) : 4.75ms 40.29ms (A:7.98 P:32.31 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:27] Info - **************** Time tick 35 - Profiling (K/D/A/E/S) : 3.91ms 40.24ms (A:8.17 P:32.07 Pop:0.00) 0.02ms 0.12ms 0.04ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:28] Info - **************** Time tick 36 - Profiling (K/D/A/E/S) : 3.33ms 42.46ms (A:9.22 P:33.24 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:29] Info - **************** Time tick 37 - Profiling (K/D/A/E/S) : 3.77ms 41.17ms (A:10.30 P:30.87 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:30] Info - **************** Time tick 38 - Profiling (K/D/A/E/S) : 4.43ms 44.87ms (A:7.71 P:37.16 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:31] Info - **************** Time tick 39 - Profiling (K/D/A/E/S) : 4.59ms 40.64ms (A:7.70 P:32.94 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:32] Info - **************** Time tick 40 - Profiling (K/D/A/E/S) : 4.33ms 42.31ms (A:7.83 P:34.47 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:33] Info - **************** Time tick 41 - Profiling (K/D/A/E/S) : 3.22ms 39.19ms (A:7.60 P:31.59 Pop:0.00) 0.02ms 0.13ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:34] Info - **************** Time tick 42 - Profiling (K/D/A/E/S) : 3.38ms 39.51ms (A:9.38 P:30.13 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:35] Info - **************** Time tick 43 - Profiling (K/D/A/E/S) : 3.50ms 40.80ms (A:7.49 P:33.30 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:36] Info - **************** Time tick 44 - Profiling (K/D/A/E/S) : 4.53ms 43.47ms (A:8.09 P:35.38 Pop:0.00) 0.02ms 0.17ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:37] Info - **************** Time tick 45 - Profiling (K/D/A/E/S) : 4.36ms 40.90ms (A:10.51 P:30.39 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 132.734 MB / 442.348 MB (VM)
+[16:36:38] Info - **************** Time tick 46 - Profiling (K/D/A/E/S) : 4.14ms 40.55ms (A:7.74 P:32.81 Pop:0.00) 0.02ms 0.12ms 0.04ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:39] Info - **************** Time tick 47 - Profiling (K/D/A/E/S) : 3.55ms 39.45ms (A:7.72 P:31.72 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:40] Info - **************** Time tick 48 - Profiling (K/D/A/E/S) : 3.37ms 41.03ms (A:7.59 P:33.44 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:41] Info - **************** Time tick 49 - Profiling (K/D/A/E/S) : 3.26ms 39.27ms (A:7.90 P:31.37 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:42] Info - **************** Time tick 50 - Profiling (K/D/A/E/S) : 3.20ms 41.58ms (A:8.52 P:33.05 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:43] Info - **************** Time tick 51 - Profiling (K/D/A/E/S) : 3.30ms 40.30ms (A:8.83 P:31.46 Pop:0.00) 0.02ms 0.14ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:44] Info - **************** Time tick 52 - Profiling (K/D/A/E/S) : 3.37ms 40.04ms (A:7.43 P:32.61 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:45] Info - **************** Time tick 53 - Profiling (K/D/A/E/S) : 8.98ms 38.28ms (A:7.63 P:30.65 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:46] Info - **************** Time tick 54 - Profiling (K/D/A/E/S) : 3.94ms 40.99ms (A:8.29 P:32.70 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:47] Info - **************** Time tick 55 - Profiling (K/D/A/E/S) : 4.28ms 40.48ms (A:7.80 P:32.69 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:48] Info - **************** Time tick 56 - Profiling (K/D/A/E/S) : 5.45ms 39.92ms (A:8.51 P:31.40 Pop:0.00) 0.02ms 0.12ms 0.01ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:49] Info - **************** Time tick 57 - Profiling (K/D/A/E/S) : 3.96ms 40.24ms (A:10.42 P:29.81 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:50] Info - **************** Time tick 58 - Profiling (K/D/A/E/S) : 3.63ms 44.45ms (A:9.94 P:34.50 Pop:0.00) 0.02ms 0.13ms 0.01ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:51] Info - **************** Time tick 59 - Profiling (K/D/A/E/S) : 4.96ms 39.15ms (A:9.03 P:30.12 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:52] Info - **************** Time tick 60 - Profiling (K/D/A/E/S) : 5.80ms 42.71ms (A:12.01 P:30.69 Pop:0.00) 0.02ms 0.16ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:53] Info - **************** Time tick 61 - Profiling (K/D/A/E/S) : 4.42ms 40.84ms (A:8.02 P:32.82 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:54] Info - **************** Time tick 62 - Profiling (K/D/A/E/S) : 3.90ms 41.37ms (A:8.21 P:33.16 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 133.734 MB / 443.348 MB (VM)
+[16:36:55] Info - **************** Time tick 63 - Profiling (K/D/A/E/S) : 2.93ms 42.43ms (A:9.90 P:32.52 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:36:56] Info - **************** Time tick 64 - Profiling (K/D/A/E/S) : 8.66ms 39.10ms (A:7.92 P:31.18 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:36:57] Info - **************** Time tick 65 - Profiling (K/D/A/E/S) : 3.70ms 41.18ms (A:8.08 P:33.09 Pop:0.00) 0.02ms 0.12ms 0.04ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:36:58] Info - **************** Time tick 66 - Profiling (K/D/A/E/S) : 4.26ms 40.85ms (A:7.51 P:33.34 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:36:59] Info - **************** Time tick 67 - Profiling (K/D/A/E/S) : 5.10ms 40.33ms (A:10.42 P:29.91 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:00] Info - **************** Time tick 68 - Profiling (K/D/A/E/S) : 9.52ms 39.46ms (A:7.70 P:31.76 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:01] Info - **************** Time tick 69 - Profiling (K/D/A/E/S) : 4.38ms 39.00ms (A:7.70 P:31.29 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:02] Info - **************** Time tick 70 - Profiling (K/D/A/E/S) : 4.13ms 39.49ms (A:7.39 P:32.10 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:03] Info - **************** Time tick 71 - Profiling (K/D/A/E/S) : 3.91ms 40.13ms (A:10.78 P:29.35 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:04] Info - **************** Time tick 72 - Profiling (K/D/A/E/S) : 8.04ms 37.41ms (A:7.65 P:29.75 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:05] Info - **************** Time tick 73 - Profiling (K/D/A/E/S) : 4.83ms 40.73ms (A:7.40 P:33.33 Pop:0.00) 0.02ms 0.14ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:06] Info - **************** Time tick 74 - Profiling (K/D/A/E/S) : 4.00ms 40.49ms (A:8.33 P:32.16 Pop:0.00) 0.02ms 0.13ms 0.04ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:07] Info - **************** Time tick 75 - Profiling (K/D/A/E/S) : 4.34ms 41.97ms (A:11.35 P:30.62 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:08] Info - **************** Time tick 76 - Profiling (K/D/A/E/S) : 4.22ms 41.07ms (A:9.62 P:31.44 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:09] Info - **************** Time tick 77 - Profiling (K/D/A/E/S) : 3.92ms 40.89ms (A:8.30 P:32.59 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:10] Info - **************** Time tick 78 - Profiling (K/D/A/E/S) : 4.88ms 41.33ms (A:8.01 P:33.31 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:11] Info - **************** Time tick 79 - Profiling (K/D/A/E/S) : 3.50ms 42.07ms (A:10.04 P:32.03 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:12] Info - **************** Time tick 80 - Profiling (K/D/A/E/S) : 7.88ms 39.10ms (A:8.46 P:30.64 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:13] Info - **************** Time tick 81 - Profiling (K/D/A/E/S) : 3.20ms 40.18ms (A:7.46 P:32.71 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:14] Info - **************** Time tick 82 - Profiling (K/D/A/E/S) : 4.07ms 40.15ms (A:8.26 P:31.89 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:15] Info - **************** Time tick 83 - Profiling (K/D/A/E/S) : 4.10ms 41.89ms (A:11.03 P:30.86 Pop:0.00) 0.02ms 0.12ms 0.02ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:16] Info - **************** Time tick 84 - Profiling (K/D/A/E/S) : 5.90ms 37.85ms (A:7.84 P:30.01 Pop:0.00) 0.02ms 0.12ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
+[16:37:17] Info - **************** Time tick 85 - Profiling (K/D/A/E/S) : 3.97ms 40.63ms (A:8.60 P:32.03 Pop:0.00) 0.02ms 0.13ms 0.00ms - PathFind : 0 short 0 long 0 done - RAM : 134.738 MB / 444.348 MB (VM)
