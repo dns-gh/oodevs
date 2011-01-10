@@ -117,7 +117,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
         footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
     urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( message.urban_block().id(), name, &footPrint );
     AttachExtensions( *object, message );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.urban_object().id(), QString( message.name().c_str() ), static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ) );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, *object, message.urban_object().id(), QString( message.name().c_str() ), static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ) );
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();

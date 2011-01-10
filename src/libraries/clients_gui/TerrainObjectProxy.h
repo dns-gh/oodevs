@@ -88,7 +88,6 @@ public:
     //@{
     virtual void DoUpdate( const sword::UrbanUpdate& msg );
     virtual void Select( kernel::ActionController& controller ) const;
-    virtual void ContextMenu( kernel::ActionController& /*controller*/, const QPoint& /*where*/) const;
     virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
     virtual void SetSelected( bool selected ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
