@@ -11,7 +11,7 @@
 #define __DEC_Knowledge_Urban_h_
 
 #include "MIL.h"
-#include "DEC_Knowledge_ABC.h"
+#include "DEC_Knowledge_Object.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
 #include <geometry/Types.h>
@@ -37,7 +37,7 @@ namespace sword
 */
 // Created: MGD 2009-12-04
 // =============================================================================
-class DEC_Knowledge_Urban : public DEC_Knowledge_ABC
+class DEC_Knowledge_Urban : public DEC_Knowledge_Object
 {
 public:
     //! @name Constructors/Destructor
@@ -58,12 +58,11 @@ public:
     //! @name Operations
     //@{
     bool IsValid() const;
-    void Prepare();
+    virtual void Prepare();
     void Update( const DEC_Knowledge_UrbanPerception& perception );
     void ComputeProgress( const MIL_Agent_ABC& agent );
     void SetProgress( float progress );
     bool Clean() const;
-    unsigned GetId() const;
     float GetCurrentRecceProgress() const;
     bool IsPerceivedBy( const MIL_Agent_ABC& pion ) const;
     const float GetPathfindCost( float weight ) const;
@@ -73,14 +72,14 @@ public:
 
     //! @name Relevance management
     //@{
-    void UpdateRelevance();
-    double GetRelevance() const;
+    virtual void UpdateRelevance();
+    //virtual double GetRelevance() const;
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork();
-    void SendStateToNewClient();
+    virtual void UpdateOnNetwork();
+    virtual void SendStateToNewClient();
     //@}
 
 public:
@@ -114,7 +113,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const unsigned nID_;
     const MIL_Army_ABC* army_;
     const urban::TerrainObject_ABC* object_;
     // Internal attribute

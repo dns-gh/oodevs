@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "UrbanModel.h"
+#include "MedicalTreatmentAttribute.h"
 #include "Overridable_ABC.h"
 #include "ResourceNetworkAttribute.h"
 #include "StaticModel.h"
@@ -19,6 +20,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/MaterialCompositionType.h"
+#include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #pragma warning( push )
@@ -27,6 +29,7 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 #include <urban/Architecture.h>
+#include <urban/InfrastructureAttribute.h>
 #include <urban/ResourceNetworkAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
@@ -119,8 +122,8 @@ void UrbanModel::Serialize( const std::string& filename ) const
             << xml::start( "urban-objects" );
     for( Resolver< gui::TerrainObjectProxy >::CIT_Elements it = Resolver< gui::TerrainObjectProxy >::elements_.begin(); it != Resolver< gui::TerrainObjectProxy >::elements_.end(); ++it )
     {
-        bool needsUpdate = false;
-        it->second->Interface().Apply( & Overridable_ABC::SetOverriden, needsUpdate );
+        bool needsUpdate = true;
+        //it->second->Interface().Apply( & Overridable_ABC::SetOverriden, needsUpdate );// Temp pour serializer l'attribut
         if( needsUpdate )
         {
             xos << xml::start( "urban-object" )
@@ -173,6 +176,8 @@ void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, 
         UpdateCapacity< StructuralStateAttribute, kernel::StructuralStateAttribute_ABC >( xis, proxy );
     else if( capacity == "resources" )
         UpdateCapacity< ResourceNetworkAttribute, kernel::ResourceNetwork_ABC >( xis, proxy );
+    else if( capacity == "medical-treatment" )
+        UpdateCapacity< MedicalTreatmentAttribute, kernel::MedicalTreatmentAttribute_ABC >( xis, proxy );
 }
 
 // -----------------------------------------------------------------------------
@@ -204,13 +209,20 @@ void UrbanModel::Purge()
 // -----------------------------------------------------------------------------
 void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
 {
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_.controller_, urbanObject, static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ) );
     kernel::PropertiesDictionary& dico = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dico ) );
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( urbanObject ) );
     const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
     if( resource )
         pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, *resource, pTerrainObject->GetId(), *this, static_.objectTypes_ ) );
+    const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >();
+    if( infra )
+    {
+        const kernel::InfrastructureType* infraType = static_.objectTypes_.tools::StringResolver< kernel::InfrastructureType >::Find( infra->GetType() );
+        if ( infraType && infraType->FindCapacity( "medical" ) )
+            pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( static_.objectTypes_, dico ) );
+    }
     pTerrainObject->Polish();
     if( !Resolver< gui::TerrainObjectProxy >::Find( urbanObject.GetId() ) )
         Resolver< gui::TerrainObjectProxy >::Register( urbanObject.GetId(), *pTerrainObject );

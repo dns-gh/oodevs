@@ -1111,9 +1111,9 @@ message ObjectKnowledgeDestruction {
 }
 
 message UrbanKnowledgeCreation {
-    required UrbanObjectKnowledgeId knowledge   = 1;
-    required PartyId                party       = 2;
-    required UrbanObjectId          urban_block = 3;
+    required UrbanObjectKnowledgeId knowledge    = 1;
+    required PartyId                party        = 2;
+    required UrbanObjectId          urban_block  = 3;
 }
 
 message UrbanKnowledgeUpdate {
@@ -1524,10 +1524,11 @@ message UrbanAttributes {
 
 message UrbanCreation {
    required UrbanObjectId   urban_object = 1;
-   required string          name         = 2;
-   required Location     location     = 3;
-   optional UrbanAttributes attributes   = 4;
-   optional UrbanObjectId   parent       = 5;
+   required UrbanObjectId   urban_block  = 2;
+   required string          name         = 3;
+   required Location        location     = 4;
+   optional UrbanAttributes attributes   = 5;
+   optional UrbanObjectId   parent       = 6;
 }
 
 message UrbanDetection {

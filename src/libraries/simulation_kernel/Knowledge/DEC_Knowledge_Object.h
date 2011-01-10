@@ -70,7 +70,7 @@ public:
     //! @name Operations
     //@{
     void Recon( const MIL_Agent_ABC& agent );
-    void Prepare();
+    virtual void Prepare();
     void Update( const PHY_PerceptionLevel& currentPerceptionLevel );
     void Update( const DEC_Knowledge_ObjectPerception& perception );
     void Update( const DEC_Knowledge_ObjectCollision& collision );
@@ -84,14 +84,14 @@ public:
 
     //! @name Relevance management
     //@{
-    void UpdateRelevance();
+    virtual void UpdateRelevance();
     double GetRelevance() const;
     //@}
 
     //! @name Network operations
     //@{
-    void UpdateOnNetwork();
-    void SendStateToNewClient();
+    virtual void UpdateOnNetwork();
+    virtual void SendStateToNewClient();
     //@}
 
     //! @name Accessors
@@ -101,7 +101,7 @@ public:
     bool IsConstructed() const;
     bool IsReservedObstacle() const;
     bool IsReservedObstacleActivated() const;
-    unsigned int GetID() const;
+    virtual unsigned int GetID() const;
     const std::string& GetName() const;
     MIL_Object_ABC* GetObjectKnown() const;
     const MIL_ObjectType_ABC& GetType() const;

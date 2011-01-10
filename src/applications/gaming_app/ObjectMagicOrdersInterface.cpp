@@ -14,9 +14,9 @@
 #include "actions/ObjectMagicAction.h"
 #include "actions/ParameterList.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "gaming/Object.h"
 #include "gaming/StaticModel.h"
@@ -30,16 +30,14 @@ using namespace parameters;
 // Name: ObjectMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-ObjectMagicOrdersInterface::ObjectMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const Profile_ABC& profile )
+ObjectMagicOrdersInterface::ObjectMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
     : QObject( parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
-    , profile_( profile )
     , selectedEntity_( controllers )
 {
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +46,7 @@ ObjectMagicOrdersInterface::ObjectMagicOrdersInterface( QWidget* parent, Control
 // -----------------------------------------------------------------------------
 ObjectMagicOrdersInterface::~ObjectMagicOrdersInterface()
 {
-    controllers_.Unregister( *this );
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +55,6 @@ ObjectMagicOrdersInterface::~ObjectMagicOrdersInterface()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
 {
-    if( !profile_.CanDoMagic( entity ) )
-        return;
     selectedEntity_ = &entity;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     AddMagic( tr( "Build" ), SLOT( BuildObject() ), magicMenu );

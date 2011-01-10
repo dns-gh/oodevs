@@ -14,14 +14,10 @@
 #include "clients_kernel/UrbanKnowledge_ABC.h"
 
 
-namespace gui
-{
-    class TerrainObjectProxy;
-}
-
 namespace kernel
 {
     class Entity_ABC;
+    class Object_ABC;
     class UrbanKnowledgeConverter_ABC;
 }
 
@@ -37,7 +33,7 @@ namespace gui
 // Created: MGD 2010-11-16
 // =============================================================================
 class ParamUrbanKnowledge : public EntityParameter< kernel::UrbanKnowledge_ABC >
-                          , public kernel::ContextMenuObserver_ABC< ::gui::TerrainObjectProxy >
+    , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -61,7 +57,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const ::gui::TerrainObjectProxy& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private:

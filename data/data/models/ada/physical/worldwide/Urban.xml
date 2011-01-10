@@ -95,5 +95,14 @@
     <accomodation capacity="0.2" role="office"/>
     <accomodation capacity="0.07" role="home"/>
   </accomodations>
+  <infrastructures>
+    <infrastructure name="infras1" symbol="sfgpuc">
+      <capacities>
+        <medical night-doctors-rate="10">
+          <emergency-plan beds-rate="10" doctors-rate="10"/>
+        </medical>
+      </capacities>
+    </infrastructure>
+  </infrastructures>
 </urban>
-<!-- signature="2320318330" -->
+<!-- signature="4291918335" -->

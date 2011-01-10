@@ -17,7 +17,7 @@
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "protocol/Protocol.h"
-#include "tools/Resolver_ABC.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -29,6 +29,11 @@ namespace kernel
     class Team_ABC;
 }
 
+namespace gui
+{
+    class TerrainObjectProxy;
+}
+class UrbanModel;
 // =============================================================================
 /** @class  ObjectKnowledge
     @brief  ObjectKnowledge
@@ -46,6 +51,7 @@ public:
              ObjectKnowledge( const kernel::Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message,
                               kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                               const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver,
+                              const UrbanModel& urbanResolver,
                               const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
     virtual ~ObjectKnowledge();
     //@}
@@ -80,6 +86,7 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
+    const tools::Resolver< gui::TerrainObjectProxy >& urbanResolver_;
     const kernel::Entity_ABC& owner_;
     const kernel::ObjectType* type_;
     std::string position_;

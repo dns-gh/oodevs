@@ -10,7 +10,7 @@
 #ifndef __ObjectMagicOrdersInterface_h_
 #define __ObjectMagicOrdersInterface_h_
 
-#include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "MagicOrdersInterface_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "protocol/ServerPublisher_ABC.h"
 
@@ -34,7 +34,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Object_ABC;
-    class Profile_ABC;
+    class Entity_ABC;
     class Time_ABC;
 }
 
@@ -47,15 +47,14 @@ class StaticModel;
 // Created: SBO 2007-05-04
 // =============================================================================
 class ObjectMagicOrdersInterface : public QObject
-                                 , public tools::Observer_ABC
-                                 , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+                                 , public MagicOrdersInterface_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
+             ObjectMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~ObjectMagicOrdersInterface();
     //@}
 
@@ -95,7 +94,6 @@ private:
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
-    const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}
 };

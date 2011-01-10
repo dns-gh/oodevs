@@ -161,14 +161,14 @@ MedicalCapacityUpdateDialog::~MedicalCapacityUpdateDialog()
 // -----------------------------------------------------------------------------
 void MedicalCapacityUpdateDialog::NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu )
 {
-    if( profile_.CanDoMagic( object ) && object.GetType().HasMedicalCapacity() )
+    if( profile_.CanDoMagic( object ) && ( object.GetType().HasMedicalCapacity() || object.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() ) )
     {
         selected_ = &object;
         QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tr( "Update medical capacity" ), this, SLOT( Show() ) );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalCapacityUpdateDialog::Show
 // Created: JCR 2010-06-28

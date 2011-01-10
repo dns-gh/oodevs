@@ -32,6 +32,7 @@ namespace kernel
     class NBCAgent;
     class WeaponSystemType;
     class FireClass;
+    class InfrastructureType;
     class MedicalTreatmentType;
     class ResourceNetworkType;
     class VolumeType;
@@ -59,6 +60,7 @@ class ObjectTypes
     , public tools::StringResolver< MaterialCompositionType >
     , public tools::StringResolver< FacadeType >
     , public tools::StringResolver< RoofShapeType >
+    , public tools::StringResolver< InfrastructureType >
 {
 public:
     //! @name Constructors/Destructor
@@ -112,6 +114,8 @@ private:
     void ReadMaterialCompositionType( xml::xistream& xis );
     void ReadRoofShapeTypes( xml::xistream& xis );
     void ReadRoofShapeType( xml::xistream& xis );
+    void ReadInfrastructureTypes( xml::xistream& xis );
+    void ReadInfrastructureType( xml::xistream& xis );
     //@}
 
 private:

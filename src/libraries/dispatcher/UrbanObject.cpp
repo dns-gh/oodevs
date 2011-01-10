@@ -13,6 +13,7 @@
 #include "InfrastructuresAttribute.h"
 #include "ResourceNetworkAttribute.h"
 #include "StructureAttribute.h"
+#include "MedicalTreatmentAttribute.h"
 #include "UrbanObject.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -26,12 +27,14 @@ using namespace dispatcher;
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
 UrbanObject::UrbanObject( Model_ABC& /*model*/, const sword::UrbanCreation& msg )
-    : dispatcher::UrbanObject_ABC( msg.urban_object().id(), msg.name().c_str() )
+    : dispatcher::Object_ABC( msg.urban_object().id(), msg.name().c_str() )
     , strName_                   ( msg.name()  )
+    , urbanBlockId_              ( msg.urban_block().id() )
     , localisation_              ( msg.location() )
     , hasInfrastructures_        ( false )
     , hasResourceNetwork_        ( false )
     , hasStructure_              ( false )
+    , hasMedicalTreatment_       ( false )
 {
     Initialize( msg.attributes() );
     RegisterSelf( *this );
@@ -73,6 +76,15 @@ void UrbanObject::AddAttribute( UrbanObjectAttribute_ABC* attribute )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObject::AddObjectAttribute
+// Created: SLG 2011-01-03
+// -----------------------------------------------------------------------------
+void UrbanObject::AddObjectAttribute( ObjectAttribute_ABC* attribute )
+{
+    objectAttributes_.push_back( attribute );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObject::SendCreation
 // Created: SLG 2009-09-27
 // -----------------------------------------------------------------------------
@@ -80,6 +92,7 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanCreation msg;
     msg().mutable_urban_object()->set_id( GetId() );
+    msg().mutable_urban_block()->set_id( urbanBlockId_ );
     msg().set_name( strName_ );
     localisation_.Send( *msg().mutable_location() );
     msg().mutable_attributes();
@@ -102,6 +115,15 @@ void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         std::for_each( attributes_.begin(), attributes_.end(),
             boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *msg().mutable_attributes() ) ) );
     msg.Send( publisher );
+
+    if( optionals_.objectAttributesPresent )
+    {
+        client::ObjectUpdate msg;
+        msg().mutable_object()->set_id( GetId() );
+        std::for_each( objectAttributes_.begin(), objectAttributes_.end(),
+        boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *msg().mutable_attributes() ) ) );
+        msg.Send( publisher );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -151,6 +173,25 @@ void UrbanObject::DoUpdate( const sword::UrbanUpdate& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObject::DoUpdate
+// Created: AGE 2007-04-12
+// -----------------------------------------------------------------------------
+void UrbanObject::DoUpdate( const sword::ObjectUpdate& msg )
+{
+    if( msg.has_attributes() )
+    {
+        if( msg.attributes().has_medical_treatment() && !hasMedicalTreatment_ )
+        {
+            hasMedicalTreatment_ = true;
+            AddObjectAttribute( new MedicalTreatmentAttribute( msg.attributes() ) );
+        }
+        optionals_.objectAttributesPresent = 1;
+        std::for_each( objectAttributes_.begin(), objectAttributes_.end(),
+            boost::bind( &ObjectAttribute_ABC::Update, _1, boost::cref( msg.attributes() ) ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObject::Accept
 // Created: SLG 2009-06-20
 // -----------------------------------------------------------------------------
@@ -164,6 +205,24 @@ void UrbanObject::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // Created: PHC 2010-07-22
 // -----------------------------------------------------------------------------
 void UrbanObject::Display( kernel::Displayer_ABC& /*displayer*/ ) const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObject::GetTeam
+// Created: SLG 2011-01-07
+// -----------------------------------------------------------------------------
+const Team_ABC& UrbanObject::GetTeam() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::GetType
+// Created: AGE 2008-06-20
+// -----------------------------------------------------------------------------
+const kernel::ObjectType& UrbanObject::GetType() const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

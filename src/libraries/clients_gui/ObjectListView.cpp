@@ -53,7 +53,12 @@ ObjectListView::~ObjectListView()
 // -----------------------------------------------------------------------------
 void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
 {
-    const Entity_ABC& team = object.Get< TacticalHierarchies >().GetTop();
+    // $$$$ AGE 2006-10-16:
+    const TacticalHierarchies* hierarchies = object.Retrieve< TacticalHierarchies >();
+    if( !hierarchies ) // urban block or other object not attached to a side
+        return;
+    const Team_ABC& team = static_cast< const Team_ABC& >( hierarchies->GetUp() );
+
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
     {

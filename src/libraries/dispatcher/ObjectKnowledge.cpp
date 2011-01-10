@@ -37,6 +37,9 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKno
     , typename_                      ( "objectKnowledge" )
     , attributes_                    ( model )
 {
+    if( !pObject_ )
+        pObject_ = model.UrbanBlocks().Find( message.object().id() );
+
     optionals_.realObjectPresent = pObject_ != 0;
     optionals_.relevancePresent = 0;
     optionals_.locationPresent = 0;
@@ -62,7 +65,11 @@ ObjectKnowledge::~ObjectKnowledge()
 void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeCreation& message )
 {
     if( ( message.object().id() && ! pObject_ ) || ( pObject_ && pObject_->GetId() != ( unsigned int )message.object().id() ) )
+    {
         pObject_ = model_.Objects().Find( message.object().id() );
+        if( !pObject_ )
+            pObject_ = model_.UrbanBlocks().Find( message.object().id() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -96,6 +103,8 @@ void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
     if( message.has_object() )
     {
         pObject_ = model_.Objects().Find( message.object().id() );
+        if( !pObject_ )
+            pObject_ = model_.UrbanBlocks().Find( message.object().id() );
         optionals_.realObjectPresent = 1;
     }
 

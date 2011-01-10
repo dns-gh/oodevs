@@ -15,6 +15,7 @@
 #include "PhysicalFileLoader.h"
 #include "FireClass.h"
 #include "FacadeType.h"
+#include "InfrastructureType.h"
 #include "MaterialCompositionType.h"
 #include "MedicalTreatmentType.h"
 #include "NBCAgent.h"
@@ -99,6 +100,7 @@ void ObjectTypes::Purge()
     tools::StringResolver< FacadeType >::DeleteAll();
     tools::StringResolver< MaterialCompositionType >::DeleteAll();
     tools::StringResolver< RoofShapeType >::DeleteAll();
+    tools::StringResolver< InfrastructureType >::DeleteAll();
     nVolumeId = 0;
 }
 
@@ -320,8 +322,9 @@ void ObjectTypes::ReadUrbanTypes( xml::xistream& xis )
     ReadFacadeTypes( xis );
     ReadMaterialCompositionTypes( xis );
     ReadRoofShapeTypes( xis );
-    xis >> xml::end
-        >> xml::end;
+    xis >> xml::end;
+    ReadInfrastructureTypes( xis );
+    xis >> xml::end;
 }
 
 
@@ -386,4 +389,25 @@ void ObjectTypes::ReadRoofShapeType( xml::xistream& xis )
 {
     RoofShapeType* type = new RoofShapeType( xis );
     StringResolver< RoofShapeType >::Register( type->GetName(), *type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadInfrastructureType
+// Created: SLG 2010-12-30
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadInfrastructureTypes( xml::xistream& xis )
+{
+    xis >> xml::start( "infrastructures" )
+        >> xml::list ( "infrastructure", *this, &ObjectTypes::ReadInfrastructureType )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectTypes::ReadInfrastructureType
+// Created: SLG 2010-12-30
+// -----------------------------------------------------------------------------
+void ObjectTypes::ReadInfrastructureType( xml::xistream& xis )
+{
+    InfrastructureType* type = new InfrastructureType( xis );
+    StringResolver< InfrastructureType >::Register( type->GetName(), *type );
 }

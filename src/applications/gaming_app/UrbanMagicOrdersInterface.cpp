@@ -14,9 +14,9 @@
 #include "actions/ActionTiming.h"
 #include "actions/UrbanMagicAction.h"
 #include "clients_kernel/MagicActionType.h"
-
+#include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/Profile_ABC.h"
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "protocol/SimulationSenders.h"
@@ -60,16 +60,14 @@ namespace
 // Name: UrbanMagicOrdersInterface constructor
 // Created: SLG 2010-12-21
 // -----------------------------------------------------------------------------
-UrbanMagicOrdersInterface::UrbanMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
+UrbanMagicOrdersInterface::UrbanMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
     : QObject( parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
-    , profile_( profile )
     , selectedEntity_( controllers )
 {
-    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,18 +76,14 @@ UrbanMagicOrdersInterface::UrbanMagicOrdersInterface( QWidget* parent, kernel::C
 // -----------------------------------------------------------------------------
 UrbanMagicOrdersInterface::~UrbanMagicOrdersInterface()
 {
-    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanMagicOrdersInterface::NotifyContextMenu
 // Created: SLG 2010-12-21
 // -----------------------------------------------------------------------------
-void UrbanMagicOrdersInterface::NotifyContextMenu( const gui::TerrainObjectProxy& object, kernel::ContextMenu& menu )
+void UrbanMagicOrdersInterface::NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu )
 {
-    if( !profile_.CanDoMagic( object ) )
-        return;
-
     selectedEntity_ = &object;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     AddValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ) );

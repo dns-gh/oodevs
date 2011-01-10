@@ -28,10 +28,9 @@ MIL_IDManager DEC_Knowledge_Urban::idManager_;
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object )
-    : DEC_Knowledge_ABC()
+: DEC_Knowledge_Object( army, UrbanObjectWrapper::GetWrapperObject( object ) )
     , army_                   ( &army )
     , object_                 ( &object )
-    , nID_                    ( idManager_.GetFreeId() )
     , rProgressPercent_       ( 0. )
     , rMaxProgressPercent_    ( 0. )
     , nTimeLastUpdate_        ( 0 )
@@ -50,10 +49,9 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban:
 // Created: JSR 2010-07-20
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Urban::DEC_Knowledge_Urban()
-    : DEC_Knowledge_ABC()
+    : DEC_Knowledge_Object()
     , army_                   ( 0 )
     , object_                 ( 0 )
-    , nID_                    ( 0 )
     , rProgressPercent_       ( 0. )
     , rMaxProgressPercent_    ( 0. )
     , nTimeLastUpdate_        ( 0 )
@@ -82,8 +80,7 @@ DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         >> const_cast< unsigned int& >( nID_ )
+    file >> boost::serialization::base_object< DEC_Knowledge_Object >( *this )
          >> nTimeLastUpdate_;
 
     unsigned long urbanId;
@@ -106,8 +103,7 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned in
 void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned long urbanId = object_->GetId();
-    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         << nID_
+    file << boost::serialization::base_object< DEC_Knowledge_Object >( *this )
          << nTimeLastUpdate_
          << urbanId
          << army_
@@ -258,7 +254,7 @@ void DEC_Knowledge_Urban::SendChangedState()
     if( bMustSend )
     {
         nTimeLastUpdate_ = GetCurrentTimeStep();
-        message().mutable_knowledge()->set_id( nID_ );
+        message().mutable_knowledge()->set_id( GetID() );
         message().mutable_party()->set_id( army_->GetID() );
         message().mutable_urban_block()->set_id( object_->GetId() );
         message.Send( NET_Publisher_ABC::Publisher() );
@@ -272,7 +268,7 @@ void DEC_Knowledge_Urban::SendChangedState()
 void DEC_Knowledge_Urban::SendFullState()
 {
     client::UrbanKnowledgeUpdate message;
-    message().mutable_knowledge()->set_id( nID_ );
+    message().mutable_knowledge()->set_id( GetID() );
     message().mutable_party()->set_id( army_->GetID() );
     message().mutable_urban_block()->set_id( object_->GetId() );
 
@@ -301,6 +297,7 @@ void DEC_Knowledge_Urban::UpdateOnNetwork()
         return;
     }
     SendChangedState();
+    DEC_Knowledge_Object::UpdateOnNetwork();
 }
 
 // -----------------------------------------------------------------------------
@@ -313,6 +310,7 @@ void DEC_Knowledge_Urban::SendStateToNewClient()
     {
         SendMsgCreation();
         SendFullState  ();
+        DEC_Knowledge_Object::SendStateToNewClient();
     }
 }
 
@@ -323,7 +321,7 @@ void DEC_Knowledge_Urban::SendStateToNewClient()
 void DEC_Knowledge_Urban::SendMsgCreation() const
 {
     client::UrbanKnowledgeCreation message;
-    message().mutable_knowledge()->set_id( nID_ );
+    message().mutable_knowledge()->set_id( GetID() );
     message().mutable_party()->set_id( army_->GetID() );
     message().mutable_urban_block()->set_id( object_->GetId() );
 
@@ -337,7 +335,7 @@ void DEC_Knowledge_Urban::SendMsgCreation() const
 void DEC_Knowledge_Urban::SendMsgDestruction() const
 {
     client::UrbanKnowledgeDestruction message;
-    message().mutable_knowledge()->set_id( nID_ );
+    message().mutable_knowledge()->set_id( GetID() );
     message().mutable_party()->set_id( army_->GetID() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -349,15 +347,6 @@ void DEC_Knowledge_Urban::SendMsgDestruction() const
 bool DEC_Knowledge_Urban::Clean() const
 {
     return false;//always maintain knowledge
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Urban::IsValid
-// Created: MGD 2009-11-26
-// -----------------------------------------------------------------------------
-unsigned DEC_Knowledge_Urban::GetId  () const
-{
-    return nID_;
 }
 
 // -----------------------------------------------------------------------------

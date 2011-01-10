@@ -12,6 +12,7 @@
 #include "Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include <urban/Architecture.h>
@@ -28,12 +29,14 @@ using namespace gui;
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id, const QString& name )
-    : EntityImplementation< kernel::Entity_ABC >( controllers.controller_, id, name )
-    , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , object_      ( object )
-    , controllers_ ( controllers )
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object,
+                                       unsigned int id, const QString& name, const kernel::ObjectType& type )
+    : EntityImplementation< kernel::Object_ABC >( controller, id, name )
+    , Creatable< TerrainObjectProxy >( controller, this )
+    , object_    ( object )
+    , controller_( controller )
     , densityColor_( false )
+    , type_( type )
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
@@ -51,11 +54,12 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
 // Name: TerrainObjectProxy constructor
 // Created: JSR 2010-06-21
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object )
-    : EntityImplementation< kernel::Entity_ABC >( controllers.controller_, object.GetId(), QString( object.GetName().c_str() ) )
-    , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , object_     ( object )
-    , controllers_( controllers )
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, const kernel::ObjectType& type )
+    : EntityImplementation< kernel::Object_ABC >( controller, object.GetId(), QString( object.GetName().c_str() ) )
+    , Creatable< TerrainObjectProxy >( controller, this )
+    , object_    ( object )
+    , controller_( controller )
+    , type_( type )
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
@@ -99,16 +103,6 @@ QString TerrainObjectProxy::GetName() const
     return object_.GetName().c_str();
 }
 
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy GetId
-// Created: SLG 2009-11-2
-// -----------------------------------------------------------------------------
-unsigned long TerrainObjectProxy::GetId() const
-{
-    // $$$$ _RC_ JSR 2010-08-20: la méthode n'est "quasiment" pas appelée, mais ça peut causer des conflits d'id si on appelle
-    // la méthode en tant que Entity_ABC. L'id sera sûrement le même qu'un agent ou un objet. 
-    return object_.GetId();
-}
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::Select
@@ -116,7 +110,8 @@ unsigned long TerrainObjectProxy::GetId() const
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::Select( kernel::ActionController& controller ) const
 {
-    controller.Select( *this, *static_cast< const Entity_ABC* >( this ) );
+    //controller.Select( *this, *static_cast< const TerrainObjectProxy* >( this ) );
+    controller.Select( *this, *(const Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,9 +121,9 @@ void TerrainObjectProxy::Select( kernel::ActionController& controller ) const
 void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
 {
     kernel::PropertiesDictionary& dictionary = *new kernel::PropertiesDictionary( controller );
-    EntityImplementation< kernel::Entity_ABC >::Attach( dictionary );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), EntityImplementation< kernel::Entity_ABC >::id_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Entity_ABC >::name_ );
+    EntityImplementation< kernel::Object_ABC >::Attach( dictionary );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), EntityImplementation< kernel::Object_ABC >::id_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Object_ABC >::name_ );
     AddDictionaryForArchitecture( dictionary );
 }
 

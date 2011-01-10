@@ -30,6 +30,8 @@ public:
     //@{
              MedicalCapacity();
     explicit MedicalCapacity( xml::xistream& xis );
+             MedicalCapacity( float emergencyBedsRate, float emergencyDoctorsRate, float nightDoctorsRate );
+
     virtual ~MedicalCapacity();
     //@}
 
@@ -43,6 +45,8 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
     virtual void Update( MIL_Object_ABC& object, unsigned int time );
+    void Update( xml::xistream& xis, const MIL_Object_ABC& /*object*/ );
+
 
     //! @name Decisional functions
     //@{

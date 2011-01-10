@@ -10,7 +10,7 @@
 #ifndef __UrbanObjectWrapper_h_
 #define __UrbanObjectWrapper_h_
 
-#include "MIL_Object_ABC.h"
+#include "MIL_Object.h"
 
 class MIL_ObjectBuilder_ABC;
 
@@ -30,7 +30,7 @@ namespace urban
 */
 // Created: SLG 2010-06-18
 // =============================================================================
-class UrbanObjectWrapper : public MIL_Object_ABC
+class UrbanObjectWrapper : public MIL_Object
 {
 public:
     //! @name Constructors/Destructor
@@ -55,32 +55,13 @@ public:
 
     //! @name Interaction
     //@{
-    virtual void Register                ( MIL_InteractiveContainer_ABC* capacity );
-    virtual void PreprocessAgent         ( MIL_Agent_ABC& agent );
-    virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent );
-    virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent );
-    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
-    virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent );
-    virtual void PreprocessPopulation    ( MIL_PopulationElement_ABC& agent );
-    virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population );
-    //@}
-
-    //! @name Instanciate / Build / Copy object
-    //@{
-    virtual void Instanciate( MIL_Object_ABC& object ) const; //<! create and register every prototyped capacity
-    virtual void Finalize(); //<! finalize capacity instanciation : for instance once the object location has been defined
+    virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
     //@}
 
     //! @name Knowledge
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team );
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& group );
-    //@}
-
-    //! @name Manipulator
-    //@{
-    virtual const MIL_ObjectManipulator_ABC& operator()() const;
-    virtual       MIL_ObjectManipulator_ABC& operator()();
     //@}
 
     //! @name HLA
@@ -109,29 +90,16 @@ public:
     //! @name Accessors
     //@{
     virtual unsigned int              GetID() const;
+    unsigned int                      GetUrbanId() const;
     const std::string&                GetName() const;
     const urban::TerrainObject_ABC&   GetObject();
     const urban::TerrainObject_ABC&   GetObject() const;
     //@}
 
 protected:
-    //! @name Tools
-    //@{
-    virtual void Update( unsigned int time );
-    virtual void Register( ObjectAttribute_ABC* attribute );
-    virtual void Register( ObjectCapacity_ABC* capacity );
-    //@}
-
     //!@name Helpers
     //@{
     void InitializeAttributes();
-    //@}
-
-private:
-    //! @name Types containers
-    //@{
-    typedef std::vector< ObjectCapacity_ABC* >              T_Capacities;
-    typedef std::vector< MIL_InteractiveContainer_ABC* >    T_InteractiveCapacities;
     //@}
 
 private:
@@ -139,15 +107,22 @@ private:
     //@{
     const urban::TerrainObject_ABC* object_;
     unsigned int                    id_;
-    MIL_ObjectManipulator_ABC& manipulator_;
-    T_Capacities            capacities_;
-    T_InteractiveCapacities interactives_;
     //@}
 
     //! @name HLA
     //@{
     HLA_Object_ABC* pView_;
     //@}
+
+public:
+
+    typedef std::map< const urban::TerrainObject_ABC*, UrbanObjectWrapper*  >     T_ObjectMap;
+    typedef T_ObjectMap::iterator                                                IT_ObjectMap;
+    typedef T_ObjectMap::const_iterator                                         CIT_ObjectMap;
+
+    static T_ObjectMap objectMap_;
+
+    static UrbanObjectWrapper& GetWrapperObject( const urban::TerrainObject_ABC& object );
 };
 
 BOOST_CLASS_EXPORT_KEY( UrbanObjectWrapper )

@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectsLayer.h"
+#include "clients_kernel/ObjectType.h"
 #include "TerrainPicker.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Pickable_ABC.h"
@@ -43,7 +44,10 @@ ObjectsLayer::~ObjectsLayer()
 void ObjectsLayer::ContextMenu( const Entity_ABC& entity, const geometry::Point2f& point, const QPoint& where )
 {
     const Object_ABC& object = static_cast< const Object_ABC& >( entity );
-    controllers_.actions_.ContextMenu( object, entity, point, where );
+    if( object.GetType().IsUrban() )
+        controllers_.actions_.ContextMenu( object, point, kernel::Nothing(), where );
+    else
+        controllers_.actions_.ContextMenu( object, entity, point, where );
 }
 
 namespace

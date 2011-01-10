@@ -1,0 +1,146 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#ifndef __MIL_Object_h_
+#define __MIL_Object_h_
+
+#include "MIL_Object_ABC.h"
+
+
+
+//=============================================================================
+// Created: NLD 2002-12-12
+// Last modified: JVT 03-07-15
+//=============================================================================
+class MIL_Object : public MIL_Object_ABC
+{
+public:
+    MIL_Object();
+    MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type );
+    virtual ~MIL_Object();
+
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    //@}
+
+    //! @name ODB
+    //@{
+    virtual void WriteODB( xml::xostream& xos ) const;
+    //@}
+
+    //! @name Construction
+    //@{
+    void UpdateLocalisation( const TER_Localisation& location );
+    //@}
+
+    //! @name Interactions
+    //@{
+    virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
+    //@}
+
+    //! @name InteractiveContainer
+    //@{
+    virtual void Register                ( MIL_InteractiveContainer_ABC* capacity );
+    virtual void PreprocessAgent         ( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentExiting     ( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
+    virtual void ProcessAgentInside      ( MIL_Agent_ABC& agent );
+    virtual void PreprocessPopulation    ( MIL_PopulationElement_ABC& population );
+    virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population );
+    //@}
+
+
+    //! @name Instanciate / Build / Copy object
+    //@{
+    virtual void Instanciate( MIL_Object_ABC& object ) const; //<! create and register every prototyped capacity
+    virtual void Finalize(); //<! finalize capacity instanciation : for instance once the object location has been defined
+    //@}
+
+    //! @name Knowledge
+    //@{
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team );
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& group );
+    //@}
+
+    //! @name Manipulator
+    //@{
+    virtual const MIL_ObjectManipulator_ABC& operator()() const;
+    virtual       MIL_ObjectManipulator_ABC& operator()();
+    //@}
+
+    //! @name HLA
+    //@{
+    virtual HLA_Object_ABC* GetHLAView() const = 0;
+    virtual void            SetHLAView( HLA_Object_ABC& view ) = 0;
+    virtual void    Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
+    virtual void    Serialize  ( HLA_UpdateFunctor& functor ) const = 0;
+    //@}
+
+    //! @name Network
+    //@{
+    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes ) = 0;
+    
+    virtual void UpdateState();
+
+    virtual void SendCreation() const = 0;
+    virtual void SendDestruction() const = 0;
+    virtual void SendFullState() const = 0;
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const std::string& GetName() const = 0;
+    virtual unsigned int GetID() const = 0;
+    //@}
+
+protected:
+    //! @name Tools
+    //@{
+    virtual void Update( unsigned int time );
+    virtual void Register( ObjectAttribute_ABC* attribute );
+    virtual void Register( ObjectCapacity_ABC* capacity );
+    //@}
+
+private:
+    //! @name Types containers
+    //@{
+    typedef std::vector< MIL_InteractiveContainer_ABC* > T_InteractiveCapacities;
+    typedef std::vector< ObjectAttribute_ABC* > T_Attributes;
+    typedef T_Attributes::const_iterator      CIT_Attributes;
+    typedef std::vector< ObjectCapacity_ABC* > T_Capacities;
+    //@}
+
+    //! @name Types
+    //@{
+    enum E_AttributeUpdate
+    {
+        eAttrUpdate_Localisation              = 0x10,
+        eAttrUpdate_All                       = 0xFF
+    };
+    //@}
+
+private:
+    MIL_ObjectManipulator_ABC& manipulator_;
+    T_InteractiveCapacities interactives_;
+    T_Capacities capacities_;
+    T_Attributes attributes_;
+
+    //! @name Network
+    //@{
+    mutable unsigned char xAttrToUpdate_;
+    mutable unsigned char xAttrToUpdateForHLA_;
+    //@}
+};
+
+#endif // __MIL_Object_h_

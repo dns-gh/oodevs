@@ -274,6 +274,7 @@ void MedicalTreatmentAttribute::OnUpdate( const sword::MissionParameter_Value& p
             capacities_[ typeId ].Update( value );
         }
     }
+    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 }
 
 // -----------------------------------------------------------------------------

@@ -260,7 +260,12 @@ void Model::Update( const sword::SimToClient& wrapper )
     if( wrapper.message().has_object_creation() )
         CreateUpdate< Object >( objects_, wrapper.message().object_creation().object().id(), wrapper.message().object_creation(), staticModel_.objectTypes_ ); 
     if( wrapper.message().has_object_update() )
-        objects_.Get( wrapper.message().object_update().object().id() ).Update( wrapper.message().object_update() ); 
+    {
+        if( objects_.Find( wrapper.message().object_update().object().id() ) )
+            objects_.Get( wrapper.message().object_update().object().id() ).Update( wrapper.message().object_update() );
+        else if( urbanBlocks_.Find( wrapper.message().object_update().object().id() ) )
+            urbanBlocks_.Get( wrapper.message().object_update().object().id() ).Update( wrapper.message().object_update() );
+    }
     if( wrapper.message().has_object_destruction() )
         Destroy( objects_, wrapper.message().object_destruction().object().id(), wrapper.message().object_destruction() ); 
     if( wrapper.message().has_object_knowledge_creation() )
@@ -504,7 +509,7 @@ void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks,
 // -----------------------------------------------------------------------------
 void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
-    urbanBlocks_           .Apply( boost::bind( &dispatcher::UrbanObject_ABC::Accept, _1, boost::ref( visitor ) ) );
+    urbanBlocks_           .Apply( boost::bind( &dispatcher::Object_ABC::Accept, _1, boost::ref( visitor ) ) );
     sides_                 .Apply( boost::bind( &dispatcher::Team_ABC::Accept, _1, boost::ref( visitor ) ) );
     knowledgeGroups_       .Apply( boost::bind( &dispatcher::KnowledgeGroup_ABC::Accept, _1, boost::ref( visitor ) ) );
     agentKnowledges_       .Apply( boost::bind( &dispatcher::AgentKnowledge_ABC::Accept, _1, boost::ref( visitor ) ) );

@@ -68,6 +68,6 @@ bool MIL_UrbanBlockParameter::ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urb
 // -----------------------------------------------------------------------------
 bool MIL_UrbanBlockParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    elem.mutable_urbanknowledge()->set_id( pKnowledgeUrbanBlock_->GetId() );
+    elem.mutable_urbanknowledge()->set_id( pKnowledgeUrbanBlock_->GetID() );
     return true;
 }

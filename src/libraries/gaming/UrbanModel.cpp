@@ -16,6 +16,7 @@
 #include "ResourceNetworkModel.h"
 #include "StaticModel.h"
 #include "StructuralStateAttribute.h"
+#include "MedicalTreatmentAttribute.h"
 #include "UrbanBlockDetectionMap.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/DetectionMap.h"
@@ -114,9 +115,9 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     unsigned long id = message.urban_object().id();
     for( int i = 0; i < message.location().coordinates().elem_size(); ++i )
         footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
-    urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
+    urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( message.urban_block().id(), name, &footPrint );
     AttachExtensions( *object, message );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, *object, message.urban_object().id(), QString( message.name().c_str() ) );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.urban_object().id(), QString( message.name().c_str() ), static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ) );
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
@@ -141,6 +142,24 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
         }
     }
     GetObject( message.urban_object().id() ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::UpdateObject
+// Created: SLG 2010-01-03
+// -----------------------------------------------------------------------------
+void UrbanModel::Update( const sword::ObjectUpdate& message )
+{   
+    if( message.has_attributes() )
+    {
+        gui::TerrainObjectProxy* pTerrainObject = Find( message.object().id() );
+        if( pTerrainObject )
+        {
+            if( message.attributes().has_medical_treatment() && pTerrainObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
+                pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controller_, static_.objectTypes_ ) );
+        }
+    }
+    GetObject( message.object().id() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,3 +198,13 @@ TerrainObjectProxy& UrbanModel::GetObject( unsigned long id ) const
 {
     return Get( id );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::FindObject
+// Created: SLG 2011-01-03
+// -----------------------------------------------------------------------------
+TerrainObjectProxy* UrbanModel::FindObject( unsigned long id ) const
+{
+    return Find( id );
+}
+

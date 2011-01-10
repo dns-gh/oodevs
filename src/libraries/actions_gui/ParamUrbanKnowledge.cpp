@@ -58,7 +58,7 @@ ParamUrbanKnowledge::~ParamUrbanKnowledge()
 // Name: ParamUrbanKnowledge::NotifyContextMenu
 // Created: MGD 2010-11-16
 // -----------------------------------------------------------------------------
-void ParamUrbanKnowledge::NotifyContextMenu( const ::gui::TerrainObjectProxy& entity, kernel::ContextMenu& menu )
+void ParamUrbanKnowledge::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
 {
     const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( agent_.Get< kernel::CommunicationHierarchies >().GetTop() );
     const kernel::UrbanKnowledge_ABC* knowledge = converter_.Find( entity, team );

@@ -11,6 +11,8 @@
 #include "MIL_ObjectManipulator.h"
 #include "MIL_AgentServer.h"
 #include "ResourceNetworkCapacity.h"
+#include "MedicalCapacity.h"
+#include "MedicalTreatmentAttribute.h"
 #include "StructuralCapacity.h"
 #include "UrbanObjectWrapper.h"
 #include "UrbanType.h"
@@ -30,9 +32,11 @@
 #include <urban/ColorAttribute.h>
 #include <urban/GeometryAttribute.h>
 #include <urban/Model.h>
+#include <urban/InfrastructureAttribute.h>
 #include <urban/ResourceNetworkAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/StaticModel.h>
+#include <urban/InfrastructureType.h>
 #include <urban/MaterialCompositionType.h>
 #include <geometry/Types.h>
 #include <boost/serialization/vector.hpp>
@@ -40,17 +44,19 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
 
+
+UrbanObjectWrapper::T_ObjectMap UrbanObjectWrapper::objectMap_;
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper constructor
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object )
-    : MIL_Object_ABC( 0, builder.GetType() )
+    : MIL_Object( 0, builder.GetType() )
     , object_( &object )
     , id_( idManager_.GetFreeId() )
-    , manipulator_( *new MIL_ObjectManipulator( *this ) )
     , pView_( 0 )
 {
+    objectMap_.insert( std::make_pair( &object, this ) );
     InitializeAttributes();
     builder.Build( *this );
 }
@@ -60,10 +66,9 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
 // Created: JSR 2010-07-20
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::UrbanObjectWrapper()
-    : MIL_Object_ABC()
+    : MIL_Object()
     , object_( 0 )
     , id_( 0 )
-    , manipulator_( *new MIL_ObjectManipulator( *this ) )
     , pView_( 0 )
 {
     // NOTHING
@@ -75,6 +80,7 @@ UrbanObjectWrapper::UrbanObjectWrapper()
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::~UrbanObjectWrapper()
 {
+    objectMap_.erase( object_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,6 +106,17 @@ void UrbanObjectWrapper::InitializeAttributes()
         ResourceNetworkCapacity* capacity = new ResourceNetworkCapacity( *resource );
         capacity->Register( *this );
     }
+
+    const urban::InfrastructureAttribute* infra = object_->Retrieve< urban::InfrastructureAttribute >();
+    if( infra )
+    {
+        urban::InfrastructureType* infraType = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::InfrastructureType >( infra->GetType() );
+        if( infraType && infraType->medical_.hasMedicalCapacity )
+        {
+            MedicalCapacity* capacity = new MedicalCapacity( infraType->medical_.emergencyBedsRate_, infraType->medical_.emergencyDoctorsRate_, infraType->medical_.nightDoctorsRate_ );
+            capacity->Register( *this );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -109,13 +126,11 @@ void UrbanObjectWrapper::InitializeAttributes()
 void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned long urbanId;
-    file >> boost::serialization::base_object< MIL_Object_ABC >( *this );
+    file >> boost::serialization::base_object< MIL_Object >( *this );
     file >> id_
          >> urbanId;
     object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
-    T_Capacities capacities;
-    file >> capacities;
-    std::for_each( capacities.begin(), capacities.end(), boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( *this ) ) );
+    objectMap_.insert( std::make_pair( object_, this ) );
     idManager_.Lock( id_ );
 }
 
@@ -126,10 +141,9 @@ void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int
 void UrbanObjectWrapper::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned long urbanId = object_->GetId();
-    file << boost::serialization::base_object< MIL_Object_ABC >( *this );
+    file << boost::serialization::base_object< MIL_Object >( *this );
     file << id_;
     file << urbanId;
-    file << capacities_;
 }
 
 // -----------------------------------------------------------------------------
@@ -142,101 +156,12 @@ void UrbanObjectWrapper::WriteODB( xml::xostream& /*xos*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::Register
-// Created: SLG 2010-06-18
+// Name: Object::CanInteractWith
+// Created: SLG 2010-01-05
 // -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Register( MIL_InteractiveContainer_ABC* capacity )
+bool UrbanObjectWrapper::CanInteractWith( const MIL_Agent_ABC& agent ) const
 {
-    interactives_.push_back( capacity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::PreprocessAgent
-// Created: JSR 2010-07-07
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::PreprocessAgent( MIL_Agent_ABC& agent )
-{
-    std::for_each( interactives_.begin(), interactives_.end(),
-        boost::bind( &MIL_InteractiveContainer_ABC::PreprocessAgent, _1, boost::ref( *this ), boost::ref( agent ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::ProcessAgentEntering
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::ProcessAgentEntering( MIL_Agent_ABC& agent )
-{
-    std::for_each( interactives_.begin(), interactives_.end(),
-        boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentEntering, _1, boost::ref( *this ), boost::ref( agent ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::ProcessAgentExiting
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::ProcessAgentExiting( MIL_Agent_ABC& agent )
-{
-    std::for_each( interactives_.begin(), interactives_.end(),
-        boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentExiting, _1, boost::ref( *this ), boost::ref( agent ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::ProcessAgentMovingInside
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::ProcessAgentMovingInside( MIL_Agent_ABC& agent )
-{
-    std::for_each( interactives_.begin(), interactives_.end(),
-        boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentMovingInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::ProcessAgentInside
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::ProcessAgentInside( MIL_Agent_ABC& agent )
-{
-    std::for_each( interactives_.begin(), interactives_.end(),
-        boost::bind( &MIL_InteractiveContainer_ABC::ProcessAgentInside, _1, boost::ref( *this ), boost::ref( agent ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::PreprocessPopulation
-// Created: JSR 2010-07-07
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::PreprocessPopulation( MIL_PopulationElement_ABC& population )
-{
-    std::for_each( interactives_.begin(), interactives_.end(),
-        boost::bind( &MIL_InteractiveContainer_ABC::PreprocessPopulation, _1, boost::ref( *this ), boost::ref( population ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::ProcessPopulationInside
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::ProcessPopulationInside( MIL_PopulationElement_ABC& population )
-{
-    std::for_each( interactives_.begin(), interactives_.end(),
-        boost::bind( &MIL_InteractiveContainer_ABC::ProcessPopulationInside, _1, boost::ref( *this ), boost::ref( population ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::Instanciate
-// Created: SLG 2010-06-23
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Instanciate( MIL_Object_ABC& object ) const
-{
-    std::for_each( capacities_.begin(), capacities_.end(),
-        boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::Finalize
-// Created: SLG 2010-06-23
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Finalize()
-{
-    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Finalize, _1, boost::ref( *this ) ) );
+    return MIL_Object_ABC::CanInteractWith( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -255,24 +180,6 @@ boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( c
 boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_KnowledgeGroup& /*group*/ )
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::operator()
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-const MIL_ObjectManipulator_ABC& UrbanObjectWrapper::operator()() const
-{
-    return manipulator_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::operator()
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-MIL_ObjectManipulator_ABC& UrbanObjectWrapper::operator()()
-{
-    return manipulator_;
 }
 
 // -----------------------------------------------------------------------------
@@ -316,9 +223,18 @@ void UrbanObjectWrapper::Serialize( HLA_UpdateFunctor& /*functor*/ ) const
 // Name: UrbanObjectWrapper::OnUpdate
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& /*attributes*/ )
+sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
 {
-    return sword::ObjectMagicActionAck::no_error;
+    for( int i = 0; i < attributes.size(); ++i )
+    {
+        const sword::MissionParameter_Value& attribute = attributes.Get( i );
+        if( attribute.list_size() == 0 ) // it should be a list of lists
+            return sword::ObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
+        const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
+        if ( actionId == sword::ObjectMagicAction_Attribute_medical_treatment )
+            GetAttribute< MedicalTreatmentAttribute >().OnUpdate( attribute );
+    }
+    return sword::ObjectMagicActionAck_ErrorCode_no_error;
 }
 
 // -----------------------------------------------------------------------------
@@ -342,7 +258,8 @@ void UrbanObjectWrapper::SendCreation() const
     if( object_->HasChild() )
         return;
     client::UrbanCreation message;
-    message().mutable_urban_object()->set_id( object_->GetId() );
+    message().mutable_urban_object()->set_id( id_ );
+    message().mutable_urban_block()->set_id( object_->GetId() );
     message().set_name( object_->GetName() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
 
@@ -393,11 +310,12 @@ void UrbanObjectWrapper::SendFullState() const
     if( capacity )
     {
         client::UrbanUpdate message;
-        message().mutable_urban_object()->set_id( object_->GetId() );
+        message().mutable_urban_object()->set_id( id_ );
         message().mutable_attributes()->mutable_structure()->set_state( capacity->GetStructuralState() );
         if ( message().attributes().has_structure() )
             message.Send( NET_Publisher_ABC::Publisher() );
     }
+    MIL_Object::SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -411,11 +329,22 @@ void UrbanObjectWrapper::UpdateState()
     if( pView_ && pView_->HideObject() )
         return;
     client::UrbanUpdate message;
-    message().mutable_urban_object()->set_id( object_->GetId() );
+    message().mutable_urban_object()->set_id( id_ );
     SendCapacity< StructuralCapacity >( *message().mutable_attributes() );
     SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     if ( message().attributes().has_structure() || message().attributes().has_infrastructures() )
         message.Send( NET_Publisher_ABC::Publisher() );
+
+    MIL_Object::UpdateState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetID
+// Created: SLG 2010-06-18
+// -----------------------------------------------------------------------------
+unsigned int UrbanObjectWrapper::GetUrbanId() const
+{
+    return object_->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -455,33 +384,6 @@ const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::Update
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Update( unsigned int time )
-{
-    std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Update, _1, boost::ref( *this ), time ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::Register
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Register( ObjectAttribute_ABC* /*attribute*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::Register
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Register( ObjectCapacity_ABC* capacity )
-{
-    capacities_.push_back( capacity );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::OnUpdateStructuralState
 // Created: SLG 2010-12-22
 // -----------------------------------------------------------------------------
@@ -492,4 +394,17 @@ sword::MagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateStructuralState( int
         return sword::MagicActionAck::error_invalid_attribute;
     capacity->SetStructuralState( state );
     return sword::MagicActionAck::no_error;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetWrapperObject
+// Created: SLG 2011-01-07
+// -----------------------------------------------------------------------------
+UrbanObjectWrapper& UrbanObjectWrapper::GetWrapperObject( const urban::TerrainObject_ABC& object )
+{
+    CIT_ObjectMap it = objectMap_.find( &object );
+    if( it == objectMap_.end() )
+        throw std::runtime_error( "error in access urban object" );
+    return *( it->second );
 }

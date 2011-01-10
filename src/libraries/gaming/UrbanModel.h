@@ -21,6 +21,7 @@ namespace sword
 {
     class UrbanCreation;
     class UrbanUpdate;
+    class ObjectUpdate;
 }
 
 namespace urban
@@ -58,10 +59,14 @@ public:
     //@{
     void Create( const sword::UrbanCreation& message );
     void Update( const sword::UrbanUpdate& message );
+    void Update( const sword::ObjectUpdate& message );
+
     void Purge();
     const urban::Model& GetModel() const;
     const UrbanBlockDetectionMap& GetUrbanBlockMap() const;
     gui::TerrainObjectProxy& GetObject( unsigned long id ) const;
+    gui::TerrainObjectProxy* FindObject( unsigned long id ) const;
+
     //@}
 
 private:

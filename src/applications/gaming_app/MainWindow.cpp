@@ -475,7 +475,6 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( populationKnowledges );
     forward_->Register( objectKnowledges );
     forward_->Register( limits );
-    forward_->Register( urbanLayer );
     forward_->Register( drawerLayer );
     forward_->Register( metrics );
     forward_->Register( elevation3d );

@@ -11,7 +11,7 @@
 #define __UrbanObject_h_
 
 #include "Localisation.h"
-#include "UrbanObject_ABC.h"
+#include "Object_ABC.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace sword
@@ -19,6 +19,7 @@ namespace sword
     class UrbanCreation;
     class UrbanUpdate;
     class UrbanAttributes;
+    class ObjectUpdate;
 }
 
 namespace kernel
@@ -30,6 +31,7 @@ namespace dispatcher
 {
     class Model_ABC;
     class UrbanObjectAttribute_ABC;
+    class ObjectAttribute_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -38,9 +40,10 @@ namespace dispatcher
 */
 // Created: SLG 2009-12-03
 // =============================================================================
-    class UrbanObject : public UrbanObject_ABC
+    class UrbanObject : public Object_ABC
                       , public kernel::Extension_ABC
                       , public kernel::Updatable_ABC< sword::UrbanUpdate >
+                      , public kernel::Updatable_ABC< sword::ObjectUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -56,7 +59,10 @@ public:
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     virtual void DoUpdate( const sword::UrbanUpdate& msg );
+    virtual void DoUpdate( const sword::ObjectUpdate& msg );
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual const Team_ABC& GetTeam() const;
+    const kernel::ObjectType& GetType() const;
     //@}
 
 private:
@@ -70,11 +76,14 @@ private:
     //@{
     void Initialize( const sword::UrbanAttributes& attributes );
     void AddAttribute( UrbanObjectAttribute_ABC* attribute );
+    void AddObjectAttribute( ObjectAttribute_ABC* attribute );
+
     //@}
 
     //! @name Types
     //@{
     typedef boost::ptr_vector< UrbanObjectAttribute_ABC > T_UrbanObjectAttributes;
+    typedef boost::ptr_vector< ObjectAttribute_ABC > T_ObjectAttributes;
     //@}
 
     //! @name Types
@@ -84,17 +93,22 @@ private:
     {
         unsigned localisationPresent : 1;
         unsigned attributesPresent : 1;
+        unsigned objectAttributesPresent : 1;
     };
 
 private:
     //! @name Member data
     //@{
     const std::string strName_;
+    unsigned long urbanBlockId_;
     Localisation localisation_;
     bool hasInfrastructures_;
     bool hasResourceNetwork_;
     bool hasStructure_;
+    bool hasMedicalTreatment_;
+    bool hasUrbanObject_;
     T_UrbanObjectAttributes attributes_;
+    T_ObjectAttributes objectAttributes_;
     T_Optionals optionals_;
     //@}
 };

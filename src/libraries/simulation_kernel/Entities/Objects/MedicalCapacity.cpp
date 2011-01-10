@@ -41,6 +41,18 @@ MedicalCapacity::MedicalCapacity()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MedicalCapacity::MedicalCapacity
+// Created: RFT 2008-05-22
+// -----------------------------------------------------------------------------
+MedicalCapacity::MedicalCapacity( float emergencyBedsRate, float emergencyDoctorsRate, float nightDoctorsRate )
+: emergencyBedsRate_     ( emergencyBedsRate )
+, emergencyDoctorsRate_  ( emergencyDoctorsRate )
+, nightDoctorsRate_      ( nightDoctorsRate )
+{
+    //NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MedicalCapacity constructor
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
@@ -109,6 +121,17 @@ void MedicalCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 
     //See if the medical structure is able to take care of the patient in the entranceWaitingList
     MakeDiagnosis( attr );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::Update
+// Created: SLG 2010-12-30
+// -----------------------------------------------------------------------------
+void MedicalCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& object )
+{
+    MedicalTreatmentAttribute* medicalAttribute = new MedicalTreatmentAttribute( xis );
+    const_cast< MIL_Object_ABC& >( object ).tools::Extendable< ObjectAttribute_ABC >::Attach< ObjectAttribute_ABC >( *medicalAttribute );
+    const_cast< MIL_Object_ABC& >( object ).GetAttribute< MedicalTreatmentAttribute >() = *medicalAttribute;
 }
 
 // -----------------------------------------------------------------------------

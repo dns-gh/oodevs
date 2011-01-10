@@ -1193,7 +1193,10 @@ void AgentServerMsgMgr::OnReceiveObjectCreation( const sword::ObjectCreation& me
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveObjectUpdate( const sword::ObjectUpdate& message )
 {
-    GetModel().objects_.UpdateObject( message );
+    if( GetModel().objects_.FindObject( message.object().id() ) )
+        GetModel().objects_.UpdateObject( message );
+    else if( GetModel().urbanObjects_.FindObject( message.object().id() ) )
+        GetModel().urbanObjects_.Update( message );
 }
 
 //-----------------------------------------------------------------------------

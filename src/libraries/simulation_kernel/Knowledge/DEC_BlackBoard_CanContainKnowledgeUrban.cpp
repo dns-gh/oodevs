@@ -34,7 +34,7 @@ namespace
         {
             boost::shared_ptr< DEC_Knowledge_Urban > knowledge( new DEC_Knowledge_Urban( army_, object ) );
             elements_[ object.GetId() ] = knowledge;
-            knowledgeElements_[ knowledge->GetId() ] = knowledge;
+            knowledgeElements_[ knowledge->GetID() ] = knowledge;
 
         }
 
@@ -86,7 +86,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::load( MIL_CheckPointInArchive& fil
         DEC_Knowledge_Urban* knowledge;
         file >> knowledge;
         urbanMapFromConcrete_[ knowledge->GetTerrainObjectKnown().GetId() ].reset( knowledge );
-        urbanKnowledgeMapFromKnowledgeId_[ knowledge->GetId() ].reset( knowledge );
+        urbanKnowledgeMapFromKnowledgeId_[ knowledge->GetID() ].reset( knowledge );
     }
 }
 
@@ -114,7 +114,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban
     boost::shared_ptr< DEC_Knowledge_Urban > knowledge ( new DEC_Knowledge_Urban( army, object ) );
     if( ! urbanMapFromConcrete_.insert( std::make_pair( object.GetId(), knowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
-    if( ! urbanKnowledgeMapFromKnowledgeId_.insert( std::make_pair( knowledge->GetId(), knowledge ) ).second )
+    if( ! urbanKnowledgeMapFromKnowledgeId_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return knowledge;
 }
@@ -127,7 +127,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::DestroyKnowledgeUrban( DEC_Knowled
 {
     if( urbanMapFromConcrete_.erase( knowledge.GetTerrainObjectKnown().GetId() ) < 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
-    if( urbanKnowledgeMapFromKnowledgeId_.erase( knowledge.GetId() ) < 1 )
+    if( urbanKnowledgeMapFromKnowledgeId_.erase( knowledge.GetID() ) < 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
