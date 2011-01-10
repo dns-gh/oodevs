@@ -30,7 +30,7 @@ namespace urban
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
     class DetectionMap;
 }
 
@@ -50,7 +50,7 @@ class UrbanModel : public tools::Resolver< gui::TerrainObjectProxy >
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanModel( kernel::Controller& controller, const Model& model, const StaticModel& staticModel, const kernel::DetectionMap& map );
+             UrbanModel( kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, const kernel::DetectionMap& map );
     virtual ~UrbanModel();
     //@}
 
@@ -74,7 +74,7 @@ private:
 public:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     const Model& model_;
     const StaticModel& static_;
     std::auto_ptr< urban::Model > urbanModel_;

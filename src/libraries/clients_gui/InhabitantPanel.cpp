@@ -48,5 +48,5 @@ InhabitantPanel::~InhabitantPanel()
 // -----------------------------------------------------------------------------
 void InhabitantPanel::OnChanged( bool value )
 {
-    options_.Change( "InhabitantPanel", value );
+    options_.Change( "UrbanDensityColor", value );
 }

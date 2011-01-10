@@ -12,10 +12,13 @@
 #include "Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/OptionVariant.h"
 #include <urban/Architecture.h>
 #include <urban/TerrainObject_ABC.h>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
+#include <urban/ColorAttribute.h>
 
 using namespace gui;
 
@@ -25,30 +28,38 @@ using namespace gui;
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name )
-    : EntityImplementation< kernel::Entity_ABC >( controller, id, name )
-    , Creatable< TerrainObjectProxy >( controller, this )
-    , object_    ( object )
-    , controller_( controller )
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id, const QString& name )
+    : EntityImplementation< kernel::Entity_ABC >( controllers.controller_, id, name )
+    , Creatable< TerrainObjectProxy >( controllers.controller_, this )
+    , object_      ( object )
+    , controllers_ ( controllers )
+    , densityColor_( false )
 {
     RegisterSelf( *this );
-    CreateDictionary( controller );
-    controller_.Register( *this );
+    CreateDictionary( controllers.controller_ );
+    controllers_.Register( *this );
+    urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
+    if( colorAttribute )
+    {
+        color_.red_ = colorAttribute->Red();
+        color_.green_ = colorAttribute->Green();
+        color_.blue_ = colorAttribute->Blue();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy constructor
 // Created: JSR 2010-06-21
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object )
-    : EntityImplementation< kernel::Entity_ABC >( controller, object.GetId(), QString( object.GetName().c_str() ) )
-    , Creatable< TerrainObjectProxy >( controller, this )
-    , object_    ( object )
-    , controller_( controller )
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object )
+    : EntityImplementation< kernel::Entity_ABC >( controllers.controller_, object.GetId(), QString( object.GetName().c_str() ) )
+    , Creatable< TerrainObjectProxy >( controllers.controller_, this )
+    , object_     ( object )
+    , controllers_( controllers )
 {
     RegisterSelf( *this );
-    CreateDictionary( controller );
-    controller_.Register( *this );
+    CreateDictionary( controllers.controller_ );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +68,7 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
 // -----------------------------------------------------------------------------
 TerrainObjectProxy::~TerrainObjectProxy()
 {
-    controller_.Unregister( *this );
+    controllers_.Unregister( *this );
     Destroy();
 }
 
@@ -210,4 +221,66 @@ const urban::TerrainObject_ABC* TerrainObjectProxy::GetObject() const
     // $$$$ JSR 2010-11-30: Utilisé pour le display dans UrbanKnowledge pour kernel::Formatter< TerrainObject_ABC >
     // A supprimer quand TerrainObjectProxy sera passé dans clients_kernel
     return &object_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::OptionChanged
+// Created: LGY 2011-01-07
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "UrbanDensityColor" )
+    {
+        bool density = value.To< bool >();
+        if( densityColor_ != density )
+        {
+            densityColor_ = density;
+            UpdateColor();
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::UpdateColor
+// Created: LGY 2011-01-07
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::UpdateColor()
+{
+    urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
+    if( colorAttribute )
+    {
+        float density = GetDensity();
+        unsigned short red = densityColor_ ? ( density > 0 ? 255 : 0 ) : color_.red_;
+        unsigned short green = densityColor_ ? ( density > 0 ? 0 : 255 ) : color_.green_;
+        unsigned short blue = densityColor_ ? 0 : color_.blue_;
+        colorAttribute->SetRed( red );
+        colorAttribute->SetGreen( green );
+        colorAttribute->SetBlue( blue );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::GetDensity
+// Created: LGY 2011-01-07
+// -----------------------------------------------------------------------------
+float TerrainObjectProxy::GetDensity() const
+{
+    float surface = object_.GetFootprint()->ComputeArea();
+    unsigned int floors = 1;
+    urban::Architecture* architecture = object_.Retrieve< urban::Architecture >();
+    if( architecture )
+        floors = architecture->GetFloorNumber();
+    return GetHumans() / ( surface * floors );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::GetHumans
+// Created: LGY 2011-01-07
+// -----------------------------------------------------------------------------
+unsigned int TerrainObjectProxy::GetHumans() const
+{
+    unsigned int humans = 0;
+    BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
+        humans += human.second;
+    return humans;
 }

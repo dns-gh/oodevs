@@ -38,12 +38,12 @@ using namespace gui;
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( kernel::Controller& controller, const Model& model, const StaticModel& staticModel, const kernel::DetectionMap& map )
-    : controller_( controller )
-    , model_( model )
-    , static_( staticModel )
-    , urbanModel_( new urban::Model() )
-    , map_( map )
+UrbanModel::UrbanModel( kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, const kernel::DetectionMap& map )
+    : controllers_           ( controllers )
+    , model_                 ( model )
+    , static_                ( staticModel )
+    , urbanModel_            ( new urban::Model() )
+    , map_                   ( map )
     , urbanBlockDetectionMap_( *new UrbanBlockDetectionMap( map ) )
 {
     // NOTHING
@@ -116,7 +116,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
         footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
     urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
     AttachExtensions( *object, message );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controller_, *object, message.urban_object().id(), QString( message.name().c_str() ) );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, *object, message.urban_object().id(), QString( message.name().c_str() ) );
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
@@ -137,7 +137,7 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
         if( pTerrainObject )
         {
             if( message.attributes().has_structure() && pTerrainObject->Retrieve< kernel::StructuralStateAttribute_ABC >() == 0 )
-                pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
+                pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controllers_.controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
         }
     }
     GetObject( message.urban_object().id() ).Update( message );

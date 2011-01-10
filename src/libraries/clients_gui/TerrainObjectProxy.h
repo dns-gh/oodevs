@@ -15,6 +15,7 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 
 namespace kernel
 {
@@ -22,6 +23,7 @@ namespace kernel
     class PropertiesDictionary;
     class Viewport_ABC;
     class Displayer_ABC;
+    class Controllers;
 }
 
 namespace sword
@@ -49,12 +51,13 @@ class TerrainObjectProxy : public kernel::Extension_ABC
                          , public kernel::Creatable< TerrainObjectProxy >
                          , public kernel::Displayable_ABC
                          , public tools::Observer_ABC
+                         , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name );
-             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object );
+             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id, const QString& name );
+             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object );
     virtual ~TerrainObjectProxy();
     //@}
 
@@ -87,6 +90,7 @@ public:
     virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
     virtual void SetSelected( bool selected ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     void UpdateHumans( const std::string& inhabitant, unsigned int number );
     //@}
@@ -96,20 +100,32 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     void AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary );
+    void UpdateColor();
+    float GetDensity() const;
+    unsigned int GetHumans() const;
     //@}
 
     //! @name Types
     //@{
     typedef std::map< std::string, unsigned int > T_Humans;
     typedef T_Humans::const_iterator            CIT_Humans;
+
+    struct BaseColor
+    {
+        unsigned short red_;
+        unsigned short green_;
+        unsigned short blue_;
+    };
     //@}
 
 private:
     //! @name Member data
     //@{
     urban::TerrainObject_ABC& object_;
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     T_Humans humans_;
+    BaseColor color_;
+    bool densityColor_;
     //@}
 };
 
