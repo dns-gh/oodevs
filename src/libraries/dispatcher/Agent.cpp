@@ -155,7 +155,7 @@ void Agent::DoUpdate( const sword::UnitAttributes& asnMsg )
         pReinforced_ = asnMsg.reinforced_unit().id() == 0 ? 0 : &model_.Agents().Get( asnMsg.reinforced_unit().id() );
 
     UPDATE_ASN_ATTRIBUTE( mort, bDead_ );
-    UPDATE_ASN_ATTRIBUTE( neutralise,  bNeutralized_ );
+    UPDATE_ASN_ATTRIBUTE( neutralise, bNeutralized_ );
     UPDATE_ASN_ATTRIBUTE( mode_furtif_actif, bStealthModeEnabled_ );
     UPDATE_ASN_ATTRIBUTE( embarque, isMounted_ );
     UPDATE_ASN_ATTRIBUTE( transporteurs_disponibles, bHumanTransportersAvailable_ );
@@ -413,7 +413,6 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_posture_pourcentage( nPostureCompletion_ );
         asn().set_etat_installation( nInstallationState_ );
         asn().set_en_tenue_de_protection_nbc( bNbcProtectionSuitEnabled_ );
-
         {
             for( std::vector< unsigned int >::const_iterator it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
             {
@@ -421,37 +420,30 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
                 data.set_id( *it );
             }
         }
-
         asn().mutable_etat_contamination()->set_percentage( contaminationPercentage_ );
         asn().mutable_etat_contamination()->set_quantity( contaminationQuantity_ );
-
         asn().mutable_communications()->set_jammed( communicationJammed_ );
         asn().mutable_communications()->mutable_knowledge_group()->set_id( knowledgeGroupJammed_ );
-
         asn().set_radio_emitter_disabled( bRadioEmitterEnabled_ );
         asn().set_radio_receiver_disabled( bRadioRecieverEnabled_ );
         asn().set_radar_actif( bRadarEnabled_ );
-
         {
             for( tools::Iterator< const kernel::Agent_ABC& > it = transportedAgents_.CreateIterator(); it.HasMoreElements(); )
                 asn().mutable_transported_units()->add_elem()->set_id( it.NextElement().GetId() );
         }
-
         asn().mutable_transporting_unit()->set_id( pTransporter_ ? pTransporter_->GetId() : 0 );
-
-        asn().set_rapport_de_force ( nForceRatioState_ );
-        asn().set_combat_de_rencontre ( nCloseCombatState_ );
-        asn().set_etat_operationnel ( nOperationalState_ );
-        asn().set_disponibilite_au_tir_indirect ( nIndirectFireAvailability_ );
-        asn().set_roe ( nRoe_ );
+        asn().set_rapport_de_force( nForceRatioState_ );
+        asn().set_combat_de_rencontre( nCloseCombatState_ );
+        asn().set_etat_operationnel( nOperationalState_ );
+        asn().set_disponibilite_au_tir_indirect( nIndirectFireAvailability_ );
+        asn().set_roe( nRoe_ );
         asn().set_roe_crowd( nPopulationRoe_ );
-        asn().set_fatigue ( nTiredness_ );
-        asn().set_moral ( nMorale_ );
-        asn().set_experience ( nExperience_ );
+        asn().set_fatigue( nTiredness_ );
+        asn().set_moral( nMorale_ );
+        asn().set_experience( nExperience_ );
         asn().mutable_surrendered_unit()->set_id( pSideSurrenderedTo_ ? pSideSurrenderedTo_->GetId() : 0 );
-        asn().set_prisonnier ( bPrisonner_ );
-        asn().set_refugie_pris_en_compte ( bRefugeeManaged_ );
-
+        asn().set_prisonnier( bPrisonner_ );
+        asn().set_refugie_pris_en_compte( bRefugeeManaged_ );
         {
             for( tools::Iterator< const Equipment& > it = equipments_.CreateIterator(); it.HasMoreElements(); )
                 it.NextElement().Send( *asn().mutable_dotation_eff_materiel()->add_elem() );
