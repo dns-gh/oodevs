@@ -25,6 +25,7 @@ GraphicPreferences.cpp \
 HelpSystem.cpp \
 HierarchyListView_ABC.cpp \
 HighlightColorModifier.cpp \
+InhabitantPanel.cpp \
 InputPropagationPrototype_ABC.cpp \
 IntelligencesPanel.cpp \
 LayersPanel.cpp \

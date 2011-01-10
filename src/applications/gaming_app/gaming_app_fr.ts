@@ -1102,37 +1102,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>LogisticStatusWidget</name>
-    <message>
-        <source>Maintenance system state</source>
-        <translation>Etat de la chaîne maintenance</translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation>Etat du système</translation>
-    </message>
-    <message>
-        <source>Working scheme</source>
-        <translation>Régime de travail</translation>
-    </message>
-    <message>
-        <source>Priorities</source>
-        <translation>Priorités</translation>
-    </message>
-    <message>
-        <source>Tactical priorities</source>
-        <translation>Priorités tactiques</translation>
-    </message>
-    <message>
-        <source>Medical system state</source>
-        <translation>Etat de la chaîne médicale</translation>
-    </message>
-    <message>
-        <source>Supply system state</source>
-        <translation>Etat de la chaîne ravitaillement</translation>
-    </message>
-</context>
-<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -1524,6 +1493,29 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>MaintenanceStates</name>
+    <message>
+        <source>Maintenance system state</source>
+        <translation>Etat de la chaîne maintenance</translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation>Etat du système</translation>
+    </message>
+    <message>
+        <source>Working scheme</source>
+        <translation>Régime de travail</translation>
+    </message>
+    <message>
+        <source>Priorities</source>
+        <translation>Priorités</translation>
+    </message>
+    <message>
+        <source>Tactical priorities</source>
+        <translation>Priorités tactiques</translation>
+    </message>
+</context>
+<context>
     <name>MedicalCapacityUpdateDialog</name>
     <message>
         <source>Update medical capacity</source>
@@ -1656,6 +1648,25 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Resting</source>
         <translation>En repos</translation>
+    </message>
+</context>
+<context>
+    <name>MedicalStates</name>
+    <message>
+        <source>Medical system state</source>
+        <translation>Etat de la chaîne médicale</translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation>Etat du système</translation>
+    </message>
+    <message>
+        <source>Priorities</source>
+        <translation>Priorités</translation>
+    </message>
+    <message>
+        <source>Tactical priorities</source>
+        <translation>Priorités tactiques</translation>
     </message>
 </context>
 <context>
@@ -2820,6 +2831,17 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Quota</source>
         <translation>Quota</translation>
+    </message>
+</context>
+<context>
+    <name>SupplyStates</name>
+    <message>
+        <source>Supply system state</source>
+        <translation>Etat de la chaîne ravitaillement</translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation>Etat du système</translation>
     </message>
 </context>
 <context>

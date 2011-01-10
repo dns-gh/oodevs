@@ -1102,37 +1102,6 @@ Motivo: %3
     </message>
 </context>
 <context>
-    <name>LogisticStatusWidget</name>
-    <message>
-        <source>Maintenance system state</source>
-        <translation>Estado del sistema de mantenimiento</translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation>Estado del sistema</translation>
-    </message>
-    <message>
-        <source>Working scheme</source>
-        <translation>Esquema de trabajo</translation>
-    </message>
-    <message>
-        <source>Priorities</source>
-        <translation>Prioridades</translation>
-    </message>
-    <message>
-        <source>Tactical priorities</source>
-        <translation>Prioridades tácticas</translation>
-    </message>
-    <message>
-        <source>Medical system state</source>
-        <translation>Estado del sistema médico</translation>
-    </message>
-    <message>
-        <source>Supply system state</source>
-        <translation>Estado de sistema de abastecimiento</translation>
-    </message>
-</context>
-<context>
     <name>LogisticSupplyChangeQuotasDialog</name>
     <message>
         <source>Supply quotas allocation</source>
@@ -1524,6 +1493,29 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>MaintenanceStates</name>
+    <message>
+        <source>Maintenance system state</source>
+        <translation>Estado del sistema de mantenimiento</translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation>Estado del sistema</translation>
+    </message>
+    <message>
+        <source>Working scheme</source>
+        <translation>Esquema de trabajo</translation>
+    </message>
+    <message>
+        <source>Priorities</source>
+        <translation>Prioridades</translation>
+    </message>
+    <message>
+        <source>Tactical priorities</source>
+        <translation>Prioridades tácticas</translation>
+    </message>
+</context>
+<context>
     <name>MedicalCapacityUpdateDialog</name>
     <message>
         <source>Update medical capacity</source>
@@ -1656,6 +1648,25 @@ Motivo: %3
     <message>
         <source>Resting</source>
         <translation>En reposo</translation>
+    </message>
+</context>
+<context>
+    <name>MedicalStates</name>
+    <message>
+        <source>Medical system state</source>
+        <translation>Estado del sistema médico</translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation>Estado del sistema</translation>
+    </message>
+    <message>
+        <source>Priorities</source>
+        <translation>Prioridades</translation>
+    </message>
+    <message>
+        <source>Tactical priorities</source>
+        <translation>Prioridades tácticas</translation>
     </message>
 </context>
 <context>
@@ -2820,6 +2831,17 @@ Motivo: %3
     <message>
         <source>Quota</source>
         <translation>Cuota</translation>
+    </message>
+</context>
+<context>
+    <name>SupplyStates</name>
+    <message>
+        <source>Supply system state</source>
+        <translation>Estado de sistema de abastecimiento</translation>
+    </message>
+    <message>
+        <source>System status</source>
+        <translation>Estado del sistema</translation>
     </message>
 </context>
 <context>

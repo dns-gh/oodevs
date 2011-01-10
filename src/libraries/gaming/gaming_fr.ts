@@ -960,15 +960,15 @@
     </message>
     <message>
         <source>Decisionnal</source>
-        <translation type="unfinished"></translation>
+        <translation>Décisionnel</translation>
     </message>
     <message>
         <source>Sealing level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau de bouclage:</translation>
     </message>
     <message>
         <source>Logistic route</source>
-        <translation type="unfinished"></translation>
+        <translation>Route logistique</translation>
     </message>
     <message>
         <source>Burn</source>
@@ -1023,171 +1023,171 @@
     <name>Profile</name>
     <message>
         <source>Too many connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Trop de connexions</translation>
     </message>
 </context>
 <context>
     <name>Reinforcements</name>
     <message>
         <source>Reinforcements/Reinforcing</source>
-        <translation type="unfinished"></translation>
+        <translation>Renforts/Renforçant</translation>
     </message>
     <message>
         <source>Reinforcements/Reinforced by</source>
-        <translation type="unfinished"></translation>
+        <translation>Renforts/Renforcé par</translation>
     </message>
     <message>
         <source>Reinforcements</source>
-        <translation type="unfinished"></translation>
+        <translation>Renforts</translation>
     </message>
     <message>
         <source>Reinforcing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Renforce:</translation>
     </message>
     <message>
         <source>Reinforced by:</source>
-        <translation type="unfinished"></translation>
+        <translation>Est renforcé par:</translation>
     </message>
 </context>
 <context>
     <name>ResourceNetwork</name>
     <message>
         <source>Resources Networks</source>
-        <translation type="unfinished"></translation>
+        <translation>Réseaux de ressource</translation>
     </message>
     <message>
         <source>Total flow</source>
-        <translation type="unfinished"></translation>
+        <translation>Débit total</translation>
     </message>
     <message>
         <source>Stock</source>
-        <translation type="unfinished"></translation>
+        <translation>Stock</translation>
     </message>
     <message>
         <source>Maximal stock</source>
-        <translation type="unfinished"></translation>
+        <translation>Stock maximal</translation>
     </message>
     <message>
         <source>Production</source>
-        <translation type="unfinished"></translation>
+        <translation>Production</translation>
     </message>
     <message>
         <source>Consumption</source>
-        <translation type="unfinished"></translation>
+        <translation>Consommation</translation>
     </message>
     <message>
         <source>Vital consumption</source>
-        <translation type="unfinished"></translation>
+        <translation>Consommation vitale</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished">Activée</translation>
+        <translation>Activé</translation>
     </message>
 </context>
 <context>
     <name>Score</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Tendency</source>
-        <translation type="unfinished"></translation>
+        <translation>Tendance</translation>
     </message>
     <message>
         <source>Gauge</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauge</translation>
     </message>
 </context>
 <context>
     <name>Stock</name>
     <message>
         <source>Stock resource attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Attribut ressources en stock</translation>
     </message>
 </context>
 <context>
     <name>SupplyStates</name>
     <message>
         <source>Supply system/System enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Chaîne ravitaillement/Chaîne activée</translation>
     </message>
     <message>
         <source>Supply system state</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat de la chaîne ravitaillement</translation>
     </message>
     <message>
         <source>System status</source>
-        <translation type="unfinished">Etat du système</translation>
+        <translation>Etat du système</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished">Activée</translation>
+        <translation>Activée</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished">Désactivée</translation>
+        <translation>Désactivée</translation>
     </message>
 </context>
 <context>
     <name>Team</name>
     <message>
         <source>Army %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Armée %1</translation>
     </message>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identifiant</translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished">Info/Nom</translation>
+        <translation>Info/Nom</translation>
     </message>
 </context>
 <context>
     <name>Transports</name>
     <message>
         <source>Transports/Tow trucks</source>
-        <translation type="unfinished"></translation>
+        <translation>Transport/Remorqueurs</translation>
     </message>
     <message>
         <source>Transports/Towed units</source>
-        <translation type="unfinished"></translation>
+        <translation>Transport/Remorqués</translation>
     </message>
     <message>
         <source>Towed units</source>
-        <translation type="unfinished"></translation>
+        <translation>Unités remorquées</translation>
     </message>
 </context>
 <context>
     <name>Urban</name>
     <message>
         <source>Details</source>
-        <translation type="unfinished">Détails</translation>
+        <translation>Détails</translation>
     </message>
     <message>
         <source>Identifier:</source>
-        <translation type="unfinished">Identifiant:</translation>
+        <translation>Identifiant:</translation>
     </message>
     <message>
         <source>Associated block:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloc associé:</translation>
     </message>
     <message>
         <source>Perceived:</source>
-        <translation type="unfinished"></translation>
+        <translation>Perçu:</translation>
     </message>
     <message>
         <source>Progress:</source>
-        <translation type="unfinished"></translation>
+        <translation>Progrès:</translation>
     </message>
     <message>
         <source>Maximum Progress:</source>
-        <translation type="unfinished"></translation>
+        <translation>Progrès maximum:</translation>
     </message>
     <message>
         <source>Known blocks</source>
@@ -1195,25 +1195,25 @@
     </message>
     <message>
         <source>Unknown urban object</source>
-        <translation type="unfinished"></translation>
+        <translation>Objet urbain inconnu</translation>
     </message>
     <message>
         <source>Urban block[%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocs urbain[%1]</translation>
     </message>
 </context>
 <context>
     <name>UserProfileFactory</name>
     <message>
         <source>New profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau profil</translation>
     </message>
 </context>
 <context>
     <name>UserProfilesModel</name>
     <message>
         <source>Profile &apos;%1&apos; does not exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le profil &apos;%1&apos; n&apos;existe pas.</translation>
     </message>
 </context>
 </TS>
