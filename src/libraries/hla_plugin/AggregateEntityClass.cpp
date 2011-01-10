@@ -9,7 +9,11 @@
 
 #include "hla_plugin_pch.h"
 #include "AggregateEntityClass.h"
-#include "HlaExtension_ABC.h"
+#include "AgentSubject_ABC.h"
+#include "AgentExtension.h"
+#include "EntityIdentifier.h"
+#include "dispatcher/Agent.h"
+#include "clients_kernel/AgentType.h"
 #include <hla/ObjectRegistration_ABC.h>
 #include <hla/Class.h>
 #include <hla/Federate.h>
@@ -36,8 +40,10 @@ struct AggregateEntityClass::UnitRegistration : public ObjectRegistration_ABC< H
 // Name: AggregateEntityClass constructor
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-AggregateEntityClass::AggregateEntityClass()
-    : registration_( new UnitRegistration() )
+AggregateEntityClass::AggregateEntityClass( Federate& federate, AgentSubject_ABC& subject )
+    : id_          ( 1 )
+    , subject_     ( subject )
+    , registration_( new UnitRegistration() )
     , hlaClass_    ( new Class< HlaExtension_ABC >( *registration_ ) )
 {
     hlaClass_->Register( AttributeIdentifier( "EntityType" ) );             // static
@@ -50,6 +56,8 @@ AggregateEntityClass::AggregateEntityClass()
     hlaClass_->Register( AttributeIdentifier( "Formation" ) );              // dynamic
     hlaClass_->Register( AttributeIdentifier( "NumberOfSilentEntities" ) ); // dynamic
     hlaClass_->Register( AttributeIdentifier( "SilentEntities" ) );         // dynamic
+    federate.Register( ClassIdentifier( "BaseEntity.AggregateEntity" ), *hlaClass_, true, false );
+    subject_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,23 +66,18 @@ AggregateEntityClass::AggregateEntityClass()
 // -----------------------------------------------------------------------------
 AggregateEntityClass::~AggregateEntityClass()
 {
-    // NOTHING
+    subject_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AggregateEntityClass::RegisterTo
-// Created: AGE 2008-02-22
+// Name: AggregateEntityClass::Created
+// Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-void AggregateEntityClass::RegisterTo( Federate& federate )
+void AggregateEntityClass::Created( dispatcher::Agent_ABC& agent )
 {
-    federate.Register( ClassIdentifier( "BaseEntity.AggregateEntity" ), *hlaClass_, true, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntityClass::Register
-// Created: AGE 2008-02-22
-// -----------------------------------------------------------------------------
-void AggregateEntityClass::Register( HlaExtension_ABC& localObject, unsigned int id )
-{
-    hlaClass_->Register( localObject, boost::lexical_cast< std::string >( id ) );
+    EntityIdentifier id( 1, 1, id_ ); // site, application, id
+    std::auto_ptr< AgentExtension > extension( new AgentExtension( agent, id ) );
+    hlaClass_->Register( *extension, agent.GetType().GetName() + boost::lexical_cast< std::string >( agent.GetId() ) );
+    agent.Attach( *extension.release() );
+    ++id_;
 }

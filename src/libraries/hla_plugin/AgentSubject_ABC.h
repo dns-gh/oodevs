@@ -3,44 +3,44 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __Hla_Plugin_Class_ABC_h_
-#define __Hla_Plugin_Class_ABC_h_
+#ifndef plugins_hla_AgentSubject_ABC_h
+#define plugins_hla_AgentSubject_ABC_h
 
-namespace hla
-{
-    class Federate;
-}
+#include <boost/noncopyable.hpp>
 
 namespace plugins
 {
 namespace hla
 {
+    class AgentListener_ABC;
+
 // =============================================================================
-/** @class  ObjectClass_ABC
-    @brief  Class definition
+/** @class  AgentSubject_ABC
+    @brief  Agent subject definition
 */
-// Created: AGE 2008-02-22
+// Created: SLI 2011-01-10
 // =============================================================================
-class ObjectClass_ABC
+class AgentSubject_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectClass_ABC() {}
-    virtual ~ObjectClass_ABC() {}
+             AgentSubject_ABC() {}
+    virtual ~AgentSubject_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void RegisterTo( ::hla::Federate& federate ) = 0;
+    virtual void Register( AgentListener_ABC& listener ) = 0;
+    virtual void Unregister( AgentListener_ABC& listener ) = 0;
     //@}
 };
 
 }
 }
 
-#endif // __Hla_Plugin_Class_ABC_h_
+#endif // plugins_hla_AgentSubject_ABC_h

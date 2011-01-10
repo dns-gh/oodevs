@@ -7,13 +7,16 @@
 //
 // *****************************************************************************
 
-#ifndef __ExtensionFactory_h_
-#define __ExtensionFactory_h_
+#ifndef plugins_hla_ExtensionFactory_h
+#define plugins_hla_ExtensionFactory_h
 
+#include "AgentSubject_ABC.h"
 #include "dispatcher/ExtensionFactory_ABC.h"
+#include <vector>
 
 namespace dispatcher
 {
+    class Model_ABC;
     class Agent;
 }
 
@@ -21,44 +24,45 @@ namespace plugins
 {
 namespace hla
 {
-    class AggregateEntityClass;
-
 // =============================================================================
 /** @class  ExtensionFactory
     @brief  Extension factory
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
+class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >,
+                         public AgentSubject_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExtensionFactory( AggregateEntityClass& agentClass );
+    explicit ExtensionFactory( dispatcher::Model_ABC& model );
     virtual ~ExtensionFactory();
     //@}
 
     //! @name Operations
     //@{
     virtual void Create( dispatcher::Agent& entity );
+    virtual void Register( AgentListener_ABC& listener );
+    virtual void Unregister( AgentListener_ABC& listener );
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Types
     //@{
-    ExtensionFactory( const ExtensionFactory& );            //!< Copy constructor
-    ExtensionFactory& operator=( const ExtensionFactory& ); //!< Assignment operator
+    typedef std::vector< AgentListener_ABC* > T_Listeners;
+    typedef T_Listeners::const_iterator     CIT_Listeners;
     //@}
 
 private:
     //! @name Member data
     //@{
-    AggregateEntityClass& agentClass_;
-    unsigned short id_;
+    dispatcher::Model_ABC& model_;
+    T_Listeners listeners_;
     //@}
 };
 
 }
 }
 
-#endif // __ExtensionFactory_h_
+#endif // plugins_hla_ExtensionFactory_h

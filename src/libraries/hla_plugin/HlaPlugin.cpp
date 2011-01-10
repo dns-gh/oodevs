@@ -33,7 +33,7 @@ namespace
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
-    : federate_  ( new FederateFacade( xis, model, ReadTimeStep( config.GetSessionFile() ) ) )
+    : federate_( new FederateFacade( xis, model, ReadTimeStep( config.GetSessionFile() ) ) )
 {
     // NOTHING
 }

@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __AggregateEntityClass_h_
-#define __AggregateEntityClass_h_
+#ifndef plugins_hla_AggregateEntityClass_h
+#define plugins_hla_AggregateEntityClass_h
 
-#include "ObjectClass_ABC.h"
+#include "AgentListener_ABC.h"
 
 namespace hla
 {
@@ -23,6 +23,7 @@ namespace plugins
 namespace hla
 {
     class HlaExtension_ABC;
+    class AgentSubject_ABC;
 
 // =============================================================================
 /** @class  AggregateEntityClass
@@ -30,28 +31,21 @@ namespace hla
 */
 // Created: AGE 2008-02-22
 // =============================================================================
-class AggregateEntityClass : public ObjectClass_ABC
+class AggregateEntityClass : public AgentListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateEntityClass();
+             AggregateEntityClass( ::hla::Federate& federate, AgentSubject_ABC& subject );
     virtual ~AggregateEntityClass();
     //@}
 
     //! @name Operations
     //@{
-    virtual void RegisterTo( ::hla::Federate& federate );
-    void Register( HlaExtension_ABC& localObject, unsigned int id );
+    virtual void Created( dispatcher::Agent_ABC& agent );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AggregateEntityClass( const AggregateEntityClass& );            //!< Copy constructor
-    AggregateEntityClass& operator=( const AggregateEntityClass& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     struct UnitRegistration;
@@ -60,6 +54,8 @@ private:
 private:
     //! @name Member data
     //@{
+    unsigned short id_;
+    AgentSubject_ABC& subject_;
     std::auto_ptr< UnitRegistration > registration_;
     std::auto_ptr< ::hla::Class< HlaExtension_ABC > > hlaClass_;
     //@}
@@ -68,4 +64,4 @@ private:
 }
 }
 
-#endif // __AggregateEntityClass_h_
+#endif // plugins_hla_AggregateEntityClass_h
