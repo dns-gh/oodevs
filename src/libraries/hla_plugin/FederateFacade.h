@@ -36,6 +36,7 @@ namespace hla
 {
     class AgentListener_ABC;
     class AgentSubject_ABC;
+    class RtiAmbassadorFactory_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -48,7 +49,7 @@ class FederateFacade : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, unsigned int lookAhead );
+             FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, const RtiAmbassadorFactory_ABC& factory, unsigned int lookAhead );
     virtual ~FederateFacade();
     //@}
 

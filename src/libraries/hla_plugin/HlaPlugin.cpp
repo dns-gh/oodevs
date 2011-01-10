@@ -10,6 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "HlaPlugin.h"
 #include "FederateFacade.h"
+#include "RtiAmbassadorFactory.h"
 #include "dispatcher/Config.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -33,7 +34,8 @@ namespace
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
-    : federate_( new FederateFacade( xis, model, ReadTimeStep( config.GetSessionFile() ) ) )
+    : pFactory_( new RtiAmbassadorFactory() )
+    , federate_( new FederateFacade( xis, model, *pFactory_, ReadTimeStep( config.GetSessionFile() ) ) )
 {
     // NOTHING
 }

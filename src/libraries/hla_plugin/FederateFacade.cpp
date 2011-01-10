@@ -11,6 +11,7 @@
 #include "FederateFacade.h"
 #include "AggregateEntityClass.h"
 #include "ExtensionFactory.h"
+#include "RtiAmbassadorFactory_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include <hla/hla_lib.h>
 #include <hla/SimpleTimeFactory.h>
@@ -26,12 +27,12 @@ using namespace hla;
 // Name: FederateFacade constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, unsigned int lookAhead )
+FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, const RtiAmbassadorFactory_ABC& factory, unsigned int lookAhead )
     : joined_         ( false )
     , subject_        ( new ExtensionFactory( model ) )
     , timeFactory_    ( new SimpleTimeFactory() )
     , intervalFactory_( new SimpleTimeIntervalFactory() )
-    , ambassador_     ( RtiAmbassador_ABC::CreateAmbassador( *timeFactory_, *intervalFactory_, RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host" ), xis.attribute< std::string >( "port", "8989" ) ) )
+    , ambassador_     ( factory.CreateAmbassador( *timeFactory_, *intervalFactory_, RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host" ), xis.attribute< std::string >( "port", "8989" ) ) )
     , federate_       ( new Federate( *ambassador_, xis.attribute< std::string >( "name" ), SimpleTime(), SimpleTimeInterval( lookAhead ) ) )
 {
     const std::string name = xis.attribute< std::string >( "federation" );

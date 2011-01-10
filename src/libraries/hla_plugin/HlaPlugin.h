@@ -12,6 +12,7 @@
 
 #include "dispatcher/Plugin_ABC.h"
 #include "protocol/Protocol.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -29,6 +30,7 @@ namespace plugins
 namespace hla
 {
     class FederateFacade;
+    class RtiAmbassadorFactory_ABC;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -36,7 +38,7 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class HlaPlugin : public dispatcher::Plugin_ABC
+class HlaPlugin : public dispatcher::Plugin_ABC, private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -54,15 +56,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    HlaPlugin( const HlaPlugin& );            //!< Copy constructor
-    HlaPlugin& operator=( const HlaPlugin& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
+    std::auto_ptr< RtiAmbassadorFactory_ABC > pFactory_;
     std::auto_ptr< FederateFacade > federate_;
     //@}
 };
