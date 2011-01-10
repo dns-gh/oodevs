@@ -156,7 +156,7 @@ void UrbanModel::Update( const sword::ObjectUpdate& message )
         if( pTerrainObject )
         {
             if( message.attributes().has_medical_treatment() && pTerrainObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
-                pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controller_, static_.objectTypes_ ) );
+                pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
         }
     }
     GetObject( message.object().id() ).Update( message );
