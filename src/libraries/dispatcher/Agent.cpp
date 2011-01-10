@@ -69,7 +69,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , nCloseCombatState_            ( sword::etat_esquive )
     , nOperationalState_            ( sword::operationnel )
     , nIndirectFireAvailability_    ( sword::UnitAttributes::fire_unavailable )
-    , nRoe_                         ( sword::RulesOfEngagement::tir_libre )
+    , nRoe_                         ( sword::RulesOfEngagement::free_fire )
     , nPopulationRoe_               ( sword::UnitAttributes::emploi_force_interdit )
     , nTiredness_                   ( sword::normal )
     , nMorale_                      ( sword::bon )

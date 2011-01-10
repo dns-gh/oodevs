@@ -43,7 +43,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
     , nForceRatioState_ ( sword::ForceRatio_Value_neutre )
     , nCloseCombatState_( sword::etat_fixe )
     , nOperationalState_( sword::detruit_totalement )
-    , nRoe_             ( sword::RulesOfEngagement_Value_tir_interdit )
+    , nRoe_             ( sword::RulesOfEngagement::fire_upon_order )
     , order_            ( 0 )
     , symbol_           ( msg.app6symbol() )
 {

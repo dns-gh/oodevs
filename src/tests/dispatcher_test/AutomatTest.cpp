@@ -449,7 +449,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             message.set_rapport_de_force( sword::ForceRatio::favorable );
             message.set_combat_de_rencontre( sword::etat_esquive );
             message.set_etat_operationnel( sword::detruit_tactiquement );
-            message.set_roe( sword::RulesOfEngagement::tir_sur_riposte );
+            message.set_roe( sword::RulesOfEngagement::retaliation_only );
             CheckInitialized( message );
             automats.Get( 1 ).Update( message );
 

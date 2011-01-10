@@ -285,7 +285,7 @@ BOOST_FIXTURE_TEST_CASE( automat_attributes_to_client_is_converted, ContextFixtu
     content.mutable_automat_attributes()->set_rapport_de_force( sword::ForceRatio::neutre );
     content.mutable_automat_attributes()->set_combat_de_rencontre( sword::etat_esquive );
     content.mutable_automat_attributes()->set_etat_operationnel( sword::operationnel );
-    content.mutable_automat_attributes()->set_roe( sword::RulesOfEngagement::tir_libre );
+    content.mutable_automat_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
     content.mutable_automat_attributes()->mutable_tc2_organic()->set_id( 8 );
     content.mutable_automat_attributes()->mutable_logistic_base_organic()->mutable_automat()->set_id( 9 );
     content.mutable_automat_attributes()->mutable_logistic_base_organic()->mutable_formation()->set_id( 10 );
@@ -401,7 +401,7 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->set_combat_de_rencontre( sword::etat_esquive );
     content.mutable_unit_attributes()->set_etat_operationnel( sword::operationnel );
     content.mutable_unit_attributes()->set_disponibilite_au_tir_indirect( sword::UnitAttributes::fire_ready );
-    content.mutable_unit_attributes()->set_roe( sword::RulesOfEngagement::tir_libre );
+    content.mutable_unit_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
     content.mutable_unit_attributes()->set_roe_crowd( sword::UnitAttributes::emploi_force_interdit );
     content.mutable_unit_attributes()->set_fatigue( sword::epuise );
     content.mutable_unit_attributes()->set_moral( sword::bon );

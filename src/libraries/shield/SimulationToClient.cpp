@@ -471,32 +471,32 @@ namespace
     void ConvertForceRatio( const From& from, To* to )
     {
         CONVERT_ENUM( rapport_de_force, ( sword::ForceRatio::none_force_ratio, MsgsSimToClient::ForceRatio::none_force_ratio )
-                                           ( sword::ForceRatio::neutre, MsgsSimToClient::ForceRatio::neutre )
-                                           ( sword::ForceRatio::favorable, MsgsSimToClient::ForceRatio::favorable )
-                                           ( sword::ForceRatio::defavorable, MsgsSimToClient::ForceRatio::defavorable ) );
+                                        ( sword::ForceRatio::neutre, MsgsSimToClient::ForceRatio::neutre )
+                                        ( sword::ForceRatio::favorable, MsgsSimToClient::ForceRatio::favorable )
+                                        ( sword::ForceRatio::defavorable, MsgsSimToClient::ForceRatio::defavorable ) );
     }
     template< typename From, typename To >
     void ConvertMeetingEngagementStatus( const From& from, To* to )
     {
         CONVERT_ENUM( combat_de_rencontre, ( sword::none_meeting, Common::none_meeting )
-                                              ( sword::etat_esquive, Common::etat_esquive )
-                                              ( sword::etat_fixe, Common::etat_fixe )
-                                              ( sword::etat_poursuite_mission, Common::etat_poursuite_mission ) );
+                                           ( sword::etat_esquive, Common::etat_esquive )
+                                           ( sword::etat_fixe, Common::etat_fixe )
+                                           ( sword::etat_poursuite_mission, Common::etat_poursuite_mission ) );
     }
     template< typename From, typename To >
     void ConvertOperationalStatus( const From& from, To* to )
     {
         CONVERT_ENUM( etat_operationnel, ( sword::detruit_totalement, Common::detruit_totalement )
-                                            ( sword::detruit_tactiquement, Common::detruit_tactiquement )
-                                            ( sword::operationnel, Common::operationnel ) );
+                                         ( sword::detruit_tactiquement, Common::detruit_tactiquement )
+                                         ( sword::operationnel, Common::operationnel ) );
     }
     template< typename From, typename To >
     void ConvertRulesOfEngagement( const From& from, To* to )
     {
-        CONVERT_ENUM( roe, ( sword::RulesOfEngagement::none_roe, MsgsSimToClient::RulesOfEngagement::none_roe )
-                              ( sword::RulesOfEngagement::tir_libre, MsgsSimToClient::RulesOfEngagement::tir_libre )
-                              ( sword::RulesOfEngagement::tir_sur_riposte, MsgsSimToClient::RulesOfEngagement::tir_sur_riposte )
-                              ( sword::RulesOfEngagement::tir_interdit, MsgsSimToClient::RulesOfEngagement::tir_interdit ) );
+        CONVERT_ENUM( roe, ( sword::RulesOfEngagement::none, MsgsSimToClient::RulesOfEngagement::none_roe )
+                           ( sword::RulesOfEngagement::free_fire, MsgsSimToClient::RulesOfEngagement::tir_libre )
+                           ( sword::RulesOfEngagement::retaliation_only, MsgsSimToClient::RulesOfEngagement::tir_sur_riposte )
+                           ( sword::RulesOfEngagement::fire_upon_order, MsgsSimToClient::RulesOfEngagement::tir_interdit ) );
     }
 }
 

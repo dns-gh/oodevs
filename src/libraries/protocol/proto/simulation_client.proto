@@ -560,13 +560,13 @@ message AutomatCreation {
 message RulesOfEngagement {
     /** @enum Value
         @brief Value of the rules of engagement
-        @todo make RulesOfEngagement the enum
+        @todo make RulesOfEngagement the enum or move the value field in this message
     */
     enum Value {
-       none_roe        = 0; //!< No rule of engagement @todo rename to no_roe ?
-       tir_libre       = 1; //!< Fire permitted @todo rename to fire_permitted
-       tir_sur_riposte = 2; //!< Fire back @todo rename to fire_back
-       tir_interdit    = 3; //!< Fire forbidden @todo rename to fire_forbidden
+       none             = 0; //!< No rule of engagement
+       free_fire        = 1; //!< Fire permitted
+       retaliation_only = 2; //!< Fire back permitted
+       fire_upon_order  = 3; //!< Fire forbidden
     }
 }
 
@@ -753,13 +753,13 @@ message UnitAttributes {
         @brief Posture states
     */
     enum Posture {
-        mouvement           = 0; //!< Moving @todo translate
-        mouvement_discret   = 1; //!< Moving discreetly @todo translate
-        arret               = 2; //!< Stopped @todo translate
-        poste_reflexe       = 3; //!< ? @todo translate
-        poste               = 4; //!< ? @todo translate
-        poste_amenage       = 5; //!< ? @todo translate
-        poste_prepare_genie = 6; //!< ? @todo translate
+        mouvement           = 0; //!< Moving @todo moving
+        mouvement_discret   = 1; //!< Moving discreetly @todo infiltrating
+        arret               = 2; //!< Stopped @todo stopping
+        poste_reflexe       = 3; //!< ? @todo short stopping
+        poste               = 4; //!< ? @todo parked
+        poste_amenage       = 5; //!< ? @todo parked on self-prepared area
+        poste_prepare_genie = 6; //!< ? @todo parked on engineer-prepared area
     }
     /** @struct FireAvailability
         @brief Fire availability states
@@ -775,10 +775,10 @@ message UnitAttributes {
     */
     enum CrowdRoe {
         none                                      = 0; //!< No rule @todo rename to no_rule
-        emploi_force_interdit                     = 1; //!< Coercion forbidden @todo rename to coercion_forbidden
-        maintien_a_distance_par_moyens_non_letaux = 2; //!< @todo translate
-        dispersion_par_moyens_de_defense_actifs   = 3; //!< @todo translate
-        armes_letales_autorisees                  = 4; //!< Lethal weapons allowed @todo translate
+        emploi_force_interdit                     = 1; //!< Coercion forbidden @todo passive
+        maintien_a_distance_par_moyens_non_letaux = 2; //!< @todo translate @todo active
+        dispersion_par_moyens_de_defense_actifs   = 3; //!< @todo translate @todo bodily_harm
+        armes_letales_autorisees                  = 4; //!< Lethal weapons allowed @todo lethal_force
     }
     required UnitId                      unit                          = 1;  //!< The unit identifier @see UnitId
     optional HumanDotations              dotation_eff_personnel        = 2;  //!< The human dotations @see HumanDotations @todo _eff_ ?
