@@ -1562,6 +1562,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( urban_creation_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_urban_creation()->mutable_urban_object()->set_id( 7 );
+    content.mutable_urban_creation()->mutable_urban_block()->set_id( 8 );
     content.mutable_urban_creation()->set_name( "name" );
     FillLocation( content.mutable_urban_creation()->mutable_location() );
     FillUrbanAttributes( content.mutable_urban_creation()->mutable_attributes() );
