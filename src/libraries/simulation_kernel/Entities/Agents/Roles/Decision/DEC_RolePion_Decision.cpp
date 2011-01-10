@@ -1082,12 +1082,12 @@ void DEC_RolePion_Decision::NotifyRoePopulationChanged( const PHY_RoePopulation&
 void DEC_RolePion_Decision::SendFullState( client::UnitAttributes& msg ) const
 {
     assert( pRoePopulation_ );
-    msg().set_rapport_de_force              ( sword::ForceRatio_Value( nForceRatioState_ ) );
-    msg().set_combat_de_rencontre           ( sword::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
-    msg().set_etat_operationnel             ( sword::EnumOperationalStatus( nOperationalState_ ) );
-    msg().set_disponibilite_au_tir_indirect ( sword::UnitAttributes_FireAvailability( nIndirectFireAvailability_ ) );
-    msg().set_roe                           ( sword::RulesOfEngagement_Value( nRulesOfEngagementState_ ) );
-    msg().set_roe_crowd                     ( pRoePopulation_->GetAsnID() );
+    msg().set_rapport_de_force             ( sword::ForceRatio_Value( nForceRatioState_ ) );
+    msg().set_combat_de_rencontre          ( sword::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
+    msg().set_etat_operationnel            ( sword::EnumOperationalStatus( nOperationalState_ ) );
+    msg().set_disponibilite_au_tir_indirect( sword::UnitAttributes::FireAvailability( nIndirectFireAvailability_ ) );
+    msg().set_roe                          ( sword::RulesOfEngagement_Value( nRulesOfEngagementState_ ) );
+    msg().set_roe_crowd                    ( pRoePopulation_->GetAsnID() );
 }
 
 // -----------------------------------------------------------------------------

@@ -56,10 +56,10 @@ void PHY_Posture::Terminate()
 // -----------------------------------------------------------------------------
 PHY_Posture::PHY_Posture( const std::string& strName, E_PostureType nType, sword::UnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture )
     : strName_         ( strName )
-    , nType_           ( nType   )
-    , nAsnID_          ( nAsnID  )
-    , nFlags_          ( nFlags  )
-    , consumptionMode_ ( consumptionMode  )
+    , nType_           ( nType )
+    , nAsnID_          ( nAsnID )
+    , nFlags_          ( nFlags )
+    , consumptionMode_ ( consumptionMode )
     , pNextAutoPosture_( pNextAutoPosture )
 {
     // NOTHING
@@ -119,7 +119,6 @@ const PHY_Posture* PHY_Posture::FindPosture( const std::string& strName )
     CIT_PostureMap it = postures_.find( strName );
     return it == postures_.end() ? 0: it->second;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Posture::FindPosture
