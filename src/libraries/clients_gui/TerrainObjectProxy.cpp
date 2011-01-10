@@ -29,12 +29,12 @@ using namespace gui;
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object,
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object,
                                        unsigned int id, const QString& name, const kernel::ObjectType& type )
-    : EntityImplementation< kernel::Object_ABC >( controller, id, name )
-    , Creatable< TerrainObjectProxy >( controller, this )
+    : EntityImplementation< kernel::Object_ABC >( controllers.controller_, id, name )
+    , Creatable< TerrainObjectProxy >( controllers.controller_, this )
     , object_    ( object )
-    , controller_( controller )
+    , controllers_( controllers )
     , densityColor_( false )
     , type_( type )
 {
@@ -54,11 +54,11 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::T
 // Name: TerrainObjectProxy constructor
 // Created: JSR 2010-06-21
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, const kernel::ObjectType& type )
-    : EntityImplementation< kernel::Object_ABC >( controller, object.GetId(), QString( object.GetName().c_str() ) )
-    , Creatable< TerrainObjectProxy >( controller, this )
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const kernel::ObjectType& type )
+    : EntityImplementation< kernel::Object_ABC >( controllers.controller_, object.GetId(), QString( object.GetName().c_str() ) )
+    , Creatable< TerrainObjectProxy >( controllers.controller_, this )
     , object_    ( object )
-    , controller_( controller )
+    , controllers_( controllers )
     , type_( type )
 {
     RegisterSelf( *this );

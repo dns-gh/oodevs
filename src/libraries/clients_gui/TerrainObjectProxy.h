@@ -56,8 +56,8 @@ class TerrainObjectProxy : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const kernel::ObjectType& type );
-             TerrainObjectProxy( kernel::Controller& controller, urban::TerrainObject_ABC& object, const kernel::ObjectType& type );
+    TerrainObjectProxy( kernel::Controllers& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const kernel::ObjectType& type );
+             TerrainObjectProxy( kernel::Controllers& controller, urban::TerrainObject_ABC& object, const kernel::ObjectType& type );
     virtual ~TerrainObjectProxy();
     //@}
 
