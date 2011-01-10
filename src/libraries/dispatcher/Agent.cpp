@@ -65,7 +65,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , bRadioEmitterEnabled_         ( true )
     , bRadarEnabled_                ( false )
     , pTransporter_                 ( 0 )
-    , nForceRatioState_             ( sword::ForceRatio::neutre )
+    , nForceRatioState_             ( sword::ForceRatio::neutral )
     , nCloseCombatState_            ( sword::etat_esquive )
     , nOperationalState_            ( sword::operationnel )
     , nIndirectFireAvailability_    ( sword::UnitAttributes::fire_unavailable )

@@ -282,7 +282,7 @@ BOOST_FIXTURE_TEST_CASE( automat_attributes_to_client_is_converted, ContextFixtu
 {
     content.mutable_automat_attributes()->mutable_automat()->set_id( 7 );
     content.mutable_automat_attributes()->set_etat_automate( sword::embraye );
-    content.mutable_automat_attributes()->set_rapport_de_force( sword::ForceRatio::neutre );
+    content.mutable_automat_attributes()->set_rapport_de_force( sword::ForceRatio::neutral );
     content.mutable_automat_attributes()->set_combat_de_rencontre( sword::etat_esquive );
     content.mutable_automat_attributes()->set_etat_operationnel( sword::operationnel );
     content.mutable_automat_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
@@ -397,7 +397,7 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->mutable_transported_units()->add_elem()->set_id( 110 );
     content.mutable_unit_attributes()->mutable_transported_units()->add_elem()->set_id( 111 );
     content.mutable_unit_attributes()->mutable_transporting_unit()->set_id( 112 );
-    content.mutable_unit_attributes()->set_rapport_de_force( sword::ForceRatio::neutre );
+    content.mutable_unit_attributes()->set_rapport_de_force( sword::ForceRatio::neutral );
     content.mutable_unit_attributes()->set_combat_de_rencontre( sword::etat_esquive );
     content.mutable_unit_attributes()->set_etat_operationnel( sword::operationnel );
     content.mutable_unit_attributes()->set_disponibilite_au_tir_indirect( sword::UnitAttributes::fire_ready );

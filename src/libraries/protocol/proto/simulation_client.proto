@@ -579,10 +579,10 @@ message ForceRatio {
         @todo make ForceRatio the enum
     */
     enum Value {
-        none_force_ratio = 0; //!< No force ratio @todo rename to no_force_ratio
-        neutre           = 1; //!< Neutral @todo rename to neutral
-        favorable        = 2; //!< Favorable
-        defavorable      = 3; //!< Unfavorable @todo rename to unfavorable
+        none        = 0; //!< No force ratio
+        neutral     = 1; //!< Neutral
+        favorable   = 2; //!< Favorable
+        unfavorable = 3; //!< Unfavorable
     }
 }
 

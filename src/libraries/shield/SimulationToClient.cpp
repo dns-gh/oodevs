@@ -470,10 +470,10 @@ namespace
     template< typename From, typename To >
     void ConvertForceRatio( const From& from, To* to )
     {
-        CONVERT_ENUM( rapport_de_force, ( sword::ForceRatio::none_force_ratio, MsgsSimToClient::ForceRatio::none_force_ratio )
-                                        ( sword::ForceRatio::neutre, MsgsSimToClient::ForceRatio::neutre )
+        CONVERT_ENUM( rapport_de_force, ( sword::ForceRatio::none, MsgsSimToClient::ForceRatio::none_force_ratio )
+                                        ( sword::ForceRatio::neutral, MsgsSimToClient::ForceRatio::neutre )
                                         ( sword::ForceRatio::favorable, MsgsSimToClient::ForceRatio::favorable )
-                                        ( sword::ForceRatio::defavorable, MsgsSimToClient::ForceRatio::defavorable ) );
+                                        ( sword::ForceRatio::unfavorable, MsgsSimToClient::ForceRatio::defavorable ) );
     }
     template< typename From, typename To >
     void ConvertMeetingEngagementStatus( const From& from, To* to )

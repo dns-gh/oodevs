@@ -114,9 +114,9 @@ namespace
     {
         switch( ratio )
         {
-        case sword::ForceRatio::neutre:      return "neutral";
-        case sword::ForceRatio::defavorable: return "low";
+        case sword::ForceRatio::neutral:     return "neutral";
         case sword::ForceRatio::favorable:   return "high";
+        case sword::ForceRatio::unfavorable: return "low";
         }
         return "none";
     }
