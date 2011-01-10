@@ -56,7 +56,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void GradientChanged( const Gradient& );
+    void GradientChanged( Gradient& );
     void ToggleVariableGradient( bool state );
     //@}
 
