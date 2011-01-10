@@ -41,7 +41,7 @@ int Resources::Extract( const sword::UnitAttributes& attributes )
     {
         --size;
         const int dotation = attributes.dotation_eff_ressource().elem( size ).type().id();
-        const int quantity = attributes.dotation_eff_ressource().elem( size ).quantite_disponible();
+        const int quantity = attributes.dotation_eff_ressource().elem( size ).quantity();
         if( filter_.IsAllowed( dotation ) )
             resources_[ dotation ] = quantity;
     }

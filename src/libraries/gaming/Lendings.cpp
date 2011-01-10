@@ -52,7 +52,7 @@ void Lendings::DoUpdate( const sword::UnitAttributes& message )
         const sword::LentEquipments_LentEquipment& pret = message.equipements_pretes().elem( i );
         lendings_.push_back( Loan( equipmentResolver_.Get( pret.type().id() ),
                                    resolver_.Get( pret.borrower().id() ),
-                                   pret.nombre() ) );
+                                   pret.quantity() ) );
     }
     controller_.Update( *this );
 }

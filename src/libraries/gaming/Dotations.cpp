@@ -72,7 +72,7 @@ void Dotations::DoUpdate( const sword::UnitAttributes& message )
         if( Dotation* dotation = Find( value.type().id() ) )
             previous = *dotation;
         Dotation current( previous );
-        current.quantity_ = value.quantite_disponible();
+        current.quantity_ = value.quantity();
         differences.push_back( current - previous );
     }
     Update( differences );

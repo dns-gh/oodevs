@@ -71,9 +71,9 @@ void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
             DotationType& type = dotationResolver_.Get( value.ressource_id().id() );
             Dotation* dotation = Find( value.ressource_id().id() );
             if( dotation )
-                dotation->quantity_ = value.quantite_disponible();
+                dotation->quantity_ = value.quantity();
             else
-                Register( value.ressource_id().id(), *new Dotation( type, value.quantite_disponible() ) );
+                Register( value.ressource_id().id(), *new Dotation( type, value.quantity() ) );
         }
     }
     controller_.Update( *this );

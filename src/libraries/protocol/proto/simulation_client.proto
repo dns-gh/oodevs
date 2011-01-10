@@ -88,7 +88,7 @@ message UnitActionAck {
     enum ErrorCode {
         no_error                = 0; //!< Operation succeeded
         error_invalid_unit      = 1; //!< Operation failed because of an invalid agent identifier @todo rename to error_invalid_agent
-        error_automate_embraye  = 2; //!< Operation failed because the target agent is currently controlled by its parent automat @todo rename to error_automate_enabled
+        error_automate_embraye  = 2; //!< Operation failed because the target agent is currently controlled by its parent automat @todo rename to error_automate_engaged
         error_invalid_attribute = 3; //!< Operation failed because the provided action parameters were invalid @todo rename to error_invalid_parameter
         error_unit_surrendered  = 4; //!< Operation failed because the agent is not in a state where it can execute the order : it must not have surrendered to be able to receive orders @todo rename to error_agent_surrendered
     }
@@ -627,9 +627,9 @@ message BorrowedEquipments {
         @brief A borrowed equipment message
     */
     message BorrowedEquipment {
-        required UnitId        owner  = 1; //!< The owner identifier @see UnitId
-        required EquipmentType type   = 2; //!< The equipment type @see EquipmentType
-        required int32         nombre = 3; //!< The amount of equipment @todo rename to amount
+        required UnitId        owner    = 1; //!< The owner identifier @see UnitId
+        required EquipmentType type     = 2; //!< The equipment type @see EquipmentType
+        required int32         quantity = 3; //!< The quantity of equipment
     }
     repeated BorrowedEquipment elem = 1; //!< The equipments @see BorrowedEquipment
 }
@@ -644,7 +644,7 @@ message LentEquipments {
     message LentEquipment {
         required UnitId        borrower = 1; //!< The borrower identifier @see UnitId
         required EquipmentType type     = 2; //!< The equipment type @see EquipmentType
-        required int32         nombre   = 3; //!< The amount of equipment @todo rename to amount
+        required int32         quantity = 3; //!< The quantity of equipment
     }
     repeated LentEquipment elem = 1; //!< The equipments @see LentEquipment
 }
@@ -657,8 +657,8 @@ message ResourceDotations {
         @brief A resource dotation message
     */
     message ResourceDotation {
-        required ResourceType type                = 1; //!< The resource type @see ResourceType
-        required int32        quantite_disponible = 2; //!< The amount available @todo rename to available_amount
+        required ResourceType type     = 1; //!< The resource type @see ResourceType
+        required int32        quantity = 2; //!< The quantity available
     }
     repeated ResourceDotation elem = 1; //!< The resource dotations @see ResourceDotation
 }
@@ -776,9 +776,9 @@ message UnitAttributes {
     enum CrowdRoe {
         none                                      = 0; //!< No rule @todo rename to no_rule
         emploi_force_interdit                     = 1; //!< Coercion forbidden @todo passive
-        maintien_a_distance_par_moyens_non_letaux = 2; //!< @todo translate @todo active
-        dispersion_par_moyens_de_defense_actifs   = 3; //!< @todo translate @todo bodily_harm
-        armes_letales_autorisees                  = 4; //!< Lethal weapons allowed @todo lethal_force
+        maintien_a_distance_par_moyens_non_letaux = 2; //!< Hold back civilians by usage of non lethal means @todo translate @todo non_lethal_force
+        dispersion_par_moyens_de_defense_actifs   = 3; //!< Disperse civilians by active defense means @todo translate @todo active_defense
+        armes_letales_autorisees                  = 4; //!< Lethal weapons authorized for use @todo lethal_force
     }
     required UnitId                      unit                          = 1;  //!< The unit identifier @see UnitId
     optional HumanDotations              dotation_eff_personnel        = 2;  //!< The human dotations @see HumanDotations @todo _eff_ ?

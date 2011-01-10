@@ -548,7 +548,7 @@ namespace
         attributes.mutable_unit()->set_id( id );
         ResourceDotations_ResourceDotation& resource = *attributes.mutable_dotation_eff_ressource()->add_elem();
         resource.mutable_type()->set_id( resourceId );
-        resource.set_quantite_disponible( variation );
+        resource.set_quantity( variation );
         return result;
     }
 }

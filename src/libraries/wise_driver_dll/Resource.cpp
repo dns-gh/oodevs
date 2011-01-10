@@ -41,7 +41,7 @@ Resource::~Resource()
 // -----------------------------------------------------------------------------
 void Resource::Update( const sword::ResourceDotations::ResourceDotation& message )
 {
-    available_ = message.quantite_disponible();
+    available_ = message.quantity();
 }
 
 // -----------------------------------------------------------------------------

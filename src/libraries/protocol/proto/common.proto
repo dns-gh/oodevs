@@ -140,8 +140,8 @@ enum UnitFireType {
 }
 
 message DotationStock {
-   required ResourceType ressource_id        = 1;
-   required int32        quantite_disponible = 2;
+   required ResourceType ressource_id = 1;
+   required int32        quantity     = 2;
 }
 
 message SeqOfDotationStock {
@@ -275,8 +275,8 @@ enum EnumOperationalStatus {
 }
 
 enum EnumAutomatMode {
-   embraye = 0;
-   debraye = 1;
+   embraye = 0; //!< @todo rename to engaged
+   debraye = 1; //!< @todo rename to disengaged
 }
 
 enum EnumCrowdAttitude{

@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Dotation::Dotation( const sword::ResourceDotations_ResourceDotation& asnMsg )
    : nDotationType_( asnMsg.type().id() )
-   , nNbr_         ( asnMsg.quantite_disponible() )
+   , nNbr_         ( asnMsg.quantity() )
 {
     // NOTHING
 }
@@ -30,7 +30,7 @@ Dotation::Dotation( const sword::ResourceDotations_ResourceDotation& asnMsg )
 // -----------------------------------------------------------------------------
 Dotation::Dotation( const sword::DotationStock & asnMsg )
    : nDotationType_( asnMsg.ressource_id().id() )
-   , nNbr_         ( asnMsg.quantite_disponible() )
+   , nNbr_         ( asnMsg.quantity() )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ Dotation::~Dotation()
 // -----------------------------------------------------------------------------
 void Dotation::Update( const sword::ResourceDotations_ResourceDotation& asnMsg )
 {
-    nNbr_ = asnMsg.quantite_disponible();
+    nNbr_ = asnMsg.quantity();
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void Dotation::Update( const sword::ResourceDotations_ResourceDotation& asnMsg )
 // -----------------------------------------------------------------------------
 void Dotation::Update( const sword::DotationStock& asnMsg )
 {
-    nNbr_ = asnMsg.quantite_disponible();
+    nNbr_ = asnMsg.quantity();
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void Dotation::Update( const sword::DotationStock& asnMsg )
 void Dotation::Send( sword::ResourceDotations_ResourceDotation& asnMsg ) const
 {
     asnMsg.mutable_type()->set_id( nDotationType_ );
-    asnMsg.set_quantite_disponible( nNbr_ );
+    asnMsg.set_quantity( nNbr_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,5 +79,5 @@ void Dotation::Send( sword::ResourceDotations_ResourceDotation& asnMsg ) const
 void Dotation::Send( sword::DotationStock& asnMsg ) const
 {
     asnMsg.mutable_ressource_id()->set_id( nDotationType_ );
-    asnMsg.set_quantite_disponible( nNbr_ );
+    asnMsg.set_quantity( nNbr_ );
 }

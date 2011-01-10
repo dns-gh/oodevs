@@ -562,21 +562,21 @@ namespace
     void ConvertResourceDotation( const From& from, To* to )
     {
         CONVERT_ID( type );
-        CONVERT( quantite_disponible );
+        CONVERT_TO( quantity, quantite_disponible );
     }
     template< typename From, typename To >
     void ConvertLentEquipment( const From& from, To* to )
     {
         CONVERT_ID( borrower );
         CONVERT_ID( type );
-        CONVERT( nombre );
+        CONVERT_TO( quantity, nombre );
     }
     template< typename From, typename To >
     void ConvertBorrowedEquipment( const From& from, To* to )
     {
         CONVERT_ID( owner );
         CONVERT_ID( type );
-        CONVERT( nombre );
+        CONVERT_TO( quantity, nombre );
     }
     template< typename From, typename To >
     void ConvertContaminationState( const From& from, To* to )
@@ -1566,7 +1566,7 @@ namespace
     void ConvertDotationStock( const From& from, To* to )
     {
         CONVERT_ID( ressource_id );
-        CONVERT( quantite_disponible );
+        CONVERT_TO( quantity, quantite_disponible );
     }
     template< typename From, typename To >
     void ConvertLogSupplyEquimentAvailability( const From& from, To* to )

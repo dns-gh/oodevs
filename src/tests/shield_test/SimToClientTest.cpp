@@ -335,21 +335,21 @@ namespace
     void FillResourceDotation( D* d )
     {
         d->mutable_type()->set_id( 30 );
-        d->set_quantite_disponible( 31 );
+        d->set_quantity( 31 );
     }
     template< typename E >
     void FillLentEquipment( E* e )
     {
         e->mutable_borrower()->set_id( 40 );
         e->mutable_type()->set_id( 41 );
-        e->set_nombre( 42 );
+        e->set_quantity( 42 );
     }
     template< typename E >
     void FillBorrowedEquipment( E* e )
     {
         e->mutable_owner()->set_id( 50 );
         e->mutable_type()->set_id( 51 );
-        e->set_nombre( 52 );
+        e->set_quantity( 52 );
     }
 }
 
@@ -1222,7 +1222,7 @@ namespace
     void FillDotationStock( S* s )
     {
         s->mutable_ressource_id()->set_id( 10 );
-        s->set_quantite_disponible( 11 );
+        s->set_quantity( 11 );
     }
     template< typename A >
     void FillLogSupplyEquimentAvailability( A* a )

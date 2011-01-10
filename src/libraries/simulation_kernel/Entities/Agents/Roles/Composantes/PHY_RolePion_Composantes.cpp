@@ -1122,7 +1122,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
             sword::LentEquipments_LentEquipment& loan = *lentEquipements.add_elem();
             loan.mutable_borrower()->set_id( it->first.first ->GetID() );
             loan.mutable_type()->set_id( it->first.second->GetMosID().id() );
-            loan.set_nombre( it->second );
+            loan.set_quantity( it->second );
         }
     }
 
@@ -1142,7 +1142,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
             sword::BorrowedEquipments_BorrowedEquipment& loan = *borrowedEquipements.add_elem();
             loan.mutable_owner()->set_id(  it->first.first ->GetID() );
             loan.mutable_type()->set_id(  it->first.second->GetMosID().id() );
-            loan.set_nombre( it->second );
+            loan.set_quantity( it->second );
         }
     }
 }

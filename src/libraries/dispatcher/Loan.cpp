@@ -22,7 +22,7 @@ using namespace dispatcher;
 Loan::Loan( const Model_ABC& model, const sword::BorrowedEquipments_BorrowedEquipment& message )
     : agent_        ( model.Agents().Get( message.owner().id() ) )
     , equipmentType_( message.type().id() )
-    , quantity_     ( message.nombre() )
+    , quantity_     ( message.quantity() )
 {
     // NOTHING
 }
@@ -34,7 +34,7 @@ Loan::Loan( const Model_ABC& model, const sword::BorrowedEquipments_BorrowedEqui
 Loan::Loan( const Model_ABC& model, const sword::LentEquipments_LentEquipment& message )
     : agent_        ( model.Agents().Get( message.borrower().id() ) )
     , equipmentType_( message.type().id() )
-    , quantity_     ( message.nombre() )
+    , quantity_     ( message.quantity() )
 {
     // NOTHING
 }
@@ -56,7 +56,7 @@ void Loan::Send( sword::BorrowedEquipments_BorrowedEquipment& message ) const
 {
     message.mutable_type()->set_id( equipmentType_ );
     message.mutable_owner()->set_id( agent_.GetId() );
-    message.set_nombre( quantity_ );
+    message.set_quantity( quantity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,5 +67,5 @@ void Loan::Send( sword::LentEquipments_LentEquipment& message ) const
 {
     message.mutable_type()->set_id( equipmentType_ );
     message.mutable_borrower()->set_id( agent_.GetId() );
-    message.set_nombre( quantity_ );
+    message.set_quantity( quantity_ );
 }
