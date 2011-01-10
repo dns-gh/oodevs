@@ -29,15 +29,15 @@ namespace
     typedef google::protobuf::int32 (HumanDotations_HumanDotation::*HumanDotationsMemberFn)()const;
     HumanDotationsMemberFn humanData[9] =
     {
-        &HumanDotations_HumanDotation::nb_total,
-        &HumanDotations_HumanDotation::nb_operationnels,
-        &HumanDotations_HumanDotation::nb_morts,
-        &HumanDotations_HumanDotation::nb_blesses,
-        &HumanDotations_HumanDotation::nb_blesses_mentaux,
-        &HumanDotations_HumanDotation::nb_contamines_nbc,
-        &HumanDotations_HumanDotation::nb_dans_chaine_sante,
-        &HumanDotations_HumanDotation::nb_utilises_pour_maintenance,
-        &HumanDotations_HumanDotation::nb_blesses_non_evacues,
+        &HumanDotations_HumanDotation::total,
+        &HumanDotations_HumanDotation::operational,
+        &HumanDotations_HumanDotation::dead,
+        &HumanDotations_HumanDotation::wounded,
+        &HumanDotations_HumanDotation::mentally_wounded,
+        &HumanDotations_HumanDotation::contaminated,
+        &HumanDotations_HumanDotation::healing,
+        &HumanDotations_HumanDotation::maintenance,
+        &HumanDotations_HumanDotation::unevacuated_wounded,
     };
     const char* humanStates[9] =
     {

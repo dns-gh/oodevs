@@ -19,14 +19,14 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Humans::Humans( const sword::HumanDotations_HumanDotation& asnMsg )
     : nRank_                    ( asnMsg.rang() )
-    , nNbrTotal_                ( asnMsg.nb_total() )
-    , nNbrOperational_          ( asnMsg.nb_operationnels() )
-    , nNbrDead_                 ( asnMsg.nb_morts() )
-    , nNbrWounded_              ( asnMsg.nb_blesses() )
-    , nNbrMentalDiseased_       ( asnMsg.nb_blesses_mentaux() )
-    , nNbrNBC_                  ( asnMsg.nb_contamines_nbc() )
-    , nNbrInLogisticMedical_    ( asnMsg.nb_dans_chaine_sante() )
-    , nNbrInLogisticMaintenance_( asnMsg.nb_utilises_pour_maintenance() )
+    , nNbrTotal_                ( asnMsg.total() )
+    , nNbrOperational_          ( asnMsg.operational() )
+    , nNbrDead_                 ( asnMsg.dead() )
+    , nNbrWounded_              ( asnMsg.wounded() )
+    , nNbrMentalDiseased_       ( asnMsg.mentally_wounded() )
+    , nNbrNBC_                  ( asnMsg.contaminated() )
+    , nNbrInLogisticMedical_    ( asnMsg.healing() )
+    , nNbrInLogisticMaintenance_( asnMsg.maintenance() )
 {
     // NOTHING
 }
@@ -46,14 +46,14 @@ Humans::~Humans()
 // -----------------------------------------------------------------------------
 void Humans::Update( const sword::HumanDotations_HumanDotation& message )
 {
-    nNbrTotal_                = message.nb_total();
-    nNbrOperational_          = message.nb_operationnels();
-    nNbrDead_                 = message.nb_morts();
-    nNbrWounded_              = message.nb_blesses();
-    nNbrMentalDiseased_       = message.nb_blesses_mentaux();
-    nNbrNBC_                  = message.nb_contamines_nbc();
-    nNbrInLogisticMedical_    = message.nb_dans_chaine_sante();
-    nNbrInLogisticMaintenance_= message.nb_utilises_pour_maintenance();
+    nNbrTotal_                = message.total();
+    nNbrOperational_          = message.operational();
+    nNbrDead_                 = message.dead();
+    nNbrWounded_              = message.wounded();
+    nNbrMentalDiseased_       = message.mentally_wounded();
+    nNbrNBC_                  = message.contaminated();
+    nNbrInLogisticMedical_    = message.healing();
+    nNbrInLogisticMaintenance_= message.maintenance();
 }
 
 // -----------------------------------------------------------------------------
@@ -62,14 +62,14 @@ void Humans::Update( const sword::HumanDotations_HumanDotation& message )
 // -----------------------------------------------------------------------------
 void Humans::Send( sword::HumanDotations_HumanDotation& message ) const
 {
-    message.set_rang                      ( nRank_ );
-    message.set_nb_total                  ( nNbrTotal_ );
-    message.set_nb_operationnels          ( nNbrOperational_ );
-    message.set_nb_morts                  ( nNbrDead_ );
-    message.set_nb_blesses                ( nNbrWounded_ );
-    message.set_nb_blesses_mentaux        ( nNbrMentalDiseased_ );
-    message.set_nb_contamines_nbc         ( nNbrNBC_ );
-    message.set_nb_dans_chaine_sante      ( nNbrInLogisticMedical_ );
-    message.set_nb_utilises_pour_maintenance( nNbrInLogisticMaintenance_ );
-    message.set_nb_blesses_non_evacues    ( 0 );    //$$$$ RPD TO IMPLEMENT
+    message.set_rang               ( nRank_ );
+    message.set_total              ( nNbrTotal_ );
+    message.set_operational        ( nNbrOperational_ );
+    message.set_dead               ( nNbrDead_ );
+    message.set_wounded            ( nNbrWounded_ );
+    message.set_mentally_wounded   ( nNbrMentalDiseased_ );
+    message.set_contaminated       ( nNbrNBC_ );
+    message.set_healing            ( nNbrInLogisticMedical_ );
+    message.set_maintenance        ( nNbrInLogisticMaintenance_ );
+    message.set_unevacuated_wounded( 0 ); //$$$$ RPD TO IMPLEMENT
 }

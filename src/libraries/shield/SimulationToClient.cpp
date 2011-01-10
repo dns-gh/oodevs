@@ -538,15 +538,15 @@ namespace
     void ConvertHumanDotation( const From& from, To* to )
     {
         CONVERT_RANK( rang );
-        CONVERT( nb_total );
-        CONVERT( nb_operationnels );
-        CONVERT( nb_morts );
-        CONVERT( nb_blesses );
-        CONVERT( nb_blesses_mentaux );
-        CONVERT( nb_contamines_nbc );
-        CONVERT( nb_dans_chaine_sante );
-        CONVERT( nb_utilises_pour_maintenance );
-        CONVERT( nb_blesses_non_evacues );
+        CONVERT_TO( total, nb_total );
+        CONVERT_TO( operational, nb_operationnels );
+        CONVERT_TO( dead, nb_morts );
+        CONVERT_TO( wounded, nb_blesses );
+        CONVERT_TO( mentally_wounded, nb_blesses_mentaux );
+        CONVERT_TO( contaminated, nb_contamines_nbc );
+        CONVERT_TO( healing, nb_dans_chaine_sante );
+        CONVERT_TO( maintenance, nb_utilises_pour_maintenance );
+        CONVERT_TO( unevacuated_wounded, nb_blesses_non_evacues );
     }
     template< typename From, typename To >
     void ConvertEquipmentDotation( const From& from, To* to )

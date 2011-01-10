@@ -8,7 +8,8 @@
         <format property="flex.expiration" pattern="d-MMM-yyyy" offset="3" unit="month" locale="en,US"/>
     </tstamp>
 
-    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
+    <property environment="env"/>
+    <import file="${env.PONEY_HOME}/poney.xml"/>
 
     <svn>
         <status path="${root.dir}" lastChangedRevisionProperty="svn.version"/>

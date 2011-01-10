@@ -480,25 +480,22 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& message ) co
     if( nNbrHumansDataChanged_ == 0 )
         return;
     assert( nNbrHumansDataChanged_ <= humansData_.size() );
-
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
     for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
     {
-        const PHY_HumanRank&           rank      = *itRank->second;
-        const T_HumanData&             humanData = humansData_[ rank.GetID() ];
-
-        sword::HumanDotations_HumanDotation& personnel = *message().mutable_dotation_eff_personnel()->add_elem();
-
-        personnel.set_rang                         ( rank.GetAsnID() );
-        personnel.set_nb_total                     ( humanData.nNbrTotal_ );
-        personnel.set_nb_operationnels             ( humanData.nNbrOperational_ );
-        personnel.set_nb_morts                     ( humanData.nNbrDead_ );
-        personnel.set_nb_blesses                   ( humanData.nNbrWounded_ );
-        personnel.set_nb_blesses_mentaux           ( humanData.nNbrMentalDiseased_ );
-        personnel.set_nb_contamines_nbc            ( humanData.nNbrNBC_ );
-        personnel.set_nb_dans_chaine_sante         ( humanData.nNbrInLogisticMedical_ );
-        personnel.set_nb_utilises_pour_maintenance ( humanData.nNbrInLogisticMaintenance_ );
-        personnel.set_nb_blesses_non_evacues       ( 0 );   //$$$ RPD TO IMPLEMENT
+        const PHY_HumanRank& rank = *itRank->second;
+        const T_HumanData& humanData = humansData_[ rank.GetID() ];
+        sword::HumanDotations::HumanDotation& personnel = *message().mutable_dotation_eff_personnel()->add_elem();
+        personnel.set_rang               ( rank.GetAsnID() );
+        personnel.set_total              ( humanData.nNbrTotal_ );
+        personnel.set_operational        ( humanData.nNbrOperational_ );
+        personnel.set_dead               ( humanData.nNbrDead_ );
+        personnel.set_wounded            ( humanData.nNbrWounded_ );
+        personnel.set_mentally_wounded   ( humanData.nNbrMentalDiseased_ );
+        personnel.set_contaminated       ( humanData.nNbrNBC_ );
+        personnel.set_healing            ( humanData.nNbrInLogisticMedical_ );
+        personnel.set_maintenance        ( humanData.nNbrInLogisticMaintenance_ );
+        personnel.set_unevacuated_wounded( 0 ); //$$$ RPD TO IMPLEMENT
     }
 }
 
@@ -511,22 +508,21 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
     for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
     {
-        const PHY_HumanRank&           rank      = *itRank->second;
-        const T_HumanData&             humanData = humansData_[ rank.GetID() ];
-        sword::HumanDotations_HumanDotation& personnel = *message().mutable_dotation_eff_personnel()->add_elem();
-        personnel.set_rang                         ( rank.GetAsnID() );
-        personnel.set_nb_total                     ( humanData.nNbrTotal_ );
-        personnel.set_nb_operationnels             ( humanData.nNbrOperational_ );
-        personnel.set_nb_morts                     ( humanData.nNbrDead_ );
-        personnel.set_nb_blesses                   ( humanData.nNbrWounded_ );
-        personnel.set_nb_blesses_mentaux           ( humanData.nNbrMentalDiseased_ );
-        personnel.set_nb_contamines_nbc            ( humanData.nNbrNBC_ );
-        personnel.set_nb_dans_chaine_sante         ( humanData.nNbrInLogisticMedical_ );
-        personnel.set_nb_utilises_pour_maintenance ( humanData.nNbrInLogisticMaintenance_ );
-        personnel.set_nb_blesses_non_evacues       ( 0 );   //$$$ RPD TO IMPLEMENT
+        const PHY_HumanRank& rank = *itRank->second;
+        const T_HumanData& humanData = humansData_[ rank.GetID() ];
+        sword::HumanDotations::HumanDotation& personnel = *message().mutable_dotation_eff_personnel()->add_elem();
+        personnel.set_rang               ( rank.GetAsnID() );
+        personnel.set_total              ( humanData.nNbrTotal_ );
+        personnel.set_operational        ( humanData.nNbrOperational_ );
+        personnel.set_dead               ( humanData.nNbrDead_ );
+        personnel.set_wounded            ( humanData.nNbrWounded_ );
+        personnel.set_mentally_wounded   ( humanData.nNbrMentalDiseased_ );
+        personnel.set_contaminated       ( humanData.nNbrNBC_ );
+        personnel.set_healing            ( humanData.nNbrInLogisticMedical_ );
+        personnel.set_maintenance        ( humanData.nNbrInLogisticMaintenance_ );
+        personnel.set_unevacuated_wounded( 0 ); //$$$ RPD TO IMPLEMENT
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::SendChangedState

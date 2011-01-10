@@ -48,14 +48,14 @@ Personnel::~Personnel()
 // -----------------------------------------------------------------------------
 void Personnel::Update( const sword::HumanDotations::HumanDotation& message )
 {
-    total_ = message.nb_total();
-    available_ = message.nb_operationnels();
-    dead_ = message.nb_morts();
-    wounded_ = message.nb_blesses();
-    mentalDiseased_ = message.nb_blesses_mentaux();
-    contaminated_ = message.nb_contamines_nbc();
-    inTreatment_ = message.nb_dans_chaine_sante();
-    assignedToMaintenance_ = message.nb_utilises_pour_maintenance();
+    total_ = message.total();
+    available_ = message.operational();
+    dead_ = message.dead();
+    wounded_ = message.wounded();
+    mentalDiseased_ = message.mentally_wounded();
+    contaminated_ = message.contaminated();
+    inTreatment_ = message.healing();
+    assignedToMaintenance_ = message.maintenance();
 }
 
 // -----------------------------------------------------------------------------

@@ -311,15 +311,15 @@ namespace
     void FillHumanDotation( D* d )
     {
         d->set_rang( sword::mdr );
-        d->set_nb_total( 10 );
-        d->set_nb_operationnels( 11 );
-        d->set_nb_morts( 12 );
-        d->set_nb_blesses( 13 );
-        d->set_nb_blesses_mentaux( 14 );
-        d->set_nb_contamines_nbc( 15 );
-        d->set_nb_dans_chaine_sante( 16 );
-        d->set_nb_utilises_pour_maintenance( 17 );
-        d->set_nb_blesses_non_evacues( 18 );
+        d->set_total( 10 );
+        d->set_operational( 11 );
+        d->set_dead( 12 );
+        d->set_wounded( 13 );
+        d->set_mentally_wounded( 14 );
+        d->set_contaminated( 15 );
+        d->set_healing( 16 );
+        d->set_maintenance( 17 );
+        d->set_unevacuated_wounded( 18 );
     }
     template< typename D >
     void FillEquipmentDotation( D* d )

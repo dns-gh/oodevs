@@ -739,15 +739,15 @@ namespace
         attributes.mutable_unit()->set_id( id );
         HumanDotations_HumanDotation& personnel = *attributes.mutable_dotation_eff_personnel()->add_elem();
         personnel.set_rang( sword::officier );
-        personnel.set_nb_total( state[0] );
-        personnel.set_nb_operationnels( state[1] );
-        personnel.set_nb_morts( state[2] );
-        personnel.set_nb_blesses( state[3] );
-        personnel.set_nb_blesses_mentaux( state[4] );
-        personnel.set_nb_contamines_nbc( state[5] );
-        personnel.set_nb_dans_chaine_sante( state[6] );
-        personnel.set_nb_utilises_pour_maintenance( state[7] );
-        personnel.set_nb_blesses_non_evacues( 0 );
+        personnel.set_total( state[0] );
+        personnel.set_operational( state[1] );
+        personnel.set_dead( state[2] );
+        personnel.set_wounded( state[3] );
+        personnel.set_mentally_wounded( state[4] );
+        personnel.set_contaminated( state[5] );
+        personnel.set_healing( state[6] );
+        personnel.set_maintenance( state[7] );
+        personnel.set_unevacuated_wounded( 0 );
         return result;
     }
 }

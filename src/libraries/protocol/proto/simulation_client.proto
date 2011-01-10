@@ -689,16 +689,16 @@ message HumanDotations {
         @brief A human dotation message
     */
     message HumanDotation {
-        required EnumHumanRank rang                         = 1;  //!< The rank @see EnumHumanRank
-        required int32         nb_total                     = 2;  //!< The total number of persons @todo uint32
-        required int32         nb_operationnels             = 3;  //!< The number of persons operational @todo uint32 translate
-        required int32         nb_morts                     = 4;  //!< The number of deads @todo uint32 translate
-        required int32         nb_blesses                   = 5;  //!< The number of wounded persons @todo uint32 translate
-        required int32         nb_blesses_mentaux           = 6;  //!< The number of mentally wounded persons @todo uint32 translate
-        required int32         nb_contamines_nbc            = 7;  //!< The number of NBC contaminated persons @todo uint32 translate
-        required int32         nb_dans_chaine_sante         = 8;  //!< The number of persons being treated by medical services @todo uint32 translate
-        required int32         nb_utilises_pour_maintenance = 9;  //!< The number of persons performing maintenance @todo uint32 translate
-        required int32         nb_blesses_non_evacues       = 10; //!< The number of non-evacuated wounded persons @todo uint32 translate
+        required EnumHumanRank rang                = 1;  //!< The rank @see EnumHumanRank
+        required int32         total               = 2;  //!< The total number of persons
+        required int32         operational         = 3;  //!< The number of persons operational
+        required int32         dead                = 4;  //!< The number of deads
+        required int32         wounded             = 5;  //!< The number of wounded persons
+        required int32         mentally_wounded    = 6;  //!< The number of mentally wounded persons
+        required int32         contaminated        = 7;  //!< The number of NBC contaminated persons
+        required int32         healing             = 8;  //!< The number of persons being treated by medical services
+        required int32         maintenance         = 9;  //!< The number of persons performing maintenance
+        required int32         unevacuated_wounded = 10; //!< The number of non-evacuated wounded persons
     }
     repeated HumanDotation elem = 1; //!< The human dotations @see HumanDotation
 }

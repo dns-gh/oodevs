@@ -63,22 +63,21 @@ void Troops::AddDifference( T_Differences& differences, kernel::E_TroopHealthSta
 // -----------------------------------------------------------------------------
 void Troops::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( ! message.has_dotation_eff_personnel()   )
+    if( ! message.has_dotation_eff_personnel() )
         return;
-
     T_Differences differences;
     uint nSize = message.dotation_eff_personnel().elem_size();
     while( nSize > 0 )
     {
         const sword::HumanDotations_HumanDotation& dot = message.dotation_eff_personnel().elem( --nSize );
-        AddDifference( differences, eTroopHealthStateTotal             , dot.rang(), dot.nb_total() );
-        AddDifference( differences, eTroopHealthStateOperational       , dot.rang(), dot.nb_operationnels() );
-        AddDifference( differences, eTroopHealthStateDead              , dot.rang(), dot.nb_morts() );
-        AddDifference( differences, eTroopHealthStateWounded           , dot.rang(), dot.nb_blesses() );
-        AddDifference( differences, eTroopHealthStateMentalWounds      , dot.rang(), dot.nb_blesses_mentaux() );
-        AddDifference( differences, eTroopHealthStateContaminated      , dot.rang(), dot.nb_contamines_nbc() );
-        AddDifference( differences, eTroopHealthStateInTreatment       , dot.rang(), dot.nb_dans_chaine_sante() );
-        AddDifference( differences, eTroopHealthStateUsedForMaintenance, dot.rang(), dot.nb_utilises_pour_maintenance() );
+        AddDifference( differences, eTroopHealthStateTotal             , dot.rang(), dot.total() );
+        AddDifference( differences, eTroopHealthStateOperational       , dot.rang(), dot.operational() );
+        AddDifference( differences, eTroopHealthStateDead              , dot.rang(), dot.dead() );
+        AddDifference( differences, eTroopHealthStateWounded           , dot.rang(), dot.wounded() );
+        AddDifference( differences, eTroopHealthStateMentalWounds      , dot.rang(), dot.mentally_wounded() );
+        AddDifference( differences, eTroopHealthStateContaminated      , dot.rang(), dot.contaminated() );
+        AddDifference( differences, eTroopHealthStateInTreatment       , dot.rang(), dot.healing() );
+        AddDifference( differences, eTroopHealthStateUsedForMaintenance, dot.rang(), dot.maintenance() );
     }
     Update( differences );
 }
