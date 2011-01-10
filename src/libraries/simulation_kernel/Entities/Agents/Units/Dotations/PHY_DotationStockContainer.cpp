@@ -404,7 +404,7 @@ void PHY_DotationStockContainer::SendChangedState( client::LogSupplyState& asn )
         const PHY_DotationStock& dotation = **itStock;
         sword::DotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
         asnRessource.mutable_ressource_id()->set_id( dotation.GetCategory().GetMosID() );
-        asnRessource.set_quantite_disponible( (unsigned int)dotation.GetValue() );
+        asnRessource.set_quantity( (unsigned int)dotation.GetValue() );
     }
 }
 
@@ -422,7 +422,7 @@ void PHY_DotationStockContainer::SendFullState( client::LogSupplyState& asn ) co
         const PHY_DotationStock& dotationStock = *itStock->second;
         sword::DotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
         asnRessource.mutable_ressource_id()->set_id( dotationStock.GetCategory().GetMosID() );
-        asnRessource.set_quantite_disponible( (unsigned int)dotationStock.GetValue() );
+        asnRessource.set_quantity( (unsigned int)dotationStock.GetValue() );
     }
 }
 
