@@ -637,25 +637,25 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     ConvertForceRatio( from, to );
     ConvertMeetingEngagementStatus( from, to );
     ConvertOperationalStatus( from, to );
-    CONVERT_ENUM( disponibilite_au_tir_indirect, ( sword::UnitAttributes::none_fire_available, MsgsSimToClient::MsgUnitAttributes::none_fire_available )
-                                                    ( sword::UnitAttributes::pret_au_tir, MsgsSimToClient::MsgUnitAttributes::pret_au_tir )
-                                                    ( sword::UnitAttributes::indisponible, MsgsSimToClient::MsgUnitAttributes::indisponible ) );
+    CONVERT_ENUM( disponibilite_au_tir_indirect, ( sword::UnitAttributes::no_fire, MsgsSimToClient::MsgUnitAttributes::none_fire_available )
+                                                 ( sword::UnitAttributes::fire_ready, MsgsSimToClient::MsgUnitAttributes::pret_au_tir )
+                                                 ( sword::UnitAttributes::fire_unavailable, MsgsSimToClient::MsgUnitAttributes::indisponible ) );
     ConvertRulesOfEngagement( from, to );
     CONVERT_ENUM( roe_crowd, ( sword::UnitAttributes::none, MsgsSimToClient::MsgUnitAttributes::none )
-                                ( sword::UnitAttributes::emploi_force_interdit, MsgsSimToClient::MsgUnitAttributes::emploi_force_interdit )
-                                ( sword::UnitAttributes::maintien_a_distance_par_moyens_non_letaux, MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux )
-                                ( sword::UnitAttributes::dispersion_par_moyens_de_defense_actifs, MsgsSimToClient::MsgUnitAttributes::dispersion_par_moyens_de_defense_actifs )
-                                ( sword::UnitAttributes::armes_letales_autorisees, MsgsSimToClient::MsgUnitAttributes::armes_letales_autorisees ) );
+                             ( sword::UnitAttributes::emploi_force_interdit, MsgsSimToClient::MsgUnitAttributes::emploi_force_interdit )
+                             ( sword::UnitAttributes::maintien_a_distance_par_moyens_non_letaux, MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux )
+                             ( sword::UnitAttributes::dispersion_par_moyens_de_defense_actifs, MsgsSimToClient::MsgUnitAttributes::dispersion_par_moyens_de_defense_actifs )
+                             ( sword::UnitAttributes::armes_letales_autorisees, MsgsSimToClient::MsgUnitAttributes::armes_letales_autorisees ) );
     CONVERT_ENUM( fatigue, ( sword::normal, Common::normal )
-                              ( sword::fatigue, Common::fatigue )
-                              ( sword::epuise, Common::epuise ) );
+                           ( sword::fatigue, Common::fatigue )
+                           ( sword::epuise, Common::epuise ) );
     CONVERT_ENUM( moral, ( sword::fanatique, Common::fanatique )
-                            ( sword::bon, Common::bon )
-                            ( sword::moyen, Common::moyen )
-                            ( sword::mauvais, Common::mauvais ) );
+                         ( sword::bon, Common::bon )
+                         ( sword::moyen, Common::moyen )
+                         ( sword::mauvais, Common::mauvais ) );
     CONVERT_ENUM( experience, ( sword::veteran, Common::veteran )
-                                 ( sword::experimente, Common::experimente )
-                                 ( sword::conscrit, Common::conscrit ) );
+                              ( sword::experimente, Common::experimente )
+                              ( sword::conscrit, Common::conscrit ) );
     CONVERT_ID( surrendered_unit );
     CONVERT( prisonnier );
     CONVERT( refugie_pris_en_compte );

@@ -188,7 +188,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_rapport_de_force( sword::ForceRatio::favorable );
                 message.set_combat_de_rencontre( sword::etat_fixe );
                 message.set_etat_operationnel( sword::detruit_totalement );
-                message.set_disponibilite_au_tir_indirect( sword::UnitAttributes::pret_au_tir );
+                message.set_disponibilite_au_tir_indirect( sword::UnitAttributes::fire_ready );
                 message.set_roe( sword::RulesOfEngagement::tir_sur_riposte );
                 message.set_roe_crowd( sword::UnitAttributes::maintien_a_distance_par_moyens_non_letaux );
                 message.set_fatigue( sword::fatigue );

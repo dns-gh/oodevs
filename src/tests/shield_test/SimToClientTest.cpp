@@ -400,7 +400,7 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->set_rapport_de_force( sword::ForceRatio::neutre );
     content.mutable_unit_attributes()->set_combat_de_rencontre( sword::etat_esquive );
     content.mutable_unit_attributes()->set_etat_operationnel( sword::operationnel );
-    content.mutable_unit_attributes()->set_disponibilite_au_tir_indirect( sword::UnitAttributes::pret_au_tir );
+    content.mutable_unit_attributes()->set_disponibilite_au_tir_indirect( sword::UnitAttributes::fire_ready );
     content.mutable_unit_attributes()->set_roe( sword::RulesOfEngagement::tir_libre );
     content.mutable_unit_attributes()->set_roe_crowd( sword::UnitAttributes::emploi_force_interdit );
     content.mutable_unit_attributes()->set_fatigue( sword::epuise );

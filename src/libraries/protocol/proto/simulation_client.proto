@@ -765,9 +765,9 @@ message UnitAttributes {
         @brief Fire availability states
     */
     enum FireAvailability {
-        none_fire_available = 0; //!< No fire available @todo rename to no_fire_available
-        pret_au_tir         = 1; //!< Fire ready @todo rename to fire_ready
-        indisponible        = 2; //!< Fire unavailable @todo rename to fire_unavailable
+        no_fire          = 0; //!< No fire
+        fire_ready       = 1; //!< Fire ready
+        fire_unavailable = 2; //!< Fire unavailable
     }
     /** @struct CrowdRoe
         @brief Rules of engagement against crowds
