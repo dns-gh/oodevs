@@ -79,6 +79,9 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , bRefugeeManaged_              ( false )
     , decisionalInfos_              ( model )
     , order_                        ( 0 )
+    , pLogMaintenance_              ( 0 )
+    , pLogSupply_                   ( 0 )
+    , pLogMedical_                  ( 0 )
 {
     automat_->Register( *this );
     RegisterSelf( *this );
@@ -122,37 +125,37 @@ void Agent::DoUpdate( const sword::UnitCreation& msg )
 }
 
 #define UPDATE_ASN_ATTRIBUTE( ASN, CPP ) \
-    if( asnMsg.has_##ASN##() )        \
-        CPP = asnMsg.##ASN##();
+    if( message.has_##ASN##() )        \
+        CPP = message.##ASN##();
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DoUpdate
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const sword::UnitAttributes& asnMsg )
+void Agent::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( asnMsg.has_position() )
-        position_.Set( asnMsg.position().latitude(), asnMsg.position().longitude() );
-    if( asnMsg.has_direction() )
-        nDirection_ = asnMsg.direction().heading();
+    if( message.has_position() )
+        position_.Set( message.position().latitude(), message.position().longitude() );
+    if( message.has_direction() )
+        nDirection_ = message.direction().heading();
 
     UPDATE_ASN_ATTRIBUTE( hauteur  , nHeight_    );
     UPDATE_ASN_ATTRIBUTE( altitude , nAltitude_  );
     UPDATE_ASN_ATTRIBUTE( vitesse  , nSpeed_     );
     UPDATE_ASN_ATTRIBUTE( etat_operationnel_brut, nOperationalStateValue_ );
 
-    if( asnMsg.has_reinforcements() )
+    if( message.has_reinforcements() )
     {
         reinforcements_.Clear();
-        for( int i = 0; i < asnMsg.reinforcements().elem_size(); ++i )
+        for( int i = 0; i < message.reinforcements().elem_size(); ++i )
         {
-            const kernel::Agent_ABC& agent = model_.Agents().Get( asnMsg.reinforcements().elem( i ).id() );
+            const kernel::Agent_ABC& agent = model_.Agents().Get( message.reinforcements().elem( i ).id() );
             reinforcements_.Register( agent.GetId(), agent );
         }
     }
 
-    if( asnMsg.has_reinforced_unit() )
-        pReinforced_ = asnMsg.reinforced_unit().id() == 0 ? 0 : &model_.Agents().Get( asnMsg.reinforced_unit().id() );
+    if( message.has_reinforced_unit() )
+        pReinforced_ = message.reinforced_unit().id() == 0 ? 0 : &model_.Agents().Get( message.reinforced_unit().id() );
 
     UPDATE_ASN_ATTRIBUTE( mort, bDead_ );
     UPDATE_ASN_ATTRIBUTE( neutralise, bNeutralized_ );
@@ -165,43 +168,43 @@ void Agent::DoUpdate( const sword::UnitAttributes& asnMsg )
     UPDATE_ASN_ATTRIBUTE( etat_installation, nInstallationState_ );
     UPDATE_ASN_ATTRIBUTE( en_tenue_de_protection_nbc, bNbcProtectionSuitEnabled_ );
 
-    if( asnMsg.has_etat_contamination() )
+    if( message.has_etat_contamination() )
     {
-        if( asnMsg.etat_contamination().has_percentage() )
-            contaminationPercentage_ = asnMsg.etat_contamination().percentage();
-        if( asnMsg.etat_contamination().has_quantity() )
-            contaminationQuantity_   = asnMsg.etat_contamination().quantity();
+        if( message.etat_contamination().has_percentage() )
+            contaminationPercentage_ = message.etat_contamination().percentage();
+        if( message.etat_contamination().has_quantity() )
+            contaminationQuantity_   = message.etat_contamination().quantity();
     }
-    if( asnMsg.has_contamine_par_agents_nbc() )
+    if( message.has_contamine_par_agents_nbc() )
     {
         nbcAgentTypesContaminating_.clear();
-        for( int i = 0; i < asnMsg.contamine_par_agents_nbc().elem_size(); ++i )
-            nbcAgentTypesContaminating_.push_back( asnMsg.contamine_par_agents_nbc().elem( i ).id() );
+        for( int i = 0; i < message.contamine_par_agents_nbc().elem_size(); ++i )
+            nbcAgentTypesContaminating_.push_back( message.contamine_par_agents_nbc().elem( i ).id() );
     }
-    if( asnMsg.has_communications() )
+    if( message.has_communications() )
     {
-        if( asnMsg.communications().has_jammed() )
-            communicationJammed_ = asnMsg.communications().jammed();
-        if( asnMsg.communications().has_knowledge_group() )
-            knowledgeGroupJammed_ = asnMsg.communications().knowledge_group().id();
+        if( message.communications().has_jammed() )
+            communicationJammed_ = message.communications().jammed();
+        if( message.communications().has_knowledge_group() )
+            knowledgeGroupJammed_ = message.communications().knowledge_group().id();
     }
 
     UPDATE_ASN_ATTRIBUTE( radio_emitter_disabled, bRadioEmitterEnabled_ );
     UPDATE_ASN_ATTRIBUTE( radio_receiver_disabled, bRadioRecieverEnabled_ );
     UPDATE_ASN_ATTRIBUTE( radar_actif, bRadarEnabled_ );
 
-    if( asnMsg.has_transported_units() )
+    if( message.has_transported_units() )
     {
         transportedAgents_.Clear();
-        for( int i = 0; i < asnMsg.transported_units().elem_size(); ++i )
+        for( int i = 0; i < message.transported_units().elem_size(); ++i )
         {
-            const kernel::Agent_ABC& agent = model_.Agents().Get( asnMsg.transported_units().elem( i ).id() );
+            const kernel::Agent_ABC& agent = model_.Agents().Get( message.transported_units().elem( i ).id() );
             transportedAgents_.Register( agent.GetId(), agent );
         }
     }
 
-    if( asnMsg.has_transporting_unit() )
-        pTransporter_ = asnMsg.transporting_unit().id() == 0 ? 0 : &model_.Agents().Get( asnMsg.transporting_unit().id() );
+    if( message.has_transporting_unit() )
+        pTransporter_ = message.transporting_unit().id() == 0 ? 0 : &model_.Agents().Get( message.transporting_unit().id() );
 
     UPDATE_ASN_ATTRIBUTE( rapport_de_force, nForceRatioState_ );
     UPDATE_ASN_ATTRIBUTE( combat_de_rencontre, nCloseCombatState_ );
@@ -213,17 +216,17 @@ void Agent::DoUpdate( const sword::UnitAttributes& asnMsg )
     UPDATE_ASN_ATTRIBUTE( moral, nMorale_ );
     UPDATE_ASN_ATTRIBUTE( experience, nExperience_ );
 
-    if( asnMsg.has_surrendered_unit()  )
-        pSideSurrenderedTo_ = asnMsg.surrendered_unit().id() == 0 ? 0 : &model_.Sides().Get( asnMsg.surrendered_unit().id() );
+    if( message.has_surrendered_unit()  )
+        pSideSurrenderedTo_ = message.surrendered_unit().id() == 0 ? 0 : &model_.Sides().Get( message.surrendered_unit().id() );
 
     UPDATE_ASN_ATTRIBUTE( prisonnier, bPrisonner_ );
     UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte, bRefugeeManaged_ );
 
-    if( asnMsg.has_dotation_eff_materiel()  )
+    if( message.has_dotation_eff_materiel()  )
     {
-        for( int i = 0; i < asnMsg.dotation_eff_materiel().elem_size(); ++i )
+        for( int i = 0; i < message.dotation_eff_materiel().elem_size(); ++i )
         {
-            const sword::EquipmentDotations_EquipmentDotation& asn = asnMsg.dotation_eff_materiel().elem( i );
+            const sword::EquipmentDotations_EquipmentDotation& asn = message.dotation_eff_materiel().elem( i );
             Equipment* pEquipment = equipments_.Find( asn.type().id() );
             if( pEquipment )
                 pEquipment->Update( asn );
@@ -235,11 +238,11 @@ void Agent::DoUpdate( const sword::UnitAttributes& asnMsg )
         }
     }
 
-    if( asnMsg.has_dotation_eff_personnel() )
+    if( message.has_dotation_eff_personnel() )
     {
-        for( int i = 0; i < asnMsg.dotation_eff_personnel().elem_size(); ++i )
+        for( int i = 0; i < message.dotation_eff_personnel().elem_size(); ++i )
         {
-            const sword::HumanDotations_HumanDotation& asn = asnMsg.dotation_eff_personnel().elem( i );
+            const sword::HumanDotations_HumanDotation& asn = message.dotation_eff_personnel().elem( i );
             Humans* pHumans = troops_.Find( asn.rang() );
             if( pHumans )
                 pHumans->Update( asn );
@@ -251,11 +254,11 @@ void Agent::DoUpdate( const sword::UnitAttributes& asnMsg )
         }
     }
 
-    if( asnMsg.has_dotation_eff_ressource() )
+    if( message.has_dotation_eff_ressource() )
     {
-        for( int i = 0; i < asnMsg.dotation_eff_ressource().elem_size(); ++i )
+        for( int i = 0; i < message.dotation_eff_ressource().elem_size(); ++i )
         {
-            const sword::ResourceDotations_ResourceDotation& asn = asnMsg.dotation_eff_ressource().elem().Get(i);
+            const sword::ResourceDotations_ResourceDotation& asn = message.dotation_eff_ressource().elem().Get(i);
             Dotation* pDotation = dotations_.Find( asn.type().id() );
             if( pDotation )
                 pDotation->Update( asn );
@@ -267,82 +270,82 @@ void Agent::DoUpdate( const sword::UnitAttributes& asnMsg )
         }
     }
 
-    if( asnMsg.has_equipements_pretes() )
+    if( message.has_equipements_pretes() )
     {
         lendings_.DeleteAll();
-        for( int i = 0; i < asnMsg.equipements_pretes().elem_size(); ++i )
+        for( int i = 0; i < message.equipements_pretes().elem_size(); ++i )
         {
-            Loan* loan = new Loan( model_, asnMsg.equipements_pretes().elem( i ) );
+            Loan* loan = new Loan( model_, message.equipements_pretes().elem( i ) );
             lendings_.Register( i, *loan );
         }
     }
 
-    if( asnMsg.has_equipements_empruntes() )
+    if( message.has_equipements_empruntes() )
     {
         borrowings_.DeleteAll();
-        for( int i = 0; i < asnMsg.equipements_empruntes().elem_size(); ++i )
+        for( int i = 0; i < message.equipements_empruntes().elem_size(); ++i )
         {
-            Loan* loan = new Loan( model_, asnMsg.equipements_empruntes().elem( i ) );
+            Loan* loan = new Loan( model_, message.equipements_empruntes().elem( i ) );
             borrowings_.Register( i, *loan );
         }
     }
-    if( asnMsg.has_extension() )
-        for( int i = 0; i < asnMsg.extension().entries_size(); ++i )
-            extensions_[ asnMsg.extension().entries( i ).name() ] = asnMsg.extension().entries( i ).value();
+    if( message.has_extension() )
+        for( int i = 0; i < message.extension().entries_size(); ++i )
+            extensions_[ message.extension().entries( i ).name() ] = message.extension().entries( i ).value();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DoUpdate
 // Created: AGE 2007-06-18
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const sword::DecisionalState& asnMsg )
+void Agent::DoUpdate( const sword::DecisionalState& message )
 {
-    decisionalInfos_.Update( asnMsg );
+    decisionalInfos_.Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const sword::LogMedicalState& asnMsg )
+void Agent::DoUpdate( const sword::LogMedicalState& message )
 {
     if( !pLogMedical_ )
-        pLogMedical_ = new AgentLogMedical( model_, *this, asnMsg );
+        pLogMedical_ = new AgentLogMedical( model_, *this, message );
     else
-        pLogMedical_->Update( asnMsg );
+        pLogMedical_->Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const sword::LogMaintenanceState& asnMsg )
+void Agent::DoUpdate( const sword::LogMaintenanceState& message )
 {
     if( !pLogMaintenance_ )
-        pLogMaintenance_ = new AgentLogMaintenance( model_, *this, asnMsg );
+        pLogMaintenance_ = new AgentLogMaintenance( model_, *this, message );
     else
-        pLogMaintenance_->Update( asnMsg );
+        pLogMaintenance_->Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const sword::LogSupplyState& asnMsg )
+void Agent::DoUpdate( const sword::LogSupplyState& message )
 {
     if( !pLogSupply_ )
-        pLogSupply_ = new AgentLogSupply( *this, asnMsg );
+        pLogSupply_ = new AgentLogSupply( *this, message );
     else
-        pLogSupply_->Update( asnMsg );
+        pLogSupply_->Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::DoUpdate
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const sword::UnitChangeSuperior& asnMsg )
+void Agent::DoUpdate( const sword::UnitChangeSuperior& message )
 {
-    SetSuperior( model_.Automats().Get( asnMsg.parent().id() ) );
+    SetSuperior( model_.Automats().Get( message.parent().id() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -360,9 +363,9 @@ void Agent::DoUpdate( const sword::UnitOrder& message )
 // Name: Agent::DoUpdate
 // Created: NLD 2010-12-27
 // -----------------------------------------------------------------------------
-void Agent::DoUpdate( const sword::UnitPathFind& asnMsg )
+void Agent::DoUpdate( const sword::UnitPathFind& message )
 {
-    currentPath_.Update( asnMsg.itineraire().location() );
+    currentPath_.Update( message.itineraire().location() );
 }
 
 // -----------------------------------------------------------------------------
