@@ -681,11 +681,11 @@ namespace
         attributes.mutable_unit()->set_id( id );
         EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_dotation_eff_materiel()->add_elem();
         equipment.mutable_type()->set_id( equipmentId );
-        equipment.set_nb_disponibles( variation[0] );
-        equipment.set_nb_indisponibles( variation[1] );
-        equipment.set_nb_reparables( variation[2] );
-        equipment.set_nb_dans_chaine_maintenance( variation[3] );
-        equipment.set_nb_prisonniers( variation[4] );
+        equipment.set_available( variation[0] );
+        equipment.set_unavailable( variation[1] );
+        equipment.set_repairable( variation[2] );
+        equipment.set_repairing( variation[3] );
+        equipment.set_captured( variation[4] );
         return result;
     }
 }

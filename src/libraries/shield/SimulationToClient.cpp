@@ -552,11 +552,11 @@ namespace
     void ConvertEquipmentDotation( const From& from, To* to )
     {
         CONVERT_ID( type );
-        CONVERT( nb_disponibles );
-        CONVERT( nb_indisponibles );
-        CONVERT( nb_reparables );
-        CONVERT( nb_dans_chaine_maintenance );
-        CONVERT( nb_prisonniers );
+        CONVERT_TO( available, nb_disponibles );
+        CONVERT_TO( unavailable, nb_indisponibles );
+        CONVERT_TO( repairable, nb_reparables );
+        CONVERT_TO( repairing, nb_dans_chaine_maintenance );
+        CONVERT_TO( captured, nb_prisonniers );
     }
     template< typename From, typename To >
     void ConvertResourceDotation( const From& from, To* to )

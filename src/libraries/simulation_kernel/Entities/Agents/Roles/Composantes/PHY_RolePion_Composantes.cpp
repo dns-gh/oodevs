@@ -1162,11 +1162,11 @@ void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) cons
 
             sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_dotation_eff_materiel()->add_elem();
             value.mutable_type()->set_id(  compType.GetMosID().id() );
-            value.set_nb_disponibles             ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_ .GetID() ] );
-            value.set_nb_indisponibles           ( properties.nbrsPerState_[ PHY_ComposanteState::dead_      .GetID() ] );
-            value.set_nb_reparables              ( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
-            value.set_nb_dans_chaine_maintenance ( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
-            value.set_nb_prisonniers             ( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ] );
+            value.set_available             ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_ .GetID() ] );
+            value.set_unavailable           ( properties.nbrsPerState_[ PHY_ComposanteState::dead_      .GetID() ] );
+            value.set_repairable              ( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
+            value.set_repairing ( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
+            value.set_captured             ( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ] );
         }
     }
 
@@ -1193,11 +1193,11 @@ void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) c
 
             sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_dotation_eff_materiel()->add_elem();
             value.mutable_type()->set_id( compType.GetMosID().id() );
-            value.set_nb_disponibles            ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_  .GetID() ] );
-            value.set_nb_indisponibles          ( properties.nbrsPerState_[ PHY_ComposanteState::dead_       .GetID() ] );
-            value.set_nb_reparables             ( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
-            value.set_nb_dans_chaine_maintenance( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
-            value.set_nb_prisonniers            ( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ] );
+            value.set_available            ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_  .GetID() ] );
+            value.set_unavailable          ( properties.nbrsPerState_[ PHY_ComposanteState::dead_       .GetID() ] );
+            value.set_repairable             ( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
+            value.set_repairing( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
+            value.set_captured            ( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ] );
         }
     }
 

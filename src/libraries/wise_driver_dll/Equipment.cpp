@@ -45,11 +45,11 @@ Equipment::~Equipment()
 // -----------------------------------------------------------------------------
 void Equipment::Update( const sword::EquipmentDotations::EquipmentDotation& message )
 {
-    available_ = message.nb_disponibles();
-    unAvailable_ = message.nb_indisponibles();
-    repairable_ = message.nb_reparables();
-    inMaintenance_ = message.nb_dans_chaine_maintenance();
-    captured_ = message.nb_prisonniers();
+    available_ = message.available();
+    unAvailable_ = message.unavailable();
+    repairable_ = message.repairable();
+    inMaintenance_ = message.repairing();
+    captured_ = message.captured();
 }
 
 // -----------------------------------------------------------------------------

@@ -67,11 +67,11 @@ QString Equipment::GetName() const
 // -----------------------------------------------------------------------------
 void Equipment::Update( const sword::EquipmentDotations_EquipmentDotation& message )
 {
-    available_     = message.nb_disponibles();
-    unavailable_   = message.nb_indisponibles();
-    repairable_    = message.nb_reparables();
-    inMaintenance_ = message.nb_dans_chaine_maintenance();
-    prisonners_    = message.nb_prisonniers();
+    available_     = message.available();
+    unavailable_   = message.unavailable();
+    repairable_    = message.repairable();
+    inMaintenance_ = message.repairing();
+    prisonners_    = message.captured();
 }
 
 // -----------------------------------------------------------------------------

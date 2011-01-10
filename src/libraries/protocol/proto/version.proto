@@ -11,10 +11,11 @@ package sword;
 
 /** @struct ProtocolVersion
     @brief A message containing the current protocol version.
-    
+
     This message is meant to be used when the client/server needs to 
-    send its current procotol version. As in an AuthenticationRequest
-    or AuthenticationResponse.
+    send its current procotol version.
+
+    @see AuthenticationRequest AuthenticationResponse
 */
 message ProtocolVersion {
     /** @property value

@@ -27,11 +27,11 @@ namespace
     typedef int (sword::EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn)() const;
     EquipmentDotationsMemberFn equipmentData[5] =
     {
-        &sword::EquipmentDotations_EquipmentDotation::nb_disponibles,
-        &sword::EquipmentDotations_EquipmentDotation::nb_indisponibles,
-        &sword::EquipmentDotations_EquipmentDotation::nb_reparables,
-        &sword::EquipmentDotations_EquipmentDotation::nb_dans_chaine_maintenance,
-        &sword::EquipmentDotations_EquipmentDotation::nb_prisonniers
+        &sword::EquipmentDotations_EquipmentDotation::available,
+        &sword::EquipmentDotations_EquipmentDotation::unavailable,
+        &sword::EquipmentDotations_EquipmentDotation::repairable,
+        &sword::EquipmentDotations_EquipmentDotation::repairing,
+        &sword::EquipmentDotations_EquipmentDotation::captured
     };
     const char* equipmentStates[5] =
     {
@@ -39,7 +39,7 @@ namespace
         "unavailable",
         "repairable",
         "repairing",
-        "prisoner"
+        "prisoner" // $$$$ MCO rename to captured
     };
     int ReadMask( xml::xistream& xis )
     {

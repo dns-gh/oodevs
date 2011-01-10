@@ -325,11 +325,11 @@ namespace
     void FillEquipmentDotation( D* d )
     {
         d->mutable_type()->set_id( 20 );
-        d->set_nb_disponibles( 21 );
-        d->set_nb_indisponibles( 22 );
-        d->set_nb_reparables( 23 );
-        d->set_nb_dans_chaine_maintenance( 24 );
-        d->set_nb_prisonniers( 25 );
+        d->set_available( 21 );
+        d->set_unavailable( 22 );
+        d->set_repairable( 23 );
+        d->set_repairing( 24 );
+        d->set_captured( 25 );
     }
     template< typename D >
     void FillResourceDotation( D* d )

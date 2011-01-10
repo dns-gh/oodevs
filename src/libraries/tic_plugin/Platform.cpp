@@ -64,41 +64,41 @@ void Platform::Spread( sword::EquipmentDotations_EquipmentDotation& updateMessag
 // -----------------------------------------------------------------------------
 void Platform::Apply( sword::EquipmentDotations_EquipmentDotation& updateMessage )
 {
-    int nVal = updateMessage.nb_dans_chaine_maintenance();
+    int nVal = updateMessage.repairing();
     if( nVal )
     {
-        updateMessage.set_nb_dans_chaine_maintenance(--nVal);
+        updateMessage.set_repairing(--nVal);
         state_ = destroyed;
     }
-    nVal = updateMessage.nb_indisponibles();
+    nVal = updateMessage.unavailable();
     if( nVal )
     {
-        updateMessage.set_nb_indisponibles(--nVal);
+        updateMessage.set_unavailable(--nVal);
         state_ = destroyed;
     }
-    nVal = updateMessage.nb_prisonniers();
+    nVal = updateMessage.captured();
     if( nVal )
     {
-        updateMessage.set_nb_prisonniers(--nVal);
+        updateMessage.set_captured(--nVal);
         state_ = destroyed;
     }
-    nVal = updateMessage.nb_reparables();
+    nVal = updateMessage.repairable();
     if( nVal )
     {
-        updateMessage.set_nb_reparables(--nVal);
+        updateMessage.set_repairable(--nVal);
         state_ = broken;
     }
-    nVal = updateMessage.nb_disponibles();
+    nVal = updateMessage.available();
     if( nVal )
     {
-        updateMessage.set_nb_disponibles(--nVal);
+        updateMessage.set_available(--nVal);
         state_ = okay;
     }
-//       SetStatus( updateMessage.nb_dans_chaine_maintenance(), destroyed )
-//    || SetStatus( updateMessage.nb_indisponibles(),           destroyed )
-//    || SetStatus( updateMessage.nb_prisonniers(),             destroyed )
-//    || SetStatus( updateMessage.nb_reparables(),              broken )
-//    || SetStatus( updateMessage.nb_disponibles(),             okay );
+//       SetStatus( updateMessage.repairing(), destroyed )
+//    || SetStatus( updateMessage.unavailable(),           destroyed )
+//    || SetStatus( updateMessage.captured(),             destroyed )
+//    || SetStatus( updateMessage.repairable(),              broken )
+//    || SetStatus( updateMessage.available(),             okay );
 }
 
 // -----------------------------------------------------------------------------

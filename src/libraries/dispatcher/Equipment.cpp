@@ -19,11 +19,11 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Equipment::Equipment( const sword::EquipmentDotations_EquipmentDotation& message )
    : nEquipmentType_   ( message.type().id() )
-   , nNbrAvailable_    ( message.nb_disponibles() )
-   , nNbrUnavailable_  ( message.nb_indisponibles() )
-   , nNbrRepairable_   ( message.nb_reparables() )
-   , nNbrInMaintenance_( message.nb_dans_chaine_maintenance() )
-   , nNbrPrisoner_     ( message.nb_prisonniers() )
+   , nNbrAvailable_    ( message.available() )
+   , nNbrUnavailable_  ( message.unavailable() )
+   , nNbrRepairable_   ( message.repairable() )
+   , nNbrInMaintenance_( message.repairing() )
+   , nNbrPrisoner_     ( message.captured() )
 {
     // NOTHING
 }
@@ -43,11 +43,11 @@ Equipment::~Equipment()
 // -----------------------------------------------------------------------------
 void Equipment::Update( const sword::EquipmentDotations_EquipmentDotation& message )
 {
-   nNbrAvailable_     = message.nb_disponibles();
-   nNbrUnavailable_   = message.nb_indisponibles();
-   nNbrRepairable_    = message.nb_reparables();
-   nNbrInMaintenance_ = message.nb_dans_chaine_maintenance();
-   nNbrPrisoner_      = message.nb_prisonniers();
+   nNbrAvailable_     = message.available();
+   nNbrUnavailable_   = message.unavailable();
+   nNbrRepairable_    = message.repairable();
+   nNbrInMaintenance_ = message.repairing();
+   nNbrPrisoner_      = message.captured();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,9 +57,9 @@ void Equipment::Update( const sword::EquipmentDotations_EquipmentDotation& messa
 void Equipment::Send( sword::EquipmentDotations_EquipmentDotation& message ) const
 {
     message.mutable_type()->set_id         ( nEquipmentType_ );
-    message.set_nb_disponibles             ( nNbrAvailable_ );
-    message.set_nb_indisponibles           ( nNbrUnavailable_ );
-    message.set_nb_reparables              ( nNbrRepairable_ );
-    message.set_nb_dans_chaine_maintenance ( nNbrInMaintenance_ );
-    message.set_nb_prisonniers             ( nNbrPrisoner_ );
+    message.set_available             ( nNbrAvailable_ );
+    message.set_unavailable           ( nNbrUnavailable_ );
+    message.set_repairable              ( nNbrRepairable_ );
+    message.set_repairing ( nNbrInMaintenance_ );
+    message.set_captured             ( nNbrPrisoner_ );
 }

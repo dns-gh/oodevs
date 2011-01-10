@@ -671,12 +671,12 @@ message EquipmentDotations {
         @brief An equipment dotation message
     */
     message EquipmentDotation {
-        required EquipmentType type                       = 1; //!< The equipment type @see EquipmentType
-        required int32         nb_disponibles             = 2; //!< The amount of equipment available @todo uint32 translate
-        required int32         nb_indisponibles           = 3; //!< The amount of equipment unavailable @todo uint32 translate
-        required int32         nb_reparables              = 4; //!< The amount of equipment fixable @todo uint32 translate
-        required int32         nb_dans_chaine_maintenance = 5; //!< The amount of equipment under maintenance @todo uint32 translate
-        required int32         nb_prisonniers             = 6; //!< The amount of equipment captured @todo uint32 translate
+        required EquipmentType type        = 1; //!< The equipment type @see EquipmentType
+        required int32         available   = 2; //!< The amount of equipment available @todo uint32 translate
+        required int32         unavailable = 3; //!< The amount of equipment unavailable @todo uint32 translate
+        required int32         repairable  = 4; //!< The amount of equipment fixable @todo uint32 translate
+        required int32         repairing   = 5; //!< The amount of equipment under maintenance @todo uint32 translate
+        required int32         captured    = 6; //!< The amount of equipment captured @todo uint32 translate
     }
     repeated EquipmentDotation elem = 1; //!< The equipment dotations @see EquipmentDotation
 }
