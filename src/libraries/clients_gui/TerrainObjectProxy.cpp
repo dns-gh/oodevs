@@ -112,7 +112,7 @@ void TerrainObjectProxy::Restore()
     {
         colorAttribute->SetRed( color_.red_ );
         colorAttribute->SetGreen( color_.green_ );
-        colorAttribute->SetBlue( color_.red_ );
+        colorAttribute->SetBlue( color_.blue_ );
     }
 }
 
@@ -289,20 +289,15 @@ void TerrainObjectProxy::UpdateColor()
     urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
     if( colorAttribute && pGradient_.get() )
     {
-        unsigned short red = color_.red_;
-        unsigned short green = color_.green_;
-        unsigned short blue = color_.blue_;
-        if( densityColor_ )
+        if( !densityColor_ )
+            Restore();
+        else
         {
-            float density = GetDensity();
-            QColor result = pGradient_->Compute( density, colorAttribute->Alpha() );
-            red = static_cast< unsigned short >( result.red() );
-            green = static_cast< unsigned short >( result.green() );
-            blue = static_cast< unsigned short >( result.blue() );
+            QColor result = pGradient_->Compute( GetDensity(), colorAttribute->Alpha() );
+            colorAttribute->SetRed( static_cast< unsigned short >( result.red() ) );
+            colorAttribute->SetGreen( static_cast< unsigned short >( result.green() ) );
+            colorAttribute->SetBlue( static_cast< unsigned short >( result.blue() ) );
         }
-        colorAttribute->SetRed( red );
-        colorAttribute->SetGreen( green );
-        colorAttribute->SetBlue( blue );
     }
 }
 
@@ -313,12 +308,12 @@ void TerrainObjectProxy::UpdateColor()
 float TerrainObjectProxy::GetDensity() const
 {
     float surface = object_.GetFootprint()->ComputeArea();
+    if( surface == 0.f )
+        return 0.f;
     unsigned int floors = 1u;
     urban::Architecture* architecture = object_.Retrieve< urban::Architecture >();
     if( architecture )
         floors += architecture->GetFloorNumber();
-    if( surface == 0.f )
-        return 0.f;
     return GetHumans() / ( surface * floors );
 }
 
