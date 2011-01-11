@@ -138,8 +138,10 @@ void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
 {
     if( entity.IsLimit() )
         return;
-    if( !line_ || line_ != &entity )
+    if( !line_ )
         line_ = &entity;
+    if( line_ != &entity )
+        return;
 
     QPopupMenu* limaMenu = new QPopupMenu( menu );
     for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
