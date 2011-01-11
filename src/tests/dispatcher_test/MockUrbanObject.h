@@ -10,7 +10,7 @@
 #ifndef __MockUrbanObject_h_
 #define __MockUrbanObject_h_
 
-#include "dispatcher/UrbanObject_ABC.h"
+#include "dispatcher/Object_ABC.h"
 
 // =============================================================================
 /** @class  MockUrbanObject
@@ -18,9 +18,9 @@
 */
 // Created: PHC 2010-07-22
 // =============================================================================
-MOCK_BASE_CLASS( MockUrbanObject, dispatcher::UrbanObject_ABC )
+MOCK_BASE_CLASS( MockUrbanObject, dispatcher::Object_ABC )
 {
-    explicit MockUrbanObject( unsigned int id ) : dispatcher::UrbanObject_ABC( id ) {}
+    explicit MockUrbanObject( unsigned int id ) : dispatcher::Object_ABC( id ) {}
 
     // kernel::Entity_ABC
     MOCK_METHOD( GetName, 0 );
@@ -29,6 +29,9 @@ MOCK_BASE_CLASS( MockUrbanObject, dispatcher::UrbanObject_ABC )
     MOCK_METHOD( Select, 1 );
     MOCK_METHOD( ContextMenu, 2 );
     MOCK_METHOD( Activate, 1 );
+    MOCK_METHOD( GetTeam, 0 );
+    MOCK_METHOD( GetType, 0 );
+    MOCK_METHOD( Display, 1 );
 
     // kernel::Object_ABC
     //MOCK_METHOD( Display, 1 );

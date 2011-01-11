@@ -14,6 +14,7 @@
 #include "MockKnowledgeGroup.h"
 #include "MockModel.h"
 #include "MockObject.h"
+#include "MockUrbanObject.h"
 #include "MockSide.h"
 #include "dispatcher/ObjectKnowledge.h"
 #include "protocol/ClientSenders.h"
@@ -27,6 +28,7 @@ namespace
             , knowledgeGroup( 3 )
             , object        ( 4 )
             , automat       ( 5 )
+            , urbanObject   ( 6 )
         {
             MOCK_EXPECT( side, GetId ).returns( 2 );
             sides.Register( side.GetId(), side );
@@ -36,10 +38,13 @@ namespace
             objects.Register( object.GetId(), object );
             MOCK_EXPECT( automat, GetId ).returns( 5 );
             automats.Register( automat.GetId(), automat );
+            MOCK_EXPECT( urbanObject, GetId ).returns( 6 );
+            urbanObjects.Register( object.GetId(), object );
             MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
             MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
             MOCK_EXPECT( model, Objects ).returns( boost::ref( objects ) );
             MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
+            MOCK_EXPECT( model, UrbanBlocks ).returns( boost::ref( urbanObjects ) );
             expected.set_context( 0 );
         }
         void createObjectKnowledge()
@@ -64,10 +69,12 @@ namespace
         MockKnowledgeGroup knowledgeGroup;
         MockObject object;
         MockAutomat automat;
+        MockUrbanObject urbanObject;
         MockModel model;
         tools::Resolver< dispatcher::Team_ABC > sides;
         tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
         tools::Resolver< dispatcher::Object_ABC > objects;
+        tools::Resolver< dispatcher::Object_ABC > urbanObjects;
         tools::Resolver< dispatcher::Automat_ABC > automats;
         std::auto_ptr< dispatcher::ObjectKnowledge_ABC > result;
         sword::SimToClient expected;
