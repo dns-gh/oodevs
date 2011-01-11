@@ -297,7 +297,6 @@ void DEC_Knowledge_Urban::UpdateOnNetwork()
         return;
     }
     SendChangedState();
-    DEC_Knowledge_Object::UpdateOnNetwork();
 }
 
 // -----------------------------------------------------------------------------
