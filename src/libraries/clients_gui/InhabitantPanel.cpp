@@ -14,6 +14,7 @@
 #include "CheckBox.h"
 #include "DensityWidget.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
 
@@ -24,6 +25,7 @@ using namespace gui;
 InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controllers )
     : PreferencePanel_ABC( parent, "InhabitantPanel" )
     , options_( controllers.options_ )
+    , loaded_ ( false )
 {
     QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Colors" ), this );
     QVBox* hBox = new QVBox( box );
@@ -31,6 +33,7 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controll
     connect( density_, SIGNAL( toggled( bool ) ), SLOT( OnChanged( bool ) ) );
     QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), hBox );
     widget_ = new DensityWidget( group, controllers );
+    options_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +42,7 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controll
 // -----------------------------------------------------------------------------
 InhabitantPanel::~InhabitantPanel()
 {
-    // NOTHING
+    options_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,4 +52,17 @@ InhabitantPanel::~InhabitantPanel()
 void InhabitantPanel::OnChanged( bool value )
 {
     options_.Change( "UrbanDensityColor", value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPanel::OptionChanged
+// Created: LGY 2011-01-11
+// -----------------------------------------------------------------------------
+void InhabitantPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "UrbanDensityColor" && !loaded_ )
+    {
+        loaded_ = true;
+        density_->setChecked( value.To< bool >() );
+    }
 }

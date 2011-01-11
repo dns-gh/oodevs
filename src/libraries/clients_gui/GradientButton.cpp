@@ -258,7 +258,7 @@ namespace
 // Name: GradientButton::LoadGradient
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void GradientButton::LoadGradient( const Gradient& gradient )
+void GradientButton::LoadGradient( const Gradient& gradient, bool loaded )
 {
     ClearSelection();
     for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
@@ -267,7 +267,7 @@ void GradientButton::LoadGradient( const Gradient& gradient )
     colors_.clear();
     GradientBuilder builder( *this );
     gradient.Accept( builder );
-    Update();
+    Update( loaded );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,7 +311,7 @@ void GradientButton::ClearSelection()
 // Name: GradientButton::Update
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-void GradientButton::Update()
+void GradientButton::Update( bool loaded )
 {
     canvas()->setAllChanged();
     Gradient gradient;
@@ -323,7 +323,8 @@ void GradientButton::Update()
         gradient.AddColor( item->GetPercentage() / 100.f, item->GetColor() );
     }
     canvas()->update();
-    emit GradientChanged( gradient );
+    if( !loaded )
+        emit GradientChanged( gradient );
 }
 
 // -----------------------------------------------------------------------------
@@ -356,4 +357,20 @@ void GradientButton::OnEnableVariableGradient( bool state )
 {
     disableState_ = state;
     Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GradientButton::Save
+// Created: LGY 2011-01-10
+// -----------------------------------------------------------------------------
+void GradientButton::Save()
+{
+    Gradient gradient;
+    QCanvasItemList list = canvas()->allItems();
+    for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
+    {
+        GradientItem* item = static_cast< GradientItem* >( *it );
+        gradient.AddColor( item->GetPercentage() / 100.f, item->GetColor() );
+    }
+    emit GradientChanged( gradient );
 }

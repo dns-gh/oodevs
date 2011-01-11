@@ -67,6 +67,7 @@ public:
     void Accept( GradientVisitor_ABC& visitor ) const;
     void LoadValues( const QString& values );
     Gradient& operator=( const Gradient& rhs );
+    QColor Compute( float percent, float alpha );
     //@}
 
 private:

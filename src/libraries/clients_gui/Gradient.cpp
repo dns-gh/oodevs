@@ -108,11 +108,11 @@ namespace
         float r, g, b, a;
     };
 
-    Color MakeColor( const QColor& cFrom, const QColor& cEnd, Color result, float ratio )
+    Color MakeColor( const QColor& cFrom, const QColor& cEnd, Color result, float ratio, float part )
     {
-        result.r = ( ( 1.f - ratio ) * cFrom.red() + ratio * cEnd.red() ) / 255.f;
-        result.g = ( ( 1.f - ratio ) * cFrom.green() + ratio * cEnd.green() ) / 255.f;
-        result.b = ( ( 1.f - ratio ) * cFrom.blue() + ratio * cEnd.blue() ) / 255.f;
+        result.r = ( ( 1.f - ratio ) * cFrom.red() + ratio * cEnd.red() ) / part;
+        result.g = ( ( 1.f - ratio ) * cFrom.green() + ratio * cEnd.green() ) / part;
+        result.b = ( ( 1.f - ratio ) * cFrom.blue() + ratio * cEnd.blue() ) / part;
         return result;
     }
 
@@ -123,7 +123,7 @@ namespace
         float ratio = 0.f;
         while( from != end )
         {
-            *from = MakeColor( cFrom, cEnd, *from, ratio );
+            *from = MakeColor( cFrom, cEnd, *from, ratio, 255.f );
             ratio += increment;
             ++from;
         }
@@ -140,7 +140,7 @@ namespace
             FillGradient( colors.begin() + colorIndex, colors.begin() + colorIndex + elements, with[i].second, with[i+1].second );
             colorIndex += elements;
         }
-        colors.back() = MakeColor( with.back().second, with.back().second, colors.back(), 1 );
+        colors.back() = MakeColor( with.back().second, with.back().second, colors.back(), 1, 255.f );
     }
 }
 
@@ -174,6 +174,37 @@ void Gradient::MakeGlTexture( float alpha )
     glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, gl::GL_CLAMP_TO_EDGE );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Gradient::Compute
+// Created: LGY 2011-01-10
+// -----------------------------------------------------------------------------
+QColor Gradient::Compute( float percent, float alpha )
+{
+    std::sort( colors_.begin(), colors_.end(), Less() );
+    T_Color from;
+    T_Color end;
+    float ratio;
+    if( !colors_.empty() && percent > colors_.back().first )
+    {
+        from = colors_.back();
+        end = colors_.back();
+        ratio = 1;
+    }
+    else
+    {
+        for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
+            if( it->first <= percent )
+            {
+                from = *it;
+                end = ( ( it + 1 ) == colors_.end() ) ? *it : *( it + 1 );
+            }
+        ratio = ( percent - from.first ) / ( end.first - from.first );
+    }
+    Color result( alpha );
+    result = MakeColor( from.second, end.second, result, ratio, 1.f );
+    return QColor( static_cast< int >( result.r ), static_cast< int >( result.g ), static_cast< int >( result.a ) );
 }
 
 // -----------------------------------------------------------------------------

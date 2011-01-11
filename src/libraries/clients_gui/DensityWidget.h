@@ -73,7 +73,6 @@ private:
     kernel::Options& options_;
     GradientButton* densityEditor_;
     ColorButton* color_;
-    bool loaded_;
     //@}
 };
 

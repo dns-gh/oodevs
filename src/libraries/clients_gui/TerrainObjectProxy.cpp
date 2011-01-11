@@ -10,10 +10,11 @@
 #include "clients_gui_pch.h"
 #include "TerrainObjectProxy.h"
 #include "Tools.h"
+#include "Gradient.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include <urban/Architecture.h>
 #include <urban/TerrainObject_ABC.h>
@@ -29,18 +30,18 @@ using namespace gui;
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object,
-                                       unsigned int id, const QString& name, const kernel::ObjectType& type )
+TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id,
+                                        const QString& name, const kernel::ObjectType& type )
     : EntityImplementation< kernel::Object_ABC >( controllers.controller_, id, name )
     , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , object_    ( object )
-    , controllers_( controllers )
+    , object_      ( object )
+    , controllers_ ( controllers )
     , densityColor_( false )
-    , type_( type )
+    , pGradient_   ( 0 )
+    , type_        ( type )
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
-    controllers_.Register( *this );
     urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
     if( colorAttribute )
     {
@@ -48,6 +49,13 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
         color_.green_ = colorAttribute->Green();
         color_.blue_ = colorAttribute->Blue();
     }
+    const std::string colors = controllers.options_.GetOption( "Density/urbanBlock", QString( "default" ) ).To< QString >();
+    if( colors != "default" )
+    {
+        pGradient_.reset( new Gradient() );
+        pGradient_->LoadValues( colors.c_str() );
+    }
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,12 +65,27 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
 TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const kernel::ObjectType& type )
     : EntityImplementation< kernel::Object_ABC >( controllers.controller_, object.GetId(), QString( object.GetName().c_str() ) )
     , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , object_    ( object )
-    , controllers_( controllers )
-    , type_( type )
+    , object_      ( object )
+    , controllers_ ( controllers )
+    , densityColor_( false )
+    , pGradient_   ( 0 )
+    , type_        ( type )
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
+    urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
+    if( colorAttribute )
+    {
+        color_.red_ = colorAttribute->Red();
+        color_.green_ = colorAttribute->Green();
+        color_.blue_ = colorAttribute->Blue();
+    }
+    const std::string colors = controllers.options_.GetOption( "Density/urbanBlock", QString( "default" ) ).To< QString >();
+    if( colors != "default" )
+    {
+        pGradient_.reset( new Gradient() );
+        pGradient_->LoadValues( colors.c_str() );
+    }
     controllers_.Register( *this );
 }
 
@@ -72,8 +95,25 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
 // -----------------------------------------------------------------------------
 TerrainObjectProxy::~TerrainObjectProxy()
 {
+    Restore();
     controllers_.Unregister( *this );
     Destroy();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::Restore
+// Created: LGY 2011-01-11
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::Restore()
+{
+    urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
+    if( colorAttribute )
+    {
+        colorAttribute->SetRed( color_.red_ );
+        colorAttribute->SetGreen( color_.green_ );
+        colorAttribute->SetBlue( color_.red_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -103,15 +143,13 @@ QString TerrainObjectProxy::GetName() const
     return object_.GetName().c_str();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::Select
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::Select( kernel::ActionController& controller ) const
 {
-    //controller.Select( *this, *static_cast< const TerrainObjectProxy* >( this ) );
-    controller.Select( *this, *(const Entity_ABC*)this );
+    controller.Select( *this, *static_cast< const Entity_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,6 +216,7 @@ void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) co
 void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number )
 {
     humans_[ inhabitant ] = number;
+    UpdateColor();
 }
 
 // -----------------------------------------------------------------------------
@@ -233,6 +272,12 @@ void TerrainObjectProxy::OptionChanged( const std::string& name, const kernel::O
             UpdateColor();
         }
     }
+    else if( name == "Density/urbanBlock" )
+    {
+        pGradient_.reset( new Gradient() );
+        pGradient_->LoadValues( value.To< QString >() );
+        UpdateColor();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -242,12 +287,19 @@ void TerrainObjectProxy::OptionChanged( const std::string& name, const kernel::O
 void TerrainObjectProxy::UpdateColor()
 {
     urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
-    if( colorAttribute )
+    if( colorAttribute && pGradient_.get() )
     {
-        float density = GetDensity();
-        unsigned short red = densityColor_ ? ( density > 0 ? 255 : 0 ) : color_.red_;
-        unsigned short green = densityColor_ ? ( density > 0 ? 0 : 255 ) : color_.green_;
-        unsigned short blue = densityColor_ ? 0 : color_.blue_;
+        unsigned short red = color_.red_;
+        unsigned short green = color_.green_;
+        unsigned short blue = color_.blue_;
+        if( densityColor_ )
+        {
+            float density = GetDensity();
+            QColor result = pGradient_->Compute( density, colorAttribute->Alpha() );
+            red = static_cast< unsigned short >( result.red() );
+            green = static_cast< unsigned short >( result.green() );
+            blue = static_cast< unsigned short >( result.blue() );
+        }
         colorAttribute->SetRed( red );
         colorAttribute->SetGreen( green );
         colorAttribute->SetBlue( blue );
@@ -261,10 +313,12 @@ void TerrainObjectProxy::UpdateColor()
 float TerrainObjectProxy::GetDensity() const
 {
     float surface = object_.GetFootprint()->ComputeArea();
-    unsigned int floors = 1;
+    unsigned int floors = 1u;
     urban::Architecture* architecture = object_.Retrieve< urban::Architecture >();
     if( architecture )
-        floors = architecture->GetFloorNumber();
+        floors += architecture->GetFloorNumber();
+    if( surface == 0.f )
+        return 0.f;
     return GetHumans() / ( surface * floors );
 }
 

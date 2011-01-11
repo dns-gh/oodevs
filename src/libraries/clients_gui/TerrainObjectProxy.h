@@ -16,6 +16,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include <memory>
 
 namespace kernel
 {
@@ -40,6 +41,8 @@ namespace urban
 
 namespace gui
 {
+    class Gradient;
+
 // =============================================================================
 /** @class  TerrainObjectProxy
     @brief  Terrain object proxy
@@ -56,8 +59,8 @@ class TerrainObjectProxy : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    TerrainObjectProxy( kernel::Controllers& controller, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const kernel::ObjectType& type );
-             TerrainObjectProxy( kernel::Controllers& controller, urban::TerrainObject_ABC& object, const kernel::ObjectType& type );
+             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const kernel::ObjectType& type );
+             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const kernel::ObjectType& type );
     virtual ~TerrainObjectProxy();
     //@}
 
@@ -102,6 +105,7 @@ private:
     void CreateDictionary( kernel::Controller& controller );
     void AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary );
     void UpdateColor();
+    void Restore();
     float GetDensity() const;
     unsigned int GetHumans() const;
     //@}
@@ -110,8 +114,6 @@ private:
     //@{
     typedef std::map< std::string, unsigned int > T_Humans;
     typedef T_Humans::const_iterator            CIT_Humans;
-    const kernel::ObjectType& type_;
-
 
     struct BaseColor
     {
@@ -129,6 +131,8 @@ private:
     T_Humans humans_;
     BaseColor color_;
     bool densityColor_;
+    std::auto_ptr< Gradient > pGradient_;
+    const kernel::ObjectType& type_;
     //@}
 };
 

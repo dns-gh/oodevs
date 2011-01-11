@@ -17,6 +17,7 @@
 #include "Painter_ABC.h"
 #include "Gradient.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include <boost/lexical_cast.hpp>
 
@@ -62,7 +63,6 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers 
     , pPainter_   ( new Painter() )
     , controllers_( controllers )
     , options_    ( controllers.options_ )
-    , loaded_     ( false )
 {
     setMaximumHeight( 150 );
     QHBox* box = new QHBox( this );
@@ -76,6 +76,7 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers 
     connect( densityEditor_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientEdited( Gradient& ) ) );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
 
+    densityEditor_->Save();
     controllers_.Register( *this );
 }
 
@@ -122,11 +123,11 @@ void DensityWidget::OnGradientEdited( Gradient& gradient )
 // -----------------------------------------------------------------------------
 void DensityWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "Density/urbanBlock" && !loaded_ )
+    if( name == "Density/urbanBlock" )
     {
         Gradient gradient;
-        gradient.LoadValues( value.To< QString >() );
-        loaded_ = true;
-        densityEditor_->LoadGradient( gradient );
+        const QString colors = value.To< QString >();
+        gradient.LoadValues( colors );
+        densityEditor_->LoadGradient( gradient, true );
     }
 }

@@ -38,7 +38,8 @@ public:
 
     //! @name Operations
     //@{
-    void LoadGradient( const Gradient& gradient );
+    void Save();
+    void LoadGradient( const Gradient& gradient, bool loaded = false );
     void SetSelectedColor( const QColor& color );
     GradientItem* AddItem( unsigned int percentage, const QColor& color );
     //@}
@@ -73,7 +74,7 @@ private:
 
     void SetSelected( GradientItem& item );
     void ClearSelection();
-    void Update();
+    void Update( bool loaded = false );
     //@}
 
     //! @name Types
