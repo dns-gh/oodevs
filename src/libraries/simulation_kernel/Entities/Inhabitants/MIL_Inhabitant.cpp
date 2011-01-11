@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Inhabitant.h"
 #include "MIL_InhabitantType.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -112,7 +113,7 @@ MIL_Inhabitant::MIL_Inhabitant(const MIL_InhabitantType& type )
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type, MIL_Army_ABC& army, const MT_Vector2D& /*point*/, int /*number*/, const std::string& name )
     : MIL_Entity_ABC( name )
-    , pType_           ( &type )
+    , pType_            ( &type )
     , nID_              ( idManager_.GetFreeId() )
     , pArmy_            ( &army )
     , nNbrHealthyHumans_( 0 )
@@ -260,10 +261,11 @@ void MIL_Inhabitant::SendCreation() const
         entry->set_name( extension.first );
         entry->set_value( extension.second );
     }
-    BOOST_FOREACH( const T_UrbanBlock& urbanBlock, urbanBlocks_ )
+    BOOST_FOREACH( const T_UrbanBlock& block, urbanBlocks_ )
     {
         sword::UrbanObjectId* blockId = msg().add_blocks();
-        blockId->set_id( urbanBlock.first->GetId() );
+        unsigned int id = UrbanObjectWrapper::GetWrapperObject( *block.first ).GetID();
+        blockId->set_id( id );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -282,7 +284,8 @@ void MIL_Inhabitant::SendFullState() const
     BOOST_FOREACH( const T_UrbanBlock& urbanBlock, urbanBlocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
-        block.mutable_block()->set_id( urbanBlock.first->GetId() );
+        unsigned int id = UrbanObjectWrapper::GetWrapperObject( *urbanBlock.first ).GetID();
+        block.mutable_block()->set_id( id );
         block.set_number( urbanBlock.second );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
