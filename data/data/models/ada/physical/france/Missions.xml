@@ -1877,7 +1877,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="people" name="Refugies" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="people" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Decrocher" dia-type="net.masagroup.sword.france.military.platoon.tasks.Decrocher" id="2059" name="COMMUNES Decrocher">
@@ -1892,7 +1892,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="people" name="Prisonniers" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="prisoners" max-occurs="unbounded" min-occurs="1" name="Prisonniers" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de prisonniers" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Franchir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Franchir" id="2071" name="COMMUNES Franchir">
@@ -1902,13 +1902,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Point de destination" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreItineraire" dia-type="net.masagroup.sword.france.military.platoon.tasks.ReconnaitreItineraire" id="2040" name="MELEE Reconnaitre Itineraire" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Destination" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Appuyer" id="2062" name="MELEE Appuyer" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3652,7 +3645,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Point de regroupement" optional="false" type="Point"/>
+      <parameter dia-name="objective" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" dia-type="net.masagroup.sword.france.military.company.tasks.Suivre" id="1012" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" name="COMMUNES Suivre">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3676,7 +3669,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="people" name="Refugies" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="peoples" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" id="1015" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" name="COMMUNES Prendre en compte Prisonniers">
@@ -3685,7 +3678,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="people" name="Prisonniers" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="prisoners" max-occurs="unbounded" min-occurs="1" name="Prisonniers" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de prisonniers" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" id="1016" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" name="COMMUNES Se Faire Decontaminer">
@@ -3714,13 +3707,19 @@
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="meetingPoint" max-occurs="unbounded" min-occurs="1" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.company.tasks.Reconnaitre" id="1019" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" name="MELEE Reconnaitre un itinéraire" package="intelligence">
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.company.tasks.Reconnaitre" id="1019" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" name="MELEE Reconnaitre" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Destination" optional="false" type="Point"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" dia-type="T_Mission_Automate_StationnerBM" id="1050" mrt-dia-behavior="net.masagroup.sword.france.military.tasks.commun.automat.StationnerBM" name="StationnerBM">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4139,4 +4138,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="2147174997" -->
+<!-- signature="2979904199" -->

@@ -1019,7 +1019,11 @@ float PHY_ComposantePion::GetReconnoissanceMaxRange() const
 {
     double distance = std::numeric_limits< double >::max();
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
-        distance = std::min( distance, (*itSensor)->GetType().GetTypeAgent()->ReconnoissanceDistance() );
+    {
+        const PHY_SensorTypeAgent* pTypeAgent = (*itSensor)->GetType().GetTypeAgent();
+        if ( pTypeAgent ) 
+            distance = std::min( distance, pTypeAgent->ReconnoissanceDistance() );
+    }
     return static_cast< float >( distance );
 }
 
