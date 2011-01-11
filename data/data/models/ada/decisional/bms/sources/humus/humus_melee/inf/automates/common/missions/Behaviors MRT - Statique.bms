@@ -64,7 +64,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Statique"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                if( self.limaLCAR == nil ) then
+                if( self.limaLCAR == 0 ) then
                     self.limaLCAR = DEC_GetLima( eTypeLima_LI )
                 end
 
@@ -231,7 +231,7 @@ elseif switch_2 == "T_Mission_Automate_INF_BarrerDirection" then
                                 _continue = false
                                                         cases_switch_2[2] = true
 elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
-                                if( self.limaLCAR == nil ) then
+                                if( self.limaLCAR == 0 ) then
                                     do
                                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
                                                                                 self:SendFeedback( eActionImpossible )
@@ -248,7 +248,7 @@ elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
                                                         cases_switch_2[3] = true
 elseif switch_2 == "T_Mission_Automate_INF_RecueillirUnite" then
                                 local mission = DEC_GetMission( myself )
-                                if( self.limaLR == nil ) then
+                                if( self.limaLR == 0 ) then
                                     do
                                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
                                                                                 self:SendFeedback( eActionImpossible )

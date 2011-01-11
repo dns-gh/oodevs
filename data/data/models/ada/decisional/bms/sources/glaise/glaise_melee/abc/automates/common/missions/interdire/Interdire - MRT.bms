@@ -49,7 +49,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/interdi
 ]]--[[//-------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                local lima = nil
+                local lima = 0
                 --[[// On recupère la lima à interdire
 ]]if( not DEC_AutomateSuperieur_EstEmbraye() ) then
                     lima = DEC_GetLima( eTypeLima_LI )
@@ -58,7 +58,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/interdi
 ]]lima = DEC_GetLima( eTypeLima_LR )
                 end
 
-                if( lima == nil ) then
+                if( lima == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -141,7 +141,7 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
 ]]--[[//-------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                local lima = nil
+                local lima = 0
                 --[[// On recupère la lima à interdire
 ]]if( not DEC_AutomateSuperieur_EstEmbraye() ) then
                     lima = DEC_GetLima( eTypeLima_LI )
@@ -150,7 +150,7 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
 ]]lima = DEC_GetLima( eTypeLima_LR )
                 end
 
-                if( lima == nil ) then
+                if( lima == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )

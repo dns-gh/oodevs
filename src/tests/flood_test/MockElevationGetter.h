@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef __MockElevationGetter_ABC_h_
-#define __MockElevationGetter_ABC_h_
+#ifndef __MockElevationGetter_h_
+#define __MockElevationGetter_h_
 
 #include "flood/ElevationGetter_ABC.h"
 
 // =============================================================================
-/** @class  MockElevationGetter_ABC
-    @brief  MockElevationGetter_ABC
+/** @class  MockElevationGetter
+    @brief  MockElevationGetter
 */
 // Created: ABR 2011-01-10
 // =============================================================================
@@ -23,4 +23,4 @@ MOCK_BASE_CLASS( MockElevationGetter, flood::ElevationGetter_ABC )
     MOCK_METHOD( GetElevationAt, 1 );
 };
 
-#endif // __MockElevationGetter_ABC_h_
+#endif // __MockElevationGetter_h_

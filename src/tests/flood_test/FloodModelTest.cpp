@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "flood_test_pch.h"
-#include "MockElevationGetter_ABC.h"
+#include "MockElevationGetter.h"
 
 namespace
 {
@@ -61,8 +61,8 @@ BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateSwimmingPool, Fixture )
     const flood::FloodModel::T_Polygons& deepArea = flood_.GetDeepAreas();
     const flood::FloodModel::T_Polygons& lowArea = flood_.GetLowAreas();
 
-    BOOST_CHECK( deepArea.size() == 1 );
-    BOOST_CHECK( lowArea.empty() );
+    BOOST_CHECK_EQUAL( 1u, deepArea.size() );
+    BOOST_CHECK_EQUAL( 0u, lowArea.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,6 +90,6 @@ BOOST_FIXTURE_TEST_CASE( FloodModel_GenerateStrips, Fixture )
     const flood::FloodModel::T_Polygons& deepArea = flood_.GetDeepAreas();
     const flood::FloodModel::T_Polygons& lowArea = flood_.GetLowAreas();
 
-    BOOST_CHECK( deepArea.size() == 1 );
-    BOOST_CHECK( lowArea.size() == 1 );
+    BOOST_CHECK_EQUAL( 1u, deepArea.size() );
+    BOOST_CHECK_EQUAL( 1u, lowArea.size() );
 }

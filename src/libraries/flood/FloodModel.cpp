@@ -114,10 +114,10 @@ void FloodModel::Propagate( int floodElevation )
         unsigned short x = queue.front().first;
         unsigned short y = queue.front().second;
         Point2f cellCenter( center_.X() + ( x - halfWidth_ ) * cellWidth_ , center_.Y() + ( y - halfWidth_ ) * cellWidth_ );
-        short elevation = getter_.GetElevationAt( cellCenter );
         sCell& cell = ppCells_[ x ][ y ];
         if( !cell.visited_ )
         {
+            short elevation = getter_.GetElevationAt( cellCenter );
             cell.visited_ = true;
             if( cellCenter.SquareDistance( center_ ) < refDist_ * refDist_ && elevation <= floodElevation )
             {

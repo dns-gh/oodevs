@@ -58,7 +58,7 @@ node "BEH_Medo_Automate_INF_PreparerMission_Retrograde"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                if( self.limaLCAR == nil ) then
+                if( self.limaLCAR == 0 ) then
                     self.limaLCAR = DEC_GetLima( eTypeLima_LI )
                 end
 

@@ -43,7 +43,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/recueil
             do
                 --[[// On recupère la LR
 ]]local LR = DEC_GetLima( eTypeLima_LR )
-                if( LR == nil ) then
+                if( LR == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )
@@ -127,7 +127,7 @@ node "BEH_Medo_Automate_ABC_Recueillir_AssignerMissionSurveillerA"
             do
                 --[[// On recupère la LR
 ]]local LIA = DEC_GetLima( eTypeLima_LIA )
-                if( LIA == nil ) then
+                if( LIA == 0 ) then
                     do
                         Activate( self.activations.ACT_Warning, 1, { eRC_MissionImpossibleLimaInvalide, } )
                                                 self:SendFeedback( eActionImpossible )

@@ -80,7 +80,7 @@ do
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[//calcul de la liste des PIA
 ]]local LIA = DEC_GetLima( eTypeLima_LIA )
-                if( LIA == nil ) then
+                if( LIA == 0 ) then
                     do
                         DEC_Trace( "Mission needs LIA" )
                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
