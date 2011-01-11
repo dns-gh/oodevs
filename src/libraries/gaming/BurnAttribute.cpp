@@ -44,7 +44,7 @@ void BurnAttribute::UpdateData( const T& message )
     if( message.has_burn()  )
     {
         currentHeat_ = message.burn().current_heat();
-        currentCombustionEnergy_ = message.burn().combustion_energy_count() > 0 ? message.burn().combustion_energy_sum() / message.burn().combustion_energy_count() : 0;
+        currentCombustionEnergy_ = message.burn().combustion_energy();
         controller_.Update( *(BurnAttribute_ABC*)this );
     }
 }

@@ -19,11 +19,17 @@
 namespace kernel
 {
     class Controller;
+    class Entity_ABC;
 }
 
 namespace sword
 {
 	enum EnumBurningCellPhase;
+}
+
+namespace actions
+{
+    class ActionsModel;
 }
 
 // =============================================================================
@@ -39,7 +45,7 @@ class BurnSurfaceAttribute : public kernel::BurnSurfaceAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             BurnSurfaceAttribute( kernel::Controller& controller );
+             BurnSurfaceAttribute( kernel::Controller& controller, actions::ActionsModel& actionsModel, kernel::Entity_ABC& entity );
     virtual ~BurnSurfaceAttribute();
     //@}
 
@@ -69,13 +75,21 @@ private:
 
 	struct BurningCell
 	{
-		sword::EnumBurningCellPhase phase_;
-		int ignitionEnergy_;
-		int ignitionThreshold_;
-		int combustionEnergy_;
-		int currentHeat_;
-		int maxCombustionEnergy_;
-	};
+        BurningCell()
+            : ignitionEnergy_( -1 )
+            , ignitionThreshold_( -1 )
+            , combustionEnergy_( -1 )
+            , currentHeat_( -1 )
+            , maxCombustionEnergy_( -1 )
+        {
+        }
+        sword::EnumBurningCellPhase phase_;
+        int ignitionEnergy_;
+        int ignitionThreshold_;
+        int combustionEnergy_;
+        int currentHeat_;
+        int maxCombustionEnergy_;
+    };
 
     //! @name Helpers
     //@{
@@ -95,6 +109,8 @@ private:
 	typedef std::map< BurningCellOrigin, BurningCell > BurningCellsByCoordinatesMap;
 	BurningCellsByCoordinatesMap burningCellsByCoordinates_;
     kernel::Controller& controller_;
+    actions::ActionsModel& actionsModel_;
+    kernel::Entity_ABC& entity_;
 	int cellSize_;
     //@}
 };

@@ -44,6 +44,7 @@ public:
     MOCK_METHOD( Deserialize, 2 );
     MOCK_METHOD( Serialize, 1 );
     MOCK_METHOD( OnUpdate, 1 );
+    MOCK_METHOD( OnRequest, 1 );
     MOCK_METHOD( SendCreation, 0 );
     MOCK_METHOD( SendDestruction, 0 );
     MOCK_METHOD( SendFullState, 0 );

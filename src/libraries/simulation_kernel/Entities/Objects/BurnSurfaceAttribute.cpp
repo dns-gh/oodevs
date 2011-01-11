@@ -16,8 +16,14 @@
 #include "MIL_BurningCells.h"
 #include "MIL_AgentServer.h"
 #include "protocol/Protocol.h"
+#include "Network/NET_AsnException.h"
+#include "Tools/MIL_Tools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BurnSurfaceAttribute )
+
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute > )
+
 
 // -----------------------------------------------------------------------------
 // Name: BurnSurfaceAttribute constructor
@@ -67,10 +73,10 @@ BurnSurfaceAttribute& BurnSurfaceAttribute::operator=( const BurnSurfaceAttribut
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int version )
 {
-    std::string className;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-	if( pObject_ )
-		burningCells_.load( ar, *pObject_, version );
+    unsigned int objectId;
+    ar >> objectId;
+    burningCells_.load( ar, objectId, version );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,9 +85,13 @@ void BurnSurfaceAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int version ) const
 {
+    if( !pObject_ )
+        throw std::runtime_error( __FUNCTION__ ": cannot save unitialized attribute" );
+
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-	if( pObject_ )
-		burningCells_.save( ar, *pObject_, version );
+    unsigned int objectId = pObject_->GetID();
+    ar << objectId;
+	burningCells_.save( ar, *pObject_, version );
 }
 
 
@@ -169,4 +179,17 @@ bool BurnSurfaceAttribute::Update( const BurnSurfaceAttribute& rhs )
         pObject_ = rhs.pObject_;
     }
     return NeedUpdate( eOnUpdate );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BurnSurfaceAttribute::OnRequest
+// Created: BCI 2011-01-10
+// -----------------------------------------------------------------------------
+void BurnSurfaceAttribute::OnRequest( const sword::MissionParameter_Value& parameters )
+{
+    if( parameters.list_size() > 2 )
+    {
+        burningCells_.OnRequest( parameters.list( 1 ).areal(), parameters.list( 2 ).areal() );
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    }
 }

@@ -76,7 +76,6 @@ void BurnCapacity::Instanciate( MIL_Object_ABC& object ) const
     BurnCapacity* pBurnCapacity = new BurnCapacity( *this );
     object.AddCapacity( pBurnCapacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( pBurnCapacity ) );
-    object.SetAttribute< FireAttribute, FireAttribute >( FireAttribute() );
 }
 
 // -----------------------------------------------------------------------------

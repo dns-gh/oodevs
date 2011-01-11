@@ -17,6 +17,7 @@
 #include "MIL_ObjectManipulator.h"
 #include "ConstructionAttribute.h"
 #include "MineAttribute.h"
+#include "BurnSurfaceAttribute.h"
 #include "BypassAttribute.h"
 #include "ObstacleAttribute.h"
 #include "CrossingSiteAttribute.h"
@@ -236,6 +237,30 @@ sword::ObjectMagicActionAck_ErrorCode Object::OnUpdate( const google::protobuf::
             break;
         case sword::ObjectMagicAction_Attribute_medical_treatment:
             GetAttribute< MedicalTreatmentAttribute >().OnUpdate( attribute );
+            break;
+        default:
+            break;
+        }
+    }
+    return sword::ObjectMagicActionAck::no_error;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::OnRequest
+// Created: BCI 2011-01-10
+// -----------------------------------------------------------------------------
+sword::ObjectMagicActionAck_ErrorCode Object::OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
+{
+    for( int i = 0; i < attributes.size(); ++i )
+    {
+        const sword::MissionParameter_Value& attribute = attributes.Get( i );
+        if( attribute.list_size() == 0 ) // it should be a list of lists
+            return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
+        const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
+        switch( actionId )
+        {
+        case sword::ObjectMagicAction_Attribute_burn_surface:
+            GetAttribute< BurnSurfaceAttribute >().OnRequest( attribute );
             break;
         default:
             break;

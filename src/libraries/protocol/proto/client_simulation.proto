@@ -287,6 +287,9 @@ message ObjectMagicAction {
         /** @brief A destroy object magic action.
         */
         destroy = 2;
+        /** @brief A request (ie retrieve specific data) object magic action
+        */
+        request = 3;
     }
     /** @enum Attribute
         @brief The type of object.
@@ -315,6 +318,7 @@ message ObjectMagicAction {
         nbc_agent          = 14;
         effect_delay       = 15;
         flood              = 16;
+        burn_surface       = 17;
     }
     /** @property object
         @brief The object identifier

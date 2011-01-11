@@ -19,12 +19,16 @@ class MIL_PopulationElement_ABC;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 class MT_Vector2D;
+class MIL_EntityManager;
 
 namespace sword
 {
 	enum EnumBurningCellPhase;
 	class ObjectAttributes;
 }
+
+class MIL_BurningCell;
+typedef geometry::Point2< int > MIL_BurningCellOrigin;
 
 // =============================================================================
 /** @class  MIL_BurningCells
@@ -47,11 +51,15 @@ public:
 	void Update( MIL_Object_ABC& object, unsigned int time );
     double ComputePathCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     bool IsTrafficable( const MT_Vector2D& from, const MT_Vector2D& to ) const;
+    void OnRequest( double x, double y );
     //@}
 
 	//! @name CheckPoints
     //@{
-    void load( MIL_CheckPointInArchive&, MIL_Object_ABC&, const unsigned int );
+    void load( MIL_CheckPointInArchive& );
+    void save( MIL_CheckPointOutArchive& ) const;
+    void finalizeLoad( MIL_EntityManager& entityManager );
+    void load( MIL_CheckPointInArchive&, unsigned int objectId, const unsigned int );
     void save( MIL_CheckPointOutArchive&, MIL_Object_ABC&, const unsigned int ) const;
     //@}
 
@@ -71,61 +79,35 @@ public:
 private:
 	//! @name Types
     //@{
-	typedef geometry::Point2< int > BurningCellOrigin;
-
-	// $$$$ BCI 2011-01-04: todo faire plusieurs classes en fonction des phases...
-	class BurningCell : private boost::noncopyable
-	{
-	public:
-		explicit BurningCell( const BurningCellOrigin& origin )
-			: origin_( origin )
-		{
-			//NOTHING
-		}
-
-		const BurningCellOrigin origin_;
-		geometry::Point2d center_;
-		MIL_Object_ABC* pObject_;
-		sword::EnumBurningCellPhase phase_;
-		int ignitionThreshold_;
-		int maxCombustionEnergy_;
-		int ignitionEnergy_;
-		int combustionEnergySum_;
-		int combustionEnergyCount_;
-		int currentHeat_;
-		int currentCombustionEnergy_;
-		unsigned int lastUpdateTime_;
-		bool bUpdated_;
-	};
-
 	enum SendStateMode
 	{
 		eUpdate,
 		eFull
 	};
+    //@}
     
 	//! @name Helpers
     //@{
-	static BurningCellOrigin ComputeCellOriginFromPoint( double x, double y );
-	BurningCell* FindCell( const BurningCellOrigin& coords ) const;
-    void StartBurn( const BurningCellOrigin& cellOrigin, MIL_Object_ABC& object );
-	void InitCell( const BurningCellOrigin& cellOrigin, MIL_Object_ABC& object, sword::EnumBurningCellPhase phase );
-	void UpdatePreIgnition( BurningCell& cell, unsigned int time );
-	void PropagateIgnition( const BurningCellOrigin& fromOrigin, BurningCell& to, unsigned int timeElapsed );
-	void UpdateCombustion( BurningCell& cell );
-	void UpdateDecline( BurningCell& cell );
+	static MIL_BurningCellOrigin ComputeCellOriginFromPoint( double x, double y );
+	MIL_BurningCell* FindCell( const MIL_BurningCellOrigin& coords ) const;
+    void StartBurn( const MIL_BurningCellOrigin& cellOrigin, MIL_Object_ABC& object );
+    void InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Object_ABC& object, sword::EnumBurningCellPhase phase );
+	void UpdatePreIgnition( MIL_BurningCell& cell, unsigned int time );
+	void PropagateIgnition( const MIL_BurningCellOrigin& fromOrigin, MIL_BurningCell& to, unsigned int timeElapsed );
+	void UpdateCombustion( MIL_BurningCell& cell );
+	void UpdateDecline( MIL_BurningCell& cell );
 
 
-	template< SendStateMode mode > void SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& object ) const;
+	void SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& object, MIL_BurningCells::SendStateMode mode ) const;
 	//@}
 
 private:
-	typedef std::map< BurningCellOrigin, BurningCell* > BurningCellsByCoordinatesMap;
+	typedef std::map< MIL_BurningCellOrigin, MIL_BurningCell* > BurningCellsByCoordinatesMap;
+	typedef std::vector< MIL_BurningCell* > BurningCellsVector;
+	typedef std::map< unsigned int/*object id*/, BurningCellsVector > BurningCellsByObjectsMap;
 	BurningCellsByCoordinatesMap burningCellsByCoordinates_;
-	typedef std::vector< BurningCell* > BurningCellsVector;
-	typedef std::map< MIL_Object_ABC*, BurningCellsVector > BurningCellsByObjectsMap;
 	BurningCellsByObjectsMap burningCellsByObjects_;
     std::size_t lastCellIndexIncludedInLocalization_;
 };
 
-#endif // __MIL_BurningCells_h_
+#endif // __MIL_MIL_BurningCells_h_

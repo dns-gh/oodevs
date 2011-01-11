@@ -1246,8 +1246,7 @@ namespace
         if( from.has_burn() )
         {
             to->mutable_burn()->set_current_heat( from.burn().current_heat() );
-            to->mutable_burn()->set_combustion_energy_sum( from.burn().combustion_energy_sum() );
-            to->mutable_burn()->set_combustion_energy_count( from.burn().combustion_energy_count() );
+            to->mutable_burn()->set_combustion_energy( from.burn().combustion_energy() );
         }
         if( from.has_medical_treatment() )
         {

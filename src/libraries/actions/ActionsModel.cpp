@@ -130,7 +130,18 @@ Action_ABC* ActionsModel::CreateCrowdCreationAction( const kernel::PopulationTyp
     Register( action->GetId(), *action );
     return action;
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateObjectMagicAction
+// Created: BCI 2011-01-10
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateObjectMagicAction( const std::string& magicAction, unsigned long targetId )
+{
+    Action_ABC* action = factory_.CreateObjectMagicAction( magicAction, targetId );
+    Register( action->GetId(), *action );
+    return action;
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11

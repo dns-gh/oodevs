@@ -97,7 +97,6 @@ void BurnSurfaceCapacity::Instanciate( MIL_Object_ABC& object ) const
     BurnSurfaceCapacity* pBurnSurfaceCapacity = new BurnSurfaceCapacity( *this );
     object.AddCapacity( pBurnSurfaceCapacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( pBurnSurfaceCapacity ) );
-    object.SetAttribute< FireAttribute, FireAttribute >( FireAttribute() );
     object.SetAttribute< BurnSurfaceAttribute, BurnSurfaceAttribute >( BurnSurfaceAttribute( &object ) );
 }
 

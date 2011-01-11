@@ -19,8 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 BurnAttribute::BurnAttribute( const sword::ObjectAttributes& asnMsg )
 : currentHeat_( asnMsg.burn().current_heat() )
-, combustionEnergySum_( asnMsg.burn().combustion_energy_sum() )
-, combustionEnergyCount_( asnMsg.burn().combustion_energy_count() )
+, combustionEnergy_( asnMsg.burn().combustion_energy() )
 {
     // NOTHING
 }
@@ -43,8 +42,7 @@ void BurnAttribute::Update( const sword::ObjectAttributes& asnMsg )
     if( asnMsg.has_burn() )
     {
         currentHeat_ = asnMsg.burn().current_heat();
-        combustionEnergySum_ = asnMsg.burn().combustion_energy_sum();
-        combustionEnergyCount_ = asnMsg.burn().combustion_energy_count();
+        combustionEnergy_ = asnMsg.burn().combustion_energy();
     }
 }
 
@@ -55,6 +53,5 @@ void BurnAttribute::Update( const sword::ObjectAttributes& asnMsg )
 void BurnAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_burn()->set_current_heat( currentHeat_ );
-    asnMsg.mutable_burn()->set_combustion_energy_sum( combustionEnergySum_ );
-    asnMsg.mutable_burn()->set_combustion_energy_count( combustionEnergyCount_ );
+    asnMsg.mutable_burn()->set_combustion_energy( combustionEnergy_ );
 }

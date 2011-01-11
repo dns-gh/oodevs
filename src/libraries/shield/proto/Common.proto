@@ -784,8 +784,7 @@ message ObjectAttributeFire {
 
 message ObjectAttributeBurn {
    required int32 current_heat = 1;
-   required int32 combustion_energy_sum = 2;
-   required int32 combustion_energy_count = 3;
+   required int32 combustion_energy = 2;
 }
 
 message MedicalTreatmentBedCapacity {

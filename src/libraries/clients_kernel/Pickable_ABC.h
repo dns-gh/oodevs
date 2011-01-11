@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-	virtual void TerrainPicked( const geometry::Point2f& /*terrainCoordinates*/, QStringList& outputInfos ) {}
+    virtual void TerrainPicked( const geometry::Point2f& /*terrainCoordinates*/, QStringList& outputInfos ) = 0;
     //@}
 };
 

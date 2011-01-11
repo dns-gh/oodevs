@@ -18,10 +18,13 @@
 #include "meteo/PHY_Meteo.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/Protocol.h"
+#include "CheckPoints/MIL_CheckPointInArchive.h"
+#include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "Entities/MIL_EntityManager.h"
 #include <pathfind/TerrainData.h>
 #include <boost/geometry/geometry.hpp>
 #include <boost/geometry/geometries/cartesian2d.hpp>
@@ -29,6 +32,63 @@
 #include <boost/geometry/multi/multi.hpp>
 
 BOOST_GEOMETRY_REGISTER_POINT_2D(MT_Vector2D, double, cs::cartesian, rX_, rY_)
+
+// $$$$ BCI 2011-01-04: todo faire plusieurs classes en fonction des phases...
+class MIL_BurningCell : private boost::noncopyable
+{
+public:
+    void serialize( MIL_CheckPointOutArchive& ar, unsigned int )
+    {
+        ar << origin_.X()
+           << origin_.Y()
+           << phase_
+           << ignitionThreshold_
+           << maxCombustionEnergy_
+           << ignitionEnergy_
+           << combustionEnergySum_
+           << combustionEnergyCount_
+           << currentHeat_
+           << currentCombustionEnergy_
+           << lastUpdateTime_;
+    }
+    void serialize( MIL_CheckPointInArchive& ar, unsigned int )
+    {
+        int x, y;
+        ar >> x
+           >> y
+           >> phase_
+           >> ignitionThreshold_
+           >> maxCombustionEnergy_
+           >> ignitionEnergy_
+           >> combustionEnergySum_
+           >> combustionEnergyCount_
+           >> currentHeat_
+           >> currentCombustionEnergy_
+           >> lastUpdateTime_;
+
+        origin_.Set( x, y );
+        double radius = MIL_FireClass::GetCellSize() / 2.;
+        center_ = geometry::Point2d( x + radius, y + radius );
+        bUpdated_ = false;
+        bRequested_ = false;
+    }
+
+    MIL_BurningCellOrigin origin_;
+    geometry::Point2d center_;
+    MIL_Object_ABC* pObject_;
+    sword::EnumBurningCellPhase phase_;
+    int ignitionThreshold_;
+    int maxCombustionEnergy_;
+    int ignitionEnergy_;
+    int combustionEnergySum_;
+    int combustionEnergyCount_;
+    int currentHeat_;
+    int currentCombustionEnergy_;
+    unsigned int lastUpdateTime_;
+    bool bUpdated_;
+    bool bRequested_;
+};
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BurningCells constructor
@@ -54,7 +114,7 @@ MIL_BurningCells::~MIL_BurningCells()
 // Name: MIL_BurningCells::FindCell
 // Created: BCI 2010-12-21
 // -----------------------------------------------------------------------------
-MIL_BurningCells::BurningCell* MIL_BurningCells::FindCell( const BurningCellOrigin& coords ) const
+MIL_BurningCell* MIL_BurningCells::FindCell( const MIL_BurningCellOrigin& coords ) const
 {
 	BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( coords );
 	if( it != burningCellsByCoordinates_.end() )
@@ -67,7 +127,7 @@ MIL_BurningCells::BurningCell* MIL_BurningCells::FindCell( const BurningCellOrig
 // Name: MIL_BurningCells::ComputeCellOriginFromPoint
 // Created: BCI 2010-12-22
 // -----------------------------------------------------------------------------
-MIL_BurningCells::BurningCellOrigin MIL_BurningCells::ComputeCellOriginFromPoint( double x, double y )
+MIL_BurningCellOrigin MIL_BurningCells::ComputeCellOriginFromPoint( double x, double y )
 {
     //Compute cell aligned coordinates
 	int alignedX = (int) x;
@@ -75,7 +135,7 @@ MIL_BurningCells::BurningCellOrigin MIL_BurningCells::ComputeCellOriginFromPoint
     int cellSize = MIL_FireClass::GetCellSize();
 	alignedX = alignedX - alignedX % cellSize;
     alignedY = alignedY - alignedY % cellSize;
-	return BurningCellOrigin( alignedX, alignedY );
+	return MIL_BurningCellOrigin( alignedX, alignedY );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,40 +150,40 @@ void MIL_BurningCells::StartBurn( MIL_Object_ABC& object )
 	double maxX = boundingBox.GetRight();
 	double maxY = boundingBox.GetTop();
 	int cellSize = MIL_FireClass::GetCellSize();
-	BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( minX, minY );
-	BurningCellOrigin maxOrigin = ComputeCellOriginFromPoint( maxX, maxY );
+	MIL_BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( minX, minY );
+	MIL_BurningCellOrigin maxOrigin = ComputeCellOriginFromPoint( maxX, maxY );
 	for( int x = minOrigin.X(); x < maxOrigin.X(); x += cellSize )
 		for( int y = minOrigin.Y(); y < maxOrigin.Y(); y += cellSize )
-			StartBurn( BurningCellOrigin( x, y ), object );
+			StartBurn( MIL_BurningCellOrigin( x, y ), object );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BurningCells::StartBurn
 // Created: BCI 2010-12-20
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::StartBurn( const BurningCellOrigin& cellOrigin, MIL_Object_ABC& object )
+void MIL_BurningCells::StartBurn( const MIL_BurningCellOrigin& cellOrigin, MIL_Object_ABC& object )
 {
 	int cellSize = MIL_FireClass::GetCellSize();
 
 	//init cell and his neighbours
 	InitCell( cellOrigin, object, sword::combustion );
-	InitCell( BurningCellOrigin( cellOrigin.X() - cellSize, cellOrigin.Y() - cellSize ), object, sword::pre_ignition );
-	InitCell( BurningCellOrigin( cellOrigin.X() + cellSize, cellOrigin.Y() + cellSize ), object, sword::pre_ignition );
-	InitCell( BurningCellOrigin( cellOrigin.X() - cellSize, cellOrigin.Y() + cellSize ), object, sword::pre_ignition );
-	InitCell( BurningCellOrigin( cellOrigin.X() + cellSize, cellOrigin.Y() - cellSize ), object, sword::pre_ignition );
-	InitCell( BurningCellOrigin( cellOrigin.X(), cellOrigin.Y() - cellSize ), object, sword::pre_ignition );
-	InitCell( BurningCellOrigin( cellOrigin.X(), cellOrigin.Y() + cellSize ), object, sword::pre_ignition );
-	InitCell( BurningCellOrigin( cellOrigin.X() - cellSize, cellOrigin.Y() ), object, sword::pre_ignition );
-	InitCell( BurningCellOrigin( cellOrigin.X() + cellSize, cellOrigin.Y() ), object, sword::pre_ignition );
+	InitCell( MIL_BurningCellOrigin( cellOrigin.X() - cellSize, cellOrigin.Y() - cellSize ), object, sword::pre_ignition );
+	InitCell( MIL_BurningCellOrigin( cellOrigin.X() + cellSize, cellOrigin.Y() + cellSize ), object, sword::pre_ignition );
+	InitCell( MIL_BurningCellOrigin( cellOrigin.X() - cellSize, cellOrigin.Y() + cellSize ), object, sword::pre_ignition );
+	InitCell( MIL_BurningCellOrigin( cellOrigin.X() + cellSize, cellOrigin.Y() - cellSize ), object, sword::pre_ignition );
+	InitCell( MIL_BurningCellOrigin( cellOrigin.X(), cellOrigin.Y() - cellSize ), object, sword::pre_ignition );
+	InitCell( MIL_BurningCellOrigin( cellOrigin.X(), cellOrigin.Y() + cellSize ), object, sword::pre_ignition );
+	InitCell( MIL_BurningCellOrigin( cellOrigin.X() - cellSize, cellOrigin.Y() ), object, sword::pre_ignition );
+	InitCell( MIL_BurningCellOrigin( cellOrigin.X() + cellSize, cellOrigin.Y() ), object, sword::pre_ignition );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BurningCells::InitCell
 // Created: BCI 2010-12-20
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::InitCell( const BurningCellOrigin& cellOrigin, MIL_Object_ABC& object, sword::EnumBurningCellPhase phase )
+void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Object_ABC& object, sword::EnumBurningCellPhase phase )
 {
-	BurningCell* pCell = FindCell( cellOrigin );
+	MIL_BurningCell* pCell = FindCell( cellOrigin );
 	if( pCell )
 	{
 		//si la cellule existe déjà, on ne peut que la faire brûler si elle ne brûle pas encore
@@ -137,9 +197,10 @@ void MIL_BurningCells::InitCell( const BurningCellOrigin& cellOrigin, MIL_Object
 			return;
 
 		//nouvelle cellule
-		pCell = new BurningCell( cellOrigin );
+		pCell = new MIL_BurningCell();
+        pCell->origin_ = cellOrigin;
 		burningCellsByCoordinates_[ cellOrigin ] = pCell;
-		burningCellsByObjects_[ &object ].push_back( pCell );
+        burningCellsByObjects_[ object.GetID() ].push_back( pCell );
 	}
 
 	//initialise la cellule
@@ -156,6 +217,7 @@ void MIL_BurningCells::InitCell( const BurningCellOrigin& cellOrigin, MIL_Object
 	pCell->currentCombustionEnergy_ = 0;
 	pCell->lastUpdateTime_ = std::numeric_limits< unsigned int >::max();
 	pCell->bUpdated_ = true;
+    pCell->bRequested_ = false;
 	object.GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
 }
 
@@ -166,12 +228,12 @@ void MIL_BurningCells::InitCell( const BurningCellOrigin& cellOrigin, MIL_Object
 void MIL_BurningCells::Update( MIL_Object_ABC& object, unsigned int time )
 {
 	//retrieve cells to update (copy vector to avoid infinite loop)
-	BurningCellsVector cellsToUpdate = burningCellsByObjects_[ &object ];
+	BurningCellsVector cellsToUpdate = burningCellsByObjects_[ object.GetID() ];
 
 	//update cells
 	for( BurningCellsVector::iterator it = cellsToUpdate.begin(); it != cellsToUpdate.end(); ++it )
 	{
-		BurningCell& cell = **it;
+		MIL_BurningCell& cell = **it;
 		if( cell.lastUpdateTime_ == std::numeric_limits< unsigned int >::max() )
 			cell.lastUpdateTime_ = time;
 
@@ -195,12 +257,12 @@ void MIL_BurningCells::Update( MIL_Object_ABC& object, unsigned int time )
     typedef bg::multi_polygon< polygon_2d > multi_polygon_2d;
     typedef bg::box< MT_Vector2D > box_2d;
     int cellSize = MIL_FireClass::GetCellSize();
-    const BurningCellsVector& cells = burningCellsByObjects_[ &object ];
+    const BurningCellsVector& cells = burningCellsByObjects_[ object.GetID() ];
     polygon_2d poly;
     bg::assign( poly, object.GetLocalisation().GetPoints() );
     for( ; lastCellIndexIncludedInLocalization_<cells.size(); ++lastCellIndexIncludedInLocalization_ )
     {
-        BurningCell& cell = *cells[ lastCellIndexIncludedInLocalization_ ];
+        MIL_BurningCell& cell = *cells[ lastCellIndexIncludedInLocalization_ ];
         box_2d cellBox( MT_Vector2D( cell.origin_.X(), cell.origin_.Y() ), MT_Vector2D( cell.origin_.X() + cellSize, cell.origin_.Y() + cellSize ) );
         multi_polygon_2d ps;
         bg::union_inserter< polygon_2d >( cellBox, poly, std::back_inserter( ps ) );
@@ -216,35 +278,29 @@ void MIL_BurningCells::Update( MIL_Object_ABC& object, unsigned int time )
 // Name: MIL_BurningCells::UpdatePreIgnition
 // Created: BCI 2010-12-20
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::UpdatePreIgnition( BurningCell& cell, unsigned int time )
+void MIL_BurningCells::UpdatePreIgnition( MIL_BurningCell& cell, unsigned int time )
 {
 	int cellSize = MIL_FireClass::GetCellSize();
 	unsigned int timeElapsed = time - cell.lastUpdateTime_;
-    int oldIgnitionEnergy_ = cell.ignitionEnergy_;
-	PropagateIgnition( BurningCellOrigin( cell.origin_.X() - cellSize, cell.origin_.Y() - cellSize ), cell, timeElapsed );
-	PropagateIgnition( BurningCellOrigin( cell.origin_.X() + cellSize, cell.origin_.Y() + cellSize ), cell, timeElapsed );
-	PropagateIgnition( BurningCellOrigin( cell.origin_.X() - cellSize, cell.origin_.Y() + cellSize ), cell, timeElapsed );
-	PropagateIgnition( BurningCellOrigin( cell.origin_.X() + cellSize, cell.origin_.Y() - cellSize ), cell, timeElapsed );
-	PropagateIgnition( BurningCellOrigin( cell.origin_.X(), cell.origin_.Y() + cellSize ), cell, timeElapsed );
-	PropagateIgnition( BurningCellOrigin( cell.origin_.X(), cell.origin_.Y() - cellSize ), cell, timeElapsed );
-	PropagateIgnition( BurningCellOrigin( cell.origin_.X() - cellSize, cell.origin_.Y() ), cell, timeElapsed );
-	PropagateIgnition( BurningCellOrigin( cell.origin_.X() + cellSize, cell.origin_.Y() ), cell, timeElapsed );
+    PropagateIgnition( MIL_BurningCellOrigin( cell.origin_.X() - cellSize, cell.origin_.Y() - cellSize ), cell, timeElapsed );
+	PropagateIgnition( MIL_BurningCellOrigin( cell.origin_.X() + cellSize, cell.origin_.Y() + cellSize ), cell, timeElapsed );
+	PropagateIgnition( MIL_BurningCellOrigin( cell.origin_.X() - cellSize, cell.origin_.Y() + cellSize ), cell, timeElapsed );
+	PropagateIgnition( MIL_BurningCellOrigin( cell.origin_.X() + cellSize, cell.origin_.Y() - cellSize ), cell, timeElapsed );
+	PropagateIgnition( MIL_BurningCellOrigin( cell.origin_.X(), cell.origin_.Y() + cellSize ), cell, timeElapsed );
+	PropagateIgnition( MIL_BurningCellOrigin( cell.origin_.X(), cell.origin_.Y() - cellSize ), cell, timeElapsed );
+	PropagateIgnition( MIL_BurningCellOrigin( cell.origin_.X() - cellSize, cell.origin_.Y() ), cell, timeElapsed );
+	PropagateIgnition( MIL_BurningCellOrigin( cell.origin_.X() + cellSize, cell.origin_.Y() ), cell, timeElapsed );
 	if( cell.ignitionEnergy_ >= cell.ignitionThreshold_ )
 		StartBurn( cell.origin_, *cell.pObject_ );
-    else if( cell.ignitionEnergy_ != oldIgnitionEnergy_ )
-    {
-        cell.bUpdated_ = true;
-        cell.pObject_->GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BurningCells::PropagateIgnition
 // Created: BCI 2010-12-20
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::PropagateIgnition( const BurningCellOrigin& fromOrigin, BurningCell& cellTo, unsigned int timeElapsed )
+void MIL_BurningCells::PropagateIgnition( const MIL_BurningCellOrigin& fromOrigin, MIL_BurningCell& cellTo, unsigned int timeElapsed )
 {
-	if( const BurningCell* pCellFrom = FindCell( fromOrigin ) )
+	if( const MIL_BurningCell* pCellFrom = FindCell( fromOrigin ) )
 	{
 		geometry::Vector2d direction( pCellFrom->center_, cellTo.center_ );
 		const weather::PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( MT_Vector2D( pCellFrom->center_.X(), pCellFrom->center_.Y() ) );
@@ -270,7 +326,7 @@ namespace
 // Name: MIL_BurningCells::UpdateCombustion
 // Created: BCI 2010-12-20
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::UpdateCombustion( BurningCell& cell )
+void MIL_BurningCells::UpdateCombustion( MIL_BurningCell& cell )
 {
     if( cell.currentCombustionEnergy_ < cell.maxCombustionEnergy_ )
     {
@@ -281,45 +337,104 @@ void MIL_BurningCells::UpdateCombustion( BurningCell& cell )
         cell.currentCombustionEnergy_ = cell.combustionEnergySum_ / cell.combustionEnergyCount_;
     }
     else
+    {
 		cell.phase_ = sword::decline;
+        cell.bUpdated_ = true;
+        cell.pObject_->GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
+    }
 
 	if( cell.currentHeat_ == 0 )
-		cell.phase_ = sword::extinguished;
-
-    cell.bUpdated_ = true;
-    cell.pObject_->GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
+    {
+        cell.phase_ = sword::extinguished;
+        cell.bUpdated_ = true;
+        cell.pObject_->GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BurningCells::UpdateCombustion
 // Created: BCI 2010-12-20
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::UpdateDecline( BurningCell& cell )
+void MIL_BurningCells::UpdateDecline( MIL_BurningCell& cell )
 {
 	FireAttribute& fireAttribute = cell.pObject_->GetAttribute< FireAttribute >();
 	cell.currentHeat_ = bound( 0, cell.currentHeat_ - fireAttribute.GetDecreaseRate() - fireAttribute.GetWeatherDecreateRate( *cell.pObject_ ), fireAttribute.GetMaxHeat() );
     if( cell.currentHeat_ == 0 )
+    {
         cell.phase_ = sword::extinguished;
+        cell.bUpdated_ = true;
+        cell.pObject_->GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
+    }    
+}
 
-    cell.bUpdated_ = true;
-    cell.pObject_->GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::load
+// Created: BCI 2011-01-07
+// -----------------------------------------------------------------------------
+void MIL_BurningCells::load( MIL_CheckPointInArchive& ar )
+{
+    ar >> lastCellIndexIncludedInLocalization_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::save
+// Created: BCI 2011-01-07
+// -----------------------------------------------------------------------------
+void MIL_BurningCells::save( MIL_CheckPointOutArchive& ar ) const
+{
+    ar << lastCellIndexIncludedInLocalization_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::finalizeLoad
+// Created: BCI 2011-01-07
+// -----------------------------------------------------------------------------
+void MIL_BurningCells::finalizeLoad( MIL_EntityManager& entityManager )
+{
+    for( BurningCellsByObjectsMap::iterator it = burningCellsByObjects_.begin(); it != burningCellsByObjects_.end(); ++it )
+    {
+        MIL_Object_ABC* pObject = entityManager.FindObject( it->first );
+        if( !pObject )
+            throw std::runtime_error( __FUNCTION__ ": cannot find object with id " + boost::lexical_cast< std::string >( it->first ) );
+
+        BurningCellsVector& cells = it->second;
+        for( BurningCellsVector::iterator itCell = cells.begin(); itCell != cells.end(); ++itCell )
+            (*itCell)->pObject_ = pObject;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BurningCells::load
 // Created: BCI 2010-12-21
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::load( MIL_CheckPointInArchive&, MIL_Object_ABC&, const unsigned int )
+void MIL_BurningCells::load( MIL_CheckPointInArchive& ar, unsigned int objectId, const unsigned int )
 {
-	// $$$$ BCI 2010-12-21: todo
+    BurningCellsVector& cells = burningCellsByObjects_[ objectId ];
+    ar >> cells;
+    for( BurningCellsVector::iterator it = cells.begin(); it != cells.end(); ++it )
+    {
+        MIL_BurningCell& cell = **it;
+        burningCellsByCoordinates_[ cell.origin_ ] = &cell;
+    }
+
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_BurningCells::save
 // Created: BCI 2010-12-21
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::save( MIL_CheckPointOutArchive&, MIL_Object_ABC&, const unsigned int ) const
+void MIL_BurningCells::save( MIL_CheckPointOutArchive& ar, MIL_Object_ABC& object, const unsigned int ) const
 {
-	// $$$$ BCI 2010-12-21: todo
+    BurningCellsByObjectsMap::const_iterator it = burningCellsByObjects_.find( object.GetID() );
+    if( it != burningCellsByObjects_.end() )
+    {
+        const BurningCellsVector& cells = it->second;
+        ar << cells;
+    }
+    else
+    {
+        BurningCellsVector emptyVector;
+        ar << emptyVector;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -328,7 +443,7 @@ void MIL_BurningCells::save( MIL_CheckPointOutArchive&, MIL_Object_ABC&, const u
 // -----------------------------------------------------------------------------
 void MIL_BurningCells::SendFullState( sword::ObjectAttributes& asn, MIL_Object_ABC& object ) const
 {
-	SendState< eFull >( asn, object );
+	SendState( asn, object, eFull );
 }
 
 // -----------------------------------------------------------------------------
@@ -337,25 +452,24 @@ void MIL_BurningCells::SendFullState( sword::ObjectAttributes& asn, MIL_Object_A
 // -----------------------------------------------------------------------------
 void MIL_BurningCells::SendUpdate( sword::ObjectAttributes& asn, MIL_Object_ABC& object ) const
 {
-	SendState< eUpdate >( asn, object );
+	SendState( asn, object, eUpdate );
 }
 
 // -----------------------------------------------------------------------------
 // Name: template< bool bUpdate > void MIL_BurningCells::SendState
 // Created: BCI 2010-12-22
 // -----------------------------------------------------------------------------
-template< MIL_BurningCells::SendStateMode mode >
-void MIL_BurningCells::SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& object ) const
+void MIL_BurningCells::SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& object, MIL_BurningCells::SendStateMode mode ) const
 {
 	sword::ObjectAttributeBurnSurface& asnBurnSurface = *asn.mutable_burn_surface();
 	asnBurnSurface.set_cell_size( object.GetAttribute< FireAttribute >().GetCellSize() );
-	BurningCellsByObjectsMap::const_iterator itCells = burningCellsByObjects_.find( &object );
+	BurningCellsByObjectsMap::const_iterator itCells = burningCellsByObjects_.find( object.GetID() );
 	if( itCells != burningCellsByObjects_.end() )
 	{
 		const BurningCellsVector& cells = itCells->second;
 		for( BurningCellsVector::const_iterator it = cells.begin(); it != cells.end(); ++it )
 		{
-			BurningCell& cell = **it;
+			MIL_BurningCell& cell = **it;
 			if( mode == eUpdate )
 			{
 				if( !cell.bUpdated_ )
@@ -366,28 +480,32 @@ void MIL_BurningCells::SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& 
 			asnCell.set_origin_x( cell.origin_.X() );
 			asnCell.set_origin_y( cell.origin_.Y() );
 			asnCell.set_phase( cell.phase_ );
-			switch( cell.phase_ )
-			{
-			case sword::pre_ignition:
-				{
-					asnCell.mutable_pre_ignition()->set_ignition_energy( cell.ignitionEnergy_ );
-					asnCell.mutable_pre_ignition()->set_ignition_threshold( cell.ignitionThreshold_ );
-					break;
-				}
-			case sword::combustion:
-				{
-					asnCell.mutable_combustion()->set_combustion_energy_count( cell.combustionEnergyCount_ );
-					asnCell.mutable_combustion()->set_combustion_energy_sum( cell.combustionEnergySum_ );
-					asnCell.mutable_combustion()->set_current_heat( cell.currentHeat_ );
-					asnCell.mutable_combustion()->set_max_combustion_energy( cell.maxCombustionEnergy_ );
-					break;
-				}
-			case sword::decline:
-				{
-					asnCell.mutable_decline()->set_current_heat( cell.currentHeat_ );
-					break;
-				}
-			}
+
+            if( cell.bRequested_ )
+            {
+			    switch( cell.phase_ )
+			    {
+			    case sword::pre_ignition:
+				    {
+					    asnCell.mutable_pre_ignition()->set_ignition_energy( cell.ignitionEnergy_ );
+					    asnCell.mutable_pre_ignition()->set_ignition_threshold( cell.ignitionThreshold_ );
+					    break;
+				    }
+			    case sword::combustion:
+				    {
+                        asnCell.mutable_combustion()->set_combustion_energy( cell.combustionEnergyCount_ > 0 ? cell.combustionEnergySum_ / cell.combustionEnergyCount_ : 0 );
+					    asnCell.mutable_combustion()->set_current_heat( cell.currentHeat_ );
+					    asnCell.mutable_combustion()->set_max_combustion_energy( cell.maxCombustionEnergy_ );
+					    break;
+				    }
+			    case sword::decline:
+				    {
+					    asnCell.mutable_decline()->set_current_heat( cell.currentHeat_ );
+					    break;
+				    }
+			    }
+                cell.bRequested_ = true;
+            }
 		}
 	}
 }
@@ -422,13 +540,13 @@ bool MIL_BurningCells::IsTrafficable( const MT_Vector2D& from, const MT_Vector2D
 {
     const MT_Line line( from, to );
     int cellSize = MIL_FireClass::GetCellSize();
-    BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( std::min( from.rX_, to.rX_ ), std::min( from.rY_, to.rY_ ) );
-    BurningCellOrigin maxOrigin = ComputeCellOriginFromPoint( std::max( from.rX_, to.rX_ ), std::max( from.rY_, to.rY_ ) );
+    MIL_BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( std::min( from.rX_, to.rX_ ), std::min( from.rY_, to.rY_ ) );
+    MIL_BurningCellOrigin maxOrigin = ComputeCellOriginFromPoint( std::max( from.rX_, to.rX_ ), std::max( from.rY_, to.rY_ ) );
 	for( int x = minOrigin.X(); x <= maxOrigin.X(); x += cellSize )
     {
 		for( int y = minOrigin.Y(); y <= maxOrigin.Y(); y += cellSize )
         {
-            BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( BurningCellOrigin( x, y ) );
+            BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( MIL_BurningCellOrigin( x, y ) );
             if( it != burningCellsByCoordinates_.end() )
             {
                 if( it->second->phase_ == sword::combustion || it->second->phase_ == sword::decline )
@@ -466,13 +584,13 @@ void MIL_BurningCells::BurnPopulation( MIL_Object_ABC& object, MIL_PopulationEle
 	double maxX = boundingBox.GetRight();
 	double maxY = boundingBox.GetTop();
 	int cellSize = MIL_FireClass::GetCellSize();
-	BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( minX, minY );
-	BurningCellOrigin maxOrigin = ComputeCellOriginFromPoint( maxX, maxY );
+	MIL_BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( minX, minY );
+	MIL_BurningCellOrigin maxOrigin = ComputeCellOriginFromPoint( maxX, maxY );
 	for( int x = minOrigin.X(); x <= maxOrigin.X(); x += cellSize )
     {
 		for( int y = minOrigin.Y(); y <= maxOrigin.Y(); y += cellSize )
         {
-            BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( BurningCellOrigin( x, y ) );
+            BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( MIL_BurningCellOrigin( x, y ) );
             if( it != burningCellsByCoordinates_.end() )
             {
                 if( it->second->phase_ == sword::combustion || it->second->phase_ == sword::decline )
@@ -482,5 +600,22 @@ void MIL_BurningCells::BurnPopulation( MIL_Object_ABC& object, MIL_PopulationEle
                 }
             }
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::OnRequest
+// Created: BCI 2011-01-10
+// -----------------------------------------------------------------------------
+void MIL_BurningCells::OnRequest( double x, double y )
+{
+    MIL_BurningCellOrigin origin = ComputeCellOriginFromPoint( x, y );
+    BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( origin );
+    if( it != burningCellsByCoordinates_.end() )
+    {
+        MIL_BurningCell& cell = *it->second;
+        cell.bUpdated_ = true;
+        cell.bRequested_ = true;
+        cell.pObject_->GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
     }
 }

@@ -980,11 +980,11 @@
     </message>
     <message>
         <source>Combustion energy:</source>
-        <translation type="unfinished"></translation>
+        <translation>Energie de combustion:</translation>
     </message>
     <message>
         <source>Max combustion energy:</source>
-        <translation type="unfinished"></translation>
+        <translation>Energie de combustion maximale:</translation>
     </message>
     <message>
         <source>Flood</source>

@@ -55,11 +55,10 @@ FireAttribute::FireAttribute( const sword::MissionParameter_Value& attributes )
     : maxCombustionEnergy_( 0 )
     , pClass_   ( 0 )
 {
-    int todo = 0; // $$$$ BCI 2010-12-07: à revoir...
     pClass_ = MIL_FireClass::Find( attributes.list( 1 ).acharstr() );
     if( !pClass_ )
         throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );
-//    asn.fire.heat
+    maxCombustionEnergy_ = attributes.list( 2 ).quantity();
 }
 
 // -----------------------------------------------------------------------------
@@ -194,4 +193,29 @@ void FireAttribute::GetSurfaceFirePotentials( const TerrainData& terrainData, in
 	pClass_->GetSurfaceFirePotentials( terrainData, ignitionThreshold, maxCombustionEnergy );
 	if( maxCombustionEnergy > maxCombustionEnergy_ )
 		maxCombustionEnergy = maxCombustionEnergy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute constructor
+// Created: BCI 2011-01-07
+// -----------------------------------------------------------------------------
+FireAttribute::FireAttribute( const FireAttribute& other )
+: pClass_( other.pClass_ )
+, maxCombustionEnergy_( other.maxCombustionEnergy_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::operator=
+// Created: BCI 2011-01-07
+// -----------------------------------------------------------------------------
+FireAttribute& FireAttribute::operator=( const FireAttribute& other )
+{
+    if( this != &other )
+    {
+        pClass_ = other.pClass_;
+        maxCombustionEnergy_ = other.maxCombustionEnergy_;
+    }
+    return *this;
 }

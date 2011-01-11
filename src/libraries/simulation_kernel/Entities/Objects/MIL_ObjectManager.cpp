@@ -328,6 +328,18 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
                 nErrorCode = pObject->OnUpdate( params.elem( 0 ).value() );
         }
     }
+    else if( msg.type() == sword::ObjectMagicAction::request )
+    {
+        MIL_Object_ABC* pObject = Find( msg.object().id() );
+        if( !pObject )
+            nErrorCode = sword::ObjectMagicActionAck::error_invalid_object;
+        else
+        {
+            const sword::MissionParameters& params = msg.parameters();
+            if( params.elem_size() && params.elem( 0 ).value_size() && params.elem( 0 ).value().Get( 0 ).list_size() )
+                nErrorCode = pObject->OnRequest( params.elem( 0 ).value() );
+        }
+    }
     client::ObjectMagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );

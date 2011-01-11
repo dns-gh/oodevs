@@ -75,6 +75,7 @@ public:
     virtual void UpdateState();
 
     sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
+    sword::ObjectMagicActionAck_ErrorCode OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& params );
 
     virtual void SendCreation() const;
     virtual void SendDestruction() const;

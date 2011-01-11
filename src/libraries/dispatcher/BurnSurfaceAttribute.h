@@ -54,13 +54,17 @@ private:
 
 	struct BurningCell
 	{
+        BurningCell()
+            : bSendFullState_( false )
+        {
+        }
 		sword::EnumBurningCellPhase phase_;
 		int ignitionEnergy_;
 		int ignitionThreshold_;
-		int combustionEnergyCount_;
-		int combustionEnergySum_;
+		int combustionEnergy_;
 		int currentHeat_;
 		int maxCombustionEnergy_;
+        bool bSendFullState_;
 	};
 
     //! @name Data members

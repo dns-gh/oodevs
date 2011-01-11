@@ -263,6 +263,21 @@
     </message>
 </context>
 <context>
+    <name>InhabitantPanel</name>
+    <message>
+        <source>Colors</source>
+        <translation type="unfinished">Couleurs</translation>
+    </message>
+    <message>
+        <source>Change urban blocks color based on population density</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gradient map</source>
+        <translation type="unfinished">Dégradé</translation>
+    </message>
+</context>
+<context>
     <name>InputPropagationPrototype_ABC</name>
     <message>
         <source>Propagation</source>
@@ -799,17 +814,6 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Strength</source>
         <translation>Intensité</translation>
-    </message>
-</context>
-<context>
-    <name>gui::InhabitantPanel</name>
-    <message>
-        <source>Colors</source>
-        <translation>Couleurs</translation>
-    </message>
-    <message>
-        <source>Change urban blocks color based on population density</source>
-        <translation>Change la couleur des blocs urbain en fonction de la densité de population</translation>
     </message>
 </context>
 <context>

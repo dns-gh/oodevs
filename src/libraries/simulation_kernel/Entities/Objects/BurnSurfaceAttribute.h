@@ -61,6 +61,7 @@ public:
     //! @name Notifications
     //@{
 	void NotifyCellsUpdated();
+    void OnRequest( const sword::MissionParameter_Value& parameters );
 	//@}
 
     //! @name Operations

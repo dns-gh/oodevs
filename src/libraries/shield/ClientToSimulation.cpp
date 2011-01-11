@@ -195,7 +195,8 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgObjectMagicAction& f
     CONVERT_ID( object );
     CONVERT_ENUM_EXT( type, Type, ( MsgsClientToSim::MsgObjectMagicAction::create, sword::ObjectMagicAction::create )
                                   ( MsgsClientToSim::MsgObjectMagicAction::update, sword::ObjectMagicAction::update )
-                                  ( MsgsClientToSim::MsgObjectMagicAction::destroy, sword::ObjectMagicAction::destroy ) );
+                                  ( MsgsClientToSim::MsgObjectMagicAction::destroy, sword::ObjectMagicAction::destroy )
+                                  ( MsgsClientToSim::MsgObjectMagicAction::request, sword::ObjectMagicAction::request ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 

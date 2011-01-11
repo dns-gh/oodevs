@@ -35,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-	QStringList TerrainPick( const geometry::Point2f& terrainCoordinates );
+	virtual QStringList TerrainPick( const geometry::Point2f& terrainCoordinates );
     //@}
 private:
     //! @name Copy/Assignment

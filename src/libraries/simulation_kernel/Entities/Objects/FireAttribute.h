@@ -68,6 +68,12 @@ public:
     MIL_BurnEffectManipulator GetBurnEffect();
     //@}
 
+    //! @name Operations
+    //@{
+    FireAttribute( const FireAttribute& ); //!< Copy operator
+    FireAttribute& operator=( const FireAttribute& ); //!< Assignment operator
+    //@}
+
 private:
     //! @name Member data
     //@{

@@ -38,6 +38,7 @@ BurnSurfaceAttribute::~BurnSurfaceAttribute()
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
+    //burningCellsByCoordinates_.clear();
 	DoUpdate( asnMsg );
 }
 
@@ -54,29 +55,25 @@ void BurnSurfaceAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 		sword::ObjectAttributeBurnSurface::BurningCell& asnCell = *asnMsg.mutable_burn_surface()->add_burningcells();
 		asnCell.set_origin_x( it->first.X() );
 		asnCell.set_origin_y( it->first.Y() );
-		asnCell.set_phase( it->second.phase_ );
-		switch( cell.phase_ )
-		{
-		case sword::pre_ignition:
-			{
-				asnCell.mutable_pre_ignition()->set_ignition_energy( cell.ignitionEnergy_ );
-				asnCell.mutable_pre_ignition()->set_ignition_threshold( cell.ignitionThreshold_ );
-				break;
-			}
-		case sword::combustion:
-			{
-				asnCell.mutable_combustion()->set_combustion_energy_count( cell.combustionEnergyCount_ );
-				asnCell.mutable_combustion()->set_combustion_energy_sum( cell.combustionEnergySum_ );
-				asnCell.mutable_combustion()->set_current_heat( cell.currentHeat_ );
-				asnCell.mutable_combustion()->set_max_combustion_energy( cell.maxCombustionEnergy_ );
-				break;
-			}
-		case sword::decline:
-			{
-				asnCell.mutable_decline()->set_current_heat( cell.currentHeat_ );
-				break;
-			}
-		}
+        asnCell.set_phase( it->second.phase_ );
+        if( cell.bSendFullState_ )
+        {
+            switch( cell.phase_ )
+            {
+            case sword::pre_ignition:
+                asnCell.mutable_pre_ignition()->set_ignition_energy( cell.ignitionEnergy_ );
+                asnCell.mutable_pre_ignition()->set_ignition_threshold( cell.ignitionThreshold_ );
+                break;
+            case sword::combustion:
+                asnCell.mutable_combustion()->set_combustion_energy( cell.combustionEnergy_ );
+                asnCell.mutable_combustion()->set_current_heat( cell.currentHeat_ );
+                asnCell.mutable_combustion()->set_max_combustion_energy( cell.maxCombustionEnergy_ );
+                break;
+            case sword::decline:
+                asnCell.mutable_decline()->set_current_heat( cell.currentHeat_ );
+                break;
+            }
+        }
 	}
 }
 
@@ -96,18 +93,22 @@ void BurnSurfaceAttribute::DoUpdate( const sword::ObjectAttributes& asnMsg )
 			cell.phase_ = asnCell.phase();
 			if( asnCell.has_pre_ignition() )
 			{
+                cell.bSendFullState_ = true;
 				cell.ignitionEnergy_ = asnCell.pre_ignition().ignition_energy();
 				cell.ignitionThreshold_ = asnCell.pre_ignition().ignition_threshold();
 			}
 			if( asnCell.has_combustion() )
 			{
-				cell.combustionEnergyCount_ = asnCell.combustion().combustion_energy_count();
-				cell.combustionEnergySum_ = asnCell.combustion().combustion_energy_sum();
+                cell.bSendFullState_ = true;
+				cell.combustionEnergy_ = asnCell.combustion().combustion_energy();
 				cell.currentHeat_ = asnCell.combustion().current_heat();
 				cell.maxCombustionEnergy_ = asnCell.combustion().max_combustion_energy();
 			}
 			if( asnCell.has_decline() )
+            {
+                cell.bSendFullState_ = true;
 				cell.currentHeat_ = asnCell.decline().current_heat();
+            }
 		}
     }
 }

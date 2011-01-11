@@ -347,6 +347,8 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 //         << pFederate_            // reloadé à la main ( cf. MIL_AgentServer::Initialize )
          << nInitialRealTime_
          << nRealTime_;
+
+    pBurningCells_->save( file );
 }
 
 // -----------------------------------------------------------------------------
@@ -372,6 +374,9 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 //         >> pFederate_
          >> nInitialRealTime_
          >> nRealTime_;
+
+    pBurningCells_->load( file );
+    pBurningCells_->finalizeLoad( GetEntityManager() );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
     nSimState_ = eSimPaused;
     if( nSimState == eSimRunning )

@@ -99,7 +99,7 @@ void BurnAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 // -----------------------------------------------------------------------------
 void BurnAttribute::Instanciate( DEC_Knowledge_Object& /*object*/ ) const
 {
-    // $$$$ BCI 2010-12-21: todo
+    // $$$$ BCI 2010-12-21: todo?
     /*object.Attach< DEC_Knowledge_ObjectAttributeProxy_ABC< BurnAttribute > >( *new T_KnowledgeProxyType() );*/
 }
 
@@ -120,9 +120,7 @@ void BurnAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
 //    asn.set_firePresent( 1 );
     asn.mutable_burn()->set_current_heat( currentHeat_ );
-    asn.mutable_burn()->set_combustion_energy_sum( combustionEnergySum_ );
-    asn.mutable_burn()->set_combustion_energy_count( combustionEnergyCount_ );
-    int todo = 0;
+    asn.mutable_burn()->set_combustion_energy( combustionEnergyCount_ > 0 ? combustionEnergySum_ / combustionEnergyCount_ : 0 );
 }
 
 // -----------------------------------------------------------------------------

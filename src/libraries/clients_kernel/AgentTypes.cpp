@@ -415,6 +415,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "create_object", sword::ObjectMagicAction::create ) );
     RegisterActionType( *new MagicActionType( "update_object", sword::ObjectMagicAction::update ) );
     RegisterActionType( *new MagicActionType( "destroy_object", sword::ObjectMagicAction::destroy ) );
+    RegisterActionType( *new MagicActionType( "request_object", sword::ObjectMagicAction::request ) );
 
     // Other Magic Actions
     RegisterActionType( *new MagicActionType( "global_weather", sword::MagicAction::global_weather ) );

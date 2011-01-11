@@ -11,6 +11,11 @@
 #include "BurnSurfaceAttribute.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/OrderType.h"
+#include "actions/ActionsModel.h"
+#include "actions/Action_ABC.h"
+#include "actions/ParameterList.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -19,9 +24,11 @@ using namespace kernel;
 // Name: BurnSurfaceAttribute constructor
 // Created: BCI 2010-12-21
 // -----------------------------------------------------------------------------
-BurnSurfaceAttribute::BurnSurfaceAttribute( Controller& controller )
+BurnSurfaceAttribute::BurnSurfaceAttribute( Controller& controller, actions::ActionsModel& actionsModel, kernel::Entity_ABC& entity )
     : controller_( controller )
 	, cellSize_( 0 )
+    , actionsModel_( actionsModel )
+    , entity_( entity )
 {
     // NOTHING
 }
@@ -67,7 +74,7 @@ void BurnSurfaceAttribute::UpdateBurningCellData( const T& asnCell )
 	}
 	if( asnCell.has_combustion() )
 	{
-        cell.combustionEnergy_ =  asnCell.combustion().combustion_energy_count() > 0 ? asnCell.combustion().combustion_energy_sum() / asnCell.combustion().combustion_energy_count() : 0;
+        cell.combustionEnergy_ =  asnCell.combustion().combustion_energy();
 		cell.currentHeat_ = asnCell.combustion().current_heat();
 		cell.maxCombustionEnergy_ = asnCell.combustion().max_combustion_energy();
 	}
@@ -99,6 +106,7 @@ void BurnSurfaceAttribute::DoUpdate( const sword::ObjectUpdate& message )
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, const GlTools_ABC& /*tools*/ ) const
 {
+    // $$$$ BCI 2011-01-07: todo ne dessiner que ce qui est visible
 	for( BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.begin(); it != burningCellsByCoordinates_.end(); ++it )
 	{
 		const BurningCell& cell = it->second;
@@ -138,21 +146,36 @@ void BurnSurfaceAttribute::TerrainPicked( const geometry::Point2f& terrainCoordi
     if( it != burningCellsByCoordinates_.end() )
     {
         const BurningCell& cell = it->second;
+
+        //format current data
         switch( cell.phase_ )
         {
         case sword::pre_ignition:
-            outputInfos.push_back( tools::translate( "Object", "Cell ignition:  %1/%2" ).arg( cell.ignitionEnergy_ ).arg( cell.ignitionThreshold_ ) );
-            break;
+            if( cell.ignitionEnergy_ >= 0 && cell.ignitionThreshold_ >= 0 )
+                outputInfos.push_back( tools::translate( "Object", "Cell ignition:  %1/%2" ).arg( cell.ignitionEnergy_ ).arg( cell.ignitionThreshold_ ) );
         case sword::combustion:
-            outputInfos.push_back( tools::translate( "Object", "Cell combustion: %1/%2, heat %3" ).arg( cell.combustionEnergy_ ).arg( cell.maxCombustionEnergy_ ).arg( cell.currentHeat_ ) );
+            if( cell.combustionEnergy_ >= 0 && cell.maxCombustionEnergy_ >= 0 && cell.currentHeat_ >= 0 )
+                outputInfos.push_back( tools::translate( "Object", "Cell combustion: %1/%2, heat %3" ).arg( cell.combustionEnergy_ ).arg( cell.maxCombustionEnergy_ ).arg( cell.currentHeat_ ) );
             break;
         case sword::decline:
-            outputInfos.push_back( tools::translate( "Object", "Cell decline: heat %1" ).arg( cell.currentHeat_ ) );
+            if( cell.currentHeat_ >= 0 )
+                outputInfos.push_back( tools::translate( "Object", "Cell decline: heat %1" ).arg( cell.currentHeat_ ) );
             break;
         case sword::extinguished:
             outputInfos.push_back( tools::translate( "Object", "Cell extinguished" ) );
             break;
         }
+
+        // $$$$ BCI 2011-01-10: request updated cell data
+        actions::Action_ABC* action = actionsModel_.CreateObjectMagicAction( "request_object", entity_.GetId() );
+        tools::Iterator< const kernel::OrderParameter& > it = action->GetType().CreateIterator();
+        actions::parameters::ParameterList* attributesList = new actions::parameters::ParameterList( it.NextElement() );
+        actions::parameters::ParameterList& list = attributesList->AddList( "BurnSurface" );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_burn_surface );
+        list.AddNumeric( "x", terrainCoordinates.X() );
+        list.AddNumeric( "y", terrainCoordinates.Y() );
+        action->AddParameter( *attributesList );
+        actionsModel_.Publish( *action );
     }
 }
 

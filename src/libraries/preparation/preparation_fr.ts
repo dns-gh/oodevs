@@ -126,7 +126,7 @@
     </message>
     <message>
         <source>Info/Fire attributes/Max combustion energy_</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de feu/Energie de combustion max</translation>
     </message>
 </context>
 <context>
