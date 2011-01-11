@@ -241,11 +241,10 @@ sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const google
 // Name: UrbanObjectWrapper::OnRequest
 // Created: BCI 2011-01-10
 // -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
+sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& /*attributes*/ )
 {
     return sword::ObjectMagicActionAck_ErrorCode_no_error;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::SendCapacity

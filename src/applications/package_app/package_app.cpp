@@ -50,7 +50,7 @@ int main( int argc, char* argv[] )
         SetDirectory();
         std::string package;
         po::options_description options;
-        po::variables_map       values;
+        po::variables_map values;
         options.add_options()( "install", po::value< std::string >( &package ), "package to install" );
         po::store( po::command_line_parser( argc, argv ).options( options ).run(), values );
         po::notify( values );
