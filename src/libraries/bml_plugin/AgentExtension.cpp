@@ -55,8 +55,8 @@ AgentExtension::~AgentExtension()
 // -----------------------------------------------------------------------------
 void AgentExtension::DoUpdate( const sword::UnitAttributes& attributes )
 {
-    const bool reportPosition = ( attributes.has_position()  || attributes.has_hauteur()  ) && simulation_.MustReportPosition( lastUpdate_ );
-    const bool reportStatus   = ( attributes.has_etat_operationnel()  || attributes.has_dotation_eff_materiel()  || attributes.has_dotation_eff_personnel()  ) && simulation_.MustReportStatus( lastUpdate_ );
+    const bool reportPosition = ( attributes.has_position()  || attributes.has_height()  ) && simulation_.MustReportPosition( lastUpdate_ );
+    const bool reportStatus   = ( attributes.has_operational_state()  || attributes.has_equipment_dotations()  || attributes.has_human_dotations()  ) && simulation_.MustReportStatus( lastUpdate_ );
     if( reportPosition || reportStatus )
         try
         {

@@ -105,35 +105,35 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_position()  )
         vPos_ = converter_.ConvertToXY( message.position() );
 
-    if( message.has_etat_operationnel_brut()  )
-        nRawOpState_ = message.etat_operationnel_brut();
+    if( message.has_raw_operational_state()  )
+        nRawOpState_ = message.raw_operational_state();
 
-    if( message.has_etat_operationnel()  )
-        nOpState_ = (E_OperationalStatus)message.etat_operationnel();
+    if( message.has_operational_state()  )
+        nOpState_ = (E_OperationalStatus)message.operational_state();
 
-    if( message.has_disponibilite_au_tir_indirect()  )
-        nIndirectFireAvailability_  = (E_FireAvailability)message.disponibilite_au_tir_indirect();
+    if( message.has_indirect_fire_availability()  )
+        nIndirectFireAvailability_  = (E_FireAvailability)message.indirect_fire_availability();
 
-    if( message.has_posture_new()  )
-        nCurrentPosture_ = (E_UnitPosture)message.posture_new();
+    if( message.has_new_posture()  )
+        nCurrentPosture_ = (E_UnitPosture)message.new_posture();
 
-    if( message.has_posture_old()  )
-        nOldPosture_ = (E_UnitPosture)message.posture_old();
+    if( message.has_old_posture()  )
+        nOldPosture_ = (E_UnitPosture)message.old_posture();
 
-    if( message.has_posture_pourcentage()  )
-        nPostureCompletionPourcentage_ = message.posture_pourcentage();
+    if( message.has_posture_transition()  )
+        nPostureCompletionPourcentage_ = message.posture_transition();
 
-    if( message.has_etat_installation()  )
-        nInstallationState_ = message.etat_installation();
+    if( message.has_installation()  )
+        nInstallationState_ = message.installation();
 
-    if( message.has_mort()  )
-        bDead_ = message.mort() != 0;
+    if( message.has_dead()  )
+        bDead_ = message.dead() != 0;
 
-    if( message.has_neutralise()  )
-        bNeutralized_ = message.neutralise() != 0;
+    if( message.has_neutralized()  )
+        bNeutralized_ = message.neutralized() != 0;
 
-    if( message.has_rapport_de_force()  )
-        nFightRateState_ = (E_ForceRatioStatus)message.rapport_de_force();
+    if( message.has_force_ratio()  )
+        nFightRateState_ = (E_ForceRatioStatus)message.force_ratio();
 
     if( message.has_roe()  )
         nRulesOfEngagementState_ = (E_Roe)message.roe();
@@ -141,23 +141,23 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_roe_crowd()  )
         nRulesOfEngagementPopulationState_ = (E_PopulationRoe)message.roe_crowd();
 
-    if( message.has_combat_de_rencontre()  )
-        nCloseCombatState_ = (E_MeetingEngagementStatus)message.combat_de_rencontre();
+    if( message.has_meeting_engagement()  )
+        nCloseCombatState_ = (E_MeetingEngagementStatus)message.meeting_engagement();
 
-    if( message.has_embarque()  )
-        bLoadingState_ = message.embarque() != 0;
+    if( message.has_embarked()  )
+        bLoadingState_ = message.embarked() != 0;
 
-    if( message.has_transporteurs_disponibles()  )
-        bHumanTransportersReady_ = message.transporteurs_disponibles() != 0;
+    if( message.has_transporters_available()  )
+        bHumanTransportersReady_ = message.transporters_available() != 0;
 
-    if( message.has_mode_furtif_actif()  )
-        bStealthModeEnabled_ = message.mode_furtif_actif() != 0;
+    if( message.has_stealth()  )
+        bStealthModeEnabled_ = message.stealth() != 0;
 
-    if( message.has_vitesse()  )
-        nSpeed_ = message.vitesse();
+    if( message.has_speed()  )
+        nSpeed_ = message.speed();
 
-    if( message.has_hauteur()  )
-        nAltitude_ = message.hauteur();
+    if( message.has_height()  )
+        nAltitude_ = message.height();
 
     if( message.has_direction()  )
         nDirection_ = message.direction().heading();
@@ -174,17 +174,17 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_radio_receiver_disabled()  )
         bRadioReceiverSilence_ = message.radio_receiver_disabled() != 0;
 
-    if( message.has_radar_actif()   )
-        bRadarEnabled_ = message.radar_actif() != 0;
+    if( message.has_radar_active()   )
+        bRadarEnabled_ = message.radar_active() != 0;
 
-    if( message.has_prisonnier()  )
-        bPrisoner_ = message.prisonnier() != 0;
+    if( message.has_prisoner()  )
+        bPrisoner_ = message.prisoner() != 0;
 
     if( message.has_surrendered_unit()  )
         surrenderedTo_ = teamResolver_.Find( message.surrendered_unit().id() );
 
-    if( message.has_refugie_pris_en_compte()  )
-        bRefugeesManaged_ = message.refugie_pris_en_compte() != 0;
+    if( message.has_refugees_managed()  )
+        bRefugeesManaged_ = message.refugees_managed() != 0;
 
     if( message.has_extension() )
         for( int i = 0; i < message.extension().entries_size(); ++i )

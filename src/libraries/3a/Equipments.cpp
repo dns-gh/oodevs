@@ -71,11 +71,11 @@ Equipments::Equipments( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 int Equipments::Extract( const sword::UnitAttributes& attributes )
 {
-    unsigned size = attributes.dotation_eff_materiel().elem_size();
+    unsigned size = attributes.equipment_dotations().elem_size();
     while( size > 0 )
     {
         --size;
-        const sword::EquipmentDotations_EquipmentDotation& equipment = attributes.dotation_eff_materiel().elem( size );
+        const sword::EquipmentDotations_EquipmentDotation& equipment = attributes.equipment_dotations().elem( size );
         if( filter_.IsAllowed( equipment.type().id() ) )
         {
             int quantity = 0;

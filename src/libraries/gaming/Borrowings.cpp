@@ -42,14 +42,14 @@ Borrowings::~Borrowings()
 // -----------------------------------------------------------------------------
 void Borrowings::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( ! message.has_equipements_empruntes()  )
+    if( ! message.has_borrowed_equipments()  )
         return;
 
     borrowings_.clear();
-    borrowings_.reserve( message.equipements_empruntes().elem_size() );
-    for( int i = 0; i < message.equipements_empruntes().elem_size(); ++i )
+    borrowings_.reserve( message.borrowed_equipments().elem_size() );
+    for( int i = 0; i < message.borrowed_equipments().elem_size(); ++i )
     {
-        const sword::BorrowedEquipments_BorrowedEquipment& pret = message.equipements_empruntes().elem( i );
+        const sword::BorrowedEquipments_BorrowedEquipment& pret = message.borrowed_equipments().elem( i );
         borrowings_.push_back( Loan( equipmentResolver_.Get( pret.type().id() ),
                                      resolver_.Get( pret.owner().id() ),
                                      pret.quantity() ) );

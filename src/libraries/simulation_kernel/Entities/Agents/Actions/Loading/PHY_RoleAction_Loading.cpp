@@ -235,7 +235,7 @@ void PHY_RoleAction_Loading::CheckConsistency()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().set_embarque( bIsLoaded_ );
+    msg().set_embarked( bIsLoaded_ );
 }
 
 // -----------------------------------------------------------------------------

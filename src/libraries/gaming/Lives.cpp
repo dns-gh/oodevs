@@ -53,8 +53,8 @@ void Lives::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 // -----------------------------------------------------------------------------
 void Lives::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_etat_operationnel_brut()  )
-        life_ = message.etat_operationnel_brut() * 0.01f;
+    if( message.has_raw_operational_state()  )
+        life_ = message.raw_operational_state() * 0.01f;
     controller_.Update( *this );
 }
 

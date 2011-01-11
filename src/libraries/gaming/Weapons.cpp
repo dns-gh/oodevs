@@ -83,14 +83,14 @@ void Weapons::OptionChanged( const std::string& name, const kernel::OptionVarian
 // -----------------------------------------------------------------------------
 void Weapons::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_dotation_eff_materiel()  != 1 )
+    if( message.has_equipment_dotations()  != 1 )
         return;
     minRange_ = std::numeric_limits< unsigned int >::max();
     maxRange_ = 0;
     efficientRange_ = 0;
-    for( int i = 0; i < message.dotation_eff_materiel().elem_size(); ++i )
+    for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
     {
-        const sword::EquipmentDotations_EquipmentDotation& value = message.dotation_eff_materiel().elem( i );
+        const sword::EquipmentDotations_EquipmentDotation& value = message.equipment_dotations().elem( i );
         Equipment* equipment = Find( value.type().id() );
         if( !equipment )
         {

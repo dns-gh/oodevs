@@ -42,8 +42,8 @@ Speeds::~Speeds()
 // -----------------------------------------------------------------------------
 void Speeds::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_vitesse()  )
-        speed_ = float( message.vitesse() );
+    if( message.has_speed()  )
+        speed_ = float( message.speed() );
     if( message.has_direction()  )
     {
         const float angle = message.direction().heading() * 3.14f / 180.f;

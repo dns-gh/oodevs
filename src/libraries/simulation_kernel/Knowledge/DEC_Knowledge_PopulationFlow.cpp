@@ -340,7 +340,7 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
-    asnMsg().set_vitesse( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
+    asnMsg().set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     if( !flowParts_.empty() )
     {
@@ -384,7 +384,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     if( bDirectionUpdated_ )
         NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     if( bSpeedUpdated_ )
-        asnMsg().set_vitesse( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
+        asnMsg().set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     if( bFlowPartsUpdated_ )
     {
         if( !flowParts_.empty() )

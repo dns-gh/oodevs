@@ -171,7 +171,7 @@ double PHY_RoleAction_Transport::DoLoad( const double rWeightToLoad )
 
         pion.Apply(&TransportNotificationHandler_ABC::LoadForTransport, transporter_, transportData.bTransportOnlyLoadable_, bTransportedByAnother );
 
-        if( it->second.rTransportedWeight_ <= 0. && bTransportedByAnother /* TODO && pion.CanBeTransported() */ ) // Filer position embarquement si bTransportOnlyLoadable_  + transporteur
+        if( it->second.rTransportedWeight_ <= 0. && bTransportedByAnother /* TODO && pion.CanBeTransported() */ ) // Filer position embarkedment si bTransportOnlyLoadable_  + transporteur
             continue; // LoadForTransport fails when the 'pion' is already transported by another unit
 
         const double rTmpWeight = std::min( rWeightToLoad - rWeightLoaded, it->second.rRemainingWeight_ );

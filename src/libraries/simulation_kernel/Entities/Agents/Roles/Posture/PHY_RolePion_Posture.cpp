@@ -256,19 +256,19 @@ void PHY_RolePion_Posture::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bPostureHasChanged_ )
     {
-        msg().set_posture_old( pLastPosture_   ->GetAsnID() );
-        msg().set_posture_new( pCurrentPosture_->GetAsnID() );
+        msg().set_old_posture( pLastPosture_   ->GetAsnID() );
+        msg().set_new_posture( pCurrentPosture_->GetAsnID() );
     }
     if( bPercentageHasChanged_ )
     {
-        msg().set_posture_pourcentage( static_cast< unsigned int >( rPostureCompletionPercentage_ * 100. ) );
+        msg().set_posture_transition( static_cast< unsigned int >( rPostureCompletionPercentage_ * 100. ) );
         rLastPostureCompletionPercentageSent_ = rPostureCompletionPercentage_ ;
     }
     if( bStealthFactorHasChanged_ )
-        msg().set_mode_furtif_actif( ( rStealthFactor_ < 1. ) );
+        msg().set_stealth( ( rStealthFactor_ < 1. ) );
     if( bInstallationStateHasChanged_ )
     {
-        msg().set_etat_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
+        msg().set_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
         rLastInstallationStateSent_ = rInstallationState_;
     }
 }
@@ -279,12 +279,12 @@ void PHY_RolePion_Posture::SendChangedState( client::UnitAttributes& msg ) const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().set_posture_old( pLastPosture_   ->GetAsnID() );
-    msg().set_posture_new( pCurrentPosture_->GetAsnID() );
-    msg().set_posture_pourcentage( static_cast< unsigned int >( rPostureCompletionPercentage_ * 100. ) );
+    msg().set_old_posture( pLastPosture_   ->GetAsnID() );
+    msg().set_new_posture( pCurrentPosture_->GetAsnID() );
+    msg().set_posture_transition( static_cast< unsigned int >( rPostureCompletionPercentage_ * 100. ) );
     rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_;
-    msg().set_mode_furtif_actif( ( rStealthFactor_ < 1. ) );
-    msg().set_etat_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
+    msg().set_stealth( ( rStealthFactor_ < 1. ) );
+    msg().set_installation( static_cast< unsigned int >( rInstallationState_ * 100. ) );
     rLastInstallationStateSent_                = rInstallationState_;
 }
 

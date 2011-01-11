@@ -12,14 +12,14 @@
 
 using namespace shield;
 
-#define CONVERT_POSTURE( field ) \
-    CONVERT_ENUM( field, ( sword::UnitAttributes::mouvement, MsgsSimToClient::MsgUnitAttributes::mouvement ) \
-                         ( sword::UnitAttributes::mouvement_discret, MsgsSimToClient::MsgUnitAttributes::mouvement_discret ) \
-                         ( sword::UnitAttributes::arret, MsgsSimToClient::MsgUnitAttributes::arret ) \
-                         ( sword::UnitAttributes::poste_reflexe, MsgsSimToClient::MsgUnitAttributes::poste_reflexe ) \
-                         ( sword::UnitAttributes::poste, MsgsSimToClient::MsgUnitAttributes::poste ) \
-                         ( sword::UnitAttributes::poste_amenage, MsgsSimToClient::MsgUnitAttributes::poste_amenage ) \
-                         ( sword::UnitAttributes::poste_prepare_genie, MsgsSimToClient::MsgUnitAttributes::poste_prepare_genie ) )
+#define CONVERT_POSTURE( from_field, to_field ) \
+    CONVERT_ENUM_TO( from_field, to_field, ( sword::UnitAttributes::mouvement, MsgsSimToClient::MsgUnitAttributes::mouvement ) \
+                                           ( sword::UnitAttributes::mouvement_discret, MsgsSimToClient::MsgUnitAttributes::mouvement_discret ) \
+                                           ( sword::UnitAttributes::arret, MsgsSimToClient::MsgUnitAttributes::arret ) \
+                                           ( sword::UnitAttributes::poste_reflexe, MsgsSimToClient::MsgUnitAttributes::poste_reflexe ) \
+                                           ( sword::UnitAttributes::poste, MsgsSimToClient::MsgUnitAttributes::poste ) \
+                                           ( sword::UnitAttributes::poste_amenage, MsgsSimToClient::MsgUnitAttributes::poste_amenage ) \
+                                           ( sword::UnitAttributes::poste_prepare_genie, MsgsSimToClient::MsgUnitAttributes::poste_prepare_genie ) )
 
 #define CONVERT_IDENTIFICATION_LEVEL( field ) \
     if( from.has_##field() ) \
@@ -470,25 +470,25 @@ namespace
     template< typename From, typename To >
     void ConvertForceRatio( const From& from, To* to )
     {
-        CONVERT_ENUM( rapport_de_force, ( sword::ForceRatio::none, MsgsSimToClient::ForceRatio::none_force_ratio )
-                                        ( sword::ForceRatio::neutral, MsgsSimToClient::ForceRatio::neutre )
-                                        ( sword::ForceRatio::favorable, MsgsSimToClient::ForceRatio::favorable )
-                                        ( sword::ForceRatio::unfavorable, MsgsSimToClient::ForceRatio::defavorable ) );
+        CONVERT_ENUM_TO( force_ratio, rapport_de_force, ( sword::ForceRatio::none, MsgsSimToClient::ForceRatio::none_force_ratio )
+                                                        ( sword::ForceRatio::neutral, MsgsSimToClient::ForceRatio::neutre )
+                                                        ( sword::ForceRatio::favorable, MsgsSimToClient::ForceRatio::favorable )
+                                                        ( sword::ForceRatio::unfavorable, MsgsSimToClient::ForceRatio::defavorable ) );
     }
     template< typename From, typename To >
     void ConvertMeetingEngagementStatus( const From& from, To* to )
     {
-        CONVERT_ENUM( combat_de_rencontre, ( sword::none_meeting, Common::none_meeting )
-                                           ( sword::etat_esquive, Common::etat_esquive )
-                                           ( sword::etat_fixe, Common::etat_fixe )
-                                           ( sword::etat_poursuite_mission, Common::etat_poursuite_mission ) );
+        CONVERT_ENUM_TO( meeting_engagement, combat_de_rencontre, ( sword::none_meeting, Common::none_meeting )
+                                                                  ( sword::etat_esquive, Common::etat_esquive )
+                                                                  ( sword::etat_fixe, Common::etat_fixe )
+                                                                  ( sword::etat_poursuite_mission, Common::etat_poursuite_mission ) );
     }
     template< typename From, typename To >
     void ConvertOperationalStatus( const From& from, To* to )
     {
-        CONVERT_ENUM( etat_operationnel, ( sword::detruit_totalement, Common::detruit_totalement )
-                                         ( sword::detruit_tactiquement, Common::detruit_tactiquement )
-                                         ( sword::operationnel, Common::operationnel ) );
+        CONVERT_ENUM_TO( operational_state, etat_operationnel, ( sword::detruit_totalement, Common::detruit_totalement )
+                                                               ( sword::detruit_tactiquement, Common::detruit_tactiquement )
+                                                               ( sword::operationnel, Common::operationnel ) );
     }
     template< typename From, typename To >
     void ConvertRulesOfEngagement( const From& from, To* to )
@@ -599,66 +599,66 @@ namespace
 void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToClient::MsgUnitAttributes* to )
 {
     CONVERT_ID( unit );
-    CONVERT_LIST( dotation_eff_personnel, elem, ConvertHumanDotation );
-    CONVERT_LIST( dotation_eff_materiel, elem, ConvertEquipmentDotation );
-    CONVERT_LIST( dotation_eff_ressource, elem, ConvertResourceDotation );
-    CONVERT_LIST( equipements_pretes, elem, ConvertLentEquipment );
-    CONVERT_LIST( equipements_empruntes, elem, ConvertBorrowedEquipment );
+    CONVERT_LIST_TO( human_dotations, dotation_eff_personnel, elem, ConvertHumanDotation );
+    CONVERT_LIST_TO( equipment_dotations, dotation_eff_materiel, elem, ConvertEquipmentDotation );
+    CONVERT_LIST_TO( resource_dotations, dotation_eff_ressource, elem, ConvertResourceDotation );
+    CONVERT_LIST_TO( lent_equipments, equipements_pretes, elem, ConvertLentEquipment );
+    CONVERT_LIST_TO( borrowed_equipments, equipements_empruntes, elem, ConvertBorrowedEquipment );
     if( from.has_position() )
         ConvertCoordLatLong( from.position(), to->mutable_position() );
     if( from.has_direction() )
         ConvertHeading( from.direction(), to->mutable_direction() );
-    CONVERT( hauteur );
+    CONVERT_TO( height, hauteur );
     CONVERT( altitude );
-    CONVERT( vitesse );
-    CONVERT( etat_operationnel_brut );
+    CONVERT_TO( speed, vitesse );
+    CONVERT_TO( raw_operational_state, etat_operationnel_brut );
     CONVERT_LIST( reinforcements, elem, ConvertIdentifier );
     CONVERT_ID( reinforced_unit );
-    CONVERT( mort );
-    CONVERT( neutralise );
-    CONVERT( mode_furtif_actif );
-    CONVERT( embarque );
-    CONVERT( transporteurs_disponibles );
-    CONVERT_POSTURE( posture_old );
-    CONVERT_POSTURE( posture_new );
-    CONVERT( posture_pourcentage );
-    CONVERT( etat_installation );
-    CONVERT( en_tenue_de_protection_nbc );
-    CONVERT_LIST( contamine_par_agents_nbc, elem, ConvertIdentifier );
-    if( from.has_etat_contamination() )
-        ConvertContaminationState( from.etat_contamination(), to->mutable_etat_contamination() );
+    CONVERT_TO( dead, mort );
+    CONVERT_TO( neutralized, neutralise );
+    CONVERT_TO( stealth, mode_furtif_actif );
+    CONVERT_TO( embarked, embarque );
+    CONVERT_TO( transporters_available, transporteurs_disponibles );
+    CONVERT_POSTURE( old_posture, posture_old );
+    CONVERT_POSTURE( new_posture, posture_new );
+    CONVERT_TO( posture_transition, posture_pourcentage );
+    CONVERT_TO( installation, etat_installation );
+    CONVERT_TO( protective_suits, en_tenue_de_protection_nbc );
+    CONVERT_LIST_TO( contamination_agents, contamine_par_agents_nbc, elem, ConvertIdentifier );
+    if( from.has_contamination_state() )
+        ConvertContaminationState( from.contamination_state(), to->mutable_etat_contamination() );
     if( from.has_communications() )
         ConvertContaminations( from.communications(), to->mutable_communications() );
     CONVERT( radio_emitter_disabled );
     CONVERT( radio_receiver_disabled );
-    CONVERT( radar_actif );
+    CONVERT_TO( radar_active, radar_actif );
     CONVERT_LIST( transported_units, elem, ConvertIdentifier );
     CONVERT_ID( transporting_unit );
     ConvertForceRatio( from, to );
     ConvertMeetingEngagementStatus( from, to );
     ConvertOperationalStatus( from, to );
-    CONVERT_ENUM( disponibilite_au_tir_indirect, ( sword::UnitAttributes::no_fire, MsgsSimToClient::MsgUnitAttributes::none_fire_available )
-                                                 ( sword::UnitAttributes::fire_ready, MsgsSimToClient::MsgUnitAttributes::pret_au_tir )
-                                                 ( sword::UnitAttributes::fire_unavailable, MsgsSimToClient::MsgUnitAttributes::indisponible ) );
+    CONVERT_ENUM_TO( indirect_fire_availability, disponibilite_au_tir_indirect, ( sword::UnitAttributes::no_fire, MsgsSimToClient::MsgUnitAttributes::none_fire_available )
+                                                                                ( sword::UnitAttributes::fire_ready, MsgsSimToClient::MsgUnitAttributes::pret_au_tir )
+                                                                                ( sword::UnitAttributes::fire_unavailable, MsgsSimToClient::MsgUnitAttributes::indisponible ) );
     ConvertRulesOfEngagement( from, to );
     CONVERT_ENUM( roe_crowd, ( sword::UnitAttributes::none, MsgsSimToClient::MsgUnitAttributes::none )
                              ( sword::UnitAttributes::emploi_force_interdit, MsgsSimToClient::MsgUnitAttributes::emploi_force_interdit )
                              ( sword::UnitAttributes::maintien_a_distance_par_moyens_non_letaux, MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux )
                              ( sword::UnitAttributes::dispersion_par_moyens_de_defense_actifs, MsgsSimToClient::MsgUnitAttributes::dispersion_par_moyens_de_defense_actifs )
                              ( sword::UnitAttributes::armes_letales_autorisees, MsgsSimToClient::MsgUnitAttributes::armes_letales_autorisees ) );
-    CONVERT_ENUM( fatigue, ( sword::normal, Common::normal )
-                           ( sword::fatigue, Common::fatigue )
-                           ( sword::epuise, Common::epuise ) );
-    CONVERT_ENUM( moral, ( sword::fanatique, Common::fanatique )
-                         ( sword::bon, Common::bon )
-                         ( sword::moyen, Common::moyen )
-                         ( sword::mauvais, Common::mauvais ) );
+    CONVERT_ENUM_TO( tiredness, fatigue, ( sword::normal, Common::normal )
+                                         ( sword::fatigue, Common::fatigue )
+                                         ( sword::epuise, Common::epuise ) );
+    CONVERT_ENUM_TO( morale, moral, ( sword::fanatique, Common::fanatique )
+                                    ( sword::bon, Common::bon )
+                                    ( sword::moyen, Common::moyen )
+                                    ( sword::mauvais, Common::mauvais ) );
     CONVERT_ENUM( experience, ( sword::veteran, Common::veteran )
                               ( sword::experimente, Common::experimente )
                               ( sword::conscrit, Common::conscrit ) );
     CONVERT_ID( surrendered_unit );
-    CONVERT( prisonnier );
-    CONVERT( refugie_pris_en_compte );
+    CONVERT_TO( prisoner, prisonnier );
+    CONVERT_TO( refugees_managed, refugie_pris_en_compte );
     if( from.has_extension() )
         ConvertExtension( from.extension(), to->mutable_extension() );
 }
@@ -793,7 +793,7 @@ void SimulationToClient::Convert( const sword::UnitKnowledgeUpdate& from, MsgsSi
     CONVERT_IDENTIFICATION_LEVEL( identification_level );
     CONVERT_IDENTIFICATION_LEVEL( max_identification_level );
     CONVERT( etat_op );
-    CONVERT( mort );
+    CONVERT_TO( dead, mort );
     if( from.has_position() )
         ConvertCoordLatLong( from.position(), to->mutable_position() );
     if( from.has_direction() )
@@ -803,8 +803,8 @@ void SimulationToClient::Convert( const sword::UnitKnowledgeUpdate& from, MsgsSi
     CONVERT( nature_pc );
     CONVERT_LIST( perception_par_compagnie, elem, ConvertAutomatPerception );
     CONVERT_ID( surrendered_unit );
-    CONVERT( prisonnier );
-    CONVERT( refugie_pris_en_compte );
+    CONVERT_TO( prisoner, prisonnier );
+    CONVERT_TO( refugees_managed, refugie_pris_en_compte );
 }
 
 // -----------------------------------------------------------------------------
@@ -1715,7 +1715,7 @@ void SimulationToClient::Convert( const sword::CrowdFlowUpdate& from, MsgsSimToC
         ConvertLocation( from.parts().location(), to->mutable_parts()->mutable_location() );
     if( from.has_direction() )
         ConvertHeading( from.direction(), to->mutable_direction() );
-    CONVERT( vitesse );
+    CONVERT_TO( speed, vitesse );
     CONVERT( nb_humains_vivants );
     CONVERT( nb_humains_morts );
     ConvertCrowdAttitude( from, to );
@@ -1842,7 +1842,7 @@ void SimulationToClient::Convert( const sword::CrowdFlowKnowledgeUpdate& from, M
     CONVERT_LIST( portions_flux, elem, ConvertFlowPart );
     if( from.has_direction() )
         ConvertHeading( from.direction(), to->mutable_direction() );
-    CONVERT( vitesse );
+    CONVERT_TO( speed, vitesse );
     CONVERT( nb_humains_vivants );
     CONVERT( nb_humains_morts );
     ConvertCrowdAttitude( from, to );

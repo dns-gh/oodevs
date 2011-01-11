@@ -1116,7 +1116,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
             for( PHY_ComposantePion::CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
                 ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
         }
-        sword::LentEquipments& lentEquipements = *message().mutable_equipements_pretes();
+        sword::LentEquipments& lentEquipements = *message().mutable_lent_equipments();
         for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
         {
             sword::LentEquipments_LentEquipment& loan = *lentEquipements.add_elem();
@@ -1136,7 +1136,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
             for( PHY_ComposantePion::CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
                 ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
         }
-        sword::BorrowedEquipments& borrowedEquipements = *message().mutable_equipements_empruntes();
+        sword::BorrowedEquipments& borrowedEquipements = *message().mutable_borrowed_equipments();
         for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
         {
             sword::BorrowedEquipments_BorrowedEquipment& loan = *borrowedEquipements.add_elem();
@@ -1160,7 +1160,7 @@ void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) cons
             const PHY_ComposanteTypePion&    compType   = *itComposanteType->first;
             const T_ComposanteTypeProperties& properties =  itComposanteType->second;
 
-            sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_dotation_eff_materiel()->add_elem();
+            sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_equipment_dotations()->add_elem();
             value.mutable_type()->set_id(  compType.GetMosID().id() );
             value.set_available             ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_ .GetID() ] );
             value.set_unavailable           ( properties.nbrsPerState_[ PHY_ComposanteState::dead_      .GetID() ] );
@@ -1170,7 +1170,7 @@ void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) cons
         }
     }
 
-    msg().set_etat_operationnel_brut( (unsigned int)( rOperationalState_ * 100. ) );
+    msg().set_raw_operational_state( (unsigned int)( rOperationalState_ * 100. ) );
 
     SendLoans( msg );
 }
@@ -1191,7 +1191,7 @@ void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) c
             if( !properties.bHasChanged_ )
                 continue;
 
-            sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_dotation_eff_materiel()->add_elem();
+            sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_equipment_dotations()->add_elem();
             value.mutable_type()->set_id( compType.GetMosID().id() );
             value.set_available            ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_  .GetID() ] );
             value.set_unavailable          ( properties.nbrsPerState_[ PHY_ComposanteState::dead_       .GetID() ] );
@@ -1202,7 +1202,7 @@ void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) c
     }
 
     if( bOperationalStateChanged_ )
-        msg().set_etat_operationnel_brut( (unsigned int)( rOperationalState_ * 100. ) );
+        msg().set_raw_operational_state( (unsigned int)( rOperationalState_ * 100. ) );
 
     if( bLoansChanged_ )
         SendLoans( msg );

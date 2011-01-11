@@ -47,7 +47,7 @@ public:
     //@{
     bool HasFlag( const sword::UnitAttributes& attributes ) const
     {
-        return attributes.has_dotation_eff_ressource();
+        return attributes.has_resource_dotations();
     }
     int Extract( const sword::UnitAttributes& attributes );
     //@}

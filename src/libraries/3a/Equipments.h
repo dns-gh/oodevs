@@ -48,7 +48,7 @@ public:
     //@{
     bool HasFlag( const sword::UnitAttributes& attributes ) const
     {
-        return attributes.has_dotation_eff_materiel();
+        return attributes.has_equipment_dotations();
     }
     int Extract( const sword::UnitAttributes& attributes );
     //@}

@@ -69,12 +69,12 @@ private:
       unsigned identification_levelPresent : 1;
       unsigned max_identification_levelPresent : 1;
       unsigned etat_opPresent : 1;
-      unsigned mortPresent : 1;
+      unsigned deadPresent : 1;
       unsigned speedPresent : 1;
       unsigned nature_pcPresent : 1;
       unsigned renduPresent : 1;
-      unsigned prisonnierPresent : 1;
-      unsigned refugie_pris_en_comptePresent : 1;
+      unsigned prisonerPresent : 1;
+      unsigned refugees_managedPresent : 1;
       unsigned positionPresent : 1;
       unsigned directionPresent : 1;
       unsigned campPresent : 1;

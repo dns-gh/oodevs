@@ -60,24 +60,24 @@ void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
 // -----------------------------------------------------------------------------
 void Contaminations::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_etat_contamination()  )
+    if( message.has_contamination_state()  )
     {
-        nContamination_ = message.etat_contamination().percentage();
+        nContamination_ = message.contamination_state().percentage();
         if( nContamination_ == 0 )
             contaminatingNbcAgents_.clear();
-        quantity_ = message.etat_contamination().quantity();
+        quantity_ = message.contamination_state().quantity();
     }
 
-   if( message.has_contamine_par_agents_nbc()  )
+   if( message.has_contamination_agents()  )
     {
         contaminatingNbcAgents_.clear();
-        contaminatingNbcAgents_.reserve( message.contamine_par_agents_nbc().elem_size() );
-        for( int i = 0; i < message.contamine_par_agents_nbc().elem_size(); ++i )
-            contaminatingNbcAgents_.push_back( &resolver_.Get( message.contamine_par_agents_nbc().elem( i ).id() ) );
+        contaminatingNbcAgents_.reserve( message.contamination_agents().elem_size() );
+        for( int i = 0; i < message.contamination_agents().elem_size(); ++i )
+            contaminatingNbcAgents_.push_back( &resolver_.Get( message.contamination_agents().elem( i ).id() ) );
     }
 
-    if( message.has_en_tenue_de_protection_nbc()  )
-        bNbcProtectionSuitWorn_ = message.en_tenue_de_protection_nbc() != 0;
+    if( message.has_protective_suits()  )
+        bNbcProtectionSuitWorn_ = message.protective_suits() != 0;
 
     controller_.Update( *this );
 }

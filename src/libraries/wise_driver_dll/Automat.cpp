@@ -130,8 +130,8 @@ void Automat::Update( CWISEDriver& driver, const WISE_HANDLE& database, const ti
     {
         if( message.has_etat_automate() )
             CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Automation" ], unsigned char( message.etat_automate() ), currentTime ) );
-        if( message.has_etat_operationnel() )
-            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"OperationalState" ], unsigned char( message.etat_operationnel() ), currentTime ) );
+        if( message.has_operational_state() )
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"OperationalState" ], unsigned char( message.operational_state() ), currentTime ) );
         driver.NotifyDebugMessage( FormatMessage( L"Updated." ), MessageCategoryDebugLevel0 );
     }
     catch( WISE_RESULT& error )

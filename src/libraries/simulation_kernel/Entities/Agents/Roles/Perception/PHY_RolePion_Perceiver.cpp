@@ -1235,7 +1235,7 @@ void PHY_RolePion_Perceiver::SendDebugState() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().set_radar_actif( IsUsingActiveRadar() );
+    msg().set_radar_active( IsUsingActiveRadar() );
 }
 
 // -----------------------------------------------------------------------------

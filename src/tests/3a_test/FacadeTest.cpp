@@ -34,7 +34,7 @@ namespace
         SimToClient result;
         UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
-        attributes.set_etat_operationnel_brut( opstate );
+        attributes.set_raw_operational_state( opstate );
         return result;
     }
     SimToClient BeginTick()
@@ -218,7 +218,7 @@ namespace
         SimToClient result;
         UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
-        attributes.set_embarque( mounted );
+        attributes.set_embarked( mounted );
         return result;
     }
 }
@@ -546,7 +546,7 @@ namespace
         SimToClient result;
         UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
-        ResourceDotations_ResourceDotation& resource = *attributes.mutable_dotation_eff_ressource()->add_elem();
+        ResourceDotations_ResourceDotation& resource = *attributes.mutable_resource_dotations()->add_elem();
         resource.mutable_type()->set_id( resourceId );
         resource.set_quantity( variation );
         return result;
@@ -679,7 +679,7 @@ namespace
         SimToClient result;
         UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
-        EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_dotation_eff_materiel()->add_elem();
+        EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_equipment_dotations()->add_elem();
         equipment.mutable_type()->set_id( equipmentId );
         equipment.set_available( variation[0] );
         equipment.set_unavailable( variation[1] );
@@ -737,7 +737,7 @@ namespace
         SimToClient result;
         UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
-        HumanDotations_HumanDotation& personnel = *attributes.mutable_dotation_eff_personnel()->add_elem();
+        HumanDotations_HumanDotation& personnel = *attributes.mutable_human_dotations()->add_elem();
         personnel.set_rang( sword::officier );
         personnel.set_total( state[0] );
         personnel.set_operational( state[1] );

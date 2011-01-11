@@ -39,8 +39,10 @@ namespace shield
 #define CONVERT( field ) \
     CONVERT_TO( field, field )
 
+#define CONVERT_ENUM_TO( from_field, to_field, mapping ) \
+    if( from.has_##from_field() ) to->set_##to_field( ConvertEnum( from.from_field(), boost::assign::map_list_of mapping ) )
 #define CONVERT_ENUM( field, mapping ) \
-    if( from.has_##field() ) to->set_##field( ConvertEnum( from.field(), boost::assign::map_list_of mapping ) )
+    CONVERT_ENUM_TO( field, field, mapping )
 
 #define CONVERT_ENUM_EXT( field, type, mapping ) \
     assert( from.type##_descriptor()->value_count() == to->type##_descriptor()->value_count() ); \

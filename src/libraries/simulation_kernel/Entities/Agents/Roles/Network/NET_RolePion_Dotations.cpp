@@ -82,26 +82,26 @@ void NET_RolePion_Dotations::SendMsgUnitAttributes( client::UnitAttributes& asnM
     if( asnMsg().has_reinforcements()  && asnMsg().reinforcements().elem_size() > 0 )
         asnMsg().mutable_reinforcements()->Clear();
 
-    if( asnMsg().has_contamine_par_agents_nbc()  && asnMsg().contamine_par_agents_nbc().elem_size() > 0 )
-        asnMsg().mutable_contamine_par_agents_nbc()->Clear();
+    if( asnMsg().has_contamination_agents()  && asnMsg().contamination_agents().elem_size() > 0 )
+        asnMsg().mutable_contamination_agents()->Clear();
 
     if( asnMsg().has_transported_units()  && asnMsg().transported_units().elem_size() > 0 )
         asnMsg().mutable_transported_units()->Clear();
 
-    if( asnMsg().has_dotation_eff_ressource()  && asnMsg().dotation_eff_ressource().elem_size() > 0 )
-        asnMsg().mutable_dotation_eff_ressource()->Clear();
+    if( asnMsg().has_resource_dotations()  && asnMsg().resource_dotations().elem_size() > 0 )
+        asnMsg().mutable_resource_dotations()->Clear();
 
-    if( asnMsg().has_dotation_eff_materiel()  && asnMsg().dotation_eff_materiel().elem_size() > 0 )
-        asnMsg().mutable_dotation_eff_materiel()->Clear();
+    if( asnMsg().has_equipment_dotations()  && asnMsg().equipment_dotations().elem_size() > 0 )
+        asnMsg().mutable_equipment_dotations()->Clear();
 
-    if( asnMsg().has_dotation_eff_personnel()  && asnMsg().dotation_eff_personnel().elem_size() > 0 )
-        asnMsg().mutable_dotation_eff_personnel()->Clear();
+    if( asnMsg().has_human_dotations()  && asnMsg().human_dotations().elem_size() > 0 )
+        asnMsg().mutable_human_dotations()->Clear();
 
-    if( asnMsg().has_equipements_pretes()  && asnMsg().equipements_pretes().elem_size() > 0 )
-        asnMsg().mutable_equipements_pretes()->Clear();
+    if( asnMsg().has_lent_equipments()  && asnMsg().lent_equipments().elem_size() > 0 )
+        asnMsg().mutable_lent_equipments()->Clear();
 
-    if( asnMsg().has_equipements_empruntes()  && asnMsg().equipements_empruntes().elem_size() > 0 )
-        asnMsg().mutable_equipements_empruntes()->Clear();
+    if( asnMsg().has_borrowed_equipments()  && asnMsg().borrowed_equipments().elem_size() > 0 )
+        asnMsg().mutable_borrowed_equipments()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -120,13 +120,13 @@ void NET_RolePion_Dotations::SendChangedState() const
         bool bIsDead = pion_.IsDead();
         if( bLastStateDead_ != bIsDead )
         {
-            msg().set_mort( bIsDead );
+            msg().set_dead( bIsDead );
             bLastStateDead_ = bIsDead;
         }
         bool bIsNeutralized = pion_.IsNeutralized();
         if( bLastStateNeutralized_ != bIsNeutralized )
         {
-            msg().set_neutralise( bIsNeutralized );
+            msg().set_neutralized( bIsNeutralized );
             bLastStateNeutralized_              = bIsNeutralized;
         }
         pion_.Apply( &network::NetworkUnitAttributesMessageSender_ABC::SendChangedState, msg );
@@ -146,8 +146,8 @@ void NET_RolePion_Dotations::SendFullState() const
     // UnitAttributes
     client::UnitAttributes msg;
     msg().mutable_unit()->set_id( pion_.GetID() );
-    msg().set_mort      ( bLastStateDead_ = pion_.IsDead() );
-    msg().set_neutralise( bLastStateNeutralized_ = pion_.IsNeutralized() );
+    msg().set_dead( bLastStateDead_ = pion_.IsDead() );
+    msg().set_neutralized( bLastStateNeutralized_ = pion_.IsNeutralized() );
     pion_.Apply( &network::NetworkUnitAttributesMessageSender_ABC::SendFullState, msg );
     SendMsgUnitAttributes( msg );
 

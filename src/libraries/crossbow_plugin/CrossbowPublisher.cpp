@@ -103,7 +103,7 @@ bool CrossbowPublisher::IsRelevant( const sword::SimToClient& wrapper ) const
     if( wrapper.message().has_unit_attributes() )
     {
         const sword::UnitAttributes& attributes = wrapper.message().unit_attributes();
-        if( attributes.has_position() || attributes.has_vitesse() || attributes.has_etat_operationnel() )
+        if( attributes.has_position() || attributes.has_speed() || attributes.has_operational_state() )
             return true;
     }
     return false;

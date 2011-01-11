@@ -105,14 +105,14 @@ void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
     if( message.has_pertinence()  )
         nRelevance_ = message.pertinence();
 
-    if( message.has_prisonnier()  )
-        bPrisonner_ = message.prisonnier() != 0;
+    if( message.has_prisoner()  )
+        bPrisonner_ = message.prisoner() != 0;
 
     if( message.has_surrendered_unit()  )
         surrenderedTo_ = teamResolver_.Find( message.surrendered_unit().id() );
 
-    if( message.has_refugie_pris_en_compte()  )
-        bRefugies_ = message.refugie_pris_en_compte() != 0;
+    if( message.has_refugees_managed()  )
+        bRefugies_ = message.refugees_managed() != 0;
 
     UpdateSymbol();
 

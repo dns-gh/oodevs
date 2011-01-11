@@ -56,8 +56,8 @@ void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& msg )
         flow_.Update( msg.parts().location() );
     if( msg.has_direction()  )
         nDirection_ = msg.direction().heading();
-    if( msg.has_vitesse()  )
-        nSpeed_ = msg.vitesse();
+    if( msg.has_speed()  )
+        nSpeed_ = msg.speed();
     if( msg.has_attitude()  )
         nAttitude_ = msg.attitude();
     if( msg.has_nb_humains_morts()  )
@@ -88,7 +88,7 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().mutable_flow()->set_id( nID_ );
     asn().mutable_crowd()->set_id( population_.GetId() );
     asn().mutable_direction()->set_heading( nDirection_ );
-    asn().set_vitesse( nSpeed_ );
+    asn().set_speed( nSpeed_ );
     asn().set_attitude( nAttitude_ );
     asn().set_nb_humains_morts( nNbrDeadHumans_ );
     asn().set_nb_humains_vivants( nNbrAliveHumans_ );

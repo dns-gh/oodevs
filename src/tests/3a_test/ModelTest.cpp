@@ -83,11 +83,11 @@ BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
     MOCK_EXPECT( handler, Handle ).exactly( 2 ).with( boost::bind( &CheckClose, NumericValue( 0.3f ), _1, epsilon ) );
     MOCK_EXPECT( handler, EndTick ).exactly( 4 );
     sword::UnitAttributes attributes;
-    attributes.set_etat_operationnel_brut( 25 );
+    attributes.set_raw_operational_state( 25 );
     {
         Evaluate( *function, MakeMessage( attributes ) );
         Evaluate( *function, MakeMessage( attributes ) );
-        attributes.set_etat_operationnel_brut( 30 );
+        attributes.set_raw_operational_state( 30 );
         Evaluate( *function, MakeMessage( attributes ) );
         Evaluate( *function, MakeMessage( attributes ) );
     }
@@ -115,13 +115,13 @@ BOOST_AUTO_TEST_CASE( Model_TestDispatchedValueExtraction )
     MOCK_EXPECT( handler, EndTick ).exactly( 4 );
     MOCK_EXPECT( keyHandler, EndTick ).exactly( 4 );
     sword::UnitAttributes attributes;
-    attributes.set_etat_operationnel_brut( 25 );
+    attributes.set_raw_operational_state( 25 );
     {
         function->BeginTick();
         function->Receive( MakeMessage( attributes, 1 ) );
         function->Receive( MakeMessage( attributes, 2 ) );
         function->EndTick();
-        attributes.set_etat_operationnel_brut( 30 );
+        attributes.set_raw_operational_state( 30 );
         function->BeginTick();
         function->Receive( MakeMessage( attributes, 1 ) );
         function->Receive( MakeMessage( attributes, 2 ) );

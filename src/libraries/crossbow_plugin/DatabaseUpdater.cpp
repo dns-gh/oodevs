@@ -552,10 +552,10 @@ void DatabaseUpdater::Update( const sword::UnitAttributes& msg )
 
     if( Row_ABC* row = table->Find( query.str() ) )
     {
-        if( msg.has_vitesse() )
-            row->SetField( "speed", FieldVariant( msg.vitesse() ) );
-        if( msg.has_etat_operationnel_brut() )
-            row->SetField( "op_state", FieldVariant( msg.etat_operationnel_brut() ) );
+        if( msg.has_speed() )
+            row->SetField( "speed", FieldVariant( msg.speed() ) );
+        if( msg.has_raw_operational_state() )
+            row->SetField( "op_state", FieldVariant( msg.raw_operational_state() ) );
         if( msg.has_direction() )
             row->SetField( "direction", FieldVariant( msg.direction().heading() ) );
         if( msg.has_position() )
@@ -583,8 +583,8 @@ void DatabaseUpdater::Update( const sword::UnitKnowledgeUpdate& msg )
             row->SetField( "direction", FieldVariant( msg.direction().heading() ) );
         if( msg.has_identification_level() )
             row->SetField( "identification_level", FieldVariant( msg.identification_level() ) );
-        if( msg.has_mort() )
-            row->SetField( "dead", FieldVariant( msg.mort() ) );
+        if( msg.has_dead() )
+            row->SetField( "dead", FieldVariant( msg.dead() ) );
         if( msg.has_max_identification_level() )
             UpdateSymbol( *row, model_.AgentKnowledges(), msg.knowledge().id() );
         if( msg.has_position() )

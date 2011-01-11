@@ -74,9 +74,9 @@ void PopulationFlowKnowledge::Update( const sword::CrowdFlowKnowledgeUpdate& msg
         nDirection_ = msg.direction().heading();
         optionals_.directionPresent = 1;
     }
-    if( msg.has_vitesse() )
+    if( msg.has_speed() )
     {
-        nSpeed_ = msg.vitesse();
+        nSpeed_ = msg.speed();
         optionals_.vitessePresent = 1;
     }
     if( msg.has_attitude() )
@@ -137,7 +137,7 @@ void PopulationFlowKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) c
     if( optionals_.directionPresent )
         asn().mutable_direction()->set_heading( nDirection_ );
     if( optionals_.vitessePresent )
-        asn().set_vitesse( nSpeed_ );
+        asn().set_speed( nSpeed_ );
     if( optionals_.nb_humains_mortsPresent )
         asn().set_nb_humains_morts( nNbrDeadHumans_ );
     if( optionals_.nb_humains_vivantsPresent )

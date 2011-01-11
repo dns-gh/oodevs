@@ -36,12 +36,12 @@ Resources::Resources( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 int Resources::Extract( const sword::UnitAttributes& attributes )
 {
-    unsigned size = attributes.dotation_eff_ressource().elem_size();
+    unsigned size = attributes.resource_dotations().elem_size();
     while( size > 0 )
     {
         --size;
-        const int dotation = attributes.dotation_eff_ressource().elem( size ).type().id();
-        const int quantity = attributes.dotation_eff_ressource().elem( size ).quantity();
+        const int dotation = attributes.resource_dotations().elem( size ).type().id();
+        const int quantity = attributes.resource_dotations().elem( size ).quantity();
         if( filter_.IsAllowed( dotation ) )
             resources_[ dotation ] = quantity;
     }

@@ -243,37 +243,37 @@ void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKn
 // Name: DEC_Knowledge_AgentDataDetection::SendFullState
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::SendFullState( sword::UnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataDetection::SendFullState( sword::UnitKnowledgeUpdate& msg ) const
 {
-    NET_ASN_Tools::WritePoint( vPosition_, *asnMsg.mutable_position() );
-    NET_ASN_Tools::WriteDirection( vDirection_, *asnMsg.mutable_direction() );
-    asnMsg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
-    asnMsg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
-    asnMsg.set_prisonnier( bPrisoner_ );
-    asnMsg.set_refugie_pris_en_compte( bRefugeeManaged_ );
-    asnMsg.set_mort( bDead_ );
+    NET_ASN_Tools::WritePoint( vPosition_, *msg.mutable_position() );
+    NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
+    msg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
+    msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
+    msg.set_prisoner( bPrisoner_ );
+    msg.set_refugees_managed( bRefugeeManaged_ );
+    msg.set_dead( bDead_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::SendChangedState
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::SendChangedState( sword::UnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataDetection::SendChangedState( sword::UnitKnowledgeUpdate& msg ) const
 {
     if( bPositionUpdated_ )
-        NET_ASN_Tools::WritePoint( vPosition_, *asnMsg.mutable_position() );
+        NET_ASN_Tools::WritePoint( vPosition_, *msg.mutable_position() );
     if( bDirectionUpdated_ )
-        NET_ASN_Tools::WriteDirection( vDirection_, *asnMsg.mutable_direction() );
+        NET_ASN_Tools::WriteDirection( vDirection_, *msg.mutable_direction() );
     if( bSpeedUpdated_ )
-        asnMsg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
+        msg.set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     if( bSurrenderedUpdated_ )
-        asnMsg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
+        msg.mutable_surrendered_unit()->set_id( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
     if( bPrisonerUpdated_ )
-        asnMsg.set_prisonnier( bPrisoner_ );
+        msg.set_prisoner( bPrisoner_ );
     if( bRefugeeManagedUpdated_ )
-        asnMsg.set_refugie_pris_en_compte( bRefugeeManaged_ );
+        msg.set_refugees_managed( bRefugeeManaged_ );
     if( bDeadUpdated_ )
-        asnMsg.set_mort( bDead_ );
+        msg.set_dead( bDead_ );
 }
 
 // -----------------------------------------------------------------------------

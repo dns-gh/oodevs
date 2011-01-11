@@ -55,14 +55,14 @@ void HumanFactors::CreateDictionary( kernel::PropertiesDictionary& dictionary ) 
 // -----------------------------------------------------------------------------
 void HumanFactors::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_moral()  )
-        morale_ = (E_UnitMorale)message.moral();
+    if( message.has_morale()  )
+        morale_ = (E_UnitMorale)message.morale();
 
     if( message.has_experience()  )
         experience_ = (E_UnitExperience)message.experience();
 
-    if( message.has_fatigue()  )
-        tiredness_ = (E_UnitTiredness)message.fatigue();
+    if( message.has_tiredness()  )
+        tiredness_ = (E_UnitTiredness)message.tiredness();
 
     controller_.Update( *(HumanFactors_ABC*)this );
 }

@@ -53,11 +53,11 @@ void AgentNotifier::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_position()  )
         controller_.Update( AgentMoved( agent_ ) );
-    if( message.has_etat_operationnel()  )
+    if( message.has_operational_state()  )
         controller_.Update( OperationalStateChanged( agent_ ) );
-    if( message.has_rapport_de_force() )
+    if( message.has_force_ratio() )
         controller_.Update( ForceRatioChanged( agent_ ) );
-    if( message.has_embarque() )
+    if( message.has_embarked() )
         controller_.Update( MountedStateChanged( agent_ ) );
 }
 

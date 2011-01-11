@@ -53,7 +53,7 @@ TicExtension::~TicExtension()
 // -----------------------------------------------------------------------------
 void TicExtension::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_dotation_eff_materiel() )
+    if( message.has_equipment_dotations() )
         UpdatePlatforms( message );
 
     if( message.has_altitude() )
@@ -124,8 +124,8 @@ void TicExtension::CreatePlatforms( float timeStep )
 // -----------------------------------------------------------------------------
 void TicExtension::UpdatePlatforms( const sword::UnitAttributes& message )
 {
-    for( int i = 0; i < message.dotation_eff_materiel().elem_size(); ++i )
-        UpdatePlatforms( message.dotation_eff_materiel().elem(i) );
+    for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
+        UpdatePlatforms( message.equipment_dotations().elem(i) );
 }
 
 // -----------------------------------------------------------------------------

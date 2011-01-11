@@ -139,10 +139,10 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_direction() )
         nDirection_ = message.direction().heading();
 
-    UPDATE_ASN_ATTRIBUTE( hauteur  , nHeight_    );
-    UPDATE_ASN_ATTRIBUTE( altitude , nAltitude_  );
-    UPDATE_ASN_ATTRIBUTE( vitesse  , nSpeed_     );
-    UPDATE_ASN_ATTRIBUTE( etat_operationnel_brut, nOperationalStateValue_ );
+    UPDATE_ASN_ATTRIBUTE( height, nHeight_ );
+    UPDATE_ASN_ATTRIBUTE( altitude, nAltitude_ );
+    UPDATE_ASN_ATTRIBUTE( speed, nSpeed_ );
+    UPDATE_ASN_ATTRIBUTE( raw_operational_state, nOperationalStateValue_ );
 
     if( message.has_reinforcements() )
     {
@@ -157,29 +157,29 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_reinforced_unit() )
         pReinforced_ = message.reinforced_unit().id() == 0 ? 0 : &model_.Agents().Get( message.reinforced_unit().id() );
 
-    UPDATE_ASN_ATTRIBUTE( mort, bDead_ );
-    UPDATE_ASN_ATTRIBUTE( neutralise, bNeutralized_ );
-    UPDATE_ASN_ATTRIBUTE( mode_furtif_actif, bStealthModeEnabled_ );
-    UPDATE_ASN_ATTRIBUTE( embarque, isMounted_ );
-    UPDATE_ASN_ATTRIBUTE( transporteurs_disponibles, bHumanTransportersAvailable_ );
-    UPDATE_ASN_ATTRIBUTE( posture_old, nLastPosture_ );
-    UPDATE_ASN_ATTRIBUTE( posture_new, nCurrentPosture_ );
-    UPDATE_ASN_ATTRIBUTE( posture_pourcentage, nPostureCompletion_ );
-    UPDATE_ASN_ATTRIBUTE( etat_installation, nInstallationState_ );
-    UPDATE_ASN_ATTRIBUTE( en_tenue_de_protection_nbc, bNbcProtectionSuitEnabled_ );
+    UPDATE_ASN_ATTRIBUTE( dead                  , bDead_ );
+    UPDATE_ASN_ATTRIBUTE( neutralized           , bNeutralized_ );
+    UPDATE_ASN_ATTRIBUTE( stealth               , bStealthModeEnabled_ );
+    UPDATE_ASN_ATTRIBUTE( embarked              , isMounted_ );
+    UPDATE_ASN_ATTRIBUTE( transporters_available, bHumanTransportersAvailable_ );
+    UPDATE_ASN_ATTRIBUTE( old_posture           , nLastPosture_ );
+    UPDATE_ASN_ATTRIBUTE( new_posture           , nCurrentPosture_ );
+    UPDATE_ASN_ATTRIBUTE( posture_transition    , nPostureCompletion_ );
+    UPDATE_ASN_ATTRIBUTE( installation          , nInstallationState_ );
+    UPDATE_ASN_ATTRIBUTE( protective_suits      , bNbcProtectionSuitEnabled_ );
 
-    if( message.has_etat_contamination() )
+    if( message.has_contamination_state() )
     {
-        if( message.etat_contamination().has_percentage() )
-            contaminationPercentage_ = message.etat_contamination().percentage();
-        if( message.etat_contamination().has_quantity() )
-            contaminationQuantity_   = message.etat_contamination().quantity();
+        if( message.contamination_state().has_percentage() )
+            contaminationPercentage_ = message.contamination_state().percentage();
+        if( message.contamination_state().has_quantity() )
+            contaminationQuantity_   = message.contamination_state().quantity();
     }
-    if( message.has_contamine_par_agents_nbc() )
+    if( message.has_contamination_agents() )
     {
         nbcAgentTypesContaminating_.clear();
-        for( int i = 0; i < message.contamine_par_agents_nbc().elem_size(); ++i )
-            nbcAgentTypesContaminating_.push_back( message.contamine_par_agents_nbc().elem( i ).id() );
+        for( int i = 0; i < message.contamination_agents().elem_size(); ++i )
+            nbcAgentTypesContaminating_.push_back( message.contamination_agents().elem( i ).id() );
     }
     if( message.has_communications() )
     {
@@ -191,7 +191,7 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
 
     UPDATE_ASN_ATTRIBUTE( radio_emitter_disabled, bRadioEmitterEnabled_ );
     UPDATE_ASN_ATTRIBUTE( radio_receiver_disabled, bRadioRecieverEnabled_ );
-    UPDATE_ASN_ATTRIBUTE( radar_actif, bRadarEnabled_ );
+    UPDATE_ASN_ATTRIBUTE( radar_active, bRadarEnabled_ );
 
     if( message.has_transported_units() )
     {
@@ -206,27 +206,27 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_transporting_unit() )
         pTransporter_ = message.transporting_unit().id() == 0 ? 0 : &model_.Agents().Get( message.transporting_unit().id() );
 
-    UPDATE_ASN_ATTRIBUTE( rapport_de_force, nForceRatioState_ );
-    UPDATE_ASN_ATTRIBUTE( combat_de_rencontre, nCloseCombatState_ );
-    UPDATE_ASN_ATTRIBUTE( etat_operationnel, nOperationalState_ );
-    UPDATE_ASN_ATTRIBUTE( disponibilite_au_tir_indirect, nIndirectFireAvailability_ );
-    UPDATE_ASN_ATTRIBUTE( roe, nRoe_ );
-    UPDATE_ASN_ATTRIBUTE( roe_crowd, nPopulationRoe_ );
-    UPDATE_ASN_ATTRIBUTE( fatigue, nTiredness_ );
-    UPDATE_ASN_ATTRIBUTE( moral, nMorale_ );
+    UPDATE_ASN_ATTRIBUTE( force_ratio               , nForceRatioState_ );
+    UPDATE_ASN_ATTRIBUTE( meeting_engagement        , nCloseCombatState_ );
+    UPDATE_ASN_ATTRIBUTE( operational_state         , nOperationalState_ );
+    UPDATE_ASN_ATTRIBUTE( indirect_fire_availability, nIndirectFireAvailability_ );
+    UPDATE_ASN_ATTRIBUTE( roe                       , nRoe_ );
+    UPDATE_ASN_ATTRIBUTE( roe_crowd                 , nPopulationRoe_ );
+    UPDATE_ASN_ATTRIBUTE( tiredness                 , nTiredness_ );
+    UPDATE_ASN_ATTRIBUTE( morale                    , nMorale_ );
     UPDATE_ASN_ATTRIBUTE( experience, nExperience_ );
 
     if( message.has_surrendered_unit()  )
         pSideSurrenderedTo_ = message.surrendered_unit().id() == 0 ? 0 : &model_.Sides().Get( message.surrendered_unit().id() );
 
-    UPDATE_ASN_ATTRIBUTE( prisonnier, bPrisonner_ );
-    UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte, bRefugeeManaged_ );
+    UPDATE_ASN_ATTRIBUTE( prisoner        , bPrisonner_ );
+    UPDATE_ASN_ATTRIBUTE( refugees_managed, bRefugeeManaged_ );
 
-    if( message.has_dotation_eff_materiel()  )
+    if( message.has_equipment_dotations()  )
     {
-        for( int i = 0; i < message.dotation_eff_materiel().elem_size(); ++i )
+        for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
         {
-            const sword::EquipmentDotations_EquipmentDotation& asn = message.dotation_eff_materiel().elem( i );
+            const sword::EquipmentDotations_EquipmentDotation& asn = message.equipment_dotations().elem( i );
             Equipment* pEquipment = equipments_.Find( asn.type().id() );
             if( pEquipment )
                 pEquipment->Update( asn );
@@ -238,11 +238,11 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         }
     }
 
-    if( message.has_dotation_eff_personnel() )
+    if( message.has_human_dotations() )
     {
-        for( int i = 0; i < message.dotation_eff_personnel().elem_size(); ++i )
+        for( int i = 0; i < message.human_dotations().elem_size(); ++i )
         {
-            const sword::HumanDotations_HumanDotation& asn = message.dotation_eff_personnel().elem( i );
+            const sword::HumanDotations_HumanDotation& asn = message.human_dotations().elem( i );
             Humans* pHumans = troops_.Find( asn.rang() );
             if( pHumans )
                 pHumans->Update( asn );
@@ -254,11 +254,11 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         }
     }
 
-    if( message.has_dotation_eff_ressource() )
+    if( message.has_resource_dotations() )
     {
-        for( int i = 0; i < message.dotation_eff_ressource().elem_size(); ++i )
+        for( int i = 0; i < message.resource_dotations().elem_size(); ++i )
         {
-            const sword::ResourceDotations_ResourceDotation& asn = message.dotation_eff_ressource().elem().Get(i);
+            const sword::ResourceDotations_ResourceDotation& asn = message.resource_dotations().elem().Get(i);
             Dotation* pDotation = dotations_.Find( asn.type().id() );
             if( pDotation )
                 pDotation->Update( asn );
@@ -270,22 +270,22 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         }
     }
 
-    if( message.has_equipements_pretes() )
+    if( message.has_lent_equipments() )
     {
         lendings_.DeleteAll();
-        for( int i = 0; i < message.equipements_pretes().elem_size(); ++i )
+        for( int i = 0; i < message.lent_equipments().elem_size(); ++i )
         {
-            Loan* loan = new Loan( model_, message.equipements_pretes().elem( i ) );
+            Loan* loan = new Loan( model_, message.lent_equipments().elem( i ) );
             lendings_.Register( i, *loan );
         }
     }
 
-    if( message.has_equipements_empruntes() )
+    if( message.has_borrowed_equipments() )
     {
         borrowings_.DeleteAll();
-        for( int i = 0; i < message.equipements_empruntes().elem_size(); ++i )
+        for( int i = 0; i < message.borrowed_equipments().elem_size(); ++i )
         {
-            Loan* loan = new Loan( model_, message.equipements_empruntes().elem( i ) );
+            Loan* loan = new Loan( model_, message.borrowed_equipments().elem( i ) );
             borrowings_.Register( i, *loan );
         }
     }
@@ -395,10 +395,10 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().mutable_position()->set_latitude( position_.X() );
         asn().mutable_position()->set_longitude( position_.Y() );
         asn().mutable_direction()->set_heading( nDirection_ );
-        asn().set_hauteur( nHeight_ );
+        asn().set_height( nHeight_ );
         asn().set_altitude( nAltitude_ );
-        asn().set_vitesse( nSpeed_ );
-        asn().set_etat_operationnel_brut( nOperationalStateValue_ );
+        asn().set_speed( nSpeed_ );
+        asn().set_raw_operational_state( nOperationalStateValue_ );
 
         {
             for( tools::Iterator< const kernel::Agent_ABC& > it = reinforcements_.CreateIterator(); it.HasMoreElements(); )
@@ -406,66 +406,66 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         }
 
         asn().mutable_reinforced_unit()->set_id( pReinforced_ ? pReinforced_->GetId() : 0 );
-        asn().set_mort( bDead_ );
-        asn().set_neutralise( bNeutralized_ );
-        asn().set_mode_furtif_actif( bStealthModeEnabled_ );
-        asn().set_embarque( isMounted_ );
-        asn().set_transporteurs_disponibles( bHumanTransportersAvailable_ );
-        asn().set_posture_old( nLastPosture_ );
-        asn().set_posture_new( nCurrentPosture_ );
-        asn().set_posture_pourcentage( nPostureCompletion_ );
-        asn().set_etat_installation( nInstallationState_ );
-        asn().set_en_tenue_de_protection_nbc( bNbcProtectionSuitEnabled_ );
+        asn().set_dead( bDead_ );
+        asn().set_neutralized( bNeutralized_ );
+        asn().set_stealth( bStealthModeEnabled_ );
+        asn().set_embarked( isMounted_ );
+        asn().set_transporters_available( bHumanTransportersAvailable_ );
+        asn().set_old_posture( nLastPosture_ );
+        asn().set_new_posture( nCurrentPosture_ );
+        asn().set_posture_transition( nPostureCompletion_ );
+        asn().set_installation( nInstallationState_ );
+        asn().set_protective_suits( bNbcProtectionSuitEnabled_ );
         {
             for( std::vector< unsigned int >::const_iterator it = nbcAgentTypesContaminating_.begin(); it != nbcAgentTypesContaminating_.end(); ++it )
             {
-                sword::NBCAgentType& data = *asn().mutable_contamine_par_agents_nbc()->add_elem();
+                sword::NBCAgentType& data = *asn().mutable_contamination_agents()->add_elem();
                 data.set_id( *it );
             }
         }
-        asn().mutable_etat_contamination()->set_percentage( contaminationPercentage_ );
-        asn().mutable_etat_contamination()->set_quantity( contaminationQuantity_ );
+        asn().mutable_contamination_state()->set_percentage( contaminationPercentage_ );
+        asn().mutable_contamination_state()->set_quantity( contaminationQuantity_ );
         asn().mutable_communications()->set_jammed( communicationJammed_ );
         asn().mutable_communications()->mutable_knowledge_group()->set_id( knowledgeGroupJammed_ );
         asn().set_radio_emitter_disabled( bRadioEmitterEnabled_ );
         asn().set_radio_receiver_disabled( bRadioRecieverEnabled_ );
-        asn().set_radar_actif( bRadarEnabled_ );
+        asn().set_radar_active( bRadarEnabled_ );
         {
             for( tools::Iterator< const kernel::Agent_ABC& > it = transportedAgents_.CreateIterator(); it.HasMoreElements(); )
                 asn().mutable_transported_units()->add_elem()->set_id( it.NextElement().GetId() );
         }
         asn().mutable_transporting_unit()->set_id( pTransporter_ ? pTransporter_->GetId() : 0 );
-        asn().set_rapport_de_force( nForceRatioState_ );
-        asn().set_combat_de_rencontre( nCloseCombatState_ );
-        asn().set_etat_operationnel( nOperationalState_ );
-        asn().set_disponibilite_au_tir_indirect( nIndirectFireAvailability_ );
+        asn().set_force_ratio( nForceRatioState_ );
+        asn().set_meeting_engagement( nCloseCombatState_ );
+        asn().set_operational_state( nOperationalState_ );
+        asn().set_indirect_fire_availability( nIndirectFireAvailability_ );
         asn().set_roe( nRoe_ );
         asn().set_roe_crowd( nPopulationRoe_ );
-        asn().set_fatigue( nTiredness_ );
-        asn().set_moral( nMorale_ );
+        asn().set_tiredness( nTiredness_ );
+        asn().set_morale( nMorale_ );
         asn().set_experience( nExperience_ );
         asn().mutable_surrendered_unit()->set_id( pSideSurrenderedTo_ ? pSideSurrenderedTo_->GetId() : 0 );
-        asn().set_prisonnier( bPrisonner_ );
-        asn().set_refugie_pris_en_compte( bRefugeeManaged_ );
+        asn().set_prisoner( bPrisonner_ );
+        asn().set_refugees_managed( bRefugeeManaged_ );
         {
             for( tools::Iterator< const Equipment& > it = equipments_.CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().Send( *asn().mutable_dotation_eff_materiel()->add_elem() );
+                it.NextElement().Send( *asn().mutable_equipment_dotations()->add_elem() );
         }
         {
             for( tools::Iterator< const Humans& > it = troops_.CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().Send( *asn().mutable_dotation_eff_personnel()->add_elem() );
+                it.NextElement().Send( *asn().mutable_human_dotations()->add_elem() );
         }
         {
             for( tools::Iterator< const Dotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().Send( *asn().mutable_dotation_eff_ressource()->add_elem() );
+                it.NextElement().Send( *asn().mutable_resource_dotations()->add_elem() );
         }
         {
             for( tools::Iterator< const Loan& > it = borrowings_.CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().Send( *asn().mutable_equipements_empruntes()->add_elem() );
+                it.NextElement().Send( *asn().mutable_borrowed_equipments()->add_elem() );
         }
         {
             for( tools::Iterator< const Loan& > it = lendings_.CreateIterator(); it.HasMoreElements(); )
-                it.NextElement().Send( *asn().mutable_equipements_pretes()->add_elem() );
+                it.NextElement().Send( *asn().mutable_lent_equipments()->add_elem() );
         }
         for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
         {

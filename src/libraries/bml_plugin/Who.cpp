@@ -65,9 +65,9 @@ namespace
     // $$$$ SBO 2008-07-24: hack to force update of real entities
     int ComputeLevel( const sword::UnitAttributes& attributes )
     {
-        return attributes.has_etat_operationnel()
-            || attributes.has_dotation_eff_materiel()
-            || attributes.has_dotation_eff_personnel()
+        return attributes.has_operational_state()
+            || attributes.has_equipment_dotations()
+            || attributes.has_human_dotations()
             ? sword::identified : -1;
     }
 }
@@ -164,13 +164,13 @@ void Who::SendEquipmentStatus( xml::xostream& xos ) const
     if( !agent_ )
         return;
     xos << xml::start( "jc3iedm:ObjectItemCapabilityInObjectItemList" );
-    if( attributes_->has_dotation_eff_materiel() )
+    if( attributes_->has_equipment_dotations() )
     {
         AvailabilityComputer computer;
         agent_->Equipments().Apply( boost::bind( &AvailabilityComputer::AddEquipment, boost::ref( computer ), _1 ) );
         SerializeAvailability( "SPLC2", xos, computer.Percentage() );
     }
-    if( attributes_->has_dotation_eff_personnel() )
+    if( attributes_->has_human_dotations() )
     {
         AvailabilityComputer computer;
         agent_->Troops().Apply( boost::bind( &AvailabilityComputer::AddHuman, boost::ref( computer ), _1 ) );

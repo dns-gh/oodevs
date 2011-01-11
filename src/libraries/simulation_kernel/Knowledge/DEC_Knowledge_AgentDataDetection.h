@@ -74,8 +74,8 @@ public:
     //! @name Network
     //@{
     bool HasChanged() const;
-    void SendChangedState( sword::UnitKnowledgeUpdate& asnMsg ) const;
-    void SendFullState( sword::UnitKnowledgeUpdate& asnMsg ) const;
+    void SendChangedState( sword::UnitKnowledgeUpdate& msg ) const;
+    void SendFullState( sword::UnitKnowledgeUpdate& msg ) const;
     //@}
 
 private:

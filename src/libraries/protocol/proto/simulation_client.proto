@@ -592,9 +592,9 @@ message ForceRatio {
 message AutomatAttributes {
    required AutomatId                   automat               = 1; //!< The automat identifier @see AutomatId
    optional EnumAutomatMode             etat_automate         = 2; //!< The automat mode @see EnumAutomatMode @todo translate
-   optional ForceRatio.Value            rapport_de_force      = 3; //!< The automat force ratio @see ForceRatio @todo translate
-   optional EnumMeetingEngagementStatus combat_de_rencontre   = 4; //!< @todo What's this ?
-   optional EnumOperationalStatus       etat_operationnel     = 5; //!< The automat operational status @todo translate
+   optional ForceRatio.Value            force_ratio           = 3; //!< The automat force ratio @see ForceRatio
+   optional EnumMeetingEngagementStatus meeting_engagement   = 4; //!< @todo What's this ?
+   optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational status @todo translate
    optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement @see RulesOfEngagement
    optional AutomatId                   tc2_organic           = 7; //!< @todo What's this ?
    optional ParentEntity                logistic_base_organic = 8; //!< @todo What's this ?
@@ -724,9 +724,10 @@ message NBCAgents {
 /** @struct Communication
     @brief A communication message
     @todo move into UnitAttributes
+    @todo rename to Communications with an s
 */
 message Communication {
-    optional bool              jammed          = 1; //!< Whether the communication is jammed or not
+    optional bool              jammed          = 1; //!< Whether the communications are jammed or not
     optional KnowledgeGroupId  knowledge_group = 2; //!< The knowledge group identifier @see KnowledgeGroupId
 }
 
@@ -776,55 +777,55 @@ message UnitAttributes {
     enum CrowdRoe {
         none                                      = 0; //!< No rule @todo rename to no_rule
         emploi_force_interdit                     = 1; //!< Coercion forbidden @todo passive
-        maintien_a_distance_par_moyens_non_letaux = 2; //!< Hold back civilians by usage of non lethal means @todo translate @todo non_lethal_force
-        dispersion_par_moyens_de_defense_actifs   = 3; //!< Disperse civilians by active defense means @todo translate @todo active_defense
+        maintien_a_distance_par_moyens_non_letaux = 2; //!< Hold back civilians by usage of non lethal means @todo translate @todo non_lethal_force ? hold_back ?
+        dispersion_par_moyens_de_defense_actifs   = 3; //!< Disperse civilians by active defense means @todo translate @todo active_defense ? disperse ?
         armes_letales_autorisees                  = 4; //!< Lethal weapons authorized for use @todo lethal_force
     }
-    required UnitId                      unit                          = 1;  //!< The unit identifier @see UnitId
-    optional HumanDotations              dotation_eff_personnel        = 2;  //!< The human dotations @see HumanDotations @todo _eff_ ?
-    optional EquipmentDotations          dotation_eff_materiel         = 3;  //!< The equipment dotations @see EquipmentDotations @todo _eff_ ?
-    optional ResourceDotations           dotation_eff_ressource        = 4;  //!< The resource dotations @see ResourceDotations @todo _eff_ ?
-    optional LentEquipments              equipements_pretes            = 5;  //!< The lent equipments @see LentEquipments @todo translate
-    optional BorrowedEquipments          equipements_empruntes         = 6;  //!< The borrowed equipments @see LentEquipments @todo translate
-    optional CoordLatLong                position                      = 7;  //!< The current position @see CoordLatLong
-    optional Heading                     direction                     = 8;  //!< The current heading @see CoordLatLong @todo rename to heading
-    optional int32                       hauteur                       = 9;  //!< The current height from the ground in meters
-    optional int32                       altitude                      = 10; //!< The current altitude on the geoid model of the earth in meters
-    optional int32                       vitesse                       = 11; //!< The current speed in kilometers per hour @todo rename to speed
-    optional int32                       etat_operationnel_brut        = 12; //!< @todo What's this ?
-    optional UnitIdList                  reinforcements                = 13; //!< The reinforcements @see UnitIdList
-    optional UnitId                      reinforced_unit               = 14; //!< The reinforced unit @see UnitId
-    optional bool                        mort                          = 15; //!< Whether the unit is dead or not @todo rename to dead
-    optional bool                        neutralise                    = 16; //!< Whether the unit has been neutralized or not @todo rename to neutralized
-    optional bool                        mode_furtif_actif             = 17; //!< Whether the unit is in stealth mode @todo rename to stealth
-    optional bool                        embarque                      = 18; //!< Whether the unit has been embarked or not @todo rename to embarked
-    optional bool                        transporteurs_disponibles     = 19; //!< Whether the unit has carriers available @todo rename to carriers_available
-    optional Posture                     posture_old                   = 20; //!< The posture which the unit is transitioning from @see Posture @todo rename to old_posture
-    optional Posture                     posture_new                   = 21; //!< The posture which the unit is transitioning to @see Posture @todo rename to new_posture
-    optional int32                       posture_pourcentage           = 22; //!< The completion of the posture transition in percent
-    optional int32                       etat_installation             = 23; //!< @todo What's this ?
-    optional bool                        en_tenue_de_protection_nbc    = 24; //!< Whether the unit is wearing NBC protective suits or not @todo translate
-    optional NBCAgents                   contamine_par_agents_nbc      = 25; //!< The NBC contamination @see NBCAgents
-    optional ContaminationState          etat_contamination            = 26; //!< The contamination state @todo Is this more than NBC ? @todo translate
-    optional Communication               communications                = 27; //!< The communication state @todo rename to communication without the s
-    optional bool                        radio_emitter_disabled        = 28; //!< Whether the radio emitter is disabled or not @todo change this to enabled ?
-    optional bool                        radio_receiver_disabled       = 29; //!< Whether the radio receiver is disabled or not @todo change this to enabled ?
-    optional bool                        radar_actif                   = 30; //!< Whether the radar is active or not @todo rename to radar_active
-    optional UnitIdList                  transported_units             = 31; //!< The transported units @see UnitIdList
-    optional UnitId                      transporting_unit             = 32; //!< The transporting unit @see UnitId
-    optional ForceRatio.Value            rapport_de_force              = 33; //!< The force ratio @see ForceRatio @todo translate to force_ratio
-    optional EnumMeetingEngagementStatus combat_de_rencontre           = 34; //!< The meeting engagement status @see EnumMeetingEngagementStatus @todo translate
-    optional EnumOperationalStatus       etat_operationnel             = 35; //!< The operational state @see EnumOperationalStatus @todo translate
-    optional FireAvailability            disponibilite_au_tir_indirect = 36; //!< The indirect fire availability @see FireAvailability @todo translate
-    optional RulesOfEngagement.Value     roe                           = 37; //!< The rules of engagement @see RulesOfEngagement @todo rename to rules_of_engagement
-    optional CrowdRoe                    roe_crowd                     = 38; //!< The rules of engagement against crowds @see CrowdRoe @todo rename to ?
-    optional EnumUnitTiredness           fatigue                       = 39; //!< The tiredness @see EnumUnitTiredness @todo rename to tiredness
-    optional EnumUnitMorale              moral                         = 40; //!< The moral @see EnumUnitMorale @todo rename to morale
-    optional EnumUnitExperience          experience                    = 41; //!< The experience @see EnumUnitExperience
-    optional UnitId                      surrendered_unit              = 42; //!< The unit to which this unit has surrendered @see UnitId
-    optional bool                        prisonnier                    = 43; //!< Whether the unit has been made prisonner @todo rename prisonner
-    optional bool                        refugie_pris_en_compte        = 44; //!< @todo What's this ? @todo translate
-    optional Extension                   extension                     = 45; //!< @todo What's this ?
+    required UnitId                      unit                       = 1;  //!< The unit identifier @see UnitId
+    optional HumanDotations              human_dotations            = 2;  //!< The human dotations @see HumanDotations
+    optional EquipmentDotations          equipment_dotations        = 3;  //!< The equipment dotations @see EquipmentDotations
+    optional ResourceDotations           resource_dotations         = 4;  //!< The resource dotations @see ResourceDotations
+    optional LentEquipments              lent_equipments            = 5;  //!< The lent equipments @see LentEquipments
+    optional BorrowedEquipments          borrowed_equipments        = 6;  //!< The borrowed equipments @see BorrowedEquipments
+    optional CoordLatLong                position                   = 7;  //!< The current position @see CoordLatLong
+    optional Heading                     direction                  = 8;  //!< The current heading @see Heading @todo rename to heading
+    optional int32                       height                     = 9;  //!< The current height from the ground in meters
+    optional int32                       altitude                   = 10; //!< The current altitude on the geoid model of the earth in meters
+    optional int32                       speed                      = 11; //!< The current speed in kilometers per hour
+    optional int32                       raw_operational_state      = 12; //!< The operational state as a percentage
+    optional UnitIdList                  reinforcements             = 13; //!< The reinforcements @see UnitIdList
+    optional UnitId                      reinforced_unit            = 14; //!< The reinforced unit @see UnitId
+    optional bool                        dead                       = 15; //!< Whether the unit is dead or not
+    optional bool                        neutralized                = 16; //!< Whether the unit has been neutralized or not
+    optional bool                        stealth                    = 17; //!< Whether the unit is in stealth mode
+    optional bool                        embarked                   = 18; //!< Whether the unit has been embarked or not
+    optional bool                        transporters_available     = 19; //!< Whether the unit has human transporters available or not
+    optional Posture                     old_posture                = 20; //!< The posture which the unit is transitioning from @see Posture @todo rename to old_posture
+    optional Posture                     new_posture                = 21; //!< The posture which the unit is transitioning to @see Posture @todo rename to new_posture
+    optional int32                       posture_transition         = 22; //!< The completion of the posture transition in percent
+    optional int32                       installation               = 23; //!< The completion of the installation in percent
+    optional bool                        protective_suits           = 24; //!< Whether the unit is wearing NBC protective suits or not
+    optional NBCAgents                   contamination_agents       = 25; //!< The NBC contamination agents @see NBCAgents
+    optional ContaminationState          contamination_state        = 26; //!< The NBC contamination state @see ContaminationState
+    optional Communication               communications             = 27; //!< The communication state @see Communication
+    optional bool                        radio_emitter_disabled     = 28; //!< Whether the radio emitter is disabled or not
+    optional bool                        radio_receiver_disabled    = 29; //!< Whether the radio receiver is disabled or not
+    optional bool                        radar_active               = 30; //!< Whether the radar is active or not
+    optional UnitIdList                  transported_units          = 31; //!< The transported units @see UnitIdList
+    optional UnitId                      transporting_unit          = 32; //!< The transporting unit @see UnitId
+    optional ForceRatio.Value            force_ratio                = 33; //!< The force ratio @see ForceRatio
+    optional EnumMeetingEngagementStatus meeting_engagement         = 34; //!< The meeting engagement status @see EnumMeetingEngagementStatus
+    optional EnumOperationalStatus       operational_state          = 35; //!< The operational state @see EnumOperationalStatus
+    optional FireAvailability            indirect_fire_availability = 36; //!< The indirect fire availability @see FireAvailability
+    optional RulesOfEngagement.Value     roe                        = 37; //!< The rules of engagement @see RulesOfEngagement @todo rename to rules_of_engagement
+    optional CrowdRoe                    roe_crowd                  = 38; //!< The rules of engagement against crowds @see CrowdRoe @todo rename to ?
+    optional EnumUnitTiredness           tiredness                  = 39; //!< The tiredness @see EnumUnitTiredness
+    optional EnumUnitMorale              morale                     = 40; //!< The morale @see EnumUnitMorale
+    optional EnumUnitExperience          experience                 = 41; //!< The experience @see EnumUnitExperience
+    optional UnitId                      surrendered_unit           = 42; //!< The unit to which this unit has surrendered @see UnitId
+    optional bool                        prisoner                   = 43; //!< Whether the unit has been made prisoner or not
+    optional bool                        refugees_managed           = 44; //!< Whether refugees are being handled by the unit or not
+    optional Extension                   extension                  = 45; //!< @todo What's this ?
 }
 
 message UnitPathFind {
@@ -874,7 +875,7 @@ message UnitKnowledgeUpdate {
     optional EnumUnitIdentificationLevel identification_level     = 4;
     optional EnumUnitIdentificationLevel max_identification_level = 5;
     optional int32                       etat_op                  = 6;
-    optional bool                        mort                     = 7;
+    optional bool                        dead                     = 7;
     optional CoordLatLong                position                 = 8;
     optional Heading                     direction                = 9;
     optional int32                       speed                    = 10;
@@ -882,8 +883,8 @@ message UnitKnowledgeUpdate {
     optional bool                        nature_pc                = 12;
     optional SeqOfAutomatPerception      perception_par_compagnie = 13;
     optional UnitId                      surrendered_unit         = 14;
-    optional bool                        prisonnier               = 15;
-    optional bool                        refugie_pris_en_compte   = 16;
+    optional bool                        prisoner                 = 15;
+    optional bool                        refugees_managed         = 16;
 }
 
 message UnitKnowledgeDestruction {
@@ -1347,7 +1348,7 @@ message CrowdFlowUpdate {
    optional Path              itineraire         = 3;
    optional Path              parts              = 4;
    optional Heading           direction          = 5;
-   optional int32             vitesse            = 6;
+   optional int32             speed              = 6;
    optional int32             nb_humains_vivants = 7;
    optional int32             nb_humains_morts   = 8;
    optional EnumCrowdAttitude attitude           = 9;
@@ -1420,7 +1421,7 @@ message CrowdFlowKnowledgeUpdate {
     optional CrowdFlowId          flow               = 4;
     optional SeqOfFlowPart        portions_flux      = 5;
     optional Heading              direction          = 6;
-    optional int32                vitesse            = 7;
+    optional int32                speed              = 7;
     optional int32                nb_humains_vivants = 8;
     optional int32                nb_humains_morts   = 9;
     optional EnumCrowdAttitude    attitude           = 10;

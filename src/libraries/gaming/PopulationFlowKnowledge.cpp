@@ -82,8 +82,8 @@ void PopulationFlowKnowledge::DoUpdate( const sword::CrowdFlowKnowledgeUpdate& m
         eAttitude_ = ( E_PopulationAttitude )message.attitude();
     if( message.has_direction()  )
         rDirection_ = ( float )message.direction().heading();
-    if( message.has_vitesse()  )
-        rSpeed_ = ( float )message.vitesse();
+    if( message.has_speed()  )
+        rSpeed_ = ( float )message.speed();
     if( message.has_est_percu()  )
         bIsPerceived_ = message.est_percu() != 0;
     if( message.has_nb_humains_vivants()  )

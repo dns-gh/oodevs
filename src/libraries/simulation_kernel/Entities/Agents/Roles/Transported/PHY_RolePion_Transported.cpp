@@ -253,7 +253,7 @@ void PHY_RolePion_Transported::Clean()
 void PHY_RolePion_Transported::SendFullState( client::UnitAttributes& msg ) const
 {
     msg().mutable_transporting_unit()->set_id( pTransporter_ ? pTransporter_->GetID() : 0 );
-    msg().set_transporteurs_disponibles( !HasHumanTransportersToRecover() );
+    msg().set_transporters_available( !HasHumanTransportersToRecover() );
 }
 
 // -----------------------------------------------------------------------------

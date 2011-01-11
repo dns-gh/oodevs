@@ -33,11 +33,11 @@ namespace extractors
     {
         bool HasFlag( const sword::UnitAttributes& attributes ) const
         {
-            return attributes.has_etat_operationnel_brut();
+            return attributes.has_raw_operational_state();
         }
         NumericValue Extract( const sword::UnitAttributes& attributes ) const
         {
-            return NumericValue( attributes.etat_operationnel_brut() * 0.01f );
+            return NumericValue( attributes.raw_operational_state() * 0.01f );
         }
     };
 
@@ -57,11 +57,11 @@ namespace extractors
     {
         bool HasFlag( const sword::UnitAttributes& attributes ) const
         {
-            return attributes.has_embarque();
+            return attributes.has_embarked();
         }
         NumericValue Extract( const sword::UnitAttributes& attributes ) const
         {
-            return NumericValue( attributes.embarque() ? 0.f : 1.f );
+            return NumericValue( attributes.embarked() ? 0.f : 1.f );
         }
     };
 

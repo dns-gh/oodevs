@@ -256,7 +256,7 @@ bool PHY_RoleHLA_Composantes::IsNeutralized() const
 // -----------------------------------------------------------------------------
 void PHY_RoleHLA_Composantes::ChangeStatus( const std::vector< std::string >& statuses )
 {
-    bNeutralized_ = std::find( statuses.begin(), statuses.end(), "neutralise" ) != statuses.end();
+    bNeutralized_ = std::find( statuses.begin(), statuses.end(), "neutralized" ) != statuses.end();
 }
 
 // -----------------------------------------------------------------------------

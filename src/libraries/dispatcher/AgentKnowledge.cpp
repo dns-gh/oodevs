@@ -46,12 +46,12 @@ AgentKnowledge::AgentKnowledge( Model& model, const sword::UnitKnowledgeCreation
     optionals_.identification_levelPresent = 0;
     optionals_.max_identification_levelPresent = 0;
     optionals_.etat_opPresent = 0;
-    optionals_.mortPresent = 0;
+    optionals_.deadPresent = 0;
     optionals_.speedPresent = 0;
     optionals_.nature_pcPresent = 0;
     optionals_.renduPresent = 0;
-    optionals_.prisonnierPresent = 0;
-    optionals_.refugie_pris_en_comptePresent = 0;
+    optionals_.prisonerPresent = 0;
+    optionals_.refugees_managedPresent = 0;
     optionals_.positionPresent = 0;
     optionals_.directionPresent = 0;
     optionals_.campPresent = 0;
@@ -81,7 +81,6 @@ AgentKnowledge::~AgentKnowledge()
     CPP = ##MESSAGE##.##ASN().id();               \
 }
 
-
 #define SEND_ASN_ATTRIBUTE( MESSAGE, ASN, CPP )  \
     if( optionals_.##ASN##Present )    \
     {                                   \
@@ -92,8 +91,7 @@ AgentKnowledge::~AgentKnowledge()
     if ( ##MESSAGE##.has_##ASN##() )    \
 {                                   \
 ##MESSAGE##.mutable_##ASN## ()->set_id( ##CPP## );  \
-}   
-
+}
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::DoUpdate
@@ -105,11 +103,11 @@ void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
     UPDATE_ASN_ATTRIBUTE( message, identification_level    , nPerceptionLevel_    );
     UPDATE_ASN_ATTRIBUTE( message, max_identification_level, nMaxPerceptionLevel_ );
     UPDATE_ASN_ATTRIBUTE( message, etat_op                 , nOperationalState_   );
-    UPDATE_ASN_ATTRIBUTE( message, mort                    , bDead_               );
+    UPDATE_ASN_ATTRIBUTE( message, dead                    , bDead_               );
     UPDATE_ASN_ATTRIBUTE( message, speed                   , nSpeed_              );
     UPDATE_ASN_ATTRIBUTE( message, nature_pc               , bPC_                 );
-    UPDATE_ASN_ATTRIBUTE( message, prisonnier              , bPrisoner_           );
-    UPDATE_ASN_ATTRIBUTE( message, refugie_pris_en_compte  , bRefugeeManaged_     );
+    UPDATE_ASN_ATTRIBUTE( message, prisoner                , bPrisoner_           );
+    UPDATE_ASN_ATTRIBUTE( message, refugees_managed        , bRefugeeManaged_     );
 
     if( message.has_surrendered_unit() )
     {
@@ -163,15 +161,15 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     client::UnitKnowledgeUpdate message;
     message().mutable_knowledge()->set_id( GetId() );
     message().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
-    SEND_ASN_ATTRIBUTE( message(), pertinence              , nRelevance_          );
-    SEND_ASN_ATTRIBUTE( message(), identification_level    , nPerceptionLevel_    );
+    SEND_ASN_ATTRIBUTE( message(), pertinence, nRelevance_ );
+    SEND_ASN_ATTRIBUTE( message(), identification_level, nPerceptionLevel_ );
     SEND_ASN_ATTRIBUTE( message(), max_identification_level, nMaxPerceptionLevel_ );
-    SEND_ASN_ATTRIBUTE( message(), etat_op                 , nOperationalState_   );
-    SEND_ASN_ATTRIBUTE( message(), mort                    , bDead_               );
-    SEND_ASN_ATTRIBUTE( message(), speed                   , nSpeed_              );
-    SEND_ASN_ATTRIBUTE( message(), nature_pc               , bPC_                 );
-    SEND_ASN_ATTRIBUTE( message(), prisonnier              , bPrisoner_           );
-    SEND_ASN_ATTRIBUTE( message(), refugie_pris_en_compte  , bRefugeeManaged_     );
+    SEND_ASN_ATTRIBUTE( message(), etat_op, nOperationalState_ );
+    SEND_ASN_ATTRIBUTE( message(), dead, bDead_ );
+    SEND_ASN_ATTRIBUTE( message(), speed, nSpeed_ );
+    SEND_ASN_ATTRIBUTE( message(), nature_pc, bPC_ );
+    SEND_ASN_ATTRIBUTE( message(), prisoner, bPrisoner_ );
+    SEND_ASN_ATTRIBUTE( message(), refugees_managed  , bRefugeeManaged_ );
     if( optionals_.renduPresent )
         message().mutable_surrendered_unit()->set_id( surrendered_ );
     if( optionals_.positionPresent )

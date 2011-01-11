@@ -499,10 +499,10 @@ void QueryDatabaseUpdater::Update( const sword::UnitAttributes& msg )
     query << "public_oid=" << msg.unit().id() << " AND session_id=" << session_.GetId();
 
     builder.SetClause( query.str() );
-    if( msg.has_vitesse() )
-        builder.SetField( "speed", msg.vitesse() );
-    if( msg.has_etat_operationnel_brut() )
-        builder.SetField( "op_state", msg.etat_operationnel_brut() );
+    if( msg.has_speed() )
+        builder.SetField( "speed", msg.speed() );
+    if( msg.has_raw_operational_state() )
+        builder.SetField( "op_state", msg.raw_operational_state() );
     if( msg.has_direction() )
         builder.SetField( "direction", msg.direction().heading() );
     if( msg.has_position() )
@@ -530,8 +530,8 @@ void QueryDatabaseUpdater::Update( const sword::UnitKnowledgeUpdate& msg )
         builder.SetField( "identification_level", msg.identification_level() );
     if( msg.has_max_identification_level() )
         UpdateSymbol( builder, model_.AgentKnowledges(), msg.knowledge().id() );
-    if( msg.has_mort() )
-        builder.SetField( "dead", msg.mort() );
+    if( msg.has_dead() )
+        builder.SetField( "dead", msg.dead() );
     if( msg.has_position() )
         builder.SetGeometry( Point( msg.position() ) );
     database_.Execute( builder );

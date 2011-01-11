@@ -75,8 +75,8 @@ void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& message )
         nLivingHumans_ = message.nb_humains_vivants();
     if( message.has_nb_humains_morts()  )
         nDeadHumans_ = message.nb_humains_morts();
-    if( message.has_vitesse()  )
-        nSpeed_ = message.vitesse();
+    if( message.has_speed()  )
+        nSpeed_ = message.speed();
     if( message.has_direction()  )
         nDirection_    = message.direction().heading();
     if( message.has_itineraire()  )

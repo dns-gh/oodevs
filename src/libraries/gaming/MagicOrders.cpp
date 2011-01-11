@@ -42,8 +42,8 @@ MagicOrders::~MagicOrders()
 // -----------------------------------------------------------------------------
 void MagicOrders::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_transporteurs_disponibles()  )
-        transportersReady_ = message.transporteurs_disponibles() != 0;
+    if( message.has_transporters_available()  )
+        transportersReady_ = message.transporters_available() != 0;
 }
 
 // -----------------------------------------------------------------------------

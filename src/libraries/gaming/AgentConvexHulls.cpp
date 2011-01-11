@@ -40,8 +40,8 @@ void AgentConvexHulls::DoUpdate( const sword::UnitAttributes& attributes )
 {
     if( attributes.has_position()  )
         SetPosition( converter_.ConvertToXY( attributes.position() ) );
-    if( attributes.has_mort()  )
-        SetDead( attributes.mort() != 0 );
+    if( attributes.has_dead()  )
+        SetDead( attributes.dead() != 0 );
 }
 
 // -----------------------------------------------------------------------------

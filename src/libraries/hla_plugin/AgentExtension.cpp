@@ -81,10 +81,10 @@ void AgentExtension::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) co
 void AgentExtension::DoUpdate( const UnitAttributes& attributes )
 {
     spatialChanged_ = spatialChanged_ || attributes.has_position()
-                                      || attributes.has_hauteur()
-                                      || attributes.has_vitesse()
+                                      || attributes.has_height()
+                                      || attributes.has_speed()
                                       || attributes.has_direction();
-    compositionChanged_ = compositionChanged_ || attributes.has_dotation_eff_materiel();
+    compositionChanged_ = compositionChanged_ || attributes.has_equipment_dotations();
 }
 
 // -----------------------------------------------------------------------------

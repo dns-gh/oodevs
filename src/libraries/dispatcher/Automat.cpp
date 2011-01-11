@@ -231,12 +231,12 @@ void Automat::DoUpdate( const sword::AutomatAttributes& msg )
 {
     if( msg.has_etat_automate()  )
         nAutomatState_ = msg.etat_automate();
-    if( msg.has_rapport_de_force()  )
-        nForceRatioState_ = msg.rapport_de_force();
-    if( msg.has_combat_de_rencontre()  )
-        nCloseCombatState_ = msg.combat_de_rencontre();
-    if( msg.has_etat_operationnel()  )
-        nOperationalState_ = msg.etat_operationnel();
+    if( msg.has_force_ratio()  )
+        nForceRatioState_ = msg.force_ratio();
+    if( msg.has_meeting_engagement()  )
+        nCloseCombatState_ = msg.meeting_engagement();
+    if( msg.has_operational_state()  )
+        nOperationalState_ = msg.operational_state();
     if( msg.has_roe()  )
         nRoe_ = msg.roe();
 }
@@ -308,9 +308,9 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         client::AutomatAttributes asn;
         asn().mutable_automat()->set_id( GetId() );
         asn().set_etat_automate( nAutomatState_ );
-        asn().set_rapport_de_force( nForceRatioState_);
-        asn().set_combat_de_rencontre( nCloseCombatState_);
-        asn().set_etat_operationnel( nOperationalState_ );
+        asn().set_force_ratio( nForceRatioState_);
+        asn().set_meeting_engagement( nCloseCombatState_);
+        asn().set_operational_state( nOperationalState_ );
         asn().set_roe( nRoe_ );
         asn.Send( publisher );
     }

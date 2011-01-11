@@ -60,14 +60,14 @@ void Dotations::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // -----------------------------------------------------------------------------
 void Dotations::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( ! message.has_dotation_eff_ressource()   )
+    if( ! message.has_resource_dotations()   )
         return;
 
-    uint nSize = message.dotation_eff_ressource().elem_size();
+    uint nSize = message.resource_dotations().elem_size();
     std::vector< Dotation > differences; differences.reserve( nSize );
     while ( nSize > 0 )
     {
-        const sword::ResourceDotations_ResourceDotation& value = message.dotation_eff_ressource().elem( --nSize );
+        const sword::ResourceDotations_ResourceDotation& value = message.resource_dotations().elem( --nSize );
         Dotation previous( resolver_.Get( value.type().id() ) );
         if( Dotation* dotation = Find( value.type().id() ) )
             previous = *dotation;

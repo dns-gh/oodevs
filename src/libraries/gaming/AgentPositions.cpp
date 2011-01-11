@@ -77,10 +77,10 @@ void AgentPositions::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_position()  )
         position_ = converter_.ConvertToXY( message.position() );
-    if( message.has_hauteur()  )
-        height_ = float( message.hauteur() );
-    if( message.has_mort()  )
-        dead_ = message.mort() != 0;
+    if( message.has_height()  )
+        height_ = float( message.height() );
+    if( message.has_dead()  )
+        dead_ = message.dead() != 0;
 
     controller_.Update( *static_cast< kernel::Positions* >( this ) );
 }

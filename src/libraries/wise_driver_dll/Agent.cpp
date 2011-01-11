@@ -91,14 +91,14 @@ void Agent::Update( CWISEDriver& driver, const WISE_HANDLE& database, const time
             CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Altitude" ], long( message.altitude() ), currentTime ) );
         if( message.has_direction() )
             CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Heading" ], long( message.direction().heading() ), currentTime ) );
-        if( message.has_embarque() )
-            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Mounted" ], unsigned char( message.embarque() ), currentTime ) );
-        if( message.has_etat_operationnel() )
-            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"OperationalState" ], unsigned char( message.etat_operationnel() ), currentTime ) );
-        if( message.has_hauteur() || message.has_position() )
+        if( message.has_embarked() )
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Mounted" ], unsigned char( message.embarked() ), currentTime ) );
+        if( message.has_operational_state() )
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"OperationalState" ], unsigned char( message.operational_state() ), currentTime ) );
+        if( message.has_height() || message.has_position() )
         {
-            if( message.has_hauteur() )
-                position_.v3 = message.hauteur();
+            if( message.has_height() )
+                position_.v3 = message.height();
             if( message.has_position() )
             {
                 position_.v1 = message.position().latitude();
@@ -106,14 +106,14 @@ void Agent::Update( CWISEDriver& driver, const WISE_HANDLE& database, const time
             }
             CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Position" ], position_, currentTime ) );
         }
-        if( message.has_vitesse() )
-            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Speed" ], long( message.vitesse() ), currentTime ) );
-        if( message.has_dotation_eff_materiel() )
-            UpdateComponents( driver, database, currentTime, message.dotation_eff_materiel(), equipments_, L"Equipments" );
-        if( message.has_dotation_eff_personnel() )
-            UpdateComponents( driver, database, currentTime, message.dotation_eff_personnel(), personnel_, L"Personnel" );
-        if( message.has_dotation_eff_ressource() )
-            UpdateComponents( driver, database, currentTime, message.dotation_eff_ressource(), resources_, L"Resources" );
+        if( message.has_speed() )
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Speed" ], long( message.speed() ), currentTime ) );
+        if( message.has_equipment_dotations() )
+            UpdateComponents( driver, database, currentTime, message.equipment_dotations(), equipments_, L"Equipments" );
+        if( message.has_human_dotations() )
+            UpdateComponents( driver, database, currentTime, message.human_dotations(), personnel_, L"Personnel" );
+        if( message.has_resource_dotations() )
+            UpdateComponents( driver, database, currentTime, message.resource_dotations(), resources_, L"Resources" );
         driver.NotifyDebugMessage( FormatMessage( L"Updated." ), MessageCategoryDebugLevel0 );
     }
     catch( WISE_RESULT& error )

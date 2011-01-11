@@ -63,13 +63,13 @@ void Troops::AddDifference( T_Differences& differences, kernel::E_TroopHealthSta
 // -----------------------------------------------------------------------------
 void Troops::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( ! message.has_dotation_eff_personnel() )
+    if( ! message.has_human_dotations() )
         return;
     T_Differences differences;
-    uint nSize = message.dotation_eff_personnel().elem_size();
+    uint nSize = message.human_dotations().elem_size();
     while( nSize > 0 )
     {
-        const sword::HumanDotations_HumanDotation& dot = message.dotation_eff_personnel().elem( --nSize );
+        const sword::HumanDotations_HumanDotation& dot = message.human_dotations().elem( --nSize );
         AddDifference( differences, eTroopHealthStateTotal             , dot.rang(), dot.total() );
         AddDifference( differences, eTroopHealthStateOperational       , dot.rang(), dot.operational() );
         AddDifference( differences, eTroopHealthStateDead              , dot.rang(), dot.dead() );

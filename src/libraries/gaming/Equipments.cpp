@@ -50,14 +50,14 @@ Equipments::~Equipments()
 // -----------------------------------------------------------------------------
 void Equipments::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_dotation_eff_materiel()  != 1 )
+    if( message.has_equipment_dotations()  != 1 )
         return;
 
     std::vector< Equipment > differences;
-    uint nSize = message.dotation_eff_materiel().elem_size();
+    uint nSize = message.equipment_dotations().elem_size();
     while ( nSize > 0 )
     {
-        const sword::EquipmentDotations_EquipmentDotation& value = message.dotation_eff_materiel().elem( --nSize );
+        const sword::EquipmentDotations_EquipmentDotation& value = message.equipment_dotations().elem( --nSize );
         Equipment previous( resolver_.Get( value.type().id() ) );
         if( Equipment* equipment = Find( value.type().id() ) )
             previous = *equipment;

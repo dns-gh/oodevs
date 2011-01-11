@@ -42,14 +42,14 @@ Lendings::~Lendings()
 // -----------------------------------------------------------------------------
 void Lendings::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( ! message.has_equipements_pretes()  )
+    if( ! message.has_lent_equipments()  )
         return;
 
     lendings_.clear();
-    lendings_.reserve( message.equipements_pretes().elem_size() );
-    for( int i = 0; i < message.equipements_pretes().elem_size(); ++i )
+    lendings_.reserve( message.lent_equipments().elem_size() );
+    for( int i = 0; i < message.lent_equipments().elem_size(); ++i )
     {
-        const sword::LentEquipments_LentEquipment& pret = message.equipements_pretes().elem( i );
+        const sword::LentEquipments_LentEquipment& pret = message.lent_equipments().elem( i );
         lendings_.push_back( Loan( equipmentResolver_.Get( pret.type().id() ),
                                    resolver_.Get( pret.borrower().id() ),
                                    pret.quantity() ) );
