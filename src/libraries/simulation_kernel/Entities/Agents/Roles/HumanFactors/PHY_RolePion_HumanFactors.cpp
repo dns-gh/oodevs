@@ -171,8 +171,8 @@ void PHY_RolePion_HumanFactors::ReadExperience( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().set_fatigue   ( pTiredness_ ->GetAsnID() );
-    msg().set_moral     ( pMorale_    ->GetAsnID() );
+    msg().set_tiredness( pTiredness_->GetAsnID() );
+    msg().set_morale( pMorale_->GetAsnID() );
     msg().set_experience( pExperience_->GetAsnID() );
 }
 
