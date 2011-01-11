@@ -8,8 +8,7 @@
         <format property="flex.expiration" pattern="d-MMM-yyyy" offset="3" unit="month" locale="en,US"/>
     </tstamp>
 
-    <property environment="env"/>
-    <import file="${env.PONEY_HOME}/poney.xml"/>
+    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <svn>
         <status path="${root.dir}" lastChangedRevisionProperty="svn.version"/>
@@ -745,8 +744,9 @@
             <if>
                 <isset property="adaptation_test.is-different"/>
                 <then>
-                    <echo>"ERROR: the following files differ :</echo>
+                    <echo>ERROR: the following files differ :</echo>
                     <echo-files files="${adaptation_test.is-different}" prefix="ERROR: "/>
+                    <echo>ERROR: did you forget to load and save modified files using adaptation_app ?</echo>
                     <fail message="saved data differs from loaded data."/>
                 </then>
             </if>
