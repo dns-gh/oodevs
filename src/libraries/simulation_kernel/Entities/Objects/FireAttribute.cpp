@@ -219,3 +219,12 @@ FireAttribute& FireAttribute::operator=( const FireAttribute& other )
     }
     return *this;
 }
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::GetClass
+// Created: BCI 2011-01-11
+// -----------------------------------------------------------------------------
+const MIL_FireClass& FireAttribute::GetClass() const
+{
+    return *pClass_;
+}

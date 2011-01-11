@@ -47,6 +47,7 @@
 #include "PopulationFilterCapacity.h"
 #include "BurnCapacity.h"
 #include "BurnSurfaceCapacity.h"
+#include "FirePropagationModifierCapacity.h"
 #include "MIL_Object_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
@@ -165,6 +166,7 @@ CapacityFactory::CapacityFactory()
     RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders, _1 ) );
     DoRegister( "flood", boost::bind( &AddBuilder< FloodCapacity >::Add, _1, _2 ) );
     DoRegister( "universal", boost::bind( &AddBuilder< UniversalCapacity >::Add, _1, _2 ) );
+    DoRegister( "fire-propagation-modifier", boost::bind( &AddBuilder< FirePropagationModifierCapacity >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

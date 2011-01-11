@@ -13,6 +13,7 @@
 #include "MIL_Object_ABC.h"
 #include "FireAttribute.h"
 #include "BurnSurfaceAttribute.h"
+#include "FirePropagationModifierCapacity.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "meteo/PHY_Meteo.h"
@@ -74,7 +75,7 @@ public:
     }
 
     MIL_BurningCellOrigin origin_;
-    geometry::Point2d center_;
+    geometry::Point2d center_; // $$$$ BCI 2011-01-11: c'est qui le plus fort? geometry::Point2d ou MT_Vector2D?
     MIL_Object_ABC* pObject_;
     sword::EnumBurningCellPhase phase_;
     int ignitionThreshold_;
@@ -209,7 +210,13 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
 	pCell->pObject_ = &object;
 	pCell->phase_ = phase;
 	TerrainData terrainData = TER_PathFindManager::GetPathFindManager().FindTerrainDataWithinCircle( MT_Vector2D( pCell->center_.X(), pCell->center_.Y() ), (float)radius );
-	object.GetAttribute< FireAttribute >().GetSurfaceFirePotentials( terrainData, pCell->ignitionThreshold_, pCell->maxCombustionEnergy_ );
+    const FireAttribute& fireAttribute = object.GetAttribute< FireAttribute >();
+	fireAttribute.GetSurfaceFirePotentials( terrainData, pCell->ignitionThreshold_, pCell->maxCombustionEnergy_ );
+    for( PropagationModifierObjects::const_iterator it = propagationModifierObjects_.begin(); it != propagationModifierObjects_.end(); ++it )
+    {
+        if( (*it)->GetLocalisation().IsInside( MT_Vector2D( pCell->center_.X(), pCell->center_.Y() ) ) )
+            (*it)->Get< FirePropagationModifierCapacity >().Modify( fireAttribute.GetClass(), pCell->ignitionThreshold_, pCell->maxCombustionEnergy_ );
+    }
 	pCell->ignitionEnergy_ = 0;
 	pCell->combustionEnergySum_ = 0;
 	pCell->combustionEnergyCount_ = 0;
@@ -618,4 +625,22 @@ void MIL_BurningCells::OnRequest( double x, double y )
         cell.bRequested_ = true;
         cell.pObject_->GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::StartModifyBurn
+// Created: BCI 2011-01-11
+// -----------------------------------------------------------------------------
+void MIL_BurningCells::StartModifyBurn( MIL_Object_ABC& object )
+{
+    propagationModifierObjects_.insert( &object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::StopModifyBurn
+// Created: BCI 2011-01-11
+// -----------------------------------------------------------------------------
+void MIL_BurningCells::StopModifyBurn( MIL_Object_ABC& object )
+{
+    propagationModifierObjects_.erase( &object );
 }

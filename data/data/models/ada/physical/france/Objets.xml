@@ -354,5 +354,13 @@
     <flood/>
     <universal/>
   </object>
+  <object geometry="polygon" name="Anti-feu" symbol="G*GPGAL---****X" type="Anti-feu">
+    <fire-propagation-modifier>
+      <modifier fire-class="Class A" ignition-threshold="5000" max-combustion-energy="500"/>
+      <modifier fire-class="Class B" ignition-threshold="4000" max-combustion-energy="600"/>
+      <modifier fire-class="Class C" ignition-threshold="3000" max-combustion-energy="700"/>
+      <modifier fire-class="Class D" ignition-threshold="2000" max-combustion-energy="1000"/>
+    </fire-propagation-modifier>
+  </object>
 </objects>
-<!-- signature="3943736716" -->
+<!-- signature="3746010568" -->

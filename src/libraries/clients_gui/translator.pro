@@ -17,6 +17,7 @@ EditorFactory.cpp \
 ElevationExtrema.cpp \
 ElevationPanel.cpp \
 FirePrototype_ABC.cpp \
+FirePropagationModifierPrototype_ABC.cpp \
 FixedLightWidget.cpp \
 FloodPrototype_ABC.cpp \
 GisToolbar.cpp \

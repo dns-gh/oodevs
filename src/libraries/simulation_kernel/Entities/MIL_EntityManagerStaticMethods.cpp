@@ -145,6 +145,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_DotationNature             >( config, "resource-natures"   );
     InitializeType< PHY_DotationType               >( config, "resources"          );
     InitializeType< PHY_ResourceNetworkType        >( config, "resource-networks"  );
+    InitializeType< MIL_FireClass                  >( config, "fires"               );
     InitializeType< MIL_ObjectFactory              >( config, "objects"            );
     InitializeType< PHY_BreakdownType              >( config, "breakdowns"         );
     InitializeType< PHY_LauncherType               >( config, "launchers"          );
@@ -156,7 +157,6 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< MIL_AutomateType               >( config, "automats"           );
     InitializeType< MIL_KnowledgeGroupType         >( config, "knowledge-groups"   );
     InitializeType< MIL_NbcAgentType               >( config, "nbc"                );
-    InitializeType< MIL_FireClass                  >( config, "fires"               );
     InitializeMedicalTreatment( config, time );
     InitializeType< PHY_SupplyResourcesAlarms      >( config, "supply"             );
     InitializeType< PHY_Convoy_ABC                 >( config, "supply"             );

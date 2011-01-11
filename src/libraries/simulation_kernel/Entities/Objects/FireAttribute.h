@@ -66,6 +66,7 @@ public:
     int GetWeatherDecreateRate( const MIL_Object_ABC& object ) const;
 	void GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const;
     MIL_BurnEffectManipulator GetBurnEffect();
+    const MIL_FireClass& GetClass() const;
     //@}
 
     //! @name Operations

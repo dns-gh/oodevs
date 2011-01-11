@@ -48,6 +48,8 @@ public:
     //! @name Operations
     //@{
 	void StartBurn( MIL_Object_ABC& object );
+    void StartModifyBurn( MIL_Object_ABC& object );
+    void StopModifyBurn( MIL_Object_ABC& object );
 	void Update( MIL_Object_ABC& object, unsigned int time );
     double ComputePathCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     bool IsTrafficable( const MT_Vector2D& from, const MT_Vector2D& to ) const;
@@ -105,8 +107,10 @@ private:
 	typedef std::map< MIL_BurningCellOrigin, MIL_BurningCell* > BurningCellsByCoordinatesMap;
 	typedef std::vector< MIL_BurningCell* > BurningCellsVector;
 	typedef std::map< unsigned int/*object id*/, BurningCellsVector > BurningCellsByObjectsMap;
+    typedef std::set< MIL_Object_ABC* > PropagationModifierObjects;
 	BurningCellsByCoordinatesMap burningCellsByCoordinates_;
 	BurningCellsByObjectsMap burningCellsByObjects_;
+    PropagationModifierObjects propagationModifierObjects_;
     std::size_t lastCellIndexIncludedInLocalization_;
 };
 

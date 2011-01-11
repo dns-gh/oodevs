@@ -169,6 +169,13 @@
     </message>
 </context>
 <context>
+    <name>FirePropagationModifierPrototype_ABC</name>
+    <message>
+        <source>Fire propagation modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FirePrototype_ABC</name>
     <message>
         <source>Fire parameters</source>
