@@ -18,6 +18,7 @@
 #include "StubTER_World.h"
 #include "Fixture.h"
 #include "MockMIL_Time_ABC.h"
+#include "MockNET_Publisher_ABC.h"
 #include <urban/CoordinateConverter.h>
 #include <urban/UrbanObject.h>
 #include <memory>
@@ -54,6 +55,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
     }
     MockArmy army;
     MIL_EffectManager effectManager;
+    MockNET_Publisher_ABC publisher;
     FixturePion pion( effectManager );
     urban::CoordinateConverter_ABC* converter = new urban::CoordinateConverter();
     flux >> xml::start( "urban-object" );
@@ -66,6 +68,8 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
     {
         MockMIL_Time_ABC time;
         MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
+        MOCK_EXPECT( army, GetID ).returns( 1u );
+        MOCK_EXPECT( publisher, Send ).at_least( 1 );
         DEC_Knowledge_Urban kn( army, *pBlock );
         DEC_Knowledge_UrbanPerception perception( *pion.pPion_, *pBlock );
         perception.SetPerceptionLevel( PHY_PerceptionLevel::detected_ );

@@ -78,10 +78,10 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , bPrisonner_                   ( false )
     , bRefugeeManaged_              ( false )
     , decisionalInfos_              ( model )
-    , order_                        ( 0 )
+    , pLogMedical_                  ( 0 )
     , pLogMaintenance_              ( 0 )
     , pLogSupply_                   ( 0 )
-    , pLogMedical_                  ( 0 )
+    , order_                        ( 0 )
 {
     automat_->Register( *this );
     RegisterSelf( *this );
