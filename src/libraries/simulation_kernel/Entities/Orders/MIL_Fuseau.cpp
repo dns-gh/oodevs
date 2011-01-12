@@ -992,35 +992,38 @@ double MIL_Fuseau::ComputeAverageDistanceFromObjective( const DEC_Objective& obj
 // -----------------------------------------------------------------------------
 double MIL_Fuseau::ComputeAdvance( const MT_Vector2D& position ) const
 {
-    const T_PointVector& points = pLeftLimit_->GetPoints().size() > pRightLimit_->GetPoints().size() ? pRightLimit_->GetPoints() : pLeftLimit_->GetPoints();
-    
     double result = 0.;
-    double currentAdvance  = 0.;
-    double totalDistances = 0.;
-    MT_Vector2D startPoint = points.front();
-    MT_Vector2D nearestPoint;
-    std::vector< double > advances;
-    std::vector< double > distances;
-    for( CIT_PointVector it = points.begin(); ++it != points.end(); )
+    if( pLeftLimit_ && pRightLimit_ )
     {
-        MT_Vector2D firstPoint = startPoint;
-        MT_Line line( firstPoint, *it );
-        startPoint = *it;
-        double advance = line.ProjectPointOnLine( position, nearestPoint );
-        double distance = position.Distance( nearestPoint );
-        advance *= line.Magnitude();
-        advance += currentAdvance;
-        advances.push_back( advance );
-        distances.push_back( distance );
-        totalDistances += distance;
-        currentAdvance += line.Magnitude();
+        const T_PointVector& points = pLeftLimit_->GetPoints().size() > pRightLimit_->GetPoints().size() ? pRightLimit_->GetPoints() : pLeftLimit_->GetPoints();
+        
+        double currentAdvance  = 0.;
+        double totalDistances = 0.;
+        MT_Vector2D startPoint = points.front();
+        MT_Vector2D nearestPoint;
+        std::vector< double > advances;
+        std::vector< double > distances;
+        for( CIT_PointVector it = points.begin(); ++it != points.end(); )
+        {
+            MT_Vector2D firstPoint = startPoint;
+            MT_Line line( firstPoint, *it );
+            startPoint = *it;
+            double advance = line.ProjectPointOnLine( position, nearestPoint );
+            double distance = position.Distance( nearestPoint );
+            advance *= line.Magnitude();
+            advance += currentAdvance;
+            advances.push_back( advance );
+            distances.push_back( distance );
+            totalDistances += distance;
+            currentAdvance += line.Magnitude();
+        }
+        unsigned int length = advances.size();
+        if( totalDistances == 0. )
+            totalDistances = 1.;
+        for( unsigned int i = 0; i < length; ++i )
+            result += advances[i] * (totalDistances - distances[i])/totalDistances;
+        result /= length;
     }
-    unsigned int length = advances.size();
-    if( totalDistances == 0. )
-        totalDistances = 1.;
-    for( unsigned int i = 0; i < length; ++i )
-        result += advances[i] * (totalDistances - distances[i])/totalDistances;
-    result /= length;
     return result;
 }
 

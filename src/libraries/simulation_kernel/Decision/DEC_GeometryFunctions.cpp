@@ -1592,8 +1592,7 @@ double DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau( MIL_AgentPion& 
 {
     if( !point)
         return 0.;
-    MIL_Automate& callerAutomate = pion.GetAutomate();
-    return callerAutomate.GetOrderManager().GetFuseau().ComputeAdvance( *point );
+    return pion.GetOrderManager().GetFuseau().ComputeAdvance( *point );
 }
 
 namespace
