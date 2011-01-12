@@ -351,14 +351,14 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::OnReceiveUrbanMagicAction( const sword::UrbanMagicAction& msg, unsigned int nCtx )
 {
-    sword::MagicActionAck_ErrorCode nErrorCode = sword::MagicActionAck::no_error;
+    sword::UrbanMagicActionAck_ErrorCode nErrorCode = sword::UrbanMagicActionAck::no_error;
     UrbanObjectWrapper* object = FindUrbanWrapper( msg.id().id() );
     if( !object )
-        nErrorCode = sword::MagicActionAck::error_invalid_attribute;
+        nErrorCode = sword::UrbanMagicActionAck::error_invalid_urbanblock;
     else
         nErrorCode = object->OnUpdateStructuralState( msg.structural_state() );
 
-    client::MagicActionAck asnReplyMsg;
+    client::UrbanMagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }

@@ -16,6 +16,7 @@ class MIL_ObjectBuilder_ABC;
 
 namespace sword
 {
+    enum UrbanMagicActionAck_ErrorCode;
     class UrbanAttributes;
 }
 
@@ -73,7 +74,7 @@ public:
     virtual void    Serialize  ( HLA_UpdateFunctor& functor ) const;
     //@}
 
-    sword::MagicActionAck_ErrorCode OnUpdateStructuralState( int state );
+    sword::UrbanMagicActionAck_ErrorCode OnUpdateStructuralState( int state );
     //! @name Network
     //@{
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );

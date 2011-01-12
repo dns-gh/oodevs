@@ -386,13 +386,13 @@ const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject() const
 // Name: UrbanObjectWrapper::OnUpdateStructuralState
 // Created: SLG 2010-12-22
 // -----------------------------------------------------------------------------
-sword::MagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateStructuralState( int state )
+sword::UrbanMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateStructuralState( int state )
 {
     StructuralCapacity* capacity = Retrieve< StructuralCapacity >();
     if( !capacity )
-        return sword::MagicActionAck::error_invalid_attribute;
+        return sword::UrbanMagicActionAck::error_invalid_urbanblock;
     capacity->SetStructuralState( state );
-    return sword::MagicActionAck::no_error;
+    return sword::UrbanMagicActionAck::no_error;
 }
 
 
