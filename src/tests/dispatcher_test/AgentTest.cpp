@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE( Agent_IsCreatedUnderAnAutomat )
         sword::UnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
         message.mutable_unit()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
-        message.set_nom( "test" );
+        message.set_name( "test" );
         message.mutable_automat()->set_id( automat.GetId() );
         message.set_pc( false );
         BOOST_REQUIRE( message.IsInitialized() );
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
             sword::UnitCreation& message = *expected.mutable_message()->mutable_unit_creation();
             message.mutable_unit()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
-            message.set_nom( "test" );
+            message.set_name( "test" );
             message.mutable_automat()->set_id( automat.GetId() );
             message.set_pc( false );
             BOOST_REQUIRE( message.IsInitialized() );

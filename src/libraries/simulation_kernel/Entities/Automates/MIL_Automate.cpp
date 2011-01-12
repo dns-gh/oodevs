@@ -848,7 +848,7 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     message().set_app6symbol( "combat" );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
-    message().set_nom( GetName() );
+    message().set_name( GetName() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
     {
         sword::Extension_Entry* entry = message().mutable_extension()->add_entries();

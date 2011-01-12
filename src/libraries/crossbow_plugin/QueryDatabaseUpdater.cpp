@@ -127,7 +127,7 @@ void QueryDatabaseUpdater::Update( const sword::UnitCreation& msg )
     builder.SetId( "id" );
     builder.SetField( "public_oid", ( long ) msg.unit().id() );
     builder.SetField( "parent_oid", ( long ) msg.automat().id() );
-    builder.SetField( "name", std::string( msg.nom() ) );
+    builder.SetField( "name", std::string( msg.name() ) );
     builder.SetField( "type", ( long ) msg.type().id() );
     builder.SetField( "session_id", session_.GetId() );
     UpdateSymbol( builder, model_.Agents(), msg.unit().id() );
@@ -453,7 +453,7 @@ void QueryDatabaseUpdater::Update( const sword::AutomatCreation& message )
         builder.SetField( "parent_oid", (long)message.parent().formation().id() );
     else
         builder.SetField( "parent_oid", (long)message.parent().automat().id() );
-    builder.SetField( "name", std::string( message.nom() ) );
+    builder.SetField( "name", std::string( message.name() ) );
     builder.SetField( "type", ( long ) message.type().id() );
     builder.SetField( "engaged", 0 );
     builder.SetField( "session_id", session_.GetId() );

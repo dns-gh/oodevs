@@ -42,7 +42,7 @@ namespace
 Automat::Automat( const Model& model, const sword::AutomatCreation& message )
     : WiseEntity( message.automat().id(), L"automat" )
     , model_( model )
-    , name_( message.nom().begin(), message.nom().end() )
+    , name_( message.name().begin(), message.name().end() )
     , type_( message.type().id() )
     , party_( model.ResolveParty( message.party().id() ) )
     , knowledgeGroup_( model.ResolveKnowledgeGroup( message.knowledge_group().id() ) )

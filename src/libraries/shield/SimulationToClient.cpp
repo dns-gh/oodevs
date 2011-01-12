@@ -446,7 +446,7 @@ void SimulationToClient::Convert( const sword::AutomatCreation& from, MsgsSimToC
 {
     CONVERT_ID( automat );
     CONVERT_ID( type );
-    CONVERT( nom ); // $$$$ MCO : rename to 'name'
+    CONVERT_TO( name, nom );
     ConvertParentEntity( from.parent(), to->mutable_parent() );
     CONVERT_ID( party );
     CONVERT_ID( knowledge_group );
@@ -518,7 +518,7 @@ void SimulationToClient::Convert( const sword::UnitCreation& from, MsgsSimToClie
 {
     CONVERT_ID( unit );
     CONVERT_ID( type );
-    CONVERT( nom ); // $$$$ MCO : rename to 'name'
+    CONVERT_TO( name, nom );
     CONVERT_ID( automat );
     CONVERT( pc );
     if( from.has_color() )
@@ -1612,7 +1612,7 @@ void SimulationToClient::Convert( const sword::CrowdCreation& from, MsgsSimToCli
 {
     CONVERT_ID( crowd );
     CONVERT_ID( type );
-    CONVERT( nom );
+    CONVERT_TO( name, nom );
     CONVERT_ID( party );
     if( from.has_extension() )
         ConvertExtension( from.extension(), to->mutable_extension() );

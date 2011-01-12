@@ -1040,7 +1040,7 @@ void MIL_Population::SendCreation() const
     asnMsg().mutable_crowd()->set_id( nID_ );
     asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().mutable_party()->set_id( pArmy_->GetID() );
-    asnMsg().set_nom( GetName() );
+    asnMsg().set_name( GetName() );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
     {
         sword::Extension_Entry* entry = asnMsg().mutable_extension()->add_entries();

@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
         sword::AutomatCreation& message = *expected.mutable_message()->mutable_automat_creation();
         message.mutable_automat()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
-        message.set_nom( "test" );
+        message.set_name( "test" );
         message.mutable_parent()->mutable_formation()->set_id( formation.GetId() );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -125,7 +125,7 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
         sword::AutomatCreation& message = *expected.mutable_message()->mutable_automat_creation();
         message.mutable_automat()->set_id( 1 );
         message.mutable_type()->set_id( 42 );
-        message.set_nom( "test" );
+        message.set_name( "test" );
         message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
         message.mutable_party()->set_id( side.GetId() );
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -192,7 +192,7 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
             sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
-            message.set_nom( "test" );
+            message.set_name( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -270,7 +270,7 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
             sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
-            message.set_nom( "test" );
+            message.set_name( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup1.GetId() );
@@ -346,7 +346,7 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
             sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
-            message.set_nom( "test" );
+            message.set_name( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -426,7 +426,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
-            message.set_nom( "test" );
+            message.set_name( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -510,7 +510,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
-            message.set_nom( "test" );
+            message.set_name( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
@@ -594,7 +594,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
             sword::AutomatCreation message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_type()->set_id( 42 );
-            message.set_nom( "test" );
+            message.set_name( "test" );
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );

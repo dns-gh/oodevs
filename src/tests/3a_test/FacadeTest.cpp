@@ -57,7 +57,7 @@ namespace
         UnitCreation& message = *result.mutable_message()->mutable_unit_creation();
         message.mutable_unit()->set_id( id );
         message.mutable_type()->set_id( 42 );
-        message.set_nom( "test" );
+        message.set_name( "test" );
         message.mutable_automat()->set_id( 12 );
         message.set_pc( false );
         return result;

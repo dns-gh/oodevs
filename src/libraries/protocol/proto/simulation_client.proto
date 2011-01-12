@@ -370,7 +370,6 @@ message ChangePopulationMagicActionAck {
 /** @struct UrbanMagicActionAck
     @brief An acknowledgement message to a urban magic action request
     @see UrbanMagicAction
-    @deprecated Never used
 */
 message UrbanMagicActionAck {
     /** @enum ErrorCode
@@ -537,7 +536,7 @@ message FormationDestruction {
 message AutomatCreation {
     required AutomatId         automat         = 1;  //!< The automat identifier @see AutomatId
     required AutomatType       type            = 2;  //!< The automat type @see AutomatType
-    required string            nom             = 3;  //!< The automat name @todo rename to name
+    required string            name            = 3;  //!< The automat name
     required ParentEntity      parent          = 4;  //!< The automat parent @see ParentEntity
     required PartyId           party           = 5;  //!< The automat party @see PartyId
     optional KnowledgeGroupId  knowledge_group = 6;  //!< The automat knowledge group @see KnowledgeGroupId
@@ -606,7 +605,7 @@ message AutomatDestruction {
 message UnitCreation {
    required UnitId    unit    = 1; //!< The unit identifier @see UnitId
    required UnitType  type    = 2; //!< The unit type @see UnitType
-   required string    nom     = 3; //!< The unit name @todo rename to name
+   required string    name    = 3; //!< The unit name
    required AutomatId automat = 4; //!< @todo What's this ?
    required bool      pc      = 5; //!< @todo What's this ?
    optional RgbColor  color   = 6; //!< The unit color @see RgbColor
@@ -1304,7 +1303,7 @@ message LogSupplyQuotas {
 message CrowdCreation {
    required CrowdId   crowd     = 1;
    required CrowdType type      = 2;
-   optional string    nom       = 3;
+   optional string    name      = 3;
    required PartyId   party     = 4;
    optional Extension extension = 5;
 }

@@ -30,7 +30,7 @@ using namespace kernel;
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
 Population::Population( const sword::CrowdCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::PopulationType >& typeResolver )
-    : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.nom().c_str() ) )
+    : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ) )
     , controllers_  ( controllers )
     , converter_    ( converter )
     , type_         ( typeResolver.Get( message.type().id() ) )

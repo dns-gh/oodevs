@@ -29,7 +29,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
-    : Automat_ABC       ( msg.automat().id(), QString( msg.nom().c_str() ) )
+    : Automat_ABC       ( msg.automat().id(), QString( msg.name().c_str() ) )
     , model_            ( model )
     , decisionalInfos_  ( model )
     , type_             ( msg.type().id() )
@@ -51,7 +51,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( ! parentFormation_ && ! parentAutomat_ )
-        throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.nom() );
+        throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.name() );
     knowledgeGroup_->Register( *this );
     if( parentFormation_ )
         parentFormation_->Register( *this );
@@ -272,7 +272,7 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         client::AutomatCreation asn;
         asn().mutable_automat()->set_id( GetId() );
         asn().mutable_type()->set_id( type_ );
-        asn().set_nom( GetName() );
+        asn().set_name( GetName() );
         asn().mutable_party()->set_id( team_.GetId() );
         asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
         asn().set_app6symbol( symbol_ );

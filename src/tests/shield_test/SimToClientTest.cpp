@@ -264,7 +264,7 @@ BOOST_FIXTURE_TEST_CASE( automat_creation_to_client_is_converted, ContextFixture
 {
     content.mutable_automat_creation()->mutable_automat()->set_id( 7 );
     content.mutable_automat_creation()->mutable_type()->set_id( 8 );
-    content.mutable_automat_creation()->set_nom( "name" );
+    content.mutable_automat_creation()->set_name( "name" );
     content.mutable_automat_creation()->mutable_parent()->mutable_automat()->set_id( 9 );
     content.mutable_automat_creation()->mutable_parent()->mutable_formation()->set_id( 10 );
     content.mutable_automat_creation()->mutable_party()->set_id( 11 );
@@ -297,7 +297,7 @@ BOOST_FIXTURE_TEST_CASE( unit_creation_to_client_is_converted, ContextFixture< s
 {
     content.mutable_unit_creation()->mutable_unit()->set_id( 7 );
     content.mutable_unit_creation()->mutable_type()->set_id( 8 );
-    content.mutable_unit_creation()->set_nom( "name" );
+    content.mutable_unit_creation()->set_name( "name" );
     content.mutable_unit_creation()->mutable_automat()->set_id( 9 );
     content.mutable_unit_creation()->set_pc( true );
     FillRgbColor( content.mutable_unit_creation()->mutable_color() );
@@ -1269,7 +1269,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_creation_to_client_is_converted, ContextFixture< 
 {
     content.mutable_crowd_creation()->mutable_crowd()->set_id( 7 );
     content.mutable_crowd_creation()->mutable_type()->set_id( 8 );
-    content.mutable_crowd_creation()->set_nom( "name" );
+    content.mutable_crowd_creation()->set_name( "name" );
     content.mutable_crowd_creation()->mutable_party()->set_id( 9 );
     FillExtension( content.mutable_crowd_creation()->mutable_extension()->add_entries() );
     FillExtension( content.mutable_crowd_creation()->mutable_extension()->add_entries() );

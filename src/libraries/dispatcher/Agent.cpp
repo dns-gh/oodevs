@@ -35,10 +35,10 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Resolver_ABC< kernel::AgentType >& types )
-    : dispatcher::Agent_ABC         ( msg.unit().id(), QString( msg.nom().c_str() ) )
+    : dispatcher::Agent_ABC         ( msg.unit().id(), QString( msg.name().c_str() ) )
     , model_                        ( model )
     , type_                         ( types.Get( msg.type().id() ) )
-    , name_                         ( msg.nom() )
+    , name_                         ( msg.name() )
     , automat_                      ( &model.Automats().Get( msg.automat().id() ) )
     , bPC_                          ( msg.pc() != 0 )
     , nDirection_                   ( 0 )
@@ -377,7 +377,7 @@ void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
     client::UnitCreation message;
     message().mutable_unit()->set_id( GetId() );
     message().mutable_type()->set_id( type_.GetId() );
-    message().set_nom( name_ );
+    message().set_name( name_ );
     message().mutable_automat()->set_id( automat_->GetId() );
     message().set_pc( bPC_ );
     message.Send( publisher );

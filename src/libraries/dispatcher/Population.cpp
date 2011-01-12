@@ -27,11 +27,11 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 Population::Population( Model_ABC& model, const sword::CrowdCreation& msg )
-    : dispatcher::Population_ABC( msg.crowd().id(), QString( msg.nom().c_str() ) )
+    : dispatcher::Population_ABC( msg.crowd().id(), QString( msg.name().c_str() ) )
     , model_           ( model )
     , decisionalInfos_ ( model )
     , nType_           ( msg.type().id() )
-    , strName_         ( msg.nom() )
+    , strName_         ( msg.name() )
     , side_            ( model.Sides().Get( msg.party().id() ) )
     , nDominationState_( 0 )
     , order_           ( 0 )
@@ -179,7 +179,7 @@ void Population::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_crowd()->set_id( GetId() );
     asn().mutable_party()->set_id( side_.GetId() );
     asn().mutable_type()->set_id( nType_ );
-    asn().set_nom( strName_ );
+    asn().set_name( strName_ );
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {
         sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();

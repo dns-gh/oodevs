@@ -193,7 +193,7 @@ void DatabaseUpdater::Update( const sword::UnitCreation& msg )
     Row_ABC& row = table->CreateRow();
     row.SetField( "public_oid", FieldVariant( ( long ) msg.unit().id() ) );
     row.SetField( "parent_oid", FieldVariant( ( long ) msg.automat().id() ) );
-    row.SetField( "name"      , FieldVariant( std::string( msg.nom() ) ) );
+    row.SetField( "name"      , FieldVariant( std::string( msg.name() ) ) );
     row.SetField( "type"      , FieldVariant( ( long ) msg.type().id() ) );
     row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     UpdateSymbol( row, model_.Agents(), msg.unit().id() );
@@ -502,7 +502,7 @@ void DatabaseUpdater::Update( const sword::AutomatCreation& message )
         row.SetField( "parent_oid", FieldVariant( ( long ) message.parent().formation().id() ) );
     else
         row.SetField( "parent_oid", FieldVariant( ( long ) message.parent().automat().id() ) );
-    row.SetField( "name", FieldVariant( std::string( message.nom() ) ) );
+    row.SetField( "name", FieldVariant( std::string( message.name() ) ) );
     row.SetField( "type", FieldVariant( ( long ) message.type().id() ) );
     row.SetField( "engaged", FieldVariant( true ) );
     row.SetField( "session_id", FieldVariant( session_.GetId() ) );

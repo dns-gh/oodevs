@@ -566,7 +566,7 @@ void MIL_AgentPion::SendCreation() const
     client::UnitCreation asnMsg;
     asnMsg().mutable_unit()->set_id( GetID() );
     asnMsg().mutable_type()->set_id( pType_->GetID() );
-    asnMsg().set_nom( GetName() );
+    asnMsg().set_name( GetName() );
     asnMsg().mutable_automat()->set_id( GetAutomate().GetID() );
     asnMsg().set_pc( IsPC() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );

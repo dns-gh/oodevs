@@ -28,7 +28,7 @@
 // -----------------------------------------------------------------------------
 Agent::Agent( const Model& model, const sword::UnitCreation& message )
     : WiseEntity( message.unit().id(), L"agent" )
-    , name_( message.nom().begin(), message.nom().end() )
+    , name_( message.name().begin(), message.name().end() )
     , type_( message.type().id() )
     , superior_( model.ResolveAutomat( message.automat().id() ) )
 {
