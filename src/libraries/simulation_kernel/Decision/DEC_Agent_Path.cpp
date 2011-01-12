@@ -240,7 +240,7 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
 
                 T_PathKnowledgeObjectVector& pathKnowledges = pathKnowledgeObjects_[ knowledge.GetType().GetID() ];
                 if( knowledge.GetType().GetCapacity< FloodCapacity >() )
-                    pathKnowledges.push_back( new DEC_Path_KnowledgeObjectFlood( knowledge ) );
+                    pathKnowledges.push_back( new DEC_Path_KnowledgeObjectFlood( queryMaker_.GetType().GetUnitType().GetCrossingHeight(), knowledge ) );
                 else if( knowledge.GetType().GetCapacity< BurnSurfaceCapacity >() )
                     pathKnowledges.push_back( new DEC_Path_KnowledgeObjectBurnSurface( knowledge ) );
                 else
@@ -612,8 +612,7 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
     {
         if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
             return false;
-
-        if( it != pathPoints_.begin() && !MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *(it-1), *it ) )
+        if( it != pathPoints_.begin() && !MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *( it - 1 ), *it ) )
             return false;
     }
 

@@ -10,6 +10,7 @@
 #ifndef __FloodCapacity_h_
 #define __FloodCapacity_h_
 
+#include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
@@ -17,6 +18,8 @@ namespace xml
 {
     class xistream;
 }
+
+class PHY_HumanWound;
 
 // =============================================================================
 /** @class  FloodCapacity
@@ -37,12 +40,26 @@ public:
 
     //! @name Operations
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Finalize( MIL_Object_ABC& /*object*/ );
     virtual void Register( MIL_Object_ABC& object );
-    virtual void CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& agent, bool& canInteract );
-    virtual void PreprocessAgent( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
-    virtual void ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    virtual void ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::map< const PHY_HumanWound*, double > T_InjuryMap;
+    typedef T_InjuryMap::const_iterator             CIT_InjuryMap;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void ReadInjury( xml::xistream& xis );
     //@}
 
 private:
@@ -50,6 +67,12 @@ private:
     //@{
     FloodCapacity( const FloodCapacity& );            //!< Copy constructor
     FloodCapacity& operator=( const FloodCapacity& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T_InjuryMap injuries_;
     //@}
 };
 

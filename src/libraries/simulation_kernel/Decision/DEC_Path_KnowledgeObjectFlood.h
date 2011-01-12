@@ -14,6 +14,7 @@
 #include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Knowledge_Object;
+enum E_CrossingHeight;
 
 // =============================================================================
 /** @class  DEC_Path_KnowledgeObjectFlood
@@ -26,13 +27,13 @@ class DEC_Path_KnowledgeObjectFlood : public DEC_Path_KnowledgeObject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Path_KnowledgeObjectFlood( const DEC_Knowledge_Object& knowledge );
+             DEC_Path_KnowledgeObjectFlood( E_CrossingHeight crossingHeight, const DEC_Knowledge_Object& knowledge );
     virtual ~DEC_Path_KnowledgeObjectFlood();
     //@}
 
     //! @name Operations
     //@{
-    virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    virtual double ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& toTerrainType, const TerrainData& linkTerrainType ) const;
     virtual double GetCostOut() const;
     //@}
 
@@ -46,6 +47,7 @@ private:
 private:
     //! @name Member data
     //@{
+    E_CrossingHeight crossingHeight_;
     std::vector< TER_Polygon > deepAreas_;
     std::vector< TER_Polygon > lowAreas_;
     TER_Localisation localisation_;

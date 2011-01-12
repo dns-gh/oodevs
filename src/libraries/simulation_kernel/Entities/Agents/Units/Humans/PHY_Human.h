@@ -29,9 +29,9 @@ class PHY_Human : public Human_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante );
-    PHY_Human( const PHY_Human& rhs );
-    PHY_Human();
+             PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante );
+             PHY_Human( const PHY_Human& rhs );
+             PHY_Human();
     virtual ~PHY_Human();
     //@}
 
@@ -45,28 +45,29 @@ public:
 
     //! @name Operations
     //@{
-    void Heal                 (); // 'Magic' Heal
-    bool SetRank              ( const PHY_HumanRank&  newRank  ); // Force rank change
-    bool SetWound             ( const PHY_HumanWound& newWound ); // Don't test 'usability' or aggravation => force wound change
-    bool ApplyWound           ( const PHY_HumanWound& newWound ); // Test 'usability'
-    bool ApplyPoisonous       ( const MIL_ToxicEffectManipulator& nbcAgent ); // NBC effects
-    void ApplyContamination   ( const MIL_ToxicEffectManipulator& nbcAgent ); // NBC effects
-    void ApplyBurn            ( const MIL_BurnEffectManipulator& burn );
-    void ApplyMentalDisease   ();
+    void Heal(); // 'Magic' Heal
+    bool SetRank( const PHY_HumanRank&  newRank ); // Force rank change
+    bool SetWound( const PHY_HumanWound& newWound ); // Don't test 'usability' or aggravation => force wound change
+    bool ApplyWound( const PHY_HumanWound& newWound ); // Test 'usability'
+    bool ApplyPoisonous( const MIL_ToxicEffectManipulator& nbcAgent ); // NBC effects
+    void ApplyContamination( const MIL_ToxicEffectManipulator& nbcAgent ); // NBC effects
+    void ApplyBurn( const MIL_BurnEffectManipulator& burn );
+    void ApplyFlood( const MIL_FloodEffectManipulator& flood );
+    void ApplyMentalDisease();
     void CancelLogisticRequest();
     //@}
 
     //! @name Accessors
     //@{
-    const PHY_HumanRank&  GetRank         () const;
-    const PHY_HumanWound& GetWound        () const;
-          E_Location      GetLocation     () const;
-          bool            IsUsable        () const;
-          bool            IsDead          () const;
-          bool            IsWounded       () const;
-          bool            IsContaminated  () const;
-          bool            IsMentalDiseased() const;
-          bool            IsAnEmergency   () const;
+    const PHY_HumanRank& GetRank() const;
+    const PHY_HumanWound& GetWound() const;
+    E_Location GetLocation() const;
+    bool IsUsable() const;
+    bool IsDead() const;
+    bool IsWounded() const;
+    bool IsContaminated() const;
+    bool IsMentalDiseased() const;
+    bool IsAnEmergency() const;
     //@}
 
     //! @name Main
@@ -77,15 +78,15 @@ public:
     //! @name Medical logistic
     //@{
     bool NeedEvacuation(); // NeedMedical() && pas encore pris en charge
-    void Evacuate      ( MIL_AutomateLOG& destinationTC2 );
-    bool NeedMedical   () const;
+    void Evacuate( MIL_AutomateLOG& destinationTC2 );
+    bool NeedMedical() const;
     void SetMedicalState( PHY_MedicalHumanState* pMedicalState );
 
-    void NotifyHandledByMedical ();
-    bool NotifyBackToWar        ();
-    void HealMentalDisease      ();
-    void HealWound              ();
-    void HealContamination      ();
+    void NotifyHandledByMedical();
+    bool NotifyBackToWar();
+    void HealMentalDisease();
+    void HealWound();
+    void HealContamination();
     //@}
 
     //! @name Composante maintenance
@@ -106,15 +107,15 @@ private:
     //@}
 
 private:
-    const MIL_Time_ABC&          time_;
-          HumansComposante_ABC*  pComposante_;
-    const PHY_HumanRank*         pRank_;
-    const PHY_HumanWound*        pWound_;
-          bool                   bMentalDiseased_;
-          bool                   bContamined_;
-          E_Location             nLocation_;
-          PHY_MedicalHumanState* pMedicalState_;
-          unsigned int                   nDeathTimeStep_;
+    const MIL_Time_ABC& time_;
+    HumansComposante_ABC* pComposante_;
+    const PHY_HumanRank* pRank_;
+    const PHY_HumanWound* pWound_;
+    bool bMentalDiseased_;
+    bool bContamined_;
+    E_Location nLocation_;
+    PHY_MedicalHumanState* pMedicalState_;
+    unsigned int nDeathTimeStep_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_Human )

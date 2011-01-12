@@ -13,6 +13,7 @@
 class MIL_AutomateLOG;
 class MIL_ToxicEffectManipulator;
 class MIL_BurnEffectManipulator;
+class MIL_FloodEffectManipulator;
 class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_MedicalHumanState;
@@ -49,6 +50,7 @@ public:
     virtual bool ApplyPoisonous( const MIL_ToxicEffectManipulator& nbcAgent ) = 0; // NBC effects
     virtual void ApplyContamination( const MIL_ToxicEffectManipulator& nbcAgent ) = 0; // NBC effects
     virtual void ApplyBurn( const MIL_BurnEffectManipulator& burn ) = 0;
+    virtual void ApplyFlood( const MIL_FloodEffectManipulator& flood ) = 0;
     virtual void ApplyMentalDisease() = 0;
     virtual void CancelLogisticRequest() = 0;
     //@}*/

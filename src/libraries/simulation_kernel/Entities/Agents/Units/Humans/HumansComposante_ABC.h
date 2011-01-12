@@ -17,11 +17,10 @@ class PHY_ComposantePion;
 class PHY_ComposanteState;
 class PHY_FireDamages_Agent;
 class PHY_RoleInterface_Composantes;
-class PHY_MedicalHumanState;
 class MIL_ToxicEffectManipulator;
 class MIL_BurnEffectManipulator;
+class MIL_FloodEffectManipulator;
 class MIL_AutomateLOG;
-class MIL_Time_ABC;
 class MIL_Injury_ABC;
 class PHY_InjuredHuman;
 
@@ -34,31 +33,32 @@ class HumansComposante_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    HumansComposante_ABC() {};
-    virtual ~HumansComposante_ABC() {};
+             HumansComposante_ABC() {}
+    virtual ~HumansComposante_ABC() {}
     //@}
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int ) {};
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 
     //! @name Operations
     //@{
-    virtual bool ChangeHumanRank   ( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound ) = 0;
+    virtual bool ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound ) = 0;
 
     virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination ) = 0;
-    virtual void ApplyPoisonous    ( const MIL_ToxicEffectManipulator& contamination ) = 0;
-    virtual void ApplyInjury       ( MIL_Injury_ABC& injury ) = 0;
-    virtual void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages ) = 0;
-    virtual void ApplyBurn         ( const MIL_BurnEffectManipulator& burn ) = 0;
+    virtual void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination ) = 0;
+    virtual void ApplyInjury( MIL_Injury_ABC& injury ) = 0;
+    virtual void ApplyWounds( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages ) = 0;
+    virtual void ApplyBurn( const MIL_BurnEffectManipulator& burn ) = 0;
+    virtual void ApplyFlood( const MIL_FloodEffectManipulator& flood ) = 0;
     virtual unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound ) = 0;
-    virtual unsigned int HealHumans ( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
-    virtual void HealAllHumans     () = 0;
+    virtual unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange ) = 0;
+    virtual void HealAllHumans() = 0;
 
     virtual PHY_InjuredHuman* GetInjury() = 0;
     virtual double GetOperationalState() const = 0;
-    virtual bool     IsViable           () const = 0;
+    virtual bool IsViable() const = 0;
     //@}
 
     //! @name Composante notifications

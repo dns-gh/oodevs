@@ -12,7 +12,6 @@
 #ifndef __PHY_HumanWound_h_
 #define __PHY_HumanWound_h_
 
-#include "MIL_Random.h"
 #include "MT_Tools/MT_Stl.h"
 
 namespace sword
@@ -35,7 +34,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_HumanWound*, sCaseInsensitiveLess > T_HumanWoundMap;
-    typedef T_HumanWoundMap::const_iterator                                      CIT_HumanWoundMap;
+    typedef T_HumanWoundMap::const_iterator                                    CIT_HumanWoundMap;
     //@}
 
 public:
@@ -49,34 +48,34 @@ public:
 public:
     //! @name Manager
     //@{
-    static void Initialize           ();
+    static void Initialize();
     static void InitializeMedicalData( xml::xistream& xis );
-    static void Terminate            ();
+    static void Terminate();
 
     static const T_HumanWoundMap& GetHumanWounds();
-    static const PHY_HumanWound*  Find( const std::string& strName );
-    static const PHY_HumanWound*  Find( sword::EnumHumanWound nAsnID );
-    static const PHY_HumanWound*  Find( unsigned int nID );
+    static const PHY_HumanWound* Find( const std::string& strName );
+    static const PHY_HumanWound* Find( sword::EnumHumanWound nAsnID );
+    static const PHY_HumanWound* Find( unsigned int nID );
 
-    static unsigned int                  GetDiagnosticTime           ();
-    static unsigned int                  GetSortingTime              ();
-    static unsigned int                  GetContaminatedHealingTime  ();
-    static unsigned int                  GetContaminatedRestingTime  ();
-    static unsigned int                  GetMentalDiseaseHealingTime ();
-    static unsigned int                  GetMentalDiseaseRestingTime ();
-    static bool                  ChooseMentalDisease         ();
-    static const PHY_HumanWound& ChooseRandomWound           ();
+    static unsigned int GetDiagnosticTime();
+    static unsigned int GetSortingTime();
+    static unsigned int GetContaminatedHealingTime();
+    static unsigned int GetContaminatedRestingTime();
+    static unsigned int GetMentalDiseaseHealingTime();
+    static unsigned int GetMentalDiseaseRestingTime();
+    static bool ChooseMentalDisease();
+    static const PHY_HumanWound& ChooseRandomWound();
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&   GetName          () const;
-    unsigned int                 GetID            () const;
-    sword::EnumHumanWound GetAsnID         () const;
-    double             GetWoundedFactor () const;
-    unsigned int                 GetLifeExpectancy() const;
-    unsigned int                 GetHealingTime   () const;
-    unsigned int                 GetRestingTime   () const;
+    const std::string& GetName() const;
+    unsigned int GetID() const;
+    sword::EnumHumanWound GetAsnID() const;
+    double GetWoundedFactor() const;
+    unsigned int GetLifeExpectancy() const;
+    unsigned int GetHealingTime() const;
+    unsigned int GetRestingTime() const;
     //@}
 
     //! @name Operators
@@ -106,7 +105,7 @@ private:
         eKilled
     };
 
-    typedef std::vector< double >       T_FloatVector;
+    typedef std::vector< double >           T_FloatVector;
     typedef T_FloatVector::const_iterator CIT_FloatVector;
     //@}
 
@@ -121,24 +120,23 @@ private:
     //@}
 
 private:
-    const std::string           strName_;
-    const E_Wound               nWound_;
+    const std::string strName_;
+    const E_Wound nWound_;
     const sword::EnumHumanWound  nAsnID_;
-          double              rWoundedFactor_;
-          unsigned int                  nLifeExpectancy_;
-          unsigned int                  nHealingTime_;
-          unsigned int                  nRestingTime_;
+    double rWoundedFactor_;
+    unsigned int nLifeExpectancy_;
+    unsigned int nHealingTime_;
+    unsigned int nRestingTime_;
 
 private:
     static T_HumanWoundMap humanWounds_;
-    static unsigned int            nDiagnosticTime_;
-    static unsigned int            nSortingTime_;
-
-    static unsigned int            nContaminatedHealingTime_;
-    static unsigned int            nContaminatedRestingTime_;
-    static unsigned int            nMentalDiseaseHealingTime_;
-    static unsigned int               nMentalDiseaseRestingTime_;
-    static double        rMentalDiseaseFactor_;
+    static unsigned int nDiagnosticTime_;
+    static unsigned int nSortingTime_;
+    static unsigned int nContaminatedHealingTime_;
+    static unsigned int nContaminatedRestingTime_;
+    static unsigned int nMentalDiseaseHealingTime_;
+    static unsigned int nMentalDiseaseRestingTime_;
+    static double rMentalDiseaseFactor_;
 };
 
 #endif // __PHY_HumanWound_h_

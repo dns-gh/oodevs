@@ -38,12 +38,12 @@ public:
     //! @name Capacity creation
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const = 0;
-    virtual void Finalize( MIL_Object_ABC& /*object*/ ) {};
+    virtual void Finalize( MIL_Object_ABC& /*object*/ ) {}
     //@}
 
     //! @name Update
     //@{
-    virtual void Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ ) {};
+    virtual void Update( MIL_Object_ABC& /*object*/, unsigned int /*time*/ ) {}
     //@}
 };
 

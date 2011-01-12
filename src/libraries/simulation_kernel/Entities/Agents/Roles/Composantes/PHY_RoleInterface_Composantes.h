@@ -29,7 +29,6 @@ class PHY_ComposanteTypePion;
 class PHY_DotationCategory;
 class PHY_FireDamages_Agent;
 class PHY_FireResults_ABC;
-class Human_ABC;
 class PHY_MaintenanceComposanteState;
 class PHY_SensorTypeAgent;
 class PHY_Volume;
@@ -53,50 +52,42 @@ public:
     };
 
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
-    typedef T_ComposanteUseMap::const_iterator                         CIT_ComposanteUseMap;
+    typedef T_ComposanteUseMap::const_iterator                       CIT_ComposanteUseMap;
 
     typedef PHY_RoleInterface_Composantes RoleInterface;
 
-    typedef std::set< PHY_MaintenanceComposanteState* >     T_MaintenanceComposanteStateSet;
-    typedef T_MaintenanceComposanteStateSet::iterator       IT_MaintenanceComposanteStateSet;
+    typedef std::set< PHY_MaintenanceComposanteState* >       T_MaintenanceComposanteStateSet;
+    typedef T_MaintenanceComposanteStateSet::iterator        IT_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::const_iterator CIT_MaintenanceComposanteStateSet;
 
     typedef std::map< const PHY_RoleInterface_Composantes*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
-    typedef T_LoanMap::iterator                                                 IT_LoanMap;
-    typedef T_LoanMap::const_iterator                                           CIT_LoanMap;
-
-    /*typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteTypeProperties > T_ComposanteTypeMap;
-    typedef T_ComposanteTypeMap::iterator                                         IT_ComposanteTypeMap;
-    typedef T_ComposanteTypeMap::const_iterator                                   CIT_ComposanteTypeMap;
-
-   */ //@}
-
-public:
-             PHY_RoleInterface_Composantes();
-    virtual ~PHY_RoleInterface_Composantes();
-
-
-    virtual void Update( bool bIsDead ) = 0;
-    virtual void Clean () = 0;
+    typedef T_LoanMap::iterator                                                                         IT_LoanMap;
+    typedef T_LoanMap::const_iterator                                                                  CIT_LoanMap;
     //@}
 
-    //! @name Humans management
+public:
+    //! @name Constructors/Destructor
     //@{
-//    virtual void WoundHumans  ( const PHY_HumanRank& rank, unsigned int nNbr ) = 0;
-//    virtual void HealHumans   ( const PHY_HumanRank& rank, unsigned int nNbr ) = 0;
-//    virtual void HealAllHumans() = 0 ;
+             PHY_RoleInterface_Composantes();
+    virtual ~PHY_RoleInterface_Composantes();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Update( bool bIsDead ) = 0;
+    virtual void Clean () = 0;
     //@}
 
     //! @name Composantes management
     //@{
     virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, unsigned int nNbrAvailable ) = 0;
-    virtual void RepairAllComposantes         () = 0;
-    virtual void DestroyRandomComposante      () = 0;
-    virtual void DestroyAllComposantes        () = 0;
+    virtual void RepairAllComposantes() = 0;
+    virtual void DestroyRandomComposante() = 0;
+    virtual void DestroyAllComposantes() = 0;
     //@}
 
     // Actions on the composante owner
-    virtual void LendComposante        ( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante ) = 0;
+    virtual void LendComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante ) = 0;
     virtual void RetrieveLentComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante ) = 0;
 
     // Notification for the beneficary
@@ -110,20 +101,20 @@ public:
 
     //! @name Logistic - maintenance
     //@{
-    virtual void                            PreprocessRandomBreakdowns           ( unsigned int /*nEndDayTimeStep*/ ) const = 0;
+    virtual void PreprocessRandomBreakdowns( unsigned int /*nEndDayTimeStep*/ ) const = 0;
 
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante ) = 0;
-    virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState ) = 0;
+    virtual void NotifyComposanteBackFromMaintenance( PHY_MaintenanceComposanteState& composanteState ) = 0;
 
     //! @name Operations
     //@{
-    virtual const PHY_Volume*          GetSignificantVolume       ( const PHY_SensorTypeAgent& sensorType ) const = 0;
-    virtual       void                 GetVisibleVolumes          ( T_ComposanteVolumeSet& volumes         ) const = 0;
-    virtual       void                 BuildKnowledgeComposantes  ( T_KnowledgeComposanteVector& knowledge ) const = 0;
-    virtual const PHY_Composante_ABC*  GetMajorComposante         () const = 0;
-    virtual       double               GetOperationalState        () const = 0;
-    virtual       double               GetMajorOperationalState   () const = 0;
-    virtual       double               GetMajorComponentWeight     ( bool loadedWeight = false ) const = 0;
+    virtual const PHY_Volume*         GetSignificantVolume     ( const PHY_SensorTypeAgent& sensorType ) const = 0;
+    virtual       void                GetVisibleVolumes        ( T_ComposanteVolumeSet& volumes         ) const = 0;
+    virtual       void                BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const = 0;
+    virtual const PHY_Composante_ABC* GetMajorComposante       () const = 0;
+    virtual       double              GetOperationalState      () const = 0;
+    virtual       double              GetMajorOperationalState () const = 0;
+    virtual       double              GetMajorComponentWeight   ( bool loadedWeight = false ) const = 0;
     //@}
 
     //! @name Fire
@@ -139,6 +130,7 @@ public:
     virtual void ApplyExplosion             ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result ) = 0;
     virtual void ApplyUrbanObjectCrumbling  ( const MIL_Object_ABC& object ) = 0;
     virtual void ApplyBurn                  ( const MIL_BurnEffectManipulator& burn ) = 0;
+    virtual void ApplyFlood                 ( const MIL_FloodEffectManipulator& flood ) = 0;
     virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const = 0;   
     virtual double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
@@ -149,7 +141,7 @@ public:
     virtual double GetMinRangeToIndirectFire        ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const = 0;
     virtual double GetMaxRangeToFire                ( const MIL_Agent_ABC&  target, double rWantedPH ) const = 0;
 
-    virtual void ApplyInjury                ( MIL_Injury_ABC& injury ) = 0;
+    virtual void ApplyInjury( MIL_Injury_ABC& injury ) = 0;
     //@}
 
     //! @name Notifications (internal)
@@ -162,9 +154,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual       bool           HasChanged              () const = 0;//@TODO MGD CLEAN ALL hasChanged on interface and move private
-    virtual       bool           IsUsable                () const = 0;
-    virtual const MIL_Agent_ABC& GetPion                 () const = 0;
+    virtual       bool           HasChanged() const = 0;//@TODO MGD CLEAN ALL hasChanged on interface and move private
+    virtual       bool           IsUsable  () const = 0;
+    virtual const MIL_Agent_ABC& GetPion   () const = 0;
     //@}
 
     //! @name HLA

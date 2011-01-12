@@ -15,6 +15,7 @@
 #include "MIL_AgentServer.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_ObjectType_ABC.h"
+#include "FloodAttribute.h"
 #include "ResourceNetworkCapacity.h"
 #include "UniversalCapacity.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -284,6 +285,17 @@ void MIL_Object_ABC::UpdateLocalisation( const TER_Localisation& newLocalisation
 {
     TER_Object_ABC::UpdateLocalisation( newLocalisation );
     interaction_.UpdateInteraction( *this, GetLocalisation() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::IsInside
+// Created: JSR 2011-01-11
+// -----------------------------------------------------------------------------
+bool MIL_Object_ABC::IsInside( const MT_Vector2D& vPos ) const
+{
+    if( const FloodAttribute* flood = RetrieveAttribute< FloodAttribute >() )
+        return flood->GetLocalisation().IsInside( vPos );
+    return TER_Object_ABC::IsInside( vPos );
 }
 
 // -----------------------------------------------------------------------------

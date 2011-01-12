@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Path_KnowledgeObjectFlood.h"
 #include "Entities/Objects/FloodAttribute.h"
+#include "MT_Tools/MT_Scipio_enum.h"
 
 using namespace geometry;
 
@@ -17,7 +18,8 @@ using namespace geometry;
 // Name: DEC_Path_KnowledgeObjectFlood constructor
 // Created: JSR 2010-12-20
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgeObjectFlood::DEC_Path_KnowledgeObjectFlood( const DEC_Knowledge_Object& knowledge )
+DEC_Path_KnowledgeObjectFlood::DEC_Path_KnowledgeObjectFlood( E_CrossingHeight crossingHeight, const DEC_Knowledge_Object& knowledge )
+    : crossingHeight_( crossingHeight )
 {
     const FloodAttribute* attribute = knowledge.RetrieveAttribute< FloodAttribute >();
     if( attribute )
@@ -66,16 +68,18 @@ DEC_Path_KnowledgeObjectFlood::~DEC_Path_KnowledgeObjectFlood()
 double DEC_Path_KnowledgeObjectFlood::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& /*nToTerrainType*/, const TerrainData& /*nLinkTerrainType*/ ) const
 {
     const MT_Line line( from, to );
-    if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
-    {
-        std::vector< TER_Polygon >::const_iterator it;
-        for( it = deepAreas_.begin(); it != deepAreas_.end(); ++ it )
-            if( it->Intersect2D( line, 0 ) )
-                return -1;
-        for( it = lowAreas_.begin(); it != lowAreas_.end(); ++ it )
-            if( it->Intersect2D( line, 0 ) )
-                return -1;
-    }
+    if( crossingHeight_ != eCrossingHeightAlways )
+        if( localisation_.Intersect2D( line ) || localisation_.IsInside( to ) )
+        {
+            std::vector< TER_Polygon >::const_iterator it;
+            for( it = deepAreas_.begin(); it != deepAreas_.end(); ++it )
+                if( it->Intersect2D( line, 0 ) )
+                    return -1;
+            if( crossingHeight_ == eCrossingHeightNever )
+                for( it = lowAreas_.begin(); it != lowAreas_.end(); ++it )
+                    if( it->Intersect2D( line, 0 ) )
+                        return -1;
+        }
     return std::numeric_limits< double >::min();
 }
 

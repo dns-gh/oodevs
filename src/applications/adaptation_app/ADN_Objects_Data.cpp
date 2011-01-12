@@ -12,7 +12,6 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Composantes_Data.h"
-
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
@@ -20,21 +19,19 @@
 #include "ADN_DataException.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Composantes_Data.h"
-
-#include <xeumeuleu/xml.hpp>
-
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ScoreLocationInfos::ScoreLocationInfos
 // Created: AGN 2004-05-24
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ScoreLocationInfos::ScoreLocationInfos()
-    : ADN_Ref_ABC           ()
-    , ADN_DataTreeNode_ABC  ()
-    , nLocation_            ( (E_Location)0 )
-    , nScore_               ( 0 )
+    : ADN_Ref_ABC         ()
+    , ADN_DataTreeNode_ABC()
+    , nLocation_          ( static_cast< E_Location >( 0 ) )
+    , nScore_             ( 0 )
 {
     nScore_.SetDataName( "le poids de placement" );
     nScore_.SetParentNode( *this );
@@ -88,7 +85,7 @@ namespace
     std::vector< std::string > VectorBuilder( const char* choice[], uint size )
     {
         std::vector< std::string > stack( size );
-        for ( int i = 0; i < int( size ); ++i )
+        for ( uint i = 0; i < size; ++i )
             stack[ i ] = std::string( choice[ i ] );
         return stack;
     }
@@ -132,9 +129,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::ReadDotation( xml::xistream&
         infos->ptrCategory_ = category;
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );
-
-//        ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >( categories_.back() );
-
     }
 }
 
@@ -149,15 +143,13 @@ void ADN_Objects_Data::ADN_CapacityInfos_Buildable::WriteArchive( xml::xostream&
     xos << xml::start( "resources" );
     for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
     {
-        ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >(*it);
+        ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >( *it );
         xos << xml::start( "resource" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end;
     }
     xos << xml::end;
 }
-
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Improvable
@@ -197,8 +189,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::ReadDotation( xml::xistream
         infos->ptrCategory_ = category;
         infos->rNbr_ = quantity;
         categories_.AddItem( infos );
-//        ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >( categories_.back() );
-//        infos->rNbr_ = quantity;
     }
 }
 
@@ -213,7 +203,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Improvable::WriteArchive( xml::xostream
     xos << xml::start( "resources" );
     for( CIT_Categories it = categories_.begin(); it != categories_.end(); ++it )
     {
-        ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >(*it);
+        ADN_Composantes_Data::CategoryInfos* infos = reinterpret_cast< ADN_Composantes_Data::CategoryInfos* >( *it );
         xos << xml::start( "resource" )
                 << xml::attribute( "name", infos->ptrCategory_.GetData()->strName_ ) << xml::attribute( "count", infos->rNbr_ )
             << xml::end;
@@ -229,10 +219,10 @@ const char* ADN_Objects_Data::ADN_CapacityInfos_Constructor::choices_[] = { "raw
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Constructor::ADN_CapacityInfos_Constructor()
-    : nDefaultConsumption_ ( eWorking )
-    , unitType_ ( VectorBuilder( choices_, 2 ) )
-    , ptrBuildable_ ( new ADN_CapacityInfos_Buildable() )
-    , ptrImprovable_ ( new ADN_CapacityInfos_Improvable() )
+    : nDefaultConsumption_( eWorking )
+    , unitType_           ( VectorBuilder( choices_, 2 ) )
+    , ptrBuildable_       ( new ADN_CapacityInfos_Buildable() )
+    , ptrImprovable_      ( new ADN_CapacityInfos_Improvable() )
 {
     nDefaultConsumption_.SetParentNode( *this );
     unitType_.SetParentNode( *this );
@@ -247,10 +237,9 @@ ADN_Objects_Data::ADN_CapacityInfos_Constructor::ADN_CapacityInfos_Constructor()
 void ADN_Objects_Data::ADN_CapacityInfos_Constructor::ReadArchive( xml::xistream& xis )
 {
     ADN_TypeCapacity_Infos::ReadArchive( xis );
-
-    std::string strComsuption;
-    xis >> xml::attribute( "default-consumption-mode", strComsuption );
-    nDefaultConsumption_ = ADN_Tr::ConvertToConsumptionType( strComsuption );
+    std::string strConsumption;
+    xis >> xml::attribute( "default-consumption-mode", strConsumption );
+    nDefaultConsumption_ = ADN_Tr::ConvertToConsumptionType( strConsumption );
     unitType_ = xis.attribute< std::string >( "unit-type" );
     xis >> xml::optional >> xml::list( ADN_CapacityInfos_Buildable::TAG, *ptrBuildable_, &ADN_CapacityInfos_Buildable::ReadArchive );
     xis >> xml::optional >> xml::list( ADN_CapacityInfos_Improvable::TAG, *ptrImprovable_, &ADN_CapacityInfos_Improvable::ReadArchive );
@@ -263,7 +252,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::ReadArchive( xml::xistream
 void ADN_Objects_Data::ADN_CapacityInfos_Constructor::WriteArchive( xml::xostream& xos )
 {
     xos << xml::attribute( "default-consumption-mode", ADN_Tr::ConvertFromConsumptionType( nDefaultConsumption_.GetData() ) )
-        << xml::attribute( "unit-type", unitType_.GetData()==""?ADN_Objects_Data::ADN_CapacityInfos_Constructor::choices_[0]:unitType_.GetData() );
+        << xml::attribute( "unit-type", unitType_.GetData() == "" ? ADN_Objects_Data::ADN_CapacityInfos_Constructor::choices_[ 0 ]:unitType_.GetData() );
     if( ptrBuildable_->bPresent_.GetData() )
     {
         xos << xml::start( ADN_CapacityInfos_Buildable::TAG );
@@ -278,14 +267,13 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::WriteArchive( xml::xostrea
     }
 }
 
-
-// =============================================================================
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Avoidable
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Avoidable::ADN_CapacityInfos_Avoidable()
-    : fields_("Distance"), rDistance_ ( 0. )
+    : fields_   ( "Distance" )
+    , rDistance_( 0. )
 {
     rDistance_.SetParentNode( *this );
 }
@@ -309,18 +297,16 @@ void ADN_Objects_Data::ADN_CapacityInfos_Avoidable::WriteArchive( xml::xostream&
     xos << xml::attribute( "distance", rDistance_.GetData() );
 }
 
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Bypassable
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Bypassable::ADN_CapacityInfos_Bypassable()
-    : fields_( "Speed" ), rSpeed_ ( 0. )
+    : fields_( "Speed" )
+    , rSpeed_( 0. )
 {
     rSpeed_.SetParentNode( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ReadArchive
@@ -341,23 +327,19 @@ void ADN_Objects_Data::ADN_CapacityInfos_Bypassable::WriteArchive( xml::xostream
     xos << xml::attribute( "bypass-speed", rSpeed_ );
 }
 
-//
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Mobility
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Mobility::ADN_CapacityInfos_Mobility()
     : rDefaultSpeed_ ( 0. )
-    , nSpeedModifier_ ( eSpeedImpact_AuPlusLent )
-    , rMaxAgentSpeed_ ( 0 )
+    , nSpeedModifier_( eSpeedImpact_AuPlusLent )
+    , rMaxAgentSpeed_( 0 )
 {
     rDefaultSpeed_.SetParentNode( *this );
     nSpeedModifier_.SetParentNode( *this );
     rMaxAgentSpeed_.SetParentNode( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ReadArchive
@@ -386,14 +368,12 @@ void ADN_Objects_Data::ADN_CapacityInfos_Mobility::WriteArchive( xml::xostream& 
         << xml::attribute( "max-unit-percentage-speed", rMaxAgentSpeed_ );
 }
 
-
-
 //! @name ADN_CapacityInfos_Attrition
 //@{
 
 ADN_Objects_Data::ADN_CapacityInfos_Attrition::ADN_CapacityInfos_Attrition()
-: ammoCategory_( (ADN_Equipement_Data::T_AmmoCategoryInfo_Vector&)ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
-, useAmmo_( false )
+    : ammoCategory_( ( ADN_Equipement_Data::T_AmmoCategoryInfo_Vector& )ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_, 0, "" )
+    , useAmmo_     ( false )
 {
     category_.SetParentNode( *this );
     ammoCategory_.SetParentNode( *this );
@@ -410,7 +390,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::ReadArchive( xml::xistream& 
         if( pCategory == 0 )
             throw ADN_DataException( "Donnée invalide", "Dotation invalide : " + dotation );
         category_ = pCategory;
-        ADN_Equipement_Data::AmmoCategoryInfo* ptrAmmo = dynamic_cast<ADN_Equipement_Data::AmmoCategoryInfo*>( pCategory );
+        ADN_Equipement_Data::AmmoCategoryInfo* ptrAmmo = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo* >( pCategory );
         ammoCategory_ = ptrAmmo;
         useAmmo_ = ( pCategory->strName_.GetData() == "munition" );
     }
@@ -428,7 +408,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream&
 //! @name ADN_CapacityInfos_Contamination
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_Contamination::ADN_CapacityInfos_Contamination()
-    : max_toxic_ ( 0 )
+    : max_toxic_( 0 )
 {
     max_toxic_.SetParentNode( *this );
 }
@@ -445,6 +425,94 @@ void ADN_Objects_Data::ADN_CapacityInfos_Contamination::WriteArchive( xml::xostr
 }
 //@}
 
+// -----------------------------------------------------------------------------
+// Name: ADN_CapacityInfos_Flood::ADN_CapacityInfos_Flood
+// Created: JSR 2011-01-10
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_Flood::ADN_CapacityInfos_Flood()
+    : nNbHurtHumans1_( 0 )
+    , nNbHurtHumans2_( 0 )
+    , nNbHurtHumans3_( 0 )
+    , nNbHurtHumansE_( 0 )
+    , nNbDeadHumans_ ( 0 )
+{
+    nNbHurtHumans1_.SetParentNode( *this );
+    nNbHurtHumans2_.SetParentNode( *this );
+    nNbHurtHumans3_.SetParentNode( *this );
+    nNbHurtHumansE_.SetParentNode( *this );
+    nNbDeadHumans_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_CapacityInfos_Flood::ReadArchive
+// Created: JSR 2011-01-10
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Flood::ReadArchive( xml::xistream& xis )
+{
+    ADN_TypeCapacity_Infos::ReadArchive( xis );
+    xis >> xml::optional >> xml::start( "injuries" )
+            >> xml::list( "injury", *this, &ADN_Objects_Data::ADN_CapacityInfos_Flood::ReadInjury );
+    if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
+        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Injuries data sum > 100" ).ascii() );
+    xis >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_CapacityInfos_Flood::::ReadInjury
+// Created: JSR 2011-01-10
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Flood::ReadInjury( xml::xistream& xis )
+{
+    std::string wound = xis.attribute< std::string >( "type" );
+    std::transform( wound.begin(), wound.end(), wound.begin(), std::tolower );
+    ADN_Type_Int* pWound =
+        wound == "u1"   ? &nNbHurtHumans1_ :
+        wound == "u2"   ? &nNbHurtHumans2_ :
+        wound == "u3"   ? &nNbHurtHumans3_ :
+        wound == "ue"   ? &nNbHurtHumansE_ :
+        wound == "dead" ? &nNbDeadHumans_ :
+        0;
+    if( pWound )
+    {
+        *pWound = static_cast< int >( xis.attribute< double >( "percentage" ) * 100. );
+        if( pWound->GetData() < 0 || pWound->GetData() > 100 )
+            throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Wound '%1' data < 0 or > 1" ).arg( wound.c_str() ).ascii() );
+    }
+    else
+        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Invalid wound type '%1'" ).arg( wound.c_str() ).ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_CapacityInfos_Flood::WriteArchive
+// Created: JSR 2011-01-10
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Flood::WriteArchive( xml::xostream& xos )
+{
+    xos << xml::start( "injuries" );
+    if( nNbHurtHumans1_.GetData() + nNbHurtHumans2_.GetData() + nNbHurtHumans3_.GetData() + nNbHurtHumansE_.GetData() + nNbDeadHumans_.GetData() > 100 )
+        throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Flood - Injuries data sum > 100" ).ascii() );
+    xos  << xml::start( "injury" )
+                << xml::attribute( "type", "u1" )
+                << xml::attribute( "percentage", nNbHurtHumans1_.GetData() / 100. )
+            << xml::end
+            << xml::start( "injury" )
+                << xml::attribute( "type", "u2" )
+                << xml::attribute( "percentage", nNbHurtHumans2_.GetData() / 100. )
+            << xml::end
+            << xml::start( "injury" )
+                << xml::attribute( "type", "u3" )
+                << xml::attribute( "percentage", nNbHurtHumans3_.GetData() / 100. )
+            << xml::end
+            << xml::start( "injury" )
+                << xml::attribute( "type", "ue" )
+                << xml::attribute( "percentage", nNbHurtHumansE_.GetData() / 100. )
+            << xml::end
+            << xml::start( "injury" )
+                << xml::attribute( "type", "dead" )
+                << xml::attribute( "percentage", nNbDeadHumans_.GetData() / 100. )
+            << xml::end
+           << xml::end;
+}
 
 //! @name ADN_CapacityInfos_InteractionHeight
 //@{
@@ -466,11 +534,10 @@ void ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::WriteArchive( xml::x
 }
 //@}
 
-
 //! @name ADN_CapacityInfos_Intoxication
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ADN_CapacityInfos_Intoxication()
-    : max_toxic_ ( 0 )
+    : max_toxic_( 0 )
 {
     max_toxic_.SetParentNode( *this );
 }
@@ -491,21 +558,24 @@ void ADN_Objects_Data::ADN_CapacityInfos_Intoxication::WriteArchive( xml::xostre
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_Decontamination::ADN_CapacityInfos_Decontamination()
 {
-
+    // NOTHING
 }
+
 void ADN_Objects_Data::ADN_CapacityInfos_Decontamination::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
+
 void ADN_Objects_Data::ADN_CapacityInfos_Decontamination::WriteArchive( xml::xostream& /* xos */ )
 {
+    // NOTHING
 }
 //@}
 
 //! @name ADN_CapacityInfos_Population
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_Population::ADN_CapacityInfos_Population()
-: density_( 0 )
+    : density_( 0 )
 {
     density_.SetParentNode( *this );
 }
@@ -520,16 +590,14 @@ void ADN_Objects_Data::ADN_CapacityInfos_Population::WriteArchive( xml::xostream
 {
     xos << xml::attribute( "density", density_ );
 }
-
 //@}
 
 //! @name ADN_CapacityInfos_Propagation
 //@{
-
 const char* ADN_Objects_Data::ADN_CapacityInfos_Propagation::choices_[] = { "input", "fire", "cloud" };
 
 ADN_Objects_Data::ADN_CapacityInfos_Propagation::ADN_CapacityInfos_Propagation()
-    : model_ ( VectorBuilder( choices_, 3 ) )
+    : model_( VectorBuilder( choices_, 3 ) )
 {
     model_.SetParentNode( *this );
 }
@@ -539,6 +607,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Propagation::ReadArchive( xml::xistream
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     model_ = xis.attribute< std::string >( "model" );
 }
+
 void ADN_Objects_Data::ADN_CapacityInfos_Propagation::WriteArchive( xml::xostream& xos )
 {
     xos << xml::attribute( "model", model_.GetData() );
@@ -550,7 +619,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Propagation::WriteArchive( xml::xostrea
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Protection::ADN_CapacityInfos_Protection()
-    : max_size_( 1 )
+    : max_size_     ( 1 )
     , geniePrepared_( false )
 {
     max_size_.SetParentNode( *this );
@@ -583,7 +652,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Protection::WriteArchive( xml::xostream
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Workable::ADN_CapacityInfos_Workable()
-    : worker_ ( 0 )
+    : worker_( 0 )
 {
     worker_.SetParentNode( *this );
 }
@@ -607,13 +676,12 @@ void ADN_Objects_Data::ADN_CapacityInfos_Workable::WriteArchive( xml::xostream& 
     xos << xml::attribute( "max-animator", worker_.GetData() );
 }
 
-
 //! @name ADN_CapacityInfos_Medical
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_Medical::ADN_CapacityInfos_Medical()
-    : emergencyBedsRate_ ( 0 )
-    , emergencyDoctorsRate_ ( 0 )
-    , nightDoctorsRate_ ( 0 )
+    : emergencyBedsRate_   ( 0 )
+    , emergencyDoctorsRate_( 0 )
+    , nightDoctorsRate_    ( 0 )
 {
     emergencyBedsRate_.SetParentNode( *this );
     emergencyDoctorsRate_.SetParentNode( *this );
@@ -629,6 +697,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Medical::ReadArchive( xml::xistream& xi
             >> xml::attribute( "beds-rate", emergencyBedsRate_ )
         >> xml::end;
 }
+
 void ADN_Objects_Data::ADN_CapacityInfos_Medical::WriteArchive( xml::xostream& xos )
 {
     xos << xml::attribute( "night-doctors-rate", nightDoctorsRate_ )
@@ -639,18 +708,21 @@ void ADN_Objects_Data::ADN_CapacityInfos_Medical::WriteArchive( xml::xostream& x
 }
 //@}
 
-
 //! @name ADN_CapacityInfos_Occupable
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_Occupable::ADN_CapacityInfos_Occupable()
 {
+    // NOTHING
 }
+
 void ADN_Objects_Data::ADN_CapacityInfos_Occupable::ReadArchive( xml::xistream& /*xis*/ )
 {
-//    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
+    // NOTHING
 }
+
 void ADN_Objects_Data::ADN_CapacityInfos_Occupable::WriteArchive( xml::xostream& /*xos*/ )
 {
+    // NOTHING
 }
 //@}
 
@@ -664,7 +736,6 @@ ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ADN_CapacityInfos_TerrainH
 void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-
     xis >> xml::list( "terrain", *this, &ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadTerrain );
 }
 
@@ -678,7 +749,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadTerrain( xml::xis
 void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::WriteArchive( xml::xostream& xos )
 {
     for( T_ScoreLocationInfosVector::iterator itScore = scores_.begin(); itScore != scores_.end(); ++itScore )
-            (*itScore)->WriteArchive( xos );
+            ( *itScore )->WriteArchive( xos );
 }
 //@}
 
@@ -686,73 +757,45 @@ void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::WriteArchive( xml::xo
 //@{
 ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::ADN_CapacityInfos_SupplyRoute()
 {
+    // NOTHING
 }
+
 void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
+
 void ADN_Objects_Data::ADN_CapacityInfos_SupplyRoute::WriteArchive( xml::xostream& /*xos*/ )
 {
     // NOTHING
 }
 //@}
 
-//! @name ADN_CapacityInfos_SupplyRoute
-//@{
-//ADN_Objects_Data::ADN_CapacityInfos_TimeLimited::ADN_CapacityInfos_TimeLimited()
-//{
-//}
-//void ADN_Objects_Data::ADN_CapacityInfos_TimeLimited::ReadArchive( xml::xistream& xis )
-//{
-//    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-//}
-//void ADN_Objects_Data::ADN_CapacityInfos_TimeLimited::WriteArchive( xml::xostream& xos )
-//{
-//}
-
-//@}
-
 ADN_Objects_Data::ADN_CapacityInfos_Bridging::ADN_CapacityInfos_Bridging()
 {
+    // NOTHING
 }
+
 void ADN_Objects_Data::ADN_CapacityInfos_Bridging::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
+
 void ADN_Objects_Data::ADN_CapacityInfos_Bridging::WriteArchive( xml::xostream& /*xos*/ )
 {
     // NOTHING
 }
 
-/*
-//! @name ADN_CapacityInfos_Toxic
-//@{
-ADN_Objects_Data::ADN_CapacityInfos_Toxic::ADN_CapacityInfos_Toxic()
-{
-}
-void ADN_Objects_Data::ADN_CapacityInfos_Toxic::ReadArchive( xml::xistream& xis )
-{
-    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-}
-void ADN_Objects_Data::ADN_CapacityInfos_Toxic::WriteArchive( xml::xostream& xos )
-{
-}
-//@}
-*/
-
-
-//! @name ADN_CapacityInfos_Detection
-//@{
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::DetectTimes
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Detection
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Detection::ADN_CapacityInfos_Detection()
-    : bDetectTime_  ( false )
-    , detectTime_   ( "0s" ) // LTO
-    , bIdentTime_   ( false ) // LTO
-    , recoTime_     ( "0s" ) // LTO
-    , bRecoTime_    ( false ) // LTO
-    , identTime_    ( "0s" ) // LTO
+    : bDetectTime_( false )
+    , detectTime_ ( "0s" ) // LTO
+    , bIdentTime_ ( false ) // LTO
+    , recoTime_   ( "0s" ) // LTO
+    , bRecoTime_  ( false ) // LTO
+    , identTime_  ( "0s" ) // LTO
 {
     bDetectTime_.SetParentNode( *this );
     detectTime_.SetParentNode( *this ); // LTO
@@ -789,16 +832,18 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::ReadAcquisitionTime( xml::xi
           >> xml::attribute( "level", level );
     if( time.empty() )
         return;
-
-    if( level == "identification" ) {
+    if( level == "identification" )
+    {
         bIdentTime_ = true;
         identTime_ = time;
     }
-    else if( level == "recognition" ) {
+    else if( level == "recognition" )
+    {
         bRecoTime_ = true;
         recoTime_ = time;
     }
-    else if( level == "detection" ) {
+    else if( level == "detection" )
+    {
         bDetectTime_ = true;
         detectTime_ = time;
     }
@@ -831,17 +876,14 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::WriteArchive( xml::xostream&
         << xml::end;
     output << xml::end;
 }
-//@}
 
-//! @name ADN_CapacityInfos_Spawn
-//@{
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Spawn
 // Created: SLG 2010-02-18
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
     : strObjectType_( "" )
-    , rActionRange_( 0 )
+    , rActionRange_ ( 0 )
 {
     rActionRange_.SetParentNode( *this );
 }
@@ -866,16 +908,13 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& out
     output << xml::attribute( "object", strObjectType_ )
            << xml::attribute( "action-range", rActionRange_ );
 }
-//@}
 
-//! @name ADN_CapacityInfos_Structural
-//@{
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Structural
 // Created: SLG 2010-06-25
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Structural::ADN_CapacityInfos_Structural()
-: rStructuralState_( 100 )
+    : rStructuralState_( 100 )
 {
     rStructuralState_.SetParentNode( *this );
 }
@@ -898,10 +937,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Structural::WriteArchive( xml::xostream
 {
     output << xml::attribute( "value", rStructuralState_ );
 }
-//@}
 
-//! @name ADN_CapacityInfos_AttitudeModifier
-//@{
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier
 // Created: MGD 2010-03-19
@@ -909,6 +945,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Structural::WriteArchive( xml::xostream
 ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ADN_CapacityInfos_AttitudeModifier()
     : attitude_( ePopulationAttitude_Calme )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -921,7 +958,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ReadArchive( xml::xis
     std::string strAttitude;
     input >> xml::attribute( "attitude", strAttitude );
     attitude_ = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
-    if( attitude_ == (E_PopulationAttitude)-1 )
+    if( attitude_ == static_cast< E_PopulationAttitude >( -1 ) )
         throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).ascii() );
 }
 
@@ -933,17 +970,15 @@ void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::WriteArchive( xml::xo
 {
     output << xml::attribute( "attitude", ENT_Tr::ConvertFromPopulationAttitude( attitude_.GetData() ) );
 }
-//@}
 
-//! @name ADN_CapacityInfos_Perception
-//@{
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Perception
 // Created: MGD 2010-03-19
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Perception::ADN_CapacityInfos_Perception()
-: blinded_( false )
+    : blinded_( false )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -965,17 +1000,15 @@ void ADN_Objects_Data::ADN_CapacityInfos_Perception::WriteArchive( xml::xostream
     bPresent_ = true;
     output << xml::attribute( "blinded", blinded_ );
 }
-//@}
 
-//! @name ADN_CapacityInfos_Scattering
-//@{
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_Scattering
 // Created: MGD 2010-03-19
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Scattering::ADN_CapacityInfos_Scattering()
-: humanByTimeStep_( 1 )
+    : humanByTimeStep_( 1 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -996,17 +1029,16 @@ void ADN_Objects_Data::ADN_CapacityInfos_Scattering::WriteArchive( xml::xostream
 {
     output << xml::attribute( "human-by-time-step", humanByTimeStep_ );
 }
-//@}
 
-//! @name ADN_CapacityInfos_SealOff
-//@{
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_SealOff
 // Created: MGD 2010-08-27
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_SealOff::ADN_CapacityInfos_SealOff()
 {
+    // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_SealOff
 // Created: MGD 2010-08-27
@@ -1015,6 +1047,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_SealOff::ReadArchive( xml::xistream& xi
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
 }
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_SealOff
 // Created: MGD 2010-08-27
@@ -1061,7 +1094,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::WriteArchive( 
 void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier( xml::xistream& xis )
 {
     std::string fireClass = xis.attribute< std::string >( "fire-class" );
-    IT_ModifierByFireClass_Vector itModifier = std::find_if( modifiers_.begin(), modifiers_.end(), ModifierByFireClass::Cmp( fireClass ));
+    IT_ModifierByFireClass_Vector itModifier = std::find_if( modifiers_.begin(), modifiers_.end(), ModifierByFireClass::Cmp( fireClass ) );
     if( itModifier == modifiers_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Fire propagation modifier - Invalid fire class '%1'" ).arg( fireClass.c_str() ).ascii() );
     ( *itModifier )->ReadArchive( xis );
@@ -1072,8 +1105,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ReadModifier( 
 // Created: BCI 2010-12-06
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ModifierByFireClass::ModifierByFireClass( ADN_FireClass_Data::FireClassInfos* p )
-    : ptrFireClass_( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), p )
-    , ignitionThreshold_( 0 )
+    : ptrFireClass_       ( ADN_Workspace::GetWorkspace().GetFireClasses().GetData().GetFireClassesInfos(), p )
+    , ignitionThreshold_  ( 0 )
     , maxCombustionEnergy_( 0 )
 {
     BindExistenceTo( &ptrFireClass_ );
@@ -1112,14 +1145,9 @@ std::string ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::Modifie
     return std::string();
 }
 
-// =============================================================================
-// ObjectInfos
-// =============================================================================
-
 #define INIT_DATA( CLASS, NAME, TAG_NAME ) \
     const std::string ADN_Objects_Data::##CLASS##::TAG( TAG_NAME ); \
     const std::string ADN_Objects_Data::##CLASS##::DISPLAY_NAME( NAME )
-
 
 #pragma warning( push )
 #pragma warning( disable : 4356 )
@@ -1172,7 +1200,7 @@ INIT_DATA( ADN_CapacityInfos_Universal       , "Universal",         "universal" 
 //-----------------------------------------------------------------------------
 ADN_Objects_Data::ObjectInfos::ObjectInfos( const std::string& type )
     : ADN_Ref_ABC()
-    , strType_( type )
+    , strType_   ( type )
 {
     InitializeCapacities();
 }
@@ -1183,7 +1211,7 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( const std::string& type )
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ObjectInfos::ObjectInfos()
     : ADN_Ref_ABC()
-    , strType_()
+    , strType_   ()
 {
     InitializeCapacities();
     InitializeDefaultParameters();
@@ -1195,7 +1223,7 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos()
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ObjectInfos::~ObjectInfos()
 {
-//    vScoreLocation_.Reset();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1204,9 +1232,6 @@ ADN_Objects_Data::ObjectInfos::~ObjectInfos()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
 {
-//    capacities_[ ADN_CapacityInfos_Buildable::TAG ].reset( new ADN_CapacityInfos_Buildable() );
-//    capacities_[ ADN_CapacityInfos_Improvable::TAG ].reset( new ADN_CapacityInfos_Improvable() );
-//    capacities_[ "propagation" ].reset( new ADN_CapacityInfos_FirePropagation() );
     capacities_[ ADN_CapacityInfos_Activable::TAG ].reset( new ADN_CapacityInfos_Activable() );
     capacities_[ ADN_CapacityInfos_Attrition::TAG ].reset( new ADN_CapacityInfos_Attrition() );
     capacities_[ ADN_CapacityInfos_Avoidable::TAG ].reset( new ADN_CapacityInfos_Avoidable() );
@@ -1275,67 +1300,11 @@ std::string ADN_Objects_Data::ObjectInfos::GetNodeName()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::ObjectInfos::ReadSensiblePosition
-// Created: AGE 2007-08-20
-// -----------------------------------------------------------------------------
-void ADN_Objects_Data::ObjectInfos::ReadSensiblePosition( xml::xistream& /*input*/ )
-{
-//    std::auto_ptr<ScoreLocationInfos> spNew( new ScoreLocationInfos() );
-//    spNew->ReadArchive( input );
-//    vScoreLocation_.AddItem( spNew.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::ObjectInfos::ReadDotation
-// Created: AGE 2007-08-20
-// -----------------------------------------------------------------------------
-void ADN_Objects_Data::ObjectInfos::ReadDotation( const std::string& /*type*/, xml::xistream& /*input*/ )
-{
-//    std::string dotation, category;
-//    unsigned count;
-//    input >> xml::attribute( "dotation", dotation )
-//          >> xml::attribute( "category", category )
-//          >> xml::attribute( "count", count );
-//    ADN_Equipement_Data::CategoryInfo* pCategory = ADN_Workspace::GetWorkspace().GetEquipements().GetData().FindEquipementCategory( category, dotation );
-//    if( pCategory == 0 )
-//        throw ADN_DataException( "Donnée invalide", "Dotation invalide dans l'objet " + strName_.GetData() );
-//    if( type == "construction" )
-//    {
-//        ptrToBuild_ = pCategory;
-//        bToBuild_ = true;
-//        nNbrToBuild_ = count;
-//    }
-//    else if( type == "valorization" )
-//    {
-//        ptrToReinforce_ = pCategory;
-//        bToReinforce_ = true;
-//        nNbrToReinforce_ = count;
-//    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::ObjectInfos::ReadUnitAttrition
-// Created: AGE 2007-08-20
-// -----------------------------------------------------------------------------
-void ADN_Objects_Data::ObjectInfos::ReadUnitAttrition( xml::xistream& /*input*/ )
-{
-//    bAttritions_ = true;
-//    std::string protection;
-//    input >> xml::attribute( "protection", protection );
-//    IT_AttritionInfosVector itAttrition = std::find_if( attritions_.begin(), attritions_.end(), AttritionInfos::Cmp(protection));
-//    if( itAttrition != attritions_.end() )
-//        (*itAttrition)->ReadArchive( input );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ReadCapacityArchive
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ObjectInfos::ReadCapacityArchive( const std::string& type, xml::xistream& xis )
 {
-//    typedef boost::mpl::fold<ADN_CapacityTypes, NullType, Reader<boost::mpl::_1,boost::mpl::_2> >::type ReaderType;
-//    ReaderType::Read( type, xis, capacities_ );
-
     IT_CapacityMap it = capacities_.find( type );
     if( it != capacities_.end() )
         it->second->ReadArchive( xis );
@@ -1414,9 +1383,6 @@ void ADN_Objects_Data::FilesNeeded( T_StringList& files ) const
 void ADN_Objects_Data::Reset()
 {
     vObjectInfos_.Reset();
-
-//    for( int i = 0; i < eNbrObjectType; ++i )
-//        vObjectInfos_.AddItem( new ObjectInfos( (E_ObjectType)i ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1425,29 +1391,13 @@ void ADN_Objects_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ReadObject( xml::xistream& xis )
 {
-//    E_ObjectType nObjectType = ENT_Tr::ConvertToObjectType( type );
-//    if( nObjectType == (E_ObjectType)-1)
-//        throw ADN_DataException( "Object", "Le type d'objet " + type + " n'est pas connu" );
-//
     std::string type = xis.attribute< std::string >( "type" );
     ObjectInfos* pObjInfo = new ObjectInfos( type );
     if( pObjInfo )
     {
         pObjInfo->ReadArchive( xis );
         vObjectInfos_.AddItem( pObjInfo );
-        // static_cast< std::vector< ObjectInfos* >* >( &vObjectInfos_ )->push_back( pObjInfo );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::ReadShotPercentage
-// Created: AGE 2007-08-20
-// -----------------------------------------------------------------------------
-void ADN_Objects_Data::ReadShotPercentage( xml::xistream& /*input*/ )
-{
-//    std::auto_ptr<AreaControlInformations> spNew( new AreaControlInformations() );
-//    spNew->ReadArchive( input );
-//    vAreaControlInformations_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1469,8 +1419,8 @@ void ADN_Objects_Data::WriteArchive( xml::xostream& xos )
 {
     xos << xml::start( "objects" );
     ADN_Tools::AddSchema( xos, "Objects" );
-    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it!= vObjectInfos_.end(); ++it)
-        (*it)->WriteArchive( xos );
+    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+        ( *it )->WriteArchive( xos );
     xos << xml::end;
 }
 

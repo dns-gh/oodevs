@@ -12,14 +12,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_ComposantePion.h"
+#include "WeaponAvailabilityComputer_ABC.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
-#include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
-#include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumansComposante.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
-#include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
@@ -27,27 +25,20 @@
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
-#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_DirectFireData.h"
-#include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_IndirectFireData.h"
-#include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_SmokeData.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
-#include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
-#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Actions/PHY_FireDamages_Agent.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "MIL_Singletons.h"
-#include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
+#include "Knowledge/DEC_Knowledge_AgentComposante.h"
 
-double  PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
+double PHY_ComposantePion::rOpStateWeightHumans_ = 0.;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_ComposantePion )
 
@@ -56,7 +47,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_ComposantePion )
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
-    : PHY_Composante_ABC()
+    : PHY_Composante_ABC           ()
     , time_                        ( time )
     , pState_                      ( &PHY_ComposanteState::undamaged_ )
     , pRole_                       ( &role )
@@ -84,7 +75,7 @@ PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_Comp
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 PHY_ComposantePion::PHY_ComposantePion()
-    : PHY_Composante_ABC()
+    : PHY_Composante_ABC    ()
     , time_                 ( MIL_Singletons::GetTime() )
     , pRole_                ( 0 )
     , pState_               ( 0 )
@@ -160,8 +151,8 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned state = pState_->GetID(),
-             type  = pType_->GetMosID().id();
+    unsigned int state = pState_->GetID();
+    unsigned int type = pType_->GetMosID().id();
     file << boost::serialization::base_object< PHY_Composante_ABC >( *this )
          << pRole_
          << state
@@ -178,7 +169,7 @@ void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned in
     if( nRandomBreakdownNextTimeStep_ )
     {
         assert( pRandomBreakdownState_ );
-        unsigned id = pRandomBreakdownState_->GetID();
+        unsigned int id = pRandomBreakdownState_->GetID();
         file << id;
     }
 }
@@ -221,7 +212,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
     if( *pState_ == *pNewState )
         return;
     const PHY_ComposanteState* pOldState = pState_;
-    pState_                              = pNewState;
+    pState_ = pNewState;
     if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
         pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
     ManageEndMaintenance();
@@ -233,7 +224,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
 // Name: PHY_ComposantePion::GetMaxSpeed
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-double   PHY_ComposantePion::GetMaxSpeed( const TerrainData& data ) const
+double PHY_ComposantePion::GetMaxSpeed( const TerrainData& data ) const
 {
     assert( pType_ );
     return pType_->GetMaxSpeed( data );
@@ -243,7 +234,7 @@ double   PHY_ComposantePion::GetMaxSpeed( const TerrainData& data ) const
 // Name: PHY_ComposantePion::GetMaxSpeed
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-double   PHY_ComposantePion::GetMaxSpeed() const
+double PHY_ComposantePion::GetMaxSpeed() const
 {
     assert( pType_ );
     return pType_->GetMaxSpeed();
@@ -417,12 +408,21 @@ void PHY_ComposantePion::ApplyBurn( const MIL_BurnEffectManipulator& burn )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::ApplyFlood
+// Created: JSR 2011-01-11
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::ApplyFlood( const MIL_FloodEffectManipulator& flood )
+{
+    assert( pHumans_ );
+    pHumans_->ApplyFlood( flood );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyInjury
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
 void PHY_ComposantePion::ApplyInjury( MIL_Injury_ABC& injury )
 {
-
     assert( pHumans_ );
     pHumans_->ApplyInjury( injury );
 }
@@ -558,12 +558,12 @@ void PHY_ComposantePion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeSte
     assert( pType_ );
     if( pType_->GetProtection().CanRandomlyBreaksDownEva() )
     {
-        pRandomBreakdownState_        = &PHY_ComposanteState::repairableWithEvacuation_;
+        pRandomBreakdownState_ = &PHY_ComposanteState::repairableWithEvacuation_;
         nRandomBreakdownNextTimeStep_ = MIL_Random::rand32_oo( time_.GetCurrentTick(), nEndDayTimeStep );
     }
     else if( pType_->GetProtection().CanRandomlyBreaksDownNeva() )
     {
-        pRandomBreakdownState_        = &PHY_ComposanteState::repairableWithoutEvacuation_;
+        pRandomBreakdownState_ = &PHY_ComposanteState::repairableWithoutEvacuation_;
         nRandomBreakdownNextTimeStep_ = MIL_Random::rand32_oo( time_.GetCurrentTick(), nEndDayTimeStep );
     }
 }
@@ -829,6 +829,7 @@ bool PHY_ComposantePion::CanEvacuateCasualties() const
     assert( pType_ );
     return pState_->IsUsable() && CanBeUsed() && pType_->CanEvacuateCasualties();
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::CanEvacuateCasualty
 // Created: NLD 2007-02-05
@@ -964,7 +965,6 @@ void PHY_ComposantePion::StartUsingForLogistic()
 // Name: PHY_ComposantePion::StopUsingForLogistic
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-
 void PHY_ComposantePion::StopUsingForLogistic()
 {
     assert( bUsedForLogistic_ );
@@ -975,7 +975,6 @@ void PHY_ComposantePion::StopUsingForLogistic()
 // Name: PHY_ComposantePion::GetNeutralizationTime
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-
 unsigned int PHY_ComposantePion::GetNeutralizationTime() const
 {
     assert( pState_ );
@@ -1020,7 +1019,7 @@ float PHY_ComposantePion::GetReconnoissanceMaxRange() const
     double distance = std::numeric_limits< double >::max();
     for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
     {
-        const PHY_SensorTypeAgent* pTypeAgent = (*itSensor)->GetType().GetTypeAgent();
+        const PHY_SensorTypeAgent* pTypeAgent = ( *itSensor )->GetType().GetTypeAgent();
         if ( pTypeAgent ) 
             distance = std::min( distance, pTypeAgent->ReconnoissanceDistance() );
     }
@@ -1355,7 +1354,7 @@ unsigned int PHY_ComposantePion::ApproximateTravelTime( const MT_Vector2D& vSour
 {
     assert( pType_ );
     assert( pType_->GetMaxSpeed() != 0. );
-    return (unsigned int)( 1.439 * vSourcePos.Distance( vTargetPos ) / pType_->GetMaxSpeed() ); //$$$ Deplacer la formule magique (Cf. DEC_GeometryFunctions où elle existe aussi...)
+    return static_cast< unsigned int >( 1.439 * vSourcePos.Distance( vTargetPos ) / pType_->GetMaxSpeed() ); //$$$ Deplacer la formule magique (Cf. DEC_GeometryFunctions où elle existe aussi...)
 }
 
 // -----------------------------------------------------------------------------

@@ -23,12 +23,9 @@ class PHY_ComposanteState;
 class PHY_FireDamages_Agent;
 class PHY_RoleInterface_Composantes;
 class PHY_InjuredHuman;
-class PHY_MedicalHumanState;
-class MIL_ToxicEffectManipulator;
 class MIL_AutomateLOG;
 class MIL_Time_ABC;
 class MIL_Injury_ABC;
-class PHY_InjuredHuman;
 
 // =============================================================================
 // @class  PHY_HumansComposante
@@ -51,32 +48,33 @@ public:
 
     //! @name Operations
     //@{
-    bool ChangeHumanRank   ( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
+    bool ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank& newRank, const PHY_HumanWound& wound );
 
     void ApplyContamination( const MIL_ToxicEffectManipulator& contamination );
-    void ApplyPoisonous    ( const MIL_ToxicEffectManipulator& contamination );
-    void ApplyBurn         ( const MIL_BurnEffectManipulator& burn );
-    void ApplyInjury       ( MIL_Injury_ABC& injury );
+    void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination );
+    void ApplyBurn( const MIL_BurnEffectManipulator& burn );
+    void ApplyFlood( const MIL_FloodEffectManipulator& flood );
+    void ApplyInjury( MIL_Injury_ABC& injury );
     PHY_InjuredHuman* GetInjury();
-    void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
-    unsigned int WoundHumans       ( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );
-    unsigned int HealHumans        ( const PHY_HumanRank& rank, unsigned int nNbrToChange );
-    void HealAllHumans     ();
+    void ApplyWounds( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
+    unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );
+    unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange );
+    void HealAllHumans();
 
     double GetOperationalState() const;
-    bool     IsViable           () const;
+    bool IsViable () const;
     //@}
 
     //! @name Composante notifications
     //@{
     void NotifyComposanteHandledByMaintenance();
-    void NotifyComposanteBackFromMaintenance ();
-    void NotifyComposanteTransfered          ( PHY_RoleInterface_Composantes& src, PHY_RoleInterface_Composantes& dest );
+    void NotifyComposanteBackFromMaintenance();
+    void NotifyComposanteTransfered( PHY_RoleInterface_Composantes& src, PHY_RoleInterface_Composantes& dest );
     //@}
 
     //! @name Humans notifications
     //@{
-    void NotifyHumanAdded  ( Human_ABC& human );
+    void NotifyHumanAdded( Human_ABC& human );
     void NotifyHumanRemoved( Human_ABC& human );
     void NotifyHumanChanged( Human_ABC& human, const Human_ABC& copyOfOldHumanState );
     //@}
@@ -97,7 +95,7 @@ private:
     PHY_ComposantePion* pComposante_;
     std::vector< Human_ABC* > humans_;
     unsigned int nNbrUsableHumans_;
-    PHY_InjuredHuman*   injury_;
+    PHY_InjuredHuman* injury_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_HumansComposante )

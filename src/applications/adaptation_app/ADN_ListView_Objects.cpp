@@ -10,18 +10,14 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Objects.h"
-
-#include <qpopupmenu.h>
-
 #include "ADN_Objects_Data.h"
 #include "ADN_Objects_GUI.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_ObjectCreator_ABC.h"
 #include "ADN_Objects_Wizard.h"
-
+#include <qpopupmenu.h>
 
 typedef ADN_Objects_Data::ObjectInfos ObjectInfos;
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Objects constructor
@@ -37,7 +33,6 @@ ADN_ListView_Objects::ADN_ListView_Objects( QWidget* pParent, const char* szName
     // Connector creation
     pConnector_ = new ADN_Connector_ListView< ObjectInfos >( *this );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Objects destructor
@@ -56,10 +51,12 @@ namespace
 
     public:
         LinkBuilder( T_ConnectorVector& connectors, ObjectInfos& infos, bool bConnect )
-            : connectors_ ( connectors )
-            , infos_ ( infos )
-            , bConnect_ ( bConnect )
-        {}
+            : connectors_( connectors )
+            , infos_     ( infos )
+            , bConnect_  ( bConnect )
+        {
+            // NOTHING
+        }
 
         template< typename T >
         T& Link( E_GuiElements element )
@@ -89,7 +86,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     if( pCurData_ == 0 )
         return;
 
-    ObjectInfos* pInfos = (ObjectInfos*)pCurData_;
+    ObjectInfos* pInfos = reinterpret_cast< ObjectInfos* >( pCurData_ );
 
     LinkBuilder builder( vItemConnectors_, *pInfos, bConnect );
 
@@ -97,50 +94,34 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Objects_GUI::eGeometry ]->Connect( &pInfos->geometries_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eSymbol ]->Connect( &pInfos->symbol_, bConnect );
 
-
-    /*typedef boost::mpl::fold<   ADN_Objects_Data::ObjectInfos::ADN_CapacityTypes,
-                                ADN_Objects_Data::NullType,
-                                GuiConnector<boost::mpl::_1, boost::mpl::_2 > >::type ConnectorType;
-    ConnectorType::Connect(capacitiesConnectors_, pInfos, bConnect);*/
     // process capacities
-
     ADN_Objects_Data::ADN_CapacityInfos_Constructor& constructor = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Constructor >( ADN_Objects_GUI::eConstructorCapacityPresent );
     {
-        vItemConnectors_[ADN_Objects_GUI::eConstructorCapacity_DefaultConsumption]->Connect( &constructor.nDefaultConsumption_, bConnect );
-        vItemConnectors_[ADN_Objects_GUI::eConstructorCapacity_UnitType]->Connect( &constructor.unitType_, bConnect );
+        vItemConnectors_[ ADN_Objects_GUI::eConstructorCapacity_DefaultConsumption ]->Connect( &constructor.nDefaultConsumption_, bConnect );
+        vItemConnectors_[ ADN_Objects_GUI::eConstructorCapacity_UnitType ]->Connect( &constructor.unitType_, bConnect );
 
         ADN_Objects_Data::ADN_CapacityInfos_Buildable& buildable = *static_cast< ADN_Objects_Data::ADN_CapacityInfos_Buildable* >( constructor.ptrBuildable_.get() );
-        vItemConnectors_[ADN_Objects_GUI::eBuildableCapacityPresent]->Connect( &buildable.bPresent_, bConnect );
-        vItemConnectors_[ADN_Objects_GUI::eBuildableCapacity_Dotation]->Connect( &buildable.categories_, bConnect );
+        vItemConnectors_[ ADN_Objects_GUI::eBuildableCapacityPresent ]->Connect( &buildable.bPresent_, bConnect );
+        vItemConnectors_[ ADN_Objects_GUI::eBuildableCapacity_Dotation ]->Connect( &buildable.categories_, bConnect );
 
         ADN_Objects_Data::ADN_CapacityInfos_Improvable& improvable = *static_cast< ADN_Objects_Data::ADN_CapacityInfos_Improvable* >( constructor.ptrImprovable_.get() );
-        vItemConnectors_[ADN_Objects_GUI::eImprovableCapacityPresent]->Connect( &improvable.bPresent_, bConnect );
-        vItemConnectors_[ADN_Objects_GUI::eImprovableCapacity_Dotation]->Connect( &improvable.categories_, bConnect );
+        vItemConnectors_[ ADN_Objects_GUI::eImprovableCapacityPresent ]->Connect( &improvable.bPresent_, bConnect );
+        vItemConnectors_[ ADN_Objects_GUI::eImprovableCapacity_Dotation ]->Connect( &improvable.categories_, bConnect );
     }
-//    ADN_Objects_Data::ADN_CapacityInfos_Buildable& buildable = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Buildable >( ADN_Objects_GUI::eBuildableCapacityPresent );
-//    vItemConnectors_[ADN_Objects_GUI::eBuildableCapacity_Consumption]->Connect( &buildable.nDefaultConsumption_, bConnect );
-//    vItemConnectors_[ADN_Objects_GUI::eBuildableCapacity_DotationPresent]->Connect( &buildable.hasCategory_, bConnect );
-//    vItemConnectors_[ADN_Objects_GUI::eBuildableCapacity_Dotation]->Connect( &buildable.category_, bConnect );
-//
-//    ADN_Objects_Data::ADN_CapacityInfos_Minable& minable = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Minable >( ADN_Objects_GUI::eMinableCapacityPresent );
-//    vItemConnectors_[ADN_Objects_GUI::eMinableCapacity_Consumption]->Connect( &minable.nDefaultConsumption_, bConnect );
-//    vItemConnectors_[ADN_Objects_GUI::eMinableCapacity_DotationPresent]->Connect( &minable.hasCategory_, bConnect );
-//    vItemConnectors_[ADN_Objects_GUI::eMinableCapacity_Dotation]->Connect( &minable.category_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Avoidable& avoidable = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Avoidable >( ADN_Objects_GUI::eAvoidableCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eAvoidableCapacity_Distance]->Connect( &avoidable.rDistance_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eAvoidableCapacity_Distance ]->Connect( &avoidable.rDistance_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Bypassable& bypassable = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Bypassable >( ADN_Objects_GUI::eBypassableCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eBypassableCapacity_Speed]->Connect( &bypassable.rSpeed_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eBypassableCapacity_Speed ]->Connect( &bypassable.rSpeed_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight& heightInteraction = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight >( ADN_Objects_GUI::eHeightInteractionPresent );
-    vItemConnectors_[ADN_Objects_GUI::eHeightInteraction]->Connect( &heightInteraction.height_, bConnect );
-
+    vItemConnectors_[ ADN_Objects_GUI::eHeightInteraction ]->Connect( &heightInteraction.height_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Mobility& mobility = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Mobility >( ADN_Objects_GUI::eMobilityCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eMobilityCapacity_DefaultSpeed]->Connect( &mobility.rDefaultSpeed_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eMobilityCapacity_SpeedModifier]->Connect( &mobility.nSpeedModifier_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eMobilityCapacity_MaxAgentSpeed]->Connect( &mobility.rMaxAgentSpeed_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eMobilityCapacity_DefaultSpeed ]->Connect( &mobility.rDefaultSpeed_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eMobilityCapacity_SpeedModifier ]->Connect( &mobility.nSpeedModifier_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eMobilityCapacity_MaxAgentSpeed ]->Connect( &mobility.rMaxAgentSpeed_, bConnect );
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Activable >( ADN_Objects_GUI::eActivableCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Logistic >( ADN_Objects_GUI::eLogisticCapacityPresent );
@@ -149,27 +130,27 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Bridging >( ADN_Objects_GUI::eBridgingCapacityPresent );
 
     ADN_Objects_Data::ADN_CapacityInfos_Workable& workable = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Workable >( ADN_Objects_GUI::eWorkableCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eWorkableCapacity_Size]->Connect( &workable.worker_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eWorkableCapacity_Size ]->Connect( &workable.worker_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Attrition& attrition = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Attrition >( ADN_Objects_GUI::eAttritionCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eAttritionDotation]->Connect( &attrition.ammoCategory_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eAttritionCapacityUseDotation]->Connect( &attrition.useAmmo_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eAttritionDotation ]->Connect( &attrition.ammoCategory_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eAttritionCapacityUseDotation ]->Connect( &attrition.useAmmo_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Contamination& contamination = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Contamination >( ADN_Objects_GUI::eContaminationCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eContaminationCapacity_MaxToxic]->Connect( &contamination.max_toxic_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eContaminationCapacity_MaxToxic ]->Connect( &contamination.max_toxic_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Intoxication& intoxication = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Intoxication >( ADN_Objects_GUI::eIntoxicationCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eIntoxicationCapacity_MaxToxic]->Connect( &intoxication.max_toxic_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eIntoxicationCapacity_MaxToxic ]->Connect( &intoxication.max_toxic_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Population& populationFilter = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Population >( ADN_Objects_GUI::ePopulationCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::ePopulationFilter_Density]->Connect( &populationFilter.density_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::ePopulationFilter_Density ]->Connect( &populationFilter.density_, bConnect );
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Decontamination >( ADN_Objects_GUI::eDecontaminationCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Extinguishable >( ADN_Objects_GUI::eExtinguishableCapacityPresent );
     ADN_Objects_Data::ADN_CapacityInfos_Medical& medical = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Medical >( ADN_Objects_GUI::eMedicalCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eMedicalCapacity_NightRate]->Connect( &medical.nightDoctorsRate_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eMedicalCapacity_EmergencyDoctorRate]->Connect( &medical.emergencyDoctorsRate_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eMedicalCapacity_EmergencyBedRate]->Connect( &medical.emergencyBedsRate_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eMedicalCapacity_NightRate ]->Connect( &medical.nightDoctorsRate_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eMedicalCapacity_EmergencyDoctorRate ]->Connect( &medical.emergencyDoctorsRate_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eMedicalCapacity_EmergencyBedRate ]->Connect( &medical.emergencyBedsRate_, bConnect );
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Interference >( ADN_Objects_GUI::eInterferenceCapacityPresent );
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_InteractWithEnemy >( ADN_Objects_GUI::eInteractWithEnemyCapacityPresent );
@@ -188,46 +169,51 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Objects_GUI::ePropagationCapacity_ModelType ]->Connect( &propagation.model_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Detection& detection = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Detection >( ADN_Objects_GUI::eDetectionCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eDetectionCapacityPresent]->Connect( &detection.bPresent_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eHasDetectionTime]->Connect( &detection.bDetectTime_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eHasIdentificationTime]->Connect( &detection.bIdentTime_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eHasRecoTime]->Connect( &detection.bRecoTime_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eDetectionTime]->Connect( &detection.detectTime_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eRecoTime]->Connect( &detection.recoTime_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eIdentificationTime]->Connect( &detection.identTime_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eDetectionCapacityPresent ]->Connect( &detection.bPresent_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eHasDetectionTime ]->Connect( &detection.bDetectTime_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eHasIdentificationTime ]->Connect( &detection.bIdentTime_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eHasRecoTime ]->Connect( &detection.bRecoTime_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eDetectionTime ]->Connect( &detection.detectTime_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eRecoTime ]->Connect( &detection.recoTime_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eIdentificationTime ]->Connect( &detection.identTime_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Spawn& spawn = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Spawn >( ADN_Objects_GUI::eSpawnCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eSpawnCapacityPresent]->Connect( &spawn.bPresent_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eActionRange]->Connect( &spawn.rActionRange_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eObjectType]->Connect( &spawn.strObjectType_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eSpawnCapacityPresent ]->Connect( &spawn.bPresent_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eActionRange ]->Connect( &spawn.rActionRange_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eObjectType ]->Connect( &spawn.strObjectType_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier& attitudeModifier = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier >( ADN_Objects_GUI::eAttitudeModifierCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eAttitudeModifierCapacityPresent]->Connect( &attitudeModifier.bPresent_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eAttitude]->Connect( &attitudeModifier.attitude_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eAttitudeModifierCapacityPresent ]->Connect( &attitudeModifier.bPresent_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eAttitude ]->Connect( &attitudeModifier.attitude_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Perception& perception = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Perception >( ADN_Objects_GUI::ePerceptionCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::ePerceptionCapacityPresent]->Connect( &perception.bPresent_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eBlinded]->Connect( &perception.blinded_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::ePerceptionCapacityPresent ]->Connect( &perception.bPresent_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eBlinded ]->Connect( &perception.blinded_, bConnect );
 
     ADN_Objects_Data::ADN_CapacityInfos_Scattering& scattering = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Scattering >( ADN_Objects_GUI::eScatteringCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eScatteringCapacityPresent]->Connect( &scattering.bPresent_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eHumanByTimeStep]->Connect( &scattering.humanByTimeStep_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eScatteringCapacityPresent ]->Connect( &scattering.bPresent_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eHumanByTimeStep ]->Connect( &scattering.humanByTimeStep_, bConnect );
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Delay >( ADN_Objects_GUI::eDelayCapacityPresent );
 
     ADN_Objects_Data::ADN_CapacityInfos_Structural& structural = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Structural >( ADN_Objects_GUI::eStructuralStateCapacityPresent );
-    vItemConnectors_[ADN_Objects_GUI::eStructuralStateCapacityPresent]->Connect( &structural.bPresent_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eStructuralStateCapacity_Value]->Connect( &structural.rStructuralState_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eStructuralStateCapacityPresent ]->Connect( &structural.bPresent_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eStructuralStateCapacity_Value ]->Connect( &structural.rStructuralState_, bConnect );
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_SealOff >( ADN_Objects_GUI::eSealOffCapacityPresent );
 
     ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier& firePropagationModifier = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier >( ADN_Objects_GUI::eFirePropagationModifierPresent );
-    vItemConnectors_[ADN_Objects_GUI::eFirePropagationModifier_Modifiers]->Connect( &firePropagationModifier.modifiers_, bConnect );
-    vItemConnectors_[ADN_Objects_GUI::eFirePropagationModifierPresent]->Connect( &firePropagationModifier.bPresent_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eFirePropagationModifier_Modifiers ]->Connect( &firePropagationModifier.modifiers_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eFirePropagationModifierPresent ]->Connect( &firePropagationModifier.bPresent_, bConnect );
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Burn >( ADN_Objects_GUI::eBurnCapacityPresent );
 
-    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Flood >( ADN_Objects_GUI::eFloodCapacityPresent );
+    ADN_Objects_Data::ADN_CapacityInfos_Flood& flood = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Flood >( ADN_Objects_GUI::eFloodCapacityPresent );
+    vItemConnectors_[ ADN_Objects_GUI::eFloodCapacity_HurtHumans1 ]->Connect( &flood.nNbHurtHumans1_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eFloodCapacity_HurtHumans2 ]->Connect( &flood.nNbHurtHumans2_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eFloodCapacity_HurtHumans3 ]->Connect( &flood.nNbHurtHumans3_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eFloodCapacity_HurtHumansE ]->Connect( &flood.nNbHurtHumansE_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eFloodCapacity_DeadHumans ]->Connect( &flood.nNbDeadHumans_, bConnect );
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Universal >( ADN_Objects_GUI::eUniversalCapacityPresent );
 
@@ -242,9 +228,8 @@ void ADN_ListView_Objects::OnContextMenu( const QPoint& pt )
 {
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
-        QPopupMenu          popupMenu( this );
-        ADN_Objects_Wizard  wizard;
-
+        QPopupMenu popupMenu( this );
+        ADN_Objects_Wizard wizard;
         FillContextMenuWithDefault( popupMenu, wizard );
         popupMenu.exec( pt );
     }

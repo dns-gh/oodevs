@@ -14,13 +14,13 @@
 #include "HumansComposante_ABC.h"
 #include "PHY_HumanRank.h"
 #include "PHY_HumanWound.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "Entities/Objects/MIL_BurnEffectManipulator.h"
+#include "Entities/Objects/MIL_FloodEffectManipulator.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"
+#include "HumansActionsNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Human )
 
@@ -33,7 +33,7 @@ PHY_Human::PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante
     , time_           ( time )
     , pComposante_    ( &composante )
     , pRank_          ( &PHY_HumanRank::militaireDuRang_ )
-    , pWound_         ( &PHY_HumanWound::notWounded_     )
+    , pWound_         ( &PHY_HumanWound::notWounded_ )
     , bMentalDiseased_( false )
     , bContamined_    ( false )
     , nLocation_      ( eBattleField )
@@ -49,14 +49,14 @@ PHY_Human::PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante
 // -----------------------------------------------------------------------------
 PHY_Human::PHY_Human( const PHY_Human& rhs )
     : Human_ABC       ()
-    , time_           ( rhs.time_            )
-    , pComposante_    ( 0                    )
-    , pRank_          ( rhs.pRank_           )
-    , pWound_         ( rhs.pWound_          )
+    , time_           ( rhs.time_ )
+    , pComposante_    ( 0 )
+    , pRank_          ( rhs.pRank_ )
+    , pWound_         ( rhs.pWound_ )
     , bMentalDiseased_( rhs.bMentalDiseased_ )
-    , bContamined_    ( rhs.bContamined_     )
-    , nLocation_      ( rhs.nLocation_       )
-    , pMedicalState_  ( rhs.pMedicalState_   )
+    , bContamined_    ( rhs.bContamined_ )
+    , nLocation_      ( rhs.nLocation_ )
+    , pMedicalState_  ( rhs.pMedicalState_ )
     , nDeathTimeStep_ ( rhs.nDeathTimeStep_  )
 {
     // NOTHING
@@ -78,6 +78,7 @@ PHY_Human::PHY_Human()
     , pMedicalState_  ( 0 )
     , nDeathTimeStep_ ( std::numeric_limits< unsigned int >::max() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -97,16 +98,12 @@ PHY_Human::~PHY_Human()
 void PHY_Human::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< Human_ABC >( *this );
-
     file >> pComposante_;
-
     unsigned int nID;
     file >> nID;
     pRank_ = PHY_HumanRank::Find( nID );
-
     file >> nID;
     pWound_ = PHY_HumanWound::Find( nID );
-
     file >> bMentalDiseased_
          >> bContamined_
          >> nLocation_
@@ -122,12 +119,9 @@ void PHY_Human::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pRank_ );
     assert( pWound_ );
-
-    unsigned rank  = pRank_->GetID(),
-             wound = pWound_->GetID();
-
+    unsigned int rank  = pRank_->GetID();
+    unsigned int wound = pWound_->GetID();
     file << boost::serialization::base_object< Human_ABC >( *this );
-
     file << pComposante_
          << rank
          << wound
@@ -147,7 +141,6 @@ void PHY_Human::NotifyHumanChanged( const Human_ABC& oldHumanState )
 {
     assert( pComposante_ );
     pComposante_->NotifyHumanChanged( *this, oldHumanState );
-
     if( pMedicalState_ )
         pMedicalState_->NotifyHumanChanged();
 }
@@ -191,9 +184,9 @@ void PHY_Human::Evacuate( MIL_AutomateLOG& destinationTC2 )
 void PHY_Human::Heal()
 {
     CancelLogisticRequest();
-    HealMentalDisease    ();
-    HealContamination    ();
-    SetWound             ( PHY_HumanWound::notWounded_ ); //$$$ NB : don't use HealWound() => 'cause it don't heal deads ...
+    HealMentalDisease();
+    HealContamination();
+    SetWound( PHY_HumanWound::notWounded_ ); //$$$ NB : don't use HealWound() => 'cause it don't heal deads ...
 }
 
 // -----------------------------------------------------------------------------
@@ -244,11 +237,9 @@ bool PHY_Human::ApplyWound( const PHY_HumanWound& newWound )
 {
     if( !IsUsable() )
         return false;
-
     assert( pWound_ );
     if( newWound > *pWound_ )
         return SetWound( newWound );
-
     return false;
 }
 
@@ -269,7 +260,6 @@ void PHY_Human::ApplyContamination( const MIL_ToxicEffectManipulator& /*contamin
 {
     if( !IsUsable() )
         return;
-
     if( !bContamined_ )
     {
         PHY_Human oldHumanState( *this );
@@ -288,15 +278,22 @@ void PHY_Human::ApplyBurn( const MIL_BurnEffectManipulator& burn )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Human::ApplyFlood
+// Created: JSR 2011-01-11
+// -----------------------------------------------------------------------------
+void PHY_Human::ApplyFlood( const MIL_FloodEffectManipulator& flood )
+{
+    flood.ApplyRandomWound( boost::bind( &PHY_Human::ApplyWound, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Human::ApplyMentalDisease
 // Created: NLD 2005-01-14
 // -----------------------------------------------------------------------------
 void PHY_Human::ApplyMentalDisease()
 {
-
     if( !IsUsable() || IsWounded() || bMentalDiseased_ )
         return;
-
     if( PHY_HumanWound::ChooseMentalDisease() )
     {
         PHY_Human oldHumanState( *this );
@@ -329,24 +326,20 @@ bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
     if( newWound == *pWound_ )
         return false;
     pWound_ = &newWound;
-
     if( *pWound_ == PHY_HumanWound::killed_ )
     {
-        nDeathTimeStep_  = 0;
+        nDeathTimeStep_ = 0;
         bMentalDiseased_ = false;
-        bContamined_     = false;
+        bContamined_ = false;
     }
     else if( *pWound_ == PHY_HumanWound::notWounded_ )
         nDeathTimeStep_ = std::numeric_limits< unsigned int >::max();
     else
         nDeathTimeStep_ = std::min( nDeathTimeStep_, time_.GetCurrentTick() + pWound_->GetLifeExpectancy() );
-
     NotifyHumanChanged( oldHumanState );
-
     // !!!! $$$ Must be called after NotifyHumanChanged() (CancelLogisticRequest() call NotifyHumanChanged() too
     if( !NeedMedical() )
         CancelLogisticRequest();
-
     return true;
 }
 
@@ -358,11 +351,9 @@ bool PHY_Human::NotifyBackToWar()
 {
     assert( pComposante_ );
     assert( pMedicalState_ );
-
     //$$$ BOF - PB gestion interrogation état composante quand modif état humain (doit être fait par composante, ou par humain ?) (fait par composante tout le temps, sauf dans ce cas ...)
     if( pComposante_->GetComposante().GetState() == PHY_ComposanteState::dead_ )
         return false;
-
     CancelLogisticRequest();
     MIL_Report::PostEvent( pComposante_->GetComposante().GetRole().GetPion(), MIL_Report::eReport_HumanBackFromMedical );
     return true;
@@ -375,7 +366,6 @@ bool PHY_Human::NotifyBackToWar()
 void PHY_Human::NotifyHandledByMedical()
 {
     assert( nLocation_ != eMedical );
-
     PHY_Human oldHumanState( *this );
     nLocation_ = eMedical;
     NotifyHumanChanged( oldHumanState );
@@ -417,7 +407,6 @@ void PHY_Human::NotifyComposanteBackFromMaintenance()
 void PHY_Human::Update()
 {
     assert( pComposante_ );
-
     if( time_.GetCurrentTick() >= nDeathTimeStep_ )
     {
         MIL_Report::E_EngineReport nReportID;
@@ -427,11 +416,9 @@ void PHY_Human::Update()
             nReportID = MIL_Report::eReport_WoundedManDeathDuringTransport;
         else
             nReportID = MIL_Report::eReport_WoundedManDeathDuringHospitalization;
-
         if( SetWound( PHY_HumanWound::killed_ ) )
             MIL_Report::PostEvent( pComposante_->GetComposante().GetRole().GetPion(), nReportID );
     }
-
     // Demande santé
     if( NeedMedical() && !pMedicalState_ )
         const_cast< MIL_Agent_ABC& >( pComposante_->GetComposante().GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );

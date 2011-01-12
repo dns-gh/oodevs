@@ -11,6 +11,7 @@
 #define __MockPHY_RoleInterface_Composantes_h_
 
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Knowledge/DEC_Knowledge_AgentComposante.h"
 
 // =============================================================================
 /** @class  MockPHY_RoleInterface_Composantes
@@ -54,6 +55,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( ApplyExplosion, 2 );
     MOCK_METHOD( ApplyUrbanObjectCrumbling, 1 );
     MOCK_METHOD( ApplyBurn, 1 );
+    MOCK_METHOD( ApplyFlood, 1 );
     MOCK_METHOD( GetDangerosity, 2 );
     MOCK_METHOD( GetOnlyLoadableMaxRangeToFireOn, 2 );
     MOCK_METHOD( GetMaxRangeToFireOn, 2 );

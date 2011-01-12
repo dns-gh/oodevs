@@ -69,7 +69,6 @@ public:
     const short* Data( unsigned int x, unsigned int y ) const;
     unsigned int Unmap( float distance ) const;
     short ElevationAt( const geometry::Point2f& point ) const;
-    short InterpolatedElevationAt( const geometry::Point2f& point ) const;
     //@}
 
     //! @name Accessors

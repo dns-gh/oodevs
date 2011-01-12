@@ -27,8 +27,10 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "MT_Tools/MT_Scipio_enum.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -262,8 +264,7 @@ void DEC_Knowledge_Object::UpdateLocalisations()
 {
     if( !pObjectKnown_ )
         return;
-    const FloodAttribute* flood = pObjectKnown_->RetrieveAttribute< FloodAttribute >();
-    const TER_Localisation& localisation = flood ? flood->GetLocalisation() : pObjectKnown_->GetLocalisation();
+    const TER_Localisation& localisation = pObjectKnown_->GetLocalisation();
     if( !( localisation_ == localisation ) )
     {
         localisation_.Reset( localisation );
@@ -761,20 +762,24 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
     if( pObjectKnown_ )
         if( const FloodAttribute* flood = pObjectKnown_->RetrieveAttribute< FloodAttribute >() )
         {
+            E_CrossingHeight crossingHeight = agent.GetType().GetUnitType().GetCrossingHeight();
+            if( crossingHeight == eCrossingHeightAlways )
+                return false;
+            const TER_Localisation& localisation = flood->GetLocalisation();
             const std::vector< geometry::Polygon2f* >& deepAreas = flood->GetDeepAreas();
             const std::vector< geometry::Polygon2f* >& lowAreas = flood->GetLowAreas();
             std::vector< geometry::Polygon2f* >::const_iterator polygonIt;
             for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
-                if( localisation_.IsInside( *it ) )
+                if( localisation.IsInside( *it ) )
                 {
-                    // TODO vérifier ici la capacité de hauteur de franchissement de l'agent
                     geometry::Point2f point( static_cast< float>( ( *it ).rX_ ), static_cast< float >( ( *it ).rY_ ) );
                     for( polygonIt = deepAreas.begin(); polygonIt != deepAreas.end(); ++polygonIt )
                         if( ( *polygonIt )->BoundingBox().IsInside( point ) && ( *polygonIt )->IsInside( point ) )
                             return true;
-                    for( polygonIt = lowAreas.begin(); polygonIt != lowAreas.end(); ++polygonIt )
-                        if( ( *polygonIt )->BoundingBox().IsInside( point ) && ( *polygonIt )->IsInside( point ) )
-                            return true;
+                    if( crossingHeight == eCrossingHeightNever )
+                        for( polygonIt = lowAreas.begin(); polygonIt != lowAreas.end(); ++polygonIt )
+                            if( ( *polygonIt )->BoundingBox().IsInside( point ) && ( *polygonIt )->IsInside( point ) )
+                                return true;
                 }
             return false;    
         }

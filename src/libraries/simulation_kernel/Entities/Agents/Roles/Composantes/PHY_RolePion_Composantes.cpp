@@ -13,28 +13,26 @@
 #include "PHY_RolePion_Composantes.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
-#include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "simulation_kernel/TransportCapacityComputer_ABC.h"
-#include "simulation_kernel/TransportWeightComputer_ABC.h"
-#include "simulation_kernel/HumanLoadingTimeComputer_ABC.h"
-#include "simulation_kernel/LoadedStateConsistencyComputer_ABC.h"
-#include "simulation_kernel/SpeedComputer_ABC.h"
-#include "simulation_kernel/OnComponentComputer_ABC.h"
-#include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
-#include "simulation_kernel/ComponentsChangedNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-#include "simulation_kernel/DotationsActionsNotificationHandler_ABC.h"
+#include "Knowledge/DEC_Knowledge_AgentComposante.h"
+#include "TransportCapacityComputer_ABC.h"
+#include "TransportWeightComputer_ABC.h"
+#include "HumanLoadingTimeComputer_ABC.h"
+#include "LoadedStateConsistencyComputer_ABC.h"
+#include "SpeedComputer_ABC.h"
+#include "OnComponentComputer_ABC.h"
+#include "OnComponentLendedFunctorComputer_ABC.h"
+#include "ComponentsChangedNotificationHandler_ABC.h"
+#include "NetworkNotificationHandler_ABC.h"
+#include "VisionConeNotificationHandler_ABC.h"
+#include "DotationsActionsNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <hla/HLA_UpdateFunctor.h>
@@ -45,6 +43,7 @@
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Composantes )
 
 using namespace human;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::T_ComposanteTypeProperties constructor
 // Created: NLD 2004-08-16
@@ -62,12 +61,10 @@ PHY_RolePion_Composantes::T_ComposanteTypeProperties::T_ComposanteTypeProperties
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Composantes::T_ComposanteTypeProperties::HasUsableComposantes() const
 {
-    unsigned int i  = 0;
+    unsigned int i = 0;
     for( std::vector< unsigned int >::const_iterator it = nbrsPerState_.begin(); it != nbrsPerState_.end(); ++it, ++i )
-    {
         if( *it > 0 && PHY_ComposanteState::Find( i ).IsUsable() )
             return true;
-    }
     return false;
 }
 
@@ -87,28 +84,28 @@ void PHY_RolePion_Composantes::T_ComposanteTypeProperties::serialize( Archive& f
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
 PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool initialise )
-    : pion_                        ( pion )
-    , composantes_                 ()
-    , lentComposantes_             ()
-    , borrowedComposantes_         ()
-    , nNbrComposanteChanged_       ( 0 )
-    , nNbrUsableComposantes_       ( 0 )
-    , rOperationalState_           ( 0. )
-    , rMajorOperationalState_      ( 0. )
-    , bOperationalStateChanged_    ( false )
-    , pMajorComposante_            ( 0 )
-    , nNeutralizationEndTimeStep_  ( 0 )
-    , bLoansChanged_               ( false )
-    , bExternalMustChange_         ( false )
-    , bTransportHasChanged_        ( false )
-    , bIsLoaded_                   ( false )
-    , bIsSurrender_                ( false )
-    , nTickRcMaintenanceQuerySent_ ( 0 )
+    : pion_                       ( pion )
+    , composantes_                ()
+    , lentComposantes_            ()
+    , borrowedComposantes_        ()
+    , nNbrComposanteChanged_      ( 0 )
+    , nNbrUsableComposantes_      ( 0 )
+    , rOperationalState_          ( 0. )
+    , rMajorOperationalState_     ( 0. )
+    , bOperationalStateChanged_   ( false )
+    , pMajorComposante_           ( 0 )
+    , nNeutralizationEndTimeStep_ ( 0 )
+    , bLoansChanged_              ( false )
+    , bExternalMustChange_        ( false )
+    , bTransportHasChanged_       ( false )
+    , bIsLoaded_                  ( false )
+    , bIsSurrender_               ( false )
+    , nTickRcMaintenanceQuerySent_( 0 )
 {
     if( initialise ) // $$$$ LDC: Set to false for debug in order to avoid useless creation of crap.
     {
         pion_.GetType().GetUnitType().InstanciateComposantes( *this );
-        DistributeCommanders ();
+        DistributeCommanders();
     }
 }
 
@@ -185,7 +182,7 @@ namespace boost
         {
             unsigned int nNbr;
             file >> nNbr;
-            while ( nNbr-- )
+            while( nNbr-- )
             {
                 sword::EquipmentType nID;
                 int equipment_type;
@@ -225,6 +222,7 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::WriteODB( xml::xostream& /*xos*/ ) const
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -234,29 +232,23 @@ void PHY_RolePion_Composantes::WriteODB( xml::xostream& /*xos*/ ) const
 void PHY_RolePion_Composantes::DistributeCommanders()
 {
     // Répartition des officiers
-
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
     std::random_shuffle( composantes.begin(), composantes.end() );
-
-
     const PHY_UnitType::T_CommanderRepartitionMap& commanderRepartition = pion_.GetType().GetUnitType().GetCommanderRepartition();
     for( PHY_UnitType::CIT_CommanderRepartitionMap it = commanderRepartition.begin(); it != commanderRepartition.end(); ++it )
     {
         const PHY_HumanRank& rank = *it->first;
-              unsigned int   nNbr =  it->second;
-
+        unsigned int nNbr = it->second;
         bool bStopRepartition = false;
         while( nNbr && !bStopRepartition )
         {
             bStopRepartition = true;
             for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end() && nNbr; ++it )
-            {
                 if( (**it).ChangeHumanRank( PHY_HumanRank::militaireDuRang_, rank, PHY_HumanWound::notWounded_ ) )
                 {
                     bStopRepartition = false;
                     --nNbr;
                 }
-            }
         }
         if( nNbr )
             MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Not enough humans in crew to distribute commanders : " << nNbr << " " << rank.GetName() << " remaining" );
@@ -272,11 +264,10 @@ void PHY_RolePion_Composantes::DistributeHumanWounds( const PHY_HumanRank& rank,
     assert( itCurrentComp != composantes_.end() );
     if( newWound == PHY_HumanWound::notWounded_ )
         return;
-
     PHY_ComposantePion::CIT_ComposantePionVector itEndComp = itCurrentComp;
     while( nNbr )
     {
-        nNbr -= (*itCurrentComp)->WoundHumans( rank, nNbr, newWound );
+        nNbr -= ( *itCurrentComp )->WoundHumans( rank, nNbr, newWound );
         if( ++itCurrentComp == composantes_.end() )
             itCurrentComp = composantes_.begin();
         if( itCurrentComp == itEndComp && nNbr > 0 )
@@ -311,19 +302,13 @@ void PHY_RolePion_Composantes::ReadEquipements( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ReadEquipement( xml::xistream& xis )
 {
-    std::string strType;
-    xis >> xml::attribute( "type", strType );
-
-    const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( strType );
+    const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         xis.error( "Unknwon composante type" );
-
     unsigned int nNbrRepairable;
     unsigned int nNbrDead;
-
     xis >> xml::attribute( "reparable", nNbrRepairable )
         >> xml::attribute( "indisponible", nNbrDead );
-
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
     {
         PHY_ComposantePion& composante = **itComposante;
@@ -342,7 +327,6 @@ void PHY_RolePion_Composantes::ReadEquipement( xml::xistream& xis )
         else
             break;
     }
-
     if( nNbrDead || nNbrRepairable )
         MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot apply all the composantes states overloading specified in ODB : " << nNbrDead << " deads and " << nNbrRepairable << " repairables '" << pType->GetName() << "' remaining" );
 }
@@ -371,23 +355,17 @@ void PHY_RolePion_Composantes::ReadPersonnels( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ReadPersonnel( xml::xistream& xis )
 {
-    std::string strState;
     PHY_ComposantePion::CIT_ComposantePionVector itCurrentComp = composantes_.begin();
-
-    xis >> xml::attribute( "etat", strState );
-
-    const PHY_HumanWound* pWound = PHY_HumanWound::Find( strState );
+    const PHY_HumanWound* pWound = PHY_HumanWound::Find( xis.attribute< std::string >( "etat" ) );
     if( !pWound )
         xis.error( "Unknown human wound" );
-
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
     for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
     {
         const PHY_HumanRank& rank = *itRank->second;
         std::stringstream strRank;
         strRank << "nb" << rank.GetName();
-        unsigned int nNbr;
-        xis >> xml::attribute( strRank.str(), nNbr );
+        unsigned int nNbr = xis.attribute< unsigned int >( strRank.str() );
         DistributeHumanWounds( rank, *pWound, nNbr, itCurrentComp );
     }
 }
@@ -399,12 +377,8 @@ void PHY_RolePion_Composantes::ReadPersonnel( xml::xistream& xis )
 void PHY_RolePion_Composantes::ReadOverloading( xml::xistream& xis )
 {
     ReadComposantesOverloading( xis );
-    ReadHumansOverloading     ( xis );
+    ReadHumansOverloading( xis );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ChangeComposantesAvailability
@@ -413,20 +387,17 @@ void PHY_RolePion_Composantes::ReadOverloading( xml::xistream& xis )
 void PHY_RolePion_Composantes::ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, unsigned int nNewNbrUndamagedComposantes )
 {
     unsigned int nNbrUndamagedComposantes = 0;
-    unsigned int nNbrComposantes          = 0;
+    unsigned int nNbrComposantes = 0;
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         const PHY_ComposantePion& composante = **it;
         if( composante.GetType() != composanteType )
             continue;
-
-        ++ nNbrComposantes;
+        ++nNbrComposantes;
         if( composante.GetState() == PHY_ComposanteState::undamaged_ )
-            ++ nNbrUndamagedComposantes;
+            ++nNbrUndamagedComposantes;
     }
-
     nNewNbrUndamagedComposantes = std::min( nNewNbrUndamagedComposantes, nNbrComposantes );
-
     if( nNewNbrUndamagedComposantes > nNbrUndamagedComposantes )
     {
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end() && nNbrUndamagedComposantes < nNewNbrUndamagedComposantes; ++it )
@@ -435,7 +406,7 @@ void PHY_RolePion_Composantes::ChangeComposantesAvailability( const PHY_Composan
             if( composante.GetType() == composanteType && composante.GetState() != PHY_ComposanteState::undamaged_ )
             {
                 composante.Repair();
-                ++ nNbrUndamagedComposantes;
+                ++nNbrUndamagedComposantes;
             }
         }
     }
@@ -447,62 +418,12 @@ void PHY_RolePion_Composantes::ChangeComposantesAvailability( const PHY_Composan
             if( composante.GetType() == composanteType && composante.GetState() == PHY_ComposanteState::undamaged_ )
             {
                 composante.ReinitializeState( PHY_ComposanteState::dead_ );
-                -- nNbrUndamagedComposantes;
+                --nNbrUndamagedComposantes;
             }
         }
     }
 }
-/*
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::WoundHumans
-// Created: NLD 2005-07-28
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WoundHumans( const PHY_HumanRank& rank, unsigned int nNbr )
-{
-    T_ComposantePionVector composantes = composantes_;
-    std::random_shuffle( composantes.begin(), composantes.end() );
 
-    IT_ComposantePionVector itCurrentComp = composantes.begin();
-    while( nNbr && itCurrentComp != composantes.end() )
-    {
-        unsigned int nNbrChanged = (*itCurrentComp)->WoundHumans( rank, 1, PHY_HumanWound::killed_ );
-        if( nNbrChanged == 0 )
-            itCurrentComp = composantes.erase( itCurrentComp );
-        else
-        {
-            nNbr -= nNbrChanged;
-            ++ itCurrentComp;
-        }
-        if( itCurrentComp == composantes.end() )
-            itCurrentComp = composantes.begin();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::HealHumans
-// Created: NLD 2005-07-28
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::HealHumans( const PHY_HumanRank& rank, unsigned int nNbr )
-{
-    T_ComposantePionVector composantes = composantes_;
-    std::random_shuffle( composantes.begin(), composantes.end() );
-
-    IT_ComposantePionVector itCurrentComp = composantes.begin();
-    while( nNbr && itCurrentComp != composantes.end() )
-    {
-        unsigned int nNbrChanged = (*itCurrentComp)->HealHumans( rank, 1 );
-        if( nNbrChanged == 0 )
-            itCurrentComp = composantes.erase( itCurrentComp );
-        else
-        {
-            nNbr -= nNbrChanged;
-            ++ itCurrentComp;
-        }
-        if( itCurrentComp == composantes.end() )
-            itCurrentComp = composantes.begin();
-    }
-}
-*/
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::UpdateOperationalStates
 // Created: NLD 2004-09-08
@@ -511,30 +432,26 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
 {
     if( !HasChanged() && !bExternalMustChange_ )
         return;
-
-    double     rMajorOpStateValue    = 0.;
-    unsigned int nMajorOpStateNbr      = 0;
-    double     rNonMajorOpStateValue = 0.;
-    unsigned int nNonMajorOpStateNbr   = 0;
+    double rMajorOpStateValue = 0.;
+    unsigned int nMajorOpStateNbr = 0;
+    double rNonMajorOpStateValue = 0.;
+    unsigned int nNonMajorOpStateNbr = 0;
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        const PHY_ComposantePion& composante   = **it;
-        const double            rCompOpState = composante.GetOperationalState();
-
+        const PHY_ComposantePion& composante = **it;
+        const double rCompOpState = composante.GetOperationalState();
         if( composante.IsMajor() )
         {
-            ++ nMajorOpStateNbr;
+            ++nMajorOpStateNbr;
             rMajorOpStateValue += rCompOpState;
         }
         else
         {
-            ++ nNonMajorOpStateNbr;
+            ++nNonMajorOpStateNbr;
             rNonMajorOpStateValue += rCompOpState;
         }
     }
-
     double rNewOpState = 0.;
-
     // Etat ops
     if( nMajorOpStateNbr == 0 ) // Pas de composantes majeures explicites
     {
@@ -550,12 +467,11 @@ void PHY_RolePion_Composantes::UpdateOperationalStates()
         rNewOpState = ( rMajorOpStateValue    / nMajorOpStateNbr    ) * rOpStateWeightMajorComposante_
                     + ( rNonMajorOpStateValue / nNonMajorOpStateNbr ) * rOpStateWeightNonMajorComposante_;
     }
-
     if( rNewOpState != rOperationalState_ )
     {
         assert( rNewOpState >= 0. && rNewOpState <= 1. );
         bOperationalStateChanged_ = true;
-        rOperationalState_        = rNewOpState;
+        rOperationalState_ = rNewOpState;
     }
 
     // Etat ops majeur
@@ -575,7 +491,6 @@ void PHY_RolePion_Composantes::UpdateMajorComposante()
 {
     if( !HasChanged() && !bTransportHasChanged_ )
         return;
-
     pMajorComposante_ = 0;
     unsigned int nMajorScore  = 0;
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
@@ -584,7 +499,7 @@ void PHY_RolePion_Composantes::UpdateMajorComposante()
         if( composante.GetMajorScore() >= nMajorScore )
         {
             pMajorComposante_ = &composante;
-            nMajorScore       = composante.GetMajorScore();
+            nMajorScore = composante.GetMajorScore();
         }
     }
 }
@@ -596,17 +511,15 @@ void PHY_RolePion_Composantes::UpdateMajorComposante()
 void PHY_RolePion_Composantes::Update( bool /*bIsDead*/ )
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        (**it).Update();
-
+        ( **it ).Update();
     if( HasChanged() )
     {
         pion_.Apply( &component::ComponentsChangedNotificationHandler_ABC::NotifyComponentHasChanged );
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
     }
-
     UpdateOperationalStates();
-    UpdateMajorComposante  ();
+    UpdateMajorComposante();
 }
 
 // -----------------------------------------------------------------------------
@@ -627,12 +540,8 @@ void PHY_RolePion_Composantes::Clean()
     bOperationalStateChanged_ = false;
 
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
-        (**it).Clean();
+        ( **it ).Clean();
 }
-
-// =============================================================================
-// NOTIFICATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::UpdateDataWhenComposanteAdded
@@ -642,7 +551,6 @@ void PHY_RolePion_Composantes::UpdateDataWhenComposanteAdded( const PHY_Composan
 {
     if( compState.IsUsable() )
         ++nNbrUsableComposantes_;
-
     ++properties.nbrsPerState_[ compState.GetID() ];
     if( !properties.bHasChanged_ )
     {
@@ -658,7 +566,7 @@ void PHY_RolePion_Composantes::UpdateDataWhenComposanteAdded( const PHY_Composan
 void PHY_RolePion_Composantes::UpdateDataWhenComposanteRemoved( const PHY_ComposanteState& compState, T_ComposanteTypeProperties& properties )
 {
     if( compState.IsUsable() )
-{
+    {
         assert( nNbrUsableComposantes_ > 0 );
         --nNbrUsableComposantes_;
     }
@@ -680,9 +588,7 @@ void PHY_RolePion_Composantes::NotifyComposanteAdded( PHY_ComposantePion& compos
 {
     assert( std::find( composantes_.begin(), composantes_.end(), &composante ) == composantes_.end() );
     composantes_.push_back( &composante );
-
     UpdateDataWhenComposanteAdded( composante.GetState(), composanteTypes_[ &composante.GetType() ] );
-
     if( composante.GetState().IsUsable() )
         pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::RegisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
 }
@@ -695,14 +601,11 @@ void PHY_RolePion_Composantes::NotifyComposanteRemoved( PHY_ComposantePion& comp
 {
     assert( composanteTypes_.find( &composante.GetType() ) != composanteTypes_.end() );
     UpdateDataWhenComposanteRemoved( composante.GetState(), composanteTypes_[ &composante.GetType() ] );
-
     PHY_ComposantePion::IT_ComposantePionVector it = std::find( composantes_.begin(), composantes_.end(), &composante );
     assert( it != composantes_.end() );
     composantes_.erase( it );
-
     if( composante.GetState().IsUsable() )
         pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
-
     pion_.Apply( &transport::TransportNotificationHandler_ABC::CheckConsistency );
 }
 
@@ -716,15 +619,12 @@ void PHY_RolePion_Composantes::NotifyComposanteChanged( PHY_ComposantePion& comp
     assert( oldState != newState );
     assert( composanteTypes_.find( &composante.GetType() ) != composanteTypes_.end() );
     T_ComposanteTypeProperties& properties = composanteTypes_[ &composante.GetType() ];
-
     UpdateDataWhenComposanteRemoved( oldState, properties );
-    UpdateDataWhenComposanteAdded  ( newState, properties );
-
+    UpdateDataWhenComposanteAdded( newState, properties );
     if( !newState.IsUsable() && oldState.IsUsable() )
         pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::UnregisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
     else if( newState.IsUsable() && !oldState.IsUsable() )
         pion_.Apply( &dotation::DotationsActionsNotificationHandler_ABC::RegisterDotationsCapacities, composante.GetType().GetDotationCapacities() );
-
     pion_.Apply( &transport::TransportNotificationHandler_ABC::NotifyComposanteChanged, composante );
     pion_.Apply( &transport::TransportNotificationHandler_ABC::CheckConsistency );
 }
@@ -740,14 +640,9 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
         MT_Vector2D newPosition;
         if( pion_.GetAutomate().GetAlivePionsBarycenter( newPosition ) )
             pion_.MagicMove( newPosition );
-
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_ReAvailableAfterRepairation );
     }
 }
-
-// =============================================================================
-// PERCEPTION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetSignificantVolume
@@ -756,20 +651,18 @@ void PHY_RolePion_Composantes::NotifyComposanteRepaired()
 const PHY_Volume* PHY_RolePion_Composantes::GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const
 {
     const PHY_Volume* pSignificantVolume = 0;
-    double rSignificantVolumeFactor    = 0.;
+    double rSignificantVolumeFactor = 0.;
     for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
     {
-        const PHY_Volume&                  compTypeVolume = it->first->GetVolume();
-        const T_ComposanteTypeProperties&  compProp       = it->second;
-
+        const PHY_Volume& compTypeVolume = it->first->GetVolume();
+        const T_ComposanteTypeProperties& compProp = it->second;
         if( !compProp.HasUsableComposantes() )
             continue;
-
         double rVolumeFactor = sensorType.GetFactor( compTypeVolume );
         if( rVolumeFactor > rSignificantVolumeFactor )
         {
-            pSignificantVolume       = &compTypeVolume;
-            rSignificantVolumeFactor =  rVolumeFactor;
+            pSignificantVolume = &compTypeVolume;
+            rSignificantVolumeFactor = rVolumeFactor;
         }
     }
     return pSignificantVolume;
@@ -784,12 +677,10 @@ void PHY_RolePion_Composantes::GetVisibleVolumes( T_ComposanteVolumeSet& volumes
     volumes.clear();
     for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
     {
-        const PHY_Volume&                 compTypeVolume = it->first->GetVolume();
-        const T_ComposanteTypeProperties& compProp       = it->second;
-
+        const PHY_Volume& compTypeVolume = it->first->GetVolume();
+        const T_ComposanteTypeProperties& compProp = it->second;
         if( !compProp.HasUsableComposantes() )
             continue;
-
         volumes.insert( &compTypeVolume );
     }
 }
@@ -805,10 +696,6 @@ void PHY_RolePion_Composantes::BuildKnowledgeComposantes( T_KnowledgeComposanteV
         knowledge.push_back( DEC_Knowledge_AgentComposante( **it ) );
 }
 
-// =============================================================================
-// FIRE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::DamageTransported
 // Created: NLD 2004-11-25
@@ -822,13 +709,11 @@ void PHY_RolePion_Composantes::DamageTransported( double rWeightToDamage, const 
     {
         PHY_ComposantePion& composante = **it;
         if( !bTransportOnlyLoadable || composante.CanBeLoaded() )
-        {
             if( newState < composante.GetState() )
             {
                 composante.ReinitializeState( newState );
                 rWeightToDamage -= composante.GetWeight();
             }
-        }
     }
 }
 
@@ -882,7 +767,6 @@ void PHY_RolePion_Composantes::ApplyExplosion( const AttritionCapacity& capacity
 {
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
     std::random_shuffle( composantes.begin(), composantes.end() );
-
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
     {
@@ -925,6 +809,20 @@ void PHY_RolePion_Composantes::ApplyBurn( const MIL_BurnEffectManipulator& burn 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ApplyFlood
+// Created: JSR 2011-01-11
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ApplyFlood( const MIL_FloodEffectManipulator& flood )
+{
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.GetState().IsUsable() )
+            composante.ApplyFlood( flood );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::ApplyIndirectFire
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
@@ -937,7 +835,6 @@ void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& do
         if( composante.CanBeFired() )
             composante.ApplyIndirectFire( dotationCategory, fireDamages, ratio );
     }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -947,10 +844,8 @@ void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& do
 void PHY_RolePion_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
 {
     assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
-
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
     PHY_ComposantePion& compTargetPion = static_cast< PHY_ComposantePion& >( compTarget );
-
     if( compTargetPion.CanBeFired() )
         compTargetPion.ApplyDirectFire( dotationCategory, fireDamages );
 }
@@ -977,10 +872,8 @@ void PHY_RolePion_Composantes::ApplyDirectFireOnMajorComposantes( const PHY_Dota
 void PHY_RolePion_Composantes::ApplyPopulationFire( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& fireResult )
 {
     assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
-
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
     PHY_ComposantePion& compTargetPion = static_cast< PHY_ComposantePion& >( compTarget );
-
     if( compTargetPion.CanBeFired() )
         compTargetPion.ApplyPopulationFire( populationType, populationAttitude, fireDamages );
 }
@@ -993,7 +886,7 @@ void PHY_RolePion_Composantes::Neutralize()
 {
     const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        nNeutralizationEndTimeStep_ = std::max( nNeutralizationEndTimeStep_, nCurrentTimeStep + (**it).GetNeutralizationTime() );
+        nNeutralizationEndTimeStep_ = std::max( nNeutralizationEndTimeStep_, nCurrentTimeStep + ( **it ).GetNeutralizationTime() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1004,12 +897,10 @@ void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& comp
 {
     if( !bIsLoaded_ )
         return;
-
     if( !composanteChanged.CanTransportHumans() )
         return;
-
     unsigned int nNbrHumansCarrier = 0;
-    unsigned int nNbrHumansLoaded  = 0;
+    unsigned int nNbrHumansLoaded = 0;
     PHY_ComposantePion::CIT_ComposantePionVector itComp;
     for( itComp = composantes_.begin(); itComp != composantes_.end(); ++itComp )
     {
@@ -1020,7 +911,6 @@ void PHY_RolePion_Composantes::WoundLoadedHumans( const PHY_ComposantePion& comp
             nNbrHumansLoaded += composante.GetNbrUsableHumans();
     }
     assert( nNbrHumansCarrier != 0 );
-
     unsigned int nNbrHumansToWound = nNbrHumansLoaded / nNbrHumansCarrier;
     for( itComp = composantes_.begin(); nNbrHumansToWound && itComp != composantes_.end(); ++itComp )
     {
@@ -1063,7 +953,6 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( PHY_ComposantePion::
     PHY_RolePion_Composantes::GetComposantesAbleToBeFired( availableTargets, bFireOnlyOnMajorComposantes );
     if( availableTargets.empty() )
         return;
-
     while( targets.size() < nNbrFirer )
     {
         std::random_shuffle( availableTargets.begin(), availableTargets.end() );
@@ -1072,10 +961,6 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( PHY_ComposantePion::
     targets.resize( nNbrFirer );
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::SendChangedState
 // Created: NLD 2004-12-29
@@ -1083,7 +968,7 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( PHY_ComposantePion::
 void PHY_RolePion_Composantes::SendChangedState() const
 {
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
-        (**it).SendChangedState();
+        ( **it ).SendChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1093,7 +978,7 @@ void PHY_RolePion_Composantes::SendChangedState() const
 void PHY_RolePion_Composantes::SendFullState() const
 {
     for( CIT_MaintenanceComposanteStateSet it = maintenanceComposanteStates_.begin(); it != maintenanceComposanteStates_.end(); ++it )
-        (**it).SendFullState();
+        ( **it ).SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1104,7 +989,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
 {
     typedef std::pair< const MIL_Agent_ABC*, const PHY_ComposanteTypePion* > T_Key;
     typedef std::map < T_Key, unsigned int >                                 T_LoanCountMap;
-    typedef T_LoanCountMap::const_iterator                                   CIT_LoanCountMap;
+    typedef T_LoanCountMap::const_iterator                                 CIT_LoanCountMap;
 
     // Lent composantes
     {
@@ -1114,7 +999,7 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
             const MIL_Agent_ABC& pion = it->first->GetPion();
             const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
             for( PHY_ComposantePion::CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
-                ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
+                ++loanData[ T_Key( &pion, &( **itComp ).GetType() ) ];
         }
         sword::LentEquipments& lentEquipements = *message().mutable_lent_equipments();
         for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
@@ -1134,14 +1019,14 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
             const MIL_Agent_ABC& pion = it->first->GetPion();
             const PHY_ComposantePion::T_ComposantePionVector& composantes = it->second;
             for( PHY_ComposantePion::CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
-                ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
+                ++loanData[ T_Key( &pion, &( **itComp ).GetType() ) ];
         }
         sword::BorrowedEquipments& borrowedEquipements = *message().mutable_borrowed_equipments();
         for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
         {
             sword::BorrowedEquipments_BorrowedEquipment& loan = *borrowedEquipements.add_elem();
-            loan.mutable_owner()->set_id(  it->first.first ->GetID() );
-            loan.mutable_type()->set_id(  it->first.second->GetMosID().id() );
+            loan.mutable_owner()->set_id( it->first.first ->GetID() );
+            loan.mutable_type()->set_id( it->first.second->GetMosID().id() );
             loan.set_quantity( it->second );
         }
     }
@@ -1154,24 +1039,19 @@ void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) cons
 void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) const
 {
     if( !composanteTypes_.empty() )
-    {
         for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
         {
-            const PHY_ComposanteTypePion&    compType   = *itComposanteType->first;
-            const T_ComposanteTypeProperties& properties =  itComposanteType->second;
-
+            const PHY_ComposanteTypePion& compType = *itComposanteType->first;
+            const T_ComposanteTypeProperties& properties = itComposanteType->second;
             sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_equipment_dotations()->add_elem();
             value.mutable_type()->set_id(  compType.GetMosID().id() );
-            value.set_available             ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_ .GetID() ] );
-            value.set_unavailable           ( properties.nbrsPerState_[ PHY_ComposanteState::dead_      .GetID() ] );
-            value.set_repairable              ( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
-            value.set_repairing ( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
-            value.set_captured             ( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ] );
+            value.set_available( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_.GetID() ] );
+            value.set_unavailable( properties.nbrsPerState_[ PHY_ComposanteState::dead_.GetID() ] );
+            value.set_repairable( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
+            value.set_repairing( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
+            value.set_captured( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_.GetID() ] );
         }
-    }
-
-    msg().set_raw_operational_state( (unsigned int)( rOperationalState_ * 100. ) );
-
+    msg().set_raw_operational_state( static_cast< unsigned int >( rOperationalState_ * 100. ) );
     SendLoans( msg );
 }
 
@@ -1182,27 +1062,23 @@ void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) cons
 void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( nNbrComposanteChanged_ > 0 )
-    {
         for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
         {
-            const PHY_ComposanteTypePion&     compType   = *itComposanteType->first;
-            const T_ComposanteTypeProperties& properties =  itComposanteType->second;
-
+            const PHY_ComposanteTypePion& compType = *itComposanteType->first;
+            const T_ComposanteTypeProperties& properties = itComposanteType->second;
             if( !properties.bHasChanged_ )
                 continue;
 
-            sword::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_equipment_dotations()->add_elem();
+            sword::EquipmentDotations_EquipmentDotation& value = *msg().mutable_equipment_dotations()->add_elem();
             value.mutable_type()->set_id( compType.GetMosID().id() );
-            value.set_available            ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_  .GetID() ] );
-            value.set_unavailable          ( properties.nbrsPerState_[ PHY_ComposanteState::dead_       .GetID() ] );
-            value.set_repairable             ( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
+            value.set_available( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_.GetID() ] );
+            value.set_unavailable( properties.nbrsPerState_[ PHY_ComposanteState::dead_.GetID() ] );
+            value.set_repairable( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
             value.set_repairing( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
-            value.set_captured            ( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ] );
+            value.set_captured( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_.GetID() ] );
         }
-    }
-
     if( bOperationalStateChanged_ )
-        msg().set_raw_operational_state( (unsigned int)( rOperationalState_ * 100. ) );
+        msg().set_raw_operational_state( static_cast< unsigned int >( rOperationalState_ * 100. ) );
 
     if( bLoansChanged_ )
         SendLoans( msg );
@@ -1230,10 +1106,6 @@ void PHY_RolePion_Composantes::Serialize( HLA_UpdateFunctor& functor ) const
     functor.Serialize( "composantes", HasChanged(), composantes );
 }
 
-// =============================================================================
-// FIRE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetDangerosity
 // Created: MGD 2010-02-04
@@ -1242,9 +1114,7 @@ double PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_AgentCompos
 {
     double rDangerosity = 0.f;
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        rDangerosity = std::max( rDangerosity, (*it)->GetDangerosity( compTarget, rDistBtwSourceAndTarget ) );
-    }
+        rDangerosity = std::max( rDangerosity, ( *it )->GetDangerosity( compTarget, rDistBtwSourceAndTarget ) );
     return rDangerosity;
 }
 
@@ -1256,11 +1126,10 @@ double PHY_RolePion_Composantes::GetMaxRangeToFireOn( const DEC_Knowledge_Agent&
 {
     // Get back the most dangerous composante type of the target (from our point of view ...)
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
-
     double rRange = 0;
     if( pTargetComposante )
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::max( rRange, (**it).GetMaxRangeToFireOn( *pTargetComposante, rWantedPH ) );
+            rRange = std::max( rRange, ( **it ).GetMaxRangeToFireOn( *pTargetComposante, rWantedPH ) );
     return rRange;
 }
 
@@ -1272,11 +1141,10 @@ double PHY_RolePion_Composantes::GetOnlyLoadableMaxRangeToFireOn( const DEC_Know
 {
     // Get the most dangerous composante type of the target (from our point of view ...)
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
-
     double rRange = 0;
     if( pTargetComposante )
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::max( rRange, (**it).GetOnlyLoadableMaxRangeToFireOn( *pTargetComposante, rWantedPH ) );
+            rRange = std::max( rRange, ( **it ).GetOnlyLoadableMaxRangeToFireOn( *pTargetComposante, rWantedPH ) );
     return rRange;
 }
 
@@ -1288,11 +1156,10 @@ double PHY_RolePion_Composantes::GetMinRangeToFireOn( const DEC_Knowledge_Agent&
 {
     // Get The most dangerous composante type of the target
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
-
     double rRange = std::numeric_limits< double >::max();
     if( pTargetComposante )
-        for(  PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::min( rRange, (**it).GetMinRangeToFireOn( *pTargetComposante, rWantedPH ) );
+        for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+            rRange = std::min( rRange, ( **it ).GetMinRangeToFireOn( *pTargetComposante, rWantedPH ) );
     return rRange;
 }
 
@@ -1304,11 +1171,10 @@ double PHY_RolePion_Composantes::GetMaxRangeToFireOnActualPosture( const DEC_Kno
 {
     // Get back the most dangerous composante type of the target (from our point of view ...)
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
-
     double rRange = 0;
     if( pTargetComposante )
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::max( rRange, (**it).GetMaxRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
+            rRange = std::max( rRange, ( **it ).GetMaxRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
     return rRange;
 }
 
@@ -1320,11 +1186,10 @@ double PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_Kno
 {
     // Get The most dangerous composante type of the target
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
-
     double rRange = std::numeric_limits< double >::max();
     if( pTargetComposante )
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::min( rRange, (**it).GetMinRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
+            rRange = std::min( rRange, ( **it ).GetMinRangeToFireOnWithPosture( *pTargetComposante, target.GetAgentKnown(), rWantedPH ) );
     return rRange;
 }
 
@@ -1335,9 +1200,8 @@ double PHY_RolePion_Composantes::GetMinRangeToFireOnActualPosture( const DEC_Kno
 double PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     double rRange = -1.;
-
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::max( rRange, (*it)->GetMaxRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability ) );
+        rRange = std::max( rRange, ( *it )->GetMaxRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability ) );
     return rRange;
 }
 
@@ -1348,9 +1212,8 @@ double PHY_RolePion_Composantes::GetMaxRangeToIndirectFire( const PHY_DotationCa
 double PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const
 {
     double rRange = std::numeric_limits< double >::max();
-
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::min( rRange, (*it)->GetMinRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability ) );
+        rRange = std::min( rRange, ( *it )->GetMinRangeToIndirectFire( dotationCategory, bCheckDotationsAvailability ) );
     return rRange;
 }
 
@@ -1361,17 +1224,11 @@ double PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_DotationCa
 double PHY_RolePion_Composantes::GetMaxRangeToFire( const MIL_Agent_ABC&  pion, double rWantedPH ) const
 {
     double rRange = 0.;
-
     for(  PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        if( (*it)->IsMajor() )
-            rRange = std::max( rRange, (**it).GetMaxRangeToFire( pion, rWantedPH ) );
-
+        if( ( *it )->IsMajor() )
+            rRange = std::max( rRange, ( **it ).GetMaxRangeToFire( pion, rWantedPH ) );
     return rRange;
 }
-
-// =============================================================================
-// LOGISTIC - MAINTENANCE
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::PreprocessRandomBreakdowns
@@ -1380,7 +1237,7 @@ double PHY_RolePion_Composantes::GetMaxRangeToFire( const MIL_Agent_ABC&  pion, 
 void PHY_RolePion_Composantes::PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        (**it).PreprocessRandomBreakdowns( nEndDayTimeStep );
+        ( **it ).PreprocessRandomBreakdowns( nEndDayTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -1415,18 +1272,13 @@ void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_Maintena
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
-// =============================================================================
-//  PRET DE COMPOSANTE
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyLentComposanteReceived
 // Created: NLD 2006-07-17
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante )
 {
-    assert( std::find ( borrowedComposantes_[ &lender ].begin(), borrowedComposantes_[ &lender ].end(), &composante ) == borrowedComposantes_[ &lender ].end() );
-
+    assert( std::find( borrowedComposantes_[ &lender ].begin(), borrowedComposantes_[ &lender ].end(), &composante ) == borrowedComposantes_[ &lender ].end() );
     borrowedComposantes_[ &lender ].push_back( &composante );
     bLoansChanged_ = true;
 }
@@ -1438,14 +1290,11 @@ void PHY_RolePion_Composantes::NotifyLentComposanteReceived( PHY_RoleInterface_C
 void PHY_RolePion_Composantes::NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante )
 {
     PHY_ComposantePion::T_ComposantePionVector& lentComps = borrowedComposantes_[ &lender ];
-
     PHY_ComposantePion::IT_ComposantePionVector itComp = std::find( lentComps.begin(), lentComps.end(), &composante );
     assert( itComp != lentComps.end() );
-
     lentComps.erase( itComp );
     if( lentComps.empty() )
         borrowedComposantes_.erase( borrowedComposantes_.find( &lender ) );
-
     bLoansChanged_ = true;
 }
 
@@ -1457,11 +1306,9 @@ void PHY_RolePion_Composantes::LendComposante( PHY_RoleInterface_Composantes& bo
 {
     assert( composante.CanBeLent() );
     assert( std::find( composantes_.begin(), composantes_.end(), &composante ) != composantes_.end() );
-
     lentComposantes_[ &borrower ].push_back( &composante );
     composante.TransferComposante( borrower );
     bLoansChanged_ = true;
-
     borrower.NotifyLentComposanteReceived( *this, composante );
 }
 
@@ -1472,23 +1319,19 @@ void PHY_RolePion_Composantes::LendComposante( PHY_RoleInterface_Composantes& bo
 void PHY_RolePion_Composantes::RetrieveLentComposante( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante )
 {
     PHY_ComposantePion::T_ComposantePionVector& lentComps = lentComposantes_[ &borrower ];
-
     PHY_ComposantePion::IT_ComposantePionVector itComp = std::find( lentComps.begin(), lentComps.end(), &composante );
     assert( itComp != lentComps.end() );
-
     composante.TransferComposante( *this );
-
     lentComps.erase( itComp );
     if( lentComps.empty() )
         lentComposantes_.erase( lentComposantes_.find( &borrower ) );
     bLoansChanged_ = true;
-
     borrower.NotifyLentComposanteReturned( *this, composante );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyCaptured
-// C: NLD 2005-03-07
+// Created: NLD 2005-03-07
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyCaptured()
 {
@@ -1524,7 +1367,6 @@ bool PHY_RolePion_Composantes::IsNeutralized() const
 {
     return nNeutralizationEndTimeStep_ && nNeutralizationEndTimeStep_ >= MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::HasChanged
@@ -1566,7 +1408,6 @@ double PHY_RolePion_Composantes::GetMajorComponentWeight( bool loadedWeight ) co
     return 0.;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetOperationalState
 // Created: NLD 2004-09-08
@@ -1601,7 +1442,7 @@ const MIL_Agent_ABC& PHY_RolePion_Composantes::GetPion() const
 void PHY_RolePion_Composantes::RepairAllComposantes()
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        (**it).Repair();
+        ( **it ).Repair();
 }
 
 // -----------------------------------------------------------------------------
@@ -1612,7 +1453,6 @@ void PHY_RolePion_Composantes::DestroyRandomComposante()
 {
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
     std::random_shuffle( composantes.begin(), composantes.end() );
-
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
@@ -1631,9 +1471,8 @@ void PHY_RolePion_Composantes::DestroyRandomComposante()
 void PHY_RolePion_Composantes::DestroyAllComposantes()
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        (**it).ReinitializeState( PHY_ComposanteState::dead_ );
+        ( **it ).ReinitializeState( PHY_ComposanteState::dead_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::Execute //@TODO MGD use OnComponentComputer hierarchie
@@ -1642,7 +1481,7 @@ void PHY_RolePion_Composantes::DestroyAllComposantes()
 void PHY_RolePion_Composantes::Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        (**it).Execute( algorithm );
+        ( **it ).Execute( algorithm );
 }
 
 // -----------------------------------------------------------------------------
@@ -1654,6 +1493,7 @@ void PHY_RolePion_Composantes::Execute( transport::TransportCapacityComputer_ABC
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
         algorithm.ApplyOnComposante( **it );
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::Execute //@TODO MGD use OnComponentComputer hierarchie
 // Created: AHC 2009-09-23
@@ -1661,10 +1501,8 @@ void PHY_RolePion_Composantes::Execute( transport::TransportCapacityComputer_ABC
 void PHY_RolePion_Composantes::Execute( transport::TransportWeightComputer_ABC& algorithm ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (*it)->CanBeTransported() )
-            algorithm.AddTransportedWeight((*it)->GetWeight(), (*it)->CanBeLoaded());
-    }
+        if( ( *it )->CanBeTransported() )
+            algorithm.AddTransportedWeight( ( *it )->GetWeight(), ( *it )->CanBeLoaded());
 }
 
 // -----------------------------------------------------------------------------
@@ -1687,9 +1525,7 @@ void PHY_RolePion_Composantes::Execute( OnComponentLendedFunctorComputer_ABC& al
     {
         const PHY_ComposantePion::T_ComposantePionVector& composantes = itLoan->second;
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
-        {
             algorithm.ApplyOnLendedComponent( **it );
-        }
     }
 }
 
@@ -1726,13 +1562,14 @@ void PHY_RolePion_Composantes::Execute( transport::LoadedStateConsistencyCompute
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::Execute
+// Created: ???
+// -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        const PHY_ComposantePion& composante= **it;
-        algorithm.ApplyOnComponent(composante);
-    }
+        algorithm.ApplyOnComponent( **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -1752,6 +1589,7 @@ void PHY_RolePion_Composantes::NotifyTransportHasChanged()
 {
     bTransportHasChanged_ = true;//@TODO MGD See to remove it isn't more called
 }
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::NotifyIsLoaded
 // Created: MGD 2009-10-02
@@ -1777,7 +1615,7 @@ void PHY_RolePion_Composantes::NotifyIsUnLoadedInVab()
 void PHY_RolePion_Composantes::UseAmmunition( const PHY_DotationCategory& category )
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        (*itComposante)->UseAmmunition( category, pion_ );
+        ( *itComposante )->UseAmmunition( category, pion_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -1788,7 +1626,7 @@ double PHY_RolePion_Composantes::GetPHModifier( const PHY_DotationCategory& cate
 {
     double result = 1.;
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        result = std::min( result, (*itComposante)->GetPHModifier( category, pion_ ) );
+        result = std::min( result, ( *itComposante )->GetPHModifier( category, pion_ ) );
     return result;
 }
 
@@ -1799,7 +1637,7 @@ double PHY_RolePion_Composantes::GetPHModifier( const PHY_DotationCategory& cate
 bool PHY_RolePion_Composantes::CounterIndirectFire( const PHY_DotationCategory& category ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        if( (*itComposante)->CounterIndirectFire( category, pion_ ) )
+        if( ( *itComposante )->CounterIndirectFire( category, pion_ ) )
             return true;
     return false;
 }
@@ -1811,7 +1649,7 @@ bool PHY_RolePion_Composantes::CounterIndirectFire( const PHY_DotationCategory& 
 bool PHY_RolePion_Composantes::DestroyIndirectFire( const PHY_DotationCategory& category ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-        if( (*itComposante)->DestroyIndirectFire( category, pion_ ) )
+        if( ( *itComposante )->DestroyIndirectFire( category, pion_ ) )
             return true;
     return false;
 }
@@ -1825,13 +1663,9 @@ double  PHY_RolePion_Composantes::GetAttritionIndexComposante ( int idMaterial )
 {
     double result = 0.;
     for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        const PHY_ComposanteTypePion& compType = ( *itComposante )->GetType();
-        result = std::max( result, compType.GetAttritionIndexComposante( idMaterial ) );
-    }
+        result = std::max( result, ( *itComposante )->GetType().GetAttritionIndexComposante( idMaterial ) );
     return result;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::GetConvoyTransportersUse
@@ -1841,32 +1675,27 @@ void PHY_RolePion_Composantes::GetConvoyTransportersUse( T_ComposanteUseMap& com
 {
     composanteUse.clear();
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-    {
-        if( (**it).CouldBePartOfConvoy() )
+        if( ( **it ).CouldBePartOfConvoy() )
         {
-            T_ComposanteUse& data = composanteUse[ &(**it).GetType() ];
-            ++ data.nNbrTotal_;
-
-            if( (**it).GetState().IsUsable() )
+            T_ComposanteUse& data = composanteUse[ &( **it ).GetType() ];
+            ++data.nNbrTotal_;
+            if( ( **it ).GetState().IsUsable() )
             {
                 ++ data.nNbrAvailable_;
-                if( !(**it).CanBePartOfConvoy() )
-                    ++ data.nNbrUsed_;
+                if( !( **it ).CanBePartOfConvoy() )
+                    ++data.nNbrUsed_;
             }
         }
-    }
 
     for( CIT_LoanMap itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
     {
         const PHY_ComposantePion::T_ComposantePionVector& composantes = itLoan->second;
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
-        {
-            if( (**it).CouldBePartOfConvoy() )
+            if( ( **it ).CouldBePartOfConvoy() )
             {
-                T_ComposanteUse& data = composanteUse[ &(**it).GetType() ];
-                ++ data.nNbrTotal_;
-                ++ data.nNbrLent_;
+                T_ComposanteUse& data = composanteUse[ &( **it ).GetType() ];
+                ++data.nNbrTotal_;
+                ++data.nNbrLent_;
             }
-        }
     }
 }

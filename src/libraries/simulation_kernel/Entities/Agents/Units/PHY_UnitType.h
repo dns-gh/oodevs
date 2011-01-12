@@ -25,6 +25,7 @@ class PHY_RolePion_Composantes;
 class PHY_HumanRank;
 class PHY_DotationLogisticType;
 enum E_PionEfficiency;
+enum E_CrossingHeight;
 
 // =============================================================================
 // @class  PHY_UnitType
@@ -35,8 +36,8 @@ class PHY_UnitType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_HumanRank*, unsigned int >   T_CommanderRepartitionMap;
-    typedef T_CommanderRepartitionMap::const_iterator CIT_CommanderRepartitionMap;
+    typedef std::map< const PHY_HumanRank*, unsigned int > T_CommanderRepartitionMap;
+    typedef T_CommanderRepartitionMap::const_iterator    CIT_CommanderRepartitionMap;
     //@}
 
 public:
@@ -65,6 +66,7 @@ public:
     bool CanFly() const;
     bool IsAutonomous() const;
     unsigned int GetPionEfficiency( E_PionEfficiency pionEfficiency ) const;
+    E_CrossingHeight GetCrossingHeight() const;
     //@}
 
 private:
@@ -99,6 +101,7 @@ private:
     void InitializeInstallationTimes( xml::xistream& xis );
     void InitializeStockLogisticThresholdRatios( xml::xistream& xis );
     void InitializeEfficiencies( xml::xistream& xis );
+    void InitializeCrossingHeight( xml::xistream& xis );
     //@}
 
     //! @name Helpers
@@ -134,6 +137,7 @@ private:
     unsigned int nProtectionSupportEfficiency_;
     unsigned int nEngineeringReconEfficiency_;
     unsigned int nUrbanAreaEfficiency_;
+    E_CrossingHeight crossingHeight_;
     //@}
 };
 

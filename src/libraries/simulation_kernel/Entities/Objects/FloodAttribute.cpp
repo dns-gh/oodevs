@@ -152,7 +152,7 @@ void FloodAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // -----------------------------------------------------------------------------
 short FloodAttribute::GetElevationAt( const Point2f& point ) const
 {
-    return MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData()( point.X(), point.Y() ).GetAltitude();
+    return static_cast< short >( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetAltitude( point.X(), point.Y() ) );
 }
 
 // -----------------------------------------------------------------------------

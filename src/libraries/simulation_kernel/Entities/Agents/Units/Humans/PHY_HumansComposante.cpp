@@ -20,7 +20,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
-#include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"
+#include "HumansActionsNotificationHandler_ABC.h"
 #include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_HumansComposante )
@@ -34,7 +34,7 @@ PHY_HumansComposante::PHY_HumansComposante( const MIL_Time_ABC& time, PHY_Compos
     , nNbrUsableHumans_( 0 )
     , injury_          ( 0 )
 {
-    while ( nNbrMdr-- )
+    while( nNbrMdr-- )
         humans_.push_back( new PHY_Human( time, *this ) );
 }
 
@@ -96,7 +96,7 @@ bool PHY_HumansComposante::ChangeHumanRank( const PHY_HumanRank& oldRank, const 
 void PHY_HumansComposante::HealAllHumans()
 {
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        (**it).Heal();
+        ( **it ).Heal();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,6 @@ namespace
             return rIntegralPart + 1.;
         return rIntegralPart;
     }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +164,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
     std::random_shuffle( humans_.begin(), humans_.end() );
     assert( pComposante_ );
     const PHY_Protection& protection = pComposante_->GetType().GetProtection();
-    unsigned int nNbrDead    = static_cast< unsigned int >( round( humans_.size() * protection.GetHumanDeadRatio( newComposanteState ) ) );
+    unsigned int nNbrDead = static_cast< unsigned int >( round( humans_.size() * protection.GetHumanDeadRatio( newComposanteState ) ) );
     unsigned int nNbrWounded = static_cast< unsigned int >( round( humans_.size() * protection.GetHumanWoundedRatio( newComposanteState ) ) );
     std::vector< Human_ABC* >::const_iterator itCur = humans_.begin();
     while( itCur != humans_.end() && nNbrDead != 0 )
@@ -175,7 +174,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
         if( human.ApplyWound( PHY_HumanWound::killed_ ) ) //return true only if newWound (here = killed_) > oldWound
             fireDamages.NotifyHumanWoundChanged( human, oldWound );
         --nNbrDead;
-        ++ itCur;
+        ++itCur;
     }
     while( itCur != humans_.end() && nNbrWounded != 0 )
     {
@@ -185,7 +184,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
             fireDamages.NotifyHumanWoundChanged( human, oldWound );
         human.ApplyMentalDisease();
         --nNbrWounded;
-        ++ itCur;
+        ++itCur;
     }
 }
 
@@ -196,7 +195,7 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
 void PHY_HumansComposante::ApplyContamination( const MIL_ToxicEffectManipulator& contamination )
 {
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        (**it).ApplyContamination( contamination );
+        ( **it ).ApplyContamination( contamination );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,7 +205,7 @@ void PHY_HumansComposante::ApplyContamination( const MIL_ToxicEffectManipulator&
 void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination )
 {
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        (**it).ApplyPoisonous( contamination );
+        ( **it ).ApplyPoisonous( contamination );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,7 +215,17 @@ void PHY_HumansComposante::ApplyPoisonous( const MIL_ToxicEffectManipulator& con
 void PHY_HumansComposante::ApplyBurn( const MIL_BurnEffectManipulator& burn )
 {
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        (**it).ApplyBurn( burn );
+        ( **it ).ApplyBurn( burn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::ApplyFlood
+// Created: JSR 2011-01-11
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::ApplyFlood( const MIL_FloodEffectManipulator& flood )
+{
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+        ( **it ).ApplyFlood( flood);
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +234,6 @@ void PHY_HumansComposante::ApplyBurn( const MIL_BurnEffectManipulator& burn )
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::ApplyInjury( MIL_Injury_ABC& injury )
 {
-
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
     {
         if( injury.IsInjured( GetComposante() ) )
@@ -247,10 +255,6 @@ PHY_InjuredHuman* PHY_HumansComposante::GetInjury()
     return injury_;
 }
 
-// =============================================================================
-// COMPOSANTE NOTIFICATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::NotifyComposanteHandledByMaintenance
 // Created: NLD 2005-01-14
@@ -258,7 +262,7 @@ PHY_InjuredHuman* PHY_HumansComposante::GetInjury()
 void PHY_HumansComposante::NotifyComposanteHandledByMaintenance()
 {
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        (**it).NotifyComposanteHandledByMaintenance();
+        ( **it ).NotifyComposanteHandledByMaintenance();
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +272,7 @@ void PHY_HumansComposante::NotifyComposanteHandledByMaintenance()
 void PHY_HumansComposante::NotifyComposanteBackFromMaintenance()
 {
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        (**it).NotifyComposanteBackFromMaintenance();
+        ( **it ).NotifyComposanteBackFromMaintenance();
 }
 
 // -----------------------------------------------------------------------------
@@ -279,7 +283,7 @@ void PHY_HumansComposante::NotifyComposanteTransfered( PHY_RoleInterface_Composa
 {
     for ( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
     {
-        (**it).CancelLogisticRequest();
+        ( **it ).CancelLogisticRequest();
         const_cast< MIL_Agent_ABC& >( src.GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanRemoved, **it );
         const_cast< MIL_Agent_ABC& >( dest.GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanAdded, **it );
     }
@@ -309,7 +313,7 @@ void PHY_HumansComposante::NotifyHumanRemoved( Human_ABC& human )
     if( human.IsUsable() )
     {
         assert( nNbrUsableHumans_ > 0 );
-        -- nNbrUsableHumans_;
+        --nNbrUsableHumans_;
     }
     assert( pComposante_ );
     const_cast< MIL_Agent_ABC& >( pComposante_->GetRole().GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanRemoved, human );
@@ -346,7 +350,7 @@ void PHY_HumansComposante::NotifyHumanChanged( Human_ABC& human, const Human_ABC
 void PHY_HumansComposante::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const
 {
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        (**it).Evacuate( destinationTC2 );
+        ( **it ).Evacuate( destinationTC2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -356,7 +360,7 @@ void PHY_HumansComposante::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC
 bool PHY_HumansComposante::HasWoundedHumansToEvacuate() const
 {
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
-        if( (**it).NeedEvacuation() )
+        if( ( **it ).NeedEvacuation() )
             return true;
     return false;
 }

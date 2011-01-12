@@ -160,6 +160,7 @@ void AttributeFactory::Create( Object& object, const std::string& attribute, xml
 // -----------------------------------------------------------------------------
 void AttributeFactory::Initialize( Object& object ) const
 {
+    // $$$$ _RC_ JSR 2011-01-10: Pourquoi rajoute t'on obligatoirement ConstructionAttribute? Ca n'a pas forcément de sens.
     // Initialize construction with 100%
     object.GetAttribute< ConstructionAttribute >();
     object.GetAttribute< OccupantAttribute >();     // $$$$ LDC: All physical objects have an occupant attribute.

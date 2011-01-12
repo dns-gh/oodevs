@@ -34,17 +34,17 @@ class PHY_RoleHLA_Composantes : public PHY_RoleInterface_Composantes
 public:
     //! @name Constructors/Destructor
     //@{
-            PHY_RoleHLA_Composantes( MIL_Entity_ABC& entity, HLA_InteractionManager_ABC& interactionManager );
+             PHY_RoleHLA_Composantes( MIL_Entity_ABC& entity, HLA_InteractionManager_ABC& interactionManager );
     virtual ~PHY_RoleHLA_Composantes();
     //@}
 
     //! @name Operations
     //@{
-    virtual const PHY_Volume*          GetSignificantVolume       ( const PHY_SensorTypeAgent& sensorType ) const;
-    virtual       void                 GetVisibleVolumes          ( T_ComposanteVolumeSet& volumes ) const;
-    virtual       void                 BuildKnowledgeComposantes  ( T_KnowledgeComposanteVector& knowledge ) const;
-    virtual       double               GetMajorComponentWeight    ( bool /*loadedWeight*/ = false ) const { return 0; };
-    virtual const PHY_Composante_ABC*  GetMajorComposante         () const;
+    virtual const PHY_Volume*         GetSignificantVolume     ( const PHY_SensorTypeAgent& sensorType ) const;
+    virtual       void                GetVisibleVolumes        ( T_ComposanteVolumeSet& volumes ) const;
+    virtual       void                BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
+    virtual       double              GetMajorComponentWeight  ( bool /*loadedWeight*/ = false ) const { return 0; }
+    virtual const PHY_Composante_ABC* GetMajorComposante       () const;
 
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     void Destroy();
@@ -60,28 +60,28 @@ public:
     virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, double );
     virtual void ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& /*dotationCategory*/, PHY_FireResults_ABC& /*fireResult*/ ) {}
     virtual void ApplyExplosion             ( const AttritionCapacity& objectType        , PHY_FireResults_ABC& result );
-    virtual void ApplyContamination         ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {};
-    virtual void ApplyPoisonous             ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {};
-    virtual void ApplyUrbanObjectCrumbling  ( const MIL_Object_ABC& /*object*/ ) {};
-    virtual void ApplyBurn                  ( const MIL_BurnEffectManipulator& /*burn*/ ) {};
+    virtual void ApplyContamination         ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {}
+    virtual void ApplyPoisonous             ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {}
+    virtual void ApplyUrbanObjectCrumbling  ( const MIL_Object_ABC& /*object*/ ) {}
+    virtual void ApplyBurn                  ( const MIL_BurnEffectManipulator& /*burn*/ ) {}
+    virtual void ApplyFlood                 ( const MIL_FloodEffectManipulator& /*flood*/ ) {}
 
-
-    virtual double    GetDangerosity                     ( const DEC_Knowledge_AgentComposante& /*compTarget*/, float /*rDistBtwSourceAndTarget*/ ) const {return 0; }; 
-    virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; };
-    virtual double GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; };
-    virtual double GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; };
-    virtual double GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; };
-    virtual double GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; };
-    virtual double GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; };
-    virtual double GetMinRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; };
-    virtual double GetMaxRangeToFire                 ( const MIL_Agent_ABC& /*pion*/, double /*rWantedPH*/ ) const { return 0; };
-    virtual void ApplyInjury                ( MIL_Injury_ABC& injury );
+    virtual double GetDangerosity                  ( const DEC_Knowledge_AgentComposante& /*compTarget*/, float /*rDistBtwSourceAndTarget*/ ) const {return 0; }
+    virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; }
+    virtual double GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; }
+    virtual double GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; }
+    virtual double GetMaxRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; }
+    virtual double GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, double /*rWantedPH*/ ) const {return 0; }
+    virtual double GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; }
+    virtual double GetMinRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; }
+    virtual double GetMaxRangeToFire                ( const MIL_Agent_ABC& /*pion*/, double /*rWantedPH*/ ) const { return 0; }
+    virtual void ApplyInjury( MIL_Injury_ABC& injury );
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool     IsNeutralized           () const;
-    virtual double GetOperationalState     () const;
+    virtual bool IsNeutralized() const;
+    virtual double GetOperationalState() const;
     virtual double GetMajorOperationalState() const;
     //@}
 
@@ -96,17 +96,17 @@ public:
 
     //! @name Humans management
     //@{
-    virtual void WoundHumans  ( const PHY_HumanRank& /*rank*/, unsigned int /*nNbr*/ ) {};
-    virtual void HealHumans   ( const PHY_HumanRank& /*rank*/, unsigned int /*nNbr*/ ) {};
-    virtual void HealAllHumans() {};
+    virtual void WoundHumans( const PHY_HumanRank& /*rank*/, unsigned int /*nNbr*/ ) {}
+    virtual void HealHumans( const PHY_HumanRank& /*rank*/, unsigned int /*nNbr*/ ) {}
+    virtual void HealAllHumans() {}
     //@}
 
     //! @name Composantes management
     //@{
     virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& /*composanteType*/, unsigned int /*nNbrAvailable*/ ) {}
-    virtual void RepairAllComposantes         () {}
-    virtual void DestroyRandomComposante      () {}
-    virtual void DestroyAllComposantes        () {}
+    virtual void RepairAllComposantes() {}
+    virtual void DestroyRandomComposante() {}
+    virtual void DestroyAllComposantes() {}
     //@}
 
     // Actions on the composante owner
@@ -117,19 +117,19 @@ public:
     virtual void NotifyLentComposanteReceived( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {}
     virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& /*lender*/, PHY_ComposantePion& /*composante*/ ) {}
     //@}
-
+ 
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
     virtual void GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const;
 
     //! @name Logistic - maintenance
     //@{
-    virtual void                            PreprocessRandomBreakdowns           ( unsigned int /*nEndDayTimeStep*/ ) const {}
+    virtual void PreprocessRandomBreakdowns( unsigned int /*nEndDayTimeStep*/ ) const {}
 
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& /*composante*/ ) { return NULL; }
     virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& /*composanteState*/ ) {}
 
     //$$$$ a deplacer (functor)
-    virtual PHY_ComposantePion*             GetAvailableHauler                   ( const PHY_ComposanteTypePion& /*composanteType*/ ) const { return NULL; }
+    virtual PHY_ComposantePion* GetAvailableHauler( const PHY_ComposanteTypePion& /*composanteType*/ ) const { return NULL; }
     //@}
 
     //! @name Prisoners
@@ -145,27 +145,24 @@ public:
 
     //! @name Notifications (internal)
     //@{
-    virtual void NotifyComposanteAdded   ( PHY_ComposantePion& /*composante*/ ) {}
-    virtual void NotifyComposanteRemoved ( PHY_ComposantePion& /*composante*/ ) {}
-    virtual void NotifyComposanteChanged ( PHY_ComposantePion& /*composante*/, const PHY_ComposanteState& /*oldState*/ ) {}
+    virtual void NotifyComposanteAdded( PHY_ComposantePion& /*composante*/ ) {}
+    virtual void NotifyComposanteRemoved( PHY_ComposantePion& /*composante*/ ) {}
+    virtual void NotifyComposanteChanged( PHY_ComposantePion& /*composante*/, const PHY_ComposanteState& /*oldState*/ ) {}
     virtual void NotifyComposanteRepaired() {}
     //@}
 
     //! @name Accessors
     //@{
-    virtual       bool           HasChanged              () const { return false; }
-    virtual       bool           IsUsable                () const { return false; }
-    virtual const MIL_Agent_ABC& GetPion                 () const { return *pPion_; }
+    virtual       bool           HasChanged() const { return false; }
+    virtual       bool           IsUsable  () const { return false; }
+    virtual const MIL_Agent_ABC& GetPion   () const { return *pPion_; }
     //@}
 
 
     //! @name Network
     //@{
-//    virtual void SendChangedState( client::UnitAttributes& asn ) const {};
-//    virtual void SendFullState   ( client::UnitAttributes& asn ) const {};
-
-    virtual void SendLogisticChangedState() const {};
-    virtual void SendLogisticFullState   () const {};
+    virtual void SendLogisticChangedState() const {}
+    virtual void SendLogisticFullState   () const {}
     //@}
 
     //! @name HLA
@@ -194,10 +191,10 @@ private:
     //! @name Member data
     //@{
     MIL_Entity_ABC& entity_;
-    T_Composantes               composantes_;
+    T_Composantes composantes_;
     HLA_InteractionManager_ABC& interactionManager_;
-    bool                        bNeutralized_;
-    MIL_Agent_ABC*              pPion_;
+    bool bNeutralized_;
+    MIL_Agent_ABC* pPion_;
     //@}
 };
 

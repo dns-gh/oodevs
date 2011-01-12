@@ -115,7 +115,6 @@ public:
     typedef helpers::ADN_CapacityInfos_Default< helpers::eSupplyCapacity >            ADN_CapacityInfos_Supply;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eTimeLimitedCapacity >       ADN_CapacityInfos_TimeLimited;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eBurnCapacity >              ADN_CapacityInfos_Burn;
-    typedef helpers::ADN_CapacityInfos_Default< helpers::eFloodCapacity >             ADN_CapacityInfos_Flood;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eUniversalCapacity >         ADN_CapacityInfos_Universal;
 
     class ADN_CapacityInfos_Attrition
@@ -220,6 +219,26 @@ public:
         typedef helpers::NullType FieldsHolderType;
     };
 
+    class ADN_CapacityInfos_Flood
+        : public helpers::ADN_CapacityInfos_Default< helpers::eFloodCapacity >
+    {
+    public:
+        ADN_CapacityInfos_Flood();
+
+        void ReadArchive( xml::xistream& xis );
+        void WriteArchive( xml::xostream& xos );
+
+    private:
+        void ReadInjury( xml::xistream& xis );
+
+    public:
+        ADN_Type_Int nNbHurtHumans1_;
+        ADN_Type_Int nNbHurtHumans2_;
+        ADN_Type_Int nNbHurtHumans3_;
+        ADN_Type_Int nNbHurtHumansE_;
+        ADN_Type_Int nNbDeadHumans_;
+    };
+
     class ADN_CapacityInfos_Medical
         : public helpers::ADN_CapacityInfos_Default< helpers::eMedicalCapacity >
     {
@@ -291,9 +310,9 @@ public:
         void WriteArchive( xml::xostream& xos );
 
     public:
-        ADN_Type_Double     rDefaultSpeed_;
+        ADN_Type_Double rDefaultSpeed_;
         ADN_Type_Enum< E_SpeedImpact, eNbrSpeedImpact > nSpeedModifier_;
-        ADN_Type_Double     rMaxAgentSpeed_; // percentage
+        ADN_Type_Double rMaxAgentSpeed_; // percentage
     };
 
     class ADN_CapacityInfos_Occupable
@@ -362,7 +381,7 @@ public:
         void WriteArchive( xml::xostream& xos );
 
     public:
-        ADN_Type_Int  max_size_;
+        ADN_Type_Int max_size_;
         ADN_Type_Bool geniePrepared_;
     };
 
@@ -378,14 +397,6 @@ public:
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
-        const std::string& displayName() const
-        {
-            return DISPLAY_NAME;
-        }
-        const std::string& tag() const
-        {
-            return TAG;
-        }
     public:
         typedef helpers::NullType FieldsHolderType;
     };
@@ -402,14 +413,6 @@ public:
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
 
-        const std::string& displayName() const
-        {
-            return DISPLAY_NAME;
-        }
-        const std::string& tag() const
-        {
-            return TAG;
-        }
     public:
         void ReadTerrain( xml::xistream& xis );
 
@@ -427,7 +430,7 @@ public:
         void WriteArchive( xml::xostream& xos );
 
     public:
-        ADN_Type_Int  worker_;
+        ADN_Type_Int worker_;
     };
 
     class ADN_CapacityInfos_Constructor
@@ -442,10 +445,10 @@ public:
         static const char* choices_[];
 
     public:
-        ADN_Type_Enum< E_ConsumptionType, eNbrConsumptionType>      nDefaultConsumption_;
+        ADN_Type_Enum< E_ConsumptionType, eNbrConsumptionType> nDefaultConsumption_;
         ADN_Type_Choice< std::string > unitType_;
-        std::auto_ptr< ADN_CapacityInfos_Buildable >     ptrBuildable_;
-        std::auto_ptr< ADN_CapacityInfos_Improvable >    ptrImprovable_;
+        std::auto_ptr< ADN_CapacityInfos_Buildable > ptrBuildable_;
+        std::auto_ptr< ADN_CapacityInfos_Improvable > ptrImprovable_;
     };
 
     class ADN_CapacityInfos_Detection
@@ -460,22 +463,13 @@ public:
         void ReadAcquisitionTime( xml::xistream& input ); // LTO
         void WriteArchive( xml::xostream& output ); // LTO
 
-        const std::string& displayName() const
-        {
-            return DISPLAY_NAME;
-        }
-        const std::string& tag() const
-        {
-            return TAG;
-        }
-
     public:
-        ADN_Type_Bool   bDetectTime_;
-        ADN_Type_Time   detectTime_; // LTO
-        ADN_Type_Bool   bIdentTime_; // LTO
-        ADN_Type_Time   recoTime_; // LTO
-        ADN_Type_Bool   bRecoTime_; // LTO
-        ADN_Type_Time   identTime_; // LTO
+        ADN_Type_Bool bDetectTime_;
+        ADN_Type_Time detectTime_; // LTO
+        ADN_Type_Bool bIdentTime_; // LTO
+        ADN_Type_Time recoTime_; // LTO
+        ADN_Type_Bool bRecoTime_; // LTO
+        ADN_Type_Time identTime_; // LTO
     };
 
     class ObjectInfos;
@@ -488,15 +482,6 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
-
-        const std::string& displayName() const
-        {
-            return DISPLAY_NAME;
-        }
-        const std::string& tag() const
-        {
-            return TAG;
-        }
 
     public:
         ADN_Type_String strObjectType_;
@@ -513,15 +498,6 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
-        const std::string& displayName() const
-        {
-            return DISPLAY_NAME;
-        }
-        const std::string& tag() const
-        {
-            return TAG;
-        }
-
     public:
         ADN_Type_Int rStructuralState_;
     };
@@ -536,15 +512,6 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
-        const std::string& displayName() const
-        {
-            return DISPLAY_NAME;
-        }
-        const std::string& tag() const
-        {
-            return TAG;
-        }
-
     public:
         ADN_Type_Enum< E_PopulationAttitude, eNbrPopulationAttitude > attitude_;
     };
@@ -558,15 +525,6 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
-
-        const std::string& displayName() const
-        {
-            return DISPLAY_NAME;
-        }
-        const std::string& tag() const
-        {
-            return TAG;
-        }
 
     public:
         ADN_Type_Bool blinded_;
@@ -583,15 +541,6 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
-        const std::string& displayName() const
-        {
-            return DISPLAY_NAME;
-        }
-        const std::string& tag() const
-        {
-            return TAG;
-        }
-
     public:
         ADN_Type_Int humanByTimeStep_;
     };
@@ -603,8 +552,6 @@ public:
 
         void ReadArchive( xml::xistream& xis );
         void WriteArchive( xml::xostream& xos );
-    public:
-
     };
 
     class ADN_CapacityInfos_FirePropagationModifier : public helpers::ADN_CapacityInfos_Default< helpers::eFirePropagationModifierCapacity >
@@ -640,7 +587,9 @@ public:
 
                 CmpRef( ADN_FireClass_Data::FireClassInfos* val ) : val_( val ){}
                 bool operator()( ModifierByFireClass* other ) const 
-                { return other->ptrFireClass_.GetData() == val_; }
+                {
+                    return other->ptrFireClass_.GetData() == val_;
+                }
 
             private:
                 ADN_FireClass_Data::FireClassInfos* val_;
@@ -651,7 +600,9 @@ public:
             public:
                 Cmp( const std::string& name ) : name_( name ) {}
                 bool operator()( ModifierByFireClass* other ) const 
-                { return other->ptrFireClass_.GetData()->strName_ == name_; }
+                {
+                    return other->ptrFireClass_.GetData()->strName_ == name_;
+                }
 
             private:
                 std::string name_;
@@ -663,8 +614,8 @@ public:
 
         T_ModifierByFireClass_Vector modifiers_;
 
-        private:
-            void ReadModifier( xml::xistream& xis );
+    private:
+        void ReadModifier( xml::xistream& xis );
     };
 
 //*****************************************************************************
@@ -680,14 +631,11 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
         ObjectInfos* CreateCopy();
-        void ReadArchive         ( xml::xistream& input );
-        void ReadSensiblePosition( xml::xistream& input );
-        void ReadDotation        ( const std::string& type, xml::xistream& input );
-        void ReadUnitAttrition   ( xml::xistream& input );
+        void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
     private:
-        void ReadCapacityArchive ( const std::string& type, xml::xistream& input );
+        void ReadCapacityArchive( const std::string& type, xml::xistream& input );
         void InitializeCapacities();
         void InitializeDefaultParameters();
 
@@ -698,19 +646,19 @@ public:
         ADN_Type_String symbol_;
 
         typedef std::map< std::string, boost::shared_ptr< helpers::ADN_TypeCapacity_Infos > > T_CapacityMap;
-        typedef T_CapacityMap::iterator IT_CapacityMap;
-        typedef T_CapacityMap::const_iterator CIT_CapacityMap;
+        typedef T_CapacityMap::iterator                                                      IT_CapacityMap;
+        typedef T_CapacityMap::const_iterator                                               CIT_CapacityMap;
         T_CapacityMap capacities_;
 
         static int VAL;
-        template <typename T> struct Enumerator
+        template< typename T > struct Enumerator
         {
             enum E { value = VAL++ };
         };
     };
 
     typedef ADN_Type_Vector_ABC< ObjectInfos > T_ObjectsInfos_Vector;
-    typedef T_ObjectsInfos_Vector::iterator  IT_ObjectsInfos_Vector;
+    typedef T_ObjectsInfos_Vector::iterator   IT_ObjectsInfos_Vector;
 
 
 //*****************************************************************************
@@ -718,23 +666,21 @@ public:
              ADN_Objects_Data();
     virtual ~ADN_Objects_Data();
 
-    void FilesNeeded(T_StringList& l) const;
+    void FilesNeeded( T_StringList& l ) const;
     void Reset();
     void SaveAttritionInfos( xml::xostream& output );
 
 
     T_ObjectsInfos_Vector& GetObjectInfos();
-    ObjectInfos*           FindObject( const std::string& strName );
+    ObjectInfos* FindObject( const std::string& strName );
 
 private:
     void ReadArchive( xml::xistream& input );
-    void ReadObject ( xml::xistream& input );
-    void ReadShotPercentage( xml::xistream& input );
-
+    void ReadObject( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
 
 private:
-    T_ObjectsInfos_Vector     vObjectInfos_;
+    T_ObjectsInfos_Vector vObjectInfos_;
 };
 
 
@@ -759,7 +705,9 @@ namespace
 
         template < typename T >
         bool operator()( T* tgtnfos ) const
-        { return ADN_Tools::CaselessCompare( tgtnfos->strType_.GetData(), strType_ ); }
+        { 
+            return ADN_Tools::CaselessCompare( tgtnfos->strType_.GetData(), strType_ );
+        }
 
     private:
         std::string strType_;
@@ -778,6 +726,5 @@ ADN_Objects_Data::ObjectInfos* ADN_Objects_Data::FindObject( const std::string& 
         return 0;
     return *it;
 }
-
 
 #endif // __ADN_Objects_Data_h_

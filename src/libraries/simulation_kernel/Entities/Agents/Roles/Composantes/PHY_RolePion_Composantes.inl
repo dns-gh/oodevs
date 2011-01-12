@@ -34,9 +34,8 @@ template< typename T >
 inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
 {
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        (**it).ApplyOnWeapons( t );
+        ( **it ).ApplyOnWeapons( t );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::LendComposantes
@@ -49,7 +48,6 @@ unsigned int PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes
     for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
     {
         PHY_ComposantePion& composante = **it;
-
         if( composante.CanBeLent() && funcPredicate( composante ) )
         {
             ++nNbrDone;
@@ -75,7 +73,6 @@ unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( PHY_RolePion_Com
         IT_LoanMap it = lentComposantes_.find( &borrower );
         if( it == lentComposantes_.end() )
             return nNbrDone;
-
         PHY_ComposantePion* pComposante = 0;
         const PHY_ComposantePion::T_ComposantePionVector& lentComps = it->second;
         for( PHY_ComposantePion::CIT_ComposantePionVector it = lentComps.begin(); it != lentComps.end(); ++it )
@@ -86,7 +83,6 @@ unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( PHY_RolePion_Com
         }
         if( !pComposante )
             return nNbrDone;
-
         ++ nNbrDone;
         RetrieveLentComposante( borrower, *pComposante );
     }
@@ -101,15 +97,12 @@ template < typename T >
 unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate )
 {
     unsigned int nNbrDone = 0;
-    unsigned int nTime    = 0;
-
-    const MT_Vector2D& srcPos  =          pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    unsigned int nTime = 0;
+    const MT_Vector2D& srcPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Vector2D& destPos = borrower.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();   //@@Hmm...
-
     for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr; ++it )
     {
         PHY_ComposantePion& composante = **it;
-
         if( composante.CanBeLent() && funcPredicate( composante ) )
         {
             ++nNbrDone;

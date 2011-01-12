@@ -55,4 +55,11 @@ enum E_PionEfficiency
     ePionEfficiencyUrbanArea
 };
 
+enum E_CrossingHeight
+{
+    eCrossingHeightNever,
+    eCrossingHeightLowAreas,
+    eCrossingHeightAlways
+};
+
 #endif // __MT_Scipio_enum_h_

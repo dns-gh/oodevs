@@ -22,6 +22,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Roles/hla/HLA_RoleInterface.h"
 #include "Entities/MIL_Entity_ABC.h"
+#include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "hla/HLA_Serialization.h"
 #include "hla/HLA_DirectFire.h"
 #include "hla/HLA_IndirectFire.h"

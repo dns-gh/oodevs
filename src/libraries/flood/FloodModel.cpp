@@ -122,7 +122,7 @@ void FloodModel::Propagate( int floodElevation )
             if( cellCenter.SquareDistance( center_ ) < refDist_ * refDist_ && elevation <= floodElevation )
             {
                 cell.polIndex_ = -1; // to be marked
-                if( floodElevation - elevation > 1)
+                if( floodElevation - elevation > 1 )
                     cell.deep_ = true;
                 if( x > 0 && !ppCells_[ x - 1 ][ y ].visited_ )
                     queue.push( std::make_pair( x - 1, y ) );

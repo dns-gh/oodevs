@@ -382,6 +382,12 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* flood = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Flood" ), hBox );
     {
         vInfosConnectors[ eFloodCapacityPresent ] = & flood->GetConnector();
+        QWidget* pInjuriesHolder = builder.AddFieldHolder( flood );
+        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 1" ), vInfosConnectors[ eFloodCapacity_HurtHumans1 ], tr( "%" ), ePercentage  );
+        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 2" ), vInfosConnectors[ eFloodCapacity_HurtHumans2 ], tr( "%" ), ePercentage  );
+        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 3" ), vInfosConnectors[ eFloodCapacity_HurtHumans3 ], tr( "%" ), ePercentage  );
+        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eFloodCapacity_HurtHumansE ], tr( "%" ), ePercentage  );
+        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eFloodCapacity_DeadHumans ], tr( "%" ), ePercentage  );
     }
 
     ADN_GroupBox* universal = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Universal" ), hBox );

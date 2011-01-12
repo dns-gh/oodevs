@@ -60,6 +60,7 @@ PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     , nProtectionSupportEfficiency_     ( 50 )
     , nEngineeringReconEfficiency_      ( 50 )
     , nUrbanAreaEfficiency_             ( 50 )
+    , crossingHeight_                   ( eCrossingHeightLowAreas )
 {
     xis >> xml::optional
             >> xml::attribute( "can-fly", bCanFly_ )
@@ -74,6 +75,7 @@ PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     InitializeNBC                         ( xis );
     InitializeStockLogisticThresholdRatios( xis );
     InitializeEfficiencies                ( xis );
+    InitializeCrossingHeight              ( xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +115,28 @@ void PHY_UnitType::InitializeEfficiencies( xml::xistream& xis )
                 >> xml::attribute( "protection-support", nProtectionSupportEfficiency_ )
                 >> xml::attribute( "engineering-support", nEngineeringReconEfficiency_ )
                 >> xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
-            >> xml::end; 
+            >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::InitializeCrossingHeight
+// Created: JSR 2011-01-07
+// -----------------------------------------------------------------------------
+void PHY_UnitType::InitializeCrossingHeight( xml::xistream& xis )
+{
+    std::string strCrossingHeight;
+    xis >> xml::optional
+            >> xml::start( "crossing-height" )
+                >> xml::attribute( "height", strCrossingHeight )
+            >> xml::end;
+    if( strCrossingHeight == "1m" )
+        crossingHeight_ = eCrossingHeightLowAreas;
+    else if( strCrossingHeight == "0m" )
+        crossingHeight_ = eCrossingHeightNever;
+    else if( strCrossingHeight == ">1m" )
+        crossingHeight_ = eCrossingHeightAlways;
+    else
+        throw std::exception( "InitializeCrossingHeight : bad value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -437,4 +460,13 @@ unsigned int PHY_UnitType::GetPionEfficiency( E_PionEfficiency pionEfficiency ) 
     default:
         throw std::exception( "GetPionEfficiency : bad value" );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetCrossingHeight
+// Created: JSR 2011-01-07
+// -----------------------------------------------------------------------------
+E_CrossingHeight PHY_UnitType::GetCrossingHeight() const
+{
+    return crossingHeight_;
 }

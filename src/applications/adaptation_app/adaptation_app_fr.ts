@@ -3013,6 +3013,26 @@ du tireur</translation>
         <source>Universal</source>
         <translation>Universel</translation>
     </message>
+    <message>
+        <source>Wounded seriousness level 1</source>
+        <translation>Blessure gravité niveau 1</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 2</source>
+        <translation>Blessure gravité niveau 2</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 3</source>
+        <translation>Blessure gravité niveau 3</translation>
+    </message>
+    <message>
+        <source>Wounded extreme seriousness</source>
+        <translation>Blessure extrêmement grave</translation>
+    </message>
+    <message>
+        <source>Killed</source>
+        <translation>Tués</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>
@@ -5772,6 +5792,18 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>
         <translation>Types de foules - Attitude de foule invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Flood - Injuries data sum &gt; 100</source>
+        <translation>Inondation - Somme des blessures &gt; 100</translation>
+    </message>
+    <message>
+        <source>Flood - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation>Inondation - Blessure &apos;%1&apos; valeur &lt; 0 or &gt; 1</translation>
+    </message>
+    <message>
+        <source>Flood - Invalid wound type &apos;%1&apos;</source>
+        <translation>Inondation - Type de blessure invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

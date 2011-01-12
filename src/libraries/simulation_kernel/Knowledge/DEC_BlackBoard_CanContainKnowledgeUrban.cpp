@@ -23,7 +23,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeUrban )
 namespace
 {
     class UrbanBlockKnowledgeCreator : public urban::TerrainObjectVisitor_ABC
-                                     , public boost::noncopyable
     {
     public:
         UrbanBlockKnowledgeCreator( DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements, std::map< unsigned, boost::shared_ptr< DEC_Knowledge_Urban > >& knowledgeElements, const MIL_Army_ABC& army )

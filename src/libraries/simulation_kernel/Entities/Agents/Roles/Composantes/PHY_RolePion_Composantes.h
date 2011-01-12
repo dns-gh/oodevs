@@ -47,6 +47,7 @@ namespace moving
 {
     class SpeedComputer_ABC;
 }
+
 class OnComponentComputer_ABC;
 class OnComponentLendedFunctorComputer_ABC;
 class MIL_AgentPion_ABC;
@@ -98,31 +99,23 @@ public:
     virtual void Execute( OnComponentComputer_ABC& algorithm ) const;
     virtual void Execute( OnComponentLendedFunctorComputer_ABC& algorithm ) const;
 
-    template< typename T > void                ApplyOnWeapons     ( T& t ) const;
+    template< typename T > void ApplyOnWeapons( T& t ) const;
 
     virtual void NotifyHumanHasChanged();
     virtual void NotifyTransportHasChanged();
     virtual void NotifyIsLoadedInVab();
     virtual void NotifyIsUnLoadedInVab();
 
-
     virtual void Update( bool bIsDead );
     virtual void Clean ();
-    //@}
-
-    //! @name Humans management
-    //@{
-//    virtual void WoundHumans  ( const PHY_HumanRank& rank, unsigned int nNbr );
-//    virtual void HealHumans   ( const PHY_HumanRank& rank, unsigned int nNbr );
-//    virtual void HealAllHumans();
     //@}
 
     //! @name Composantes management
     //@{
     virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, unsigned int nNbrAvailable );
-    virtual void RepairAllComposantes         ();
-    virtual void DestroyRandomComposante      ();
-    virtual void DestroyAllComposantes        ();
+    virtual void RepairAllComposantes();
+    virtual void DestroyRandomComposante();
+    virtual void DestroyAllComposantes();
     //@}
 
     //! @name Pret de composantes
@@ -144,7 +137,7 @@ public:
     void GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const;
     //! @name Logistic - maintenance
     //@{
-    virtual void                            PreprocessRandomBreakdowns           ( unsigned int nEndDayTimeStep ) const;
+    virtual void PreprocessRandomBreakdowns ( unsigned int nEndDayTimeStep ) const;
 
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
     virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState );
@@ -158,21 +151,22 @@ public:
 
     //! @name Fire / Dangerosity
     //@{
-    virtual bool     IsNeutralized                    () const;
-    virtual void     GetComposantesAbleToBeFired      ( PHY_Composante_ABC::T_ComposanteVector& targets, unsigned int nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
-    virtual void     GetComposantesAbleToBeFired      ( PHY_Composante_ABC::T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
-    virtual void     Neutralize                       ();
-    virtual void     ApplyPopulationFire              ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
-    virtual void     ApplyDirectFire                  ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
-    virtual void     ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult );
-    virtual void     ApplyIndirectFire                ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, double ratio );
-    virtual void     ApplyExplosion                   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
-    virtual void     ApplyContamination               ( const MIL_ToxicEffectManipulator& contamination );
-    virtual void     ApplyPoisonous                   ( const MIL_ToxicEffectManipulator& contamination );
-    virtual void     ApplyUrbanObjectCrumbling        ( const MIL_Object_ABC& object );
-    virtual void     ApplyBurn                        ( const MIL_BurnEffectManipulator& burn );
+    virtual bool IsNeutralized                    () const;
+    virtual void GetComposantesAbleToBeFired      ( PHY_Composante_ABC::T_ComposanteVector& targets, unsigned int nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual void GetComposantesAbleToBeFired      ( PHY_Composante_ABC::T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual void Neutralize                       ();
+    virtual void ApplyPopulationFire              ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
+    virtual void ApplyDirectFire                  ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
+    virtual void ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult );
+    virtual void ApplyIndirectFire                ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, double ratio );
+    virtual void ApplyExplosion                   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& result );
+    virtual void ApplyContamination               ( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyPoisonous                   ( const MIL_ToxicEffectManipulator& contamination );
+    virtual void ApplyUrbanObjectCrumbling        ( const MIL_Object_ABC& object );
+    virtual void ApplyBurn                        ( const MIL_BurnEffectManipulator& burn );
+    virtual void ApplyFlood                       ( const MIL_FloodEffectManipulator& flood );
 
-    virtual double   GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const;
+    virtual double GetDangerosity                  ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const;
     virtual double GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, double rWantedPH ) const;
     virtual double GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, double rWantedPH ) const;
     virtual double GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, double rWantedPH ) const;
@@ -180,18 +174,18 @@ public:
     virtual double GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, double rWantedPH ) const;
     virtual double GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     virtual double GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
-    virtual double   GetMaxRangeToFire               ( const MIL_Agent_ABC&  pion, double rWantedPH ) const;
-    virtual void     ApplyInjury                     ( MIL_Injury_ABC& injury );
+    virtual double GetMaxRangeToFire               ( const MIL_Agent_ABC&  pion, double rWantedPH ) const;
+    virtual void ApplyInjury( MIL_Injury_ABC& injury );
     //@}
 
     //! @name Perception / Knowledge
     //@{
-    virtual const PHY_Volume*          GetSignificantVolume     ( const PHY_SensorTypeAgent& sensorType  ) const;
-    virtual       void                 GetVisibleVolumes        ( T_ComposanteVolumeSet& volumes         ) const;
-    virtual       void                 BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
-    virtual const PHY_ComposantePion*  GetMajorComposante       () const;
-    virtual       double               GetMajorComponentWeight  ( bool loadedWeight = false ) const;
-    virtual       double               GetAttritionIndexComposante ( int idMaterial ) const;
+    virtual const PHY_Volume* GetSignificantVolume( const PHY_SensorTypeAgent& sensorType ) const;
+    virtual void GetVisibleVolumes( T_ComposanteVolumeSet& volumes ) const;
+    virtual void BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
+    virtual const PHY_ComposantePion* GetMajorComposante() const;
+    virtual double GetMajorComponentWeight( bool loadedWeight = false ) const;
+    virtual double GetAttritionIndexComposante( int idMaterial ) const;
     //@}
 
     //! @name Load / unload / transport
@@ -209,10 +203,10 @@ public:
 
     //! @name Accessors
     //@{
-    virtual       double          GetOperationalState     () const;
-    virtual       double            GetMajorOperationalState() const;
-    virtual       bool              IsUsable                () const;
-    virtual const MIL_Agent_ABC&    GetPion                 () const;
+    virtual double GetOperationalState() const;
+    virtual double GetMajorOperationalState() const;
+    virtual bool IsUsable() const;
+    virtual const MIL_Agent_ABC& GetPion() const;
     //@}
 
     //! @name Network
@@ -253,24 +247,24 @@ private:
         template< typename Archive > void serialize( Archive&, const unsigned int );
 
         std::vector< unsigned int > nbrsPerState_;
-        bool                bHasChanged_;
+        bool bHasChanged_;
     };
     //@}
 
 public:
     //! @name Types
     //@{
-    typedef std::set< PHY_MaintenanceComposanteState* >     T_MaintenanceComposanteStateSet;
-    typedef T_MaintenanceComposanteStateSet::iterator       IT_MaintenanceComposanteStateSet;
+    typedef std::set< PHY_MaintenanceComposanteState* >       T_MaintenanceComposanteStateSet;
+    typedef T_MaintenanceComposanteStateSet::iterator        IT_MaintenanceComposanteStateSet;
     typedef T_MaintenanceComposanteStateSet::const_iterator CIT_MaintenanceComposanteStateSet;
 
     typedef std::map< const PHY_RoleInterface_Composantes*, PHY_ComposantePion::T_ComposantePionVector > T_LoanMap;
-    typedef T_LoanMap::iterator                                                 IT_LoanMap;
-    typedef T_LoanMap::const_iterator                                           CIT_LoanMap;
+    typedef T_LoanMap::iterator                                                                         IT_LoanMap;
+    typedef T_LoanMap::const_iterator                                                                  CIT_LoanMap;
 
     typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteTypeProperties > T_ComposanteTypeMap;
-    typedef T_ComposanteTypeMap::iterator                                         IT_ComposanteTypeMap;
-    typedef T_ComposanteTypeMap::const_iterator                                   CIT_ComposanteTypeMap;
+    typedef T_ComposanteTypeMap::iterator                                        IT_ComposanteTypeMap;
+    typedef T_ComposanteTypeMap::const_iterator                                 CIT_ComposanteTypeMap;
     //@}
 
 private:
@@ -302,29 +296,29 @@ private:
     //@}
 
 private:
-    MIL_Agent_ABC&         pion_;
+    MIL_Agent_ABC& pion_;
     PHY_ComposantePion::T_ComposantePionVector composantes_;
-    T_ComposanteTypeMap    composanteTypes_;
-    unsigned int                   nNbrComposanteChanged_;
-    double               rMajorOperationalState_;
-    double               rOperationalState_;
-    bool                   bOperationalStateChanged_;
-    PHY_ComposantePion*    pMajorComposante_;
-    unsigned int                   nNeutralizationEndTimeStep_;
-    unsigned int                   nNbrUsableComposantes_;
+    T_ComposanteTypeMap composanteTypes_;
+    unsigned int nNbrComposanteChanged_;
+    double rMajorOperationalState_;
+    double rOperationalState_;
+    bool bOperationalStateChanged_;
+    PHY_ComposantePion* pMajorComposante_;
+    unsigned int nNeutralizationEndTimeStep_;
+    unsigned int nNbrUsableComposantes_;
 
-    T_LoanMap              lentComposantes_;
-    T_LoanMap              borrowedComposantes_;
+    T_LoanMap lentComposantes_;
+    T_LoanMap borrowedComposantes_;
 
-    bool                   bLoansChanged_;
-    bool                   bExternalMustChange_;
-    bool                   bTransportHasChanged_;
-    bool                   bIsLoaded_;
-    bool                   bIsSurrender_;
+    bool bLoansChanged_;
+    bool bExternalMustChange_;
+    bool bTransportHasChanged_;
+    bool bIsLoaded_;
+    bool bIsSurrender_;
 
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;
-    unsigned int                            nTickRcMaintenanceQuerySent_;
+    unsigned int nTickRcMaintenanceQuerySent_;
 
 
 private:
