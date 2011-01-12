@@ -1496,7 +1496,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
             throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
-        if( !pDotationCategory )
+        if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
             throw NET_AsnException< sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_munition );
 
         if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
