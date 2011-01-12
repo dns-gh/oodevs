@@ -76,7 +76,7 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers 
     connect( densityEditor_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientEdited( Gradient& ) ) );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
 
-    densityEditor_->Save();
+    densityEditor_->Update( false );
     controllers_.Register( *this );
 }
 

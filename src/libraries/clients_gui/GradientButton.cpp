@@ -358,19 +358,3 @@ void GradientButton::OnEnableVariableGradient( bool state )
     disableState_ = state;
     Update();
 }
-
-// -----------------------------------------------------------------------------
-// Name: GradientButton::Save
-// Created: LGY 2011-01-10
-// -----------------------------------------------------------------------------
-void GradientButton::Save()
-{
-    Gradient gradient;
-    QCanvasItemList list = canvas()->allItems();
-    for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
-    {
-        GradientItem* item = static_cast< GradientItem* >( *it );
-        gradient.AddColor( item->GetPercentage() / 100.f, item->GetColor() );
-    }
-    emit GradientChanged( gradient );
-}
