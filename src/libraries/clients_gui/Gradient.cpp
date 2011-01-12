@@ -180,13 +180,14 @@ void Gradient::MakeGlTexture( float alpha )
 // Name: Gradient::Compute
 // Created: LGY 2011-01-10
 // -----------------------------------------------------------------------------
-QColor Gradient::Compute( float percent, float alpha )
+QColor Gradient::Compute( float density, float alpha, float min, float max )
 {
     if( colors_.empty() )
         return QColor( 0, 255, 0 );
     std::sort( colors_.begin(), colors_.end(), Less() );
     T_Color from;
     T_Color end;
+    float percent = density / ( max - min );
     float ratio;
     if( percent > colors_.back().first )
     {

@@ -28,7 +28,7 @@ class GradientVisitor_ABC
 {
 public:
              GradientVisitor_ABC() {};
-    virtual ~GradientVisitor_ABC() {}
+    virtual ~GradientVisitor_ABC() {};
 
     virtual void Visit( float position, const QColor& color ) = 0;
 };
@@ -67,7 +67,7 @@ public:
     void Accept( GradientVisitor_ABC& visitor ) const;
     void LoadValues( const QString& values );
     Gradient& operator=( const Gradient& rhs );
-    QColor Compute( float percent, float alpha );
+    QColor Compute( float density, float alpha, float min, float max );
     //@}
 
 private:

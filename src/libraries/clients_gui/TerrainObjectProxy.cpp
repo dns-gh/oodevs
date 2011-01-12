@@ -37,8 +37,10 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
     , object_      ( object )
     , controllers_ ( controllers )
     , densityColor_( false )
-    , pGradient_   ( 0 )
+    , pGradient_   ( new Gradient() )
     , type_        ( type )
+    , minDensity_  ( 0.f )
+    , maxDensity_  ( 1.f )
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
@@ -51,9 +53,11 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
     }
     const std::string colors = controllers.options_.GetOption( "Density/urbanBlock", QString( "default" ) ).To< QString >();
     if( colors != "default" )
-    {
-        pGradient_.reset( new Gradient() );
         pGradient_->LoadValues( colors.c_str() );
+    else
+    {
+        pGradient_->AddColor( 0, Qt::green );
+        pGradient_->AddColor( 1, Qt::red );
     }
     controllers_.Register( *this );
 }
@@ -68,8 +72,10 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
     , object_      ( object )
     , controllers_ ( controllers )
     , densityColor_( false )
-    , pGradient_   ( 0 )
+    , pGradient_   ( new Gradient() )
     , type_        ( type )
+    , minDensity_  ( 0.f )
+    , maxDensity_  ( 1.f )
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
@@ -82,9 +88,11 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
     }
     const std::string colors = controllers.options_.GetOption( "Density/urbanBlock", QString( "default" ) ).To< QString >();
     if( colors != "default" )
-    {
-        pGradient_.reset( new Gradient() );
         pGradient_->LoadValues( colors.c_str() );
+    else
+    {
+        pGradient_->AddColor( 0, Qt::green );
+        pGradient_->AddColor( 1, Qt::red );
     }
     controllers_.Register( *this );
 }
@@ -200,7 +208,8 @@ void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) co
 {
     if( !humans_.empty() )
     {
-        displayer.Display( "Populations:", "" );
+        displayer.Display( tools::translate( "Block", "Density:" ), GetDensity() );
+        displayer.Display( tools::translate( "Block", "Populations:" ), "" );
         BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
         {
             const std::string name = " - " + boost::lexical_cast< std::string >( human.first ) + ":";
@@ -278,6 +287,16 @@ void TerrainObjectProxy::OptionChanged( const std::string& name, const kernel::O
         pGradient_->LoadValues( value.To< QString >() );
         UpdateColor();
     }
+    else if( name == "Density/min" )
+    {
+        minDensity_ = value.To< float >();
+        UpdateColor();
+    }
+    else if( name == "Density/max" )
+    {
+        maxDensity_ = value.To< float >();
+        UpdateColor();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -287,13 +306,13 @@ void TerrainObjectProxy::OptionChanged( const std::string& name, const kernel::O
 void TerrainObjectProxy::UpdateColor()
 {
     urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
-    if( colorAttribute && pGradient_.get() )
+    if( colorAttribute )
     {
         if( !densityColor_ )
             Restore();
         else
         {
-            QColor result = pGradient_->Compute( GetDensity(), colorAttribute->Alpha() );
+            QColor result = pGradient_->Compute( GetDensity(), colorAttribute->Alpha(), minDensity_, maxDensity_ );
             colorAttribute->SetRed( static_cast< unsigned short >( result.red() ) );
             colorAttribute->SetGreen( static_cast< unsigned short >( result.green() ) );
             colorAttribute->SetBlue( static_cast< unsigned short >( result.blue() ) );

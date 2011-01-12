@@ -64,6 +64,8 @@ private slots:
     void OnColorChanged( const QColor& color );
     void OnGradientEdited( Gradient& gradient );
     void Reset();
+    void OnMinChanged( const QString& value );
+    void OnMaxChanged( const QString& value );
     //@}
 
 private:
@@ -72,9 +74,13 @@ private:
     std::auto_ptr< Painter_ABC > pPainter_;
     kernel::Controllers& controllers_;
     kernel::Options& options_;
+    QLineEdit* max_;
+    QLineEdit* min_;
     GradientButton* densityEditor_;
     ColorButton* color_;
-    bool loaded_;
+    bool blockLoaded_;
+    bool minLoaded_;
+    bool maxLoaded_;
     //@}
 };
 

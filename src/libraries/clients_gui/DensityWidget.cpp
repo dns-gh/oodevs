@@ -25,13 +25,6 @@ using namespace gui;
 
 namespace
 {
-    std::string Format( double number )
-    {
-        std::stringstream s;
-        s << std::fixed << std::setprecision( 2 ) << number;
-        return s.str();
-    }
-
     class Painter : public Painter_ABC
     {
     public:
@@ -45,11 +38,10 @@ namespace
         }
         virtual void Draw( QPainter& painter, unsigned int pourcentage, int x, int y ) const
         {
-            QFont font( "Normal", 8, QFont::Light );
+            QFont font( "Normal", 7, QFont::Light );
             painter.setFont( font );
-            double convert = static_cast< double >( pourcentage / 100.f );
-            int position = pourcentage > 50 ? x - 20 : x;
-            painter.drawText( position, y, Format( convert ).c_str() );
+            int position = pourcentage > 50 ? x - 12 : x;
+            painter.drawText( position, y, boost::lexical_cast< std::string >( pourcentage ).c_str() );
         }
     };
 }
@@ -63,14 +55,29 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers 
     , pPainter_   ( new Painter() )
     , controllers_( controllers )
     , options_    ( controllers.options_ )
-    , loaded_     ( false )
+    , blockLoaded_( false )
+    , minLoaded_  ( false )
+    , maxLoaded_  ( false )
 {
     setMaximumHeight( 150 );
-    QHBox* box = new QHBox( this );
-    box->layout()->setAlignment( Qt::AlignCenter );
-    box->setMaximumHeight( 100 );
-    densityEditor_ = new GradientButton( box, *pPainter_, false, Qt::green, Qt::red );
-    color_ = new ColorButton( box );
+
+    QHBox* valueBox = new QHBox( this );
+    valueBox->setSpacing( 4 );
+    new QLabel( "Min : ", valueBox );
+
+    min_ = new QLineEdit( valueBox );
+    min_->setValidator( new QDoubleValidator( 0., 100.f, 2, valueBox ) );
+    min_->setText( "0" );
+    new QLabel( "Max : ", valueBox );
+    max_ = new QLineEdit( valueBox );
+    max_->setValidator( new QDoubleValidator( 0., 100.f, 2, valueBox ) );
+    max_->setText( "1" );
+
+    QHBox* graphicBox = new QHBox( this );
+    graphicBox->layout()->setAlignment( Qt::AlignCenter );
+    graphicBox->setMaximumHeight( 100 );
+    densityEditor_ = new GradientButton( graphicBox, *pPainter_, false, Qt::green, Qt::red );
+    color_ = new ColorButton( graphicBox );
     color_->setMaximumHeight( 30 );
     QButton* button = new QPushButton( tr( "Reset" ), this );
 
@@ -78,6 +85,8 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers 
     connect( densityEditor_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientEdited( Gradient& ) ) );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
     connect( button, SIGNAL( clicked() ), SLOT( Reset() ) );
+    connect( min_, SIGNAL( textChanged( const QString& ) ), SLOT( OnMinChanged( const QString& ) ) );
+    connect( max_, SIGNAL( textChanged( const QString& ) ), SLOT( OnMaxChanged( const QString& ) ) );
 
     controllers_.Register( *this );
 }
@@ -129,6 +138,28 @@ void DensityWidget::Reset()
     gradient.AddColor( 0, Qt::green );
     gradient.AddColor( 1, Qt::red );
     densityEditor_->LoadGradient( gradient );
+    min_->setText(  "0" );
+    max_->setText(  "1" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DensityWidget::OnMinChanged
+// Created: LGY 2011-01-12
+// -----------------------------------------------------------------------------
+void DensityWidget::OnMinChanged( const QString& value )
+{
+    if( !value.isEmpty() )
+        options_.Change( "Density/min", boost::lexical_cast< float >( value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DensityWidget::OnMaxChanged
+// Created: LGY 2011-01-12
+// -----------------------------------------------------------------------------
+void DensityWidget::OnMaxChanged( const QString& value )
+{
+    if( !value.isEmpty() )
+        options_.Change( "Density/max", boost::lexical_cast< float >( value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,12 +168,22 @@ void DensityWidget::Reset()
 // -----------------------------------------------------------------------------
 void DensityWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "Density/urbanBlock" && !loaded_ )
+    if( name == "Density/urbanBlock" && !blockLoaded_ )
     {
-        loaded_ = true;
+        blockLoaded_ = true;
         Gradient gradient;
         const QString colors = value.To< QString >();
         gradient.LoadValues( colors );
         densityEditor_->LoadGradient( gradient );
+    }
+    if( name == "Density/min" && !minLoaded_ )
+    {
+        minLoaded_ = true;
+        min_->setText( boost::lexical_cast< std::string >( value.To< float >() ).c_str() );
+    }
+    if( name == "Density/max" && !maxLoaded_ )
+    {
+        maxLoaded_ = true;
+        max_->setText( boost::lexical_cast< std::string >( value.To< float >() ).c_str() );
     }
 }

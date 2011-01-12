@@ -131,6 +131,8 @@ private:
     T_Humans humans_;
     BaseColor color_;
     bool densityColor_;
+    float minDensity_;
+    float maxDensity_;
     std::auto_ptr< Gradient > pGradient_;
     const kernel::ObjectType& type_;
     //@}
