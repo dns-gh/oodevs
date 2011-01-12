@@ -178,7 +178,7 @@ public:
     //! @name Accessors
     //@{
     virtual const std::string& GetName() const = 0;
-    virtual unsigned int GetID() const = 0;
+    unsigned int GetID() const;
     const MIL_ObjectType_ABC& GetType() const;
     const MIL_Army_ABC* GetArmy() const;
           MIL_Army_ABC* GetArmy();
@@ -207,6 +207,7 @@ protected:
 
 protected:
     static MIL_IDManager idManager_;
+    unsigned int id_;
 
 private:
     //! @name Member data

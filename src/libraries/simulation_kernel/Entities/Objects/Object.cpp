@@ -48,10 +48,10 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved )
     : MIL_Object( &army, builder.GetType() )
-    , id_         ( xis.attribute< unsigned long >( "id" ) )
     , name_       ( xis.attribute< std::string >( "name", "" ) )
     , pView_      ( 0 )
 {
+    id_ = xis.attribute< unsigned long >( "id" );
     idManager_.Lock( id_ );
     MIL_Object_ABC::Register();
     if( pLocation )
@@ -68,10 +68,10 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
 // -----------------------------------------------------------------------------
 Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name /*= std::string()*/, bool reserved /*= true*/ )
     : MIL_Object( &army, builder.GetType() )
-    , id_         ( idManager_.GetFreeId() )
     , name_       ( name )
     , pView_      ( 0 )
 {
+    id_ = idManager_.GetFreeId();
     if( GetType().GetCapacity< SpawnCapacity >() )
         idManager_.GetFreeId(); // we need to skip one ID for dynamic created object.
 
@@ -90,10 +90,9 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
 // -----------------------------------------------------------------------------
 Object::Object()
     : MIL_Object()
-    , id_         ( 0 )
     , pView_      ( 0 )
 {
-    // NOTHING
+    id_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -102,15 +101,6 @@ Object::Object()
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::GetID
-// Created: JCR 2008-06-02
-// -----------------------------------------------------------------------------
-unsigned int Object::GetID() const
-{
-    return id_;
 }
 
 // -----------------------------------------------------------------------------

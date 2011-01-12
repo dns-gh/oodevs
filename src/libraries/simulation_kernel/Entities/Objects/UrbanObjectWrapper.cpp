@@ -53,9 +53,9 @@ UrbanObjectWrapper::T_ObjectMap UrbanObjectWrapper::objectMap_;
 UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object )
     : MIL_Object( 0, builder.GetType() )
     , object_( &object )
-    , id_( idManager_.GetFreeId() )
     , pView_( 0 )
 {
+    id_ = idManager_.GetFreeId();
     objectMap_.insert( std::make_pair( &object, this ) );
     InitializeAttributes();
     builder.Build( *this );
@@ -68,10 +68,9 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
 UrbanObjectWrapper::UrbanObjectWrapper()
     : MIL_Object()
     , object_( 0 )
-    , id_( 0 )
     , pView_( 0 )
 {
-    // NOTHING
+    id_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -354,15 +353,6 @@ void UrbanObjectWrapper::UpdateState()
 unsigned int UrbanObjectWrapper::GetUrbanId() const
 {
     return object_->GetId();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::GetID
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-unsigned int UrbanObjectWrapper::GetID() const
-{
-    return id_;
 }
 
 // -----------------------------------------------------------------------------

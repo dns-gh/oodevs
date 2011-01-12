@@ -48,8 +48,7 @@ MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type )
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 MIL_Object::MIL_Object()
-    : MIL_Object_ABC()
-    , manipulator_( *new MIL_ObjectManipulator( *this ) )
+: manipulator_( *new MIL_ObjectManipulator( *this ) )
 {
     // NOTHING
 }

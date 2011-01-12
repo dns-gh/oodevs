@@ -45,7 +45,6 @@ public:
     virtual void SendCreation() const {}
     virtual void SendDestruction() const {}
     virtual void SendFullState() const {}
-    virtual unsigned int GetID() const { throw; }
     virtual void Update( unsigned int /*time*/ ) {}
     virtual void Register(ObjectCapacity_ABC *) { throw; }
     virtual void Register(ObjectAttribute_ABC *) { throw; }

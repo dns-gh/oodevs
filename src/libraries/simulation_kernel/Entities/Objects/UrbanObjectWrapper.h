@@ -90,7 +90,6 @@ public:
 
     //! @name Accessors
     //@{
-    virtual unsigned int              GetID() const;
     unsigned int                      GetUrbanId() const;
     const std::string&                GetName() const;
     const urban::TerrainObject_ABC&   GetObject();
@@ -107,7 +106,6 @@ private:
     //! @name Member data
     //@{
     const urban::TerrainObject_ABC* object_;
-    unsigned int                    id_;
     //@}
 
     //! @name HLA

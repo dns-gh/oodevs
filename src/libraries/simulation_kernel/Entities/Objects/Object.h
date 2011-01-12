@@ -92,7 +92,6 @@ public:
 
     //! @name
     //@{
-    unsigned int  GetID() const;
     const std::string& GetName() const;
     virtual unsigned int  GetMaterial() const{ return std::numeric_limits< unsigned int >::max(); };   // $$$$ _TODO_ SLG 2010-06-24: mettre en place un système de material pour les objets
     //@}
@@ -117,7 +116,6 @@ private:
     //! @name Member data
     //@{
     std::string name_;
-    unsigned int id_;
     std::auto_ptr< Object > pChildObject_;
     HLA_Object_ABC* pView_;
     //@}

@@ -132,3 +132,13 @@ void MIL_Object_ABC::SetAttribute( const T& attribute )
 {
     GetAttribute< T, I >() = attribute;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::GetID
+// Created: BCI 2011-01-12
+// -----------------------------------------------------------------------------
+inline
+unsigned int MIL_Object_ABC::GetID() const
+{
+    return id_;
+}

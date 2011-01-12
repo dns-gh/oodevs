@@ -101,7 +101,6 @@ public:
     //! @name Accessors
     //@{
     virtual const std::string& GetName() const = 0;
-    virtual unsigned int GetID() const = 0;
     //@}
 
 protected:
