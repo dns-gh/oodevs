@@ -63,6 +63,7 @@ private slots:
     void OnSelectionChanged( const QColor& color );
     void OnColorChanged( const QColor& color );
     void OnGradientEdited( Gradient& gradient );
+    void Reset();
     //@}
 
 private:

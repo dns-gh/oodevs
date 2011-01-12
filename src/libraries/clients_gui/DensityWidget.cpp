@@ -71,10 +71,12 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers 
     densityEditor_ = new GradientButton( box, *pPainter_, false, Qt::green, Qt::red );
     color_ = new ColorButton( box );
     color_->setMaximumHeight( 30 );
+    QButton* button = new QPushButton( tr( "Reset" ), this );
 
     connect( densityEditor_, SIGNAL( SelectionChanged( const QColor& ) ), SLOT( OnSelectionChanged( const QColor& ) ) );
     connect( densityEditor_, SIGNAL( GradientChanged( Gradient& ) ), SLOT( OnGradientEdited( Gradient& ) ) );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
+    connect( button, SIGNAL( clicked() ), SLOT( Reset() ) );
 
     densityEditor_->Update( false );
     controllers_.Register( *this );
@@ -115,6 +117,18 @@ void DensityWidget::OnGradientEdited( Gradient& gradient )
 {
     gradient.SetName( "urbanBlock" );
     gradient.Save( options_, "Density/" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DensityWidget::Reset
+// Created: LGY 2011-01-12
+// -----------------------------------------------------------------------------
+void DensityWidget::Reset()
+{
+    Gradient gradient;
+    gradient.AddColor( 0, Qt::green );
+    gradient.AddColor( 1, Qt::red );
+    densityEditor_->LoadGradient( gradient, false );
 }
 
 // -----------------------------------------------------------------------------
