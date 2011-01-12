@@ -258,7 +258,7 @@ namespace
 // Name: GradientButton::LoadGradient
 // Created: SBO 2007-07-03
 // -----------------------------------------------------------------------------
-void GradientButton::LoadGradient( const Gradient& gradient, bool loaded )
+void GradientButton::LoadGradient( const Gradient& gradient )
 {
     ClearSelection();
     for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
@@ -267,7 +267,7 @@ void GradientButton::LoadGradient( const Gradient& gradient, bool loaded )
     colors_.clear();
     GradientBuilder builder( *this );
     gradient.Accept( builder );
-    Update( loaded );
+    Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -311,7 +311,7 @@ void GradientButton::ClearSelection()
 // Name: GradientButton::Update
 // Created: SBO 2007-07-02
 // -----------------------------------------------------------------------------
-void GradientButton::Update( bool loaded )
+void GradientButton::Update()
 {
     canvas()->setAllChanged();
     Gradient gradient;
@@ -323,8 +323,7 @@ void GradientButton::Update( bool loaded )
         gradient.AddColor( item->GetPercentage() / 100.f, item->GetColor() );
     }
     canvas()->update();
-    if( !loaded )
-        emit GradientChanged( gradient );
+    emit GradientChanged( gradient );
 }
 
 // -----------------------------------------------------------------------------

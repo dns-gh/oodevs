@@ -63,6 +63,7 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers 
     , pPainter_   ( new Painter() )
     , controllers_( controllers )
     , options_    ( controllers.options_ )
+    , loaded_     ( false )
 {
     setMaximumHeight( 150 );
     QHBox* box = new QHBox( this );
@@ -78,7 +79,6 @@ DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers 
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
     connect( button, SIGNAL( clicked() ), SLOT( Reset() ) );
 
-    densityEditor_->Update( false );
     controllers_.Register( *this );
 }
 
@@ -128,7 +128,7 @@ void DensityWidget::Reset()
     Gradient gradient;
     gradient.AddColor( 0, Qt::green );
     gradient.AddColor( 1, Qt::red );
-    densityEditor_->LoadGradient( gradient, false );
+    densityEditor_->LoadGradient( gradient );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,11 +137,12 @@ void DensityWidget::Reset()
 // -----------------------------------------------------------------------------
 void DensityWidget::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "Density/urbanBlock" )
+    if( name == "Density/urbanBlock" && !loaded_ )
     {
+        loaded_ = true;
         Gradient gradient;
         const QString colors = value.To< QString >();
         gradient.LoadValues( colors );
-        densityEditor_->LoadGradient( gradient, true );
+        densityEditor_->LoadGradient( gradient );
     }
 }
