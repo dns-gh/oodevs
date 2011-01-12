@@ -149,10 +149,8 @@ message ObjectMagicActionAck {
     */
     enum ErrorCode {
         no_error                          = 0; //!< Operation succeeded
-        error_invalid_object              = 1; //!< Operation failed because the provided object identifier was invalid @todo rename to error_invalid_id
-        error_invalid_id                  = 2; //!< @deprecated never used
+        error_invalid_object              = 1; //!< Operation failed because the provided object identifier was invalid
         error_invalid_party               = 3; //!< Operation failed because the provided party identifier was invalid
-        error_invalid_localisation        = 4; //!< Operation failed because the provided location was invalid : provided location must meet the restriction for the object geometry as defined in the file "Object.xml" @todo rename to error_invalid_location
         error_missing_specific_attributes = 5; //!< Operation failed because object specific attributes are missing : they must meet the requirements associated with the object type
         error_invalid_specific_attributes = 6; //!< Operation failed because object specific attributes are invalid : they must meet the requirements associated with the object type
     }

@@ -10,6 +10,7 @@
 #ifndef shield_SimulationTools_h
 #define shield_SimulationTools_h
 
+#define SHIELD_SIMULATION
 #include "CommonTools.h"
 
 namespace shield

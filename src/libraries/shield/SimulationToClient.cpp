@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "SimulationToClient.h"
-#include "CommonTools.h"
+#include "SimulationTools.h"
 
 using namespace shield;
 
@@ -142,9 +142,7 @@ void SimulationToClient::Convert( const sword::ObjectMagicActionAck& from, MsgsS
 {
     CONVERT_ENUM( error_code, ( sword::ObjectMagicActionAck::no_error, MsgsSimToClient::MsgObjectMagicActionAck::no_error )
                               ( sword::ObjectMagicActionAck::error_invalid_object, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_object )
-                              ( sword::ObjectMagicActionAck::error_invalid_id, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_id )
                               ( sword::ObjectMagicActionAck::error_invalid_party, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_camp )
-                              ( sword::ObjectMagicActionAck::error_invalid_localisation, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_localisation )
                               ( sword::ObjectMagicActionAck::error_missing_specific_attributes, MsgsSimToClient::MsgObjectMagicActionAck::error_missing_specific_attributes )
                               ( sword::ObjectMagicActionAck::error_invalid_specific_attributes, MsgsSimToClient::MsgObjectMagicActionAck::error_invalid_specific_attributes ) );
 }

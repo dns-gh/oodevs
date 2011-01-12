@@ -128,7 +128,7 @@ namespace shield
         }
     };
 
-    struct constraint // $$$$ MCO : make it easier in turtle to add constraints with custom descriptions
+    struct constraint
     {
         template< typename Message >
         constraint( const Message& msg, const std::string& expected )
@@ -141,11 +141,19 @@ namespace shield
         template< typename Actual >
         friend bool operator==( const Actual& actual, const constraint& c )
         {
+            if( ! actual.IsInitialized() )
+                return false;
             BOOST_REQUIRE_EQUAL( c.fields_, actual.descriptor()->field_count() );
             const std::string s =  actual.ShortDebugString();
+            //for( std::size_t pos = 0; pos != std::min( s.size(), c.expected_.size() ); ++pos )
+            //    if( s[pos] != c.expected_[pos] )
+            //    {
+            //        BOOST_ERROR( "Mismatch starting at position " << pos << ": " << s[pos] << " != " << c.expected_[pos] );
+            //        return false;
+            //    }
             //BOOST_CHECK_MESSAGE( s.find( ": 0 " ) == std::string::npos, "one of the value fields is 0 : " + s );
             //BOOST_CHECK_MESSAGE( s.find( ": \"\" " ) == std::string::npos, "one of the string fields is empty !" + s );
-            return actual.IsInitialized() && s == c.expected_;
+            return s.size() == c.expected_.size();
         }
 
         friend std::ostream& operator<<( std::ostream& os, const constraint& c )

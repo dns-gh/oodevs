@@ -660,7 +660,7 @@ namespace
     template< typename O >
     void FillMissionObjective( O* o )
     {
-        FillLocation( o->mutable_localisation() );
+        FillLocation( o->mutable_location() );
         o->mutable_horaire()->set_data( "horaire" );
     }
     template< typename O >

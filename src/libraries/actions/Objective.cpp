@@ -56,7 +56,7 @@ Objective::Objective( const OrderParameter& parameter, xml::xistream& xis, const
 Objective::Objective( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::MissionObjective& message )
     : Parameter< QString >( parameter )
 {
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Objective location" ).ascii(), "location", false ), converter, message.localisation() ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Objective location" ).ascii(), "location", false ), converter, message.location() ) );
     AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), message.horaire() ) );
 }
 
@@ -113,7 +113,7 @@ void Objective::CommitTo( sword::MissionObjective& message ) const
     {
         const std::string type = it->second->GetType();
         if( type == "location" )
-            static_cast< const Location* >( it->second )->CommitTo( *message.mutable_localisation() );
+            static_cast< const Location* >( it->second )->CommitTo( *message.mutable_location() );
         else if( type == "datetime" )
             static_cast< const DateTime* >( it->second )->CommitTo( *message.mutable_horaire() );
     }

@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "ReplayToClient.h"
-#include "CommonTools.h"
+#include "SimulationTools.h"
 #include "Tools.h"
 
 using namespace shield;

@@ -195,7 +195,13 @@ namespace shield
     template< typename From, typename To >
     void ConvertObjective( const From& from, To* to )
     {
-        ConvertLocation( from.localisation(), to->mutable_localisation() );
+#ifdef SHIELD_CLIENT
+        ConvertLocation( from.localisation(), to->mutable_location() );
+#elif defined SHIELD_SIMULATION
+        ConvertLocation( from.location(), to->mutable_localisation() );
+#else
+#error do not include CommonTools.h directly but ClientTools.h or SimulationTools.h // $$$$ MAT : yep, totally crappy !
+#endif
         to->mutable_horaire()->set_data( from.horaire().data() );
     }
     template< typename From, typename To >

@@ -470,8 +470,8 @@ message LogMaintenancePriorities {
 }
 
 message MissionObjective {
-   required Location localisation = 1;
-   required DateTime horaire      = 2;
+   required Location location = 1;
+   required DateTime horaire  = 2;
 }
 
 message MissionObjectiveList {

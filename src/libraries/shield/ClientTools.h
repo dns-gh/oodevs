@@ -10,6 +10,7 @@
 #ifndef shield_ClientTools_h
 #define shield_ClientTools_h
 
+#define SHIELD_CLIENT
 #include "CommonTools.h"
 
 namespace shield

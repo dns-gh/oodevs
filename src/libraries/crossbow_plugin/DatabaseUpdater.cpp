@@ -732,10 +732,6 @@ std::string DatabaseUpdater::Error( const sword::ObjectMagicActionAck_ErrorCode&
         return "no_error";
     case sword::ObjectMagicActionAck::error_invalid_party:
         return "error_invalid_party";
-    case sword::ObjectMagicActionAck::error_invalid_id:
-        return "error_invalid_id";
-    case sword::ObjectMagicActionAck::error_invalid_localisation:
-        return "error_invalid_location";
     case sword::ObjectMagicActionAck::error_invalid_object:
         return "error_invalid_object";
     case sword::ObjectMagicActionAck::error_invalid_specific_attributes:
@@ -743,5 +739,4 @@ std::string DatabaseUpdater::Error( const sword::ObjectMagicActionAck_ErrorCode&
     default:
         return "unknown error code";
     }
-
 }
