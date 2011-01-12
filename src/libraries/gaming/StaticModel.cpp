@@ -75,4 +75,5 @@ void StaticModel::Purge()
     drawings_.Purge();
     reportFactory_.Purge();
     kernel::StaticModel::Purge();
+    controllers_.controller_.Update( kernel::ModelUnLoaded() );
 }

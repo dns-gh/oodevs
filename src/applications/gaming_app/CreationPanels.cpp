@@ -17,7 +17,6 @@
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
 #include "gaming/DrawingsModel.h"
-#include "gaming/Services.h"
 #include "protocol/SimulationSenders.h"
 #include "FireCreationPanel.h"
 #include "ObjectCreationPanel.h"
@@ -31,19 +30,18 @@ using namespace actions;
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings )
-    : Panels( parent )
+CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, ItemFactory_ABC& factory, ActionsModel& actionsModel, const Time_ABC& simulation, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings )
+    : Panels      ( parent )
     , controllers_( controllers )
-    , shown_( true )
 {
-    AddPanel( units_   = new gui::UnitsPanel    ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
+    AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
-    controllers_.Register( *this );
-    AddPanel( intel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
-    AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, drawings ) );
-    AddPanel( new FireCreationPanel( this, *this, controllers, actionsModel, simulation, staticModel ) );
+    AddPanel( intel_ = new IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
+    AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, drawings ) );
+    AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, actionsModel, simulation, staticModel ) );
     AddPanel( weather_ = new WeatherCreationPanel( this, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
-    AddPanel( crowds_ = new gui::PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
+    AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,21 +65,30 @@ void CreationPanels::Draw( Viewport_ABC& viewport ) const
 
 // -----------------------------------------------------------------------------
 // Name: CreationPanels::NotifyUpdated
-// Created: AGE 2007-10-18
+// Created: JSR 2011-01-12
 // -----------------------------------------------------------------------------
-void CreationPanels::NotifyUpdated( const Services& services )
+void CreationPanels::NotifyUpdated( const ModelLoaded& )
 {
-    if( services.HasService< simulation::Service >() )
-    {
-        Add( units_ );
-        Add( objects_ );
-        Add( intel_ );
-        Add( crowds_ );
-    } else
-    {
-        Remove( units_ );
-        Remove( objects_ );
-        Remove( intel_ );
-        Remove( crowds_ );
-    }
+    Add( units_ );
+    Add( objects_ );
+    Add( intel_ );
+    Add( crowds_ );
+    Add( weather_ );
+    Add( drawings_ );
+    Add( fires_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreationPanels::NotifyUpdated
+// Created: JSR 2011-01-12
+// -----------------------------------------------------------------------------
+void CreationPanels::NotifyUpdated( const ModelUnLoaded& )
+{
+    Remove( units_ );
+    Remove( objects_ );
+    Remove( intel_ );
+    Remove( crowds_ );
+    Remove( weather_ );
+    Remove( drawings_ );
+    Remove( fires_ );
 }

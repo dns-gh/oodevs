@@ -17,6 +17,8 @@ namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
+    class ModelLoaded;
+    class ModelUnLoaded;
     class Time_ABC;
     class Viewport_ABC;
 }
@@ -24,6 +26,7 @@ namespace kernel
 namespace gui
 {
     class ColorStrategy_ABC;
+    class DrawerPanel;
     class IntelligencesPanel;
     class ItemFactory_ABC;
     class ParametersLayer;
@@ -37,10 +40,10 @@ namespace actions
     class ActionsModel;
 }
 
-class StaticModel;
-class ObjectCreationPanel;
-class Services;
 class DrawingsModel;
+class FireCreationPanel;
+class ObjectCreationPanel;
+class StaticModel;
 class WeatherCreationPanel;
 
 // =============================================================================
@@ -51,7 +54,8 @@ class WeatherCreationPanel;
 // =============================================================================
 class CreationPanels : public gui::Panels
                      , public tools::Observer_ABC
-                     , public tools::ElementObserver_ABC< Services >
+                     , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                     , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
 public:
     //! @name Constructors/Destructor
@@ -68,19 +72,21 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void NotifyUpdated( const Services& services );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& model );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& model );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    bool shown_;
     gui::UnitsPanel* units_;
     ObjectCreationPanel* objects_;
     gui::IntelligencesPanel* intel_;
     WeatherCreationPanel* weather_;
     gui::PopulationsPanel* crowds_;
+    gui::DrawerPanel* drawings_;
+    FireCreationPanel* fires_;
     //@}
 };
 
