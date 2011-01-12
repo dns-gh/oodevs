@@ -45,6 +45,8 @@ void FloodDrawer::Draw() const
         const_cast< FloodDrawer* >( this )->RenderTexture();
     const geometry::Point2f& center = model_.GetCenter();
     int refDist = model_.GetReferenceDistance();
+    glDisable( GL_TEXTURE_GEN_S );
+    glDisable( GL_TEXTURE_GEN_T );
     glEnable( GL_TEXTURE_2D );
     glBindTexture( GL_TEXTURE_2D, textureId_ );
     glColor4f( 1, 1, 1, 1 );
