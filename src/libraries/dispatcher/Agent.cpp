@@ -365,7 +365,7 @@ void Agent::DoUpdate( const sword::UnitOrder& message )
 // -----------------------------------------------------------------------------
 void Agent::DoUpdate( const sword::UnitPathFind& message )
 {
-    currentPath_.Update( message.itineraire().location() );
+    currentPath_.Update( message.path().location() );
 }
 
 // -----------------------------------------------------------------------------
@@ -506,7 +506,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     { 
         client::UnitPathFind msg;
         msg().mutable_unit()->set_id( GetId() );
-        currentPath_.Send( *msg().mutable_itineraire()->mutable_location() );
+        currentPath_.Send( *msg().mutable_path()->mutable_location() );
         msg.Send( publisher );
     }
 }

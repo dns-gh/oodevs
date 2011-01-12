@@ -78,8 +78,8 @@ void TicExtension::DoUpdate( const sword::UnitAttributes& message )
 void TicExtension::DoUpdate( const sword::UnitPathFind& message )
 {
     path_.resize( 0 );
-    for( int i = 0; i < message.itineraire().location().coordinates().elem_size(); ++i )
-        path_.push_back( converter_.ConvertToXY( message.itineraire().location().coordinates().elem(i) ) );
+    for( int i = 0; i < message.path().location().coordinates().elem_size(); ++i )
+        path_.push_back( converter_.ConvertToXY( message.path().location().coordinates().elem(i) ) );
 }
 
 // -----------------------------------------------------------------------------

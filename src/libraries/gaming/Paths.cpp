@@ -69,11 +69,11 @@ void Paths::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Paths::DoUpdate( const sword::UnitPathFind& message )
 {
-    plannedPath_.clear(); plannedPath_.reserve( message.itineraire().location().coordinates().elem_size() );
+    plannedPath_.clear(); plannedPath_.reserve( message.path().location().coordinates().elem_size() );
     plannedBox_ = Rectangle2f();
-    for( int i = 0; i < message.itineraire().location().coordinates().elem_size(); ++i )
+    for( int i = 0; i < message.path().location().coordinates().elem_size(); ++i )
     {
-        plannedPath_.push_back( converter_.ConvertToXY( message.itineraire().location().coordinates().elem(i) ) );
+        plannedPath_.push_back( converter_.ConvertToXY( message.path().location().coordinates().elem(i) ) );
         plannedBox_.Incorporate( plannedPath_.back() );
     }
     UpdatePathfind();

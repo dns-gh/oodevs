@@ -670,7 +670,7 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
 void SimulationToClient::Convert( const sword::UnitPathFind& from, MsgsSimToClient::MsgUnitPathFind* to )
 {
     CONVERT_ID( unit );
-    ConvertLocation( from.itineraire().location(), to->mutable_itineraire()->mutable_location() );
+    ConvertLocation( from.path().location(), to->mutable_itineraire()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1709,8 +1709,8 @@ void SimulationToClient::Convert( const sword::CrowdFlowUpdate& from, MsgsSimToC
 {
     CONVERT_ID( flow );
     CONVERT_ID( crowd );
-    if( from.has_itineraire() )
-        ConvertLocation( from.itineraire().location(), to->mutable_itineraire()->mutable_location() );
+    if( from.has_path() )
+        ConvertLocation( from.path().location(), to->mutable_itineraire()->mutable_location() );
     if( from.has_parts() )
         ConvertLocation( from.parts().location(), to->mutable_parts()->mutable_location() );
     if( from.has_direction() )

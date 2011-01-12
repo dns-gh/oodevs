@@ -828,13 +828,19 @@ message UnitAttributes {
     optional Extension                   extension                  = 45; //!< @todo What's this ?
 }
 
+/** @struct UnitPathFind
+    @brief A unit path find message
+*/
 message UnitPathFind {
-   required UnitId  unit       = 1;
-   required Path itineraire = 2;
+   required UnitId unit = 1; //!< The unit identifier @see UnitId
+   required Path   path = 2; //!< The unit path @see Path
 }
 
-message UnitDestruction  {
-    required UnitId unit = 1;
+/** @struct UnitDestruction
+    @brief A unit destruction message
+*/
+message UnitDestruction {
+    required UnitId unit = 1; //!< The unit identifier @see UnitId
 }
 
 message UnitEnvironmentType {
@@ -1345,7 +1351,7 @@ message CrowdFlowDestruction {
 message CrowdFlowUpdate {
    required CrowdFlowId       flow               = 1;
    required CrowdId           crowd              = 2;
-   optional Path              itineraire         = 3;
+   optional Path              path               = 3;
    optional Path              parts              = 4;
    optional Heading           direction          = 5;
    optional int32             speed              = 6;

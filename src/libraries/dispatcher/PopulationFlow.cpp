@@ -50,8 +50,8 @@ PopulationFlow::~PopulationFlow()
 // -----------------------------------------------------------------------------
 void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& msg )
 {
-    if( msg.has_itineraire()  )
-        path_.Update( msg.itineraire().location() );
+    if( msg.has_path()  )
+        path_.Update( msg.path().location() );
     if( msg.has_parts()  )
         flow_.Update( msg.parts().location() );
     if( msg.has_direction()  )
@@ -92,7 +92,7 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_attitude( nAttitude_ );
     asn().set_nb_humains_morts( nNbrDeadHumans_ );
     asn().set_nb_humains_vivants( nNbrAliveHumans_ );
-    path_.Send( *asn().mutable_itineraire()->mutable_location() );
+    path_.Send( *asn().mutable_path()->mutable_location() );
     flow_.Send( *asn().mutable_parts()->mutable_location() );
     asn.Send( publisher );
 }

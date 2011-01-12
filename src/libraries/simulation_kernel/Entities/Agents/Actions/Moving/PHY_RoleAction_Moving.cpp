@@ -261,12 +261,11 @@ void PHY_RoleAction_Moving::SendEnvironmentType() const
 void PHY_RoleAction_Moving::SendCurrentPath() const
 {
     client::UnitPathFind asnMsg;
-    asnMsg().mutable_unit()->set_id( pion_.GetID() );   
-    if( !SerializeCurrentPath( *asnMsg().mutable_itineraire() ) )
+    asnMsg().mutable_unit()->set_id( pion_.GetID() );
+    if( !SerializeCurrentPath( *asnMsg().mutable_path() ) )
         return;
-
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    asnMsg().mutable_itineraire()->Clear();
+    asnMsg().mutable_path()->Clear();
 }
 
 // -----------------------------------------------------------------------------

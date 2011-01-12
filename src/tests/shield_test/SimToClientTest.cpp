@@ -418,7 +418,7 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
 BOOST_FIXTURE_TEST_CASE( unit_pathfind_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_unit_pathfind()->mutable_unit()->set_id( 7 );
-    FillLocation( content.mutable_unit_pathfind()->mutable_itineraire()->mutable_location() );
+    FillLocation( content.mutable_unit_pathfind()->mutable_path()->mutable_location() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_pathfind { unit { id: 7 } itineraire { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1333,7 +1333,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_flow_update_to_client_is_converted, ContextFixtur
 {
     content.mutable_crowd_flow_update()->mutable_flow()->set_id( 7 );
     content.mutable_crowd_flow_update()->mutable_crowd()->set_id( 8 );
-    FillLocation( content.mutable_crowd_flow_update()->mutable_itineraire()->mutable_location() );
+    FillLocation( content.mutable_crowd_flow_update()->mutable_path()->mutable_location() );
     FillLocation( content.mutable_crowd_flow_update()->mutable_parts()->mutable_location() );
     content.mutable_crowd_flow_update()->mutable_direction()->set_heading( 20 );
     content.mutable_crowd_flow_update()->set_speed( 21 );

@@ -22,15 +22,14 @@ using namespace kernel;
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 PopulationFlow::PopulationFlow( const sword::CrowdFlowCreation& message, const CoordinateConverter_ABC& converter )
-    : converter_ ( converter )
-    , nID_       ( message.flow().id() )
-    , itineraire_( )
-    , flow_      ( 2, geometry::Point2f( 0, 0 ) )
-    , nDirection_( 0 )
-    , nSpeed_    ( 0 )
+    : converter_    ( converter )
+    , nID_          ( message.flow().id() )
+    , flow_         ( 2, geometry::Point2f( 0, 0 ) )
+    , nDirection_   ( 0 )
+    , nSpeed_       ( 0 )
     , nLivingHumans_( 0 )
-    , nDeadHumans_( 0 )
-    , rDensity_( 0 )
+    , nDeadHumans_  ( 0 )
+    , rDensity_     ( 0 )
 {
     RegisterSelf( *this );
 }
@@ -79,11 +78,11 @@ void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& message )
         nSpeed_ = message.speed();
     if( message.has_direction()  )
         nDirection_    = message.direction().heading();
-    if( message.has_itineraire()  )
+    if( message.has_path()  )
     {
         itineraire_.clear();
-        for( int i = 0; i < message.itineraire().location().coordinates().elem_size(); ++i )
-            itineraire_.push_back( converter_.ConvertToXY( message.itineraire().location().coordinates().elem(i) ) );
+        for( int i = 0; i < message.path().location().coordinates().elem_size(); ++i )
+            itineraire_.push_back( converter_.ConvertToXY( message.path().location().coordinates().elem(i) ) );
     }
     if( message.has_parts()  )
     {
