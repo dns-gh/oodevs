@@ -9,8 +9,9 @@
 
 #include "clients_gui_pch.h"
 #include "UrbanLayer.h"
-#include "clients_gui/TerrainObjectProxy.h"
+#include "TerrainObjectProxy.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_kernel/Infrastructure_ABC.h"
 #include <boost/noncopyable.hpp>
 
 using namespace gui;
@@ -50,6 +51,8 @@ namespace
             // dessin du réseau en dernier par dessus les blocs
             if( const kernel::ResourceNetwork_ABC* resource = proxy.Retrieve< kernel::ResourceNetwork_ABC >() )
                 resource->Draw( viewport_, tools_ );
+            if( const kernel::Infrastructure_ABC* infra = proxy.Retrieve< kernel::Infrastructure_ABC >() )
+                infra->Draw( viewport_, tools_ );
         }
 
         const kernel::Viewport_ABC& viewport_;

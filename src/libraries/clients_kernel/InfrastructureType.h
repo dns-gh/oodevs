@@ -49,6 +49,7 @@ public:
     //@{
     unsigned int GetId() const;
     const std::string& GetName() const;
+    const std::string GetSymbol() const;
     xml::xistream* FindCapacity( const std::string& capacity ) const;
     //@}
 
@@ -68,6 +69,7 @@ private:
     //@{
     unsigned int id_;
     std::string name_;
+    std::string symbol_;
     T_Capacities capacities_;
     static unsigned int nNextID_;
     //@}

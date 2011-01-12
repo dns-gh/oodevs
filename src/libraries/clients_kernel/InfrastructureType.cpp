@@ -22,6 +22,7 @@ unsigned int InfrastructureType::nNextID_ = 0;
 InfrastructureType::InfrastructureType( xml::xistream& xis )
     : id_  ( nNextID_++ )
     , name_( xis.attribute< std::string >( "name" ) )
+    , symbol_( "symbols/" + xis.attribute< std::string >( "symbol" ) )
 {
     xis >> xml::optional() >> xml::start( "capacities" )
         >> xml::list( *this, &InfrastructureType::ReadCapacities );
@@ -74,4 +75,13 @@ const std::string& InfrastructureType::GetName() const
 unsigned int InfrastructureType::GetId() const
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureType::GetSymbol
+// Created: SLG 2011-01-11
+// -----------------------------------------------------------------------------
+const std::string InfrastructureType::GetSymbol() const
+{
+    return symbol_;
 }

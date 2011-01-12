@@ -160,6 +160,33 @@
     </message>
 </context>
 <context>
+    <name>Infrastructure</name>
+    <message>
+        <source>Infrastructure</source>
+        <translation>Infrastructure</translation>
+    </message>
+    <message>
+        <source>Enable:</source>
+        <translation>Actif:</translation>
+    </message>
+    <message>
+        <source>Threshold:</source>
+        <translation>Seuil:</translation>
+    </message>
+    <message>
+        <source>Info/Infrastructure/Type</source>
+        <translation>Info/Infrastructure/Type</translation>
+    </message>
+    <message>
+        <source>Info/Infrastructure/Enable</source>
+        <translation>Info/Infrastructure/Actif</translation>
+    </message>
+    <message>
+        <source>Info/Infrastructure/Threshold</source>
+        <translation>Info/Infrastructure/Seuil</translation>
+    </message>
+</context>
+<context>
     <name>Intelligence</name>
     <message>
         <source>Intelligence [%1]</source>

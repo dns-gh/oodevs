@@ -14,6 +14,7 @@
 #include "ResourceNetworkAttribute.h"
 #include "StaticModel.h"
 #include "StructuralStateAttribute.h"
+#include "InfrastructureAttribute.h"
 #include "UrbanPositions.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Controllers.h"
@@ -178,6 +179,8 @@ void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, 
         UpdateCapacity< ResourceNetworkAttribute, kernel::ResourceNetwork_ABC >( xis, proxy );
     else if( capacity == "medical-treatment" )
         UpdateCapacity< MedicalTreatmentAttribute, kernel::MedicalTreatmentAttribute_ABC >( xis, proxy );
+    else if( capacity == "infrastructure" )
+        UpdateCapacity< InfrastructureAttribute, kernel::Infrastructure_ABC >( xis, proxy );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,8 +223,12 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
     if( infra )
     {
         const kernel::InfrastructureType* infraType = static_.objectTypes_.tools::StringResolver< kernel::InfrastructureType >::Find( infra->GetType() );
-        if ( infraType && infraType->FindCapacity( "medical" ) )
-            pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( static_.objectTypes_, dico ) );
+        if ( infraType )
+        {
+            pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( *pTerrainObject, *infraType, dico ) );
+            if( infraType->FindCapacity( "medical" ) )
+                pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( static_.objectTypes_, dico ) );
+        }
     }
     pTerrainObject->Polish();
     if( !Resolver< gui::TerrainObjectProxy >::Find( urbanObject.GetId() ) )

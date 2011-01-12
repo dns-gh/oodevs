@@ -162,8 +162,8 @@ void MedicalTreatmentAttribute::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
-    dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
-    for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
-        dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ), it->second );
+        dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Doctors" ), doctors_ );
+        dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", "Info/Medical Treatment attributes/Hospital ID" ), referenceID_ );
+        for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
+            dico.Register( *this, tools::translate( "MedicalTreatmentAttribute", std::string( "Info/Medical Treatment attributes/" + it->first ).c_str() ), it->second );
 }
