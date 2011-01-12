@@ -9,12 +9,16 @@
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Attaquer"/>
+        <mission name="MELEE Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Appui feu sur position"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Couvrir"/>
@@ -76,12 +80,16 @@
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
-        <mission name="MELEE Attaquer"/>
+        <mission name="MELEE Appui feu sur position"/>
+        <mission name="MELEE Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Contre Attaquer">
           <fragorder name="Deboucher"/>
@@ -135,6 +143,7 @@
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
@@ -176,10 +185,13 @@
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="TEST Observe"/>
+        <mission name="MELEE Appui feu sur position"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Attaquer">
@@ -238,6 +250,7 @@
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
@@ -275,12 +288,10 @@
         <mission name="TEST BuildObjects"/>
         <mission name="TEST BypassObjects"/>
         <mission name="TEST Control"/>
-        <mission name="TEST DestroyAgents"/>
         <mission name="TEST EngageAgents"/>
         <mission name="TEST Flee"/>
         <mission name="TEST GetDecon"/>
         <mission name="TEST GuideAndLoad"/>
-        <mission name="TEST IdentifyAgent"/>
         <mission name="TEST MoveAlongPointList"/>
         <mission name="TEST MoveAlongPolygonList"/>
         <mission name="TEST MoveAlongAgentKnowledgeList"/>
@@ -293,14 +304,13 @@
         <mission name="TEST MoveToWithLima">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="TEST NeutralizeAgents"/>
+        <mission name="TEST Neutralize"/>
         <mission name="TEST Open"/>
         <mission name="TEST Observe"/>
-        <mission name="TEST ObservePoint"/>
-        <mission name="TEST ObserveAgent"/>
-        <mission name="TEST ReconnoiterPoint"/>
-        <mission name="TEST ReconnoiterUrbanBlock"/>
-        <mission name="TEST ReconnoiterArea"/>
+        <mission name="TEST Observe ligne"/>
+        <mission name="TEST Destroy"/>
+        <mission name="TEST Identify"/>
+        <mission name="TEST Reconnoiter"/>
         <mission name="TEST Reinforce"/>
         <mission name="TEST RemoveObstacle"/>
         <mission name="TEST Search"/>
@@ -384,6 +394,7 @@
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
@@ -7612,7 +7623,9 @@
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="MELEE Appuyer"/>
-        <mission name="MELEE Attaquer"/>
+        <mission name="MELEE Attaquer">
+          <fragorder name="Deboucher"/>
+        </mission>
         <mission name="MELEE Barrer"/>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Controler"/>
@@ -7624,6 +7637,7 @@
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE S'emparer"/>
+        <mission name="MELEE Surveiller"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7722,6 +7736,7 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
     <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" masalife="false" name="Groupe Chalands">
@@ -11599,4 +11614,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0530167770" -->
+<!-- signature="0488698848" -->
