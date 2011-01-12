@@ -63,6 +63,14 @@
         <source>PhysicalFeatures/Architecture/trafficability</source>
         <translation>Eléments physiques/Architecture/Traficabilité</translation>
     </message>
+    <message>
+        <source>Density:</source>
+        <translation>Densité :</translation>
+    </message>
+    <message>
+        <source>Populations:</source>
+        <translation>Populations :</translation>
+    </message>
 </context>
 <context>
     <name>BypassPrototype_ABC</name>
