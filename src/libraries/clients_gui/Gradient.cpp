@@ -182,11 +182,13 @@ void Gradient::MakeGlTexture( float alpha )
 // -----------------------------------------------------------------------------
 QColor Gradient::Compute( float percent, float alpha )
 {
+    if( colors_.empty() )
+        return QColor( 0, 255, 0 );
     std::sort( colors_.begin(), colors_.end(), Less() );
     T_Color from;
     T_Color end;
     float ratio;
-    if( !colors_.empty() && percent > colors_.back().first )
+    if( percent > colors_.back().first )
     {
         from = colors_.back();
         end = colors_.back();

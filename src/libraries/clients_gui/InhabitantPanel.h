@@ -60,10 +60,10 @@ private slots:
 private:
     //! @name Member Data
     //@{
+    kernel::Controllers& controllers_;
     kernel::Options& options_;
     CheckBox* density_;
     DensityWidget* widget_;
-    bool loaded_;
     //@}
 };
 

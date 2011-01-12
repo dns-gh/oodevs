@@ -10,10 +10,10 @@
 #include "clients_gui_pch.h"
 #include "InhabitantPanel.h"
 #include "moc_InhabitantPanel.cpp"
-#include "InhabitantLayer.h"
 #include "CheckBox.h"
 #include "DensityWidget.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 
 using namespace gui;
@@ -24,8 +24,8 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controllers )
     : PreferencePanel_ABC( parent, "InhabitantPanel" )
-    , options_( controllers.options_ )
-    , loaded_ ( false )
+    , controllers_( controllers )
+    , options_    ( controllers.options_ )
 {
     QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Colors" ), this );
     QVBox* hBox = new QVBox( box );
@@ -33,7 +33,7 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controll
     connect( density_, SIGNAL( toggled( bool ) ), SLOT( OnChanged( bool ) ) );
     QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), hBox );
     widget_ = new DensityWidget( group, controllers );
-    options_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controll
 // -----------------------------------------------------------------------------
 InhabitantPanel::~InhabitantPanel()
 {
-    options_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,9 +60,6 @@ void InhabitantPanel::OnChanged( bool value )
 // -----------------------------------------------------------------------------
 void InhabitantPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
 {
-    if( name == "UrbanDensityColor" && !loaded_ )
-    {
-        loaded_ = true;
+    if( name == "UrbanDensityColor" )
         density_->setChecked( value.To< bool >() );
-    }
 }
