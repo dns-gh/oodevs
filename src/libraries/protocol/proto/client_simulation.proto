@@ -11,14 +11,14 @@ import "common.proto";
 
 package sword;
 
-/** @struct ControlDatetimeChange
+/** @struct ControlDateTimeChange
     @brief A date and/or time change request.
     
     This message is sent by a client to change the current date and/or time.
     
-    @see ControlDatetimeChangeAck 
+    @see ControlDateTimeChangeAck
 */
-message ControlDatetimeChange {
+message ControlDateTimeChange {
     /** @property date_time
         @brief The new date and/or time.
         @see DateTime
@@ -555,10 +555,10 @@ message ClientToSim {
         */
         optional ControlChangeTimeFactor        control_change_time_factor        = 4;
         /** @property control_date_time_change
-            @brief @copybrief ControlDatetimeChange
-            @see ControlDatetimeChange
+            @brief @copybrief ControlDateTimeChange
+            @see ControlDateTimeChange
         */
-        optional ControlDatetimeChange          control_date_time_change          = 5;
+        optional ControlDateTimeChange          control_date_time_change          = 5;
         /** @property control_checkpoint_save_now
             @brief @copybrief ControlCheckPointSaveNow
             @see ControlCheckPointSaveNow

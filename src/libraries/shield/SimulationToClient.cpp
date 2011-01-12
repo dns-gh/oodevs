@@ -352,7 +352,7 @@ void SimulationToClient::Convert( const sword::ControlChangeTimeFactorAck& from,
 // Name: SimulationToClient::Convert
 // Created: MCO 2010-11-10
 // -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::ControlDatetimeChangeAck& from, MsgsSimToClient::MsgControlDatetimeChangeAck* to )
+void SimulationToClient::Convert( const sword::ControlDateTimeChangeAck& from, MsgsSimToClient::MsgControlDatetimeChangeAck* to )
 {
     ConvertControlAckErrorCode( from, to );
 }
@@ -2160,8 +2160,8 @@ void SimulationToClient::Convert( const sword::ActionCreateFireOrderAck& from, M
     CONVERT_ENUM( error_code, ( sword::ActionCreateFireOrderAck::no_error, MsgsSimToClient::MsgActionCreateFireOrderAck::no_error )
                               ( sword::ActionCreateFireOrderAck::error_invalid_reporter, MsgsSimToClient::MsgActionCreateFireOrderAck::error_invalid_reporter )
                               ( sword::ActionCreateFireOrderAck::error_invalid_target, MsgsSimToClient::MsgActionCreateFireOrderAck::error_invalid_target )
-                              ( sword::ActionCreateFireOrderAck::error_invalid_munition, MsgsSimToClient::MsgActionCreateFireOrderAck::error_invalid_munition )
-                              ( sword::ActionCreateFireOrderAck::error_target_no_illuminated, MsgsSimToClient::MsgActionCreateFireOrderAck::error_target_no_illuminated ) );
+                              ( sword::ActionCreateFireOrderAck::error_invalid_ammunition, MsgsSimToClient::MsgActionCreateFireOrderAck::error_invalid_munition )
+                              ( sword::ActionCreateFireOrderAck::error_target_not_illuminated, MsgsSimToClient::MsgActionCreateFireOrderAck::error_target_no_illuminated ) );
 }
 
 namespace

@@ -53,7 +53,7 @@ public:
     static void Convert( const sword::ControlPauseAck& from, MsgsSimToClient::MsgControlPauseAck* to );
     static void Convert( const sword::ControlResumeAck& from, MsgsSimToClient::MsgControlResumeAck* to );
     static void Convert( const sword::ControlChangeTimeFactorAck& from, MsgsSimToClient::MsgControlChangeTimeFactorAck* to );
-    static void Convert( const sword::ControlDatetimeChangeAck& from, MsgsSimToClient::MsgControlDatetimeChangeAck* to );
+    static void Convert( const sword::ControlDateTimeChangeAck& from, MsgsSimToClient::MsgControlDatetimeChangeAck* to );
     static void Convert( const sword::ControlCheckPointSaveEnd& from, MsgsSimToClient::MsgControlCheckPointSaveEnd* to );
     static void Convert( const sword::FormationCreation& from, MsgsSimToClient::MsgFormationCreation* to );
     static void Convert( const sword::PartyCreation& from, MsgsSimToClient::MsgPartyCreation* to );

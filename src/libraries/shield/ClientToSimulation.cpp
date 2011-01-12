@@ -53,7 +53,7 @@ void ClientToSimulation::Convert( const Common::MsgControlResume& /*from*/, swor
 // Name: ClientToSimulation::Convert
 // Created: MCO 2010-11-25
 // -----------------------------------------------------------------------------
-void ClientToSimulation::Convert( const MsgsClientToSim::MsgControlDatetimeChange& from, sword::ControlDatetimeChange* to )
+void ClientToSimulation::Convert( const MsgsClientToSim::MsgControlDatetimeChange& from, sword::ControlDateTimeChange* to )
 {
     to->mutable_date_time()->set_data( from.date_time().data() );
 }

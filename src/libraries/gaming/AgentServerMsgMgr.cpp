@@ -285,12 +285,12 @@ void AgentServerMsgMgr::OnReceiveControlChangeTimeFactorAck( const sword::Contro
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveControlDatetimeChangeAck
+// Name: AgentServerMsgMgr::OnReceiveControlDateTimeChangeAck
 // Created: SBO 2008-04-24
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveControlDatetimeChangeAck( const sword::ControlDatetimeChangeAck& message )
+void AgentServerMsgMgr::OnReceiveControlDateTimeChangeAck( const sword::ControlDateTimeChangeAck& message )
 {
-    CheckAcknowledge( logger_, message, "ControlDatetimeChangeAck" );
+    CheckAcknowledge( logger_, message, "ControlDateTimeChangeAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1780,7 +1780,7 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
     else if( wrapper.message().has_control_change_time_factor_ack() )
         OnReceiveControlChangeTimeFactorAck( wrapper.message().control_change_time_factor_ack() );
     else if( wrapper.message().has_control_date_time_change_ack() )
-        OnReceiveControlDatetimeChangeAck( wrapper.message().control_date_time_change_ack() );
+        OnReceiveControlDateTimeChangeAck( wrapper.message().control_date_time_change_ack() );
     else if( wrapper.message().has_control_global_weather_ack() )
         OnReceiveControlMeteoGlobalAck();
     else if( wrapper.message().has_control_local_weather_ack() )

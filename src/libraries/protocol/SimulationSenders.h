@@ -24,7 +24,7 @@ namespace simulation
     GENERATE_MESSAGE( sword::ClientToSim, sword, UnitOrder                    , unit_order )
     GENERATE_MESSAGE( sword::ClientToSim, sword, AutomatOrder                 , automat_order )
     GENERATE_MESSAGE( sword::ClientToSim, sword, CrowdOrder                   , crowd_order )
-    GENERATE_MESSAGE( sword::ClientToSim, sword, ControlDatetimeChange        , control_date_time_change )
+    GENERATE_MESSAGE( sword::ClientToSim, sword, ControlDateTimeChange        , control_date_time_change )
     GENERATE_MESSAGE( sword::ClientToSim, sword, ControlCheckPointSaveNow     , control_checkpoint_save_now )
     GENERATE_MESSAGE( sword::ClientToSim, sword, ControlCheckPointSetFrequency, control_checkpoint_set_frequency )
     GENERATE_MESSAGE( sword::ClientToSim, sword, ControlEnableVisionCones     , control_toggle_vision_cones )

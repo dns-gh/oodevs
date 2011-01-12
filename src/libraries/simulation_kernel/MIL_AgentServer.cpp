@@ -502,7 +502,7 @@ void MIL_AgentServer::SetRealTime( const std::string& realTime )
     sword::DateTime datetime;
     datetime.set_data( realTime );
     NET_ASN_Tools::ReadGDH( datetime, secs );
-    client::ControlDatetimeChangeAck ack;
+    client::ControlDateTimeChangeAck ack;
     if( secs < nInitialRealTime_ )
         ack().set_error_code( sword::ControlAck::error_invalid_date_time );
     else

@@ -32,7 +32,7 @@ public:
     static void Convert( const Common::MsgControlStop& from, sword::ControlStop* to );
     static void Convert( const Common::MsgControlPause& from, sword::ControlPause* to );
     static void Convert( const Common::MsgControlResume& from, sword::ControlResume* to );
-    static void Convert( const MsgsClientToSim::MsgControlDatetimeChange& from, sword::ControlDatetimeChange* to );
+    static void Convert( const MsgsClientToSim::MsgControlDatetimeChange& from, sword::ControlDateTimeChange* to );
     static void Convert( const MsgsClientToSim::MsgControlCheckPointSaveNow& from, sword::ControlCheckPointSaveNow* to );
     static void Convert( const MsgsClientToSim::MsgControlCheckPointSetFrequency& from, sword::ControlCheckPointSetFrequency* to );
     static void Convert( const MsgsClientToSim::MsgControlEnableVisionCones& from, sword::ControlEnableVisionCones* to );

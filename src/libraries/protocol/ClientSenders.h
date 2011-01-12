@@ -33,7 +33,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlPauseAck                        , control_pause_ack                         )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlResumeAck                       , control_resume_ack                        )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlChangeTimeFactorAck             , control_change_time_factor_ack            )
-    GENERATE_MESSAGE( sword::SimToClient, sword, ControlDatetimeChangeAck               , control_date_time_change_ack              )
+    GENERATE_MESSAGE( sword::SimToClient, sword, ControlDateTimeChangeAck               , control_date_time_change_ack              )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlSendCurrentStateBegin           , control_send_current_state_begin          )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlSendCurrentStateEnd             , control_send_current_state_end            )
     GENERATE_MESSAGE( sword::SimToClient, sword, UnitChangeSuperiorAck                  , unit_change_superior_ack                  )

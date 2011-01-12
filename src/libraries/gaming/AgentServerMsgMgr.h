@@ -24,7 +24,7 @@ namespace sword
     class CrowdFlowDetection;
     class CrowdDestruction;
     class DebugPoints;
-    class ControlDatetimeChangeAck;
+    class ControlDateTimeChangeAck;
     class ControlInformation;
     class ControlProfilingInformation;
     class ControlBeginTick;
@@ -269,7 +269,7 @@ private:
     void OnReceiveControlPauseAck             ( const sword::ControlPauseAck&                   message );
     void OnReceiveControlResumeAck            ( const sword::ControlResumeAck&                  message );
     void OnReceiveControlChangeTimeFactorAck  ( const sword::ControlChangeTimeFactorAck&        message );
-    void OnReceiveControlDatetimeChangeAck    ( const sword::ControlDatetimeChangeAck&          message );
+    void OnReceiveControlDateTimeChangeAck    ( const sword::ControlDateTimeChangeAck&          message );
     void OnReceiveControlSkipToTickAck        ( const sword::ControlSkipToTickAck&           message );
     void OnReceiveControlInformation          ( const sword::ControlInformation&                message );
     void OnReceiveMsgProfilingValues          ( const sword::ControlProfilingInformation&       message );

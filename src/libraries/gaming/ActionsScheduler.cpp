@@ -111,7 +111,7 @@ void ActionsScheduler::SetDate( const QDateTime& dateTime )
     QDateTime newTime( dateTime );
     if( newTime < simulation_.GetInitialDateTime() )
         newTime = simulation_.GetInitialDateTime();
-    simulation::ControlDatetimeChange message;
+    simulation::ControlDateTimeChange message;
     message().mutable_date_time()->set_data( MakeGDHString( dateTime ).c_str() );
     message.Send( publisher_ );
 }

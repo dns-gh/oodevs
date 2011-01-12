@@ -341,11 +341,11 @@ message ActionCreateFireOrderAck {
         @todo rename to ErrorCode
     */
     enum EnumActionCreateFireOrderErrorCode {
-        no_error                    = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
-        error_invalid_reporter      = 1; //!< Operation failed because no existing reporter with the provided identifier could be found
-        error_invalid_target        = 2; //!< Operation failed because no existing target with the provided identifier could be found
-        error_invalid_munition      = 3; //!< Operation failed because no existing ammunition with the provided identifier could be found @todo rename to error_invalid_ammunition
-        error_target_no_illuminated = 4; //!< Operation failed because of the target not being illuminated @todo explain a bit more what illuminated means and how to illuminate a target @todo rename to error_target_not_illuminated
+        no_error                     = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
+        error_invalid_reporter       = 1; //!< Operation failed because no existing reporter with the provided identifier could be found
+        error_invalid_target         = 2; //!< Operation failed because no existing target with the provided identifier could be found
+        error_invalid_ammunition     = 3; //!< Operation failed because no existing ammunition with the provided identifier could be found
+        error_target_not_illuminated = 4; //!< Operation failed because of the target not being illuminated
     }
     required EnumActionCreateFireOrderErrorCode error_code = 2; //!< Reason for the failure of the request @see EnumActionCreateFireOrderErrorCode @todo change field index to 1
 }
@@ -370,6 +370,7 @@ message ChangePopulationMagicActionAck {
 /** @struct UrbanMagicActionAck
     @brief An acknowledgement message to a urban magic action request
     @see UrbanMagicAction
+    @deprecated Never used
 */
 message UrbanMagicActionAck {
     /** @enum ErrorCode
@@ -377,7 +378,7 @@ message UrbanMagicActionAck {
     */
     enum ErrorCode {
        no_error                 = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
-       error_invalid_urbanblock = 1; //!< Operation failed no existing urban block with the provided identifier could be found @todo rename to error_invalid_urban_block or error_invalid_block
+       error_invalid_urbanblock = 1; //!< Operation failed because no existing urban block with the provided identifier could be found @todo rename to error_invalid_urban_block or error_invalid_block
        error_invalid_role       = 2; //!< Operation failed because no existing motivation type with the provided identifier could be found
        error_invalid_threshold  = 3; //!< Operation failed because of an invalid threshold @todo Find how a threshold can be invalid
     }
@@ -391,7 +392,7 @@ message UrbanMagicActionAck {
 message ControlInformation {
    required int32               current_tick         = 1; //!< The current tick number
    required DateTime            initial_date_time    = 2; //!< The initial date and time @see DateTime
-   required DateTime            date_time            = 3; //!< The current date and time @see DateTime @see ControlDatetimeChange
+   required DateTime            date_time            = 3; //!< The current date and time @see DateTime @see ControlDateTimeChange
    required int32               tick_duration        = 4; //!< The duration of a simulation tick in seconds
    required int32               time_factor          = 5; //!< The simulation time multiplier @see ControlChangeTimeFactor
    required int32               checkpoint_frequency = 6; //!< The number of seconds between automatic checkpoints saves @see ControlCheckPointSetFrequency @see ControlCheckPointSaveNow
@@ -437,7 +438,7 @@ message ControlEndTick {
     @brief A control acknowledgement message
     @see ControlStop ControlPause ControlResume
     @see ControlChangeTimeFactor
-    @see ControlDatetimeChange
+    @see ControlDateTimeChange
     @todo split into different acks
 */
 message ControlAck {
@@ -447,7 +448,7 @@ message ControlAck {
     enum ErrorCode {
        no_error                  = 0; //<! Operation succeeded
        error_already_started     = 1; //<! @deprecated never used
-       error_not_started         = 2; //<! Stop request failed because the simulation is already stopped @rename to error_already_stopped
+       error_not_started         = 2; //<! Stop request failed because the simulation is already stopped
        error_not_paused          = 3; //<! Resume request failed because the simulation is running
        error_already_paused      = 4; //<! Pause request failed because the simulation is already paused
        error_invalid_time_factor = 5; //<! The time factor must be strictly positive
@@ -455,12 +456,11 @@ message ControlAck {
     }
 }
 
-/** @struct ControlDatetimeChangeAck
+/** @struct ControlDateTimeChangeAck
     @brief A data time change acknowledgement message
-    @see ControlDatetimeChange
-    @todo rename to ControlDateTimeChangeAck
+    @see ControlDateTimeChange
 */
-message ControlDatetimeChangeAck {
+message ControlDateTimeChangeAck {
     required ControlAck.ErrorCode error_code = 1; //!< Reason for the failure of the request
 }
 
@@ -543,7 +543,7 @@ message AutomatCreation {
     optional KnowledgeGroupId  knowledge_group = 6;  //!< The automat knowledge group @see KnowledgeGroupId
     optional Extension         extension       = 7;  //!< @todo What's this ?
     required string            app6symbol      = 8;  //!< The automat APP-6 symbol
-    required EnumLogisticLevel logistic_level  = 9;  //!< @todo What's this ?
+    required EnumLogisticLevel logistic_level  = 9;  //!< The automat logistic level @see EnumLogisticLevel
     optional RgbColor          color           = 10; //!< The automat color @see RgbColor
 }
 
@@ -1688,7 +1688,7 @@ message SimToClient {
         optional ControlPauseAck                      control_pause_ack                           = 23;
         optional ControlResumeAck                     control_resume_ack                          = 24;
         optional ControlChangeTimeFactorAck           control_change_time_factor_ack              = 25;
-        optional ControlDatetimeChangeAck             control_date_time_change_ack                = 26;
+        optional ControlDateTimeChangeAck             control_date_time_change_ack                = 26;
         optional ControlCheckPointSaveEnd             control_checkpoint_save_end                 = 27;
         optional FormationCreation                    formation_creation                          = 28;
         optional PartyCreation                        party_creation                              = 29;

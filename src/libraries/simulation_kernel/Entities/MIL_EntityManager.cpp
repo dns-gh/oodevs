@@ -1497,10 +1497,10 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
         if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_munition );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_ammunition );
 
         if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_target_no_illuminated );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_target_not_illuminated );
 
         // Iterations
         const sword::MissionParameter& iterations = msg.parameters().elem( 2 );
