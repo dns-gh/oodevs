@@ -242,24 +242,24 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow( const sword::MissionPar
     MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
     MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
     if( !candidateAutomate && !candidateFormation)
-        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
+        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
 
     MIL_AutomateLOG* pSupplier = candidateAutomate!=0 ? candidateAutomate->GetBrainLogistic() :
             candidateFormation->GetBrainLogistic();
 
     if( !pSupplier )
-        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
+        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
 
     PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), PHY_SupplyStockRequestContainer::eDownward );
     if(!supplyRequests.HasRequests())
-        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
+        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
 
     PHY_SupplyStockState* pSupplyState = 0;
     supplyRequests.Execute( *pSupplier, pSupplyState );
     if( pSupplyState )
         manualSupplyStates_.insert( pSupplyState );
     else
-        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
+        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
 }
 
 // -----------------------------------------------------------------------------

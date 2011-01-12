@@ -30,8 +30,6 @@ message OrderAck {
         error_unit_cannot_receive_order         = 6;  //!< Operation failed because the unit is not in a state where it can execute the order : it must be alive and disengaged (for an agent) @todo rename to error_tasker_unable_cannot_receive_order
         error_invalid_order_conduite            = 7;  //!< Operation failed because of an invalid fragmentary order identifier : valid identifiers can be found in the file "Missions.xml" @todo rename to error_invalid_fragorder
         error_invalid_order_mission             = 8;  //!< Operation failed because of an invalid mission identifier : valid identifiers can be found in the file "Missions.xml"
-        error_invalid_order_initial             = 9;  //!< @deprecated never used
-        error_invalid_order_conduite_parameters = 10; //!< @deprecated never used
         error_unit_surrendered                  = 11; //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered and be able to receive orders @todo rename to error_tasker_surrendered
         error_invalid_lima_function             = 12; //!< Operation failed because of an invalid phase line function : phase line parameters are required for some missions, each phase line is assigned one or more functions in the context of the mission @deprecated should be handled using invalid_mission_parameters
     }
@@ -41,7 +39,7 @@ message OrderAck {
     @brief An agent order execution request acknowledgement message
 
     @see UnitOrder
-    @todo rename to TaskCreationRequestAck, gather UnitOrder, AutomatOrder and CrowdOrder into one message
+    @todo gather UnitOrder, AutomatOrder and CrowdOrder into one message
 */
 message TaskCreationRequestAck {
     required Tasker             tasker     = 1; //!< Identifier of the agent, automat, crowd on which the order was issued @see Tasker
@@ -71,7 +69,7 @@ message SetAutomatModeAck {
     enum ErrorCode {
         no_error           = 0; //!< Operation succeeded @todo make error_code field optional instead
         error_invalid_unit = 1; //!< Operation failed because of an invalid automat identifier @todo rename to error_invalid_automat
-        error_not_allowed  = 2; //!< @deprecated never used
+        error_not_allowed  = 2; //!< Operation failed because the parent automat is engaged @todo rename to error_parent_automat_engaged
     }
     required AutomatId automate   = 1; //!< Identifier of the automat for which to change mode @see AutomatId
     required ErrorCode error_code = 2; //!< Reason for the failure of the automat mode changing operation @see ErrorCode
@@ -200,7 +198,7 @@ message ChangeDiplomacyAck {
     }
     required PartyId       party1     = 1; //!< Identifier of the party from which the diplomacy is defined @see PartyId
     required PartyId       party2     = 2; //!< Identifier of the party to which the diplomacy is defined @see PartyId
-    required EnumDiplomacy diplomatie = 3; //!< Definition of the diplomacy between specified parties @see EnumDiplomacy @todo rename to diplomacy
+    required EnumDiplomacy diplomacy  = 3; //!< Definition of the diplomacy between specified parties @see EnumDiplomacy
     required ErrorCode     error_code = 4; //!< Reason for the failure of the diplomacy change operation @see ErrorCode
 }
 
@@ -213,18 +211,15 @@ message HierarchyModificationAck {
         @brief Reason for the failure of a hierarchy modification operation
     */
     enum ErrorCode {
-        no_error_hierarchy                 = 0; //!< Operation succeeded @todo rename to no_error
-        error_invalid_pion                 = 1; //!< Operation failed because no existing agent with the provided identifier could be found @todo rename to error_invalid_agent
-        error_invalid_automate             = 2; //!< Operation failed because no existing automat with the provided identifier could be found @todo rename to error_invalid_automat
-        error_invalid_formation            = 3; //!< Operation failed because no existing formation with the provided identifier could be found @todo rename to error_invalid_agent
-        error_invalid_automate_tc2         = 4; //!< Operation failed because no existing logistics automat with the provided identifier could be found @todo rename to error_invalid_supply_automat
-        error_invalid_automate_maintenance = 5; //!< @deprecated never used
-        error_invalid_automate_sante       = 6; //!< deprecated never used
-        error_invalid_automate_supply      = 7; //!< @deprecated never used
-        error_unit_surrendered_hierarchy   = 8; //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered to be able to receive orders @todo rename to error_agent_surrendered
-        error_invalid_party_hierarchy      = 9; //!< Operation failed because no existing party with the provided identifier could be found @todo rename to error_invalid_party
-        error_invalid_knowledge_group      = 10; //!< Operation failed because no existing knowledge group with the provided identifier could be found @todo rename to error_invalid_knowledge_group
-        error_parties_mismatched           = 11; //!< Operation failed because an agent cannot be moved from a party to another
+        no_error_hierarchy               = 0;  //!< Operation succeeded @todo rename to no_error
+        error_invalid_agent              = 1;  //!< Operation failed because no existing agent with the provided identifier could be found
+        error_invalid_automate           = 2;  //!< Operation failed because no existing automat with the provided identifier could be found @todo rename to error_invalid_automat
+        error_invalid_formation          = 3;  //!< Operation failed because no existing formation with the provided identifier could be found
+        error_invalid_automate_tc2       = 4;  //!< Operation failed because no existing logistics automat with the provided identifier could be found @todo rename to error_invalid_supply_automat
+        error_unit_surrendered_hierarchy = 8;  //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered to be able to receive orders @todo rename to error_agent_surrendered
+        error_invalid_party_hierarchy    = 9;  //!< Operation failed because no existing party with the provided identifier could be found @todo rename to error_invalid_party
+        error_invalid_knowledge_group    = 10; //!< Operation failed because no existing knowledge group with the provided identifier could be found @todo rename to error_invalid_knowledge_group
+        error_parties_mismatched         = 11; //!< Operation failed because an agent cannot be moved from a party to another
     }
 }
 
@@ -236,7 +231,7 @@ message HierarchyModificationAck {
     @see UnitMagicAction of type "change_knowledge_group"
     @todo gather magic action acks
 */
-message AutomatChangeKnowledgeGroupAck  {
+message AutomatChangeKnowledgeGroupAck {
     required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat knowledge group change operation @see HierarchyModificationAck.ErrorCode
 }
 
@@ -248,7 +243,7 @@ message AutomatChangeKnowledgeGroupAck  {
     @see UnitMagicAction of type UnitMagiAction.Type.change_logistic_links
     @todo gather magic action acks
 */
-message ChangeLogisticLinksAck  {
+message ChangeLogisticLinksAck {
     required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat logistic links change operation @see HierarchyModificationAck.ErrorCode
 }
 
@@ -260,7 +255,7 @@ message ChangeLogisticLinksAck  {
     @see UnitMagicAction of UnitMagiAction.Type.change_automat_superior
     @todo gather magic action acks
 */
-message AutomatChangeSuperiorAck  {
+message AutomatChangeSuperiorAck {
     required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat superior change operation @see HierarchyModificationAck.ErrorCode
 }
 
@@ -272,7 +267,7 @@ message AutomatChangeSuperiorAck  {
     @see UnitMagicAction of UnitMagiAction.Type.unit_change_superior
     @todo gather magic action acks
 */
-message UnitChangeSuperiorAck  {
+message UnitChangeSuperiorAck {
     required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the agent superior change operation @see HierarchyModificationAck.ErrorCode
 }
 
@@ -284,15 +279,15 @@ message UnitChangeSuperiorAck  {
     @see UnitMagicAction of UnitMagiAction.Type.log_supply_push_flow
     @todo gather magic action acks
 */
-message LogSupplyPushFlowAck  {
+message LogSupplyPushFlowAck {
     /** @enum EnumLogSupplyPushFlow
         @brief Reason for the failure of the pushed flow creation
         @todo rename to ErrorCode
     */
     enum EnumLogSupplyPushFlow {
-        no_error_pushflow               = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
-        error_invalid_donneur_pushflow  = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found @todo rename to error_invalid_supplier
-        error_invalid_receveur_pushflow = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found @todo rename to error_invalid_receiver
+        no_error_pushflow      = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
+        error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
+        error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
     }
     optional EnumLogSupplyPushFlow ack = 1; //!< Reason for the failure of the request @see EnumLogSupplyPushFlow @todo rename to error_code
 }
@@ -305,7 +300,7 @@ message LogSupplyPushFlowAck  {
     @see UnitMagicAction of UnitMagiAction.Type.log_supply_pull_flow
     @todo gather magic action acks
 */
-message LogSupplyPullFlowAck  {
+message LogSupplyPullFlowAck {
     /** @enum EnumLogSupplyPullFlow
         @brief Reason for the failure of the pulled flow creation @todo rename to ErrorCode
     */
@@ -829,7 +824,7 @@ message UnitAttributes {
 }
 
 /** @struct UnitPathFind
-    @brief A unit path find message
+    @brief Notifies of a path change for a unit
 */
 message UnitPathFind {
    required UnitId unit = 1; //!< The unit identifier @see UnitId
@@ -837,25 +832,31 @@ message UnitPathFind {
 }
 
 /** @struct UnitDestruction
-    @brief A unit destruction message
+    @brief Notifies of the destruction a unit
 */
 message UnitDestruction {
     required UnitId unit = 1; //!< The unit identifier @see UnitId
 }
 
+/** @struct UnitEnvironmentType
+    @brief Notifies of a change in the environment for a given unit
+*/
 message UnitEnvironmentType {
-    required UnitId unit   = 1;
-    required int32  area   = 2;
-    required int32  left   = 3;
-    required int32  right  = 4;
-    required int32  linear = 5;
+    required UnitId unit   = 1; //!< The unit identifier @see UnitId
+    required int32  area   = 2; //!< @todo What's this ?
+    required int32  left   = 3; //!< @todo What's this ?
+    required int32  right  = 4; //!< @todo What's this ?
+    required int32  linear = 5; //!< @todo What's this ?
 }
 
+/** @struct UnitEnvironmentType
+    @brief Notifies of the creation of a unit knowledge
+*/
 message UnitKnowledgeCreation {
-    required UnitKnowledgeId  knowledge       = 1;
-    required KnowledgeGroupId knowledge_group = 2;
-    required UnitId           unit            = 3;
-    required UnitType         type            = 4;
+    required UnitKnowledgeId  knowledge       = 1; //!< The unit knowledge identifier @see UnitKnowledgeId
+    required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier @see KnowledgeGroupId
+    required UnitId           unit            = 3; //!< The unit identifier @see UnitId
+    required UnitType         type            = 4; //!< The unit type @see UnitType
 }
 
 enum EnumUnitIdentificationLevel {
@@ -983,7 +984,7 @@ message StartFireEffect {
     required EnumFireEffectType type        = 3;
 }
 
-message StopFireEffect  {
+message StopFireEffect {
     required FireEffectId fire_effect = 1;
 }
 
@@ -1081,7 +1082,7 @@ message ObjectCreation {
     required ObjectAttributes attributes = 6;
 }
 
-message ObjectDestruction  {
+message ObjectDestruction {
     required ObjectId object = 1;
 }
 

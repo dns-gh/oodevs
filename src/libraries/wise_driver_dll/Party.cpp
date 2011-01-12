@@ -123,13 +123,13 @@ void Party::Update( CWISEDriver& driver, const WISE_HANDLE& database, const time
             CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, identifier, L"PartyDiplomacy", diplomacy->handle_, diplomacy->attributes_ ) );
             CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, diplomacy->handle_, diplomacy->attributes_[ L"PartyFrom" ], long( message.party1().id() ), currentTime ) );
             CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, diplomacy->handle_, diplomacy->attributes_[ L"PartyTo" ], long( message.party2().id() ), currentTime ) );
-            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, diplomacy->handle_, diplomacy->attributes_[ L"Diplomacy" ], unsigned char( message.diplomatie() ), currentTime ) );
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, diplomacy->handle_, diplomacy->attributes_[ L"Diplomacy" ], unsigned char( message.diplomacy() ), currentTime ) );
             CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, diplomacy->handle_ ) );
             driver.NotifyInfoMessage( FormatMessage( identifier + L"' created." ) );
         }
         else
         {
-            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, diplomacy->handle_, diplomacy->attributes_[ L"Diplomacy" ], unsigned char( message.diplomatie() ), currentTime ) );       
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, diplomacy->handle_, diplomacy->attributes_[ L"Diplomacy" ], unsigned char( message.diplomacy() ), currentTime ) );       
             driver.NotifyInfoMessage( FormatMessage( identifier + L"' updated." ) );
         }
     }

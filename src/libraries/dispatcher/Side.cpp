@@ -58,7 +58,7 @@ Side::~Side()
 void Side::DoUpdate( const sword::ChangeDiplomacy& asnMsg )
 {
     const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.party2().id() );
-    diplomacies_[ &side ] = asnMsg.diplomatie();
+    diplomacies_[ &side ] = asnMsg.diplomacy();
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ void Side::DoUpdate( const sword::ChangeDiplomacy& asnMsg )
 void Side::DoUpdate( const sword::ChangeDiplomacyAck& asnMsg )
 {
     const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.party2().id() );
-    diplomacies_[ &side ] = asnMsg.diplomatie();
+    diplomacies_[ &side ] = asnMsg.diplomacy();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ void Side::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         client::ChangeDiplomacy asn;
         asn().mutable_party1()->set_id( GetId() );
         asn().mutable_party2()->set_id( it->first->GetId() );
-        asn().set_diplomatie( it->second );
+        asn().set_diplomacy( it->second );
         asn.Send( publisher );
     }
 }

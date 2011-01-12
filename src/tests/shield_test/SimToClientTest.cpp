@@ -93,7 +93,7 @@ BOOST_FIXTURE_TEST_CASE( change_diplomacy_ack_to_client_is_converted, ContextFix
 {
     content.mutable_change_diplomacy_ack()->mutable_party1()->set_id( 7 );
     content.mutable_change_diplomacy_ack()->mutable_party2()->set_id( 8 );
-    content.mutable_change_diplomacy_ack()->set_diplomatie( sword::friend_diplo );
+    content.mutable_change_diplomacy_ack()->set_diplomacy( sword::friend_diplo );
     content.mutable_change_diplomacy_ack()->set_error_code( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { change_diplomacy_ack { party1 { id: 7 } party2 { id: 8 } diplomatie: friend_diplo error_code: error_invalid_camp_diplomacy } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
@@ -101,35 +101,35 @@ BOOST_FIXTURE_TEST_CASE( change_diplomacy_ack_to_client_is_converted, ContextFix
 
 BOOST_FIXTURE_TEST_CASE( automat_change_knowledge_group_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_automat_change_knowledge_group_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_pion );
+    content.mutable_automat_change_knowledge_group_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_agent );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_knowledge_group_ack { error_code: error_invalid_pion } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_automat_change_logistic_links_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_pion );
+    content.mutable_automat_change_logistic_links_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_agent );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links_ack { error_code: error_invalid_pion } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( automat_change_superior_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_automat_change_superior_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_pion );
+    content.mutable_automat_change_superior_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_agent );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_superior_ack { error_code: error_invalid_pion } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( unit_change_superior_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_unit_change_superior_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_pion );
+    content.mutable_unit_change_superior_ack()->set_error_code( sword::HierarchyModificationAck::error_invalid_agent );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_change_superior_ack { error_code: error_invalid_pion } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( log_supply_push_flow_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_log_supply_push_flow_ack()->set_ack( sword::LogSupplyPushFlowAck::error_invalid_donneur_pushflow );
+    content.mutable_log_supply_push_flow_ack()->set_ack( sword::LogSupplyPushFlowAck::error_invalid_supplier );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_push_flow_ack { ack: error_invalid_donneur_pushflow } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -445,7 +445,7 @@ BOOST_FIXTURE_TEST_CASE( change_diplomacy_to_client_is_converted, ContextFixture
 {
     content.mutable_change_diplomacy()->mutable_party1()->set_id( 7 );
     content.mutable_change_diplomacy()->mutable_party2()->set_id( 8 );
-    content.mutable_change_diplomacy()->set_diplomatie( sword::friend_diplo );
+    content.mutable_change_diplomacy()->set_diplomacy( sword::friend_diplo );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { change_diplomacy { party1 { id: 7 } party2 { id: 8 } diplomatie: friend_diplo } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

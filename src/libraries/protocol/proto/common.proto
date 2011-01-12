@@ -517,7 +517,7 @@ message IntelligenceList {
 message ChangeDiplomacy {
    required PartyId       party1     = 1;
    required PartyId       party2     = 2;
-   required EnumDiplomacy diplomatie = 3;
+   required EnumDiplomacy diplomacy = 3;
 }
 
 message AtlasNature {

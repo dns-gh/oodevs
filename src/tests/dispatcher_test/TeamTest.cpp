@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
             sword::ChangeDiplomacy& message = *expected.mutable_message()->mutable_change_diplomacy();
             message.mutable_party1()->set_id( result->GetId() );
             message.mutable_party2()->set_id( side.GetId() );
-            message.set_diplomatie( sword::enemy_diplo );
+            message.set_diplomacy( sword::enemy_diplo );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
             sides.Get( 1 ).Update( message );
 
@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
                 sword::ChangeDiplomacyAck& message = *expected.mutable_message()->mutable_change_diplomacy_ack();
                 message.mutable_party1()->set_id( result->GetId() );
                 message.mutable_party2()->set_id( side.GetId() );
-                message.set_diplomatie( sword::neutral_diplo );
+                message.set_diplomacy( sword::neutral_diplo );
                 message.set_error_code( sword::ChangeDiplomacyAck::no_error_diplomacy );
                 BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
                 sides.Get( 1 ).Update( message );
@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE( Team_DiplomacyCanBeChanged )
             sword::ChangeDiplomacy& message = *expected.mutable_message()->mutable_change_diplomacy();
             message.mutable_party1()->set_id( result->GetId() );
             message.mutable_party2()->set_id( side.GetId() );
-            message.set_diplomatie( sword::neutral_diplo );
+            message.set_diplomacy( sword::neutral_diplo );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             // network serialization

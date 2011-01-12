@@ -66,7 +66,7 @@ void Diplomacies::UpdateData( const T& message )
     if( & team1.Get< Diplomacies_ABC >() != this )
         return;
     if( & team2.Get< Diplomacies_ABC >() != this )
-        diplomacies_[ & team2.Get< Diplomacies_ABC >() ] = ResolveDiplomacy( message.diplomatie() );
+        diplomacies_[ & team2.Get< Diplomacies_ABC >() ] = ResolveDiplomacy( message.diplomacy() );
     controller_.Update( *(kernel::Diplomacies_ABC*)this );
 }
 

@@ -169,7 +169,7 @@ void MessengerToClient::Convert( const sword::IntelligenceUpdate& from, MsgsMess
     if( from.has_location() )
         ConvertCoordLatLong( from.location(), to->mutable_location() );
     if( from.has_diplomacy() )
-        CONVERT_DIPLOMACY( diplomacy );
+        CONVERT_DIPLOMACY( diplomacy, diplomacy );
 }
 
 // -----------------------------------------------------------------------------

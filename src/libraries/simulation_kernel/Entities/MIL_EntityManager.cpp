@@ -1167,7 +1167,7 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
     client::ChangeDiplomacyAck ack;
     ack().mutable_party1()->set_id( message.parameters().elem( 0 ).value().Get(0).identifier() );
     ack().mutable_party2()->set_id( message.parameters().elem( 1 ).value().Get(0).identifier() );
-    ack().set_diplomatie( ( sword::EnumDiplomacy ) message.parameters().elem( 2 ).value().Get(0).enumeration() );
+    ack().set_diplomacy( ( sword::EnumDiplomacy ) message.parameters().elem( 2 ).value().Get(0).enumeration() );
     ack().set_error_code( sword::ChangeDiplomacyAck::no_error_diplomacy );
     try
     {
@@ -1312,7 +1312,7 @@ void MIL_EntityManager::ProcessUnitChangeSuperior( const sword::UnitMagicAction&
     {
         MIL_AgentPion* pPion = ( message.tasker().has_unit() && message.tasker().unit().has_id() ) ? FindAgentPion( message.tasker().unit().id() ) : 0;
         if( !pPion )
-            throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_pion );
+            throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_agent );
         pPion->OnReceiveChangeSuperior( *this, message );
     }
     catch( NET_AsnException< sword::HierarchyModificationAck_ErrorCode >& e )
@@ -1362,14 +1362,14 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const sword::UnitMagicActi
 void MIL_EntityManager::ProcessLogSupplyPushFlow( const sword::UnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyPushFlowAck ack;
-    ack().set_ack( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_no_error_pushflow );
+    ack().set_ack( sword::LogSupplyPushFlowAck::no_error_pushflow );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
         if( pAutomate )
             pAutomate->OnReceiveLogSupplyPushFlow( message.parameters() );
         else
-            throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
+            throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
     }
     catch( NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >& e )
     {

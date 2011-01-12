@@ -1152,7 +1152,7 @@ void MIL_Automate::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, c
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveLogSupplyChangeQuotas( const sword::MissionParameters& /*msg*/ )
 {
-    throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_receveur_pushflow );
+    throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
 }
 
 // -----------------------------------------------------------------------------

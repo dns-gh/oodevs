@@ -657,7 +657,7 @@ void MIL_Army::SendFullState() const
         client::ChangeDiplomacy asn;
         asn().mutable_party1()->set_id( nID_ );
         asn().mutable_party2()->set_id( it->first->GetID() );
-        asn().set_diplomatie( sword::EnumDiplomacy( it->second ) );
+        asn().set_diplomacy( sword::EnumDiplomacy( it->second ) );
         asn.Send( NET_Publisher_ABC::Publisher() );
     }
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )

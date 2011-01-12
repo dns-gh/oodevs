@@ -47,8 +47,6 @@ namespace
                                   ( sword::OrderAck::error_unit_cannot_receive_order, MsgsSimToClient::OrderAck::error_unit_cannot_receive_order )
                                   ( sword::OrderAck::error_invalid_order_conduite, MsgsSimToClient::OrderAck::error_invalid_order_conduite )
                                   ( sword::OrderAck::error_invalid_order_mission, MsgsSimToClient::OrderAck::error_invalid_order_mission )
-                                  ( sword::OrderAck::error_invalid_order_initial, MsgsSimToClient::OrderAck::error_invalid_order_initial )
-                                  ( sword::OrderAck::error_invalid_order_conduite_parameters, MsgsSimToClient::OrderAck::error_invalid_order_conduite_parameters )
                                   ( sword::OrderAck::error_unit_surrendered, MsgsSimToClient::OrderAck::error_unit_surrendered )
                                   ( sword::OrderAck::error_invalid_lima_function, MsgsSimToClient::OrderAck::error_invalid_lima_function ) );
     }
@@ -171,7 +169,7 @@ void SimulationToClient::Convert( const sword::ChangeDiplomacyAck& from, MsgsSim
 {
     CONVERT_ID( party1 );
     CONVERT_ID( party2 );
-    CONVERT_DIPLOMACY( diplomatie );
+    CONVERT_DIPLOMACY( diplomacy, diplomatie );
     CONVERT_ENUM( error_code, ( sword::ChangeDiplomacyAck::no_error_diplomacy, MsgsSimToClient::MsgChangeDiplomacyAck::no_error_diplomacy )
                               ( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy, MsgsSimToClient::MsgChangeDiplomacyAck::error_invalid_camp_diplomacy ) );
 }
@@ -182,13 +180,10 @@ namespace
     void ConvertHierarchyModificationAckErrorCode( const From& from, To* to )
     {
         CONVERT_ENUM( error_code, ( sword::HierarchyModificationAck::no_error_hierarchy, MsgsSimToClient::HierarchyModificationAck::no_error_hierarchy )
-                                  ( sword::HierarchyModificationAck::error_invalid_pion, MsgsSimToClient::HierarchyModificationAck::error_invalid_pion )
+                                  ( sword::HierarchyModificationAck::error_invalid_agent, MsgsSimToClient::HierarchyModificationAck::error_invalid_pion )
                                   ( sword::HierarchyModificationAck::error_invalid_automate, MsgsSimToClient::HierarchyModificationAck::error_invalid_automate )
                                   ( sword::HierarchyModificationAck::error_invalid_formation, MsgsSimToClient::HierarchyModificationAck::error_invalid_formation )
                                   ( sword::HierarchyModificationAck::error_invalid_automate_tc2, MsgsSimToClient::HierarchyModificationAck::error_invalid_automate_tc2 )
-                                  ( sword::HierarchyModificationAck::error_invalid_automate_maintenance, MsgsSimToClient::HierarchyModificationAck::error_invalid_automate_maintenance )
-                                  ( sword::HierarchyModificationAck::error_invalid_automate_sante, MsgsSimToClient::HierarchyModificationAck::error_invalid_automate_sante )
-                                  ( sword::HierarchyModificationAck::error_invalid_automate_supply, MsgsSimToClient::HierarchyModificationAck::error_invalid_automate_supply )
                                   ( sword::HierarchyModificationAck::error_unit_surrendered_hierarchy, MsgsSimToClient::HierarchyModificationAck::error_unit_surrendered_hierarchy )
                                   ( sword::HierarchyModificationAck::error_invalid_party_hierarchy, MsgsSimToClient::HierarchyModificationAck::error_invalid_party_hierarchy )
                                   ( sword::HierarchyModificationAck::error_invalid_knowledge_group, MsgsSimToClient::HierarchyModificationAck::error_invalid_knowledge_group )
@@ -203,8 +198,8 @@ namespace
 void SimulationToClient::Convert( const sword::LogSupplyPushFlowAck& from, MsgsSimToClient::MsgLogSupplyPushFlowAck* to )
 {
     CONVERT_ENUM( ack, ( sword::LogSupplyPushFlowAck::no_error_pushflow, MsgsSimToClient::MsgLogSupplyPushFlowAck::no_error_pushflow )
-                       ( sword::LogSupplyPushFlowAck::error_invalid_donneur_pushflow, MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_donneur_pushflow )
-                       ( sword::LogSupplyPushFlowAck::error_invalid_receveur_pushflow, MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_receveur_pushflow ) );
+                       ( sword::LogSupplyPushFlowAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_donneur_pushflow )
+                       ( sword::LogSupplyPushFlowAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_receveur_pushflow ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -438,7 +433,7 @@ void SimulationToClient::Convert( const sword::PartyCreation& from, MsgsSimToCli
 {
     CONVERT_ID( party );
     CONVERT( name );
-    CONVERT_DIPLOMACY( type );
+    CONVERT_DIPLOMACY( type, type );
     if( from.has_extension() )
         ConvertExtension( from.extension(), to->mutable_extension() );
     if( from.has_color() )
@@ -703,7 +698,7 @@ void SimulationToClient::Convert( const sword::ChangeDiplomacy& from, Common::Ms
 {
     CONVERT_ID( party1 );
     CONVERT_ID( party2 );
-    CONVERT_DIPLOMACY( diplomatie );
+    CONVERT_DIPLOMACY( diplomacy, diplomatie );
 }
 
 // -----------------------------------------------------------------------------
