@@ -353,6 +353,7 @@ eRC_TireParCampEnnemi = 334
 eRC_DroneDoitEtreMisEnOeuvre = 335
 eRC_ReussiteRenforcementPion = 336
 eRC_EchecRenforcementPion = 337
+eRC_LeaveLima = 338
 eNbr = 338
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float

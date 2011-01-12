@@ -473,6 +473,24 @@
   <report category="operational" id="333" message="enemy fire"/>
   <report category="operational" id="334" message="sustaining enemy fire"/>
   <report category="operational" id="335" message="UAV must be deployed first"/>
+  <report category="operational" id="337" message="Reinforcement impossible: %1 sur %2">
+    <parameter type="Agent"/>
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="338" message="Coordination end on phase line. Type: %1">
+    <parameter type="Enumeration">
+      <value id="0" name="departure line"/>
+      <value id="1" name="change of posture line"/>
+      <value id="2" name="coordination line"/>
+      <value id="3" name="deny line"/>
+      <value id="4" name="objective line"/>
+      <value id="5" name="blocking line"/>
+      <value id="6" name="rearward passage line"/>
+      <value id="7" name="mission: start line"/>
+      <value id="8" name="mission: complete line"/>
+      <value id="9" name="checkpoint line"/>
+    </parameter>
+  </report>
   <report category="operational" id="3015" message="need technical backup"/>
   <report category="operational" id="3016" message="need %1 firetrucks backup to fight fire of class %2">
     <parameter type="Integer"/>

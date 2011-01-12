@@ -473,6 +473,28 @@
   <report category="operational" id="333" message="tir sur camp ennemi"/>
   <report category="operational" id="334" message="tire par camp ennemi"/>
   <report category="operational" id="335" message="le drone doit être mis en oeuvre"/>
+  <report category="operational" id="336" message="reussite renforcement : %1 sur %2">
+    <parameter type="Agent"/>
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="337" message="echec renforcement : %1 sur %2">
+    <parameter type="Agent"/>
+    <parameter type="Agent"/>
+  </report>
+  <report category="operational" id="338" message="fin de coordination sur lima de type %1">
+    <parameter type="Enumeration">
+      <value id="0" name="ligne_debouche"/>
+      <value id="1" name="ligne_changement_attitude"/>
+      <value id="2" name="ligne_coordination"/>
+      <value id="3" name="ligne_interdire"/>
+      <value id="4" name="ligne_objectif"/>
+      <value id="5" name="ligne_coup_arret"/>
+      <value id="6" name="ligne_recueil"/>
+      <value id="7" name="ligne_debut_mission"/>
+      <value id="8" name="ligne_fin_mission"/>
+      <value id="9" name="ligne_identification_accueil"/>
+    </parameter>
+  </report>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>

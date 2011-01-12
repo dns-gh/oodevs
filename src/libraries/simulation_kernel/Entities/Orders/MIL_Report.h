@@ -465,6 +465,7 @@ public:
         eRC_DroneDoitEtreMisEnOeuvre,
         eRC_ReussiteRenforcementPion,
         eRC_EchecRenforcementPion,
+        eRC_LeaveLima,
         eLast
     };
     //@}
