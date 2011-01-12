@@ -143,7 +143,7 @@ BOOST_FIXTURE_TEST_CASE( log_supply_pull_flow_ack_to_client_is_converted, Contex
 
 BOOST_FIXTURE_TEST_CASE( log_supply_change_quotas_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_log_supply_change_quotas_ack()->set_ack( sword::LogSupplyChangeQuotasAck::error_invalid_donneur_quotas );
+    content.mutable_log_supply_change_quotas_ack()->set_ack( sword::LogSupplyChangeQuotasAck::error_invalid_supplier );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_change_quotas_ack { ack: error_invalid_donneur_quotas } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

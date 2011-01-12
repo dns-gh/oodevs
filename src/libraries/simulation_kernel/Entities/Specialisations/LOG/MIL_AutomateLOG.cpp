@@ -624,7 +624,7 @@ void MIL_AutomateLOG::OnReceiveLogSupplyChangeQuotas( const sword::MissionParame
            GetLogisticAutomate( oid_donneur ) != pNominalSuperior_)
          )
     {
-        throw NET_AsnException< LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( LogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_donneur_quotas );
+        throw NET_AsnException< LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( LogSupplyChangeQuotasAck::error_invalid_supplier );
     }
 
     if ( GetLogisticAutomate( oid_donneur ) == pCurrentSuperior_ )

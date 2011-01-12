@@ -324,9 +324,9 @@ message LogSupplyChangeQuotasAck {
         @todo rename to ErrorCode
     */
     enum LogSupplyChangeQuotas {
-        no_error_quotas               = 0; //!< Operation succeeded @todo rename to no_error @todo As error codes are optional, no_error should not exist
-        error_invalid_donneur_quotas  = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found @todo rename to error_invalid_supplier
-        error_invalid_receveur_quotas = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found @todo rename to error_invalid_receiver
+        no_error_quotas        = 0; //!< Operation succeeded @todo rename to no_error @todo As error codes are optional, no_error should not exist
+        error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
+        error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
     }
     optional LogSupplyChangeQuotas ack = 1; //!< Reason for the failure of the request @see LogSupplyChangeQuotas @todo rename to error_code
 }

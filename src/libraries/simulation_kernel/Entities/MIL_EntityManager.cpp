@@ -1336,16 +1336,16 @@ void MIL_EntityManager::ProcessUnitChangeSuperior( const sword::UnitMagicAction&
 void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const sword::UnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyChangeQuotasAck ack;
-    ack().set_ack( sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas_no_error_quotas );
+    ack().set_ack( sword::LogSupplyChangeQuotasAck::no_error_quotas );
     try
     {
         MIL_Automate* pAutomat = TaskerToAutomat( *this, message.tasker() );
         MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
         if( !pAutomat && !pFormation )
-            throw NET_AsnException< sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_receveur_quotas );
+            throw NET_AsnException< sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( sword::LogSupplyChangeQuotasAck::error_invalid_receiver );
         MIL_AutomateLOG* pReceiver = pAutomat ? pAutomat->GetBrainLogistic() : pFormation->GetBrainLogistic();
         if( !pReceiver )
-            throw NET_AsnException< sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_receveur_quotas );
+            throw NET_AsnException< sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( sword::LogSupplyChangeQuotasAck::error_invalid_receiver );
         pReceiver->OnReceiveLogSupplyChangeQuotas( message.parameters() );
     }
     catch( NET_AsnException< sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >& e )
@@ -1385,14 +1385,14 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const sword::UnitMagicAction& 
 void MIL_EntityManager::ProcessLogSupplyPullFlow( const sword::UnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyPullFlowAck ack;
-    ack().set_ack( sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow_no_error_pullflow );
+    ack().set_ack( sword::LogSupplyPullFlowAck::no_error_pullflow );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
         if( pAutomate )
             pAutomate->OnReceiveLogSupplyPullFlow( message.parameters() );
         else
-            throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow_error_invalid_receiver_pullflow );
+            throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck::error_invalid_receiver_pullflow );
     }
     catch( NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >& e )
     {
@@ -1488,7 +1488,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
 
         boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( target.value().Get(0).identifier() );
         if( !targetKn )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_target );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
 
         // Ammo
         const sword::MissionParameter& ammo = msg.parameters().elem( 1 );
@@ -1497,10 +1497,10 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
         if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_munition );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_munition );
 
         if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_target_no_illuminated );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_target_no_illuminated );
 
         // Iterations
         const sword::MissionParameter& iterations = msg.parameters().elem( 2 );
@@ -1514,7 +1514,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
 
         pDotationCategory->ApplyIndirectFireEffect( *reporter, targetKn->GetAgentKnown(), ammos , fireResult );
     }
-    catch( NET_AsnException< sword::ActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >& e )
+    catch( NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }

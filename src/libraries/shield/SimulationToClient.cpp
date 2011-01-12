@@ -218,8 +218,8 @@ void SimulationToClient::Convert( const sword::LogSupplyPullFlowAck& from, MsgsS
 void SimulationToClient::Convert( const sword::LogSupplyChangeQuotasAck& from, MsgsSimToClient::MsgLogSupplyChangeQuotasAck* to )
 {
     CONVERT_ENUM( ack, ( sword::LogSupplyChangeQuotasAck::no_error_quotas, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::no_error_quotas )
-                          ( sword::LogSupplyChangeQuotasAck::error_invalid_donneur_quotas, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_donneur_quotas )
-                          ( sword::LogSupplyChangeQuotasAck::error_invalid_receveur_quotas, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas ) );
+                       ( sword::LogSupplyChangeQuotasAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_donneur_quotas )
+                       ( sword::LogSupplyChangeQuotasAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas ) );
 }
 
 // -----------------------------------------------------------------------------
