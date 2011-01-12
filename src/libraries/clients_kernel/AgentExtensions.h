@@ -17,8 +17,8 @@
 class extension : public kernel::Extension_ABC, public kernel::Displayable_ABC  \
 {                                                                               \
 public:                                                                         \
-             extension() {};                                                    \
-    virtual ~extension() {};                                                    \
+             extension() {}                                                     \
+    virtual ~extension() {}                                                     \
 };
 
 namespace kernel

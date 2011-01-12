@@ -308,7 +308,7 @@ float Attributes::ComputePostureFactor( const std::vector< float >& factors ) co
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::map< std::string, std::string >& Attributes::GetExtensions
+// Name: Attributes::GetExtensions
 // Created: JSR 2010-10-11
 // -----------------------------------------------------------------------------
 const std::map< std::string, std::string >& Attributes::GetExtensions() const

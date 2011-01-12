@@ -292,9 +292,6 @@ void MIL_PopulationFlow::NotifyMovingOnPathPoint( const DEC_PathPoint& point )
     flowShape_.insert( itTmp, point.GetPos() );
 }
 
-#pragma warning( push )
-#pragma warning( disable : 4127 ) // conditional expression is constant
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::UpdateTailPosition
 // Created: NLD 2005-10-04
@@ -302,7 +299,7 @@ void MIL_PopulationFlow::NotifyMovingOnPathPoint( const DEC_PathPoint& point )
 void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
 {
     bFlowShapeUpdated_ = true;
-    /////// $$ A NETTOYER
+    // $$$$ A NETTOYER
     MT_Vector2D vCur = GetTailPosition();
     IT_PointList itNext = flowShape_.begin();
     ++itNext;
@@ -312,7 +309,9 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
     double rDirLength = vDir.Magnitude();
     if( rDirLength )
         vDir /= rDirLength;
+#pragma warning( push, 0 )
     while( 1 )
+#pragma warning( pop )
     {
         if( rDist < rDirLength )
         {
@@ -346,8 +345,6 @@ void MIL_PopulationFlow::UpdateTailPosition( const double rWalkedDistance )
         }
     }
 }
-
-#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::ManageSplit
@@ -601,8 +598,6 @@ void MIL_PopulationFlow::SendFullState( MIL_Population::sPeopleCounter& peopleCo
     client::CrowdFlowUpdate asnMsg;
     asnMsg().mutable_flow()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
-//    if( SerializeCurrentPath( asnMsg().itineraire ) )
-//        asnMsg()//TOTODEL1;
     NET_ASN_Tools::WritePath( flowShape_, *asnMsg().mutable_parts() );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     asnMsg().set_attitude( GetAttitude().GetAsnID() );
@@ -623,8 +618,6 @@ void MIL_PopulationFlow::SendChangedState( MIL_Population::sPeopleCounter& peopl
     client::CrowdFlowUpdate asnMsg;
     asnMsg().mutable_flow()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
-//    if( bPathUpdated_ && SerializeCurrentPath( asnMsg().itineraire ) )
-//        asnMsg()//TOTODEL1;
     if( bFlowShapeUpdated_ )
         NET_ASN_Tools::WritePath( flowShape_, *asnMsg().mutable_parts() );
     if( HasAttitudeChanged() )
