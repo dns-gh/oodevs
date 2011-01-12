@@ -881,6 +881,9 @@ void GlWidget::DrawIcon( const char** xpm, const Point2f& where, float size /*= 
     size *= factor;
     glPushMatrix();
     glPushAttrib( GL_TEXTURE_BIT );
+        glEnable( GL_TEXTURE_2D );
+        glDisable( GL_TEXTURE_GEN_S );
+        glDisable( GL_TEXTURE_GEN_T );
         Base().BindIcon( xpm );
         const Point2f iconTranslation = iconLayout_.IconLocation( xpm );
         glTranslatef( where.X()+ iconTranslation.X()*factor, where.Y() + iconTranslation.Y()*factor, 0.f );
