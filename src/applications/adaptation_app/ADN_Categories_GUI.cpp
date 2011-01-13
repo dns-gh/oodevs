@@ -162,7 +162,7 @@ void ADN_Categories_GUI::Build()
 // -----------------------------------------------------------------------------
 void ADN_Categories_GUI::OnTypeChanged( int index )
 {
-    if( index == eProtectionType_Human )
+    if( pComboType_->GetEnumIndexFromGUI( index ) == eProtectionType_Human )
     {
         pArmorBreakdownGroup_->hide();
         pAttritionEffectGroup_->hide();

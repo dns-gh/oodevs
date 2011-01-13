@@ -121,7 +121,6 @@ void ADN_ComboBox::ItemSelected( int ndx )
         ndx = vItemsEnum_.at( ndx );
     fromView_ = false;
     pCurData_ = static_cast< ADN_Connector_Combo_ABC* >( pConnector_ )->SetNdxChanged( ndx );
-    emit Activated( ndx );
     ConnectItem();
 }
 

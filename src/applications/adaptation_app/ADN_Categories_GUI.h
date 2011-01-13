@@ -20,6 +20,7 @@ class ADN_ListView_Categories_Armor;
 class ADN_ListView_Categories_Size;
 class ADN_ListView_Categories_DotationNature;
 class ADN_Categories_AttritionEffect_Table;
+class ADN_ComboBox;
 
 // =============================================================================
 /** @class  ADN_Categories_GUI
@@ -72,11 +73,11 @@ private:
     ADN_ListView_Categories_Armor*          pListArmor_;
     ADN_ListView_Categories_Size*           pListSize_;
     ADN_ListView_Categories_DotationNature* pListDotationNature_;
-    ADN_Categories_AttritionEffect_Table* pAttritionEffects_;
+    ADN_Categories_AttritionEffect_Table*   pAttritionEffects_;
 
-    QComboBox*  pComboType_;
-    QGroupBox*  pArmorBreakdownGroup_;
-    QGroupBox*  pAttritionEffectGroup_;
+    ADN_ComboBox* pComboType_;
+    QGroupBox*    pArmorBreakdownGroup_;
+    QGroupBox*    pAttritionEffectGroup_;
 };
 
 

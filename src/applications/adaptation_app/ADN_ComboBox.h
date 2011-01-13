@@ -57,11 +57,9 @@ public:
     int                         FindNdx( const ADN_ComboBoxItem* item ) const;
     int                         FindNdx( void * data) const;
     ADN_ComboBoxItem*           GetItem( int ndx );
+    int                         GetEnumIndexFromGUI( int index ) const;
 
     void setEnabled( bool b );
-
-signals:
-    void Activated( int nIndex );
 
 protected:
     void*                       pCurData_;
@@ -102,5 +100,14 @@ void ADN_ComboBox::SetItemConnectors(const T_ConnectorVector& v)
     vItemConnectors_ = v;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_ComboBox::GetEnumIndexFromGUI
+// Created: ABR 2011-01-13
+// -----------------------------------------------------------------------------
+inline
+int ADN_ComboBox::GetEnumIndexFromGUI( int index ) const
+{
+    return ( vItemsEnum_.empty() ) ? index : vItemsEnum_.at( index );
+}
 
 #endif // __ADN_ComboBox_h_
