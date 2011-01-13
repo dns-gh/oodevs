@@ -1167,6 +1167,40 @@ namespace
         CONVERT( emergency_count );
     }
     template< typename From, typename To >
+    void ConvertPreIgnition( const From& from, To* to )
+    {
+        CONVERT( ignition_energy );
+        CONVERT( ignition_threshold );
+    }
+    template< typename From, typename To >
+    void ConvertCombustion( const From& from, To* to )
+    {
+        CONVERT( current_heat );
+        CONVERT( combustion_energy );
+        CONVERT( max_combustion_energy );
+    }
+    template< typename From, typename To >
+    void ConvertDecline( const From& from, To* to )
+    {
+        CONVERT( current_heat );
+    }
+    template< typename From, typename To >
+    void ConvertBurnSurfaceBurningCell( const From& from, To* to )
+    {
+        CONVERT( origin_x );
+        CONVERT( origin_y );
+        CONVERT_ENUM( phase, ( sword::pre_ignition, Common::pre_ignition )
+            ( sword::combustion, Common::combustion )
+            ( sword::decline, Common::decline )
+            ( sword::extinguished, Common::extinguished ));
+        if( from.has_pre_ignition() )
+            ConvertPreIgnition( from.pre_ignition(), to->mutable_pre_ignition() );
+        if( from.has_combustion() )
+            ConvertCombustion( from.combustion(), to->mutable_combustion() );
+        if( from.has_decline() )
+            ConvertDecline( from.decline(), to->mutable_decline() );
+    }    
+    template< typename From, typename To >
     void ConvertStockResource( const From& from, To* to )
     {
         CONVERT_ID( resource );
@@ -1240,6 +1274,11 @@ namespace
         {
             to->mutable_burn()->set_current_heat( from.burn().current_heat() );
             to->mutable_burn()->set_combustion_energy( from.burn().combustion_energy() );
+        }
+        if( from.has_burn_surface() )
+        {
+            to->mutable_burn_surface()->set_cell_size( from.burn_surface().cell_size() );
+            CONVERT_LIST( burn_surface, burning_cells, ConvertBurnSurfaceBurningCell );
         }
         if( from.has_medical_treatment() )
         {

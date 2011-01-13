@@ -483,7 +483,7 @@ void MIL_BurningCells::SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& 
 					continue;
 				cell.bUpdated_ = false;
 			}
-			sword::ObjectAttributeBurnSurface::BurningCell& asnCell = *asnBurnSurface.add_burningcells();
+			sword::ObjectAttributeBurnSurface::BurningCell& asnCell = *asnBurnSurface.add_burning_cells();
 			asnCell.set_origin_x( cell.origin_.X() );
 			asnCell.set_origin_y( cell.origin_.Y() );
 			asnCell.set_phase( cell.phase_ );

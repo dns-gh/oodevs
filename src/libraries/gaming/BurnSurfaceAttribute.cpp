@@ -52,8 +52,8 @@ void BurnSurfaceAttribute::UpdateData( const T& message )
     if( message.has_burn_surface()  )
     {
 		cellSize_ = message.burn_surface().cell_size();
-		for( int i=0, nbCells = message.burn_surface().burningcells_size(); i<nbCells; ++i )
-			UpdateBurningCellData( message.burn_surface().burningcells( i ) );
+		for( int i=0, nbCells = message.burn_surface().burning_cells_size(); i<nbCells; ++i )
+			UpdateBurningCellData( message.burn_surface().burning_cells( i ) );
         controller_.Update( *(BurnSurfaceAttribute_ABC*)this );
     }
 }

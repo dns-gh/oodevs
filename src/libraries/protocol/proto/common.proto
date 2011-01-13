@@ -830,7 +830,7 @@ message ObjectAttributeBurnSurface {
 		optional Decline decline = 6;
 	}
 	required int32 cell_size = 1;
-	repeated BurningCell burningCells = 2;
+	repeated BurningCell burning_cells = 2;
 }
 
 message MedicalTreatmentBedCapacity {

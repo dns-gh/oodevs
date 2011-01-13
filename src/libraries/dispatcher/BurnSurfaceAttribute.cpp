@@ -52,7 +52,7 @@ void BurnSurfaceAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 	for( BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.begin(); it != burningCellsByCoordinates_.end(); ++it )
 	{
 		const BurningCell& cell = it->second;
-		sword::ObjectAttributeBurnSurface::BurningCell& asnCell = *asnMsg.mutable_burn_surface()->add_burningcells();
+		sword::ObjectAttributeBurnSurface::BurningCell& asnCell = *asnMsg.mutable_burn_surface()->add_burning_cells();
 		asnCell.set_origin_x( it->first.X() );
 		asnCell.set_origin_y( it->first.Y() );
         asnCell.set_phase( it->second.phase_ );
@@ -86,9 +86,9 @@ void BurnSurfaceAttribute::DoUpdate( const sword::ObjectAttributes& asnMsg )
     if( asnMsg.has_burn_surface() )
     {
 		cellSize_ = asnMsg.burn_surface().cell_size();
-		for( int i=0, nbCells = asnMsg.burn_surface().burningcells_size(); i<nbCells; ++i )
+		for( int i=0, nbCells = asnMsg.burn_surface().burning_cells_size(); i<nbCells; ++i )
 		{
-			const sword::ObjectAttributeBurnSurface::BurningCell& asnCell = asnMsg.burn_surface().burningcells( i );
+			const sword::ObjectAttributeBurnSurface::BurningCell& asnCell = asnMsg.burn_surface().burning_cells( i );
 			BurningCell& cell = burningCellsByCoordinates_[ BurningCellOrigin( asnCell.origin_x(), asnCell.origin_y() ) ];
 			cell.phase_ = asnCell.phase();
 			if( asnCell.has_pre_ignition() )
