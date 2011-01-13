@@ -45,8 +45,8 @@ AgentLogMedical::~AgentLogMedical()
 // -----------------------------------------------------------------------------
 void AgentLogMedical::Update( const sword::LogMedicalState& asnMsg )
 {
-    if( asnMsg.has_chaine_activee()  )
-        bSystemEnabled_ = asnMsg.chaine_activee() != 0;
+    if( asnMsg.has_chain()  )
+        bSystemEnabled_ = asnMsg.chain() != 0;
 
     if( asnMsg.has_disponibilites_ambulances_ramassage()  )
     {
@@ -62,11 +62,11 @@ void AgentLogMedical::Update( const sword::LogMedicalState& asnMsg )
             evacuationAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.disponibilites_ambulances_releve().elem( i ) ) );
     }
 
-    if( asnMsg.has_disponibilites_medecins()  )
+    if( asnMsg.has_doctors()  )
     {
         doctorsAvailability_.clear();
-        for( int i = 0; i < asnMsg.disponibilites_medecins().elem_size(); ++i )
-            doctorsAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.disponibilites_medecins().elem( i ) ) );
+        for( int i = 0; i < asnMsg.doctors().elem_size(); ++i )
+            doctorsAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.doctors().elem( i ) ) );
     }
 
     if( asnMsg.has_tactical_priorities()  )
@@ -76,11 +76,11 @@ void AgentLogMedical::Update( const sword::LogMedicalState& asnMsg )
             tacticalPriorities_.push_back( &model_.Automats().Get( asnMsg.tactical_priorities().elem( i ).id() ) );
     }
 
-    if( asnMsg.has_priorites()  )
+    if( asnMsg.has_priorities()  )
     {
         priorities_.clear();
-        for( int i = 0; i < asnMsg.priorites().elem_size(); ++i )
-            priorities_.push_back( asnMsg.priorites().elem( i ) );
+        for( int i = 0; i < asnMsg.priorities().elem_size(); ++i )
+            priorities_.push_back( asnMsg.priorities().elem( i ) );
     }
 }
 
@@ -92,7 +92,7 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalState asn;
     asn().mutable_unit()->set_id( agent_.GetId() );
-    asn().set_chaine_activee ( bSystemEnabled_ );
+    asn().set_chain ( bSystemEnabled_ );
 
     {
         for( std::vector< MedicalEquipmentAvailability >::const_iterator it = evacuationAmbulancesAvailability_.begin(); it != evacuationAmbulancesAvailability_.end(); ++it )
@@ -104,7 +104,7 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
     }
     {
         for( std::vector< MedicalEquipmentAvailability >::const_iterator it = doctorsAvailability_.begin(); it != doctorsAvailability_.end(); ++it )
-            it->Send( *asn().mutable_disponibilites_medecins()->add_elem() );
+            it->Send( *asn().mutable_doctors()->add_elem() );
     }
     {
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it )
@@ -112,7 +112,7 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
     }
     {
         for( std::vector< sword::EnumHumanWound >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
-            asn().mutable_priorites()->add_elem( *it );
+            asn().mutable_priorities()->add_elem( *it );
     }
 
     asn.Send( publisher );
@@ -121,10 +121,10 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
         asn().mutable_disponibilites_ambulances_releve()->Clear();
     if( asn().disponibilites_ambulances_ramassage().elem_size() > 0 )
         asn().mutable_disponibilites_ambulances_ramassage()->Clear();
-    if( asn().disponibilites_medecins().elem_size() > 0 )
-        asn().mutable_disponibilites_medecins()->Clear();
-    if( asn().priorites().elem_size() > 0 )
-        asn().mutable_priorites()->Clear();
+    if( asn().doctors().elem_size() > 0 )
+        asn().mutable_doctors()->Clear();
+    if( asn().priorities().elem_size() > 0 )
+        asn().mutable_priorities()->Clear();
     if( asn().tactical_priorities().elem_size() > 0 )
         asn().mutable_tactical_priorities()->Clear();
 }

@@ -25,7 +25,7 @@ LogConsignMedical::LogConsignMedical( const Model& model, const sword::LogMedica
     : SimpleEntity< >   ( msg.request().id() )
     , model_            ( model )
     , agent_            ( model.Agents().Get( msg.unit().id() ) )
-    , nTickCreation_    ( msg.tick_creation() )
+    , nTickCreation_    ( msg.tick() )
     , pTreatingAgent_   ( 0 )
     , nRank_            ( msg.rank() )
     , nWound_           ( msg.wound() )
@@ -76,7 +76,7 @@ void LogConsignMedical::SendCreation( ClientPublisher_ABC& publisher ) const
 
     asn().mutable_request()->set_id( GetId() );
     asn().mutable_unit()->set_id( agent_.GetId() );
-    asn().set_tick_creation( nTickCreation_ );
+    asn().set_tick( nTickCreation_ );
     asn().set_rank( nRank_ );
     asn().set_wound( nWound_ );
     asn().set_mental_wound( bMentalDiseased_ );

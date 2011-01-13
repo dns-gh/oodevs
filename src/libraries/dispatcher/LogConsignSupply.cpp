@@ -27,7 +27,7 @@ LogConsignSupply::LogConsignSupply( const Model& model, const sword::LogSupplyHa
     : SimpleEntity< >   ( msg.request().id() )
     , model_            ( model )
     , automat_          ( model.Automats().Get( msg.consumer().id() ) )
-    , nTickCreation_    ( msg.tick_creation() )
+    , nTickCreation_    ( msg.tick() )
     , pTreatingEntity_  ( 0 )
     , pConvoyingEntity_ ( 0 )
     , pConvoy_          ( 0 )
@@ -83,7 +83,7 @@ void LogConsignSupply::SendCreation( ClientPublisher_ABC& publisher ) const
 
     asn().mutable_request()->set_id( GetId() );
     asn().mutable_consumer()->set_id( automat_.GetId() );
-    asn().set_tick_creation( nTickCreation_ );
+    asn().set_tick( nTickCreation_ );
     {
         for( tools::Iterator< const LogSupplyDotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
             it.NextElement().Send( *asn().mutable_dotations()->add_elem() );

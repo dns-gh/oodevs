@@ -1136,19 +1136,19 @@ message ObjectKnowledgeDestruction {
 }
 
 message UrbanKnowledgeCreation {
-    required UrbanObjectKnowledgeId knowledge    = 1;
-    required PartyId                party        = 2;
-    required UrbanObjectId          urban_block  = 3;
+    required UrbanObjectKnowledgeId knowledge   = 1;
+    required PartyId                party       = 2;
+    required UrbanObjectId          urban_block = 3;
 }
 
 message UrbanKnowledgeUpdate {
-    required UrbanObjectKnowledgeId knowledge            = 1;
-    required PartyId                party                = 2;
-    required UrbanObjectId          urban_block          = 3;
-    optional int32                  progress             = 4;
-    optional int32                  max_progress         = 5;
-    optional bool                   perceived            = 6;
-    optional AutomatIdList          automat_perceptions  = 7;
+    required UrbanObjectKnowledgeId knowledge           = 1;
+    required PartyId                party               = 2;
+    required UrbanObjectId          urban_block         = 3;
+    optional int32                  progress            = 4;
+    optional int32                  max_progress        = 5;
+    optional bool                   perceived           = 6;
+    optional AutomatIdList          automat_perceptions = 7;
 }
 
 message UrbanKnowledgeDestruction {
@@ -1159,7 +1159,7 @@ message UrbanKnowledgeDestruction {
 message LogMedicalHandlingCreation {
     required MedicalRequestId request          = 1;
     required UnitId           unit             = 2;
-    required int32            tick_creation    = 3;
+    required int32            tick             = 3;
     required EnumHumanRank    rank             = 4;
     required EnumHumanWound   wound            = 5;
     optional bool             mental_wound     = 6;
@@ -1183,12 +1183,12 @@ message LogMedicalHandlingDestruction {
 }
 
 message LogMedicalEquipmentAvailability{
-    required EquipmentType equipment_type = 1;
-    required int32         nbr_total       = 2;
-    required int32         nbr_disponibles = 3;
-    required int32         nbr_au_travail  = 4;
-    optional int32         nbr_pretes      = 5;
-    optional int32         nbr_au_repos    = 6;
+    required EquipmentType equipment = 1;
+    required int32         total     = 2;
+    required int32         available = 3;
+    required int32         working   = 4;
+    optional int32         lent      = 5;
+    optional int32         resting   = 6;
 }
 
 message SeqOfLogMedicalEquipmentAvailability {
@@ -1197,27 +1197,27 @@ message SeqOfLogMedicalEquipmentAvailability {
 
 message LogMedicalState {
     required UnitId                               unit                                = 1;
-    optional bool                                 chaine_activee                      = 2;
-    optional LogMedicalPriorities                 priorites                           = 3;
+    optional bool                                 chain                               = 2;
+    optional LogMedicalPriorities                 priorities                          = 3;
     optional AutomatIdList                        tactical_priorities                 = 4;
     optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_releve    = 5;
     optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_ramassage = 6;
-    optional SeqOfLogMedicalEquipmentAvailability disponibilites_medecins             = 7;
+    optional SeqOfLogMedicalEquipmentAvailability doctors             = 7;
 }
 
 message LogMaintenanceHandlingCreation {
-    required MaintenanceRequestId request       = 1;
-    required UnitId               unit          = 2;
-    required int32                tick_creation = 3;
-    required EquipmentType        equipement    = 4;
-    required BreakdownType        breakdown     = 5;
+    required MaintenanceRequestId request    = 1;
+    required UnitId               unit       = 2;
+    required int32                tick       = 3;
+    required EquipmentType        equipement = 4;
+    required BreakdownType        breakdown  = 5;
 }
 
 message LogMaintenanceHandlingUpdate {
-    required MaintenanceRequestId             request               = 1;
-    required UnitId                           unit                  = 2;
-    required UnitId                           provider              = 3;
-    optional EnumLogMaintenanceHandlingStatus state                  = 4;
+    required MaintenanceRequestId             request   = 1;
+    required UnitId                           unit      = 2;
+    required UnitId                           provider  = 3;
+    optional EnumLogMaintenanceHandlingStatus state     = 4;
     optional bool                             diagnosed = 5;
 }
 
@@ -1227,12 +1227,12 @@ message LogMaintenanceHandlingDestruction {
 }
 
 message LogMaintenanceEquipmentAvailability {
-    required EquipmentType equipment_type  = 1;
-    required int32 nbr_total               = 2;
-    required int32 nbr_disponibles         = 3;
-    required int32 nbr_au_travail          = 4;
-    optional int32 nbr_pretes              = 5;
-    optional int32 nbr_au_repos            = 6;
+    required EquipmentType equipment = 1;
+    required int32         total     = 2;
+    required int32         available = 3;
+    required int32         working   = 4;
+    optional int32         lent      = 5;
+    optional int32         resting   = 6;
 }
 
 message SeqOfLogMaintenanceEquipmentAvailability {
@@ -1240,20 +1240,20 @@ message SeqOfLogMaintenanceEquipmentAvailability {
 }
 
 message LogMaintenanceState {
-    required UnitId                                   unit                       = 1;
-    optional bool                                     chaine_activee             = 2;
-    optional EnumLogMaintenanceRegimeTravail          regime_travail             = 3;
-    optional LogMaintenancePriorities                 priorites                  = 4;
-    optional AutomatIdList                            priorites_tactiques        = 5;
-    optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_remorqueurs = 6;
-    optional SeqOfLogMaintenanceEquipmentAvailability disponibilites_reparateurs = 7;
+    required UnitId                                   unit                = 1;
+    optional bool                                     chain               = 2;
+    optional EnumLogMaintenanceRegimeTravail          working_scheme      = 3;
+    optional LogMaintenancePriorities                 priorities          = 4;
+    optional AutomatIdList                            tactical_priorities = 5;
+    optional SeqOfLogMaintenanceEquipmentAvailability haulers             = 6;
+    optional SeqOfLogMaintenanceEquipmentAvailability repairers           = 7;
 }
 
 message LogSupplyHandlingCreation {
-    optional SupplyRequestId    request       = 1;
-    optional AutomatId          consumer      = 2;
-    optional int32              tick_creation = 3;
-    optional SeqOfDotationQuery dotations     = 4;
+    optional SupplyRequestId    request   = 1;
+    optional AutomatId          consumer  = 2;
+    optional int32              tick      = 3;
+    optional SeqOfDotationQuery dotations = 4;
 }
 
 message DotationQuery {
@@ -1296,12 +1296,12 @@ message LogSupplyHandlingDestruction {
 }
 
 message LogSupplyEquimentAvailability {
-    optional EquipmentType equipment       = 1;
-    optional int32         nbr_total       = 2;
-    optional int32         nbr_disponibles = 3;
-    optional int32         nbr_au_travail  = 4;
-    optional int32         nbr_pretes      = 5;
-    optional int32         nbr_au_repos    = 6;
+    optional EquipmentType equipment = 1;
+    optional int32         total     = 2;
+    optional int32         available = 3;
+    optional int32         working   = 4;
+    optional int32         lent      = 5;
+    optional int32         resting   = 6;
 }
 
 message SeqOfLogSupplyEquimentAvailability {
@@ -1310,7 +1310,7 @@ message SeqOfLogSupplyEquimentAvailability {
 
 message LogSupplyState {
     optional UnitId                              unit                                 = 1;
-    optional bool                                chaine_activee                       = 2;
+    optional bool                                chain                       = 2;
     optional SeqOfDotationStock                  stocks                               = 3;
     optional SeqOfLogSupplyEquimentAvailability  disponibilites_transporteurs_convois = 4;
 }

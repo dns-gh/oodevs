@@ -107,8 +107,8 @@ namespace boost
             for ( CIT_MaintenancePriorityVector it = vector.begin(); it != vector.end(); ++it )
             {
                 sword::EquipmentType id = (*it)->GetMosID();
-                int equipment_type = id.id();
-                file << equipment_type;
+                int equipment = id.id();
+                file << equipment;
             }
         }
 
@@ -121,9 +121,9 @@ namespace boost
             while ( nNbr-- )
             {
                 sword::EquipmentType nID;
-                int equipment_type;
-                file >> equipment_type;
-                nID.set_id( equipment_type );
+                int equipment;
+                file >> equipment;
+                nID.set_id( equipment );
                 vector.push_back( PHY_ComposanteTypePion::Find( nID ) );
             }
         }
@@ -644,18 +644,18 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, swor
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         sword::LogMaintenanceEquipmentAvailability& data = *asn.add_elem();
-        data.mutable_equipment_type()->set_id( itData->first->GetMosID().id() );
+        data.mutable_equipment()->set_id( itData->first->GetMosID().id() );
         assert( itData->second.nNbrTotal_ );
-        data.set_nbr_total( itData->second.nNbrTotal_ );
-        data.set_nbr_au_travail( itData->second.nNbrUsed_ );
-        data.set_nbr_disponibles( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
-        data.set_nbr_pretes( itData->second.nNbrLent_ );
+        data.set_total( itData->second.nNbrTotal_ );
+        data.set_working( itData->second.nNbrUsed_ );
+        data.set_available( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
+        data.set_lent( itData->second.nNbrLent_ );
         if( pWorkRate )
         {
             const unsigned int nNbrAllowedToWork = pWorkRate->GetNbrWorkerAllowedToWork( itData->second.nNbrAvailable_ );
             const unsigned int nNbrAvailableAllowedToWork = nNbrAllowedToWork > itData->second.nNbrUsed_ ? nNbrAllowedToWork - itData->second.nNbrUsed_ : 0;
-            data.set_nbr_disponibles( nNbrAvailableAllowedToWork );
-            data.set_nbr_au_repos( itData->second.nNbrAvailable_ - nNbrAvailableAllowedToWork - itData->second.nNbrUsed_ );
+            data.set_available( nNbrAvailableAllowedToWork );
+            data.set_resting( itData->second.nNbrAvailable_ - nNbrAvailableAllowedToWork - itData->second.nNbrUsed_ );
         }
     }
 }
@@ -668,14 +668,14 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
 {
     client::LogMaintenanceState asn;
     asn().mutable_unit()->set_id( pion_.GetID() );
-    asn().set_chaine_activee( bSystemEnabled_ );
-    asn().set_regime_travail( pWorkRate_->GetAsnID() );
-    asn().mutable_priorites();
+    asn().set_chain( bSystemEnabled_ );
+    asn().set_working_scheme( pWorkRate_->GetAsnID() );
+    asn().mutable_priorities();
     for( CIT_MaintenancePriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
-        asn().mutable_priorites()->add_elem()->set_id( (**itPriority).GetMosID().id() );
-    asn().mutable_priorites_tactiques();
+        asn().mutable_priorities()->add_elem()->set_id( (**itPriority).GetMosID().id() );
+    asn().mutable_tactical_priorities();
     for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
-        asn().mutable_priorites_tactiques()->add_elem()->set_id( (**itPriority).GetID() );
+        asn().mutable_tactical_priorities()->add_elem()->set_id( (**itPriority).GetID() );
     {
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         PHY_ComposanteUsePredicate predicate( &PHY_ComposantePion::CanHaul, &PHY_ComposanteTypePion::CanHaul );
@@ -685,7 +685,7 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
         GetComponentLendedUseFunctor functorOnLendedComponent( predicate, composanteUse );
         std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
         pion_.Execute( *lendedComputer );
-        SendComposanteUse( composanteUse, *asn().mutable_disponibilites_remorqueurs(), 0 );
+        SendComposanteUse( composanteUse, *asn().mutable_haulers(), 0 );
     }
     {
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
@@ -697,7 +697,7 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
         std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
         pion_.Execute( *lendedComputer );
 
-        SendComposanteUse( composanteUse, *asn().mutable_disponibilites_reparateurs(), pWorkRate_ );
+        SendComposanteUse( composanteUse, *asn().mutable_repairers(), pWorkRate_ );
     }
     asn.Send( NET_Publisher_ABC::Publisher() );
 }

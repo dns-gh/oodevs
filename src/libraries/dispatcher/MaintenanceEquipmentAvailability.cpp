@@ -19,12 +19,12 @@ using namespace dispatcher;
 // Created: LGY 2010-07-07
 // -----------------------------------------------------------------------------
 MaintenanceEquipmentAvailability::MaintenanceEquipmentAvailability( const sword::LogMaintenanceEquipmentAvailability& asn )
-: nEquipmentType_( asn.equipment_type().id() )
-, nNbrTotal_     ( asn.nbr_total() )
-, nNbrAvailable_ ( asn.nbr_disponibles() )
-, nNbrWorking_   ( asn.nbr_au_travail() )
-, nNbrLent_      ( asn.nbr_pretes() )
-, nNbrResting_   ( asn.has_nbr_au_repos() ? asn.nbr_au_repos() : std::numeric_limits< unsigned int >::max() )
+: nEquipmentType_( asn.equipment().id() )
+, nNbrTotal_     ( asn.total() )
+, nNbrAvailable_ ( asn.available() )
+, nNbrWorking_   ( asn.working() )
+, nNbrLent_      ( asn.lent() )
+, nNbrResting_   ( asn.has_resting() ? asn.resting() : std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
 }
@@ -44,11 +44,11 @@ MaintenanceEquipmentAvailability::~MaintenanceEquipmentAvailability()
 // -----------------------------------------------------------------------------
 void MaintenanceEquipmentAvailability::Send( sword::LogMaintenanceEquipmentAvailability& asn ) const
 {
-    asn.mutable_equipment_type()->set_id( nEquipmentType_ );
-    asn.set_nbr_total( nNbrTotal_ );
-    asn.set_nbr_disponibles( nNbrAvailable_ );
-    asn.set_nbr_au_travail( nNbrWorking_ );
-    asn.set_nbr_pretes( nNbrLent_ );
+    asn.mutable_equipment()->set_id( nEquipmentType_ );
+    asn.set_total( nNbrTotal_ );
+    asn.set_available( nNbrAvailable_ );
+    asn.set_working( nNbrWorking_ );
+    asn.set_lent( nNbrLent_ );
     if( nNbrResting_ != std::numeric_limits< unsigned int >::max() )
-        asn.set_nbr_au_repos( nNbrResting_ );
+        asn.set_resting( nNbrResting_ );
 }

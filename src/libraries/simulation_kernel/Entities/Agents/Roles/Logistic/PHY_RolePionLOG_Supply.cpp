@@ -436,10 +436,10 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, swor
         data.mutable_equipment()->set_id( itData->first->GetMosID().id() );
         assert( itData->second.nNbrTotal_ );
 
-        data.set_nbr_total       ( itData->second.nNbrTotal_ );
-        data.set_nbr_au_travail  ( itData->second.nNbrUsed_ );
-        data.set_nbr_disponibles ( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
-        data.set_nbr_pretes      ( itData->second.nNbrLent_ );
+        data.set_total       ( itData->second.nNbrTotal_ );
+        data.set_working  ( itData->second.nNbrUsed_ );
+        data.set_available ( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
+        data.set_lent      ( itData->second.nNbrLent_ );
     }
 }
 
@@ -451,7 +451,7 @@ void PHY_RolePionLOG_Supply::SendFullState() const
 {
     client::LogSupplyState asn;
     asn().mutable_unit()->set_id( pion_.GetID() );
-    asn().set_chaine_activee( bSystemEnabled_ );
+    asn().set_chain( bSystemEnabled_ );
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     ConvoyTransportersUseFunctor functor( composanteUse );
@@ -488,7 +488,7 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
     asn().mutable_unit()->set_id( pion_.GetID() );
     if( bHasChanged_ || bExternalMustChangeState_ )
     {
-        asn().set_chaine_activee( bSystemEnabled_ );
+        asn().set_chain( bSystemEnabled_ );
 
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         ConvoyTransportersUseFunctor functor( composanteUse );

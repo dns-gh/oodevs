@@ -171,8 +171,8 @@ namespace boost
             for(  PHY_RolePion_Composantes::CIT_ComposanteTypeMap it = map.begin(); it != map.end(); ++it )
             {
                 sword::EquipmentType id = it->first->GetMosID();
-                int equipment_type = id.id();
-                file << equipment_type;
+                int equipment = id.id();
+                file << equipment;
                 file << it->second;
             }
         }
@@ -185,9 +185,9 @@ namespace boost
             while( nNbr-- )
             {
                 sword::EquipmentType nID;
-                int equipment_type;
-                file >> equipment_type;
-                nID.set_id( equipment_type );
+                int equipment;
+                file >> equipment;
+                nID.set_id( equipment );
                 file >> map[ PHY_ComposanteTypePion::Find( nID ) ];
             }
         }

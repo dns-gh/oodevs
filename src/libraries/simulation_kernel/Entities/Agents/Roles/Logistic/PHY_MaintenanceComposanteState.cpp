@@ -238,7 +238,7 @@ void PHY_MaintenanceComposanteState::SendMsgCreation() const
     client::LogMaintenanceHandlingCreation asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
-    asn().set_tick_creation( nCreationTick_ );
+    asn().set_tick( nCreationTick_ );
     asn().mutable_equipement()->set_id( pComposante_->GetType().GetMosID().id() );
     asn().mutable_breakdown()->set_id( GetComposanteBreakdown().GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );

@@ -119,9 +119,9 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
     file >> nID;
     pState_ = &PHY_ComposanteState::Find( nID );
     sword::EquipmentType nEqID;
-    int equipment_type;
-    file >> equipment_type;
-    nEqID.set_id( equipment_type );
+    int equipment;
+    file >> equipment;
+    nEqID.set_id( equipment );
     pType_ = PHY_ComposanteTypePion::Find( nEqID );
     assert( pType_ );
     pType_->InstanciateWeapons( std::back_inserter( weapons_ ) );

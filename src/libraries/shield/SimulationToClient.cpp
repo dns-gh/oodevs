@@ -1383,7 +1383,7 @@ void SimulationToClient::Convert( const sword::LogMedicalHandlingCreation& from,
 {
     CONVERT_ID( request );
     CONVERT_ID( unit );
-    CONVERT( tick_creation );
+    CONVERT_TO( tick, tick_creation );
     CONVERT_RANK( rank, rang );
     CONVERT_ENUM_TO( wound, blessure, HUMAN_WOUND );
     CONVERT_TO( mental_wound, blesse_mental );
@@ -1441,12 +1441,12 @@ namespace
     template< typename From, typename To >
     void ConvertLogMedicalEquipmentAvailability( const From& from, To* to )
     {
-        CONVERT_ID( equipment_type );
-        CONVERT( nbr_total );
-        CONVERT( nbr_disponibles );
-        CONVERT( nbr_au_travail );
-        CONVERT( nbr_pretes );
-        CONVERT( nbr_au_repos );
+        CONVERT_ID_TO( equipment, equipment_type );
+        CONVERT_TO( total, nbr_total );
+        CONVERT_TO( available, nbr_disponibles );
+        CONVERT_TO( working, nbr_au_travail );
+        CONVERT_TO( lent, nbr_pretes );
+        CONVERT_TO( resting, nbr_au_repos );
     }
 }
 
@@ -1457,13 +1457,13 @@ namespace
 void SimulationToClient::Convert( const sword::LogMedicalState& from, MsgsSimToClient::MsgLogMedicalState* to )
 {
     CONVERT_ID( unit );
-    CONVERT( chaine_activee );
-    if( from.has_priorites() )
-        ConvertLogMedicalPriorities( from.priorites(), to->mutable_priorites() );
-    CONVERT_LIST( tactical_priorities, elem, ConvertIdentifier );
+    CONVERT_TO( chain, chaine_activee );
+    if( from.has_priorities() )
+        ConvertLogMedicalPriorities( from.priorities(), to->mutable_priorites() );
+    CONVERT_LIST_TO( tactical_priorities, tactical_priorities, elem, ConvertIdentifier );
     CONVERT_LIST( disponibilites_ambulances_releve, elem, ConvertLogMedicalEquipmentAvailability );
     CONVERT_LIST( disponibilites_ambulances_ramassage, elem, ConvertLogMedicalEquipmentAvailability );
-    CONVERT_LIST( disponibilites_medecins, elem, ConvertLogMedicalEquipmentAvailability );
+    CONVERT_LIST_TO( doctors, disponibilites_medecins, elem, ConvertLogMedicalEquipmentAvailability );
 }
 
 // -----------------------------------------------------------------------------
@@ -1474,7 +1474,7 @@ void SimulationToClient::Convert( const sword::LogMaintenanceHandlingCreation& f
 {
     CONVERT_ID( request );
     CONVERT_ID( unit );
-    CONVERT( tick_creation );
+    CONVERT_TO( tick, tick_creation );
     CONVERT_ID( equipement );
     CONVERT_ID( breakdown );
 }
@@ -1521,15 +1521,15 @@ void SimulationToClient::Convert( const sword::LogMaintenanceHandlingDestruction
 void SimulationToClient::Convert( const sword::LogMaintenanceState& from, MsgsSimToClient::MsgLogMaintenanceState* to )
 {
     CONVERT_ID( unit );
-    CONVERT( chaine_activee );
-    CONVERT_ENUM( regime_travail, ( sword::regime_1, Common::regime_1 )
-                                     ( sword::regime_2, Common::regime_2 )
-                                     ( sword::regime_3, Common::regime_3 )
-                                     ( sword::regime_4, Common::regime_4 ) );
-    CONVERT_LIST( priorites, elem, ConvertIdentifier );
-    CONVERT_LIST( priorites_tactiques, elem, ConvertIdentifier );
-    CONVERT_LIST( disponibilites_remorqueurs, elem, ConvertLogMedicalEquipmentAvailability );
-    CONVERT_LIST( disponibilites_reparateurs, elem, ConvertLogMedicalEquipmentAvailability );
+    CONVERT_TO( chain, chaine_activee );
+    CONVERT_ENUM_TO( working_scheme, regime_travail, ( sword::regime_1, Common::regime_1 )
+                                                     ( sword::regime_2, Common::regime_2 )
+                                                     ( sword::regime_3, Common::regime_3 )
+                                                     ( sword::regime_4, Common::regime_4 ) );
+    CONVERT_LIST_TO( priorities, priorites, elem, ConvertIdentifier );
+    CONVERT_LIST_TO( tactical_priorities, priorites_tactiques, elem, ConvertIdentifier );
+    CONVERT_LIST_TO( haulers, disponibilites_remorqueurs, elem, ConvertLogMedicalEquipmentAvailability );
+    CONVERT_LIST_TO( repairers, disponibilites_reparateurs, elem, ConvertLogMedicalEquipmentAvailability );
 }
 
 namespace
@@ -1552,7 +1552,7 @@ void SimulationToClient::Convert( const sword::LogSupplyHandlingCreation& from, 
 {
     CONVERT_ID( request );
     CONVERT_ID( consumer );
-    CONVERT( tick_creation );
+    CONVERT_TO( tick, tick_creation );
     CONVERT_LIST( dotations, elem, ConvertDotationQuery );
 }
 
@@ -1602,11 +1602,11 @@ namespace
     void ConvertLogSupplyEquimentAvailability( const From& from, To* to )
     {
         CONVERT_ID( equipment );
-        CONVERT( nbr_total );
-        CONVERT( nbr_disponibles );
-        CONVERT( nbr_au_travail );
-        CONVERT( nbr_pretes );
-        CONVERT( nbr_au_repos );
+        CONVERT_TO( total, nbr_total );
+        CONVERT_TO( available, nbr_disponibles );
+        CONVERT_TO( working, nbr_au_travail );
+        CONVERT_TO( lent, nbr_pretes );
+        CONVERT_TO( resting, nbr_au_repos );
     }
 }
 
@@ -1617,7 +1617,7 @@ namespace
 void SimulationToClient::Convert( const sword::LogSupplyState& from, MsgsSimToClient::MsgLogSupplyState* to )
 {
     CONVERT_ID( unit );
-    CONVERT( chaine_activee );
+    CONVERT_TO( chain, chaine_activee );
     CONVERT_LIST( stocks, elem, ConvertDotationStock );
     CONVERT_LIST( disponibilites_transporteurs_convois, elem, ConvertLogSupplyEquimentAvailability );
 }

@@ -295,7 +295,7 @@ void PHY_MedicalHumanState::SendMsgCreation() const
     client::LogMedicalHandlingCreation asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
-    asn().set_tick_creation( nCreationTick_ );
+    asn().set_tick( nCreationTick_ );
     asn().set_rank( pHuman_->GetRank ().GetAsnID() );
     asn().set_wound( pHuman_->GetWound().GetAsnID() );
     asn().set_mental_wound( pHuman_->IsMentalDiseased() );

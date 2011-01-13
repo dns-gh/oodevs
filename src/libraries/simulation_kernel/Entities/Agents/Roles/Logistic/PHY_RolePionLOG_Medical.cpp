@@ -802,13 +802,13 @@ void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, swor
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
         sword::LogMedicalEquipmentAvailability& data = *asn.add_elem();
-        data.mutable_equipment_type()->set_id( itData->first->GetMosID().id() );
+        data.mutable_equipment()->set_id( itData->first->GetMosID().id() );
         assert( itData->second.nNbrTotal_ );
 
-        data.set_nbr_total( itData->second.nNbrTotal_ );
-        data.set_nbr_au_travail( itData->second.nNbrUsed_ );
-        data.set_nbr_disponibles( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
-        data.set_nbr_pretes( itData->second.nNbrLent_ );
+        data.set_total( itData->second.nNbrTotal_ );
+        data.set_working( itData->second.nNbrUsed_ );
+        data.set_available( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
+        data.set_lent( itData->second.nNbrLent_ );
     }
 }
 
@@ -820,10 +820,10 @@ void PHY_RolePionLOG_Medical::SendFullState() const
 {
     client::LogMedicalState asn;
     asn().mutable_unit()->set_id( pion_.GetID() );
-    asn().set_chaine_activee( bSystemEnabled_ );
+    asn().set_chain( bSystemEnabled_ );
     if( !priorities_.empty() )
         for( CIT_MedicalPriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
-            asn().mutable_priorites()->add_elem( (**itPriority).GetAsnID() );
+            asn().mutable_priorities()->add_elem( (**itPriority).GetAsnID() );
     if( !tacticalPriorities_.empty() )
         for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
             asn().mutable_tactical_priorities()->add_elem()->set_id( (**itPriority).GetID() );
@@ -838,18 +838,18 @@ void PHY_RolePionLOG_Medical::SendFullState() const
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate3( &PHY_ComposantePion::CanDiagnoseHumans, &PHY_ComposanteTypePion::CanDiagnoseHumans );
     ExecuteOnComponentsAndLendedComponents( predicate3, composanteUse );
-    SendComposanteUse( composanteUse, *asn().mutable_disponibilites_medecins() );
+    SendComposanteUse( composanteUse, *asn().mutable_doctors() );
     asn.Send( NET_Publisher_ABC::Publisher() );
-    if( asn().priorites().elem_size() > 0 )
-        asn().mutable_priorites()->Clear();
+    if( asn().priorities().elem_size() > 0 )
+        asn().mutable_priorities()->Clear();
     if( asn().tactical_priorities().elem_size() > 0 )
         asn().mutable_tactical_priorities()->Clear();
     if( asn().disponibilites_ambulances_ramassage().elem_size() > 0 )
         asn().mutable_disponibilites_ambulances_ramassage()->Clear();
     if( asn().disponibilites_ambulances_releve().elem_size() > 0 )
         asn().mutable_disponibilites_ambulances_releve()->Clear();
-    if( asn().disponibilites_medecins().elem_size() > 0 )
-        asn().mutable_disponibilites_medecins()->Clear();
+    if( asn().doctors().elem_size() > 0 )
+        asn().mutable_doctors()->Clear();
 }
 
 // -----------------------------------------------------------------------------

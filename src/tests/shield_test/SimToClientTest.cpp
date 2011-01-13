@@ -1068,7 +1068,7 @@ BOOST_FIXTURE_TEST_CASE( log_medical_handling_creation_to_client_is_converted, C
 {
     content.mutable_log_medical_handling_creation()->mutable_request()->set_id( 7 );
     content.mutable_log_medical_handling_creation()->mutable_unit()->set_id( 8 );
-    content.mutable_log_medical_handling_creation()->set_tick_creation( 9u );
+    content.mutable_log_medical_handling_creation()->set_tick( 9u );
     content.mutable_log_medical_handling_creation()->set_rank( sword::mdr );
     content.mutable_log_medical_handling_creation()->set_wound( sword::mort );
     content.mutable_log_medical_handling_creation()->set_mental_wound( true );
@@ -1104,29 +1104,29 @@ namespace
     template< typename A >
     void FillLogMedicalEquipmentAvailability( A* a )
     {
-        a->mutable_equipment_type()->set_id( 10 );
-        a->set_nbr_total( 11 );
-        a->set_nbr_disponibles( 12 );
-        a->set_nbr_au_travail( 13 );
-        a->set_nbr_pretes( 14 );
-        a->set_nbr_au_repos( 15 );
+        a->mutable_equipment()->set_id( 10 );
+        a->set_total( 11 );
+        a->set_available( 12 );
+        a->set_working( 13 );
+        a->set_lent( 14 );
+        a->set_resting( 15 );
     }
 }
 
 BOOST_FIXTURE_TEST_CASE( log_medical_state_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_log_medical_state()->mutable_unit()->set_id( 7 );
-    content.mutable_log_medical_state()->set_chaine_activee( true );
-    content.mutable_log_medical_state()->mutable_priorites()->add_elem( sword::mort );
-    content.mutable_log_medical_state()->mutable_priorites()->add_elem( sword::non_blesse );
+    content.mutable_log_medical_state()->set_chain( true );
+    content.mutable_log_medical_state()->mutable_priorities()->add_elem( sword::mort );
+    content.mutable_log_medical_state()->mutable_priorities()->add_elem( sword::non_blesse );
     content.mutable_log_medical_state()->mutable_tactical_priorities()->add_elem()->set_id( 8 );
     content.mutable_log_medical_state()->mutable_tactical_priorities()->add_elem()->set_id( 9 );
     FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_ambulances_releve()->add_elem() );
     FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_ambulances_releve()->add_elem() );
     FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_ambulances_ramassage()->add_elem() );
     FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_ambulances_ramassage()->add_elem() );
-    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_medecins()->add_elem() );
-    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_medecins()->add_elem() );
+    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_doctors()->add_elem() );
+    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_doctors()->add_elem() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_medical_state { unit { id: 7 } chaine_activee: true priorites { elem: mort elem: non_blesse } tactical_priorities { elem { id: 8 } elem { id: 9 } } disponibilites_ambulances_releve { elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } } disponibilites_ambulances_ramassage { elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } } disponibilites_medecins { elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1135,7 +1135,7 @@ BOOST_FIXTURE_TEST_CASE( log_maintenance_handling_creation_to_client_is_converte
 {
     content.mutable_log_maintenance_handling_creation()->mutable_request()->set_id( 7 );
     content.mutable_log_maintenance_handling_creation()->mutable_unit()->set_id( 8 );
-    content.mutable_log_maintenance_handling_creation()->set_tick_creation( 9 );
+    content.mutable_log_maintenance_handling_creation()->set_tick( 9 );
     content.mutable_log_maintenance_handling_creation()->mutable_equipement()->set_id( 10 );
     content.mutable_log_maintenance_handling_creation()->mutable_breakdown()->set_id( 11 );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_maintenance_handling_creation { request { id: 7 } unit { id: 8 } tick_creation: 9 equipement { id: 10 } breakdown { id: 11 } } }" ) );
@@ -1164,16 +1164,16 @@ BOOST_FIXTURE_TEST_CASE( log_maintenance_handling_destruction_to_client_is_conve
 BOOST_FIXTURE_TEST_CASE( log_maintenance_state_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_log_maintenance_state()->mutable_unit()->set_id( 7 );
-    content.mutable_log_maintenance_state()->set_chaine_activee( true );
-    content.mutable_log_maintenance_state()->set_regime_travail( sword::regime_1 );
-    content.mutable_log_maintenance_state()->mutable_priorites()->add_elem()->set_id( 8 );
-    content.mutable_log_maintenance_state()->mutable_priorites()->add_elem()->set_id( 9 );
-    content.mutable_log_maintenance_state()->mutable_priorites_tactiques()->add_elem()->set_id( 10 );
-    content.mutable_log_maintenance_state()->mutable_priorites_tactiques()->add_elem()->set_id( 11 );
-    FillLogMedicalEquipmentAvailability( content.mutable_log_maintenance_state()->mutable_disponibilites_remorqueurs()->add_elem() );
-    FillLogMedicalEquipmentAvailability( content.mutable_log_maintenance_state()->mutable_disponibilites_remorqueurs()->add_elem() );
-    FillLogMedicalEquipmentAvailability( content.mutable_log_maintenance_state()->mutable_disponibilites_reparateurs()->add_elem() );
-    FillLogMedicalEquipmentAvailability( content.mutable_log_maintenance_state()->mutable_disponibilites_reparateurs()->add_elem() );
+    content.mutable_log_maintenance_state()->set_chain( true );
+    content.mutable_log_maintenance_state()->set_working_scheme( sword::regime_1 );
+    content.mutable_log_maintenance_state()->mutable_priorities()->add_elem()->set_id( 8 );
+    content.mutable_log_maintenance_state()->mutable_priorities()->add_elem()->set_id( 9 );
+    content.mutable_log_maintenance_state()->mutable_tactical_priorities()->add_elem()->set_id( 10 );
+    content.mutable_log_maintenance_state()->mutable_tactical_priorities()->add_elem()->set_id( 11 );
+    FillLogMedicalEquipmentAvailability( content.mutable_log_maintenance_state()->mutable_haulers()->add_elem() );
+    FillLogMedicalEquipmentAvailability( content.mutable_log_maintenance_state()->mutable_haulers()->add_elem() );
+    FillLogMedicalEquipmentAvailability( content.mutable_log_maintenance_state()->mutable_repairers()->add_elem() );
+    FillLogMedicalEquipmentAvailability( content.mutable_log_maintenance_state()->mutable_repairers()->add_elem() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_maintenance_state { unit { id: 7 } chaine_activee: true regime_travail: regime_1 priorites { elem { id: 8 } elem { id: 9 } } priorites_tactiques { elem { id: 10 } elem { id: 11 } } disponibilites_remorqueurs { elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } } disponibilites_reparateurs { elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1194,7 +1194,7 @@ BOOST_FIXTURE_TEST_CASE( log_supply_handling_creation_to_client_is_converted, Co
 {
     content.mutable_log_supply_handling_creation()->mutable_request()->set_id( 7 );
     content.mutable_log_supply_handling_creation()->mutable_consumer()->set_id( 8 );
-    content.mutable_log_supply_handling_creation()->set_tick_creation( 9 );
+    content.mutable_log_supply_handling_creation()->set_tick( 9 );
     FillDotationQuery( content.mutable_log_supply_handling_creation()->mutable_dotations()->add_elem() );
     FillDotationQuery( content.mutable_log_supply_handling_creation()->mutable_dotations()->add_elem() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_creation { request { id: 7 } consumer { id: 8 } tick_creation: 9 dotations { elem { resource { id: 10 } quantite_demandee: 11 quantite_accordee: 12 quantite_en_transit: 13 } elem { resource { id: 10 } quantite_demandee: 11 quantite_accordee: 12 quantite_en_transit: 13 } } } }" ) );
@@ -1237,18 +1237,18 @@ namespace
     void FillLogSupplyEquimentAvailability( A* a )
     {
         a->mutable_equipment()->set_id( 10 );
-        a->set_nbr_total( 11 );
-        a->set_nbr_disponibles( 12 );
-        a->set_nbr_au_travail( 13 );
-        a->set_nbr_pretes( 14 );
-        a->set_nbr_au_repos( 15 );
+        a->set_total( 11 );
+        a->set_available( 12 );
+        a->set_working( 13 );
+        a->set_lent( 14 );
+        a->set_resting( 15 );
     }
 }
 
 BOOST_FIXTURE_TEST_CASE( log_supply_state_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_log_supply_state()->mutable_unit()->set_id( 7 );
-    content.mutable_log_supply_state()->set_chaine_activee( true );
+    content.mutable_log_supply_state()->set_chain( true );
     FillDotationStock( content.mutable_log_supply_state()->mutable_stocks()->add_elem() );
     FillDotationStock( content.mutable_log_supply_state()->mutable_stocks()->add_elem() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_state { unit { id: 7 } chaine_activee: true stocks { elem { ressource_id { id: 10 } quantite_disponible: 11 } elem { ressource_id { id: 10 } quantite_disponible: 11 } } } }" ) );

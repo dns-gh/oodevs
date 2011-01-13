@@ -52,17 +52,15 @@ void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // -----------------------------------------------------------------------------
 void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
 {
-    if( message.has_chaine_activee()  )
-        bChainEnabled_ = message.chaine_activee() != 0;
-
-    if( message.has_disponibilites_transporteurs_convois()  )
+    if( message.has_chain() )
+        bChainEnabled_ = message.chain() != 0;
+    if( message.has_disponibilites_transporteurs_convois() )
     {
         dispoTransporters_.resize( message.disponibilites_transporteurs_convois().elem_size() );
         for( int i = 0; i < message.disponibilites_transporteurs_convois().elem_size(); ++i )
             dispoTransporters_[i] = SupplyAvailability( resolver_, message.disponibilites_transporteurs_convois().elem( i ) );
     }
-
-    if( message.has_stocks()  )
+    if( message.has_stocks() )
     {
         int nSize = message.stocks().elem_size();
         while( nSize > 0 )

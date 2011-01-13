@@ -55,39 +55,37 @@ void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // -----------------------------------------------------------------------------
 void MedicalStates::DoUpdate( const sword::LogMedicalState& message )
 {
-    if( message.has_chaine_activee()  )
-        bChainEnabled_ = message.chaine_activee() != 0;
-
-    if( message.has_priorites()  )
+    if( message.has_chain() )
+        bChainEnabled_ = message.chain() != 0;
+    if( message.has_priorities() )
     {
-        priorities_.resize( message.priorites().elem_size() );
-        for( int i = 0; i < message.priorites().elem_size(); ++i )
-            priorities_[i] = E_HumanWound( message.priorites().elem( i ) );
+        priorities_.resize( message.priorities().elem_size() );
+        for( int i = 0; i < message.priorities().elem_size(); ++i )
+            priorities_[i] = E_HumanWound( message.priorities().elem( i ) );
     }
-    if( message.has_tactical_priorities()  )
+    if( message.has_tactical_priorities() )
     {
         tacticalPriorities_.resize( message.tactical_priorities().elem_size() );
         for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
-            tacticalPriorities_[i] = & automatResolver_.Get( message.tactical_priorities().elem( i ).id() );
+            tacticalPriorities_[i] = &automatResolver_.Get( message.tactical_priorities().elem( i ).id() );
     }
-
-    if( message.has_disponibilites_ambulances_ramassage()  )
+    if( message.has_disponibilites_ambulances_ramassage() )
     {
         dispoRamassageAmbulances_.resize( message.disponibilites_ambulances_ramassage().elem_size() );
         for( int i = 0; i < message.disponibilites_ambulances_ramassage().elem_size(); ++i )
             dispoRamassageAmbulances_[i] = Availability( resolver_, message.disponibilites_ambulances_ramassage().elem( i ) );
     }
-    if( message.has_disponibilites_ambulances_releve()  )
+    if( message.has_disponibilites_ambulances_releve() )
     {
         dispoReleveAmbulances_.resize( message.disponibilites_ambulances_releve().elem_size() );
         for( int i = 0; i < message.disponibilites_ambulances_releve().elem_size(); ++i )
             dispoReleveAmbulances_[i] = Availability( resolver_, message.disponibilites_ambulances_releve().elem( i ) );
     }
-    if( message.has_disponibilites_medecins()  )
+    if( message.has_doctors()  )
     {
-        dispoDoctors_.resize( message.disponibilites_medecins().elem_size() );
-        for( int i = 0; i < message.disponibilites_medecins().elem_size(); ++i )
-            dispoDoctors_[i] = Availability( resolver_, message.disponibilites_medecins().elem( i ) );
+        dispoDoctors_.resize( message.doctors().elem_size() );
+        for( int i = 0; i < message.doctors().elem_size(); ++i )
+            dispoDoctors_[i] = Availability( resolver_, message.doctors().elem( i ) );
     }
     controller_.Update( *this );
 }

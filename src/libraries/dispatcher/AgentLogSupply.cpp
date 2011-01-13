@@ -42,8 +42,8 @@ AgentLogSupply::~AgentLogSupply()
 // -----------------------------------------------------------------------------
 void AgentLogSupply::Update( const sword::LogSupplyState& asnMsg )
 {
-    if( asnMsg.has_chaine_activee()  )
-        bSystemEnabled_ = asnMsg.chaine_activee() != 0;
+    if( asnMsg.has_chain()  )
+        bSystemEnabled_ = asnMsg.chain() != 0;
 
     if( asnMsg.has_disponibilites_transporteurs_convois()  )
     {
@@ -74,7 +74,7 @@ void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogSupplyState asn;
     asn().mutable_unit()->set_id( agent_.GetId() );
-    asn().set_chaine_activee( bSystemEnabled_ );
+    asn().set_chain( bSystemEnabled_ );
     {
         for( std::vector< T_Availability >::const_iterator it = convoyersAvailability_.begin(); it != convoyersAvailability_.end(); ++it )
             it->Send( *asn().mutable_disponibilites_transporteurs_convois()->add_elem() );

@@ -58,36 +58,34 @@ void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico ) c
 // -----------------------------------------------------------------------------
 void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
 {
-    if( message.has_chaine_activee()  )
-        bChainEnabled_ = message.chaine_activee() != 0;
-    if( message.has_regime_travail()  )
-        nWorkRate_ = message.regime_travail() + 1; // $$$$ AGE 2006-06-27:
-
-    if( message.has_priorites()  )
+    if( message.has_chain()  )
+        bChainEnabled_ = message.chain() != 0;
+    if( message.has_working_scheme()  )
+        nWorkRate_ = message.working_scheme() + 1; // $$$$ AGE 2006-06-27:
+    if( message.has_priorities() )
     {
-        priorities_.resize( message.priorites().elem_size() );
-        for( int i = 0; i < message.priorites().elem_size(); ++i )
-            priorities_[i] = & resolver_.Get( message.priorites().elem( i ).id() );
+        priorities_.resize( message.priorities().elem_size() );
+        for( int i = 0; i < message.priorities().elem_size(); ++i )
+            priorities_[i] = & resolver_.Get( message.priorities().elem( i ).id() );
     }
-    if( message.has_priorites_tactiques()  )
+    if( message.has_tactical_priorities() )
     {
-        tacticalPriorities_.resize( message.priorites_tactiques().elem_size() );
-        for( int i = 0; i < message.priorites_tactiques().elem_size(); ++i )
-            tacticalPriorities_[i] = & automatResolver_.Get( message.priorites_tactiques().elem( i ).id() );
+        tacticalPriorities_.resize( message.tactical_priorities().elem_size() );
+        for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
+            tacticalPriorities_[i] = & automatResolver_.Get( message.tactical_priorities().elem( i ).id() );
     }
-    if( message.has_disponibilites_remorqueurs()  )
+    if( message.has_haulers() )
     {
-        dispoHaulers_.resize( message.disponibilites_remorqueurs().elem_size() );
-        for( int i = 0; i < message.disponibilites_remorqueurs().elem_size(); ++i )
-            dispoHaulers_[i] = Availability( resolver_, message.disponibilites_remorqueurs().elem( i ) );
+        dispoHaulers_.resize( message.haulers().elem_size() );
+        for( int i = 0; i < message.haulers().elem_size(); ++i )
+            dispoHaulers_[i] = Availability( resolver_, message.haulers().elem( i ) );
     }
-    if( message.has_disponibilites_reparateurs()  )
+    if( message.has_repairers() )
     {
-        dispoRepairers_.resize( message.disponibilites_reparateurs().elem_size() );
-        for( int i = 0; i < message.disponibilites_reparateurs().elem_size(); ++i )
-            dispoRepairers_[i] = Availability( resolver_, message.disponibilites_reparateurs().elem( i ) );
+        dispoRepairers_.resize( message.repairers().elem_size() );
+        for( int i = 0; i < message.repairers().elem_size(); ++i )
+            dispoRepairers_[i] = Availability( resolver_, message.repairers().elem( i ) );
     }
-
     controller_.Update( *this );
 }
 
@@ -99,7 +97,7 @@ void MaintenanceStates::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "MaintenanceStates", "Maintenance system state" ) )
                 .Display( tools::translate( "MaintenanceStates", "System status" ), bChainEnabled_ ?
-                        tools::translate( "MaintenanceStates", "Enabled" ) : tools::translate( "MaintenanceStates", "Disabled" ) )
+                          tools::translate( "MaintenanceStates", "Enabled" ) : tools::translate( "MaintenanceStates", "Disabled" ) )
                 .Display( tools::translate( "MaintenanceStates", "Working scheme" ), tools::translate( "MaintenanceStates", "R%1" ).arg( nWorkRate_ ) )
                 .Display( tools::translate( "MaintenanceStates", "Priorities" ), priorities_ )
                 .Display( tools::translate( "MaintenanceStates", "Tactical priorities" ), tacticalPriorities_ );

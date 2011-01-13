@@ -203,7 +203,7 @@ void PHY_SupplyDotationState::SendMsgCreation() const
     client::LogSupplyHandlingCreation asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_consumer()->set_id( pSuppliedAutomate_->GetID() );
-    asn().set_tick_creation( nCreationTick_ );
+    asn().set_tick( nCreationTick_ );
 
     for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {

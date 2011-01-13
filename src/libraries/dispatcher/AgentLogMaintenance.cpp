@@ -46,37 +46,37 @@ AgentLogMaintenance::~AgentLogMaintenance()
 // -----------------------------------------------------------------------------
 void AgentLogMaintenance::Update( const sword::LogMaintenanceState& message )
 {
-    if( message.has_chaine_activee() )
-        bSystemEnabled_ = message.chaine_activee() != 0;
+    if( message.has_chain() )
+        bSystemEnabled_ = message.chain() != 0;
 
-    if( message.has_disponibilites_remorqueurs()  )
+    if( message.has_haulers()  )
     {
         haulersAvailability_.clear();
-        for( int i = 0; i < message.disponibilites_remorqueurs().elem_size(); ++i )
-            haulersAvailability_.push_back( MaintenanceEquipmentAvailability( message.disponibilites_remorqueurs().elem( i ) ) );
+        for( int i = 0; i < message.haulers().elem_size(); ++i )
+            haulersAvailability_.push_back( MaintenanceEquipmentAvailability( message.haulers().elem( i ) ) );
     }
 
-    if( message.has_disponibilites_reparateurs()  )
+    if( message.has_repairers()  )
     {
         repairersAvailability_.clear();
-        for( int i = 0; i < message.disponibilites_reparateurs().elem_size(); ++i )
-            repairersAvailability_.push_back( MaintenanceEquipmentAvailability( message.disponibilites_reparateurs().elem( i ) ) );
+        for( int i = 0; i < message.repairers().elem_size(); ++i )
+            repairersAvailability_.push_back( MaintenanceEquipmentAvailability( message.repairers().elem( i ) ) );
     }
 
-    if( message.has_priorites_tactiques()  )
+    if( message.has_tactical_priorities()  )
     {
         tacticalPriorities_.clear();
-        for( int i = 0; i < message.priorites_tactiques().elem_size(); ++i )
-            tacticalPriorities_.push_back( &model_.Automats().Get( message.priorites_tactiques().elem( i ).id() ) );
+        for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
+            tacticalPriorities_.push_back( &model_.Automats().Get( message.tactical_priorities().elem( i ).id() ) );
     }
 
-    if( message.has_priorites()  )
+    if( message.has_priorities()  )
     {
         priorities_.clear();
-        for( int i = 0; i < message.priorites().elem_size(); ++i )
+        for( int i = 0; i < message.priorities().elem_size(); ++i )
         {
             sword::EquipmentType msg;
-            msg.set_id( message.priorites().elem( i ).id() );
+            msg.set_id( message.priorities().elem( i ).id() );
             priorities_.push_back( msg );
         }
     }
@@ -90,22 +90,22 @@ void AgentLogMaintenance::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogMaintenanceState asn;
     asn().mutable_unit()->set_id( agent_.GetId() );
-    asn().set_chaine_activee ( bSystemEnabled_ );
+    asn().set_chain ( bSystemEnabled_ );
     {
         for( std::vector< MaintenanceEquipmentAvailability >::const_iterator it = repairersAvailability_.begin(); it != repairersAvailability_.end(); ++it )
-            it->Send( *asn().mutable_disponibilites_reparateurs()->add_elem() );
+            it->Send( *asn().mutable_repairers()->add_elem() );
     }
     {
         for( std::vector< MaintenanceEquipmentAvailability >::const_iterator it = haulersAvailability_.begin(); it != haulersAvailability_.end(); ++it )
-            it->Send( *asn().mutable_disponibilites_remorqueurs()->add_elem() );
+            it->Send( *asn().mutable_haulers()->add_elem() );
     }
     {
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it)
-            asn().mutable_priorites_tactiques()->add_elem()->set_id( (*it)->GetId() );
+            asn().mutable_tactical_priorities()->add_elem()->set_id( (*it)->GetId() );
     }
     {
         for( std::vector< sword::EquipmentType >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
-            asn().mutable_priorites()->add_elem()->set_id( (*it).id() );
+            asn().mutable_priorities()->add_elem()->set_id( (*it).id() );
     }
     asn.Send( publisher );
 }

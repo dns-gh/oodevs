@@ -33,11 +33,11 @@ public:
              Availability();
              template< typename Message >
                  Availability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
-                : type_     ( & resolver.Get( message.equipment_type().id() ) )
-                , total_    ( message.nbr_total() )
-                , available_( message.nbr_disponibles() )
-                , atWork_   ( message.nbr_au_travail() )
-                , atRest_   ( message.has_nbr_au_repos() ? message.nbr_au_repos() : 0 )
+                : type_     ( & resolver.Get( message.equipment().id() ) )
+                , total_    ( message.total() )
+                , available_( message.available() )
+                , atWork_   ( message.working() )
+                , atRest_   ( message.has_resting() ? message.resting() : 0 )
              {};
     virtual ~Availability();
     //@}

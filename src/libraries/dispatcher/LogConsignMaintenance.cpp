@@ -25,7 +25,7 @@ LogConsignMaintenance::LogConsignMaintenance( const Model& model, const sword::L
     : SimpleEntity< >   ( msg.request().id() )
     , model_            ( model )
     , agent_            ( model.Agents().Get( msg.unit().id() ) )
-    , nTickCreation_    ( msg.tick_creation() )
+    , nTickCreation_    ( msg.tick() )
     , nEquipmentType_   ( msg.equipement().id() )
     , nBreakdownType_   ( msg.breakdown().id() )
     , pTreatingAgent_   ( 0 )
@@ -67,7 +67,7 @@ void LogConsignMaintenance::SendCreation( ClientPublisher_ABC& publisher ) const
 
     message().mutable_request()->set_id( GetId() );
     message().mutable_unit()->set_id( agent_.GetId() );
-    message().set_tick_creation ( nTickCreation_ );
+    message().set_tick ( nTickCreation_ );
 
     message().mutable_equipement()->set_id( nEquipmentType_ );
     message().mutable_breakdown()->set_id( nBreakdownType_ );
