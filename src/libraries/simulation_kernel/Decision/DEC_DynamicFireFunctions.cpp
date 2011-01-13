@@ -17,40 +17,11 @@
 #include "Entities/Objects/FireAttribute.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 
-/*
-namespace
-{
-    // -----------------------------------------------------------------------------
-    // Name: GetFireHoseRange
-    // Created: RFT 2004-09-16
-    // -----------------------------------------------------------------------------
-    int GetFireHoseRange( const MIL_AgentPion& pPion, MIL_FireFunctor& functor )
-    {
-        //pPion.GetRole< PHY_RolePion_Composantes >().Apply( functor );
-        const PHY_RolePion_Reinforcement::T_PionSet& reinforcements = pPion.GetRole< PHY_RolePion_Reinforcement >().GetReinforcements();
-        for( PHY_RolePion_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
-        {
-            //(*itReinforcement)->GetRole< PHY_RolePion_Composantes >().Apply( functor );
-        }
-        return functor.GetFireHoseRange();
-    }
-}*/
-
 // -----------------------------------------------------------------------------
 // Name: DEC_FireFunctions::GetRangeToExtinguish
 // Created: RFT 2008
 // -----------------------------------------------------------------------------
 float DEC_DynamicFireFunctions::GetRangeToExtinguish( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > /*knowledge*/ )
 {
-    //if( !knowledge || !knowledge->IsValid() )
-    //    return -1.f; //If the fire is extinguished the range is set to -1
-    //MIL_Object_ABC* pObject = knowledge->GetObjectKnown();
-    //if( !pObject || pObject->IsMarkedForDestruction() )
-    //    return -1.f;
-    //MIL_FireFunctor functor( pObject->GetAttribute< FireAttribute >().GetClass() );
-    //return static_cast< float >( GetFireHoseRange( callerAgent, functor ) );
-
-    int todo = 0;
     return -1.0f;
 }
-
