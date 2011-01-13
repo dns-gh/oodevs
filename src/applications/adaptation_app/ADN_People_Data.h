@@ -11,11 +11,8 @@
 #define __ADN_People_Data_h_
 
 #include "ADN_Data_ABC.h"
-
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
-#include "ADN_Type_VectorFixed_ABC.h"
-#include "ADN_Models_Data.h"
 #include "ADN_Population_Data.h"
 
 class xml::xistream;
@@ -27,7 +24,6 @@ class xml::xistream;
 // =============================================================================
 class ADN_People_Data : public ADN_Data_ABC
 {
-
 public:
 // *****************************************************************************
     class PeopleInfos
@@ -76,7 +72,7 @@ private:
     void WriteArchive( xml::xostream& output );
 
 public:
-    T_PeopleInfosVector   vPeople_;
+    T_PeopleInfosVector vPeople_;
 };
 
 // -----------------------------------------------------------------------------
@@ -102,6 +98,5 @@ ADN_People_Data::PeopleInfos* ADN_People_Data::FindPeople( const std::string& st
         return 0;
     return *it;
 }
-
 
 #endif // __ADN_People_Data_h_

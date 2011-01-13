@@ -14,19 +14,19 @@
 #include "ADN_Wizard_ABC.h"
 
 typedef ADN_Wizard_ABC<ADN_People_Data::PeopleInfos> ADN_Wizard_ABC_ADN_People_Data_PeopleInfos;
+
 // =============================================================================
 /** @class  ADN_People_Wizard
-@brief  ADN_People_Wizard
+    @brief  ADN_People_Wizard
 */
 // Created: SLG 2010-11-23
 // =============================================================================
 class ADN_People_Wizard : public ADN_Wizard_ABC_ADN_People_Data_PeopleInfos
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    ADN_People_Wizard( QWidget* pParent = 0, const char* szName = 0 );
+             ADN_People_Wizard( QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_People_Wizard();
     //@}
 };

@@ -9,15 +9,10 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_People_Data.h"
-
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_OpenFile_Exception.h"
 #include "ADN_DataException.h"
-#include "ADN_SaveFile_Exception.h"
-
 #include "ADN_Tr.h"
-#include "ENT/ENT_Tr.h"
 
 // =============================================================================
 // ADN_People_Data::PeopleInfos
@@ -28,12 +23,12 @@
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_People_Data::PeopleInfos::PeopleInfos()
-: ADN_Ref_ABC            ()
-, ADN_DataTreeNode_ABC   ()
-, ptrModel_              ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
-, male_                  ( 0 )
-, female_                  ( 0 )
-, children_                  ( 0 )
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , ptrModel_( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
+    , male_    ( 0 )
+    , female_  ( 0 )
+    , children_( 0 )
 {
     this->BindExistenceTo( &ptrModel_ );
 }
@@ -47,7 +42,6 @@ ADN_People_Data::PeopleInfos::~PeopleInfos()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PeopleInfos::GetNodeName
 // Created: APE 2004-12-02
@@ -56,7 +50,6 @@ std::string ADN_People_Data::PeopleInfos::GetNodeName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PeopleInfos::GetItemName
@@ -74,10 +67,10 @@ std::string ADN_People_Data::PeopleInfos::GetItemName()
 ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
 {
     PeopleInfos* pCopy = new PeopleInfos();
-    pCopy->ptrModel_        = ptrModel_.GetData();
-    pCopy->male_            = male_.GetData();
-    pCopy->female_          = female_.GetData();
-    pCopy->children_        = children_.GetData();
+    pCopy->ptrModel_ = ptrModel_.GetData();
+    pCopy->male_ = male_.GetData();
+    pCopy->female_ = female_.GetData();
+    pCopy->children_ = children_.GetData();
     return pCopy;
 }
 
@@ -89,7 +82,7 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
 {
     std::string strModel;
     input >> xml::attribute( "name", strName_ )
-        >> xml::attribute( "associated-crowd", strModel );
+          >> xml::attribute( "associated-crowd", strModel );
 
     ADN_Population_Data::PopulationInfos* pModel = ADN_Workspace::GetWorkspace().GetPopulation().GetData().FindPopulation( strModel );
     if( !pModel )
@@ -97,15 +90,15 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
     ptrModel_ = pModel;
 
     input >> xml::start( "repartition" )
-        >> xml::attribute( "male", male_ )
-        >> xml::attribute( "female", female_ )
-        >> xml::attribute( "children", children_ )
-        >> xml::end;
+              >> xml::attribute( "male", male_ )
+              >> xml::attribute( "female", female_ )
+              >> xml::attribute( "children", children_ )
+          >> xml::end;
     input >> xml::start( "schedule" )
-        >> xml::attribute( "transfer-time", transfertTime_ )
-        >> xml::end
-        >> xml::start( "needs" )
-        >> xml::end;
+              >> xml::attribute( "transfer-time", transfertTime_ )
+          >> xml::end
+          >> xml::start( "needs" )
+          >> xml::end;
 }
 // -----------------------------------------------------------------------------
 // Name: PeopleInfos::WriteArchive
@@ -114,19 +107,19 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
 void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosId )
 {
     output << xml::start( "population" )
-        << xml::attribute( "name", strName_ )
-        << xml::attribute( "id", mosId )
-        << xml::attribute( "associated-crowd", ptrModel_.GetData()->strName_ )
-        << xml::start( "repartition" )
-            << xml::attribute( "male", male_ )
-            << xml::attribute( "female", female_ )
-            << xml::attribute( "children", children_ )
-            << xml::end
-            << xml::start( "schedule" )
-            << xml::attribute( "transfer-time", transfertTime_ )
-            << xml::end
-            << xml::start( "needs" )
-            << xml::end
+               << xml::attribute( "name", strName_ )
+               << xml::attribute( "id", mosId )
+               << xml::attribute( "associated-crowd", ptrModel_.GetData()->strName_ )
+               << xml::start( "repartition" )
+                   << xml::attribute( "male", male_ )
+                   << xml::attribute( "female", female_ )
+                   << xml::attribute( "children", children_ )
+               << xml::end
+               << xml::start( "schedule" )
+                   << xml::attribute( "transfer-time", transfertTime_ )
+               << xml::end
+               << xml::start( "needs" )
+               << xml::end
     << xml::end;
 }
 
@@ -139,10 +132,9 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
 ADN_People_Data::ADN_People_Data()
-: ADN_Data_ABC()
-, vPeople_    ()
+    : ADN_Data_ABC()
 {
-    //TODO
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -179,11 +171,9 @@ void ADN_People_Data::FilesNeeded( T_StringList& vFiles ) const
 void ADN_People_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "populations" )
-            >> xml::list( "population", *this, &ADN_People_Data::ReadPeople )
+              >> xml::list( "population", *this, &ADN_People_Data::ReadPeople )
           >> xml::end;
-    //TODO
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_People_Data::ReadPeople
