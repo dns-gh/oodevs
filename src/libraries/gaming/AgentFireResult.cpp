@@ -23,12 +23,12 @@ AgentFireResult::AgentFireResult( const sword::UnitFireDamages& message, const t
 {
     for( int i = 0; i < message.equipments().elem_size(); ++i )
     {
-        const kernel::EquipmentType* type = & equipmentResolver.Get( message.equipments().elem( i ).equipement_type().id() );
+        const kernel::EquipmentType* type = & equipmentResolver.Get( message.equipments().elem( i ).equipement().id() );
         Equipment* equipment = new Equipment( *type );
-        equipment->available_   = message.equipments().elem( i ).available_nbr();
-        equipment->unavailable_ = message.equipments().elem( i ).unavailable_nbr();
-        equipment->repairable_  = message.equipments().elem( i ).repairable_nbr();
-        Register( message.equipments().elem( i ).equipement_type().id(), *equipment );
+        equipment->available_   = message.equipments().elem( i ).available();
+        equipment->unavailable_ = message.equipments().elem( i ).unavailable();
+        equipment->repairable_  = message.equipments().elem( i ).repairable();
+        Register( message.equipments().elem( i ).equipement().id(), *equipment );
     }
     for( int i = 0; i < eNbrHumanWound; ++i )
         casualties_[i].wound_ = E_HumanWound( i );
@@ -43,12 +43,12 @@ AgentFireResult::AgentFireResult( const sword::UnitFireDamages& message, const t
         else if( fire.rank() == sword::sous_officer )
             table = & Casualties::subOfficers_;
 
-        casualties_[ eHumanWound_BlesseUrgence1 ].*table        = fire.wounded_u1_nbr();
-        casualties_[ eHumanWound_BlesseUrgence2 ].*table        = fire.wounded_u2_nbr();
-        casualties_[ eHumanWound_BlesseUrgence3 ].*table        = fire.wounded_u3_nbr();
-        casualties_[ eHumanWound_BlesseUrgenceExtreme ].*table  = fire.wounded_ue_nbr();
-        casualties_[ eHumanWound_Mort ].*table                  = fire.dead_nbr();
-        casualties_[ eHumanWound_NonBlesse ].*table             = fire.alive_nbr();
+        casualties_[ eHumanWound_BlesseUrgence1 ].*table        = fire.wounded_u1();
+        casualties_[ eHumanWound_BlesseUrgence2 ].*table        = fire.wounded_u2();
+        casualties_[ eHumanWound_BlesseUrgence3 ].*table        = fire.wounded_u3();
+        casualties_[ eHumanWound_BlesseUrgenceExtreme ].*table  = fire.wounded_ue();
+        casualties_[ eHumanWound_Mort ].*table                  = fire.dead();
+        casualties_[ eHumanWound_NonBlesse ].*table             = fire.alive();
     }
 }
 

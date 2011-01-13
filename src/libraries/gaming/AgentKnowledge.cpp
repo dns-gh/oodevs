@@ -99,8 +99,8 @@ void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
     if( message.has_party()  )
         team_ = & teamResolver_.Get( message.party().id() );
 
-    if( message.has_nature_pc()  )
-        bIsPC_ = message.nature_pc() != 0;
+    if( message.has_command_post()  )
+        bIsPC_ = message.command_post() != 0;
 
     if( message.has_pertinence()  )
         nRelevance_ = message.pertinence();

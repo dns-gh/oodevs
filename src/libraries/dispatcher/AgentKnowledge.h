@@ -71,7 +71,7 @@ private:
       unsigned operational_statePresent : 1;
       unsigned deadPresent : 1;
       unsigned speedPresent : 1;
-      unsigned nature_pcPresent : 1;
+      unsigned command_postPresent : 1;
       unsigned renduPresent : 1;
       unsigned prisonerPresent : 1;
       unsigned refugees_managedPresent : 1;

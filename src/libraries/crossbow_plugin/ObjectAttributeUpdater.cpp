@@ -131,8 +131,8 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeConstruction& c
         row.SetField( "percentage", FieldVariant( construction.percentage() ) ); //int
     if( construction.has_resource() )
         row.SetField( "dotation_type", FieldVariant( static_cast< long >( construction.resource().id() ) ) ); //int
-    if( construction.has_dotation_nbr() )
-        row.SetField( "dotation_nbr", FieldVariant( construction.dotation_nbr() ) ); //int
+    if( construction.has_dotation() )
+        row.SetField( "dotation_nbr", FieldVariant( construction.dotation() ) ); //int
 }
 
 // -----------------------------------------------------------------------------
@@ -163,8 +163,8 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeMine& mine )
         row.SetField( "percentage", FieldVariant( mine.percentage() ) );
     if( mine.has_resource() )
         row.SetField( "dotation_type", FieldVariant( (long)mine.resource().id() ) );
-    if( mine.has_dotation_nbr() )
-        row.SetField( "dotation_nbr", FieldVariant( mine.dotation_nbr() ) );
+    if( mine.has_dotation() )
+        row.SetField( "dotation_nbr", FieldVariant( mine.dotation() ) );
 }
 
 // -----------------------------------------------------------------------------

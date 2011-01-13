@@ -48,7 +48,7 @@ AgentKnowledge::AgentKnowledge( Model& model, const sword::UnitKnowledgeCreation
     optionals_.operational_statePresent = 0;
     optionals_.deadPresent = 0;
     optionals_.speedPresent = 0;
-    optionals_.nature_pcPresent = 0;
+    optionals_.command_postPresent = 0;
     optionals_.renduPresent = 0;
     optionals_.prisonerPresent = 0;
     optionals_.refugees_managedPresent = 0;
@@ -105,7 +105,7 @@ void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
     UPDATE_ASN_ATTRIBUTE( message, operational_state                 , nOperationalState_   );
     UPDATE_ASN_ATTRIBUTE( message, dead                    , bDead_               );
     UPDATE_ASN_ATTRIBUTE( message, speed                   , nSpeed_              );
-    UPDATE_ASN_ATTRIBUTE( message, nature_pc               , bPC_                 );
+    UPDATE_ASN_ATTRIBUTE( message, command_post               , bPC_                 );
     UPDATE_ASN_ATTRIBUTE( message, prisoner                , bPrisoner_           );
     UPDATE_ASN_ATTRIBUTE( message, refugees_managed        , bRefugeeManaged_     );
 
@@ -167,7 +167,7 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     SEND_ASN_ATTRIBUTE( message(), operational_state, nOperationalState_ );
     SEND_ASN_ATTRIBUTE( message(), dead, bDead_ );
     SEND_ASN_ATTRIBUTE( message(), speed, nSpeed_ );
-    SEND_ASN_ATTRIBUTE( message(), nature_pc, bPC_ );
+    SEND_ASN_ATTRIBUTE( message(), command_post, bPC_ );
     SEND_ASN_ATTRIBUTE( message(), prisoner, bPrisoner_ );
     SEND_ASN_ATTRIBUTE( message(), refugees_managed  , bRefugeeManaged_ );
     if( optionals_.renduPresent )

@@ -85,10 +85,10 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, sword::UnitF
         const T_ComposanteStates&      states =  itResult->second;
 
         sword::UnitEquipmentFireDamage& asnEquipement = *asn.mutable_equipments()->add_elem();
-        asnEquipement.mutable_equipement_type()->set_id( type.GetMosID().id() );
-        asnEquipement.set_available_nbr( states[ PHY_ComposanteState::undamaged_.GetID() ] );
-        asnEquipement.set_repairable_nbr( states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
-        asnEquipement.set_unavailable_nbr( states[ PHY_ComposanteState::dead_.GetID() ] );
+        asnEquipement.mutable_equipement()->set_id( type.GetMosID().id() );
+        asnEquipement.set_available( states[ PHY_ComposanteState::undamaged_.GetID() ] );
+        asnEquipement.set_repairable( states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
+        asnEquipement.set_unavailable( states[ PHY_ComposanteState::dead_.GetID() ] );
     }
 
     asn.mutable_humans();
@@ -98,13 +98,12 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, sword::UnitF
         const PHY_HumanRank& rank = *it->second;
         sword::UnitHumanFireDamage& personnel = *asn.mutable_humans()->add_elem();
         const T_HumansPerWoundVector& wounds = humanResults_[ rank.GetID() ];
-
-        personnel.set_rank           ( rank.GetAsnID() );
-        personnel.set_alive_nbr      ( wounds[ PHY_HumanWound::notWounded_.GetID() ] );
-        personnel.set_wounded_u1_nbr ( wounds[ PHY_HumanWound::woundedU1_ .GetID() ] );
-        personnel.set_wounded_u2_nbr ( wounds[ PHY_HumanWound::woundedU2_ .GetID() ] );
-        personnel.set_wounded_u3_nbr ( wounds[ PHY_HumanWound::woundedU3_ .GetID() ] );
-        personnel.set_wounded_ue_nbr ( wounds[ PHY_HumanWound::woundedUE_ .GetID() ] );
-        personnel.set_dead_nbr       ( wounds[ PHY_HumanWound::killed_    .GetID() ] );
+        personnel.set_rank( rank.GetAsnID() );
+        personnel.set_alive( wounds[ PHY_HumanWound::notWounded_.GetID() ] );
+        personnel.set_wounded_u1( wounds[ PHY_HumanWound::woundedU1_.GetID() ] );
+        personnel.set_wounded_u2( wounds[ PHY_HumanWound::woundedU2_.GetID() ] );
+        personnel.set_wounded_u3( wounds[ PHY_HumanWound::woundedU3_.GetID() ] );
+        personnel.set_wounded_ue( wounds[ PHY_HumanWound::woundedUE_.GetID() ] );
+        personnel.set_dead( wounds[ PHY_HumanWound::killed_.GetID() ] );
     }
 }

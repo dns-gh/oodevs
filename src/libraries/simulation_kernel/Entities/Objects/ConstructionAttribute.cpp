@@ -56,8 +56,8 @@ ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotati
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, const sword::ObjectAttributes& asn )
-    : nFullNbrDotation_       ( asn.construction().dotation_nbr() )
-    , nCurrentNbrDotation_    ( asn.construction().dotation_nbr() )
+    : nFullNbrDotation_       ( asn.construction().dotation() )
+    , nCurrentNbrDotation_    ( asn.construction().dotation() )
     , constructionPercentage_ ( 1., 0.05, 0., 1.)
     , dotation_               ( &dotation )
     , bBuildByGen_            ( false )
@@ -207,7 +207,7 @@ void ConstructionAttribute::SendFullState( sword::ObjectAttributes& asn ) const
     if( dotation_ )
     {
         asn.mutable_construction()->mutable_resource()->set_id( dotation_->GetMosID() );
-        asn.mutable_construction()->set_dotation_nbr( nCurrentNbrDotation_ );        
+        asn.mutable_construction()->set_dotation( nCurrentNbrDotation_ );        
     }
     asn.mutable_construction()->set_percentage( unsigned int( constructionPercentage_.Send() * 100. ) );
 }

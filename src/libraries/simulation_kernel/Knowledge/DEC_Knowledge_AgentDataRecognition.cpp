@@ -158,7 +158,7 @@ void DEC_Knowledge_AgentDataRecognition::SendChangedState( sword::UnitKnowledgeU
         assert( pArmy_ );
         assert( pAgentType_ );
         asnMsg.mutable_party()->set_id( pArmy_->GetID() );
-        asnMsg.set_nature_pc( bIsPC_ );
+        asnMsg.set_command_post( bIsPC_ );
     }
 }
 
@@ -174,7 +174,7 @@ void DEC_Knowledge_AgentDataRecognition::SendFullState( sword::UnitKnowledgeUpda
     assert( pArmy_ );
     assert( pAgentType_ );
     asnMsg.mutable_party()->set_id( pArmy_->GetID() );
-    asnMsg.set_nature_pc( bIsPC_ );
+    asnMsg.set_command_post( bIsPC_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -49,8 +49,10 @@ namespace shield
     assert( from.type##_descriptor()->value_count() == int( boost::assign::map_list_of mapping .size() ) ); \
     CONVERT_ENUM( field, mapping )
 
+#define CONVERT_ID_TO( from_field, to_field ) \
+    to->mutable_##to_field()->set_id( from.from_field().id() )
 #define CONVERT_ID( field ) \
-    to->mutable_##field()->set_id( from.field().id() )
+    CONVERT_ID_TO( field, field )
 
 #define CONVERT_LIST_TO( from_field, to_field, elem, callback ) \
     if( from.has_##from_field() ) \

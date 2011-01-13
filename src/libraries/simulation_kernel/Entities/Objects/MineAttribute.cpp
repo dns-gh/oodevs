@@ -174,7 +174,7 @@ void MineAttribute::SendFullState( sword::ObjectAttributes& asn ) const
     if( dotation_ )
     {
         asn.mutable_mine()->mutable_resource()->set_id( dotation_->GetMosID() );
-        asn.mutable_mine()->set_dotation_nbr( nCurrentNbrDotation_ );
+        asn.mutable_mine()->set_dotation( nCurrentNbrDotation_ );
     }
     asn.mutable_mine()->set_percentage( unsigned int( miningPercentage_.Send() * 100. ) );
 }

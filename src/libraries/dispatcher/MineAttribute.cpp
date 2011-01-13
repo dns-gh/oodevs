@@ -44,8 +44,8 @@ void MineAttribute::Update( const sword::ObjectAttributes& asnMsg )
     {
         if( asnMsg.mine().has_resource() )
             dotation_ = asnMsg.mine().resource().id();
-        if( asnMsg.mine().has_dotation_nbr() )
-            nNbrDotationForMining_ = asnMsg.mine().dotation_nbr();
+        if( asnMsg.mine().has_dotation() )
+            nNbrDotationForMining_ = asnMsg.mine().dotation();
         if( asnMsg.mine().has_percentage() )
             nPercentageMining_ = asnMsg.mine().percentage();
     }
@@ -58,6 +58,6 @@ void MineAttribute::Update( const sword::ObjectAttributes& asnMsg )
 void MineAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_mine()->mutable_resource()->set_id( dotation_ );
-    asnMsg.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );
+    asnMsg.mutable_mine()->set_dotation( nNbrDotationForMining_ );
     asnMsg.mutable_mine()->set_percentage( nPercentageMining_ );
 }

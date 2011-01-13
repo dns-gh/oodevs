@@ -178,13 +178,11 @@ const MIL_Automate& PHY_MaintenanceComposanteState::GetAutomate() const
 void PHY_MaintenanceComposanteState::SendFullState() const
 {
     assert( pPion_ );
-
     SendMsgCreation();
     client::LogMaintenanceHandlingUpdate asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
-    asn().set_diagnostique_effectue( bDiagnosed_ );
-
+    asn().set_diagnosed( bDiagnosed_ );
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
@@ -203,14 +201,11 @@ void PHY_MaintenanceComposanteState::SendChangedState() const
 {
     if( !( bHasChanged_ || ( pConsign_ && pConsign_->HasChanged() ) ) )
         return;
-
     assert( pPion_ );
-
     client::LogMaintenanceHandlingUpdate asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
-    asn().set_diagnostique_effectue( bDiagnosed_ );
-
+    asn().set_diagnosed( bDiagnosed_ );
     if( pConsign_ )
         pConsign_->SendChangedState( asn );
     else
@@ -240,7 +235,6 @@ void PHY_MaintenanceComposanteState::SendMsgCreation() const
 {
     assert( pPion_ );
     assert( pComposante_ );
-
     client::LogMaintenanceHandlingCreation asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
@@ -257,7 +251,6 @@ void PHY_MaintenanceComposanteState::SendMsgCreation() const
 void PHY_MaintenanceComposanteState::SendMsgDestruction() const
 {
     assert( pPion_ );
-
     client::LogMaintenanceHandlingDestruction asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
@@ -272,8 +265,7 @@ void PHY_MaintenanceComposanteState::SetConsign( PHY_MaintenanceConsign_ABC* pCo
 {
     if( pConsign == pConsign_ )
         return;
-
-    pConsign_    = pConsign;
+    pConsign_ = pConsign;
     bHasChanged_ = true;
 }
 

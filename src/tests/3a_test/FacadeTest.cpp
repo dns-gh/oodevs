@@ -376,7 +376,7 @@ namespace
         StopUnitFire& fire = *result.mutable_message()->mutable_stop_unit_fire();
         fire.mutable_fire()->set_id( fire_id );
         UnitFireDamages& damage = *fire.mutable_units_damages()->add_elem();
-        damage.mutable_equipments()->add_elem()->set_unavailable_nbr( damage_count );
+        damage.mutable_equipments()->add_elem()->set_unavailable( damage_count );
         return result;
     }
 }

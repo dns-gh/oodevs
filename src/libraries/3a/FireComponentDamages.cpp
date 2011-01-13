@@ -44,8 +44,8 @@ float FireComponentDamages::Extract( const sword::SimToClient& wrapper ) const
         for( int e = 0; e < damages.equipments().elem_size(); ++e )
         {
             const sword::UnitEquipmentFireDamage& damage = damages.equipments().elem( e );
-            if( filter_.IsAllowed( damage.equipement_type().id() ) )
-                result += damage.unavailable_nbr();
+            if( filter_.IsAllowed( damage.equipement().id() ) )
+                result += damage.unavailable();
         }
     }
     return result;

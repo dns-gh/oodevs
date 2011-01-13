@@ -60,8 +60,8 @@ void LogMaintenanceConsign::Update( const sword::LogMaintenanceHandlingUpdate& m
 {
     if( message.has_state()  )
         nState_ = E_LogMaintenanceHandlingStatus( message.state() );
-    if( message.has_diagnostique_effectue()  )
-        diagnosed_ = message.diagnostique_effectue();
+    if( message.has_diagnosed()  )
+        diagnosed_ = message.diagnosed();
     if( message.has_provider() && ( !pPionLogHandling_ || message.provider().id() != int( pPionLogHandling_->GetId() ) ) )
     {
         if( pPionLogHandling_ )

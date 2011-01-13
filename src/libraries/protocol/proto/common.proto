@@ -704,14 +704,14 @@ message ObjectAttributeResourceNetwork {
 
 message ObjectAttributeConstruction {
    optional ResourceType resource     = 1;
-   optional int32        dotation_nbr = 2;
+   optional int32        dotation = 2;
    optional float        density      = 3;
    optional int32        percentage   = 4;
 }
 
 message ObjectAttributeMine {
    optional ResourceType resource     = 1;
-   optional int32        dotation_nbr = 2;
+   optional int32        dotation = 2;
    optional float        density      = 3;
    optional int32        percentage   = 4;
 }

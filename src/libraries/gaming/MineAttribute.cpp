@@ -108,8 +108,8 @@ void MineAttribute::UpdateData( const T& message )
         if( ! valorization_ && message.mine().has_resource()  )
             valorization_ = resolver_.Find( message.mine().resource().id() );
 
-        if( message.mine().has_dotation_nbr()  )
-            nDotationValorization_ = message.mine().dotation_nbr();
+        if( message.mine().has_dotation()  )
+            nDotationValorization_ = message.mine().dotation();
         if( message.mine().has_percentage()  )
             rValorizationPercentage_ = float( message.mine().percentage() );
         if( message.mine().has_density()  )

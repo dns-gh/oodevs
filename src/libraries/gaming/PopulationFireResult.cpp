@@ -18,7 +18,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 PopulationFireResult::PopulationFireResult( const sword::CrowdFireDamages& message , const tools::Resolver_ABC< Population_ABC >& resolver, const QDateTime& time )
     : target_( resolver.Get( message.target().id() ) )
-    , deadPeople_( message.dead_nbr() )
+    , deadPeople_( message.dead() )
     , time_( time )
 {
     // NOTHING

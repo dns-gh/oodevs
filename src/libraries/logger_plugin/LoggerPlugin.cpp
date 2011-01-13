@@ -268,11 +268,11 @@ void LoggerPlugin::LogPopulationsFireDamages( const sword::CrowdsFireDamages& po
     for( int i = 0; i < populationsDamages.elem_size(); ++i )
     {
         const sword::CrowdFireDamages& damages = populationsDamages.elem( i );
-        if( damages.has_target() && damages.has_dead_nbr() && damages.dead_nbr() > 0 )
+        if( damages.has_target() && damages.has_dead() && damages.dead() > 0 )
         {
             kernel::Entity_ABC* target = model_.Populations().Find( damages.target().id() );
             if( target )
-                *file_ << date_ << " Fire - " << target->GetName() << "[" << target->GetId() << "] damaged : " << damages.dead_nbr() << " killed" << std::endl;
+                *file_ << date_ << " Fire - " << target->GetName() << "[" << target->GetId() << "] damaged : " << damages.dead() << " killed" << std::endl;
         }
     }
 }
@@ -290,16 +290,16 @@ void LoggerPlugin::LogDamagesOnTarget( const sword::UnitFireDamages& unitDamages
         for( int i = 0; i < unitDamages.humans().elem_size(); ++i )
         {
             const sword::UnitHumanFireDamage& humanDamage = unitDamages.humans().elem( i );
-            if( humanDamage.has_dead_nbr() )
-                dead += humanDamage.dead_nbr();
-            if( humanDamage.has_wounded_u1_nbr() )
-                wounded += humanDamage.wounded_u1_nbr();
-            if( humanDamage.has_wounded_u2_nbr() )
-                wounded += humanDamage.wounded_u2_nbr();
-            if( humanDamage.has_wounded_u3_nbr() )
-                wounded += humanDamage.wounded_u3_nbr();
-            if( humanDamage.has_wounded_ue_nbr() )
-                wounded += humanDamage.wounded_ue_nbr();
+            if( humanDamage.has_dead() )
+                dead += humanDamage.dead();
+            if( humanDamage.has_wounded_u1() )
+                wounded += humanDamage.wounded_u1();
+            if( humanDamage.has_wounded_u2() )
+                wounded += humanDamage.wounded_u2();
+            if( humanDamage.has_wounded_u3() )
+                wounded += humanDamage.wounded_u3();
+            if( humanDamage.has_wounded_ue() )
+                wounded += humanDamage.wounded_ue();
         }
         if( dead > 0 || wounded > 0 )
         {
@@ -323,10 +323,10 @@ void LoggerPlugin::LogDamagesOnTarget( const sword::UnitFireDamages& unitDamages
         for( int i = 0; i < unitDamages.equipments().elem_size(); ++i )
         {
             const sword::UnitEquipmentFireDamage& equipmentDamage = unitDamages.equipments().elem( i );
-            if( equipmentDamage.has_unavailable_nbr() )
-                unavailable += equipmentDamage.unavailable_nbr();
-            if( equipmentDamage.has_repairable_nbr() )
-                repairable += equipmentDamage.repairable_nbr();
+            if( equipmentDamage.has_unavailable() )
+                unavailable += equipmentDamage.unavailable();
+            if( equipmentDamage.has_repairable() )
+                repairable += equipmentDamage.repairable();
         }
         if( repairable > 0 || unavailable > 0)
         {

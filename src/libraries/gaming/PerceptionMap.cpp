@@ -39,15 +39,15 @@ PerceptionMap::~PerceptionMap()
 // -----------------------------------------------------------------------------
 void PerceptionMap::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 {
-    if( message.has_perception_par_compagnie()  )
+    if( message.has_perceptions() )
     {
         perceptions_.clear();
-        perceptions_.reserve( message.perception_par_compagnie().elem_size() );
-        for( int i = 0; i < message.perception_par_compagnie().elem_size(); ++i )
+        perceptions_.reserve( message.perceptions().elem_size() );
+        for( int i = 0; i < message.perceptions().elem_size(); ++i )
         {
-            const Automat_ABC& agent = resolver_.Get( message.perception_par_compagnie().elem( i ).automat().id() );
+            const Automat_ABC& agent = resolver_.Get( message.perceptions().elem( i ).automat().id() );
             // $$$$ AGE 2006-02-22:
-            perceptions_.push_back( Perception( agent, (E_PerceptionResult)( 3 - message.perception_par_compagnie().elem( i ).identification_level() ) ) );
+            perceptions_.push_back( Perception( agent, (E_PerceptionResult)( 3 - message.perceptions().elem( i ).identification_level() ) ) );
         }
         controller_.Update( *this );
     }

@@ -44,8 +44,8 @@ void ConstructionAttribute::Update( const sword::ObjectAttributes& asnMsg )
     {
         if ( asnMsg.construction().has_resource() )
             dotation_ = asnMsg.construction().resource().id();
-        if( asnMsg.construction().has_dotation_nbr() )
-            nNbrDotationForConstruction_ = asnMsg.construction().dotation_nbr();
+        if( asnMsg.construction().has_dotation() )
+            nNbrDotationForConstruction_ = asnMsg.construction().dotation();
         if( asnMsg.construction().has_percentage() )
             nPercentageConstruction_ = asnMsg.construction().percentage();
     }
@@ -58,6 +58,6 @@ void ConstructionAttribute::Update( const sword::ObjectAttributes& asnMsg )
 void ConstructionAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
     asnMsg.mutable_construction()->mutable_resource()->set_id( dotation_ );
-    asnMsg.mutable_construction()->set_dotation_nbr( nNbrDotationForConstruction_ );
+    asnMsg.mutable_construction()->set_dotation( nNbrDotationForConstruction_ );
     asnMsg.mutable_construction()->set_percentage( nPercentageConstruction_ );
 }

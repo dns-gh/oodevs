@@ -520,7 +520,7 @@ BOOST_FIXTURE_TEST_CASE( unit_knowledge_update_to_client_is_converted, ContextFi
     content.mutable_unit_knowledge_update()->mutable_direction()->set_heading( 77 );
     content.mutable_unit_knowledge_update()->set_speed( 78 );
     content.mutable_unit_knowledge_update()->mutable_party()->set_id( 79 );
-    content.mutable_unit_knowledge_update()->set_nature_pc( true );
+    content.mutable_unit_knowledge_update()->set_command_post( true );
     FillAutomatPerception( content.mutable_unit_knowledge_update()->mutable_perceptions()->add_elem() );
     FillAutomatPerception( content.mutable_unit_knowledge_update()->mutable_perceptions()->add_elem() );
     content.mutable_unit_knowledge_update()->mutable_surrendered_unit()->set_id( 80 );
@@ -557,20 +557,20 @@ namespace
     void FillUnitHumanFireDamage( D* d )
     {
         d->set_rank( sword::mdr );
-        d->set_alive_nbr( 10 );
-        d->set_dead_nbr( 11 );
-        d->set_wounded_u1_nbr( 12 );
-        d->set_wounded_u2_nbr( 13 );
-        d->set_wounded_u3_nbr( 14 );
-        d->set_wounded_ue_nbr( 15 );
+        d->set_alive( 10 );
+        d->set_dead( 11 );
+        d->set_wounded_u1( 12 );
+        d->set_wounded_u2( 13 );
+        d->set_wounded_u3( 14 );
+        d->set_wounded_ue( 15 );
     }
     template< typename D >
     void FillUnitEquipmentFireDamage( D* d )
     {
-        d->mutable_equipement_type()->set_id( 20 );
-        d->set_available_nbr( 21 );
-        d->set_unavailable_nbr( 22 );
-        d->set_repairable_nbr( 23 );
+        d->mutable_equipement()->set_id( 20 );
+        d->set_available( 21 );
+        d->set_unavailable( 22 );
+        d->set_repairable( 23 );
     }
     template< typename D >
     void FillUnitFireDamages( D* d )
@@ -585,7 +585,7 @@ namespace
     void FillCrowdFireDamages( D* d )
     {
         d->mutable_target()->set_id( 30 );
-        d->set_dead_nbr( 31 );
+        d->set_dead( 31 );
     }
 }
 
@@ -948,14 +948,14 @@ namespace
     void FillObjectAttributes( A* a )
     {
         a->mutable_construction()->mutable_resource()->set_id( 10 );
-        a->mutable_construction()->set_dotation_nbr( 11 );
+        a->mutable_construction()->set_dotation( 11 );
         a->mutable_construction()->set_density( 12 );
         a->mutable_construction()->set_percentage( 13 );
         a->mutable_obstacle()->set_type( sword::ObstacleType::reserved );
         a->mutable_obstacle()->set_activated( true );
         a->mutable_obstacle()->set_activation_time( 14 );
         a->mutable_mine()->mutable_resource()->set_id( 15 );
-        a->mutable_mine()->set_dotation_nbr( 16 );
+        a->mutable_mine()->set_dotation( 16 );
         a->mutable_mine()->set_density( 17 );
         a->mutable_mine()->set_percentage( 18 );
         a->mutable_activity_time()->set_value( 19 );
@@ -1086,7 +1086,7 @@ BOOST_FIXTURE_TEST_CASE( log_medical_handling_update_to_client_is_converted, Con
     content.mutable_log_medical_handling_update()->set_mental_wound( true );
     content.mutable_log_medical_handling_update()->set_nbc_contaminated( true );
     content.mutable_log_medical_handling_update()->set_state( sword::tri );
-    content.mutable_log_medical_handling_update()->set_diagnostique_effectue( true );
+    content.mutable_log_medical_handling_update()->set_diagnosed( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_medical_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } blessure: mort blesse_mental: true contamine_nbc: true etat: tri diagnostique_effectue: true } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1148,7 +1148,7 @@ BOOST_FIXTURE_TEST_CASE( log_maintenance_handling_update_to_client_is_converted,
     content.mutable_log_maintenance_handling_update()->mutable_unit()->set_id( 8 );
     content.mutable_log_maintenance_handling_update()->mutable_provider()->set_id( 9 );
     content.mutable_log_maintenance_handling_update()->set_state( sword::reparation );
-    content.mutable_log_maintenance_handling_update()->set_diagnostique_effectue( true );
+    content.mutable_log_maintenance_handling_update()->set_diagnosed( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_maintenance_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } etat: reparation diagnostique_effectue: true } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

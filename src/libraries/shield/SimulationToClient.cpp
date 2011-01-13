@@ -799,7 +799,7 @@ void SimulationToClient::Convert( const sword::UnitKnowledgeUpdate& from, MsgsSi
         ConvertHeading( from.direction(), to->mutable_direction() );
     CONVERT( speed );
     CONVERT_ID( party );
-    CONVERT( nature_pc );
+    CONVERT_TO( command_post, nature_pc );
     CONVERT_LIST_TO( perceptions, perception_par_compagnie, elem, ConvertAutomatPerception );
     CONVERT_ID( surrendered_unit );
     CONVERT_TO( prisoner, prisonnier );
@@ -848,20 +848,20 @@ namespace
     void ConvertUnitHumanFireDamage( const From& from, To* to )
     {
         CONVERT_RANK( rank, rank );
-        CONVERT( alive_nbr );
-        CONVERT( dead_nbr );
-        CONVERT( wounded_u1_nbr );
-        CONVERT( wounded_u2_nbr );
-        CONVERT( wounded_u3_nbr );
-        CONVERT( wounded_ue_nbr );
+        CONVERT_TO( alive, alive_nbr );
+        CONVERT_TO( dead, dead_nbr );
+        CONVERT_TO( wounded_u1, wounded_u1_nbr );
+        CONVERT_TO( wounded_u2, wounded_u2_nbr );
+        CONVERT_TO( wounded_u3, wounded_u3_nbr );
+        CONVERT_TO( wounded_ue, wounded_ue_nbr );
     }
     template< typename From, typename To >
     void ConvertUnitEquipmentFireDamage( const From& from, To* to )
     {
-        CONVERT_ID( equipement_type );
-        CONVERT( available_nbr );
-        CONVERT( unavailable_nbr );
-        CONVERT( repairable_nbr );
+        CONVERT_ID_TO( equipement, equipement_type );
+        CONVERT_TO( available, available_nbr );
+        CONVERT_TO( unavailable, unavailable_nbr );
+        CONVERT_TO( repairable, repairable_nbr );
     }
     template< typename From, typename To >
     void ConvertUnitsFireDamages( const From& from, To* to )
@@ -874,7 +874,7 @@ namespace
     void ConvertCrowdsFireDamages( const From& from, To* to )
     {
         CONVERT_ID( target );
-        CONVERT( dead_nbr );
+        CONVERT_TO( dead, dead_nbr );
     }
 }
 
@@ -1099,7 +1099,7 @@ namespace
     void ConvertObjectAttributeConstruction( const From& from, To* to )
     {
         CONVERT_ID( resource );
-        CONVERT( dotation_nbr );
+        CONVERT_TO( dotation, dotation_nbr );
         CONVERT( density );
         CONVERT( percentage );
     }
@@ -1115,7 +1115,7 @@ namespace
     void ConvertObjectAttributeMine( const From& from, To* to )
     {
         CONVERT_ID( resource );
-        CONVERT( dotation_nbr );
+        CONVERT_TO( dotation, dotation_nbr );
         CONVERT( density );
         CONVERT( percentage );
     }
@@ -1423,7 +1423,7 @@ void SimulationToClient::Convert( const sword::LogMedicalHandlingUpdate& from, M
                                   ( sword::ambulance_ramassage_deplacement_aller, Common::ambulance_ramassage_deplacement_aller )
                                   ( sword::ambulance_ramassage_dechargement, Common::ambulance_ramassage_dechargement )
                                   ( sword::termine_medical, Common::termine ) );
-    CONVERT( diagnostique_effectue );
+    CONVERT_TO( diagnosed, diagnostique_effectue );
 }
 
 // -----------------------------------------------------------------------------
@@ -1501,7 +1501,7 @@ void SimulationToClient::Convert( const sword::LogMaintenanceHandlingUpdate& fro
                                   ( sword::reparation, Common::reparation )
                                   ( sword::retour_pion, Common::retour_pion )
                                   ( sword::termine_maintenance, Common::termine_maintenance ) );
-    CONVERT( diagnostique_effectue );
+    CONVERT_TO( diagnosed, diagnostique_effectue );
 }
 
 // -----------------------------------------------------------------------------

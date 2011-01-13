@@ -104,8 +104,8 @@ void ConstructionAttribute::UpdateData( const T& message )
     {
         if( ! construction_ && message.construction().has_resource()  )
             construction_ = resolver_.Find( message.construction().resource().id() );
-        if( message.construction().has_dotation_nbr()  )
-            nDotationConstruction_ = message.construction().dotation_nbr();
+        if( message.construction().has_dotation()  )
+            nDotationConstruction_ = message.construction().dotation();
         if( message.construction().has_percentage()  )
             rConstructionPercentage_ = float( message.construction().percentage() );
         controller_.Update( *(ConstructionAttribute_ABC*)this );

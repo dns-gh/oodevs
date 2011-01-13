@@ -40,7 +40,7 @@ PHY_FireDamages_Population::~PHY_FireDamages_Population()
 void PHY_FireDamages_Population::Serialize( const MIL_Population& target, sword::CrowdFireDamages& asn ) const
 {
     asn.mutable_target()->set_id( target.GetID() );
-    asn.set_dead_nbr( nNbrKilledHumans_ );
+    asn.set_dead( nNbrKilledHumans_ );
 }
 
 // -----------------------------------------------------------------------------

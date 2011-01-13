@@ -876,7 +876,7 @@ message AutomatPerception {
 */
 message SeqOfAutomatPerception {
     repeated AutomatPerception elem = 1; //!< The perceptions @see AutomatPerception
-}                  
+}
 
 /** @enum UnitKnowledgeUpdate
     @brief Notifies of an update in the knowledge of a unit
@@ -893,24 +893,27 @@ message UnitKnowledgeUpdate {
     optional Heading                     direction                = 9;  //!< The unit heading @see Heading
     optional int32                       speed                    = 10; //!< The unit speed in kilometers per hour
     optional PartyId                     party                    = 11; //!< The unit party identifier @see PartyId
-    optional bool                        nature_pc                = 12; //!< @todo What's this ? @todo translate
+    optional bool                        command_post             = 12; //!< Whether the unit is a command post or not
     optional SeqOfAutomatPerception      perceptions              = 13; //!< The perceptions for each automat
     optional UnitId                      surrendered_unit         = 14; //!< The unit to which this unit has surrendered @see UnitId
     optional bool                        prisoner                 = 15; //!< Whether the unit has been made prisoner or not
     optional bool                        refugees_managed         = 16; //!< Whether refugees are being handled by the unit or not
 }
 
+/** @enum UnitKnowledgeDestruction
+    @brief Notifies of the destruction of a unit knowledge
+*/
 message UnitKnowledgeDestruction {
-   required UnitKnowledgeId  knowledge       = 1;
-   required KnowledgeGroupId knowledge_group = 2;
+    required UnitKnowledgeId  knowledge       = 1; //!< The unit knowledge @see UnitKnowledgeId
+    required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier @see KnowledgeGroupId
 }
 
-message UnitFireTarget {
-    optional UnitId       unit     = 1;
-    optional CrowdId      crowd    = 2;
-    optional CoordLatLong position = 3;
-}
 message StartUnitFire {
+    message UnitFireTarget {
+        optional UnitId       unit     = 1;
+        optional CrowdId      crowd    = 2;
+        optional CoordLatLong position = 3;
+    }
     required FireId         fire        = 1;
     required UnitId         firing_unit = 2;
     required UnitFireTarget target      = 3;
@@ -919,28 +922,28 @@ message StartUnitFire {
 }
 
 message UnitHumanFireDamage {
-   required EnumHumanRank rank           = 1;
-   required int32         alive_nbr      = 2;
-   required int32         dead_nbr       = 3;
-   required int32         wounded_u1_nbr = 4;
-   required int32         wounded_u2_nbr = 5;
-   required int32         wounded_u3_nbr = 6;
-   required int32         wounded_ue_nbr = 7;
+    required EnumHumanRank rank           = 1;
+    required int32         alive      = 2;
+    required int32         dead       = 3;
+    required int32         wounded_u1 = 4;
+    required int32         wounded_u2 = 5;
+    required int32         wounded_u3 = 6;
+    required int32         wounded_ue = 7;
 }
 
 message SeqOfUnitHumanFireDamage {
-   repeated UnitHumanFireDamage elem = 1;
+    repeated UnitHumanFireDamage elem = 1;
 }
 
 message UnitEquipmentFireDamage {
-   required EquipmentType equipement_type = 1;
-   required uint32        available_nbr   = 2;
-   required uint32        unavailable_nbr = 3;
-   required uint32        repairable_nbr  = 4;
+    required EquipmentType equipement  = 1;
+    required uint32        available   = 2;
+    required uint32        unavailable = 3;
+    required uint32        repairable  = 4;
 }
 
 message SeqOfUnitEquipmentFireDamage {
-   repeated UnitEquipmentFireDamage elem = 1;
+    repeated UnitEquipmentFireDamage elem = 1;
 }
 
 message UnitFireDamages {
@@ -955,7 +958,7 @@ message UnitsFireDamages {
 
 message CrowdFireDamages {
     required CrowdId target   = 1;
-    required int32   dead_nbr = 2;
+    required int32   dead = 2;
 }
 
 message CrowdsFireDamages {
@@ -1062,29 +1065,29 @@ enum EnumUnitVisibility {
 
 message UnitDetection {
     required UnitId             observer           = 1;
-    required UnitId             detected_unit      = 2;
+    required UnitId             detected_unit      = 2; //!< @todo rename to unit
     required EnumUnitVisibility current_visibility = 3;
     required EnumUnitVisibility max_visibility     = 4;
 }
 
 message ObjectDetection {
     required UnitId             observer        = 1;
-    required ObjectId           detected_object = 2;
+    required ObjectId           detected_object = 2; //!< @todo rename to object
     required EnumUnitVisibility visibility      = 3;
 }
 
 message CrowdConcentrationDetection {
     required UnitId               observer               = 1;
-    required CrowdId              detected_crowd         = 2;
-    required CrowdConcentrationId detected_concentration = 3;
+    required CrowdId              detected_crowd         = 2; //!< @todo rename to crowd
+    required CrowdConcentrationId detected_concentration = 3; //!< @todo rename to concentration
     required EnumUnitVisibility   visibility             = 4;
 }
 
 message CrowdFlowDetection {
     required UnitId      observer       = 1;
-    required CrowdId     detected_crowd = 2;
-    required CrowdFlowId detected_flow  = 3;
-    required Path        visible_flow   = 4;
+    required CrowdId     detected_crowd = 2; //!< @todo rename to crowd
+    required CrowdFlowId detected_flow  = 3; //!< @todo rename to flow
+    required Path        visible_flow   = 4; //!< @todo rename to path
 }
 
 message ObjectCreation {
@@ -1164,14 +1167,14 @@ message LogMedicalHandlingCreation {
 }
 
 message LogMedicalHandlingUpdate {
-    required MedicalRequestId             request                = 1;
-    required UnitId                       unit                   = 2;
-    optional UnitId                       provider               = 3;
-    optional EnumHumanWound               wound                  = 4;
-    optional bool                         mental_wound           = 5;
-    optional bool                         nbc_contaminated       = 6;
-    optional EnumLogMedicalHandlingStatus state                  = 7;
-    optional bool                         diagnostique_effectue  = 8;
+    required MedicalRequestId             request          = 1;
+    required UnitId                       unit             = 2;
+    optional UnitId                       provider         = 3;
+    optional EnumHumanWound               wound            = 4;
+    optional bool                         mental_wound     = 5;
+    optional bool                         nbc_contaminated = 6;
+    optional EnumLogMedicalHandlingStatus state            = 7;
+    optional bool                         diagnosed        = 8;
 }
 
 message LogMedicalHandlingDestruction {
@@ -1215,7 +1218,7 @@ message LogMaintenanceHandlingUpdate {
     required UnitId                           unit                  = 2;
     required UnitId                           provider              = 3;
     optional EnumLogMaintenanceHandlingStatus state                  = 4;
-    optional bool                             diagnostique_effectue = 5;
+    optional bool                             diagnosed = 5;
 }
 
 message LogMaintenanceHandlingDestruction {

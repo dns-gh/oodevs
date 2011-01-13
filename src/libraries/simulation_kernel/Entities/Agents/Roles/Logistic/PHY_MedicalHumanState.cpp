@@ -233,7 +233,7 @@ void PHY_MedicalHumanState::SendFullState() const
     asn().set_wound( pHuman_->GetWound().GetAsnID() );
     asn().set_mental_wound( pHuman_->IsMentalDiseased() );
     asn().set_nbc_contaminated( pHuman_->IsContaminated() );
-    asn().set_diagnostique_effectue( bDiagnosed_ );
+    asn().set_diagnosed( bDiagnosed_ );
 
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -266,7 +266,7 @@ void PHY_MedicalHumanState::SendChangedState() const
         asn().set_mental_wound( pHuman_->IsMentalDiseased() );
         asn().set_nbc_contaminated( pHuman_->IsContaminated() );
     }
-    asn().set_diagnostique_effectue( bDiagnosed_ );
+    asn().set_diagnosed( bDiagnosed_ );
 
     asn.Send( NET_Publisher_ABC::Publisher() );
 }

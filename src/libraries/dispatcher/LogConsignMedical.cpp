@@ -62,8 +62,8 @@ void LogConsignMedical::Update( const sword::LogMedicalHandlingUpdate& msg )
         bContaminated_ = msg.nbc_contaminated() != 0;
     if( msg.has_state() )
         nState_ = msg.state();
-    if( msg.has_diagnostique_effectue() )
-        bDiagnosed_ = msg.diagnostique_effectue() != 0;
+    if( msg.has_diagnosed() )
+        bDiagnosed_ = msg.diagnosed() != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_mental_wound( bMentalDiseased_);
     asn().set_wound( nWound_);
     asn().set_nbc_contaminated( bContaminated_);
-    asn().set_diagnostique_effectue( bDiagnosed_);
+    asn().set_diagnosed( bDiagnosed_);
     asn().set_state( nState_);
     asn.Send( publisher );
 }

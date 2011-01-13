@@ -97,7 +97,6 @@ void FireEngagement::SendDamages( CWISEDriver& driver, const WISE_HANDLE& handle
     for( int i = 0; i < message.equipments().elem_size(); ++i )
         SendEquipmentDamages( equipments, cache, message.equipments().elem( i ) );
     CHECK_WISE_RESULT_EX( driver.GetSink()->SetEventAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle, attributes[ L"EquipmentDamages" ], equipments ) );
-
     std::list< CWISEAttributeGroup > personnel;
     for( int i = 0; i < message.humans().elem_size(); ++i )
         SendPersonnelDamages( personnel, cache, message.humans().elem( i ) );
@@ -111,11 +110,10 @@ void FireEngagement::SendDamages( CWISEDriver& driver, const WISE_HANDLE& handle
 void FireEngagement::SendEquipmentDamages( std::list< CWISEAttributeGroup >& list, IWISEStringCache& cache, const sword::UnitEquipmentFireDamage& message ) const
 {
     CWISEAttributeGroupTemplate groupTemplate;
-    groupTemplate.Add( L"Type", long( message.equipement_type().id() ) );
-    groupTemplate.Add( L"AvailableCount", long( message.available_nbr() ) );
-    groupTemplate.Add( L"UnavailableCount", long( message.unavailable_nbr() ) );
-    groupTemplate.Add( L"RepairableCount", long( message.repairable_nbr() ) );
-
+    groupTemplate.Add( L"Type", long( message.equipement().id() ) );
+    groupTemplate.Add( L"AvailableCount", long( message.available() ) );
+    groupTemplate.Add( L"UnavailableCount", long( message.unavailable() ) );
+    groupTemplate.Add( L"RepairableCount", long( message.repairable() ) );
     CWISEAttributeGroup group;
     CHECK_WISE_RESULT_EX( CWISEAttributeGroupConverter::TemplateToValueGroup( groupTemplate, &cache, L"EquipmentDamageReport", group ) );
     list.push_back( group );
@@ -129,13 +127,12 @@ void FireEngagement::SendPersonnelDamages( std::list< CWISEAttributeGroup >& lis
 {
     CWISEAttributeGroupTemplate groupTemplate;
     groupTemplate.Add( L"Rank", unsigned char( message.rank() ) );
-    groupTemplate.Add( L"AliveCount", long( message.alive_nbr() ) );
-    groupTemplate.Add( L"DeadCount", long( message.dead_nbr() ) );
-    groupTemplate.Add( L"WoundedPriority1Count", long( message.wounded_u1_nbr() ) );
-    groupTemplate.Add( L"WoundedPriority2Count", long( message.wounded_u2_nbr() ) );
-    groupTemplate.Add( L"WoundedPriority3Count", long( message.wounded_u3_nbr() ) );
-    groupTemplate.Add( L"WoundedHighestPriorityCount", long( message.wounded_ue_nbr() ) );
-
+    groupTemplate.Add( L"AliveCount", long( message.alive() ) );
+    groupTemplate.Add( L"DeadCount", long( message.dead() ) );
+    groupTemplate.Add( L"WoundedPriority1Count", long( message.wounded_u1() ) );
+    groupTemplate.Add( L"WoundedPriority2Count", long( message.wounded_u2() ) );
+    groupTemplate.Add( L"WoundedPriority3Count", long( message.wounded_u3() ) );
+    groupTemplate.Add( L"WoundedHighestPriorityCount", long( message.wounded_ue() ) );
     CWISEAttributeGroup group;
     CHECK_WISE_RESULT_EX( CWISEAttributeGroupConverter::TemplateToValueGroup( groupTemplate, &cache, L"PersonnelDamageReport", group ) );
     list.push_back( group );

@@ -73,8 +73,8 @@ void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message )
         wound_ = E_HumanWound( message.wound() );
     if( message.has_state()  )
         nState_ = E_LogMedicalHandlingStatus( message.state() );
-    if( message.has_diagnostique_effectue()  )
-        diagnosed_ = message.diagnostique_effectue();
+    if( message.has_diagnosed()  )
+        diagnosed_ = message.diagnosed();
     controller_.Update( *this );
 }
 
