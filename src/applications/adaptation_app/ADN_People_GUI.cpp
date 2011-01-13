@@ -10,13 +10,8 @@
 #include "adaptation_app_pch.h"
 #include "ADN_People_GUI.h"
 #include "moc_ADN_People_GUI.cpp"
-#include "ADN_MainWindow.h"
-#include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
-#include "ADN_Workspace.h"
-#include "ADN_CommonGfx.h"
 #include "ADN_People_Data.h"
-#include "ADN_Connector_Vector_ABC.h"
 #include "ADN_People_ListView.h"
 #include "ADN_ComboBox_Vector.h"
 
@@ -26,11 +21,10 @@
 // -----------------------------------------------------------------------------
 ADN_People_GUI::ADN_People_GUI( ADN_People_Data& data )
     : ADN_GUI_ABC( "ADN_People_GUI" )
-    , data_( data )
+    , data_      ( data )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_People_GUI destructor
@@ -57,7 +51,7 @@ void ADN_People_GUI::Build()
     // Create the population listview.
     pPeopleList_ = new ADN_People_ListView( pMainWidget_ );
     pPeopleList_->GetConnector().Connect( &data_.GetPeople() );
-    T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     QVBox* pMainBox = new QVBox( pMainWidget_ );
 
@@ -66,14 +60,18 @@ void ADN_People_GUI::Build()
 
     QGroupBox* pPropertiesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
 
-    builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddField< ADN_ComboBox_Vector< ADN_Population_Data::PopulationInfos > >( pPropertiesGroup, tr( "Associated Crowd" ), vInfosConnectors[eModel] );
-    pMaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Male" ), vInfosConnectors[eMale], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vInfosConnectors[ eName ] );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Population_Data::PopulationInfos > >( pPropertiesGroup, tr( "Associated Crowd" ), vInfosConnectors[ eModel ] );
+    pMaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Male" ), vInfosConnectors[ eMale ], tr( "%" ), ePercentage );
     connect( pMaleEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-    pFemaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Female" ), vInfosConnectors[eFemale], tr( "%" ), ePercentage );
+    pFemaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Female" ), vInfosConnectors[ eFemale ], tr( "%" ), ePercentage );
     connect( pFemaleEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-    pChildrenEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Children" ), vInfosConnectors[eChildren], tr( "%" ), ePercentage );
+    pChildrenEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Children" ), vInfosConnectors[ eChildren ], tr( "%" ), ePercentage );
     connect( pChildrenEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
+
+    QGroupBox* pSecurityGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Security satisfaction level" ), pGroup );
+    builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Loss on fire" ), vInfosConnectors[ eLossOnFire ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Gain per hour" ), vInfosConnectors[ eGainPerHour ], tr( "%" ), ePercentage );
 
     pPeopleList_->SetItemConnectors( vInfosConnectors );
 
@@ -89,7 +87,7 @@ void ADN_People_GUI::Build()
 // -----------------------------------------------------------------------------
 void ADN_People_GUI::PercentageChanged()
 {
-    ADN_People_Data::PeopleInfos* pInfos = (ADN_People_Data::PeopleInfos*)pPeopleList_->GetCurrentData();
+    ADN_People_Data::PeopleInfos* pInfos = static_cast< ADN_People_Data::PeopleInfos* >( pPeopleList_->GetCurrentData() );
     if( pInfos == 0 )
         return;
     pMaleEditLine_->GetValidator().setTop( 100 - pInfos->children_.GetData() - pInfos->female_.GetData() );

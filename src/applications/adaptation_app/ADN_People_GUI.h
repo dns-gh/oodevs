@@ -14,7 +14,6 @@
 #include "ADN_EditLine.h"
 
 class ADN_People_Data;
-class ADN_Table;
 class ADN_People_ListView;
 
 // =============================================================================
@@ -37,6 +36,8 @@ public:
         eMale,
         eFemale,
         eChildren,
+        eLossOnFire,
+        eGainPerHour,
         eNbrGuiElements
     };
     //@}
@@ -44,7 +45,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_People_GUI( ADN_People_Data& data );
+    explicit ADN_People_GUI( ADN_People_Data& data );
     virtual ~ADN_People_GUI();
     //@}
 
@@ -69,6 +70,5 @@ private:
     ADN_EditLine_Int* pChildrenEditLine_;
     //@}
 };
-
 
 #endif // __ADN_People_GUI_h_

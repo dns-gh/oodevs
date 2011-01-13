@@ -3127,6 +3127,18 @@ Assurez vous que le fichier existe.</translation>
         <source>Children</source>
         <translation>Enfant</translation>
     </message>
+    <message>
+        <source>Security satisfaction level</source>
+        <translation>Niveau de satisfaction en sécurité</translation>
+    </message>
+    <message>
+        <source>Loss on fire</source>
+        <translation>Perte par tir</translation>
+    </message>
+    <message>
+        <source>Gain per hour</source>
+        <translation>Gain par heure</translation>
+    </message>
 </context>
 <context>
     <name>ADN_People_ListView</name>

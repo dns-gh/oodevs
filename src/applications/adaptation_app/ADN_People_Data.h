@@ -15,7 +15,10 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Population_Data.h"
 
-class xml::xistream;
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  ADN_People_Data
@@ -44,12 +47,14 @@ public:
         void WriteArchive( xml::xostream& output, int mosId );
 
     public:
-        ADN_Type_String                                       strName_;
+        ADN_Type_String strName_;
         ADN_TypePtr_InVector_ABC<ADN_Population_Data::PopulationInfos> ptrModel_;
         ADN_Type_Int male_; 
         ADN_Type_Int female_; 
         ADN_Type_Int children_;
-        ADN_Type_String transfertTime_;
+        ADN_Type_String transferTime_;
+        ADN_Type_Double securityLossOnFire_;
+        ADN_Type_Double securityGainPerHour_;
     };
 
     typedef ADN_Type_Vector_ABC< PeopleInfos >  T_PeopleInfosVector;
@@ -60,15 +65,15 @@ public:
     ADN_People_Data();
     virtual ~ADN_People_Data();
 
-    void                        Reset();
-    void                        FilesNeeded(T_StringList& l) const;
+    void Reset();
+    void FilesNeeded(T_StringList& l) const;
 
-    T_PeopleInfosVector&      GetPeople();
-    PeopleInfos*              FindPeople( const std::string& strName );
+    T_PeopleInfosVector& GetPeople();
+    PeopleInfos* FindPeople( const std::string& strName );
 
 private:
-    void ReadArchive ( xml::xistream& input );
-    void ReadPeople  ( xml::xistream& input );
+    void ReadArchive( xml::xistream& input );
+    void ReadPeople( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
 
 public:
@@ -84,7 +89,6 @@ ADN_People_Data::T_PeopleInfosVector& ADN_People_Data::GetPeople()
 {
     return vPeople_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data::FindPopulation
