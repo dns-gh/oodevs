@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_UrbanPerception.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -117,7 +118,7 @@ void DEC_Knowledge_UrbanPerception::SendStateToNewClient()
 {
     client::UrbanDetection message;
     message().mutable_observer()->set_id( perceiver_.GetID() );
-    message().mutable_urban_object()->set_id( object_.GetId() );
+    message().mutable_urban_object()->set_id( UrbanObjectWrapper::GetWrapperObject( object_ ).GetID() );
     message().set_visibility( sword::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
     message.Send( NET_Publisher_ABC::Publisher() );
 }

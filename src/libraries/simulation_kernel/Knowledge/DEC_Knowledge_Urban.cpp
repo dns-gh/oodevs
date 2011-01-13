@@ -256,7 +256,7 @@ void DEC_Knowledge_Urban::SendChangedState()
         nTimeLastUpdate_ = GetCurrentTimeStep();
         message().mutable_knowledge()->set_id( GetID() );
         message().mutable_party()->set_id( army_->GetID() );
-        message().mutable_urban_block()->set_id( object_->GetId() );
+        message().mutable_urban_block()->set_id( GetObjectKnown()->GetID() );
         message.Send( NET_Publisher_ABC::Publisher() );
     }
 }
@@ -270,7 +270,7 @@ void DEC_Knowledge_Urban::SendFullState()
     client::UrbanKnowledgeUpdate message;
     message().mutable_knowledge()->set_id( GetID() );
     message().mutable_party()->set_id( army_->GetID() );
-    message().mutable_urban_block()->set_id( object_->GetId() );
+    message().mutable_urban_block()->set_id( GetObjectKnown()->GetID() );
     float rProgress = static_cast< int >( rProgressPercent_ * 100 ) / 5 * 0.05f;
     message().set_progress( static_cast< int >( rProgress * 100 ) );
     rLastProgressSent_ = rProgress;
@@ -318,7 +318,7 @@ void DEC_Knowledge_Urban::SendMsgCreation() const
     client::UrbanKnowledgeCreation message;
     message().mutable_knowledge()->set_id( GetID() );
     message().mutable_party()->set_id( army_->GetID() );
-    message().mutable_urban_block()->set_id( object_->GetId() );
+    message().mutable_urban_block()->set_id( GetObjectKnown()->GetID() );
 
     message.Send( NET_Publisher_ABC::Publisher() );
 }
