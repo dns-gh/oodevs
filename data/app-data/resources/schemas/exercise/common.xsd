@@ -43,9 +43,15 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_ZeroTo255Integer">
-		<xs:restriction base="xs:double">
+		<xs:restriction base="xs:integer">
 			<xs:minInclusive value="0"/>
 			<xs:maxInclusive value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_ZeroTo100Integer">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="100"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_LocationMGRS">
