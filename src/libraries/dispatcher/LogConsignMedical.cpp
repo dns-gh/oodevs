@@ -27,10 +27,10 @@ LogConsignMedical::LogConsignMedical( const Model& model, const sword::LogMedica
     , agent_            ( model.Agents().Get( msg.unit().id() ) )
     , nTickCreation_    ( msg.tick_creation() )
     , pTreatingAgent_   ( 0 )
-    , nRank_            ( msg.rang() )
-    , nWound_           ( msg.blessure() )
-    , bMentalDiseased_  ( msg.blesse_mental() != 0 )
-    , bContaminated_    ( msg.contamine_nbc() != 0 )
+    , nRank_            ( msg.rank() )
+    , nWound_           ( msg.wound() )
+    , bMentalDiseased_  ( msg.mental_wound() != 0 )
+    , bContaminated_    ( msg.nbc_contaminated() != 0 )
     , nState_           ( sword::ambulance_ramassage_dechargement )
     , bDiagnosed_       ( false )
 {
@@ -54,14 +54,14 @@ void LogConsignMedical::Update( const sword::LogMedicalHandlingUpdate& msg )
 {
     if( msg.has_provider() )
         pTreatingAgent_ = ( msg.provider().id() == 0 ) ? 0 : &model_.Agents().Get( msg.provider().id() );
-    if( msg.has_blessure() )
-        nWound_ = msg.blessure();
-    if( msg.has_blesse_mental() )
-        bMentalDiseased_ = msg.blesse_mental() != 0;
-    if( msg.has_contamine_nbc() )
-        bContaminated_ = msg.contamine_nbc() != 0;
-    if( msg.has_etat() )
-        nState_ = msg.etat();
+    if( msg.has_wound() )
+        nWound_ = msg.wound();
+    if( msg.has_mental_wound() )
+        bMentalDiseased_ = msg.mental_wound() != 0;
+    if( msg.has_nbc_contaminated() )
+        bContaminated_ = msg.nbc_contaminated() != 0;
+    if( msg.has_state() )
+        nState_ = msg.state();
     if( msg.has_diagnostique_effectue() )
         bDiagnosed_ = msg.diagnostique_effectue() != 0;
 }
@@ -77,10 +77,10 @@ void LogConsignMedical::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_request()->set_id( GetId() );
     asn().mutable_unit()->set_id( agent_.GetId() );
     asn().set_tick_creation( nTickCreation_ );
-    asn().set_rang( nRank_ );
-    asn().set_blessure( nWound_ );
-    asn().set_blesse_mental( bMentalDiseased_ );
-    asn().set_contamine_nbc( bContaminated_ );
+    asn().set_rank( nRank_ );
+    asn().set_wound( nWound_ );
+    asn().set_mental_wound( bMentalDiseased_ );
+    asn().set_nbc_contaminated( bContaminated_ );
 
 
     asn.Send( publisher );
@@ -93,16 +93,14 @@ void LogConsignMedical::SendCreation( ClientPublisher_ABC& publisher ) const
 void LogConsignMedical::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalHandlingUpdate asn;
-
     asn().mutable_request()->set_id( GetId() );
     asn().mutable_unit()->set_id( agent_.GetId() );
     asn().mutable_provider()->set_id( pTreatingAgent_ ? pTreatingAgent_->GetId() : 0);
-    asn().set_blesse_mental         ( bMentalDiseased_);
-    asn().set_blessure              ( nWound_);
-    asn().set_contamine_nbc         ( bContaminated_);
-    asn().set_diagnostique_effectue ( bDiagnosed_);
-    asn().set_etat                  ( nState_);
-
+    asn().set_mental_wound( bMentalDiseased_);
+    asn().set_wound( nWound_);
+    asn().set_nbc_contaminated( bContaminated_);
+    asn().set_diagnostique_effectue( bDiagnosed_);
+    asn().set_state( nState_);
     asn.Send( publisher );
 }
 

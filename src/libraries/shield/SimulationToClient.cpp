@@ -28,10 +28,10 @@ using namespace shield;
                              ( sword::detectee, MsgsSimToClient::detectee ) \
                              ( sword::signale, MsgsSimToClient::signale ) )
 
-#define CONVERT_RANK( field ) \
-        CONVERT_ENUM( field, ( sword::officier, Common::officier ) \
-                             ( sword::sous_officer, Common::sous_officer ) \
-                             ( sword::mdr, Common::mdr ) )
+#define CONVERT_RANK( from_field, to_field ) \
+        CONVERT_ENUM_TO( from_field, to_field, ( sword::officier, Common::officier ) \
+                                     ( sword::sous_officer, Common::sous_officer ) \
+                                     ( sword::mdr, Common::mdr ) )
 
 #define CONVERT_UNIT_ACTION_ACK( field ) \
     CONVERT_ENUM( field, ( sword::UnitActionAck::no_error, MsgsSimToClient::UnitActionAck::no_error ) \
@@ -536,7 +536,7 @@ namespace
     template< typename From, typename To >
     void ConvertHumanDotation( const From& from, To* to )
     {
-        CONVERT_RANK( rang );
+        CONVERT_RANK( rank, rang );
         CONVERT_TO( total, nb_total );
         CONVERT_TO( operational, nb_operationnels );
         CONVERT_TO( dead, nb_morts );
@@ -791,7 +791,7 @@ void SimulationToClient::Convert( const sword::UnitKnowledgeUpdate& from, MsgsSi
     CONVERT( pertinence );
     CONVERT_IDENTIFICATION_LEVEL( identification_level );
     CONVERT_IDENTIFICATION_LEVEL( max_identification_level );
-    CONVERT( etat_op );
+    CONVERT_TO( operational_state, etat_op );
     CONVERT_TO( dead, mort );
     if( from.has_position() )
         ConvertCoordLatLong( from.position(), to->mutable_position() );
@@ -800,7 +800,7 @@ void SimulationToClient::Convert( const sword::UnitKnowledgeUpdate& from, MsgsSi
     CONVERT( speed );
     CONVERT_ID( party );
     CONVERT( nature_pc );
-    CONVERT_LIST( perception_par_compagnie, elem, ConvertAutomatPerception );
+    CONVERT_LIST_TO( perceptions, perception_par_compagnie, elem, ConvertAutomatPerception );
     CONVERT_ID( surrendered_unit );
     CONVERT_TO( prisoner, prisonnier );
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );
@@ -847,7 +847,7 @@ namespace
     template< typename From, typename To >
     void ConvertUnitHumanFireDamage( const From& from, To* to )
     {
-        CONVERT_RANK( rank );
+        CONVERT_RANK( rank, rank );
         CONVERT( alive_nbr );
         CONVERT( dead_nbr );
         CONVERT( wounded_u1_nbr );
@@ -1384,10 +1384,10 @@ void SimulationToClient::Convert( const sword::LogMedicalHandlingCreation& from,
     CONVERT_ID( request );
     CONVERT_ID( unit );
     CONVERT( tick_creation );
-    CONVERT_RANK( rang );
-    CONVERT_ENUM( blessure, HUMAN_WOUND );
-    CONVERT( blesse_mental );
-    CONVERT( contamine_nbc );
+    CONVERT_RANK( rank, rang );
+    CONVERT_ENUM_TO( wound, blessure, HUMAN_WOUND );
+    CONVERT_TO( mental_wound, blesse_mental );
+    CONVERT_TO( nbc_contaminated, contamine_nbc );
 }
 
 // -----------------------------------------------------------------------------
@@ -1399,30 +1399,30 @@ void SimulationToClient::Convert( const sword::LogMedicalHandlingUpdate& from, M
     CONVERT_ID( request );
     CONVERT_ID( unit );
     CONVERT_ID( provider );
-    CONVERT_ENUM( blessure, HUMAN_WOUND );
-    CONVERT( blesse_mental );
-    CONVERT( contamine_nbc );
-    CONVERT_ENUM( etat, ( sword::attente_disponibilite_ambulance_releve, Common::attente_disponibilite_ambulance_releve )
-                        ( sword::ambulance_releve_deplacement_aller, Common::ambulance_releve_deplacement_aller )
-                        ( sword::ambulance_releve_chargement, Common::ambulance_releve_chargement )
-                        ( sword::attente_chargement_complet_ambulance_releve, Common::attente_chargement_complet_ambulance_releve )
-                        ( sword::ambulance_releve_deplacement_retour, Common::ambulance_releve_deplacement_retour )
-                        ( sword::ambulance_releve_dechargement, Common::ambulance_releve_dechargement )
-                        ( sword::attente_disponibilite_medecin_pour_diagnostique, Common::attente_disponibilite_medecin_pour_diagnostique )
-                        ( sword::diagnostique, Common::diagnostique )
-                        ( sword::recherche_secteur_tri, Common::recherche_secteur_tri )
-                        ( sword::attente_disponibilite_medecin_pour_tri, Common::attente_disponibilite_medecin_pour_tri )
-                        ( sword::tri, Common::tri )
-                        ( sword::recherche_secteur_soin, Common::recherche_secteur_soin )
-                        ( sword::attente_disponibilite_medecin_pour_soin, Common::attente_disponibilite_medecin_pour_soin )
-                        ( sword::soin, Common::soin )
-                        ( sword::hospitalisation, Common::hospitalisation )
-                        ( sword::attente_disponibilite_ambulance_ramassage, Common::attente_disponibilite_ambulance_ramassage )
-                        ( sword::ambulance_ramassage_chargement, Common::ambulance_ramassage_chargement )
-                        ( sword::attente_chargement_complet_ambulance_ramassage, Common::attente_chargement_complet_ambulance_ramassage )
-                        ( sword::ambulance_ramassage_deplacement_aller, Common::ambulance_ramassage_deplacement_aller )
-                        ( sword::ambulance_ramassage_dechargement, Common::ambulance_ramassage_dechargement )
-                        ( sword::termine_medical, Common::termine ) );
+    CONVERT_ENUM_TO( wound, blessure, HUMAN_WOUND );
+    CONVERT_TO( mental_wound, blesse_mental );
+    CONVERT_TO( nbc_contaminated, contamine_nbc );
+    CONVERT_ENUM_TO( state, etat, ( sword::attente_disponibilite_ambulance_releve, Common::attente_disponibilite_ambulance_releve )
+                                  ( sword::ambulance_releve_deplacement_aller, Common::ambulance_releve_deplacement_aller )
+                                  ( sword::ambulance_releve_chargement, Common::ambulance_releve_chargement )
+                                  ( sword::attente_chargement_complet_ambulance_releve, Common::attente_chargement_complet_ambulance_releve )
+                                  ( sword::ambulance_releve_deplacement_retour, Common::ambulance_releve_deplacement_retour )
+                                  ( sword::ambulance_releve_dechargement, Common::ambulance_releve_dechargement )
+                                  ( sword::attente_disponibilite_medecin_pour_diagnostique, Common::attente_disponibilite_medecin_pour_diagnostique )
+                                  ( sword::diagnostique, Common::diagnostique )
+                                  ( sword::recherche_secteur_tri, Common::recherche_secteur_tri )
+                                  ( sword::attente_disponibilite_medecin_pour_tri, Common::attente_disponibilite_medecin_pour_tri )
+                                  ( sword::tri, Common::tri )
+                                  ( sword::recherche_secteur_soin, Common::recherche_secteur_soin )
+                                  ( sword::attente_disponibilite_medecin_pour_soin, Common::attente_disponibilite_medecin_pour_soin )
+                                  ( sword::soin, Common::soin )
+                                  ( sword::hospitalisation, Common::hospitalisation )
+                                  ( sword::attente_disponibilite_ambulance_ramassage, Common::attente_disponibilite_ambulance_ramassage )
+                                  ( sword::ambulance_ramassage_chargement, Common::ambulance_ramassage_chargement )
+                                  ( sword::attente_chargement_complet_ambulance_ramassage, Common::attente_chargement_complet_ambulance_ramassage )
+                                  ( sword::ambulance_ramassage_deplacement_aller, Common::ambulance_ramassage_deplacement_aller )
+                                  ( sword::ambulance_ramassage_dechargement, Common::ambulance_ramassage_dechargement )
+                                  ( sword::termine_medical, Common::termine ) );
     CONVERT( diagnostique_effectue );
 }
 
@@ -1488,19 +1488,19 @@ void SimulationToClient::Convert( const sword::LogMaintenanceHandlingUpdate& fro
     CONVERT_ID( request );
     CONVERT_ID( unit );
     CONVERT_ID( provider );
-    CONVERT_ENUM( etat, ( sword::deplacement_vers_chaine, Common::deplacement_vers_chaine )
-                           ( sword::attente_disponibilite_remorqueur, Common::attente_disponibilite_remorqueur )
-                           ( sword::remorqueur_deplacement_aller, Common::remorqueur_deplacement_aller )
-                           ( sword::remorqueur_chargement, Common::remorqueur_chargement )
-                           ( sword::remorqueur_deplacement_retour, Common::remorqueur_deplacement_retour )
-                           ( sword::remorqueur_dechargement, Common::remorqueur_dechargement )
-                           ( sword::diagnostique_maintenance, Common::diagnostique_maintenance )
-                           ( sword::attente_prise_en_charge_par_niveau_superieur, Common::attente_prise_en_charge_par_niveau_superieur )
-                           ( sword::attente_disponibilite_pieces, Common::attente_disponibilite_pieces )
-                           ( sword::attente_disponibilite_reparateur, Common::attente_disponibilite_reparateur )
-                           ( sword::reparation, Common::reparation )
-                           ( sword::retour_pion, Common::retour_pion )
-                           ( sword::termine_maintenance, Common::termine_maintenance ) );
+    CONVERT_ENUM_TO( state, etat, ( sword::deplacement_vers_chaine, Common::deplacement_vers_chaine )
+                                  ( sword::attente_disponibilite_remorqueur, Common::attente_disponibilite_remorqueur )
+                                  ( sword::remorqueur_deplacement_aller, Common::remorqueur_deplacement_aller )
+                                  ( sword::remorqueur_chargement, Common::remorqueur_chargement )
+                                  ( sword::remorqueur_deplacement_retour, Common::remorqueur_deplacement_retour )
+                                  ( sword::remorqueur_dechargement, Common::remorqueur_dechargement )
+                                  ( sword::diagnostique_maintenance, Common::diagnostique_maintenance )
+                                  ( sword::attente_prise_en_charge_par_niveau_superieur, Common::attente_prise_en_charge_par_niveau_superieur )
+                                  ( sword::attente_disponibilite_pieces, Common::attente_disponibilite_pieces )
+                                  ( sword::attente_disponibilite_reparateur, Common::attente_disponibilite_reparateur )
+                                  ( sword::reparation, Common::reparation )
+                                  ( sword::retour_pion, Common::retour_pion )
+                                  ( sword::termine_maintenance, Common::termine_maintenance ) );
     CONVERT( diagnostique_effectue );
 }
 
@@ -1569,14 +1569,14 @@ void SimulationToClient::Convert( const sword::LogSupplyHandlingUpdate& from, Ms
     if( from.has_convoy_provider() )
         ConvertParentEntity( from.convoy_provider(), to->mutable_convoy_provider() );
     CONVERT_ID( convoying_unit );
-    CONVERT_ENUM( etat, ( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters, MsgsSimToClient::convoi_en_attente_camions )
-                        ( sword::LogSupplyHandlingUpdate::convoy_forming, MsgsSimToClient::convoi_constitution )
-                        ( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point, MsgsSimToClient::convoi_deplacement_vers_point_chargement )
-                        ( sword::LogSupplyHandlingUpdate::convoy_loading, MsgsSimToClient::convoi_chargement )
-                        ( sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point, MsgsSimToClient::convoi_deplacement_vers_point_dechargement )
-                        ( sword::LogSupplyHandlingUpdate::convoy_unloading, MsgsSimToClient::convoi_dechargement )
-                        ( sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point, MsgsSimToClient::convoi_deplacement_retour )
-                        ( sword::LogSupplyHandlingUpdate::convoy_finished, MsgsSimToClient::termine ) );
+    CONVERT_ENUM_TO( state, etat, ( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters, MsgsSimToClient::convoi_en_attente_camions )
+                                  ( sword::LogSupplyHandlingUpdate::convoy_forming, MsgsSimToClient::convoi_constitution )
+                                  ( sword::LogSupplyHandlingUpdate::convoy_moving_to_loading_point, MsgsSimToClient::convoi_deplacement_vers_point_chargement )
+                                  ( sword::LogSupplyHandlingUpdate::convoy_loading, MsgsSimToClient::convoi_chargement )
+                                  ( sword::LogSupplyHandlingUpdate::convoy_moving_to_unloading_point, MsgsSimToClient::convoi_deplacement_vers_point_dechargement )
+                                  ( sword::LogSupplyHandlingUpdate::convoy_unloading, MsgsSimToClient::convoi_dechargement )
+                                  ( sword::LogSupplyHandlingUpdate::convoy_moving_back_to_loading_point, MsgsSimToClient::convoi_deplacement_retour )
+                                  ( sword::LogSupplyHandlingUpdate::convoy_finished, MsgsSimToClient::termine ) );
     CONVERT_LIST( dotations, elem, ConvertDotationQuery );
 }
 
@@ -2076,7 +2076,7 @@ void SimulationToClient::Convert( const sword::UrbanKnowledgeUpdate& from, MsgsS
     CONVERT_ID( party );
     CONVERT_ID( urban_block );
     CONVERT( progress );
-    CONVERT( maxprogress );
+    CONVERT_TO( max_progress, maxprogress );
     CONVERT( perceived );
     CONVERT_LIST( automat_perceptions, elem, ConvertIdentifier );
 }

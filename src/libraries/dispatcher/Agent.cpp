@@ -243,13 +243,13 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         for( int i = 0; i < message.human_dotations().elem_size(); ++i )
         {
             const sword::HumanDotations_HumanDotation& asn = message.human_dotations().elem( i );
-            Humans* pHumans = troops_.Find( asn.rang() );
+            Humans* pHumans = troops_.Find( asn.rank() );
             if( pHumans )
                 pHumans->Update( asn );
             else
             {
                 pHumans = new Humans( asn );
-                troops_.Register( asn.rang(), *pHumans );
+                troops_.Register( asn.rank(), *pHumans );
             }
         }
     }

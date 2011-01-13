@@ -678,7 +678,7 @@ message HumanDotations {
         @brief A human dotation message
     */
     message HumanDotation {
-        required EnumHumanRank rang                = 1;  //!< The rank @see EnumHumanRank
+        required EnumHumanRank rank                = 1;  //!< The rank @see EnumHumanRank
         required int32         total               = 2;  //!< The total number of persons
         required int32         operational         = 3;  //!< The number of persons operational
         required int32         dead                = 4;  //!< The number of deads
@@ -871,30 +871,33 @@ message AutomatPerception {
     required EnumUnitIdentificationLevel identification_level = 2; //!< The identification level @see EnumUnitIdentificationLevel
 }
 
+/** @enum SeqOfAutomatPerception
+    @brief Regroups the perceptions of several automats
+*/
 message SeqOfAutomatPerception {
-    repeated AutomatPerception elem = 1;
-}
+    repeated AutomatPerception elem = 1; //!< The perceptions @see AutomatPerception
+}                  
 
 /** @enum UnitKnowledgeUpdate
     @brief Notifies of an update in the knowledge of a unit
 */
 message UnitKnowledgeUpdate {
-    required UnitKnowledgeId             knowledge                = 1; //!< The unit knowledge @see UnitKnowledgeId
-    required KnowledgeGroupId            knowledge_group          = 2; //!< The knowledge group identifier @see KnowledgeGroupId
-    optional int32                       pertinence               = 3;
-    optional EnumUnitIdentificationLevel identification_level     = 4;
-    optional EnumUnitIdentificationLevel max_identification_level = 5;
-    optional int32                       etat_op                  = 6;
-    optional bool                        dead                     = 7;
-    optional CoordLatLong                position                 = 8;
-    optional Heading                     direction                = 9;
-    optional int32                       speed                    = 10;
-    optional PartyId                     party                    = 11;
-    optional bool                        nature_pc                = 12;
-    optional SeqOfAutomatPerception      perception_par_compagnie = 13;
-    optional UnitId                      surrendered_unit         = 14;
-    optional bool                        prisoner                 = 15;
-    optional bool                        refugees_managed         = 16;
+    required UnitKnowledgeId             knowledge                = 1;  //!< The unit knowledge @see UnitKnowledgeId
+    required KnowledgeGroupId            knowledge_group          = 2;  //!< The knowledge group identifier @see KnowledgeGroupId
+    optional int32                       pertinence               = 3;  //!< The relevance of the knowledge in percent
+    optional EnumUnitIdentificationLevel identification_level     = 4;  //!< The identification level @see EnumUnitIdentificationLevel
+    optional EnumUnitIdentificationLevel max_identification_level = 5;  //!< The maximum identification level @see EnumUnitIdentificationLevel
+    optional int32                       operational_state        = 6;  //!< The operational state of the unit in percent
+    optional bool                        dead                     = 7;  //!< Whether the unit is dead or not
+    optional CoordLatLong                position                 = 8;  //!< The unit position @see CoordLatLong
+    optional Heading                     direction                = 9;  //!< The unit heading @see Heading
+    optional int32                       speed                    = 10; //!< The unit speed in kilometers per hour
+    optional PartyId                     party                    = 11; //!< The unit party identifier @see PartyId
+    optional bool                        nature_pc                = 12; //!< @todo What's this ? @todo translate
+    optional SeqOfAutomatPerception      perceptions              = 13; //!< The perceptions for each automat
+    optional UnitId                      surrendered_unit         = 14; //!< The unit to which this unit has surrendered @see UnitId
+    optional bool                        prisoner                 = 15; //!< Whether the unit has been made prisoner or not
+    optional bool                        refugees_managed         = 16; //!< Whether refugees are being handled by the unit or not
 }
 
 message UnitKnowledgeDestruction {
@@ -903,8 +906,8 @@ message UnitKnowledgeDestruction {
 }
 
 message UnitFireTarget {
-    optional UnitId          unit     = 1;
-    optional CrowdId         crowd    = 2;
+    optional UnitId       unit     = 1;
+    optional CrowdId      crowd    = 2;
     optional CoordLatLong position = 3;
 }
 message StartUnitFire {
@@ -1140,7 +1143,7 @@ message UrbanKnowledgeUpdate {
     required PartyId                party                = 2;
     required UrbanObjectId          urban_block          = 3;
     optional int32                  progress             = 4;
-    optional int32                  maxProgress          = 5;
+    optional int32                  max_progress         = 5;
     optional bool                   perceived            = 6;
     optional AutomatIdList          automat_perceptions  = 7;
 }
@@ -1151,23 +1154,23 @@ message UrbanKnowledgeDestruction {
 }
 
 message LogMedicalHandlingCreation {
-    required MedicalRequestId request       = 1;
-    required UnitId           unit          = 2;
-    required int32            tick_creation = 3;
-    required EnumHumanRank    rang          = 4;
-    required EnumHumanWound   blessure      = 5;
-    optional bool             blesse_mental = 6;
-    optional bool             contamine_nbc = 7;
+    required MedicalRequestId request          = 1;
+    required UnitId           unit             = 2;
+    required int32            tick_creation    = 3;
+    required EnumHumanRank    rank             = 4;
+    required EnumHumanWound   wound            = 5;
+    optional bool             mental_wound     = 6;
+    optional bool             nbc_contaminated = 7;
 }
 
 message LogMedicalHandlingUpdate {
     required MedicalRequestId             request                = 1;
     required UnitId                       unit                   = 2;
     optional UnitId                       provider               = 3;
-    optional EnumHumanWound               blessure               = 4;
-    optional bool                         blesse_mental          = 5;
-    optional bool                         contamine_nbc          = 6;
-    optional EnumLogMedicalHandlingStatus etat                   = 7;
+    optional EnumHumanWound               wound                  = 4;
+    optional bool                         mental_wound           = 5;
+    optional bool                         nbc_contaminated       = 6;
+    optional EnumLogMedicalHandlingStatus state                  = 7;
     optional bool                         diagnostique_effectue  = 8;
 }
 
@@ -1211,7 +1214,7 @@ message LogMaintenanceHandlingUpdate {
     required MaintenanceRequestId             request               = 1;
     required UnitId                           unit                  = 2;
     required UnitId                           provider              = 3;
-    optional EnumLogMaintenanceHandlingStatus etat                  = 4;
+    optional EnumLogMaintenanceHandlingStatus state                  = 4;
     optional bool                             diagnostique_effectue = 5;
 }
 
@@ -1280,7 +1283,7 @@ message LogSupplyHandlingUpdate {
     optional ParentEntity       supplier        = 3;
     optional ParentEntity       convoy_provider = 4;
     optional UnitId             convoying_unit  = 5;
-    optional EnumConvoyState    etat            = 6;
+    optional EnumConvoyState    state            = 6;
     optional SeqOfDotationQuery dotations       = 7;
 }
 

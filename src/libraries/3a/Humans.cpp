@@ -102,7 +102,7 @@ int Humans::Extract( const UnitAttributes& attributes )
     {
         --size;
         const HumanDotations_HumanDotation& humans = attributes.human_dotations().elem( size );
-        if( ( rankMask_ & ( 1 << humans.rang() ) ) != 0 )
+        if( ( rankMask_ & ( 1 << humans.rank() ) ) != 0 )
             for( unsigned i = 0; i < nHumanStates; ++i )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
                     result += (humans.*humanData[i])();

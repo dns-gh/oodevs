@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 Humans::Humans( const sword::HumanDotations_HumanDotation& asnMsg )
-    : nRank_                    ( asnMsg.rang() )
+    : nRank_                    ( asnMsg.rank() )
     , nNbrTotal_                ( asnMsg.total() )
     , nNbrOperational_          ( asnMsg.operational() )
     , nNbrDead_                 ( asnMsg.dead() )
@@ -62,7 +62,7 @@ void Humans::Update( const sword::HumanDotations_HumanDotation& message )
 // -----------------------------------------------------------------------------
 void Humans::Send( sword::HumanDotations_HumanDotation& message ) const
 {
-    message.set_rang               ( nRank_ );
+    message.set_rank               ( nRank_ );
     message.set_total              ( nNbrTotal_ );
     message.set_operational        ( nNbrOperational_ );
     message.set_dead               ( nNbrDead_ );

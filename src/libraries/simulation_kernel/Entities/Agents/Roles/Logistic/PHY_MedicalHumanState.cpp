@@ -227,12 +227,12 @@ void PHY_MedicalHumanState::SendFullState() const
     else
     {
         asn().mutable_provider()->set_id( 0 );
-        asn().set_etat( sword::termine_medical );
+        asn().set_state( sword::termine_medical );
     }
 
-    asn().set_blessure( pHuman_->GetWound().GetAsnID() );
-    asn().set_blesse_mental( pHuman_->IsMentalDiseased() );
-    asn().set_contamine_nbc( pHuman_->IsContaminated() );
+    asn().set_wound( pHuman_->GetWound().GetAsnID() );
+    asn().set_mental_wound( pHuman_->IsMentalDiseased() );
+    asn().set_nbc_contaminated( pHuman_->IsContaminated() );
     asn().set_diagnostique_effectue( bDiagnosed_ );
 
     asn.Send( NET_Publisher_ABC::Publisher() );
@@ -258,13 +258,13 @@ void PHY_MedicalHumanState::SendChangedState() const
     else
     {
         asn().mutable_provider()->set_id( 0 );
-        asn().set_etat( sword::termine_medical );
+        asn().set_state( sword::termine_medical );
     }
     if( bHumanStateHasChanged_ )
     {
-        asn().set_blessure( pHuman_->GetWound().GetAsnID() );
-        asn().set_blesse_mental( pHuman_->IsMentalDiseased() );
-        asn().set_contamine_nbc( pHuman_->IsContaminated() );
+        asn().set_wound( pHuman_->GetWound().GetAsnID() );
+        asn().set_mental_wound( pHuman_->IsMentalDiseased() );
+        asn().set_nbc_contaminated( pHuman_->IsContaminated() );
     }
     asn().set_diagnostique_effectue( bDiagnosed_ );
 
@@ -296,10 +296,10 @@ void PHY_MedicalHumanState::SendMsgCreation() const
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
     asn().set_tick_creation( nCreationTick_ );
-    asn().set_rang         ( pHuman_->GetRank ().GetAsnID() );
-    asn().set_blessure( pHuman_->GetWound().GetAsnID() );
-    asn().set_blesse_mental( pHuman_->IsMentalDiseased() );
-    asn().set_contamine_nbc( pHuman_->IsContaminated() );
+    asn().set_rank( pHuman_->GetRank ().GetAsnID() );
+    asn().set_wound( pHuman_->GetWound().GetAsnID() );
+    asn().set_mental_wound( pHuman_->IsMentalDiseased() );
+    asn().set_nbc_contaminated( pHuman_->IsContaminated() );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

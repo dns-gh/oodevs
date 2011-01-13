@@ -52,8 +52,8 @@ void LogConsignMaintenance::Update( const sword::LogMaintenanceHandlingUpdate& m
 {
     if( msg.has_diagnostique_effectue() )
         bDiagnosed_ = msg.diagnostique_effectue() != 0;
-    if( msg.has_etat() )
-        nState_ = msg.etat();
+    if( msg.has_state() )
+        nState_ = msg.state();
     pTreatingAgent_ = ( msg.provider().id() == 0 )? 0 : &model_.Agents().Get( msg.provider().id() );
 }
 
@@ -86,7 +86,7 @@ void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) con
     message().mutable_request()->set_id( GetId() );
     message().mutable_unit()->set_id( agent_.GetId() );
     message().mutable_provider()->set_id( pTreatingAgent_ ? pTreatingAgent_->GetId() : 0 );
-    message().set_etat( nState_ );
+    message().set_state( nState_ );
     message().set_diagnostique_effectue( bDiagnosed_ );
 
     message.Send( publisher );

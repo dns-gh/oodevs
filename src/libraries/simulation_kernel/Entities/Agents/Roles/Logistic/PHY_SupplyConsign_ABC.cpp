@@ -63,7 +63,7 @@ void PHY_SupplyConsign_ABC::SendFullState( client::LogSupplyHandlingUpdate& asn 
     assert( pConvoyingAutomate_ );
     assert( pSuppliedAutomate_ );
 
-    asn().set_etat( (sword::LogSupplyHandlingUpdate::EnumConvoyState ) nState_  );
+    asn().set_state( (sword::LogSupplyHandlingUpdate::EnumConvoyState ) nState_  );
     pSupplyingAutomate_->FillParentEntity(*asn().mutable_supplier());
     pConvoyingAutomate_->FillParentEntity(*asn().mutable_convoy_provider());
     asn().mutable_convoying_unit()->set_id( 0 );
@@ -88,7 +88,7 @@ void PHY_SupplyConsign_ABC::SendDefaultState( client::LogSupplyHandlingUpdate& a
     asn().mutable_convoying_unit()->set_id( 0 );
     asn().mutable_convoy_provider()->mutable_automat()->set_id( 0 );
     asn().mutable_supplier()->mutable_automat()->set_id( 0 );
-    asn().set_etat( sword::LogSupplyHandlingUpdate::convoy_finished );
+    asn().set_state( sword::LogSupplyHandlingUpdate::convoy_finished );
 }
 
 // -----------------------------------------------------------------------------

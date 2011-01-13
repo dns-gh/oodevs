@@ -95,8 +95,8 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
     }
     if( message.has_convoy_provider()  )
         pLogProvidingConvoyResourcesEntity_ = FindLogEntity( message.convoy_provider() );
-    if( message.has_etat()  )
-        nState_ = E_LogSupplyHandlingStatus( message.etat() );
+    if( message.has_state()  )
+        nState_ = E_LogSupplyHandlingStatus( message.state() );
     if( message.has_dotations()  )
         for( int i = 0; i < message.dotations().elem_size(); ++i )
         {

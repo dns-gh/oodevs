@@ -382,7 +382,7 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( sword::UnitKnowledgeUpdate&
     if( !perceptionLevelPerAutomateMap_.empty() )
         for( CIT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
         {
-            sword::AutomatPerception& perception = *asnMsg.mutable_perception_par_compagnie()->add_elem();
+            sword::AutomatPerception& perception = *asnMsg.mutable_perceptions()->add_elem();
             perception.mutable_automat()->set_id( it->first->GetID() );
             sword::EnumUnitIdentificationLevel level;
             it->second->Serialize( level );
@@ -428,8 +428,8 @@ void DEC_Knowledge_Agent::SendChangedState()
     dataRecognition_.SendChangedState( asnMsg() );
     dataIdentification_.SendChangedState( asnMsg() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    if( asnMsg().has_perception_par_compagnie()  && asnMsg().perception_par_compagnie().elem_size() > 0 )
-        asnMsg().mutable_perception_par_compagnie()->Clear(); //$$$ RAM
+    if( asnMsg().has_perceptions()  && asnMsg().perceptions().elem_size() > 0 )
+        asnMsg().mutable_perceptions()->Clear(); //$$$ RAM
 }
 
 // -----------------------------------------------------------------------------
@@ -455,8 +455,8 @@ void DEC_Knowledge_Agent::SendFullState()
     dataRecognition_ .SendFullState( asnMsg() );
     dataIdentification_.SendFullState( asnMsg() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    if( asnMsg().has_perception_par_compagnie()  && asnMsg().perception_par_compagnie().elem_size() > 0 )
-        asnMsg().mutable_perception_par_compagnie()->Clear(); //$$$ RAM
+    if( asnMsg().has_perceptions()  && asnMsg().perceptions().elem_size() > 0 )
+        asnMsg().mutable_perceptions()->Clear(); //$$$ RAM
 }
 
 // -----------------------------------------------------------------------------

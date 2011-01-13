@@ -70,14 +70,14 @@ void Troops::DoUpdate( const sword::UnitAttributes& message )
     while( nSize > 0 )
     {
         const sword::HumanDotations_HumanDotation& dot = message.human_dotations().elem( --nSize );
-        AddDifference( differences, eTroopHealthStateTotal             , dot.rang(), dot.total() );
-        AddDifference( differences, eTroopHealthStateOperational       , dot.rang(), dot.operational() );
-        AddDifference( differences, eTroopHealthStateDead              , dot.rang(), dot.dead() );
-        AddDifference( differences, eTroopHealthStateWounded           , dot.rang(), dot.wounded() );
-        AddDifference( differences, eTroopHealthStateMentalWounds      , dot.rang(), dot.mentally_wounded() );
-        AddDifference( differences, eTroopHealthStateContaminated      , dot.rang(), dot.contaminated() );
-        AddDifference( differences, eTroopHealthStateInTreatment       , dot.rang(), dot.healing() );
-        AddDifference( differences, eTroopHealthStateUsedForMaintenance, dot.rang(), dot.maintenance() );
+        AddDifference( differences, eTroopHealthStateTotal             , dot.rank(), dot.total() );
+        AddDifference( differences, eTroopHealthStateOperational       , dot.rank(), dot.operational() );
+        AddDifference( differences, eTroopHealthStateDead              , dot.rank(), dot.dead() );
+        AddDifference( differences, eTroopHealthStateWounded           , dot.rank(), dot.wounded() );
+        AddDifference( differences, eTroopHealthStateMentalWounds      , dot.rank(), dot.mentally_wounded() );
+        AddDifference( differences, eTroopHealthStateContaminated      , dot.rank(), dot.contaminated() );
+        AddDifference( differences, eTroopHealthStateInTreatment       , dot.rank(), dot.healing() );
+        AddDifference( differences, eTroopHealthStateUsedForMaintenance, dot.rank(), dot.maintenance() );
     }
     Update( differences );
 }

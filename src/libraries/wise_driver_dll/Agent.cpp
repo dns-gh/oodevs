@@ -131,7 +131,7 @@ namespace
     }
     unsigned long ExtractId( const sword::HumanDotations::HumanDotation& message )
     {
-        return message.rang();
+        return message.rank();
     }
 }
 

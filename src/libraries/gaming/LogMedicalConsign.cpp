@@ -31,9 +31,9 @@ LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resol
     , nID_             ( message.request().id() )
     , consumer_        ( resolver_.Get( message.unit().id() ) )
     , pPionLogHandling_( 0 )
-    , wound_           ( E_HumanWound( message.blessure() ) )
-    , bMentalDeceased_ ( message.blesse_mental() )
-    , bContaminated_   ( message.contamine_nbc() )
+    , wound_           ( E_HumanWound( message.wound() ) )
+    , bMentalDeceased_ ( message.mental_wound() )
+    , bContaminated_   ( message.nbc_contaminated() )
     , diagnosed_       ( false )
     , nState_          ( eLogMedicalHandlingStatus_Termine )
 {
@@ -65,14 +65,14 @@ void LogMedicalConsign::Update( const sword::LogMedicalHandlingUpdate& message )
         if( pPionLogHandling_ )
             pPionLogHandling_->Get< LogMedicalConsigns >().HandleConsign( *this );
     }
-    if( message.has_blesse_mental()  )
-        bMentalDeceased_ = message.blesse_mental();
-    if( message.has_contamine_nbc()  )
-        bContaminated_   = message.contamine_nbc();
-    if( message.has_blessure()  )
-        wound_ = E_HumanWound( message.blessure() );
-    if( message.has_etat()  )
-        nState_ = E_LogMedicalHandlingStatus( message.etat() );
+    if( message.has_mental_wound()  )
+        bMentalDeceased_ = message.mental_wound();
+    if( message.has_nbc_contaminated()  )
+        bContaminated_   = message.nbc_contaminated();
+    if( message.has_wound()  )
+        wound_ = E_HumanWound( message.wound() );
+    if( message.has_state()  )
+        nState_ = E_LogMedicalHandlingStatus( message.state() );
     if( message.has_diagnostique_effectue()  )
         diagnosed_ = message.diagnostique_effectue();
     controller_.Update( *this );

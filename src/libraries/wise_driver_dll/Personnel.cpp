@@ -20,7 +20,7 @@
 // Created: SEB 2010-10-14
 // -----------------------------------------------------------------------------
 Personnel::Personnel( const sword::HumanDotations::HumanDotation& message )
-    : rank_( message.rang() )
+    : rank_( message.rank() )
     , total_( 0 )
     , available_( 0 )
     , dead_( 0 )

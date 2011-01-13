@@ -310,7 +310,7 @@ namespace
     template< typename D >
     void FillHumanDotation( D* d )
     {
-        d->set_rang( sword::mdr );
+        d->set_rank( sword::mdr );
         d->set_total( 10 );
         d->set_operational( 11 );
         d->set_dead( 12 );
@@ -514,15 +514,15 @@ BOOST_FIXTURE_TEST_CASE( unit_knowledge_update_to_client_is_converted, ContextFi
     content.mutable_unit_knowledge_update()->set_pertinence( 9 );
     content.mutable_unit_knowledge_update()->set_identification_level( sword::reconnue );
     content.mutable_unit_knowledge_update()->set_max_identification_level( sword::detectee );
-    content.mutable_unit_knowledge_update()->set_etat_op( 10 );
+    content.mutable_unit_knowledge_update()->set_operational_state( 10 );
     content.mutable_unit_knowledge_update()->set_dead( true );
     FillCoordLatLong( content.mutable_unit_knowledge_update()->mutable_position() );
     content.mutable_unit_knowledge_update()->mutable_direction()->set_heading( 77 );
     content.mutable_unit_knowledge_update()->set_speed( 78 );
     content.mutable_unit_knowledge_update()->mutable_party()->set_id( 79 );
     content.mutable_unit_knowledge_update()->set_nature_pc( true );
-    FillAutomatPerception( content.mutable_unit_knowledge_update()->mutable_perception_par_compagnie()->add_elem() );
-    FillAutomatPerception( content.mutable_unit_knowledge_update()->mutable_perception_par_compagnie()->add_elem() );
+    FillAutomatPerception( content.mutable_unit_knowledge_update()->mutable_perceptions()->add_elem() );
+    FillAutomatPerception( content.mutable_unit_knowledge_update()->mutable_perceptions()->add_elem() );
     content.mutable_unit_knowledge_update()->mutable_surrendered_unit()->set_id( 80 );
     content.mutable_unit_knowledge_update()->set_prisoner( true );
     content.mutable_unit_knowledge_update()->set_refugees_managed( true );
@@ -1069,10 +1069,10 @@ BOOST_FIXTURE_TEST_CASE( log_medical_handling_creation_to_client_is_converted, C
     content.mutable_log_medical_handling_creation()->mutable_request()->set_id( 7 );
     content.mutable_log_medical_handling_creation()->mutable_unit()->set_id( 8 );
     content.mutable_log_medical_handling_creation()->set_tick_creation( 9u );
-    content.mutable_log_medical_handling_creation()->set_rang( sword::mdr );
-    content.mutable_log_medical_handling_creation()->set_blessure( sword::mort );
-    content.mutable_log_medical_handling_creation()->set_blesse_mental( true );
-    content.mutable_log_medical_handling_creation()->set_contamine_nbc( true );
+    content.mutable_log_medical_handling_creation()->set_rank( sword::mdr );
+    content.mutable_log_medical_handling_creation()->set_wound( sword::mort );
+    content.mutable_log_medical_handling_creation()->set_mental_wound( true );
+    content.mutable_log_medical_handling_creation()->set_nbc_contaminated( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_medical_handling_creation { request { id: 7 } unit { id: 8 } tick_creation: 9 rang: mdr blessure: mort blesse_mental: true contamine_nbc: true } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1082,10 +1082,10 @@ BOOST_FIXTURE_TEST_CASE( log_medical_handling_update_to_client_is_converted, Con
     content.mutable_log_medical_handling_update()->mutable_request()->set_id( 7 );
     content.mutable_log_medical_handling_update()->mutable_unit()->set_id( 8 );
     content.mutable_log_medical_handling_update()->mutable_provider()->set_id( 9 );
-    content.mutable_log_medical_handling_update()->set_blessure( sword::mort );
-    content.mutable_log_medical_handling_update()->set_blesse_mental( true );
-    content.mutable_log_medical_handling_update()->set_contamine_nbc( true );
-    content.mutable_log_medical_handling_update()->set_etat( sword::tri );
+    content.mutable_log_medical_handling_update()->set_wound( sword::mort );
+    content.mutable_log_medical_handling_update()->set_mental_wound( true );
+    content.mutable_log_medical_handling_update()->set_nbc_contaminated( true );
+    content.mutable_log_medical_handling_update()->set_state( sword::tri );
     content.mutable_log_medical_handling_update()->set_diagnostique_effectue( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_medical_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } blessure: mort blesse_mental: true contamine_nbc: true etat: tri diagnostique_effectue: true } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
@@ -1147,7 +1147,7 @@ BOOST_FIXTURE_TEST_CASE( log_maintenance_handling_update_to_client_is_converted,
     content.mutable_log_maintenance_handling_update()->mutable_request()->set_id( 7 );
     content.mutable_log_maintenance_handling_update()->mutable_unit()->set_id( 8 );
     content.mutable_log_maintenance_handling_update()->mutable_provider()->set_id( 9 );
-    content.mutable_log_maintenance_handling_update()->set_etat( sword::reparation );
+    content.mutable_log_maintenance_handling_update()->set_state( sword::reparation );
     content.mutable_log_maintenance_handling_update()->set_diagnostique_effectue( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_maintenance_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } etat: reparation diagnostique_effectue: true } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
@@ -1210,7 +1210,7 @@ BOOST_FIXTURE_TEST_CASE( log_supply_handling_update_to_client_is_converted, Cont
     content.mutable_log_supply_handling_update()->mutable_convoy_provider()->mutable_automat()->set_id( 11 );
     content.mutable_log_supply_handling_update()->mutable_convoy_provider()->mutable_formation()->set_id( 12 );
     content.mutable_log_supply_handling_update()->mutable_convoying_unit()->set_id( 13 );
-    content.mutable_log_supply_handling_update()->set_etat( sword::LogSupplyHandlingUpdate::convoy_loading );
+    content.mutable_log_supply_handling_update()->set_state( sword::LogSupplyHandlingUpdate::convoy_loading );
     FillDotationQuery( content.mutable_log_supply_handling_update()->mutable_dotations()->add_elem() );
     FillDotationQuery( content.mutable_log_supply_handling_update()->mutable_dotations()->add_elem() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_update { request { id: 7 } consumer { id: 8 } supplier { automat { id: 9 } formation { id: 10 } } convoy_provider { automat { id: 11 } formation { id: 12 } } convoying_unit { id: 13 } etat: convoi_chargement dotations { elem { resource { id: 10 } quantite_demandee: 11 quantite_accordee: 12 quantite_en_transit: 13 } elem { resource { id: 10 } quantite_demandee: 11 quantite_accordee: 12 quantite_en_transit: 13 } } } }" ) );
@@ -1604,7 +1604,7 @@ BOOST_FIXTURE_TEST_CASE( urban_knowledge_update_to_client_is_converted, ContextF
     content.mutable_urban_knowledge_update()->mutable_party()->set_id( 8 );
     content.mutable_urban_knowledge_update()->mutable_urban_block()->set_id( 9 );
     content.mutable_urban_knowledge_update()->set_progress( 10 );
-    content.mutable_urban_knowledge_update()->set_maxprogress( 11 );
+    content.mutable_urban_knowledge_update()->set_max_progress( 11 );
     content.mutable_urban_knowledge_update()->set_perceived( true );
     content.mutable_urban_knowledge_update()->mutable_automat_perceptions()->add_elem()->set_id( 13u );
     content.mutable_urban_knowledge_update()->mutable_automat_perceptions()->add_elem()->set_id( 14u );

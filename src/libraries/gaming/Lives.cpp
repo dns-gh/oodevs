@@ -64,8 +64,8 @@ void Lives::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Lives::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 {
-    if( message.has_etat_op() )
-        life_ = message.etat_op() * 0.01f;
+    if( message.has_operational_state() )
+        life_ = message.operational_state() * 0.01f;
     controller_.Update( *this );
 }
 

@@ -152,7 +152,7 @@ void DEC_Knowledge_AgentDataRecognition::Update( const DEC_Knowledge_AgentDataRe
 void DEC_Knowledge_AgentDataRecognition::SendChangedState( sword::UnitKnowledgeUpdate& asnMsg ) const
 {
     if( bOperationalStateChanged_ )
-        asnMsg.set_etat_op( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ));
+        asnMsg.set_operational_state( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ));
     if( bAgentTypeUpdated_ )
     {
         assert( pArmy_ );
@@ -170,7 +170,7 @@ void DEC_Knowledge_AgentDataRecognition::SendFullState( sword::UnitKnowledgeUpda
 {
     if( nTimeLastUpdate_ == 0 )
         return;
-    asnMsg.set_etat_op( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ) );
+    asnMsg.set_operational_state( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ) );
     assert( pArmy_ );
     assert( pAgentType_ );
     asnMsg.mutable_party()->set_id( pArmy_->GetID() );

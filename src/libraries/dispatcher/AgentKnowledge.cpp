@@ -45,7 +45,7 @@ AgentKnowledge::AgentKnowledge( Model& model, const sword::UnitKnowledgeCreation
     optionals_.pertinencePresent = 0;
     optionals_.identification_levelPresent = 0;
     optionals_.max_identification_levelPresent = 0;
-    optionals_.etat_opPresent = 0;
+    optionals_.operational_statePresent = 0;
     optionals_.deadPresent = 0;
     optionals_.speedPresent = 0;
     optionals_.nature_pcPresent = 0;
@@ -55,7 +55,7 @@ AgentKnowledge::AgentKnowledge( Model& model, const sword::UnitKnowledgeCreation
     optionals_.positionPresent = 0;
     optionals_.directionPresent = 0;
     optionals_.campPresent = 0;
-    optionals_.perception_par_compagniePresent = 0;
+    optionals_.perceptionsPresent = 0;
     RegisterSelf( *this );
 }
 
@@ -102,7 +102,7 @@ void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
     UPDATE_ASN_ATTRIBUTE( message, pertinence              , nRelevance_          );
     UPDATE_ASN_ATTRIBUTE( message, identification_level    , nPerceptionLevel_    );
     UPDATE_ASN_ATTRIBUTE( message, max_identification_level, nMaxPerceptionLevel_ );
-    UPDATE_ASN_ATTRIBUTE( message, etat_op                 , nOperationalState_   );
+    UPDATE_ASN_ATTRIBUTE( message, operational_state                 , nOperationalState_   );
     UPDATE_ASN_ATTRIBUTE( message, dead                    , bDead_               );
     UPDATE_ASN_ATTRIBUTE( message, speed                   , nSpeed_              );
     UPDATE_ASN_ATTRIBUTE( message, nature_pc               , bPC_                 );
@@ -129,12 +129,12 @@ void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
         team_ = &model_.Sides().Get( message.party().id() );
         optionals_.campPresent = 1;
     }
-    if( message.has_perception_par_compagnie() )
+    if( message.has_perceptions() )
     {
         automatePerceptions_.clear();
-        for( int i = 0; i < message.perception_par_compagnie().elem_size(); ++i )
-            automatePerceptions_.push_back( message.perception_par_compagnie().elem().Get(i) );
-        optionals_.perception_par_compagniePresent = 1;
+        for( int i = 0; i < message.perceptions().elem_size(); ++i )
+            automatePerceptions_.push_back( message.perceptions().elem().Get(i) );
+        optionals_.perceptionsPresent = 1;
     }
 }
 
@@ -164,7 +164,7 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     SEND_ASN_ATTRIBUTE( message(), pertinence, nRelevance_ );
     SEND_ASN_ATTRIBUTE( message(), identification_level, nPerceptionLevel_ );
     SEND_ASN_ATTRIBUTE( message(), max_identification_level, nMaxPerceptionLevel_ );
-    SEND_ASN_ATTRIBUTE( message(), etat_op, nOperationalState_ );
+    SEND_ASN_ATTRIBUTE( message(), operational_state, nOperationalState_ );
     SEND_ASN_ATTRIBUTE( message(), dead, bDead_ );
     SEND_ASN_ATTRIBUTE( message(), speed, nSpeed_ );
     SEND_ASN_ATTRIBUTE( message(), nature_pc, bPC_ );
@@ -181,9 +181,9 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         message().mutable_direction()->set_heading( nDirection_ );
     if( team_ && optionals_.campPresent )
         message().mutable_party()->set_id( team_->GetId() );
-    if( optionals_.perception_par_compagniePresent )
+    if( optionals_.perceptionsPresent )
         for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
-            *message().mutable_perception_par_compagnie()->add_elem() = automatePerceptions_[ i ];
+            *message().mutable_perceptions()->add_elem() = automatePerceptions_[ i ];
     message.Send( publisher );
 }
 

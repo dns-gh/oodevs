@@ -68,7 +68,7 @@ private:
       unsigned pertinencePresent : 1;
       unsigned identification_levelPresent : 1;
       unsigned max_identification_levelPresent : 1;
-      unsigned etat_opPresent : 1;
+      unsigned operational_statePresent : 1;
       unsigned deadPresent : 1;
       unsigned speedPresent : 1;
       unsigned nature_pcPresent : 1;
@@ -78,7 +78,7 @@ private:
       unsigned positionPresent : 1;
       unsigned directionPresent : 1;
       unsigned campPresent : 1;
-      unsigned perception_par_compagniePresent : 1;
+      unsigned perceptionsPresent : 1;
     };
     //@}
 

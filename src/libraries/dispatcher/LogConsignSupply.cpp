@@ -57,8 +57,8 @@ void LogConsignSupply::Update( const sword::LogSupplyHandlingUpdate& msg )
         pConvoyingEntity_ = FindLogEntity( msg.convoy_provider() );
     if( msg.has_convoying_unit() )
         pConvoy_ = ( msg.convoying_unit().id() == 0 ) ? 0 : &model_.Agents().Get( msg.convoying_unit().id() );
-    if( msg.has_etat() )
-        nState_ = msg.etat();
+    if( msg.has_state() )
+        nState_ = msg.state();
     if( msg.has_dotations() )
         for( int i = 0; i < msg.dotations().elem_size(); ++i )
         {
@@ -114,7 +114,7 @@ void LogConsignSupply::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     FillLogEntityID( *asn().mutable_supplier(), pTreatingEntity_ );
     FillLogEntityID( *asn().mutable_convoy_provider(), pConvoyingEntity_ );
     asn().mutable_convoying_unit()->set_id( pConvoy_ ? pConvoy_->GetId() : 0 );
-    asn().set_etat( nState_ );
+    asn().set_state( nState_ );
     {
         for( tools::Iterator< const LogSupplyDotation& > it = dotations_.CreateIterator(); it.HasMoreElements(); )
             it.NextElement().Send( *asn().mutable_dotations()->add_elem() );

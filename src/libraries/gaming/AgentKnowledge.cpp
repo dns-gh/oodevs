@@ -83,8 +83,8 @@ void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
             nMaxPerceptionLevel_ = nCurrentPerceptionLevel_;
     }
 
-    if( message.has_etat_op()  )
-        nEtatOps_ = message.etat_op();
+    if( message.has_operational_state()  )
+        nEtatOps_ = message.operational_state();
 
     // $$$$ AGE 2008-04-03:
 //    if( message.has_position()  )

@@ -486,7 +486,7 @@ void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& message ) co
         const PHY_HumanRank& rank = *itRank->second;
         const T_HumanData& humanData = humansData_[ rank.GetID() ];
         sword::HumanDotations::HumanDotation& personnel = *message().mutable_human_dotations()->add_elem();
-        personnel.set_rang               ( rank.GetAsnID() );
+        personnel.set_rank               ( rank.GetAsnID() );
         personnel.set_total              ( humanData.nNbrTotal_ );
         personnel.set_operational        ( humanData.nNbrOperational_ );
         personnel.set_dead               ( humanData.nNbrDead_ );
@@ -511,7 +511,7 @@ void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& message ) const
         const PHY_HumanRank& rank = *itRank->second;
         const T_HumanData& humanData = humansData_[ rank.GetID() ];
         sword::HumanDotations::HumanDotation& personnel = *message().mutable_human_dotations()->add_elem();
-        personnel.set_rang               ( rank.GetAsnID() );
+        personnel.set_rank               ( rank.GetAsnID() );
         personnel.set_total              ( humanData.nNbrTotal_ );
         personnel.set_operational        ( humanData.nNbrOperational_ );
         personnel.set_dead               ( humanData.nNbrDead_ );

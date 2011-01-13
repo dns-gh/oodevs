@@ -228,7 +228,7 @@ void DEC_Knowledge_Urban::SendChangedState()
     {
         float rProgress  = static_cast< int >( rProgressPercent_ * 100 ) / 5 * 0.05f;
         message().set_progress( static_cast< int >( rProgress * 100 ) );
-        message().set_maxprogress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
+        message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
         rLastProgressSent_ = rProgress;
         bMustSend = true;
     }
@@ -271,16 +271,12 @@ void DEC_Knowledge_Urban::SendFullState()
     message().mutable_knowledge()->set_id( GetID() );
     message().mutable_party()->set_id( army_->GetID() );
     message().mutable_urban_block()->set_id( object_->GetId() );
-
     float rProgress = static_cast< int >( rProgressPercent_ * 100 ) / 5 * 0.05f;
     message().set_progress( static_cast< int >( rProgress * 100 ) );
     rLastProgressSent_ = rProgress;
-    message().set_maxprogress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
-
+    message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
     message().set_perceived( bLastPerceived_ );
-
     WriteMsgPerceptionSources( message() );
-
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 // -----------------------------------------------------------------------------
