@@ -51,14 +51,8 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
         color_.green_ = colorAttribute->Green();
         color_.blue_ = colorAttribute->Blue();
     }
-    const std::string colors = controllers.options_.GetOption( "Density/urbanBlock", QString( "default" ) ).To< QString >();
-    if( colors != "default" )
-        pGradient_->LoadValues( colors.c_str() );
-    else
-    {
-        pGradient_->AddColor( 0, Qt::green );
-        pGradient_->AddColor( 1, Qt::red );
-    }
+    pGradient_->AddColor( 0, Qt::green );
+    pGradient_->AddColor( 1, Qt::red );
     controllers_.Register( *this );
 }
 
@@ -86,14 +80,8 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
         color_.green_ = colorAttribute->Green();
         color_.blue_ = colorAttribute->Blue();
     }
-    const std::string colors = controllers.options_.GetOption( "Density/urbanBlock", QString( "default" ) ).To< QString >();
-    if( colors != "default" )
-        pGradient_->LoadValues( colors.c_str() );
-    else
-    {
-        pGradient_->AddColor( 0, Qt::green );
-        pGradient_->AddColor( 1, Qt::red );
-    }
+    pGradient_->AddColor( 0, Qt::green );
+    pGradient_->AddColor( 1, Qt::red );
     controllers_.Register( *this );
 }
 
