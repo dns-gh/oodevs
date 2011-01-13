@@ -7656,6 +7656,8 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
       </fragorders>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" masalife="true" name="net.masagroup.sword.military.company.combat.support.artillery.roles.Company">
@@ -11616,4 +11618,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0665217399" -->
+<!-- signature="1976507488" -->
