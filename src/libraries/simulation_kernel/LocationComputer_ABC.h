@@ -12,7 +12,6 @@
 
 namespace location
 {
-
 // =============================================================================
 /** @class  LocationComputer_ABC
     @brief  LocationComputer_ABC
@@ -35,6 +34,6 @@ public:
     //@}
 };
 
-} // namespace firing
+} // namespace location
 
 #endif // __LocationComputer_ABC_h_

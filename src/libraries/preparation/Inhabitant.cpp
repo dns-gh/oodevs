@@ -14,7 +14,6 @@
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryExtensions.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 

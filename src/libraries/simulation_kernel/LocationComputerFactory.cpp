@@ -8,11 +8,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
-#include "simulation_kernel/LocationComputerFactory.h"
-#include "simulation_kernel/DefaultLocationComputer.h"
+#include "LocationComputerFactory.h"
+#include "DefaultLocationComputer.h"
 
 using namespace location;
+
 // -----------------------------------------------------------------------------
 // Name: LocationComputerFactory constructor
 // Created: MGD 2009-08-13

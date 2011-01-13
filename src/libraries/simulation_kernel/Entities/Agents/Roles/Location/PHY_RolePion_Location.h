@@ -14,10 +14,10 @@
 
 #include "MIL.h"
 #include "PHY_RoleInterface_Location.h"
-#include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
-#include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
-#include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
+#include "PopulationCollisionNotificationHandler_ABC.h"
+#include "ObjectCollisionNotificationHandler_ABC.h"
+#include "NetworkUnitAttributesMessageSender_ABC.h"
+#include "LocationActionNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
 namespace urbanLocation
@@ -55,46 +55,46 @@ public:
     virtual void Update( bool bIsDead );
     virtual void Clean ();
 
-    virtual void Hide     ();
-    virtual void Show     ( const MT_Vector2D& vNewPosition );
+    virtual void Hide();
+    virtual void Show( const MT_Vector2D& vNewPosition );
     virtual void MagicMove( const MT_Vector2D& vNewPosition );
-    virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, double rNewSpeed );
-    virtual void Follow   ( const MIL_Agent_ABC& agent );
-    void         Execute  ( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
+    virtual void Move( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, double rNewSpeed );
+    virtual void Follow( const MIL_Agent_ABC& agent );
+    void Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
 
-    virtual void NotifyTerrainObjectCollision    ( MIL_Object_ABC& object );
-    virtual void NotifyTerrainPutInsideObject    ( MIL_Object_ABC& object );
-    virtual void NotifyTerrainPutOutsideObject   ( MIL_Object_ABC& object );
+    virtual void NotifyTerrainObjectCollision( MIL_Object_ABC& object );
+    virtual void NotifyTerrainPutInsideObject( MIL_Object_ABC& object );
+    virtual void NotifyTerrainPutOutsideObject( MIL_Object_ABC& object );
     //@}
 
     //! @name Event handlers
     //@{
-    virtual void NotifyMovingInsideObject ( MIL_Object_ABC& object );
+    virtual void NotifyMovingInsideObject( MIL_Object_ABC& object );
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
     virtual void NotifyPutInsideObject( MIL_Object_ABC& object ) ;
     virtual void NotifyPutOutsideObject( MIL_Object_ABC& object );
-    virtual void NotifyFlowCollision( MIL_PopulationFlow&          population );
+    virtual void NotifyFlowCollision( MIL_PopulationFlow& population );
     virtual void NotifyConcentrationCollision( MIL_PopulationConcentration& population );
     //@}
 
     //! @name Accessors
     //@{
-    virtual double            GetHeight         () const;
-    virtual double            GetAltitude       () const;
-    virtual const MT_Vector2D&  GetPosition       () const;
+    virtual double GetHeight() const;
+    virtual double GetAltitude() const;
+    virtual const MT_Vector2D& GetPosition() const;
     virtual boost::shared_ptr<MT_Vector2D> GetSharedPosition() const;
-    virtual const MT_Vector2D&  GetDirection      () const;
-    virtual MIL_Agent_ABC&      GetAgent          () const;
-    virtual double            GetCurrentSpeed   () const;
-    virtual bool                HasDoneMagicMove  () const;
-    virtual bool                HasSpeedChanged   () const; // Position or direction or height has changed
-    virtual bool                HasLocationChanged() const;
+    virtual const MT_Vector2D& GetDirection() const;
+    virtual MIL_Agent_ABC& GetAgent() const;
+    virtual double GetCurrentSpeed() const;
+    virtual bool HasDoneMagicMove() const;
+    virtual bool HasSpeedChanged() const; // Position or direction or height has changed
+    virtual bool HasLocationChanged() const;
     //@}
 
     //! @name Network
     //@{
     virtual void SendChangedState( client::UnitAttributes& asnMsg ) const;
-    virtual void SendFullState   ( client::UnitAttributes& asnMsg ) const;
+    virtual void SendFullState( client::UnitAttributes& asnMsg ) const;
     //@}
 
     //! @name HLA
@@ -105,20 +105,20 @@ public:
 private:
     //! @name Tools
     //@{
-    void SetDirection   ( const MT_Vector2D& vDirection );
-    void SetPosition    ( const MT_Vector2D& vPosition  );
-    void SetCurrentSpeed( double rSpeed               );
-    void SetHeight      ( double rHeight              );
+    void SetDirection( const MT_Vector2D& vDirection );
+    void SetPosition( const MT_Vector2D& vPosition  );
+    void SetCurrentSpeed( double rSpeed );
+    void SetHeight( double rHeight );
     //@}
 
 private:
     MIL_AgentPion& pion_;
-    MT_Vector2D    vDirection_;
+    MT_Vector2D vDirection_;
     boost::shared_ptr<MT_Vector2D> pvPosition_;
-    double       rHeight_;
-    double       rCurrentSpeed_;
-    bool           bHasDoneMagicMove_;
-    bool           bHasMove_;
+    double rHeight_;
+    double rCurrentSpeed_;
+    bool bHasDoneMagicMove_;
+    bool bHasMove_;
 
     bool bPositionHasChanged_;
     bool bDirectionHasChanged_;
@@ -127,7 +127,6 @@ private:
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Location* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Location* role, const unsigned int /*version*/ );
-
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_RolePion_Location )

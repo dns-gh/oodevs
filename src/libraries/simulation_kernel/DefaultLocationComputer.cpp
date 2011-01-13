@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
-#include "simulation_kernel/DefaultLocationComputer.h"
-#include "simulation_kernel/Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "DefaultLocationComputer.h"
 
 using namespace location;
 

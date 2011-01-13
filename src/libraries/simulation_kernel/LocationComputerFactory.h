@@ -10,8 +10,8 @@
 #ifndef __LocationComputerFactory_h_
 #define __LocationComputerFactory_h_
 
-#include "simulation_kernel/LocationComputerFactory_ABC.h"
-#include "simulation_kernel/PostureComputer_ABC.h"
+#include "LocationComputerFactory_ABC.h"
+#include "PostureComputer_ABC.h"
 
 namespace location
 {

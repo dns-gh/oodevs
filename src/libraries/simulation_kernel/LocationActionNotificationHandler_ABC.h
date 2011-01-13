@@ -40,4 +40,4 @@ public:
 
 } // namespace location
 
-#endif /* __LocationActionNotificationHandler_ABC_H__ */
+#endif // __LocationActionNotificationHandler_ABC_H__

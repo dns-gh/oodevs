@@ -10,11 +10,10 @@
 #ifndef __DefaultLocationComputer_h_
 #define __DefaultLocationComputer_h_
 
-#include "simulation_kernel/LocationComputer_ABC.h"
+#include "LocationComputer_ABC.h"
 
 namespace location
 {
-
 // =============================================================================
 /** @class  DefaultLocationComputer
     @brief  DefaultLocationComputer
@@ -43,6 +42,6 @@ private:
     //@}
 };
 
-} // namespace firing
+} // namespace location
 
 #endif // __DefaultLocationComputer_h_
