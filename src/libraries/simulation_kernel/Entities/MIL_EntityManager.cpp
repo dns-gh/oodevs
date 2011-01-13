@@ -919,14 +919,14 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const sword::UnitMagicAct
     try
     {
         if( msg.type() != sword::UnitMagicAction_Type_automat_creation )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
         if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
         const sword::MissionParameter& id = msg.parameters().elem( 0 );
         if( id.value_size() != 1 || !id.value().Get(0).has_identifier() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
         const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( id.value().Get(0).identifier() );
         if( !pType )
@@ -934,11 +934,11 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const sword::UnitMagicAct
 
         const sword::MissionParameter& groupId = msg.parameters().elem( 1 );
         if( groupId.value_size() != 1  || !groupId.value().Get(0).has_identifier() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
         const sword::MissionParameter& nameParam = msg.parameters().elem( 2 );
         if( nameParam.value_size() != 1 || !nameParam.value().Get(0).has_acharstr() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         const std::string name = nameParam.value().Get(0).acharstr();
         MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, groupId.value().Get(0).identifier(), name, entity, nCtx ); // auto-registration
     }
@@ -960,14 +960,14 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const sword::UnitMagicA
     {
         if( !formation )
         {
-            ack().set_error_code( sword::MagicActionAck::error_invalid_attribute );
+            ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
             return;
         }
         army = &(formation->GetArmy());
     }
     if( !message.has_parameters() || message.parameters().elem_size() != 3 || !(message.parameters().elem( 0 ).value_size() == 1) || !message.parameters().elem( 0 ).value().Get(0).has_areal() )
     {
-        ack().set_error_code( sword::MagicActionAck::error_invalid_attribute );
+        ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
         return;
     }
     const ::sword::MissionParameters& parameters = message.parameters();
@@ -992,7 +992,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const sword::UnitMagicActio
         || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get(0).has_point() 
         || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get(0).has_areal() )
     {
-        ack().set_error_code( sword::MagicActionAck::error_invalid_attribute );
+        ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
         return;
     }
     const ::sword::MissionParameters& parameters = message.parameters();
@@ -1000,7 +1000,7 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const sword::UnitMagicActio
     ::sword::Location location = parameters.elem( 1 ).value().Get(0).point().location();
     if( !location.has_coordinates() )
     {
-        ack().set_error_code( sword::MagicActionAck::error_invalid_attribute );
+        ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
         return;
     }
     ack.Send( NET_Publisher_ABC::Publisher() );
@@ -1342,13 +1342,13 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const sword::UnitMagicActi
         MIL_Automate* pAutomat = TaskerToAutomat( *this, message.tasker() );
         MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
         if( !pAutomat && !pFormation )
-            throw NET_AsnException< sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( sword::LogSupplyChangeQuotasAck::error_invalid_receiver );
+            throw NET_AsnException< sword::LogSupplyChangeQuotasAck::ErrorCode >( sword::LogSupplyChangeQuotasAck::error_invalid_receiver );
         MIL_AutomateLOG* pReceiver = pAutomat ? pAutomat->GetBrainLogistic() : pFormation->GetBrainLogistic();
         if( !pReceiver )
-            throw NET_AsnException< sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( sword::LogSupplyChangeQuotasAck::error_invalid_receiver );
+            throw NET_AsnException< sword::LogSupplyChangeQuotasAck::ErrorCode >( sword::LogSupplyChangeQuotasAck::error_invalid_receiver );
         pReceiver->OnReceiveLogSupplyChangeQuotas( message.parameters() );
     }
-    catch( NET_AsnException< sword::LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >& e )
+    catch( NET_AsnException< sword::LogSupplyChangeQuotasAck::ErrorCode >& e )
     {
         ack().set_ack( e.GetErrorID() );
     }
@@ -1369,9 +1369,9 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const sword::UnitMagicAction& 
         if( pAutomate )
             pAutomate->OnReceiveLogSupplyPushFlow( message.parameters() );
         else
-            throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
+            throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
     }
-    catch( NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >& e )
+    catch( NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >& e )
     {
         ack().set_ack( e.GetErrorID() );
     }
@@ -1392,9 +1392,9 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const sword::UnitMagicAction& 
         if( pAutomate )
             pAutomate->OnReceiveLogSupplyPullFlow( message.parameters() );
         else
-            throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck::error_invalid_receiver_pullflow );
+            throw NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >( sword::LogSupplyPullFlowAck::error_invalid_receiver );
     }
-    catch( NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >& e )
+    catch( NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >& e )
     {
         ack().set_ack( e.GetErrorID() );
     }
@@ -1475,37 +1475,37 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
     try
     {
         if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
 
         MIL_Agent_ABC* reporter = ( msg.tasker().has_unit() && msg.tasker().unit().has_id() ) ? FindAgentPion( msg.tasker().unit().id() ) : 0;
         if( !reporter )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_reporter );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_reporter );
 
         // Target
         const sword::MissionParameter& target = msg.parameters().elem( 0 );
         if( target.value_size() != 1 || !target.value().Get(0).has_identifier() )
-            throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
 
         boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( target.value().Get(0).identifier() );
         if( !targetKn )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
 
         // Ammo
         const sword::MissionParameter& ammo = msg.parameters().elem( 1 );
         if( ammo.value_size() != 1 || !ammo.value().Get(0).has_resourcetype() )
-            throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
         if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_ammunition );
 
         if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >( sword::ActionCreateFireOrderAck::error_target_not_illuminated );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_target_not_illuminated );
 
         // Iterations
         const sword::MissionParameter& iterations = msg.parameters().elem( 2 );
         if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
-            throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
 
         PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
         unsigned int ammos = (unsigned int) pDotationCategory->GetIndirectFireData()->ConvertToNbrAmmo( iterations.value().Get(0).areal() );
@@ -1514,7 +1514,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
 
         pDotationCategory->ApplyIndirectFireEffect( *reporter, targetKn->GetAgentKnown(), ammos , fireResult );
     }
-    catch( NET_AsnException< sword::ActionCreateFireOrderAck::EnumActionCreateFireOrderErrorCode >& e )
+    catch( NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }

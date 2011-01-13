@@ -601,9 +601,7 @@ void MIL_AutomateLOG::OnReceiveChangeLogisticLinks( const sword::UnitMagicAction
     unsigned int automatId = msg.parameters().elem( 1 ).value().Get(0).identifier();
     unsigned int formationId = msg.parameters().elem( 2 ).value().Get(0).identifier();
     if( ( automatId == ( unsigned int ) -1 ) && (formationId == ( unsigned int ) -1) )
-    {
-        throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_party_hierarchy );
-    }
+        throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_party );
     pCurrentSuperior_ = automatId!=0 ? GetLogisticAutomate(automatId) : GetLogisticAutomate(formationId);
     if( !pCurrentSuperior_ )
         pNominalSuperior_ = 0;
@@ -624,7 +622,7 @@ void MIL_AutomateLOG::OnReceiveLogSupplyChangeQuotas( const sword::MissionParame
            GetLogisticAutomate( oid_donneur ) != pNominalSuperior_)
          )
     {
-        throw NET_AsnException< LogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( LogSupplyChangeQuotasAck::error_invalid_supplier );
+        throw NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >( LogSupplyChangeQuotasAck::error_invalid_supplier );
     }
 
     if ( GetLogisticAutomate( oid_donneur ) == pCurrentSuperior_ )

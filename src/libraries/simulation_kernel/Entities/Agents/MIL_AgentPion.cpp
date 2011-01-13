@@ -662,17 +662,17 @@ void MIL_AgentPion::OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition )
 void MIL_AgentPion::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& asn )
 {
     if( asn.type() != sword::UnitMagicAction::move_to )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( pAutomate_->IsEngaged() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_automate_embraye );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_automat_engaged );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1)
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = asn.parameters().elem( 0 );
     if( !parametre.value_size() == 1 || !parametre.value().Get(0).has_point() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const sword::Point& point = parametre.value().Get(0).point();
     if( point.location().type() != sword::Location::point  || point.location().coordinates().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
     MagicMove( vPosTmp );
@@ -690,7 +690,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         sword::EnumUnitTiredness tiredness = static_cast< sword::EnumUnitTiredness >( msg.elem( 0 ).value().Get(0).enumeration() );
         const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
         if( !pTiredness )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
     }
     if( msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value().Get(0).has_enumeration() )
@@ -698,7 +698,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         sword::EnumUnitMorale morale = static_cast< sword::EnumUnitMorale >( msg.elem( 1 ).value().Get(0).enumeration() );
         const PHY_Morale* pMoral = PHY_Morale::Find( morale );
         if( !pMoral )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
     }
     if( msg.elem( 2 ).value_size() == 1 && msg.elem( 2 ).value().Get(0).has_enumeration() )
@@ -706,7 +706,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         sword::EnumUnitExperience experience = static_cast< sword::EnumUnitExperience >( msg.elem( 2 ).value().Get(0).enumeration() );
         const PHY_Experience* pExperience = PHY_Experience::Find( experience );
         if( !pExperience )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
     }
 }

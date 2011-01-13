@@ -211,24 +211,24 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::MissionPar
     MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
     MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
     if( !candidateAutomate && !candidateFormation)
-        throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck::error_invalid_provider_pullflow );
+        throw NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >( sword::LogSupplyPullFlowAck::error_invalid_supplier );
 
     MIL_AutomateLOG* pSupplier = candidateAutomate!=0 ? candidateAutomate->GetBrainLogistic() :
             candidateFormation->GetBrainLogistic();
 
     if( !pSupplier )
-        throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck::error_invalid_provider_pullflow );
+        throw NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >( sword::LogSupplyPullFlowAck::error_invalid_supplier );
 
     PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), PHY_SupplyStockRequestContainer::eUpward );
     if(!supplyRequests.HasRequests())
-        throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck::error_invalid_provider_pullflow );
+        throw NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >( sword::LogSupplyPullFlowAck::error_invalid_supplier );
 
     PHY_SupplyStockState* pSupplyState = 0;
     supplyRequests.Execute( *pSupplier, pSupplyState );
     if( pSupplyState )
         manualSupplyStates_.insert( pSupplyState );
     else
-        throw NET_AsnException< sword::LogSupplyPullFlowAck_EnumLogSupplyPullFlow >( sword::LogSupplyPullFlowAck::error_invalid_provider_pullflow );
+        throw NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >( sword::LogSupplyPullFlowAck::error_invalid_supplier );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,24 +242,24 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow( const sword::MissionPar
     MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
     MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
     if( !candidateAutomate && !candidateFormation)
-        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
+        throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
 
     MIL_AutomateLOG* pSupplier = candidateAutomate!=0 ? candidateAutomate->GetBrainLogistic() :
             candidateFormation->GetBrainLogistic();
 
     if( !pSupplier )
-        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
+        throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
 
     PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), PHY_SupplyStockRequestContainer::eDownward );
     if(!supplyRequests.HasRequests())
-        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
+        throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
 
     PHY_SupplyStockState* pSupplyState = 0;
     supplyRequests.Execute( *pSupplier, pSupplyState );
     if( pSupplyState )
         manualSupplyStates_.insert( pSupplyState );
     else
-        throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
+        throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
 }
 
 // -----------------------------------------------------------------------------

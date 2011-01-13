@@ -60,9 +60,9 @@ void MIL_PopulationOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn
 {
     const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.type().id() );
     if( !pType )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_order_conduite );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_frag_order );
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_order_conduite );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_frag_order );
     DEC_Representations& representation = population_.GetRole<DEC_Representations>();
     boost::shared_ptr< MIL_FragOrder > pFragOrder ( new MIL_FragOrder( *pType, population_.GetKnowledge(), asn ) );
     representation.AddToOrdersCategory( pFragOrder );

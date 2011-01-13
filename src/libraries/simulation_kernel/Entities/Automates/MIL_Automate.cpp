@@ -969,21 +969,21 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitCreationReques
 void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& msg )
 {
     if( msg.type() != sword::UnitMagicAction_Type_unit_creation )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( !msg.has_parameters() || msg.parameters().elem_size() != 2)
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const sword::MissionParameter& id = msg.parameters().elem( 0 );
     if( id.value_size() != 1 || !id.value().Get(0).has_identifier() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id.value().Get(0).identifier() );
     if( !pType )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
     const sword::MissionParameter& location = msg.parameters().elem( 1 );
     if( location.value_size() != 1 || !location.value().Get(0).has_point() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const sword::Point& point = location.value().Get(0).point();
     if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     MT_Vector2D position;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), position );
     try
@@ -1008,7 +1008,7 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         {
             const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( msg.parameters().elem( 0 ).value().Get(0).party().id() );
             if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
             else if( IsSurrendered() )
                 throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_unit_surrendered );
             else
@@ -1037,15 +1037,15 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
 void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg )
 {
     if( msg.type() != sword::UnitMagicAction::move_to )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_point() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const sword::Point& point = parametre.value().Get(0).point();
     if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), vPosTmp );
     const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
@@ -1062,16 +1062,16 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
 void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies  )
 {
     if( msg.type() != sword::UnitMagicAction::change_knowledge_group )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( !msg.has_parameters() || msg.parameters().elem_size() != 2 )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get(0).has_knowledgegroup() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( msg.parameters().elem( 1 ).value_size() != 1 || !msg.parameters().elem( 1 ).value().Get(0).has_party() )
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     MIL_Army_ABC* pNewArmy = armies.Find( msg.parameters().elem( 1 ).value().Get(0).party().id() );
     if( !pNewArmy || *pNewArmy != GetArmy() )
-        throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_invalid_party_hierarchy );
+        throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_invalid_party );
     MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( msg.parameters().elem( 0 ).value().Get(0).knowledgegroup().id() );
     if( !pNewKnowledgeGroup )
         throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_invalid_knowledge_group );
@@ -1090,7 +1090,7 @@ void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& 
 void MIL_Automate::OnReceiveChangeLogisticLinks( const sword::UnitMagicAction& msg )
 {
     if( IsSurrendered() )
-        throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_unit_surrendered_hierarchy );
+        throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_agent_surrendered );
     unsigned int tc2Id = msg.parameters().elem( 0 ).value().Get(0).identifier();
     if( tc2Id != static_cast< unsigned int >( -1 ) )
     {
@@ -1100,7 +1100,7 @@ void MIL_Automate::OnReceiveChangeLogisticLinks( const sword::UnitMagicAction& m
         {
             MIL_Automate* pTC2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( tc2Id );
             if( !pTC2 || !pTC2->GetType().IsLogistic() )
-                throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_automate_tc2 );
+                throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_supply_automat );
             pTC2_ = pTC2->GetBrainLogistic();
         }
     }
@@ -1152,7 +1152,7 @@ void MIL_Automate::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, c
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveLogSupplyChangeQuotas( const sword::MissionParameters& /*msg*/ )
 {
-    throw NET_AsnException< sword::LogSupplyPushFlowAck_EnumLogSupplyPushFlow >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
+    throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
 }
 
 // -----------------------------------------------------------------------------

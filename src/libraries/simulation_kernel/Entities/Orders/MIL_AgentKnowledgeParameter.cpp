@@ -32,7 +32,7 @@ MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const sword::UnitKnowl
     : pKnowledgeAgent_( NET_ASN_Tools::ReadAgentKnowledge( asn, resolver ) )
 {
     if( !pKnowledgeAgent_ )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------

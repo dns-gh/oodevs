@@ -61,7 +61,7 @@ BOOST_FIXTURE_TEST_CASE( unit_creation_request_ack_to_client_is_converted, Conte
 
 BOOST_FIXTURE_TEST_CASE( magic_action_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_magic_action_ack()->set_error_code( sword::MagicActionAck::error_invalid_attribute );
+    content.mutable_magic_action_ack()->set_error_code( sword::MagicActionAck::error_invalid_parameter );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { magic_action_ack { error_code: error_invalid_attribute } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -136,7 +136,7 @@ BOOST_FIXTURE_TEST_CASE( log_supply_push_flow_ack_to_client_is_converted, Contex
 
 BOOST_FIXTURE_TEST_CASE( log_supply_pull_flow_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_log_supply_pull_flow_ack()->set_ack( sword::LogSupplyPullFlowAck::error_invalid_provider_pullflow );
+    content.mutable_log_supply_pull_flow_ack()->set_ack( sword::LogSupplyPullFlowAck::error_invalid_supplier );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_pull_flow_ack { ack: error_invalid_provider_pullflow } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

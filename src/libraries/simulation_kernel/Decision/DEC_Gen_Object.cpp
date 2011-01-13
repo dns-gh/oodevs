@@ -29,14 +29,14 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityM
     , pTC2_              ( 0 )
 {
     if( type_.empty() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     if( !NET_ASN_Tools::ReadLocation( asn.position(), localisation_ ) )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     if( asn.tc2().id() != 0 )
     {
         pTC2_ = entityManager.FindAutomate( asn.tc2().id() );
         if( !pTC2_ )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
+            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     }
 }
 
@@ -53,7 +53,7 @@ DEC_Gen_Object::DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localis
     , pTC2_              ( 0 )
 {
     if( type_.empty() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------

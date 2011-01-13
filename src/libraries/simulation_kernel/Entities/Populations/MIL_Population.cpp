@@ -886,16 +886,16 @@ void MIL_Population::OnReceiveCrowdMagicAction( const sword::UnitMagicAction& ms
 void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicAction& asn )
 {
     if( asn.type() != sword::UnitMagicAction::move_to )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( !asn.has_parameters() || asn.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = asn.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_point() )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const sword::Point& point = parametre.value().Get(0).point();
     if( point.location().type() != sword::Location::point
         || point.location().coordinates().elem_size() != 1 )
-        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
    // merge all concentrations into new
@@ -931,13 +931,13 @@ void MIL_Population::OnReceiveMsgDestroyAll()
 void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_enumeration() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parametre.value().Get(0).enumeration() );
     if( !pAttitude )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
 
     // $$$$ JSR 2010-04-16: TODO concentration, flux et global non définis.
     // On fait comme si c'était en global.
@@ -955,7 +955,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& m
                 ( **it ).SetAttitude( *pAttitude );
                 return;
             }
-        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
     }
     // flow
     else if( asn.beneficiaire().has_flux() )
@@ -966,7 +966,7 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& m
                 ( **it ).SetAttitude( *pAttitude );
                 return;
             }
-        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
     }
     // global
     else if( asn.beneficiaire().has_global() )
@@ -985,10 +985,10 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& m
 void MIL_Population::OnReceiveMsgKill( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_quantity() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
     unsigned int remainingKills = parametre.value().Get(0).quantity();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
@@ -1011,10 +1011,10 @@ void MIL_Population::OnReceiveMsgKill( const sword::UnitMagicAction& msg )
 void MIL_Population::OnReceiveMsgResurrect( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() )
-        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
     const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get(0).has_quantity() )
-        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_attribute );
+        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
     unsigned int remainingResurrections = parametre.value().Get(0).quantity();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {

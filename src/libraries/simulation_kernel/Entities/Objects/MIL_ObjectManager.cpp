@@ -378,7 +378,7 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
     else 
         object = Find( id );
     if( object == 0 )
-        nErrorCode = sword::MagicActionAck::error_invalid_attribute;
+        nErrorCode = sword::MagicActionAck::error_invalid_parameter;
     else if( params.elem( 2 ).value_size() > 0 )
         nErrorCode = object->OnUpdateResourceLinks( params.elem( 2 ).value() );
     client::MagicActionAck asnReplyMsg;

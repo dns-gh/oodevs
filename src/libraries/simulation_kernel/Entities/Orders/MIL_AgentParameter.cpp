@@ -36,7 +36,7 @@ MIL_AgentParameter::MIL_AgentParameter( const sword::UnitId& asn, MIL_EntityMana
     if( pPion )
         pDecision_ = dynamic_cast< DEC_RolePion_Decision* >( &pPion->GetDecision() );
     if( !pDecision_ )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------

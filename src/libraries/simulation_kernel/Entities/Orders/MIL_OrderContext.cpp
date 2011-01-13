@@ -40,7 +40,7 @@ MIL_OrderContext::MIL_OrderContext( const sword::MissionParameters& asn, const M
     : hasContext_( true )
 {
     if( unsigned int( asn.elem_size() ) < Length() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     ReadDirection( asn.elem(0) );
     ReadPhaseLines( asn.elem(1) );
     ReadLimits( asn.elem(2), asn.elem(3), orientationReference );
@@ -94,7 +94,7 @@ void MIL_OrderContext::ReadLimits( const sword::MissionParameter& limit1, const 
     if( limit1.null_value() )
         return;
     if( !limit1.value().Get( 0 ).has_limit() || !limit2.value().Get( 0 ).has_limit() )
-        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 
     T_PointVector limit1Data, limit2Data;
     if( !NET_ASN_Tools::ReadLine( limit1.value().Get( 0 ).limit(), limit1Data )
@@ -121,7 +121,7 @@ void MIL_OrderContext::ReadPhaseLines( const sword::MissionParameter& asn )
     if( !asn.null_value() )
     {
         if( !asn.value_size() || !asn.value().Get( 0 ).has_limasorder() )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
+            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
         for( int i = 0; i < asn.value().Get( 0 ).limasorder().elem_size(); ++i )
             limas_.push_back( MIL_LimaOrder( asn.value().Get( 0 ).limasorder().elem(i) ) );
     }
@@ -136,7 +136,7 @@ void MIL_OrderContext::ReadDirection( const sword::MissionParameter& asn )
     if( !asn.null_value() )
     {
         if( !asn.value_size() || !asn.value().Get( 0 ).has_heading() )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission_parameters );
+            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
         dirDanger_ = weather::ReadDirection( asn.value().Get( 0 ).heading() );
     }
 }

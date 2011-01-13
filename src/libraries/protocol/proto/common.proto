@@ -241,14 +241,6 @@ enum EnumLogMedicalHandlingStatus {
    termine_medical                                 = 20;
 }
 
-enum EnumUnitVisibility {
-   invisible  = 0;
-   detected   = 1;
-   recognized = 2;
-   identified = 3;
-   recorded   = 4;
-}
-
 enum EnumSimulationState {
    running = 0;
    paused  = 1;

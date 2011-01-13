@@ -317,7 +317,7 @@ sword::MagicActionAck_ErrorCode MIL_Object_ABC::OnUpdateResourceLinks( const goo
 {
     ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >();
     if( !capacity )
-        return sword::MagicActionAck::error_invalid_attribute;
+        return sword::MagicActionAck::error_invalid_parameter;
     capacity->Update( list );
     return sword::MagicActionAck::no_error;
 }

@@ -33,6 +33,20 @@ using namespace shield;
                              ( sword::sous_officer, Common::sous_officer ) \
                              ( sword::mdr, Common::mdr ) )
 
+#define CONVERT_UNIT_ACTION_ACK( field ) \
+    CONVERT_ENUM( field, ( sword::UnitActionAck::no_error, MsgsSimToClient::UnitActionAck::no_error ) \
+                         ( sword::UnitActionAck::error_invalid_unit, MsgsSimToClient::UnitActionAck::error_invalid_unit ) \
+                         ( sword::UnitActionAck::error_automat_engaged, MsgsSimToClient::UnitActionAck::error_automate_embraye ) \
+                         ( sword::UnitActionAck::error_invalid_parameter, MsgsSimToClient::UnitActionAck::error_invalid_attribute ) \
+                         ( sword::UnitActionAck::error_unit_surrendered, MsgsSimToClient::UnitActionAck::error_unit_surrendered ) )
+
+#define CONVERT_UNIT_VISIBILITY( field ) \
+    CONVERT_ENUM( field, ( sword::invisible, Common::invisible ) \
+                         ( sword::detected, Common::detected ) \
+                         ( sword::recognized, Common::recognized ) \
+                         ( sword::identified, Common::identified ) \
+                         ( sword::recorded, Common::recorded ) )
+
 namespace
 {
     template< typename From, typename To >
@@ -43,9 +57,9 @@ namespace
                                   ( sword::OrderAck::error_invalid_limit, MsgsSimToClient::OrderAck::error_invalid_limit )
                                   ( sword::OrderAck::error_invalid_lima, MsgsSimToClient::OrderAck::error_invalid_lima )
                                   ( sword::OrderAck::error_invalid_mission, MsgsSimToClient::OrderAck::error_invalid_mission )
-                                  ( sword::OrderAck::error_invalid_mission_parameters, MsgsSimToClient::OrderAck::error_invalid_mission_parameters )
+                                  ( sword::OrderAck::error_invalid_parameter, MsgsSimToClient::OrderAck::error_invalid_mission_parameters )
                                   ( sword::OrderAck::error_unit_cannot_receive_order, MsgsSimToClient::OrderAck::error_unit_cannot_receive_order )
-                                  ( sword::OrderAck::error_invalid_order_conduite, MsgsSimToClient::OrderAck::error_invalid_order_conduite )
+                                  ( sword::OrderAck::error_invalid_frag_order, MsgsSimToClient::OrderAck::error_invalid_order_conduite )
                                   ( sword::OrderAck::error_invalid_order_mission, MsgsSimToClient::OrderAck::error_invalid_order_mission )
                                   ( sword::OrderAck::error_unit_surrendered, MsgsSimToClient::OrderAck::error_unit_surrendered )
                                   ( sword::OrderAck::error_invalid_lima_function, MsgsSimToClient::OrderAck::error_invalid_lima_function ) );
@@ -103,11 +117,7 @@ void SimulationToClient::Convert( const sword::SetAutomatModeAck& from, MsgsSimT
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::UnitCreationRequestAck& from, MsgsSimToClient::MsgUnitCreationRequestAck* to )
 {
-    CONVERT_ENUM( error, ( sword::UnitActionAck::no_error, MsgsSimToClient::UnitActionAck::no_error )
-                         ( sword::UnitActionAck::error_invalid_unit, MsgsSimToClient::UnitActionAck::error_invalid_unit )
-                         ( sword::UnitActionAck::error_automate_embraye, MsgsSimToClient::UnitActionAck::error_automate_embraye )
-                         ( sword::UnitActionAck::error_invalid_attribute, MsgsSimToClient::UnitActionAck::error_invalid_attribute )
-                         ( sword::UnitActionAck::error_unit_surrendered, MsgsSimToClient::UnitActionAck::error_unit_surrendered ) );
+    CONVERT_UNIT_ACTION_ACK( error );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +127,7 @@ void SimulationToClient::Convert( const sword::UnitCreationRequestAck& from, Msg
 void SimulationToClient::Convert( const sword::MagicActionAck& from, MsgsSimToClient::MsgMagicActionAck* to )
 {
     CONVERT_ENUM( error_code, ( sword::MagicActionAck::no_error, MsgsSimToClient::MsgMagicActionAck::no_error )
-                              ( sword::MagicActionAck::error_invalid_attribute, MsgsSimToClient::MsgMagicActionAck::error_invalid_attribute ) );
+                              ( sword::MagicActionAck::error_invalid_parameter, MsgsSimToClient::MsgMagicActionAck::error_invalid_attribute ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,11 +137,7 @@ void SimulationToClient::Convert( const sword::MagicActionAck& from, MsgsSimToCl
 void SimulationToClient::Convert( const sword::UnitMagicActionAck& from, MsgsSimToClient::MsgUnitMagicActionAck* to )
 {
     CONVERT_ID( unit );
-    CONVERT_ENUM( error_code, ( sword::UnitActionAck::no_error, MsgsSimToClient::UnitActionAck::no_error )
-                              ( sword::UnitActionAck::error_invalid_unit, MsgsSimToClient::UnitActionAck::error_invalid_unit )
-                              ( sword::UnitActionAck::error_automate_embraye, MsgsSimToClient::UnitActionAck::error_automate_embraye )
-                              ( sword::UnitActionAck::error_invalid_attribute, MsgsSimToClient::UnitActionAck::error_invalid_attribute )
-                              ( sword::UnitActionAck::error_unit_surrendered, MsgsSimToClient::UnitActionAck::error_unit_surrendered ) );
+    CONVERT_UNIT_ACTION_ACK( error_code );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,7 +162,7 @@ void SimulationToClient::Convert( const sword::CrowdMagicActionAck& from, MsgsSi
     CONVERT_ID( crowd );
     CONVERT_ENUM( error_code, ( sword::CrowdMagicActionAck::no_error, MsgsSimToClient::MsgCrowdMagicActionAck::no_error )
                               ( sword::CrowdMagicActionAck::error_invalid_unit, MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_unit )
-                              ( sword::CrowdMagicActionAck::error_invalid_attribute, MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute ) );
+                              ( sword::CrowdMagicActionAck::error_invalid_parameter, MsgsSimToClient::MsgCrowdMagicActionAck::error_invalid_attribute ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,9 +187,9 @@ namespace
                                   ( sword::HierarchyModificationAck::error_invalid_agent, MsgsSimToClient::HierarchyModificationAck::error_invalid_pion )
                                   ( sword::HierarchyModificationAck::error_invalid_automate, MsgsSimToClient::HierarchyModificationAck::error_invalid_automate )
                                   ( sword::HierarchyModificationAck::error_invalid_formation, MsgsSimToClient::HierarchyModificationAck::error_invalid_formation )
-                                  ( sword::HierarchyModificationAck::error_invalid_automate_tc2, MsgsSimToClient::HierarchyModificationAck::error_invalid_automate_tc2 )
-                                  ( sword::HierarchyModificationAck::error_unit_surrendered_hierarchy, MsgsSimToClient::HierarchyModificationAck::error_unit_surrendered_hierarchy )
-                                  ( sword::HierarchyModificationAck::error_invalid_party_hierarchy, MsgsSimToClient::HierarchyModificationAck::error_invalid_party_hierarchy )
+                                  ( sword::HierarchyModificationAck::error_invalid_supply_automat, MsgsSimToClient::HierarchyModificationAck::error_invalid_automate_tc2 )
+                                  ( sword::HierarchyModificationAck::error_agent_surrendered, MsgsSimToClient::HierarchyModificationAck::error_unit_surrendered_hierarchy )
+                                  ( sword::HierarchyModificationAck::error_invalid_party, MsgsSimToClient::HierarchyModificationAck::error_invalid_party_hierarchy )
                                   ( sword::HierarchyModificationAck::error_invalid_knowledge_group, MsgsSimToClient::HierarchyModificationAck::error_invalid_knowledge_group )
                                   ( sword::HierarchyModificationAck::error_parties_mismatched, MsgsSimToClient::HierarchyModificationAck::error_parties_mismatched ) );
     }
@@ -207,8 +213,8 @@ void SimulationToClient::Convert( const sword::LogSupplyPushFlowAck& from, MsgsS
 void SimulationToClient::Convert( const sword::LogSupplyPullFlowAck& from, MsgsSimToClient::MsgLogSupplyPullFlowAck* to )
 {
     CONVERT_ENUM( ack, ( sword::LogSupplyPullFlowAck::no_error_pullflow, MsgsSimToClient::MsgLogSupplyPullFlowAck::no_error_pullflow )
-                       ( sword::LogSupplyPullFlowAck::error_invalid_provider_pullflow, MsgsSimToClient::MsgLogSupplyPullFlowAck::error_invalid_provider_pullflow )
-                       ( sword::LogSupplyPullFlowAck::error_invalid_receiver_pullflow, MsgsSimToClient::MsgLogSupplyPullFlowAck::error_invalid_receiver_pullflow ) );
+                       ( sword::LogSupplyPullFlowAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyPullFlowAck::error_invalid_provider_pullflow )
+                       ( sword::LogSupplyPullFlowAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyPullFlowAck::error_invalid_receiver_pullflow ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1012,13 +1018,6 @@ void SimulationToClient::Convert( const sword::UnitVisionCones& from, MsgsSimToC
     CONVERT_LIST( cones, elem, ConvertVisionCone );
     CONVERT( elongation );
 }
-
-#define CONVERT_UNIT_VISIBILITY( field ) \
-    CONVERT_ENUM( field, ( sword::invisible, Common::invisible ) \
-                         ( sword::detected, Common::detected ) \
-                         ( sword::recognized, Common::recognized ) \
-                         ( sword::identified, Common::identified ) \
-                         ( sword::recorded, Common::recorded ) )
 
 // -----------------------------------------------------------------------------
 // Name: SimulationToClient::Convert

@@ -21,17 +21,17 @@ message OrderAck {
         @todo Move long descriptions to the corresponding field in BlablaOrder and use @@see tags here
     */
     enum ErrorCode {
-        no_error                                = 0;  //!< Operation succeeded @todo As error codes are optional, no_error should not exist
-        error_invalid_unit                      = 1;  //!< Operation failed because of an invalid tasker identifier e.g. an existing agent/automat/crowd identifier @todo rename to error_invalid_tasker
-        error_invalid_limit                     = 2;  //!< Operation failed because of an invalid limit : limit parameters are required for automat missions @deprecated should be handled using invalid_mission_parameters
-        error_invalid_lima                      = 3;  //!< Operation failed because of an invalid phase line : phase line parameters are required for some missions @deprecated should be handled using invalid_mission_parameters
-        error_invalid_mission                   = 4;  //!< Operation failed because of an invalid mission identifier : the mission must exist and be available for the specified tasker unit
-        error_invalid_mission_parameters        = 5;  //!< Operation failed because of an invalid mission parameter : parameters are defined in the file "Missions.xml" @todo rename to error_invalid_parameter
-        error_unit_cannot_receive_order         = 6;  //!< Operation failed because the unit is not in a state where it can execute the order : it must be alive and disengaged (for an agent) @todo rename to error_tasker_unable_cannot_receive_order
-        error_invalid_order_conduite            = 7;  //!< Operation failed because of an invalid fragmentary order identifier : valid identifiers can be found in the file "Missions.xml" @todo rename to error_invalid_fragorder
-        error_invalid_order_mission             = 8;  //!< Operation failed because of an invalid mission identifier : valid identifiers can be found in the file "Missions.xml"
-        error_unit_surrendered                  = 11; //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered and be able to receive orders @todo rename to error_tasker_surrendered
-        error_invalid_lima_function             = 12; //!< Operation failed because of an invalid phase line function : phase line parameters are required for some missions, each phase line is assigned one or more functions in the context of the mission @deprecated should be handled using invalid_mission_parameters
+        no_error                        = 0;  //!< Operation succeeded @todo As error codes are optional, no_error should not exist
+        error_invalid_unit              = 1;  //!< Operation failed because of an invalid tasker identifier e.g. an existing agent/automat/crowd identifier @todo rename to error_invalid_tasker
+        error_invalid_limit             = 2;  //!< Operation failed because of an invalid limit : limit parameters are required for automat missions @deprecated should be handled using invalid_mission_parameters
+        error_invalid_lima              = 3;  //!< Operation failed because of an invalid phase line : phase line parameters are required for some missions @deprecated should be handled using invalid_mission_parameters
+        error_invalid_mission           = 4;  //!< Operation failed because of an invalid mission identifier : the mission must exist and be available for the specified tasker unit
+        error_invalid_parameter         = 5;  //!< Operation failed because of an invalid mission parameter : parameters are defined in the file "Missions.xml"
+        error_unit_cannot_receive_order = 6;  //!< Operation failed because the unit is not in a state where it can execute the order : it must be alive and disengaged (for an agent) @todo rename to error_tasker_cannot_receive_order
+        error_invalid_frag_order        = 7;  //!< Operation failed because of an invalid fragmentary order identifier : valid identifiers can be found in the file "Missions.xml"
+        error_invalid_order_mission     = 8;  //!< Operation failed because of an invalid mission identifier : valid identifiers can be found in the file "Missions.xml"
+        error_unit_surrendered          = 11; //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered and be able to receive orders @todo rename to error_tasker_surrendered
+        error_invalid_lima_function     = 12; //!< Operation failed because of an invalid phase line function : phase line parameters are required for some missions, each phase line is assigned one or more functions in the context of the mission @deprecated should be handled using invalid_mission_parameters
     }
 }
 
@@ -86,8 +86,8 @@ message UnitActionAck {
     enum ErrorCode {
         no_error                = 0; //!< Operation succeeded
         error_invalid_unit      = 1; //!< Operation failed because of an invalid agent identifier @todo rename to error_invalid_agent
-        error_automate_embraye  = 2; //!< Operation failed because the target agent is currently controlled by its parent automat @todo rename to error_automate_engaged
-        error_invalid_attribute = 3; //!< Operation failed because the provided action parameters were invalid @todo rename to error_invalid_parameter
+        error_automat_engaged   = 2; //!< Operation failed because the target agent is currently controlled by its parent automat
+        error_invalid_parameter = 3; //!< Operation failed because the provided action parameters were invalid
         error_unit_surrendered  = 4; //!< Operation failed because the agent is not in a state where it can execute the order : it must not have surrendered to be able to receive orders @todo rename to error_agent_surrendered
     }
 }
@@ -130,7 +130,7 @@ message MagicActionAck {
     */
     enum ErrorCode {
         no_error                = 0; //!< Operation succeeded
-        error_invalid_attribute = 1; //!< Operation failed because the provided action parameters were invalid @todo rename to error_invalid_parameter
+        error_invalid_parameter = 1; //!< Operation failed because the provided action parameters were invalid
     }
     required ErrorCode error_code = 1; //!< Reason for the failure of the magic action execution operation @see ErrorCode
 }
@@ -172,7 +172,7 @@ message CrowdMagicActionAck {
     enum ErrorCode {
         no_error                = 0; //!< Operation succeeded
         error_invalid_unit      = 1; //!< Operation failed because the provided crowd identifier was invalid @todo rename to error_invalid_crowd
-        error_invalid_attribute = 2; //!< Operation failed because the provided action parameters were invalid @todo rename to error_invalid_parameter
+        error_invalid_parameter = 2; //!< Operation failed because the provided action parameters were invalid
     }
     required CrowdId   crowd      = 1; //!< Identifier of the crowd on which the magic action was requested to be executed
     required ErrorCode error_code = 2; //!< Reason for the failure of the crowd magic action execution operation @see ErrorCode
@@ -209,15 +209,15 @@ message HierarchyModificationAck {
         @brief Reason for the failure of a hierarchy modification operation
     */
     enum ErrorCode {
-        no_error_hierarchy               = 0;  //!< Operation succeeded @todo rename to no_error
-        error_invalid_agent              = 1;  //!< Operation failed because no existing agent with the provided identifier could be found
-        error_invalid_automate           = 2;  //!< Operation failed because no existing automat with the provided identifier could be found @todo rename to error_invalid_automat
-        error_invalid_formation          = 3;  //!< Operation failed because no existing formation with the provided identifier could be found
-        error_invalid_automate_tc2       = 4;  //!< Operation failed because no existing logistics automat with the provided identifier could be found @todo rename to error_invalid_supply_automat
-        error_unit_surrendered_hierarchy = 8;  //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered to be able to receive orders @todo rename to error_agent_surrendered
-        error_invalid_party_hierarchy    = 9;  //!< Operation failed because no existing party with the provided identifier could be found @todo rename to error_invalid_party
-        error_invalid_knowledge_group    = 10; //!< Operation failed because no existing knowledge group with the provided identifier could be found @todo rename to error_invalid_knowledge_group
-        error_parties_mismatched         = 11; //!< Operation failed because an agent cannot be moved from a party to another
+        no_error_hierarchy            = 0;  //!< Operation succeeded @todo rename to no_error
+        error_invalid_agent           = 1;  //!< Operation failed because no existing agent with the provided identifier could be found
+        error_invalid_automate        = 2;  //!< Operation failed because no existing automat with the provided identifier could be found @todo rename to error_invalid_automat
+        error_invalid_formation       = 3;  //!< Operation failed because no existing formation with the provided identifier could be found
+        error_invalid_supply_automat  = 4;  //!< Operation failed because no existing supply automat with the provided identifier could be found
+        error_agent_surrendered       = 8;  //!< Operation failed because the unit is not in a state where it can execute the order : it must not have surrendered to be able to receive orders
+        error_invalid_party           = 9;  //!< Operation failed because no existing party with the provided identifier could be found
+        error_invalid_knowledge_group = 10; //!< Operation failed because no existing knowledge group with the provided identifier could be found
+        error_parties_mismatched      = 11; //!< Operation failed because an agent cannot be moved from a party to another
     }
 }
 
@@ -278,16 +278,15 @@ message UnitChangeSuperiorAck {
     @todo gather magic action acks
 */
 message LogSupplyPushFlowAck {
-    /** @enum EnumLogSupplyPushFlow
+    /** @enum ErrorCode
         @brief Reason for the failure of the pushed flow creation
-        @todo rename to ErrorCode
     */
-    enum EnumLogSupplyPushFlow {
+    enum ErrorCode {
         no_error_pushflow      = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
         error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
         error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
     }
-    optional EnumLogSupplyPushFlow ack = 1; //!< Reason for the failure of the request @see EnumLogSupplyPushFlow @todo rename to error_code
+    optional ErrorCode ack = 1; //!< Reason for the failure of the request @see ErrorCode @todo rename to error_code
 }
 
 /** @struct LogSupplyPullFlowAck
@@ -299,15 +298,15 @@ message LogSupplyPushFlowAck {
     @todo gather magic action acks
 */
 message LogSupplyPullFlowAck {
-    /** @enum EnumLogSupplyPullFlow
-        @brief Reason for the failure of the pulled flow creation @todo rename to ErrorCode
+    /** @enum ErrorCode
+        @brief Reason for the failure of the pulled flow creation
     */
-    enum EnumLogSupplyPullFlow {
-        no_error_pullflow               = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
-        error_invalid_provider_pullflow = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found @todo rename to error_invalid_supplier
-        error_invalid_receiver_pullflow = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found @todo rename to error_invalid_receiver
+    enum ErrorCode {
+        no_error_pullflow      = 0; //!< Operation succeeded @todo As error codes are optional, no_error should not exist
+        error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
+        error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
     }
-    optional EnumLogSupplyPullFlow ack = 1; //!< Reason for the failure of the request @see EnumLogSupplyPushFlow @todo rename to error_code
+    optional ErrorCode ack = 1; //!< Reason for the failure of the request @see ErrorCode @todo rename to error_code
 }
 
 /** @struct LogSupplyChangeQuotasAck
@@ -319,16 +318,15 @@ message LogSupplyPullFlowAck {
     @todo gather magic action acks
 */
 message LogSupplyChangeQuotasAck {
-    /** @enum LogSupplyChangeQuotas
+    /** @enum ErrorCode
         @brief Reason for the failure of the quota allocation.
-        @todo rename to ErrorCode
     */
-    enum LogSupplyChangeQuotas {
+    enum ErrorCode {
         no_error_quotas        = 0; //!< Operation succeeded @todo rename to no_error @todo As error codes are optional, no_error should not exist
         error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
         error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
     }
-    optional LogSupplyChangeQuotas ack = 1; //!< Reason for the failure of the request @see LogSupplyChangeQuotas @todo rename to error_code
+    optional ErrorCode ack = 1; //!< Reason for the failure of the request @see ErrorCode @todo rename to error_code
 }
 
 /** @struct ActionCreateFireOrderAck
@@ -336,18 +334,17 @@ message LogSupplyChangeQuotasAck {
     @see ActionCreateFireOrder
 */
 message ActionCreateFireOrderAck {
-    /** @enum EnumActionCreateFireOrderErrorCode
+    /** @enum ErrorCode
         @brief Reason for the failure of the create fire order.
-        @todo rename to ErrorCode
     */
-    enum EnumActionCreateFireOrderErrorCode {
+    enum ErrorCode {
         no_error                     = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
         error_invalid_reporter       = 1; //!< Operation failed because no existing reporter with the provided identifier could be found
         error_invalid_target         = 2; //!< Operation failed because no existing target with the provided identifier could be found
         error_invalid_ammunition     = 3; //!< Operation failed because no existing ammunition with the provided identifier could be found
         error_target_not_illuminated = 4; //!< Operation failed because of the target not being illuminated
     }
-    required EnumActionCreateFireOrderErrorCode error_code = 2; //!< Reason for the failure of the request @see EnumActionCreateFireOrderErrorCode @todo change field index to 1
+    required ErrorCode error_code = 2; //!< Reason for the failure of the request @see ErrorCode @todo change field index to 1
 }
 
 /** @struct ChangePopulationMagicActionAck
@@ -792,8 +789,8 @@ message UnitAttributes {
     optional bool                        stealth                    = 17; //!< Whether the unit is in stealth mode
     optional bool                        embarked                   = 18; //!< Whether the unit has been embarked or not
     optional bool                        transporters_available     = 19; //!< Whether the unit has human transporters available or not
-    optional Posture                     old_posture                = 20; //!< The posture which the unit is transitioning from @see Posture @todo rename to old_posture
-    optional Posture                     new_posture                = 21; //!< The posture which the unit is transitioning to @see Posture @todo rename to new_posture
+    optional Posture                     old_posture                = 20; //!< The posture which the unit is transitioning from @see Posture
+    optional Posture                     new_posture                = 21; //!< The posture which the unit is transitioning to @see Posture
     optional int32                       posture_transition         = 22; //!< The completion of the posture transition in percent
     optional int32                       installation               = 23; //!< The completion of the installation in percent
     optional bool                        protective_suits           = 24; //!< Whether the unit is wearing NBC protective suits or not
@@ -856,25 +853,34 @@ message UnitKnowledgeCreation {
     required UnitType         type            = 4; //!< The unit type @see UnitType
 }
 
+/** @enum EnumUnitIdentificationLevel
+    @brief Indicates the level of identification of a unit
+*/
 enum EnumUnitIdentificationLevel {
-    identifiee = 0;
-    reconnue   = 1;
-    detectee   = 2;
-    signale    = 3;
+    identifiee = 0; //!< The unit has been identified @todo translate
+    reconnue   = 1; //!< The unit has been recognized @todo translate
+    detectee   = 2; //!< The unit has been detected @todo translate
+    signale    = 3; //!< The unit has not been seen @todo translate
 }
 
+/** @enum AutomatPerception
+    @brief Describes the perception of an automat
+*/
 message AutomatPerception {
-    required AutomatId                   automat              = 1;
-    required EnumUnitIdentificationLevel identification_level = 2;
+    required AutomatId                   automat              = 1; //!< The automat identifier @see AutomatId
+    required EnumUnitIdentificationLevel identification_level = 2; //!< The identification level @see EnumUnitIdentificationLevel
 }
 
 message SeqOfAutomatPerception {
     repeated AutomatPerception elem = 1;
 }
 
+/** @enum UnitKnowledgeUpdate
+    @brief Notifies of an update in the knowledge of a unit
+*/
 message UnitKnowledgeUpdate {
-    required UnitKnowledgeId             knowledge                = 1;
-    required KnowledgeGroupId            knowledge_group          = 2;
+    required UnitKnowledgeId             knowledge                = 1; //!< The unit knowledge @see UnitKnowledgeId
+    required KnowledgeGroupId            knowledge_group          = 2; //!< The knowledge group identifier @see KnowledgeGroupId
     optional int32                       pertinence               = 3;
     optional EnumUnitIdentificationLevel identification_level     = 4;
     optional EnumUnitIdentificationLevel max_identification_level = 5;
@@ -1041,6 +1047,14 @@ message UnitVisionCones {
     required UnitId          unit       = 1;
     required SeqOfVisionCone cones      = 2;
     required float           elongation = 3;
+}
+
+enum EnumUnitVisibility {
+   invisible  = 0;
+   detected   = 1;
+   recognized = 2;
+   identified = 3;
+   recorded   = 4;
 }
 
 message UnitDetection {
