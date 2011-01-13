@@ -514,10 +514,10 @@ void MIL_FragOrder::Send( client::FragOrder& message ) const
 // Name: MIL_FragOrder::Serialize
 // Created: MGD 2010-12-27
 // -----------------------------------------------------------------------------
-void MIL_FragOrder::Serialize( sword::MissionParameters& asn ) const
+void MIL_FragOrder::Serialize( sword::MissionParameters& message ) const
 {
-    //@TODO try to merge FragOrder with Mission_ABC
-    if( !type_.Copy( parameters_, asn, MIL_OrderContext(false) ) )
+    // $$$$ _RC_ PHC 2011-01-13: try to merge FragOrder with Mission_ABC
+    if( !type_.Copy( parameters_, message, MIL_OrderContext ) )
         throw std::runtime_error( std::string( "Frag Order " ) + type_.GetName() + " impossible to serialize parameters" );
 }
 

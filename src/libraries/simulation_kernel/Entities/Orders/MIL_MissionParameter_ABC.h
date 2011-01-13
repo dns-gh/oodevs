@@ -137,7 +137,6 @@ public:
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const = 0;
     virtual bool ToEquipmentType( const PHY_ComposanteTypePion*& ) const = 0;
     virtual bool ToGDH( float& value ) const = 0;
-    //virtual bool ToNumeric( float& value ) const = 0;
     virtual bool ToGenObject( boost::shared_ptr< DEC_Gen_Object >& ) const = 0;
     virtual bool ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen_Object > >& ) const = 0;
     virtual bool ToMaintenancePriorities( T_MaintenancePriorityVector& ) const = 0;
@@ -147,7 +146,6 @@ public:
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const = 0;
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const = 0;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const = 0;
-
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param ) = 0;
     //@}
 };

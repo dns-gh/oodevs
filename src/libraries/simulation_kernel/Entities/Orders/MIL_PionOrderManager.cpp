@@ -47,7 +47,7 @@ MIL_PionOrderManager::~MIL_PionOrderManager()
 // Name: MIL_PionOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& asnMsg )
+void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
@@ -55,10 +55,10 @@ void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& asnMsg )
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_surrendered );
     // Instanciate and check the new mission
-    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::Find( asnMsg.type().id() );
+    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::Find( message.type().id() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission );
-    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PionMission( *pMissionType, pion_, asnMsg ) );
+    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PionMission( *pMissionType, pion_, message ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
 

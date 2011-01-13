@@ -11,7 +11,6 @@
 #include "AgentConditions.h"
 #include "SimpleEntityCondition.h"
 #include "AgentEvents.h"
-#include "AgentManipulator.h"
 #include "directia/brain/Brain.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/AgentKnowledge.h"
