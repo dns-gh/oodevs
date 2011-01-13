@@ -390,11 +390,10 @@ sword::UrbanMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateStructuralState
 {
     StructuralCapacity* capacity = Retrieve< StructuralCapacity >();
     if( !capacity )
-        return sword::UrbanMagicActionAck::error_invalid_urbanblock;
+        return sword::UrbanMagicActionAck::error_invalid_urban_block;
     capacity->SetStructuralState( state );
     return sword::UrbanMagicActionAck::no_error;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::GetWrapperObject

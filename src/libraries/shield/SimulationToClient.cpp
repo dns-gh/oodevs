@@ -2371,7 +2371,7 @@ void SimulationToClient::Convert( const sword::ChangePopulationMagicActionAck& f
 void SimulationToClient::Convert( const sword::UrbanMagicActionAck& from, MsgsSimToClient::MsgUrbanMagicActionAck* to )
 {
     CONVERT_ENUM( error_code, ( sword::UrbanMagicActionAck::no_error, MsgsSimToClient::MsgUrbanMagicActionAck::no_error )
-                              ( sword::UrbanMagicActionAck::error_invalid_urbanblock, MsgsSimToClient::MsgUrbanMagicActionAck::error_invalid_urbanblock )
+                              ( sword::UrbanMagicActionAck::error_invalid_urban_block, MsgsSimToClient::MsgUrbanMagicActionAck::error_invalid_urbanblock )
                               ( sword::UrbanMagicActionAck::error_invalid_role, MsgsSimToClient::MsgUrbanMagicActionAck::error_invalid_role )
                               ( sword::UrbanMagicActionAck::error_invalid_threshold, MsgsSimToClient::MsgUrbanMagicActionAck::error_invalid_threshold ) );
 }

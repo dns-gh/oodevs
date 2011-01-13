@@ -354,10 +354,9 @@ void MIL_ObjectManager::OnReceiveUrbanMagicAction( const sword::UrbanMagicAction
     sword::UrbanMagicActionAck_ErrorCode nErrorCode = sword::UrbanMagicActionAck::no_error;
     UrbanObjectWrapper* object = FindUrbanWrapper( msg.id().id() );
     if( !object )
-        nErrorCode = sword::UrbanMagicActionAck::error_invalid_urbanblock;
+        nErrorCode = sword::UrbanMagicActionAck::error_invalid_urban_block;
     else
         nErrorCode = object->OnUpdateStructuralState( msg.structural_state() );
-
     client::UrbanMagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );

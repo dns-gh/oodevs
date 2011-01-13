@@ -376,10 +376,10 @@ message UrbanMagicActionAck {
         @brief Reason for the failure of the urban magic action
     */
     enum ErrorCode {
-       no_error                 = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
-       error_invalid_urbanblock = 1; //!< Operation failed because no existing urban block with the provided identifier could be found @todo rename to error_invalid_urban_block or error_invalid_block
-       error_invalid_role       = 2; //!< Operation failed because no existing motivation type with the provided identifier could be found
-       error_invalid_threshold  = 3; //!< Operation failed because of an invalid threshold @todo Find how a threshold can be invalid
+       no_error                  = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
+       error_invalid_urban_block = 1; //!< Operation failed because no existing urban block with the provided identifier could be found
+       error_invalid_role        = 2; //!< Operation failed because no existing motivation type with the provided identifier could be found
+       error_invalid_threshold   = 3; //!< Operation failed because of an invalid threshold
     }
     required ErrorCode error_code = 1; //!< Reason for the failure of the request
 }
@@ -585,7 +585,7 @@ message AutomatAttributes {
    required AutomatId                   automat               = 1; //!< The automat identifier @see AutomatId
    optional EnumAutomatMode             etat_automate         = 2; //!< The automat mode @see EnumAutomatMode @todo translate
    optional ForceRatio.Value            force_ratio           = 3; //!< The automat force ratio @see ForceRatio
-   optional EnumMeetingEngagementStatus meeting_engagement   = 4; //!< @todo What's this ?
+   optional EnumMeetingEngagementStatus meeting_engagement   = 4;  //!< @todo What's this ?
    optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational status @todo translate
    optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement @see RulesOfEngagement
    optional AutomatId                   tc2_organic           = 7; //!< @todo What's this ?
