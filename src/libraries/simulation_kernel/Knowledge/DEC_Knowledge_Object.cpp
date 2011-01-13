@@ -757,7 +757,7 @@ bool DEC_Knowledge_Object::IsReconBy( const MIL_AgentType_ABC& agentType ) const
 // Name: DEC_Knowledge_Object::IsObjectInsidePathPoint
 // Created: JSR 2010-12-22
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC& agent ) const
+bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC& /*agent*/ ) const
 {
     if( pObjectKnown_ )
         if( const FloodAttribute* flood = pObjectKnown_->RetrieveAttribute< FloodAttribute >() )

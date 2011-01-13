@@ -90,11 +90,13 @@ end
 Polygon = {}
 Polygon.__index = Polygon
 
-function Polygon.create()
-    return Location.create( "polygon", "1" )
-end
 
 function Polygon.create( name, type, points )
+
+    if not name and not type and not points then
+        return Location.create( "polygon", "1" )
+    end
+
     local new = {}
     setmetatable( new, Polygon )
     new.type = type

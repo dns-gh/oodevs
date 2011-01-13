@@ -25,9 +25,9 @@ using namespace actions;
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 Parameter_ABC::Parameter_ABC( const QString& name )
-    : name_( name )
+    : name_    ( name )
     , position_()
-    , isSet_( true )
+    , isSet_   ( true )
 {
     // NOTHING
 }
@@ -109,8 +109,6 @@ void Parameter_ABC::DrawToolTip( const Viewport_ABC& viewport, const GlTools_ABC
 void Parameter_ABC::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "name", name_ );
-    if( !isSet_ )
-        xos << xml::attribute( "set", false );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "parameter" );
@@ -175,7 +173,6 @@ void Parameter_ABC::CommitTo( std::string& content ) const
 void Parameter_ABC::CommitTo( sword::MissionParameter& message ) const
 {
     ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >* list =message.mutable_value();
-
     message.set_null_value( elements_.size() == 0 );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
@@ -224,6 +221,6 @@ bool Parameter_ABC::IsSet() const
 // -----------------------------------------------------------------------------
 void Parameter_ABC::CommitTo( sword::MissionParameter_Value& /*message*/ ) const
 {
-    throw("No specific implementation avalaible");
+    throw( "No specific implementation avalaible" );
 }
 

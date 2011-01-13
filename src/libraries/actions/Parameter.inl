@@ -17,7 +17,7 @@ namespace actions {
 template< typename T >
 Parameter< T >::Parameter( const kernel::OrderParameter& parameter )
     : Parameter_ABC( parameter.GetName().c_str() )
-    , parameter_( parameter )
+    , parameter_   ( parameter )
 {
     // NOTHING
 }
@@ -29,7 +29,7 @@ Parameter< T >::Parameter( const kernel::OrderParameter& parameter )
 template< typename T >
 Parameter< T >::Parameter( const kernel::OrderParameter& parameter, const T& value )
     : Parameter_ABC( parameter.GetName().c_str() )
-    , parameter_( parameter )
+    , parameter_   ( parameter )
 {
     SetValue( value );
 }

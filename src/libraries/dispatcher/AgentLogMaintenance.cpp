@@ -23,12 +23,12 @@ using namespace dispatcher;
 // Name: AgentLogMaintenance constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMaintenance::AgentLogMaintenance( const Model_ABC& model, const kernel::Agent_ABC& agent, const sword::LogMaintenanceState& asnMsg )
+AgentLogMaintenance::AgentLogMaintenance( const Model_ABC& model, const kernel::Agent_ABC& agent, const sword::LogMaintenanceState& message )
     : model_         ( model )
     , agent_         ( agent )
     , bSystemEnabled_( false )
 {
-    Update( asnMsg );
+    Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,39 +44,39 @@ AgentLogMaintenance::~AgentLogMaintenance()
 // Name: AgentLogMaintenance::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogMaintenance::Update( const sword::LogMaintenanceState& asnMsg )
+void AgentLogMaintenance::Update( const sword::LogMaintenanceState& message )
 {
-    if( asnMsg.has_chaine_activee()  )
-        bSystemEnabled_ = asnMsg.chaine_activee() != 0;
+    if( message.has_chaine_activee() )
+        bSystemEnabled_ = message.chaine_activee() != 0;
 
-    if( asnMsg.has_disponibilites_remorqueurs()  )
+    if( message.has_disponibilites_remorqueurs()  )
     {
         haulersAvailability_.clear();
-        for( int i = 0; i < asnMsg.disponibilites_remorqueurs().elem_size(); ++i )
-            haulersAvailability_.push_back( MaintenanceEquipmentAvailability( asnMsg.disponibilites_remorqueurs().elem( i ) ) );
+        for( int i = 0; i < message.disponibilites_remorqueurs().elem_size(); ++i )
+            haulersAvailability_.push_back( MaintenanceEquipmentAvailability( message.disponibilites_remorqueurs().elem( i ) ) );
     }
 
-    if( asnMsg.has_disponibilites_reparateurs()  )
+    if( message.has_disponibilites_reparateurs()  )
     {
         repairersAvailability_.clear();
-        for( int i = 0; i < asnMsg.disponibilites_reparateurs().elem_size(); ++i )
-            repairersAvailability_.push_back( MaintenanceEquipmentAvailability( asnMsg.disponibilites_reparateurs().elem( i ) ) );
+        for( int i = 0; i < message.disponibilites_reparateurs().elem_size(); ++i )
+            repairersAvailability_.push_back( MaintenanceEquipmentAvailability( message.disponibilites_reparateurs().elem( i ) ) );
     }
 
-    if( asnMsg.has_priorites_tactiques()  )
+    if( message.has_priorites_tactiques()  )
     {
         tacticalPriorities_.clear();
-        for( int i = 0; i < asnMsg.priorites_tactiques().elem_size(); ++i )
-            tacticalPriorities_.push_back( &model_.Automats().Get( asnMsg.priorites_tactiques().elem( i ).id() ) );
+        for( int i = 0; i < message.priorites_tactiques().elem_size(); ++i )
+            tacticalPriorities_.push_back( &model_.Automats().Get( message.priorites_tactiques().elem( i ).id() ) );
     }
 
-    if( asnMsg.has_priorites()  )
+    if( message.has_priorites()  )
     {
         priorities_.clear();
-        for( int i = 0; i < asnMsg.priorites().elem_size(); ++i )
+        for( int i = 0; i < message.priorites().elem_size(); ++i )
         {
             sword::EquipmentType msg;
-            msg.set_id( asnMsg.priorites().elem( i ).id() );
+            msg.set_id( message.priorites().elem( i ).id() );
             priorities_.push_back( msg );
         }
     }

@@ -138,18 +138,6 @@ void HospitalUpdateReport::UpdateBedCapacity( xml::xostream& xos, const sword::M
 void HospitalUpdateReport::UpdateFacilityStatus( xml::xostream& xos, const sword::ObjectAttributeMedicalTreatment& object )
 {
     xos << xml::start( "EmergencyDepartmentStatus" ) << "Normal" << xml::end; // "Advisory|Closed|On Divert|N/A"
-    if( false )
-    {
-        xos << xml::start( "IncreasingPatientCare" ) << "IncreasingPatientCareYes" << xml::end;
-        xos << xml::start( "PatientsLeftED" ) << "PatientsLeftEDYes" << xml::end;
-        xos << xml::start( "DisasterProtocols" ) << "DisasterProtocolsYes" << xml::end;
-        xos << xml::start( "ImplementSurgeStrategies" ) << "ImplementSurgeStrategiesYes" << xml::end;
-        xos << xml::start( "InPlaceStrategies" ) << "InPlaceStrategiesYes" << xml::end;
-        xos << xml::start( "AugmentedPersonnel" ) << "AugmentedPersonnelYes" << xml::end;
-        xos << xml::start( "ExpandedBedCapacity" ) << "ExpandedBedCapacityYes" << xml::end;
-        xos << xml::start( "EstablishAlternateCareSites" ) << "EstablishAlternateCareSitesYes" << xml::end;
-        xos << xml::start( "ActivateMobileUnits" ) << "ActivateMobileUnitsYes" << xml::end;
-    }
     UpdateDecon( xos, object );
     UpdateEvacuation( xos, object );
 }

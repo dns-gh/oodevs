@@ -197,7 +197,6 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         found = DoCreateParameter( parameter, xis, type, param );
     if( found == false )
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
-    param->Set( true ); // $$$$ SBO 2007-10-11: ...
     return param.release();
 }
 
@@ -214,7 +213,6 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     std::auto_ptr< actions::Parameter_ABC > param;
     if( DoCreateParameter( parameter, xis, type, param ) == false )
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
-    param->Set( true ); // $$$$ SBO 2007-10-11: ...
     return param.release();
 }
 
