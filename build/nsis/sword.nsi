@@ -40,18 +40,18 @@ Section "!${PRODUCT_NAME}"
     ;---- resources: documentation ----
     SetOutPath "$INSTDIR\applications\resources\help\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\en\*.chm"
+    File "${DOCDIR}\en\final\*.chm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     SetOutPath "$INSTDIR\applications\resources\help\fr"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\fr\*.chm"
+    File "${DOCDIR}\fr\final\*.chm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;---- readme / changelog files ----
     SetOutPath "$INSTDIR\doc"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\en\readme.txt" ; no language support
+    File "${DOCDIR}\readme.txt" ; no language support
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;---- Application ----
