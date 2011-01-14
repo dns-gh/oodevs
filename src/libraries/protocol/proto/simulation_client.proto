@@ -863,7 +863,7 @@ enum EnumUnitIdentificationLevel {
     signale    = 3; //!< The unit has not been seen @todo translate
 }
 
-/** @enum AutomatPerception
+/** @struct AutomatPerception
     @brief Describes the perception of an automat
 */
 message AutomatPerception {
@@ -871,14 +871,14 @@ message AutomatPerception {
     required EnumUnitIdentificationLevel identification_level = 2; //!< The identification level @see EnumUnitIdentificationLevel
 }
 
-/** @enum SeqOfAutomatPerception
+/** @struct SeqOfAutomatPerception
     @brief Regroups the perceptions of several automats
 */
 message SeqOfAutomatPerception {
     repeated AutomatPerception elem = 1; //!< The perceptions @see AutomatPerception
 }
 
-/** @enum UnitKnowledgeUpdate
+/** @struct UnitKnowledgeUpdate
     @brief Notifies of an update in the knowledge of a unit
 */
 message UnitKnowledgeUpdate {
@@ -900,7 +900,7 @@ message UnitKnowledgeUpdate {
     optional bool                        refugees_managed         = 16; //!< Whether refugees are being handled by the unit or not
 }
 
-/** @enum UnitKnowledgeDestruction
+/** @struct UnitKnowledgeDestruction
     @brief Notifies of the destruction of a unit knowledge
 */
 message UnitKnowledgeDestruction {
