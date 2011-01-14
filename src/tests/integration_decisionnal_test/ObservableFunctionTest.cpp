@@ -26,7 +26,7 @@ namespace
             brain[ "DEC_ConnaissanceObject_EstUnEnnemi" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref(this), _1  ) );
             brain[ "DEC_ConnaissanceObject_EstUnAllie" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsAllie, boost::cref(this), _1  ) );
             brain[ "DEC_ConnaissanceObjet_NiveauDePerceptionCourant" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetPerceptionLevel, boost::cref(this), _1  ) );
-            brain[ "DEC_ConnaissanceAgent_PercoitUnite" ] = boost::function< bool ( const std::string& ) >( boost::bind( &BrainFixture::Mock_PerceiveUnit, boost::cref(this), _1  ) );
+            brain[ "DEC_ConnaissanceAgent_EstPercuParUnite" ] = boost::function< bool ( const std::string& ) >( boost::bind( &BrainFixture::Mock_PerceiveUnit, boost::cref(this), _1  ) );
             brain[ "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant" ] = boost::function< float ( const std::string& ) >( boost::bind( &BrainFixture::Mock_GetRecceLevel, boost::cref(this), _1 ) );
         }
         int Mock_IsEnemy( const std::string& name )
