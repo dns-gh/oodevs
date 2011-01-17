@@ -281,7 +281,7 @@ BOOST_FIXTURE_TEST_CASE( automat_attributes_to_client_is_converted, ContextFixtu
     content.mutable_automat_attributes()->mutable_automat()->set_id( 7 );
     content.mutable_automat_attributes()->set_mode( sword::embraye );
     content.mutable_automat_attributes()->set_force_ratio( sword::ForceRatio::neutral );
-    content.mutable_automat_attributes()->set_meeting_engagement( sword::etat_esquive );
+    content.mutable_automat_attributes()->set_meeting_engagement( sword::avoiding );
     content.mutable_automat_attributes()->set_operational_state( sword::operationnel );
     content.mutable_automat_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_attributes { automat { id: 7 } etat_automate: embraye rapport_de_force: neutre combat_de_rencontre: etat_esquive etat_operationnel: operationnel roe: tir_libre } }" ) );
@@ -393,7 +393,7 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->mutable_transported_units()->add_elem()->set_id( 111 );
     content.mutable_unit_attributes()->mutable_transporting_unit()->set_id( 112 );
     content.mutable_unit_attributes()->set_force_ratio( sword::ForceRatio::neutral );
-    content.mutable_unit_attributes()->set_meeting_engagement( sword::etat_esquive );
+    content.mutable_unit_attributes()->set_meeting_engagement( sword::avoiding );
     content.mutable_unit_attributes()->set_operational_state( sword::operationnel );
     content.mutable_unit_attributes()->set_indirect_fire_availability( sword::UnitAttributes::fire_ready );
     content.mutable_unit_attributes()->set_roe( sword::RulesOfEngagement::free_fire );

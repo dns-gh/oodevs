@@ -186,7 +186,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
 //            message.mutable_pions_transportes();
                 message.mutable_transporting_unit()->set_id( 0 );
                 message.set_force_ratio( sword::ForceRatio::favorable );
-                message.set_meeting_engagement( sword::etat_fixe );
+                message.set_meeting_engagement( sword::pinned_down );
                 message.set_operational_state( sword::detruit_totalement );
                 message.set_indirect_fire_availability( sword::UnitAttributes::fire_ready );
                 message.set_roe( sword::RulesOfEngagement::retaliation_only );

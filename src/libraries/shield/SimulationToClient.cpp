@@ -475,10 +475,10 @@ namespace
     template< typename From, typename To >
     void ConvertMeetingEngagementStatus( const From& from, To* to )
     {
-        CONVERT_ENUM_TO( meeting_engagement, combat_de_rencontre, ( sword::none_meeting, Common::none_meeting )
-                                                                  ( sword::etat_esquive, Common::etat_esquive )
-                                                                  ( sword::etat_fixe, Common::etat_fixe )
-                                                                  ( sword::etat_poursuite_mission, Common::etat_poursuite_mission ) );
+        CONVERT_ENUM_TO( meeting_engagement, combat_de_rencontre, ( sword::no_contact, Common::none_meeting )
+                                                                  ( sword::avoiding, Common::etat_esquive )
+                                                                  ( sword::pinned_down, Common::etat_fixe )
+                                                                  ( sword::proceeding_with_mission, Common::etat_poursuite_mission ) );
     }
     template< typename From, typename To >
     void ConvertOperationalStatus( const From& from, To* to )

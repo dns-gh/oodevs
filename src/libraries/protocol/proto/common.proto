@@ -172,10 +172,10 @@ enum EnumDispatcherState {
 }
 
 enum EnumMeetingEngagementStatus {
-   none_meeting           = 0; //!< @todo translate
-   etat_esquive           = 1; //!< @todo translate
-   etat_fixe              = 2; //!< @todo translate
-   etat_poursuite_mission = 3; //!< @todo translate
+   no_contact              = 0; //!< No engagement
+   avoiding                = 1; //!< Avoiding engagement
+   pinned_down             = 2; //!< Pinned down
+   proceeding_with_mission = 3; //!< Proceeding with the mission
 }
 
 enum EnumOperationalStatus {

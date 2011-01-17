@@ -582,7 +582,7 @@ message AutomatAttributes {
    required AutomatId                   automat               = 1; //!< The automat identifier @see AutomatId
    optional EnumAutomatMode             mode                  = 2; //!< The automat mode @see EnumAutomatMode
    optional ForceRatio.Value            force_ratio           = 3; //!< The automat force ratio @see ForceRatio
-   optional EnumMeetingEngagementStatus meeting_engagement    = 4;  //!< @todo What's this ?
+   optional EnumMeetingEngagementStatus meeting_engagement    = 4; //!< The meeting engagement status @see EnumMeetingEngagementStatus
    optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational state
    optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement @see RulesOfEngagement
    optional AutomatId                   tc2_organic           = 7; //!< @deprecated
@@ -743,13 +743,13 @@ message UnitAttributes {
         @brief Posture states
     */
     enum Posture {
-        mouvement           = 0; //!< Moving @todo moving
-        mouvement_discret   = 1; //!< Moving discreetly @todo infiltrating
-        arret               = 2; //!< Stopped @todo stopping
-        poste_reflexe       = 3; //!< ? @todo short stopping
-        poste               = 4; //!< ? @todo parked
-        poste_amenage       = 5; //!< ? @todo parked on self-prepared area
-        poste_prepare_genie = 6; //!< ? @todo parked on engineer-prepared area
+        mouvement           = 0; //!< Moving @todo transmate to moving
+        mouvement_discret   = 1; //!< Moving discreetly @todo transmate to infiltrating
+        arret               = 2; //!< Stopped @todo transmate to stopping
+        poste_reflexe       = 3; //!< ? @todo transmate to short stopping
+        poste               = 4; //!< ? @todo transmate to parked
+        poste_amenage       = 5; //!< ? @todo transmate to parked on self-prepared area
+        poste_prepare_genie = 6; //!< ? @todo transmate to parked on engineer-prepared area
     }
     /** @struct FireAvailability
         @brief Fire availability states
@@ -788,7 +788,7 @@ message UnitAttributes {
     optional bool                        neutralized                = 16; //!< Whether the unit has been neutralized or not
     optional bool                        stealth                    = 17; //!< Whether the unit is in stealth mode
     optional bool                        embarked                   = 18; //!< Whether the unit has been embarked or not
-    optional bool                        transporters_available     = 19; //!< Whether the unit has human transporters available or not
+    optional bool                        transporters_available     = 19; //!< Whether the unit has transporters available or not
     optional Posture                     old_posture                = 20; //!< The posture which the unit is transitioning from @see Posture
     optional Posture                     new_posture                = 21; //!< The posture which the unit is transitioning to @see Posture
     optional int32                       posture_transition         = 22; //!< The completion of the posture transition in percent
