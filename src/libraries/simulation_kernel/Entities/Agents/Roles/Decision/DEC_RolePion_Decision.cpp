@@ -606,7 +606,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion, _1, _2 ) );
     brain[ "DEC_ConnaissanceAgent_DangerositeSurConnaissance" ] =
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge, _1, _2 ) );
-    brain[ "DEC_ConnaissanceAgent_EstPercuParUnite" ] =
+    brain[ "DEC_ConnaissanceAgent_EstPercuParUnite" ] = // i.e. I perceive the agent
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceivedByAgent, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_EstUnEnnemi" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsAnEnemy, boost::cref( GetPion() ), _1 ) );
@@ -616,7 +616,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsKnowledgeValid, _1 ) );
     brain[ "DEC_ConnaissanceAgent_EstEnMouvement" ] =
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsMoving, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_PercoitUnite" ] =
+    brain[ "DEC_ConnaissanceAgent_PercoitUnite" ] = // i.e. the agent perceives me
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceivingAgent, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_EstPrisonnier" ] =
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPrisoner, _1 ) );
@@ -659,7 +659,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::Recon , boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissancePopulation_EstReconnu" ] =
         boost::function< bool(int)> ( boost::bind ( &DEC_KnowledgePopulationFunctions::IsRecon< MIL_AgentPion > , boost::cref( GetPion() ), _1 ) );
-    brain[ "DEC_ConnaissancePopulation_EstPercueParUnite" ] =
+    brain[ "DEC_ConnaissancePopulation_EstPercueParUnite" ] = // i.e. I perceive the pop
         boost::function< bool (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::IsPerceivedByAgent, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissancePopulation_Dangerosite" ] =
         boost::function< float(int)>(boost::bind ( &DEC_KnowledgePopulationFunctions::GetDangerosity , boost::cref( GetPion() ), _1 ) );
