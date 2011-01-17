@@ -238,8 +238,8 @@ namespace shield
     template< typename U >
     void FillUrbanUsage( U* u )
     {
-        u->mutable_role()->set_id( 10 );
-        u->set_value( 11 );
+        u->set_role( "office" );
+        u->set_percentage( 11 );
     }
 }
 

@@ -27,10 +27,13 @@
 #include <urban/InfrastructureAttribute.h>
 #include <urban/ResourceNetworkAttribute.h>
 #include <urban/TerrainObject_ABC.h>
+#include <urban/MotivationsVisitor_ABC.h>
 #include <urban/StaticModel.h>
 #include <urban/InfrastructureType.h>
 #include <urban/MaterialCompositionType.h>
 #include <boost/serialization/vector.hpp>
+#include <boost/foreach.hpp>
+#include <map>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
 
@@ -246,6 +249,24 @@ void UrbanObjectWrapper::SendCapacity( sword::UrbanAttributes& msg )
         capacity->SendState( msg );
 }
 
+namespace
+{
+    class MotivationsVisitor : public urban::MotivationsVisitor_ABC
+    {
+    public:
+        explicit MotivationsVisitor( std::map< std::string, float >& motivations )
+            : motivations_( motivations )
+        {
+            // NOTHING
+        }
+        virtual void Visit( const std::string& motivation, float proportion )
+        {
+            motivations_[ motivation ] = proportion;
+        }
+        std::map< std::string, float >& motivations_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::SendCreation
 // Created: SLG 2010-06-18
@@ -270,16 +291,31 @@ void UrbanObjectWrapper::SendCreation() const
     }
 
     const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >();
-    if( pPhysical && pPhysical->GetArchitecture() )
+    if( pPhysical )
     {
-        message().mutable_attributes()->mutable_architecture()->set_height( pPhysical->GetArchitecture()->GetHeight() );
-        message().mutable_attributes()->mutable_architecture()->set_floor_number( pPhysical->GetArchitecture()->GetFloorNumber() );
-        message().mutable_attributes()->mutable_architecture()->set_roof_shape( pPhysical->GetArchitecture()->GetRoofShape().c_str() );
-        message().mutable_attributes()->mutable_architecture()->set_material( pPhysical->GetArchitecture()->GetMaterial().c_str() );
-        message().mutable_attributes()->mutable_architecture()->set_occupation( pPhysical->GetArchitecture()->GetOccupation() );
-        message().mutable_attributes()->mutable_architecture()->set_trafficability( pPhysical->GetArchitecture()->GetTrafficability() );
-        // TODO parking
-        message().mutable_attributes()->mutable_architecture()->set_parking_available( false );
+        if( pPhysical->GetArchitecture() )
+        {
+            message().mutable_attributes()->mutable_architecture()->set_height( pPhysical->GetArchitecture()->GetHeight() );
+            message().mutable_attributes()->mutable_architecture()->set_floor_number( pPhysical->GetArchitecture()->GetFloorNumber() );
+            message().mutable_attributes()->mutable_architecture()->set_roof_shape( pPhysical->GetArchitecture()->GetRoofShape().c_str() );
+            message().mutable_attributes()->mutable_architecture()->set_material( pPhysical->GetArchitecture()->GetMaterial().c_str() );
+            message().mutable_attributes()->mutable_architecture()->set_occupation( pPhysical->GetArchitecture()->GetOccupation() );
+            message().mutable_attributes()->mutable_architecture()->set_trafficability( pPhysical->GetArchitecture()->GetTrafficability() );
+            // TODO parking
+            message().mutable_attributes()->mutable_architecture()->set_parking_available( false );
+        }
+        if( pPhysical->GetMotivations() )
+        {
+            T_Motivations motivations;
+            MotivationsVisitor visitor( motivations );
+            pPhysical->GetMotivations()->Accept( visitor );
+            BOOST_FOREACH( const T_Motivations::value_type& motivation, motivations )
+            {
+                sword::UrbanUsage& usage = *message().mutable_attributes()->add_usages();
+                usage.set_role( motivation.first );
+                usage.set_percentage( static_cast< unsigned int >( motivation.second * 100 ) );
+            }
+        }
     }
 
     message.Send( NET_Publisher_ABC::Publisher() );

@@ -1276,8 +1276,8 @@ message MsgPopulationCreation {
 
 message MsgPopulationUpdate {
     message MotivationSatisfaction {
-        required Common.MotivationType motivation = 1; // motivationType = "home", "office", ...
-        required float                 value      = 2;
+        required string motivation = 1; // motivationType = "home", "office", ...
+        required float  percentage  = 2;
     }
     message ResourceSatisfaction {
         required Common.ResourceType resource = 1;
@@ -1301,7 +1301,7 @@ message MsgPopulationUpdate {
     optional int32                 dead         = 4;
     repeated Common.PartyAdhesion  adhesions    = 5;
     optional Satisfaction          satisfaction = 6;
-    optional Common.MotivationType motivation   = 7; 
+    optional string                motivation   = 7; 
     repeated BlockOccupation       occupations  = 8;
 
 }

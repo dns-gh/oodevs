@@ -1578,7 +1578,7 @@ BOOST_FIXTURE_TEST_CASE( urban_creation_to_client_is_converted, ContextFixture< 
     FillLocation( content.mutable_urban_creation()->mutable_location() );
     FillUrbanAttributes( content.mutable_urban_creation()->mutable_attributes() );
     content.mutable_urban_creation()->mutable_parent()->set_id( 20 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { urban_creation { urban_object { id: 7 } name: \"name\" location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } attributes { architecture { height: 8 floor_number: 9 roof_shape: \"shape\" material: \"material\" occupation: 10 trafficability: 11 parking_available: true } structure { state: 12 } color { red: 12 green: 42 blue: 77 alpha: 99 } infrastructures { resource_network { resource { name: \"name\" } link { kind: urban target_id: 50 capacity: 51 flow: 52 } link { kind: urban target_id: 50 capacity: 51 flow: 52 } enabled: true max_stock: 53 stock: 54 production: 55 consumption: 56 critical: true initial_stock: 57 max_production: 58 max_consumption: 59 } resource_network { resource { name: \"name\" } link { kind: urban target_id: 50 capacity: 51 flow: 52 } link { kind: urban target_id: 50 capacity: 51 flow: 52 } enabled: true max_stock: 53 stock: 54 production: 55 consumption: 56 critical: true initial_stock: 57 max_production: 58 max_consumption: 59 } infrastructure { type: \"type\" active: true threshold: 13 } } usages { role { id: 10 } value: 11 } usages { role { id: 10 } value: 11 } } parent { id: 20 } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { urban_creation { urban_object { id: 7 } name: \"name\" location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } attributes { architecture { height: 8 floor_number: 9 roof_shape: \"shape\" material: \"material\" occupation: 10 trafficability: 11 parking_available: true } structure { state: 12 } color { red: 12 green: 42 blue: 77 alpha: 99 } infrastructures { resource_network { resource { name: \"name\" } link { kind: urban target_id: 50 capacity: 51 flow: 52 } link { kind: urban target_id: 50 capacity: 51 flow: 52 } enabled: true max_stock: 53 stock: 54 production: 55 consumption: 56 critical: true initial_stock: 57 max_production: 58 max_consumption: 59 } resource_network { resource { name: \"name\" } link { kind: urban target_id: 50 capacity: 51 flow: 52 } link { kind: urban target_id: 50 capacity: 51 flow: 52 } enabled: true max_stock: 53 stock: 54 production: 55 consumption: 56 critical: true initial_stock: 57 max_production: 58 max_consumption: 59 } infrastructure { type: \"type\" active: true threshold: 13 } } usages { role: \"office\" percentage: 11 } usages { role: \"office\" percentage: 11 } } parent { id: 20 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -1587,7 +1587,7 @@ BOOST_FIXTURE_TEST_CASE( urban_update_to_client_is_converted, ContextFixture< sw
     content.mutable_urban_update()->mutable_urban_object()->set_id( 7 );
     FillLocation( content.mutable_urban_update()->mutable_location() );
     FillUrbanAttributes( content.mutable_urban_update()->mutable_attributes() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { urban_update { urban_object { id: 7 } location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } attributes { architecture { height: 8 floor_number: 9 roof_shape: \"shape\" material: \"material\" occupation: 10 trafficability: 11 parking_available: true } structure { state: 12 } color { red: 12 green: 42 blue: 77 alpha: 99 } infrastructures { resource_network { resource { name: \"name\" } link { kind: urban target_id: 50 capacity: 51 flow: 52 } link { kind: urban target_id: 50 capacity: 51 flow: 52 } enabled: true max_stock: 53 stock: 54 production: 55 consumption: 56 critical: true initial_stock: 57 max_production: 58 max_consumption: 59 } resource_network { resource { name: \"name\" } link { kind: urban target_id: 50 capacity: 51 flow: 52 } link { kind: urban target_id: 50 capacity: 51 flow: 52 } enabled: true max_stock: 53 stock: 54 production: 55 consumption: 56 critical: true initial_stock: 57 max_production: 58 max_consumption: 59 } infrastructure { type: \"type\" active: true threshold: 13 } } usages { role { id: 10 } value: 11 } usages { role { id: 10 } value: 11 } } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { urban_update { urban_object { id: 7 } location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } attributes { architecture { height: 8 floor_number: 9 roof_shape: \"shape\" material: \"material\" occupation: 10 trafficability: 11 parking_available: true } structure { state: 12 } color { red: 12 green: 42 blue: 77 alpha: 99 } infrastructures { resource_network { resource { name: \"name\" } link { kind: urban target_id: 50 capacity: 51 flow: 52 } link { kind: urban target_id: 50 capacity: 51 flow: 52 } enabled: true max_stock: 53 stock: 54 production: 55 consumption: 56 critical: true initial_stock: 57 max_production: 58 max_consumption: 59 } resource_network { resource { name: \"name\" } link { kind: urban target_id: 50 capacity: 51 flow: 52 } link { kind: urban target_id: 50 capacity: 51 flow: 52 } enabled: true max_stock: 53 stock: 54 production: 55 consumption: 56 critical: true initial_stock: 57 max_production: 58 max_consumption: 59 } infrastructure { type: \"type\" active: true threshold: 13 } } usages { role: \"office\" percentage: 11 } usages { role: \"office\" percentage: 11 } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -1807,8 +1807,8 @@ namespace
     template< typename S >
     void FillMotivationSatisfaction( S* s )
     {
-        s->mutable_motivation()->set_id( 40 );
-        s->set_value( 41.f );
+        s->set_motivation( "office" );
+        s->set_percentage( 41.f );
     }
     template< typename S >
     void FillSatisfaction( S* s )
@@ -1838,10 +1838,10 @@ BOOST_FIXTURE_TEST_CASE( population_update_to_client_is_converted, ContextFixtur
     FillPartyAdhesion( content.mutable_population_update()->add_adhesions() );
     FillPartyAdhesion( content.mutable_population_update()->add_adhesions() );
     FillSatisfaction( content.mutable_population_update()->mutable_satisfaction() );
-    content.mutable_population_update()->mutable_motivation()->set_id( 11 );
+    content.mutable_population_update()->set_motivation( "office" );
     FillBlockOccupation( content.mutable_population_update()->add_occupations() );
     FillBlockOccupation( content.mutable_population_update()->add_occupations() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { population_update { id { id: 7 } healthy: 8 wounded: 9 dead: 10 adhesions { party { id: 20 } value: 21 } adhesions { party { id: 20 } value: 21 } satisfaction { resources { resource { id: 30 } value: 31 } resources { resource { id: 30 } value: 31 } motivations { motivation { id: 40 } value: 41 } motivations { motivation { id: 40 } value: 41 } lodging: 50 health: 50 safety: 50 } motivation { id: 11 } occupations { block { id: 12 } number: 13 } occupations { block { id: 12 } number: 13 } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { population_update { id { id: 7 } healthy: 8 wounded: 9 dead: 10 adhesions { party { id: 20 } value: 21 } adhesions { party { id: 20 } value: 21 } satisfaction { resources { resource { id: 30 } value: 31 } resources { resource { id: 30 } value: 31 } motivations { motivation: \"office\" percentage: 41 } motivations { motivation: \"office\" percentage: 41 } lodging: 50 health: 50 safety: 50 } motivation: \"office\" occupations { block { id: 12 } number: 13 } occupations { block { id: 12 } number: 13 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 

@@ -326,8 +326,8 @@ namespace shield
     template< typename From, typename To >
     void ConvertUrbanUsage( const From& from, To* to )
     {
-        CONVERT_ID( role );
-        CONVERT( value );
+        CONVERT( role );
+        CONVERT( percentage );
     }
 }
 

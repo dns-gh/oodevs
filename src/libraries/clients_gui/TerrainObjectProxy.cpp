@@ -200,11 +200,10 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
         }
         if( pPhysical->GetMotivations() )
         {
-            T_Motivations motivations;
-            MotivationsVisitor visitor( motivations );
+            MotivationsVisitor visitor( motivations_ );
             object_.Accept( visitor );
-            BOOST_FOREACH( const T_Motivations::value_type& motivation, motivations )
-                dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Motivations" ) + QString( motivation.first.c_str() ), motivation.second );
+            BOOST_FOREACH( const T_Motivations::value_type& motivation, motivations_ )
+                dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + QString( motivation.first.c_str() ), motivation.second );
         }
     }
 }

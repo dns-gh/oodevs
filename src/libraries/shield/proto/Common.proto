@@ -84,7 +84,6 @@ message ReportCategory        { required uint32 id = 1; }
 message NationalityType       { required uint32 id = 1; }
 message ResourceNetworkType   { required string name = 1; }
 message PopulationType        { required uint32 id = 1; }
-message MotivationType        { required uint32 id = 1; }
 
 // Helpers
 message MsgHeading {
@@ -664,8 +663,8 @@ message MsgTextMessage {
 // Urban attributes
 
 message UrbanUsage {
-    required MotivationType role  = 1;
-    required uint32         value = 2;
+    required string role  = 1;
+    required uint32 percentage = 2;
 }
     
 // Object attributes

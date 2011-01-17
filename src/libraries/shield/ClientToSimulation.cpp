@@ -258,7 +258,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgChangePopulationMagi
     CONVERT( healthy );
     CONVERT( wounded );
     CONVERT( dead );
-    CONVERT_ID( motivation );
+    CONVERT( motivation );
 }
 
 namespace

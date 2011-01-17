@@ -61,6 +61,16 @@ UrbanModel::~UrbanModel()
 
 namespace
 {
+    void CheckPhysicalAttribute( urban::TerrainObject_ABC& object )
+    {
+        urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
+        if( !pPhysical )
+        {
+            pPhysical = new urban::PhysicalAttribute( object );
+            object.Attach( *pPhysical );
+        }
+    }
+
     void AttachExtensions( urban::TerrainObject_ABC& object, const sword::UrbanCreation& message )
     {
         if( !message.has_attributes() )
@@ -88,12 +98,8 @@ namespace
         if( message.attributes().has_architecture() )
         {
             const sword::UrbanAttributes::Architecture& architecture = message.attributes().architecture();
+            CheckPhysicalAttribute( object );
             urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
-            if( !pPhysical )
-            {
-                pPhysical = new urban::PhysicalAttribute( object );
-                object.Attach( *pPhysical );
-            }
             if( !pPhysical->GetArchitecture() )
                 pPhysical->CreateArchitecture();
             pPhysical->GetArchitecture()->SetHeight( architecture.height() );
@@ -102,6 +108,19 @@ namespace
             pPhysical->GetArchitecture()->SetMaterial( architecture.material() );
             pPhysical->GetArchitecture()->SetOccupation( architecture.occupation() );
             pPhysical->GetArchitecture()->SetTrafficability( architecture.trafficability() );
+        }
+        if( message.attributes().usages_size() > 0 )
+        {
+            CheckPhysicalAttribute( object );
+            urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
+            if( !pPhysical->GetMotivations() )
+                pPhysical->CreateMotivations();
+            for( int i = 0; i <  message.attributes().usages_size(); ++i )
+            {
+                const sword::UrbanUsage& usage =  message.attributes().usages( i );
+                float percent = usage.percentage() / 100.f;
+                pPhysical->GetMotivations()->Add( usage.role(), percent );
+            }
         }
     }
 }

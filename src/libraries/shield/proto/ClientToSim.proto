@@ -153,7 +153,7 @@ message MsgChangePopulationMagicAction {
   optional int32                 healthy    = 3;
   optional int32                 wounded    = 4;
   optional int32                 dead       = 5;
-  optional Common.MotivationType motivation = 6;
+  optional string                motivation = 6;
 }
 
 message MsgUrbanMagicAction {

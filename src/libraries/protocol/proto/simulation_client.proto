@@ -1653,8 +1653,8 @@ message PopulationCreation {
 
 message PopulationUpdate {
     message MotivationSatisfaction {
-        required MotivationType motivation = 1; // motivationType = "home", "office", ...
-        required float          value      = 2;
+        required string motivation = 1; // motivationType = "home", "office", ...
+        required float  percentage = 2;
     }
     message ResourceSatisfaction {
         required ResourceType resource = 1;
@@ -1677,7 +1677,7 @@ message PopulationUpdate {
     optional int32           dead         = 4;
     repeated PartyAdhesion   adhesions    = 5;
     optional Satisfaction    satisfaction = 6;
-    optional MotivationType  motivation   = 7;
+    optional string          motivation   = 7;
     repeated BlockOccupation occupations  = 8;
 }
 

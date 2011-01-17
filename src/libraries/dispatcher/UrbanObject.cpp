@@ -13,6 +13,7 @@
 #include "InfrastructuresAttribute.h"
 #include "ResourceNetworkAttribute.h"
 #include "StructureAttribute.h"
+#include "UsagesAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "UrbanObject.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
@@ -64,6 +65,8 @@ void UrbanObject::Initialize( const sword::UrbanAttributes& attributes )
     MSG_MSG_CREATION( color          , ColorAttribute );
     MSG_MSG_CREATION( architecture   , ArchitectureAttribute );
     MSG_MSG_CREATION( structure      , StructureAttribute );
+    if( attributes.usages_size() > 0 )
+        AddAttribute( new UsagesAttribute( attributes ) );
 }
 
 // -----------------------------------------------------------------------------

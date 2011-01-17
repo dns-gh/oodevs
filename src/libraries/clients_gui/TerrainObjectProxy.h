@@ -137,6 +137,7 @@ private:
     float maxDensity_;
     std::auto_ptr< Gradient > pGradient_;
     const kernel::ObjectType& type_;
+    T_Motivations motivations_;
     //@}
 };
 

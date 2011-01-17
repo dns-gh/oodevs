@@ -109,6 +109,11 @@ private:
     const urban::TerrainObject_ABC* object_;
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< std::string, float > T_Motivations;
+    //@}
+
     //! @name HLA
     //@{
     HLA_Object_ABC* pView_;

@@ -2358,8 +2358,8 @@ namespace
     template< typename From, typename To >
     void ConvertMotivationSatisfaction( const From& from, To* to )
     {
-        CONVERT_ID( motivation );
-        CONVERT( value );
+        CONVERT( motivation );
+        CONVERT( percentage );
     }
     template< typename From, typename To >
     void ConvertBlockOccupation( const From& from, To* to )
@@ -2385,7 +2385,7 @@ void SimulationToClient::Convert( const sword::PopulationUpdate& from, MsgsSimTo
         ConvertSatisfaction( from.satisfaction(), to->mutable_satisfaction() );
     CONVERT_LIST( satisfaction, resources, ConvertResourceSatisfaction );
     CONVERT_LIST( satisfaction, motivations, ConvertMotivationSatisfaction );
-    CONVERT_ID( motivation );
+    CONVERT( motivation );
     for( int i = 0; i < from.occupations().size(); ++i )
         ConvertBlockOccupation( from.occupations( i ), to->add_occupations() );
 }
