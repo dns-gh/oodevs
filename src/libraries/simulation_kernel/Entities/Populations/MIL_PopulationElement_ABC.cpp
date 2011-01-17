@@ -185,9 +185,9 @@ void MIL_PopulationElement_ABC::ApplyInjury( MIL_Injury_ABC& injury )
 // Name: MIL_PopulationElement_ABC::ApplyBurn
 // Created: BCI 2010-12-15
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::ApplyBurn( const MIL_BurnEffectManipulator& burn )
+void MIL_PopulationElement_ABC::ApplyBurn( const MIL_BurnEffectManipulator& /*burn*/ )
 {
-    int todo = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

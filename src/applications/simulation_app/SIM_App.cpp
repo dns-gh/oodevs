@@ -203,7 +203,7 @@ void SIM_App::RunGUI()
     TrayIcon_.hIcon = LoadIcon( hInstance_, MAKEINTRESOURCE( IDI_ICON1 ) );
     TrayIcon_.uCallbackMessage = MY_WM_NOTIFYICON;
     TrayIcon_.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-    strcpy( TrayIcon_.szTip, "Simulation" );
+    strcpy_s( TrayIcon_.szTip, "Simulation" );
     Shell_NotifyIcon( NIM_ADD,&TrayIcon_ );
 
     // Loop

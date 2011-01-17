@@ -258,32 +258,7 @@ bool MIL_Injury_Fire::IsInjured( const PHY_ComposantePion& pComposante )
 // -----------------------------------------------------------------------------
 void MIL_Injury_Fire::SetInjury( unsigned int /*nNbrAliveHumans*/ , double /*rDensity*/ )
 {
-    int todo = 0;
-    /*
-    //Population doesn't have any protection
-    //First we compute the number of persons caught in the fire
-    const unsigned int nNbrOfPossibleCasualties = std::min( nNbrAliveHumans, static_cast< unsigned int >( std::max( 1., rDensity * MIL_FireClass::GetLength() * MIL_FireClass::GetWidth() ) ) );
-
-    //For, each of them, we will compute if they're going to be injured, and how
-    for( unsigned int i = 0; i < nNbrOfPossibleCasualties; ++i )
-    {
-        const unsigned int injuryThreshold = static_cast< unsigned int >( ( 1 + 0.2 * MIL_Random::rand_ii( 0 , 1, MIL_Random::eWounds ) ) * heat_ );
-        if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetDeathThreshold() )
-        {
-            PHY_InjuredHuman::InitializeInjuredHuman( *this );
-            injuryCategory_ = MIL_MedicalTreatmentType::eDead;
-        }
-        else if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetInjuryThreshold( MIL_MedicalTreatmentType::eUA ) )
-        {
-            PHY_InjuredHuman::InitializeInjuredHuman( *this );
-            injuryCategory_ = MIL_MedicalTreatmentType::eUA;
-        }
-        else if( injuryThreshold > MIL_MedicalTreatmentType::Find( injuryID_ )->GetInjuryThreshold( MIL_MedicalTreatmentType::eUR ) )
-        {
-            PHY_InjuredHuman::InitializeInjuredHuman( *this );
-            injuryCategory_ = MIL_MedicalTreatmentType::eUR;
-        }
-    }*/
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
