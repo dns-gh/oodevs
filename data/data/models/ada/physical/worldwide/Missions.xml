@@ -1998,6 +1998,14 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Replenishment sites" optional="false" type="ObjectKnowledge"/>
     </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreSite" dia-type="T_Mission_Automate_ASA_DefendreSite" id="205" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreSite" name="Air Defense Artillery - defend site">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
+      <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Deployment positions" optional="false" type="Point"/>
+    </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreZone" dia-type="T_Mission_Automate_ASA_DefendreZone" id="206" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreZone" name="Air Defense Artillery - defend area">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2005,6 +2013,13 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
       <parameter dia-name="positionsSections_" max-occurs="unbounded" min-occurs="1" name="Deployment positions" optional="false" type="Point"/>
+    </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_DefendreUnites" dia-type="T_Mission_Automate_ASA_DefendreUnites" id="207" mrt-dia-behavior="MIS_Automate_MRT_ASA_DefendreUnites" name="Air Defense Artillery - defend units">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="unites_" max-occurs="unbounded" min-occurs="1" name="Units" optional="false" type="Agent"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ASA_Surveiller" dia-type="T_Mission_Automate_ASA_Surveiller" id="208" mrt-dia-behavior="MIS_Automate_MRT_ASA_Surveiller" name="Air Defense Artillery - monitor">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3221,4 +3236,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2106520306" -->
+<!-- signature="4212179169" -->
