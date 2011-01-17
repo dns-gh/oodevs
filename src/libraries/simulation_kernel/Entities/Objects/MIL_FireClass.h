@@ -37,7 +37,6 @@ namespace urban
 // MIL_FireClass.h
 // Modified: RFT 19/05/2008
 // =============================================================================
-
 class MIL_FireClass : private boost::noncopyable
 {
 public:
@@ -58,7 +57,7 @@ public:
     int GetIncreaseRate() const;
     int GetMaxHeat() const;
     int GetWeatherDecreateRate( const weather::PHY_Precipitation& ) const;
-	void GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const;
+    void GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const;
     static int GetCellSize();
     //@}
 

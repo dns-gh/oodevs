@@ -371,7 +371,6 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
     sword::MagicActionAck_ErrorCode nErrorCode = sword::MagicActionAck::no_error;
     const sword::MissionParameters& params = message.parameters();
     unsigned int id = params.elem( 0 ).value().Get( 0 ).identifier();
-    bool urban = params.elem( 1 ).value().Get( 0 ).booleanvalue();
     MIL_Object_ABC* object = Find( id );
     if( object == 0 )
         nErrorCode = sword::MagicActionAck::error_invalid_parameter;

@@ -23,8 +23,8 @@ class MIL_EntityManager;
 
 namespace sword
 {
-	enum EnumBurningCellPhase;
-	class ObjectAttributes;
+    enum EnumBurningCellPhase;
+    class ObjectAttributes;
 }
 
 class MIL_BurningCell;
@@ -32,7 +32,7 @@ typedef geometry::Point2< int > MIL_BurningCellOrigin;
 
 // =============================================================================
 /** @class  MIL_BurningCells
-	@see "Feu sauvage" in 4311340-Modèles de feu.doc
+    @see "Feu sauvage" in 4311340-Modèles de feu.doc
 */
 // Created: BCI 2010-12-20
 // =============================================================================
@@ -47,16 +47,16 @@ public:
 
     //! @name Operations
     //@{
-	void StartBurn( MIL_Object_ABC& object );
+    void StartBurn( MIL_Object_ABC& object );
     void StartModifyBurn( MIL_Object_ABC& object );
     void StopModifyBurn( MIL_Object_ABC& object );
-	void Update( MIL_Object_ABC& object, unsigned int time );
+    void Update( MIL_Object_ABC& object, unsigned int time );
     double ComputePathCost( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     bool IsTrafficable( const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void OnRequest( double x, double y );
     //@}
 
-	//! @name CheckPoints
+    //! @name CheckPoints
     //@{
     void load( MIL_CheckPointInArchive& );
     void save( MIL_CheckPointOutArchive& ) const;
@@ -65,12 +65,12 @@ public:
     void save( MIL_CheckPointOutArchive&, MIL_Object_ABC&, const unsigned int ) const;
     //@}
 
-	//! @name Dispatch & save
+    //! @name Dispatch & save
     //@{
-	void SendFullState( sword::ObjectAttributes& asn, MIL_Object_ABC& object ) const;
-	void SendUpdate( sword::ObjectAttributes& asn, MIL_Object_ABC& object ) const;
-	void WriteODB( xml::xostream& xos, MIL_Object_ABC& ) const;
-	//@}
+    void SendFullState( sword::ObjectAttributes& asn, MIL_Object_ABC& object ) const;
+    void SendUpdate( sword::ObjectAttributes& asn, MIL_Object_ABC& object ) const;
+    void WriteODB( xml::xostream& xos, MIL_Object_ABC& ) const;
+    //@}
 
     //! @name Attrition
     //@{
@@ -79,37 +79,37 @@ public:
     //@}
 
 private:
-	//! @name Types
+    //! @name Types
     //@{
-	enum SendStateMode
-	{
-		eUpdate,
-		eFull
-	};
+    enum SendStateMode
+    {
+        eUpdate,
+        eFull
+    };
     //@}
     
-	//! @name Helpers
+    //! @name Helpers
     //@{
-	static MIL_BurningCellOrigin ComputeCellOriginFromPoint( double x, double y );
-	MIL_BurningCell* FindCell( const MIL_BurningCellOrigin& coords ) const;
+    static MIL_BurningCellOrigin ComputeCellOriginFromPoint( double x, double y );
+    MIL_BurningCell* FindCell( const MIL_BurningCellOrigin& coords ) const;
     void StartBurn( const MIL_BurningCellOrigin& cellOrigin, MIL_Object_ABC& object );
     void InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Object_ABC& object, sword::EnumBurningCellPhase phase );
-	void UpdatePreIgnition( MIL_BurningCell& cell, unsigned int time );
-	void PropagateIgnition( const MIL_BurningCellOrigin& fromOrigin, MIL_BurningCell& to, unsigned int timeElapsed );
-	void UpdateCombustion( MIL_BurningCell& cell );
-	void UpdateDecline( MIL_BurningCell& cell );
+    void UpdatePreIgnition( MIL_BurningCell& cell, unsigned int time );
+    void PropagateIgnition( const MIL_BurningCellOrigin& fromOrigin, MIL_BurningCell& to, unsigned int timeElapsed );
+    void UpdateCombustion( MIL_BurningCell& cell );
+    void UpdateDecline( MIL_BurningCell& cell );
 
 
-	void SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& object, MIL_BurningCells::SendStateMode mode ) const;
-	//@}
+    void SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& object, MIL_BurningCells::SendStateMode mode ) const;
+    //@}
 
 private:
-	typedef std::map< MIL_BurningCellOrigin, MIL_BurningCell* > BurningCellsByCoordinatesMap;
-	typedef std::vector< MIL_BurningCell* > BurningCellsVector;
-	typedef std::map< unsigned int/*object id*/, BurningCellsVector > BurningCellsByObjectsMap;
+    typedef std::map< MIL_BurningCellOrigin, MIL_BurningCell* > BurningCellsByCoordinatesMap;
+    typedef std::vector< MIL_BurningCell* > BurningCellsVector;
+    typedef std::map< unsigned int/*object id*/, BurningCellsVector > BurningCellsByObjectsMap;
     typedef std::set< MIL_Object_ABC* > PropagationModifierObjects;
-	BurningCellsByCoordinatesMap burningCellsByCoordinates_;
-	BurningCellsByObjectsMap burningCellsByObjects_;
+    BurningCellsByCoordinatesMap burningCellsByCoordinates_;
+    BurningCellsByObjectsMap burningCellsByObjects_;
     PropagationModifierObjects propagationModifierObjects_;
     std::size_t lastCellIndexIncludedInLocalization_;
 };
