@@ -36,7 +36,7 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Resolver.h"
 #include <geometry/Types.h>
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Model.h>
 #include <urban/StaticModel.h>
@@ -512,9 +512,9 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
         {
             const urban::TerrainObject_ABC& object = **it;
 
-            const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
+            const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
 
-            if( architecture == 0 && bIsAroundBU == true )
+            if( ( pPhysical == 0 || pPhysical->GetArchitecture() ) && bIsAroundBU == true )
                 continue;
 
             const geometry::Polygon2f* footPrint = object.GetFootprint();
@@ -522,7 +522,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
             if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
             {
                 bIsAroundBU = true;
-                if( architecture != 0 )
+                if( pPhysical && pPhysical->GetArchitecture() )
                 {
                     float intersectionDistance = 0;
                     std::sort( intersectPoints.begin(), intersectPoints.end() );
@@ -538,8 +538,8 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
                     else
                         intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
-                    double rDistanceModificator = urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
-                    double occupationFactor = std::sqrt( architecture->GetOccupation() );
+                    double rDistanceModificator = urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() )->GetId() ];
+                    double occupationFactor = std::sqrt( pPhysical->GetArchitecture()->GetOccupation() );
                     if( occupationFactor == 1. && rDistanceModificator <= epsilon )
                         rVisionNRJ = -1 ;
                     else
@@ -863,9 +863,9 @@ double PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
 // -----------------------------------------------------------------------------
 double PHY_SensorTypeAgent::GetUrbanBlockFactor( const urban::TerrainObject_ABC& block ) const
 {
-    const urban::Architecture* architecture = block.Retrieve< urban::Architecture >();
-    if( architecture )
-        return urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
+    const urban::PhysicalAttribute* pPhysical = block.Retrieve< urban::PhysicalAttribute >();
+    if( pPhysical && pPhysical->GetArchitecture() )
+        return urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() )->GetId() ];
     return 1.f;
 }
 

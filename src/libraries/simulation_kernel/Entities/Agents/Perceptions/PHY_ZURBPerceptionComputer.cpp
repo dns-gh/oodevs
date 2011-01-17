@@ -26,7 +26,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Tools/MIL_Geometry.h"
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 #pragma warning( push, 0 )
@@ -208,15 +208,19 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
                         {
                             float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
                             float objectHeight = 2; //2 = SensorHeight
-                            const urban::Architecture* architecture = object.Retrieve< urban::Architecture >();
+
+                            const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
                             if( perceiverUrbanBlock )
-                                if( const urban::Architecture* perceiverUrbanBlockArchitecture = perceiverUrbanBlock->GetObject().Retrieve< urban::Architecture >() )
-                                    perceiverUrbanBlockHeight += perceiverUrbanBlockArchitecture->GetHeight();
-                            if( architecture )
-                                objectHeight += architecture->GetHeight();
+                            {
+                                const urban::PhysicalAttribute* perceiverUrbanBlockPhysical = perceiverUrbanBlock->GetObject().Retrieve< urban::PhysicalAttribute >();
+                                if( perceiverUrbanBlockPhysical && perceiverUrbanBlockPhysical->GetArchitecture() )
+                                    perceiverUrbanBlockHeight += perceiverUrbanBlockPhysical->GetArchitecture()->GetHeight();
+                            }
+                            if( pPhysical && pPhysical->GetArchitecture() )
+                                objectHeight += pPhysical->GetArchitecture()->GetHeight();
                             double urbanFactor = ( *itSensor )->GetUrbanBlockFactor( object ) * perceiverUrbanBlockHeight / objectHeight;
-                            if( architecture )
-                                urbanFactor = 1. + architecture->GetOccupation() * ( urbanFactor - 1. ) ;
+                            if( pPhysical && pPhysical->GetArchitecture() )
+                                urbanFactor = 1. + pPhysical->GetArchitecture()->GetOccupation() * ( urbanFactor - 1. ) ;
                             worstFactor = std::min( worstFactor, urbanFactor );
                         }
                     }

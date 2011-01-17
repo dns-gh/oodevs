@@ -6,7 +6,7 @@
 #include "SensorType.h"
 #include "Tools.h"
 #include "Agent_ABC.h"
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.hpp>
@@ -255,10 +255,10 @@ bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, cons
     if( object )
     {
         bIsAroundBU = true;
-        const urban::Architecture* architecture = object->Retrieve< urban::Architecture >();
-        if( architecture )
+        const urban::PhysicalAttribute* pPhysical = object->Retrieve< urban::PhysicalAttribute >();
+        if( pPhysical && pPhysical->GetArchitecture() )
         {
-            float rDistanceModificator = urbanBlockFactors_.find( architecture->GetMaterial() )->second;
+            float rDistanceModificator = urbanBlockFactors_.find( pPhysical->GetArchitecture()->GetMaterial() )->second;
             rDistanceModificator <= 1e-8 ? rVisionNRJ = -1 : rVisionNRJ = rVisionNRJ - distance / rDistanceModificator ;
         }
     }

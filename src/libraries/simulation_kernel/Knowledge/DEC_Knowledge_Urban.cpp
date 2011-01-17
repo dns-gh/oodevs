@@ -15,7 +15,7 @@
 #include "simulation_kernel/Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/Model.h>
 #include "protocol/ClientSenders.h"
 
@@ -393,8 +393,8 @@ bool DEC_Knowledge_Urban::IsValid() const
 // -----------------------------------------------------------------------------
 const float DEC_Knowledge_Urban::GetPathfindCost( float weight ) const
 {
-    const urban::Architecture* architecture = object_->Retrieve< urban::Architecture >();
-    if( architecture )
-        return architecture->GetPathfindCost( weight );
+    const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >();
+    if( pPhysical && pPhysical->GetArchitecture() )
+        return pPhysical->GetArchitecture()->GetPathfindCost( weight );
     return 0;
 }

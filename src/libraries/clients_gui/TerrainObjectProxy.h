@@ -112,6 +112,8 @@ private:
 
     //! @name Types
     //@{
+    typedef std::map< std::string, float > T_Motivations;
+
     typedef std::map< std::string, unsigned int > T_Humans;
     typedef T_Humans::const_iterator            CIT_Humans;
 

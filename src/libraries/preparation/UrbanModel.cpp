@@ -29,7 +29,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/InfrastructureAttribute.h>
 #include <urban/ResourceNetworkAttribute.h>
 #include <urban/TerrainObject_ABC.h>
@@ -76,8 +76,8 @@ namespace
         {}
         virtual void VisitBlock( urban::TerrainObject_ABC& urbanObject )
         {
-            const urban::Architecture* architecture = urbanObject.Retrieve< urban::Architecture >();
-            if( architecture && ( !static_.objectTypes_.StringResolver< kernel::MaterialCompositionType >::Find( architecture->GetMaterial() ) || !static_.objectTypes_.StringResolver< kernel::RoofShapeType >::Find( architecture->GetRoofShape() ) ) )
+            const urban::PhysicalAttribute* pPhysical = urbanObject.Retrieve< urban::PhysicalAttribute >();
+            if( pPhysical && pPhysical->GetArchitecture() && ( !static_.objectTypes_.StringResolver< kernel::MaterialCompositionType >::Find( pPhysical->GetArchitecture()->GetMaterial() ) || !static_.objectTypes_.StringResolver< kernel::RoofShapeType >::Find( pPhysical->GetArchitecture()->GetRoofShape() ) ) )
             {
                 loadingErrors_ += "Urban Bloc : " + urbanObject.GetName() + "\n";
                 return;

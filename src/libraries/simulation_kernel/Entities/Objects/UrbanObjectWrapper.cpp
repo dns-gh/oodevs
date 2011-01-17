@@ -8,27 +8,19 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "MIL_ObjectManipulator.h"
+#include "UrbanObjectWrapper.h"
 #include "MIL_AgentServer.h"
 #include "ResourceNetworkCapacity.h"
 #include "MedicalCapacity.h"
 #include "MedicalTreatmentAttribute.h"
 #include "StructuralCapacity.h"
-#include "UrbanObjectWrapper.h"
 #include "UrbanType.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Objects/MIL_ObjectLoader.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_terrain/TER_Localisation.h"
 #include "hla/HLA_Object_ABC.h"
-#include "hla/HLA_UpdateFunctor.h"
-#include <urban/ColorRGBA.h>
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/ColorAttribute.h>
 #include <urban/GeometryAttribute.h>
 #include <urban/Model.h>
@@ -38,14 +30,12 @@
 #include <urban/StaticModel.h>
 #include <urban/InfrastructureType.h>
 #include <urban/MaterialCompositionType.h>
-#include <geometry/Types.h>
 #include <boost/serialization/vector.hpp>
-#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
 
-
 UrbanObjectWrapper::T_ObjectMap UrbanObjectWrapper::objectMap_;
+
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper constructor
 // Created: SLG 2010-06-18
@@ -53,7 +43,7 @@ UrbanObjectWrapper::T_ObjectMap UrbanObjectWrapper::objectMap_;
 UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object )
     : MIL_Object( 0, builder.GetType() )
     , object_( &object )
-    , pView_( 0 )
+    , pView_ ( 0 )
 {
     id_ = idManager_.GetFreeId();
     objectMap_.insert( std::make_pair( &object, this ) );
@@ -68,7 +58,7 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
 UrbanObjectWrapper::UrbanObjectWrapper()
     : MIL_Object()
     , object_( 0 )
-    , pView_( 0 )
+    , pView_ ( 0 )
 {
     id_ = 0;
 }
@@ -105,7 +95,6 @@ void UrbanObjectWrapper::InitializeAttributes()
         ResourceNetworkCapacity* capacity = new ResourceNetworkCapacity( *resource );
         capacity->Register( *this );
     }
-
     const urban::InfrastructureAttribute* infra = object_->Retrieve< urban::InfrastructureAttribute >();
     if( infra )
     {
@@ -164,7 +153,7 @@ bool UrbanObjectWrapper::CanInteractWith( const MIL_Agent_ABC& agent ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge
+// Name: UrbanObjectWrapper::CreateKnowledge
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_Army_ABC& /*team*/ )
@@ -173,7 +162,7 @@ boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( c
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge
+// Name: UrbanObjectWrapper::CreateKnowledge
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_KnowledgeGroup& /*group*/ )
@@ -280,18 +269,19 @@ void UrbanObjectWrapper::SendCreation() const
         message().mutable_attributes()->mutable_color()->set_alpha( color->Alpha() );
     }
 
-    const urban::Architecture* architecture = object_->Retrieve< urban::Architecture >();
-    if( architecture != 0 )
+    const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >();
+    if( pPhysical && pPhysical->GetArchitecture() )
     {
-        message().mutable_attributes()->mutable_architecture()->set_height( architecture->GetHeight() );
-        message().mutable_attributes()->mutable_architecture()->set_floor_number( architecture->GetFloorNumber() );
-        message().mutable_attributes()->mutable_architecture()->set_roof_shape( architecture->GetRoofShape().c_str() );
-        message().mutable_attributes()->mutable_architecture()->set_material( architecture->GetMaterial().c_str() );
-        message().mutable_attributes()->mutable_architecture()->set_occupation( architecture->GetOccupation() );
-        message().mutable_attributes()->mutable_architecture()->set_trafficability( architecture->GetTrafficability() );
+        message().mutable_attributes()->mutable_architecture()->set_height( pPhysical->GetArchitecture()->GetHeight() );
+        message().mutable_attributes()->mutable_architecture()->set_floor_number( pPhysical->GetArchitecture()->GetFloorNumber() );
+        message().mutable_attributes()->mutable_architecture()->set_roof_shape( pPhysical->GetArchitecture()->GetRoofShape().c_str() );
+        message().mutable_attributes()->mutable_architecture()->set_material( pPhysical->GetArchitecture()->GetMaterial().c_str() );
+        message().mutable_attributes()->mutable_architecture()->set_occupation( pPhysical->GetArchitecture()->GetOccupation() );
+        message().mutable_attributes()->mutable_architecture()->set_trafficability( pPhysical->GetArchitecture()->GetTrafficability() );
         // TODO parking
         message().mutable_attributes()->mutable_architecture()->set_parking_available( false );
     }
+
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 

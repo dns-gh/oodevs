@@ -27,7 +27,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "protocol/Simulation.h"
 #include "protocol/Protocol.h"
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/ColorAttribute.h>
 #include <urban/Model.h>
 #include <urban/UrbanFactory.h>
@@ -88,18 +88,20 @@ namespace
         if( message.attributes().has_architecture() )
         {
             const sword::UrbanAttributes::Architecture& architecture = message.attributes().architecture();
-            urban::Architecture* attribute = object.Retrieve< urban::Architecture >();
-            if( !attribute )
+            urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
+            if( !pPhysical )
             {
-                attribute = new urban::Architecture( object );
-                object.Attach( *attribute );
+                pPhysical = new urban::PhysicalAttribute( object );
+                object.Attach( *pPhysical );
             }
-            attribute->SetHeight( architecture.height() );
-            attribute->SetFloorNumber( architecture.floor_number() );
-            attribute->SetRoofShape( architecture.roof_shape() );
-            attribute->SetMaterial( architecture.material() );
-            attribute->SetOccupation( architecture.occupation() );
-            attribute->SetTrafficability( architecture.trafficability() );
+            if( !pPhysical->GetArchitecture() )
+                pPhysical->CreateArchitecture();
+            pPhysical->GetArchitecture()->SetHeight( architecture.height() );
+            pPhysical->GetArchitecture()->SetFloorNumber( architecture.floor_number() );
+            pPhysical->GetArchitecture()->SetRoofShape( architecture.roof_shape() );
+            pPhysical->GetArchitecture()->SetMaterial( architecture.material() );
+            pPhysical->GetArchitecture()->SetOccupation( architecture.occupation() );
+            pPhysical->GetArchitecture()->SetTrafficability( architecture.trafficability() );
         }
     }
 }

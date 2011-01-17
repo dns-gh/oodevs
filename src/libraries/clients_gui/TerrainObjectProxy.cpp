@@ -16,8 +16,9 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/TerrainObject_ABC.h>
+#include <urban/MotivationsVisitor_ABC.h>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <urban/ColorAttribute.h>
@@ -161,21 +162,50 @@ void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
     AddDictionaryForArchitecture( dictionary );
 }
 
+namespace
+{
+    class MotivationsVisitor : public urban::MotivationsVisitor_ABC
+    {
+    public:
+        explicit MotivationsVisitor( std::map< std::string, float >& motivations )
+            : motivations_( motivations )
+        {
+            // NOTHING
+        }
+        virtual void Visit( const std::string& motivation, float proportion )
+        {
+            motivations_[ motivation ] = proportion;
+        }
+        std::map< std::string, float >& motivations_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::AddDictionaryForArchitecture
 // Created: SLG 2009-12-09
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary )
 {
-    urban::Architecture* architecture = object_.Retrieve< urban::Architecture >();
-    if( architecture )
+    const urban::PhysicalAttribute* pPhysical = object_.Retrieve< urban::PhysicalAttribute >();
+    if( pPhysical )
     {
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), architecture->GetHeight() );
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), architecture->GetFloorNumber() );
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), architecture->GetRoofShape() );
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), architecture->GetMaterial() );
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), architecture->GetOccupation() );
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), architecture->GetTrafficability() );
+        if( pPhysical->GetArchitecture() )
+        {
+            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), pPhysical->GetArchitecture()->GetHeight() );
+            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), pPhysical->GetArchitecture()->GetFloorNumber() );
+            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), pPhysical->GetArchitecture()->GetRoofShape() );
+            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), pPhysical->GetArchitecture()->GetMaterial() );
+            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), pPhysical->GetArchitecture()->GetOccupation() );
+            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), pPhysical->GetArchitecture()->GetTrafficability() );
+        }
+        if( pPhysical->GetMotivations() )
+        {
+            T_Motivations motivations;
+            MotivationsVisitor visitor( motivations );
+            object_.Accept( visitor );
+            BOOST_FOREACH( const T_Motivations::value_type& motivation, motivations )
+                dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Motivations" ) + QString( motivation.first.c_str() ), motivation.second );
+        }
     }
 }
 
@@ -318,9 +348,9 @@ float TerrainObjectProxy::GetDensity() const
     if( surface == 0.f )
         return 0.f;
     unsigned int floors = 1u;
-    urban::Architecture* architecture = object_.Retrieve< urban::Architecture >();
-    if( architecture )
-        floors += architecture->GetFloorNumber();
+    const urban::PhysicalAttribute* pPhysical = object_.Retrieve< urban::PhysicalAttribute >();
+    if( pPhysical && pPhysical->GetArchitecture() )
+        floors += pPhysical->GetArchitecture()->GetFloorNumber();
     return GetHumans() / ( surface * floors );
 }
 

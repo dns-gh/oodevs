@@ -66,7 +66,6 @@ public:
     const UrbanBlockDetectionMap& GetUrbanBlockMap() const;
     gui::TerrainObjectProxy& GetObject( unsigned long id ) const;
     gui::TerrainObjectProxy* FindObject( unsigned long id ) const;
-
     //@}
 
 private:

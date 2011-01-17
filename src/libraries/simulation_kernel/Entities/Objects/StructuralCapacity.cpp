@@ -22,7 +22,7 @@
 #include "Tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
 #include <geometry/Types.h>
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/StaticModel.h>
 #include <urban/MaterialCompositionType.h>
 #include <urban/TerrainObject_ABC.h>
@@ -118,10 +118,10 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
     UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object );
     if( wrapper )
     {
-        const urban::Architecture* architecture = wrapper->GetObject().Retrieve< urban::Architecture >();
-        if( architecture )
+        const urban::PhysicalAttribute* pPhysical = wrapper->GetObject().Retrieve< urban::PhysicalAttribute >();
+        if( pPhysical && pPhysical->GetArchitecture() )
         {
-            urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() );
+            urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() );
             if( material )
                 object.GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
         }

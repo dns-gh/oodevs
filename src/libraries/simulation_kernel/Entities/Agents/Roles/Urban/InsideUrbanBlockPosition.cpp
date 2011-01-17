@@ -18,7 +18,7 @@
 #include "Tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include <urban/TerrainObject_ABC.h>
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/MaterialCompositionType.h>
 #include <urban/StaticModel.h>
 #pragma warning( push, 0 )
@@ -191,11 +191,11 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
 // -----------------------------------------------------------------------------
 double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
-    const urban::Architecture* architecture = urbanObject_->Retrieve< urban::Architecture >();
-    if( architecture )
+    const urban::PhysicalAttribute* pPhysical = urbanObject_->Retrieve< urban::PhysicalAttribute >();
+    if( pPhysical && pPhysical->GetArchitecture() )
     {
-        unsigned int materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
-        return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialID ) ) * architecture->GetOccupation();
+        unsigned int materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() )->GetId();
+        return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialID ) ) * pPhysical->GetArchitecture()->GetOccupation();
     }
     return 0.;
 }

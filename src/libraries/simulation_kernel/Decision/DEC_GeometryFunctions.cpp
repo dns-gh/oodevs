@@ -34,7 +34,7 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Random.h"
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 
@@ -985,9 +985,9 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
         const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( *pBarycenter ) );
         if( terrainObject )
         {
-            const urban::Architecture* architecture = terrainObject->Retrieve< urban::Architecture >();
+            const urban::PhysicalAttribute* pPhysical = terrainObject->Retrieve< urban::PhysicalAttribute >();
             const double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
-            if( architecture && architecture->GetTrafficability() <= myWeight )
+            if( pPhysical && pPhysical->GetArchitecture() && pPhysical->GetArchitecture()->GetTrafficability() <= myWeight )
                 if( const geometry::Polygon2f* pVertices = terrainObject->GetFootprint() )
                 {
                     const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
@@ -1030,8 +1030,11 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
 bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight )
 {
     if( const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
-        if( const urban::Architecture* architecture = terrainObject->Retrieve< urban::Architecture >() )
-            return architecture->GetTrafficability() > weight;
+    {
+        const urban::PhysicalAttribute* pPhysical = terrainObject->Retrieve< urban::PhysicalAttribute >();
+        if( pPhysical && pPhysical->GetArchitecture() )
+            return pPhysical->GetArchitecture()->GetTrafficability() > weight;
+    }
     return true;
 }
 
@@ -1042,8 +1045,11 @@ bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, d
 bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point, bool loadedWeight )
 {
     if( const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
-        if( const urban::Architecture* architecture = terrainObject->Retrieve< urban::Architecture >() )
-           return architecture->GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( loadedWeight );
+    {
+        const urban::PhysicalAttribute* pPhysical = terrainObject->Retrieve< urban::PhysicalAttribute >();
+        if( pPhysical && pPhysical->GetArchitecture() )
+           return pPhysical->GetArchitecture()->GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( loadedWeight );
+    }
     return true;
 }
 

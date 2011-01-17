@@ -68,15 +68,15 @@ public:
     //! @name HLA
     //@{
     virtual HLA_Object_ABC* GetHLAView() const;
-    virtual void            SetHLAView( HLA_Object_ABC& view );
-
-    virtual void    Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
-    virtual void    Serialize  ( HLA_UpdateFunctor& functor ) const;
+    virtual void SetHLAView( HLA_Object_ABC& view );
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}
 
-    sword::UrbanMagicActionAck_ErrorCode OnUpdateStructuralState( int state );
     //! @name Network
     //@{
+    sword::UrbanMagicActionAck_ErrorCode OnUpdateStructuralState( int state );
+
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
     virtual sword::ObjectMagicActionAck_ErrorCode OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
 
@@ -91,10 +91,10 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int                      GetUrbanId() const;
-    const std::string&                GetName() const;
-    const urban::TerrainObject_ABC&   GetObject();
-    const urban::TerrainObject_ABC&   GetObject() const;
+    unsigned int GetUrbanId() const;
+    const std::string& GetName() const;
+    const urban::TerrainObject_ABC& GetObject();
+    const urban::TerrainObject_ABC& GetObject() const;
     //@}
 
 protected:
@@ -116,9 +116,9 @@ private:
 
 public:
 
-    typedef std::map< const urban::TerrainObject_ABC*, UrbanObjectWrapper*  >     T_ObjectMap;
-    typedef T_ObjectMap::iterator                                                IT_ObjectMap;
-    typedef T_ObjectMap::const_iterator                                         CIT_ObjectMap;
+    typedef std::map< const urban::TerrainObject_ABC*, UrbanObjectWrapper*  > T_ObjectMap;
+    typedef T_ObjectMap::iterator                                            IT_ObjectMap;
+    typedef T_ObjectMap::const_iterator                                     CIT_ObjectMap;
 
     static T_ObjectMap objectMap_;
 

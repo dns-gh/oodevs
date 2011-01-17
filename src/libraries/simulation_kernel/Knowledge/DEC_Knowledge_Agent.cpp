@@ -33,7 +33,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "UrbanType.h"
 #include <urban/StaticModel.h>
-#include <urban/Architecture.h>
+#include <urban/PhysicalAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/MaterialCompositionType.h>
 #include <boost/serialization/split_free.hpp>
@@ -651,11 +651,11 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
 // -----------------------------------------------------------------------------
 double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const
 {
-    const urban::Architecture* architecture = urbanKnowledge->GetTerrainObjectKnown().Retrieve< urban::Architecture >();
-    if( architecture )
+    const urban::PhysicalAttribute* pPhysical = urbanKnowledge->GetTerrainObjectKnown().Retrieve< urban::PhysicalAttribute >();
+    if( pPhysical && pPhysical->GetArchitecture() )
     {
         const PHY_RolePion_Composantes& role = GetAgentKnown().GetRole< PHY_RolePion_Composantes >();
-        unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
+        unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() )->GetId();
 
         if (GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_)
             return role.GetAttritionIndexComposante(materialID);
