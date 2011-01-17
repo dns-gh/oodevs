@@ -101,7 +101,7 @@ message AutomatChangeKnowledgeGroup {
 
 message ChangeLogisticLinks {
    required ParentEntity requester     = 1;
-   optional AutomatId    tc2           = 2; //!< @todo translate
+   optional AutomatId    combat_train  = 2;
    optional ParentEntity logistic_base = 3;
 }
 
@@ -263,7 +263,7 @@ enum EnumNatureLevel {
 
 enum EnumLogisticLevel {
    none          = 0;
-   tc2           = 1; //!< @todo translate
+   combat_train  = 1;
    logistic_base = 2;
 }
 
@@ -362,7 +362,7 @@ message PlannedWork {
    required Location                          position      = 2;
    optional ObstacleType.DemolitionTargetType type_obstacle = 3; //!< @todo rename to obstacle
    optional float                             densite       = 4;
-   optional AutomatId                         tc2           = 5; //!< @todo translate           
+   optional AutomatId                         combat_train  = 5;           
    optional int32                             activity_time = 6;
    optional PlannedWorkId                     planned_work  = 7;
 }
@@ -627,7 +627,7 @@ message ObjectAttributeMine {
 }
 
 message ObjectAttributeLogistic {
-   required AutomatId tc2 = 1; //!< @todo translate
+   required AutomatId combat_train = 1;
 }
 
 message ObjectAttributeInteractionHeight {

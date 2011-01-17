@@ -517,7 +517,7 @@ message FormationCreation {
     required string            app6symbol            = 7;  //!< The formation APP-6 symbol
     required EnumLogisticLevel logistic_level        = 8;  //!< @todo What's this ?
     optional RgbColor          color                 = 9;  //!< The formation color @see RgbColor
-    optional ParentEntity      logistic_base_organic = 10; //!< @todo What's this ?
+    optional ParentEntity      logistic_base_organic = 10; //!< @deprecated
 }
 
 /** @struct FormationDestruction
@@ -585,8 +585,8 @@ message AutomatAttributes {
    optional EnumMeetingEngagementStatus meeting_engagement    = 4;  //!< @todo What's this ?
    optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational state
    optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement @see RulesOfEngagement
-   optional AutomatId                   tc2_organic           = 7; //!< @todo What's this ?
-   optional ParentEntity                logistic_base_organic = 8; //!< @todo What's this ?
+   optional AutomatId                   tc2_organic           = 7; //!< @deprecated
+   optional ParentEntity                logistic_base_organic = 8; //!< @deprecated
 }
 
 /** @struct AutomatDestruction
@@ -766,7 +766,7 @@ message UnitAttributes {
     enum CrowdRoe {
         none                                      = 0; //!< No rule @todo rename to no_rule
         emploi_force_interdit                     = 1; //!< Coercion forbidden @todo passive
-        maintien_a_distance_par_moyens_non_letaux = 2; //!< Hold back civilians by usage of non lethal means @todo translate @todo non_lethal_force ? hold_back ?
+        maintien_a_distance_par_moyens_non_letaux = 2; //!< Hold back civilians by use of non lethal means @todo translate @todo non_lethal_force ? hold_back ?
         dispersion_par_moyens_de_defense_actifs   = 3; //!< Disperse civilians by active defense means @todo translate @todo active_defense ? disperse ?
         armes_letales_autorisees                  = 4; //!< Lethal weapons authorized for use @todo lethal_force
     }

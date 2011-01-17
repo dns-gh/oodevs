@@ -32,9 +32,9 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityM
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     if( !NET_ASN_Tools::ReadLocation( asn.position(), localisation_ ) )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
-    if( asn.tc2().id() != 0 )
+    if( asn.combat_train().id() != 0 )
     {
-        pTC2_ = entityManager.FindAutomate( asn.tc2().id() );
+        pTC2_ = entityManager.FindAutomate( asn.combat_train().id() );
         if( !pTC2_ )
             throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     }
@@ -103,7 +103,7 @@ void DEC_Gen_Object::Serialize( sword::PlannedWork& asn ) const
 {
     asn.set_type( type_.c_str() );
     asn.set_type_obstacle( pObstacleType_ );
-    asn.mutable_tc2()->set_id( pTC2_ ? pTC2_->GetID() : 0 );
+    asn.mutable_combat_train()->set_id( pTC2_ ? pTC2_->GetID() : 0 );
     asn.set_densite( static_cast< float >( rDensity_ ) );
     asn.set_activity_time( nMinesActivityTime_ );
     NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_position() );

@@ -912,7 +912,7 @@ void MIL_Automate::SendLogisticLinks() const
 
     if( pTC2_ )
     {
-        message().mutable_tc2()->set_id( pTC2_->GetID() );
+        message().mutable_combat_train()->set_id( pTC2_->GetID() );
     }
     if( pBrainLogistic_.get() && pBrainLogistic_->GetSuperior() )
     {

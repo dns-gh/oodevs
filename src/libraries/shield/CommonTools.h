@@ -183,7 +183,11 @@ namespace shield
         CONVERT_ENUM( type_obstacle, ( sword::ObstacleType::preliminary, Common::ObstacleType::preliminary )
                                      ( sword::ObstacleType::reserved, Common::ObstacleType::reserved ) );
         CONVERT( densite );
-        CONVERT_ID( tc2 );
+#ifdef SHIELD_SIMULATION
+        CONVERT_ID_TO( combat_train, tc2 );
+#else
+        CONVERT_ID_TO( tc2, combat_train );
+#endif
         CONVERT( activity_time );
         CONVERT_ID( planned_work );
     }

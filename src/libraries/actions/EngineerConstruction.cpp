@@ -56,10 +56,10 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // -----------------------------------------------------------------------------
 void EngineerConstruction::SetParameters( const sword::PlannedWork& message, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller )
 {
-    if( message.tc2().id() != 0 )
+    if( message.combat_train().id() != 0 )
     {
         const OrderParameter param( tools::translate( "ActionParameter", "Obstacle tc2" ).ascii(), "tc2", false );
-        AddParameter( *new Automat( param, message.tc2().id(), entities, controller ) );
+        AddParameter( *new Automat( param, message.combat_train().id(), entities, controller ) );
     }
     if( message.densite() != 0 )
     {
@@ -175,7 +175,7 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
         else if( type == "density" )
             static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_densite, boost::ref( message ), _1 ) );
         else if( type == "tc2" || type == "automate" )
-            static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &sword::AutomatId::set_id, boost::ref( *message.mutable_tc2() ), _1 ) );
+            static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &sword::AutomatId::set_id, boost::ref( *message.mutable_combat_train() ), _1 ) );
     }
 }
 

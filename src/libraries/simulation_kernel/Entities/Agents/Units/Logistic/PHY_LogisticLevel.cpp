@@ -20,7 +20,7 @@ PHY_LogisticLevel::T_LogisticLevelMap PHY_LogisticLevel::logisticLevels_;
 // =============================================================================
 
 PHY_LogisticLevel PHY_LogisticLevel::none_( "aucun", sword::none );
-PHY_LogisticLevel PHY_LogisticLevel::tc2_ ( "tc2", sword::tc2   );
+PHY_LogisticLevel PHY_LogisticLevel::tc2_ ( "tc2", sword::combat_train   );
 PHY_LogisticLevel PHY_LogisticLevel::logistic_base_  ( "logistic-base", sword::logistic_base  );
 
 // -----------------------------------------------------------------------------

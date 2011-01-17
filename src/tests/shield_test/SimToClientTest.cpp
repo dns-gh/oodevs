@@ -240,11 +240,9 @@ BOOST_FIXTURE_TEST_CASE( formation_creation_to_client_is_converted, ContextFixtu
     FillExtension( content.mutable_formation_creation()->mutable_extension()->add_entries() );
     FillExtension( content.mutable_formation_creation()->mutable_extension()->add_entries() );
     content.mutable_formation_creation()->set_app6symbol( "app6" );
-    content.mutable_formation_creation()->set_logistic_level( sword::tc2 );
+    content.mutable_formation_creation()->set_logistic_level( sword::combat_train );
     FillRgbColor( content.mutable_formation_creation()->mutable_color() );
-    content.mutable_formation_creation()->mutable_logistic_base_organic()->mutable_automat()->set_id( 9 );
-    content.mutable_formation_creation()->mutable_logistic_base_organic()->mutable_formation()->set_id( 10 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { formation_creation { formation { id: 6 } party { id: 7 } parent { id: 8 } level: ooo name: \"name\" extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } app6symbol: \"app6\" logistic_level: tc2 color { red: 12 green: 42 blue: 77 } logistic_base_organic { automat { id: 9 } formation { id: 10 } } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { formation_creation { formation { id: 6 } party { id: 7 } parent { id: 8 } level: ooo name: \"name\" extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } app6symbol: \"app6\" logistic_level: tc2 color { red: 12 green: 42 blue: 77 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -272,7 +270,7 @@ BOOST_FIXTURE_TEST_CASE( automat_creation_to_client_is_converted, ContextFixture
     FillExtension( content.mutable_automat_creation()->mutable_extension()->add_entries() );
     FillExtension( content.mutable_automat_creation()->mutable_extension()->add_entries() );
     content.mutable_automat_creation()->set_app6symbol( "app6" );
-    content.mutable_automat_creation()->set_logistic_level( sword::tc2 );
+    content.mutable_automat_creation()->set_logistic_level( sword::combat_train );
     FillRgbColor( content.mutable_automat_creation()->mutable_color() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_creation { automat { id: 7 } type { id: 8 } nom: \"name\" parent { automat { id: 9 } formation { id: 10 } } party { id: 11 } knowledge_group { id: 12 } extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } app6symbol: \"app6\" logistic_level: tc2 color { red: 12 green: 42 blue: 77 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
@@ -286,10 +284,7 @@ BOOST_FIXTURE_TEST_CASE( automat_attributes_to_client_is_converted, ContextFixtu
     content.mutable_automat_attributes()->set_meeting_engagement( sword::etat_esquive );
     content.mutable_automat_attributes()->set_operational_state( sword::operationnel );
     content.mutable_automat_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
-    content.mutable_automat_attributes()->mutable_tc2_organic()->set_id( 8 );
-    content.mutable_automat_attributes()->mutable_logistic_base_organic()->mutable_automat()->set_id( 9 );
-    content.mutable_automat_attributes()->mutable_logistic_base_organic()->mutable_formation()->set_id( 10 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_attributes { automat { id: 7 } etat_automate: embraye rapport_de_force: neutre combat_de_rencontre: etat_esquive etat_operationnel: operationnel roe: tir_libre tc2_organic { id: 8 } logistic_base_organic { automat { id: 9 } formation { id: 10 } } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_attributes { automat { id: 7 } etat_automate: embraye rapport_de_force: neutre combat_de_rencontre: etat_esquive etat_operationnel: operationnel roe: tir_libre } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -462,7 +457,7 @@ BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted, C
 {
     content.mutable_automat_change_logistic_links()->mutable_requester()->mutable_automat()->set_id( 7 );
     content.mutable_automat_change_logistic_links()->mutable_requester()->mutable_formation()->set_id( 8 );
-    content.mutable_automat_change_logistic_links()->mutable_tc2()->set_id( 9 );
+    content.mutable_automat_change_logistic_links()->mutable_combat_train()->set_id( 9 );
     content.mutable_automat_change_logistic_links()->mutable_logistic_base()->mutable_automat()->set_id( 10 );
     content.mutable_automat_change_logistic_links()->mutable_logistic_base()->mutable_formation()->set_id( 11 );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { automat { id: 7 } formation { id: 8 } } tc2 { id: 9 } logistic_base { automat { id: 10 } formation { id: 11 } } } }" ) );
@@ -653,7 +648,7 @@ namespace
         FillLocation( w->mutable_position() );
         w->set_type_obstacle( sword::ObstacleType::reserved );
         w->set_densite( 1.23f );
-        w->mutable_tc2()->set_id( 40 );
+        w->mutable_combat_train()->set_id( 40 );
         w->set_activity_time( 41 );
         w->mutable_planned_work()->set_id( 42 );
     }
@@ -960,7 +955,7 @@ namespace
         a->mutable_mine()->set_percentage( 18 );
         a->mutable_activity_time()->set_value( 19 );
         a->mutable_bypass()->set_percentage( 20 );
-        a->mutable_logistic()->mutable_tc2()->set_id( 21 );
+        a->mutable_logistic()->mutable_combat_train()->set_id( 21 );
         a->mutable_nbc()->set_danger_level( 22 );
         a->mutable_nbc()->add_nbc_agents()->set_id( 23 );
         a->mutable_nbc()->add_nbc_agents()->set_id( 24 );

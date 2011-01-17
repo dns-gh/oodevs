@@ -201,7 +201,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeLogistic& logis
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Logistic" ) );
 
     RowManipulator row( *table, session_, objectId_ );
-    row.SetField( "tc2", FieldVariant( static_cast< long >( logistic.tc2().id() ) ) ); // automat id
+    row.SetField( "tc2", FieldVariant( static_cast< long >( logistic.combat_train().id() ) ) ); // automat id
 }
 
 // -----------------------------------------------------------------------------

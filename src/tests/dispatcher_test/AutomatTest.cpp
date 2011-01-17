@@ -514,7 +514,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
-            message.set_logistic_level( sword::tc2 );
+            message.set_logistic_level( sword::combat_train );
             message.set_app6symbol( "sfgpu----------" );
             CheckInitialized( message );
 
@@ -613,7 +613,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
             expected.set_context( 0 );
             sword::ChangeLogisticLinks& message = *expected.mutable_message()->mutable_automat_change_logistic_links();
             message.mutable_requester()->mutable_automat()->set_id( 1 );
-            message.mutable_tc2()->set_id( 1 );
+            message.mutable_combat_train()->set_id( 1 );
             message.mutable_logistic_base()->mutable_automat()->set_id( 1 );
             CheckInitialized( message );
             automats.Get( 1 ).Update( message );

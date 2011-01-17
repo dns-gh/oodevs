@@ -396,7 +396,7 @@ namespace
     void ConvertLogisticLevel( const From& from, To* to )
     {
         CONVERT_ENUM( logistic_level, ( sword::none, Common::none )
-                                      ( sword::tc2, Common::tc2 )
+                                      ( sword::combat_train, Common::tc2 )
                                       ( sword::logistic_base, Common::logistic_base ) );
     }
     template< typename From, typename To >
@@ -425,8 +425,6 @@ void SimulationToClient::Convert( const sword::FormationCreation& from, MsgsSimT
     ConvertLogisticLevel( from, to );
     if( from.has_color() )
         ConvertRgbColor( from.color(), to->mutable_color() );
-    if( from.has_logistic_base_organic() )
-        ConvertParentEntity( from.logistic_base_organic(), to->mutable_logistic_base_organic() );
 }
 
 // -----------------------------------------------------------------------------
@@ -511,9 +509,6 @@ void SimulationToClient::Convert( const sword::AutomatAttributes& from, MsgsSimT
     ConvertMeetingEngagementStatus( from, to );
     ConvertOperationalStatus( from, to );
     ConvertRulesOfEngagement( from, to );
-    CONVERT_ID( tc2_organic );
-    if( from.has_logistic_base_organic() )
-        ConvertParentEntity( from.logistic_base_organic(), to->mutable_logistic_base_organic() );
 }
 
 // -----------------------------------------------------------------------------
@@ -722,7 +717,7 @@ void SimulationToClient::Convert( const sword::UnitChangeSuperior& from, Common:
 void SimulationToClient::Convert( const sword::ChangeLogisticLinks& from, Common::MsgChangeLogisticLinks* to )
 {
     ConvertParentEntity( from.requester(), to->mutable_requester() );
-    CONVERT_ID( tc2 );
+    CONVERT_ID_TO( combat_train, tc2 );
     if( from.has_logistic_base() )
         ConvertParentEntity( from.logistic_base(), to->mutable_logistic_base() );
 }
@@ -1252,7 +1247,7 @@ namespace
         if( from.has_bypass() )
             to->mutable_bypass()->set_percentage( from.bypass().percentage() );
         if( from.has_logistic() )
-            to->mutable_logistic()->mutable_tc2()->set_id( from.logistic().tc2().id() );
+            to->mutable_logistic()->mutable_tc2()->set_id( from.logistic().combat_train().id() );
         if( from.has_nbc() )
         {
             to->mutable_nbc()->set_danger_level( from.nbc().danger_level() );

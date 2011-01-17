@@ -120,7 +120,7 @@ void LogisticAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void LogisticAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-    asn.mutable_logistic()->mutable_tc2()->set_id( pTC2_->GetID() );
+    asn.mutable_logistic()->mutable_combat_train()->set_id( pTC2_->GetID() );
 }
 
 // -----------------------------------------------------------------------------

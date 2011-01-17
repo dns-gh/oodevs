@@ -45,7 +45,7 @@ void LogisticAttribute::UpdateData( const T& message )
 {
     if( message.has_logistic()  )
     {
-        tc2_ = resolver_.Find( message.logistic().tc2().id() );
+        tc2_ = resolver_.Find( message.logistic().combat_train().id() );
         controller_.Update( *(LogisticAttribute_ABC*)this );
     }
 }

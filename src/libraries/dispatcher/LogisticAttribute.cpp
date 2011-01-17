@@ -42,7 +42,7 @@ LogisticAttribute::~LogisticAttribute()
 void LogisticAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
     if ( asnMsg.has_logistic()  )
-        pTC2_ = &automats_.Get( asnMsg.logistic().tc2().id() );    
+        pTC2_ = &automats_.Get( asnMsg.logistic().combat_train().id() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -53,5 +53,5 @@ void LogisticAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
     if( !pTC2_ )
         throw std::runtime_error( __FUNCTION__ ": logistic superior is not defined" );
-    asnMsg.mutable_logistic()->mutable_tc2()->set_id( pTC2_->GetId() );
+    asnMsg.mutable_logistic()->mutable_combat_train()->set_id( pTC2_->GetId() );
 }

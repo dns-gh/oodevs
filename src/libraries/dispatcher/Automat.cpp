@@ -134,8 +134,8 @@ void Automat::DoUpdate( const sword::AutomatCreation& msg )
 // -----------------------------------------------------------------------------
 void Automat::DoUpdate( const sword::ChangeLogisticLinks& msg )
 {
-    if( msg.has_tc2()  )
-        pTC2_ = msg.tc2().id() == 0 ? 0 : &model_.Automats().Get( msg.tc2().id() );
+    if( msg.has_combat_train()  )
+        pTC2_ = msg.combat_train().id() == 0 ? 0 : &model_.Automats().Get( msg.combat_train().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -335,7 +335,7 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         client::ChangeLogisticLinks asn;
         asn().mutable_requester()->mutable_automat()->set_id( GetId() );
         if( pTC2_ )
-            asn().mutable_tc2()->set_id( pTC2_->GetId() );
+            asn().mutable_combat_train()->set_id( pTC2_->GetId() );
         logisticEntity_.Fill(asn);
         asn.Send( publisher );
     }

@@ -83,7 +83,7 @@ kernel::Entity_ABC* LogisticLinks::GetSuperior() const
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
 {
-    tc2_ = message.has_tc2()? automatResolver_.Find( message.tc2().id() ) : 0;
+    tc2_ = message.has_combat_train() ? automatResolver_.Find( message.combat_train().id() ) : 0;
     superior_ = message.logistic_base().has_automat() ?
             (kernel::Entity_ABC*)automatResolver_.Find( message.logistic_base().automat().id() ) :
             ( message.logistic_base().has_formation() ?
