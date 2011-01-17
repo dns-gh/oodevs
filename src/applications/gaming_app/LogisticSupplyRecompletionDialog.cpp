@@ -257,10 +257,10 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
 void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
 {
     munitionsFamilyTable_->setNumRows( 0 );
-    AddAmmunition( sword::obus, tr( "Shell" ) );          //eAmmunitionFamily_Obus
-    AddAmmunition( sword::missile_sol, tr( "Ground missile" ) ); //eAmmunitionFamily_MissileSol
-    AddAmmunition( sword::missile_air, tr( "Air missile" ) );    //eAmmunitionFamily_MissileAir
-    AddAmmunition( sword::mitraille, tr( "Bullet" ) );         //eAmmunitionFamily_Mitraille
+    AddAmmunition( eAmmunitionFamily_Obus, tr( "Shell" ) );
+    AddAmmunition( eAmmunitionFamily_MissileSol, tr( "Ground missile" ) );
+    AddAmmunition( eAmmunitionFamily_MissileAir, tr( "Air missile" ) );
+    AddAmmunition( eAmmunitionFamily_Mitraille, tr( "Bullet" ) );
     munitionsFamilyTable_->setMinimumHeight( munitionsFamilyTable_->rowHeight( 0 ) * 5 );
 }
 
