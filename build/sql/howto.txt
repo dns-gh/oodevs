@@ -1,16 +1,22 @@
+The install-sword-db.bat scripts:
+1) creates sword role and a database in pgsql
+2) add functions and table allowing to turn it into a geodatabase 
+
+It moreover performs the following steps for Sword Application:
+4) creates a schema for sword application (crossbow plugin)
+
+
+
 Postgresql intallation
 service SecondaryLogon must be started
 
 1) Install
 
- - if the database is new, run create-sword-user to have a "sword" user available
- - install-sword-sde-db: create sword database & schema, add sde system tables, add an sde service and start it.
-   Run the command with two arguments: the expected database name, and the expected SDE service port
- - register-sword-db: resgister sde tables
-   Run the command with two arguments: the database name, and the SDE service port
+ - install-sword-db: create sword database & schema.
+   Run the command with one argument or set the variables in set_sword_var.bat: the expected database name
  
 2) Uninstall
 
- -unregister-sword-db
- -uninstall : delete database & stop service
+ - uninstall-sword-db
+
   
