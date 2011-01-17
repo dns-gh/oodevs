@@ -164,7 +164,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Indirect fire" ), pGroupBox );
     vConnectors[ eIndirect ] = &pIndirectGroup->GetConnector();
     pHolder = builder.AddFieldHolder( pIndirectGroup );
-    ADN_ComboBox_Enum< E_TypeMunitionTirIndirect >* pIndirectTypeCombo_ = builder.AddEnumField< E_TypeMunitionTirIndirect >( pHolder, tr( "Type" ), vConnectors[ eIndirectType ], ADN_Tr::ConvertFromTypeMunitionTirIndirect );
+    pIndirectTypeCombo_ = builder.AddEnumField< E_TypeMunitionTirIndirect >( pHolder, tr( "Type" ), vConnectors[ eIndirectType ], ADN_Tr::ConvertFromTypeMunitionTirIndirect );
     pIndirectGroup->connect( pIndirectTypeCombo_, SIGNAL( activated( int ) ), this, SLOT( IndirectTypeComboActivated( int ) ) );
     builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Intervention" ), vConnectors[ eIntervention ], 0, eGreaterEqualZero );
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "X Dispersion" ), vConnectors[ eDispersionX ], tr( "m" ), eGreaterZero );
@@ -196,6 +196,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     vConnectors[ eIlluminating ] = &pIlluminationGroup->GetConnector();
     builder.AddField< ADN_EditLine_Double >( pIlluminationGroup, tr( "Range" ), vConnectors[ eRange ] );
     builder.AddField< ADN_CheckBox >( pIlluminationGroup, tr( "Must Maintain illumination" ), vConnectors[ eMaintainIllumination ] );
+    // Guidance
     ADN_GroupBox* pGuidanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Guidance" ), pGroupBox );
     vConnectors[ eGuided ] = &pGuidanceGroup->GetConnector();
     builder.AddField< ADN_CheckBox >( pGuidanceGroup, tr( "Must Maintain guidance" ), vConnectors[ eMaintainGuidance ] );
@@ -270,7 +271,7 @@ void ADN_Equipement_GUI::IndirectTypeComboActivated( int nIndex )
     pFlareParametersGroup_->hide();
     pEffectParametersGroup_->hide();
     pMineParametersGroup_->hide();
-    E_TypeMunitionTirIndirect type = static_cast< E_TypeMunitionTirIndirect >( nIndex );
+    E_TypeMunitionTirIndirect type = static_cast< E_TypeMunitionTirIndirect >( pIndirectTypeCombo_->GetEnumIndexFromGUI( nIndex ) );
     if( type == eTypeMunitionTirIndirect_Explosif || type == eTypeMunitionTirIndirect_Aced || type == eTypeMunitionTirIndirect_Grenade )
         pExplosiveParametersGroup_->show();
     else if( type == eTypeMunitionTirIndirect_Eclairant || type == eTypeMunitionTirIndirect_Fumigene )

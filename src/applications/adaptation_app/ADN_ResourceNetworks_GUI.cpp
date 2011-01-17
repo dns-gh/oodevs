@@ -61,7 +61,7 @@ void ADN_ResourceNetworks_GUI::Build()
     {
         QWidget* pHolder = builder.AddFieldHolder( pResourceNetwork );
         dotationsCombo_ = builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::ResourceInfos > >( pHolder, tr( "Dotation" ), vInfosConnectors[ eDotation ] );
-        connect( dotationsCombo_, SIGNAL( activated( int ) ),this, SLOT( OnDotationChanged( int ) ) );
+        connect( dotationsCombo_, SIGNAL( activated( int ) ),this, SLOT( OnDotationChanged() ) );
         categoriesCombo_ = builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::CategoryInfo > >( pHolder, tr( "Category" ), vInfosConnectors[ eCategory ] );
         builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Default production" ), vInfosConnectors[ eProduction ] );
         builder.SetValidator( new ADN_IntValidator( 0, INT_MAX, this ) );
@@ -78,7 +78,7 @@ void ADN_ResourceNetworks_GUI::Build()
 // Name: ADN_ResourceNetworks_GUI::OnDotationChanged
 // Created: JSR 2010-09-14
 // -----------------------------------------------------------------------------
-void ADN_ResourceNetworks_GUI::OnDotationChanged( int )
+void ADN_ResourceNetworks_GUI::OnDotationChanged()
 {
     ADN_Equipement_Data::ResourceInfos* dotation = static_cast< ADN_Equipement_Data::ResourceInfos* >( dotationsCombo_->GetCurrentData() );
     ADN_ResourceNetworks_Data::ResourceNetworkInfos* pInfos = static_cast< ADN_ResourceNetworks_Data::ResourceNetworkInfos* >( pResourceNetworks_->GetCurrentData() );

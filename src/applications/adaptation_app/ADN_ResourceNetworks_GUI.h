@@ -60,7 +60,7 @@ private:
 private slots:
     //! @name Slots
     //@{
-    void OnDotationChanged( int );
+    void OnDotationChanged();
     //@}
 
 private:
