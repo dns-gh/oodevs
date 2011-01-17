@@ -546,7 +546,7 @@ void MIL_Automate::UpdateNetwork() const
         client::AutomatAttributes msg;
         msg().mutable_automat()->set_id( nID_ );
         if( bAutomateModeChanged_ )
-            msg().set_etat_automate( bEngaged_ ? sword::embraye : sword::debraye );
+            msg().set_mode( bEngaged_ ? sword::embraye : sword::debraye );
         GetRole< DEC_AutomateDecision >().SendChangedState( msg );
         msg.Send( NET_Publisher_ABC::Publisher() );
     }
@@ -877,7 +877,7 @@ void MIL_Automate::SendFullState() const
 {
     client::AutomatAttributes message;
     message().mutable_automat()->set_id( nID_ );
-    message().set_etat_automate( bEngaged_ ? sword::embraye : sword::debraye );
+    message().set_mode( bEngaged_ ? sword::embraye : sword::debraye );
     GetRole< DEC_AutomateDecision >().SendFullState( message );
     message.Send( NET_Publisher_ABC::Publisher() );
     SendLogisticLinks();

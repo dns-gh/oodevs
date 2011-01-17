@@ -98,7 +98,7 @@ bool CrossbowPublisher::IsRelevant( const sword::SimToClient& wrapper ) const
         return true;
 
     if( wrapper.message().has_automat_attributes() )
-        return ( wrapper.message().automat_attributes().has_etat_automate() == 1 );
+        return ( wrapper.message().automat_attributes().has_mode() == 1 );
 
     if( wrapper.message().has_unit_attributes() )
     {

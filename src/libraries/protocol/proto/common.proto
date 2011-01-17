@@ -85,71 +85,12 @@ message NationalityType       { required uint32 id = 1; }
 message ResourceNetworkType   { required string name = 1; }
 message PopulationType        { required uint32 id = 1; }
 
-// Helpers
 message Heading {
    required int32 heading = 1;
 }
 
 message DateTime {
    required string data = 1;
-}
-
-// Enumerations
-
-///////////// begin <only used by SimToClient> /////////////
-
-enum EnumPrecipitationType {
-   pas_de_precipitation = 0;
-   tempete_sable        = 1;
-   brouillard           = 2;
-   crachin              = 3;
-   pluie                = 4;
-   neige                = 5;
-}
-
-enum EnumFireEffectType {
-   smoke = 0;
-   light = 1;
-   explosion = 2;
-   neutralization = 3;
-}
-
-enum UnitFireType {
-   direct   = 0;
-   indirect = 1;
-}
-
-message DotationStock {
-   required ResourceType ressource_id = 1;
-   required int32        quantity     = 2;
-}
-
-message SeqOfDotationStock {
-   repeated DotationStock elem = 1;
-}
-
-message DotationQuota {
-   required ResourceType ressource_id     = 1;
-   required int32        quota_disponible = 2;
-}
-
-message SeqOfDotationQuota {
-   repeated DotationQuota elem = 1;
-}
-
-enum EnumLightingType {
-   jour_sans_nuage          = 0;
-   jour_peu_nuageux         = 1;
-   jour_moyennement_nuageux = 2;
-   jour_assez_nuageux       = 3;
-   jour_tres_nuageux        = 4;
-   nuit_pleine_lune         = 5;
-   nuit_trois_quart_de_lune = 6;
-   nuit_demi_lune           = 7;
-   nuit_quart_de_lune       = 8;
-   nuit_nouvelle_lune       = 9;
-   eclairant                = 10;
-   global_weather           = 11;
 }
 
 message AutomatChangeKnowledgeGroup {
@@ -160,18 +101,17 @@ message AutomatChangeKnowledgeGroup {
 
 message ChangeLogisticLinks {
    required ParentEntity requester     = 1;
-   optional AutomatId    tc2           = 2;
+   optional AutomatId    tc2           = 2; //!< @todo translate
    optional ParentEntity logistic_base = 3;
 }
 
-message AutomatChangeSuperior_oid_superior {
-   optional FormationId formation = 1;
-   optional AutomatId   automat   = 2;
-}
-
 message AutomatChangeSuperior {
-   required AutomatId                          automat  = 1;
-   required AutomatChangeSuperior_oid_superior superior = 2;
+    message Superior {
+       optional FormationId formation = 1;
+       optional AutomatId   automat   = 2;
+    }
+   required AutomatId automat  = 1;
+   required Superior  superior = 2;
 }
 
 message UnitChangeSuperior {
@@ -179,46 +119,44 @@ message UnitChangeSuperior {
    required AutomatId parent = 2;
 }
 
-///////////// end <only used by SimToClient> /////////////
-
 enum EnumLogMaintenanceHandlingStatus {
-   deplacement_vers_chaine                      = 0;
-   attente_disponibilite_remorqueur             = 1;
-   remorqueur_deplacement_aller                 = 2;
-   remorqueur_chargement                        = 3;
-   remorqueur_deplacement_retour                = 4;
-   remorqueur_dechargement                      = 5;
-   diagnostique_maintenance                     = 6;
-   attente_prise_en_charge_par_niveau_superieur = 7;
-   attente_disponibilite_pieces                 = 8;
-   attente_disponibilite_reparateur             = 9;
-   reparation                                   = 10;
-   retour_pion                                  = 11;
-   termine_maintenance                          = 12;
+   deplacement_vers_chaine                      = 0;  //!< @todo translate
+   attente_disponibilite_remorqueur             = 1;  //!< @todo translate
+   remorqueur_deplacement_aller                 = 2;  //!< @todo translate
+   remorqueur_chargement                        = 3;  //!< @todo translate
+   remorqueur_deplacement_retour                = 4;  //!< @todo translate
+   remorqueur_dechargement                      = 5;  //!< @todo translate
+   diagnostique_maintenance                     = 6;  //!< @todo translate
+   attente_prise_en_charge_par_niveau_superieur = 7;  //!< @todo translate
+   attente_disponibilite_pieces                 = 8;  //!< @todo translate
+   attente_disponibilite_reparateur             = 9;  //!< @todo translate
+   reparation                                   = 10; //!< @todo translate
+   retour_pion                                  = 11; //!< @todo translate
+   termine_maintenance                          = 12; //!< @todo translate
 }
 
 enum EnumLogMedicalHandlingStatus {
-   attente_disponibilite_ambulance_releve          = 0;
-   ambulance_releve_deplacement_aller              = 1;
-   ambulance_releve_chargement                     = 2;
-   attente_chargement_complet_ambulance_releve     = 3;
-   ambulance_releve_deplacement_retour             = 4;
-   ambulance_releve_dechargement                   = 5;
-   attente_disponibilite_medecin_pour_diagnostique = 6;
-   diagnostique                                    = 7;
-   recherche_secteur_tri                           = 8;
-   attente_disponibilite_medecin_pour_tri          = 9;
-   tri                                             = 10;
-   recherche_secteur_soin                          = 11;
-   attente_disponibilite_medecin_pour_soin         = 12;
-   soin                                            = 13;
-   hospitalisation                                 = 14;
-   attente_disponibilite_ambulance_ramassage       = 15;
-   ambulance_ramassage_chargement                  = 16;
-   attente_chargement_complet_ambulance_ramassage  = 17;
-   ambulance_ramassage_deplacement_aller           = 18;
-   ambulance_ramassage_dechargement                = 19;
-   termine_medical                                 = 20;
+   attente_disponibilite_ambulance_releve          = 0;  //!< @todo translate
+   ambulance_releve_deplacement_aller              = 1;  //!< @todo translate
+   ambulance_releve_chargement                     = 2;  //!< @todo translate
+   attente_chargement_complet_ambulance_releve     = 3;  //!< @todo translate
+   ambulance_releve_deplacement_retour             = 4;  //!< @todo translate
+   ambulance_releve_dechargement                   = 5;  //!< @todo translate
+   attente_disponibilite_medecin_pour_diagnostique = 6;  //!< @todo translate
+   diagnostique                                    = 7;  //!< @todo translate
+   recherche_secteur_tri                           = 8;  //!< @todo translate
+   attente_disponibilite_medecin_pour_tri          = 9;  //!< @todo translate
+   tri                                             = 10; //!< @todo translate
+   recherche_secteur_soin                          = 11; //!< @todo translate
+   attente_disponibilite_medecin_pour_soin         = 12; //!< @todo translate
+   soin                                            = 13; //!< @todo translate
+   hospitalisation                                 = 14; //!< @todo translate
+   attente_disponibilite_ambulance_ramassage       = 15; //!< @todo translate
+   ambulance_ramassage_chargement                  = 16; //!< @todo translate
+   attente_chargement_complet_ambulance_ramassage  = 17; //!< @todo translate
+   ambulance_ramassage_deplacement_aller           = 18; //!< @todo translate
+   ambulance_ramassage_dechargement                = 19; //!< @todo translate
+   termine_medical                                 = 20; //!< @todo translate
 }
 
 enum EnumSimulationState {
@@ -234,16 +172,16 @@ enum EnumDispatcherState {
 }
 
 enum EnumMeetingEngagementStatus {
-   none_meeting           = 0;
-   etat_esquive           = 1;
-   etat_fixe              = 2;
-   etat_poursuite_mission = 3;
+   none_meeting           = 0; //!< @todo translate
+   etat_esquive           = 1; //!< @todo translate
+   etat_fixe              = 2; //!< @todo translate
+   etat_poursuite_mission = 3; //!< @todo translate
 }
 
 enum EnumOperationalStatus {
-   detruit_totalement   = 0;
-   detruit_tactiquement = 1;
-   operationnel         = 2;
+   detruit_totalement   = 0; //!< @todo translate
+   detruit_tactiquement = 1; //!< @todo translate
+   operationnel         = 2; //!< @todo translate
 }
 
 enum EnumAutomatMode {
@@ -252,35 +190,35 @@ enum EnumAutomatMode {
 }
 
 enum EnumCrowdAttitude{
-   calme     = 0;
-   agitee    = 1;
-   excitee   = 2;
-   agressive = 3;
+   calme     = 0; //!< @todo translate
+   agitee    = 1; //!< @todo translate
+   excitee   = 2; //!< @todo translate
+   agressive = 3; //!< @todo translate
 }
 
 enum EnumUnitTiredness {
-   normal  = 0;
-   fatigue = 1;
-   epuise  = 2;
+   normal  = 0; //!< @todo translate
+   fatigue = 1; //!< @todo translate
+   epuise  = 2; //!< @todo translate
 }
 
 enum EnumUnitMorale {
-   fanatique = 0;
-   bon       = 1;
-   moyen     = 2;
-   mauvais   = 3;
+   fanatique = 0; //!< @todo translate
+   bon       = 1; //!< @todo translate
+   moyen     = 2; //!< @todo translate
+   mauvais   = 3; //!< @todo translate
 }
 
 enum EnumUnitExperience {
-   veteran     = 0;
-   experimente = 1;
-   conscrit    = 2;
+   veteran     = 0; //!< @todo translate
+   experimente = 1; //!< @todo translate
+   conscrit    = 2; //!< @todo translate
 }
 
 enum EnumHumanRank {
-   officier     = 0;
-   sous_officer = 1;
-   mdr          = 2;
+   officier     = 0; //!< @todo translate
+   sous_officer = 1; //!< @todo translate
+   mdr          = 2; //!< @todo translate
 }
 
 enum EnumDiplomacy {
@@ -291,19 +229,19 @@ enum EnumDiplomacy {
 }
 
 enum EnumHumanWound {
-   non_blesse             = 0;
-   mort                   = 1;
-   blesse_urgence_1       = 2;
-   blesse_urgence_2       = 3;
-   blesse_urgence_3       = 4;
-   blesse_urgence_extreme = 5;
+   non_blesse             = 0; //!< @todo translate
+   mort                   = 1; //!< @todo translate
+   blesse_urgence_1       = 2; //!< @todo translate
+   blesse_urgence_2       = 3; //!< @todo translate
+   blesse_urgence_3       = 4; //!< @todo translate
+   blesse_urgence_extreme = 5; //!< @todo translate
 }
 
 enum EnumLogMaintenanceRegimeTravail {
-   regime_1 = 0;
-   regime_2 = 1;
-   regime_3 = 2;
-   regime_4 = 3;
+   regime_1 = 0; //!< @todo translate
+   regime_2 = 1; //!< @todo translate
+   regime_3 = 2; //!< @todo translate
+   regime_4 = 3; //!< @todo translate
 }
 
 enum EnumNatureLevel {
@@ -325,18 +263,17 @@ enum EnumNatureLevel {
 
 enum EnumLogisticLevel {
    none          = 0;
-   tc2           = 1;
+   tc2           = 1; //!< @todo translate
    logistic_base = 2;
 }
 
 enum EnumBurningCellPhase {
-	pre_ignition = 0;
-	combustion = 1;
-	decline = 2;
-	extinguished = 3;
+    pre_ignition = 0;
+    combustion   = 1;
+    decline      = 2;
+    extinguished = 3;
 }
 
-// Control messages
 message ControlStop {
 }
 
@@ -361,7 +298,6 @@ message NetworkAddress  {
    required int32   port = 2 [default = 8080];
 }
 
-// Color
 message RgbColor
 {
     required int32 red   = 1;
@@ -377,7 +313,6 @@ message RgbaColor
     required float alpha = 4;
 }
 
-// Geometry
 message CoordLatLong {
     required double latitude  = 1;
     required double longitude = 2;
@@ -411,7 +346,6 @@ message PointList    { repeated Point    elem = 1; }
 message Polygon      { required Location location = 1; }
 message PolygonList  { repeated Polygon  elem = 1; }
 
-// Order parameters
 message LogMedicalPriorities {
    repeated EnumHumanWound elem = 1;
 }
@@ -426,9 +360,9 @@ message ObstacleType {
 message PlannedWork {
    required string                            type          = 1;
    required Location                          position      = 2;
-   optional ObstacleType.DemolitionTargetType type_obstacle = 3;
+   optional ObstacleType.DemolitionTargetType type_obstacle = 3; //!< @todo rename to obstacle
    optional float                             densite       = 4;
-   optional AutomatId                         tc2           = 5;
+   optional AutomatId                         tc2           = 5; //!< @todo translate           
    optional int32                             activity_time = 6;
    optional PlannedWorkId                     planned_work  = 7;
 }
@@ -443,7 +377,7 @@ message LogMaintenancePriorities {
 
 message MissionObjective {
    required Location location = 1;
-   required DateTime horaire  = 2;
+   required DateTime horaire  = 2; //!< @todo translate
 }
 
 message MissionObjectiveList {
@@ -452,19 +386,19 @@ message MissionObjectiveList {
 
 message LimaOrder {
     enum Function {
-        ligne_debouche               = 0;
-        ligne_changement_attitude    = 1;
-        ligne_coordination           = 2;
-        ligne_interdire              = 3;
-        ligne_objectif               = 4;
-        ligne_coup_arret             = 5;
-        ligne_recueil                = 6;
-        ligne_debut_mission          = 7;
-        ligne_fin_mission            = 8;
-        ligne_identification_accueil = 9;
+        ligne_debouche               = 0; //!< @todo translate
+        ligne_changement_attitude    = 1; //!< @todo translate
+        ligne_coordination           = 2; //!< @todo translate
+        ligne_interdire              = 3; //!< @todo translate
+        ligne_objectif               = 4; //!< @todo translate
+        ligne_coup_arret             = 5; //!< @todo translate
+        ligne_recueil                = 6; //!< @todo translate
+        ligne_debut_mission          = 7; //!< @todo translate
+        ligne_fin_mission            = 8; //!< @todo translate
+        ligne_identification_accueil = 9; //!< @todo translate
     }
     required Line     lima      = 1;
-    required DateTime horaire   = 2;
+    required DateTime horaire   = 2; //!< @todo translate
     repeated Function fonctions = 3;
 }
 
@@ -494,22 +428,22 @@ message ChangeDiplomacy {
 
 message AtlasNature {
    enum Nature {
-        blinde           = 1;
-        ass              = 2;
-        pc               = 4;
-        log              = 8;
-        mortier          = 16;
-        lance_roquette   = 32;
-        vehicule         = 64;
-        personnel_a_pied = 128;
-        helicoptere      = 256;
-        asa              = 1024;
+        blinde           = 1;    //!< @todo translate
+        ass              = 2;    //!< @todo translate
+        pc               = 4;    //!< @todo translate
+        log              = 8;    //!< @todo translate
+        mortier          = 16;   //!< @todo translate
+        lance_roquette   = 32;   //!< @todo translate
+        vehicule         = 64;   //!< @todo translate
+        personnel_a_pied = 128;  //!< @todo translate
+        helicoptere      = 256;  //!< @todo translate
+        asa              = 1024; //!< @todo translate
    }
    required int32 nature = 1;
 }
 
 message MissionParameter {
-    message Value {
+    message Value { //!< @todo clean-up field names
         //parameters used for missions and magic actions:
         optional bool                     booleanValue             = 1;
         optional int32                    intValue                 = 2;
@@ -573,7 +507,7 @@ message UnitOrder {
     required MissionType       type           = 2;
     optional MissionParameters parameters     = 3;
     optional string            label          = 4;
-    optional Location          symbolLocation = 5;
+    optional Location          symbolLocation = 5; //!< @todo rename to symbol_location
     optional DateTime          start_time     = 6;
 }
 
@@ -582,7 +516,7 @@ message AutomatOrder {
     required MissionType       type           = 2;
     optional MissionParameters parameters     = 3;
     optional string            label          = 4;
-    optional Location          symbolLocation = 5;
+    optional Location          symbolLocation = 5; //!< @todo rename to symbol_location
     optional DateTime          start_time     = 6;
 }
 
@@ -591,7 +525,7 @@ message CrowdOrder {
     required MissionType       type           = 2;
     optional MissionParameters parameters     = 3;
     optional string            label          = 4;
-    optional Location          symbolLocation = 5;
+    optional Location          symbolLocation = 5; //!< @todo rename to symbol_location
     optional DateTime          start_time     = 6;
 }
 
@@ -600,22 +534,20 @@ message FragOrder {
    required FragOrderType     type           = 2;
    optional MissionParameters parameters     = 3;
    optional string            label          = 4;
-   optional Location          symbolLocation = 5;
+   optional Location          symbolLocation = 5; //!< @todo rename to symbol_location
    optional DateTime          start_time     = 6;
 }
-
-// Messenger common types
 
 message ClientObjectProperty {
     message Value {
         optional string string_value           = 1;
-        optional int32  integer_value           = 2;
+        optional int32  integer_value          = 2;
         optional uint32 unsigned_integer_value = 3;
-        optional float  float_value             = 4;
-        optional bool   bool_value               = 5;
+        optional float  float_value            = 4;
+        optional bool   bool_value             = 5;
     }
-    required string name = 1;
-    required Value value = 2;
+    required string name  = 1;
+    required Value  value = 2;
 }
 
 message TacticalLine {
@@ -652,18 +584,16 @@ message UrbanUsage {
     required uint32 percentage = 2;
 }
 
-// Object attributes
-
 message ResourceNetwork {
     message Link {
         enum TargetKind {
             urban  = 1;
             object = 2;
         }
-        required TargetKind kind  = 1;
-        required uint32 target_id = 2;
-        required int32  capacity  = 3;
-        required uint32 flow      = 4;
+        required TargetKind kind      = 1;
+        required uint32     target_id = 2;
+        required int32      capacity  = 3;
+        required uint32     flow      = 4;
     }
     required ResourceNetworkType resource        = 1;
     repeated Link                link            = 2;
@@ -683,21 +613,21 @@ message ObjectAttributeResourceNetwork {
 }
 
 message ObjectAttributeConstruction {
-   optional ResourceType resource     = 1;
-   optional int32        dotation = 2;
-   optional float        density      = 3;
-   optional int32        percentage   = 4;
+   optional ResourceType resource   = 1;
+   optional int32        dotation   = 2;
+   optional float        density    = 3;
+   optional int32        percentage = 4;
 }
 
 message ObjectAttributeMine {
-   optional ResourceType resource     = 1;
-   optional int32        dotation = 2;
-   optional float        density      = 3;
-   optional int32        percentage   = 4;
+   optional ResourceType resource   = 1;
+   optional int32        dotation   = 2;
+   optional float        density    = 3;
+   optional int32        percentage = 4;
 }
 
 message ObjectAttributeLogistic {
-   required AutomatId tc2 = 1;
+   required AutomatId tc2 = 1; //!< @todo translate
 }
 
 message ObjectAttributeInteractionHeight {
@@ -771,38 +701,38 @@ message ObjectAttributeToxicCloud {
 }
 
 message ObjectAttributeFire {
-   required string class_name = 1;
-   required int32 max_combustion_energy = 2;
+   required string class_name            = 1;
+   required int32  max_combustion_energy = 2;
 }
 
 message ObjectAttributeBurn {
-   required int32 current_heat = 1;
+   required int32 current_heat      = 1;
    required int32 combustion_energy = 2;
 }
 
 message ObjectAttributeBurnSurface {
-	message BurningCell {
-		message PreIgnition {
-			required int32 ignition_energy = 1;
-			required int32 ignition_threshold = 2;
-		}
-		message Combustion {
-		   required int32 current_heat = 1;
-		   required int32 combustion_energy = 2;
-		   required int32 max_combustion_energy = 3;
-		}
-		message Decline {
-		   required int32 current_heat = 1;
-		}		
-		required int32 origin_x = 1;
-		required int32 origin_y = 2;
-		required EnumBurningCellPhase phase = 3;
-		optional PreIgnition pre_ignition = 4;
-		optional Combustion combustion = 5;
-		optional Decline decline = 6;
-	}
-	required int32 cell_size = 1;
-	repeated BurningCell burning_cells = 2;
+    message BurningCell {
+        message PreIgnition {
+            required int32 ignition_energy    = 1;
+            required int32 ignition_threshold = 2;
+        }
+        message Combustion {
+           required int32 current_heat         = 1;
+           required int32 combustion_energy    = 2;
+           required int32 max_combustion_energy = 3;
+        }
+        message Decline {
+           required int32 current_heat = 1;
+        }
+        required int32                origin_x     = 1;
+        required int32                origin_y     = 2;
+        required EnumBurningCellPhase phase        = 3;
+        optional PreIgnition          pre_ignition = 4;
+        optional Combustion           combustion   = 5;
+        optional Decline              decline      = 6;
+    }
+    required int32       cell_size     = 1;
+    repeated BurningCell burning_cells = 2;
 }
 
 message MedicalTreatmentBedCapacity {
@@ -853,10 +783,10 @@ message ObjectAttributes {
    optional ObjectAttributeNBCType           nbc_agent          = 15;
    optional ObjectAttributeEffectDelay       effect_delay       = 16;
    optional ObjectAttributeSealOff           seal_off           = 17;
-   optional ObjectAttributeResourceNetwork   resource_networks  = 18; // not in scipio V1.stab
+   optional ObjectAttributeResourceNetwork   resource_networks  = 18;
    optional ObjectAttributeBurn              burn               = 19;
    optional ObjectAttributeFlood             flood              = 20;
-   optional ObjectAttributeBurnSurface       burn_surface = 21;
+   optional ObjectAttributeBurnSurface       burn_surface       = 21;
 }
 
 message Marker {
@@ -866,19 +796,6 @@ message Marker {
     optional string   number      = 5;
 }
 
-// weather
-message WeatherAttributes {
-   required int32                 temperature    = 1;
-   required int32                 wind_speed     = 2;
-   required Heading               wind_direction = 3;
-   required int32                 cloud_floor    = 4;
-   required int32                 cloud_ceiling  = 5;
-   required int32                 cloud_density  = 6;
-   required EnumPrecipitationType precipitation  = 7;
-   required EnumLightingType      lighting       = 8;
-}
-
-//adhesions
 message PartyAdhesion {
     required PartyId party = 1;
     required float   value = 2;

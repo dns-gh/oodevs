@@ -53,8 +53,8 @@ AutomatDecisions::~AutomatDecisions()
 // -----------------------------------------------------------------------------
 void AutomatDecisions::DoUpdate( const sword::AutomatAttributes& message )
 {
-    if( message.has_etat_automate()  )
-        bEmbraye_ = ( message.etat_automate() == sword::embraye );
+    if( message.has_mode()  )
+        bEmbraye_ = ( message.mode() == sword::embraye );
     controller_.Update( *this );
 }
 

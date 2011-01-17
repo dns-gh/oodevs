@@ -506,7 +506,7 @@ namespace
 void SimulationToClient::Convert( const sword::AutomatAttributes& from, MsgsSimToClient::MsgAutomatAttributes* to )
 {
     CONVERT_ID( automat );
-    CONVERT_AUTOMAT_MODE( etat_automate );
+    CONVERT_AUTOMAT_MODE( mode, etat_automate );
     ConvertForceRatio( from, to );
     ConvertMeetingEngagementStatus( from, to );
     ConvertOperationalStatus( from, to );

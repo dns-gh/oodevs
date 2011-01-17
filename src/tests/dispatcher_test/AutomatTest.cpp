@@ -445,7 +445,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             expected.set_context( 0 );
             sword::AutomatAttributes& message = *expected.mutable_message()->mutable_automat_attributes();
             message.mutable_automat()->set_id( 1 );
-            message.set_etat_automate( sword::debraye );
+            message.set_mode( sword::debraye );
             message.set_force_ratio( sword::ForceRatio::favorable );
             message.set_meeting_engagement( sword::etat_esquive );
             message.set_operational_state( sword::detruit_tactiquement );

@@ -102,6 +102,7 @@ message UnitMagicAction {
         Specific parameters are expected for each type.
 
         @todo Explain what parameters are expected for each type
+        @todo Uniformize, for instance unit_creation != create_wound
     */
    enum Type {
         move_to                   = 0;  //!< A move to magic action

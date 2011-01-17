@@ -131,7 +131,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgFragOrder& from, swo
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgSetAutomatMode& from, sword::SetAutomatMode* to )
 {
     CONVERT_ID( automate );
-    CONVERT_AUTOMAT_MODE( mode );
+    CONVERT_AUTOMAT_MODE( mode, mode );
 }
 
 // -----------------------------------------------------------------------------

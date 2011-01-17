@@ -281,7 +281,7 @@ BOOST_FIXTURE_TEST_CASE( automat_creation_to_client_is_converted, ContextFixture
 BOOST_FIXTURE_TEST_CASE( automat_attributes_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_automat_attributes()->mutable_automat()->set_id( 7 );
-    content.mutable_automat_attributes()->set_etat_automate( sword::embraye );
+    content.mutable_automat_attributes()->set_mode( sword::embraye );
     content.mutable_automat_attributes()->set_force_ratio( sword::ForceRatio::neutral );
     content.mutable_automat_attributes()->set_meeting_engagement( sword::etat_esquive );
     content.mutable_automat_attributes()->set_operational_state( sword::operationnel );

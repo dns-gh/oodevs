@@ -229,8 +229,8 @@ void Automat::ResetSuperior()
 // -----------------------------------------------------------------------------
 void Automat::DoUpdate( const sword::AutomatAttributes& msg )
 {
-    if( msg.has_etat_automate()  )
-        nAutomatState_ = msg.etat_automate();
+    if( msg.has_mode()  )
+        nAutomatState_ = msg.mode();
     if( msg.has_force_ratio()  )
         nForceRatioState_ = msg.force_ratio();
     if( msg.has_meeting_engagement()  )
@@ -307,7 +307,7 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     {
         client::AutomatAttributes asn;
         asn().mutable_automat()->set_id( GetId() );
-        asn().set_etat_automate( nAutomatState_ );
+        asn().set_mode( nAutomatState_ );
         asn().set_force_ratio( nForceRatioState_);
         asn().set_meeting_engagement( nCloseCombatState_);
         asn().set_operational_state( nOperationalState_ );

@@ -580,10 +580,10 @@ message ForceRatio {
 */
 message AutomatAttributes {
    required AutomatId                   automat               = 1; //!< The automat identifier @see AutomatId
-   optional EnumAutomatMode             etat_automate         = 2; //!< The automat mode @see EnumAutomatMode @todo translate
+   optional EnumAutomatMode             mode                  = 2; //!< The automat mode @see EnumAutomatMode
    optional ForceRatio.Value            force_ratio           = 3; //!< The automat force ratio @see ForceRatio
-   optional EnumMeetingEngagementStatus meeting_engagement   = 4;  //!< @todo What's this ?
-   optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational status @todo translate
+   optional EnumMeetingEngagementStatus meeting_engagement    = 4;  //!< @todo What's this ?
+   optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational state
    optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement @see RulesOfEngagement
    optional AutomatId                   tc2_organic           = 7; //!< @todo What's this ?
    optional ParentEntity                logistic_base_organic = 8; //!< @todo What's this ?
@@ -908,6 +908,11 @@ message UnitKnowledgeDestruction {
     required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier @see KnowledgeGroupId
 }
 
+enum UnitFireType { //!< @todo move into StartUnitFire @todo why isn't that a boolean ?
+   direct   = 0;
+   indirect = 1;
+}
+
 message StartUnitFire {
     message UnitFireTarget {
         optional UnitId       unit     = 1;
@@ -985,6 +990,13 @@ message Explosion {
     required ObjectId          object         = 1;
     optional UnitsFireDamages  units_damages  = 2;
     optional CrowdsFireDamages crowds_damages = 3;
+}
+
+enum EnumFireEffectType { //!< @todo move into StartFireEffect
+   smoke = 0;
+   light = 1;
+   explosion = 2;
+   neutralization = 3;
 }
 
 message StartFireEffect {
@@ -1314,11 +1326,29 @@ message SeqOfLogSupplyEquimentAvailability {
     repeated LogSupplyEquimentAvailability elem = 1;
 }
 
+message DotationStock {
+   required ResourceType ressource_id = 1;
+   required int32        quantity     = 2;
+}
+
+message SeqOfDotationStock { //!< @todo move into LogSupplyState
+   repeated DotationStock elem = 1;
+}
+
 message LogSupplyState {
     optional UnitId                             unit         = 1;
     optional bool                               chain        = 2;
     optional SeqOfDotationStock                 stocks       = 3;
     optional SeqOfLogSupplyEquimentAvailability transporters = 4;
+}
+
+message DotationQuota {
+   required ResourceType ressource_id     = 1;
+   required int32        quota_disponible = 2;
+}
+
+message SeqOfDotationQuota { //!< @todo move into SeqOfDotationQuota
+   repeated DotationQuota elem = 1;
 }
 
 message LogSupplyQuotas {
@@ -1621,6 +1651,41 @@ message ControlGlobalWeatherAck {
 }
 
 message ControlLocalWeatherAck {
+}
+
+enum EnumPrecipitationType { // !< @todo move into WeatherAttributes
+   pas_de_precipitation = 0;
+   tempete_sable        = 1;
+   brouillard           = 2;
+   crachin              = 3;
+   pluie                = 4;
+   neige                = 5;
+}
+
+enum EnumLightingType { //!< @todo move into WeatherAttributes
+   jour_sans_nuage          = 0;
+   jour_peu_nuageux         = 1;
+   jour_moyennement_nuageux = 2;
+   jour_assez_nuageux       = 3;
+   jour_tres_nuageux        = 4;
+   nuit_pleine_lune         = 5;
+   nuit_trois_quart_de_lune = 6;
+   nuit_demi_lune           = 7;
+   nuit_quart_de_lune       = 8;
+   nuit_nouvelle_lune       = 9;
+   eclairant                = 10;
+   global_weather           = 11;
+}
+
+message WeatherAttributes {
+   required int32                 temperature    = 1;
+   required int32                 wind_speed     = 2;
+   required Heading               wind_direction = 3;
+   required int32                 cloud_floor    = 4;
+   required int32                 cloud_ceiling  = 5;
+   required int32                 cloud_density  = 6;
+   required EnumPrecipitationType precipitation  = 7;
+   required EnumLightingType      lighting       = 8;
 }
 
 message ControlGlobalWeather {

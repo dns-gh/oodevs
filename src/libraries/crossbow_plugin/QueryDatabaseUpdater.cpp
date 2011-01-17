@@ -472,8 +472,8 @@ void QueryDatabaseUpdater::Update( const sword::AutomatAttributes& msg )
 
     query << "public_oid=" << msg.automat().id() << " AND session_id=" << session_.GetId();
     builder.SetClause( query.str() );
-    if( msg.has_etat_automate() )
-        builder.SetField( "engaged", ( msg.etat_automate() == sword::embraye ) ? -1 : 0 );
+    if( msg.has_mode() )
+        builder.SetField( "engaged", ( msg.mode() == sword::embraye ) ? -1 : 0 );
     database_.Execute( builder );
 }
 

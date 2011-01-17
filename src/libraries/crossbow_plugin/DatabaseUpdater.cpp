@@ -523,8 +523,8 @@ void DatabaseUpdater::Update( const sword::AutomatAttributes& msg )
     table->EndTransaction();
     if( Row_ABC* row = table->Find( query.str() ) )
     {
-        if( msg.has_etat_automate() )
-            row->SetField( "engaged", FieldVariant( ( msg.etat_automate() == sword::embraye ) ? -1 : 0 ) );
+        if( msg.has_mode() )
+            row->SetField( "engaged", FieldVariant( ( msg.mode() == sword::embraye ) ? -1 : 0 ) );
         table->UpdateRow( *row );
     }
 }

@@ -25,9 +25,9 @@
                     ( sword::blesse_urgence_3, Common::blesse_urgence_3 ) \
                     ( sword::blesse_urgence_extreme, Common::blesse_urgence_extreme )
 
-#define CONVERT_AUTOMAT_MODE( field ) \
-    CONVERT_ENUM( field, ( sword::embraye, Common::embraye ) \
-                         ( sword::debraye, Common::debraye ) )
+#define CONVERT_AUTOMAT_MODE( from_field, to_field ) \
+    CONVERT_ENUM_TO( from_field, to_field, ( sword::embraye, Common::embraye ) \
+                                           ( sword::debraye, Common::debraye ) )
 
 #define CONVERT_SIMULATION_STATE( field ) \
     CONVERT_ENUM( field, ( sword::running, Common::running ) \
