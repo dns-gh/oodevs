@@ -118,7 +118,7 @@ void InfrastructureAttribute::CreateDictionary( kernel::PropertiesDictionary& di
 // Name: InfrastructureAttribute::Draw
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawApp6Symbol( type_.GetSymbol(), object_.Barycenter() , 0.1, 1.f );
+    tools.DrawApp6Symbol( type_.GetSymbol(), object_.Barycenter() , 0.1f, 1.f );
 }

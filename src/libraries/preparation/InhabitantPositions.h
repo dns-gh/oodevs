@@ -10,15 +10,15 @@
 #ifndef __InhabitantPositions_h_
 #define __InhabitantPositions_h_
 
-#include "clients_kernel/Positions.h"
+#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "geometry/types.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
     class Location_ABC;
-    class InhabitantType;
     class GlTools_ABC;
 }
 
@@ -38,17 +38,25 @@ class UrbanModel;
 /** @class  InhabitantPositions
 @brief  InhabitantPositions
 */
-// Created: AGE 2006-03-22
+// Created: SLG 2010-11-25
 // =============================================================================
 class InhabitantPositions : public kernel::Positions
                           , public kernel::Serializable_ABC
-
+                          , public kernel::Drawable_ABC
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::vector< const gui::TerrainObjectProxy* > T_UrbanObjectVector;
+    typedef T_UrbanObjectVector::iterator                IT_UrbanObjectVector;
+    typedef T_UrbanObjectVector::const_iterator         CIT_UrbanObjectVector;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, UrbanModel& urbanModel );
-             InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, UrbanModel& urbanModel );
+             InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const UrbanModel& urbanModel );
+             InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel );
     virtual ~InhabitantPositions();
     //@}
 
@@ -62,7 +70,7 @@ public:
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    void Draw( const kernel::GlTools_ABC& tools ) const;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -74,20 +82,16 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadLocation( xml::xistream& xis );
-    void ReadLivingUrbanBlock( xml::xistream& xis );
+    void ReadLocation( xml::xistream& xis, const UrbanModel& urbanModel );
+    void ReadLivingUrbanBlock( xml::xistream& xis, const UrbanModel& urbanModel );
+    void ComputePosition();
     //@}
-
-    typedef std::vector< const gui::TerrainObjectProxy* > T_UrbanObjectVector;
-    typedef T_UrbanObjectVector::iterator          IT_UrbanObjectVector;
-    typedef T_UrbanObjectVector::const_iterator   CIT_UrbanObjectVector;
 
 private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    kernel::Location_ABC* location_;
-    UrbanModel& urbanModel_;
+    geometry::Point2f position_;
     T_UrbanObjectVector livingUrbanObject_;
     //@}
 

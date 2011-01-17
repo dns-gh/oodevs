@@ -4049,7 +4049,7 @@ Cliquer sur &quot;Ok&quot; pour le supprimer ainsi que tous les éléments qui l
     <message>
         <source>Really delete this item?
 Click &quot;Ok&quot; to delete it and all its references.</source>
-        <translation>Confirmer la déstruction de cet élément ?
+        <translation>Confirmer la destruction de cet élément ?
 Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui le référencent.</translation>
     </message>
 </context>

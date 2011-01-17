@@ -66,14 +66,20 @@ namespace
                         , public ValueEditor< QString >
     {
     public:
-                 QStringEditor( QWidget* parent ) : QLineEdit( parent ) {}
-        virtual ~QStringEditor() {}
+        explicit QStringEditor( QWidget* parent ) : QLineEdit( parent )
+        {
+            // NOTHING
+        }
+
+        virtual ~QStringEditor()
+        {
+            // NOTHING
+        }
 
         virtual QString GetValue()
         {
             return text();
         }
-
     };
 }
 
@@ -96,14 +102,18 @@ namespace
     class DecimalSpinBox : public QSpinBox
     {
     public:
-                 DecimalSpinBox( QWidget* parent, unsigned short decimals = 0 )
+        explicit DecimalSpinBox( QWidget* parent, unsigned short decimals = 0 )
                      : QSpinBox( parent )
-                     , decimals_( unsigned int( std::pow( 10.f, decimals ) ) )
-                 {
-                     setMinValue( 0 );
-                     setMaxValue( std::numeric_limits< int >::max() );
-                 }
-        virtual ~DecimalSpinBox() {}
+                     , decimals_( static_cast< unsigned int >( std::pow( 10.f, decimals ) ) )
+        {
+            setMinValue( 0 );
+            setMaxValue( std::numeric_limits< int >::max() );
+        }
+
+        virtual ~DecimalSpinBox()
+        {
+            // NOTHING
+        }
 
         virtual QString mapValueToText( int value )
         {
@@ -115,7 +125,10 @@ namespace
         virtual int mapTextToValue( bool *ok )
         {
             QString textValue = text().mid( prefix().length(), text().length() - prefix().length() - suffix().length() );
-            std::string txt = textValue.ascii();
+            const char* ascii = textValue.ascii();
+            if( !ascii )
+                return 0;
+            std::string txt = ascii;
             if( decimals_ > 1 )
                 return int( textValue.toDouble( ok ) * decimals_ );
             return textValue.toInt( ok );
@@ -145,11 +158,12 @@ namespace
                        , public ValueEditor< T >
     {
     public:
-                 NumberEditor( QWidget* parent, const T& value, unsigned short decimals = 0 )
-                     : DecimalSpinBox( parent, decimals )
-                 {
-                     SetValue( value );
-                 }
+        NumberEditor( QWidget* parent, const T& value, unsigned short decimals = 0 )
+             : DecimalSpinBox( parent, decimals )
+        {
+             SetValue( value );
+        }
+
         virtual ~NumberEditor() {}
 
         virtual T GetValue()
@@ -164,13 +178,13 @@ namespace
                      , public ValueEditor< UnitedValue< T > >
     {
     public:
-                 UnitEditor( QWidget* parent, const UnitedValue< T >& value, unsigned short decimals = 0 )
-                     : DecimalSpinBox( parent, decimals )
-                     , unit_( value.unit_ )
-                 {
-                     setSuffix( value.unit_.AsString() );
-                     SetValue( value.value_ );
-                 }
+         UnitEditor( QWidget* parent, const UnitedValue< T >& value, unsigned short decimals = 0 )
+             : DecimalSpinBox( parent, decimals )
+             , unit_( value.unit_ )
+         {
+             setSuffix( value.unit_.AsString() );
+             SetValue( value.value_ );
+         }
         virtual ~UnitEditor() {}
 
         virtual UnitedValue< T > GetValue()
@@ -257,7 +271,6 @@ namespace
         {
             return ValuedComboBox< bool >::GetValue();
         }
-
     };
 }
 

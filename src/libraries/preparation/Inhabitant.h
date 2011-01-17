@@ -12,14 +12,11 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Inhabitant_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include "tools/Resolver.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
-#include "EnumTypes.h"
 
 namespace kernel
 {
-    class Team_ABC;
     class Controller;
     class InhabitantType;
 }
@@ -40,19 +37,13 @@ class IdManager;
 class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
                  , public kernel::Extension_ABC
                  , public kernel::Serializable_ABC
-                 , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              Inhabitant( const kernel::InhabitantType& type, int number, const QString& name, kernel::Controller& controller, IdManager& idManager );
-             Inhabitant( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const tools::Resolver_ABC< kernel::InhabitantType, std::string >& types );
+             Inhabitant( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const tools::StringResolver< kernel::InhabitantType >& types );
     virtual ~Inhabitant();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -80,9 +71,10 @@ private:
     //! @name Member data
     //@{
     const kernel::InhabitantType& type_;
-    unsigned long healthy_;
-    unsigned long wounded_;
-    unsigned long dead_;
+    unsigned int healthy_;
+    unsigned int wounded_;
+    unsigned int dead_;
+    float healthNeed_;
     QString text_;
     T_Extensions extensions_;
     //@}

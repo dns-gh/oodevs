@@ -43,21 +43,21 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class AgentTypes : public tools::Resolver< AgentType >
-                 , public tools::Resolver< AgentType, std::string >
+                 , public tools::StringResolver< AgentType >
                  , public tools::Resolver< PopulationType >
-                 , public tools::Resolver< PopulationType, std::string >
+                 , public tools::StringResolver< PopulationType >
                  , public tools::Resolver< InhabitantType >
-                 , public tools::Resolver< InhabitantType, std::string >
+                 , public tools::StringResolver< InhabitantType >
                  , public tools::Resolver< AutomatType >
-                 , public tools::Resolver< AutomatType, std::string >
+                 , public tools::StringResolver< AutomatType >
                  , public tools::Resolver< ComponentType >
-                 , public tools::Resolver< ComponentType, std::string >
-                 , public tools::Resolver< SensorType, std::string >
-                 , public tools::Resolver< KnowledgeGroupType, std::string >
+                 , public tools::StringResolver< ComponentType >
+                 , public tools::StringResolver< SensorType >
+                 , public tools::StringResolver< KnowledgeGroupType >
                  , public tools::Resolver< MissionType >
                  , public tools::Resolver< FragOrderType >
-                 , public tools::Resolver< FragOrderType, std::string >
-                 , public tools::Resolver< MagicActionType, std::string >
+                 , public tools::StringResolver< FragOrderType >
+                 , public tools::StringResolver< MagicActionType >
 {
 public:
     //! @name Constructors/Destructor
@@ -70,7 +70,7 @@ public:
     //! @name Operations
     //@{
     void Load( const tools::ExerciseConfig& config );
-    void Load( const tools::ExerciseConfig& config, std::string& invalidSingatureFiles, std::string& missingSignatureFiles );
+    void Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles );
     void Purge();
     //@}
 
@@ -83,8 +83,8 @@ private:
 
     //! @name Types
     //@{
-    typedef Mission* (MissionFactory::*T_Resolver)( const std::string& );
-    typedef  tools::Resolver< MissionType, std::string > T_MissionResolver;
+    typedef Mission* ( MissionFactory::*T_Resolver )( const std::string& );
+    typedef tools::StringResolver< MissionType > T_MissionResolver;
     //@}
 
     //! @name Helpers
@@ -129,9 +129,9 @@ private:
 public:
     //! @name Member data
     //@{
-     tools::Resolver< DecisionalModel, std::string > unitModels_;
-     tools::Resolver< DecisionalModel, std::string > automatModels_;
-     tools::Resolver< DecisionalModel, std::string > populationModels_;
+     tools::StringResolver< DecisionalModel > unitModels_;
+     tools::StringResolver< DecisionalModel > automatModels_;
+     tools::StringResolver< DecisionalModel > populationModels_;
     //@}
 };
 

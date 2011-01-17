@@ -386,8 +386,6 @@ void MainWindow::New()
     static ExerciseCreationDialog* exerciseCreationDialog_ = new ExerciseCreationDialog( this, config_ );
     if( exerciseCreationDialog_->exec() == QDialog::Accepted )
     {
-        invalidSignedFiles_.clear();
-        missingSignedFiles_.clear();
         QString filename = exerciseCreationDialog_->GetFileName();
         DoLoad( filename );
     }
@@ -403,6 +401,8 @@ void MainWindow::DoLoad( QString filename )
         return;
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
+    invalidSignedFiles_.clear();
+    missingSignedFiles_.clear();
     config_.LoadExercise( filename.ascii() );
     tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename.ascii() );
     if( error == tools::eXmlCrc32SignatureError_Invalid )

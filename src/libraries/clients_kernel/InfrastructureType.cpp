@@ -39,7 +39,7 @@ InfrastructureType::~InfrastructureType()
 
 
 // -----------------------------------------------------------------------------
-// Name: ObjectType::ReadCapacities
+// Name: InfrastructureType::ReadCapacities
 // Created: SLG 2010-12-29
 // -----------------------------------------------------------------------------
 void InfrastructureType::ReadCapacities( const std::string& capacity, xml::xistream& xis )
