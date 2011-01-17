@@ -52,6 +52,7 @@ protected slots:
 ADN_Equipement_GUI::ADN_Equipement_GUI( ADN_Equipement_Data& data )
     : ADN_GUI_ABC( "ADN_Equipement_GUI" )
     , data_      ( data )
+    , pAttritionTable_( 0 )
 {
     // NOTHING
 }
@@ -149,8 +150,8 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     vConnectors[ eDirect ] = &pDirectGroup->GetConnector();
     QGroupBox* pTablesGroup = new QGroupBox( 2, Qt::Vertical, pDirectGroup );
     pTablesGroup->setFrameShape( QFrame::NoFrame );
-    ADN_Equipement_AttritionTable* pAttritionTable = new ADN_Equipement_AttritionTable( pTablesGroup );
-    vConnectors[ eAttritions ] = &pAttritionTable->GetConnector();
+    pAttritionTable_ = new ADN_Equipement_AttritionTable( pTablesGroup );
+    vConnectors[ eAttritions ] = &pAttritionTable_->GetConnector();
     new ADN_Equipement_UrbanModifiersTable( pTablesGroup, vConnectors[ eUrbanAttritions ] );
     QGroupBox* pAttritionVisualisation = new QGroupBox( 2, Qt::Vertical, tr( "Simulation" ), pDirectGroup );
     QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
@@ -362,5 +363,6 @@ void ADN_Equipement_GUI::ExportPKs( ADN_HtmlBuilder& builder, ADN_Equipement_Dat
         return;
     pAmmoListView_->SetCurrentItem( &infos );
     builder.Section( tr( "PKs" ) );
-    builder.CreateTableFrom( *pAttritionTable_ );
+    if( pAttritionTable_ )
+        builder.CreateTableFrom( *pAttritionTable_ );
 }
