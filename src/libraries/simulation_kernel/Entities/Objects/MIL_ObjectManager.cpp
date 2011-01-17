@@ -352,7 +352,7 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
 void MIL_ObjectManager::OnReceiveUrbanMagicAction( const sword::UrbanMagicAction& msg, unsigned int nCtx )
 {
     sword::UrbanMagicActionAck_ErrorCode nErrorCode = sword::UrbanMagicActionAck::no_error;
-    UrbanObjectWrapper* object = FindUrbanWrapper( msg.id().id() );
+    UrbanObjectWrapper* object = static_cast< UrbanObjectWrapper* >( Find( msg.id().id() ) );
     if( !object )
         nErrorCode = sword::UrbanMagicActionAck::error_invalid_urban_block;
     else
@@ -372,11 +372,7 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
     const sword::MissionParameters& params = message.parameters();
     unsigned int id = params.elem( 0 ).value().Get( 0 ).identifier();
     bool urban = params.elem( 1 ).value().Get( 0 ).booleanvalue();
-    MIL_Object_ABC* object = 0;
-    if( urban )
-        object = FindUrbanWrapper( id );
-    else 
-        object = Find( id );
+    MIL_Object_ABC* object = Find( id );
     if( object == 0 )
         nErrorCode = sword::MagicActionAck::error_invalid_parameter;
     else if( params.elem( 2 ).value_size() > 0 )
