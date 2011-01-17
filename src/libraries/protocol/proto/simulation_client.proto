@@ -1579,7 +1579,7 @@ message UrbanAttributes {
 }
 
 message UrbanCreation {
-   required UrbanObjectId   urban_object = 1;
+   required ObjectId        urban_object = 1;
    required UrbanObjectId   urban_block  = 2;
    required string          name         = 3;
    required Location        location     = 4;
