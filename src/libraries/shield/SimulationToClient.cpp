@@ -1538,9 +1538,9 @@ namespace
     void ConvertDotationQuery( const From& from, To* to )
     {
         CONVERT_ID( resource );
-        CONVERT( quantite_demandee );
-        CONVERT( quantite_accordee );
-        CONVERT( quantite_en_transit );
+        CONVERT_TO( requested, quantite_demandee );
+        CONVERT_TO( granted, quantite_accordee );
+        CONVERT_TO( convoyed, quantite_en_transit );
     }
 }
 
@@ -1619,7 +1619,7 @@ void SimulationToClient::Convert( const sword::LogSupplyState& from, MsgsSimToCl
     CONVERT_ID( unit );
     CONVERT_TO( chain, chaine_activee );
     CONVERT_LIST( stocks, elem, ConvertDotationStock );
-    CONVERT_LIST( disponibilites_transporteurs_convois, elem, ConvertLogSupplyEquimentAvailability );
+    CONVERT_LIST_TO( transporters, disponibilites_transporteurs_convois, elem, ConvertLogSupplyEquimentAvailability );
 }
 
 namespace
@@ -1663,7 +1663,7 @@ void SimulationToClient::Convert( const sword::CrowdCreation& from, MsgsSimToCli
 void SimulationToClient::Convert( const sword::CrowdUpdate& from, MsgsSimToClient::MsgCrowdUpdate* to )
 {
     CONVERT_ID( crowd );
-    CONVERT( etat_domination );
+    CONVERT_TO( domination, etat_domination );
 }
 
 // -----------------------------------------------------------------------------
@@ -1707,8 +1707,8 @@ void SimulationToClient::Convert( const sword::CrowdConcentrationUpdate& from, M
 {
     CONVERT_ID( concentration );
     CONVERT_ID( crowd );
-    CONVERT( nb_humains_vivants );
-    CONVERT( nb_humains_morts );
+    CONVERT_TO( alive, nb_humains_vivants );
+    CONVERT_TO( dead, nb_humains_morts );
     ConvertCrowdAttitude( from, to );
 }
 
@@ -1747,8 +1747,8 @@ void SimulationToClient::Convert( const sword::CrowdFlowUpdate& from, MsgsSimToC
     if( from.has_direction() )
         ConvertHeading( from.direction(), to->mutable_direction() );
     CONVERT_TO( speed, vitesse );
-    CONVERT( nb_humains_vivants );
-    CONVERT( nb_humains_morts );
+    CONVERT_TO( alive, nb_humains_vivants );
+    CONVERT_TO( dead, nb_humains_morts );
     ConvertCrowdAttitude( from, to );
 }
 
@@ -1772,7 +1772,7 @@ void SimulationToClient::Convert( const sword::CrowdKnowledgeUpdate& from, MsgsS
 {
     CONVERT_ID( knowledge );
     CONVERT_ID( knowledge_group );
-    CONVERT( etat_domination );
+    CONVERT_TO( domination, etat_domination );
 }
 
 // -----------------------------------------------------------------------------
@@ -1820,11 +1820,11 @@ void SimulationToClient::Convert( const sword::CrowdConcentrationKnowledgeUpdate
     CONVERT_ID( crowd );
     CONVERT_ID( knowledge_group );
     CONVERT_ID( concentration );
-    CONVERT( nb_humains_vivants );
-    CONVERT( nb_humains_morts );
+    CONVERT_TO( alive, nb_humains_vivants );
+    CONVERT_TO( dead, nb_humains_morts );
     ConvertCrowdAttitude( from, to );
     CONVERT( pertinence );
-    CONVERT( est_percu );
+    CONVERT_TO( perceived, est_percu );
 }
 
 // -----------------------------------------------------------------------------
@@ -1855,7 +1855,7 @@ namespace
     template< typename From, typename To >
     void ConvertFlowPart( const From& from, To* to )
     {
-        ConvertLocation( from.forme().location(), to->mutable_forme()->mutable_location() );
+        ConvertLocation( from.shape().location(), to->mutable_forme()->mutable_location() );
         CONVERT( pertinence );
     }
 }
@@ -1870,14 +1870,14 @@ void SimulationToClient::Convert( const sword::CrowdFlowKnowledgeUpdate& from, M
     CONVERT_ID( crowd );
     CONVERT_ID( knowledge_group );
     CONVERT_ID( flow );
-    CONVERT_LIST( portions_flux, elem, ConvertFlowPart );
+    CONVERT_LIST_TO( parts, portions_flux, elem, ConvertFlowPart );
     if( from.has_direction() )
         ConvertHeading( from.direction(), to->mutable_direction() );
     CONVERT_TO( speed, vitesse );
-    CONVERT( nb_humains_vivants );
-    CONVERT( nb_humains_morts );
+    CONVERT_TO( alive, nb_humains_vivants );
+    CONVERT_TO( dead, nb_humains_morts );
     ConvertCrowdAttitude( from, to );
-    CONVERT( est_percu );
+    CONVERT_TO( perceived, est_percu );
 }
 
 namespace

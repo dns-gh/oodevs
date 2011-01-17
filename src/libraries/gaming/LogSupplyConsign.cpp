@@ -51,9 +51,9 @@ LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolve
     for( int i = 0; i < message.dotations().elem_size(); ++i )
         Register( message.dotations().elem( i ).resource().id(),
                   * new DotationRequest( dotationResolver_.Get( message.dotations().elem( i ).resource().id() ),
-                                         message.dotations().elem( i ).quantite_demandee(),
-                                         message.dotations().elem( i ).quantite_accordee(),
-                                         message.dotations().elem( i ).quantite_en_transit() ) );
+                                         message.dotations().elem( i ).requested(),
+                                         message.dotations().elem( i ).granted(),
+                                         message.dotations().elem( i ).convoyed() ) );
     consumer_.Get< LogSupplyConsigns >().AddConsign( *this );
 }
 
@@ -102,16 +102,16 @@ void LogSupplyConsign::Update( const sword::LogSupplyHandlingUpdate& message )
         {
             if( DotationRequest* request = Find( message.dotations().elem( i ).resource().id() ) )
             {
-                request->requested_ = message.dotations().elem( i ).quantite_demandee();
-                request->granted_   = message.dotations().elem( i ).quantite_accordee();
-                request->convoyed_  = message.dotations().elem( i ).quantite_en_transit();
+                request->requested_ = message.dotations().elem( i ).requested();
+                request->granted_   = message.dotations().elem( i ).granted();
+                request->convoyed_  = message.dotations().elem( i ).convoyed();
             }
             else
                 Register( message.dotations().elem( i ).resource().id(),
                   * new DotationRequest( dotationResolver_.Get( message.dotations().elem( i ).resource().id() ),
-                                         message.dotations().elem( i ).quantite_demandee(),
-                                         message.dotations().elem( i ).quantite_accordee(),
-                                         message.dotations().elem( i ).quantite_en_transit() ) );
+                                         message.dotations().elem( i ).requested(),
+                                         message.dotations().elem( i ).granted(),
+                                         message.dotations().elem( i ).convoyed() ) );
         }
     controller_.Update( *this );
 }

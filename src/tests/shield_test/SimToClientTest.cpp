@@ -1184,9 +1184,9 @@ namespace
     void FillDotationQuery( Q* q )
     {
         q->mutable_resource()->set_id( 10 );
-        q->set_quantite_demandee( 11 );
-        q->set_quantite_accordee( 12 );
-        q->set_quantite_en_transit( 13 );
+        q->set_requested( 11 );
+        q->set_granted( 12 );
+        q->set_convoyed( 13 );
     }
 }
 
@@ -1251,7 +1251,9 @@ BOOST_FIXTURE_TEST_CASE( log_supply_state_to_client_is_converted, ContextFixture
     content.mutable_log_supply_state()->set_chain( true );
     FillDotationStock( content.mutable_log_supply_state()->mutable_stocks()->add_elem() );
     FillDotationStock( content.mutable_log_supply_state()->mutable_stocks()->add_elem() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_state { unit { id: 7 } chaine_activee: true stocks { elem { ressource_id { id: 10 } quantite_disponible: 11 } elem { ressource_id { id: 10 } quantite_disponible: 11 } } } }" ) );
+    FillLogSupplyEquimentAvailability( content.mutable_log_supply_state()->mutable_transporters()->add_elem() );
+    FillLogSupplyEquimentAvailability( content.mutable_log_supply_state()->mutable_transporters()->add_elem() );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_state { unit { id: 7 } chaine_activee: true stocks { elem { ressource_id { id: 10 } quantite_disponible: 11 } elem { ressource_id { id: 10 } quantite_disponible: 11 } } disponibilites_transporteurs_convois { elem { equipment { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } elem { equipment { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -1290,7 +1292,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_creation_to_client_is_converted, ContextFixture< 
 BOOST_FIXTURE_TEST_CASE( crowd_update_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_crowd_update()->mutable_crowd()->set_id( 7 );
-    content.mutable_crowd_update()->set_etat_domination( 8 );
+    content.mutable_crowd_update()->set_domination( 8 );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_update { crowd { id: 7 } etat_domination: 8 } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1316,8 +1318,8 @@ BOOST_FIXTURE_TEST_CASE( crowd_concentration_update_to_client_is_converted, Cont
 {
     content.mutable_crowd_concentration_update()->mutable_concentration()->set_id( 7 );
     content.mutable_crowd_concentration_update()->mutable_crowd()->set_id( 8 );
-    content.mutable_crowd_concentration_update()->set_nb_humains_vivants( 9 );
-    content.mutable_crowd_concentration_update()->set_nb_humains_morts( 10 );
+    content.mutable_crowd_concentration_update()->set_alive( 9 );
+    content.mutable_crowd_concentration_update()->set_dead( 10 );
     content.mutable_crowd_concentration_update()->set_attitude( sword::agitee );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_concentration_update { concentration { id: 7 } crowd { id: 8 } nb_humains_vivants: 9 nb_humains_morts: 10 attitude: agitee } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
@@ -1347,8 +1349,8 @@ BOOST_FIXTURE_TEST_CASE( crowd_flow_update_to_client_is_converted, ContextFixtur
     FillLocation( content.mutable_crowd_flow_update()->mutable_parts()->mutable_location() );
     content.mutable_crowd_flow_update()->mutable_direction()->set_heading( 20 );
     content.mutable_crowd_flow_update()->set_speed( 21 );
-    content.mutable_crowd_flow_update()->set_nb_humains_vivants( 22 );
-    content.mutable_crowd_flow_update()->set_nb_humains_morts( 23 );
+    content.mutable_crowd_flow_update()->set_alive( 22 );
+    content.mutable_crowd_flow_update()->set_dead( 23 );
     content.mutable_crowd_flow_update()->set_attitude( sword::agitee );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_flow_update { flow { id: 7 } crowd { id: 8 } itineraire { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } parts { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } direction { heading: 20 } vitesse: 21 nb_humains_vivants: 22 nb_humains_morts: 23 attitude: agitee } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
@@ -1368,7 +1370,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_knowledge_update_to_client_is_converted, ContextF
 {
     content.mutable_crowd_knowledge_update()->mutable_knowledge()->set_id( 7 );
     content.mutable_crowd_knowledge_update()->mutable_knowledge_group()->set_id( 8 );
-    content.mutable_crowd_knowledge_update()->set_etat_domination( 9 );
+    content.mutable_crowd_knowledge_update()->set_domination( 9 );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_knowledge_update { knowledge { id: 7 } knowledge_group { id: 8 } etat_domination: 9 } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1407,11 +1409,11 @@ BOOST_FIXTURE_TEST_CASE( crowd_concentration_knowledge_update_to_client_is_conve
     content.mutable_crowd_concentration_knowledge_update()->mutable_crowd()->set_id( 8 );
     content.mutable_crowd_concentration_knowledge_update()->mutable_knowledge_group()->set_id( 9 );
     content.mutable_crowd_concentration_knowledge_update()->mutable_concentration()->set_id( 10 );
-    content.mutable_crowd_concentration_knowledge_update()->set_nb_humains_vivants( 22 );
-    content.mutable_crowd_concentration_knowledge_update()->set_nb_humains_morts( 23 );
+    content.mutable_crowd_concentration_knowledge_update()->set_alive( 22 );
+    content.mutable_crowd_concentration_knowledge_update()->set_dead( 23 );
     content.mutable_crowd_concentration_knowledge_update()->set_attitude( sword::agitee );
     content.mutable_crowd_concentration_knowledge_update()->set_pertinence( 24 );
-    content.mutable_crowd_concentration_knowledge_update()->set_est_percu( true );
+    content.mutable_crowd_concentration_knowledge_update()->set_perceived( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_concentration_knowledge_update { knowledge { id: 7 } crowd { id: 8 } knowledge_group { id: 9 } concentration { id: 10 } nb_humains_vivants: 22 nb_humains_morts: 23 attitude: agitee pertinence: 24 est_percu: true } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1440,7 +1442,7 @@ namespace
     template< typename P >
     void FillFlowPart( P* p )
     {
-        FillLocation( p->mutable_forme()->mutable_location() );
+        FillLocation( p->mutable_shape()->mutable_location() );
         p->set_pertinence( 19 );
     }
 }
@@ -1451,14 +1453,14 @@ BOOST_FIXTURE_TEST_CASE( crowd_flow_knowledge_update_to_client_is_converted, Con
     content.mutable_crowd_flow_knowledge_update()->mutable_crowd()->set_id( 8 );
     content.mutable_crowd_flow_knowledge_update()->mutable_knowledge_group()->set_id( 9 );
     content.mutable_crowd_flow_knowledge_update()->mutable_flow()->set_id( 10 );
-    FillFlowPart( content.mutable_crowd_flow_knowledge_update()->mutable_portions_flux()->add_elem() );
-    FillFlowPart( content.mutable_crowd_flow_knowledge_update()->mutable_portions_flux()->add_elem() );
+    FillFlowPart( content.mutable_crowd_flow_knowledge_update()->mutable_parts()->add_elem() );
+    FillFlowPart( content.mutable_crowd_flow_knowledge_update()->mutable_parts()->add_elem() );
     content.mutable_crowd_flow_knowledge_update()->mutable_direction()->set_heading( 20 );
     content.mutable_crowd_flow_knowledge_update()->set_speed( 21 );
-    content.mutable_crowd_flow_knowledge_update()->set_nb_humains_vivants( 22 );
-    content.mutable_crowd_flow_knowledge_update()->set_nb_humains_morts( 23 );
+    content.mutable_crowd_flow_knowledge_update()->set_alive( 22 );
+    content.mutable_crowd_flow_knowledge_update()->set_dead( 23 );
     content.mutable_crowd_flow_knowledge_update()->set_attitude( sword::agitee );
-    content.mutable_crowd_flow_knowledge_update()->set_est_percu( true );
+    content.mutable_crowd_flow_knowledge_update()->set_perceived( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_flow_knowledge_update { knowledge { id: 7 } crowd { id: 8 } knowledge_group { id: 9 } flow { id: 10 } portions_flux { elem { forme { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } pertinence: 19 } elem { forme { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } pertinence: 19 } } direction { heading: 20 } vitesse: 21 nb_humains_vivants: 22 nb_humains_morts: 23 attitude: agitee est_percu: true } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

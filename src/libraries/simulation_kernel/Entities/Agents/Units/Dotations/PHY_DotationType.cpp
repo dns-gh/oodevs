@@ -46,14 +46,14 @@ struct PHY_DotationType::LoadingWrapper
 void PHY_DotationType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotation types" );
-    PHY_DotationType::munition_        = new PHY_DotationType( "munition"         , eMunition       , sword::munition           , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::carburant_       = new PHY_DotationType( "carburant"        , eCarburant      , sword::carburant          , PHY_DotationLogisticType::uniteEssence_   );
-    PHY_DotationType::mine_            = new PHY_DotationType( "mine"             , eMine           , sword::mine               , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::explosif_        = new PHY_DotationType( "explosif"         , eExplosif       , sword::explosif           , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::barbele_         = new PHY_DotationType( "barbele"          , eBarbele        , sword::barbele            , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::piece_           = new PHY_DotationType( "piece"            , ePiece          , sword::piece              , PHY_DotationLogisticType::pieces_         );
-    PHY_DotationType::ration_          = new PHY_DotationType( "ration"           , eRation         , sword::ration             , PHY_DotationLogisticType::uniteVivre_     );
-    PHY_DotationType::agentExtincteur_ = new PHY_DotationType( "agent extincteur" , eAgentExtincteur, sword::agent_extincteur   , PHY_DotationLogisticType::uniteVivre_     );
+    PHY_DotationType::munition_        = new PHY_DotationType( "munition"         , eMunition       , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::carburant_       = new PHY_DotationType( "carburant"        , eCarburant      , PHY_DotationLogisticType::uniteEssence_   );
+    PHY_DotationType::mine_            = new PHY_DotationType( "mine"             , eMine           , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::explosif_        = new PHY_DotationType( "explosif"         , eExplosif       , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::barbele_         = new PHY_DotationType( "barbele"          , eBarbele        , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::piece_           = new PHY_DotationType( "piece"            , ePiece          , PHY_DotationLogisticType::pieces_         );
+    PHY_DotationType::ration_          = new PHY_DotationType( "ration"           , eRation         , PHY_DotationLogisticType::uniteVivre_     );
+    PHY_DotationType::agentExtincteur_ = new PHY_DotationType( "agent extincteur" , eAgentExtincteur, PHY_DotationLogisticType::uniteVivre_     );
 
     dotationTypes_[ munition_       ->GetName() ] = munition_;
     dotationTypes_[ carburant_      ->GetName() ] = carburant_;
@@ -104,28 +104,12 @@ void PHY_DotationType::Terminate()
 // Name: PHY_DotationType::Initialize
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationType nType, sword::EnumDotationFamily nAsnID, const PHY_DotationLogisticType& defaultLogisticType )
-    : strName_            ( strName )
-    , nType_              ( nType )
-    , nAsnID_             ( nAsnID )
-    , defaultLogisticType_( defaultLogisticType )
-    , dotationCategories_ ()
-{
-    // NOTHING
-}
-
-//-----------------------------------------------------------------------------
-// Name: PHY_DotationType::Initialize
-// Created: NLD/JVT 2004-08-03
-//-----------------------------------------------------------------------------
 void PHY_DotationType::RegisterDotation( const std::string& strCategoryName, xml::xistream& xis )
 {
     const PHY_DotationCategory*& pCategory = dotationCategories_[ strCategoryName ];
     if( pCategory )
         xis.error( "Dotation category '" + strCategoryName + "' already registered" );
-
     pCategory = new PHY_DotationCategory( *this, strCategoryName, xis );
-
     const PHY_DotationCategory*& pCategoryID = dotationCategorieIDs_[ pCategory->GetMosID() ];
     if( pCategoryID )
         xis.error( "Dotation category ID already registered" );
@@ -177,18 +161,6 @@ const PHY_DotationType* PHY_DotationType::FindDotationType( const std::string& s
     if( itDotationType == dotationTypes_.end() )
         return 0;
     return itDotationType->second;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationType::FindDotationType
-// Created: NLD 2005-07-28
-// -----------------------------------------------------------------------------
-const PHY_DotationType* PHY_DotationType::FindDotationType( sword::EnumDotationFamily nAsnID )
-{
-    for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
-        if( it->second->GetAsnID() == nAsnID )
-            return it->second;
-    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -251,15 +223,6 @@ const std::string& PHY_DotationType::GetName() const
 unsigned int PHY_DotationType::GetID() const
 {
     return nType_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationType::GetAsnID
-// Created: NLD 2005-07-28
-// -----------------------------------------------------------------------------
-sword::EnumDotationFamily PHY_DotationType::GetAsnID() const
-{
-    return nAsnID_;
 }
 
 // -----------------------------------------------------------------------------

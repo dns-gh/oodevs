@@ -67,8 +67,8 @@ void Population::DoUpdate( const sword::CrowdCreation& /*message*/ )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const sword::CrowdUpdate& msg )
 {
-    if( msg.has_etat_domination() )
-        nDominationState_ = msg.etat_domination();
+    if( msg.has_domination() )
+        nDominationState_ = msg.domination();
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::CrowdUpdate asn;
     asn().mutable_crowd()->set_id( GetId() );
-    asn().set_etat_domination( nDominationState_ );
+    asn().set_domination( nDominationState_ );
     asn.Send( publisher );
     if( order_.get() )
         order_->Send( publisher );

@@ -53,8 +53,8 @@ PopulationKnowledge::~PopulationKnowledge()
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const sword::CrowdKnowledgeUpdate& msg )
 {
-    if( msg.has_etat_domination()  )
-        nDominationState_ = msg.etat_domination();
+    if( msg.has_domination()  )
+        nDominationState_ = msg.domination();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ void PopulationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 
     asn().mutable_knowledge()->set_id( GetId() );
     asn().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
-    asn().set_etat_domination( nDominationState_ );
+    asn().set_domination( nDominationState_ );
 
     asn.Send( publisher );
 }

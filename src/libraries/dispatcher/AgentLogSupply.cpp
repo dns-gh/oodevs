@@ -45,11 +45,11 @@ void AgentLogSupply::Update( const sword::LogSupplyState& asnMsg )
     if( asnMsg.has_chain()  )
         bSystemEnabled_ = asnMsg.chain() != 0;
 
-    if( asnMsg.has_disponibilites_transporteurs_convois()  )
+    if( asnMsg.has_transporters()  )
     {
         convoyersAvailability_.clear();
-        for( int i = 0; i < asnMsg.disponibilites_transporteurs_convois().elem_size(); ++i )
-            convoyersAvailability_.push_back( T_Availability( asnMsg.disponibilites_transporteurs_convois().elem( i ) ) );
+        for( int i = 0; i < asnMsg.transporters().elem_size(); ++i )
+            convoyersAvailability_.push_back( T_Availability( asnMsg.transporters().elem( i ) ) );
     }
 
     if( asnMsg.has_stocks() )
@@ -77,7 +77,7 @@ void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
     asn().set_chain( bSystemEnabled_ );
     {
         for( std::vector< T_Availability >::const_iterator it = convoyersAvailability_.begin(); it != convoyersAvailability_.end(); ++it )
-            it->Send( *asn().mutable_disponibilites_transporteurs_convois()->add_elem() );
+            it->Send( *asn().mutable_transporters()->add_elem() );
     }
     {
         for( tools::Iterator< const Dotation& > it = stocks_.CreateIterator(); it.HasMoreElements(); )

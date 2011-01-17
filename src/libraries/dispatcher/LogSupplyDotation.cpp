@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "LogSupplyDotation.h"
 #include "protocol/Protocol.h"
 
@@ -18,12 +17,13 @@ using namespace dispatcher;
 // Name: LogSupplyDotation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LogSupplyDotation::LogSupplyDotation( const Model& /*model*/, const sword::DotationQuery& asn )
-    : nDotationType_( asn.resource().id()       )
-    , nNbrRequested_( asn.quantite_demandee()   )
-    , nNbrGranted_  ( asn.quantite_accordee()   )
-    , nNbrConvoyed_ ( asn.quantite_en_transit() )
+LogSupplyDotation::LogSupplyDotation( const Model& /*model*/, const sword::DotationQuery& msg )
+    : nDotationType_( msg.resource().id() )
+    , nNbrRequested_( msg.requested() )
+    , nNbrGranted_  ( msg.granted() )
+    , nNbrConvoyed_ ( msg.convoyed() )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,21 +39,21 @@ LogSupplyDotation::~LogSupplyDotation()
 // Name: LogSupplyDotation::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogSupplyDotation::Update( const sword::DotationQuery& asn )
+void LogSupplyDotation::Update( const sword::DotationQuery& msg )
 {
-    nNbrRequested_ = asn.quantite_demandee();
-    nNbrGranted_   = asn.quantite_accordee();
-    nNbrConvoyed_  = asn.quantite_en_transit();
+    nNbrRequested_ = msg.requested();
+    nNbrGranted_ = msg.granted();
+    nNbrConvoyed_ = msg.convoyed();
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyDotation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void LogSupplyDotation::Send( sword::DotationQuery& asn ) const
+void LogSupplyDotation::Send( sword::DotationQuery& msg ) const
 {
-    asn.mutable_resource()->set_id( nDotationType_ );
-    asn.set_quantite_demandee( nNbrRequested_ );
-    asn.set_quantite_accordee( nNbrGranted_ );
-    asn.set_quantite_en_transit( nNbrConvoyed_ );
+    msg.mutable_resource()->set_id( nDotationType_ );
+    msg.set_requested( nNbrRequested_ );
+    msg.set_granted( nNbrGranted_ );
+    msg.set_convoyed( nNbrConvoyed_ );
 }

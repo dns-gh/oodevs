@@ -18,7 +18,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 PopulationFlowPart::PopulationFlowPart( const sword::FlowPart& asn )
-    : localisation_( asn.forme().location() )
+    : localisation_( asn.shape().location() )
     , nRelevance_  ( asn.pertinence() )
 {
     // NOTHING
@@ -40,5 +40,5 @@ PopulationFlowPart::~PopulationFlowPart()
 void PopulationFlowPart::Send( sword::FlowPart& asn ) const
 {
     asn.set_pertinence( nRelevance_ );
-    localisation_.Send( *asn.mutable_forme()->mutable_location() );
+    localisation_.Send( *asn.mutable_shape()->mutable_location() );
 }

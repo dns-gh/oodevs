@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
         BOOST_CHECK_EQUAL( 1, asn.medical_treatment().bed_capacities().size() );
         
-        unsigned int woundNumber = 1;
+        int woundNumber = 1;
         BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 ).has_type_id() );
         BOOST_CHECK_EQUAL( woundNumber, asn.medical_treatment().bed_capacities( 0 ).type_id() );
         BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 ).has_available_count() );

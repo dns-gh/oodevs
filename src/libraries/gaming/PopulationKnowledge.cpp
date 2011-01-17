@@ -74,9 +74,9 @@ QString PopulationKnowledge::GetName() const
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const sword::CrowdKnowledgeUpdate& message )
 {
-    if( message.has_etat_domination()  )
+    if( message.has_domination()  )
     {
-        domination_ = message.etat_domination();
+        domination_ = message.domination();
         Touch();
     }
 }

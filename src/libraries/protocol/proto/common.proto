@@ -96,25 +96,6 @@ message DateTime {
 }
 
 // Enumerations
-///////////// begin <not used by protocol> /////////////
-enum EnumDotationFamily {
-   munition  = 0;
-   carburant = 1;
-   explosif  = 2;
-   mine      = 3;
-   barbele   = 4;
-   piece     = 5;
-   ration    = 6;
-   agent_extincteur = 7;
-}
-
-enum EnumAmmunitionFamily {
-   obus        = 0;
-   missile_sol = 1;
-   missile_air = 2;
-   mitraille   = 3;
-}
-///////////// end <not used by protocol> /////////////
 
 ///////////// begin <only used by SimToClient> /////////////
 

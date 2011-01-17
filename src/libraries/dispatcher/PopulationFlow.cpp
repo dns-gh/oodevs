@@ -60,10 +60,10 @@ void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& msg )
         nSpeed_ = msg.speed();
     if( msg.has_attitude()  )
         nAttitude_ = msg.attitude();
-    if( msg.has_nb_humains_morts()  )
-        nNbrDeadHumans_ = msg.nb_humains_morts();
-    if( msg.has_nb_humains_vivants()  )
-        nNbrAliveHumans_ = msg.nb_humains_vivants();
+    if( msg.has_dead()  )
+        nNbrDeadHumans_ = msg.dead();
+    if( msg.has_alive()  )
+        nNbrAliveHumans_ = msg.alive();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,8 +90,8 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().mutable_direction()->set_heading( nDirection_ );
     asn().set_speed( nSpeed_ );
     asn().set_attitude( nAttitude_ );
-    asn().set_nb_humains_morts( nNbrDeadHumans_ );
-    asn().set_nb_humains_vivants( nNbrAliveHumans_ );
+    asn().set_dead( nNbrDeadHumans_ );
+    asn().set_alive( nNbrAliveHumans_ );
     path_.Send( *asn().mutable_path()->mutable_location() );
     flow_.Send( *asn().mutable_parts()->mutable_location() );
     asn.Send( publisher );

@@ -35,11 +35,11 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel
     , nRelevance_         ( 0 )
     , bPerceived_         ( false )
 {
-    optionals_.nb_humains_vivantsPresent = 0;
-    optionals_.nb_humains_mortsPresent   = 0;
+    optionals_.alivePresent = 0;
+    optionals_.deadPresent   = 0;
     optionals_.attitudePresent           = 0;
     optionals_.pertinencePresent         = 0;
-    optionals_.est_percuPresent          = 0;
+    optionals_.perceivedPresent          = 0;
 //    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationConcentrationKnowledge >( *this ) );
 }
 
@@ -66,25 +66,25 @@ void PopulationConcentrationKnowledge::Update( const sword::CrowdConcentrationKn
         nAttitude_ = msg.attitude();
         optionals_.attitudePresent = 1;
     }
-    if( msg.has_nb_humains_morts() )
+    if( msg.has_dead() )
     {
-        nNbrDeadHumans_ = msg.nb_humains_morts();
-        optionals_.nb_humains_mortsPresent = 1;
+        nNbrDeadHumans_ = msg.dead();
+        optionals_.deadPresent = 1;
     }
-    if( msg.has_nb_humains_vivants() )
+    if( msg.has_alive() )
     {
-        nNbrAliveHumans_ = msg.nb_humains_vivants();
-        optionals_.nb_humains_vivantsPresent = 1;
+        nNbrAliveHumans_ = msg.alive();
+        optionals_.alivePresent = 1;
     }
     if( msg.has_pertinence() )
     {
         nRelevance_ = msg.pertinence();
         optionals_.pertinencePresent = 1;
     }
-    if( msg.has_est_percu() )
+    if( msg.has_perceived() )
     {
-        bPerceived_ = msg.est_percu();
-        optionals_.est_percuPresent = 1;
+        bPerceived_ = msg.perceived();
+        optionals_.perceivedPresent = 1;
     }
 }
 
@@ -120,16 +120,16 @@ void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publ
         asn().mutable_concentration()->set_id( concentrationId_ );
     else
         asn().mutable_concentration()->set_id( 0 );
-    if( optionals_.nb_humains_mortsPresent )
-        asn().set_nb_humains_morts( nNbrDeadHumans_ );
-    if( optionals_.nb_humains_vivantsPresent )
-        asn().set_nb_humains_vivants( nNbrAliveHumans_ );
+    if( optionals_.deadPresent )
+        asn().set_dead( nNbrDeadHumans_ );
+    if( optionals_.alivePresent )
+        asn().set_alive( nNbrAliveHumans_ );
     if( optionals_.attitudePresent )
         asn().set_attitude( nAttitude_ );
     if( optionals_.pertinencePresent )
         asn().set_pertinence( nRelevance_ );
-    if( optionals_.est_percuPresent )
-        asn().set_est_percu( bPerceived_ );
+    if( optionals_.perceivedPresent )
+        asn().set_perceived( bPerceived_ );
     asn.Send( publisher );
 }
 

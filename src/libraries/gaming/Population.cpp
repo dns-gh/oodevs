@@ -186,8 +186,8 @@ void Population::DoUpdate( const sword::CrowdConcentrationDestruction& message )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const sword::CrowdUpdate& message )
 {
-    if( message.has_etat_domination()  )
-        nDomination_ = message.etat_domination();
+    if( message.has_domination()  )
+        nDomination_ = message.domination();
 }
 
 // -----------------------------------------------------------------------------

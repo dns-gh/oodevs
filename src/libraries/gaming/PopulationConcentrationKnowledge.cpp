@@ -58,12 +58,12 @@ void PopulationConcentrationKnowledge::DoUpdate( const sword::CrowdConcentration
     static const float oneOnpi = 1.f / std::acos( -1.f );
     if( message.has_attitude()  )
         eAttitude_ = ( E_PopulationAttitude )message.attitude();
-    if( message.has_est_percu()  )
-        bIsPerceived_ = message.est_percu() != 0;
-    if( message.has_nb_humains_vivants()  )
-        nNbrAliveHumans_ = ( uint )message.nb_humains_vivants();
-    if( message.has_nb_humains_morts()  )
-        nNbrDeadHumans_ = ( uint )message.nb_humains_morts();
+    if( message.has_perceived()  )
+        bIsPerceived_ = message.perceived() != 0;
+    if( message.has_alive()  )
+        nNbrAliveHumans_ = ( uint )message.alive();
+    if( message.has_dead()  )
+        nNbrDeadHumans_ = ( uint )message.dead();
     if( message.has_concentration()  )
         concentrationId_ = message.concentration().id();
     if( message.has_pertinence()  )

@@ -67,13 +67,13 @@ private:
     //$$$ bullshit
     struct T_Optionals
     {
-        unsigned portions_fluxPresent : 1;
+        unsigned partsPresent : 1;
         unsigned directionPresent : 1;
         unsigned vitessePresent : 1;
-        unsigned nb_humains_vivantsPresent : 1;
-        unsigned nb_humains_mortsPresent : 1;
+        unsigned alivePresent : 1;
+        unsigned deadPresent : 1;
         unsigned attitudePresent : 1;
-        unsigned est_percuPresent : 1;
+        unsigned perceivedPresent : 1;
     };
     //@}
 

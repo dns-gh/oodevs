@@ -432,7 +432,7 @@ void DEC_PopulationDecision::StopMissionBehavior( const boost::shared_ptr< MIL_M
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::SendFullState( client::CrowdUpdate& msg ) const
 {
-    msg().set_etat_domination( (unsigned int)( rDominationState_ * 100. ) );
+    msg().set_domination( (unsigned int)( rDominationState_ * 100. ) );
 }
 
 // -----------------------------------------------------------------------------

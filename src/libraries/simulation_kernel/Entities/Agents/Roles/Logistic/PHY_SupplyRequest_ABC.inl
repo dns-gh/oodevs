@@ -215,9 +215,9 @@ template< typename T >
 void PHY_SupplyRequest_ABC< T >::Serialize( sword::DotationQuery& asn ) const
 {
     asn.mutable_resource()->set_id( GetDotationCategory().GetMosID() );
-    asn.set_quantite_demandee  ( (unsigned int)rTotalRequestedValue_ );
-    asn.set_quantite_accordee  ( (unsigned int)rTotalReservedValue_ );
-    asn.set_quantite_en_transit( (unsigned int)rTotalConvoyedValue_ );
+    asn.set_requested  ( (unsigned int)rTotalRequestedValue_ );
+    asn.set_granted  ( (unsigned int)rTotalReservedValue_ );
+    asn.set_convoyed( (unsigned int)rTotalConvoyedValue_ );
 }
        
 // =============================================================================

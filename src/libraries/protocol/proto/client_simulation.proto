@@ -13,9 +13,9 @@ package sword;
 
 /** @struct ControlDateTimeChange
     @brief A date and/or time change request.
-    
+
     This message is sent by a client to change the current date and/or time.
-    
+
     @see ControlDateTimeChangeAck
 */
 message ControlDateTimeChange {
@@ -28,10 +28,10 @@ message ControlDateTimeChange {
 
 /** @struct ControlCheckPointSaveNow
     @brief A checkpoint save request.
-    
+
     This message is sent by a client to trigger a checkpoint save.
-    
-    @see ControlCheckPointSaveEnd 
+
+    @see ControlCheckPointSaveEnd
 */
 message ControlCheckPointSaveNow {
     /** @property name
@@ -42,9 +42,9 @@ message ControlCheckPointSaveNow {
 
 /** @struct SetAutomatMode
     @brief An automate mode change request.
-    
+
     This message is sent by a client to activate or deactivate an automate.
-    
+
     @see SetAutomatModeAck
 */
 message SetAutomatMode {
@@ -62,9 +62,9 @@ message SetAutomatMode {
 
 /** @struct UnitCreationRequest
     @brief An agent creation request.
-    
+
     This message is sent by a client to create an agent.
-    
+
     @see UnitCreationRequestAck
     @todo rename into AgentCreationRequest
     @todo no clue what the fields are exactly...
@@ -89,114 +89,52 @@ message UnitCreationRequest {
 
 /** @struct UnitMagicAction
     @brief An agent magic action request.
-    
+
     This message is sent by a client to perform a magic action.
-    
+
     @see UnitMagicActionAck
     @todo rename into AgentMagicAction
 */
 message UnitMagicAction {
     /** @enum Type
         @brief The type of magic action.
-        
+
         Specific parameters are expected for each type.
 
         @todo Explain what parameters are expected for each type
     */
    enum Type {
-        /** @brief A move to magic action.
-        */
-        move_to                   = 0;
-        /** @brief A surrender to magic action.
-        */
-        surrender_to              = 1;
-        /** @brief A cancel surrender magic action.
-        */
-        cancel_surrender          = 2;
-        /** @brief A recover transporters magic action.
-        */
-        recover_transporters      = 3;
-        /** @brief A destroy component magic action.
-        */
-        destroy_component         = 4;
-        /** @brief A recover all magic action.
-        */
-        recover_all               = 5;
-        /** @brief A recover troops magic action.
-        */
-        recover_troops            = 6;
-        /** @brief A recover equiments magic action.
-        */
-        recover_equipments        = 7;
-        /** @brief A recover resources magic action.
-        */
-        recover_resources         = 8;
-        /** @brief A destroy all magic action.
-        */
-        destroy_all               = 9;
-        /** @brief A change human factors magic action.
-        */
-        change_human_factors      = 10;
-        /** @brief A partial recovery magic action.
-        */
-        partial_recovery          = 11;
-        /** @brief A unit creation magic action.
-        */
-        unit_creation             = 12;
-        /** @brief A create fire order magic action.
-        */
-        create_fire_order         = 13;
-        /** @brief A crowd total destruction magic action.
-        */
-        crowd_total_destruction   = 14;
-        /** @brief A crowd kill magic action.
-        */
-        crowd_kill                = 15;
-        /** @brief A crowd resurrect magic action.
-        */
-        crowd_resurrect           = 16;
-        /** @brief A crowd change attitude magic action.
-        */
-        crowd_change_attitude     = 17;
-        /** @brief A change knowledge group magic action.
-        */
-        change_knowledge_group    = 18;
-        /** @brief A change logistic links magic action.
-        */
-        change_logistic_links     = 19;
-        /** @brief A unit change superior magic action.
-        */
-        unit_change_superior      = 20;
-        /** @brief A change automate superior magic action.
-        */
-        change_automat_superior   = 21;
-        /** @brief A change formation superior magic action.
-        */
-        change_formation_superior = 22;
-        /** @brief A knowledge group update magic action.
-        */
-        knowledge_group_update    = 23;
-        /** @brief A log supply push flow magic action.
-        */
-        log_supply_push_flow      = 24;
-        /** @brief A log supply change quotas magic action.
-        */
-        log_supply_change_quotas  = 25;
-        /** @brief An automate creation magic action.
-        */
-        automat_creation          = 26;
-        /** @brief A formation creation magic action.
-        */
-        formation_creation        = 27;
-        /** @brief A crowd creation magic action.
-        */
-        crowd_creation            = 28;
-        /** @brief A log supply pull flow magic action.
-        */
-        log_supply_pull_flow      = 29;
-        /** @brief A create wound magic action.
-        */
-        create_wound              = 30;
+        move_to                   = 0;  //!< A move to magic action
+        surrender_to              = 1;  //!< A surrender to magic action
+        cancel_surrender          = 2;  //!< A cancel surrender magic action
+        recover_transporters      = 3;  //!< A recover transporters magic action
+        destroy_component         = 4;  //!< A destroy component magic action
+        recover_all               = 5;  //!< A recover all magic action
+        recover_troops            = 6;  //!< A recover troops magic action
+        recover_equipments        = 7;  //!< A recover equiments magic action
+        recover_resources         = 8;  //!< A recover resources magic action
+        destroy_all               = 9;  //!< A destroy all magic action
+        change_human_factors      = 10; //!< A change human factors magic action
+        partial_recovery          = 11; //!< A partial recovery magic action
+        unit_creation             = 12; //!< A unit creation magic action
+        create_fire_order         = 13; //!< A create fire order magic action
+        crowd_total_destruction   = 14; //!< A crowd total destruction magic action
+        crowd_kill                = 15; //!< A crowd kill magic action
+        crowd_resurrect           = 16; //!< A crowd resurrect magic action
+        crowd_change_attitude     = 17; //!< A crowd change attitude magic action
+        change_knowledge_group    = 18; //!< A change knowledge group magic action
+        change_logistic_links     = 19; //!< A change logistic links magic action
+        unit_change_superior      = 20; //!< A unit change superior magic action
+        change_automat_superior   = 21; //!< A change automate superior magic action
+        change_formation_superior = 22; //!< A change formation superior magic action
+        knowledge_group_update    = 23; //!< A knowledge group update magic action
+        log_supply_push_flow      = 24; //!< A log supply push flow magic action
+        log_supply_change_quotas  = 25; //!< A log supply change quotas magic action
+        automat_creation          = 26; //!< An automate creation magic action
+        formation_creation        = 27; //!< A formation creation magic action
+        crowd_creation            = 28; //!< A crowd creation magic action
+        log_supply_pull_flow      = 29; //!< A log supply pull flow magic action
+        create_wound              = 30; //!< A create wound magic action
     }
     /** @property tasker
         @brief The tasker.
@@ -218,17 +156,17 @@ message UnitMagicAction {
 
 /** @struct KnowledgeMagicAction
     @brief A knowledge magic action request.
-    
+
     This message is sent by a client to perform a magic action.
-    
+
     @todo no corresponding ack message ?
 */
 message KnowledgeMagicAction {
     /** @enum Type
         @brief The type of magic action.
-        
+
         Specific parameters are expected for each type.
-        
+
         @todo Explain what parameters are expected for each type
     */
    enum Type {
@@ -264,17 +202,17 @@ message KnowledgeMagicAction {
 
 /** @struct ObjectMagicAction
     @brief An object magic action request.
-    
+
     This message is sent by a client to perform a magic action.
-    
+
     @see ObjectMagicActionAck
 */
 message ObjectMagicAction {
     /** @enum Type
         @brief The type of magic action.
-        
+
         Specific parameters are expected for each type.
-        
+
         @todo Explain what parameters are expected for each type
     */
     enum Type {
@@ -293,11 +231,11 @@ message ObjectMagicAction {
     }
     /** @enum Attribute
         @brief The type of object.
-        
+
         The first parameter among the parameters actually is of type
         MissionParameter::Value::identifier and must be reinterpreted as a value
         of this enumeration.
-        
+
         @todo This must be a joke !
     */
     enum Attribute {
@@ -341,17 +279,17 @@ message ObjectMagicAction {
 
 /** @struct MagicAction
     @brief A magic action request.
-    
+
     This message is sent by a client to perform a magic action.
-    
+
     @see MagicActionAck
 */
 message MagicAction {
     /** @enum Type
         @brief The type of magic action.
-        
+
         Specific parameters are expected for each type.
-        
+
         @todo Explain what parameters are expected for each type
     */
    enum Type {
@@ -385,9 +323,9 @@ message MagicAction {
 
 /** @struct ControlCheckPointSetFrequency
     @brief A checkpoint frequency change request.
-    
+
     This message is sent by a client to change the frequency of automatic checkpoints.
-    
+
     @see ControlCheckPointSetFrequencyAck
     @todo rename to ControlCheckpointSetFrequency
 */
@@ -400,9 +338,9 @@ message ControlCheckPointSetFrequency {
 
 /** @struct ControlCheckPointDeleteRequest
     @brief A checkpoint deletion request.
-    
+
     This message is sent by a client to delete a checkpoint.
-    
+
     @see ControlCheckPointListRequest
     @see ControlCheckPointDeleteAck
 */
@@ -415,9 +353,9 @@ message ControlCheckPointDeleteRequest {
 
 /** @struct ControlCheckPointListRequest
     @brief A checkpoint list request.
-    
+
     This message is sent by a client to retrieve the list of checkpoints.
-    
+
     @see ControlCheckPointListAck
     @see ControlCheckPointList
 */
@@ -426,11 +364,11 @@ message ControlCheckPointListRequest {
 
 /** @struct ControlEnableVisionCones
     @brief A vision cones toggle request.
-    
+
     This message is sent by a client to toggle the sending of vision cones.
-    
+
     Enabling vision cones will produce UnitVisionCones messages.
-    
+
     @see UnitVisionCones
     @todo see how it is related to ControlInformation::send_vision_cones
 */
@@ -440,9 +378,9 @@ message ControlEnableVisionCones {
 
 /** @struct ChangePopulationMagicAction
     @brief A change population magic action.
-    
+
     This message is sent by a client to alter a population with a magic action.
-    
+
     @see ChangePopulationMagicActionAck
 */
 message ChangePopulationMagicAction {
@@ -479,9 +417,9 @@ message ChangePopulationMagicAction {
 
 /** @struct UrbanMagicAction
     @brief A urban magic action.
-    
+
     This message is sent by a client to alter a urban object with a magic action.
-    
+
     @see UrbanMagicActionAck
 */
 message UrbanMagicAction {
@@ -525,7 +463,7 @@ message UrbanMagicAction {
 
 /** @struct ClientToSim
     @brief A facade for all messages from clients to the simulation.
-    
+
     This is the actual message sent over the network.
 */
 message ClientToSim {
@@ -647,12 +585,12 @@ message ClientToSim {
     }
     /** @property context
         @brief Identifies the request matching the response.
-        
+
         This field is used to fill the "context" fields in the response message
         (from SimToClient).
-        
-        This context allows the client application to put an unique identifier 
-        (based for instance on MAC address), thus allowing to track response 
+
+        This context allows the client application to put an unique identifier
+        (based for instance on MAC address), thus allowing to track response
         message matching a specific request emitted by the client.
     */
     optional int32   context = 1;

@@ -71,11 +71,11 @@ void PopulationConcentration::DoUpdate( const sword::CrowdConcentrationUpdate& m
     if( message.has_attitude()  )
         attitude_ = (E_PopulationAttitude)message.attitude();
     static const float oneOnpi = 1.f / std::acos( -1.f );
-    if( message.has_nb_humains_vivants()  )
-        nLivingHumans_ = message.nb_humains_vivants();
+    if( message.has_alive()  )
+        nLivingHumans_ = message.alive();
 
-    if( message.has_nb_humains_morts()  )
-        nDeadHumans_ = message.nb_humains_morts();
+    if( message.has_dead()  )
+        nDeadHumans_ = message.dead();
 
     if( density_ > 0 )
     {

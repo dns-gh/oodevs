@@ -338,7 +338,7 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-    asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+    asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     asnMsg().set_speed( static_cast< int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
@@ -346,19 +346,19 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
     {
         unsigned int i = 0;
         for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
-            (*it->second).Serialize( *asnMsg().mutable_portions_flux()->add_elem() );
+            (*it->second).Serialize( *asnMsg().mutable_parts()->add_elem() );
     }
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );
-        asnMsg().set_nb_humains_morts( nNbrDeadHumans_ );
-        asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
+        asnMsg().set_dead( nNbrDeadHumans_ );
+        asnMsg().set_alive( nNbrAliveHumans_ );
         asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    if( asnMsg().has_portions_flux() )
+    if( asnMsg().has_parts() )
     {
-        asnMsg().mutable_portions_flux()->Clear();
+        asnMsg().mutable_parts()->Clear();
         asnMsg().Clear();
     }
 }
@@ -378,7 +378,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
-        asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+        asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     if( bRealFlowUpdated_ )
         asnMsg().mutable_flow()->set_id( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
     if( bDirectionUpdated_ )
@@ -391,7 +391,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         {
             unsigned int i = 0;
             for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
-                (*it->second).Serialize( *asnMsg().mutable_portions_flux()->add_elem() );
+                (*it->second).Serialize( *asnMsg().mutable_parts()->add_elem() );
         }
     }
     if( bReconAttributesValid_ )
@@ -399,21 +399,21 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
         assert( pAttitude_ );
         if( bHumansUpdated_ )
         {
-            asnMsg().set_nb_humains_morts( nNbrDeadHumans_  );
-            asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
+            asnMsg().set_dead( nNbrDeadHumans_  );
+            asnMsg().set_alive( nNbrAliveHumans_ );
         }
         if( bAttitudeUpdated_ )
             asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    if( asnMsg().has_portions_flux() )
+    if( asnMsg().has_parts() )
     {
-        asnMsg().mutable_portions_flux()->clear_elem();
-        asnMsg().clear_portions_flux();
-//        for( unsigned int i = 0; i < asnMsg().portions_flux.n; ++i )
-//            ASN_Delete::Delete( asnMsg().portions_flux.elem[ i ].forme );
-//        if( asnMsg().portions_flux.n > 0 )
-//            delete [] asnMsg().portions_flux.elem;
+        asnMsg().mutable_parts()->clear_elem();
+        asnMsg().clear_parts();
+//        for( unsigned int i = 0; i < asnMsg().parts.n; ++i )
+//            ASN_Delete::Delete( asnMsg().parts.elem[ i ].forme );
+//        if( asnMsg().parts.n > 0 )
+//            delete [] asnMsg().parts.elem;
     }
 }
 

@@ -15,10 +15,10 @@
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Stl.h"
 
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , sword::obus        );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", sword::missile_air );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", sword::missile_sol );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , sword::mitraille   );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , 0 );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", 1 );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", 2 );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , 3 );
 
 PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 
@@ -48,9 +48,9 @@ void PHY_AmmoDotationClass::Terminate()
 // Name: PHY_AmmoDotationClass constructor
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, sword::EnumAmmunitionFamily nAsnID )
+PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, int id )
     : strName_( strName )
-    , nAsnID_ ( nAsnID  )
+    , id_     ( id )
 {
     // NOTHING
 }
@@ -83,24 +83,8 @@ const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( int nID )
 const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( const std::string& strName )
 {
     for( CIT_TypeMap it = types_.begin(); it != types_.end(); ++it )
-    {
         if( sCaseInsensitiveEqual()( strName, it->second->GetName() ) )
             return it->second;
-    }
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_AmmoDotationClass::Find
-// Created: NLD 2005-07-29
-// -----------------------------------------------------------------------------
-const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( sword::EnumAmmunitionFamily nAsnID )
-{
-    for( CIT_TypeMap it = types_.begin(); it != types_.end(); ++it )
-    {
-        if( it->second->GetAsnID() == nAsnID )
-            return it->second;
-    }
     return 0;
 }
 
@@ -110,16 +94,7 @@ const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( sword::EnumAmmunitionF
 // -----------------------------------------------------------------------------
 int PHY_AmmoDotationClass::GetID() const
 {
-    return (int) nAsnID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_AmmoDotationClass::GetAsnID
-// Created: NLD 2005-07-29
-// -----------------------------------------------------------------------------
-sword::EnumAmmunitionFamily PHY_AmmoDotationClass::GetAsnID() const
-{
-    return nAsnID_;
+    return id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +112,7 @@ const std::string& PHY_AmmoDotationClass::GetName() const
 // -----------------------------------------------------------------------------
 bool PHY_AmmoDotationClass::operator==( const PHY_AmmoDotationClass& rhs ) const
 {
-    return nAsnID_ == rhs.nAsnID_;
+    return id_ == rhs.id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,5 +121,5 @@ bool PHY_AmmoDotationClass::operator==( const PHY_AmmoDotationClass& rhs ) const
 // -----------------------------------------------------------------------------
 bool PHY_AmmoDotationClass::operator!=( const PHY_AmmoDotationClass& rhs ) const
 {
-    return nAsnID_ != rhs.nAsnID_;
+    return id_ != rhs.id_;
 }

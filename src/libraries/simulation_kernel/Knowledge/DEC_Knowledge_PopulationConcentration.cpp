@@ -292,15 +292,15 @@ void DEC_Knowledge_PopulationConcentration::SendFullState()
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
-    asnMsg().set_est_percu                ( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+    asnMsg().set_perceived                ( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     asnMsg().mutable_concentration()->set_id( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
     asnMsg().set_pertinence               ( (unsigned int)( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );
-        asnMsg().set_nb_humains_morts( nNbrDeadHumans_ );
-        asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
+        asnMsg().set_dead( nNbrDeadHumans_ );
+        asnMsg().set_alive( nNbrAliveHumans_ );
         asnMsg().set_attitude( pAttitude_->GetAsnID() );
     }
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -322,7 +322,7 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
     asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
 
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
-        asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+        asnMsg().set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     if( bRealConcentrationUpdated_ )
         asnMsg().mutable_concentration()->set_id( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
     if( bRelevanceUpdated_ )
@@ -335,8 +335,8 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
         assert( pAttitude_ );
         if( bHumansUpdated_ )
         {
-            asnMsg().set_nb_humains_morts  ( nNbrDeadHumans_ );
-            asnMsg().set_nb_humains_vivants( nNbrAliveHumans_ );
+            asnMsg().set_dead  ( nNbrDeadHumans_ );
+            asnMsg().set_alive( nNbrAliveHumans_ );
         }
         if( bAttitudeUpdated_ )
             asnMsg().set_attitude( pAttitude_->GetAsnID() );

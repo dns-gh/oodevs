@@ -49,10 +49,10 @@ void PopulationConcentration::DoUpdate( const sword::CrowdConcentrationUpdate& m
 {
     if( msg.has_attitude()  )
         nAttitude_ = msg.attitude();
-    if( msg.has_nb_humains_morts()  )
-        nNbrDeadHumans_ = msg.nb_humains_morts();
-    if( msg.has_nb_humains_vivants()  )
-        nNbrAliveHumans_ = msg.nb_humains_vivants();
+    if( msg.has_dead()  )
+        nNbrDeadHumans_ = msg.dead();
+    if( msg.has_alive()  )
+        nNbrAliveHumans_ = msg.alive();
 }
 
 // -----------------------------------------------------------------------------
@@ -78,8 +78,8 @@ void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) c
     asn().mutable_concentration()->set_id( nID_ );
     asn().mutable_crowd()->set_id( population_.GetId() );
     asn().set_attitude( nAttitude_ );
-    asn().set_nb_humains_morts( nNbrDeadHumans_ );
-    asn().set_nb_humains_vivants( nNbrAliveHumans_ );
+    asn().set_dead( nNbrDeadHumans_ );
+    asn().set_alive( nNbrAliveHumans_ );
     asn.Send( publisher );
 }
 

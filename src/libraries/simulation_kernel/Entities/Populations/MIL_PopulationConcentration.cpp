@@ -314,8 +314,8 @@ void MIL_PopulationConcentration::SendFullState( MIL_Population::sPeopleCounter&
     asnMsg().mutable_concentration()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
     asnMsg().set_attitude          ( GetAttitude().GetAsnID() );
-    asnMsg().set_nb_humains_morts  ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
-    asnMsg().set_nb_humains_vivants( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
+    asnMsg().set_dead  ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
+    asnMsg().set_alive( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
 
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -340,8 +340,8 @@ void MIL_PopulationConcentration::SendChangedState( MIL_Population::sPeopleCount
 
     if( HasHumansChanged() )
     {
-        asnMsg().set_nb_humains_morts  ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
-        asnMsg().set_nb_humains_vivants( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
+        asnMsg().set_dead  ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
+        asnMsg().set_alive( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
     }
 
     asnMsg.Send( NET_Publisher_ABC::Publisher() );

@@ -922,7 +922,7 @@ message StartUnitFire {
 }
 
 message UnitHumanFireDamage {
-    required EnumHumanRank rank           = 1;
+    required EnumHumanRank rank       = 1;
     required int32         alive      = 2;
     required int32         dead       = 3;
     required int32         wounded_u1 = 4;
@@ -957,8 +957,8 @@ message UnitsFireDamages {
 }
 
 message CrowdFireDamages {
-    required CrowdId target   = 1;
-    required int32   dead = 2;
+    required CrowdId target = 1;
+    required int32   dead   = 2;
 }
 
 message CrowdsFireDamages {
@@ -1200,9 +1200,9 @@ message LogMedicalState {
     optional bool                                 chain                               = 2;
     optional LogMedicalPriorities                 priorities                          = 3;
     optional AutomatIdList                        tactical_priorities                 = 4;
-    optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_releve    = 5;
-    optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_ramassage = 6;
-    optional SeqOfLogMedicalEquipmentAvailability doctors             = 7;
+    optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_releve    = 5; //!< @todo translate
+    optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_ramassage = 6; //!< @todo translate
+    optional SeqOfLogMedicalEquipmentAvailability doctors                             = 7;
 }
 
 message LogMaintenanceHandlingCreation {
@@ -1256,17 +1256,23 @@ message LogSupplyHandlingCreation {
     optional SeqOfDotationQuery dotations = 4;
 }
 
+/** @struct DotationQuery
+    @brief Queries a dotation
+*/
 message DotationQuery {
-    optional ResourceType resource            = 1;
-    optional int32        quantite_demandee   = 2;
-    optional int32        quantite_accordee   = 3;
-    optional int32        quantite_en_transit = 4;
+    optional ResourceType resource  = 1; //!< The type of the resource @see ResourceType
+    optional int32        requested = 2; //!< The amount requested
+    optional int32        granted   = 3; //!< The amount granted
+    optional int32        convoyed  = 4; //!< The amount being convoyed
 }
 
 message SeqOfDotationQuery {
     repeated DotationQuery elem = 1;
 }
 
+/** @struct LogSupplyHandlingUpdate
+    @brief Notified of a log supply handling update
+*/
 message LogSupplyHandlingUpdate {
     /** @enum EnumConvoyState
         @brief List of states a supply request can go through
@@ -1284,9 +1290,9 @@ message LogSupplyHandlingUpdate {
     optional SupplyRequestId    request         = 1;
     optional AutomatId          consumer        = 2;
     optional ParentEntity       supplier        = 3;
-    optional ParentEntity       convoy_provider = 4;
-    optional UnitId             convoying_unit  = 5;
-    optional EnumConvoyState    state            = 6;
+    optional ParentEntity       convoy_provider = 4; //!< @todo rename to provider
+    optional UnitId             convoying_unit  = 5; //!< @todo rename to convoyer
+    optional EnumConvoyState    state           = 6;
     optional SeqOfDotationQuery dotations       = 7;
 }
 
@@ -1309,10 +1315,10 @@ message SeqOfLogSupplyEquimentAvailability {
 }
 
 message LogSupplyState {
-    optional UnitId                              unit                                 = 1;
-    optional bool                                chain                       = 2;
-    optional SeqOfDotationStock                  stocks                               = 3;
-    optional SeqOfLogSupplyEquimentAvailability  disponibilites_transporteurs_convois = 4;
+    optional UnitId                             unit         = 1;
+    optional bool                               chain        = 2;
+    optional SeqOfDotationStock                 stocks       = 3;
+    optional SeqOfLogSupplyEquimentAvailability transporters = 4;
 }
 
 message LogSupplyQuotas {
@@ -1329,8 +1335,8 @@ message CrowdCreation {
 }
 
 message CrowdUpdate {
-   required CrowdId crowd           = 1;
-   optional int32   etat_domination = 2;
+   required CrowdId crowd      = 1;
+   optional int32   domination = 2;
 }
 
 message CrowdDestruction {
@@ -1349,11 +1355,11 @@ message CrowdConcentrationDestruction {
 }
 
 message CrowdConcentrationUpdate {
-   required CrowdConcentrationId concentration      = 1;
-   required CrowdId              crowd              = 2;
-   optional int32                nb_humains_vivants = 3;
-   optional int32                nb_humains_morts   = 4;
-   optional EnumCrowdAttitude    attitude           = 5;
+   required CrowdConcentrationId concentration = 1;
+   required CrowdId              crowd         = 2;
+   optional int32                alive         = 3;
+   optional int32                dead          = 4;
+   optional EnumCrowdAttitude    attitude      = 5;
 }
 
 message CrowdFlowCreation {
@@ -1367,15 +1373,15 @@ message CrowdFlowDestruction {
 }
 
 message CrowdFlowUpdate {
-   required CrowdFlowId       flow               = 1;
-   required CrowdId           crowd              = 2;
-   optional Path              path               = 3;
-   optional Path              parts              = 4;
-   optional Heading           direction          = 5;
-   optional int32             speed              = 6;
-   optional int32             nb_humains_vivants = 7;
-   optional int32             nb_humains_morts   = 8;
-   optional EnumCrowdAttitude attitude           = 9;
+   required CrowdFlowId       flow      = 1;
+   required CrowdId           crowd     = 2;
+   optional Path              path      = 3;
+   optional Path              parts     = 4;
+   optional Heading           direction = 5;
+   optional int32             speed     = 6;
+   optional int32             alive     = 7;
+   optional int32             dead      = 8;
+   optional EnumCrowdAttitude attitude  = 9;
 }
 
 message CrowdKnowledgeCreation {
@@ -1388,7 +1394,7 @@ message CrowdKnowledgeCreation {
 message CrowdKnowledgeUpdate {
    required CrowdKnowledgeId knowledge       = 1;
    required KnowledgeGroupId knowledge_group = 2;
-   optional int32            etat_domination = 3;
+   optional int32            domination      = 3;
 }
 
 message CrowdKnowledgeDestruction {
@@ -1405,15 +1411,15 @@ message CrowdConcentrationKnowledgeCreation {
 }
 
 message CrowdConcentrationKnowledgeUpdate {
-    required CrowdConcentrationKnowledgeId knowledge          = 1;
-    required CrowdKnowledgeId              crowd              = 2;
-    required KnowledgeGroupId              knowledge_group    = 3;
-    optional CrowdConcentrationId          concentration      = 4;
-    optional int32                         nb_humains_vivants = 5;
-    optional int32                         nb_humains_morts   = 6;
-    optional EnumCrowdAttitude             attitude           = 7;
-    optional int32                         pertinence         = 8;
-    optional bool                          est_percu          = 9;
+    required CrowdConcentrationKnowledgeId knowledge       = 1;
+    required CrowdKnowledgeId              crowd           = 2;
+    required KnowledgeGroupId              knowledge_group = 3;
+    optional CrowdConcentrationId          concentration   = 4;
+    optional int32                         alive           = 5;
+    optional int32                         dead            = 6;
+    optional EnumCrowdAttitude             attitude        = 7;
+    optional int32                         pertinence      = 8;
+    optional bool                          perceived       = 9;
 }
 
 message CrowdConcentrationKnowledgeDestruction {
@@ -1430,8 +1436,8 @@ message CrowdFlowKnowledgeCreation {
 }
 
 message FlowPart {
-   required Path forme      = 1;
-   required int32   pertinence = 2;
+   required Path  shape      = 1;
+   required int32 pertinence = 2;
 }
 
 message SeqOfFlowPart {
@@ -1439,17 +1445,17 @@ message SeqOfFlowPart {
 }
 
 message CrowdFlowKnowledgeUpdate {
-    required CrowdFlowKnowledgeId knowledge          = 1;
-    required CrowdKnowledgeId     crowd              = 2;
-    required KnowledgeGroupId     knowledge_group    = 3;
-    optional CrowdFlowId          flow               = 4;
-    optional SeqOfFlowPart        portions_flux      = 5;
-    optional Heading              direction          = 6;
-    optional int32                speed              = 7;
-    optional int32                nb_humains_vivants = 8;
-    optional int32                nb_humains_morts   = 9;
-    optional EnumCrowdAttitude    attitude           = 10;
-    optional bool                 est_percu          = 11;
+    required CrowdFlowKnowledgeId knowledge       = 1;
+    required CrowdKnowledgeId     crowd           = 2;
+    required KnowledgeGroupId     knowledge_group = 3;
+    optional CrowdFlowId          flow            = 4;
+    optional SeqOfFlowPart        parts           = 5;
+    optional Heading              direction       = 6;
+    optional int32                speed           = 7;
+    optional int32                alive           = 8;
+    optional int32                dead            = 9;
+    optional EnumCrowdAttitude    attitude        = 10;
+    optional bool                 perceived       = 11;
 }
 
 message CrowdFlowKnowledgeDestruction {
@@ -1458,20 +1464,17 @@ message CrowdFlowKnowledgeDestruction {
     required KnowledgeGroupId     knowledge_group = 3;
 }
 
-// Folk
-message FolkCreation_profiles {
-   repeated string elem = 1;
-}
-
-message FolkCreation_activities {
-   repeated string elem = 1;
-}
-
 message FolkCreation {
-   required FolkCreation_profiles   profiles       = 1;
-   required FolkCreation_activities activities     = 2;
-   optional int32                   container_size = 3;
-   optional int32                   edge_number    = 4;
+    message Profiles {
+       repeated string elem = 1;
+    }
+    message Activities {
+        repeated string elem = 1;
+    }
+    required Profiles   profiles       = 1;
+    required Activities activities     = 2;
+    optional int32      container_size = 3;
+    optional int32      edge_number    = 4;
 }
 
 message FolkGraphEdgeUpdate {
@@ -1484,7 +1487,6 @@ message FolkGraphUpdate {
    repeated FolkGraphEdgeUpdate elem = 1;
 }
 
-// Checkpoints
 message ControlCheckPointSetFrequencyAck {
 }
 
@@ -1511,8 +1513,7 @@ message ControlCheckPointList {
 message ControlCheckPointDeleteAck {
 }
 
-// Current State / Initialization
-message ControlSendCurrentStateBegin{
+message ControlSendCurrentStateBegin {
 }
 
 message ControlSendCurrentStateEnd {
@@ -1564,7 +1565,7 @@ message UrbanDetection {
 
 message UrbanUpdate {
    required UrbanObjectId   urban_object = 1;
-   optional Location     location     = 2;
+   optional Location        location     = 2;
    optional UrbanAttributes attributes   = 3;
 }
 
@@ -1616,7 +1617,6 @@ message KnowledgeGroupDestruction {
     required PartyId          party           = 2;
 }
 
-// Weather
 message ControlGlobalWeatherAck {
 }
 
@@ -1624,12 +1624,12 @@ message ControlLocalWeatherAck {
 }
 
 message ControlGlobalWeather {
-    required WeatherId            weather    = 1;
+    required WeatherId         weather    = 1;
     required WeatherAttributes attributes = 2;
 }
 
 message ControlLocalWeatherCreation {
-   required WeatherId            weather                 = 1;
+   required WeatherId         weather                 = 1;
    optional CoordLatLong      top_left_coordinate     = 2;
    optional CoordLatLong      bottom_right_coordinate = 3;
    optional WeatherAttributes attributes              = 4;
@@ -1684,65 +1684,65 @@ message PopulationUpdate {
 // Message container
 message SimToClient {
     message Content {
-        optional TaskCreationRequestAck               order_ack                                   = 1;
-        optional FragOrderAck                         frag_order_ack                              = 4;
-        optional SetAutomatModeAck                    set_automat_mode_ack                        = 5;
-        optional UnitCreationRequestAck               unit_creation_request_ack                   = 6;
-        optional MagicActionAck                       magic_action_ack                            = 7;
-        optional UnitMagicActionAck                   unit_magic_action_ack                       = 8;
-        optional ObjectMagicActionAck                 object_magic_action_ack                     = 9;
-        optional CrowdMagicActionAck                  crowd_magic_action_ack                      = 10;
-        optional ChangeDiplomacyAck                   change_diplomacy_ack                        = 11;
-        optional AutomatChangeKnowledgeGroupAck       automat_change_knowledge_group_ack          = 12;
-        optional ChangeLogisticLinksAck               automat_change_logistic_links_ack           = 13;
-        optional AutomatChangeSuperiorAck             automat_change_superior_ack                 = 14;
-        optional UnitChangeSuperiorAck                unit_change_superior_ack                    = 15;
-        optional LogSupplyPushFlowAck                 log_supply_push_flow_ack                    = 16;
-        optional LogSupplyChangeQuotasAck             log_supply_change_quotas_ack                = 17;
-        optional ControlInformation                   control_information                         = 18;
-        optional ControlProfilingInformation          control_profiling_information               = 19;
-        optional ControlBeginTick                     control_begin_tick                          = 20;
-        optional ControlEndTick                       control_end_tick                            = 21;
-        optional ControlStopAck                       control_stop_ack                            = 22;
-        optional ControlPauseAck                      control_pause_ack                           = 23;
-        optional ControlResumeAck                     control_resume_ack                          = 24;
-        optional ControlChangeTimeFactorAck           control_change_time_factor_ack              = 25;
-        optional ControlDateTimeChangeAck             control_date_time_change_ack                = 26;
-        optional ControlCheckPointSaveEnd             control_checkpoint_save_end                 = 27;
-        optional FormationCreation                    formation_creation                          = 28;
-        optional PartyCreation                        party_creation                              = 29;
-        optional AutomatCreation                      automat_creation                            = 30;
-        optional AutomatAttributes                    automat_attributes                          = 31;
-        optional UnitCreation                         unit_creation                               = 32;
-        optional UnitAttributes                       unit_attributes                             = 33;
-        optional UnitPathFind                         unit_pathfind                               = 34;
-        optional UnitDestruction                      unit_destruction                            = 35;
-        optional UnitEnvironmentType                  unit_environment_type                       = 36;
-        optional ChangeDiplomacy                      change_diplomacy                            = 37;
-        optional UnitChangeSuperior                   unit_change_superior                        = 38;
-        optional ChangeLogisticLinks                  automat_change_logistic_links               = 39;
-        optional AutomatChangeKnowledgeGroup          automat_change_knowledge_group              = 40;
-        optional AutomatChangeSuperior                automat_change_superior                     = 41;
-        optional UnitKnowledgeCreation                unit_knowledge_creation                     = 42;
-        optional UnitKnowledgeUpdate                  unit_knowledge_update                       = 43;
-        optional UnitKnowledgeDestruction             unit_knowledge_destruction                  = 44;
-        optional StartUnitFire                        start_unit_fire                             = 45;
-        optional StopUnitFire                         stop_unit_fire                              = 46;
-        optional StartCrowdFire                       start_crowd_fire                            = 47;
-        optional StopCrowdFire                        stop_crowd_fire                             = 48;
-        optional Explosion                            explosion                                   = 49;
-        optional StartFireEffect                      start_fire_effect                           = 50;
-        optional StopFireEffect                       stop_fire_effect                            = 51;
-        optional Report                               report                                      = 52;
-        optional InvalidateReport                     invalidate_report                           = 53;
-        optional Trace                                trace                                       = 54;
-        optional DecisionalState                      decisional_state                            = 55;
-        optional DebugPoints                          debug_points                                = 56;
-        optional UnitVisionCones                      unit_vision_cones                           = 57;
-        optional UnitDetection                        unit_detection                              = 58;
-        optional ObjectDetection                      object_detection                            = 59;
-        optional CrowdConcentrationDetection          crowd_concentration_detection               = 60;
-        optional CrowdFlowDetection                   crowd_flow_detection                        = 61;
+        optional TaskCreationRequestAck                 order_ack                                 = 1;
+        optional FragOrderAck                           frag_order_ack                            = 4;
+        optional SetAutomatModeAck                      set_automat_mode_ack                      = 5;
+        optional UnitCreationRequestAck                 unit_creation_request_ack                 = 6;
+        optional MagicActionAck                         magic_action_ack                          = 7;
+        optional UnitMagicActionAck                     unit_magic_action_ack                     = 8;
+        optional ObjectMagicActionAck                   object_magic_action_ack                   = 9;
+        optional CrowdMagicActionAck                    crowd_magic_action_ack                    = 10;
+        optional ChangeDiplomacyAck                     change_diplomacy_ack                      = 11;
+        optional AutomatChangeKnowledgeGroupAck         automat_change_knowledge_group_ack        = 12;
+        optional ChangeLogisticLinksAck                 automat_change_logistic_links_ack         = 13;
+        optional AutomatChangeSuperiorAck               automat_change_superior_ack               = 14;
+        optional UnitChangeSuperiorAck                  unit_change_superior_ack                  = 15;
+        optional LogSupplyPushFlowAck                   log_supply_push_flow_ack                  = 16;
+        optional LogSupplyChangeQuotasAck               log_supply_change_quotas_ack              = 17;
+        optional ControlInformation                     control_information                       = 18;
+        optional ControlProfilingInformation            control_profiling_information             = 19;
+        optional ControlBeginTick                       control_begin_tick                        = 20;
+        optional ControlEndTick                         control_end_tick                          = 21;
+        optional ControlStopAck                         control_stop_ack                          = 22;
+        optional ControlPauseAck                        control_pause_ack                         = 23;
+        optional ControlResumeAck                       control_resume_ack                        = 24;
+        optional ControlChangeTimeFactorAck             control_change_time_factor_ack            = 25;
+        optional ControlDateTimeChangeAck               control_date_time_change_ack              = 26;
+        optional ControlCheckPointSaveEnd               control_checkpoint_save_end               = 27;
+        optional FormationCreation                      formation_creation                        = 28;
+        optional PartyCreation                          party_creation                            = 29;
+        optional AutomatCreation                        automat_creation                          = 30;
+        optional AutomatAttributes                      automat_attributes                        = 31;
+        optional UnitCreation                           unit_creation                             = 32;
+        optional UnitAttributes                         unit_attributes                           = 33;
+        optional UnitPathFind                           unit_pathfind                             = 34;
+        optional UnitDestruction                        unit_destruction                          = 35;
+        optional UnitEnvironmentType                    unit_environment_type                     = 36;
+        optional ChangeDiplomacy                        change_diplomacy                          = 37;
+        optional UnitChangeSuperior                     unit_change_superior                      = 38;
+        optional ChangeLogisticLinks                    automat_change_logistic_links             = 39;
+        optional AutomatChangeKnowledgeGroup            automat_change_knowledge_group            = 40;
+        optional AutomatChangeSuperior                  automat_change_superior                   = 41;
+        optional UnitKnowledgeCreation                  unit_knowledge_creation                   = 42;
+        optional UnitKnowledgeUpdate                    unit_knowledge_update                     = 43;
+        optional UnitKnowledgeDestruction               unit_knowledge_destruction                = 44;
+        optional StartUnitFire                          start_unit_fire                           = 45;
+        optional StopUnitFire                           stop_unit_fire                            = 46;
+        optional StartCrowdFire                         start_crowd_fire                          = 47;
+        optional StopCrowdFire                          stop_crowd_fire                           = 48;
+        optional Explosion                              explosion                                 = 49;
+        optional StartFireEffect                        start_fire_effect                         = 50;
+        optional StopFireEffect                         stop_fire_effect                          = 51;
+        optional Report                                 report                                    = 52;
+        optional InvalidateReport                       invalidate_report                         = 53;
+        optional Trace                                  trace                                     = 54;
+        optional DecisionalState                        decisional_state                          = 55;
+        optional DebugPoints                            debug_points                              = 56;
+        optional UnitVisionCones                        unit_vision_cones                         = 57;
+        optional UnitDetection                          unit_detection                            = 58;
+        optional ObjectDetection                        object_detection                          = 59;
+        optional CrowdConcentrationDetection            crowd_concentration_detection             = 60;
+        optional CrowdFlowDetection                     crowd_flow_detection                      = 61;
         optional UnitOrder                              unit_order                                = 62;
         optional AutomatOrder                           automat_order                             = 63;
         optional CrowdOrder                             crowd_order                               = 64;

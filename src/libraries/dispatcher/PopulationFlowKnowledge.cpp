@@ -37,11 +37,11 @@ PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowle
 {
     optionals_.vitessePresent            = 0;
     optionals_.directionPresent          = 0;
-    optionals_.portions_fluxPresent      = 0;
-    optionals_.nb_humains_vivantsPresent = 0;
-    optionals_.nb_humains_mortsPresent   = 0;
+    optionals_.partsPresent      = 0;
+    optionals_.alivePresent = 0;
+    optionals_.deadPresent   = 0;
     optionals_.attitudePresent           = 0;
-    optionals_.est_percuPresent          = 0;
+    optionals_.perceivedPresent          = 0;
 //    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationFlowKnowledge >( *this ) );
 }
 
@@ -62,12 +62,12 @@ void PopulationFlowKnowledge::Update( const sword::CrowdFlowKnowledgeUpdate& msg
 {
     if( msg.has_flow()  )
         pFlow_ = msg.flow().id() == 0 ? 0 : &populationKnowledge_.GetEntity()->GetFlow( msg.flow().id() );
-    if( msg.has_portions_flux() )
+    if( msg.has_parts() )
     {
         flowParts_.clear();
-        for( int i = 0; i < msg.portions_flux().elem_size(); ++i )
-            flowParts_.push_back( PopulationFlowPart( msg.portions_flux().elem( i ) ) );
-        optionals_.portions_fluxPresent = 1;
+        for( int i = 0; i < msg.parts().elem_size(); ++i )
+            flowParts_.push_back( PopulationFlowPart( msg.parts().elem( i ) ) );
+        optionals_.partsPresent = 1;
     }
     if( msg.has_direction() )
     {
@@ -84,20 +84,20 @@ void PopulationFlowKnowledge::Update( const sword::CrowdFlowKnowledgeUpdate& msg
         nAttitude_ = msg.attitude();
         optionals_.attitudePresent = 1;
     }
-    if( msg.has_nb_humains_morts() )
+    if( msg.has_dead() )
     {
-        nNbrDeadHumans_ = msg.nb_humains_morts();
-        optionals_.nb_humains_mortsPresent = 1;
+        nNbrDeadHumans_ = msg.dead();
+        optionals_.deadPresent = 1;
     }
-    if( msg.has_nb_humains_vivants() )
+    if( msg.has_alive() )
     {
-        nNbrAliveHumans_ = msg.nb_humains_vivants();
-        optionals_.nb_humains_vivantsPresent = 1;
+        nNbrAliveHumans_ = msg.alive();
+        optionals_.alivePresent = 1;
     }
-    if( msg.has_est_percu() )
+    if( msg.has_perceived() )
     {
-        bPerceived_ = msg.est_percu();
-        optionals_.est_percuPresent = 1;
+        bPerceived_ = msg.perceived();
+        optionals_.perceivedPresent = 1;
     }
 }
 
@@ -131,26 +131,26 @@ void PopulationFlowKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) c
 
     {
         for( std::vector< PopulationFlowPart >::const_iterator it = flowParts_.begin(); it != flowParts_.end(); ++it )
-            it->Send( *asn().mutable_portions_flux()->add_elem() );
+            it->Send( *asn().mutable_parts()->add_elem() );
     }
 
     if( optionals_.directionPresent )
         asn().mutable_direction()->set_heading( nDirection_ );
     if( optionals_.vitessePresent )
         asn().set_speed( nSpeed_ );
-    if( optionals_.nb_humains_mortsPresent )
-        asn().set_nb_humains_morts( nNbrDeadHumans_ );
-    if( optionals_.nb_humains_vivantsPresent )
-        asn().set_nb_humains_vivants( nNbrAliveHumans_ );
+    if( optionals_.deadPresent )
+        asn().set_dead( nNbrDeadHumans_ );
+    if( optionals_.alivePresent )
+        asn().set_alive( nNbrAliveHumans_ );
     if( optionals_.attitudePresent )
         asn().set_attitude( nAttitude_ );
-    if( optionals_.est_percuPresent )
-        asn().set_est_percu( bPerceived_ );
+    if( optionals_.perceivedPresent )
+        asn().set_perceived( bPerceived_ );
 
     asn.Send( publisher );
 
-    if( asn().has_portions_flux() && asn().portions_flux().elem_size() > 0 )
-        asn().mutable_portions_flux()->Clear();
+    if( asn().has_parts() && asn().parts().elem_size() > 0 )
+        asn().mutable_parts()->Clear();
 }
 
 // -----------------------------------------------------------------------------

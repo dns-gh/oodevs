@@ -70,10 +70,10 @@ void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& message )
 {
     if( message.has_attitude()  )
         attitude_ = (E_PopulationAttitude)message.attitude();
-    if( message.has_nb_humains_vivants()  )
-        nLivingHumans_ = message.nb_humains_vivants();
-    if( message.has_nb_humains_morts()  )
-        nDeadHumans_ = message.nb_humains_morts();
+    if( message.has_alive()  )
+        nLivingHumans_ = message.alive();
+    if( message.has_dead()  )
+        nDeadHumans_ = message.dead();
     if( message.has_speed()  )
         nSpeed_ = message.speed();
     if( message.has_direction()  )

@@ -36,9 +36,9 @@ using namespace kernel;
 PopulationFlowKnowledge::FlowPart::FlowPart( const sword::FlowPart& message, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
      : relevance_ ( unsigned short( message.pertinence() ) )
 {
-    for( int i = 0; i < message.forme().location().coordinates().elem_size(); ++i )
+    for( int i = 0; i < message.shape().location().coordinates().elem_size(); ++i )
     {
-        const geometry::Point2f point = converter.ConvertToXY( message.forme().location().coordinates().elem( i ) );
+        const geometry::Point2f point = converter.ConvertToXY( message.shape().location().coordinates().elem( i ) );
         flowPart_.push_back( point );
         boundingBox.Incorporate( point );
     }
@@ -84,20 +84,20 @@ void PopulationFlowKnowledge::DoUpdate( const sword::CrowdFlowKnowledgeUpdate& m
         rDirection_ = ( float )message.direction().heading();
     if( message.has_speed()  )
         rSpeed_ = ( float )message.speed();
-    if( message.has_est_percu()  )
-        bIsPerceived_ = message.est_percu() != 0;
-    if( message.has_nb_humains_vivants()  )
-        nNbrAliveHumans_ = ( uint )message.nb_humains_vivants();
-    if( message.has_nb_humains_morts()  )
-        nNbrDeadHumans_ = ( uint )message.nb_humains_morts();
+    if( message.has_perceived()  )
+        bIsPerceived_ = message.perceived() != 0;
+    if( message.has_alive()  )
+        nNbrAliveHumans_ = ( uint )message.alive();
+    if( message.has_dead()  )
+        nNbrDeadHumans_ = ( uint )message.dead();
     if( message.has_flow()  )
         pFlow_ = popu_.FindFlow( message.flow().id() );
-    if( message.has_portions_flux()  )
+    if( message.has_parts()  )
     {
         boundingBox_ = geometry::Rectangle2f();
-        flowParts_.clear(); flowParts_.reserve( message.portions_flux().elem_size() );
-        for( int i = 0; i < message.portions_flux().elem_size(); ++i )
-            flowParts_.push_back( FlowPart( message.portions_flux().elem( i ), converter_, boundingBox_ ) );
+        flowParts_.clear(); flowParts_.reserve( message.parts().elem_size() );
+        for( int i = 0; i < message.parts().elem_size(); ++i )
+            flowParts_.push_back( FlowPart( message.parts().elem( i ), converter_, boundingBox_ ) );
     }
     controller_.Update( *this );
 }

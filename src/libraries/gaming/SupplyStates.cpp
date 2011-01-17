@@ -54,11 +54,11 @@ void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
 {
     if( message.has_chain() )
         bChainEnabled_ = message.chain() != 0;
-    if( message.has_disponibilites_transporteurs_convois() )
+    if( message.has_transporters() )
     {
-        dispoTransporters_.resize( message.disponibilites_transporteurs_convois().elem_size() );
-        for( int i = 0; i < message.disponibilites_transporteurs_convois().elem_size(); ++i )
-            dispoTransporters_[i] = SupplyAvailability( resolver_, message.disponibilites_transporteurs_convois().elem( i ) );
+        dispoTransporters_.resize( message.transporters().elem_size() );
+        for( int i = 0; i < message.transporters().elem_size(); ++i )
+            dispoTransporters_[i] = SupplyAvailability( resolver_, message.transporters().elem( i ) );
     }
     if( message.has_stocks() )
     {

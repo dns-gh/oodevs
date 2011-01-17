@@ -461,15 +461,15 @@ void PHY_RolePionLOG_Supply::SendFullState() const
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
     pion_.Execute( *lendedComputer );
 
-    SendComposanteUse( composanteUse, *asn().mutable_disponibilites_transporteurs_convois()  );
+    SendComposanteUse( composanteUse, *asn().mutable_transporters()  );
 
     assert( pStocks_ );
     pStocks_->SendFullState( asn );
 
     asn.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asn().disponibilites_transporteurs_convois().elem_size() > 0 )
-        asn().mutable_disponibilites_transporteurs_convois()->Clear();
+    if( asn().transporters().elem_size() > 0 )
+        asn().mutable_transporters()->Clear();
     if( asn().stocks().elem_size() > 0 )
         asn().mutable_stocks()->Clear();
 }
@@ -498,15 +498,15 @@ void PHY_RolePionLOG_Supply::SendChangedState() const
         std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
         pion_.Execute( *lendedComputer );
 
-        SendComposanteUse( composanteUse, *asn().mutable_disponibilites_transporteurs_convois() );
+        SendComposanteUse( composanteUse, *asn().mutable_transporters() );
     }
 
     pStocks_->SendChangedState( asn );
 
     asn.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asn().has_disponibilites_transporteurs_convois() && asn().disponibilites_transporteurs_convois().elem_size() > 0 )
-        asn().mutable_disponibilites_transporteurs_convois()->Clear();
+    if( asn().has_transporters() && asn().transporters().elem_size() > 0 )
+        asn().mutable_transporters()->Clear();
     if( asn().has_stocks() && asn().stocks().elem_size() > 0 )
         asn().mutable_stocks()->Clear();
 }

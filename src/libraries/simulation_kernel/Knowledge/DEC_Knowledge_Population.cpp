@@ -401,7 +401,7 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
         client::CrowdKnowledgeUpdate asnMsg;
         asnMsg().mutable_knowledge()->set_id( nID_ );
         asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_ ->GetId() );
-        asnMsg().set_etat_domination       ( (unsigned int)( rDominationState_ * 100. ) );
+        asnMsg().set_domination       ( (unsigned int)( rDominationState_ * 100. ) );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -422,7 +422,7 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
         client::CrowdKnowledgeUpdate asnMsg;
         asnMsg().mutable_knowledge()->set_id( nID_ );
         asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_ ->GetId() );
-        asnMsg().set_etat_domination( (unsigned int)( rDominationState_ * 100. ) );
+        asnMsg().set_domination( (unsigned int)( rDominationState_ * 100. ) );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )

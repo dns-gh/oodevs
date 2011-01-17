@@ -12,11 +12,6 @@
 #ifndef __PHY_AmmoDotationClass_h_
 #define __PHY_AmmoDotationClass_h_
 
-namespace sword
-{
-    enum EnumAmmunitionFamily;
-}
-
 // =============================================================================
 // @class  PHY_AmmoDotationClass
 // Created: JVT 2004-08-03
@@ -38,7 +33,6 @@ public:
     static void Initialize();
     static void Terminate ();
 
-    static const PHY_AmmoDotationClass* Find( sword::EnumAmmunitionFamily nAsnID );
     static const PHY_AmmoDotationClass* Find( int nID );
     static const PHY_AmmoDotationClass* Find( const std::string& strName );
     //@}
@@ -46,7 +40,6 @@ public:
     //! @name Accessors
     //@{
           int          GetID  () const;
-    sword::EnumAmmunitionFamily GetAsnID() const;
     const std::string& GetName() const;
     //@}
 
@@ -60,19 +53,23 @@ private:
     //! @name Types
     //@{
     typedef std::map< int, const PHY_AmmoDotationClass* > T_TypeMap;
-    typedef T_TypeMap::const_iterator                     CIT_TypeMap;
+    typedef T_TypeMap::const_iterator                   CIT_TypeMap;
     //@}
 
 private:
-     PHY_AmmoDotationClass( const std::string& strName, sword::EnumAmmunitionFamily nAsnID );
+    //! @name Constructors/Destructor
+    //@{
+             PHY_AmmoDotationClass( const std::string& strName, int id );
     virtual ~PHY_AmmoDotationClass();
+    //@}
 
 private:
-    const std::string               strName_;
-    const sword::EnumAmmunitionFamily nAsnID_;
-
-private:
+    //! @name Member data
+    //@{
+    const std::string strName_;
+    const int id_;
     static T_TypeMap types_;
+    //@}
 };
 
 #endif // __PHY_AmmoDotationClass_h_
