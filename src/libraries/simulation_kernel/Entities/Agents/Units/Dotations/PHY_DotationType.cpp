@@ -101,7 +101,7 @@ void PHY_DotationType::Terminate()
 }
 
 //-----------------------------------------------------------------------------
-// Name: PHY_DotationType::Initialize
+// Name: PHY_DotationType::RegisterDotation
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
 void PHY_DotationType::RegisterDotation( const std::string& strCategoryName, xml::xistream& xis )
@@ -114,6 +114,18 @@ void PHY_DotationType::RegisterDotation( const std::string& strCategoryName, xml
     if( pCategoryID )
         xis.error( "Dotation category ID already registered" );
     pCategoryID = pCategory;
+}
+
+//-----------------------------------------------------------------------------
+// Name: PHY_DotationType constructor
+// Created: NLD/JVT 2004-08-03
+//-----------------------------------------------------------------------------
+PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationType nType, const PHY_DotationLogisticType& defaultLogisticType )
+    : strName_            ( strName )
+    , nType_              ( nType )
+    , defaultLogisticType_( defaultLogisticType )
+{
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
