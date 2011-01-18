@@ -1579,8 +1579,8 @@ message UrbanAttributes {
 }
 
 message UrbanCreation {
-   required ObjectId        urban_object = 1;
-   required UrbanObjectId   urban_block  = 2;
+   required UrbanObjectId   urban_object = 1;
+   required ObjectId        object       = 2;
    required string          name         = 3;
    required Location        location     = 4;
    optional UrbanAttributes attributes   = 5;
@@ -1594,7 +1594,7 @@ message UrbanDetection {
 }
 
 message UrbanUpdate {
-   required UrbanObjectId   urban_object = 1;
+   required ObjectId        object       = 1;
    optional Location        location     = 2;
    optional UrbanAttributes attributes   = 3;
 }

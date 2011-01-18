@@ -1175,8 +1175,8 @@ message UrbanAttributes {
 }
 
 message MsgUrbanCreation {
-   required Common.ObjectId      urban_object = 1;
-   required Common.UrbanObjectId urban_block  = 2;
+   required Common.UrbanObjectId urban_object = 1;
+   required Common.ObjectId      object       = 2;
    required string               name         = 3;
    required Common.MsgLocation   location     = 4;
    optional UrbanAttributes      attributes   = 5;
@@ -1190,7 +1190,7 @@ message MsgUrbanDetection {
 }
 
 message MsgUrbanUpdate {
-   required Common.UrbanObjectId urban_object = 1;
+   required Common.ObjectId      object       = 1;
    optional Common.MsgLocation   location     = 2;
    optional UrbanAttributes      attributes   = 3;
 }

@@ -276,8 +276,8 @@ void UrbanObjectWrapper::SendCreation() const
     if( object_->HasChild() )
         return;
     client::UrbanCreation message;
-    message().mutable_urban_object()->set_id( id_ );
-    message().mutable_urban_block()->set_id( object_->GetId() );
+    message().mutable_object()->set_id( id_ );
+    message().mutable_urban_object()->set_id( object_->GetId() );
     message().set_name( object_->GetName() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
 
@@ -344,7 +344,7 @@ void UrbanObjectWrapper::SendFullState() const
     if( capacity )
     {
         client::UrbanUpdate message;
-        message().mutable_urban_object()->set_id( id_ );
+        message().mutable_object()->set_id( id_ );
         message().mutable_attributes()->mutable_structure()->set_state( capacity->GetStructuralState() );
         if ( message().attributes().has_structure() )
             message.Send( NET_Publisher_ABC::Publisher() );
@@ -363,7 +363,7 @@ void UrbanObjectWrapper::UpdateState()
     if( pView_ && pView_->HideObject() )
         return;
     client::UrbanUpdate message;
-    message().mutable_urban_object()->set_id( id_ );
+    message().mutable_object()->set_id( id_ );
     SendCapacity< StructuralCapacity >( *message().mutable_attributes() );
     SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     if ( message().attributes().has_structure() || message().attributes().has_infrastructures() )

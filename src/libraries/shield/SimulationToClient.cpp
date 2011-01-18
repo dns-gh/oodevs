@@ -2030,8 +2030,8 @@ namespace
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::UrbanCreation& from, MsgsSimToClient::MsgUrbanCreation* to )
 {
+    CONVERT_ID( object );
     CONVERT_ID( urban_object );
-    CONVERT_ID( urban_block );
     CONVERT( name );
     ConvertLocation( from.location(), to->mutable_location() );
     if( from.has_attributes() )
@@ -2045,7 +2045,7 @@ void SimulationToClient::Convert( const sword::UrbanCreation& from, MsgsSimToCli
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::UrbanUpdate& from, MsgsSimToClient::MsgUrbanUpdate* to )
 {
-    CONVERT_ID( urban_object );
+    CONVERT_ID( object );
     ConvertLocation( from.location(), to->mutable_location() );
     if( from.has_attributes() )
         ConvertUrbanAttributes( from.attributes(), to->mutable_attributes() );

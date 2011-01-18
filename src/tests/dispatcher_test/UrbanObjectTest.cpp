@@ -29,8 +29,8 @@ namespace
         void createUrbanObject()
         {
             sword::UrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
-            message.mutable_urban_object()->set_id( 1 );
-            message.mutable_urban_block()->set_id( 10 );
+            message.mutable_object()->set_id( 1 );
+            message.mutable_urban_object()->set_id( 10 );
             message.set_name( "test" );
             message.mutable_location()->set_type( sword::Location::point );
             message.mutable_location()->mutable_coordinates()->add_elem();
@@ -72,7 +72,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
     {
         createUrbanObject();
         sword::UrbanUpdate& message = *expected.mutable_message()->mutable_urban_update();
-        message.mutable_urban_object()->set_id( 1 );
+        message.mutable_object()->set_id( 1 );
         message.mutable_location()->set_type( sword::Location::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
         message.mutable_location()->mutable_coordinates()->mutable_elem( 0 )->set_latitude( 1. );
@@ -87,8 +87,8 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
     {
         expected.mutable_message()->Clear();
         sword::UrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
-        message.mutable_urban_object()->set_id( 1 );
-        message.mutable_urban_block()->set_id( 10 );
+        message.mutable_object()->set_id( 1 );
+        message.mutable_urban_object()->set_id( 10 );
         message.set_name( "test" );
         message.mutable_location()->set_type( sword::Location::line );
         message.mutable_location()->mutable_coordinates()->add_elem();
@@ -111,7 +111,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
     {
         createUrbanObject();
         sword::UrbanUpdate& message = *expected.mutable_message()->mutable_urban_update();
-        message.mutable_urban_object()->set_id( 1 );
+        message.mutable_object()->set_id( 1 );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         result->Update( message );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
@@ -121,8 +121,8 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
     {
         expected.mutable_message()->Clear();
         sword::UrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
-        message.mutable_urban_object()->set_id( 1 );
-        message.mutable_urban_block()->set_id( 10 );
+        message.mutable_object()->set_id( 1 );
+        message.mutable_urban_object()->set_id( 10 );
         message.set_name( "test" );
         message.mutable_location()->set_type( sword::Location::point );
         message.mutable_location()->mutable_coordinates()->add_elem();

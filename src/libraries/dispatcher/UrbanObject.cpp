@@ -28,9 +28,9 @@ using namespace dispatcher;
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
 UrbanObject::UrbanObject( Model_ABC& /*model*/, const sword::UrbanCreation& msg )
-    : dispatcher::Object_ABC( msg.urban_object().id(), msg.name().c_str() )
+    : dispatcher::Object_ABC( msg.object().id(), msg.name().c_str() )
     , strName_                   ( msg.name()  )
-    , urbanBlockId_              ( msg.urban_block().id() )
+    , urbanBlockId_              ( msg.urban_object().id() )
     , localisation_              ( msg.location() )
     , hasInfrastructures_        ( false )
     , hasResourceNetwork_        ( false )
@@ -94,8 +94,8 @@ void UrbanObject::AddObjectAttribute( ObjectAttribute_ABC* attribute )
 void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanCreation msg;
-    msg().mutable_urban_object()->set_id( GetId() );
-    msg().mutable_urban_block()->set_id( urbanBlockId_ );
+    msg().mutable_object()->set_id( GetId() );
+    msg().mutable_urban_object()->set_id( urbanBlockId_ );
     msg().set_name( strName_ );
     localisation_.Send( *msg().mutable_location() );
     msg().mutable_attributes();
@@ -111,7 +111,7 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 void UrbanObject::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanUpdate msg;
-    msg().mutable_urban_object()->set_id( GetId() );
+    msg().mutable_object()->set_id( GetId() );
     if( optionals_.localisationPresent )
         localisation_.Send( *msg().mutable_location() );
     if( optionals_.attributesPresent )

@@ -355,9 +355,9 @@ void Model::Update( const sword::SimToClient& wrapper )
         folk_->Update( wrapper.message().folk_creation() );
 
     if( wrapper.message().has_urban_creation() )
-        CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation().urban_object().id(), wrapper.message().urban_creation() );
+        CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation().object().id(), wrapper.message().urban_creation() );
     if( wrapper.message().has_urban_update() )
-        urbanBlocks_.Get( wrapper.message().urban_update().urban_object().id() ).Update( wrapper.message().urban_update() );
+        urbanBlocks_.Get( wrapper.message().urban_update().object().id() ).Update( wrapper.message().urban_update() );
 
     if( wrapper.message().has_urban_knowledge_creation() )
         CreateUpdate< UrbanKnowledge >( urbanKnowledges_, wrapper.message().urban_knowledge_creation().knowledge().id(), wrapper.message().urban_knowledge_creation() );
@@ -372,7 +372,7 @@ void Model::Update( const sword::SimToClient& wrapper )
     if( wrapper.message().has_control_local_weather_destruction() )
         meteoModel_->OnReceiveMsgLocalMeteoDestruction( wrapper.message().control_local_weather_destruction() );
     if( wrapper.message().has_urban_creation() )
-        CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation().urban_object().id(), wrapper.message().urban_creation() );
+        CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation().object().id(), wrapper.message().urban_creation() );
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked
 //    }
