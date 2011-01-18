@@ -120,19 +120,19 @@ message UnitChangeSuperior {
 }
 
 enum EnumLogMaintenanceHandlingStatus {
-   deplacement_vers_chaine                      = 0;  //!< @todo translate
-   attente_disponibilite_remorqueur             = 1;  //!< @todo translate
-   remorqueur_deplacement_aller                 = 2;  //!< @todo translate
-   remorqueur_chargement                        = 3;  //!< @todo translate
-   remorqueur_deplacement_retour                = 4;  //!< @todo translate
-   remorqueur_dechargement                      = 5;  //!< @todo translate
-   diagnostique_maintenance                     = 6;  //!< @todo translate
-   attente_prise_en_charge_par_niveau_superieur = 7;  //!< @todo translate
-   attente_disponibilite_pieces                 = 8;  //!< @todo translate
-   attente_disponibilite_reparateur             = 9;  //!< @todo translate
-   reparation                                   = 10; //!< @todo translate
-   retour_pion                                  = 11; //!< @todo translate
-   termine_maintenance                          = 12; //!< @todo translate
+   moving_to_supply             = 0;
+   waiting_for_transporter      = 1;
+   transporter_moving_to_supply = 2;
+   transporter_loading          = 3;
+   transporter_moving_back      = 4;
+   transporter_unloading        = 5;
+   diagnosing                   = 6;
+   searching_upper_levels       = 7;
+   waiting_for_parts            = 8;
+   waiting_for_repairer         = 9;
+   repairing                    = 10;
+   moving_back                  = 11;
+   maintenance_over             = 12;
 }
 
 enum EnumLogMedicalHandlingStatus {

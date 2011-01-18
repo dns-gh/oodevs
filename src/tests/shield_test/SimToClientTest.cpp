@@ -1142,7 +1142,7 @@ BOOST_FIXTURE_TEST_CASE( log_maintenance_handling_update_to_client_is_converted,
     content.mutable_log_maintenance_handling_update()->mutable_request()->set_id( 7 );
     content.mutable_log_maintenance_handling_update()->mutable_unit()->set_id( 8 );
     content.mutable_log_maintenance_handling_update()->mutable_provider()->set_id( 9 );
-    content.mutable_log_maintenance_handling_update()->set_state( sword::reparation );
+    content.mutable_log_maintenance_handling_update()->set_state( sword::repairing );
     content.mutable_log_maintenance_handling_update()->set_diagnosed( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_maintenance_handling_update { request { id: 7 } unit { id: 8 } provider { id: 9 } etat: reparation diagnostique_effectue: true } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );

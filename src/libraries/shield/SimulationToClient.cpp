@@ -1483,19 +1483,19 @@ void SimulationToClient::Convert( const sword::LogMaintenanceHandlingUpdate& fro
     CONVERT_ID( request );
     CONVERT_ID( unit );
     CONVERT_ID( provider );
-    CONVERT_ENUM_TO( state, etat, ( sword::deplacement_vers_chaine, Common::deplacement_vers_chaine )
-                                  ( sword::attente_disponibilite_remorqueur, Common::attente_disponibilite_remorqueur )
-                                  ( sword::remorqueur_deplacement_aller, Common::remorqueur_deplacement_aller )
-                                  ( sword::remorqueur_chargement, Common::remorqueur_chargement )
-                                  ( sword::remorqueur_deplacement_retour, Common::remorqueur_deplacement_retour )
-                                  ( sword::remorqueur_dechargement, Common::remorqueur_dechargement )
-                                  ( sword::diagnostique_maintenance, Common::diagnostique_maintenance )
-                                  ( sword::attente_prise_en_charge_par_niveau_superieur, Common::attente_prise_en_charge_par_niveau_superieur )
-                                  ( sword::attente_disponibilite_pieces, Common::attente_disponibilite_pieces )
-                                  ( sword::attente_disponibilite_reparateur, Common::attente_disponibilite_reparateur )
-                                  ( sword::reparation, Common::reparation )
-                                  ( sword::retour_pion, Common::retour_pion )
-                                  ( sword::termine_maintenance, Common::termine_maintenance ) );
+    CONVERT_ENUM_TO( state, etat, ( sword::moving_to_supply, Common::deplacement_vers_chaine )
+                                  ( sword::waiting_for_transporter, Common::attente_disponibilite_remorqueur )
+                                  ( sword::transporter_moving_to_supply, Common::remorqueur_deplacement_aller )
+                                  ( sword::transporter_loading, Common::remorqueur_chargement )
+                                  ( sword::transporter_moving_back, Common::remorqueur_deplacement_retour )
+                                  ( sword::transporter_unloading, Common::remorqueur_dechargement )
+                                  ( sword::diagnosing, Common::diagnostique_maintenance )
+                                  ( sword::searching_upper_levels, Common::attente_prise_en_charge_par_niveau_superieur )
+                                  ( sword::waiting_for_parts, Common::attente_disponibilite_pieces )
+                                  ( sword::waiting_for_repairer, Common::attente_disponibilite_reparateur )
+                                  ( sword::repairing, Common::reparation )
+                                  ( sword::moving_back, Common::retour_pion )
+                                  ( sword::maintenance_over, Common::termine_maintenance ) );
     CONVERT_TO( diagnosed, diagnostique_effectue );
 }
 
