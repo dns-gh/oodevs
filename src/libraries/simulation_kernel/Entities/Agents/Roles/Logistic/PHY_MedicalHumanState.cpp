@@ -227,7 +227,7 @@ void PHY_MedicalHumanState::SendFullState() const
     else
     {
         asn().mutable_provider()->set_id( 0 );
-        asn().set_state( sword::termine_medical );
+        asn().set_state( sword::LogMedicalHandlingUpdate::finished );
     }
 
     asn().set_wound( pHuman_->GetWound().GetAsnID() );
@@ -258,7 +258,7 @@ void PHY_MedicalHumanState::SendChangedState() const
     else
     {
         asn().mutable_provider()->set_id( 0 );
-        asn().set_state( sword::termine_medical );
+        asn().set_state( sword::LogMedicalHandlingUpdate::finished );
     }
     if( bHumanStateHasChanged_ )
     {
