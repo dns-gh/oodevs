@@ -88,13 +88,15 @@ void Message::Write( const char* data, unsigned size )
     std::copy( data, data + size, std::back_inserter( *data_ ) );
 }
 
+BOOST_STATIC_ASSERT( sizeof( unsigned long ) == 4 );
+
 // -----------------------------------------------------------------------------
 // Name: Message::MakeOutputBuffer
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
 boost::asio::const_buffers_1 Message::MakeOutputBuffer( unsigned long tag ) const
 {
-    if( ! data_ || data_->size() < 8 )
+    if( ! data_ || data_->size() < 2 * sizeof( unsigned long ) )
         return boost::asio::const_buffers_1( boost::asio::const_buffer() );
     unsigned long* data = reinterpret_cast< unsigned long* >( &data_->front() );
     *data = htonl( data_->size() - sizeof( unsigned long ) );
