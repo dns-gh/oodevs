@@ -50,7 +50,7 @@ public:
 
     //! @name Compilation compatibility
     //@{
-    explicit Position( unsigned int ) {};
+    explicit Position( double ) {}
 
     template< typename T >
     Position& operator+=( const T& ) { return *this; }

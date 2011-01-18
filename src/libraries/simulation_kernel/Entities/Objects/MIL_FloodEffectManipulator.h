@@ -10,6 +10,8 @@
 #ifndef __MIL_FloodEffectManipulator_h_
 #define __MIL_FloodEffectManipulator_h_
 
+#include <boost/noncopyable.hpp>
+
 class PHY_HumanWound;
 
 // =============================================================================
@@ -18,7 +20,7 @@ class PHY_HumanWound;
 */
 // Created: JSR 2011-01-11
 // =============================================================================
-class MIL_FloodEffectManipulator
+class MIL_FloodEffectManipulator : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -29,7 +31,11 @@ public:
 
     //! @name
     //@{
-    template< typename WoundFunctor > void ApplyRandomWound( WoundFunctor functor ) const;
+    template< typename WoundFunctor >
+    void ApplyRandomWound( WoundFunctor functor ) const
+    {
+        functor( GetRandomWound() );
+    }
     //@}
 
 private:
@@ -44,15 +50,5 @@ private:
     const std::map< const PHY_HumanWound*, double >& map_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FloodEffectManipulator::ApplyRandomWound
-// Created: JSR 2011-01-11
-// -----------------------------------------------------------------------------
-template< typename WoundFunctor >
-void MIL_FloodEffectManipulator::ApplyRandomWound( WoundFunctor functor ) const
-{
-    functor( GetRandomWound() );
-}
 
 #endif // __MIL_FloodEffectManipulator_h_

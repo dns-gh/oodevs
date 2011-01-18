@@ -11,9 +11,9 @@
 #define __Zone_h_
 
 #include "Zone_ABC.h"
+#include <boost/shared_ptr.hpp>
 #include <string>
 #include <sstream>
-#include <boost/shared_ptr.hpp>
 
 // =============================================================================
 /** @class  Zone
@@ -26,7 +26,7 @@ class Zone
 public:
     //! @name Constructors/Destructor
     //@{
-     Zone();
+             Zone();
     virtual ~Zone();
     //@}
 
@@ -42,7 +42,7 @@ public:
     //@{
     operator double() const;
 
-    Zone( unsigned int );
+    Zone( double );
     Zone& operator+=( const Zone& ) { return *this; }
     Zone  operator/( const Zone& ) const { return *this; }
     Zone  operator-( const Zone& ) const { return *this; }

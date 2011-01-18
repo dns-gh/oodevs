@@ -59,7 +59,7 @@ public:
     virtual void OnBeginTick()
     {
         handler_.BeginTick();
-    };
+    }
     virtual void SetKey( const K& /*key*/ )
     {
         // NOTHING
@@ -111,7 +111,17 @@ private:
     T ApplyThreshold( const T& value )
     {
         std::map< double, double >::const_iterator it = thresholds_.lower_bound( double( value ) );
-        return it != thresholds_.end() ? static_cast< T >( it->second ) : T();
+        return it != thresholds_.end() ? ToResult< T >( it->second ) : T();
+    }
+    template< typename R >
+    R ToResult( double value ) const
+    {
+        return R( value );
+    }
+    template<>
+    bool ToResult< bool >( double value ) const
+    {
+        return value != 0;
     }
     //@}
 

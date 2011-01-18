@@ -42,7 +42,7 @@ Zone::Zone()
 // Name: Zone constructor
 // Created: AGE 2007-10-09
 // -----------------------------------------------------------------------------
-Zone::Zone( unsigned int )
+Zone::Zone( double )
     : zone_( new WorldZone() )
 {
     // NOTHING

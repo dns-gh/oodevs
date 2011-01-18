@@ -10,6 +10,7 @@
 #ifndef __ObjectCapacity_ABC_h_
 #define __ObjectCapacity_ABC_h_
 
+#include <boost/noncopyable.hpp>
 #include <boost/serialization/export.hpp>
 
 class MIL_Object_ABC;
@@ -20,12 +21,12 @@ class MIL_Object_ABC;
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class ObjectCapacity_ABC
+class ObjectCapacity_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-            ObjectCapacity_ABC() {}
+             ObjectCapacity_ABC() {}
     virtual ~ObjectCapacity_ABC() {}
     //@}
 
