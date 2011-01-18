@@ -39,10 +39,10 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
     , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
     , pTC2_             ( 0 )
     , logisticEntity_   ( model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve( msg.logistic_level() ) )
-    , nAutomatState_    ( sword::debraye )
+    , nAutomatState_    ( sword::disengaged )
     , nForceRatioState_ ( sword::ForceRatio::neutral )
     , nCloseCombatState_( sword::pinned_down )
-    , nOperationalState_( sword::detruit_totalement )
+    , nOperationalState_( sword::totally_destroyed )
     , nRoe_             ( sword::RulesOfEngagement::fire_upon_order )
     , order_            ( 0 )
     , symbol_           ( msg.app6symbol() )
@@ -393,7 +393,7 @@ const kernel::AutomatType& Automat::GetType() const
 // -----------------------------------------------------------------------------
 bool Automat::IsEngaged() const
 {
-    return nAutomatState_ == sword::embraye;
+    return nAutomatState_ == sword::engaged;
 }
 
 // -----------------------------------------------------------------------------

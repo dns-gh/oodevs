@@ -445,10 +445,10 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             expected.set_context( 0 );
             sword::AutomatAttributes& message = *expected.mutable_message()->mutable_automat_attributes();
             message.mutable_automat()->set_id( 1 );
-            message.set_mode( sword::debraye );
+            message.set_mode( sword::disengaged );
             message.set_force_ratio( sword::ForceRatio::favorable );
             message.set_meeting_engagement( sword::avoiding );
-            message.set_operational_state( sword::detruit_tactiquement );
+            message.set_operational_state( sword::tactically_destroyed );
             message.set_roe( sword::RulesOfEngagement::retaliation_only );
             CheckInitialized( message );
             automats.Get( 1 ).Update( message );

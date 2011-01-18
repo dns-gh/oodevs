@@ -17,9 +17,9 @@
 
 PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;
 
-const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , eNormal , sword::normal , 1. );
-const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", eFatigue, sword::fatigue, 1. );
-const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , eEpuise , sword::epuise , 1. );
+const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , eNormal , sword::rested , 1. );
+const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", eFatigue, sword::tired, 1. );
+const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , eEpuise , sword::exhausted , 1. );
 
 struct PHY_Tiredness::LoadingWrapper
 {

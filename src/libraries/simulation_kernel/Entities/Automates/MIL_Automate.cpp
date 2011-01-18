@@ -546,7 +546,7 @@ void MIL_Automate::UpdateNetwork() const
         client::AutomatAttributes msg;
         msg().mutable_automat()->set_id( nID_ );
         if( bAutomateModeChanged_ )
-            msg().set_mode( bEngaged_ ? sword::embraye : sword::debraye );
+            msg().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
         GetRole< DEC_AutomateDecision >().SendChangedState( msg );
         msg.Send( NET_Publisher_ABC::Publisher() );
     }
@@ -877,7 +877,7 @@ void MIL_Automate::SendFullState() const
 {
     client::AutomatAttributes message;
     message().mutable_automat()->set_id( nID_ );
-    message().set_mode( bEngaged_ ? sword::embraye : sword::debraye );
+    message().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
     GetRole< DEC_AutomateDecision >().SendFullState( message );
     message.Send( NET_Publisher_ABC::Publisher() );
     SendLogisticLinks();
@@ -937,10 +937,10 @@ void MIL_Automate::OnReceiveSetAutomateMode( const sword::SetAutomatMode& asnMsg
         throw NET_AsnException< sword::SetAutomatModeAck_ErrorCode >( sword::SetAutomatModeAck::error_not_allowed );
     switch( asnMsg.mode() )
     {
-    case sword::debraye:
+    case sword::disengaged:
         Disengage();
         break;
-    case sword::embraye:
+    case sword::engaged:
         Engage();
         break;
     default:

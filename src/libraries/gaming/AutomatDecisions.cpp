@@ -54,7 +54,7 @@ AutomatDecisions::~AutomatDecisions()
 void AutomatDecisions::DoUpdate( const sword::AutomatAttributes& message )
 {
     if( message.has_mode()  )
-        bEmbraye_ = ( message.mode() == sword::embraye );
+        bEmbraye_ = ( message.mode() == sword::engaged );
     controller_.Update( *this );
 }
 
@@ -144,7 +144,7 @@ void AutomatDecisions::Engage() const
 {
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( agent_.GetId() );
-    message().set_mode( sword::embraye );
+    message().set_mode( sword::engaged );
     message.Send( publisher_, 0 );
 }
 
@@ -156,7 +156,7 @@ void AutomatDecisions::Disengage() const
 {
     simulation::SetAutomatMode message;
     message().mutable_automate()->set_id( agent_.GetId() );
-    message().set_mode( sword::debraye );
+    message().set_mode( sword::disengaged );
     message.Send( publisher_, 0 );
 }
 

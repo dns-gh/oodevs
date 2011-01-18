@@ -115,7 +115,7 @@ void Automat::Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& a
     {
         simulation::SetAutomatMode message;
         message().mutable_automate()->set_id( GetId() );
-        message().set_mode( value.GetByteValue() ? sword::embraye : sword::debraye );
+        message().set_mode( value.GetByteValue() ? sword::engaged : sword::disengaged );
         message.Send( publisher, 0 );
     }
 }

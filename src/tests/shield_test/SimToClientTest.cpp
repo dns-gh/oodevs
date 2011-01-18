@@ -279,10 +279,10 @@ BOOST_FIXTURE_TEST_CASE( automat_creation_to_client_is_converted, ContextFixture
 BOOST_FIXTURE_TEST_CASE( automat_attributes_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_automat_attributes()->mutable_automat()->set_id( 7 );
-    content.mutable_automat_attributes()->set_mode( sword::embraye );
+    content.mutable_automat_attributes()->set_mode( sword::engaged );
     content.mutable_automat_attributes()->set_force_ratio( sword::ForceRatio::neutral );
     content.mutable_automat_attributes()->set_meeting_engagement( sword::avoiding );
-    content.mutable_automat_attributes()->set_operational_state( sword::operationnel );
+    content.mutable_automat_attributes()->set_operational_state( sword::operational );
     content.mutable_automat_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_attributes { automat { id: 7 } etat_automate: embraye rapport_de_force: neutre combat_de_rencontre: etat_esquive etat_operationnel: operationnel roe: tir_libre } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
@@ -394,11 +394,11 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->mutable_transporting_unit()->set_id( 112 );
     content.mutable_unit_attributes()->set_force_ratio( sword::ForceRatio::neutral );
     content.mutable_unit_attributes()->set_meeting_engagement( sword::avoiding );
-    content.mutable_unit_attributes()->set_operational_state( sword::operationnel );
+    content.mutable_unit_attributes()->set_operational_state( sword::operational );
     content.mutable_unit_attributes()->set_indirect_fire_availability( sword::UnitAttributes::fire_ready );
     content.mutable_unit_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
     content.mutable_unit_attributes()->set_roe_crowd( sword::UnitAttributes::emploi_force_interdit );
-    content.mutable_unit_attributes()->set_tiredness( sword::epuise );
+    content.mutable_unit_attributes()->set_tiredness( sword::exhausted );
     content.mutable_unit_attributes()->set_morale( sword::bon );
     content.mutable_unit_attributes()->set_experience( sword::conscrit );
     content.mutable_unit_attributes()->mutable_surrendered_unit()->set_id( 120 );
@@ -1315,7 +1315,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_concentration_update_to_client_is_converted, Cont
     content.mutable_crowd_concentration_update()->mutable_crowd()->set_id( 8 );
     content.mutable_crowd_concentration_update()->set_alive( 9 );
     content.mutable_crowd_concentration_update()->set_dead( 10 );
-    content.mutable_crowd_concentration_update()->set_attitude( sword::agitee );
+    content.mutable_crowd_concentration_update()->set_attitude( sword::agitated );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_concentration_update { concentration { id: 7 } crowd { id: 8 } nb_humains_vivants: 9 nb_humains_morts: 10 attitude: agitee } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1346,7 +1346,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_flow_update_to_client_is_converted, ContextFixtur
     content.mutable_crowd_flow_update()->set_speed( 21 );
     content.mutable_crowd_flow_update()->set_alive( 22 );
     content.mutable_crowd_flow_update()->set_dead( 23 );
-    content.mutable_crowd_flow_update()->set_attitude( sword::agitee );
+    content.mutable_crowd_flow_update()->set_attitude( sword::agitated );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_flow_update { flow { id: 7 } crowd { id: 8 } itineraire { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } parts { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } direction { heading: 20 } vitesse: 21 nb_humains_vivants: 22 nb_humains_morts: 23 attitude: agitee } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1406,7 +1406,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_concentration_knowledge_update_to_client_is_conve
     content.mutable_crowd_concentration_knowledge_update()->mutable_concentration()->set_id( 10 );
     content.mutable_crowd_concentration_knowledge_update()->set_alive( 22 );
     content.mutable_crowd_concentration_knowledge_update()->set_dead( 23 );
-    content.mutable_crowd_concentration_knowledge_update()->set_attitude( sword::agitee );
+    content.mutable_crowd_concentration_knowledge_update()->set_attitude( sword::agitated );
     content.mutable_crowd_concentration_knowledge_update()->set_pertinence( 24 );
     content.mutable_crowd_concentration_knowledge_update()->set_perceived( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_concentration_knowledge_update { knowledge { id: 7 } crowd { id: 8 } knowledge_group { id: 9 } concentration { id: 10 } nb_humains_vivants: 22 nb_humains_morts: 23 attitude: agitee pertinence: 24 est_percu: true } }" ) );
@@ -1454,7 +1454,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_flow_knowledge_update_to_client_is_converted, Con
     content.mutable_crowd_flow_knowledge_update()->set_speed( 21 );
     content.mutable_crowd_flow_knowledge_update()->set_alive( 22 );
     content.mutable_crowd_flow_knowledge_update()->set_dead( 23 );
-    content.mutable_crowd_flow_knowledge_update()->set_attitude( sword::agitee );
+    content.mutable_crowd_flow_knowledge_update()->set_attitude( sword::agitated );
     content.mutable_crowd_flow_knowledge_update()->set_perceived( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_flow_knowledge_update { knowledge { id: 7 } crowd { id: 8 } knowledge_group { id: 9 } flow { id: 10 } portions_flux { elem { forme { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } pertinence: 19 } elem { forme { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } pertinence: 19 } } direction { heading: 20 } vitesse: 21 nb_humains_vivants: 22 nb_humains_morts: 23 attitude: agitee est_percu: true } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );

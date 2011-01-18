@@ -10,6 +10,10 @@
 #ifndef shield_Common_h
 #define shield_Common_h
 
+#if !defined( SHIELD_CLIENT ) && !defined( SHIELD_SIMULATION )
+#error do not include CommonTools.h directly but ClientTools.h or SimulationTools.h // $$$$ MAT : yep, totally crappy !
+#endif
+
 #include "Tools.h"
 
 #define CONVERT_DIPLOMACY( from_field, to_field ) \
@@ -26,8 +30,8 @@
                     ( sword::blesse_urgence_extreme, Common::blesse_urgence_extreme )
 
 #define CONVERT_AUTOMAT_MODE( from_field, to_field ) \
-    CONVERT_ENUM_TO( from_field, to_field, ( sword::embraye, Common::embraye ) \
-                                           ( sword::debraye, Common::debraye ) )
+    CONVERT_ENUM_TO( from_field, to_field, ( sword::engaged, Common::embraye ) \
+                                           ( sword::disengaged, Common::debraye ) )
 
 #define CONVERT_SIMULATION_STATE( field ) \
     CONVERT_ENUM( field, ( sword::running, Common::running ) \
@@ -203,8 +207,6 @@ namespace shield
         ConvertLocation( from.localisation(), to->mutable_location() );
 #elif defined SHIELD_SIMULATION
         ConvertLocation( from.location(), to->mutable_localisation() );
-#else
-#error do not include CommonTools.h directly but ClientTools.h or SimulationTools.h // $$$$ MAT : yep, totally crappy !
 #endif
         to->mutable_horaire()->set_data( from.horaire().data() );
     }

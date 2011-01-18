@@ -23,9 +23,9 @@ MIL_PopulationAttitude::T_AttitudeMap MIL_PopulationAttitude::attitudes_;
 void MIL_PopulationAttitude::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing population attitudes" );
-    attitudes_[ "calme"     ] = new MIL_PopulationAttitude( "calme"    , eCalme    , sword::calme     );
-    attitudes_[ "agitee"    ] = new MIL_PopulationAttitude( "agitee"   , eAgitee   , sword::agitee    );
-    attitudes_[ "excitee"   ] = new MIL_PopulationAttitude( "excitee"  , eExcitee  , sword::excitee   );
+    attitudes_[ "calme"     ] = new MIL_PopulationAttitude( "calme"    , eCalme    , sword::peaceful  );
+    attitudes_[ "agitee"    ] = new MIL_PopulationAttitude( "agitee"   , eAgitee   , sword::agitated  );
+    attitudes_[ "excitee"   ] = new MIL_PopulationAttitude( "excitee"  , eExcitee  , sword::excited   );
     attitudes_[ "agressive" ] = new MIL_PopulationAttitude( "agressive", eAgressive, sword::agressive );
 }
 

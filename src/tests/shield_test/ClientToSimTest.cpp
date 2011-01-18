@@ -186,7 +186,7 @@ BOOST_FIXTURE_TEST_CASE( set_automat_mode_from_client_is_converted, ContextFixtu
 {
     content.mutable_set_automat_mode()->mutable_automate()->set_id( 7 );
     content.mutable_set_automat_mode()->set_mode( Common::debraye );
-    MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { set_automat_mode { automate { id: 7 } mode: debraye } }" ) );
+    MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { set_automat_mode { automate { id: 7 } mode: disengaged } }" ) );
     converter.ReceiveClientToSim( "client endpoint", msg );
 }
 

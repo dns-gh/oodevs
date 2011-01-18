@@ -214,10 +214,10 @@ namespace
     {
         switch( status )
         {
-            case sword::detruit_tactiquement:
-            case sword::detruit_totalement:
+            case sword::totally_destroyed:
+            case sword::tactically_destroyed:
                 return "NOP";
-            case sword::operationnel:
+            case sword::operational:
                 return "OPR";
             default:
                 break;

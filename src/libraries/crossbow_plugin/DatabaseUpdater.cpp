@@ -524,7 +524,7 @@ void DatabaseUpdater::Update( const sword::AutomatAttributes& msg )
     if( Row_ABC* row = table->Find( query.str() ) )
     {
         if( msg.has_mode() )
-            row->SetField( "engaged", FieldVariant( ( msg.mode() == sword::embraye ) ? -1 : 0 ) );
+            row->SetField( "engaged", FieldVariant( ( msg.mode() == sword::engaged ) ? -1 : 0 ) );
         table->UpdateRow( *row );
     }
 }

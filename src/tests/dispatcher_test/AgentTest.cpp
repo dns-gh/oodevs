@@ -187,11 +187,11 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.mutable_transporting_unit()->set_id( 0 );
                 message.set_force_ratio( sword::ForceRatio::favorable );
                 message.set_meeting_engagement( sword::pinned_down );
-                message.set_operational_state( sword::detruit_totalement );
+                message.set_operational_state( sword::totally_destroyed );
                 message.set_indirect_fire_availability( sword::UnitAttributes::fire_ready );
                 message.set_roe( sword::RulesOfEngagement::retaliation_only );
                 message.set_roe_crowd( sword::UnitAttributes::maintien_a_distance_par_moyens_non_letaux );
-                message.set_tiredness( sword::fatigue );
+                message.set_tiredness( sword::tired );
                 message.set_morale( sword::fanatique );
                 message.set_experience( sword::veteran );
                 message.mutable_surrendered_unit()->set_id( 0 );

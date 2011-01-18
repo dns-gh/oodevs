@@ -138,27 +138,27 @@ enum EnumMeetingEngagementStatus {
 }
 
 enum EnumOperationalStatus {
-   detruit_totalement   = 0; //!< @todo translate
-   detruit_tactiquement = 1; //!< @todo translate
-   operationnel         = 2; //!< @todo translate
+   totally_destroyed    = 0; //!< Totally destroyed
+   tactically_destroyed = 1; //!< Tactically Destroyed
+   operational          = 2; //!< Operational
 }
 
 enum EnumAutomatMode {
-   embraye = 0; //!< @todo rename to engaged
-   debraye = 1; //!< @todo rename to disengaged
+   engaged    = 0; //!< Engaged
+   disengaged = 1; //!< Disengaged
 }
 
-enum EnumCrowdAttitude{
-   calme     = 0; //!< @todo translate
-   agitee    = 1; //!< @todo translate
-   excitee   = 2; //!< @todo translate
-   agressive = 3; //!< @todo translate
+enum EnumCrowdAttitude {
+   peaceful  = 0; //!< Peaceful
+   agitated  = 1; //!< Agitated
+   excited   = 2; //!< Excited
+   agressive = 3; //!< Agressive
 }
 
 enum EnumUnitTiredness {
-   normal  = 0; //!< @todo translate
-   fatigue = 1; //!< @todo translate
-   epuise  = 2; //!< @todo translate
+   rested     = 0; //!< Rested
+   tired      = 1; //!< Tired
+   exhausted  = 2; //!< Exhausted
 }
 
 enum EnumUnitMorale {
@@ -181,10 +181,10 @@ enum EnumHumanRank {
 }
 
 enum EnumDiplomacy {
-   unknown_diplo = 0;
-   friend_diplo  = 1;
-   enemy_diplo   = 2;
-   neutral_diplo = 3;
+   unknown_diplo = 0; //!< @todo remove suffix _diplo
+   friend_diplo  = 1; //!< @todo remove suffix _diplo
+   enemy_diplo   = 2; //!< @todo remove suffix _diplo
+   neutral_diplo = 3; //!< @todo remove suffix _diplo
 }
 
 enum EnumHumanWound {

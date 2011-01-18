@@ -483,9 +483,9 @@ namespace
     template< typename From, typename To >
     void ConvertOperationalStatus( const From& from, To* to )
     {
-        CONVERT_ENUM_TO( operational_state, etat_operationnel, ( sword::detruit_totalement, Common::detruit_totalement )
-                                                               ( sword::detruit_tactiquement, Common::detruit_tactiquement )
-                                                               ( sword::operationnel, Common::operationnel ) );
+        CONVERT_ENUM_TO( operational_state, etat_operationnel, ( sword::totally_destroyed, Common::detruit_totalement )
+                                                               ( sword::tactically_destroyed, Common::detruit_tactiquement )
+                                                               ( sword::operational, Common::operationnel ) );
     }
     template< typename From, typename To >
     void ConvertRulesOfEngagement( const From& from, To* to )
@@ -640,9 +640,9 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
                              ( sword::UnitAttributes::maintien_a_distance_par_moyens_non_letaux, MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux )
                              ( sword::UnitAttributes::dispersion_par_moyens_de_defense_actifs, MsgsSimToClient::MsgUnitAttributes::dispersion_par_moyens_de_defense_actifs )
                              ( sword::UnitAttributes::armes_letales_autorisees, MsgsSimToClient::MsgUnitAttributes::armes_letales_autorisees ) );
-    CONVERT_ENUM_TO( tiredness, fatigue, ( sword::normal, Common::normal )
-                                         ( sword::fatigue, Common::fatigue )
-                                         ( sword::epuise, Common::epuise ) );
+    CONVERT_ENUM_TO( tiredness, fatigue, ( sword::rested, Common::normal )
+                                         ( sword::tired, Common::fatigue )
+                                         ( sword::exhausted, Common::epuise ) );
     CONVERT_ENUM_TO( morale, moral, ( sword::fanatique, Common::fanatique )
                                     ( sword::bon, Common::bon )
                                     ( sword::moyen, Common::moyen )
@@ -1687,9 +1687,9 @@ namespace
     template< typename From, typename To >
     void ConvertCrowdAttitude( const From& from, To* to )
     {
-        CONVERT_ENUM( attitude, ( sword::calme, Common::calme )
-                                ( sword::agitee, Common::agitee )
-                                ( sword::excitee, Common::excitee )
+        CONVERT_ENUM( attitude, ( sword::peaceful, Common::calme )
+                                ( sword::agitated, Common::agitee )
+                                ( sword::excited, Common::excitee )
                                 ( sword::agressive, Common::agressive ) );
     }
 }
