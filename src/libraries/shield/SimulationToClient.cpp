@@ -643,10 +643,10 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     CONVERT_ENUM_TO( tiredness, fatigue, ( sword::rested, Common::normal )
                                          ( sword::tired, Common::fatigue )
                                          ( sword::exhausted, Common::epuise ) );
-    CONVERT_ENUM_TO( morale, moral, ( sword::fanatique, Common::fanatique )
-                                    ( sword::bon, Common::bon )
-                                    ( sword::moyen, Common::moyen )
-                                    ( sword::mauvais, Common::mauvais ) );
+    CONVERT_ENUM_TO( morale, moral, ( sword::fanatical, Common::fanatique )
+                                    ( sword::high, Common::bon )
+                                    ( sword::standard, Common::moyen )
+                                    ( sword::low, Common::mauvais ) );
     CONVERT_ENUM( experience, ( sword::veteran, Common::veteran )
                               ( sword::experimente, Common::experimente )
                               ( sword::conscrit, Common::conscrit ) );

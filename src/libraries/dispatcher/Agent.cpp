@@ -72,7 +72,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , nRoe_                         ( sword::RulesOfEngagement::free_fire )
     , nPopulationRoe_               ( sword::UnitAttributes::emploi_force_interdit )
     , nTiredness_                   ( sword::rested )
-    , nMorale_                      ( sword::bon )
+    , nMorale_                      ( sword::high )
     , nExperience_                  ( sword::experimente )
     , pSideSurrenderedTo_           ( 0 )
     , bPrisonner_                   ( false )

@@ -162,10 +162,10 @@ enum EnumUnitTiredness {
 }
 
 enum EnumUnitMorale {
-   fanatique = 0; //!< @todo translate
-   bon       = 1; //!< @todo translate
-   moyen     = 2; //!< @todo translate
-   mauvais   = 3; //!< @todo translate
+   fanatical = 0; //!< Fanatical
+   high      = 1; //!< High
+   standard  = 2; //!< Standard
+   low       = 3; //!< Low
 }
 
 enum EnumUnitExperience {

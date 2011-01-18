@@ -17,10 +17,10 @@
 
 PHY_Morale::T_MoraleMap PHY_Morale::morales_;
 
-const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , sword::mauvais  , 0.5  );
-const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , sword::moyen    , 0.75 );
-const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , sword::bon      , 1    );
-const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, sword::fanatique, 1.25 );
+const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, sword::fanatical, 1.25 );
+const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , sword::high     , 1    );
+const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , sword::standard , 0.75 );
+const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , sword::low      , 0.5  );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Morale::Initialize
@@ -29,10 +29,10 @@ const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, sword::fanatiq
 void PHY_Morale::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing morales" );
-    morales_[ mauvais_  .GetName() ] = &mauvais_;
-    morales_[ moyen_    .GetName() ] = &moyen_;
-    morales_[ bon_      .GetName() ] = &bon_;
     morales_[ fanatique_.GetName() ] = &fanatique_;
+    morales_[ bon_      .GetName() ] = &bon_;
+    morales_[ moyen_    .GetName() ] = &moyen_;
+    morales_[ mauvais_  .GetName() ] = &mauvais_;
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +50,8 @@ void PHY_Morale::Terminate()
 // -----------------------------------------------------------------------------
 PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, sword::EnumUnitMorale nAsnID, double rDIAWeight )
     : strName_   ( strName )
-    , nType_     ( nType   )
-    , nAsnID_    ( nAsnID  )
+    , nType_     ( nType )
+    , nAsnID_    ( nAsnID )
     , rDIAWeight_( rDIAWeight )
 {
     // NOTHING
@@ -93,7 +93,6 @@ const PHY_Morale* PHY_Morale::Find( unsigned int nID )
 const PHY_Morale* PHY_Morale::Find( const std::string& strName )
 {
     CIT_MoraleMap it = morales_.find( strName );
-
     return it == morales_.end() ? 0 : it->second;
 }
 
