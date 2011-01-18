@@ -1,9 +1,5 @@
 @echo off
 
-SET SPACE=sword
-SET USR=sword
-SET PWD=sword
-
 SET PG_USR=postgres
 SET PG_PWD=postgres
 SET PG_DB=postgres
@@ -18,4 +14,5 @@ SET COMMAND_DROP_DB="%PGHOME%\dropdb.exe"
 SET SQL_SCHEMA_FILE="create-sword-schema.sql"
 SET SQL_CONSTRAINT_FILE="create-sword-constraints.sql"
 SET SQL_USER_FILE="create-sword-user.sql"
+SET SQL_DROP_USER_FILE="drop-sword-user.sql"
 
