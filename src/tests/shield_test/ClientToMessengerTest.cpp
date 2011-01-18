@@ -89,7 +89,7 @@ BOOST_FIXTURE_TEST_CASE( lima_destruction_request_from_client_is_converted, Cont
 BOOST_FIXTURE_TEST_CASE( intelligence_creation_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
 {
     FillShieldIntelligence( content.mutable_intelligence_creation_request()->mutable_intelligence() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { intelligence_creation_request { intelligence { name: \"name\" nature: \"nature\" level: ii embarked: true location { latitude: 17.23 longitude: 23.17 } diplomacy: friend_diplo formation { id: 77 } } } }" ) );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { intelligence_creation_request { intelligence { name: \"name\" nature: \"nature\" level: ii embarked: true location { latitude: 17.23 longitude: 23.17 } diplomacy: friendly formation { id: 77 } } } }" ) );
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 
@@ -97,7 +97,7 @@ BOOST_FIXTURE_TEST_CASE( intelligence_update_request_from_client_is_converted, C
 {
     content.mutable_intelligence_update_request()->mutable_intelligence()->set_id( 12 );
     FillShieldIntelligence( content.mutable_intelligence_update_request() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { intelligence_update_request { intelligence { id: 12 } formation { id: 77 } name: \"name\" nature: \"nature\" level: ii embarked: true location { latitude: 17.23 longitude: 23.17 } diplomacy: friend_diplo } }" ) );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { intelligence_update_request { intelligence { id: 12 } formation { id: 77 } name: \"name\" nature: \"nature\" level: ii embarked: true location { latitude: 17.23 longitude: 23.17 } diplomacy: friendly } }" ) );
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 

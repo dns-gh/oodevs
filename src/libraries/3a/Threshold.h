@@ -12,16 +12,13 @@
 
 #include "Reductor_ABC.h"
 #include "TypeChecks.h"
-#include <set>
-#include <map>
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push )
-#pragma warning( disable : 4800 4804 4996 )
+#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
-
-namespace xml { class xistream; }
+#include <set>
+#include <map>
 
 // =============================================================================
 /** @class  Threshold
@@ -41,26 +38,36 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Threshold( xml::xistream& xis, Function1_ABC< K, T >& handler )
-                : handler_( handler )
-                , thresholds_( ReadThresholds( xis ) ) {};
-    virtual ~Threshold() {};
+    Threshold( xml::xistream& xis, Function1_ABC< K, T >& handler )
+        : handler_   ( handler )
+        , thresholds_( ReadThresholds( xis ) )
+    {
+        // NOTHING
+    }
+    virtual ~Threshold()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string GetName() const { return "Threshold"; }
+    virtual std::string GetName() const
+    {
+        return "Threshold";
+    }
     virtual void OnBeginTick()
     {
         handler_.BeginTick();
     };
     virtual void SetKey( const K& /*key*/ )
     {
+        // NOTHING
     }
     virtual void Apply( const T& value )
     {
         handler_.Apply( ApplyThreshold( value ) );
-    };
+    }
     virtual void OnEndTick()
     {
         handler_.EndTick();

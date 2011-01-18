@@ -42,11 +42,11 @@ namespace
     {
         switch( diplomacy )
         {
-        case sword::friend_diplo:
+        case sword::friendly:
             return Karma::friend_;
-        case sword::enemy_diplo:
+        case sword::enemy:
             return Karma::enemy_;
-        case sword::neutral_diplo:
+        case sword::neutral:
             return Karma::neutral_;
         default:
             return kernel::Karma::unknown_;
@@ -112,13 +112,13 @@ void Diplomacies::DoUpdate( const sword::PartyCreation& message )
 {
     switch( message.type() )
     {
-    case sword::friend_diplo :
+    case sword::friendly :
         karma_ = kernel::Karma::friend_;
         break;
-    case sword::enemy_diplo :
+    case sword::enemy :
         karma_ = kernel::Karma::enemy_;
         break;
-    case sword::neutral_diplo :
+    case sword::neutral :
         karma_ = kernel::Karma::neutral_;
         break;
     default:

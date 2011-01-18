@@ -263,7 +263,7 @@ void DatabaseUpdater::Update( const sword::ObjectKnowledgeCreation& msg )
         row.SetField( "observer_affiliation", FieldVariant( tools::app6::GetAffiliation( symbol ) ) );
     }
     else
-        tools::app6::SetAffiliation( symbol, (unsigned int) sword::unknown_diplo );
+        tools::app6::SetAffiliation( symbol, (unsigned int) sword::unknown );
     row.SetField( "symbol_id", FieldVariant( FormatSymbol( symbol ) ) );
     table->InsertRow( row );
 }
@@ -436,7 +436,7 @@ void DatabaseUpdater::Update( const sword::ObjectKnowledgeUpdate& msg )
             row->SetField( "observer_affiliation", FieldVariant( tools::app6::GetAffiliation( symbol ) ) );
         }
         else
-            tools::app6::SetAffiliation( symbol, (unsigned int) sword::unknown_diplo );
+            tools::app6::SetAffiliation( symbol, (unsigned int) sword::unknown );
 
         row->SetField( "symbol_id", FieldVariant( FormatSymbol( symbol ) ) );
         //Geometry

@@ -70,22 +70,22 @@ namespace
     sword::EnumDiplomacy ResolveKarma( const std::string& karma )
     {
         if( karma == "friend" )
-            return sword::friend_diplo;
+            return sword::friendly;
         if( karma == "enemy" )
-            return sword::enemy_diplo;
+            return sword::enemy;
         if( karma == "neutral" )
-            return sword::neutral_diplo;
-        return sword::unknown_diplo;
+            return sword::neutral;
+        return sword::unknown;
     }
 
     std::string ResolveKarma( sword::EnumDiplomacy karma )
     {
         switch( karma )
         {
-        case sword::friend_diplo: return "friend";
-        case sword::enemy_diplo: return "enemy";
-        case sword::neutral_diplo: return "neutral";
-        case sword::unknown_diplo:
+        case sword::friendly: return "friend";
+        case sword::enemy: return "enemy";
+        case sword::neutral: return "neutral";
+        case sword::unknown:
         default: return "unknown";
         }
     }

@@ -169,22 +169,22 @@ enum EnumUnitMorale {
 }
 
 enum EnumUnitExperience {
-   veteran     = 0; //!< @todo translate
-   experimente = 1; //!< @todo translate
-   conscrit    = 2; //!< @todo translate
+   veteran = 0; //!< Veteran
+   expert  = 1; //!< Expert
+   novice  = 2; //!< Novice
 }
 
 enum EnumHumanRank {
-   officier     = 0; //!< @todo translate
-   sous_officer = 1; //!< @todo translate
-   mdr          = 2; //!< @todo translate
+   officer     = 0; //!< Commissioned Officer
+   sub_officer = 1; //!< Non-commissioned Officer
+   trooper     = 2; //!< Other Enlisted Rank
 }
 
 enum EnumDiplomacy {
-   unknown_diplo = 0; //!< @todo remove suffix _diplo
-   friend_diplo  = 1; //!< @todo remove suffix _diplo
-   enemy_diplo   = 2; //!< @todo remove suffix _diplo
-   neutral_diplo = 3; //!< @todo remove suffix _diplo
+   unknown  = 0;
+   friendly = 1;
+   enemy    = 2;
+   neutral  = 3;
 }
 
 enum EnumHumanWound {

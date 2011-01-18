@@ -34,10 +34,10 @@ Side::Side( const Model_ABC& model, const sword::PartyCreation& msg )
 {
     switch( nType_ )
     {
-        case sword::unknown_diplo: karma_ = kernel::Karma::unknown_; break;
-        case sword::friend_diplo : karma_ = kernel::Karma::friend_; break;
-        case sword::enemy_diplo  : karma_ = kernel::Karma::enemy_; break;
-        case sword::neutral_diplo: karma_ = kernel::Karma::neutral_; break;
+        case sword::unknown: karma_ = kernel::Karma::unknown_; break;
+        case sword::friendly : karma_ = kernel::Karma::friend_; break;
+        case sword::enemy  : karma_ = kernel::Karma::enemy_; break;
+        case sword::neutral: karma_ = kernel::Karma::neutral_; break;
     }
     RegisterSelf( *this );
 }

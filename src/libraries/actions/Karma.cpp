@@ -25,11 +25,11 @@ namespace
     {
         switch( diplomacy )
         {
-        case sword::friend_diplo:
+        case sword::friendly:
             return kernel::Karma::friend_;
-        case sword::enemy_diplo:
+        case sword::enemy:
             return kernel::Karma::enemy_;
-        case sword::neutral_diplo:
+        case sword::neutral:
             return kernel::Karma::neutral_;
         default:
             return kernel::Karma::unknown_;
@@ -40,13 +40,13 @@ namespace
     {
 
         if (karma == kernel::Karma::friend_)
-            return sword::friend_diplo;
+            return sword::friendly;
         else if (karma == kernel::Karma::enemy_)
-            return sword::enemy_diplo;
+            return sword::enemy;
         else if (karma == kernel::Karma::neutral_)
-            return sword::neutral_diplo;
+            return sword::neutral;
         else
-            return sword::unknown_diplo;
+            return sword::unknown;
     }
 
     // Reverts diplomacy effect applied on karma => "diplomacy" karma

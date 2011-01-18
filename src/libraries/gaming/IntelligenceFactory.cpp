@@ -66,12 +66,12 @@ namespace
     sword::EnumDiplomacy ConvertToDiplomacy( const Karma& karma )
     {
         if( karma == Karma::friend_ )
-            return sword::friend_diplo;
+            return sword::friendly;
         if( karma == Karma::enemy_ )
-            return sword::enemy_diplo;
+            return sword::enemy;
         if( karma == Karma::neutral_ )
-            return sword::neutral_diplo;
-        return sword::unknown_diplo;
+            return sword::neutral;
+        return sword::unknown;
     }
 }
 

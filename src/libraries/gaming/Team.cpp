@@ -20,10 +20,10 @@ namespace
     {
         switch( diplomacy )
         {
-            case sword::friend_diplo : return kernel::Karma::friend_;
-            case sword::enemy_diplo  : return kernel::Karma::enemy_;
-            case sword::neutral_diplo: return kernel::Karma::neutral_;
-            case sword::unknown_diplo:
+            case sword::friendly : return kernel::Karma::friend_;
+            case sword::enemy  : return kernel::Karma::enemy_;
+            case sword::neutral: return kernel::Karma::neutral_;
+            case sword::unknown:
             default: return kernel::Karma::unknown_;
         }
     }

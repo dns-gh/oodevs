@@ -691,16 +691,16 @@ void MIL_Army::OnReceiveChangeDiplomacy( const sword::MissionParameters& asnMsg 
     E_Diplomacy nDiplomacy = eUnknown;
     switch( asnMsg.elem( 2 ).value().Get(0).enumeration() )
     {
-    case sword::unknown_diplo:
+    case sword::unknown:
         nDiplomacy = eUnknown;
         break;
-    case sword::friend_diplo:
+    case sword::friendly:
         nDiplomacy = eFriend;
         break;
-    case sword::enemy_diplo:
+    case sword::enemy:
         nDiplomacy = eEnemy;
         break;
-    case sword::neutral_diplo:
+    case sword::neutral:
         nDiplomacy = eNeutral;
         break;
     default:

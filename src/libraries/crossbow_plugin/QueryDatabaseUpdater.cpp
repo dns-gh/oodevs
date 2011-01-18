@@ -202,7 +202,7 @@ void QueryDatabaseUpdater::Update( const sword::ObjectKnowledgeCreation& msg )
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
     }
     else
-        tools::app6::SetAffiliation( symbol, (unsigned int) sword::unknown_diplo );
+        tools::app6::SetAffiliation( symbol, (unsigned int) sword::unknown );
 
     builder.SetField( "symbol_id", FormatSymbol( symbol ) );
     database_.Execute( builder );
@@ -330,7 +330,7 @@ void QueryDatabaseUpdater::Update( const sword::ObjectKnowledgeUpdate& msg )
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
     }
     else
-        tools::app6::SetAffiliation( symbol, (unsigned int) sword::unknown_diplo );
+        tools::app6::SetAffiliation( symbol, (unsigned int) sword::unknown );
 
     builder.SetField( "symbol_id", FormatSymbol( symbol ) );
     database_.Execute( builder );

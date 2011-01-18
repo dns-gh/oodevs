@@ -31,11 +31,11 @@ namespace
     {
         switch( diplomacy )
         {
-        case sword::friend_diplo:
+        case sword::friendly:
             return Karma::friend_;
-        case sword::enemy_diplo:
+        case sword::enemy:
             return Karma::enemy_;
-        case sword::neutral_diplo:
+        case sword::neutral:
             return Karma::neutral_;
         default:
             return Karma::unknown_;

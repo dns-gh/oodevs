@@ -22,8 +22,8 @@ namespace
 {
     unsigned char ConvertAlignment( const sword::EnumDiplomacy& diplomacy )
     {
-        if( diplomacy == sword::unknown_diplo )
-            return sword::friend_diplo;
+        if( diplomacy == sword::unknown )
+            return sword::friendly;
         return char( diplomacy ) - 1;
     }
 }

@@ -93,7 +93,7 @@ BOOST_FIXTURE_TEST_CASE( change_diplomacy_ack_to_client_is_converted, ContextFix
 {
     content.mutable_change_diplomacy_ack()->mutable_party1()->set_id( 7 );
     content.mutable_change_diplomacy_ack()->mutable_party2()->set_id( 8 );
-    content.mutable_change_diplomacy_ack()->set_diplomacy( sword::friend_diplo );
+    content.mutable_change_diplomacy_ack()->set_diplomacy( sword::friendly );
     content.mutable_change_diplomacy_ack()->set_error_code( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { change_diplomacy_ack { party1 { id: 7 } party2 { id: 8 } diplomatie: friend_diplo error_code: error_invalid_camp_diplomacy } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
@@ -250,7 +250,7 @@ BOOST_FIXTURE_TEST_CASE( party_creation_to_client_is_converted, ContextFixture< 
 {
     content.mutable_party_creation()->mutable_party()->set_id( 7 );
     content.mutable_party_creation()->set_name( "name" );
-    content.mutable_party_creation()->set_type( sword::friend_diplo );
+    content.mutable_party_creation()->set_type( sword::friendly );
     FillExtension( content.mutable_party_creation()->mutable_extension()->add_entries() );
     FillExtension( content.mutable_party_creation()->mutable_extension()->add_entries() );
     FillRgbColor( content.mutable_party_creation()->mutable_color() );
@@ -305,7 +305,7 @@ namespace
     template< typename D >
     void FillHumanDotation( D* d )
     {
-        d->set_rank( sword::mdr );
+        d->set_rank( sword::trooper );
         d->set_total( 10 );
         d->set_operational( 11 );
         d->set_dead( 12 );
@@ -400,7 +400,7 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->set_roe_crowd( sword::UnitAttributes::emploi_force_interdit );
     content.mutable_unit_attributes()->set_tiredness( sword::exhausted );
     content.mutable_unit_attributes()->set_morale( sword::high );
-    content.mutable_unit_attributes()->set_experience( sword::conscrit );
+    content.mutable_unit_attributes()->set_experience( sword::novice );
     content.mutable_unit_attributes()->mutable_surrendered_unit()->set_id( 120 );
     content.mutable_unit_attributes()->set_prisoner( true );
     content.mutable_unit_attributes()->set_refugees_managed( true );
@@ -440,7 +440,7 @@ BOOST_FIXTURE_TEST_CASE( change_diplomacy_to_client_is_converted, ContextFixture
 {
     content.mutable_change_diplomacy()->mutable_party1()->set_id( 7 );
     content.mutable_change_diplomacy()->mutable_party2()->set_id( 8 );
-    content.mutable_change_diplomacy()->set_diplomacy( sword::friend_diplo );
+    content.mutable_change_diplomacy()->set_diplomacy( sword::friendly );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { change_diplomacy { party1 { id: 7 } party2 { id: 8 } diplomatie: friend_diplo } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -551,7 +551,7 @@ namespace
     template< typename D >
     void FillUnitHumanFireDamage( D* d )
     {
-        d->set_rank( sword::mdr );
+        d->set_rank( sword::trooper );
         d->set_alive( 10 );
         d->set_dead( 11 );
         d->set_wounded_u1( 12 );
@@ -1064,7 +1064,7 @@ BOOST_FIXTURE_TEST_CASE( log_medical_handling_creation_to_client_is_converted, C
     content.mutable_log_medical_handling_creation()->mutable_request()->set_id( 7 );
     content.mutable_log_medical_handling_creation()->mutable_unit()->set_id( 8 );
     content.mutable_log_medical_handling_creation()->set_tick( 9u );
-    content.mutable_log_medical_handling_creation()->set_rank( sword::mdr );
+    content.mutable_log_medical_handling_creation()->set_rank( sword::trooper );
     content.mutable_log_medical_handling_creation()->set_wound( sword::mort );
     content.mutable_log_medical_handling_creation()->set_mental_wound( true );
     content.mutable_log_medical_handling_creation()->set_nbc_contaminated( true );

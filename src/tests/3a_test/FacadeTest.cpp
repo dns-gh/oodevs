@@ -738,7 +738,7 @@ namespace
         UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
         attributes.mutable_unit()->set_id( id );
         HumanDotations_HumanDotation& personnel = *attributes.mutable_human_dotations()->add_elem();
-        personnel.set_rank( sword::officier );
+        personnel.set_rank( sword::officer );
         personnel.set_total( state[0] );
         personnel.set_operational( state[1] );
         personnel.set_dead( state[2] );

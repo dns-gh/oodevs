@@ -17,9 +17,9 @@
 
 PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
 
-const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , eConscrit   , sword::conscrit   , 1.);
-const PHY_Experience PHY_Experience::experimente_( "Experimente", eExperimente, sword::experimente, 1.);
-const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , eVeteran    , sword::veteran    , 1. );
+const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , eVeteran    , sword::veteran, 1. );
+const PHY_Experience PHY_Experience::experimente_( "Experimente", eExperimente, sword::expert , 1.);
+const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , eConscrit   , sword::novice , 1.);
 
 struct PHY_Experience::LoadingWrapper
 {
@@ -50,10 +50,9 @@ void PHY_Experience::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_Experience::ReadExperience( xml::xistream& xis )
 {
-    experiences_[ conscrit_    .GetName() ] = &conscrit_;
-    experiences_[ experimente_ .GetName() ] = &experimente_;
-    experiences_[ veteran_     .GetName() ] = &veteran_;
-
+    experiences_[ veteran_    .GetName() ] = &veteran_;
+    experiences_[ experimente_.GetName() ] = &experimente_;
+    experiences_[ conscrit_   .GetName() ] = &conscrit_;
     std::string type;
     xis >> xml::attribute( "state", type );
     T_ExperienceMap::iterator it = experiences_.find( type );

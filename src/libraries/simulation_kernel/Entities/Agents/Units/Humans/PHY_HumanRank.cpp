@@ -13,9 +13,10 @@
 #include "MT_Tools/MT_Logger.h"
 
 PHY_HumanRank::T_HumanRankMap PHY_HumanRank::humanRanks_;
-const PHY_HumanRank           PHY_HumanRank::officier_       ( "Officier"       , eOfficier       , sword::officier    , true  );
-const PHY_HumanRank           PHY_HumanRank::sousOfficier_   ( "SousOfficier"   , eSousOfficier   , sword::sous_officer, true  );
-const PHY_HumanRank           PHY_HumanRank::militaireDuRang_( "MilitaireDuRang", eMilitaireDuRang, sword::mdr         , false );
+
+const PHY_HumanRank PHY_HumanRank::officier_       ( "Officier"       , eOfficier       , sword::officer    , true  );
+const PHY_HumanRank PHY_HumanRank::sousOfficier_   ( "SousOfficier"   , eSousOfficier   , sword::sub_officer, true  );
+const PHY_HumanRank PHY_HumanRank::militaireDuRang_( "MilitaireDuRang", eMilitaireDuRang, sword::trooper     , false );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_HumanRank::Initialize

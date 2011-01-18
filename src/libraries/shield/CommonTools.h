@@ -17,10 +17,10 @@
 #include "Tools.h"
 
 #define CONVERT_DIPLOMACY( from_field, to_field ) \
-    CONVERT_ENUM_TO( from_field, to_field, ( sword::unknown_diplo, Common::unknown_diplo ) \
-                                           ( sword::friend_diplo, Common::friend_diplo ) \
-                                           ( sword::enemy_diplo, Common::enemy_diplo ) \
-                                           ( sword::neutral_diplo, Common::neutral_diplo ) )
+    CONVERT_ENUM_TO( from_field, to_field, ( sword::unknown, Common::unknown_diplo ) \
+                                           ( sword::friendly, Common::friend_diplo ) \
+                                           ( sword::enemy, Common::enemy_diplo ) \
+                                           ( sword::neutral, Common::neutral_diplo ) )
 
 #define HUMAN_WOUND ( sword::non_blesse, Common::non_blesse ) \
                     ( sword::mort, Common::mort ) \

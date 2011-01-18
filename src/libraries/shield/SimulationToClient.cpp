@@ -29,9 +29,9 @@ using namespace shield;
                              ( sword::signale, MsgsSimToClient::signale ) )
 
 #define CONVERT_RANK( from_field, to_field ) \
-        CONVERT_ENUM_TO( from_field, to_field, ( sword::officier, Common::officier ) \
-                                     ( sword::sous_officer, Common::sous_officer ) \
-                                     ( sword::mdr, Common::mdr ) )
+        CONVERT_ENUM_TO( from_field, to_field, ( sword::officer, Common::officier ) \
+                                     ( sword::sub_officer, Common::sous_officer ) \
+                                     ( sword::trooper, Common::mdr ) )
 
 #define CONVERT_UNIT_ACTION_ACK( field ) \
     CONVERT_ENUM( field, ( sword::UnitActionAck::no_error, MsgsSimToClient::UnitActionAck::no_error ) \
@@ -648,8 +648,8 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
                                     ( sword::standard, Common::moyen )
                                     ( sword::low, Common::mauvais ) );
     CONVERT_ENUM( experience, ( sword::veteran, Common::veteran )
-                              ( sword::experimente, Common::experimente )
-                              ( sword::conscrit, Common::conscrit ) );
+                              ( sword::expert, Common::experimente )
+                              ( sword::novice, Common::conscrit ) );
     CONVERT_ID( surrendered_unit );
     CONVERT_TO( prisoner, prisonnier );
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );

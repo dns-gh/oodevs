@@ -38,9 +38,9 @@ AgentFireResult::AgentFireResult( const sword::UnitFireDamages& message, const t
         const sword::UnitHumanFireDamage& fire = message.humans().elem( i );
 
         int Casualties::* table = & Casualties::troopers_;
-        if( fire.rank() == sword::officier )
+        if( fire.rank() == sword::officer )
             table = & Casualties::officers_;
-        else if( fire.rank() == sword::sous_officer )
+        else if( fire.rank() == sword::sub_officer )
             table = & Casualties::subOfficers_;
 
         casualties_[ eHumanWound_BlesseUrgence1 ].*table        = fire.wounded_u1();

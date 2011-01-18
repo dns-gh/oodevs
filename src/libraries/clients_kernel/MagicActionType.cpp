@@ -249,10 +249,10 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Camp1", "identifier" );
         CreateOrderParameter( "Camp2", "identifier" );
         OrderParameter* diplomacy = CreateOrderParameter( "Diplomacy", "enumeration" );
-        diplomacy->AddValue( sword::unknown_diplo, kernel::Karma::unknown_.GetName().ascii() );
-        diplomacy->AddValue( sword::friend_diplo, kernel::Karma::friend_.GetName().ascii() );
-        diplomacy->AddValue( sword::enemy_diplo, kernel::Karma::enemy_.GetName().ascii() );
-        diplomacy->AddValue( sword::neutral_diplo, kernel::Karma::neutral_.GetName().ascii() );
+        diplomacy->AddValue( sword::unknown, kernel::Karma::unknown_.GetName().ascii() );
+        diplomacy->AddValue( sword::friendly, kernel::Karma::friend_.GetName().ascii() );
+        diplomacy->AddValue( sword::enemy, kernel::Karma::enemy_.GetName().ascii() );
+        diplomacy->AddValue( sword::neutral, kernel::Karma::neutral_.GetName().ascii() );
     }
     else if( name_ == "create_knowledge_group" )
     {
