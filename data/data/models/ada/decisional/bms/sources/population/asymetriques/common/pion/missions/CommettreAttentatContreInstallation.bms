@@ -25,6 +25,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
+        self._namedParams.mission.suicide_ = self.params.mission.suicide_ or false
     end,
 
     activate = function( self )
@@ -135,6 +136,10 @@ self.done_ACT_Eni_Pion_ASY_CommettreAttentatContreInstallation = function( self,
                 --[[// Rejoindre la position de repli
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eSExfiltrer then
+                    if self._namedParams.mission.suicide_ then
+                        self.ePhaseMission = eFinMission
+                        return
+                    end
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( self.eAction == eActionEffectuee ) then
                         do

@@ -1621,7 +1621,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="pointRepli_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="suicide_" name="Suicide" optional="false" type="Boolean"/>
       <parameter dia-name="dotation_" name="Ammunition" optional="false" type="ResourceType"/>
       <parameter dia-name="populationCible_" name="Population Target" optional="false" type="CrowdKnowledge"/>
     </mission>
@@ -1646,7 +1645,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="pointRepli_" name="Meeting point" optional="false" type="Point"/>
-      <parameter dia-name="suicide_" name="Suicide" optional="false" type="Boolean"/>
       <parameter dia-name="dotation_" name="Ammunition" optional="false" type="ResourceType"/>
       <parameter dia-name="installationCible_" name="Critical infrastructure Target" optional="false" type="ObjectKnowledge"/>
     </mission>
@@ -1763,6 +1761,36 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area_" name="Area" optional="false" type="Polygon"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatSuicideContrePopulation" dia-type="T_Mission_Pion_ASY_CommettreAttentatSuicideContrePopulation" id="500" name="Asymetric - carry out a suicide bombing (against population)">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
+      <parameter dia-name="dotation_" name="Ammunition" optional="false" type="ResourceType"/>
+      <parameter dia-name="populationCible_" name="Population Target" optional="false" type="CrowdKnowledge"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatSuicideContreForcesArmees" dia-type="T_Mission_Pion_ASY_CommettreAttentatSuicideContreForcesArmees" id="501" name="Asymetric - carry out a suicide attack (against armed forces)">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
+      <parameter dia-name="typeAttentatForcesArmees_" name="Terrorist attack type" optional="false" type="Enumeration">
+        <value id="0" name="assasinat_officier"/>
+        <value id="1" name="destruction_composante_majeure"/>
+      </parameter>
+      <parameter dia-name="uniteCible_" name="Unit Target" optional="false" type="AgentKnowledge"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatSuicideContreInstallation" dia-type="T_Mission_Pion_ASY_CommettreAttentatSuicideContreInstallation" id="502" name="Asymetric - suicide destroy (against critical infrastructure)">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
+      <parameter dia-name="dotation_" name="Ammunition" optional="false" type="ResourceType"/>
+      <parameter dia-name="installationCible_" name="Critical infrastructure Target" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Emergency_OrganizeDistribution" dia-type="T_Mission_Pion_Emergency_OrganizeDistribution" id="402" name="Emergency - organize distribution">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3236,4 +3264,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="4212179169" -->
+<!-- signature="3461024055" -->

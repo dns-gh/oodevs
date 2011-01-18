@@ -1588,6 +1588,9 @@
         <mission name="Asymetric - carry out an attack (against armed forces)"/>
         <mission name="Asymetric - destroy (against critical infrastructure)"/>
         <mission name="Asymetric - carry out a bombing (against population)"/>
+        <mission name="Asymetric - carry out a suicide attack (against armed forces)"/>
+        <mission name="Asymetric - suicide destroy (against critical infrastructure)"/>
+        <mission name="Asymetric - carry out a suicide bombing (against population)"/>
         <mission name="adopt transportation posture"/>
       </missions>
       <fragorders>
@@ -4672,4 +4675,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1923740503" -->
+<!-- signature="4113041848" -->

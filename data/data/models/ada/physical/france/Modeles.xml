@@ -5217,6 +5217,9 @@
         <mission name="ASY Commettre Attentat Contre Forces Armees"/>
         <mission name="ASY Commettre Attentat Contre Installation"/>
         <mission name="ASY Commettre Attentat Contre Population"/>
+        <mission name="ASY Commettre Attentat Suicide Contre Forces Armees"/>
+        <mission name="ASY Commettre Attentat Suicide Contre Installation"/>
+        <mission name="ASY Commettre Attentat Suicide Contre Population"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
@@ -7340,6 +7343,9 @@
         <mission name="ASY Commettre Attentat Contre Forces Armees"/>
         <mission name="ASY Commettre Attentat Contre Installation"/>
         <mission name="ASY Commettre Attentat Contre Population"/>
+        <mission name="ASY Commettre Attentat Suicide Contre Forces Armees"/>
+        <mission name="ASY Commettre Attentat Suicide Contre Installation"/>
+        <mission name="ASY Commettre Attentat Suicide Contre Population"/>
         <mission name="Se Faire Transporter"/>
         <mission name="Suivre"/>
       </missions>
@@ -11618,4 +11624,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1976507488" -->
+<!-- signature="3208632512" -->

@@ -88,6 +88,12 @@ include "Population/Asymetriques/Common/Pion/Missions/CommettreAttentatContrePop
 
 include "Population/Asymetriques/Common/Pion/Missions/CommettreAttentatContreInstallation.bms"
 
+include "Population/Asymetriques/Common/Pion/Missions/CommettreAttentatSuicideContreForcesArmees.bms"
+
+include "Population/Asymetriques/Common/Pion/Missions/CommettreAttentatSuicideContrePopulation.bms"
+
+include "Population/Asymetriques/Common/Pion/Missions/CommettreAttentatSuicideContreInstallation.bms"
+
 include "Population/Asymetriques/Common/Pion/Missions/CommettreExactions.bms"
 
 include "Population/Asymetriques/Common/Pion/Missions/ExecuteBombingAttack.bms"
