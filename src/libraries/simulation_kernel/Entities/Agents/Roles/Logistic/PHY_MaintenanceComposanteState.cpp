@@ -188,7 +188,7 @@ void PHY_MaintenanceComposanteState::SendFullState() const
     else
     {
         asn().mutable_provider()->set_id( 0 );
-        asn().set_state( sword::termine_maintenance );
+        asn().set_state( sword::LogMaintenanceHandlingUpdate::finished );
     }
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -211,7 +211,7 @@ void PHY_MaintenanceComposanteState::SendChangedState() const
     else
     {
         asn().mutable_provider()->set_id( 0 );
-        asn().set_state( sword::termine_maintenance );
+        asn().set_state( sword::LogMaintenanceHandlingUpdate::finished );
     }
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
