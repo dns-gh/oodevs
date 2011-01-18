@@ -50,7 +50,7 @@ void ResourceNetworkModel::DoUpdate( const sword::UrbanUpdate& message )
 {
     if( message.has_attributes() )
     {
-        gui::TerrainObjectProxy* pTerrainObject = urbanObjects_.Find( message.urban_object().id() );
+        gui::TerrainObjectProxy* pTerrainObject = urbanObjects_.Find( message.object().id() );
         if( pTerrainObject )
         {
             if( message.attributes().has_infrastructures() && pTerrainObject->Retrieve< kernel::ResourceNetwork_ABC >() == 0 )
