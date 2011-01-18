@@ -27,29 +27,23 @@ namespace gui
     class TerrainObjectProxy;
 }
 
-namespace sword
-{
-    class UrbanUpdate;
-}
-
 // =============================================================================
 /** @class  ResourceNetworkModel
     @brief  ResourceNetworkModel
 */
 // Created: JSR 2010-08-18
 // =============================================================================
-class ResourceNetworkModel : public kernel::Updatable_ABC< sword::UrbanUpdate >
+class ResourceNetworkModel
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkModel( kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, tools::Resolver< gui::TerrainObjectProxy >& urbanObjects );
+             ResourceNetworkModel( kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel );
     virtual ~ResourceNetworkModel();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const sword::UrbanUpdate& message );
     template< typename T >
     void Create( kernel::Entity_ABC& entity, const T& msg );
     //@}
@@ -67,8 +61,7 @@ private:
     kernel::Controllers& controllers_;
     const Model& model_;
     const StaticModel& staticModel_;
-    tools::Resolver< gui::TerrainObjectProxy >& urbanObjects_;
-    kernel::ResourceNetworkSelectionObserver& observer_;
+    std::auto_ptr< kernel::ResourceNetworkSelectionObserver > observer_;
     //@}
 };
 

@@ -33,6 +33,7 @@ namespace kernel
     class ResourceNetworkType;
     class PropertiesDictionary;
     class Object_ABC;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -70,6 +71,7 @@ private:
     //@{
     virtual void DoUpdate( const sword::ObjectUpdate& message );
     virtual void DoUpdate( const sword::UrbanUpdate& message );
+    const kernel::Entity_ABC* FindEntity( unsigned int id ) const;
     void UpdateNetwork( kernel::Entity_ABC* entity, const sword::ResourceNetwork& msg );
     void SetColor( const std::string& resource ) const;
     void UpdateStipple( int value ) const;
@@ -81,7 +83,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     unsigned int id_;
-    bool isUrban_;
     const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver_;
     const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
     const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver_;

@@ -33,6 +33,15 @@ UrbanPositions::~UrbanPositions()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanPositions::GetPosition
+// Created: JSR 2011-01-18
+// -----------------------------------------------------------------------------
+geometry::Point2f UrbanPositions::GetPosition( bool /*aggregated*/ ) const
+{
+    return object_.GetFootprint()->Barycenter();
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanPositions::Draw
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------

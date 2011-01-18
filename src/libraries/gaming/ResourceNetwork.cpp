@@ -25,15 +25,15 @@
 
 using namespace geometry;
 using namespace gui;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary& dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, PropertiesDictionary& dico )
     : controllers_( controllers )
     , id_                     ( id )
-    , isUrban_                ( true )
     , urbanResolver_          ( urbanResolver )
     , objectResolver_         ( objectResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
@@ -47,10 +47,9 @@ ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary& dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, PropertiesDictionary& dico )
     : controllers_( controllers )
     , id_                     ( id )
-    , isUrban_                ( false )
     , urbanResolver_          ( urbanResolver )
     , objectResolver_         ( objectResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
@@ -70,10 +69,22 @@ ResourceNetwork::~ResourceNetwork()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetwork::FindEntity
+// Created: JSR 2011-01-18
+// -----------------------------------------------------------------------------
+const Entity_ABC* ResourceNetwork::FindEntity( unsigned int id ) const
+{
+    const Entity_ABC* object = urbanResolver_.Find( id );
+    if( !object )
+        object = objectResolver_.Find( id_ );
+    return object;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetwork::Draw
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-void ResourceNetwork::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void ResourceNetwork::Draw( const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     // TODO utiliser un enum pour les options
     char filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< char >();
@@ -81,12 +92,12 @@ void ResourceNetwork::Draw( const kernel::Viewport_ABC& viewport, const kernel::
         return;
     if( filter == 3 && !IsSelected() ) // selected outgoing
         return;
-    Point2f from = isUrban_ ? urbanResolver_.Get( id_ ).Barycenter()
-        : objectResolver_.Get( id_ ).Get< kernel::Positions >().GetPosition();
-
+    const Entity_ABC* object = FindEntity( id_ );
+    if( !object )
+        return;
+    Point2f from = object->Get< Positions >().GetPosition();
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 1.f );
-
     for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         SetColor( node->second.resource_ );
@@ -95,17 +106,16 @@ void ResourceNetwork::Draw( const kernel::Viewport_ABC& viewport, const kernel::
             glEnable( GL_LINE_STIPPLE );
             for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
-                kernel::Entity_ABC* target = link->urban_ ? static_cast< kernel::Entity_ABC* >( urbanResolver_.Find( link->id_ ) ) : objectResolver_.Find( link->id_ );
+                const Entity_ABC* target = FindEntity( link->id_ );
                 if( !target )
                     continue;
                 if( filter == 2 )  // selected all
                 {
-                    ResourceNetwork_ABC* resourceTarget = target->Retrieve< ResourceNetwork_ABC >();
+                    const ResourceNetwork_ABC* resourceTarget = target->Retrieve< ResourceNetwork_ABC >();
                     if( !resourceTarget || ( !IsSelected() && !resourceTarget->IsSelected() ) )
                         continue;
                 }
-                Point2f to = link->urban_ ? urbanResolver_.Get( link->id_ ).Barycenter()
-                                          : objectResolver_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();
+                Point2f to = target->Get< Positions >().GetPosition();
                 UpdateStipple( link->flow_ );
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawLine( from, to );
@@ -129,11 +139,9 @@ QString ResourceNetwork::GetLinkName( const std::string& resource, unsigned int 
     if( node == 0 || i >= node->links_.size() )
         return "";
     const ResourceLink& link = node->links_[ i ];
-    kernel::Entity_ABC* entity = 0;
-    if( link.urban_ )
-        entity = &urbanResolver_.Get( link.id_ );
-    else
-        entity = &objectResolver_.Get( link.id_ );
+    const Entity_ABC* entity = FindEntity( link.id_ );
+    if( !entity )
+        return QString();
     QString ret = entity->GetName();
     if( ret.isEmpty() )
         ret = QString::number( link.id_ );
@@ -148,7 +156,7 @@ void ResourceNetwork::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.attributes().has_resource_networks() )
     {
-        kernel::Entity_ABC* entity = objectResolver_.Find( id_ );
+        Entity_ABC* entity = objectResolver_.Find( id_ );
         for( int i = 0; i < message.attributes().resource_networks().network_size(); ++i )
             UpdateNetwork( entity, message.attributes().resource_networks().network( i ) );
     }
@@ -162,7 +170,7 @@ void ResourceNetwork::DoUpdate( const sword::UrbanUpdate& message )
 {
     if( message.attributes().has_infrastructures() )
     {
-        kernel::Entity_ABC* entity = urbanResolver_.Find( id_ );
+        Entity_ABC* entity = urbanResolver_.Find( id_ );
         for( int i = 0; i < message.attributes().infrastructures().resource_network_size(); ++i )
             UpdateNetwork( entity, message.attributes().infrastructures().resource_network( i ) );
     }
@@ -172,7 +180,7 @@ void ResourceNetwork::DoUpdate( const sword::UrbanUpdate& message )
 // Name: ResourceNetwork::UpdateNetwork
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void ResourceNetwork::UpdateNetwork( kernel::Entity_ABC* entity, const sword::ResourceNetwork& msg )
+void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNetwork& msg )
 {
     std::string resource( msg.resource().name() );
     ResourceNode& node = resourceNodes_[ resource ];
@@ -194,7 +202,7 @@ void ResourceNetwork::UpdateNetwork( kernel::Entity_ABC* entity, const sword::Re
     for( int j = 0; j < msg.link_size(); ++j )
     {
         ResourceLink link;
-        link.urban_ = msg.link( j ).kind() == sword::ResourceNetwork_Link::urban;
+        link.urban_ = msg.link( j ).kind() == sword::ResourceNetwork_Link::urban; // à virer
         link.id_ = msg.link( j ).target_id();
         link.capacity_ = msg.link( j ).capacity();
         link.flow_ = msg.link( j ).flow();
@@ -205,17 +213,17 @@ void ResourceNetwork::UpdateNetwork( kernel::Entity_ABC* entity, const sword::Re
     {
         const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + resource.c_str() + "/";
         if( node.totalFlow_ != oldFlow && node.links_.size() )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Total flow" ) ) );
+            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Total flow" ) ) );
         if( node.stock_ != oldStock )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Stock" ) ) );
+            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Stock" ) ) );
         if( node.maxStock_ != oldMaxStock )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ) ) );
+            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ) ) );
         if( node.production_ != oldProduction )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Production" ) ) );
+            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Production" ) ) );
         if( node.consumption_ != oldConsumption )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Consumption" ) ) );
+            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Consumption" ) ) );
         if( node.critical_ != oldCritical )
-            controllers_.controller_.Update( kernel::DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ) ) );
+            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ) ) );
     }
 }
 
@@ -246,7 +254,7 @@ void ResourceNetwork::UpdateStipple( int value ) const
 // Name: ResourceNetwork::CreateDictionary
 // Created: JSR 2010-08-23
 // -----------------------------------------------------------------------------
-void ResourceNetwork::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+void ResourceNetwork::CreateDictionary( PropertiesDictionary& dico ) const
 {
     for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {

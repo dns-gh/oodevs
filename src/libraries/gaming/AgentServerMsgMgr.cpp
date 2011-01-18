@@ -1625,7 +1625,6 @@ void AgentServerMsgMgr::OnReceiveUrbanCreation( const sword::UrbanCreation& mess
 void AgentServerMsgMgr::OnReceiveUrbanUpdate( const sword::UrbanUpdate& message )
 {
     GetModel().urbanObjects_.Update( message );
-    GetModel().resourceNetwork_.DoUpdate( message );
 }
 
 // -----------------------------------------------------------------------------

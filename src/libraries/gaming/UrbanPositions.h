@@ -29,6 +29,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual geometry::Point2f GetPosition( bool aggregated ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const;
     //@}

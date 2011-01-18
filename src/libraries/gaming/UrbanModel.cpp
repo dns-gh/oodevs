@@ -155,11 +155,20 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
 {
     if( message.has_attributes() )
     {
+        // TODO mettre toute cette partie dans une factory comme pour les Objets.
         gui::TerrainObjectProxy* pTerrainObject = Find( message.object().id() );
         if( pTerrainObject )
         {
             if( message.attributes().has_structure() && pTerrainObject->Retrieve< kernel::StructuralStateAttribute_ABC >() == 0 )
                 pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controllers_.controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
+            if( message.attributes().has_infrastructures() && pTerrainObject->Retrieve< kernel::ResourceNetwork_ABC >() == 0 )
+            {
+                if( message.attributes().infrastructures().resource_network_size() > 0 )
+                {
+                    model_.resourceNetwork_.Create( *pTerrainObject, message.attributes().infrastructures() );
+                }
+                // TODO update infrastructures other than resource network
+            }
         }
     }
     GetObject( message.object().id() ).Update( message );
