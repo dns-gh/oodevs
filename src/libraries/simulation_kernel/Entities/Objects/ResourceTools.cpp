@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "ResourceTools.h"
 #include "PHY_ResourceNetworkType.h"
+#include "UrbanObjectWrapper.h"
 #include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
@@ -52,4 +53,13 @@ unsigned long ResourceTools::GetResourceId( const std::string& name ) const
     if( !resourceNetwork )
         throw std::runtime_error( "Bad resource name :" + name );
     return resourceNetwork->GetId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceTools::GetIdFromSimulation
+// Created: JSR 2011-01-17
+// -----------------------------------------------------------------------------
+unsigned int ResourceTools::GetIdFromSimulation( unsigned int urbanId ) const
+{
+    return UrbanObjectWrapper::GetIdFromSimulation( urbanId );
 }

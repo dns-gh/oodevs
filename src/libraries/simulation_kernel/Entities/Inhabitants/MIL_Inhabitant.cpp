@@ -10,17 +10,18 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Inhabitant.h"
 #include "MIL_InhabitantType.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Objects/MedicalCapacity.h"
+#include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "tools/MIL_IDManager.h"
-#include "tools/MIL_Tools.h"
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
-#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Inhabitant )
@@ -63,12 +64,15 @@ void load_construct_data( Archive& /*archive*/, MIL_Inhabitant* /*population*/, 
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army )
     : MIL_Entity_ABC( xis )
-    , pType_            ( &type )
-    , nID_              ( xis.attribute< unsigned int >( "id" ) )
-    , pArmy_            ( &army )
-    , nNbrHealthyHumans_( 0 )
-    , nNbrDeadHumans_   ( 0 )
-    , nNbrWoundedHumans_( 0 )
+    , pType_             ( &type )
+    , nID_               ( xis.attribute< unsigned int >( "id" ) )
+    , pArmy_             ( &army )
+    , nNbrHealthyHumans_ ( 0 )
+    , nNbrDeadHumans_    ( 0 )
+    , nNbrWoundedHumans_ ( 0 )
+    , healthNeed_        ( 0 )
+    , healthSatisfaction_( 0 )
+    , healthChanged_     ( false )
 {
     float totalArea = 0.f;
     idManager_.Lock( nID_ );
@@ -83,11 +87,15 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
         >> xml::start( "information" )
             >> xml::optional >> text_
         >> xml::end
+        >> xml::start( "health-need" )
+            >> xml::attribute( "quantity", healthNeed_ )
+        >> xml::end
         >> xml::optional
         >> xml::start( "extensions" )
             >> xml::list( "entry", *this, &MIL_Inhabitant::ReadExtension )
         >> xml::end;
     DistributeHumans( totalArea );
+    ComputeHealthSatisfaction();
     pArmy_->RegisterInhabitant( *this );
 }
 
@@ -97,12 +105,15 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant(const MIL_InhabitantType& type )
     : MIL_Entity_ABC( type.GetName() )
-    , pType_            ( &type )
-    , nID_              ( 0 )
-    , pArmy_            ( 0 )
-    , nNbrHealthyHumans_( 0 )
-    , nNbrDeadHumans_   ( 0 )
-    , nNbrWoundedHumans_( 0 )
+    , pType_             ( &type )
+    , nID_               ( 0 )
+    , pArmy_             ( 0 )
+    , nNbrHealthyHumans_ ( 0 )
+    , nNbrDeadHumans_    ( 0 )
+    , nNbrWoundedHumans_ ( 0 )
+    , healthNeed_        ( 0 )
+    , healthSatisfaction_( 0 )
+    , healthChanged_     ( false )
 {
     // NOTHING
 }
@@ -113,12 +124,15 @@ MIL_Inhabitant::MIL_Inhabitant(const MIL_InhabitantType& type )
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type, MIL_Army_ABC& army, const MT_Vector2D& /*point*/, int /*number*/, const std::string& name )
     : MIL_Entity_ABC( name )
-    , pType_            ( &type )
-    , nID_              ( idManager_.GetFreeId() )
-    , pArmy_            ( &army )
-    , nNbrHealthyHumans_( 0 )
-    , nNbrDeadHumans_   ( 0 )
-    , nNbrWoundedHumans_( 0 )
+    , pType_             ( &type )
+    , nID_               ( idManager_.GetFreeId() )
+    , pArmy_             ( &army )
+    , nNbrHealthyHumans_ ( 0 )
+    , nNbrDeadHumans_    ( 0 )
+    , nNbrWoundedHumans_ ( 0 )
+    , healthNeed_        ( 0 )
+    , healthSatisfaction_( 0 )
+    , healthChanged_     ( false )
 {
     // NOTHING
 }
@@ -151,16 +165,13 @@ void MIL_Inhabitant::DistributeHumans( float area )
     std::sort( urbanBlocks_.begin(), urbanBlocks_.end(), boost::bind( &Compare< T_UrbanBlock >, _1, _2 ) );
     unsigned long population = nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_;
     unsigned long tmp = population;
-    for( IT_UrbanBlocks it = urbanBlocks_.begin(); it != urbanBlocks_.end(); ++it )
+    for( IT_UrbanBlocks it = urbanBlocks_.begin(); it != urbanBlocks_.end() && tmp > 0; ++it )
     {
-        if( tmp > 0 )
-        {
-            unsigned long person = static_cast< unsigned long >( it->first->GetFootprint()->ComputeArea() * population / area );
-            if( tmp - person < 0 )
-                person = tmp;
-            it->second = person;
-            tmp -= person;
-        }
+        unsigned long person = static_cast< unsigned long >( it->first->GetFootprint()->ComputeArea() * population / area );
+        if( tmp - person < 0 )
+            person = tmp;
+        it->second = person;
+        tmp -= person;
     }
     if( tmp > 0 && !urbanBlocks_.empty() )
         urbanBlocks_.front().second += tmp;
@@ -177,6 +188,7 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& /*file*/, const unsigned int
     file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army_ABC*& >( pArmy_ );
     idManager_.Lock( nID_ );*/
+    // TODO appeler les méthodes faites à l'initialisation (DistributeHumans, ...)
 }
 
 // -----------------------------------------------------------------------------
@@ -208,6 +220,9 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "wounded", nNbrWoundedHumans_ )
             << xml::attribute( "dead", nNbrDeadHumans_ )
         << xml::end
+        << xml::start( "health-need" )
+            << xml::attribute( "quantity", healthNeed_ )
+        << xml::end
         << xml::content( "information", text_ )
         << xml::start( "living-area" );
             for( CIT_UrbanBlocks it = urbanBlocks_.begin(); it != urbanBlocks_.end(); ++it )
@@ -234,13 +249,12 @@ void MIL_Inhabitant::ReadExtension( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::ReadUrbanBlock( xml::xistream& xis, float& area )
 {
-    int id;
-    xis >> xml::attribute( "id", id );
-    const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( id );
+    const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( xis.attribute< int >( "id" ) );
     if( !object )
         xis.error( "Error in loading living urban block of population " + GetName() );
     area += object->GetFootprint()->ComputeArea();
-    urbanBlocks_.push_back( T_UrbanBlock( object , 0u ) );
+    urbanBlocks_.push_back( T_UrbanBlock( object , 0 ) );
+    UrbanObjectWrapper::GetWrapperObject( *object ).Register( *static_cast< MIL_StructuralStateNotifier_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,9 +277,7 @@ void MIL_Inhabitant::SendCreation() const
     }
     BOOST_FOREACH( const T_UrbanBlock& block, urbanBlocks_ )
     {
-        sword::UrbanObjectId* blockId = msg().add_blocks();
-        unsigned int id = UrbanObjectWrapper::GetWrapperObject( *block.first ).GetID();
-        blockId->set_id( id );
+        msg().add_blocks()->set_id( UrbanObjectWrapper::GetWrapperObject( *block.first ).GetID() );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -281,14 +293,23 @@ void MIL_Inhabitant::SendFullState() const
     msg().set_healthy( nNbrHealthyHumans_ );
     msg().set_dead( nNbrDeadHumans_ );
     msg().set_wounded( nNbrWoundedHumans_ );
+    msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
     BOOST_FOREACH( const T_UrbanBlock& urbanBlock, urbanBlocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
-        unsigned int id = UrbanObjectWrapper::GetWrapperObject( *urbanBlock.first ).GetID();
-        block.mutable_block()->set_id( id );
+        block.mutable_block()->set_id( UrbanObjectWrapper::GetWrapperObject( *urbanBlock.first ).GetID() );
         block.set_number( urbanBlock.second );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::UpdateState
+// Created: JSR 2011-01-14
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::UpdateState()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -297,7 +318,14 @@ void MIL_Inhabitant::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::UpdateNetwork()
 {
-    // NOTHING
+    if( healthChanged_ )
+    {
+        client::PopulationUpdate msg;
+        msg().mutable_id()->set_id( nID_ );
+        msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
+        msg.Send( NET_Publisher_ABC::Publisher() );
+    }
+    healthChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -327,4 +355,44 @@ MIL_Army_ABC& MIL_Inhabitant::GetArmy() const
 {
     assert( pArmy_ );
     return *pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::NotifyStructuralStateChanged
+// Created: JSR 2011-01-14
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::NotifyStructuralStateChanged( unsigned int /*structuralState*/, const MIL_Object_ABC& object )
+{
+    if( object.Retrieve< MedicalCapacity >() )
+        ComputeHealthSatisfaction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::ComputeHealthSatisfaction
+// Created: JSR 2011-01-14
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::ComputeHealthSatisfaction()
+{
+    float healthSatisfaction;
+    if( healthNeed_ == 0 )
+        healthSatisfaction = 1.f;
+    else
+    {
+        float healthCount = 0;
+        BOOST_FOREACH( const T_UrbanBlock& urbanBlock, urbanBlocks_ )
+        {
+            MIL_Object_ABC& object = UrbanObjectWrapper::GetWrapperObject( *urbanBlock.first );
+            if( object.Retrieve< MedicalCapacity >() )
+            {
+                const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();
+                healthCount += structural ? 0.01f * structural->GetStructuralState() : 1.f;
+            }
+        }
+        healthSatisfaction = std::min( 1.f, healthCount / healthNeed_ );
+    }
+    if( healthSatisfaction != healthSatisfaction_ )
+    {
+        healthChanged_ = true;
+        healthSatisfaction_ = healthSatisfaction;
+    }
 }

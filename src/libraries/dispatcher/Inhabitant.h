@@ -49,11 +49,6 @@ public:
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Draw( const kernel::GlTools_ABC& tools ) const ;
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -79,6 +74,7 @@ private:
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;
+    float healthSatisfaction_;
     T_UrbanObjectId urbanObjectId_;
     T_UrbanBlocks urbanBlocks_;
     T_Extensions extensions_;

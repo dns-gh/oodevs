@@ -30,6 +30,7 @@ namespace xml
 namespace resource
 {
 class ResourceNetworkModel;
+class ResourceTools_ABC;
 
 // =============================================================================
 /** @class  NodeElement
@@ -54,6 +55,7 @@ public:
     //@{
     void SetModel( const ResourceNetworkModel& model );
     void Update( xml::xistream& xis );
+    void Finalize( const ResourceTools_ABC& tools );
     void UpdateImmediateStock( bool isFunctional );
     void Consume( bool& isFunctional );
     void DistributeResource( bool isFunctional );

@@ -17,27 +17,13 @@
 namespace resource
 {
 
-class UrbanResolver : public tools::Resolver< NodeProperties >
-{
-public:
-    UrbanResolver() : tools::Resolver< NodeProperties >() {}
-};
-
-class ObjectResolver : public tools::Resolver< NodeProperties >
-{
-public:
-    ObjectResolver() : tools::Resolver< NodeProperties >() {}
-};
-
 // =============================================================================
 /** @class  ResourceNetworkModel
     @brief  Resource network model
 */
 // Created: JSR 2010-08-13
 // =============================================================================
-class ResourceNetworkModel : private UrbanResolver
-                           , private ObjectResolver
-                           , private boost::noncopyable
+class ResourceNetworkModel : private tools::Resolver< NodeProperties >
 {
 public:
     //! @name Constructors/Destructor
@@ -48,9 +34,10 @@ public:
 
     //! @name Operations
     //@{
+    void Finalize();
     void Update();
-    void RegisterNode( NodeProperties& nodeProperties, unsigned int id, bool urban );
-    void Push( unsigned int id, bool urban, int quantity, unsigned long resourceId ) const;
+    void RegisterNode( NodeProperties& nodeProperties, unsigned int id );
+    void Push( unsigned int id, int quantity, unsigned long resourceId ) const;
     //@}
 };
 

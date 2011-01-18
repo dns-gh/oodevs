@@ -25,6 +25,7 @@ namespace xml
 
 namespace resource
 {
+class ResourceTools_ABC;
 
 // =============================================================================
 /** @class  ResourceLink
@@ -52,6 +53,7 @@ public:
 
     //! @name Operations
     //@{
+    void Finalize( const ResourceTools_ABC& tools );
     static ETargetKind FindTargetKind( const std::string& kind );
     void SetCapacity( int capacity );
     int GetEfficientCapacity() const;

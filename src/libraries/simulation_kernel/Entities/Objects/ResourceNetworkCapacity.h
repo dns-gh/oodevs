@@ -12,6 +12,7 @@
 
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
+#include "MIL_StructuralStateNotifier_ABC.h"
 #include <boost/serialization/export.hpp>
 
 namespace google
@@ -51,6 +52,7 @@ namespace xml
 // Created: JSR 2010-08-12
 // =============================================================================
 class ResourceNetworkCapacity : public ObjectCapacity_ABC
+                              , public MIL_StructuralStateNotifier_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -76,10 +78,11 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
 
-    void RegisterNode( unsigned int id, bool urban );
+    virtual void NotifyStructuralStateChanged( unsigned int structuralState, const MIL_Object_ABC& object );
+
+    void RegisterNode( unsigned int id );
     void SendState( sword::UrbanAttributes& message );
     void SendState( sword::ObjectAttributes& asn ) const;
-    void SetModifier( unsigned int modifier ) const;
     //@}
 
 private:

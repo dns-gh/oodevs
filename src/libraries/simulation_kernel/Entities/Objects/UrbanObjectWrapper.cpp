@@ -31,6 +31,7 @@
 #include <urban/StaticModel.h>
 #include <urban/InfrastructureType.h>
 #include <urban/MaterialCompositionType.h>
+#include <boost/lexical_cast.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
 #include <map>
@@ -418,6 +419,7 @@ sword::UrbanMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateStructuralState
     if( !capacity )
         return sword::UrbanMagicActionAck::error_invalid_urban_block;
     capacity->SetStructuralState( state );
+    ApplyStructuralState( state );
     return sword::UrbanMagicActionAck::no_error;
 }
 
@@ -431,4 +433,16 @@ UrbanObjectWrapper& UrbanObjectWrapper::GetWrapperObject( const urban::TerrainOb
     if( it == objectMap_.end() )
         throw std::runtime_error( "error in access urban object" );
     return *( it->second );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetIdFromSimulation
+// Created: JSR 2011-01-17
+// -----------------------------------------------------------------------------
+unsigned int UrbanObjectWrapper::GetIdFromSimulation( unsigned int urbanId )
+{
+    for( CIT_ObjectMap it = objectMap_.begin(); it != objectMap_.end(); ++it )
+        if( it->first->GetId() == urbanId )
+            return it->second->GetID();
+    throw std::runtime_error( "Cannot find urban object with id = " + boost::lexical_cast< std::string >( urbanId ) );
 }

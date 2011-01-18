@@ -251,25 +251,9 @@ void MIL_ObjectManager::UpdateCapacity( const std::string& capacity, xml::xistre
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 {
-    unsigned int id = xis.attribute< unsigned int >( "id" );
-    UrbanObjectWrapper* wrapper = FindUrbanWrapper( id );
-    if( wrapper )
-        xis >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *wrapper );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::FindUrbanWrapper
-// Created: JSR 2010-06-28
-// -----------------------------------------------------------------------------
-UrbanObjectWrapper* MIL_ObjectManager::FindUrbanWrapper( unsigned int nId )
-{
-    for( std::vector< unsigned int >::const_iterator it = urbanIds_.begin(); it != urbanIds_.end(); ++it )
-    {
-        UrbanObjectWrapper* wrapper = static_cast< UrbanObjectWrapper* >( objects_[ *it ] );
-        if( wrapper->GetObject().GetId() == nId )
-            return wrapper;
-    }
-    return 0;
+    MIL_Object_ABC* urbanObject = Find( UrbanObjectWrapper::GetIdFromSimulation( xis.attribute< unsigned int >( "id" ) ) );
+    if( urbanObject )
+        xis >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *urbanObject );
 }
 
 // -----------------------------------------------------------------------------
@@ -356,7 +340,10 @@ void MIL_ObjectManager::OnReceiveUrbanMagicAction( const sword::UrbanMagicAction
     if( !object )
         nErrorCode = sword::UrbanMagicActionAck::error_invalid_urban_block;
     else
-        nErrorCode = object->OnUpdateStructuralState( msg.structural_state() );
+    {
+        if( msg.has_structural_state() )
+            nErrorCode = object->OnUpdateStructuralState( msg.structural_state() );
+    }
     client::UrbanMagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );

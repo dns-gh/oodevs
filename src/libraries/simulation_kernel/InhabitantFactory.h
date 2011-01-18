@@ -10,10 +10,7 @@
 #ifndef __InhabitantFactory_h_
 #define __InhabitantFactory_h_
 
-#include "tools/MIL_Config.h"
 #include "InhabitantFactory_ABC.h"
-
-class DEC_DataBase;
 
 // =============================================================================
 /** @class  InhabitantFactory
@@ -26,7 +23,7 @@ class InhabitantFactory : public InhabitantFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    InhabitantFactory();
+             InhabitantFactory();
     virtual ~InhabitantFactory();
     //@}
 

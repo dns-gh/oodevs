@@ -11,7 +11,6 @@
 #define __MIL_InhabitantType_h_
 
 #include "MT_Tools/MT_Stl.h"
-#include "tools/MIL_Config.h"
 
 namespace xml
 {
@@ -31,18 +30,17 @@ class MIL_InhabitantType : private boost::noncopyable
 public:
     //! @name Manager
     //@{
-    static void                      Initialize( xml::xistream& xis );
-    static void                      Terminate ();
-    static const MIL_InhabitantType* Find      ( const std::string& strName );
-    static const MIL_InhabitantType* Find      ( unsigned int nID );
+    static void Initialize( xml::xistream& xis );
+    static void Terminate();
+    static const MIL_InhabitantType* Find( const std::string& strName );
+    static const MIL_InhabitantType* Find( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&                         GetName                () const;
-          unsigned int                         GetID                  () const;
-
-    const MIL_PopulationType&                  GetAssociatedCrowdType () const;
+    const std::string& GetName() const;
+    unsigned int GetID() const;
+    const MIL_PopulationType& GetAssociatedCrowdType () const;
     //@}
 
     //! @name Operations
@@ -50,19 +48,20 @@ public:
     MIL_Inhabitant& InstanciateInhabitant( xml::xistream& xis, MIL_Army_ABC& army ) const;
     //@}
 
-protected:
-    MIL_InhabitantType( const MIL_PopulationType& model );
+private:
+    //! @name Constructors/Destructor
+    //@{
+    explicit MIL_InhabitantType( const MIL_PopulationType& model );
+             MIL_InhabitantType( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_InhabitantType();
+    //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_InhabitantType*, sCaseInsensitiveLess > T_InhabitantMap;
-    typedef T_InhabitantMap::const_iterator                                          CIT_InhabitantMap;
+    typedef T_InhabitantMap::const_iterator                                        CIT_InhabitantMap;
     //@}
-
-private:
-     MIL_InhabitantType( const std::string& strName, xml::xistream& xis );
 
 private:
 
@@ -73,13 +72,15 @@ private:
     //@}
 
 private:
-    const std::string                          strName_;
-          unsigned int                         nID_;
-
-    const MIL_PopulationType*                  pModel_;
-
-private:
+    //! @name Member Data
+    //@{
+    const std::string strName_;
+    unsigned int nID_;
+    const MIL_PopulationType* pModel_;
+    float securityGainPerHour_;
+    float securityLossOnFire_;
     static T_InhabitantMap inhabitants_;
+    //@}
 };
 
 #endif // __MIL_InhabitantType_h_

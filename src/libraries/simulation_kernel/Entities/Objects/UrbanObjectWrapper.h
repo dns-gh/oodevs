@@ -128,6 +128,7 @@ public:
     static T_ObjectMap objectMap_;
 
     static UrbanObjectWrapper& GetWrapperObject( const urban::TerrainObject_ABC& object );
+    static unsigned int GetIdFromSimulation( unsigned int urbanId );
 };
 
 BOOST_CLASS_EXPORT_KEY( UrbanObjectWrapper )

@@ -15,7 +15,6 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Displayable_ABC.h"
 #include "Simulation.h"
 #include "tools/Resolver.h"
 
@@ -99,6 +98,7 @@ private:
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;
+    float healthSatisfaction_;
     T_UrbanObjectVector livingUrbanObject_;
     T_Extensions extensions_;
     //@}

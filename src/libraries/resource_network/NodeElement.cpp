@@ -9,6 +9,7 @@
 
 #include "NodeElement.h"
 #include "ResourceNetworkModel.h"
+#include "ResourceTools_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -142,6 +143,16 @@ void NodeElement::Update( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::Finalize
+// Created: JSR 2011-01-17
+// -----------------------------------------------------------------------------
+void NodeElement::Finalize( const ResourceTools_ABC& tools )
+{
+    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+        ( *it )->Finalize( tools );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::UpdateImmediateStock
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
@@ -211,7 +222,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
         if( linkCapacity != -1 && linkCapacity <= distributionMean )
         {
             ( *it )->SetFlow( linkCapacity );
-            model_->Push( ( *it )->GetTarget(), ( *it )->GetTargetKind()== ResourceLink::eTargetKindUrban, linkCapacity, resourceId_ );
+            model_->Push( ( *it )->GetTarget(), linkCapacity, resourceId_ );
             immediateStock_ -= linkCapacity;
             updatedLinks.push_back( *it );
         }
@@ -240,7 +251,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
                 }
             }
             ( *it )->SetFlow( distributed );
-            model_->Push( ( *it )->GetTarget(), ( *it )->GetTargetKind()== ResourceLink::eTargetKindUrban, distributed, resourceId_ );
+            model_->Push( ( *it )->GetTarget(), distributed, resourceId_ );
         }
     }
     else
@@ -353,12 +364,10 @@ void NodeElement::ReadLink( xml::xistream& xis )
     if( xis.has_attribute( "kind" ) )
         kind = ResourceLink::FindTargetKind( xis.attribute< std::string >( "kind" ) );
     for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
-    {
         if( ( *it )->GetTarget() == target && ( *it )->GetTargetKind() == kind )
         {
             ( *it )->SetCapacity( capacity );
             return;
         }
-    }
     links_.push_back( new ResourceLink( target, kind, capacity ) );
 }

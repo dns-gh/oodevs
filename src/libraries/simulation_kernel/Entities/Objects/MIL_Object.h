@@ -43,13 +43,9 @@ public:
     void UpdateLocalisation( const TER_Localisation& location );
     //@}
 
-    //! @name Interactions
-    //@{
-    virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
-    //@}
-
     //! @name InteractiveContainer
     //@{
+    virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
     virtual void Register                ( MIL_InteractiveContainer_ABC* capacity );
     virtual void PreprocessAgent         ( MIL_Agent_ABC& agent );
     virtual void ProcessAgentEntering    ( MIL_Agent_ABC& agent );
@@ -60,6 +56,11 @@ public:
     virtual void ProcessPopulationInside ( MIL_PopulationElement_ABC& population );
     //@}
 
+    //! @name StructuralStateNotifier
+    //@{
+    virtual void Register( MIL_StructuralStateNotifier_ABC& notifier );
+    virtual void ApplyStructuralState( unsigned int structuralState ) const;
+    //@}
 
     //! @name Instanciate / Build / Copy object
     //@{
@@ -115,6 +116,7 @@ private:
     //! @name Types containers
     //@{
     typedef std::vector< MIL_InteractiveContainer_ABC* > T_InteractiveCapacities;
+    typedef std::vector< MIL_StructuralStateNotifier_ABC* > T_StructuralStateNotifiers;
     typedef std::vector< ObjectAttribute_ABC* > T_Attributes;
     typedef T_Attributes::const_iterator      CIT_Attributes;
     typedef std::vector< ObjectCapacity_ABC* > T_Capacities;
@@ -132,6 +134,7 @@ private:
 private:
     MIL_ObjectManipulator_ABC& manipulator_;
     T_InteractiveCapacities interactives_;
+    T_StructuralStateNotifiers structuralStateNotifiers_;
     T_Capacities capacities_;
     T_Attributes attributes_;
 

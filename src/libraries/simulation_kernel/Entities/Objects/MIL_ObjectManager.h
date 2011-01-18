@@ -76,7 +76,6 @@ public:
     MIL_Object_ABC*     CreateUrbanObject( const urban::TerrainObject_ABC& object );
     void                UpdateCapacity( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object );
     void                ReadUrbanState( xml::xistream& xis );
-    UrbanObjectWrapper* FindUrbanWrapper( unsigned int nID );
     MIL_Object_ABC*     Find( unsigned int nID ) const;
     const MIL_ObjectType_ABC&   FindType( const std::string& type ) const;
     //@}
@@ -116,6 +115,7 @@ private:
     //@{
     T_ObjectMap objects_;
     std::auto_ptr< MIL_ObjectFactory >  builder_;
+    // $$$$ _RC_ JSR 2011-01-17: A VIRER!!!
     std::vector< unsigned int > urbanIds_;
     //@}
 };

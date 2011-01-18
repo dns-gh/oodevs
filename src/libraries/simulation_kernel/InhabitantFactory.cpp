@@ -8,13 +8,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "simulation_kernel/InhabitantFactory.h"
-#include "simulation_kernel/Entities/Inhabitants/MIL_Inhabitant.h"
-#include "simulation_kernel/Entities/Inhabitants/MIL_InhabitantType.h"
-#include "simulation_kernel/FormationFactory_ABC.h"
+#include "InhabitantFactory.h"
+#include "Entities/Inhabitants/MIL_Inhabitant.h"
+#include "Entities/Inhabitants/MIL_InhabitantType.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
-#include <boost/serialization/map.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InhabitantFactory )
 
@@ -33,7 +30,6 @@ InhabitantFactory::InhabitantFactory()
 // -----------------------------------------------------------------------------
 InhabitantFactory::~InhabitantFactory()
 {
-
     // NOTHING
 }
 
@@ -43,8 +39,7 @@ InhabitantFactory::~InhabitantFactory()
 // -----------------------------------------------------------------------------
 MIL_Inhabitant& InhabitantFactory::Create( xml::xistream& xis, MIL_Army_ABC& army )
 {
-    std::string strType( xis.attribute< std::string >( "type" ) );
-    const MIL_InhabitantType* pType = MIL_InhabitantType::Find( strType );
+    const MIL_InhabitantType* pType = MIL_InhabitantType::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         xis.error( "Unknown population type" );
     MIL_Inhabitant& inhabitant = *new MIL_Inhabitant( xis, *pType, army );

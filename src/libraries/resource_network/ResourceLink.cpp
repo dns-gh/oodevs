@@ -9,6 +9,7 @@
 
 #include "ResourceLink.h"
 #include "protocol/Protocol.h"
+#include "ResourceTools_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace resource;
@@ -65,6 +66,16 @@ ResourceLink::ResourceLink( const ResourceLink& from )
 ResourceLink::~ResourceLink()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLink::Finalize
+// Created: JSR 2011-01-17
+// -----------------------------------------------------------------------------
+void ResourceLink::Finalize( const ResourceTools_ABC& tools )
+{
+    if( kind_ == eTargetKindUrban )
+        target_ = tools.GetIdFromSimulation( target_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -239,16 +239,6 @@ void MIL_Object_ABC::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Object_ABC::ApplyStructuralState
-// Created: JSR 2010-08-31
-// -----------------------------------------------------------------------------
-void MIL_Object_ABC::ApplyStructuralState( unsigned int structuralState ) const
-{
-    if( const ResourceNetworkCapacity* network = Retrieve< ResourceNetworkCapacity >() )
-        network->SetModifier( structuralState );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::IsUniversal
 // Created: JSR 2011-01-07
 // -----------------------------------------------------------------------------

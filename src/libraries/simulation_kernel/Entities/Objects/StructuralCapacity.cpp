@@ -35,9 +35,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 // Created: SLG 2010-06-17
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity()
-    : structuralState_( 100 )
+    : structuralState_    ( 100 )
     , lastStructuralState_( std::numeric_limits< unsigned int >::max() )
-    , materialType_   ( 0 )
+    , materialType_       ( 0 )
 {
     // NOTHING
 }
@@ -47,7 +47,7 @@ StructuralCapacity::StructuralCapacity()
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( xml::xistream& xis )
-    : structuralState_( xis.attribute< unsigned int >( "value" ) )
+    : structuralState_    ( xis.attribute< unsigned int >( "value" ) )
     , lastStructuralState_( std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
@@ -58,7 +58,7 @@ StructuralCapacity::StructuralCapacity( xml::xistream& xis )
 // Created: JSR 2010-06-23
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( const StructuralCapacity& from )
-    : structuralState_( from.structuralState_ )
+    : structuralState_    ( from.structuralState_ )
     , lastStructuralState_( std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
@@ -115,33 +115,25 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
     StructuralCapacity* capacity = new StructuralCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC* >( capacity ) );
-    UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object );
-    if( wrapper )
-    {
-        const urban::PhysicalAttribute* pPhysical = wrapper->GetObject().Retrieve< urban::PhysicalAttribute >();
-        if( pPhysical && pPhysical->GetArchitecture() )
-        {
-            urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() );
-            if( material )
-                object.GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
-        }
-    }
+    if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
+        if( const urban::PhysicalAttribute* pPhysical = wrapper->GetObject().Retrieve< urban::PhysicalAttribute >() )
+            if( pPhysical->GetArchitecture() )
+                if( urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() ) )
+                    object.GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
     object.ApplyStructuralState( structuralState_ );
 }
 
 namespace
 {
-    geometry::Polygon2f EllipseToPolygon( const MT_Ellipse& ellipse )
+    geometry::Polygon2d EllipseToPolygon( const MT_Ellipse& ellipse )
     {
-        geometry::Polygon2f polygon;
-        polygon.Add( geometry::Point2f( static_cast< float >( ellipse.GetMajorAxisHighPoint().rX_ + ellipse.GetMinorAxisHighPoint().rX_ - ellipse.GetCenter().rX_ ),
-            static_cast< float >( ellipse.GetMajorAxisHighPoint().rY_ + ellipse.GetMinorAxisHighPoint().rY_ - ellipse.GetCenter().rY_ ) ) );
-        polygon.Add( geometry::Point2f( static_cast< float >( ellipse.GetMajorAxisHighPoint().rX_ - ellipse.GetMinorAxisHighPoint().rX_ + ellipse.GetCenter().rX_ ),
-            static_cast< float >( ellipse.GetMajorAxisHighPoint().rY_ - ellipse.GetMinorAxisHighPoint().rY_ + ellipse.GetCenter().rY_ ) ) );
-        polygon.Add( geometry::Point2f( static_cast< float >( 3 * ellipse.GetCenter().rX_ - ellipse.GetMajorAxisHighPoint().rX_ - ellipse.GetMinorAxisHighPoint().rX_ ),
-            static_cast< float >( 3 * ellipse.GetCenter().rY_ - ellipse.GetMajorAxisHighPoint().rY_ - ellipse.GetMinorAxisHighPoint().rY_ ) ) );
-        polygon.Add( geometry::Point2f( static_cast< float >( ellipse.GetCenter().rX_ - ellipse.GetMajorAxisHighPoint().rX_ + ellipse.GetMinorAxisHighPoint().rX_ ),
-            static_cast< float >( ellipse.GetCenter().rY_ - ellipse.GetMajorAxisHighPoint().rY_ + ellipse.GetMinorAxisHighPoint().rY_ ) ) );
+        geometry::Polygon2d polygon;
+        const MT_Vector2D major = ellipse.GetMajorAxisHighPoint();
+        const MT_Vector2D minor = ellipse.GetMinorAxisHighPoint();
+        polygon.Add( geometry::Point2d( major.rX_ + minor.rX_ - ellipse.GetCenter().rX_, major.rY_ + minor.rY_ - ellipse.GetCenter().rY_ ) );
+        polygon.Add( geometry::Point2d( major.rX_ - minor.rX_ + ellipse.GetCenter().rX_, major.rY_ - minor.rY_ + ellipse.GetCenter().rY_ ) );
+        polygon.Add( geometry::Point2d( 3 * ellipse.GetCenter().rX_ - major.rX_ - minor.rX_, 3 * ellipse.GetCenter().rY_ - major.rY_ - minor.rY_ ) );
+        polygon.Add( geometry::Point2d( ellipse.GetCenter().rX_ - major.rX_ + minor.rX_, ellipse.GetCenter().rY_ - major.rY_ + minor.rY_ ) );
         return polygon;
     }
 }
@@ -152,21 +144,19 @@ namespace
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation )
 {
-    const float objectArea = static_cast< float >( object.GetLocalisation().GetArea() );
+    const double objectArea = object.GetLocalisation().GetArea();
     if( !objectArea )
         return;
-    const geometry::Polygon2f attritionPolygon = EllipseToPolygon( attritionSurface );
-    CT_PointVector points = object.GetLocalisation().GetPoints();
-    geometry::Polygon2f p;
-    for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
-        p.Add( geometry::Point2f( static_cast< float >( it->rX_ ), static_cast< float >( it->rY_ ) ) );
-    const float ratio = MIL_Geometry::IntersectionArea( attritionPolygon, p ) / objectArea;
-    const unsigned int oldStructuralState = structuralState_;
-    const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
-    if( materialAttribute )
+    if( const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >() )
     {
-        float attrition = static_cast< float >( dotation.GetAttrition(  materialAttribute->GetMaterial().GetId()) );
-        unsigned int damage = static_cast< unsigned int >( 100.f * ratio * attrition );
+        CT_PointVector points = object.GetLocalisation().GetPoints();
+        geometry::Polygon2d p;
+        for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
+            p.Add( geometry::Point2d( it->rX_, it->rY_ ) );
+        const double ratio = MIL_Geometry::IntersectionArea( EllipseToPolygon( attritionSurface ), p ) / objectArea;
+        const unsigned int oldStructuralState = structuralState_;
+        double attrition = dotation.GetAttrition(  materialAttribute->GetMaterial().GetId() );
+        unsigned int damage = static_cast< unsigned int >( 100. * ratio * attrition );
         if( damage <= structuralState_ )
             structuralState_ -= damage;
         else
@@ -213,21 +203,18 @@ const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation )
 {
-    const float area = static_cast< float >( object.GetLocalisation().GetArea() );
-    if( area )
-    {
-        const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
-        // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
-        if( !materialAttribute )
-            return;
-        const float modifier = static_cast< float >( dotation.GetAttrition( materialAttribute->GetMaterial().GetId() ) );
-        unsigned int damage = static_cast< unsigned int >( 100 * modifier / area );
-        if( damage <= structuralState_ )
-            structuralState_ -= damage;
-        else
-            structuralState_ = 0;
-        object.ApplyStructuralState( structuralState_ );
-    }
+    const double area = object.GetLocalisation().GetArea();
+    const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >();
+    // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
+    if( area == 0 || materialAttribute == 0 )
+        return;
+    const double modifier = dotation.GetAttrition( materialAttribute->GetMaterial().GetId() );
+    unsigned int damage = static_cast< unsigned int >( 100. * modifier / area );
+    if( damage <= structuralState_ )
+        structuralState_ -= damage;
+    else
+        structuralState_ = 0;
+    object.ApplyStructuralState( structuralState_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,14 +11,11 @@
 #include "Inhabitant.h"
 #include "Tools.h"
 #include "UrbanModel.h"
-#include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include <boost/foreach.hpp>
 
@@ -29,7 +26,7 @@ using namespace kernel;
 // Name: Inhabitant constructor
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver, UrbanModel& model )
+Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const tools::Resolver_ABC< InhabitantType >& typeResolver, UrbanModel& model )
     : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
     , controllers_      ( controllers )
     , type_             ( typeResolver.Get( message.type().id() ) )
@@ -69,17 +66,18 @@ Inhabitant::~Inhabitant()
 // Name: Agent::CreateDictionary
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-void Inhabitant::CreateDictionary( kernel::Controller& controller )
+void Inhabitant::CreateDictionary( Controller& controller )
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
     const Inhabitant& self = *this;
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), self.id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), self.name_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Info/Identifier" ), self.id_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Info/Name" ), self.name_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Health" ), self.healthSatisfaction_ );
     BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
     {
         std::string info = "Details/" + extension.first;
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", info.c_str() ), extension.second );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", info.c_str() ), extension.second );
     }
 }
 
@@ -95,6 +93,11 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         nNbrDeadHumans_ = msg.dead();
     if( msg.has_wounded() )
         nNbrWoundedHumans_ = msg.wounded();
+    if( msg.has_satisfaction() )
+    {
+        if( msg.satisfaction().has_health() )
+            healthSatisfaction_ = msg.satisfaction().health();
+    }
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
         const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
@@ -109,12 +112,11 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 // Name: Inhabitant::Draw
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-void Inhabitant::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
+void Inhabitant::Draw( const Point2f& /*where*/, const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        const gui::TerrainObjectProxy& object = *it->second;
-        const geometry::Polygon2f* footprint = object.GetFootprint();
+        const Polygon2f* footprint = it->second->GetFootprint();
         if( footprint )
             tools.DrawConvexPolygon( footprint->Vertices() );
     }
@@ -124,9 +126,9 @@ void Inhabitant::Draw( const geometry::Point2f& /*where*/, const kernel::Viewpor
 // Name: Inhabitant::GetPosition
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-geometry::Point2f Inhabitant::GetPosition( bool ) const
+Point2f Inhabitant::GetPosition( bool ) const
 {
-    geometry::Polygon2f poly;
+    Polygon2f poly;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         poly.Add( it->second->Barycenter() );
     return poly.Barycenter();
@@ -145,7 +147,7 @@ float Inhabitant::GetHeight( bool ) const
 // Name: Inhabitant::IsAt
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-bool Inhabitant::IsAt( const geometry::Point2f& /*pos*/, float /*precision*/, float /*adaptiveFactor*/ ) const
+bool Inhabitant::IsAt( const Point2f& /*pos*/, float /*precision*/, float /*adaptiveFactor*/ ) const
 {
     return false;
 }
@@ -154,7 +156,7 @@ bool Inhabitant::IsAt( const geometry::Point2f& /*pos*/, float /*precision*/, fl
 // Name: Inhabitant::IsIn
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-bool Inhabitant::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
+bool Inhabitant::IsIn( const Rectangle2f& /*rectangle*/ ) const
 {
     return false;
 }
@@ -163,14 +165,14 @@ bool Inhabitant::IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const
 // Name: Inhabitant::GetBoundingBox
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-geometry::Rectangle2f Inhabitant::GetBoundingBox() const
+Rectangle2f Inhabitant::GetBoundingBox() const
 {
-    geometry::Rectangle2f box;
+    Rectangle2f box;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        const geometry::Polygon2f* polygon = it->second->GetFootprint();
+        const Polygon2f* polygon = it->second->GetFootprint();
         if( polygon )
-            BOOST_FOREACH( const geometry::Polygon2f::T_Vertices::value_type& point, polygon->Vertices() )
+            BOOST_FOREACH( const Polygon2f::T_Vertices::value_type& point, polygon->Vertices() )
                 box.Incorporate( point );
     }
     return box;
@@ -180,7 +182,7 @@ geometry::Rectangle2f Inhabitant::GetBoundingBox() const
 // Name: Inhabitant::Accept
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-void Inhabitant::Accept( kernel::LocationVisitor_ABC& /*visitor*/ ) const
+void Inhabitant::Accept( LocationVisitor_ABC& /*visitor*/ ) const
 {
     // NOTHING
 }
@@ -191,17 +193,18 @@ void Inhabitant::Accept( kernel::LocationVisitor_ABC& /*visitor*/ ) const
 // -----------------------------------------------------------------------------
 void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Item( "" ).Start( Styles::bold ).Add( (Inhabitant_ABC*)this ).End();
+    displayer.Item( "" ).Start( Styles::bold ).Add( static_cast< const Inhabitant_ABC* >( this ) ).End();
     displayer.Display( tools::translate( "Inhabitant", "Alive:" ), nNbrHealthyHumans_ );
     displayer.Display( tools::translate( "Inhabitant", "Wounded:" ), nNbrWoundedHumans_ );
     displayer.Display( tools::translate( "Inhabitant", "Dead:" ), nNbrDeadHumans_ );
+    displayer.Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Inhabitant::DisplayInSummary
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-void Inhabitant::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+void Inhabitant::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     const_cast< Inhabitant* >( this )->displayers_.insert( &displayer );
 }
@@ -214,10 +217,11 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
 {
     if( !displayers_.empty() )
     {
-        for( std::set< kernel::Displayer_ABC* >::iterator it = displayers_.begin(); it != displayers_.end(); ++it )
+        for( std::set< Displayer_ABC* >::iterator it = displayers_.begin(); it != displayers_.end(); ++it )
             (*it)->Display( tools::translate( "Inhabitant", "Alive:" ), nNbrHealthyHumans_ )
                   .Display( tools::translate( "Inhabitant", "Dead:" ), nNbrDeadHumans_ )
-                  .Display( tools::translate( "Inhabitant", "Wounded:" ), nNbrWoundedHumans_ );
+                  .Display( tools::translate( "Inhabitant", "Wounded:" ), nNbrWoundedHumans_ )
+                  .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ );
         displayers_.clear();
     }
 }

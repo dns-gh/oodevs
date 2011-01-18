@@ -15,6 +15,7 @@
 #include "MIL_ObjectBuilder_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 #include "MIL_ObjectManipulator.h"
+#include "MIL_StructuralStateNotifier_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -130,6 +131,15 @@ void MIL_Object::Register( MIL_InteractiveContainer_ABC* capacity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Object::Register
+// Created: JSR 2011-01-14
+// -----------------------------------------------------------------------------
+void MIL_Object::Register( MIL_StructuralStateNotifier_ABC& notifier )
+{
+    structuralStateNotifiers_.push_back( &notifier );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Object::AddAttribute
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
@@ -148,7 +158,7 @@ void MIL_Object::Register( ObjectCapacity_ABC* capacity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::Instanciate
+// Name: MIL_Object::Instanciate
 // Created: SLG 2010-06-23
 // -----------------------------------------------------------------------------
 void MIL_Object::Instanciate( MIL_Object_ABC& object ) const
@@ -248,6 +258,16 @@ void MIL_Object::ProcessPopulationInside( MIL_PopulationElement_ABC& population 
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Object::ApplyStructuralState
+// Created: JSR 2011-01-14
+// -----------------------------------------------------------------------------
+void MIL_Object::ApplyStructuralState( unsigned int structuralState ) const
+{
+    std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(),
+                   boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyStructuralStateChanged, _1, structuralState, boost::cref( *this ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Object::SendFullState
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
@@ -286,7 +306,7 @@ void MIL_Object::UpdateState()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::Update
+// Name: MIL_Object::Update
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 void MIL_Object::Update( unsigned int time )
@@ -295,7 +315,7 @@ void MIL_Object::Update( unsigned int time )
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::operator()
+// Name: MIL_Object::operator()
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 const MIL_ObjectManipulator_ABC& MIL_Object::operator()() const
@@ -304,7 +324,7 @@ const MIL_ObjectManipulator_ABC& MIL_Object::operator()() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::operator()
+// Name: MIL_Object::operator()
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
 MIL_ObjectManipulator_ABC& MIL_Object::operator()()

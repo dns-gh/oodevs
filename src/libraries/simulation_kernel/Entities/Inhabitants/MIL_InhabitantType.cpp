@@ -10,10 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_InhabitantType.h"
 #include "MIL_Inhabitant.h"
-#include "simulation_kernel/Entities/Populations/MIL_PopulationType.h"
-#include "tools/MIL_Tools.h"
+#include "Entities/Populations/MIL_PopulationType.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_InhabitantType::T_InhabitantMap MIL_InhabitantType::inhabitants_;
@@ -45,13 +43,10 @@ void MIL_InhabitantType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_InhabitantType::ReadInhabitant( xml::xistream& xis )
 {
-    std::string strName;
-    xis >> xml::attribute( "name", strName );
-
+    std::string strName = xis.attribute< std::string >( "name" );
     const MIL_InhabitantType*& pInhabitant = inhabitants_[ strName ];
     if( pInhabitant )
         xis.error( "Inhabitant type already exists" );
-
     pInhabitant = new MIL_InhabitantType( strName, xis );
 }
 
@@ -71,14 +66,16 @@ void MIL_InhabitantType::Terminate()
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
 MIL_InhabitantType::MIL_InhabitantType( const std::string& strName, xml::xistream& xis )
-    : strName_              ( strName )
+    : strName_( strName )
 {
-    std::string associatedCrowd; 
-    xis >> xml::attribute( "id", nID_ )
-        >> xml::attribute( "associated-crowd", associatedCrowd );
-    pModel_ = MIL_PopulationType::Find( associatedCrowd );
+    nID_ = xis.attribute< unsigned int >( "id" );
+    pModel_ = MIL_PopulationType::Find( xis.attribute< std::string >( "associated-crowd" ) );
     if( !pModel_ )
         xis.error( "Unknown crowd type" );
+    xis >> xml::start( "security-level" )
+            >> xml::attribute( "gain-per-hour", securityGainPerHour_ )
+            >> xml::attribute( "loss-on-fire", securityLossOnFire_ )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -87,6 +84,7 @@ MIL_InhabitantType::MIL_InhabitantType( const std::string& strName, xml::xistrea
 // -----------------------------------------------------------------------------
 MIL_InhabitantType::~MIL_InhabitantType()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +123,6 @@ unsigned int MIL_InhabitantType::GetID() const
 {
     return nID_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_InhabitantType::Find

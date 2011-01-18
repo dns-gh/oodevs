@@ -19,9 +19,9 @@ using namespace kernel;
 // Name: ResourceNetworkSelectionObserver constructor
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-ResourceNetworkSelectionObserver::ResourceNetworkSelectionObserver( kernel::Controllers& controllers )
+ResourceNetworkSelectionObserver::ResourceNetworkSelectionObserver( Controllers& controllers )
     : controllers_( controllers )
-    , selected_( 0 )
+    , selected_   ( 0 )
 {
     controllers_.Register( *this );
 }
@@ -39,28 +39,26 @@ ResourceNetworkSelectionObserver::~ResourceNetworkSelectionObserver()
 // Name: ResourceNetworkSelectionObserver::NotifySelected
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-void ResourceNetworkSelectionObserver::NotifySelected( const kernel::Entity_ABC* element )
+void ResourceNetworkSelectionObserver::NotifySelected( const Entity_ABC* element )
 {
     if( selected_ != 0 )
     {
-        const_cast< kernel::ResourceNetwork_ABC* >( selected_->Retrieve< kernel::ResourceNetwork_ABC >() )->Select( false );
+        const_cast< ResourceNetwork_ABC* >( selected_->Retrieve< ResourceNetwork_ABC >() )->Select( false );
         selected_ = 0;
     }
     if( element )
-    {
-        if( kernel::ResourceNetwork_ABC* resource = const_cast< kernel::ResourceNetwork_ABC* >( element->Retrieve< kernel::ResourceNetwork_ABC >() ) )
+        if( ResourceNetwork_ABC* resource = const_cast< ResourceNetwork_ABC* >( element->Retrieve< ResourceNetwork_ABC >() ) )
         {
-            selected_= element;
+            selected_ = element;
             resource->Select( true );
         }
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkSelectionObserver::NotifyDeleted
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-void ResourceNetworkSelectionObserver::NotifyDeleted( const kernel::Entity_ABC& entity )
+void ResourceNetworkSelectionObserver::NotifyDeleted( const Entity_ABC& entity )
 {
     if( &entity == selected_ )
         selected_ = 0;

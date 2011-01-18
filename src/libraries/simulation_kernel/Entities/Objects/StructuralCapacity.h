@@ -53,25 +53,30 @@ public:
     //! @name Operations
     //@{
     void Update( xml::xistream& xis, const MIL_Object_ABC& object );
-    template< typename Archive > void serialize( Archive& file, const unsigned int );
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
+
+    void ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation );
+    void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
+    const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
+    unsigned int GetStructuralState() const;
+    void SetStructuralState( int state );
+
+    void SendState( sword::UrbanAttributes& message );
+
+    //! @name From MIL_InteractiveContainer_ABC
+    //@{    
     virtual void CanInteractWith( const MIL_Object_ABC& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ){};
     virtual void ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ );
     virtual void ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ );
     virtual void ProcessAgentMovingInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
     virtual void ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ ){};
-    void ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation );
-    void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
-    void SendState( sword::UrbanAttributes& message );
-    unsigned int GetStructuralState() const;
-    void SetStructuralState( int state );
-    const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
+    virtual void ProcessPopulationInside( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {};
     //@}
 
-    //! @name Operations on population
+    //! @name Checkpoints
     //@{
-    virtual void ProcessPopulationInside( MIL_Object_ABC& /*object*/, MIL_PopulationElement_ABC& /*population*/ ) {};
+    template< typename Archive > void serialize( Archive& file, const unsigned int );
     //@}
 
 private:

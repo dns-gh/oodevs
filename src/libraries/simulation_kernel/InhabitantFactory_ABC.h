@@ -27,12 +27,12 @@ class MIL_Army_ABC;
 // Created: SLG 2010-11-29
 // =============================================================================
 class InhabitantFactory_ABC : public tools::Resolver< MIL_Inhabitant >
-                      , private boost::noncopyable
+                            , private boost::noncopyable
 {
 public:
     //! @name Destructor
     //@{
-    virtual ~InhabitantFactory_ABC() { DeleteAll(); };
+    virtual ~InhabitantFactory_ABC();
     //@}
 
     //! @name Operations
@@ -49,13 +49,33 @@ public:
 protected:
     //! @name Constructor
     //@{
-    InhabitantFactory_ABC() {};
+    InhabitantFactory_ABC();
     //@}
 };
 
 // -----------------------------------------------------------------------------
+// Name: InhabitantFactory_ABC constructor
+// Created: JSR 2011-01-14
+// -----------------------------------------------------------------------------
+inline
+InhabitantFactory_ABC::InhabitantFactory_ABC()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantFactory_ABC::~InhabitantFactory_ABC()
+// Created: JSR 2011-01-14
+// -----------------------------------------------------------------------------
+inline
+InhabitantFactory_ABC::~InhabitantFactory_ABC()
+{
+    DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
 // Name: template< typename Archive > void InhabitantFactory_ABC::serialize
-// Created: MGD 2009-10-24
+// Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
 template< typename Archive >
 void InhabitantFactory_ABC::serialize( Archive& file, const unsigned int )

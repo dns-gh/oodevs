@@ -31,6 +31,7 @@ public:
     //@{
     virtual const std::string& GetResourceName( unsigned long id ) const;
     virtual unsigned long GetResourceId( const std::string& name ) const;
+    virtual unsigned int GetIdFromSimulation( unsigned int urbanId ) const;
     //@}
 
 private:

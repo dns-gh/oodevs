@@ -119,14 +119,11 @@ void ResourceNetworkCapacity::save( MIL_CheckPointOutArchive& file, const unsign
 void ResourceNetworkCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
-    // TODO Find a better way
-    UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object );
-    if( wrapper )
-        RegisterNode( wrapper->GetObject().GetId(), true );
-    else
-        RegisterNode( object.GetID(), false );
+    object.Register( *static_cast< MIL_StructuralStateNotifier_ABC *>( this ) );
+    RegisterNode( object.GetID() );
+    // $$$$ JSR 2011-01-14: TODO vérifier si ça peut être fait automatiquement par MIL_StructuralStateNotifier_ABC
     if( StructuralCapacity* structural = object.Retrieve< StructuralCapacity >() )
-        SetModifier( structural->GetStructuralState() );
+        NotifyStructuralStateChanged( structural->GetStructuralState(), object );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,25 +134,22 @@ void ResourceNetworkCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     ResourceNetworkCapacity* capacity = new ResourceNetworkCapacity( *this );
     object.AddCapacity( capacity );
-    // TODO Find a better way
-    UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object );
-    if( wrapper )
-        capacity->RegisterNode( wrapper->GetObject().GetId(), true );
-    else
-        capacity->RegisterNode( object.GetID(), false );
+    object.Register( *static_cast< MIL_StructuralStateNotifier_ABC *>( capacity ) );
+    capacity->RegisterNode( object.GetID() );
+    // $$$$ JSR 2011-01-14: TODO vérifier si ça peut être fait automatiquement par MIL_StructuralStateNotifier_ABC
     if( StructuralCapacity* structural = object.Retrieve< StructuralCapacity >() )
-        SetModifier( structural->GetStructuralState() );
+        nodeProperties_->SetModifier( structural->GetStructuralState() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::RegisterNode
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::RegisterNode( unsigned int id, bool urban )
+void ResourceNetworkCapacity::RegisterNode( unsigned int id )
 {
     if( nodeProperties_ == 0 )
         throw std::exception( "RegisterResource : Node Properties not instanciated" );
-    MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().RegisterNode( *nodeProperties_, id, urban );
+    MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().RegisterNode( *nodeProperties_, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -183,10 +177,10 @@ void ResourceNetworkCapacity::SendState( sword::ObjectAttributes& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkCapacity::SetModifier
-// Created: JSR 2010-08-31
+// Name: ResourceNetworkCapacity::NotifyStructuralStateChanged
+// Created: JSR 2011-01-14
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::SetModifier( unsigned int modifier ) const
+void ResourceNetworkCapacity::NotifyStructuralStateChanged( unsigned int structuralState, const MIL_Object_ABC& /*object*/ )
 {
-    nodeProperties_->SetModifier( modifier );
+    nodeProperties_->SetModifier( structuralState );
 }

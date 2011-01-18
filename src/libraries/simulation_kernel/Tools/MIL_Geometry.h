@@ -31,8 +31,11 @@ public:
     //@{
     static void Scale( geometry::Polygon2f& result, const geometry::Polygon2f& polygon, float distance ); // $$$$ MCO : where are the unit tests ?!
     static void ComputeHull( geometry::Polygon2f& result, const geometry::Polygon2f& polygon );
-    static float IntersectionArea( const geometry::Polygon2f& polygon1, const geometry::Polygon2f& polygon2 );
+    template< typename T >
+    static T IntersectionArea( const geometry::Polygon2< T >& polygon1, const geometry::Polygon2< T >& polygon2 );
     //@}
 };
+
+#include "MIL_Geometry.inl"
 
 #endif // __MIL_Geometry_h_

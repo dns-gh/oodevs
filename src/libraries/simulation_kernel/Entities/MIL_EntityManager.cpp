@@ -99,6 +99,7 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"
+#include "resource_network/ResourceNetworkModel.h"
 #include <urban/Model.h>
 #include <urban/PhysicalAttribute.h>
 #include <urban/ObjectVisitor_ABC.h>
@@ -262,6 +263,8 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     kernel::ExerciseFileLoader loader ( config );
     loader.LoadAndUpdate( "orbat", boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ), "resources/orbat0-4.2.xsl" );
 
+    MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
+
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
@@ -334,7 +337,7 @@ void MIL_EntityManager::CreateUrbanObjects( urban::Model& urbanModel, const MIL_
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateUrbanObjectWrapper
+// Name: MIL_EntityManager::CreateUrbanObject
 // Created: SLG 2010-06-23
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::CreateUrbanObject( const urban::TerrainObject_ABC& object )
@@ -669,9 +672,11 @@ void MIL_EntityManager::UpdateStates()
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateState, _1 ) );
+    inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::UpdateState, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateNetwork, _1 ) );
+    inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::UpdateNetwork, _1 ) );
     pObjectManager_->UpdateStates();
     rStatesTime_ = profiler_.Stop();
 }

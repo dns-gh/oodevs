@@ -9,11 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Geometry.h"
-#pragma warning( push, 0 )
-#include <boost/geometry/geometry.hpp>
-#pragma warning( pop )
-
-namespace bg = boost::geometry;
 
 namespace
 {
@@ -75,12 +70,12 @@ void MIL_Geometry::ComputeHull( geometry::Polygon2f& result, const geometry::Pol
     hull.push_back( *maxLeft );
     hull.push_back( *maxRight );
     unsigned int nPoint = 0;
+    geometry::Point2f worst;
     while( nPoint != hull.size() )
     {
         unsigned int nFollowingPoint = ( nPoint + 1 ) % hull.size();
         geometry::Vector2f direction( hull[ nPoint ], hull[ nFollowingPoint ] );
         direction.Normalize();
-        geometry::Point2f worst;
         if( FindOuterPoint( vertices, hull[ nPoint ], direction, worst ) )
         {
             hull.insert( hull.begin() + nFollowingPoint, worst );
@@ -90,36 +85,4 @@ void MIL_Geometry::ComputeHull( geometry::Polygon2f& result, const geometry::Pol
             ++nPoint;
     }
     result = geometry::Polygon2f( hull );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Geometry::IntersectionArea
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-float MIL_Geometry::IntersectionArea( const geometry::Polygon2f& polygon1, const geometry::Polygon2f& polygon2 )
-{
-    bg::polygon< bg::point_xy< float > > poly1;
-    bg::polygon< bg::point_xy< float > > poly2;
-    {
-        const geometry::Polygon2f::T_Vertices& vertices1 = polygon1.Vertices();
-        std::vector< bg::point_xy< float > > vectorTemp;
-        for( geometry::Polygon2f::CIT_Vertices it = vertices1.begin(); it != vertices1.end(); ++it )
-            vectorTemp.push_back( bg::point_xy< float >( it->X(), it->Y() ) );
-        bg::assign( poly1, vectorTemp );
-        bg::correct( poly1 );
-    }
-    {
-        const geometry::Polygon2f::T_Vertices& vertices2 = polygon2.Vertices();
-        std::vector< bg::point_xy< float > > vectorTemp;
-        for( geometry::Polygon2f::CIT_Vertices it = vertices2.begin(); it != vertices2.end(); ++it )
-            vectorTemp.push_back( bg::point_xy< float >( it->X(), it->Y() ) );
-        bg::assign( poly2, vectorTemp );
-        bg::correct( poly2 );
-    }
-    std::vector< bg::polygon< bg::point_xy< float > > > polygonResult;
-    bg::intersection_inserter< bg::polygon< bg::point_xy< float > > >( poly2, poly1, std::back_inserter( polygonResult ) );
-    float intersectArea = 0;
-    for( std::vector< bg::polygon< bg::point_xy< float > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
-        intersectArea += static_cast< float >( area( *it ) );
-    return intersectArea;
 }

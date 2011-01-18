@@ -12,8 +12,7 @@
 
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
-#include <vector>
-#include <map>
+#include "Entities/Objects/MIL_StructuralStateNotifier_ABC.h"
 
 namespace xml
 {
@@ -28,11 +27,13 @@ namespace urban
 
 class MIL_Army_ABC;
 class MIL_InhabitantType;
+class MIL_StructuralStateNotifier_ABC;
 
 // =============================================================================
 // Created: NLD 2005-09-28
 // =============================================================================
 class MIL_Inhabitant : public MIL_Entity_ABC
+                     , public MIL_StructuralStateNotifier_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -53,6 +54,7 @@ public:
     //@{
     void SendCreation() const;
     void SendFullState() const;
+    void UpdateState();
     void UpdateNetwork();
     //@}
 
@@ -62,6 +64,11 @@ public:
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     void WriteODB( xml::xostream& xos ) const;
+    //@}
+
+    //! @name From MIL_StructuralStateNotifier_ABC
+    //@{
+    virtual void NotifyStructuralStateChanged( unsigned int structuralState, const MIL_Object_ABC& object );
     //@}
 
 protected:
@@ -87,6 +94,7 @@ private:
     //! @name Helpers
     //@{
     void DistributeHumans( float area );
+    void ComputeHealthSatisfaction();
     //@}
 
 private:
@@ -110,6 +118,9 @@ private:
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;
+    float healthNeed_;
+    float healthSatisfaction_;
+    bool healthChanged_;
     T_UrbanBlocks urbanBlocks_;
     T_Extensions extensions_;
     //@}

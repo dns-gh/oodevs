@@ -9,12 +9,11 @@
 
 #include "dispatcher_pch.h"
 #include "Inhabitant.h"
-#include "Model.h"
+#include "Model_ABC.h"
 #include "Side.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
 using namespace dispatcher;
@@ -24,15 +23,16 @@ using namespace dispatcher;
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg )
-    : dispatcher::Inhabitant_ABC( msg.id().id(), QString( msg.name().c_str() ) )
-    , model_            ( model )
-    , nType_            ( msg.type().id() )
-    , strName_          ( msg.name() )
-    , text_             ( msg.text() )
-    , side_             ( model.Sides().Get( msg.party().id() ) )
-    , nNbrHealthyHumans_( 0 )
-    , nNbrDeadHumans_   ( 0 )
-    , nNbrWoundedHumans_( 0 )
+    : Inhabitant_ABC( msg.id().id(), QString( msg.name().c_str() ) )
+    , model_             ( model )
+    , nType_             ( msg.type().id() )
+    , strName_           ( msg.name() )
+    , text_              ( msg.text() )
+    , side_              ( model.Sides().Get( msg.party().id() ) )
+    , nNbrHealthyHumans_ ( 0 )
+    , nNbrDeadHumans_    ( 0 )
+    , nNbrWoundedHumans_ ( 0 )
+    , healthSatisfaction_( 0 )
 {
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
@@ -66,6 +66,11 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         nNbrDeadHumans_ = msg.dead();
     if( msg.has_wounded() )
         nNbrWoundedHumans_ = msg.wounded();
+    if( msg.has_satisfaction() )
+    {
+        if( msg.satisfaction().has_health() )
+            healthSatisfaction_ = msg.satisfaction().health();
+    }
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
         const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
@@ -93,8 +98,7 @@ void Inhabitant::SendCreation( ClientPublisher_ABC& publisher ) const
     }
     BOOST_FOREACH( int id, urbanObjectId_ )
     {
-        sword::UrbanObjectId* blockId = msg().add_blocks();
-        blockId->set_id( id );
+        msg().add_blocks()->set_id( id );
     }
     msg.Send( publisher );
 }
@@ -110,6 +114,7 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     msg().set_healthy( nNbrHealthyHumans_ );
     msg().set_wounded( nNbrWoundedHumans_ );
     msg().set_dead( nNbrDeadHumans_ );
+    msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
     BOOST_FOREACH( const T_UrbanBlocks::value_type& urbanBlock, urbanBlocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
@@ -135,13 +140,4 @@ void Inhabitant::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 void Inhabitant::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::Draw
-// Created: SLG 2010-12-01
-// -----------------------------------------------------------------------------
-void Inhabitant::Draw( const kernel::GlTools_ABC& /*tools*/ ) const
-{
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

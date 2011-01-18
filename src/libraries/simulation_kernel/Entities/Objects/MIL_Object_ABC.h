@@ -12,12 +12,11 @@
 #ifndef __MIL_Object_ABC_h_
 #define __MIL_Object_ABC_h_
 
-#include "simulation_kernel/MIL.h"
-#include "simulation_terrain/TER_Object_ABC.h"
-#include "MIL_InteractiveContainer_ABC.h"
+#include "MIL.h"
 #include "MIL_ObjectInteraction.h"
 #include "ObjectCapacity_ABC.h"
 #include "ObjectAttribute_ABC.h"
+#include "simulation_terrain/TER_Object_ABC.h"
 #include "tools/Extendable.h"
 #include "Tools/MIL_IDManager.h"
 
@@ -47,6 +46,7 @@ class MIL_Agent_ABC;
 class MIL_Army_ABC;
 class MIL_KnowledgeGroup;
 class MIL_InteractiveContainer_ABC;
+class MIL_StructuralStateNotifier_ABC;
 class MIL_ObjectManipulator_ABC;
 class MIL_ObjectType_ABC;
 class MIL_PopulationElement_ABC;
@@ -88,11 +88,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void UpdateState       ();
+    virtual void UpdateState();
     virtual void UpdateLocalisation( const TER_Localisation& newLocalisation );
     virtual bool IsInside( const MT_Vector2D& vPos ) const;
-            void ProcessEvents     ();
-            void MarkForDestruction();
+    void ProcessEvents();
+    void MarkForDestruction();
     //@}
 
     //! @name Interactions
@@ -128,7 +128,12 @@ public:
     //@{
     template< typename T> void ProcessAgentsInside( T functor ) const;
     template< typename T, typename I > void SetAttribute( const T& attribute );
-    void ApplyStructuralState( unsigned int structuralState ) const;
+    //@}
+
+    //! @name StructuralStateNotifier
+    //@{
+    virtual void Register( MIL_StructuralStateNotifier_ABC& notifier ) = 0;
+    virtual void ApplyStructuralState( unsigned int structuralState ) const = 0;
     //@}
 
     //! @name Instanciate / Build / Copy object

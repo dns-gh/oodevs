@@ -82,7 +82,6 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
         pEntityManager_->ReadODB( config_ );
-
         if( !config_.GetPausedAtStartup() )
             Resume();
     }

@@ -68,6 +68,7 @@ public:
     void SetTools( const ResourceTools_ABC& tools );
     void Update( xml::xistream& xis );
     void Update();
+    void Finalize();
     void Push( int quantity, unsigned long resourceId );
     void SetModifier( unsigned int modifier );
     bool NeedUpdate() const;
