@@ -4,7 +4,7 @@
 	<xs:element name="exercise">
 		<xs:complexType>
 			<xs:all>
-				<xs:element ref="meta"/>
+				<xs:element ref="meta" minOccurs="0"/>
 				<xs:element ref="model"/>
 				<xs:element ref="urbanstate" minOccurs="0"/>
 				<xs:element ref="population" minOccurs="0"/>
