@@ -181,6 +181,15 @@ void DEC_OrdersFunctions::GiveAutomateMission( boost::shared_ptr< MIL_Mission_AB
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_OrdersFunctions::GiveAutomateMissionToAutomat
+// Created: LMT 2011-01-17
+// -----------------------------------------------------------------------------
+void DEC_OrdersFunctions::GiveAutomateMissionToAutomat( boost::shared_ptr< MIL_Mission_ABC > pMission, MIL_Automate& callerAutomate )
+{
+    callerAutomate.GetOrderManager().GiveMissionToNewAutomat( callerAutomate, pMission );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_OrdersFunctions::SplitFuseau
 // Created: NLD 2007-04-05
 // -----------------------------------------------------------------------------

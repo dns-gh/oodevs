@@ -383,6 +383,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< boost::shared_ptr< MIL_Mission_ABC > (DEC_Decision_ABC*, const std::string&)> ( boost::bind( &DEC_OrdersFunctions::CreateAutomateMission, boost::ref( GetAutomate() ), _1, _2 ) );
     brain[ "DEC_DonnerMissionAutomate_Mission" ] =
             boost::function< void( boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::GiveAutomateMission , _1, boost::ref( GetAutomate() ) ) );
+    brain[ "DEC_DonnerMissionAutomate" ] =
+            boost::function< void( boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::GiveAutomateMissionToAutomat , _1, boost::ref( GetAutomate() ) ) );
     brain[ "DEC_AssignerFuseauAMissionAutomate_Mission" ] =
             boost::function< void( MIL_Fuseau* ,  boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToAutomateMission , _1, _2 ) );
     brain[ "DEC_AssignerDirectionAMissionAutomate_Mission" ] =

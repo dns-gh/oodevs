@@ -7644,6 +7644,7 @@
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
+        <mission name="MELEE Relever"/>
         <mission name="MELEE S'emparer"/>
         <mission name="MELEE Surveiller"/>
       </missions>
@@ -11624,4 +11625,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3208632512" -->
+<!-- signature="4185788787" -->

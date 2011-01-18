@@ -61,6 +61,7 @@ public:
     void                    CDT_GivePionMissionVersPion  ( const boost::shared_ptr< MIL_Mission_ABC > mission );
     boost::shared_ptr< MIL_Mission_ABC > CreateAutomateMission( MIL_Automate& automate, const MIL_MissionType_ABC& missionType );
     void                    GiveAutomateMission  ( const boost::shared_ptr< MIL_Mission_ABC > mission );
+    void                    GiveMissionToNewAutomat( MIL_Automate& automate, boost::shared_ptr< MIL_Mission_ABC > mission );
     //@}
 
 private:

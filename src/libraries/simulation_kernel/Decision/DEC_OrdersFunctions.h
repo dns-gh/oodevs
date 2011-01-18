@@ -58,6 +58,7 @@ public:
     static void AssignFuseauToAutomateMission   ( MIL_Fuseau* pFuseau, boost::shared_ptr< MIL_Mission_ABC > pMission );
     static void AssignDirectionToAutomateMission( MT_Vector2D* pDirection, boost::shared_ptr< MIL_Mission_ABC > pMission);
     static void GiveAutomateMission             ( boost::shared_ptr< MIL_Mission_ABC > pMission, MIL_Automate& callerAutomate );
+    static void GiveAutomateMissionToAutomat    ( boost::shared_ptr< MIL_Mission_ABC > pMission, MIL_Automate& callerAutomate );
     static std::list<MIL_Fuseau*> SplitFuseau   ( MIL_Automate& callerAutomate, unsigned int nbrSubFuseaux );
 
     static bool IsMissionAvailable( DEC_Decision_ABC* agent, std::string diaType );

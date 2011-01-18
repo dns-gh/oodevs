@@ -330,3 +330,14 @@ void MIL_AutomateOrderManager::GiveAutomateMission( boost::shared_ptr< MIL_Missi
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     mission->GetAutomate().GetOrderManager().ReplaceMission( mission );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateOrderManager::GiveMissionToNewAutomat
+// Created: LMT 2011-01-17
+// -----------------------------------------------------------------------------
+void MIL_AutomateOrderManager::GiveMissionToNewAutomat( MIL_Automate& automate, boost::shared_ptr< MIL_Mission_ABC > mission )
+{
+    boost::shared_ptr< MIL_Mission_ABC > newMission = static_cast< MIL_AutomateMission* >( mission.get() )->CreateCopy( automate );    
+    mission->GetAutomate().GetOrderManager().CancelMission();
+    automate.GetOrderManager().ReplaceMission( newMission );
+}
