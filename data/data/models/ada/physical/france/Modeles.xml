@@ -7638,6 +7638,7 @@
         <mission name="MELEE Controler"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
+        <mission name="MELEE Effectuer un raid"/>
         <mission name="MELEE Freiner"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Neutraliser"/>
@@ -11625,4 +11626,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4185788787" -->
+<!-- signature="1704068794" -->
