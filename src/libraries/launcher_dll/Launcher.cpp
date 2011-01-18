@@ -80,7 +80,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Connecti
 //    if( valid )
     {
         response().mutable_dispatcher_address()->set_ip( "127.0.0.1" ); // $$$$ SBO 2010-09-30: ???
-        response().mutable_dispatcher_address()->set_port( 33000 );     // $$$$ SBO 2010-09-30: ???
+        response().mutable_dispatcher_address()->set_port( 10001 );     // $$$$ SBO 2010-09-30: ???
     }
     response.Send( server_->ResolveClient( endpoint ) );
 }
