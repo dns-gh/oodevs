@@ -38,8 +38,16 @@ public:
     //! @name Constructors/Destructor
     //@{
     Derivate( xml::xistream& xis, Function1_ABC< K, T >& next )
-        : period_( double( std::max( xis.attribute< unsigned int >( "period", 1 ), 1u ) ) ), next_( next ), currentKey_() {}
-    virtual ~Derivate() {}
+        : period_( double( std::max( xis.attribute< unsigned int >( "period", 1 ), 1u ) ) )
+        , next_  ( next )
+        , currentKey_()
+    {
+        // NOTHING
+    }
+    virtual ~Derivate()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -76,7 +84,10 @@ private:
 
     //! @name Operations
     //@{
-    virtual std::string GetName() const { return "Derivate"; }
+    virtual std::string GetName() const
+    {
+        return "Derivate";
+    }
     //@}
 
 private:

@@ -24,19 +24,18 @@ class MIL_BurningCells;
 // =============================================================================
 /** @class  FirePropagationModifierCapacity
     @brief  Allows to stop fire propagation on a surface defined with a polygon.
-			This polygon is roughly subdivised in fixed size cells.
-	@see "Feu sauvage" in 4311340-Modèles de feu.doc
+            This polygon is roughly subdivised in fixed size cells.
+    @see "Feu sauvage" in 4311340-Modèles de feu.doc
 */
 // Created: BCI 2010-12-17
 // =============================================================================
-
 class FirePropagationModifierCapacity : public ObjectCapacity_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit FirePropagationModifierCapacity( xml::xistream& xis );
-    explicit FirePropagationModifierCapacity();
+             FirePropagationModifierCapacity();
     virtual ~FirePropagationModifierCapacity();
     //@}
 
@@ -68,15 +67,20 @@ private:
     void ReadModifier( xml::xistream& xis );
     //@}
 
+private:
+    //! @name Types
+    //@{
     struct Modifier
     {
         int ignitionThreshold_;
         int maxCombustionEnergy_;
     };
+    //@}
 
-    //! @name Private member
+private:
+    //! @name Member data
     //@{
-	MIL_BurningCells& burningCells_;
+    MIL_BurningCells& burningCells_;
     typedef std::map< const MIL_FireClass*, Modifier > ModifierMap;
     ModifierMap modifiers_;
     MIL_Object_ABC* pObject_;

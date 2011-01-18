@@ -46,7 +46,7 @@ void load_construct_data( Archive& archive, MIL_AgentPionLOGConvoy* pion, const 
 MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
     : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories, xis )
 {
-    xis.error( "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB" );
+    throw xml::exception( xis.context() + "Creation of pion of type 'Pion LOG Convoi' not allowed in ODB" );
 }
 
 // -----------------------------------------------------------------------------

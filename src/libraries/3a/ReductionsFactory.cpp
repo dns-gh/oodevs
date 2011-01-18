@@ -47,7 +47,6 @@ void ReductionsFactory::Reduce( const std::string& name, xml::xistream& xis, Tas
 {
     typedef NumericValue K;
     const std::string functionName = xis.attribute< std::string >( "function" );
-
     if( functionName == "select" )
         ReduceFunction< Selector< K, T > >( name, xis, result );
     else if( functionName == "count" )
