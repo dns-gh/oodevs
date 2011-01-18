@@ -10,10 +10,9 @@
 #include "dispatcher_pch.h"
 #include "LogConsignMedical.h"
 #include "Model.h"
+#include "Agent.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "Agent.h"
-#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
@@ -22,17 +21,17 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 LogConsignMedical::LogConsignMedical( const Model& model, const sword::LogMedicalHandlingCreation& msg )
-    : SimpleEntity< >   ( msg.request().id() )
-    , model_            ( model )
-    , agent_            ( model.Agents().Get( msg.unit().id() ) )
-    , nTickCreation_    ( msg.tick() )
-    , pTreatingAgent_   ( 0 )
-    , nRank_            ( msg.rank() )
-    , nWound_           ( msg.wound() )
-    , bMentalDiseased_  ( msg.mental_wound() != 0 )
-    , bContaminated_    ( msg.nbc_contaminated() != 0 )
-    , nState_           ( sword::ambulance_ramassage_dechargement )
-    , bDiagnosed_       ( false )
+    : SimpleEntity< >( msg.request().id() )
+    , model_          ( model )
+    , agent_          ( model.Agents().Get( msg.unit().id() ) )
+    , nTickCreation_  ( msg.tick() )
+    , pTreatingAgent_ ( 0 )
+    , nRank_          ( msg.rank() )
+    , nWound_         ( msg.wound() )
+    , bMentalDiseased_( msg.mental_wound() != 0 )
+    , bContaminated_  ( msg.nbc_contaminated() != 0 )
+    , nState_         ( sword::LogMedicalHandlingUpdate::collection_ambulance_unloading )
+    , bDiagnosed_     ( false )
 {
     // NOTHING
 }

@@ -119,46 +119,6 @@ message UnitChangeSuperior {
    required AutomatId parent = 2;
 }
 
-enum EnumLogMaintenanceHandlingStatus {
-   moving_to_supply             = 0;
-   waiting_for_transporter      = 1;
-   transporter_moving_to_supply = 2;
-   transporter_loading          = 3;
-   transporter_moving_back      = 4;
-   transporter_unloading        = 5;
-   diagnosing                   = 6;
-   searching_upper_levels       = 7;
-   waiting_for_parts            = 8;
-   waiting_for_repairer         = 9;
-   repairing                    = 10;
-   moving_back                  = 11;
-   maintenance_over             = 12;
-}
-
-enum EnumLogMedicalHandlingStatus {
-   attente_disponibilite_ambulance_releve          = 0;  //!< @todo translate
-   ambulance_releve_deplacement_aller              = 1;  //!< @todo translate
-   ambulance_releve_chargement                     = 2;  //!< @todo translate
-   attente_chargement_complet_ambulance_releve     = 3;  //!< @todo translate
-   ambulance_releve_deplacement_retour             = 4;  //!< @todo translate
-   ambulance_releve_dechargement                   = 5;  //!< @todo translate
-   attente_disponibilite_medecin_pour_diagnostique = 6;  //!< @todo translate
-   diagnostique                                    = 7;  //!< @todo translate
-   recherche_secteur_tri                           = 8;  //!< @todo translate
-   attente_disponibilite_medecin_pour_tri          = 9;  //!< @todo translate
-   tri                                             = 10; //!< @todo translate
-   recherche_secteur_soin                          = 11; //!< @todo translate
-   attente_disponibilite_medecin_pour_soin         = 12; //!< @todo translate
-   soin                                            = 13; //!< @todo translate
-   hospitalisation                                 = 14; //!< @todo translate
-   attente_disponibilite_ambulance_ramassage       = 15; //!< @todo translate
-   ambulance_ramassage_chargement                  = 16; //!< @todo translate
-   attente_chargement_complet_ambulance_ramassage  = 17; //!< @todo translate
-   ambulance_ramassage_deplacement_aller           = 18; //!< @todo translate
-   ambulance_ramassage_dechargement                = 19; //!< @todo translate
-   termine_medical                                 = 20; //!< @todo translate
-}
-
 enum EnumSimulationState {
    running = 0;
    paused  = 1;

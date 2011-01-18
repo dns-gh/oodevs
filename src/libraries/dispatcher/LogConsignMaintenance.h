@@ -11,13 +11,7 @@
 #define __LogConsignMaintenance_h_
 
 #include "SimpleEntity.h"
-
-namespace sword
-{
-    enum EnumLogMaintenanceHandlingStatus;
-    class LogMaintenanceHandlingCreation;
-    class LogMaintenanceHandlingUpdate;
-}
+#include "protocol/ClientSenders.h"
 
 namespace kernel
 {
@@ -65,15 +59,17 @@ private:
     //@}
 
 private:
-    const Model&        model_;
-    const kernel::Agent_ABC&        agent_;
+    //! @name Member data
+    //@{
+    const Model& model_;
+    const kernel::Agent_ABC& agent_;
     const unsigned long nTickCreation_;
     const unsigned int  nEquipmentType_; // XML reference - not resolved by dispatcher
     const unsigned int  nBreakdownType_; // XML reference - not resolved by dispatcher
-
-    const kernel::Agent_ABC*               pTreatingAgent_;
-    sword::EnumLogMaintenanceHandlingStatus nState_;
-    bool                                   bDiagnosed_;
+    const kernel::Agent_ABC* pTreatingAgent_;
+    sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus nState_;
+    bool bDiagnosed_;
+    //@}
 };
 
 }

@@ -1397,27 +1397,27 @@ void SimulationToClient::Convert( const sword::LogMedicalHandlingUpdate& from, M
     CONVERT_ENUM_TO( wound, blessure, HUMAN_WOUND );
     CONVERT_TO( mental_wound, blesse_mental );
     CONVERT_TO( nbc_contaminated, contamine_nbc );
-    CONVERT_ENUM_TO( state, etat, ( sword::attente_disponibilite_ambulance_releve, Common::attente_disponibilite_ambulance_releve )
-                                  ( sword::ambulance_releve_deplacement_aller, Common::ambulance_releve_deplacement_aller )
-                                  ( sword::ambulance_releve_chargement, Common::ambulance_releve_chargement )
-                                  ( sword::attente_chargement_complet_ambulance_releve, Common::attente_chargement_complet_ambulance_releve )
-                                  ( sword::ambulance_releve_deplacement_retour, Common::ambulance_releve_deplacement_retour )
-                                  ( sword::ambulance_releve_dechargement, Common::ambulance_releve_dechargement )
-                                  ( sword::attente_disponibilite_medecin_pour_diagnostique, Common::attente_disponibilite_medecin_pour_diagnostique )
-                                  ( sword::diagnostique, Common::diagnostique )
-                                  ( sword::recherche_secteur_tri, Common::recherche_secteur_tri )
-                                  ( sword::attente_disponibilite_medecin_pour_tri, Common::attente_disponibilite_medecin_pour_tri )
-                                  ( sword::tri, Common::tri )
-                                  ( sword::recherche_secteur_soin, Common::recherche_secteur_soin )
-                                  ( sword::attente_disponibilite_medecin_pour_soin, Common::attente_disponibilite_medecin_pour_soin )
-                                  ( sword::soin, Common::soin )
-                                  ( sword::hospitalisation, Common::hospitalisation )
-                                  ( sword::attente_disponibilite_ambulance_ramassage, Common::attente_disponibilite_ambulance_ramassage )
-                                  ( sword::ambulance_ramassage_chargement, Common::ambulance_ramassage_chargement )
-                                  ( sword::attente_chargement_complet_ambulance_ramassage, Common::attente_chargement_complet_ambulance_ramassage )
-                                  ( sword::ambulance_ramassage_deplacement_aller, Common::ambulance_ramassage_deplacement_aller )
-                                  ( sword::ambulance_ramassage_dechargement, Common::ambulance_ramassage_dechargement )
-                                  ( sword::termine_medical, Common::termine ) );
+    CONVERT_ENUM_TO( state, etat, ( sword::LogMedicalHandlingUpdate::waiting_for_evacuation, Common::attente_disponibilite_ambulance_releve )
+                                  ( sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_in, Common::ambulance_releve_deplacement_aller )
+                                  ( sword::LogMedicalHandlingUpdate::evacuation_ambulance_loading, Common::ambulance_releve_chargement )
+                                  ( sword::LogMedicalHandlingUpdate::waiting_for_evacuation_loading_completion, Common::attente_chargement_complet_ambulance_releve )
+                                  ( sword::LogMedicalHandlingUpdate::evacuation_ambulance_moving_out, Common::ambulance_releve_deplacement_retour )
+                                  ( sword::LogMedicalHandlingUpdate::evacuation_ambulance_unloading, Common::ambulance_releve_dechargement )
+                                  ( sword::LogMedicalHandlingUpdate::waiting_for_diagnostic, Common::attente_disponibilite_medecin_pour_diagnostique )
+                                  ( sword::LogMedicalHandlingUpdate::diagnosing, Common::diagnostique )
+                                  ( sword::LogMedicalHandlingUpdate::looking_for_triage, Common::recherche_secteur_tri )
+                                  ( sword::LogMedicalHandlingUpdate::waiting_for_triage, Common::attente_disponibilite_medecin_pour_tri )
+                                  ( sword::LogMedicalHandlingUpdate::triaging, Common::tri )
+                                  ( sword::LogMedicalHandlingUpdate::looking_for_medical_attention, Common::recherche_secteur_soin )
+                                  ( sword::LogMedicalHandlingUpdate::waiting_for_medical_attention, Common::attente_disponibilite_medecin_pour_soin )
+                                  ( sword::LogMedicalHandlingUpdate::receiving_medical_attention, Common::soin )
+                                  ( sword::LogMedicalHandlingUpdate::resting, Common::hospitalisation )
+                                  ( sword::LogMedicalHandlingUpdate::waiting_for_collection, Common::attente_disponibilite_ambulance_ramassage )
+                                  ( sword::LogMedicalHandlingUpdate::collection_ambulance_loading, Common::ambulance_ramassage_chargement )
+                                  ( sword::LogMedicalHandlingUpdate::waiting_for_collection_loading_completion, Common::attente_chargement_complet_ambulance_ramassage )
+                                  ( sword::LogMedicalHandlingUpdate::collection_ambulance_moving_in, Common::ambulance_ramassage_deplacement_aller )
+                                  ( sword::LogMedicalHandlingUpdate::collection_ambulance_unloading, Common::ambulance_ramassage_dechargement )
+                                  ( sword::LogMedicalHandlingUpdate::finished, Common::termine ) );
     CONVERT_TO( diagnosed, diagnostique_effectue );
 }
 
@@ -1483,19 +1483,19 @@ void SimulationToClient::Convert( const sword::LogMaintenanceHandlingUpdate& fro
     CONVERT_ID( request );
     CONVERT_ID( unit );
     CONVERT_ID( provider );
-    CONVERT_ENUM_TO( state, etat, ( sword::moving_to_supply, Common::deplacement_vers_chaine )
-                                  ( sword::waiting_for_transporter, Common::attente_disponibilite_remorqueur )
-                                  ( sword::transporter_moving_to_supply, Common::remorqueur_deplacement_aller )
-                                  ( sword::transporter_loading, Common::remorqueur_chargement )
-                                  ( sword::transporter_moving_back, Common::remorqueur_deplacement_retour )
-                                  ( sword::transporter_unloading, Common::remorqueur_dechargement )
-                                  ( sword::diagnosing, Common::diagnostique_maintenance )
-                                  ( sword::searching_upper_levels, Common::attente_prise_en_charge_par_niveau_superieur )
-                                  ( sword::waiting_for_parts, Common::attente_disponibilite_pieces )
-                                  ( sword::waiting_for_repairer, Common::attente_disponibilite_reparateur )
-                                  ( sword::repairing, Common::reparation )
-                                  ( sword::moving_back, Common::retour_pion )
-                                  ( sword::maintenance_over, Common::termine_maintenance ) );
+    CONVERT_ENUM_TO( state, etat, ( sword::LogMaintenanceHandlingUpdate::moving_to_supply, Common::deplacement_vers_chaine )
+                                  ( sword::LogMaintenanceHandlingUpdate::waiting_for_transporter, Common::attente_disponibilite_remorqueur )
+                                  ( sword::LogMaintenanceHandlingUpdate::transporter_moving_to_supply, Common::remorqueur_deplacement_aller )
+                                  ( sword::LogMaintenanceHandlingUpdate::transporter_loading, Common::remorqueur_chargement )
+                                  ( sword::LogMaintenanceHandlingUpdate::transporter_moving_back, Common::remorqueur_deplacement_retour )
+                                  ( sword::LogMaintenanceHandlingUpdate::transporter_unloading, Common::remorqueur_dechargement )
+                                  ( sword::LogMaintenanceHandlingUpdate::diagnosing, Common::diagnostique_maintenance )
+                                  ( sword::LogMaintenanceHandlingUpdate::searching_upper_levels, Common::attente_prise_en_charge_par_niveau_superieur )
+                                  ( sword::LogMaintenanceHandlingUpdate::waiting_for_parts, Common::attente_disponibilite_pieces )
+                                  ( sword::LogMaintenanceHandlingUpdate::waiting_for_repairer, Common::attente_disponibilite_reparateur )
+                                  ( sword::LogMaintenanceHandlingUpdate::repairing, Common::reparation )
+                                  ( sword::LogMaintenanceHandlingUpdate::moving_back, Common::retour_pion )
+                                  ( sword::LogMaintenanceHandlingUpdate::finished, Common::termine_maintenance ) );
     CONVERT_TO( diagnosed, diagnostique_effectue );
 }
 

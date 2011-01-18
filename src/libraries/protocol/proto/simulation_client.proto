@@ -1179,6 +1179,29 @@ message LogMedicalHandlingCreation {
 }
 
 message LogMedicalHandlingUpdate {
+    enum EnumLogMedicalHandlingStatus {
+       waiting_for_evacuation                    = 0;
+       evacuation_ambulance_moving_in            = 1;
+       evacuation_ambulance_loading              = 2;
+       waiting_for_evacuation_loading_completion = 3;
+       evacuation_ambulance_moving_out           = 4;
+       evacuation_ambulance_unloading            = 5;
+       waiting_for_diagnostic                    = 6;
+       diagnosing                                = 7;
+       looking_for_triage                        = 8;
+       waiting_for_triage                        = 9;
+       triaging                                  = 10;
+       looking_for_medical_attention             = 11;
+       waiting_for_medical_attention             = 12;
+       receiving_medical_attention               = 13;
+       resting                                   = 14;
+       waiting_for_collection                    = 15;
+       collection_ambulance_loading              = 16;
+       waiting_for_collection_loading_completion = 17;
+       collection_ambulance_moving_in            = 18;
+       collection_ambulance_unloading            = 19;
+       finished                                  = 20;
+    }
     required MedicalRequestId             request          = 1;
     required UnitId                       unit             = 2;
     optional UnitId                       provider         = 3;
@@ -1226,6 +1249,21 @@ message LogMaintenanceHandlingCreation {
 }
 
 message LogMaintenanceHandlingUpdate {
+    enum EnumLogMaintenanceHandlingStatus {
+       moving_to_supply             = 0;
+       waiting_for_transporter      = 1;
+       transporter_moving_to_supply = 2;
+       transporter_loading          = 3;
+       transporter_moving_back      = 4;
+       transporter_unloading        = 5;
+       diagnosing                   = 6;
+       searching_upper_levels       = 7;
+       waiting_for_parts            = 8;
+       waiting_for_repairer         = 9;
+       repairing                    = 10;
+       moving_back                  = 11;
+       finished                     = 12;
+    }
     required MaintenanceRequestId             request   = 1;
     required UnitId                           unit      = 2;
     required UnitId                           provider  = 3;

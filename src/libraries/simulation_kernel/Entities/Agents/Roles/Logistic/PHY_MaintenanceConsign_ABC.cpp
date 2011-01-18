@@ -106,9 +106,8 @@ void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUp
 {
     assert( pComposanteState_ );
     assert( pMaintenance_ );
-
     asn().mutable_provider()->set_id( pMaintenance_->GetID() );
-    asn().set_state( sword::EnumLogMaintenanceHandlingStatus( nState_ ) );
+    asn().set_state( sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus( nState_ ) );
 }
 
 // -----------------------------------------------------------------------------

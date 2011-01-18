@@ -10,10 +10,9 @@
 #include "dispatcher_pch.h"
 #include "LogConsignMaintenance.h"
 #include "Model.h"
+#include "Agent.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "Agent.h"
-#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
@@ -22,15 +21,15 @@ using namespace dispatcher;
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 LogConsignMaintenance::LogConsignMaintenance( const Model& model, const sword::LogMaintenanceHandlingCreation& msg )
-    : SimpleEntity< >   ( msg.request().id() )
-    , model_            ( model )
-    , agent_            ( model.Agents().Get( msg.unit().id() ) )
-    , nTickCreation_    ( msg.tick() )
-    , nEquipmentType_   ( msg.equipement().id() )
-    , nBreakdownType_   ( msg.breakdown().id() )
-    , pTreatingAgent_   ( 0 )
-    , nState_           ( sword::attente_disponibilite_pieces )
-    , bDiagnosed_       ( false )
+    : SimpleEntity<>( msg.request().id() )
+    , model_         ( model )
+    , agent_         ( model.Agents().Get( msg.unit().id() ) )
+    , nTickCreation_ ( msg.tick() )
+    , nEquipmentType_( msg.equipement().id() )
+    , nBreakdownType_( msg.breakdown().id() )
+    , pTreatingAgent_( 0 )
+    , nState_        ( sword::LogMaintenanceHandlingUpdate::waiting_for_parts )
+    , bDiagnosed_    ( false )
 {
     // NOTHING
 }
@@ -64,14 +63,11 @@ void LogConsignMaintenance::Update( const sword::LogMaintenanceHandlingUpdate& m
 void LogConsignMaintenance::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::LogMaintenanceHandlingCreation message;
-
     message().mutable_request()->set_id( GetId() );
     message().mutable_unit()->set_id( agent_.GetId() );
     message().set_tick ( nTickCreation_ );
-
     message().mutable_equipement()->set_id( nEquipmentType_ );
     message().mutable_breakdown()->set_id( nBreakdownType_ );
-
     message.Send( publisher );
 }
 
@@ -82,13 +78,11 @@ void LogConsignMaintenance::SendCreation( ClientPublisher_ABC& publisher ) const
 void LogConsignMaintenance::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::LogMaintenanceHandlingUpdate message;
-
     message().mutable_request()->set_id( GetId() );
     message().mutable_unit()->set_id( agent_.GetId() );
     message().mutable_provider()->set_id( pTreatingAgent_ ? pTreatingAgent_->GetId() : 0 );
     message().set_state( nState_ );
     message().set_diagnosed( bDiagnosed_ );
-
     message.Send( publisher );
 }
 

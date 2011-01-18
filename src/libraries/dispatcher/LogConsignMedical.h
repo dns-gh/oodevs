@@ -11,15 +11,7 @@
 #define __LogConsignMedical_h_
 
 #include "SimpleEntity.h"
-
-namespace sword
-{
-    enum EnumHumanRank;
-    enum EnumHumanWound;
-    enum EnumLogMedicalHandlingStatus;
-    class LogMedicalHandlingCreation;
-    class LogMedicalHandlingUpdate;
-}
+#include "protocol/ClientSenders.h"
 
 namespace kernel
 {
@@ -66,17 +58,19 @@ private:
     //@}
 
 private:
-    const Model&             model_;
+    //! @name Member data
+    //@{
+    const Model& model_;
     const kernel::Agent_ABC& agent_;
-    const unsigned long      nTickCreation_;
-
-    const kernel::Agent_ABC*         pTreatingAgent_;
-    sword::EnumHumanRank              nRank_;
-    sword::EnumHumanWound             nWound_;
-    bool                             bMentalDiseased_;
-    bool                             bContaminated_;
-    sword::EnumLogMedicalHandlingStatus nState_;
-    bool                             bDiagnosed_;
+    const unsigned long nTickCreation_;
+    const kernel::Agent_ABC* pTreatingAgent_;
+    sword::EnumHumanRank nRank_;
+    sword::EnumHumanWound nWound_;
+    bool bMentalDiseased_;
+    bool bContaminated_;
+    sword::LogMedicalHandlingUpdate::EnumLogMedicalHandlingStatus nState_;
+    bool bDiagnosed_;
+    //@}
 };
 
 }
