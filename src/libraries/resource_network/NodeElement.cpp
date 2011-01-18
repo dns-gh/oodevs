@@ -203,7 +203,7 @@ void NodeElement::DistributeResource( bool isFunctional )
     // finally update stock
     int oldStockCapacity = stockCapacity_;
     stockCapacity_ = std::min( immediateStock_, static_cast< unsigned int >( modifier_ * stockMaxCapacity_ ) );
-    if( std::abs( static_cast< float >( oldStockCapacity - stockCapacity_ ) ) / stockMaxCapacity_ > 0.05f )
+    if( ( stockMaxCapacity_ == 0 && oldStockCapacity != 0 ) || std::abs( static_cast< float >( oldStockCapacity - stockCapacity_ ) ) / stockMaxCapacity_ > 0.05f )
         needUpdate_ = true;
 }
 

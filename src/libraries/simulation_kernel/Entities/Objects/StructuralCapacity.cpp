@@ -221,7 +221,7 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
 // Name: StructuralCapacity::SendState
 // Created: SLG 2010-06-21
 // -----------------------------------------------------------------------------
-void StructuralCapacity::SendState( sword::UrbanAttributes& message )
+void StructuralCapacity::SendState( sword::UrbanAttributes& message ) const
 {
     int diff = structuralState_ - lastStructuralState_;
     if( std::abs( diff ) > 5 )
@@ -229,6 +229,15 @@ void StructuralCapacity::SendState( sword::UrbanAttributes& message )
         message.mutable_structure()->set_state( structuralState_ );
         lastStructuralState_ = structuralState_;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::SendFullState
+// Created: JSR 2011-01-18
+// -----------------------------------------------------------------------------
+void StructuralCapacity::SendFullState( sword::UrbanAttributes& message ) const
+{
+    message.mutable_structure()->set_state( structuralState_ );
 }
 
 // -----------------------------------------------------------------------------

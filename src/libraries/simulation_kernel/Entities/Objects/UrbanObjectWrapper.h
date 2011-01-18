@@ -84,9 +84,6 @@ public:
     virtual void SendDestruction() const;
     virtual void SendFullState() const;
     virtual void UpdateState();
-
-    template < typename T >
-    void SendCapacity( sword::UrbanAttributes& msg );
     //@}
 
     //! @name Accessors
@@ -97,10 +94,14 @@ public:
     const urban::TerrainObject_ABC& GetObject() const;
     //@}
 
-protected:
+private:
     //!@name Helpers
     //@{
     void InitializeAttributes();
+    template < typename T >
+    void SendCapacity( sword::UrbanAttributes& msg ) const;
+    template < typename T >
+    void SendFullStateCapacity( sword::UrbanAttributes& msg ) const;
     //@}
 
 private:

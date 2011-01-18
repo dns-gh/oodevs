@@ -243,11 +243,23 @@ sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnRequest( const googl
 // Created: JSR 2010-09-17
 // -----------------------------------------------------------------------------
 template < typename T >
-void UrbanObjectWrapper::SendCapacity( sword::UrbanAttributes& msg )
+void UrbanObjectWrapper::SendCapacity( sword::UrbanAttributes& msg ) const
 {
-    T* capacity = Retrieve< T >();
+    const T* capacity = Retrieve< T >();
     if( capacity )
         capacity->SendState( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::SendFullStateCapacity
+// Created: JSR 2011-01-18
+// -----------------------------------------------------------------------------
+template < typename T >
+void UrbanObjectWrapper::SendFullStateCapacity( sword::UrbanAttributes& msg ) const
+{
+    const T* capacity = Retrieve< T >();
+    if( capacity )
+        capacity->SendFullState( msg );
 }
 
 namespace
@@ -341,15 +353,11 @@ void UrbanObjectWrapper::SendFullState() const
         return;
     if( pView_ && pView_->HideObject() )
         return;
-    const StructuralCapacity* capacity = Retrieve< StructuralCapacity >();
-    if( capacity )
-    {
-        client::UrbanUpdate message;
-        message().mutable_object()->set_id( id_ );
-        message().mutable_attributes()->mutable_structure()->set_state( capacity->GetStructuralState() );
-        if ( message().attributes().has_structure() )
-            message.Send( NET_Publisher_ABC::Publisher() );
-    }
+    client::UrbanUpdate message;
+    message().mutable_object()->set_id( id_ );
+    SendFullStateCapacity< StructuralCapacity >( *message().mutable_attributes() );
+    SendFullStateCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
+    message.Send( NET_Publisher_ABC::Publisher() );
     MIL_Object::SendFullState();
 }
 

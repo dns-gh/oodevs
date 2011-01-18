@@ -62,7 +62,8 @@ public:
     unsigned int GetStructuralState() const;
     void SetStructuralState( int state );
 
-    void SendState( sword::UrbanAttributes& message );
+    void SendState( sword::UrbanAttributes& message ) const;
+    void SendFullState( sword::UrbanAttributes& message ) const;
 
     //! @name From MIL_InteractiveContainer_ABC
     //@{    
@@ -96,7 +97,7 @@ private:
     //! @name Member data
     //@{
     unsigned int structuralState_;
-    unsigned int lastStructuralState_;
+    mutable unsigned int lastStructuralState_;
     T_Agents agents_;
     urban::MaterialCompositionType* materialType_;
     //@}

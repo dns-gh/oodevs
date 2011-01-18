@@ -156,7 +156,7 @@ void ResourceNetworkCapacity::RegisterNode( unsigned int id )
 // Name: ResourceNetworkCapacity::SendState
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::SendState( sword::UrbanAttributes& message )
+void ResourceNetworkCapacity::SendState( sword::UrbanAttributes& message ) const
 {
     if( nodeProperties_ == 0 )
         throw std::exception( "RegisterResource : Node Properties not instanciated" );
@@ -174,6 +174,17 @@ void ResourceNetworkCapacity::SendState( sword::ObjectAttributes& asn ) const
         throw std::exception( "RegisterResource : Node Properties not instanciated" );
     if( nodeProperties_->NeedUpdate() )
         nodeProperties_->Serialize( *asn.mutable_resource_networks() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::SendFullState
+// Created: JSR 2011-01-18
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::SendFullState( sword::UrbanAttributes& message ) const
+{
+    if( nodeProperties_ == 0 )
+        throw std::exception( "RegisterResource : Node Properties not instanciated" );
+    nodeProperties_->Serialize( *message.mutable_infrastructures() );
 }
 
 // -----------------------------------------------------------------------------
