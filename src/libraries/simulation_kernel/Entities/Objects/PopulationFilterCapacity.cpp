@@ -20,7 +20,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFilterCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 PopulationFilterCapacity::PopulationFilterCapacity( xml::xistream& xis )
-    : density_ ( xis.attribute< double >( "density" ) )
+    : density_( xis.attribute< double >( "density" ) )
 {
     // NOTHING
 }
@@ -30,7 +30,7 @@ PopulationFilterCapacity::PopulationFilterCapacity( xml::xistream& xis )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 PopulationFilterCapacity::PopulationFilterCapacity()
-    : density_ ( 0. )
+    : density_( 0 )
 {
     // NOTHING
 }

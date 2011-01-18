@@ -46,6 +46,7 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
+    InteractWithEnemyCapacity( const InteractWithEnemyCapacity& );
     InteractWithEnemyCapacity& operator=( const InteractWithEnemyCapacity& ); //!< Assignment operator
     //@}
 };

@@ -48,6 +48,13 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    BypassableCapacity( const BypassableCapacity& );
+    BypassableCapacity& operator=( const BypassableCapacity& ); //!< Assignment operator
+    //@}
+
+private:
     //! @name Member data
     //@{
     double bypassSpeed_;
