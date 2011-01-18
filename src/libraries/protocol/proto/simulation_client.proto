@@ -1009,18 +1009,17 @@ message StopFireEffect {
     required FireEffectId fire_effect = 1;
 }
 
-enum EnumReportType {
-    information       = 0;
-    operational       = 1;
-    exceptional_event = 2;
-    warning           = 3;
-}
-
 message Report {
+    enum EnumReportType {
+        information       = 0;
+        operational       = 1;
+        exceptional_event = 2;
+        warning           = 3;
+    }
     required ReportId          report     = 1;
     required Tasker            source     = 2;
     required ReportType        type       = 3;
-    required ReportCategory    category   = 4;
+    required EnumReportType    category   = 4;
     required DateTime          time       = 5;
     optional MissionParameters parameters = 6;
 }

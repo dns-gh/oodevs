@@ -111,11 +111,11 @@ Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const swor
     if( !report )
         return 0;
     Report::E_Type type = Report::eRC;
-    if( message.category().id() == sword::information )
+    if( message.category() == sword::Report::information )
         type = Report::eMessage;
-    else if( message.category().id() == sword::exceptional_event )
+    else if( message.category() == sword::Report::exceptional_event )
         type = Report::eEvent;
-    else if( message.category().id() == sword::warning )
+    else if( message.category() == sword::Report::warning )
         type = Report::eWarning;
     return new Report( agent, type, report->RenderMessage( message ), GetTime( message.time() ) );
 }

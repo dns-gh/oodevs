@@ -80,7 +80,6 @@ message CrowdType             { required uint32 id = 1; }
 message ReportType            { required uint32 id = 1; }
 message ResourceType          { required uint32 id = 1; }
 message UnitType              { required uint32 id = 1; }
-message ReportCategory        { required uint32 id = 1; }
 message NationalityType       { required uint32 id = 1; }
 message ResourceNetworkType   { required string name = 1; }
 message PopulationType        { required uint32 id = 1; }

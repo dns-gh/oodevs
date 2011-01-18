@@ -945,7 +945,7 @@ void SimulationToClient::Convert( const sword::Report& from, MsgsSimToClient::Ms
     CONVERT_ID( report );
     ConvertTasker( from.source(), to->mutable_source() );
     CONVERT_ID( type );
-    CONVERT_ID( category );
+    to->mutable_category()->set_id( from.category() );
     to->mutable_time()->set_data( from.time().data() );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
