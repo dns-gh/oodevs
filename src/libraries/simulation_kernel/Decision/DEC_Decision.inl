@@ -83,11 +83,13 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
 
     RegisterUserFunctions( *pBrain_ );
 
-    RegisterSelf( *pBrain_, isMasalife_, groupName );
 
-    //Enregistrement à la main de BreakForDebug
+        //Enregistrement à la main de BreakForDebug
     (*pBrain_)[ "BreakForDebug" ] =
         boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, pEntity_->GetID() ,_1 ) ) ;
+    RegisterSelf( *pBrain_, isMasalife_, groupName );
+
+
 
     pRefs_.reset( new ScriptRefs( *pBrain_) );
     

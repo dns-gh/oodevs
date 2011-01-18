@@ -1691,7 +1691,7 @@ void DEC_GeometryFunctions::GetCrossroads( directia::brain::Brain& brain, MIL_Ag
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().GetCrossroads( points );
 
-    knowledgeCreateFunction( table, brain[ "net.masagroup.sword.military.world.Point" ], points, true );
+    knowledgeCreateFunction( table, brain[ "integration.ontology.types.crossroad" ], points, true );
 }
 
 // -----------------------------------------------------------------------------
