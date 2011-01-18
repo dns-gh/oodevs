@@ -14,7 +14,6 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/NullDisplayer.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
@@ -87,8 +86,8 @@ private:
     //! @name Helpers
     //@{
     void DoContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    void SendAction( const kernel::Entity_ABC& entity, sword::EnumUnitTiredness, sword::EnumUnitMorale, sword::EnumUnitExperience );
-    void SendMessage( const kernel::Entity_ABC& entity, sword::EnumUnitTiredness, sword::EnumUnitMorale, sword::EnumUnitExperience );
+    void SendAction( const kernel::Entity_ABC& entity, E_UnitTiredness, E_UnitMorale, E_UnitExperience );
+    void SendMessage( const kernel::Entity_ABC& entity, E_UnitTiredness, E_UnitMorale, E_UnitExperience );
     virtual void Call( const E_UnitTiredness& fatigue );
     virtual void Call( const E_UnitMorale& morale );
     virtual void Call( const E_UnitExperience& experience );

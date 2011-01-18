@@ -28,7 +28,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 using namespace gui;
@@ -140,9 +139,9 @@ void ChangeHumanFactorsDialog::Validate()
 {
     if( ! selected_ )
         return;
-    const sword::EnumUnitTiredness tiredness = (sword::EnumUnitTiredness)pTirednessCombo_->GetValue();
-    const sword::EnumUnitMorale moral = (sword::EnumUnitMorale)pMoralCombo_->GetValue();
-    const sword::EnumUnitExperience experience = (sword::EnumUnitExperience)pExperienceCombo_->GetValue();
+    const E_UnitTiredness tiredness = pTirednessCombo_->GetValue();
+    const E_UnitMorale moral = pMoralCombo_->GetValue();
+    const E_UnitExperience experience = pExperienceCombo_->GetValue();
     tools::Iterator< const Entity_ABC& > it = selected_->Get< TacticalHierarchies >().CreateSubordinateIterator();
     SendMessage( *selected_, tiredness, moral, experience );
     hide();
@@ -152,7 +151,7 @@ void ChangeHumanFactorsDialog::Validate()
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2006-12-01
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, sword::EnumUnitTiredness tiredness, sword::EnumUnitMorale moral, sword::EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, E_UnitTiredness tiredness, E_UnitMorale moral, E_UnitExperience experience )
 {
     if( entity.Retrieve< HumanFactors_ABC >() )
         SendAction( entity, tiredness, moral, experience );
@@ -168,18 +167,18 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, sw
 }
 
 // -----------------------------------------------------------------------------
-// Name: ChangeHumanFactorsDialog::SendMessage
+// Name: ChangeHumanFactorsDialog::SendAction
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, sword::EnumUnitTiredness tiredness, sword::EnumUnitMorale moral, sword::EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, E_UnitTiredness tiredness, E_UnitMorale moral, E_UnitExperience experience )
 {
     // $$$$ _RC_ SBO 2010-05-17: user ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_human_factors" );
     UnitMagicAction* action = new UnitMagicAction( entity, actionType, controllers_.controller_, tr( "Change Human Factors" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) tiredness ) );
-    action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) moral ) );
-    action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) experience ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), tiredness ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), moral ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), experience ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &entity, false ) );
     action->RegisterAndPublish( actionsModel_ );
