@@ -212,7 +212,7 @@ void ADN_Ref_ABC::AutoDelete()
         // Warn others before self deleting.
         emit Invalidated( this, false );
 
-        // Self delete with a delay to prevent some wierd Qt bug.
+        // Self delete with a delay to prevent some weird Qt bug.
         QTimer::singleShot( 0, this, SLOT( AutoDeleteEx() ) );
     }
 }

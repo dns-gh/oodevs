@@ -33,7 +33,7 @@ ADN_Models_Data::OrderInfos::OrderInfos()
 , ADN_DataTreeNode_ABC()
 , fragOrder_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders(), 0 )
 {
-    // NOTHING
+    this->BindExistenceTo( &fragOrder_ );
 }
 
 ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_Data::FragOrder* fragorder, const std::string& name )
@@ -43,6 +43,7 @@ ADN_Models_Data::OrderInfos::OrderInfos( ADN_Missions_Data::FragOrder* fragorder
 {
     fragOrder_ = fragorder;
     strName_ = name;
+    this->BindExistenceTo( &fragOrder_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,6 +108,7 @@ ADN_Models_Data::MissionInfos::MissionInfos( ADN_Missions_Data::T_Mission_Vector
     vOrders_.SetItemTypeName( "un ordre" );
     vOrders_.SetNodeName( "la liste des ordres" );
     vOrders_.SetParentNode( *this );
+    this->BindExistenceTo( &mission_ );
 }
 
 // -----------------------------------------------------------------------------
