@@ -98,6 +98,8 @@ CREATE TABLE sword.create_orders
   checked     INTEGER,                         --TODO: set as boolean
   session_id  INTEGER 
 );
+ALTER TABLE sword.create_orders OWNER TO sword;
+GRANT ALL ON TABLE sword.create_orders TO sword;
 
 CREATE TABLE sword.create_objects
 (
@@ -109,6 +111,8 @@ CREATE TABLE sword.create_objects
   checked    INTEGER,                         --TODO: set as boolean
   session_id INTEGER
 );
+ALTER TABLE sword.create_objects OWNER TO sword;
+GRANT ALL ON TABLE sword.create_objects TO sword;
 
 
 CREATE TABLE sword.create_tacticalobject_area

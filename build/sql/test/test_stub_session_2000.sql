@@ -60,22 +60,22 @@ INSERT INTO sword.unitforces (public_oid, parent_oid, type, name, symbol_id, val
 INSERT INTO sword.unitforces (public_oid, parent_oid, type, name, symbol_id, valid, op_state, shape, direction, speed, session_id) VALUES (14, 13, 18, 'Refugee', 'SFGPU-----A----', NULL, 100, '280000000100000001000400000000000C00000001000000808A98C2C41780A395B39F1A00000000', 360, 0, sessionid);
 
 -- Objects
-INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 47, st_polygon('POLYGON ((4.36507 50.8529, 4.36979 50.8472, 4.38109 50.8517, 4.37545 50.855, 4.36507 50.8529))',0), sessionid, 'ttttttttttttt', 'refugees camp', 0);
-INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 48, st_polygon('POLYGON ((4.36507 50.7529, 4.36979 50.7472, 4.38109 50.7517, 4.37545 50.755, 4.36507 50.7529))',0), sessionid, 'ttttttttttttt', 'refugees camp', 0);
-INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 49, st_polygon('POLYGON ((4.36507 50.6529, 4.36979 50.6472, 4.38109 50.6517, 4.37545 50.655, 4.36507 50.6529))',0), sessionid, 'ttttttttttttt', 'refugees camp', 0);
+INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 47, ST_SetSRID( st_polyfromtext('POLYGON ((4.36507 50.8529, 4.36979 50.8472, 4.38109 50.8517, 4.37545 50.855, 4.36507 50.8529))'), 4326), sessionid, 'ttttttttttttt', 'refugees camp', 0);
+INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 48, ST_SetSRID( st_polyfromtext('POLYGON ((4.36507 50.7529, 4.36979 50.7472, 4.38109 50.7517, 4.37545 50.755, 4.36507 50.7529))'), 4326), sessionid, 'ttttttttttttt', 'refugees camp', 0);
+INSERT INTO sword.tacticalobject_area (id, symbol_id, public_oid, shape, session_id, name, type, state) VALUES (nextval('sword.tacticalobject_area_id_seq'::regclass), 'GFSPAH--------X', 49, ST_SetSRID( st_polyfromtext('POLYGON ((4.36507 50.6529, 4.36979 50.6472, 4.38109 50.6517, 4.37545 50.655, 4.36507 50.6529))'), 4326), sessionid, 'ttttttttttttt', 'refugees camp', 0);
 
 
 -- Tactical lines
-INSERT INTO sword.tacticallines (public_oid, symbol_id, shape, session_id, name) VALUES (1500, 'TCTCL------', st_linestring('LINESTRING (4.3 50.8, 4.31 50.84, 4.29 50.85)'), sessionid, NULL);
+INSERT INTO sword.tacticallines (public_oid, symbol_id, shape, session_id, name) VALUES (1500, 'TCTCL------', ST_SetSRID( st_linefromtext('LINESTRING (4.3 50.8, 4.31 50.84, 4.29 50.85)'), sessionid, NULL);
 
 -- Boundary limits
-INSERT INTO sword.boundarylimits (public_oid, symbol_id, shape, session_id, name) VALUES (1600, 'TCTCL------', st_linestring('LINESTRING (6.32 51.87, 4.33 50.87, 3.34 50.8745)'), sessionid, NULL);
-INSERT INTO sword.boundarylimits (public_oid, symbol_id, shape, session_id, name) VALUES (1601, 'TCTCL------', st_linestring('LINESTRING (5.4 53.9, 5.5 51.99, 4.55 50.99)'), sessionid, NULL);
+INSERT INTO sword.boundarylimits (public_oid, symbol_id, shape, session_id, name) VALUES (1600, 'TCTCL------', ST_SetSRID( st_linefromtext('LINESTRING (6.32 51.87, 4.33 50.87, 3.34 50.8745)'), 4326 ), sessionid, NULL);
+INSERT INTO sword.boundarylimits (public_oid, symbol_id, shape, session_id, name) VALUES (1601, 'TCTCL------', ST_SetSRID( st_linefromtext('LINESTRING (5.4 53.9, 5.5 51.99, 4.55 50.99)'), 4326 ), sessionid, NULL);
 
 -------------------------------
 -- Object Knowledges
 INSERT INTO sword.knowledgeobjects (public_oid, symbol_id, team_id, session_id, name, type, observer_affiliation, state) VALUES (34, 'GUSPAH--------X', 3, sessionid, 'ttttttttttttt', 'refugees camp', NULL, 0);
-INSERT INTO sword.knowledgeobjects_area (shape, public_oid, session_id) VALUES (st_polygon('POLYGON ((4.36507 50.8529, 4.36979 50.8472, 4.38109 50.8517, 4.37545 50.855, 4.36507 50.8529))'), 34, sessionid);
+INSERT INTO sword.knowledgeobjects_area (shape, public_oid, session_id) VALUES (ST_SetSRID( st_polyfromtext('POLYGON ((4.36507 50.8529, 4.36979 50.8472, 4.38109 50.8517, 4.37545 50.855, 4.36507 50.8529))'), 4326 ), 34, sessionid);
 -- refugee camp is part of side1 in orbat, but a knowledge for side3 (refugees)
 
 

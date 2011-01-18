@@ -15,7 +15,7 @@ INSERT INTO sword.create_objects   (id, team_id, name, type, session_id) VALUES 
 INSERT INTO sword.actionparameters (reference_id, type, name, value) VALUES ( 331, 'String', 'Type', 'checkpoint' );
 INSERT INTO sword.actionparameters (id, reference_id, type, name, value) VALUES ( 33201, 331, 'Location', 'Location', 'actionparameters_point' );
 INSERT INTO sword.actionparameters_point (parameter_id, shape) VALUES ( 
-    33201, st_point( 0.13297806372070312, 49.5225, 0 ) );
+    33201, ST_SetSRID( st_point( 0.13297806372070312, 49.5225 ), 4326 ) );
 INSERT INTO sword.actionparameters (reference_id, type, name, value) VALUES ( 331, 'String', 'Name', 'Checkpoint 1' );
 INSERT INTO sword.actionparameters (reference_id, type, name, value) VALUES ( 331, 'Army', 'Camp', '3' );
 INSERT INTO sword.actionparameters (reference_id, type, name, value) VALUES ( 331, 'List', 'Attributes', '' );
@@ -24,9 +24,9 @@ INSERT INTO sword.create_objects   (id, team_id, name, type, session_id) VALUES 
 INSERT INTO sword.actionparameters (reference_id, type, name, value) VALUES ( 321, 'String', 'Type', 'abattis' );
 INSERT INTO sword.actionparameters (id, reference_id, type, name, value) VALUES ( 30201, 321, 'Location', 'Location', 'actionparameters_area' );
 INSERT INTO sword.actionparameters_area (parameter_id, shape) VALUES ( 
-    30201, st_polygon( 'polygon(( 0.1283868466796875 49.52336174621582,
+    30201, ST_SetSRID( st_polyfromtext( 'polygon(( 0.1283868466796875 49.52336174621582,
                                       0.11705719580078125 49.52353340759277,
-                                      0.12169205297851562 49.51735359802246, 0.1283868466796875 49.52336174621582 ))', 0 ) );
+                                      0.12169205297851562 49.51735359802246, 0.1283868466796875 49.52336174621582 ))'), 4326 ) );
 INSERT INTO sword.actionparameters (reference_id, type, name, value) VALUES ( 321, 'String', 'Name', 'Abattis 1' );
 INSERT INTO sword.actionparameters (reference_id, type, name, value) VALUES ( 321, 'Army', 'Camp', '3' );
 INSERT INTO sword.actionparameters (id, reference_id, type, name, value) VALUES ( 30222, 321, 'List', 'Attributes', '' );
