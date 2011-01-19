@@ -141,7 +141,7 @@ void InfrastructureCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& /
 // Name: InfrastructureCapacity::SendState
 // Created: SLG 2010-01-13
 // -----------------------------------------------------------------------------
-void InfrastructureCapacity::SendState( sword::UrbanAttributes& message )
+void InfrastructureCapacity::SendState( sword::UrbanAttributes& message ) const
 {
     if( needUpdate_ )
         SendFullState( message );
