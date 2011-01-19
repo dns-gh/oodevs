@@ -47,13 +47,6 @@ public:
 private:
     //! @name Member data
     //@{
-    PopulationFilterCapacity( const PopulationFilterCapacity& );
-    PopulationFilterCapacity& operator=( const PopulationFilterCapacity& );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     double density_;
     //@}
 };
