@@ -48,20 +48,6 @@ MIL_Inhabitant& InhabitantFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantFactory::Create
-// Created: SLG 2010-11-29
-// -----------------------------------------------------------------------------
-MIL_Inhabitant& InhabitantFactory::Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army )
-{
-    const MIL_InhabitantType* pType = MIL_InhabitantType::Find( type );
-    if( !pType )
-        throw std::runtime_error( "Unknown population type" );
-    MIL_Inhabitant& inhabitant = *new MIL_Inhabitant( *pType, army, point, number, name );
-    Register( inhabitant.GetID(), inhabitant );
-    return inhabitant;
-}
-
-// -----------------------------------------------------------------------------
 // Name: InhabitantFactory::load
 // Created: SLG 2010-02-10
 // -----------------------------------------------------------------------------

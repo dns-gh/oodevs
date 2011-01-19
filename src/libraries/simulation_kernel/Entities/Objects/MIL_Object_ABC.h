@@ -66,6 +66,7 @@ class MIL_Object_ABC : public TER_Object_ABC
 public:
              MIL_Object_ABC();
              MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type );
+             MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int id );
     virtual ~MIL_Object_ABC();
 
     //! @name Init
@@ -164,9 +165,9 @@ public:
     //! @name HLA
     //@{
     virtual HLA_Object_ABC* GetHLAView() const = 0;
-    virtual void            SetHLAView( HLA_Object_ABC& view ) = 0;
-    virtual void    Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer ) = 0;
-    virtual void    Serialize  ( HLA_UpdateFunctor& functor ) const = 0;
+    virtual void SetHLAView( HLA_Object_ABC& view ) = 0;
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer ) = 0;
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
     //@}
 
     //! @name Network
@@ -191,12 +192,12 @@ public:
 
     //! @name Extensions
     //@{
-    template< typename T >             T&   GetAttribute();
-    template< typename T >       const T&   GetAttribute() const;
-    template< typename T, typename I > T&   GetAttribute();
-    template< typename T >             T*   RetrieveAttribute();
-    template< typename T >       const T*   RetrieveAttribute() const;
-    template< typename T >             void AddCapacity( T* capacity );
+    template< typename T >             T& GetAttribute();
+    template< typename T >       const T& GetAttribute() const;
+    template< typename T, typename I > T& GetAttribute();
+    template< typename T >             T* RetrieveAttribute();
+    template< typename T >       const T* RetrieveAttribute() const;
+    template< typename T >           void AddCapacity( T* capacity );
     //@}
 
 protected:
@@ -210,15 +211,13 @@ protected:
     virtual void Register( ObjectCapacity_ABC* capacity ) = 0;
     //@}
 
-protected:
-    static MIL_IDManager idManager_;
-    unsigned int id_;
-
 private:
     //! @name Member data
     //@{
+    static MIL_IDManager idManager_;
+    unsigned int id_;
     const MIL_ObjectType_ABC* pType_;
-          MIL_Army_ABC*       pArmy_;
+    MIL_Army_ABC* pArmy_;
     MIL_ObjectInteraction interaction_;
     bool bMarkedForDestruction_;
     bool bReadyForDeletion_;

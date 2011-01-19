@@ -23,7 +23,6 @@
 #include "CrossingSiteAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "MedicalTreatmentAttribute.h"
-#include "SpawnCapacity.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Network/NET_ASN_Tools.h"
@@ -47,12 +46,10 @@ using namespace hla;
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved )
-    : MIL_Object( &army, builder.GetType() )
+    : MIL_Object( &army, builder.GetType(), xis.attribute< unsigned long >( "id" ) )
     , name_       ( xis.attribute< std::string >( "name", "" ) )
     , pView_      ( 0 )
 {
-    id_ = xis.attribute< unsigned long >( "id" );
-    idManager_.Lock( id_ );
     MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
@@ -71,10 +68,6 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
     , name_       ( name )
     , pView_      ( 0 )
 {
-    id_ = idManager_.GetFreeId();
-    if( GetType().GetCapacity< SpawnCapacity >() )
-        idManager_.GetFreeId(); // we need to skip one ID for dynamic created object.
-
     MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
@@ -90,9 +83,9 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
 // -----------------------------------------------------------------------------
 Object::Object()
     : MIL_Object()
-    , pView_      ( 0 )
+    , pView_    ( 0 )
 {
-    id_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -119,9 +112,7 @@ const std::string& Object::GetName() const
 void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Object >( *this );
-    file >> name_
-         >> id_;
-    idManager_.Lock( id_ );
+    file >> name_;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +123,6 @@ void Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_Object >( *this );
     file << name_;
-    file << id_;
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +132,7 @@ void Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 void Object::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "object" )
-            << xml::attribute( "id"  , id_ )
+            << xml::attribute( "id"  , GetID() )
             << xml::attribute( "name", name_ )
             << xml::attribute( "type", GetType().GetName() );
     GetLocalisation().Write( xos );

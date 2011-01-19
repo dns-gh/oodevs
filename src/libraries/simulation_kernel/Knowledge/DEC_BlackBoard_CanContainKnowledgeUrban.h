@@ -29,15 +29,15 @@ class DEC_BlackBoard_CanContainKnowledgeUrban : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< unsigned, boost::shared_ptr< DEC_Knowledge_Urban > > T_KnowledgeUrbanMap;
-    typedef T_KnowledgeUrbanMap::iterator             IT_KnowledgeUrbanMap;
-    typedef T_KnowledgeUrbanMap::const_iterator      CIT_KnowledgeUrbanMap;
+    typedef std::map< unsigned int, boost::shared_ptr< DEC_Knowledge_Urban > > T_KnowledgeUrbanMap;
+    typedef T_KnowledgeUrbanMap::iterator                                     IT_KnowledgeUrbanMap;
+    typedef T_KnowledgeUrbanMap::const_iterator                              CIT_KnowledgeUrbanMap;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army_ABC& knowledgeGroup );
+    explicit DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army_ABC& knowledgeGroup, bool fromCheckpoint = false );
     virtual ~DEC_BlackBoard_CanContainKnowledgeUrban();
     //@}
 
@@ -52,7 +52,7 @@ public:
     //! @name Operations
     //@{
     boost::shared_ptr< DEC_Knowledge_Urban > CreateKnowledgeUrban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object );
-    void                 DestroyKnowledgeUrban( DEC_Knowledge_Urban& knowledge );
+    void DestroyKnowledgeUrban( DEC_Knowledge_Urban& knowledge );
     //@}
 
     //! @name Queries
@@ -122,7 +122,7 @@ inline void load_construct_data( Archive& archive, DEC_BlackBoard_CanContainKnow
 {
     MIL_Army_ABC* army;
     archive >> army;
-    ::new( blackboard )DEC_BlackBoard_CanContainKnowledgeUrban( *army );
+    ::new( blackboard )DEC_BlackBoard_CanContainKnowledgeUrban( *army, true );
 }
 
 #endif // __DEC_BlackBoard_CanContainKnowledgeUrban_h_

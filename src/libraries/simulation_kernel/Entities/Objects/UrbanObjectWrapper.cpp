@@ -44,10 +44,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object )
     : MIL_Object( 0, builder.GetType() )
-    , object_( &object )
-    , pView_ ( 0 )
+    , object_   ( &object )
+    , pView_    ( 0 )
 {
-    id_ = idManager_.GetFreeId();
     InitializeAttributes();
     builder.Build( *this );
 }
@@ -58,10 +57,10 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::UrbanObjectWrapper()
     : MIL_Object()
-    , object_( 0 )
-    , pView_ ( 0 )
+    , object_   ( 0 )
+    , pView_    ( 0 )
 {
-    id_ = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -121,10 +120,8 @@ void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int
 {
     unsigned long urbanId;
     file >> boost::serialization::base_object< MIL_Object >( *this );
-    file >> id_
-        >> urbanId;
+    file >> urbanId;
     object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
-    idManager_.Lock( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +132,6 @@ void UrbanObjectWrapper::save( MIL_CheckPointOutArchive& file, const unsigned in
 {
     unsigned long urbanId = object_->GetId();
     file << boost::serialization::base_object< MIL_Object >( *this );
-    file << id_;
     file << urbanId;
 }
 
@@ -290,7 +286,7 @@ void UrbanObjectWrapper::SendCreation() const
     if( object_->HasChild() )
         return;
     client::UrbanCreation message;
-    message().mutable_object()->set_id( id_ );
+    message().mutable_object()->set_id( GetID() );
     message().mutable_urban_object()->set_id( object_->GetId() );
     message().set_name( object_->GetName() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
@@ -355,7 +351,7 @@ void UrbanObjectWrapper::SendFullState() const
     if( pView_ && pView_->HideObject() )
         return;
     client::UrbanUpdate message;
-    message().mutable_object()->set_id( id_ );
+    message().mutable_object()->set_id( GetID() );
     SendFullStateCapacity< StructuralCapacity >( *message().mutable_attributes() );
     SendFullStateCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     SendFullStateCapacity< InfrastructureCapacity >( *message().mutable_attributes() );
@@ -374,7 +370,7 @@ void UrbanObjectWrapper::UpdateState()
     if( pView_ && pView_->HideObject() )
         return;
     client::UrbanUpdate message;
-    message().mutable_object()->set_id( id_ );
+    message().mutable_object()->set_id( GetID() );
     SendCapacity< StructuralCapacity >( *message().mutable_attributes() );
     SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     SendCapacity< InfrastructureCapacity >( *message().mutable_attributes() );

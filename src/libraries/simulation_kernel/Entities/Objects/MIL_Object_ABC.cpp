@@ -17,6 +17,7 @@
 #include "MIL_ObjectType_ABC.h"
 #include "FloodAttribute.h"
 #include "ResourceNetworkCapacity.h"
+#include "SpawnCapacity.h"
 #include "UniversalCapacity.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
@@ -38,12 +39,28 @@ MIL_IDManager MIL_Object_ABC::idManager_;
 // Created: NLD 2002-12-12
 //-----------------------------------------------------------------------------
 MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type )
-    : pArmy_                ( army )
+    : id_                   ( idManager_.GetFreeId() )
+    , pArmy_                ( army )
     , pType_                ( &type )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
 {
-    // NOTHING
+    if( GetType().GetCapacity< SpawnCapacity >() )
+        idManager_.GetFreeId(); // we need to skip one ID for dynamic created object.
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC constructor
+// Created: JSR 2011-01-19
+// -----------------------------------------------------------------------------
+MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int id )
+    : id_                   ( id )
+    , pArmy_                ( army )
+    , pType_                ( &type )
+    , bMarkedForDestruction_( false )
+    , bReadyForDeletion_    ( false )
+{
+    idManager_.Lock( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,7 +68,8 @@ MIL_Object_ABC::MIL_Object_ABC( MIL_Army_ABC* army, const MIL_ObjectType_ABC& ty
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
 MIL_Object_ABC::MIL_Object_ABC()
-    : pArmy_                ( 0 )
+    : id_                   ( 0 )
+    , pArmy_                ( 0 )
     , pType_                ( 0 )
     , bMarkedForDestruction_( false )
     , bReadyForDeletion_    ( false )
@@ -118,7 +136,9 @@ void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< TER_Object_ABC >( *this );
+    file >> boost::serialization::base_object< TER_Object_ABC >( *this )
+         >> id_;
+    idManager_.Lock( id_ );
     std::string type;
     file >> type;
     pType_ = &MIL_ObjectFactory::FindType( type );
@@ -133,7 +153,8 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    file << boost::serialization::base_object< TER_Object_ABC >( *this );
+    file << boost::serialization::base_object< TER_Object_ABC >( *this )
+         << id_;
     file << pType_->GetName();
     file << pArmy_
          << bMarkedForDestruction_

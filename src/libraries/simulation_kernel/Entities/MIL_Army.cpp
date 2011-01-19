@@ -195,7 +195,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
         {
             unsigned long index;
             file >> index;
-            file >> tools::Resolver< MIL_Inhabitant >::elements_[ index ];
+            file >> tools::Resolver< MIL_Population >::elements_[ index ];
         }
     }
     {
@@ -205,7 +205,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
         {
             unsigned long index;
             file >> index;
-            file >> tools::Resolver< MIL_Population >::elements_[ index ];
+            file >> tools::Resolver< MIL_Inhabitant >::elements_[ index ];
         }
     }
     {

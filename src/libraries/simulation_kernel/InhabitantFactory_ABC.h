@@ -38,7 +38,6 @@ public:
     //! @name Operations
     //@{
     virtual MIL_Inhabitant& Create( xml::xistream& xis, MIL_Army_ABC& army ) = 0;
-    virtual MIL_Inhabitant& Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& formation ) = 0;
     //@}
 
     //! @name CheckPoint

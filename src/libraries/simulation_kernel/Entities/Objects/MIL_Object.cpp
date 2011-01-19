@@ -42,6 +42,18 @@ MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type )
     : MIL_Object_ABC( army, type )
     , manipulator_( *new MIL_ObjectManipulator( *this ) )
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object constructor
+// Created: JSR 2011-01-19
+// -----------------------------------------------------------------------------
+MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int id )
+    : MIL_Object_ABC( army, type, id )
+    , manipulator_( *new MIL_ObjectManipulator( *this ) )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

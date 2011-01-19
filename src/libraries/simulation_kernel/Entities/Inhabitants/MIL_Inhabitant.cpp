@@ -39,24 +39,20 @@ namespace
 }
 
 template< typename Archive >
-void save_construct_data( Archive& /*archive*/, const MIL_Inhabitant* /*population*/, const unsigned int /*version*/ )
+void save_construct_data( Archive& archive, const MIL_Inhabitant* population, const unsigned int /*version*/ )
 {
-    // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
-    /*
     unsigned int nTypeID = population->GetType().GetID();
-    archive << nTypeID;*/
+    archive << nTypeID;
 }
 
 template< typename Archive >
-void load_construct_data( Archive& /*archive*/, MIL_Inhabitant* /*population*/, const unsigned int /*version*/ )
+void load_construct_data( Archive& archive, MIL_Inhabitant* population, const unsigned int /*version*/ )
 {
-    // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
-    /*unsigned int nTypeID;
+    unsigned int nTypeID;
     archive >> nTypeID;
     const MIL_InhabitantType* pType = MIL_InhabitantType::Find( nTypeID );
-    //assert( pType );
     if( pType )
-        ::new( population )MIL_Inhabitant( *pType);*/
+        ::new( population )MIL_Inhabitant( *pType);
 }
 
 // -----------------------------------------------------------------------------
@@ -120,25 +116,6 @@ MIL_Inhabitant::MIL_Inhabitant(const MIL_InhabitantType& type )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Inhabitant constructor
-// Created: SLG 2010-11-29
-// -----------------------------------------------------------------------------
-MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type, MIL_Army_ABC& army, const MT_Vector2D& /*point*/, int /*number*/, const std::string& name )
-    : MIL_Entity_ABC( name )
-    , pType_             ( &type )
-    , nID_               ( idManager_.GetFreeId() )
-    , pArmy_             ( &army )
-    , nNbrHealthyHumans_ ( 0 )
-    , nNbrDeadHumans_    ( 0 )
-    , nNbrWoundedHumans_ ( 0 )
-    , healthNeed_        ( 0 )
-    , healthSatisfaction_( 0 )
-    , healthChanged_     ( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant destructor
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
@@ -182,26 +159,70 @@ void MIL_Inhabitant::DistributeHumans( float area )
 // Name: MIL_Inhabitant::load
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-void MIL_Inhabitant::load( MIL_CheckPointInArchive& /*file*/, const unsigned int )
+void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-     // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
-    /*file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
+    file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army_ABC*& >( pArmy_ );
-    idManager_.Lock( nID_ );*/
-    // TODO appeler les méthodes faites à l'initialisation (DistributeHumans, ...)
+    idManager_.Lock( nID_ );
+    file >> text_
+         >> nNbrHealthyHumans_
+         >> nNbrDeadHumans_
+         >> nNbrWoundedHumans_
+         >> healthNeed_
+         >> healthSatisfaction_;
+    unsigned int size;
+    file >> size;
+    unsigned int blockId;
+    unsigned int person;
+    for( unsigned int i = 0; i < size; ++i )
+    {
+        file >> blockId
+             >> person;
+        const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( blockId );
+        if( object )
+            urbanBlocks_.push_back( T_UrbanBlock( object , person ) );
+    }
+    file >> size;
+    std::string first;
+    std::string second;
+    for( unsigned int i = 0; i < size; ++i )
+    {
+        file >> first
+             >> second;
+        extensions_[ first ] = second;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant::save
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
-void MIL_Inhabitant::save( MIL_CheckPointOutArchive& /*file*/, const unsigned int ) const
+void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    // $$$$ _RC_ JSR 2010-12-06: commenté temporairement pour réparer le build
-    /*file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
+    file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file << nID_
-         << pArmy_;      */
+         << pArmy_
+         << text_
+         << nNbrHealthyHumans_
+         << nNbrDeadHumans_
+         << nNbrWoundedHumans_
+         << healthNeed_
+         << healthSatisfaction_;
+    unsigned int size = urbanBlocks_.size();
+    file << size;
+    unsigned int blockId;
+    for( CIT_UrbanBlocks it = urbanBlocks_.begin(); it != urbanBlocks_.end(); ++it )
+    {
+        blockId = it->first->GetId();
+        file << blockId
+             << it->second;
+    }
+    size = extensions_.size();
+    file << size;
+    for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
+        file << it->first
+             << it->second;
 }
 
 // -----------------------------------------------------------------------------

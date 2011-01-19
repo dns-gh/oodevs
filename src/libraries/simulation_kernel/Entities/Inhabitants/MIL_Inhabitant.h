@@ -39,7 +39,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army );
-             MIL_Inhabitant( const MIL_InhabitantType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name );
     virtual ~MIL_Inhabitant();
     //@}
 
@@ -106,6 +105,7 @@ private:
     typedef T_UrbanBlocks::const_iterator                            CIT_UrbanBlocks;
 
     typedef std::map< std::string, std::string > T_Extensions;
+    typedef T_Extensions::const_iterator       CIT_Extensions;
     //@}
 
 private:
