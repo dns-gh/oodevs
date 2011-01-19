@@ -62,6 +62,7 @@ public:
     void Push( int quantity );
     void SetModifier( unsigned int modifier );
     bool NeedUpdate() const;
+    float GetFunctionalState() const;
     //@}
 
     //! @name Network
@@ -117,6 +118,7 @@ private:
     bool consumptionCritical_;
     double modifier_;
     mutable bool needUpdate_;
+    float functionalState_;
     //@}
 };
 

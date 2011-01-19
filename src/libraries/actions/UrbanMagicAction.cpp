@@ -20,24 +20,13 @@ using namespace actions;
 // Name: UrbanMagicAction::UrbanMagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-UrbanMagicAction::UrbanMagicAction( const kernel::Entity_ABC& object, kernel::Controller& controller, int structuralState, bool registered /*= true*/ )
+UrbanMagicAction::UrbanMagicAction( const kernel::Entity_ABC& object, kernel::Controller& controller, bool registered /*= true*/ )
     : ActionWithTarget_ABC ( controller, kernel::MagicActionType( "urban" ), object ) // $$$$ _RC_ SLG 2010-12-22: Creation d'un MagicActionType fictif
     , controller_( controller )
     , registered_( registered )
-    , structuralState_( structuralState )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanMagicAction::UrbanMagicAction
-// Created: JSR 2010-04-02
-// -----------------------------------------------------------------------------
-UrbanMagicAction::UrbanMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::Entity_ABC& object )
-    : ActionWithTarget_ABC( xis, controller, kernel::MagicActionType( "urban" ), object )  // $$$$ _RC_ SLG 2010-12-22: Creation d'un MagicActionType fictif
-    , controller_( controller )
-    , registered_( true )
-    , structuralState_( 100 )
+    , state_( false, 0 )
+    , threshold_( false, 0. )
+    , active_( false, false )
 {
     // NOTHING
 }
@@ -79,7 +68,50 @@ void UrbanMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {
     simulation::UrbanMagicAction message;
     message().mutable_id()->set_id( GetEntity().GetId() );
-    message().set_structural_state( structuralState_ );
+    if ( state_.first )
+    {
+        int state = state_.second;
+        message().set_structural_state( state );
+    }
+    if ( threshold_.first )
+    {
+        float threshold = threshold_.second;
+        message().mutable_infrastructure()->set_threshold( threshold );
+    }
+    if ( active_.first )
+    {
+        bool active = active_.second;
+        message().mutable_infrastructure()->set_active( active );
+    }
+
     message.Send( publisher );
     message().Clear();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicAction::SetStructuralState
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+void UrbanMagicAction::SetStructuralState( int state )
+{
+    state_ = std::make_pair( true, state );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicAction::SetThreshold
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+void UrbanMagicAction::SetThreshold( float threshold )
+{
+    threshold_ = std::make_pair( true, threshold );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicAction::SetEnabled
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+void UrbanMagicAction::SetEnabled( bool enabled )
+{
+    active_ = std::make_pair( true, enabled );
 }

@@ -13,6 +13,7 @@
 #include "ResourceNetworkCapacity.h"
 #include "MedicalCapacity.h"
 #include "MedicalTreatmentAttribute.h"
+#include "InfrastructureCapacity.h"
 #include "StructuralCapacity.h"
 #include "UrbanType.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
@@ -99,10 +100,15 @@ void UrbanObjectWrapper::InitializeAttributes()
     if( infra )
     {
         urban::InfrastructureType* infraType = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::InfrastructureType >( infra->GetType() );
-        if( infraType && infraType->medical_.hasMedicalCapacity )
+        if( infraType )
         {
-            MedicalCapacity* capacity = new MedicalCapacity( infraType->medical_.emergencyBedsRate_, infraType->medical_.emergencyDoctorsRate_, infraType->medical_.nightDoctorsRate_ );
+            InfrastructureCapacity* capacity = new InfrastructureCapacity();
             capacity->Register( *this );
+            if( infraType->medical_.hasMedicalCapacity )
+            {
+                MedicalCapacity* capacity = new MedicalCapacity( infraType->medical_.emergencyBedsRate_, infraType->medical_.emergencyDoctorsRate_, infraType->medical_.nightDoctorsRate_ );
+                capacity->Register( *this );
+            }
         }
     }
 }
@@ -116,7 +122,7 @@ void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int
     unsigned long urbanId;
     file >> boost::serialization::base_object< MIL_Object >( *this );
     file >> id_
-         >> urbanId;
+        >> urbanId;
     object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
     idManager_.Lock( id_ );
 }
@@ -352,6 +358,7 @@ void UrbanObjectWrapper::SendFullState() const
     message().mutable_object()->set_id( id_ );
     SendFullStateCapacity< StructuralCapacity >( *message().mutable_attributes() );
     SendFullStateCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
+    SendFullStateCapacity< InfrastructureCapacity >( *message().mutable_attributes() );
     message.Send( NET_Publisher_ABC::Publisher() );
     MIL_Object::SendFullState();
 }
@@ -370,6 +377,7 @@ void UrbanObjectWrapper::UpdateState()
     message().mutable_object()->set_id( id_ );
     SendCapacity< StructuralCapacity >( *message().mutable_attributes() );
     SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
+    SendCapacity< InfrastructureCapacity >( *message().mutable_attributes() );
     if ( message().attributes().has_structure() || message().attributes().has_infrastructures() )
         message.Send( NET_Publisher_ABC::Publisher() );
     MIL_Object::UpdateState();
@@ -424,3 +432,20 @@ sword::UrbanMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateStructuralState
     ApplyStructuralState( state );
     return sword::UrbanMagicActionAck::no_error;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::UrbanObjectWrapper::OnUpdateStructuralState
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+sword::UrbanMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateInfrastructure( const sword::UrbanMagicAction_Infrastructure& msg )
+{
+    InfrastructureCapacity* capacity = Retrieve< InfrastructureCapacity >();
+    if( !capacity )
+        return sword::UrbanMagicActionAck::error_invalid_urban_block;
+    if( msg.has_active() )
+        capacity->SetEnabled( msg.active() );
+    if( msg.has_threshold() )
+        capacity->SetThreshold( msg.threshold() );
+    return sword::UrbanMagicActionAck::no_error;
+}
+

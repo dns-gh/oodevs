@@ -193,3 +193,14 @@ void ResourceNetworkCapacity::NotifyStructuralStateChanged( unsigned int structu
 {
     nodeProperties_->SetModifier( structuralState );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::GetNetworkState
+// Created: SLG 2011-01-14
+// -----------------------------------------------------------------------------
+float ResourceNetworkCapacity::GetNetworkState() const
+{
+    if( nodeProperties_ )
+        return nodeProperties_->GetNetworkState();
+    return 1.f;
+}

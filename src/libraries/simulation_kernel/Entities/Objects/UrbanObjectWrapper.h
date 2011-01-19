@@ -18,6 +18,7 @@ namespace sword
 {
     enum UrbanMagicActionAck_ErrorCode;
     class UrbanAttributes;
+    class UrbanMagicAction_Infrastructure;
 }
 
 namespace urban
@@ -76,6 +77,8 @@ public:
     //! @name Network
     //@{
     sword::UrbanMagicActionAck_ErrorCode OnUpdateStructuralState( int state );
+    sword::UrbanMagicActionAck_ErrorCode OnUpdateInfrastructure( const sword::UrbanMagicAction_Infrastructure& msg );
+
 
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
     virtual sword::ObjectMagicActionAck_ErrorCode OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );

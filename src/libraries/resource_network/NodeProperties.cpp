@@ -14,7 +14,6 @@
 #include <boost/bind.hpp>
 #include <urban/ResourceNetworkAttribute.h>
 #include <xeumeuleu/xml.hpp>
-
 using namespace resource;
 
 // -----------------------------------------------------------------------------
@@ -231,4 +230,16 @@ void NodeProperties::ReadNode( xml::xistream& xis )
         element->Update( xis );
     else
         Register( resourceId, *new NodeElement( xis, resourceId, resourceName ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::GetNetworkState
+// Created: SLG 2011-01-14
+// -----------------------------------------------------------------------------
+float NodeProperties::GetNetworkState() const 
+{
+    float state = 1.;
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        state *= it->second->GetFunctionalState();
+    return state;
 }

@@ -25,6 +25,7 @@
 #include "ExtinguishableCapacity.h"
 #include "FloodCapacity.h"
 #include "MedicalCapacity.h"
+#include "InfrastructureCapacity.h"
 #include "InteractIfEquippedCapacity.h"
 #include "InteractWithEnemyCapacity.h"
 #include "InterferenceCapacity.h"
@@ -156,6 +157,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "structural", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
     DoRegister( "resources", boost::bind( &AddBuilder< ResourceNetworkCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< ResourceNetworkCapacity >::Update, _1, _2 ) );
     DoRegister( "medical-treatment", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< MedicalCapacity >::Update, _1, _2 ) );
+    DoRegister( "infrastructure", boost::bind( &AddBuilder< InfrastructureCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< InfrastructureCapacity >::Update, _1, _2 ) );
     DoRegister( "interaction-height", boost::bind( &AddBuilder< InteractIfHeightCapacity >::Add, _1, _2 ) );
     DoRegister( "population-filter", boost::bind( &AddBuilder< PopulationFilterCapacity >::Add, _1, _2 ) );
 

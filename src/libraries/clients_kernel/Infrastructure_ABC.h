@@ -10,7 +10,7 @@
 #ifndef __Infrastructure_ABC_h_
 #define __Infrastructure_ABC_h_
 
-#include "Extension_ABC.h"
+#include "UrbanExtensions.h"
 
 
 namespace kernel
@@ -24,7 +24,7 @@ class Viewport_ABC;
 */
 // Created: JSR 2010-08-19
 // =============================================================================
-class Infrastructure_ABC : public Extension_ABC
+class Infrastructure_ABC : public InfrastructureAttribute_ABC
 {
 
 public:
@@ -37,6 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
+    virtual bool IsEnabled() const = 0;
     //@}
 
 private:

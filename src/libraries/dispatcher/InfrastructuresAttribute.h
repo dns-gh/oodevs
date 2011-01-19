@@ -35,6 +35,15 @@ public:
     virtual void Update( const sword::UrbanAttributes& message );
     virtual void Send  (       sword::UrbanAttributes& message ) const;
     //@}
+
+private:
+    //! @name Data members
+    //@{
+    bool enabled_;
+    float threshold_;
+    std::string role_;
+    //@}
+
 };
 
 }

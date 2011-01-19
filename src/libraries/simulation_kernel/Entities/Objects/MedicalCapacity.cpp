@@ -124,7 +124,7 @@ void MedicalCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkCapacity::Update
+// Name: MedicalCapacity::Update
 // Created: SLG 2010-12-30
 // -----------------------------------------------------------------------------
 void MedicalCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& object )

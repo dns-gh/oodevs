@@ -266,6 +266,13 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Urban", "bool" );
         CreateOrderParameter( "Nodes", "list" );
     }
+
+    else if( name_ == "update_urban" )
+    {
+        CreateOrderParameter( "Target", "identifier" );
+        CreateOrderParameter( "StructuralState", "quantity" );
+        //CreateOrderParameter( "Threshold", "quantity" );
+    }
     else if( name_ == "automat_creation" )
     {
         CreateOrderParameter( "AutomatType", "identifier" );

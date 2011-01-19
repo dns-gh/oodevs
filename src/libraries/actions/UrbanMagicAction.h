@@ -17,6 +17,11 @@ namespace kernel
     class Controller;
 }
 
+namespace simulation
+{
+
+    class UrbanMagicAction;
+}
 namespace actions
 {
 
@@ -31,7 +36,7 @@ class UrbanMagicAction : public ActionWithTarget_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanMagicAction( const kernel::Entity_ABC& object, kernel::Controller& controller, int structuralState, bool registered = true );
+             UrbanMagicAction( const kernel::Entity_ABC& object, kernel::Controller& controller, bool registered = true );
              UrbanMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::Entity_ABC& object );
     virtual ~UrbanMagicAction();
     //@}
@@ -41,6 +46,10 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void Polish();
     virtual void Publish( Publisher_ABC& publisher, int context ) const;
+
+    void SetStructuralState( int state );
+    void SetThreshold( float threshold );
+    void SetEnabled( bool enabled );
     //@}
 
 private:
@@ -48,7 +57,9 @@ private:
     //@{
     kernel::Controller& controller_;
     bool registered_;
-    int structuralState_;
+    std::pair< bool, int > state_;
+    std::pair< bool, float > threshold_;
+    std::pair< bool, bool > active_;
     //@}
 };
 

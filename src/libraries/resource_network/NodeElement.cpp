@@ -33,6 +33,7 @@ NodeElement::NodeElement()
     , consumptionCritical_( false )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
+    , functionalState_    ( 0 )
 {
     // NOTHING
 }
@@ -55,6 +56,7 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
     , consumptionCritical_( false )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
+    , functionalState_    ( 0 )
 {
     Update( xis );
 }
@@ -77,6 +79,7 @@ NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& n
     , consumptionCritical_( node.critical_ )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
+    , functionalState_    ( 0 )
 {
     for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator it = node.links_.begin(); it != node.links_.end(); ++it )
         links_.push_back( new ResourceLink( it->id_, ResourceLink::eTargetKindUrban, it->capacity_ ) );
@@ -101,6 +104,7 @@ NodeElement::NodeElement( const NodeElement& from )
     , consumptionCritical_( from.consumptionCritical_ )
     , modifier_           ( from.modifier_ )
     , needUpdate_         ( true )
+    , functionalState_    ( 0 )
 {
     for( CIT_ResourceLinks it = from.links_.begin(); it != from.links_.end(); ++it )
         links_.push_back( new ResourceLink( **it ) );
@@ -177,11 +181,13 @@ void NodeElement::Consume( bool& isFunctional )
     unsigned int consumption = static_cast< unsigned int >( modifier_ * consumptionAmount_ );
     if( consumption > immediateStock_ )
     {
+        functionalState_ = immediateStock_ / consumption;
         immediateStock_ = 0;
         if( consumptionCritical_ )
             isFunctional = false;
     }
     else
+        functionalState_ = 1;
         immediateStock_ -= consumption;
 }
 
@@ -370,4 +376,14 @@ void NodeElement::ReadLink( xml::xistream& xis )
             return;
         }
     links_.push_back( new ResourceLink( target, kind, capacity ) );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement::GetFunctionalState
+// Created: SLG 2011-01-14
+// -----------------------------------------------------------------------------
+float NodeElement::GetFunctionalState() const
+{
+    return functionalState_;
 }

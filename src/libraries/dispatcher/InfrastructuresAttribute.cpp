@@ -18,6 +18,8 @@ using namespace dispatcher;
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
 InfrastructuresAttribute::InfrastructuresAttribute( const sword::UrbanAttributes& message )
+    : enabled_  ( true )
+    , threshold_( 30 )
 {
     Update( message );
 }
@@ -38,6 +40,10 @@ void InfrastructuresAttribute::Update( const sword::UrbanAttributes& message )
 {
     if( !message.has_infrastructures() )
         return;
+
+    enabled_   = message.infrastructures().infrastructure().active();
+    threshold_ = message.infrastructures().infrastructure().threshold();
+    role_     = message.infrastructures().infrastructure().type();
     // Infrastructures
     // TODO
 }
@@ -46,7 +52,9 @@ void InfrastructuresAttribute::Update( const sword::UrbanAttributes& message )
 // Name: InfrastructuresAttribute::Send
 // Created: JSR 2010-08-17
 // -----------------------------------------------------------------------------
-void InfrastructuresAttribute::Send( sword::UrbanAttributes& /*message*/ ) const
+void InfrastructuresAttribute::Send( sword::UrbanAttributes& message ) const
 {
-    // TODO
+    message.mutable_infrastructures()->mutable_infrastructure()->set_active( enabled_ );
+    message.mutable_infrastructures()->mutable_infrastructure()->set_threshold( threshold_ );
+    message.mutable_infrastructures()->mutable_infrastructure()->set_type( role_ );
 }

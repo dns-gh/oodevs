@@ -72,6 +72,7 @@ public:
     void Push( int quantity, unsigned long resourceId );
     void SetModifier( unsigned int modifier );
     bool NeedUpdate() const;
+    float GetNetworkState() const;
     //@}
 
     //! @name Network

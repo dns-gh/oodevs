@@ -22,6 +22,7 @@ namespace kernel
 namespace actions
 {
     class ActionsModel;
+    class UrbanMagicAction;
 }
 
 class StaticModel;
@@ -53,7 +54,9 @@ private slots:
     //! @name Slots
     //@{
     void ChangeStructuralState();
-
+    void ChangeThreshold();
+    void Disable();
+    void Enable();
     //@}
 
 private:
@@ -68,6 +71,7 @@ private:
     void AddMagic( const QString& label, int id,           QPopupMenu* menu );
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
     void AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
+    void SendUrbanUpdateMagic( actions::UrbanMagicAction& action );
     //@}
 
 private:

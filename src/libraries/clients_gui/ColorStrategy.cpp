@@ -132,7 +132,7 @@ QColor ColorStrategy::FindColor( const Entity_ABC& entity )
     const Entity_ABC& team = hierarchies ? hierarchies->GetTop() : entity;
     if( dynamic_cast< const kernel::Team_ABC* >( &team ) ) // $$$$ SBO 2008-10-03: depends on extensions polishing order...
         return FindTeamColor( team );
-    if( dynamic_cast< const TerrainObjectProxy* >( &entity ) ) // $$$$ SLG 2011-01-12: depends on extensions polishing order...
+    if( dynamic_cast< const TerrainObjectProxy* >( &entity ) )
         return Qt::white;
     return Qt::black;
 }

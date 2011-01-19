@@ -84,6 +84,7 @@ public:
     void SendState( sword::UrbanAttributes& message ) const;
     void SendState( sword::ObjectAttributes& asn ) const;
     void SendFullState( sword::UrbanAttributes& message ) const;
+    float GetNetworkState() const;
     //@}
 
 private:

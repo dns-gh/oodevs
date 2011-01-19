@@ -17,6 +17,7 @@
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Infrastructure_ABC.h"
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "protocol/SimulationSenders.h"
@@ -87,23 +88,14 @@ void UrbanMagicOrdersInterface::NotifyContextMenu( const kernel::Object_ABC& obj
     selectedEntity_ = &object;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     AddValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanMagicOrdersInterface::ChangeStructuralState
-// Created: SLG 2010-12-21
-// -----------------------------------------------------------------------------
-void UrbanMagicOrdersInterface::ChangeStructuralState()
-{
-    if( selectedEntity_ )
+    const kernel::Infrastructure_ABC* infra = object.Retrieve< kernel::Infrastructure_ABC >();
+    if( infra )
     {
-        if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
-        {
-            actions::UrbanMagicAction* action = new actions::UrbanMagicAction( *selectedEntity_, controllers_.controller_, editor->text().toInt(), true );
-            action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-            action->Attach( *new actions::ActionTasker( selectedEntity_, false ) );
-            action->RegisterAndPublish( actionsModel_ );
-        }
+        AddValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ) );
+        if( infra->IsEnabled() )
+            AddMagic( tr( "Disable" ), SLOT( Disable() ), magicMenu );
+        else
+            AddMagic( tr( "Enable" ), SLOT( Enable() ), magicMenu );
     }
 }
 
@@ -139,4 +131,77 @@ void UrbanMagicOrdersInterface::AddValuedMagic( QPopupMenu* parent, kernel::Cont
     QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
     connect( valueEditor, SIGNAL( returnPressed() ), this, slot );
     connect( valueEditor, SIGNAL( returnPressed() ), menu, SLOT( hide() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicOrdersInterface::ChangeStructuralState
+// Created: SLG 2010-12-21
+// -----------------------------------------------------------------------------
+void UrbanMagicOrdersInterface::ChangeStructuralState()
+{
+    if( selectedEntity_ )
+    {
+        if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
+        {
+            actions::UrbanMagicAction* action = new actions::UrbanMagicAction( *selectedEntity_, controllers_.controller_, true );
+            action->SetStructuralState( editor->text().toInt() );
+            SendUrbanUpdateMagic( *action );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicOrdersInterface::Disable
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+void UrbanMagicOrdersInterface::Disable()
+{
+    if( selectedEntity_ )
+    {
+        actions::UrbanMagicAction* action = new actions::UrbanMagicAction( *selectedEntity_, controllers_.controller_, true );
+        action->SetEnabled( false );
+        SendUrbanUpdateMagic( *action );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicOrdersInterface::Enable
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+void UrbanMagicOrdersInterface::Enable()
+{
+    if( selectedEntity_ )
+    {
+        actions::UrbanMagicAction* action = new actions::UrbanMagicAction( *selectedEntity_, controllers_.controller_, true );
+        action->SetEnabled( true );
+        SendUrbanUpdateMagic( *action );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicOrdersInterface::ChangeThreshold
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+void UrbanMagicOrdersInterface::ChangeThreshold()
+{
+    if( selectedEntity_ )
+    {
+        if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
+        {
+            actions::UrbanMagicAction* action = new actions::UrbanMagicAction( *selectedEntity_, controllers_.controller_, true );
+            action->SetThreshold( editor->text().toInt() );
+            SendUrbanUpdateMagic( *action );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicOrdersInterface::SendUrbanUpdateMagic
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+void UrbanMagicOrdersInterface::SendUrbanUpdateMagic( actions::UrbanMagicAction& action )
+{
+    action.Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
+    action.Attach( *new actions::ActionTasker( selectedEntity_, false ) );
+    action.RegisterAndPublish( actionsModel_ );
 }

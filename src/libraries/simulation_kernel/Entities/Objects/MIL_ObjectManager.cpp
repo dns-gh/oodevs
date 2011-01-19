@@ -370,6 +370,8 @@ void MIL_ObjectManager::OnReceiveUrbanMagicAction( const sword::UrbanMagicAction
     {
         if( msg.has_structural_state() )
             nErrorCode = object->OnUpdateStructuralState( msg.structural_state() );
+        else if( msg.has_infrastructure() )
+            nErrorCode = object->OnUpdateInfrastructure( msg.infrastructure() );
     }
     client::UrbanMagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
