@@ -23,6 +23,7 @@ FloodAttribute.cpp \
 Formation.cpp \
 HumanFactors.cpp \
 Intelligence.cpp \
+InfrastructureAttribute.cpp \
 IntelligenceFactory.cpp \
 KnowledgeGroup.cpp \
 Lima.cpp \

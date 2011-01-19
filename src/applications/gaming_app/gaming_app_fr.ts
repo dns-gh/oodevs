@@ -3084,6 +3084,18 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
     </message>
+    <message>
+        <source>Change Threshold</source>
+        <translation>Changer Seuil</translation>
+    </message>
+    <message>
+        <source>Disable</source>
+        <translation>Désactiver</translation>
+    </message>
+    <message>
+        <source>Enable</source>
+        <translation>Activer</translation>
+    </message>
 </context>
 <context>
     <name>UserProfileDialog</name>
