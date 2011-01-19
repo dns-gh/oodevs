@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Objective::Objective( const sword::MissionObjective& asn )
     : location_( asn.location() )
-    , schedule_( asn.horaire().data() )
+    , schedule_( asn.time().data() )
 {
     // NOTHING
 }
@@ -49,6 +49,6 @@ Objective::~Objective()
 // -----------------------------------------------------------------------------
 void Objective::Send( sword::MissionObjective& asn ) const
 {
-    asn.mutable_horaire()->set_data( schedule_ );
+    asn.mutable_time()->set_data( schedule_ );
     location_.Send( *asn.mutable_location() );
 }

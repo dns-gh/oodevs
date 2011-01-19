@@ -188,19 +188,19 @@ enum EnumDiplomacy {
 }
 
 enum EnumHumanWound {
-   non_blesse             = 0; //!< @todo translate
-   mort                   = 1; //!< @todo translate
-   blesse_urgence_1       = 2; //!< @todo translate
-   blesse_urgence_2       = 3; //!< @todo translate
-   blesse_urgence_3       = 4; //!< @todo translate
-   blesse_urgence_extreme = 5; //!< @todo translate
+   unwounded               = 0; //!< Unwounded
+   dead                    = 1; //!< Dead
+   wounded_urgency_1       = 2; //!< Wounded urgency level 1
+   wounded_urgency_2       = 3; //!< Wounded urgency level 2
+   wounded_urgency_3       = 4; //!< Wounded urgency level 3
+   wounded_extreme_urgency = 5; //!< Wounded extreme urgency
 }
 
-enum EnumLogMaintenanceRegimeTravail {
-   regime_1 = 0; //!< @todo translate
-   regime_2 = 1; //!< @todo translate
-   regime_3 = 2; //!< @todo translate
-   regime_4 = 3; //!< @todo translate
+enum EnumLogMaintenanceWorkRate {
+   rate_1 = 0; //!< Rate 1
+   rate_2 = 1; //!< Rate 2
+   rate_3 = 2; //!< Rate 3
+   rate_4 = 3; //!< Rate 4
 }
 
 enum EnumNatureLevel {
@@ -336,14 +336,14 @@ message LogMaintenancePriorities {
 
 message MissionObjective {
    required Location location = 1;
-   required DateTime horaire  = 2; //!< @todo translate
+   required DateTime time     = 2;
 }
 
 message MissionObjectiveList {
    repeated MissionObjective elem = 1;
 }
 
-message LimaOrder {
+message PhaseLineOrder {
     enum Function {
         ligne_debouche               = 0; //!< @todo translate
         ligne_changement_attitude    = 1; //!< @todo translate
@@ -357,12 +357,12 @@ message LimaOrder {
         ligne_identification_accueil = 9; //!< @todo translate
     }
     required Line     lima      = 1;
-    required DateTime horaire   = 2; //!< @todo translate
+    required DateTime time      = 2;
     repeated Function fonctions = 3;
 }
 
-message LimasOrder {
-   repeated LimaOrder elem = 1;
+message PhaseLinesOrder {
+   repeated PhaseLineOrder elem = 1;
 }
 
 message Intelligence {
@@ -380,25 +380,25 @@ message IntelligenceList {
 }
 
 message ChangeDiplomacy {
-   required PartyId       party1     = 1;
-   required PartyId       party2     = 2;
+   required PartyId       party1    = 1;
+   required PartyId       party2    = 2;
    required EnumDiplomacy diplomacy = 3;
 }
 
-message AtlasNature {
-   enum Nature {
-        blinde           = 1;    //!< @todo translate
-        ass              = 2;    //!< @todo translate
-        pc               = 4;    //!< @todo translate
-        log              = 8;    //!< @todo translate
-        mortier          = 16;   //!< @todo translate
-        lance_roquette   = 32;   //!< @todo translate
-        vehicule         = 64;   //!< @todo translate
-        personnel_a_pied = 128;  //!< @todo translate
-        helicoptere      = 256;  //!< @todo translate
-        asa              = 1024; //!< @todo translate
+message Nature {
+    enum Flags {
+        tank             = 1;    //!< Tank
+        missile_launcher = 2;    //!< Missile Launcher
+        command_post     = 4;    //!< Command Post
+        logistics        = 8;    //!< Logistics
+        mortar           = 16;   //!< Mortar
+        rocket_launcher  = 32;   //!< Rocket Launcher
+        vehicle          = 64;    //!< Vehicle
+        infantry         = 128;  //!< Infantry
+        helicopter       = 256;  //!< Helicopter
+        anti_aircraft    = 1024; //!< Anti Aircraft
    }
-   required int32 nature = 1;
+   required int32 flags = 1;
 }
 
 message MissionParameter {
@@ -413,7 +413,7 @@ message MissionParameter {
         optional Polygon                  area                     = 7;
         optional Path                     path                     = 8;
         optional Line                     limit                    = 9;
-        optional LimasOrder               phaseLine                = 10;
+        optional PhaseLinesOrder          phaseLine                = 10;
         optional AutomatId                automat                  = 11;
         optional UnitId                   agent                    = 12;
         optional UnitKnowledgeId          agentKnowledge           = 13;
@@ -421,7 +421,7 @@ message MissionParameter {
         optional ObjectKnowledgeId        objectKnowledge          = 15;
         optional UrbanObjectKnowledgeId   urbanKnowledge           = 16;
         optional PlannedWork              plannedWork              = 17;
-        optional AtlasNature              atlasNature              = 18;
+        optional Nature                   nature                   = 18; //!< A combinaison of nature flags @see Nature
         optional ResourceType             resourceType             = 19;
         optional LogMaintenancePriorities logMaintenancePriorities = 20;
         optional LogMedicalPriorities     logMedicalPriorities     = 21;
@@ -443,7 +443,7 @@ message MissionParameter {
         optional string                   aCharStr                 = 35;
         optional MissionObjective         missionObjective         = 36;
         optional MissionObjectiveList     missionObjectiveList     = 37;
-        optional LimasOrder               limasOrder               = 38;
+        optional PhaseLinesOrder          limasOrder               = 38;
         optional IntelligenceList         intelligenceList         = 39;
         optional UrbanObjectId            urbanBlock               = 40;
         optional PartyId                  party                    = 41;

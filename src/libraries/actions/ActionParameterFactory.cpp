@@ -131,8 +131,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         return new actions::parameters::Location( parameter, converter_, message.location() );
     if( message.has_plannedwork() )
         return new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, message.plannedwork(), controller_ );
-    if( message.has_atlasnature() )
-        return new actions::parameters::AtlasNature( parameter, message.atlasnature(), staticModel_.atlasNatures_ );
+    if( message.has_nature() )
+        return new actions::parameters::AtlasNature( parameter, message.nature(), staticModel_.atlasNatures_ );
     if( message.has_missionobjective() )
         return new actions::parameters::Objective( parameter, converter_, message.missionobjective() );
     if( message.has_point() )

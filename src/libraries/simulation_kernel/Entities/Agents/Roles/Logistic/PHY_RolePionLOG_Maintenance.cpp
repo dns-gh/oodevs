@@ -173,7 +173,7 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uns
          >> bSystemEnabled_
          >> priorities_
          >> tacticalPriorities_;
-    sword::EnumLogMaintenanceRegimeTravail nID;
+    sword::EnumLogMaintenanceWorkRate nID;
     file >> nID;
     pWorkRate_ = PHY_MaintenanceWorkRate::Find( nID );
     file >> nWorkRateWarningRCTick_;
@@ -195,7 +195,7 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uns
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    sword::EnumLogMaintenanceRegimeTravail workRate = pWorkRate_->GetAsnID();
+    sword::EnumLogMaintenanceWorkRate workRate = pWorkRate_->GetAsnID();
     file << boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
          << bSystemEnabled_
          << priorities_
@@ -206,9 +206,7 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const un
     file << size;
     for ( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         file << it->first << it->second;
-
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityRatio
@@ -270,35 +268,36 @@ void PHY_RolePionLOG_Maintenance::StopUsingForLogistic( PHY_ComposantePion& comp
     composante.StopUsingForLogistic();
 }
 
-// =============================================================================
-// Available Hauler //@TODO MGD MERGE all Logictic OnComponentFunctor in one file
-// =============================================================================
-class AvailableHaulerComputer : public OnComponentFunctor_ABC
+namespace
 {
-public:
-    AvailableHaulerComputer( const PHY_ComposanteTypePion& composanteType )
-        : rScore_( std::numeric_limits< double >::max() )
-        , composanteType_( composanteType )
-        , pSelectedHauler_( 0 )
+    class AvailableHaulerComputer : public OnComponentFunctor_ABC // $$$$ MGD MERGE all Logictic OnComponentFunctor in one file
     {
-    }
-    void operator() ( PHY_ComposantePion& composante )
-    {
-        if( !composante.CanHaul( composanteType_ ) )
-            return;
-
-        double rNewScore = composante.GetType().GetHaulerWeightCapacity() - composanteType_.GetWeight();
-        assert( rNewScore >= 0. );
-        if( rNewScore < rScore_ )
+    public:
+        AvailableHaulerComputer( const PHY_ComposanteTypePion& composanteType )
+            : rScore_( std::numeric_limits< double >::max() )
+            , composanteType_( composanteType )
+            , pSelectedHauler_( 0 )
         {
-            rScore_ = rNewScore;
-            pSelectedHauler_ = &composante;
         }
-    }
-    double rScore_;
-    const PHY_ComposanteTypePion& composanteType_;
-    PHY_ComposantePion* pSelectedHauler_;
-};
+        void operator() ( PHY_ComposantePion& composante )
+        {
+            if( !composante.CanHaul( composanteType_ ) )
+                return;
+
+            double rNewScore = composante.GetType().GetHaulerWeightCapacity() - composanteType_.GetWeight();
+            assert( rNewScore >= 0. );
+            if( rNewScore < rScore_ )
+            {
+                rScore_ = rNewScore;
+                pSelectedHauler_ = &composante;
+            }
+        }
+        double rScore_;
+        const PHY_ComposanteTypePion& composanteType_;
+        PHY_ComposantePion* pSelectedHauler_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAvailableHauler
 // Created: NLD 2004-12-23
@@ -669,7 +668,7 @@ void PHY_RolePionLOG_Maintenance::SendFullState() const
     client::LogMaintenanceState asn;
     asn().mutable_unit()->set_id( pion_.GetID() );
     asn().set_chain( bSystemEnabled_ );
-    asn().set_working_scheme( pWorkRate_->GetAsnID() );
+    asn().set_work_rate( pWorkRate_->GetAsnID() );
     asn().mutable_priorities();
     for( CIT_MaintenancePriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
         asn().mutable_priorities()->add_elem()->set_id( (**itPriority).GetMosID().id() );

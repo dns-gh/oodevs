@@ -11,7 +11,6 @@
 #include "AtlasNature.h"
 #include "clients_kernel/AtlasNatures.h"
 #include "protocol/Protocol.h"
-#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace actions;
@@ -31,8 +30,8 @@ AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const kernel:
 // Name: AtlasNature constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const sword::AtlasNature& message, const kernel::AtlasNatures& natures )
-    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( static_cast< unsigned short >( message.nature() ) ) )
+AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const sword::Nature& message, const kernel::AtlasNatures& natures )
+    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( static_cast< unsigned short >( message.flags() ) ) )
 {
     // NOTHING
 }
@@ -74,7 +73,7 @@ void AtlasNature::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-       message.mutable_value()->Add()->mutable_atlasnature()->set_nature( GetValue().GetValue() );
+       message.add_value()->mutable_nature()->set_flags( GetValue().GetValue() );
 }
 // -----------------------------------------------------------------------------
 // Name: AtlasNature::CommitTo
@@ -83,7 +82,7 @@ void AtlasNature::CommitTo( sword::MissionParameter& message ) const
 void AtlasNature::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        message.mutable_atlasnature()->set_nature( GetValue().GetValue() );
+        message.mutable_nature()->set_flags( GetValue().GetValue() );
 }
 
 // -----------------------------------------------------------------------------

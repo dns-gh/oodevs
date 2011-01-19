@@ -1517,10 +1517,10 @@ void SimulationToClient::Convert( const sword::LogMaintenanceState& from, MsgsSi
 {
     CONVERT_ID( unit );
     CONVERT_TO( chain, chaine_activee );
-    CONVERT_ENUM_TO( working_scheme, regime_travail, ( sword::regime_1, Common::regime_1 )
-                                                     ( sword::regime_2, Common::regime_2 )
-                                                     ( sword::regime_3, Common::regime_3 )
-                                                     ( sword::regime_4, Common::regime_4 ) );
+    CONVERT_ENUM_TO( work_rate, regime_travail, ( sword::rate_1, Common::regime_1 )
+                                                ( sword::rate_2, Common::regime_2 )
+                                                ( sword::rate_3, Common::regime_3 )
+                                                ( sword::rate_4, Common::regime_4 ) );
     CONVERT_LIST_TO( priorities, priorites, elem, ConvertIdentifier );
     CONVERT_LIST_TO( tactical_priorities, priorites_tactiques, elem, ConvertIdentifier );
     CONVERT_LIST_TO( haulers, disponibilites_remorqueurs, elem, ConvertLogMedicalEquipmentAvailability );

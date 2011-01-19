@@ -12,6 +12,11 @@
 
 #include "MIL_BaseParameter.h"
 
+namespace sword
+{
+    class PhaseLinesOrder;
+}
+
 class MIL_LimaOrder;
 
 // =============================================================================
@@ -25,7 +30,7 @@ class MIL_LimaListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_LimaListParameter( const sword::LimasOrder& message );
+    explicit MIL_LimaListParameter( const sword::PhaseLinesOrder& message );
     virtual ~MIL_LimaListParameter();
     //@}
 
@@ -36,8 +41,8 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToLima( sword::LimasOrder& message ) const;
-    virtual bool ToLimaList( sword::LimasOrder& message ) const;
+    virtual bool ToLima( sword::PhaseLinesOrder& message ) const;
+    virtual bool ToLimaList( sword::PhaseLinesOrder& message ) const;
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;

@@ -1291,7 +1291,7 @@ message SeqOfLogMaintenanceEquipmentAvailability {
 message LogMaintenanceState {
     required UnitId                                   unit                = 1;
     optional bool                                     chain               = 2;
-    optional EnumLogMaintenanceRegimeTravail          working_scheme      = 3;
+    optional EnumLogMaintenanceWorkRate               work_rate           = 3;
     optional LogMaintenancePriorities                 priorities          = 4;
     optional AutomatIdList                            tactical_priorities = 5;
     optional SeqOfLogMaintenanceEquipmentAvailability haulers             = 6;

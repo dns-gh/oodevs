@@ -21,8 +21,7 @@ MIL_LogMedicalPrioritiesParameter::MIL_LogMedicalPrioritiesParameter( const swor
     priorities_.reserve( asn.elem_size() );
     for( int i = 0; i < asn.elem_size(); ++i )
     {
-        sword::EnumHumanWound nWoundID = asn.elem(i);
-        const PHY_HumanWound* pWound = PHY_HumanWound::Find( nWoundID );
+        const PHY_HumanWound* pWound = PHY_HumanWound::Find( asn.elem( i ) );
         if( !pWound )
         {
             priorities_.clear();

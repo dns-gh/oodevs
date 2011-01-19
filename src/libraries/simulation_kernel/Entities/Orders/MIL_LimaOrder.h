@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class LimaOrder;
+    class PhaseLineOrder;
 }
 
 class MT_Line;
@@ -40,7 +40,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_LimaOrder( const sword::LimaOrder& asn );
+    explicit MIL_LimaOrder( const sword::PhaseLineOrder& asn );
     virtual ~MIL_LimaOrder();
     //@}
 
@@ -70,7 +70,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( sword::LimaOrder& asn ) const;
+    void Serialize( sword::PhaseLineOrder& asn ) const;
     //@}
 
 private:

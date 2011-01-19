@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    class AtlasNature;
+    class Nature;
 }
 
 namespace kernel
@@ -23,9 +23,10 @@ namespace kernel
     class AtlasNatures;
 }
 
-namespace actions {
-    namespace parameters {
-
+namespace actions
+{
+namespace parameters
+{
 // =============================================================================
 /** @class  AtlasNature
     @brief  AtlasNature
@@ -38,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AtlasNature( const kernel::OrderParameter& parameter, const kernel::AtlasNature& nature );
-             AtlasNature( const kernel::OrderParameter& parameter, const sword::AtlasNature& asn, const kernel::AtlasNatures& natures );
+             AtlasNature( const kernel::OrderParameter& parameter, const sword::Nature& asn, const kernel::AtlasNatures& natures );
              AtlasNature( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::AtlasNatures& natures );
     virtual ~AtlasNature();
     //@}
@@ -63,7 +64,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterAtlasNature_h_

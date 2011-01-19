@@ -35,7 +35,7 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
 // Name: Lima constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::LimaOrder& message )
+Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::PhaseLineOrder& message )
     : Parameter< QString >( parameter )
 {
     QStringList functions;
@@ -43,7 +43,7 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
         functions.append( tools::ToShortString( (E_FuncLimaType)message.fonctions(i) ) );
     SetValue( functions.join( ", " ) );
     AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, message.lima().location() ) );
-    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), message.horaire() ) );
+    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), message.time() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,11 +135,11 @@ void Lima::DisplayInToolTip( Displayer_ABC& displayer ) const
 // Name: Lima::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Lima::CommitTo( sword::LimaOrder& message ) const
+void Lima::CommitTo( sword::PhaseLineOrder& message ) const
 {
     QStringList functions = QStringList::split( ", ", GetValue() );
     for( unsigned int i = 0; i < functions.count(); ++i )
-        message.add_fonctions( sword::LimaOrder::Function( tools::LimaTypeFromShortString( functions[i] ) ) );
+        message.add_fonctions( sword::PhaseLineOrder::Function( tools::LimaTypeFromShortString( functions[i] ) ) );
 
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
@@ -147,7 +147,7 @@ void Lima::CommitTo( sword::LimaOrder& message ) const
         if( type == "location" )
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_lima()->mutable_location() );
         else if( type == "datetime" )
-            static_cast< const DateTime* >( it->second )->CommitTo( *message.mutable_horaire() );
+            static_cast< const DateTime* >( it->second )->CommitTo( *message.mutable_time() );
     }
 }
 
@@ -179,7 +179,7 @@ void Lima::CommitTo( sword::MissionParameter_Value& message ) const
 // Name: Lima::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Lima::Clean( sword::LimaOrder& message ) const
+void Lima::Clean( sword::PhaseLineOrder& message ) const
 {
     message.Clear();
 }

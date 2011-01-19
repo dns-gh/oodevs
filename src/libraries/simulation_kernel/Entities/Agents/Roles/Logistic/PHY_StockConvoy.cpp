@@ -65,7 +65,7 @@ PHY_StockConvoy::~PHY_StockConvoy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGConvoy::load
+// Name: PHY_StockConvoy::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
 void PHY_StockConvoy::load( MIL_CheckPointInArchive& file, const unsigned int )
@@ -80,7 +80,7 @@ void PHY_StockConvoy::load( MIL_CheckPointInArchive& file, const unsigned int )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPionLOGConvoy::save
+// Name: PHY_StockConvoy::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
 void PHY_StockConvoy::save( MIL_CheckPointOutArchive& file, const unsigned int ) const

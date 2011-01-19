@@ -60,8 +60,8 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
 {
     if( message.has_chain()  )
         bChainEnabled_ = message.chain() != 0;
-    if( message.has_working_scheme()  )
-        nWorkRate_ = message.working_scheme() + 1; // $$$$ AGE 2006-06-27:
+    if( message.has_work_rate()  )
+        nWorkRate_ = message.work_rate() + 1; // $$$$ AGE 2006-06-27:
     if( message.has_priorities() )
     {
         priorities_.resize( message.priorities().elem_size() );

@@ -9,16 +9,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AtlasNatureParameter.h"
-#include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AtlasNatureParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AtlasNatureParameter::MIL_AtlasNatureParameter( const sword::AtlasNature& asn )
+MIL_AtlasNatureParameter::MIL_AtlasNatureParameter( const sword::Nature& asn )
 {
-    NET_ASN_Tools::CopyNatureAtlas( asn, nature_ );
+    nature_ = asn.flags();
 }
 
 // -----------------------------------------------------------------------------
@@ -65,5 +64,6 @@ bool MIL_AtlasNatureParameter::ToNatureAtlas( int& atlas ) const
 // -----------------------------------------------------------------------------
 bool MIL_AtlasNatureParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    return NET_ASN_Tools::CopyNatureAtlas( nature_, *elem.mutable_atlasnature() );
+    elem.mutable_nature()->set_flags( nature_ );
+    return true;
 }

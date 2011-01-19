@@ -16,7 +16,7 @@
 
 namespace sword
 {
-    enum EnumLogMaintenanceRegimeTravail;
+    enum EnumLogMaintenanceWorkRate;
 }
 
 namespace xml
@@ -44,13 +44,13 @@ public:
     //@{
     static       void                     Initialize( xml::xistream& xis );
     static       void                     Terminate ();
-    static const PHY_MaintenanceWorkRate* Find      ( sword::EnumLogMaintenanceRegimeTravail nID );
+    static const PHY_MaintenanceWorkRate* Find      ( sword::EnumLogMaintenanceWorkRate nID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-    sword::EnumLogMaintenanceRegimeTravail GetAsnID() const;
+    sword::EnumLogMaintenanceWorkRate GetAsnID() const;
     unsigned int GetNbrWorkerAllowedToWork( unsigned int nNbrAvailable ) const;
     unsigned int GetDelayBeforeWarningRC() const;
     //@}
@@ -63,7 +63,7 @@ private:
     //@}
 
 private:
-     PHY_MaintenanceWorkRate( const std::string& strName, sword::EnumLogMaintenanceRegimeTravail asn );
+     PHY_MaintenanceWorkRate( const std::string& strName, sword::EnumLogMaintenanceWorkRate msg );
     ~PHY_MaintenanceWorkRate();
 
     //! @name Init
@@ -73,11 +73,11 @@ private:
     //@}
 
 private:
-    const std::string                           strName_;
-    const sword::EnumLogMaintenanceRegimeTravail asn_;
-          double                              rWorkerRatio_;
-          double                              rWorkTime_;
-          unsigned int                          nDelayBeforeWarningRC_;
+    const std::string                       strName_;
+    const sword::EnumLogMaintenanceWorkRate asn_;
+          double                            rWorkerRatio_;
+          double                            rWorkTime_;
+          unsigned int                      nDelayBeforeWarningRC_;
 
 private:
     static T_WorkRateMap workRates_;

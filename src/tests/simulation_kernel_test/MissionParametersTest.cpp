@@ -152,16 +152,15 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_AtlasNatureParameter_ToASN )
 {
-    AtlasNature asnIn;
-    asnIn.set_nature( AtlasNature::blinde | AtlasNature::log | AtlasNature::asa );
-
+    Nature asnIn;
+    asnIn.set_flags( Nature::tank | Nature::logistics | Nature::anti_aircraft );
     MIL_AtlasNatureParameter param( asnIn );
     MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
-    BOOST_CHECK_EQUAL( true, asnOut.has_atlasnature() );
-    BOOST_CHECK_EQUAL( AtlasNature::blinde, asnOut.atlasnature().nature() & AtlasNature::blinde );
-    BOOST_CHECK_EQUAL( AtlasNature::log,    asnOut.atlasnature().nature() & AtlasNature::log );
-    BOOST_CHECK_EQUAL( AtlasNature::asa,    asnOut.atlasnature().nature() & AtlasNature::asa );
+    BOOST_CHECK_EQUAL( true, asnOut.has_nature() );
+    BOOST_CHECK_EQUAL( Nature::tank, asnOut.nature().flags() & Nature::tank );
+    BOOST_CHECK_EQUAL( Nature::logistics,    asnOut.nature().flags() & Nature::logistics );
+    BOOST_CHECK_EQUAL( Nature::anti_aircraft,    asnOut.nature().flags() & Nature::anti_aircraft );
 }
 
 // -----------------------------------------------------------------------------
@@ -372,14 +371,14 @@ BOOST_AUTO_TEST_CASE( TestMIL_LogMaintenancePrioritiesParameter_ToASN )
 {
     PHY_HumanWound::Initialize();
     LogMedicalPriorities asnIn;
-    asnIn.add_elem( sword::blesse_urgence_2 );
+    asnIn.add_elem( sword::wounded_urgency_2 );
     MIL_LogMedicalPrioritiesParameter param( asnIn );
     asnIn.clear_elem();
     MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
     BOOST_CHECK_EQUAL( true, asnOut.has_logmedicalpriorities() );
     BOOST_CHECK_EQUAL( 1, asnOut.logmedicalpriorities().elem_size() );
-    BOOST_CHECK_EQUAL( sword::blesse_urgence_2, asnOut.logmedicalpriorities().elem(0) );
+    BOOST_CHECK_EQUAL( sword::wounded_urgency_2, asnOut.logmedicalpriorities().elem(0) );
 }
 
 // -----------------------------------------------------------------------------

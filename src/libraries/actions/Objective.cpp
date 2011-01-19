@@ -57,7 +57,7 @@ Objective::Objective( const OrderParameter& parameter, const CoordinateConverter
     : Parameter< QString >( parameter )
 {
     AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Objective location" ).ascii(), "location", false ), converter, message.location() ) );
-    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), message.horaire() ) );
+    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), message.time() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ void Objective::CommitTo( sword::MissionObjective& message ) const
         if( type == "location" )
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_location() );
         else if( type == "datetime" )
-            static_cast< const DateTime* >( it->second )->CommitTo( *message.mutable_horaire() );
+            static_cast< const DateTime* >( it->second )->CommitTo( *message.mutable_time() );
     }
 }
 

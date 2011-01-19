@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class LimaOrder;
+    class PhaseLineOrder;
 }
 
 namespace kernel
@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::LimaOrder& message );
+             Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::PhaseLineOrder& message );
              Lima( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Lima();
     //@}
@@ -51,10 +51,10 @@ public:
     virtual void DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
-    void CommitTo( sword::LimaOrder& message ) const;
+    void CommitTo( sword::PhaseLineOrder& message ) const;
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
-    void Clean( sword::LimaOrder& message ) const;
+    void Clean( sword::PhaseLineOrder& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

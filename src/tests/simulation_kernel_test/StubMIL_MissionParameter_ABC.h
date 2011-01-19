@@ -84,7 +84,7 @@ public:
     { throw; }
     virtual bool ToMedicalPriorities( sword::LogMedicalPriorities& ) const
     { throw; }
-    virtual bool ToNatureAtlas( sword::AtlasNature& ) const
+    virtual bool ToNatureAtlas( sword::Nature& ) const
     { throw; }
     virtual bool ToNumeric( float& ) const
     { throw; }
@@ -105,9 +105,9 @@ public:
         result = param_;
         return true;
     }
-    virtual bool ToLima( sword::LimasOrder& ) const
+    virtual bool ToLima( sword::PhaseLinesOrder& ) const
     { throw; }
-    virtual bool ToLimaList( sword::LimasOrder& ) const
+    virtual bool ToLimaList( sword::PhaseLinesOrder& ) const
     { throw; }
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const
     { throw; }

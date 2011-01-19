@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( sword::MissionParameter& parameter ) const;
-    void Serialize( sword::LimaOrder& asn ) const;
+    void Serialize( sword::PhaseLineOrder& asn ) const;
     //@}
 
 private:

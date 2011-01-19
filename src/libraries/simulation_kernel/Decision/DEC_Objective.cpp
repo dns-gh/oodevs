@@ -21,7 +21,7 @@ DEC_Objective::DEC_Objective( const sword::MissionObjective& asn )
     : localisation_()
     , bFlag_       ( false )
 {
-    NET_ASN_Tools::ReadTick( asn.horaire(), nSchedule_);
+    NET_ASN_Tools::ReadTick( asn.time(), nSchedule_);
     if( !NET_ASN_Tools::ReadLocation( asn.location(), localisation_ ) )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }
@@ -51,6 +51,6 @@ void DEC_Objective::operator=( const DEC_Objective& rhs )
 // -----------------------------------------------------------------------------
 void DEC_Objective::Serialize( sword::MissionObjective& asn ) const
 {
-    NET_ASN_Tools::WriteTick    ( nSchedule_, *asn.mutable_horaire() );
+    NET_ASN_Tools::WriteTick    ( nSchedule_, *asn.mutable_time() );
     NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_location() );
 }

@@ -22,13 +22,13 @@ unsigned int MIL_LimaOrder::nNextID_ = 0;
 // Name: MIL_LimaOrder constructor
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-MIL_LimaOrder::MIL_LimaOrder( const sword::LimaOrder& asn )
+MIL_LimaOrder::MIL_LimaOrder( const sword::PhaseLineOrder& asn )
     : nID_          ( ++nNextID_ )
     , functions_    ()
     , bFlag_        ( false )
     , bScheduleFlag_( false )
 {
-    NET_ASN_Tools::ReadTick( asn.horaire(), nSchedule_);
+    NET_ASN_Tools::ReadTick( asn.time(), nSchedule_);
 
     T_PointVector points;
     localisation_ = boost::shared_ptr< TER_Localisation >( new TER_Localisation( TER_Localisation::eLine, points ) );
@@ -99,10 +99,10 @@ bool MIL_LimaOrder::Intersect2D( const T_PointVector& polyline, T_PointSet& inte
 // Name: MIL_LimaOrder::Serialize
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-void MIL_LimaOrder::Serialize( sword::LimaOrder& asn ) const
+void MIL_LimaOrder::Serialize( sword::PhaseLineOrder& asn ) const
 {
     NET_ASN_Tools::WriteLine( *localisation_, *asn.mutable_lima() );
-    NET_ASN_Tools::WriteTick( nSchedule_, *asn.mutable_horaire() );
+    NET_ASN_Tools::WriteTick( nSchedule_, *asn.mutable_time() );
 
     for( CIT_LimaFunctions it = functions_.begin(); it != functions_.end(); ++it )
         asn.add_fonctions( (*it)->GetAsnID() );

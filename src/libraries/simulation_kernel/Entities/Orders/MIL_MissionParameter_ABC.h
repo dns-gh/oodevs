@@ -28,10 +28,8 @@ namespace sword
     class AutomatIdList;
     class EquipmentType;
     class FireId;
-    class AtlasNature;
     class DateTime;
     class Heading;
-    class LimasOrder;
     class Location;
     class LocationList;
     class LogMaintenancePriorities;

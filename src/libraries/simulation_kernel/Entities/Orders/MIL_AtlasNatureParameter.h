@@ -12,6 +12,11 @@
 
 #include "MIL_BaseParameter.h"
 
+namespace sword
+{
+    class Nature;
+}
+
 // =============================================================================
 /** @class  MIL_AtlasNatureParameter
     @brief  MIL_AtlasNatureParameter
@@ -23,7 +28,7 @@ class MIL_AtlasNatureParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_AtlasNatureParameter( const sword::AtlasNature& );
+    explicit MIL_AtlasNatureParameter( const sword::Nature& );
     explicit MIL_AtlasNatureParameter( int nature );
     virtual ~MIL_AtlasNatureParameter();
     //@}

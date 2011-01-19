@@ -17,7 +17,6 @@
 
 namespace sword
 {
-    class AtlasNature;
     class AutomatId;
     class AutomatIdList;
     class CoordLatLong;
@@ -65,11 +64,6 @@ class MIL_EntityManager_ABC;
 class NET_ASN_Tools
 {
 public:
-
-    static bool CopyNatureAtlas ( int value, sword::AtlasNature& asn );
-    static bool CopyNatureAtlas ( const sword::AtlasNature& asn, int& value );
-    //@}
-
     // @name Misc tools
     //@{
     static void Delete( sword::MissionObjective& asn );

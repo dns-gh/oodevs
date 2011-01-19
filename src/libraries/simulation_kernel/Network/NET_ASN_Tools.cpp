@@ -582,23 +582,3 @@ void NET_ASN_Tools::WriteTick( unsigned int simTick, DateTime& asnGDH )
 {
     WriteGDH( MIL_AgentServer::GetWorkspace().TickToRealTime( simTick ), asnGDH );
 }
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyNatureAtlas
-// Created: LDC 2009-05-26
-// -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyNatureAtlas( const AtlasNature& asn, int& value )
-{
-    value = asn.nature();
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::CopyNatureAtlas
-// Created: LDC 2009-05-26
-// -----------------------------------------------------------------------------
-bool NET_ASN_Tools::CopyNatureAtlas( int value, AtlasNature& asn )
-{
-    asn.set_nature( value );
-    return true;
-}

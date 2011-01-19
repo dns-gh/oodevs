@@ -14,7 +14,7 @@
 
 namespace sword
 {
-    class LimasOrder;
+    class PhaseLinesOrder;
 }
 
 namespace kernel
@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LimaList( const kernel::OrderParameter& parameter );
-             LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::LimasOrder& limas );
+             LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const sword::PhaseLinesOrder& limas );
              LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~LimaList();
     //@}

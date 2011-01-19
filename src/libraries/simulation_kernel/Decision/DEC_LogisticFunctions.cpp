@@ -81,7 +81,7 @@ void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( MIL_Agent_A
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::PionMaintenanceChangeWorkRate( MIL_Agent_ABC& callerAgent, int workRate )
 {
-    if( const PHY_MaintenanceWorkRate* pWorkRate = PHY_MaintenanceWorkRate::Find( sword::EnumLogMaintenanceRegimeTravail( workRate ) ) )
+    if( const PHY_MaintenanceWorkRate* pWorkRate = PHY_MaintenanceWorkRate::Find( sword::EnumLogMaintenanceWorkRate( workRate ) ) )
         if( PHY_RoleInterface_Maintenance* role = callerAgent.RetrieveRole< PHY_RoleInterface_Maintenance >() )
             role->ChangeWorkRate( *pWorkRate );
 }

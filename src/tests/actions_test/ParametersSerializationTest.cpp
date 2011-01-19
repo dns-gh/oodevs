@@ -384,8 +384,8 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AtlasNature )
     kernel::AtlasNatures natures;
     std::auto_ptr< sword::MissionParameter > message( Serialize( "NatureAtlas", input,
         bl::bind( bl::new_ptr< actions::parameters::AtlasNature >(), bl::_1, bl::_2, bl::var( natures ) ) ) );
-    BOOST_CHECK_EQUAL( sword::AtlasNature::blinde,   message->value().Get( 0 ).atlasnature().nature() & sword::AtlasNature::blinde );
-    BOOST_CHECK_EQUAL( sword::AtlasNature::vehicule, message->value().Get( 0 ).atlasnature().nature() & sword::AtlasNature::vehicule );
+    BOOST_CHECK_EQUAL( sword::Nature::tank,   message->value().Get( 0 ).nature().flags() & sword::Nature::tank );
+    BOOST_CHECK_EQUAL( sword::Nature::vehicle, message->value().Get( 0 ).nature().flags() & sword::Nature::vehicle );
 }
 
 // -----------------------------------------------------------------------------
@@ -434,10 +434,10 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Lima )
     std::auto_ptr< sword::MissionParameter > message( new sword::MissionParameter() );
     parameter.CommitTo( *message->mutable_value()->Add()->mutable_limasorder()->add_elem() );
     CheckSet( *message );
-    const sword::LimaOrder& lima = message->value().Get( 0 ).limasorder().elem(0);
+    const sword::PhaseLineOrder& lima = message->value().Get( 0 ).limasorder().elem(0);
     BOOST_CHECK_EQUAL( 2, lima.lima().location().type() );
     BOOST_CHECK_EQUAL( 5, lima.lima().location().coordinates().elem_size() );
-    BOOST_CHECK_EQUAL( "20081211T190022", lima.horaire().data() );
+    BOOST_CHECK_EQUAL( "20081211T190022", lima.time().data() );
     CheckCoordinate( converter, "31TCN7270936833", lima.lima().location().coordinates().elem( 0 ) );
     CheckCoordinate( converter, "31TCN7776344465", lima.lima().location().coordinates().elem( 1 ) );
     CheckCoordinate( converter, "31TCN8594043967", lima.lima().location().coordinates().elem( 2 ) );

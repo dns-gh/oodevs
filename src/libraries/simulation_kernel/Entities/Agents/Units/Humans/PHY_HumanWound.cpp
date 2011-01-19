@@ -27,12 +27,12 @@ unsigned int PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
 unsigned int PHY_HumanWound::nMentalDiseaseRestingTime_ = 0;
 double PHY_HumanWound::rMentalDiseaseFactor_ = 0;
 
-const PHY_HumanWound PHY_HumanWound::notWounded_( "healthy", eNotWounded, sword::non_blesse             );
-const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "u3"     , eWoundedU3 , sword::blesse_urgence_3       );
-const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "u2"     , eWoundedU2 , sword::blesse_urgence_2       );
-const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "u1"     , eWoundedU1 , sword::blesse_urgence_1       );
-const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "ue"     , eWoundedUE , sword::blesse_urgence_extreme );
-const PHY_HumanWound PHY_HumanWound::killed_    ( "dead"   , eKilled    , sword::mort                   );
+const PHY_HumanWound PHY_HumanWound::notWounded_( "healthy", eNotWounded, sword::unwounded             );
+const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "u3"     , eWoundedU3 , sword::wounded_urgency_3       );
+const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "u2"     , eWoundedU2 , sword::wounded_urgency_2       );
+const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "u1"     , eWoundedU1 , sword::wounded_urgency_1       );
+const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "ue"     , eWoundedUE , sword::wounded_extreme_urgency );
+const PHY_HumanWound PHY_HumanWound::killed_    ( "dead"   , eKilled    , sword::dead                   );
 
 struct PHY_HumanWound::LoadingWrapper
 {
@@ -171,8 +171,8 @@ void PHY_HumanWound::Terminate()
 // -----------------------------------------------------------------------------
 PHY_HumanWound::PHY_HumanWound( const std::string& strName, E_Wound nWound, const sword::EnumHumanWound& nAsnID )
     : strName_        ( strName )
-    , nWound_         ( nWound  )
-    , nAsnID_         ( nAsnID  )
+    , nWound_         ( nWound )
+    , nAsnID_         ( nAsnID )
     , rWoundedFactor_ ( 0. )
     , nLifeExpectancy_( 0 )
     , nHealingTime_   ( 0 )
@@ -205,7 +205,7 @@ const PHY_HumanWound& PHY_HumanWound::ChooseRandomWound()
         if( rSumFactors >= rRand )
             return state;
     }
-    assert( false );
+    assert( false ); // $$$$ MCO : throw instead, or even better rewrite algorithm
     return killed_;
 }
 

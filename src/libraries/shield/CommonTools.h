@@ -22,12 +22,12 @@
                                            ( sword::enemy, Common::enemy_diplo ) \
                                            ( sword::neutral, Common::neutral_diplo ) )
 
-#define HUMAN_WOUND ( sword::non_blesse, Common::non_blesse ) \
-                    ( sword::mort, Common::mort ) \
-                    ( sword::blesse_urgence_1, Common::blesse_urgence_1 ) \
-                    ( sword::blesse_urgence_2, Common::blesse_urgence_2 ) \
-                    ( sword::blesse_urgence_3, Common::blesse_urgence_3 ) \
-                    ( sword::blesse_urgence_extreme, Common::blesse_urgence_extreme )
+#define HUMAN_WOUND ( sword::unwounded, Common::non_blesse ) \
+                    ( sword::dead, Common::mort ) \
+                    ( sword::wounded_urgency_1, Common::blesse_urgence_1 ) \
+                    ( sword::wounded_urgency_2, Common::blesse_urgence_2 ) \
+                    ( sword::wounded_urgency_3, Common::blesse_urgence_3 ) \
+                    ( sword::wounded_extreme_urgency, Common::blesse_urgence_extreme )
 
 #define CONVERT_AUTOMAT_MODE( from_field, to_field ) \
     CONVERT_ENUM_TO( from_field, to_field, ( sword::engaged, Common::embraye ) \
@@ -205,26 +205,31 @@ namespace shield
     {
 #ifdef SHIELD_CLIENT
         ConvertLocation( from.localisation(), to->mutable_location() );
+        to->mutable_time()->set_data( from.horaire().data() );
 #elif defined SHIELD_SIMULATION
         ConvertLocation( from.location(), to->mutable_localisation() );
+        to->mutable_horaire()->set_data( from.time().data() );
 #endif
-        to->mutable_horaire()->set_data( from.horaire().data() );
     }
     template< typename From, typename To >
     void ConvertLimaOrder( const From& from, To* to )
     {
         ConvertLocation( from.lima().location(), to->mutable_lima()->mutable_location() );
-        to->mutable_horaire()->set_data( from.horaire().data() );
-        CONVERT_ENUM_LIST( fonctions, ( sword::LimaOrder::ligne_debouche, Common::MsgLimaOrder::ligne_debouche )
-                                      ( sword::LimaOrder::ligne_changement_attitude, Common::MsgLimaOrder::ligne_changement_attitude )
-                                      ( sword::LimaOrder::ligne_coordination, Common::MsgLimaOrder::ligne_coordination )
-                                      ( sword::LimaOrder::ligne_interdire, Common::MsgLimaOrder::ligne_interdire )
-                                      ( sword::LimaOrder::ligne_objectif, Common::MsgLimaOrder::ligne_objectif )
-                                      ( sword::LimaOrder::ligne_coup_arret, Common::MsgLimaOrder::ligne_coup_arret )
-                                      ( sword::LimaOrder::ligne_recueil, Common::MsgLimaOrder::ligne_recueil )
-                                      ( sword::LimaOrder::ligne_debut_mission, Common::MsgLimaOrder::ligne_debut_mission )
-                                      ( sword::LimaOrder::ligne_fin_mission, Common::MsgLimaOrder::ligne_fin_mission )
-                                      ( sword::LimaOrder::ligne_identification_accueil, Common::MsgLimaOrder::ligne_identification_accueil ) );
+#ifdef SHIELD_CLIENT
+        to->mutable_time()->set_data( from.horaire().data() );
+#elif defined SHIELD_SIMULATION
+        to->mutable_horaire()->set_data( from.time().data() );
+#endif
+        CONVERT_ENUM_LIST( fonctions, ( sword::PhaseLineOrder::ligne_debouche, Common::MsgLimaOrder::ligne_debouche )
+                                      ( sword::PhaseLineOrder::ligne_changement_attitude, Common::MsgLimaOrder::ligne_changement_attitude )
+                                      ( sword::PhaseLineOrder::ligne_coordination, Common::MsgLimaOrder::ligne_coordination )
+                                      ( sword::PhaseLineOrder::ligne_interdire, Common::MsgLimaOrder::ligne_interdire )
+                                      ( sword::PhaseLineOrder::ligne_objectif, Common::MsgLimaOrder::ligne_objectif )
+                                      ( sword::PhaseLineOrder::ligne_coup_arret, Common::MsgLimaOrder::ligne_coup_arret )
+                                      ( sword::PhaseLineOrder::ligne_recueil, Common::MsgLimaOrder::ligne_recueil )
+                                      ( sword::PhaseLineOrder::ligne_debut_mission, Common::MsgLimaOrder::ligne_debut_mission )
+                                      ( sword::PhaseLineOrder::ligne_fin_mission, Common::MsgLimaOrder::ligne_fin_mission )
+                                      ( sword::PhaseLineOrder::ligne_identification_accueil, Common::MsgLimaOrder::ligne_identification_accueil ) );
     }
     template< typename From, typename To >
     void ConvertValue( const From& from, To* to )
@@ -253,8 +258,13 @@ namespace shield
         CONVERT_ID( urbanknowledge );
         if( from.has_plannedwork() )
             ConvertPlannedWork( from.plannedwork(), to->mutable_plannedwork() );
+#ifdef SHIELD_CLIENT
         if( from.has_atlasnature() )
-            to->mutable_atlasnature()->set_nature( from.atlasnature().nature() );
+            to->mutable_nature()->set_flags( from.atlasnature().nature() );
+#elif defined SHIELD_SIMULATION
+        if( from.has_nature() )
+            to->mutable_atlasnature()->set_nature( from.nature().flags() );
+#endif
         CONVERT_ID( resourcetype );
         CONVERT_LIST( logmaintenancepriorities, elem, ConvertIdentifier );
         if( from.has_logmedicalpriorities() )

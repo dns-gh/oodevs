@@ -40,20 +40,20 @@ public:
     //@{
     static       void              Initialize();
     static       void              Terminate ();
-    static const MIL_LimaFunction* Find      ( const sword::LimaOrder_Function& asn );
+    static const MIL_LimaFunction* Find      ( const sword::PhaseLineOrder::Function& asn );
     static const MIL_LimaFunction* Find      ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
     unsigned int                  GetID   () const;
-    sword::LimaOrder_Function GetAsnID() const;
+    sword::PhaseLineOrder::Function GetAsnID() const;
     //@}
 
 private:
     //! @name Constructors/Destructor
     //@{
-     MIL_LimaFunction( const sword::LimaOrder_Function& asn, unsigned int nID, const std::string& strName );
+     MIL_LimaFunction( const sword::PhaseLineOrder::Function& asn, unsigned int nID, const std::string& strName );
     ~MIL_LimaFunction();
 
      MIL_LimaFunction( const MIL_LimaFunction& );            //!< Copy constructor
@@ -63,7 +63,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< sword::LimaOrder_Function, const MIL_LimaFunction* > T_LimaFunctionMap;
+    typedef std::map< sword::PhaseLineOrder::Function, const MIL_LimaFunction* > T_LimaFunctionMap;
     typedef T_LimaFunctionMap::const_iterator                       CIT_LimaFunctionMap;
     //@}
 
@@ -85,7 +85,7 @@ private:
     //@}
 
 private:
-    const sword::LimaOrder_Function nAsnID_;
+    const sword::PhaseLineOrder::Function nAsnID_;
     const unsigned int                  nID_;
     const std::string                   strName_;
 

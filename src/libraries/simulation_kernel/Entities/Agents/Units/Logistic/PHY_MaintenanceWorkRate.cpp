@@ -19,10 +19,10 @@
 
 PHY_MaintenanceWorkRate::T_WorkRateMap PHY_MaintenanceWorkRate::workRates_;
 
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r1_( "Regime1", sword::regime_1 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", sword::regime_2 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", sword::regime_3 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", sword::regime_4 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r1_( "Regime1", sword::rate_1 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", sword::rate_2 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", sword::rate_3 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", sword::rate_4 );
 
 struct PHY_MaintenanceWorkRate::LoadingWrapper
 {
@@ -42,7 +42,6 @@ void PHY_MaintenanceWorkRate::Initialize( xml::xistream& xis )
     workRates_[ r2_.GetName() ] = &r2_;
     workRates_[ r3_.GetName() ] = &r3_;
     workRates_[ r4_.GetName() ] = &r4_;
-
     LoadingWrapper loader;
     xis >> xml::start( "maintenance" )
             >> xml::start( "working-schemes" )
@@ -64,7 +63,7 @@ void PHY_MaintenanceWorkRate::Terminate()
 // Name: PHY_MaintenanceWorkRate constructor
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-PHY_MaintenanceWorkRate::PHY_MaintenanceWorkRate( const std::string& strName, sword::EnumLogMaintenanceRegimeTravail asn )
+PHY_MaintenanceWorkRate::PHY_MaintenanceWorkRate( const std::string& strName, sword::EnumLogMaintenanceWorkRate asn )
     : strName_              ( strName )
     , asn_                  ( asn )
     , rWorkerRatio_         ( 1. )
@@ -112,7 +111,7 @@ void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
 // Name: PHY_MaintenanceWorkRate::Find
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( sword::EnumLogMaintenanceRegimeTravail nID )
+const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( sword::EnumLogMaintenanceWorkRate nID )
 {
     for( CIT_WorkRateMap it = workRates_.begin(); it != workRates_.end(); ++it )
         if( it->second->GetAsnID() == nID )
@@ -124,7 +123,7 @@ const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( sword::EnumLogMain
 // Name: PHY_MaintenanceWorkRate::GetAsnID
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-sword::EnumLogMaintenanceRegimeTravail PHY_MaintenanceWorkRate::GetAsnID() const
+sword::EnumLogMaintenanceWorkRate PHY_MaintenanceWorkRate::GetAsnID() const
 {
     return asn_;
 }

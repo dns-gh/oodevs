@@ -656,15 +656,15 @@ namespace
     void FillMissionObjective( O* o )
     {
         FillLocation( o->mutable_location() );
-        o->mutable_horaire()->set_data( "horaire" );
+        o->mutable_time()->set_data( "horaire" );
     }
     template< typename O >
     void FillLimaOrder( O* o )
     {
         FillLocation( o->mutable_lima()->mutable_location() );
-        o->mutable_horaire()->set_data( "horaire2" );
-        o->add_fonctions( sword::LimaOrder::ligne_recueil );
-        o->add_fonctions( sword::LimaOrder::ligne_objectif );
+        o->mutable_time()->set_data( "horaire2" );
+        o->add_fonctions( sword::PhaseLineOrder::ligne_recueil );
+        o->add_fonctions( sword::PhaseLineOrder::ligne_objectif );
     }
     template< typename V >
     void FillParameterValue( V* v )
@@ -687,12 +687,12 @@ namespace
         v->mutable_objectknowledge()->set_id( 9 );
         v->mutable_urbanknowledge()->set_id( 10 );
         FillPlannedWork( v->mutable_plannedwork() );
-        v->mutable_atlasnature()->set_nature( 11 );
+        v->mutable_nature()->set_flags( 11 );
         v->mutable_resourcetype()->set_id( 50 );
         v->mutable_logmaintenancepriorities()->add_elem()->set_id( 51 );
         v->mutable_logmaintenancepriorities()->add_elem()->set_id( 52 );
-        v->mutable_logmedicalpriorities()->add_elem( sword::mort );
-        v->mutable_logmedicalpriorities()->add_elem( sword::non_blesse );
+        v->mutable_logmedicalpriorities()->add_elem( sword::dead );
+        v->mutable_logmedicalpriorities()->add_elem( sword::unwounded );
         v->set_areal( 3.14f );
         FillLocation( v->mutable_pathlist()->add_elem()->mutable_location() );
         FillLocation( v->mutable_pathlist()->add_elem()->mutable_location() );
@@ -1065,7 +1065,7 @@ BOOST_FIXTURE_TEST_CASE( log_medical_handling_creation_to_client_is_converted, C
     content.mutable_log_medical_handling_creation()->mutable_unit()->set_id( 8 );
     content.mutable_log_medical_handling_creation()->set_tick( 9u );
     content.mutable_log_medical_handling_creation()->set_rank( sword::trooper );
-    content.mutable_log_medical_handling_creation()->set_wound( sword::mort );
+    content.mutable_log_medical_handling_creation()->set_wound( sword::dead );
     content.mutable_log_medical_handling_creation()->set_mental_wound( true );
     content.mutable_log_medical_handling_creation()->set_nbc_contaminated( true );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_medical_handling_creation { request { id: 7 } unit { id: 8 } tick_creation: 9 rang: mdr blessure: mort blesse_mental: true contamine_nbc: true } }" ) );
@@ -1077,7 +1077,7 @@ BOOST_FIXTURE_TEST_CASE( log_medical_handling_update_to_client_is_converted, Con
     content.mutable_log_medical_handling_update()->mutable_request()->set_id( 7 );
     content.mutable_log_medical_handling_update()->mutable_unit()->set_id( 8 );
     content.mutable_log_medical_handling_update()->mutable_provider()->set_id( 9 );
-    content.mutable_log_medical_handling_update()->set_wound( sword::mort );
+    content.mutable_log_medical_handling_update()->set_wound( sword::dead );
     content.mutable_log_medical_handling_update()->set_mental_wound( true );
     content.mutable_log_medical_handling_update()->set_nbc_contaminated( true );
     content.mutable_log_medical_handling_update()->set_state( sword::LogMedicalHandlingUpdate::triaging );
@@ -1112,8 +1112,8 @@ BOOST_FIXTURE_TEST_CASE( log_medical_state_to_client_is_converted, ContextFixtur
 {
     content.mutable_log_medical_state()->mutable_unit()->set_id( 7 );
     content.mutable_log_medical_state()->set_chain( true );
-    content.mutable_log_medical_state()->mutable_priorities()->add_elem( sword::mort );
-    content.mutable_log_medical_state()->mutable_priorities()->add_elem( sword::non_blesse );
+    content.mutable_log_medical_state()->mutable_priorities()->add_elem( sword::dead );
+    content.mutable_log_medical_state()->mutable_priorities()->add_elem( sword::unwounded );
     content.mutable_log_medical_state()->mutable_tactical_priorities()->add_elem()->set_id( 8 );
     content.mutable_log_medical_state()->mutable_tactical_priorities()->add_elem()->set_id( 9 );
     FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_ambulances_releve()->add_elem() );
@@ -1160,7 +1160,7 @@ BOOST_FIXTURE_TEST_CASE( log_maintenance_state_to_client_is_converted, ContextFi
 {
     content.mutable_log_maintenance_state()->mutable_unit()->set_id( 7 );
     content.mutable_log_maintenance_state()->set_chain( true );
-    content.mutable_log_maintenance_state()->set_working_scheme( sword::regime_1 );
+    content.mutable_log_maintenance_state()->set_work_rate( sword::rate_1 );
     content.mutable_log_maintenance_state()->mutable_priorities()->add_elem()->set_id( 8 );
     content.mutable_log_maintenance_state()->mutable_priorities()->add_elem()->set_id( 9 );
     content.mutable_log_maintenance_state()->mutable_tactical_priorities()->add_elem()->set_id( 10 );

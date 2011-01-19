@@ -20,15 +20,13 @@
 namespace bpt = boost::posix_time;
 using namespace plugins::bml;
 
-using namespace sword;
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPhaseLine constructor
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
 MissionParameterPhaseLine::MissionParameterPhaseLine( xml::xistream& xis, const kernel::OrderParameter& type, const std::string& functions )
     : MissionParameter_ABC( type )
-    , points_( 0 )
+    , points_   ( 0 )
     , functions_( functions )
 {
     xis >> xml::start( NS( "Line", "cbml" ) );
@@ -49,36 +47,36 @@ MissionParameterPhaseLine::~MissionParameterPhaseLine()
 // Name: MissionParameterPhaseLine::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Serialize( MissionParameter& ) const
+void MissionParameterPhaseLine::Serialize( sword::MissionParameter& ) const
 {
     // NOTHING
 }
 
 namespace
 {
-    LimaOrder_Function ToPhaseLineType( const std::string& function )
+    sword::PhaseLineOrder::Function ToPhaseLineType( const std::string& function )
     {
         if( function == "LD" )
-            return LimaOrder_Function_ligne_debouche;
+            return sword::PhaseLineOrder::ligne_debouche;
         if( function == "LCA" )
-            return LimaOrder_Function_ligne_changement_attitude;
+            return sword::PhaseLineOrder::ligne_changement_attitude;
         if( function == "LC" )
-            return LimaOrder_Function_ligne_coordination;
+            return sword::PhaseLineOrder::ligne_coordination;
         if( function == "LI" )
-            return LimaOrder_Function_ligne_interdire;
+            return sword::PhaseLineOrder::ligne_interdire;
         if( function == "LO" )
-            return LimaOrder_Function_ligne_objectif;
+            return sword::PhaseLineOrder::ligne_objectif;
         if( function == "LCAR" )
-            return LimaOrder_Function_ligne_coup_arret;
+            return sword::PhaseLineOrder::ligne_coup_arret;
         if( function == "LR" )
-            return LimaOrder_Function_ligne_recueil;
+            return sword::PhaseLineOrder::ligne_recueil;
         if( function == "LDM" )
-            return LimaOrder_Function_ligne_debut_mission;
+            return sword::PhaseLineOrder::ligne_debut_mission;
         if( function == "LFM" )
-            return LimaOrder_Function_ligne_fin_mission;
+            return sword::PhaseLineOrder::ligne_fin_mission;
         if( function == "LIA" )
-            return LimaOrder_Function_ligne_identification_accueil;
-        return LimaOrder_Function( -1 );
+            return sword::PhaseLineOrder::ligne_identification_accueil;
+        return sword::PhaseLineOrder::Function( -1 );
     }
 }
 
@@ -86,13 +84,13 @@ namespace
 // Name: MissionParameterPhaseLine::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Serialize( LimaOrder& message ) const
+void MissionParameterPhaseLine::Serialize( sword::PhaseLineOrder& message ) const
 {
     std::vector< std::string > functions;
     boost::algorithm::split( functions, functions_, boost::algorithm::is_any_of( "," ) );
     for( std::vector< std::string >::const_iterator it = functions.begin(); it != functions.end(); ++it )
         message.add_fonctions( ToPhaseLineType( *it ) );
-    message.mutable_lima()->mutable_location()->set_type( Location_Geometry_line );
+    message.mutable_lima()->mutable_location()->set_type( sword::Location::line );
     points_->Serialize( *message.mutable_lima()->mutable_location()->mutable_coordinates() );
-    message.mutable_horaire()->set_data( bpt::to_iso_string( bpt::from_time_t( 0 ) ).c_str() );
+    message.mutable_time()->set_data( bpt::to_iso_string( bpt::from_time_t( 0 ) ).c_str() );
 }

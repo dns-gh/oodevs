@@ -33,7 +33,7 @@ LimaList::LimaList( const OrderParameter& parameter )
 // Name: LimaList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::LimasOrder& message )
+LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const sword::PhaseLinesOrder& message )
     : Parameter< QString >( parameter )
 {
     for( int i = 0; i < message.elem_size(); ++i )
@@ -72,12 +72,14 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( sword::LimasOrder& message ) : message_( &message ) {}
+        explicit AsnSerializer( sword::PhaseLinesOrder& message )
+            : message_( &message )
+        {}
         virtual void Visit( const Lima& param )
         {
             param.CommitTo( *message_->add_elem() );
         }
-        sword::LimasOrder* message_;
+        sword::PhaseLinesOrder* message_;
     };
 }
 

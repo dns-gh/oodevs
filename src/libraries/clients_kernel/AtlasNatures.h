@@ -14,8 +14,7 @@
 
 namespace kernel
 {
-
-class AtlasNature;
+    class AtlasNature;
 
 // =============================================================================
 /** @class  AtlasNatures

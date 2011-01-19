@@ -100,8 +100,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_LocationParameter( message.location() );
     else if( message.has_heading() )
         ptr = new MIL_DirectionParameter( message.heading() );
-    else if( message.has_atlasnature() )
-        ptr = new MIL_AtlasNatureParameter( message.atlasnature() );
+    else if( message.has_nature() )
+        ptr = new MIL_AtlasNatureParameter( message.nature() );
     else if( message.has_agent() )
         ptr = new MIL_AgentParameter( message.agent(), entityManager );
     else if( message.has_automat() )
