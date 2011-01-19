@@ -45,7 +45,7 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Update( MIL_Object_ABC& object, unsigned int time );
     void Update( xml::xistream& xis, const MIL_Object_ABC& /*object*/ );
-    void SendState( sword::UrbanAttributes& message );
+    void SendState( sword::UrbanAttributes& message ) const;
     void SendFullState( sword::UrbanAttributes& message ) const;
     void SetEnabled( bool enabled );
     void SetThreshold( float threshold );
@@ -70,7 +70,7 @@ private:
     std::string role_;
     bool enabled_;
     float threshold_;
-    bool needUpdate_;
+    mutable bool needUpdate_;
     //@}
 };
 
