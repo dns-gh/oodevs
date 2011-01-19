@@ -126,6 +126,7 @@ ADN_OpenMode_Dialog.cpp \
 ADN_Point_GUI.cpp \
 ADN_People_Data.cpp \
 ADN_People_GUI.cpp \
+ADN_Schedule_Table.cpp \
 ADN_People_ListView.cpp \
 ADN_People_Wizard.cpp \
 ADN_Population_Data.cpp \

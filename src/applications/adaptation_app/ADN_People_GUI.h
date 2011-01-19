@@ -38,7 +38,8 @@ public:
         eChildren,
         eLossOnFire,
         eGainPerHour,
-        eNbrGuiElements
+        eTransferTime,
+        eNbrGuiElements,
     };
     //@}
 

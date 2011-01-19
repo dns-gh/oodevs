@@ -3139,6 +3139,14 @@ Assurez vous que le fichier existe.</translation>
         <source>Gain per hour</source>
         <translation>Gain par heure</translation>
     </message>
+    <message>
+        <source>Schedule</source>
+        <translation>Calendier</translation>
+    </message>
+    <message>
+        <source>Transfer time</source>
+        <translation>Temps de transfert</translation>
+    </message>
 </context>
 <context>
     <name>ADN_People_ListView</name>
@@ -3504,6 +3512,33 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
 Make sure that the file is not write-protected.</source>
         <translation>Impossible d&apos;enregistrer le fichier &apos;%1&apos;.
 Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Schedule_Table</name>
+    <message>
+        <source>Day</source>
+        <translation>Jour</translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation>De</translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation>A</translation>
+    </message>
+    <message>
+        <source>Motivation</source>
+        <translation>Motivation</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>

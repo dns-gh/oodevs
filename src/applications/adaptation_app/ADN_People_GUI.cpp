@@ -14,6 +14,7 @@
 #include "ADN_People_Data.h"
 #include "ADN_People_ListView.h"
 #include "ADN_ComboBox_Vector.h"
+#include "ADN_Schedule_Table.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_People_GUI constructor
@@ -72,6 +73,11 @@ void ADN_People_GUI::Build()
     QGroupBox* pSecurityGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Security satisfaction level" ), pGroup );
     builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Loss on fire" ), vInfosConnectors[ eLossOnFire ], tr( "%" ), ePercentage );
     builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Gain per hour" ), vInfosConnectors[ eGainPerHour ], tr( "%" ), ePercentage );
+
+    QGroupBox* pScheduleGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Schedule" ), pGroup );
+    builder.AddField< ADN_TimeField >( pScheduleGroup, tr( "Transfer time" ), vInfosConnectors[ eTransferTime ] );
+    ADN_Schedule_Table* pTable = new ADN_Schedule_Table( pScheduleGroup );
+    connect( pPeopleList_, SIGNAL( ItemSelected( void* ) ), pTable, SLOT( OnPeopleChanged( void* ) ) );
 
     pPeopleList_->SetItemConnectors( vInfosConnectors );
 

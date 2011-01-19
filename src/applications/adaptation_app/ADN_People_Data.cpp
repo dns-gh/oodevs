@@ -14,6 +14,79 @@
 #include "ADN_DataException.h"
 #include "ADN_Tr.h"
 
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::EventInfos
+// Created: LGY 2011-01-18
+// -----------------------------------------------------------------------------
+ADN_People_Data::EventInfos::EventInfos()
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::~EventInfos
+// Created: LGY 2011-01-18
+// -----------------------------------------------------------------------------
+ADN_People_Data::EventInfos::~EventInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::GetNodeName
+// Created: LGY 2011-01-18
+// -----------------------------------------------------------------------------
+std::string ADN_People_Data::EventInfos::GetNodeName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::GetItemName
+// Created: LGY 2011-01-18
+// -----------------------------------------------------------------------------
+std::string ADN_People_Data::EventInfos::GetItemName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::CreateCopy
+// Created: LGY 2011-01-18
+// -----------------------------------------------------------------------------
+ADN_People_Data::EventInfos* ADN_People_Data::EventInfos::CreateCopy()
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::ReadArchive
+// Created: LGY 2011-01-18
+// -----------------------------------------------------------------------------
+void ADN_People_Data::EventInfos::ReadArchive( xml::xistream& input )
+{
+    day_ = input.attribute< std::string >( "day" );
+    from_ = input.attribute< std::string >( "from" );
+    to_ = input.attribute< std::string >( "to" );
+    motivation_ = input.attribute< std::string >( "motivation" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::WriteArchive
+// Created: LGY 2011-01-18
+// -----------------------------------------------------------------------------
+void ADN_People_Data::EventInfos::WriteArchive( xml::xostream& output )
+{
+    output << xml::start( "event" )
+           << xml::attribute( "day", day_ )
+           << xml::attribute( "from", from_ )
+           << xml::attribute( "to", to_ )
+           << xml::attribute( "motivation", motivation_ )
+           << xml::end;
+}
+
 // =============================================================================
 // ADN_People_Data::PeopleInfos
 // =============================================================================
@@ -23,7 +96,7 @@
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
 ADN_People_Data::PeopleInfos::PeopleInfos()
-    : ADN_Ref_ABC         ()
+    : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
     , ptrModel_           ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
     , male_               ( 0 )
@@ -31,6 +104,7 @@ ADN_People_Data::PeopleInfos::PeopleInfos()
     , children_           ( 0 )
     , securityLossOnFire_ ( 0 )
     , securityGainPerHour_( 0 )
+    , transferTime_       ( "0h" )
 {
     BindExistenceTo( &ptrModel_ );
 }
@@ -73,8 +147,17 @@ ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
     pCopy->male_ = male_.GetData();
     pCopy->female_ = female_.GetData();
     pCopy->children_ = children_.GetData();
+    pCopy->transferTime_ = transferTime_.GetData();
     pCopy->securityLossOnFire_ = securityLossOnFire_.GetData();
     pCopy->securityGainPerHour_ = securityGainPerHour_.GetData();
+    for( IT_Events it = schedule_.begin(); it != schedule_.end(); ++it )
+    {
+        pCopy->schedule_[ it->first ].reset( new EventInfos() );
+        pCopy->schedule_[ it->first ]->day_ = it->second->day_.GetData();
+        pCopy->schedule_[ it->first ]->from_ = it->second->from_.GetData();
+        pCopy->schedule_[ it->first ]->to_ = it->second->to_.GetData();
+        pCopy->schedule_[ it->first ]->motivation_ = it->second->motivation_.GetData();
+    }
     return pCopy;
 }
 
@@ -84,6 +167,7 @@ ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
 {
+    int index = 0;
     std::string strModel;
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "associated-crowd", strModel );
@@ -100,6 +184,7 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
           >> xml::end
           >> xml::start( "schedule" )
             >> xml::attribute( "transfer-time", transferTime_ )
+            >> xml::list( "event", *this, &ADN_People_Data::PeopleInfos::ReadEvent, index )
           >> xml::end
           >> xml::start( "security-level" )
             >> xml::attribute( "loss-on-fire", securityLossOnFire_ )
@@ -125,13 +210,26 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
                 << xml::attribute( "children", children_ )
             << xml::end
             << xml::start( "schedule" )
-                << xml::attribute( "transfer-time", transferTime_ )
-            << xml::end
+                << xml::attribute( "transfer-time", transferTime_ );
+    for( IT_Events it = schedule_.begin(); it != schedule_.end(); ++it )
+        it->second->WriteArchive( output );
+    output  << xml::end
           << xml::start( "security-level" )
             << xml::attribute( "loss-on-fire", securityLossOnFire_.GetData() / 100.0 )
             << xml::attribute( "gain-per-hour", securityGainPerHour_.GetData() / 100.0 )
           << xml::end
          << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::ReadEvent
+// Created: LGY 2011-01-18
+// -----------------------------------------------------------------------------
+void ADN_People_Data::PeopleInfos::ReadEvent( xml::xistream& input, int& index )
+{
+    schedule_[ index ].reset( new EventInfos() );
+    schedule_[ index ]->ReadArchive( input );
+    index++;
 }
 
 // =============================================================================

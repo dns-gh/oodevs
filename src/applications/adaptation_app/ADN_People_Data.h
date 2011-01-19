@@ -14,6 +14,8 @@
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Population_Data.h"
+#include <map>
+#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -29,13 +31,35 @@ class ADN_People_Data : public ADN_Data_ABC
 {
 public:
 // *****************************************************************************
+    class EventInfos : public ADN_Ref_ABC
+                     , public ADN_DataTreeNode_ABC
+    {
+    public:
+         EventInfos();
+        ~EventInfos();
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        EventInfos* CreateCopy();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        ADN_Type_String day_;
+        ADN_Type_String from_;
+        ADN_Type_String to_;
+        ADN_Type_String motivation_;
+    };
+// *****************************************************************************
     class PeopleInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
 
     public:
-        PeopleInfos();
+         PeopleInfos();
         ~PeopleInfos();
 
         virtual std::string GetNodeName();
@@ -46,23 +70,30 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output, int mosId );
 
+        typedef std::map< int, boost::shared_ptr< EventInfos > > T_Events;
+        typedef T_Events::iterator                              IT_Events;
+
+    private:
+        void ReadEvent( xml::xistream& input, int& index );
+
     public:
         ADN_Type_String strName_;
         ADN_TypePtr_InVector_ABC<ADN_Population_Data::PopulationInfos> ptrModel_;
-        ADN_Type_Int male_; 
-        ADN_Type_Int female_; 
+        ADN_Type_Int male_;
+        ADN_Type_Int female_;
         ADN_Type_Int children_;
-        ADN_Type_String transferTime_;
+        ADN_Type_Time transferTime_;
         ADN_Type_Double securityLossOnFire_;
         ADN_Type_Double securityGainPerHour_;
+        T_Events schedule_;
     };
 
-    typedef ADN_Type_Vector_ABC< PeopleInfos >  T_PeopleInfosVector;
-    typedef T_PeopleInfosVector::iterator      IT_PeopleInfosVector;
+    typedef ADN_Type_Vector_ABC< PeopleInfos > T_PeopleInfosVector;
+    typedef T_PeopleInfosVector::iterator     IT_PeopleInfosVector;
 
 // *****************************************************************************
 public:
-    ADN_People_Data();
+             ADN_People_Data();
     virtual ~ADN_People_Data();
 
     void Reset();
