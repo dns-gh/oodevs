@@ -12,7 +12,6 @@
 #include "StructuralCapacity.h"
 #include "ResourceNetworkCapacity.h"
 #include "MIL_Object_ABC.h"
-#include "resource_network/NodeElementVisitor_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
 
