@@ -13,6 +13,7 @@
 #include "DEC_Knowledge_Urban.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
@@ -31,10 +32,12 @@ namespace
 
         virtual void VisitBlock( urban::TerrainObject_ABC& object )
         {
-            boost::shared_ptr< DEC_Knowledge_Urban > knowledge( new DEC_Knowledge_Urban( army_, object ) );
-            elements_[ object.GetId() ] = knowledge;
-            knowledgeElements_[ knowledge->GetID() ] = knowledge;
-
+            if( UrbanObjectWrapper::FindWrapperObject( object ) )
+            {
+                boost::shared_ptr< DEC_Knowledge_Urban > knowledge( new DEC_Knowledge_Urban( army_, object ) );  // $$$$ _RC_ SLG 2011-01-18: passer le wrapper en paramètre au lieu de l'objet
+                elements_[ object.GetId() ] = knowledge;
+                knowledgeElements_[ knowledge->GetID() ] = knowledge;
+            }
         }
 
     private:
