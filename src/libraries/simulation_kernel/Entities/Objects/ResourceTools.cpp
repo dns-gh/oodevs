@@ -9,8 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "ResourceTools.h"
+#include "MIL_AgentServer.h"
 #include "PHY_ResourceNetworkType.h"
 #include "UrbanObjectWrapper.h"
+#include "Entities/MIL_EntityManager.h"
 #include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
@@ -61,5 +63,5 @@ unsigned long ResourceTools::GetResourceId( const std::string& name ) const
 // -----------------------------------------------------------------------------
 unsigned int ResourceTools::GetIdFromSimulation( unsigned int urbanId ) const
 {
-    return UrbanObjectWrapper::GetIdFromSimulation( urbanId );
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( urbanId );
 }

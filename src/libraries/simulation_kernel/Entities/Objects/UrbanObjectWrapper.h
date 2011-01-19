@@ -119,17 +119,6 @@ private:
     //@{
     HLA_Object_ABC* pView_;
     //@}
-
-public:
-
-    typedef std::map< const urban::TerrainObject_ABC*, UrbanObjectWrapper*  > T_ObjectMap;
-    typedef T_ObjectMap::iterator                                            IT_ObjectMap;
-    typedef T_ObjectMap::const_iterator                                     CIT_ObjectMap;
-
-    static T_ObjectMap objectMap_;
-
-    static UrbanObjectWrapper& GetWrapperObject( const urban::TerrainObject_ABC& object );
-    static unsigned int GetIdFromSimulation( unsigned int urbanId );
 };
 
 BOOST_CLASS_EXPORT_KEY( UrbanObjectWrapper )

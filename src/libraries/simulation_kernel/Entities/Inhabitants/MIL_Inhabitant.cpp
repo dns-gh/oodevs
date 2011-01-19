@@ -11,6 +11,7 @@
 #include "MIL_Inhabitant.h"
 #include "MIL_InhabitantType.h"
 #include "MIL_AgentServer.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Objects/MedicalCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
@@ -254,7 +255,7 @@ void MIL_Inhabitant::ReadUrbanBlock( xml::xistream& xis, float& area )
         xis.error( "Error in loading living urban block of population " + GetName() );
     area += object->GetFootprint()->ComputeArea();
     urbanBlocks_.push_back( T_UrbanBlock( object , 0 ) );
-    UrbanObjectWrapper::GetWrapperObject( *object ).Register( *static_cast< MIL_StructuralStateNotifier_ABC* >( this ) );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object ).Register( *static_cast< MIL_StructuralStateNotifier_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +278,7 @@ void MIL_Inhabitant::SendCreation() const
     }
     BOOST_FOREACH( const T_UrbanBlock& block, urbanBlocks_ )
     {
-        msg().add_blocks()->set_id( UrbanObjectWrapper::GetWrapperObject( *block.first ).GetID() );
+        msg().add_blocks()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *block.first ).GetID() );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -297,7 +298,7 @@ void MIL_Inhabitant::SendFullState() const
     BOOST_FOREACH( const T_UrbanBlock& urbanBlock, urbanBlocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
-        block.mutable_block()->set_id( UrbanObjectWrapper::GetWrapperObject( *urbanBlock.first ).GetID() );
+        block.mutable_block()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *urbanBlock.first ).GetID() );
         block.set_number( urbanBlock.second );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
@@ -381,7 +382,7 @@ void MIL_Inhabitant::ComputeHealthSatisfaction()
         float healthCount = 0;
         BOOST_FOREACH( const T_UrbanBlock& urbanBlock, urbanBlocks_ )
         {
-            MIL_Object_ABC& object = UrbanObjectWrapper::GetWrapperObject( *urbanBlock.first );
+            MIL_Object_ABC& object = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *urbanBlock.first );
             if( object.Retrieve< MedicalCapacity >() )
             {
                 const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();

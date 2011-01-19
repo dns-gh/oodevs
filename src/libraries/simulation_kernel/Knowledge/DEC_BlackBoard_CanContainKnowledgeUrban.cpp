@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_Urban.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_Army_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/MIL_EntityManager.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
@@ -32,11 +32,15 @@ namespace
 
         virtual void VisitBlock( urban::TerrainObject_ABC& object )
         {
-            if( UrbanObjectWrapper::FindWrapperObject( object ) )
+            try
             {
-                boost::shared_ptr< DEC_Knowledge_Urban > knowledge( new DEC_Knowledge_Urban( army_, object ) );  // $$$$ _RC_ SLG 2011-01-18: passer le wrapper en paramètre au lieu de l'objet
+                boost::shared_ptr< DEC_Knowledge_Urban > knowledge( new DEC_Knowledge_Urban( army_, MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( object ) ) );
                 elements_[ object.GetId() ] = knowledge;
                 knowledgeElements_[ knowledge->GetID() ] = knowledge;
+            }
+            catch( ... )
+            {
+                // object not wrapped
             }
         }
 
@@ -67,7 +71,7 @@ DEC_BlackBoard_CanContainKnowledgeUrban::DEC_BlackBoard_CanContainKnowledgeUrban
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeUrban::~DEC_BlackBoard_CanContainKnowledgeUrban()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
@@ -113,7 +117,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& fi
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban::CreateKnowledgeUrban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object )
 {
-    boost::shared_ptr< DEC_Knowledge_Urban > knowledge ( new DEC_Knowledge_Urban( army, object ) );
+    boost::shared_ptr< DEC_Knowledge_Urban > knowledge ( new DEC_Knowledge_Urban( army, MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( object ) ) );
     if( ! urbanMapFromConcrete_.insert( std::make_pair( object.GetId(), knowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     if( ! urbanKnowledgeMapFromKnowledgeId_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )

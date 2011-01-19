@@ -12,7 +12,6 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_Object.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
 #include <geometry/Types.h>
 
@@ -20,6 +19,7 @@ class DEC_Knowledge_UrbanPerception;
 class MIL_Army_ABC;
 class MIL_Agent_ABC;
 class MIL_Automate;
+class UrbanObjectWrapper;
 
 namespace urban
 {
@@ -42,7 +42,7 @@ class DEC_Knowledge_Urban : public DEC_Knowledge_Object
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object );
+             DEC_Knowledge_Urban( const MIL_Army_ABC& army, UrbanObjectWrapper& wrapper );
              DEC_Knowledge_Urban();
     virtual ~DEC_Knowledge_Urban();
     //@}
@@ -73,7 +73,6 @@ public:
     //! @name Relevance management
     //@{
     virtual void UpdateRelevance();
-    //virtual double GetRelevance() const;
     //@}
 
     //! @name Network operations
@@ -85,12 +84,12 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::vector< const MIL_Automate* >  T_PerceptionSource;
+    typedef std::vector< const MIL_Automate* >   T_PerceptionSource;
     typedef T_PerceptionSource::iterator        IT_PerceptionSource;
-    typedef T_PerceptionSource::const_iterator  CIT_PerceptionSource;
+    typedef T_PerceptionSource::const_iterator CIT_PerceptionSource;
 
-    typedef std::vector< const MIL_Agent_ABC* >     T_PerceptionAgentSource;
-    typedef T_PerceptionAgentSource::iterator       IT_PerceptionAgentSource;
+    typedef std::vector< const MIL_Agent_ABC* >       T_PerceptionAgentSource;
+    typedef T_PerceptionAgentSource::iterator        IT_PerceptionAgentSource;
     typedef T_PerceptionAgentSource::const_iterator CIT_PerceptionAgentSource;
     //@}
 

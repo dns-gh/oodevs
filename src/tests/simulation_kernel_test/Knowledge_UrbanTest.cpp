@@ -12,6 +12,7 @@
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
+#include "simulation_kernel/Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Urban.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
@@ -61,7 +62,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
     flux >> xml::start( "urban-object" );
     const urban::TerrainObject_ABC* pBlock = new urban::UrbanObject( flux, 0, *converter );
     flux >> xml::end;
-    MIL_Object_ABC* pObject = loader.CreateUrbanObject( *pBlock );
+    UrbanObjectWrapper* pObject = static_cast< UrbanObjectWrapper* >( loader.CreateUrbanObject( *pBlock ) );
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *pion.pPion_ );
     urbanRole->NotifyMovingInsideObject( *pObject);
     pion.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
@@ -70,7 +71,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
         MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
         MOCK_EXPECT( army, GetID ).returns( 1u );
         MOCK_EXPECT( publisher, Send ).at_least( 1 );
-        DEC_Knowledge_Urban kn( army, *pBlock );
+        DEC_Knowledge_Urban kn( army, *pObject );
         DEC_Knowledge_UrbanPerception perception( *pion.pPion_, *pBlock );
         perception.SetPerceptionLevel( PHY_PerceptionLevel::detected_ );
 

@@ -10,19 +10,16 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "CapacityFactory.h"
 #include "MIL_ObjectManager.h"
-#include "MIL_AgentServer.h"
+#include "CapacityFactory.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectLoader.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "MIL_Singletons.h"
 #include "Entities/MIL_Army_ABC.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -30,6 +27,7 @@
 #include <urban/TerrainObject_ABC.h>
 #include <hla/HLA_Federate.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/map.hpp>
 
@@ -63,6 +61,9 @@ MIL_ObjectManager::~MIL_ObjectManager()
 void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> objects_;
+    for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+        if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( it->second ) )
+            urbanObjects_.insert( std::make_pair( &wrapper->GetObject(), wrapper ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +99,8 @@ void MIL_ObjectManager::UpdateStates()
             object.SendDestruction();
             if( MIL_Singletons::GetHla() )
                 MIL_Singletons::GetHla()->Unregister( object );
+            if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
+                urbanObjects_.erase( &wrapper->GetObject() );
             delete &object;
             it = objects_.erase( it );
         }
@@ -144,6 +147,30 @@ void MIL_ObjectManager::RegisterDistantObject( MIL_Object_ABC* pObject )
 const MIL_ObjectType_ABC& MIL_ObjectManager::FindType( const std::string& type ) const
 {
     return builder_->FindType( type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::GetUrbanObjectWrapper
+// Created: JSR 2011-01-18
+// -----------------------------------------------------------------------------
+UrbanObjectWrapper& MIL_ObjectManager::GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object )
+{
+    CIT_UrbanObjectMap it = urbanObjects_.find( &object );
+    if( it == urbanObjects_.end() )
+        throw std::exception( "Unable to get UrbanObjectWrapper from TerrainObject" );
+    return *( it->second );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::ConvertUrbanIdToSimId
+// Created: JSR 2011-01-18
+// -----------------------------------------------------------------------------
+unsigned int MIL_ObjectManager::ConvertUrbanIdToSimId( unsigned int urbanId )
+{
+    for( CIT_UrbanObjectMap it = urbanObjects_.begin(); it != urbanObjects_.end(); ++it )
+        if( it->first->GetId() == urbanId )
+            return it->second->GetID();
+    throw std::exception( ( "Cannot find urban object with id = " + boost::lexical_cast< std::string >( urbanId ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +259,7 @@ MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const urban::TerrainObject
 {
     MIL_Object_ABC* pObject = builder_->BuildUrbanObject( object );
     RegisterObject( pObject );
-    urbanIds_.push_back( pObject->GetID() );
+    urbanObjects_.insert( std::make_pair( &object, static_cast< UrbanObjectWrapper* >( pObject ) ) );
     return pObject;
 }
 
@@ -251,7 +278,7 @@ void MIL_ObjectManager::UpdateCapacity( const std::string& capacity, xml::xistre
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 {
-    MIL_Object_ABC* urbanObject = Find( UrbanObjectWrapper::GetIdFromSimulation( xis.attribute< unsigned int >( "id" ) ) );
+    MIL_Object_ABC* urbanObject = Find( ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) ) );
     if( urbanObject )
         xis >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *urbanObject );
 }

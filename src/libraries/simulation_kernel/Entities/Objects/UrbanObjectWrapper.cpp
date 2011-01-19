@@ -31,14 +31,11 @@
 #include <urban/StaticModel.h>
 #include <urban/InfrastructureType.h>
 #include <urban/MaterialCompositionType.h>
-#include <boost/lexical_cast.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
 #include <map>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
-
-UrbanObjectWrapper::T_ObjectMap UrbanObjectWrapper::objectMap_;
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper constructor
@@ -50,7 +47,6 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
     , pView_ ( 0 )
 {
     id_ = idManager_.GetFreeId();
-    objectMap_.insert( std::make_pair( &object, this ) );
     InitializeAttributes();
     builder.Build( *this );
 }
@@ -73,7 +69,7 @@ UrbanObjectWrapper::UrbanObjectWrapper()
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::~UrbanObjectWrapper()
 {
-    objectMap_.erase( object_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +118,6 @@ void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int
     file >> id_
          >> urbanId;
     object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
-    objectMap_.insert( std::make_pair( object_, this ) );
     idManager_.Lock( id_ );
 }
 
@@ -377,7 +372,6 @@ void UrbanObjectWrapper::UpdateState()
     SendCapacity< ResourceNetworkCapacity >( *message().mutable_attributes() );
     if ( message().attributes().has_structure() || message().attributes().has_infrastructures() )
         message.Send( NET_Publisher_ABC::Publisher() );
-
     MIL_Object::UpdateState();
 }
 
@@ -429,28 +423,4 @@ sword::UrbanMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateStructuralState
     capacity->SetStructuralState( state );
     ApplyStructuralState( state );
     return sword::UrbanMagicActionAck::no_error;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::GetWrapperObject
-// Created: SLG 2011-01-07
-// -----------------------------------------------------------------------------
-UrbanObjectWrapper& UrbanObjectWrapper::GetWrapperObject( const urban::TerrainObject_ABC& object )
-{
-    CIT_ObjectMap it = objectMap_.find( &object );
-    if( it == objectMap_.end() )
-        throw std::runtime_error( "error in access urban object" );
-    return *( it->second );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::GetIdFromSimulation
-// Created: JSR 2011-01-17
-// -----------------------------------------------------------------------------
-unsigned int UrbanObjectWrapper::GetIdFromSimulation( unsigned int urbanId )
-{
-    for( CIT_ObjectMap it = objectMap_.begin(); it != objectMap_.end(); ++it )
-        if( it->first->GetId() == urbanId )
-            return it->second->GetID();
-    throw std::runtime_error( "Cannot find urban object with id = " + boost::lexical_cast< std::string >( urbanId ) );
 }

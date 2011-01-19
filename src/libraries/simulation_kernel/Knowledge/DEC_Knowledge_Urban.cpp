@@ -10,11 +10,12 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Urban.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "simulation_kernel/Entities/Automates/MIL_Automate.h"
-#include "simulation_kernel/Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
-#include "simulation_kernel/Entities/Objects/UrbanObjectWrapper.h"
-#include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
-#include "simulation_kernel/Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityManager.h"
+#include "Entities/Automates/MIL_Automate.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Knowledge/DEC_Knowledge_UrbanPerception.h"
+#include "Entities/MIL_Army_ABC.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/Model.h>
 #include "protocol/ClientSenders.h"
@@ -27,10 +28,10 @@ MIL_IDManager DEC_Knowledge_Urban::idManager_;
 // Name: DEC_Knowledge_Urban constructor
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object )
-: DEC_Knowledge_Object( army, UrbanObjectWrapper::GetWrapperObject( object ) )
+DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, UrbanObjectWrapper& wrapper )
+    : DEC_Knowledge_Object    ( army, wrapper )
     , army_                   ( &army )
-    , object_                 ( &object )
+    , object_                 ( &wrapper.GetObject() )
     , rProgressPercent_       ( 0. )
     , rMaxProgressPercent_    ( 0. )
     , nTimeLastUpdate_        ( 0 )
@@ -133,7 +134,6 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
         return;
     ComputeProgress( perception.GetPerceiver() );
-
     UpdatePerceptionSources( perception );
 }
 
@@ -152,7 +152,6 @@ void DEC_Knowledge_Urban::ComputeProgress( const MIL_Agent_ABC& agent )
     maxRecce = std::max( maxRecce, rProgressPercent_ );
     SetProgress( std::min( std::max( rProgressPercent_ + progress, rProgressPercent_ + 0.001f ), maxRecce ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::SetProgress
@@ -174,16 +173,12 @@ void DEC_Knowledge_Urban::UpdatePerceptionSources( const DEC_Knowledge_UrbanPerc
 {
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
         return;
-
     const MIL_Automate* pAutomateSource = &perception.GetPerceiver().GetAutomate();
     const MIL_Agent_ABC& pionSource = perception.GetPerceiver();
-
     if( std::find( perceivedByAutomate_.begin(), perceivedByAutomate_.end(), pAutomateSource ) == perceivedByAutomate_.end() )
         perceivedByAutomate_.push_back( pAutomateSource );
-
     if( std::find( perceivedByAgent_.begin(), perceivedByAgent_.end(), &pionSource ) == perceivedByAgent_.end() )
         perceivedByAgent_.push_back( &pionSource );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -194,9 +189,7 @@ void DEC_Knowledge_Urban::UpdateRelevance()
 {
     if( perceivedByAgent_.size() > 0  )
         return;
-
-    float rTimeRelevanceDegradation = (float)(( GetCurrentTimeStep() - nTimeLastUpdate_ ) / 100.); //config factor
-
+    float rTimeRelevanceDegradation = static_cast< float >( ( GetCurrentTimeStep() - nTimeLastUpdate_ ) / 100. ); //config factor
     SetProgress( rProgressPercent_ - rTimeRelevanceDegradation );
     nTimeLastUpdate_ = GetCurrentTimeStep();
 }
@@ -211,7 +204,7 @@ void DEC_Knowledge_Urban::WriteMsgPerceptionSources( sword::UrbanKnowledgeUpdate
         for( CIT_PerceptionSource it = perceivedByAutomate_.begin(); it != perceivedByAutomate_.end(); ++it )
         {
             sword::AutomatId& data = *message.mutable_automat_perceptions()->add_elem();
-            data.set_id( (*it)->GetID() );
+            data.set_id( ( *it )->GetID() );
         }
 }
 
@@ -226,7 +219,7 @@ void DEC_Knowledge_Urban::SendChangedState()
 
     if( std::abs( rLastProgressSent_ - rProgressPercent_ ) >= 0.05 )
     {
-        float rProgress  = static_cast< int >( rProgressPercent_ * 100 ) / 5 * 0.05f;
+        float rProgress = static_cast< float >( rProgressPercent_ * 100 ) / 5 * 0.05f;
         message().set_progress( static_cast< int >( rProgress * 100 ) );
         message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
         rLastProgressSent_ = rProgress;
@@ -271,7 +264,7 @@ void DEC_Knowledge_Urban::SendFullState()
     message().mutable_knowledge()->set_id( GetID() );
     message().mutable_party()->set_id( army_->GetID() );
     message().mutable_urban_block()->set_id( GetObjectKnown()->GetID() );
-    float rProgress = static_cast< int >( rProgressPercent_ * 100 ) / 5 * 0.05f;
+    float rProgress = static_cast< float >( rProgressPercent_ * 100 ) / 5 * 0.05f;
     message().set_progress( static_cast< int >( rProgress * 100 ) );
     rLastProgressSent_ = rProgress;
     message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
@@ -319,7 +312,6 @@ void DEC_Knowledge_Urban::SendMsgCreation() const
     message().mutable_knowledge()->set_id( GetID() );
     message().mutable_party()->set_id( army_->GetID() );
     message().mutable_urban_block()->set_id( GetObjectKnown()->GetID() );
-
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 

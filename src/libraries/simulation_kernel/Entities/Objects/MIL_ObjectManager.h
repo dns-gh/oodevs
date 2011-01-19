@@ -36,7 +36,6 @@ namespace xml
 }
 
 class MIL_Army_ABC;
-class MIL_Army;
 class TER_Localisation;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
@@ -68,16 +67,18 @@ public:
     void UpdateStates ();
 
     //@TODO MGD return reference
-    MIL_Object_ABC&     CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
-    MIL_Object_ABC*     CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
-    MIL_Object_ABC*     CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name );
-    MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType );
-    MIL_Object_ABC*     CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
-    MIL_Object_ABC*     CreateUrbanObject( const urban::TerrainObject_ABC& object );
-    void                UpdateCapacity( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object );
-    void                ReadUrbanState( xml::xistream& xis );
-    MIL_Object_ABC*     Find( unsigned int nID ) const;
-    const MIL_ObjectType_ABC&   FindType( const std::string& type ) const;
+    MIL_Object_ABC& CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
+    MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
+    MIL_Object_ABC* CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name );
+    MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType );
+    MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
+    MIL_Object_ABC* CreateUrbanObject( const urban::TerrainObject_ABC& object );
+
+    void ReadUrbanState( xml::xistream& xis );
+    MIL_Object_ABC* Find( unsigned int nID ) const;
+    const MIL_ObjectType_ABC& FindType( const std::string& type ) const;
+    UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
+    unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     //@}
 
     //! @name Network
@@ -95,6 +96,10 @@ private:
     typedef std::map< unsigned int, MIL_Object_ABC* > T_ObjectMap;
     typedef T_ObjectMap::iterator                    IT_ObjectMap;
     typedef T_ObjectMap::const_iterator             CIT_ObjectMap;
+
+    typedef std::map< const urban::TerrainObject_ABC*, UrbanObjectWrapper* > T_UrbanObjectMap;
+    typedef T_UrbanObjectMap::iterator                                      IT_UrbanObjectMap;
+    typedef T_UrbanObjectMap::const_iterator                               CIT_UrbanObjectMap;
     //@}
 
 private:
@@ -102,6 +107,7 @@ private:
     //@{
     void RegisterObject( MIL_Object_ABC* pObject );
     void RegisterDistantObject( MIL_Object_ABC* pObject );
+    void UpdateCapacity( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object );
     //@}
 
 private:
@@ -114,9 +120,8 @@ private:
     //! @name
     //@{
     T_ObjectMap objects_;
-    std::auto_ptr< MIL_ObjectFactory >  builder_;
-    // $$$$ _RC_ JSR 2011-01-17: A VIRER!!!
-    std::vector< unsigned int > urbanIds_;
+    T_UrbanObjectMap urbanObjects_;
+    std::auto_ptr< MIL_ObjectFactory > builder_;
     //@}
 };
 

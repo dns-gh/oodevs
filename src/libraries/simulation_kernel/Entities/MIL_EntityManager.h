@@ -82,6 +82,7 @@ class MIL_Time_ABC;
 class InhabitantFactory_ABC;
 class PopulationFactory_ABC;
 class TER_Localisation;
+class UrbanObjectWrapper;
 class HLA_Federate;
 
 // =============================================================================
@@ -122,9 +123,10 @@ public:
     virtual       MIL_AgentPion*      FindAgentPion ( unsigned int nID ) const;
                   MIL_Object_ABC*     FindObject    ( unsigned int nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
-
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
     const bool HasInfiniteDotations() const;
+    UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
+    unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
     //@}
 
     //! @name Stats
@@ -141,11 +143,11 @@ public:
 
     //! @name Operations
     //@{
-    void ReadODB             ( const MIL_Config& config );
-    void CreateUrbanObjects  ( urban::Model& urbanModel, const MIL_Config& config );
+    void ReadODB( const MIL_Config& config );
+    void CreateUrbanObjects ( urban::Model& urbanModel, const MIL_Config& config );
     void SendStateToNewClient() const;
-    void Update              ();
-    void Clean               ();
+    void Update();
+    void Clean();
     //@}
 
     //! @external helper

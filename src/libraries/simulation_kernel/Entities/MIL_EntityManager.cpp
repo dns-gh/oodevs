@@ -1713,6 +1713,24 @@ const bool MIL_EntityManager::HasInfiniteDotations() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetUrbanObjectWrapper
+// Created: JSR 2011-01-18
+// -----------------------------------------------------------------------------
+UrbanObjectWrapper& MIL_EntityManager::GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object )
+{
+    return pObjectManager_->GetUrbanObjectWrapper( object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ConvertUrbanIdToSimId
+// Created: JSR 2011-01-18
+// -----------------------------------------------------------------------------
+unsigned int MIL_EntityManager::ConvertUrbanIdToSimId( unsigned int urbanId )
+{
+    return pObjectManager_->ConvertUrbanIdToSimId( urbanId );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::GetKnowledgesTime
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
