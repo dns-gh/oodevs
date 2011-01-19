@@ -594,7 +594,9 @@ void DEC_AutomateDecision::RegisterSelf( directia::brain::Brain& brain, bool isM
 {
     brain[ "myself" ] = (DEC_Decision_ABC*)this;
     if( isMasalife )
-        brain[ "InitMe" ](  brain[ "myself" ], groupName );
+    {
+        brain[ "InitMe" ](  brain[ "net.masagroup.sword.military.world.Company" ], brain[ "myself" ], groupName );
+    }
 }
 
 // -----------------------------------------------------------------------------
