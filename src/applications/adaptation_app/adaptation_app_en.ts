@@ -3394,6 +3394,17 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
+    <context>
+        <name>ADNDatabaseWarnings</name>
+        <message>
+            <source>Database Work in progress. \n Convoy unit type not defined. \n Do you want to save anyway ?</source>
+            <translation></translation>
+        </message>
+        <message>
+            <source>Database Work in progress</source>
+            <translation></translation>
+        </message>
+    </context>
 <context>
     <name>ADN_Supply_Data::SupplyDataInfos</name>
     <message>

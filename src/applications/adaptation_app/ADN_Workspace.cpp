@@ -11,6 +11,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Workspace.h"
 #include "moc_ADN_Workspace.cpp"
+#include "ADN_GuiTools.h"
 #include "ADN_WorkspaceElement.h"
 #include "ADN_NBC_GUI.h"
 #include "ADN_NBC_Datas.h"
@@ -74,6 +75,7 @@
 #include "ADN_FireClass_Data.h"
 #include "ADN_FireClass_GUI.h"
 #include "qtundo.h"
+#include <boost/foreach.hpp>
 #include <io.h>
 #include <qtimer.h>
 #include <qmessagebox.h>
@@ -287,12 +289,28 @@ inline bool isWritable(const std::string& filename)
 
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::IsValidDatabase
+// Created: PAUL 2011-01-19
+// -----------------------------------------------------------------------------
+bool ADN_Workspace::IsValidDatabase()
+{
+    BOOST_FOREACH( ADN_WorkspaceElement_ABC* element, elements_ )
+        if( !element->GetDataABC().IsValidDatabase() )
+            return false;
+    return true;
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::SaveAs
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
 bool ADN_Workspace::SaveAs( const std::string& filename )
 {
+    if( !IsValidDatabase() )
+        if( !ADN_GuiTools::WorkInProgressWarning() )
+            return false;
+
     ADN_Project_Data::WorkDirInfos& dirInfos = ADN_Project_Data::GetWorkDirInfos();
 
     // Set a temporary working directory

@@ -41,7 +41,6 @@ bool ADN_GuiTools::MultiRefWarning()
     return nResult == QMessageBox::Ok;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiTools::DeletionWarning
 // Created: APE 2005-04-06
@@ -57,3 +56,16 @@ bool ADN_GuiTools::DeletionWarning()
     return nResult == QMessageBox::Ok;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiTools::WorkInProgressWarning
+// Created: PAUL 2011-01-19
+// -----------------------------------------------------------------------------
+bool ADN_GuiTools::WorkInProgressWarning()
+{
+    int nResult = QMessageBox::warning( 0,
+        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
+        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress. \n Convoy unit type not defined. \n Do you want to save anyway ?" ),
+        QMessageBox::Yes | QMessageBox::Default,
+        QMessageBox::No  | QMessageBox::Escape );
+    return nResult == QMessageBox::Yes;
+}

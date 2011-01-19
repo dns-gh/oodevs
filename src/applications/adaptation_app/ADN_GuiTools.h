@@ -35,6 +35,7 @@ class ADN_GuiTools
 public:
     static bool MultiRefWarning();
     static bool DeletionWarning();
+    static bool WorkInProgressWarning();
 };
 
 #endif // __ADN_GuiTools_h_

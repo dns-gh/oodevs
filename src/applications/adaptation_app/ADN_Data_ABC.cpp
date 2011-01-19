@@ -15,6 +15,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
+#include "ADN_GuiTools.h"
 #include <tools/XmlCrc32Signature.h>
 
 // -----------------------------------------------------------------------------
@@ -121,4 +122,13 @@ void ADN_Data_ABC::ReadArchive( xml::xistream& )
 void ADN_Data_ABC::WriteArchive( xml::xostream& )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Data_ABC::IsValidDatabase
+// Created: PAUL 2011-01-19
+// -----------------------------------------------------------------------------
+bool ADN_Data_ABC::IsValidDatabase()
+{
+    return true;
 }

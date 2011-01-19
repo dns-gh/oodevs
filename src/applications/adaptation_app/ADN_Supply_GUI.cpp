@@ -35,9 +35,10 @@
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_Supply_GUI::ADN_Supply_GUI( ADN_Supply_Data& data )
-: ADN_GUI_ABC( "ADN_Supply_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_Supply_GUI" )
+    , data_      ( data )
 {
+    // NOTHING
 }
 
 
@@ -47,6 +48,7 @@ ADN_Supply_GUI::ADN_Supply_GUI( ADN_Supply_Data& data )
 // -----------------------------------------------------------------------------
 ADN_Supply_GUI::~ADN_Supply_GUI()
 {
+    // NOTHING
 }
 
 

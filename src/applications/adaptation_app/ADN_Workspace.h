@@ -94,6 +94,7 @@ public:
     bool Save();
     bool SaveAs( const std::string& filename );
     void ExportHtml( const std::string& strPath );
+    bool IsValidDatabase();
 
     ADN_Project_Data& GetProject();
     ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& GetNbc();

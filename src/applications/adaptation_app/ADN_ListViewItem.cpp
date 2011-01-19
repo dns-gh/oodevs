@@ -45,14 +45,14 @@ public:
             case ADN_ListViewItem::eInt:
             {
                 char   istring[256];
-                sprintf(istring,"%d",*(int*)data);
+                sprintf_s(istring,"%d",*(int*)data);
                 lvi_.setText(nPos_,istring);
                 break;
             }
             case ADN_ListViewItem::eDouble:
             {
                 char   istring[256];
-                sprintf(istring,"%f",*(double*)data);
+                sprintf_s(istring,"%f",*(double*)data);
                 lvi_.setText(nPos_,istring);
                 break;
             }

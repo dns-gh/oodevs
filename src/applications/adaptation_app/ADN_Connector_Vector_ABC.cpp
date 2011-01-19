@@ -179,7 +179,7 @@ void ADN_Connector_Vector_ABC::AddItemNoEmit( void* pObj, int index )
 // Name: ADN_Connector_Vector_ABC::SetNextItemIndex
 // Created: LDC 2011-01-03
 // -----------------------------------------------------------------------------
-void ADN_Connector_Vector_ABC::SetNextItemIndex( int index )
+void ADN_Connector_Vector_ABC::SetNextItemIndex( int /*index*/ )
 {
     // NOTHING
 }

@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Supply_Data.h"
 
+#include "ADN_GuiTools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Supply_Gui.h"
 #include "ADN_Project_Data.h"
@@ -82,10 +83,10 @@ void ADN_Supply_Data::ConvoyInfo< T >::WriteArchive( const std::string& section,
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
 ADN_Supply_Data::SupplyDataInfos::SupplyDataInfos()
-    : ADN_Ref_ABC()
+    : ADN_Ref_ABC         ()
     , ADN_DataTreeNode_ABC()
-    , ptrUnit_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
-    , ptrSupplyMission_( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions(), 0 )
+    , ptrUnit_            ( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos(), 0 )
+    , ptrSupplyMission_   ( ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions(), 0 )
 {
     BindExistenceTo( &ptrUnit_ );
     BindExistenceTo( &ptrSupplyMission_ );
@@ -222,14 +223,22 @@ void ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Supply_Data::SupplyDataInfos::IsValidDatabase
+// Created: PAUL 2011-01-19
+// -----------------------------------------------------------------------------
+bool ADN_Supply_Data::SupplyDataInfos::IsValidDatabase()
+{
+    return ptrUnit_.GetData() != 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Supply_Data::SupplyDataInfos::WriteArchive
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
 {
     if( ptrUnit_.GetData() == 0 )
-        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).ascii(), tools::translate( "Supply_Data",  "Logistic supply systems - Convoy unit type not defined" ).ascii() );
-
+        return;
     if( ptrUnit_.GetData()->eTypeId_.GetData() != eAgentTypePionLOGConvoi )
         throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).ascii(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit type for convoy units" ).ascii() );
 
@@ -326,4 +335,13 @@ void ADN_Supply_Data::ReadArchive( xml::xistream& input )
 void ADN_Supply_Data::WriteArchive( xml::xostream& output )
 {
     infos_.WriteArchive( output );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Supply_Data::IsValidDatabase
+// Created: PAUL 2011-01-19
+// -----------------------------------------------------------------------------
+bool ADN_Supply_Data::IsValidDatabase()
+{
+    return infos_.IsValidDatabase();
 }

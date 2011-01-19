@@ -11,6 +11,19 @@
     </message>
 </context>
 <context>
+    <name>ADNDatabaseWarnings</name>
+    <message>
+        <source>Database Work in progress</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Database Work in progress. 
+ Convoy unit type not defined. 
+ Do you want to save anyway ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_ActiveProtectionsListView</name>
     <message>
         <source>active Protection</source>
@@ -5954,10 +5967,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
         <translation>Chaîne ravitaillement - Mission invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Logistic supply systems - Convoy unit type not defined</source>
-        <translation>Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Logistic supply system - Invalid unit type for convoy units</source>

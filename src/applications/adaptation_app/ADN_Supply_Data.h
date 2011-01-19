@@ -61,6 +61,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
+        bool IsValidDatabase();
         void Reset();
 
     private:
@@ -93,6 +94,7 @@ public:
     //@{
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Reset();
+    virtual bool IsValidDatabase();
     //@}
 
 private:

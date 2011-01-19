@@ -48,6 +48,7 @@ public:
     virtual void Reset() = 0;
     virtual void Load( std::string& invalidSignedFiles );
     virtual void Save();
+    virtual bool IsValidDatabase();
     //@}
 
 protected:
