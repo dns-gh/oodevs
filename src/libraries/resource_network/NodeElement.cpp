@@ -181,14 +181,16 @@ void NodeElement::Consume( bool& isFunctional )
     unsigned int consumption = static_cast< unsigned int >( modifier_ * consumptionAmount_ );
     if( consumption > immediateStock_ )
     {
-        functionalState_ = immediateStock_ / consumption;
+        functionalState_ = static_cast< float >( immediateStock_ ) / consumption;
         immediateStock_ = 0;
         if( consumptionCritical_ )
             isFunctional = false;
     }
     else
+    {
         functionalState_ = 1;
         immediateStock_ -= consumption;
+    }
 }
 
 // -----------------------------------------------------------------------------
