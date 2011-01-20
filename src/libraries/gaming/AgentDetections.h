@@ -59,7 +59,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Agent_ABC*, sword::EnumUnitVisibility > T_AgentDetections;
+    typedef std::map< const kernel::Agent_ABC*, sword::UnitVisibility::Level > T_AgentDetections;
     typedef T_AgentDetections::const_iterator                              CIT_AgentDetections;
     //@}
 

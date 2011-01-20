@@ -49,7 +49,7 @@ PopulationDetections::~PopulationDetections()
 void PopulationDetections::DoUpdate( const sword::CrowdConcentrationDetection& message )
 {
     const PopulationPart_ABC* pConcentration = & resolver_.Get( message.detected_crowd().id() ).GetConcentration( message.detected_concentration().id() );
-    if( message.visibility() == sword::invisible )
+    if( message.visibility() == sword::UnitVisibility::invisible )
         perceived_.erase( pConcentration );
     else
         perceived_.insert( pConcentration );

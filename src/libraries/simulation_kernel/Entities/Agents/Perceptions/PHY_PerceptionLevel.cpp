@@ -13,10 +13,10 @@
 #include "PHY_PerceptionLevel.h"
 #include "protocol/Protocol.h"
 
-const PHY_PerceptionLevel PHY_PerceptionLevel::identified_( "Identified", eIdentified, sword::identifiee );
-const PHY_PerceptionLevel PHY_PerceptionLevel::recognized_( "Recognized", eRecognized, sword::reconnue   );
-const PHY_PerceptionLevel PHY_PerceptionLevel::detected_  ( "Detected"  , eDetected  , sword::detectee   );
-const PHY_PerceptionLevel PHY_PerceptionLevel::notSeen_   ( "NotSeen"   , eNotSeen   , sword::signale    );
+const PHY_PerceptionLevel PHY_PerceptionLevel::identified_( "Identified", eIdentified, sword::UnitIdentification::identified );
+const PHY_PerceptionLevel PHY_PerceptionLevel::recognized_( "Recognized", eRecognized, sword::UnitIdentification::recognized );
+const PHY_PerceptionLevel PHY_PerceptionLevel::detected_  ( "Detected"  , eDetected  , sword::UnitIdentification::detected );
+const PHY_PerceptionLevel PHY_PerceptionLevel::notSeen_   ( "NotSeen"   , eNotSeen   , sword::UnitIdentification::unseen );
 
 PHY_PerceptionLevel::T_LevelMap PHY_PerceptionLevel::levels_;
 
@@ -45,7 +45,7 @@ void PHY_PerceptionLevel::Terminate()
 // Name: PHY_PerceptionLevel constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_PerceptionLevel::PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const sword::EnumUnitIdentificationLevel& nAsnID )
+PHY_PerceptionLevel::PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const sword::UnitIdentification::Level& nAsnID )
     : strName_( strName )
     , nLevel_ ( nLevel  )
     , nAsnID_ ( nAsnID  )
@@ -104,7 +104,7 @@ unsigned int PHY_PerceptionLevel::GetID() const
 // Name: PHY_PerceptionLevel::Serialize
 // Created: SBO 2009-06-30
 // -----------------------------------------------------------------------------
-void PHY_PerceptionLevel::Serialize( sword::EnumUnitIdentificationLevel& level ) const
+void PHY_PerceptionLevel::Serialize( sword::UnitIdentification::Level& level ) const
 {
     level = nAsnID_;
 }

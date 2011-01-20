@@ -13,20 +13,20 @@
 using namespace shield;
 
 #define CONVERT_POSTURE( from_field, to_field ) \
-    CONVERT_ENUM_TO( from_field, to_field, ( sword::UnitAttributes::mouvement, MsgsSimToClient::MsgUnitAttributes::mouvement ) \
-                                           ( sword::UnitAttributes::mouvement_discret, MsgsSimToClient::MsgUnitAttributes::mouvement_discret ) \
-                                           ( sword::UnitAttributes::arret, MsgsSimToClient::MsgUnitAttributes::arret ) \
-                                           ( sword::UnitAttributes::poste_reflexe, MsgsSimToClient::MsgUnitAttributes::poste_reflexe ) \
-                                           ( sword::UnitAttributes::poste, MsgsSimToClient::MsgUnitAttributes::poste ) \
-                                           ( sword::UnitAttributes::poste_amenage, MsgsSimToClient::MsgUnitAttributes::poste_amenage ) \
-                                           ( sword::UnitAttributes::poste_prepare_genie, MsgsSimToClient::MsgUnitAttributes::poste_prepare_genie ) )
+    CONVERT_ENUM_TO( from_field, to_field, ( sword::UnitAttributes::moving, MsgsSimToClient::MsgUnitAttributes::mouvement ) \
+                                           ( sword::UnitAttributes::infiltrating, MsgsSimToClient::MsgUnitAttributes::mouvement_discret ) \
+                                           ( sword::UnitAttributes::stopping, MsgsSimToClient::MsgUnitAttributes::arret ) \
+                                           ( sword::UnitAttributes::short_stopping, MsgsSimToClient::MsgUnitAttributes::poste_reflexe ) \
+                                           ( sword::UnitAttributes::parked, MsgsSimToClient::MsgUnitAttributes::poste ) \
+                                           ( sword::UnitAttributes::parked_on_self_prepared_area, MsgsSimToClient::MsgUnitAttributes::poste_amenage ) \
+                                           ( sword::UnitAttributes::parked_on_engineer_prepared_area, MsgsSimToClient::MsgUnitAttributes::poste_prepare_genie ) )
 
 #define CONVERT_IDENTIFICATION_LEVEL( field ) \
     if( from.has_##field() ) \
-        CONVERT_ENUM( field, ( sword::identifiee, MsgsSimToClient::identifiee ) \
-                             ( sword::reconnue, MsgsSimToClient::reconnue ) \
-                             ( sword::detectee, MsgsSimToClient::detectee ) \
-                             ( sword::signale, MsgsSimToClient::signale ) )
+        CONVERT_ENUM( field, ( sword::UnitIdentification::identified, MsgsSimToClient::identifiee ) \
+                             ( sword::UnitIdentification::recognized, MsgsSimToClient::reconnue ) \
+                             ( sword::UnitIdentification::detected, MsgsSimToClient::detectee ) \
+                             ( sword::UnitIdentification::unseen, MsgsSimToClient::signale ) )
 
 #define CONVERT_RANK( from_field, to_field ) \
         CONVERT_ENUM_TO( from_field, to_field, ( sword::officer, Common::officier ) \
@@ -41,11 +41,11 @@ using namespace shield;
                          ( sword::UnitActionAck::error_unit_surrendered, MsgsSimToClient::UnitActionAck::error_unit_surrendered ) )
 
 #define CONVERT_UNIT_VISIBILITY( field ) \
-    CONVERT_ENUM( field, ( sword::invisible, Common::invisible ) \
-                         ( sword::detected, Common::detected ) \
-                         ( sword::recognized, Common::recognized ) \
-                         ( sword::identified, Common::identified ) \
-                         ( sword::recorded, Common::recorded ) )
+    CONVERT_ENUM( field, ( sword::UnitVisibility::invisible, Common::invisible ) \
+                         ( sword::UnitVisibility::detected, Common::detected ) \
+                         ( sword::UnitVisibility::recognized, Common::recognized ) \
+                         ( sword::UnitVisibility::identified, Common::identified ) \
+                         ( sword::UnitVisibility::recorded, Common::recorded ) )
 
 namespace
 {
@@ -635,11 +635,11 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
                                                                                 ( sword::UnitAttributes::fire_ready, MsgsSimToClient::MsgUnitAttributes::pret_au_tir )
                                                                                 ( sword::UnitAttributes::fire_unavailable, MsgsSimToClient::MsgUnitAttributes::indisponible ) );
     ConvertRulesOfEngagement( from, to );
-    CONVERT_ENUM( roe_crowd, ( sword::UnitAttributes::none, MsgsSimToClient::MsgUnitAttributes::none )
-                             ( sword::UnitAttributes::emploi_force_interdit, MsgsSimToClient::MsgUnitAttributes::emploi_force_interdit )
-                             ( sword::UnitAttributes::maintien_a_distance_par_moyens_non_letaux, MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux )
-                             ( sword::UnitAttributes::dispersion_par_moyens_de_defense_actifs, MsgsSimToClient::MsgUnitAttributes::dispersion_par_moyens_de_defense_actifs )
-                             ( sword::UnitAttributes::armes_letales_autorisees, MsgsSimToClient::MsgUnitAttributes::armes_letales_autorisees ) );
+    CONVERT_ENUM( roe_crowd, ( sword::UnitAttributes::no_rule, MsgsSimToClient::MsgUnitAttributes::none )
+                             ( sword::UnitAttributes::no_force, MsgsSimToClient::MsgUnitAttributes::emploi_force_interdit )
+                             ( sword::UnitAttributes::non_lethal_force, MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux )
+                             ( sword::UnitAttributes::active_defense, MsgsSimToClient::MsgUnitAttributes::dispersion_par_moyens_de_defense_actifs )
+                             ( sword::UnitAttributes::lethal_force, MsgsSimToClient::MsgUnitAttributes::armes_letales_autorisees ) );
     CONVERT_ENUM_TO( tiredness, fatigue, ( sword::rested, Common::normal )
                                          ( sword::tired, Common::fatigue )
                                          ( sword::exhausted, Common::epuise ) );
@@ -1456,8 +1456,8 @@ void SimulationToClient::Convert( const sword::LogMedicalState& from, MsgsSimToC
     if( from.has_priorities() )
         ConvertLogMedicalPriorities( from.priorities(), to->mutable_priorites() );
     CONVERT_LIST_TO( tactical_priorities, tactical_priorities, elem, ConvertIdentifier );
-    CONVERT_LIST( disponibilites_ambulances_releve, elem, ConvertLogMedicalEquipmentAvailability );
-    CONVERT_LIST( disponibilites_ambulances_ramassage, elem, ConvertLogMedicalEquipmentAvailability );
+    CONVERT_LIST_TO( evacuation_ambulances, disponibilites_ambulances_releve, elem, ConvertLogMedicalEquipmentAvailability );
+    CONVERT_LIST_TO( collection_ambulances, disponibilites_ambulances_ramassage, elem, ConvertLogMedicalEquipmentAvailability );
     CONVERT_LIST_TO( doctors, disponibilites_medecins, elem, ConvertLogMedicalEquipmentAvailability );
 }
 

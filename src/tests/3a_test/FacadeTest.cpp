@@ -849,7 +849,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestConflicts, Fixture )
 
 namespace
 {
-    SimToClient CreateUnitDetection( unsigned int detector, unsigned int detected, sword::EnumUnitVisibility visibility )
+    SimToClient CreateUnitDetection( unsigned int detector, unsigned int detected, sword::UnitVisibility::Level visibility )
     {
         SimToClient result;
         sword::UnitDetection& message = *result.mutable_message()->mutable_unit_detection();
@@ -875,17 +875,17 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetection, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::identified ) ); // ok
+    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::identified ) ); // ok
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 51, sword::recognized ) ); // irrelevant detected unit
-    task->Receive( CreateUnitDetection( 51, 69, sword::detected ) ); // irrelevant detecting unit
+    task->Receive( CreateUnitDetection( 42, 51, sword::UnitVisibility::recognized ) ); // irrelevant detected unit
+    task->Receive( CreateUnitDetection( 51, 69, sword::UnitVisibility::detected ) ); // irrelevant detecting unit
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::invisible ) ); // irrelevant detection level
+    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::invisible ) ); // irrelevant detection level
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::recognized ) ); // ok
+    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::recognized ) ); // ok
     task->Receive( EndTick() );
     double expectedResult[] = { 1, 1, 0, 1 };//, 1, 1, 1, 1 };
     MakeExpectation( publisher, expectedResult );
@@ -908,22 +908,22 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetectionWithThreshold, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 12, 69, sword::detected ) );
+    task->Receive( CreateUnitDetection( 12, 69, sword::UnitVisibility::detected ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::identified ) );
+    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::identified ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 51, sword::recognized ) );
-    task->Receive( CreateUnitDetection( 51, 69, sword::detected ) );
+    task->Receive( CreateUnitDetection( 42, 51, sword::UnitVisibility::recognized ) );
+    task->Receive( CreateUnitDetection( 51, 69, sword::UnitVisibility::detected ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::invisible ) );
-    task->Receive( CreateUnitDetection( 51, 69, sword::recorded ) );
+    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::invisible ) );
+    task->Receive( CreateUnitDetection( 51, 69, sword::UnitVisibility::recorded ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::recognized ) );
-    task->Receive( CreateUnitDetection( 51, 69, sword::recognized ) );
+    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::recognized ) );
+    task->Receive( CreateUnitDetection( 51, 69, sword::UnitVisibility::recognized ) );
     task->Receive( EndTick() );
     double expectedResult[] = { 0, 1, 1, 0, 1 };
     MakeExpectation( publisher, expectedResult );
@@ -977,7 +977,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 100, 69 ) );
-    task->Receive( CreateUnitDetection( 42, 69, sword::detected ) );
+    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::detected ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( EndTick() );

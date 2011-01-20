@@ -45,7 +45,7 @@ void ObjectDetections::DoUpdate( const sword::ObjectDetection& message )
 {
     if( Object_ABC* object = resolver_.Find( message.observer().id() ) )
     {
-        if( message.visibility() == sword::invisible )
+        if( message.visibility() == sword::UnitVisibility::invisible )
             perceivedObjects_.erase( object );
         else
             perceivedObjects_.insert( object );

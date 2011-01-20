@@ -220,16 +220,16 @@ namespace shield
 #elif defined SHIELD_SIMULATION
         to->mutable_horaire()->set_data( from.time().data() );
 #endif
-        CONVERT_ENUM_LIST( fonctions, ( sword::PhaseLineOrder::ligne_debouche, Common::MsgLimaOrder::ligne_debouche )
-                                      ( sword::PhaseLineOrder::ligne_changement_attitude, Common::MsgLimaOrder::ligne_changement_attitude )
-                                      ( sword::PhaseLineOrder::ligne_coordination, Common::MsgLimaOrder::ligne_coordination )
-                                      ( sword::PhaseLineOrder::ligne_interdire, Common::MsgLimaOrder::ligne_interdire )
-                                      ( sword::PhaseLineOrder::ligne_objectif, Common::MsgLimaOrder::ligne_objectif )
-                                      ( sword::PhaseLineOrder::ligne_coup_arret, Common::MsgLimaOrder::ligne_coup_arret )
-                                      ( sword::PhaseLineOrder::ligne_recueil, Common::MsgLimaOrder::ligne_recueil )
-                                      ( sword::PhaseLineOrder::ligne_debut_mission, Common::MsgLimaOrder::ligne_debut_mission )
-                                      ( sword::PhaseLineOrder::ligne_fin_mission, Common::MsgLimaOrder::ligne_fin_mission )
-                                      ( sword::PhaseLineOrder::ligne_identification_accueil, Common::MsgLimaOrder::ligne_identification_accueil ) );
+        CONVERT_ENUM_LIST( fonctions, ( sword::PhaseLineOrder::line_of_departure, Common::MsgLimaOrder::ligne_debouche )
+                                      ( sword::PhaseLineOrder::attitude_change_line, Common::MsgLimaOrder::ligne_changement_attitude )
+                                      ( sword::PhaseLineOrder::coordination_line, Common::MsgLimaOrder::ligne_coordination )
+                                      ( sword::PhaseLineOrder::denial_line, Common::MsgLimaOrder::ligne_interdire )
+                                      ( sword::PhaseLineOrder::objective_line, Common::MsgLimaOrder::ligne_objectif )
+                                      ( sword::PhaseLineOrder::blocking_line, Common::MsgLimaOrder::ligne_coup_arret )
+                                      ( sword::PhaseLineOrder::handover_line, Common::MsgLimaOrder::ligne_recueil )
+                                      ( sword::PhaseLineOrder::start_of_mission_line, Common::MsgLimaOrder::ligne_debut_mission )
+                                      ( sword::PhaseLineOrder::end_of_mission_line, Common::MsgLimaOrder::ligne_fin_mission )
+                                      ( sword::PhaseLineOrder::recognition_and_reception_line, Common::MsgLimaOrder::ligne_identification_accueil ) );
     }
     template< typename From, typename To >
     void ConvertValue( const From& from, To* to )

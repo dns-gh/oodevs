@@ -55,7 +55,7 @@ public:
     virtual const kernel::Agent_ABC* GetEntity() const;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual sword::EnumUnitIdentificationLevel GetMaxPerceptionLevel() const;
+    virtual sword::UnitIdentification::Level GetMaxPerceptionLevel() const;
     virtual geometry::Point2d GetPosition() const;
     //@}
 
@@ -90,8 +90,8 @@ private:
     const dispatcher::Agent_ABC& agent_;
     const sword::UnitType type_;
     unsigned int nRelevance_;
-    sword::EnumUnitIdentificationLevel nPerceptionLevel_;
-    sword::EnumUnitIdentificationLevel nMaxPerceptionLevel_;
+    sword::UnitIdentification::Level nPerceptionLevel_;
+    sword::UnitIdentification::Level nMaxPerceptionLevel_;
     unsigned int nOperationalState_;
     bool bDead_;
     geometry::Point2d position_; // $$$$ _RC_ SBO 2010-05-27: x = latitude, y = longitude !

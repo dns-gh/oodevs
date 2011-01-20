@@ -177,8 +177,8 @@ void DEC_Knowledge_AgentPerception::SendStateToNewClient() const
     client::UnitDetection asn;
     asn().mutable_observer()->set_id( pAgentPerceiving_->GetID() );
     asn().mutable_detected_unit()->set_id( pAgentPerceived_->GetID() );
-    asn().set_current_visibility( bRecordModeEnabled_ ? sword::recorded : sword::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
-    asn().set_max_visibility( sword::EnumUnitVisibility( pMaxPerceptionLevel_->GetID() ) );
+    asn().set_current_visibility( bRecordModeEnabled_ ? sword::UnitVisibility::recorded : sword::UnitVisibility::Level( pCurrentPerceptionLevel_->GetID() ) );
+    asn().set_max_visibility( sword::UnitVisibility::Level( pMaxPerceptionLevel_->GetID() ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

@@ -344,16 +344,16 @@ message MissionObjectiveList {
 
 message PhaseLineOrder {
     enum Function {
-        ligne_debouche               = 0; //!< @todo translate
-        ligne_changement_attitude    = 1; //!< @todo translate
-        ligne_coordination           = 2; //!< @todo translate
-        ligne_interdire              = 3; //!< @todo translate
-        ligne_objectif               = 4; //!< @todo translate
-        ligne_coup_arret             = 5; //!< @todo translate
-        ligne_recueil                = 6; //!< @todo translate
-        ligne_debut_mission          = 7; //!< @todo translate
-        ligne_fin_mission            = 8; //!< @todo translate
-        ligne_identification_accueil = 9; //!< @todo translate
+        line_of_departure              = 0; //!< Line of departure
+        attitude_change_line           = 1; //!< Attitude change line
+        coordination_line              = 2; //!< Coordination line
+        denial_line                    = 3; //!< Denial line
+        objective_line                 = 4; //!< Objective line
+        blocking_line                  = 5; //!< Blocking line
+        handover_line                  = 6; //!< Handover line
+        start_of_mission_line          = 7; //!< Start of mission line
+        end_of_mission_line            = 8; //!< End of mission line
+        recognition_and_reception_line = 9; //!< Recognition and reception line
     }
     required Line     lima      = 1;
     required DateTime time      = 2;

@@ -830,11 +830,11 @@ void PHY_RolePionLOG_Medical::SendFullState() const
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
         ExecuteOnComponentsAndLendedComponents( predicate1, composanteUse );
-    SendComposanteUse( composanteUse, *asn().mutable_disponibilites_ambulances_releve() );
+    SendComposanteUse( composanteUse, *asn().mutable_evacuation_ambulances() );
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate2( &PHY_ComposantePion::CanCollectCasualties, &PHY_ComposanteTypePion::CanCollectCasualties );
     ExecuteOnComponentsAndLendedComponents( predicate2, composanteUse );
-    SendComposanteUse( composanteUse, *asn().mutable_disponibilites_ambulances_ramassage() );
+    SendComposanteUse( composanteUse, *asn().mutable_collection_ambulances() );
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate3( &PHY_ComposantePion::CanDiagnoseHumans, &PHY_ComposanteTypePion::CanDiagnoseHumans );
     ExecuteOnComponentsAndLendedComponents( predicate3, composanteUse );
@@ -844,10 +844,10 @@ void PHY_RolePionLOG_Medical::SendFullState() const
         asn().mutable_priorities()->Clear();
     if( asn().tactical_priorities().elem_size() > 0 )
         asn().mutable_tactical_priorities()->Clear();
-    if( asn().disponibilites_ambulances_ramassage().elem_size() > 0 )
-        asn().mutable_disponibilites_ambulances_ramassage()->Clear();
-    if( asn().disponibilites_ambulances_releve().elem_size() > 0 )
-        asn().mutable_disponibilites_ambulances_releve()->Clear();
+    if( asn().collection_ambulances().elem_size() > 0 )
+        asn().mutable_collection_ambulances()->Clear();
+    if( asn().evacuation_ambulances().elem_size() > 0 )
+        asn().mutable_evacuation_ambulances()->Clear();
     if( asn().doctors().elem_size() > 0 )
         asn().mutable_doctors()->Clear();
 }

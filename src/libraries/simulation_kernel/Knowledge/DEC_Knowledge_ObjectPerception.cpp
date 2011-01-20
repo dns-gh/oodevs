@@ -129,7 +129,7 @@ void DEC_Knowledge_ObjectPerception::SendStateToNewClient() const
     client::ObjectDetection asn;
     asn().mutable_observer()->set_id( pAgentPerceiving_->GetID() );
     asn().mutable_detected_object()->set_id( pObjectPerceived_->GetID() );
-    asn().set_visibility( sword::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
+    asn().set_visibility( sword::UnitVisibility::Level( pCurrentPerceptionLevel_->GetID() ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

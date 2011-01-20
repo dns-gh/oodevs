@@ -170,8 +170,8 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_stealth( true );
                 message.set_embarked( true );
                 message.set_transporters_available( true );
-                message.set_old_posture( sword::UnitAttributes::mouvement );
-                message.set_new_posture( sword::UnitAttributes::poste_prepare_genie );
+                message.set_old_posture( sword::UnitAttributes::moving );
+                message.set_new_posture( sword::UnitAttributes::parked_on_engineer_prepared_area );
                 message.set_posture_transition( 51 );
                 message.set_installation( 60 );
                 message.set_protective_suits( true );
@@ -190,7 +190,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_operational_state( sword::totally_destroyed );
                 message.set_indirect_fire_availability( sword::UnitAttributes::fire_ready );
                 message.set_roe( sword::RulesOfEngagement::retaliation_only );
-                message.set_roe_crowd( sword::UnitAttributes::maintien_a_distance_par_moyens_non_letaux );
+                message.set_roe_crowd( sword::UnitAttributes::non_lethal_force );
                 message.set_tiredness( sword::tired );
                 message.set_morale( sword::fanatical );
                 message.set_experience( sword::veteran );

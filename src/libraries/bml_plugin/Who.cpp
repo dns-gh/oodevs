@@ -68,7 +68,7 @@ namespace
         return attributes.has_operational_state()
             || attributes.has_equipment_dotations()
             || attributes.has_human_dotations()
-            ? sword::identified : -1;
+            ? sword::UnitVisibility::identified : -1;
     }
 }
 
@@ -232,7 +232,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::string Who::GetFilterHostility() const
 {
-    if( level_ > sword::detected )
+    if( level_ > sword::UnitVisibility::detected )
     {
         if( agent_ )
             return Hostility( agent_->GetSuperior() );
@@ -247,7 +247,7 @@ std::string Who::GetFilterHostility() const
 // -----------------------------------------------------------------------------
 std::string Who::GetFilterOperationalState() const
 {
-    if( agent_ && level_ > sword::recognized )
+    if( agent_ && level_ > sword::UnitVisibility::recognized )
         return OperationalState( agent_->GetOperationalState() );
     return "NKN";
 }

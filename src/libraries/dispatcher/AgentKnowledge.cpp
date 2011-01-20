@@ -30,8 +30,8 @@ AgentKnowledge::AgentKnowledge( Model& model, const sword::UnitKnowledgeCreation
     , agent_                        ( model.Agents().Get( message.unit().id() ) )
     , type_                         ( message.type() )
     , nRelevance_                   ( 0 )
-    , nPerceptionLevel_             ( sword::signale )
-    , nMaxPerceptionLevel_          ( sword::signale )
+    , nPerceptionLevel_             ( sword::UnitIdentification::unseen )
+    , nMaxPerceptionLevel_          ( sword::UnitIdentification::unseen )
     , nOperationalState_            ( 0 )
     , bDead_                        ( false )
     , nDirection_                   ( 0 )
@@ -248,7 +248,7 @@ void AgentKnowledge::Display( kernel::Displayer_ABC& ) const
 // Name: AgentKnowledge::GetMaxPerceptionLevel
 // Created: SBO 2010-06-08
 // -----------------------------------------------------------------------------
-sword::EnumUnitIdentificationLevel AgentKnowledge::GetMaxPerceptionLevel() const
+sword::UnitIdentification::Level AgentKnowledge::GetMaxPerceptionLevel() const
 {
     return nMaxPerceptionLevel_;
 }

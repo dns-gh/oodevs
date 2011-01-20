@@ -375,8 +375,8 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->set_stealth( true );
     content.mutable_unit_attributes()->set_embarked( true );
     content.mutable_unit_attributes()->set_transporters_available( true );
-    content.mutable_unit_attributes()->set_old_posture( sword::UnitAttributes::arret );
-    content.mutable_unit_attributes()->set_new_posture( sword::UnitAttributes::arret );
+    content.mutable_unit_attributes()->set_old_posture( sword::UnitAttributes::stopping );
+    content.mutable_unit_attributes()->set_new_posture( sword::UnitAttributes::stopping );
     content.mutable_unit_attributes()->set_posture_transition( 90 );
     content.mutable_unit_attributes()->set_installation( 91 );
     content.mutable_unit_attributes()->set_protective_suits( true );
@@ -397,7 +397,7 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->set_operational_state( sword::operational );
     content.mutable_unit_attributes()->set_indirect_fire_availability( sword::UnitAttributes::fire_ready );
     content.mutable_unit_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
-    content.mutable_unit_attributes()->set_roe_crowd( sword::UnitAttributes::emploi_force_interdit );
+    content.mutable_unit_attributes()->set_roe_crowd( sword::UnitAttributes::no_force );
     content.mutable_unit_attributes()->set_tiredness( sword::exhausted );
     content.mutable_unit_attributes()->set_morale( sword::high );
     content.mutable_unit_attributes()->set_experience( sword::novice );
@@ -498,7 +498,7 @@ namespace
     void FillAutomatPerception( P* p )
     {
         p->mutable_automat()->set_id( 100 );
-        p->set_identification_level( sword::signale );
+        p->set_identification_level( sword::UnitIdentification::unseen );
     }
 }
 
@@ -507,8 +507,8 @@ BOOST_FIXTURE_TEST_CASE( unit_knowledge_update_to_client_is_converted, ContextFi
     content.mutable_unit_knowledge_update()->mutable_knowledge()->set_id( 7 );
     content.mutable_unit_knowledge_update()->mutable_knowledge_group()->set_id( 8 );
     content.mutable_unit_knowledge_update()->set_pertinence( 9 );
-    content.mutable_unit_knowledge_update()->set_identification_level( sword::reconnue );
-    content.mutable_unit_knowledge_update()->set_max_identification_level( sword::detectee );
+    content.mutable_unit_knowledge_update()->set_identification_level( sword::UnitIdentification::recognized );
+    content.mutable_unit_knowledge_update()->set_max_identification_level( sword::UnitIdentification::detected );
     content.mutable_unit_knowledge_update()->set_operational_state( 10 );
     content.mutable_unit_knowledge_update()->set_dead( true );
     FillCoordLatLong( content.mutable_unit_knowledge_update()->mutable_position() );
@@ -663,8 +663,8 @@ namespace
     {
         FillLocation( o->mutable_lima()->mutable_location() );
         o->mutable_time()->set_data( "horaire2" );
-        o->add_fonctions( sword::PhaseLineOrder::ligne_recueil );
-        o->add_fonctions( sword::PhaseLineOrder::ligne_objectif );
+        o->add_fonctions( sword::PhaseLineOrder::handover_line );
+        o->add_fonctions( sword::PhaseLineOrder::objective_line );
     }
     template< typename V >
     void FillParameterValue( V* v )
@@ -813,8 +813,8 @@ BOOST_FIXTURE_TEST_CASE( unit_detection_to_client_is_converted, ContextFixture< 
 {
     content.mutable_unit_detection()->mutable_observer()->set_id( 7 );
     content.mutable_unit_detection()->mutable_detected_unit()->set_id( 8 );
-    content.mutable_unit_detection()->set_current_visibility( sword::detected );
-    content.mutable_unit_detection()->set_max_visibility( sword::recorded );
+    content.mutable_unit_detection()->set_current_visibility( sword::UnitVisibility::detected );
+    content.mutable_unit_detection()->set_max_visibility( sword::UnitVisibility::recorded );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_detection { observer { id: 7 } detected_unit { id: 8 } current_visibility: detected max_visibility: recorded } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -823,7 +823,7 @@ BOOST_FIXTURE_TEST_CASE( object_detection_to_client_is_converted, ContextFixture
 {
     content.mutable_object_detection()->mutable_observer()->set_id( 7 );
     content.mutable_object_detection()->mutable_detected_object()->set_id( 8 );
-    content.mutable_object_detection()->set_visibility( sword::detected );
+    content.mutable_object_detection()->set_visibility( sword::UnitVisibility::detected );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { object_detection { observer { id: 7 } detected_object { id: 8 } visibility: detected } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -833,7 +833,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_concentration_detection_to_client_is_converted, C
     content.mutable_crowd_concentration_detection()->mutable_observer()->set_id( 7 );
     content.mutable_crowd_concentration_detection()->mutable_detected_crowd()->set_id( 8 );
     content.mutable_crowd_concentration_detection()->mutable_detected_concentration()->set_id( 9 );
-    content.mutable_crowd_concentration_detection()->set_visibility( sword::detected );
+    content.mutable_crowd_concentration_detection()->set_visibility( sword::UnitVisibility::detected );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_concentration_detection { observer { id: 7 } detected_crowd { id: 8 } detected_concentration { id: 9 } visibility: detected } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1116,10 +1116,10 @@ BOOST_FIXTURE_TEST_CASE( log_medical_state_to_client_is_converted, ContextFixtur
     content.mutable_log_medical_state()->mutable_priorities()->add_elem( sword::unwounded );
     content.mutable_log_medical_state()->mutable_tactical_priorities()->add_elem()->set_id( 8 );
     content.mutable_log_medical_state()->mutable_tactical_priorities()->add_elem()->set_id( 9 );
-    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_ambulances_releve()->add_elem() );
-    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_ambulances_releve()->add_elem() );
-    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_ambulances_ramassage()->add_elem() );
-    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_disponibilites_ambulances_ramassage()->add_elem() );
+    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_evacuation_ambulances()->add_elem() );
+    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_evacuation_ambulances()->add_elem() );
+    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_collection_ambulances()->add_elem() );
+    FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_collection_ambulances()->add_elem() );
     FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_doctors()->add_elem() );
     FillLogMedicalEquipmentAvailability( content.mutable_log_medical_state()->mutable_doctors()->add_elem() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_medical_state { unit { id: 7 } chaine_activee: true priorites { elem: mort elem: non_blesse } tactical_priorities { elem { id: 8 } elem { id: 9 } } disponibilites_ambulances_releve { elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } } disponibilites_ambulances_ramassage { elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } } disponibilites_medecins { elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } elem { equipment_type { id: 10 } nbr_total: 11 nbr_disponibles: 12 nbr_au_travail: 13 nbr_pretes: 14 nbr_au_repos: 15 } } } }" ) );
@@ -1627,7 +1627,7 @@ BOOST_FIXTURE_TEST_CASE( urban_detection_to_client_is_converted, ContextFixture<
 {
     content.mutable_urban_detection()->mutable_observer()->set_id( 7 );
     content.mutable_urban_detection()->mutable_object()->set_id( 8 );
-    content.mutable_urban_detection()->set_visibility( sword::detected );
+    content.mutable_urban_detection()->set_visibility( sword::UnitVisibility::detected );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { urban_detection { observer { id: 7 } object { id: 8 } visibility: detected } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

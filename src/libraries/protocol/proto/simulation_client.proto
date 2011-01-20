@@ -744,13 +744,13 @@ message UnitAttributes {
         @brief Posture states
     */
     enum Posture {
-        mouvement           = 0; //!< Moving @todo transmate to moving
-        mouvement_discret   = 1; //!< Moving discreetly @todo transmate to infiltrating
-        arret               = 2; //!< Stopped @todo transmate to stopping
-        poste_reflexe       = 3; //!< ? @todo transmate to short stopping
-        poste               = 4; //!< ? @todo transmate to parked
-        poste_amenage       = 5; //!< ? @todo transmate to parked on self-prepared area
-        poste_prepare_genie = 6; //!< ? @todo transmate to parked on engineer-prepared area
+        moving                           = 0; //!< Moving
+        infiltrating                     = 1; //!< Infiltrating
+        stopping                         = 2; //!< Stopping
+        short_stopping                   = 3; //!< Short stopping
+        parked                           = 4; //!< Parked
+        parked_on_self_prepared_area     = 5; //!< Parked on self-prepared area
+        parked_on_engineer_prepared_area = 6; //!< Parked on engineer-prepared area
     }
     /** @struct FireAvailability
         @brief Fire availability states
@@ -765,11 +765,11 @@ message UnitAttributes {
         @todo rename to RulesOfEngagementAgainstCrowds or something along
     */
     enum CrowdRoe {
-        none                                      = 0; //!< No rule @todo rename to no_rule
-        emploi_force_interdit                     = 1; //!< Coercion forbidden @todo passive
-        maintien_a_distance_par_moyens_non_letaux = 2; //!< Hold back civilians by use of non lethal means @todo translate @todo non_lethal_force ? hold_back ?
-        dispersion_par_moyens_de_defense_actifs   = 3; //!< Disperse civilians by active defense means @todo translate @todo active_defense ? disperse ?
-        armes_letales_autorisees                  = 4; //!< Lethal weapons authorized for use @todo lethal_force
+        no_rule          = 0; //!< No rule
+        no_force         = 1; //!< Use of force forbidden
+        non_lethal_force = 2; //!< Hold back civilians by the use of non lethal means
+        active_defense   = 3; //!< Disperse civilians by active defense means
+        lethal_force     = 4; //!< Lethal weapons authorized for use
     }
     required UnitId                      unit                       = 1;  //!< The unit identifier @see UnitId
     optional HumanDotations              human_dotations            = 2;  //!< The human dotations @see HumanDotations
@@ -854,14 +854,19 @@ message UnitKnowledgeCreation {
     required UnitType         type            = 4; //!< The unit type @see UnitType
 }
 
-/** @enum EnumUnitIdentificationLevel
-    @brief Indicates the level of identification of a unit
+/** @enum UnitIdentification
+    @brief Encapsulates the unit identification levels
 */
-enum EnumUnitIdentificationLevel {
-    identifiee = 0; //!< The unit has been identified @todo translate
-    reconnue   = 1; //!< The unit has been recognized @todo translate
-    detectee   = 2; //!< The unit has been detected @todo translate
-    signale    = 3; //!< The unit has not been seen @todo translate
+message UnitIdentification {
+    /** @enum Level
+        @brief Indicates the level of identification of a unit
+    */
+    enum Level {
+        identified = 0; //!< The unit has been identified
+        recognized = 1; //!< The unit has been recognized
+        detected   = 2; //!< The unit has been detected
+        unseen     = 3; //!< The unit has not been seen
+    }
 }
 
 /** @struct AutomatPerception
@@ -869,7 +874,7 @@ enum EnumUnitIdentificationLevel {
 */
 message AutomatPerception {
     required AutomatId                   automat              = 1; //!< The automat identifier @see AutomatId
-    required EnumUnitIdentificationLevel identification_level = 2; //!< The identification level @see EnumUnitIdentificationLevel
+    required UnitIdentification.Level identification_level = 2; //!< The identification level @see UnitIdentification.Level
 }
 
 /** @struct SeqOfAutomatPerception
@@ -886,8 +891,8 @@ message UnitKnowledgeUpdate {
     required UnitKnowledgeId             knowledge                = 1;  //!< The unit knowledge @see UnitKnowledgeId
     required KnowledgeGroupId            knowledge_group          = 2;  //!< The knowledge group identifier @see KnowledgeGroupId
     optional int32                       pertinence               = 3;  //!< The relevance of the knowledge in percent
-    optional EnumUnitIdentificationLevel identification_level     = 4;  //!< The identification level @see EnumUnitIdentificationLevel
-    optional EnumUnitIdentificationLevel max_identification_level = 5;  //!< The maximum identification level @see EnumUnitIdentificationLevel
+    optional UnitIdentification.Level identification_level     = 4;  //!< The identification level @see UnitIdentification.Level
+    optional UnitIdentification.Level max_identification_level = 5;  //!< The maximum identification level @see UnitIdentification.Level
     optional int32                       operational_state        = 6;  //!< The operational state of the unit in percent
     optional bool                        dead                     = 7;  //!< Whether the unit is dead or not
     optional CoordLatLong                position                 = 8;  //!< The unit position @see CoordLatLong
@@ -1067,32 +1072,34 @@ message UnitVisionCones {
     required float           elongation = 3;
 }
 
-enum EnumUnitVisibility {
-   invisible  = 0;
-   detected   = 1;
-   recognized = 2;
-   identified = 3;
-   recorded   = 4;
+message UnitVisibility {
+    enum Level {
+       invisible  = 0;
+       detected   = 1;
+       recognized = 2;
+       identified = 3;
+       recorded   = 4;
+    }
 }
 
 message UnitDetection {
-    required UnitId             observer           = 1;
-    required UnitId             detected_unit      = 2; //!< @todo rename to unit
-    required EnumUnitVisibility current_visibility = 3;
-    required EnumUnitVisibility max_visibility     = 4;
+    required UnitId               observer           = 1;
+    required UnitId               detected_unit      = 2; //!< @todo rename to unit
+    required UnitVisibility.Level current_visibility = 3;
+    required UnitVisibility.Level max_visibility     = 4;
 }
 
 message ObjectDetection {
-    required UnitId             observer        = 1;
-    required ObjectId           detected_object = 2; //!< @todo rename to object
-    required EnumUnitVisibility visibility      = 3;
+    required UnitId               observer        = 1;
+    required ObjectId             detected_object = 2; //!< @todo rename to object
+    required UnitVisibility.Level visibility      = 3;
 }
 
 message CrowdConcentrationDetection {
     required UnitId               observer               = 1;
     required CrowdId              detected_crowd         = 2; //!< @todo rename to crowd
     required CrowdConcentrationId detected_concentration = 3; //!< @todo rename to concentration
-    required EnumUnitVisibility   visibility             = 4;
+    required UnitVisibility.Level visibility             = 4;
 }
 
 message CrowdFlowDetection {
@@ -1231,13 +1238,13 @@ message SeqOfLogMedicalEquipmentAvailability {
 }
 
 message LogMedicalState {
-    required UnitId                               unit                                = 1;
-    optional bool                                 chain                               = 2;
-    optional LogMedicalPriorities                 priorities                          = 3;
-    optional AutomatIdList                        tactical_priorities                 = 4;
-    optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_releve    = 5; //!< @todo translate
-    optional SeqOfLogMedicalEquipmentAvailability disponibilites_ambulances_ramassage = 6; //!< @todo translate
-    optional SeqOfLogMedicalEquipmentAvailability doctors                             = 7;
+    required UnitId                               unit                  = 1;
+    optional bool                                 chain                 = 2;
+    optional LogMedicalPriorities                 priorities            = 3;
+    optional AutomatIdList                        tactical_priorities   = 4;
+    optional SeqOfLogMedicalEquipmentAvailability evacuation_ambulances = 5;
+    optional SeqOfLogMedicalEquipmentAvailability collection_ambulances = 6;
+    optional SeqOfLogMedicalEquipmentAvailability doctors               = 7;
 }
 
 message LogMaintenanceHandlingCreation {
@@ -1625,15 +1632,15 @@ message UrbanCreation {
 }
 
 message UrbanDetection {
-    required UnitId             observer     = 1;
-    required ObjectId           object       = 2;
-    required EnumUnitVisibility visibility   = 3;
+    required UnitId               observer     = 1;
+    required ObjectId             object       = 2;
+    required UnitVisibility.Level visibility   = 3;
 }
 
 message UrbanUpdate {
-   required ObjectId        object       = 1;
-   optional Location        location     = 2;
-   optional UrbanAttributes attributes   = 3;
+   required ObjectId        object     = 1;
+   optional Location        location   = 2;
+   optional UrbanAttributes attributes = 3;
 }
 
 // Knowledge groups

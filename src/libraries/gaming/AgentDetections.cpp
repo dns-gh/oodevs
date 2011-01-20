@@ -62,13 +62,13 @@ void AgentDetections::Draw( const geometry::Point2f& where, const kernel::Viewpo
     for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )
     {
         const Agent_ABC& agent = *it->first;
-        if( ! IsSameTeam( agent ) && it->second != sword::invisible )
+        if( ! IsSameTeam( agent ) && it->second != sword::UnitVisibility::invisible )
         {
-            if( it->second == sword::recognized )
+            if( it->second == sword::UnitVisibility::recognized )
                 glColor4f( COLOR_RECO );
-            else if( it->second == sword::identified )
+            else if( it->second == sword::UnitVisibility::identified )
                 glColor4f( COLOR_IDENTIFIED );
-            else if( it->second == sword::recorded )
+            else if( it->second == sword::UnitVisibility::recorded )
                 glColor4f( COLOR_RECORDED );
             else
                 glColor4f( COLOR_DETECTED );

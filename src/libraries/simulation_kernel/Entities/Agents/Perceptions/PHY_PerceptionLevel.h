@@ -15,7 +15,7 @@
 
 namespace sword
 {
-    enum EnumUnitIdentificationLevel;
+    enum UnitIdentification_Level;
 }
 
 // =============================================================================
@@ -25,13 +25,16 @@ namespace sword
 class PHY_PerceptionLevel : private boost::noncopyable
 {
 public:
+    //! @name Member data
+    //@{
     static const PHY_PerceptionLevel identified_;
     static const PHY_PerceptionLevel recognized_;
     static const PHY_PerceptionLevel detected_;
     static const PHY_PerceptionLevel notSeen_;
+    //@}
 
 public:
-    //! @name Manager
+    //! @name Operations
     //@{
     static void Initialize();
     static void Terminate ();
@@ -42,11 +45,14 @@ public:
     const std::string& GetName() const;
     unsigned int GetID() const;
     bool IsBestLevel() const;
+
+    static const PHY_PerceptionLevel& FindPerceptionLevel( unsigned int nID );
     //@}
 
     //! @name Operators
     //@{
-    void Serialize( sword::EnumUnitIdentificationLevel& level ) const;
+    void Serialize( sword::UnitIdentification_Level& level ) const;
+
     bool operator ==( const PHY_PerceptionLevel& rhs ) const;
     bool operator !=( const PHY_PerceptionLevel& rhs ) const;
     bool operator < ( const PHY_PerceptionLevel& rhs ) const;
@@ -54,9 +60,6 @@ public:
     bool operator > ( const PHY_PerceptionLevel& rhs ) const;
     bool operator >=( const PHY_PerceptionLevel& rhs ) const;
     //@}
-
-public:
-    static const PHY_PerceptionLevel& FindPerceptionLevel( unsigned int nID );
 
 private:
     //! @name Types
@@ -71,23 +74,27 @@ private:
     //@}
 
 private:
-     PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const sword::EnumUnitIdentificationLevel& nAsnID );
+    //! @name Constructors/Destructor
+    //@{
+             PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const sword::UnitIdentification_Level& nAsnID );
     virtual ~PHY_PerceptionLevel();
+    //@}
 
 private:
-    //! @name types
+    //! @name Types
     //@{
     typedef std::map< unsigned int, const PHY_PerceptionLevel* > T_LevelMap;
     typedef T_LevelMap::const_iterator                         CIT_LevelMap;
     //@}
 
 private:
-    const std::string                       strName_;
-    const E_Level                           nLevel_;
-    const sword::EnumUnitIdentificationLevel nAsnID_;
-
-private:
+    //! @name Member data
+    //@{
+    const std::string strName_;
+    const E_Level nLevel_;
+    const sword::UnitIdentification_Level nAsnID_;
     static T_LevelMap levels_;
+    //@}
 };
 
 #endif // __PHY_PerceptionLevel_h_

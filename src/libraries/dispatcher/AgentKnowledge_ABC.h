@@ -15,12 +15,11 @@
 
 namespace sword
 {
-    enum EnumUnitIdentificationLevel;
+    enum UnitIdentification_Level;
 }
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  AgentKnowledge_ABC
     @brief  AgentKnowledge_ABC
@@ -39,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual sword::EnumUnitIdentificationLevel GetMaxPerceptionLevel() const = 0;
+    virtual sword::UnitIdentification_Level GetMaxPerceptionLevel() const = 0;
     virtual geometry::Point2d GetPosition() const = 0;
     //@}
 };

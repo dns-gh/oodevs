@@ -384,7 +384,7 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( sword::UnitKnowledgeUpdate&
         {
             sword::AutomatPerception& perception = *asnMsg.mutable_perceptions()->add_elem();
             perception.mutable_automat()->set_id( it->first->GetID() );
-            sword::EnumUnitIdentificationLevel level;
+            sword::UnitIdentification::Level level;
             it->second->Serialize( level );
             perception.set_identification_level( level );
         }
@@ -411,13 +411,13 @@ void DEC_Knowledge_Agent::SendChangedState()
     }
     if( bCurrentPerceptionLevelUpdated_ )
     {
-        sword::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
+        sword::UnitIdentification::Level level( asnMsg().identification_level() );
         pCurrentPerceptionLevel_->Serialize( level );
         asnMsg().set_identification_level( level );
     }
     if( bMaxPerceptionLevelUpdated_ )
     {
-        sword::EnumUnitIdentificationLevel level( asnMsg().max_identification_level() );
+        sword::UnitIdentification::Level level( asnMsg().max_identification_level() );
         pMaxPerceptionLevel_->Serialize( level );
         asnMsg().set_max_identification_level( level );
     }
@@ -444,10 +444,10 @@ void DEC_Knowledge_Agent::SendFullState()
     asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
     asnMsg().set_pertinence( static_cast< int >( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
-    sword::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
+    sword::UnitIdentification::Level level( asnMsg().identification_level() );
     pCurrentPerceptionLevel_->Serialize( level );
     asnMsg().set_identification_level( level );
-    sword::EnumUnitIdentificationLevel maxlevel( asnMsg().max_identification_level() );
+    sword::UnitIdentification::Level maxlevel( asnMsg().max_identification_level() );
     pMaxPerceptionLevel_->Serialize( maxlevel );
     asnMsg().set_max_identification_level( maxlevel );
     WriteMsgPerceptionSources( asnMsg() );

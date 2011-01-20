@@ -16,19 +16,6 @@
 #include "tools/Resolver.h"
 #include "protocol/SimulationSenders.h"
 
-namespace sword
-{
-    class UnitCreation;
-    class UnitAttributes;
-    class DecisionalState;
-    class LogMedicalState;
-    class LogMaintenanceState;
-    class LogSupplyState;
-    class UnitChangeSuperior;
-    class UnitOrder;
-    class CoordLatLong;
-}
-
 namespace kernel
 {
     class AgentType;
@@ -89,7 +76,7 @@ public:
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    virtual void SetSuperior( dispatcher::Automat_ABC& superior );
+    virtual void SetSuperior    ( dispatcher::Automat_ABC& superior );
     //@}
 
     //! @name Accessors
@@ -119,70 +106,70 @@ private:
     //@}
 
 private:
-    Model_ABC&                                              model_;
-    const kernel::AgentType&                                type_;
-    const std::string                                       name_;
-    dispatcher::Automat_ABC*                                automat_;
-    const bool                                              bPC_;
+    Model_ABC&                                 model_;
+    const kernel::AgentType&                   type_;
+    const std::string                          name_;
+    dispatcher::Automat_ABC*                   automat_;
+    const bool                                 bPC_;
 
-    geometry::Point2d                                       position_; // x = longitude, y = latitude
-    unsigned int                                            nDirection_;
-    unsigned int                                            nHeight_;
-    unsigned int                                            nAltitude_;
-    unsigned int                                            nSpeed_;
-    unsigned int                                            nOperationalStateValue_;
-    tools::Resolver< const kernel::Agent_ABC >              reinforcements_;
-    kernel::Agent_ABC*                                      pReinforced_;
-    bool                                                    bDead_;
-    bool                                                    bNeutralized_;
-    bool                                                    bStealthModeEnabled_;
-    bool                                                    isMounted_;
-    bool                                                    bHumanTransportersAvailable_;
-    sword::UnitAttributes_Posture              nLastPosture_;
-    sword::UnitAttributes_Posture              nCurrentPosture_;
-    unsigned int                                            nPostureCompletion_;
-    unsigned int                                            nInstallationState_;
-    bool                                                    bNbcProtectionSuitEnabled_;
-    std::vector< unsigned int >                             nbcAgentTypesContaminating_;
-    int                                                     contaminationPercentage_;
-    float                                                   contaminationQuantity_;
+    geometry::Point2d                          position_; // x = longitude, y = latitude
+    unsigned int                               nDirection_;
+    unsigned int                               nHeight_;
+    unsigned int                               nAltitude_;
+    unsigned int                               nSpeed_;
+    unsigned int                               nOperationalStateValue_;
+    tools::Resolver< const kernel::Agent_ABC > reinforcements_;
+    kernel::Agent_ABC*                         pReinforced_;
+    bool                                       bDead_;
+    bool                                       bNeutralized_;
+    bool                                       bStealthModeEnabled_;
+    bool                                       isMounted_;
+    bool                                       bHumanTransportersAvailable_;
+    sword::UnitAttributes::Posture             nLastPosture_;
+    sword::UnitAttributes::Posture             nCurrentPosture_;
+    unsigned int                               nPostureCompletion_;
+    unsigned int                               nInstallationState_;
+    bool                                       bNbcProtectionSuitEnabled_;
+    std::vector< unsigned int >                nbcAgentTypesContaminating_;
+    int                                        contaminationPercentage_;
+    float                                      contaminationQuantity_;
 
-    bool                                                    communicationJammed_;
-    unsigned int                                            knowledgeGroupJammed_;
+    bool                                       communicationJammed_;
+    unsigned int                               knowledgeGroupJammed_;
 
-    bool                                                    bRadioEmitterEnabled_;
-    bool                                                    bRadioRecieverEnabled_;
-    bool                                                    bRadarEnabled_;
-    tools::Resolver< const kernel::Agent_ABC >              transportedAgents_;
-    kernel::Agent_ABC*                                      pTransporter_;
-    sword::ForceRatio_Value                                 nForceRatioState_;
-    sword::EnumMeetingEngagementStatus                      nCloseCombatState_;
-    sword::EnumOperationalStatus                            nOperationalState_;
-    sword::UnitAttributes_FireAvailability                  nIndirectFireAvailability_;
-    sword::RulesOfEngagement_Value                          nRoe_;
-    sword::UnitAttributes_CrowdRoe                          nPopulationRoe_;
-    sword::EnumUnitTiredness                                nTiredness_;
-    sword::EnumUnitMorale                                   nMorale_;
-    sword::EnumUnitExperience                               nExperience_;
-    const kernel::Team_ABC*                                 pSideSurrenderedTo_;
-    bool                                                    bPrisonner_;
-    bool                                                    bRefugeeManaged_;
-    DecisionalState                                         decisionalInfos_;
+    bool                                       bRadioEmitterEnabled_;
+    bool                                       bRadioRecieverEnabled_;
+    bool                                       bRadarEnabled_;
+    tools::Resolver< const kernel::Agent_ABC > transportedAgents_;
+    kernel::Agent_ABC*                         pTransporter_;
+    sword::ForceRatio::Value                   nForceRatioState_;
+    sword::EnumMeetingEngagementStatus         nCloseCombatState_;
+    sword::EnumOperationalStatus               nOperationalState_;
+    sword::UnitAttributes::FireAvailability    nIndirectFireAvailability_;
+    sword::RulesOfEngagement::Value            nRoe_;
+    sword::UnitAttributes::CrowdRoe            nPopulationRoe_;
+    sword::EnumUnitTiredness                   nTiredness_;
+    sword::EnumUnitMorale                      nMorale_;
+    sword::EnumUnitExperience                  nExperience_;
+    const kernel::Team_ABC*                    pSideSurrenderedTo_;
+    bool                                       bPrisonner_;
+    bool                                       bRefugeeManaged_;
+    DecisionalState                            decisionalInfos_;
 
-    tools::Resolver< Equipment >                            equipments_;
-    tools::Resolver< Humans >                               troops_;
-    tools::Resolver< Dotation >                             dotations_;
-    tools::Resolver< Loan >                                 borrowings_;
-    tools::Resolver< Loan >                                 lendings_;
+    tools::Resolver< Equipment >               equipments_;
+    tools::Resolver< Humans >                  troops_;
+    tools::Resolver< Dotation >                dotations_;
+    tools::Resolver< Loan >                    borrowings_;
+    tools::Resolver< Loan >                    lendings_;
 
-    AgentLogMedical*                                        pLogMedical_;
-    AgentLogMaintenance*                                    pLogMaintenance_;
-    AgentLogSupply*                                         pLogSupply_;
+    AgentLogMedical*                           pLogMedical_;
+    AgentLogMaintenance*                       pLogMaintenance_;
+    AgentLogSupply*                            pLogSupply_;
 
-    std::auto_ptr< AgentOrder >                             order_;
-    std::map< std::string, std::string >                    extensions_;
+    std::auto_ptr< AgentOrder >                order_;
+    std::map< std::string, std::string >       extensions_;
 
-    Localisation                                            currentPath_;
+    Localisation                               currentPath_;
 };
 
 }

@@ -48,18 +48,18 @@ void AgentLogMedical::Update( const sword::LogMedicalState& asnMsg )
     if( asnMsg.has_chain()  )
         bSystemEnabled_ = asnMsg.chain() != 0;
 
-    if( asnMsg.has_disponibilites_ambulances_ramassage()  )
+    if( asnMsg.has_collection_ambulances()  )
     {
         collectionAmbulancesAvailability_.clear();
-        for( int i = 0; i < asnMsg.disponibilites_ambulances_ramassage().elem_size(); ++i )
-            collectionAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.disponibilites_ambulances_ramassage().elem( i ) ) );
+        for( int i = 0; i < asnMsg.collection_ambulances().elem_size(); ++i )
+            collectionAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.collection_ambulances().elem( i ) ) );
     }
 
-    if( asnMsg.has_disponibilites_ambulances_releve()  )
+    if( asnMsg.has_evacuation_ambulances()  )
     {
         evacuationAmbulancesAvailability_.clear();
-        for( int i = 0; i < asnMsg.disponibilites_ambulances_releve().elem_size(); ++i )
-            evacuationAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.disponibilites_ambulances_releve().elem( i ) ) );
+        for( int i = 0; i < asnMsg.evacuation_ambulances().elem_size(); ++i )
+            evacuationAmbulancesAvailability_.push_back( MedicalEquipmentAvailability( asnMsg.evacuation_ambulances().elem( i ) ) );
     }
 
     if( asnMsg.has_doctors()  )
@@ -96,11 +96,11 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
 
     {
         for( std::vector< MedicalEquipmentAvailability >::const_iterator it = evacuationAmbulancesAvailability_.begin(); it != evacuationAmbulancesAvailability_.end(); ++it )
-            it->Send( *asn().mutable_disponibilites_ambulances_releve()->add_elem() );
+            it->Send( *asn().mutable_evacuation_ambulances()->add_elem() );
     }
     {
         for( std::vector< MedicalEquipmentAvailability >::const_iterator it = collectionAmbulancesAvailability_.begin(); it != collectionAmbulancesAvailability_.end(); ++it )
-            it->Send( *asn().mutable_disponibilites_ambulances_ramassage()->add_elem() );
+            it->Send( *asn().mutable_collection_ambulances()->add_elem() );
     }
     {
         for( std::vector< MedicalEquipmentAvailability >::const_iterator it = doctorsAvailability_.begin(); it != doctorsAvailability_.end(); ++it )
@@ -117,10 +117,10 @@ void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
 
     asn.Send( publisher );
 
-    if( asn().disponibilites_ambulances_releve().elem_size() > 0 )
-        asn().mutable_disponibilites_ambulances_releve()->Clear();
-    if( asn().disponibilites_ambulances_ramassage().elem_size() > 0 )
-        asn().mutable_disponibilites_ambulances_ramassage()->Clear();
+    if( asn().evacuation_ambulances().elem_size() > 0 )
+        asn().mutable_evacuation_ambulances()->Clear();
+    if( asn().collection_ambulances().elem_size() > 0 )
+        asn().mutable_collection_ambulances()->Clear();
     if( asn().doctors().elem_size() > 0 )
         asn().mutable_doctors()->Clear();
     if( asn().priorities().elem_size() > 0 )

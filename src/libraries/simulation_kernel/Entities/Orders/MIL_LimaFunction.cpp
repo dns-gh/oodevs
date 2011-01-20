@@ -13,16 +13,16 @@
 
 MIL_LimaFunction::T_LimaFunctionMap MIL_LimaFunction::limaFunctions_;
 
-const MIL_LimaFunction MIL_LimaFunction::LD_  ( sword::PhaseLineOrder::ligne_debouche              , eLimaFuncLD  , "LD"   );
-const MIL_LimaFunction MIL_LimaFunction::LCA_ ( sword::PhaseLineOrder::ligne_changement_attitude   , eLimaFuncLCA , "LCA"  );
-const MIL_LimaFunction MIL_LimaFunction::LC_  ( sword::PhaseLineOrder::ligne_coordination          , eLimaFuncLC  , "LC"   );
-const MIL_LimaFunction MIL_LimaFunction::LI_  ( sword::PhaseLineOrder::ligne_interdire             , eLimaFuncLI  , "LI"   );
-const MIL_LimaFunction MIL_LimaFunction::LO_  ( sword::PhaseLineOrder::ligne_objectif              , eLimaFuncLO  , "LO"   );
-const MIL_LimaFunction MIL_LimaFunction::LCAR_( sword::PhaseLineOrder::ligne_coup_arret            , eLimaFuncLCAR, "LCAR" );
-const MIL_LimaFunction MIL_LimaFunction::LR_  ( sword::PhaseLineOrder::ligne_recueil               , eLimaFuncLR  , "LR"   );
-const MIL_LimaFunction MIL_LimaFunction::LDM_ ( sword::PhaseLineOrder::ligne_debut_mission         , eLimaFuncLDM , "LDM"  );
-const MIL_LimaFunction MIL_LimaFunction::LFM_ ( sword::PhaseLineOrder::ligne_fin_mission           , eLimaFuncLFM , "LFM"  );
-const MIL_LimaFunction MIL_LimaFunction::LIA_ ( sword::PhaseLineOrder::ligne_identification_accueil, eLimaFuncLIA , "LIA"  );
+const MIL_LimaFunction MIL_LimaFunction::LD_  ( sword::PhaseLineOrder::line_of_departure              , eLimaFuncLD  , "LD"   );
+const MIL_LimaFunction MIL_LimaFunction::LCA_ ( sword::PhaseLineOrder::attitude_change_line   , eLimaFuncLCA , "LCA"  );
+const MIL_LimaFunction MIL_LimaFunction::LC_  ( sword::PhaseLineOrder::coordination_line          , eLimaFuncLC  , "LC"   );
+const MIL_LimaFunction MIL_LimaFunction::LI_  ( sword::PhaseLineOrder::denial_line             , eLimaFuncLI  , "LI"   );
+const MIL_LimaFunction MIL_LimaFunction::LO_  ( sword::PhaseLineOrder::objective_line              , eLimaFuncLO  , "LO"   );
+const MIL_LimaFunction MIL_LimaFunction::LCAR_( sword::PhaseLineOrder::blocking_line            , eLimaFuncLCAR, "LCAR" );
+const MIL_LimaFunction MIL_LimaFunction::LR_  ( sword::PhaseLineOrder::handover_line               , eLimaFuncLR  , "LR"   );
+const MIL_LimaFunction MIL_LimaFunction::LDM_ ( sword::PhaseLineOrder::start_of_mission_line         , eLimaFuncLDM , "LDM"  );
+const MIL_LimaFunction MIL_LimaFunction::LFM_ ( sword::PhaseLineOrder::end_of_mission_line           , eLimaFuncLFM , "LFM"  );
+const MIL_LimaFunction MIL_LimaFunction::LIA_ ( sword::PhaseLineOrder::recognition_and_reception_line, eLimaFuncLIA , "LIA"  );
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LimaFunction::Initialize

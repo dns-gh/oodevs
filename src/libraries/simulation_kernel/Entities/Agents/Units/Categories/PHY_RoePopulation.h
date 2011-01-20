@@ -15,11 +15,6 @@
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Stl.h"
 
-namespace sword
-{
-    class UnitAttributes;
-}
-
 // =============================================================================
 // @class  PHY_RoePopulation
 // Created: JVT 2004-08-03
@@ -53,7 +48,7 @@ public:
     //@{
     const std::string&                                      GetName () const;
           unsigned int                                      GetID   () const;
-          sword::UnitAttributes_CrowdRoe  GetAsnID() const;
+          sword::UnitAttributes::CrowdRoe  GetAsnID() const;
     //@}
 
     //! @name Operators
@@ -67,22 +62,22 @@ private:
     //@{
     enum E_Type
     {
-        eNone                                  = 0,
-        eEmploiForceInterdit                   = 1,
-        eMaintienADistanceParMoyensNonLetaux   = 2,
-        eDispersionParMoyensDeDefenseActifs    = 3,
-        eArmesLetalesAutorisees                = 4
+        eNone                                = 0,
+        eEmploiForceInterdit                 = 1,
+        eMaintienADistanceParMoyensNonLetaux = 2,
+        eDispersionParMoyensDeDefenseActifs  = 3,
+        eArmesLetalesAutorisees              = 4
     };
     //@}
 
 private:
-    PHY_RoePopulation( const std::string& strName, E_Type nType, sword::UnitAttributes_CrowdRoe nAsnID );
+             PHY_RoePopulation( const std::string& strName, E_Type nType, sword::UnitAttributes::CrowdRoe nAsnID );
     virtual ~PHY_RoePopulation();
 
 private:
-    const std::string             strName_;
-    const E_Type                  nType_;
-    const sword::UnitAttributes_CrowdRoe nAsnID_;
+    const std::string strName_;
+    const E_Type nType_;
+    const sword::UnitAttributes::CrowdRoe nAsnID_;
 
 private:
     static T_RoePopulationMap roePopulations_;

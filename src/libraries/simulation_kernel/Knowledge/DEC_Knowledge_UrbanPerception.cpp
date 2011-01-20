@@ -24,8 +24,7 @@ MIL_IDManager DEC_Knowledge_UrbanPerception::idManager_;
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
 DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& object )
-    : DEC_Knowledge_ABC()
-    , perceiver_               ( agentPerceiving )
+    : perceiver_               ( agentPerceiving )
     , object_                  ( object )
     , nID_                     ( idManager_.GetFreeId() )
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
@@ -120,7 +119,7 @@ void DEC_Knowledge_UrbanPerception::SendStateToNewClient()
     client::UrbanDetection message;
     message().mutable_observer()->set_id( perceiver_.GetID() );
     message().mutable_object()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( object_ ).GetID() );
-    message().set_visibility( sword::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
+    message().set_visibility( sword::UnitVisibility::Level( pCurrentPerceptionLevel_->GetID() ) );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 

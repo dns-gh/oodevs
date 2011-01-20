@@ -69,17 +69,17 @@ void MedicalStates::DoUpdate( const sword::LogMedicalState& message )
         for( int i = 0; i < message.tactical_priorities().elem_size(); ++i )
             tacticalPriorities_[i] = &automatResolver_.Get( message.tactical_priorities().elem( i ).id() );
     }
-    if( message.has_disponibilites_ambulances_ramassage() )
+    if( message.has_collection_ambulances() )
     {
-        dispoRamassageAmbulances_.resize( message.disponibilites_ambulances_ramassage().elem_size() );
-        for( int i = 0; i < message.disponibilites_ambulances_ramassage().elem_size(); ++i )
-            dispoRamassageAmbulances_[i] = Availability( resolver_, message.disponibilites_ambulances_ramassage().elem( i ) );
+        dispoRamassageAmbulances_.resize( message.collection_ambulances().elem_size() );
+        for( int i = 0; i < message.collection_ambulances().elem_size(); ++i )
+            dispoRamassageAmbulances_[i] = Availability( resolver_, message.collection_ambulances().elem( i ) );
     }
-    if( message.has_disponibilites_ambulances_releve() )
+    if( message.has_evacuation_ambulances() )
     {
-        dispoReleveAmbulances_.resize( message.disponibilites_ambulances_releve().elem_size() );
-        for( int i = 0; i < message.disponibilites_ambulances_releve().elem_size(); ++i )
-            dispoReleveAmbulances_[i] = Availability( resolver_, message.disponibilites_ambulances_releve().elem( i ) );
+        dispoReleveAmbulances_.resize( message.evacuation_ambulances().elem_size() );
+        for( int i = 0; i < message.evacuation_ambulances().elem_size(); ++i )
+            dispoReleveAmbulances_[i] = Availability( resolver_, message.evacuation_ambulances().elem( i ) );
     }
     if( message.has_doctors()  )
     {

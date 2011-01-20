@@ -57,25 +57,25 @@ namespace
     sword::PhaseLineOrder::Function ToPhaseLineType( const std::string& function )
     {
         if( function == "LD" )
-            return sword::PhaseLineOrder::ligne_debouche;
+            return sword::PhaseLineOrder::line_of_departure;
         if( function == "LCA" )
-            return sword::PhaseLineOrder::ligne_changement_attitude;
+            return sword::PhaseLineOrder::attitude_change_line;
         if( function == "LC" )
-            return sword::PhaseLineOrder::ligne_coordination;
+            return sword::PhaseLineOrder::coordination_line;
         if( function == "LI" )
-            return sword::PhaseLineOrder::ligne_interdire;
+            return sword::PhaseLineOrder::denial_line;
         if( function == "LO" )
-            return sword::PhaseLineOrder::ligne_objectif;
+            return sword::PhaseLineOrder::objective_line;
         if( function == "LCAR" )
-            return sword::PhaseLineOrder::ligne_coup_arret;
+            return sword::PhaseLineOrder::blocking_line;
         if( function == "LR" )
-            return sword::PhaseLineOrder::ligne_recueil;
+            return sword::PhaseLineOrder::handover_line;
         if( function == "LDM" )
-            return sword::PhaseLineOrder::ligne_debut_mission;
+            return sword::PhaseLineOrder::start_of_mission_line;
         if( function == "LFM" )
-            return sword::PhaseLineOrder::ligne_fin_mission;
+            return sword::PhaseLineOrder::end_of_mission_line;
         if( function == "LIA" )
-            return sword::PhaseLineOrder::ligne_identification_accueil;
+            return sword::PhaseLineOrder::recognition_and_reception_line;
         return sword::PhaseLineOrder::Function( -1 );
     }
 }
