@@ -86,6 +86,11 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
 SIM_App::~SIM_App()
 {
     MT_LOG_UNREGISTER_LOGGER( *logger_ );
+    if( dispatcherThread_.get() && pDispatcher_ )
+    {
+        pDispatcher_->Stop();
+        dispatcherThread_->join();
+    }
     delete pDispatcher_;
     if( pNetworkLogger_.get() )
         MT_LOG_UNREGISTER_LOGGER( *pNetworkLogger_ );
@@ -95,7 +100,7 @@ SIM_App::~SIM_App()
 // Name: SIM_App::Initialize
 // Created: NLD 2004-01-27
 // -----------------------------------------------------------------------------
-void SIM_App::Initialize()
+int SIM_App::Initialize()
 {
     MT_LOG_INFO_MSG( "Starting simulation GUI" );
     guiThread_.reset( new boost::thread( boost::bind( &SIM_App::RunGUI, this ) ) );
@@ -106,7 +111,16 @@ void SIM_App::Initialize()
     }
     MT_Profiler::Initialize();
     MIL_Random::Initialize( startupConfig_->GetRandomSeed(), startupConfig_->GetRandomGaussian(), startupConfig_->GetRandomDeviation(), startupConfig_->GetRandomMean() );
-    MIL_AgentServer::CreateWorkspace( *startupConfig_ );
+    try
+    {
+        MIL_AgentServer::CreateWorkspace( *startupConfig_ );
+    }
+    catch( MT_ScipioException& exception )
+    {
+        MT_LOG_ERROR_MSG( MT_FormatString( "Error initializing workspace : '%s'", exception.GetMsg().c_str() ) );
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +330,9 @@ int SIM_App::Execute()
 {
     if( startupConfig_->IsTestMode() )
         return Test();
-    Initialize();
+    int init = Initialize();
+    if( init != EXIT_SUCCESS )
+        return init;
     Run();
     Cleanup();
     return EXIT_SUCCESS;

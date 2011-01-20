@@ -47,7 +47,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void Initialize    ();
+    int Initialize    ();
     void Run           ();
     void Stop          ();
     bool Tick           ();
