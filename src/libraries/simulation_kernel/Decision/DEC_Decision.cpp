@@ -114,6 +114,7 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_DistanceBetweenPoints" ] = &DEC_GeometryFunctions::ComputeDistance;
     brain[ "DEC_Geometrie_AreaSize" ] = &DEC_GeometryFunctions::ComputeAreaSize;
     brain[ "DEC_Geometrie_AreaDiameter" ] = &DEC_GeometryFunctions::ComputeAreaDiameter;
+    brain[ "DEC_Geometrie_PositionAdvanceAlongFuseau" ] = &DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau;
 }
 
 // -----------------------------------------------------------------------------

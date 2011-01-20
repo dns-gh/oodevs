@@ -1119,7 +1119,7 @@ void DEC_RolePion_Decision::RegisterSelf( directia::brain::Brain& brain, bool is
     brain[ "myself" ] = (DEC_Decision_ABC*)this;
     if( isMasalife )
     {
-        brain[ "InitMe" ](  brain[ "net.masagroup.sword.military.world.PlatoonAlly" ], brain[ "myself" ], groupName );
+        brain[ "InitMePlatoon" ](  brain[ "net.masagroup.sword.military.world.PlatoonAlly" ], brain[ "myself" ], groupName );
     }
 }
 

@@ -59,12 +59,14 @@ public:
     //@{
              MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const sword::FragOrder& asn );
              MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs );
+             MIL_FragOrder( const MIL_FragOrderType& type );
     virtual ~MIL_FragOrder();
     //@}
 
     //! @name Operations
     //@{
     static void Register( directia::brain::Brain& brain );
+    static boost::shared_ptr< MIL_FragOrder > CreateFragOrder( std::string );
     void Send( MIL_AgentPion& pion ) const;
     void Send( MIL_Automate& automat ) const;
     void Send( MIL_Population& population ) const;

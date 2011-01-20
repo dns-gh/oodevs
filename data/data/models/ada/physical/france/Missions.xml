@@ -4030,8 +4030,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
-      <parameter dia-name="meetingPoint" name="Position de deploiement" optional="true" type="Point"/>
-      <parameter dia-name="reconnoiterPositions" max-occurs="unbounded" min-occurs="1" name="Position de reconnaissance" optional="true" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Relever" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Relever" id="1038" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Relever" name="MELEE Relever" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4281,4 +4280,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0726930459" -->
+<!-- signature="0049249079" -->

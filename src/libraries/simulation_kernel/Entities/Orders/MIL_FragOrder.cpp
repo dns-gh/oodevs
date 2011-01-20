@@ -45,6 +45,17 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_Knowledge
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_FragOrder constructor
+// Created: DDA 2011-01-17
+// -----------------------------------------------------------------------------
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type )
+    : type_      ( type )
+    , parameters_()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_FragOrder destructor
 // Created: NLD 2006-11-25
 // -----------------------------------------------------------------------------
@@ -68,6 +79,7 @@ std::string MIL_FragOrder::GetDIAType() const
 // -----------------------------------------------------------------------------
 void MIL_FragOrder::Register( directia::brain::Brain& brain )
 {
+    brain[ "CreateFragOrder" ] = &MIL_FragOrder::CreateFragOrder;
     brain.Register( "GetType", &MIL_FragOrder::GetDIAType );
     brain.Register( "GetambianceMission_", &MIL_FragOrder::GetAmbianceMission );
     brain.Register( "Getmunitions_", &MIL_FragOrder::GetMunitions );
@@ -94,6 +106,19 @@ void MIL_FragOrder::Register( directia::brain::Brain& brain )
     brain.Register( "GetsiteFranchissementVariante_", &MIL_FragOrder::GetSiteFranchissementVariante );
     brain.Register( "GetAgentKnowledge_", &MIL_FragOrder::GetAgentKnowledge );
     brain.Register( "GetAgent_", &MIL_FragOrder::GetAgent );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::Register
+// Created: DDA 2011-01-17
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MIL_FragOrder > MIL_FragOrder::CreateFragOrder( std::string type )
+{
+    const MIL_FragOrderType* fragOrderType = MIL_FragOrderType::Find( type );
+    if( fragOrderType )
+        return boost::shared_ptr< MIL_FragOrder >( new MIL_FragOrder( *fragOrderType ) );
+    else
+        return boost::shared_ptr< MIL_FragOrder >();
 }
 
 namespace

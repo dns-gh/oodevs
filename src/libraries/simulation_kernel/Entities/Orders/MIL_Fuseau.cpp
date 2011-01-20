@@ -1020,9 +1020,21 @@ double MIL_Fuseau::ComputeAdvance( const MT_Vector2D& position ) const
         unsigned int length = advances.size();
         if( totalDistances == 0. )
             totalDistances = 1.;
+        bool projectionMustBeWeighted = false;
         for( unsigned int i = 0; i < length; ++i )
-            result += advances[i] * (totalDistances - distances[i])/totalDistances;
-        result /= length;
+            if( totalDistances != distances[i] * length )
+            {
+                projectionMustBeWeighted = true;
+                break;
+            }
+        if( projectionMustBeWeighted )
+        {
+            for( unsigned int i = 0; i < length; ++i )
+                result += advances[i] * (totalDistances - distances[i])/totalDistances;
+            result /= length;
+        }
+        else if( length )
+            result = advances[0];
     }
     return result;
 }

@@ -27,7 +27,9 @@
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Fixer"/>
-        <mission name="MELEE Freiner"/>
+        <mission name="MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE Interdire"/>
@@ -7639,7 +7641,9 @@
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Effectuer un raid"/>
-        <mission name="MELEE Freiner"/>
+        <mission name="MELEE Freiner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Interdire"/>
@@ -11626,4 +11630,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1704068794" -->
+<!-- signature="2575228854" -->
