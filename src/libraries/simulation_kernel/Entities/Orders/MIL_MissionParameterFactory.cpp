@@ -514,6 +514,15 @@ void MIL_MissionParameterFactory::SetAgentKnowledgeListParameter( boost::shared_
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetGenObjectParameter
+// Created: LMT 2011-01-19
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetGenObjectParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Gen_Object > object )
+{
+    pMission->SetParameter( parameter, Create( object ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetGenObjectListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------

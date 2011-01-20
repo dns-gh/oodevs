@@ -281,6 +281,7 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignMissionObjectKnowledgeListParameter" ] = &MIL_MissionParameterFactory::SetObjectKnowledgeListParameter;
     brain[ "DEC_AssignMissionPointParameter" ] = &MIL_MissionParameterFactory::SetPointParameter;
     brain[ "DEC_AssignMissionAgentKnowledgeListParameter" ] = &MIL_MissionParameterFactory::SetAgentKnowledgeListParameter;
+    brain[ "DEC_AssignMissionGenObjectParameter" ] = &MIL_MissionParameterFactory::SetGenObjectParameter;
     brain[ "DEC_AssignMissionGenObjectListParameter" ] = &MIL_MissionParameterFactory::SetGenObjectListParameter;
     brain[ "DEC_AssignMissionPionListParameter" ] = &MIL_MissionParameterFactory::SetPionListParameter;
     brain[ "DEC_AssignMissionLocationListParameter" ] = &MIL_MissionParameterFactory::SetLocationListParameter;
@@ -744,7 +745,7 @@ bool GenObjectFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     boost::shared_ptr< DEC_Gen_Object > value;
     if( element.ToGenObject( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.EngineerObject" ], name, value, true );
+        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.EngineerObject" ], name, value, false );
         return true;
     }
     return false;

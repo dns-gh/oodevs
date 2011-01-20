@@ -2391,7 +2391,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Objets a animer" optional="false" type="PlannedWork"/>
+      <parameter dia-name="obstacle" name="Objet a animer" optional="false" type="PlannedWork"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" id="2116" name="MELEE Fixer" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4054,6 +4054,14 @@
         </choice>
       </parameter>
     </mission>
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.stabilisation.tasks.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.company.stabilisation.tasks.AnimerPosteDeControle" id="1041" mrt-dia-behavior="net.masagroup.sword.france.military.company.stabilisation.tasks.AnimerPosteDeControle" name="STABILISATION Animer Poste De Controle" package="support">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Objets a animer" optional="false" type="PlannedWork"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="MIS_Population_FaireMouvement" dia-type="T_Mission_Population_FaireMouvement" id="332" name="Faire Mouvement">
@@ -4280,4 +4288,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0049249079" -->
+<!-- signature="4218260000" -->
