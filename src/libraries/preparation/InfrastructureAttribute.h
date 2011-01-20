@@ -59,6 +59,8 @@ public:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     void Update( xml::xistream& xis );
     void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    bool IsEnabled() const;
+
     //@}
 
 private:

@@ -122,3 +122,13 @@ void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& /*viewport*/, co
 {
     tools.DrawApp6Symbol( type_.GetSymbol(), object_.Barycenter() , 0.1f, 1.f );
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute::IsEnabled
+// Created: SLG 2011-01-20
+// -----------------------------------------------------------------------------
+bool InfrastructureAttribute::IsEnabled() const
+{
+    return enabled_;
+}
