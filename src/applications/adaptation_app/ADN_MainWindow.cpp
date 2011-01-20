@@ -340,8 +340,8 @@ void ADN_MainWindow::SaveAsProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::NewProject()
 {
-    QString qfilename=QFileDialog::getSaveFileName ( generalConfig_->GetModelsDir().c_str(), tr("Physical model file (physical.xml)"), this, "", tr("Create new project"));
-    if (qfilename==QString::null)
+    QString qfilename = QFileDialog::getSaveFileName( generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ), this, "", tr( "Create new project" ) );
+    if ( qfilename == QString::null )
         return;
 
     workspace_.SetOpenMode( eOpenMode_Admin );

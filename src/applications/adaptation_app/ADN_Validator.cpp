@@ -258,13 +258,13 @@ void ADN_PercentageValidator::fixup( QString& strInput ) const
         rSum += ( *it )->GetData();
     if( rSum >= 100.0 )
     {
-        strInput = QString::number( 0.0 );
+        strInput = QString::number( 0.f );
         return;
     }
     bool bOk = true;
     double rValue = strInput.toDouble( &bOk );
     if( ! bOk )
         return;
-    if( rSum + rValue > 100.0 )
-        strInput = QString::number( 100.0 - rSum );
+    if( rSum + rValue > 100.f )
+        strInput = QString::number( 100.f - rSum );
 }

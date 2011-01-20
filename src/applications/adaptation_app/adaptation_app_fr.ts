@@ -5961,14 +5961,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Donnée invalide</translation>
     </message>
     <message>
-        <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
-        <translation>Chaîne ravitaillement - Pion invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
-        <translation>Chaîne ravitaillement - Mission invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>Logistic supply system - Invalid unit type for convoy units</source>
         <translation>Chaîne ravitaillement - Type de convoi invalide &apos;%1&apos;</translation>
     </message>

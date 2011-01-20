@@ -21,6 +21,10 @@
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
 ADN_Health_Data::WoundInfo::WoundInfo()
+    : lifeExpectancy_( "0s" )
+    , treatTime_     ( "0s" )
+    , restingTime_   ( "0s" )
+
 {
     // NOTHING
 }
@@ -32,9 +36,9 @@ ADN_Health_Data::WoundInfo::WoundInfo()
 void ADN_Health_Data::WoundInfo::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "life-expectancy", lifeExpectancy_ )
-          >> xml::attribute( "caring-time",     treatTime_ )
-          >> xml::attribute( "resting-time",    restingTime_ )
-          >> xml::attribute( "percentage",      rPercentage_ );
+          >> xml::attribute( "caring-time", treatTime_ )
+          >> xml::attribute( "resting-time", restingTime_ )
+          >> xml::attribute( "percentage", rPercentage_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +61,13 @@ void ADN_Health_Data::WoundInfo::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-22
 // -----------------------------------------------------------------------------
 ADN_Health_Data::ADN_Health_Data()
-: ADN_Data_ABC()
+    : ADN_Data_ABC             ()
+    , diagnosticTime_          ( "0s" )
+    , sortingTime_             ( "0s" )
+    , shockTreatTime_          ( "0s" )
+    , contaminationTreatTime_  ( "0s" )
+    , shockRestingTime_        ( "0s" )
+    , contaminationRestingTime_( "0s" )
 {
     for( int n = 0; n < eNbrDoctorSkills; ++n )
         wounds[n].nType_ = (E_DoctorSkills)n;

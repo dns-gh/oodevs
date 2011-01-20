@@ -22,8 +22,8 @@ template <class Connector,class Validator>
 ADN_TableItem_Edit<Connector,Validator>::ADN_TableItem_Edit(ADN_Table*parent,void*data, QTableItem::EditType nEditType)
 : ADN_TableItem_ABC(parent,data,nEditType)
 , bUseColor_       ( false )
-, rMax_            ( 100.0 )
-, rMin_            ( 0.0 )
+, rMax_            ( 100.f )
+, rMin_            ( 0.f )
 , nAlignment_      ( -1 )
 {
     pConnector_ = new Connector(this);

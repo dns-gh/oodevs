@@ -112,7 +112,7 @@ private:
 
 public:
     int nNextId_;
-    ADN_Type_String       strAverageDiagnosticTime_;
+    ADN_Type_String strAverageDiagnosticTime_;
     T_BreakdownInfoVector vBreakdowns_;
 };
 

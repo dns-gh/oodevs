@@ -291,7 +291,7 @@ inline bool isWritable(const std::string& filename)
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::IsValidDatabase
-// Created: PAUL 2011-01-19
+// Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
 bool ADN_Workspace::IsValidDatabase()
 {

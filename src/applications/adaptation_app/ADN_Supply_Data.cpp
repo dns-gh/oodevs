@@ -147,14 +147,14 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
     vConvoySpeedModificatorInfos_.AddItem( 0 );
 
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
-    if( pUnit == 0 )
-        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).ascii(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).ascii() );
+//    if( pUnit == 0 )
+//        throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).ascii(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).ascii() );
     ptrUnit_ = pUnit;
 
     ADN_Missions_Data::T_Mission_Vector& missions = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetUnitMissions();
     ADN_Missions_Data::Mission* mission = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindMission( missions, supplyMission );
-    if( mission == 0 )
-        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).ascii(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).ascii() );
+//    if( mission == 0 )
+//        throw ADN_DataException( tools::translate( "Supply_Data",  "Invalid data" ).ascii(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid mission '%1'" ).arg( supplyMission.c_str() ).ascii() );
     ptrSupplyMission_ = mission;
     ADN_Workspace::GetWorkspace().GetSupply().GetGui().ConnectMission( true );
 
@@ -224,7 +224,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier( xml::xistream& input )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_Data::SupplyDataInfos::IsValidDatabase
-// Created: PAUL 2011-01-19
+// Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
 bool ADN_Supply_Data::SupplyDataInfos::IsValidDatabase()
 {
@@ -341,7 +341,7 @@ void ADN_Supply_Data::WriteArchive( xml::xostream& output )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_Data::IsValidDatabase
-// Created: PAUL 2011-01-19
+// Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
 bool ADN_Supply_Data::IsValidDatabase()
 {

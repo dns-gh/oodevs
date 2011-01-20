@@ -23,14 +23,15 @@
 // Created: AGN 2004-06-15
 // -----------------------------------------------------------------------------
 ADN_AiEngine_Data::ADN_AiEngine_Data()
-: ADN_Data_ABC()
-, rPertinenceMaxDecrease_( 0.0 )
-, rOperationalStateMaxDecrease_( 0.0 )
-, rNeutralizedStateMaxDecrease_( 0.0 )
-, rMinorEquipmentWeight_( 0.0 )
-, rMajorEquipmentWeight_( 0.0 )
-, rHumanWeight_( 0.0 )
-, rDefaultFeedbackTime_( "1s" )
+    : ADN_Data_ABC                 ()
+    , rPertinenceMaxDecrease_      ( 0.f )
+    , rOperationalStateMaxDecrease_( 0.f )
+    , rNeutralizedStateMaxDecrease_( 0.f )
+    , rMinorEquipmentWeight_       ( 0.f )
+    , rMajorEquipmentWeight_       ( 1.f )
+    , rHumanWeight_                ( 0.f )
+    , rDefaultFeedbackTime_        ( "1s" )
+    , modelVersion_                ( "0.0.0" )
 {
     rMinorEquipmentWeight_.SetDataName( "Poids des composantes non majeures." );
     rMajorEquipmentWeight_.SetDataName( "Poids des composantes majeures." );
@@ -96,16 +97,16 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::attribute( "crew", rHumanWeight_ )
           >> xml::end;
 
-    if( rMinorEquipmentWeight_.GetData() < 0.0 || rMinorEquipmentWeight_.GetData() > 1.0 )
+    if( rMinorEquipmentWeight_.GetData() < 0.f || rMinorEquipmentWeight_.GetData() > 1.f )
         throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
 
-    if( rMajorEquipmentWeight_.GetData() < 0.0 || rMajorEquipmentWeight_.GetData() > 1.0 )
+    if( rMajorEquipmentWeight_.GetData() < 0.f || rMajorEquipmentWeight_.GetData() > 1.f )
         throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
 
-    if( rMinorEquipmentWeight_.GetData() + rMajorEquipmentWeight_.GetData() != 1.0 )
+    if( rMinorEquipmentWeight_.GetData() + rMajorEquipmentWeight_.GetData() != 1.f )
         throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid equipment weight sum (must be >=0 and <= 1)" ).ascii() );
 
-    if( rHumanWeight_.GetData() < 0.0 || rHumanWeight_.GetData() > 1.0 )
+    if( rHumanWeight_.GetData() < 0.f || rHumanWeight_.GetData() > 1.f )
         throw ADN_DataException( tools::translate( "AiEngine_Data", "Invalid data" ).ascii(), tools::translate( "AiEngine_Data", "Op. Indicators - Op. state computation - Invalid crew state weight (must be >=0 and <= 1)" ).ascii() );
 
     input >> xml::start( "force-ratio" )

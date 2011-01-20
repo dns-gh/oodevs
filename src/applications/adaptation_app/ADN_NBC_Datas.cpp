@@ -355,8 +355,13 @@ void ADN_NBC_Datas::NbcAgentInfos::WriteArchive( xml::xostream& output )
 // Created: AGN 2004-05-06
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::ADN_NBC_Datas()
-    : ADN_Data_ABC()
-    , nNextId_( 1 )
+    : ADN_Data_ABC                  ()
+    , nNextId_                      ( 1 )
+    , rContaminationDistance_       ( 0.f )
+    , rContaminationQuantityGiven_  ( 0.f )
+    , rWindSpeedLimitForSpreading_  ( 0.f )
+    , rNbcSuitMaxSpeedMultiplier_   ( 0.f )
+    , rNbcSuitReloadSpeedMultiplier_( 0.f )
 {
     vNbcAgent_.SetItemTypeName( "un agent NBC" );
 }

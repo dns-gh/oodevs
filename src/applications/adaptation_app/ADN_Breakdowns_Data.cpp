@@ -205,9 +205,9 @@ void ADN_Breakdowns_Data::BreakdownInfo::WriteArchive( xml::xostream& output )
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_Data::ADN_Breakdowns_Data()
-: ADN_Data_ABC ()
-, nNextId_     ( 1 )
-, vBreakdowns_ ()
+    : ADN_Data_ABC             ()
+    , nNextId_                 ( 1 )
+    , strAverageDiagnosticTime_( "0s" )
 {
     // NOTHING
 }
@@ -307,13 +307,13 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "breakdowns" );
     ADN_Tools::AddSchema( output, "Breakdowns" );
-    output    << xml::start( "diagnosis" )
-                  << xml::attribute( "time", strAverageDiagnosticTime_ )
-              << xml::end;
-    for( uint i = 0; i < eNbrBreakdownNTI; ++i )
+    output   << xml::start( "diagnosis" )
+               << xml::attribute( "time", strAverageDiagnosticTime_ )
+             << xml::end;
+    for( unsigned int i = 0; i < eNbrBreakdownNTI; ++i )
     {
         output << xml::start( "category" )
-                << xml::attribute( "name", ADN_Tr::ConvertFromBreakdownNTI( ( E_BreakdownNTI )i ) );
+                 << xml::attribute( "name", ADN_Tr::ConvertFromBreakdownNTI( ( E_BreakdownNTI )i ) );
         for( IT_BreakdownInfoVector it = vBreakdowns_.begin(); it != vBreakdowns_.end(); ++it )
             if( (*it)->nNTI_ == ( E_BreakdownNTI )i )
                 (*it)->WriteArchive( output );

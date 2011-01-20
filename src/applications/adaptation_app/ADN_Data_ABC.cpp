@@ -126,7 +126,7 @@ void ADN_Data_ABC::WriteArchive( xml::xostream& )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC::IsValidDatabase
-// Created: PAUL 2011-01-19
+// Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
 bool ADN_Data_ABC::IsValidDatabase()
 {

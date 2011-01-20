@@ -48,28 +48,28 @@ GQ_PlotAxis::GQ_PlotAxis( QWidget* pParent, Qt::Orientation nOrientation )
 , nTicksLength_    ( 4 )
 , nSubTicksLength_ ( 2 )
 , nNbrSubTicks_    ( 0 )
-, rMinTickPeriod_  (    0.0 )
-, rMultiplesBase_  (   10.0 )
+, rMinTickPeriod_  ( 0.f )
+, rMultiplesBase_  ( 10.f )
 , nMinBasePower_   ( -100   )
 , tickMultiples_   ( _defaultTickMultiples, _defaultTickMultiples + 4 )
 , bShowTickValues_ ( false )
 , pValueToString_  ( 0 )
 , captionFont_     ( "helvetica", 8, QFont::DemiBold )
 , tickValueFont_   ( "helvetica", 6 )
-, rMinDataValue_   ( 0.0 )
-, rMaxDataValue_   ( 1.0 )
-, rMinVirtualValue_( 0.0 )
-, rMaxVirtualValue_( 0.0 )
+, rMinDataValue_   ( 0.f )
+, rMaxDataValue_   ( 1.f )
+, rMinVirtualValue_( 0.f )
+, rMaxVirtualValue_( 0.f )
 , bFixedRange_     ( false )
 , bVirtualRange_   ( false )
 , nAxisLength_     ( 100 )
 , bUpdateNeeded_   ( true )
-, rMinAxisValue_   ( 0.0 )
-, rMaxAxisValue_   ( 0.0 )
-, rScale_          ( 0.0 )
-, rFirstTick_      ( 0.0 )
-, rTickPeriod_     ( 0.0 )
-, rSubTickPeriod_  ( 0.0 )
+, rMinAxisValue_   ( 0.f )
+, rMaxAxisValue_   ( 0.f )
+, rScale_          ( 0.f )
+, rFirstTick_      ( 0.f )
+, rTickPeriod_     ( 0.f )
+, rSubTickPeriod_  ( 0.f )
 , nAxisWidth_      ( 0 )
 {
     Update();
@@ -278,7 +278,7 @@ void GQ_PlotAxis::SetTickMultiples( double rMultiplesBase, const std::vector< ui
 void GQ_PlotAxis::InitTickMultiplesForIntegers()
 {
     T_TickMultipleList multiples( _defaultTickMultiples, _defaultTickMultiples + 4 );
-    SetTickMultiples( 10.0, multiples, 1.0, 0 );
+    SetTickMultiples( 10.f, multiples, 1.f, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ void GQ_PlotAxis::InitTickMultiplesForIntegers()
 void GQ_PlotAxis::InitTickMultiplesForMinutes()
 {
     T_TickMultipleList multiples( _defaultMinutesMultiples, _defaultMinutesMultiples + 6 );
-    SetTickMultiples( 60.0, multiples, 1.0, 0 );
+    SetTickMultiples( 60.f, multiples, 1.f, 0 );
 }
 
 // -----------------------------------------------------------------------------

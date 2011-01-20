@@ -2024,7 +2024,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::IsValidDatabase
-// Created: PAUL 2011-01-20
+// Created: PHC 2011-01-20
 // -----------------------------------------------------------------------------
 bool ADN_Composantes_Data::ComposanteInfos::IsValidDatabase()
 {
@@ -2036,7 +2036,7 @@ bool ADN_Composantes_Data::ComposanteInfos::IsValidDatabase()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::IsValidDatabase
-// Created: PAUL 2011-01-20
+// Created: PHC 2011-01-20
 // -----------------------------------------------------------------------------
 bool ADN_Composantes_Data::IsValidDatabase()
 {

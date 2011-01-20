@@ -58,7 +58,7 @@ bool ADN_GuiTools::DeletionWarning()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiTools::WorkInProgressWarning
-// Created: PAUL 2011-01-19
+// Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
 bool ADN_GuiTools::WorkInProgressWarning()
 {
@@ -72,7 +72,7 @@ bool ADN_GuiTools::WorkInProgressWarning()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiTools::MissingBreakdownWarning
-// Created: PAUL 2011-01-20
+// Created: PHC 2011-01-20
 // -----------------------------------------------------------------------------
 bool ADN_GuiTools::MissingBreakdownWarning( const std::string& name )
 {
