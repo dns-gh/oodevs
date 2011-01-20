@@ -93,12 +93,12 @@ void InfrastructureAttribute::UpdateData( const T& message )
 // Name: InfrastructureAttribute::Draw
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
     if( type_ )
-        tools.DrawApp6Symbol( type_->GetSymbol(), object_.Barycenter() , 0.1, 1.f );
+        tools.DrawApp6Symbol( type_->GetSymbol(), object_.Barycenter() , 0.1f, 1.f );
     if( !enabled_ )
-        tools.DrawSvg( "infra.svg", object_.Barycenter(), 0.1 );
+        tools.DrawSvg( "infra.svg", object_.Barycenter(), 0.1f );
 }
 
 // -----------------------------------------------------------------------------

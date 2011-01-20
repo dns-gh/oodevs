@@ -189,7 +189,7 @@ void UrbanMagicOrdersInterface::ChangeThreshold()
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
             actions::UrbanMagicAction* action = new actions::UrbanMagicAction( *selectedEntity_, controllers_.controller_, true );
-            action->SetThreshold( editor->text().toInt() );
+            action->SetThreshold( editor->text().toFloat() );
             SendUrbanUpdateMagic( *action );
         }
     }

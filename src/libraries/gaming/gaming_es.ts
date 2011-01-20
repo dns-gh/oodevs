@@ -303,6 +303,18 @@
         <source>Info/StructuralState</source>
         <translation>Info/Estado Estructural</translation>
     </message>
+    <message>
+        <source>Infrastructure/Enable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infrastructure/Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infrastructure/Role</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Crowd</name>

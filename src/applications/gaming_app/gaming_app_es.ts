@@ -3084,6 +3084,18 @@ Motivo: %3
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation type="unfinished">Ingrese un valor y luego presione &apos;enter&apos;</translation>
     </message>
+    <message>
+        <source>Change Threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable</source>
+        <translation type="unfinished">Deshabilitar</translation>
+    </message>
+    <message>
+        <source>Enable</source>
+        <translation type="unfinished">Habilitar</translation>
+    </message>
 </context>
 <context>
     <name>UserProfileDialog</name>
