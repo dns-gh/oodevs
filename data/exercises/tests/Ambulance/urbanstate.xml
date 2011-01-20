@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <urban-state model-version="4.2.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/urbanstate.xsd">
   <urban-objects>
-    <urban-object id="3">
+    <urban-object id="3"/>
+    <urban-object id="6">
       <structural-state value="99"/>
-      <infrastructure enabled="false" role="infras1" threshold="50.02"/>
+      <infrastructure enabled="true" role="infras1" threshold="30"/>
       <medical-treatment doctors="18">
         <bed-capacities/>
       </medical-treatment>
     </urban-object>
   </urban-objects>
 </urban-state>
-<!-- signature="0320651469" -->
+<!-- signature="2249772476" -->
