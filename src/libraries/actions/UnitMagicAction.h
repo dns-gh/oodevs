@@ -44,7 +44,7 @@ public:
     virtual void Publish( Publisher_ABC& publisher, int context ) const;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     kernel::Controller& controller_;

@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Types.h"
 #include "protocol/ServerPublisher_ABC.h"
+#include "actions/CreationListener_ABC.h"
 
 namespace sword
 {
@@ -212,7 +213,7 @@ class CommandHandler;
 //=============================================================================
 // Created: NLD 2002-07-12
 //=============================================================================
-class AgentServerMsgMgr : public Publisher_ABC
+class AgentServerMsgMgr : public Publisher_ABC, public actions::CreationListener_ABC
 {
 public:
     //! @name Constructor/Destructor
@@ -232,6 +233,7 @@ public:
     virtual void Send( const sword::ClientToReplay& message );
     virtual void Send( const sword::ClientToAar& message );
     virtual void Send( const sword::ClientToMessenger& message ) ;
+    virtual void SetForceMode( bool /*force*/ ) {} 
 
     void SetElements( Model& model, Profile& profile );
     //@}

@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "AutomatsLayer.h"
-#include "AutomatCreationListener.h"
+#include "actions/AutomatCreationListener.h"
 #include "actions/ActionFactory.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
@@ -144,7 +144,8 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
 {
-    Action_ABC* action = actionsModel_.CreateAutomatCreationAction( type , *selected_, controllers_.controller_, static_.types_ );
+    Action_ABC* action = actionsModel_.CreateAutomatCreationAction( point, type, *selected_, controllers_.controller_, 
+        static_, agentsModel_, messageManager_, simulation_ );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
     action->Polish();

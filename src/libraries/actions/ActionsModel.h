@@ -19,12 +19,16 @@ namespace kernel
     class AgentType;
     class AgentTypes;
     class AutomatType;
+    class Automat_ABC;
     class Controller;
     class CoordinateConverter_ABC;
     class Entity_ABC;
     class FragOrderType;
     class MissionType;
     class PopulationType;
+    class StaticModel;
+    class Resolver_ABC;
+    class Time_ABC;
 }
 
 namespace xml
@@ -33,12 +37,15 @@ namespace xml
     class xistream;
 }
 
+class AgentServerMsgMgr;
+
 namespace actions
 {
 
 class Action_ABC;
 class ActionFactory_ABC;
 class ActionsFilter_ABC;
+class CreationListener_ABC;
 
 // =============================================================================
 /** @class  ActionsModel
@@ -59,7 +66,8 @@ public:
     //@{
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission );
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder );
-    Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes );
+
+    Action_ABC* CreateAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, const kernel::StaticModel& staticModel, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, const kernel::Time_ABC& simulation );
     Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter );
     Action_ABC* CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes );
     Action_ABC* CreateCrowdCreationAction( const kernel::PopulationType& type, int number, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter );
@@ -69,6 +77,7 @@ public:
     void Load( const std::string& filename, bool readonly = false );
     void Save( const std::string& filename, const ActionsFilter_ABC* filter = 0 ) const;
     void Publish( const Action_ABC& action, int context = 0 );
+    void Publish( const Action_ABC& action, bool force );
     //@}
 
 private:

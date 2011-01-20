@@ -13,6 +13,8 @@
 #include "ActionFactory_ABC.h"
 #include "ActionsFilter_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/StaticModel.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include <boost/bind.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -91,11 +93,14 @@ Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const FragOrde
 // Name: ActionsModel::CreateAutomatCreationAction
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes )
+Action_ABC* ActionsModel::CreateAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected,
+                                                      kernel::Controller& controller, const kernel::StaticModel& staticModel,
+                                                      tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, const Time_ABC& simulation  )
 {
-    Action_ABC* action = factory_.CreateAutomatCreationAction( type, selected, controller, agentTypes );
-    Register( action->GetId(), *action );
-    return action;
+   Action_ABC* action = factory_.CreateAutomatCreationAction( type, selected, controller, staticModel, point, 
+        agentsModel, agentMessenger, *this, simulation );
+   Register( action->GetId(), *action );
+   return action;
 }
 
 // -----------------------------------------------------------------------------
@@ -226,4 +231,15 @@ void ActionsModel::Save( const std::string& filename, const ActionsFilter_ABC* f
 void ActionsModel::Publish( const Action_ABC& action, int context )
 {
     action.Publish( publisher_, context );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::Publish
+// Created: HBD 2011-01-19
+// -----------------------------------------------------------------------------
+void ActionsModel::Publish( const Action_ABC& action, bool force /*= false*/ )
+{
+    publisher_.SetForceMode( true );
+    Publish( action );
+    publisher_.SetForceMode( false );
 }

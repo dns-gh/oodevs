@@ -11,6 +11,7 @@
 #include "ActionPublisher.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: ActionPublisher constructor
@@ -20,6 +21,7 @@ ActionPublisher::ActionPublisher( Publisher_ABC& publisher, kernel::Controllers&
     : controllers_( controllers )
     , publisher_( publisher )
     , design_( false )
+    , force_ ( false )
 {
     controllers_.Register( *this );
 }
@@ -37,10 +39,19 @@ ActionPublisher::~ActionPublisher()
 // Name: ActionPublisher::Send
 // Created: SBO 2010-03-17
 // -----------------------------------------------------------------------------
-void ActionPublisher::Send( const sword::ClientToSim& message )
+void ActionPublisher::Send( const sword::ClientToSim& msg )
 {
-    if( !design_ )
-        publisher_.Send( message );
+    if( !design_ || force_ )
+        publisher_.Send( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionPublisher::SetForceMode
+// Created: HBD 2011-01-19
+// -----------------------------------------------------------------------------
+void ActionPublisher::SetForceMode( bool force )
+{
+    force_ = force;
 }
 
 // -----------------------------------------------------------------------------

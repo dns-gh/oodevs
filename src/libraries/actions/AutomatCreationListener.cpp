@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
+#include "actions_pch.h"
 #include "AutomatCreationListener.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
@@ -71,7 +71,7 @@ bool AutomatCreationListener::OnMessageReceived( const sword::SimToClient& messa
             actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( agentType, point_, *automat, controller_, agentTypes_, coordinateConverter_ );
             action->Attach( *new actions::ActionTiming( controller_, time_ ) );
             action->Attach( *new actions::ActionTasker( automat, false ) );
-            actionsModel_.Publish( *action );
+            actionsModel_.Publish( *action, true );
         }
     }
     return true;

@@ -20,7 +20,9 @@ namespace sword
 
 namespace kernel
 {
+    class Automat_ABC;
     class Controller;
+    class CoordinateConverter_ABC;
     class EntityResolver_ABC;
     class OrderType;
     class OrderParameter;
@@ -31,6 +33,8 @@ namespace kernel
 
 namespace actions
 {
+    class ActionsModel;
+    class CreationListener_ABC; 
     class ParameterFactory_ABC;
 
 // =============================================================================
@@ -61,7 +65,7 @@ public:
     virtual actions::Action_ABC* CreateAction( const sword::CrowdOrder& message ) const;
     virtual actions::Action_ABC* CreateAction( const sword::FragOrder& message ) const;
     
-    virtual actions::Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const;
+    virtual actions::Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, const kernel::StaticModel& staticModel, const geometry::Point2f& point, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel,  CreationListener_ABC& agentMessenger, ActionsModel& actionsModel, const kernel::Time_ABC& simulation ) const;
     virtual actions::Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const;
     virtual actions::Action_ABC* CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const;
     virtual actions::Action_ABC* CreateCrowdCreationAction( const kernel::PopulationType& type, int number, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const;

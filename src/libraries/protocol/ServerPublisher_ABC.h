@@ -41,6 +41,8 @@ public:
     virtual void Send( const sword::ClientToReplay& message ) = 0;
     virtual void Send( const sword::ClientToAar& message ) = 0;
     virtual void Send( const sword::ClientToMessenger& message ) = 0;
+
+    virtual void SetForceMode( bool force ) = 0; 
     //@}
 };
 

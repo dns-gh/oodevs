@@ -9,11 +9,12 @@
 
 #include "actions_pch.h"
 #include "ActionFactory.h"
-#include "ActionsModel.h"
 #include "ActionTasker.h"
 #include "ActionTiming.h"
 #include "AgentMission.h"
 #include "AutomatMission.h"
+#include "AutomatCreationMagicAction.h"
+#include "CreationListener_ABC.h"
 #include "EngageMagicAction.h"
 #include "FragOrder.h"
 #include "Identifier.h"
@@ -53,6 +54,7 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace actions;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory constructor
@@ -644,14 +646,21 @@ namespace
     }
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateAutomatCreationAction
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const
+actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatType& type, const Entity_ABC& selected, Controller& controller, const StaticModel& staticModel, const geometry::Point2f& point,
+                                                                tools::Resolver_ABC< Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, 
+                                                                ActionsModel& actionsModel, const Time_ABC& simulation ) const
+
 {
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "automat_creation" );
-    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Automat Creation" ), true );
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel.types_ ).Get( "automat_creation" );
+
+    AutomatCreationMagicAction* action = new AutomatCreationMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Automat Creation" ),  
+          staticModel, type, point, agentsModel, agentMessenger, actionsModel, simulation, true );
+
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
     int knowledgeGroup = 0;

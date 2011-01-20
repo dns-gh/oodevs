@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "FormationLayer.h"
-#include "AutomatCreationListener.h"
+#include "actions/AutomatCreationListener.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTiming.h"
@@ -102,7 +102,8 @@ void FormationLayer::NotifySelected( const kernel::Formation_ABC* formation )
 // -----------------------------------------------------------------------------
 void FormationLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
 {
-    actions::Action_ABC* action = actionsModel_.CreateAutomatCreationAction( type , *selected_, controllers_.controller_, static_.types_ );
+    actions::Action_ABC* action = actionsModel_.CreateAutomatCreationAction( point, type, *selected_, controllers_.controller_, 
+        static_, agentsModel_, messageManager_, simulation_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();

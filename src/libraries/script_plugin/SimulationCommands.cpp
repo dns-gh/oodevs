@@ -114,5 +114,5 @@ void SimulationCommands::Engage( unsigned automat, bool engage )
     simulation::SetAutomatMode mode;
     mode().mutable_automate()->set_id( automat );
     mode().set_mode( engage ? sword::engaged : sword::disengaged );
-    mode.Send( publisher_,0 );
+    mode.Send( publisher_, 0 );
 }
