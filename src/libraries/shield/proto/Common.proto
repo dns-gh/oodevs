@@ -31,7 +31,6 @@ message UnitId                             { required uint32              id = 1
 message UnitIdList                         { repeated UnitId            elem = 1; }
 message UnitKnowledgeId                    { required uint32              id = 1; }
 message UnitKnowledgeIdList                { repeated UnitKnowledgeId   elem = 1; }
-message UrbanObjectId                      { required uint32              id = 1; }
 message UrbanObjectKnowledgeId             { required uint32              id = 1; }
 message ClientObjectId                     { required uint32              id = 1; }
 message PlannedWorkId                      { required uint32              id = 1; }
@@ -576,7 +575,7 @@ message MsgMissionParameter {
         optional MsgMissionObjectiveList     missionObjectiveList        = 37;
         optional MsgLimasOrder               limasOrder                  = 38;
         optional MsgIntelligenceList         intelligenceList            = 39;
-        optional UrbanObjectId               urbanBlock                  = 40;
+        optional ObjectId                    object                      = 40;
         optional PartyId                     party                       = 41;
         optional FormationId                 formation                   = 42;
         optional uint32                      identifier                  = 43;

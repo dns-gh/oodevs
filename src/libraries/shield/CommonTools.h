@@ -289,7 +289,7 @@ namespace shield
         CONVERT_LIST( missionobjectivelist, elem, ConvertObjective );
         CONVERT_LIST( limasorder, elem, ConvertLimaOrder );
         CONVERT_LIST( intelligencelist, elem, ConvertIntelligence );
-        CONVERT_ID( urbanblock );
+        CONVERT_ID( object );
         CONVERT_ID( party );
         CONVERT_ID( formation );
         CONVERT( identifier );

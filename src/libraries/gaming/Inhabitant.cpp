@@ -41,9 +41,9 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& c
         for( int i = 0; i < message.extension().entries_size(); ++i )
             extensions_[ message.extension().entries( i ).name() ] = message.extension().entries( i ).value();
     }
-    for( int i = 0; i < message.blocks_size(); ++i )
+    for( int i = 0; i < message.objects_size(); ++i )
     {
-        int id = message.blocks( i ).id(); 
+        int id = message.objects( i ).id(); 
         gui::TerrainObjectProxy& urbanObject = model.GetObject( id );
         livingUrbanObject_[ id ] = &urbanObject;
     }
@@ -101,7 +101,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
         const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
-        unsigned int id = occupation.block().id();
+        unsigned int id = occupation.object().id();
         CIT_UrbanObjectVector it = livingUrbanObject_.find( id );
         if( it != livingUrbanObject_.end() )
             it->second->UpdateHumans( name_.ascii(), occupation.number() );

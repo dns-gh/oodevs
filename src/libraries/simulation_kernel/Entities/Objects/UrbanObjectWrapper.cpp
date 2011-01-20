@@ -287,7 +287,6 @@ void UrbanObjectWrapper::SendCreation() const
         return;
     client::UrbanCreation message;
     message().mutable_object()->set_id( GetID() );
-    message().mutable_urban_object()->set_id( object_->GetId() );
     message().set_name( object_->GetName() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
 

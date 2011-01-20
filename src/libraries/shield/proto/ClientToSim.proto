@@ -162,10 +162,10 @@ message MsgUrbanMagicAction {
         optional bool  active    = 1;
         optional float threshold = 2;
     }
-  required Common.UrbanObjectId   id               = 1;
-  repeated Common.UrbanUsage      usages           = 2;
-  optional Infrastructure         infrastructure   = 3;
-  optional uint32                 structural_state = 4;
+  required Common.ObjectId   id               = 1;
+  repeated Common.UrbanUsage usages           = 2;
+  optional Infrastructure    infrastructure   = 3;
+  optional uint32            structural_state = 4;
 }
 
 message MsgClientToSim {

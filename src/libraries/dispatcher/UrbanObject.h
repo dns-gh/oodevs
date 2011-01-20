@@ -40,10 +40,10 @@ namespace dispatcher
 */
 // Created: SLG 2009-12-03
 // =============================================================================
-    class UrbanObject : public Object_ABC
-                      , public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< sword::UrbanUpdate >
-                      , public kernel::Updatable_ABC< sword::ObjectUpdate >
+class UrbanObject : public Object_ABC
+                  , public kernel::Extension_ABC
+                  , public kernel::Updatable_ABC< sword::UrbanUpdate >
+                  , public kernel::Updatable_ABC< sword::ObjectUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -100,7 +100,6 @@ private:
     //! @name Member data
     //@{
     const std::string strName_;
-    unsigned long urbanBlockId_;
     Localisation localisation_;
     bool hasInfrastructures_;
     bool hasResourceNetwork_;

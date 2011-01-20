@@ -37,10 +37,8 @@ Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg )
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
-
-    for( int i = 0; i < msg.blocks_size(); ++i )
-        urbanObjectId_.push_back( msg.blocks( i ).id() );
-
+    for( int i = 0; i < msg.objects_size(); ++i )
+        urbanObjectId_.push_back( msg.objects( i ).id() );
     side_.Register( *this );
     RegisterSelf( *this );
 }
@@ -74,7 +72,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
         const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
-        urbanBlocks_[ occupation.block().id() ] = occupation.number();
+        urbanBlocks_[ occupation.object().id() ] = occupation.number();
     }
 }
 
@@ -98,7 +96,7 @@ void Inhabitant::SendCreation( ClientPublisher_ABC& publisher ) const
     }
     BOOST_FOREACH( int id, urbanObjectId_ )
     {
-        msg().add_blocks()->set_id( id );
+        msg().add_objects()->set_id( id );
     }
     msg.Send( publisher );
 }
@@ -118,7 +116,7 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     BOOST_FOREACH( const T_UrbanBlocks::value_type& urbanBlock, urbanBlocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
-        block.mutable_block()->set_id( urbanBlock.first );
+        block.mutable_object()->set_id( urbanBlock.first );
         block.set_number( urbanBlock.second );
     }
     msg.Send( publisher );

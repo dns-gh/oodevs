@@ -445,9 +445,9 @@ message UrbanMagicAction {
     }
     /** @property id
         @brief The identifier.
-        @see UrbanObjectId
+        @see ObjectId
     */
-    required UrbanObjectId  id               = 1;
+    required ObjectId       id               = 1;
     /** @property usages
         @brief The usages.
         @see UrbanUsage

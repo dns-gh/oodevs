@@ -29,7 +29,7 @@ namespace actions
 /** @class  UrbanMagicAction
     @brief  UrbanMagicAction
 */
-// Created: JSR 2010-04-02
+// Created: SLG 2011-01-18
 // =============================================================================
 class UrbanMagicAction : public ActionWithTarget_ABC
 {

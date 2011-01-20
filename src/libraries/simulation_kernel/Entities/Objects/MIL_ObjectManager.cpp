@@ -363,6 +363,7 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
 void MIL_ObjectManager::OnReceiveUrbanMagicAction( const sword::UrbanMagicAction& msg, unsigned int nCtx )
 {
     sword::UrbanMagicActionAck_ErrorCode nErrorCode = sword::UrbanMagicActionAck::no_error;
+    // $$$$ _RC_ JSR 2011-01-20: Virer le static_cast et remonter OnUpdateStructuralState et OnUpdateInfrastructure dans MIL_Object_ABC
     UrbanObjectWrapper* object = static_cast< UrbanObjectWrapper* >( Find( msg.id().id() ) );
     if( !object )
         nErrorCode = sword::UrbanMagicActionAck::error_invalid_urban_block;

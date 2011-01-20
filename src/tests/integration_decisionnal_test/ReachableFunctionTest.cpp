@@ -23,7 +23,7 @@ namespace
         {
             brain[ "include" ]( std::string("Integration.lua") );
         }
-        void MagnitudeTest( directia::tools::binders::ScriptRef var1, directia::tools::binders::ScriptRef var2, double expected )
+        void MagnitudeTest( directia::tools::binders::ScriptRef var1, directia::tools::binders::ScriptRef var2, double /*expected*/ )
         {
             BOOST_TODO;
             //@TODO MGD replace test with mock on MT_Vector2D

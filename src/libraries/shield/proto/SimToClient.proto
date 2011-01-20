@@ -796,13 +796,13 @@ message MsgObjectKnowledgeDestruction {
 message MsgUrbanKnowledgeCreation {
     required Common.UrbanObjectKnowledgeId knowledge   = 1;
     required Common.PartyId                party       = 2;
-    required Common.UrbanObjectId          urban_block = 3;
+    required Common.ObjectId               object      = 3;
 }
 
 message MsgUrbanKnowledgeUpdate {
     required Common.UrbanObjectKnowledgeId knowledge            = 1;
     required Common.PartyId                party                = 2;
-    required Common.UrbanObjectId          urban_block          = 3; 
+    required Common.ObjectId               object               = 3; 
     optional int32                         progress             = 4;
     optional int32                         maxProgress          = 5;
     optional bool                          perceived            = 6;
@@ -1176,17 +1176,16 @@ message UrbanAttributes {
 }
 
 message MsgUrbanCreation {
-   required Common.UrbanObjectId urban_object = 1;
-   required Common.ObjectId      object       = 2;
-   required string               name         = 3;
-   required Common.MsgLocation   location     = 4;
-   optional UrbanAttributes      attributes   = 5;
-   optional Common.UrbanObjectId parent       = 6;
+   required Common.ObjectId    object       = 1;
+   required string             name         = 2;
+   required Common.MsgLocation location     = 3;
+   optional UrbanAttributes    attributes   = 4;
+   optional Common.ObjectId    parent       = 5;
 }
 
 message MsgUrbanDetection {
     required Common.UnitId             observer     = 1;
-    required Common.UrbanObjectId      urban_object = 2;
+    required Common.ObjectId           object       = 2;
     required Common.EnumUnitVisibility visibility   = 3;
 }
 
@@ -1273,7 +1272,7 @@ message MsgPopulationCreation {
     required string                name      = 4;
     required string                text      = 5;
     optional Extension             extension = 6;
-    repeated Common.UrbanObjectId  blocks    = 7;
+    repeated Common.ObjectId       objects   = 7;
 }
 
 message MsgPopulationUpdate {
@@ -1293,8 +1292,8 @@ message MsgPopulationUpdate {
         optional float                  safety      = 5;
     }
     message BlockOccupation {
-         required Common.UrbanObjectId  block = 1;
-         required int32 number = 2;
+         required Common.ObjectId object = 1;
+         required int32           number = 2;
      }
 
     required Common.PopulationId   id           = 1;
@@ -1305,7 +1304,6 @@ message MsgPopulationUpdate {
     optional Satisfaction          satisfaction = 6;
     optional string                motivation   = 7; 
     repeated BlockOccupation       occupations  = 8;
-
 }
 
 // Message container

@@ -42,7 +42,7 @@ namespace
             sword::UrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
             message.mutable_knowledge()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
-            message.mutable_urban_block()->set_id( urban.GetId() );
+            message.mutable_object()->set_id( urban.GetId() );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             result.reset( new dispatcher::UrbanKnowledge( model, message ) );
@@ -100,7 +100,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
     {
         sword::UrbanKnowledgeUpdate& message = *expected.mutable_message()->mutable_urban_knowledge_update();
         message.mutable_knowledge()->set_id( 1 );
-        message.mutable_urban_block()->set_id( 0 );
+        message.mutable_object()->set_id( 0 );
         message.mutable_party()->set_id( side.GetId() );
         message.set_progress( 5 );
         message.set_max_progress( 7 );
@@ -117,7 +117,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
         sword::UrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
         message.mutable_knowledge()->set_id( 1 );
         message.mutable_party()->set_id( side.GetId() );
-        message.mutable_urban_block()->set_id( 0 );
+        message.mutable_object()->set_id( 0 );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );

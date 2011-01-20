@@ -1150,13 +1150,13 @@ message ObjectKnowledgeDestruction {
 message UrbanKnowledgeCreation {
     required UrbanObjectKnowledgeId knowledge   = 1;
     required PartyId                party       = 2;
-    required UrbanObjectId          urban_block = 3;
+    required ObjectId               object      = 3;
 }
 
 message UrbanKnowledgeUpdate {
     required UrbanObjectKnowledgeId knowledge           = 1;
     required PartyId                party               = 2;
-    required UrbanObjectId          urban_block         = 3;
+    required ObjectId               object              = 3;
     optional int32                  progress            = 4;
     optional int32                  max_progress        = 5;
     optional bool                   perceived           = 6;
@@ -1617,17 +1617,16 @@ message UrbanAttributes {
 }
 
 message UrbanCreation {
-   required UrbanObjectId   urban_object = 1;
-   required ObjectId        object       = 2;
-   required string          name         = 3;
-   required Location        location     = 4;
-   optional UrbanAttributes attributes   = 5;
-   optional UrbanObjectId   parent       = 6;
+   required ObjectId        object       = 1;
+   required string          name         = 2;
+   required Location        location     = 3;
+   optional UrbanAttributes attributes   = 4;
+   optional ObjectId        parent       = 5;
 }
 
 message UrbanDetection {
     required UnitId             observer     = 1;
-    required UrbanObjectId      urban_object = 2;
+    required ObjectId           object       = 2;
     required EnumUnitVisibility visibility   = 3;
 }
 
@@ -1751,7 +1750,7 @@ message PopulationCreation {
     required string         name      = 4;
     required string         text      = 5;
     optional Extension      extension = 6;
-    repeated UrbanObjectId  blocks    = 7;
+    repeated ObjectId       objects   = 7;
 }
 
 message PopulationUpdate {
@@ -1771,8 +1770,8 @@ message PopulationUpdate {
         optional float                  safety      = 5;
     }
     message BlockOccupation {
-         required UrbanObjectId block = 1;
-         required int32         number = 2;
+         required ObjectId object = 1;
+         required int32    number = 2;
      }
     required PopulationId    id           = 1;
     optional int32           healthy      = 2;

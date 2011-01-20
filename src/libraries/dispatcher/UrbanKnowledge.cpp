@@ -11,8 +11,8 @@
 #include "UrbanKnowledge.h"
 #include "Automat.h"
 #include "Model_ABC.h"
+#include "Object_ABC.h"
 #include "Side.h"
-#include "UrbanObject.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -25,12 +25,12 @@ using namespace dispatcher;
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
 UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const sword::UrbanKnowledgeCreation& message )
-    : dispatcher::UrbanKnowledge_ABC( message.knowledge().id() )
-    , model_                        ( model )
-    , team_                         ( model.Sides().Get( message.party().id() ) )
-    , pUrban_                       ( model.UrbanBlocks().Find( message.urban_block().id() ) )
-    , bPerceived_                   ( false )
-    , rProgress_                    ( 0 )
+    : UrbanKnowledge_ABC( message.knowledge().id() )
+    , model_            ( model )
+    , team_             ( model.Sides().Get( message.party().id() ) )
+    , pUrban_           ( model.UrbanBlocks().Find( message.object().id() ) )
+    , bPerceived_       ( false )
+    , rProgress_        ( 0 )
 {
     optionals_.perceivedPresent = 0;
     optionals_.automat_perceptionPresent = 0;
@@ -54,8 +54,7 @@ UrbanKnowledge::~UrbanKnowledge()
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::DoUpdate( const sword::UrbanKnowledgeCreation& message )
 {
-    if( ( message.urban_block().id() && ! pUrban_ ) || ( pUrban_ && pUrban_->GetId() != unsigned int( message.urban_block().id() ) ) )
-        pUrban_ = model_.UrbanBlocks().Find( message.urban_block().id() );
+    pUrban_ = model_.UrbanBlocks().Find( message.object().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,8 +63,7 @@ void UrbanKnowledge::DoUpdate( const sword::UrbanKnowledgeCreation& message )
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::DoUpdate( const sword::UrbanKnowledgeUpdate& message )
 {
-    if( message.has_urban_block() )
-        pUrban_ = model_.UrbanBlocks().Find( message.urban_block().id() );
+    pUrban_ = model_.UrbanBlocks().Find( message.object().id() );
     if( message.has_perceived() )
     {
         optionals_.perceivedPresent = 1;
@@ -99,7 +97,7 @@ void UrbanKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
     client::UrbanKnowledgeCreation message;
     message().mutable_knowledge()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
-    message().mutable_urban_block()->set_id( pUrban_ ? pUrban_->GetId() : 0 );
+    message().mutable_object()->set_id( pUrban_ ? pUrban_->GetId() : 0 );
     message.Send( publisher );
 }
 
@@ -112,7 +110,7 @@ void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     client::UrbanKnowledgeUpdate message;
     message().mutable_knowledge()->set_id( GetId() );
     message().mutable_party()->set_id( team_.GetId() );
-    message().mutable_urban_block()->set_id( pUrban_ ? pUrban_->GetId() : 0 );
+    message().mutable_object()->set_id( pUrban_ ? pUrban_->GetId() : 0 );
     if( optionals_.perceivedPresent )
         message().set_perceived( bPerceived_ );
     if( optionals_.progressPresent )
@@ -121,10 +119,7 @@ void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         message().set_max_progress( rMaxProgress_ );
     if( optionals_.automat_perceptionPresent )
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
-        {
-            sword::AutomatId &data = *message().mutable_automat_perceptions()->add_elem();
-            data.set_id( (*it)->GetId() );
-        }
+            message().mutable_automat_perceptions()->add_elem()->set_id( ( *it )->GetId() );
     message.Send( publisher );
 }
 

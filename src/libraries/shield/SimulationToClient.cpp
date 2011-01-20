@@ -2031,7 +2031,6 @@ namespace
 void SimulationToClient::Convert( const sword::UrbanCreation& from, MsgsSimToClient::MsgUrbanCreation* to )
 {
     CONVERT_ID( object );
-    CONVERT_ID( urban_object );
     CONVERT( name );
     ConvertLocation( from.location(), to->mutable_location() );
     if( from.has_attributes() )
@@ -2059,7 +2058,7 @@ void SimulationToClient::Convert( const sword::UrbanKnowledgeCreation& from, Msg
 {
     CONVERT_ID( knowledge );
     CONVERT_ID( party );
-    CONVERT_ID( urban_block );
+    CONVERT_ID( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -2070,7 +2069,7 @@ void SimulationToClient::Convert( const sword::UrbanKnowledgeUpdate& from, MsgsS
 {
     CONVERT_ID( knowledge );
     CONVERT_ID( party );
-    CONVERT_ID( urban_block );
+    CONVERT_ID( object );
     CONVERT( progress );
     CONVERT_TO( max_progress, maxprogress );
     CONVERT( perceived );
@@ -2103,7 +2102,7 @@ void SimulationToClient::Convert( const sword::StockResource& from, Common::Stoc
 void SimulationToClient::Convert( const sword::UrbanDetection& from, MsgsSimToClient::MsgUrbanDetection* to )
 {
     CONVERT_ID( observer );
-    CONVERT_ID( urban_object );
+    CONVERT_ID( object );
     CONVERT_UNIT_VISIBILITY( visibility );
 }
 
@@ -2332,8 +2331,8 @@ void SimulationToClient::Convert( const sword::PopulationCreation& from, MsgsSim
     CONVERT( text );
     if( from.has_extension() )
         ConvertExtension( from.extension(), to->mutable_extension() );
-    for( int i = 0; i < from.blocks().size(); ++i )
-        to->add_blocks()->set_id( from.blocks( i ).id() );
+    for( int i = 0; i < from.objects().size(); ++i )
+        to->add_objects()->set_id( from.objects( i ).id() );
 }
 
 namespace
@@ -2360,7 +2359,7 @@ namespace
     template< typename From, typename To >
     void ConvertBlockOccupation( const From& from, To* to )
     {
-        CONVERT_ID( block );
+        CONVERT_ID( object );
         CONVERT( number );
     }
 }

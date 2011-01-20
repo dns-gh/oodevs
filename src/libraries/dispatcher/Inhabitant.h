@@ -29,7 +29,7 @@ namespace dispatcher
 */
 // Created: SLG 2010-11-29
 // =============================================================================
-class Inhabitant : public dispatcher::Inhabitant_ABC
+class Inhabitant : public Inhabitant_ABC
                  , public kernel::Extension_ABC
                  , public kernel::Updatable_ABC< sword::PopulationUpdate >
 {
@@ -70,7 +70,7 @@ private:
     const unsigned long nType_;
     const std::string strName_;
     const std::string text_;
-    dispatcher::Team_ABC& side_;
+    Team_ABC& side_;
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;

@@ -11,13 +11,18 @@
 #define __UrbanKnowledge_h_
 
 #include "UrbanKnowledge_ABC.h"
-#include "protocol/Simulation.h"
 
 namespace kernel
 {
     class Automat_ABC;
     class Entity_ABC;
     class ModelVisitor_ABC;
+}
+
+namespace sword
+{
+    class UrbanKnowledgeCreation;
+    class UrbanKnowledgeUpdate;
 }
 
 namespace dispatcher
@@ -37,7 +42,6 @@ class UrbanKnowledge : public UrbanKnowledge_ABC
                      , public kernel::Updatable_ABC< sword::UrbanKnowledgeCreation >
                      , public kernel::Updatable_ABC< sword::UrbanKnowledgeUpdate >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -92,7 +96,6 @@ private:
     std::vector< const kernel::Automat_ABC* > automatPerceptions_;
     T_Optionals optionals_;
     //@}
-
 };
 
 }

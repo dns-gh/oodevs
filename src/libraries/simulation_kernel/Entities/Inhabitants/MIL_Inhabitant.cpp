@@ -299,7 +299,7 @@ void MIL_Inhabitant::SendCreation() const
     }
     BOOST_FOREACH( const T_UrbanBlock& block, urbanBlocks_ )
     {
-        msg().add_blocks()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *block.first ).GetID() );
+        msg().add_objects()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *block.first ).GetID() );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -319,7 +319,7 @@ void MIL_Inhabitant::SendFullState() const
     BOOST_FOREACH( const T_UrbanBlock& urbanBlock, urbanBlocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
-        block.mutable_block()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *urbanBlock.first ).GetID() );
+        block.mutable_object()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *urbanBlock.first ).GetID() );
         block.set_number( urbanBlock.second );
     }
     msg.Send( NET_Publisher_ABC::Publisher() );

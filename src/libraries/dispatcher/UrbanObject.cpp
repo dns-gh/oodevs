@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
+#include "UrbanObject.h"
 #include "ArchitectureAttribute.h"
 #include "ColorAttribute.h"
 #include "InfrastructuresAttribute.h"
@@ -15,7 +16,6 @@
 #include "StructureAttribute.h"
 #include "UsagesAttribute.h"
 #include "MedicalTreatmentAttribute.h"
-#include "UrbanObject.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -28,14 +28,13 @@ using namespace dispatcher;
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
 UrbanObject::UrbanObject( Model_ABC& /*model*/, const sword::UrbanCreation& msg )
-    : dispatcher::Object_ABC( msg.object().id(), msg.name().c_str() )
-    , strName_                   ( msg.name()  )
-    , urbanBlockId_              ( msg.urban_object().id() )
-    , localisation_              ( msg.location() )
-    , hasInfrastructures_        ( false )
-    , hasResourceNetwork_        ( false )
-    , hasStructure_              ( false )
-    , hasMedicalTreatment_       ( false )
+    : Object_ABC          ( msg.object().id(), msg.name().c_str() )
+    , strName_            ( msg.name()  )
+    , localisation_       ( msg.location() )
+    , hasInfrastructures_ ( false )
+    , hasResourceNetwork_ ( false )
+    , hasStructure_       ( false )
+    , hasMedicalTreatment_( false )
 {
     Initialize( msg.attributes() );
     RegisterSelf( *this );
@@ -62,9 +61,9 @@ UrbanObject::~UrbanObject()
 // -----------------------------------------------------------------------------
 void UrbanObject::Initialize( const sword::UrbanAttributes& attributes )
 {
-    MSG_MSG_CREATION( color          , ColorAttribute );
-    MSG_MSG_CREATION( architecture   , ArchitectureAttribute );
-    MSG_MSG_CREATION( structure      , StructureAttribute );
+    MSG_MSG_CREATION( color        , ColorAttribute );
+    MSG_MSG_CREATION( architecture , ArchitectureAttribute );
+    MSG_MSG_CREATION( structure    , StructureAttribute );
     if( attributes.usages_size() > 0 )
         AddAttribute( new UsagesAttribute( attributes ) );
 }
@@ -95,7 +94,6 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanCreation msg;
     msg().mutable_object()->set_id( GetId() );
-    msg().mutable_urban_object()->set_id( urbanBlockId_ );
     msg().set_name( strName_ );
     localisation_.Send( *msg().mutable_location() );
     msg().mutable_attributes();

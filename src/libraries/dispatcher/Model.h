@@ -156,7 +156,7 @@ private:
     tools::Resolver< Automat_ABC >           automats_;
     tools::Resolver< Agent_ABC >             agents_;
     tools::Resolver< Object_ABC >            objects_;
-    tools::Resolver< Object_ABC >       urbanBlocks_;
+    tools::Resolver< Object_ABC >            urbanBlocks_;
     tools::Resolver< Population_ABC >        populations_;
     tools::Resolver< Inhabitant_ABC >        inhabitants_;
     tools::Resolver< AgentKnowledge_ABC >    agentKnowledges_;

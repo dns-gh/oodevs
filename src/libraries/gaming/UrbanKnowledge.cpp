@@ -38,7 +38,7 @@ UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const sword::UrbanKnowled
     , pRealUrban_           ( 0 )
 {
     RegisterSelf( *this );
-    pRealUrban_ = terrainObjectResolver_.Find( message.urban_block().id() );
+    pRealUrban_ = terrainObjectResolver_.Find( message.object().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,8 +56,8 @@ UrbanKnowledge::~UrbanKnowledge()
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::DoUpdate( const sword::UrbanKnowledgeUpdate& message )
 {
-    if( message.urban_block().id() )
-        pRealUrban_ = terrainObjectResolver_.Find( message.urban_block().id() );
+    if( message.object().id() )
+        pRealUrban_ = terrainObjectResolver_.Find( message.object().id() );
     if( message.has_perceived() )
         bIsPerceived_ = message.perceived();
     if( message.has_progress() )

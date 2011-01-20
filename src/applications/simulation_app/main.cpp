@@ -11,7 +11,10 @@
 #include <tools/Win32/Win32Exception.h>
 #include <tools/win32/FlexLm.h>
 #include <masalloc/masalloc.h>
+#pragma warning( push )
+#pragma warning( disable : 4244 )
 #include <google/protobuf/message.h>
+#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 #include <new.h>
 #include <dbghelp.h>

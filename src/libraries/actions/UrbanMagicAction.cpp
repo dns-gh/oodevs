@@ -18,7 +18,7 @@ using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: UrbanMagicAction::UrbanMagicAction
-// Created: JSR 2010-04-02
+// Created: SLG 2011-01-18
 // -----------------------------------------------------------------------------
 UrbanMagicAction::UrbanMagicAction( const kernel::Entity_ABC& object, kernel::Controller& controller, bool registered /*= true*/ )
     : ActionWithTarget_ABC ( controller, kernel::MagicActionType( "urban" ), object ) // $$$$ _RC_ SLG 2010-12-22: Creation d'un MagicActionType fictif
@@ -33,7 +33,7 @@ UrbanMagicAction::UrbanMagicAction( const kernel::Entity_ABC& object, kernel::Co
 
 // -----------------------------------------------------------------------------
 // Name: UrbanMagicAction::~UrbanMagicAction
-// Created: JSR 2010-04-02
+// Created: SLG 2011-01-18
 // -----------------------------------------------------------------------------
 UrbanMagicAction::~UrbanMagicAction()
 {
@@ -43,7 +43,7 @@ UrbanMagicAction::~UrbanMagicAction()
 
 // -----------------------------------------------------------------------------
 // Name: UrbanMagicAction::Polish
-// Created: JSR 2010-04-02
+// Created: SLG 2011-01-18
 // -----------------------------------------------------------------------------
 void UrbanMagicAction::Polish()
 {
@@ -53,7 +53,7 @@ void UrbanMagicAction::Polish()
 
 // -----------------------------------------------------------------------------
 // Name: UrbanMagicAction::Serialize
-// Created: JSR 2010-04-02
+// Created: SLG 2011-01-18
 // -----------------------------------------------------------------------------
 void UrbanMagicAction::Serialize( xml::xostream& xos ) const
 {
@@ -62,7 +62,7 @@ void UrbanMagicAction::Serialize( xml::xostream& xos ) const
 
 // -----------------------------------------------------------------------------
 // Name: UrbanMagicAction::Publish
-// Created: JSR 2010-04-21
+// Created: SLG 2011-01-18
 // -----------------------------------------------------------------------------
 void UrbanMagicAction::Publish( Publisher_ABC& publisher, int ) const
 {

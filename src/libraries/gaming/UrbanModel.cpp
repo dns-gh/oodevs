@@ -132,19 +132,20 @@ namespace
 // -----------------------------------------------------------------------------
 void UrbanModel::Create( const sword::UrbanCreation& message )
 {
+    unsigned long id = message.object().id();
+    if( Find( id ) )
+        return;
     geometry::Polygon2f footPrint;
     std::string name( message.name() );
-    unsigned long id = message.object().id();
     for( int i = 0; i < message.location().coordinates().elem_size(); ++i )
         footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
-    urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( message.urban_object().id(), name, &footPrint );
+    urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
     AttachExtensions( *object, message );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, *object, message.object().id(), QString( message.name().c_str() ), static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ) );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, *object, id, QString( name.c_str() ), static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ) );
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
-    if( !Find( id ) )
-        Register( id, *pTerrainObject );
+    Register( id, *pTerrainObject );
     urbanBlockDetectionMap_.AddUrbanBlock( *object );
 }
 
