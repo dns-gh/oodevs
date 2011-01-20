@@ -88,6 +88,7 @@
     <roof-shape-types>
       <roof-shape-type name="Flat"/>
       <roof-shape-type name="Pitched"/>
+      <roof-shape-type name="None"/>
     </roof-shape-types>
   </urban-block-types>
   <accomodations>
@@ -96,7 +97,7 @@
     <accomodation capacity="0.07" role="home"/>
   </accomodations>
   <infrastructures>
-    <infrastructure name="infras1" symbol="sfgpuc">
+    <infrastructure name="infras1" symbol="sfgpucaw">
       <capacities>
         <medical night-doctors-rate="10">
           <emergency-plan beds-rate="10" doctors-rate="10"/>
@@ -105,4 +106,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="3135806878" -->
+<!-- signature="2182275125" -->
