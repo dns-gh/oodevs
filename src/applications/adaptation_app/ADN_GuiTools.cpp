@@ -18,7 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_GuiTools.h"
-
+#include "ADN_Tr.h"
 #include <qmessagebox.h>
 #include <qlabel.h>
 #include <qgroupbox.h>
@@ -65,6 +65,22 @@ bool ADN_GuiTools::WorkInProgressWarning()
     int nResult = QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress. \n Convoy unit type not defined. \n Do you want to save anyway ?" ),
+        QMessageBox::Yes | QMessageBox::Default,
+        QMessageBox::No  | QMessageBox::Escape );
+    return nResult == QMessageBox::Yes;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiTools::MissingBreakdownWarning
+// Created: PAUL 2011-01-20
+// -----------------------------------------------------------------------------
+bool ADN_GuiTools::MissingBreakdownWarning( const std::string& name )
+{
+    int nResult = QMessageBox::warning( 0,
+        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
+        tools::translate( "Composante_Data", "Equipment - Shall contain at least one breakdown for " ) 
+      + QString::fromLatin1( name.c_str() ) 
+      + QString::fromLatin1( ". \n Do you want to save anyway ?" ),
         QMessageBox::Yes | QMessageBox::Default,
         QMessageBox::No  | QMessageBox::Escape );
     return nResult == QMessageBox::Yes;

@@ -107,11 +107,11 @@ ADN_Supply_Data::SupplyDataInfos::~SupplyDataInfos()
 // -----------------------------------------------------------------------------
 void ADN_Supply_Data::SupplyDataInfos::Reset()
 {
-    vConvoySetupInfos_    .Reset();
-    vConvoyLoadingInfos_  .Reset();
+    vConvoySetupInfos_.Reset();
+    vConvoyLoadingInfos_.Reset();
     vConvoyUnloadingInfos_.Reset();
     vConvoySpeedModificatorInfos_.Reset();
-    vVectorWarnings_      .Reset();
+    vVectorWarnings_.Reset();
     ADN_Workspace::GetWorkspace().GetSupply().GetGui().ConnectMission( false );
     ptrSupplyMission_.SetData( 0, false );
     ptrUnit_.SetData( 0, false );
@@ -126,20 +126,20 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
     std::string strUnit, supplyMission;
     input >> xml::start( "supply" )
             >> xml::start( "convoys" )
-                >> xml::attribute( "unit-type", strUnit )
-                >> xml::attribute( "mission", supplyMission )
-                >> xml::start( "constitution-times" )
-                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadConstitutionTime )
-                >> xml::end
-                >> xml::start( "loading-times" )
-                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadLoadingTime )
-                >> xml::end
-                >> xml::start( "unloading-times" )
-                    >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadUnloadingTime )
-                >> xml::end
-                >> xml::start( "speed-modifiers" )
-                    >> xml::list( "speed-modifier", *this, &ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier )
-                >> xml::end
+              >> xml::attribute( "unit-type", strUnit )
+              >> xml::attribute( "mission", supplyMission )
+              >> xml::start( "constitution-times" )
+                >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadConstitutionTime )
+              >> xml::end
+              >> xml::start( "loading-times" )
+                >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadLoadingTime )
+              >> xml::end
+              >> xml::start( "unloading-times" )
+                >> xml::list( "unit-time", *this, &ADN_Supply_Data::SupplyDataInfos::ReadUnloadingTime )
+              >> xml::end
+              >> xml::start( "speed-modifiers" )
+                >> xml::list( "speed-modifier", *this, &ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier )
+              >> xml::end
             >> xml::end;
     vConvoySetupInfos_.AddItem( 0 );
     vConvoyLoadingInfos_.AddItem( 0 );
@@ -228,7 +228,9 @@ void ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier( xml::xistream& input )
 // -----------------------------------------------------------------------------
 bool ADN_Supply_Data::SupplyDataInfos::IsValidDatabase()
 {
-    return ptrUnit_.GetData() != 0;
+    if( ptrUnit_.GetData() == 0 )
+        return ADN_GuiTools::WorkInProgressWarning();
+    return true;
 }
 
 // -----------------------------------------------------------------------------

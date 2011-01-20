@@ -36,6 +36,7 @@ public:
     static bool MultiRefWarning();
     static bool DeletionWarning();
     static bool WorkInProgressWarning();
+    static bool MissingBreakdownWarning( const std::string& name );
 };
 
 #endif // __ADN_GuiTools_h_

@@ -308,8 +308,7 @@ bool ADN_Workspace::IsValidDatabase()
 bool ADN_Workspace::SaveAs( const std::string& filename )
 {
     if( !IsValidDatabase() )
-        if( !ADN_GuiTools::WorkInProgressWarning() )
-            return false;
+        return false;
 
     ADN_Project_Data::WorkDirInfos& dirInfos = ADN_Project_Data::GetWorkDirInfos();
 

@@ -18,9 +18,9 @@
 // Created: SBO 2006-01-02
 // -----------------------------------------------------------------------------
 ADN_Config::ADN_Config()
-    : pDialog_         ( 0 )
-    , strSimPath_      ()
-    , strSimArguments_ ()
+    : pDialog_        ( 0 )
+    , strSimPath_     ()
+    , strSimArguments_()
 {
     Load();
 }

@@ -10,7 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Composantes_Data.h"
-
+#include "ADN_GuiTools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
@@ -26,13 +26,13 @@
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 ADN_Composantes_Data::AmbulanceInfos::AmbulanceInfos()
-: ADN_DataTreeNode_ABC  ()
-, transportSkills_      ()
-, bTransportNBC_        ( false )
-, bTransportShock_      ( false )
-, rCapacity_            ( 0 )
-, loadTimePerPerson_    ( "0s" )
-, unloadTimePerPerson_  ( "0s" )
+    : ADN_DataTreeNode_ABC()
+    , transportSkills_    ()
+    , bTransportNBC_      ( false )
+    , bTransportShock_    ( false )
+    , rCapacity_          ( 0 )
+    , loadTimePerPerson_  ( "0s" )
+    , unloadTimePerPerson_( "0s" )
 {
     for( int n = 0; n < eNbrDoctorSkills; ++n )
         transportSkills_[n] = false;
@@ -48,7 +48,6 @@ std::string ADN_Composantes_Data::AmbulanceInfos::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AmbulanceInfos::GetItemName
 // Created: APE 2005-03-11
@@ -57,7 +56,6 @@ std::string ADN_Composantes_Data::AmbulanceInfos::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AmbulanceInfos::CopyFrom
@@ -70,8 +68,8 @@ void ADN_Composantes_Data::AmbulanceInfos::CopyFrom( AmbulanceInfos& src )
     unloadTimePerPerson_ = src.unloadTimePerPerson_.GetData();
     for( int n = 0; n < eNbrDoctorSkills; ++n )
         transportSkills_[n] = src.transportSkills_[n].GetData();
-    bTransportNBC_       = src.bTransportNBC_.GetData();
-    bTransportShock_     = src.bTransportShock_.GetData();
+    bTransportNBC_ = src.bTransportNBC_.GetData();
+    bTransportShock_ = src.bTransportShock_.GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -2025,22 +2023,46 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::IsValidDatabase
+// Created: PAUL 2011-01-20
+// -----------------------------------------------------------------------------
+bool ADN_Composantes_Data::ComposanteInfos::IsValidDatabase()
+{
+    if( attritionBreakdowns_.vBreakdowns_.empty() || randomBreakdowns_.vBreakdowns_.empty() )
+        if( ptrArmor_.GetData()->nType_.GetData() != eProtectionType_Human )
+            return ADN_GuiTools::MissingBreakdownWarning( strName_.GetData() );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::IsValidDatabase
+// Created: PAUL 2011-01-20
+// -----------------------------------------------------------------------------
+bool ADN_Composantes_Data::IsValidDatabase()
+{
+    for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+        if( !(*it)->IsValidDatabase() )
+            return false;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ComposanteInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "equipment" )
-            << xml::attribute( "comment", strAdditionalComments_ )
-            << xml::attribute( "name", strName_ )
-            << xml::attribute( "id", nMosId_ )
-            << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
-            << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
-            << xml::attribute( "codeLFRIL", strCodeLFRIL_ )
-            << xml::attribute( "codeNNO",   strCodeNNO_   )
-            << xml::attribute( "protection", ptrArmor_.GetData()->strName_ )
-            << xml::attribute( "size", *ptrSize_.GetData() )
-            << xml::attribute( "weight", rWeight_ );
+               << xml::attribute( "comment", strAdditionalComments_ )
+               << xml::attribute( "name", strName_ )
+               << xml::attribute( "id", nMosId_ )
+               << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
+               << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
+               << xml::attribute( "codeLFRIL", strCodeLFRIL_ )
+               << xml::attribute( "codeNNO",   strCodeNNO_   )
+               << xml::attribute( "protection", ptrArmor_.GetData()->strName_ )
+               << xml::attribute( "size", *ptrSize_.GetData() )
+               << xml::attribute( "weight", rWeight_ );
 
     output << xml::start( "speeds" )
             << xml::attribute( "max", rMaxSpeed_ );
@@ -2107,7 +2129,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
         attritionBreakdowns_.WriteArchive( output );
         output << xml::end;
     }
-    else if( ptrArmor_.GetData()->nType_.GetData() != eProtectionType_Human )
+    else if( !IsValidDatabase() )
         throw ADN_DataException( tools::translate( "Composante_Data", "Missing breakdown" ).ascii(), tools::translate( "Composante_Data", "Equipment - Shall contain at least one breakdown for " ).ascii() + strName_.GetData() );
     if( bMaxSlope_.GetData() )
         output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );
@@ -2127,9 +2149,9 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
 // Created: JDY 03-07-17
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::ADN_Composantes_Data()
-: ADN_Data_ABC ()
-, nNextId_     ( 1 )
-, vComposantes_()
+    : ADN_Data_ABC ()
+    , nNextId_     ( 1 )
+    , vComposantes_()
 {
     vComposantes_.SetItemTypeName( "an equipment" );
 }

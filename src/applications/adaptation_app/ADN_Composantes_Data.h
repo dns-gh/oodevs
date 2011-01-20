@@ -627,57 +627,49 @@ public:
         void ReadActiveProtection( xml::xistream& input );
         void ReadObject( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
+        bool IsValidDatabase();
 
     public:
-        ADN_Type_String                                                           strName_;
-        ADN_Type_String                                                           strAdditionalComments_;
-        ADN_Type_Int                                                              nMosId_;
-
-        ADN_Type_String                                                           strCodeEMAT6_;
-        ADN_Type_String                                                           strCodeEMAT8_;
-        ADN_Type_String                                                           strCodeLFRIL_;
-        ADN_Type_String                                                           strCodeNNO_;
-        ADN_Type_String                                                           equipmentCategory_;
-
-        ADN_TypePtr_InVector_ABC<helpers::ArmorInfos>                 ptrArmor_;
-        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos>                  ptrSize_;
-        ADN_Type_Double                                                           rWeight_;
-        ADN_Type_Double                                                           rMaxSpeed_;
-
-        T_SpeedInfos_Vector                                                       vSpeeds_;
-        T_WeaponInfos_Vector                                                      vWeapons_;
-        T_SensorInfos_Vector                                                      vSensors_;
-        T_RadarInfos_Vector                                                       vRadars_;
-        T_ObjectInfos_Vector                                                      vObjects_;
-        ConsumptionsInfos                                                         consumptions_;
-        ResourceInfos                                                             resources_;
-        HumanProtectionInfos                                                      humanProtections_;
-        T_ActiveProtectionsInfos_Vector                                           vActiveProtections_;
-
-        BreakdownGroupInfos                                                       attritionBreakdowns_;
-        BreakdownGroupInfos                                                       randomBreakdowns_;
-
-        ADN_Type_Bool                                                             bTroopEmbarkingTimes_;
-        ADN_Type_Time                                                             embarkingTimePerPerson_;
-        ADN_Type_Time                                                             disembarkingTimePerPerson_;
-
-        ADN_Type_Bool                                                             bCanCarryCargo_;
-        ADN_Type_Double                                                           rWeightTransportCapacity_;
-        ADN_Type_Time                                                             embarkingTimePerTon_;
-        ADN_Type_Time                                                             disembarkingTimePerTon_;
-
-        ADN_Type_Bool                                                             bMaxSlope_;
-        ADN_Type_Double                                                           rMaxSlope_;
-
-        LogInfos        logInfos_;
-
+        ADN_Type_String strName_;
+        ADN_Type_String strAdditionalComments_;
+        ADN_Type_Int nMosId_;
+        ADN_Type_String strCodeEMAT6_;
+        ADN_Type_String strCodeEMAT8_;
+        ADN_Type_String strCodeLFRIL_;
+        ADN_Type_String strCodeNNO_;
+        ADN_Type_String equipmentCategory_;
+        ADN_TypePtr_InVector_ABC<helpers::ArmorInfos> ptrArmor_;
+        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos> ptrSize_;
+        ADN_Type_Double rWeight_;
+        ADN_Type_Double rMaxSpeed_;
+        T_SpeedInfos_Vector vSpeeds_;
+        T_WeaponInfos_Vector vWeapons_;
+        T_SensorInfos_Vector vSensors_;
+        T_RadarInfos_Vector vRadars_;
+        T_ObjectInfos_Vector vObjects_;
+        ConsumptionsInfos consumptions_;
+        ResourceInfos resources_;
+        HumanProtectionInfos humanProtections_;
+        T_ActiveProtectionsInfos_Vector vActiveProtections_;
+        BreakdownGroupInfos attritionBreakdowns_;
+        BreakdownGroupInfos randomBreakdowns_;
+        ADN_Type_Bool bTroopEmbarkingTimes_;
+        ADN_Type_Time embarkingTimePerPerson_;
+        ADN_Type_Time disembarkingTimePerPerson_;
+        ADN_Type_Bool bCanCarryCargo_;
+        ADN_Type_Double rWeightTransportCapacity_;
+        ADN_Type_Time embarkingTimePerTon_;
+        ADN_Type_Time disembarkingTimePerTon_;
+        ADN_Type_Bool bMaxSlope_;
+        ADN_Type_Double rMaxSlope_;
+        LogInfos logInfos_;
 
     public:
         class CmpId : public std::unary_function< ComposanteInfos* , bool >
         {
         public:
             CmpId( int val) : val_(val) {}
-            ~CmpId() {}
+            ~CmpId(){}
 
             bool operator()( ComposanteInfos* tgtnfos ) const
             { return tgtnfos->nMosId_.GetData() ==val_; }
@@ -687,20 +679,19 @@ public:
         };
     };
 
-    typedef ADN_Type_Vector_ABC<ComposanteInfos>    T_ComposanteInfos_Vector;
-    typedef T_ComposanteInfos_Vector::iterator      IT_ComposanteInfos_Vector;
-
+    typedef ADN_Type_Vector_ABC<ComposanteInfos> T_ComposanteInfos_Vector;
+    typedef T_ComposanteInfos_Vector::iterator  IT_ComposanteInfos_Vector;
 
     //*****************************************************************************
 public:
     explicit ADN_Composantes_Data();
     virtual ~ADN_Composantes_Data();
 
-    void            FilesNeeded(T_StringList& l) const;
-    void            Reset();
-
-    T_ComposanteInfos_Vector&            GetComposantes();
-    ComposanteInfos*                     FindComposante( const std::string& strName );
+    void FilesNeeded(T_StringList& l) const;
+    void Reset();
+    virtual bool IsValidDatabase();
+    T_ComposanteInfos_Vector& GetComposantes();
+    ComposanteInfos* FindComposante( const std::string& strName );
 
     int GetNextId();
 
@@ -716,9 +707,8 @@ private:
 public:
     int nNextId_;
 
-    T_ComposanteInfos_Vector            vComposantes_;
+    T_ComposanteInfos_Vector vComposantes_;
 };
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::T_ComposanteInfos_Vector
@@ -729,7 +719,6 @@ ADN_Composantes_Data::T_ComposanteInfos_Vector&  ADN_Composantes_Data::GetCompos
 {
     return vComposantes_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::FindComposante
@@ -743,6 +732,5 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::FindComposante( con
         return 0;
     return *it;
 }
-
 
 #endif // __ADN_Composantes_Data_h_
