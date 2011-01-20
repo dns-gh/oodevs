@@ -342,7 +342,8 @@ message ActionCreateFireOrderAck {
         error_invalid_reporter       = 1; //!< Operation failed because no existing reporter with the provided identifier could be found
         error_invalid_target         = 2; //!< Operation failed because no existing target with the provided identifier could be found
         error_invalid_ammunition     = 3; //!< Operation failed because no existing ammunition with the provided identifier could be found
-        error_target_not_illuminated = 4; //!< Operation failed because of the target not being illuminated
+        error_invalid_iteration      = 4; //!< Operation failed because iterations should be greater than 0
+        error_target_not_illuminated = 5; //!< Operation failed because of the target not being illuminated
     }
     required ErrorCode error_code = 2; //!< Reason for the failure of the request @see ErrorCode @todo change field index to 1
 }

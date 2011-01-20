@@ -607,36 +607,72 @@ Motivo: %3
 <context>
     <name>FireCreationPanel</name>
     <message>
-        <source>Fire</source>
-        <translation>Disparo</translation>
+        <source>Reporter:</source>
+        <translation>Reportero:</translation>
     </message>
     <message>
-        <source>FireOrder description</source>
-        <translation>Descripción de orden de disparo</translation>
+        <source>---</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike on unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike on position</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Target:</source>
         <translation>Blanco:</translation>
     </message>
     <message>
-        <source>Reporter:</source>
-        <translation>Reportero:</translation>
-    </message>
-    <message>
-        <source>Munitions:</source>
+        <source>Ammunition:</source>
         <translation>Municiones:</translation>
     </message>
     <message>
-        <source>IT:</source>
-        <translation>IT:</translation>
+        <source>Iteration:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ApplyFire</source>
-        <translation>Aplicar fuego</translation>
+        <source>Launch strike</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fire order</source>
-        <translation>Órden de disparo</translation>
+        <source>Strike order on location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike order: location target</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike order: reporter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike order: unit target</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike order description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location target:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

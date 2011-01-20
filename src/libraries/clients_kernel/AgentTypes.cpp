@@ -423,6 +423,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "change_diplomacy", sword::MagicAction::change_diplomacy ) );
     RegisterActionType( *new MagicActionType( "create_knowledge_group", sword::MagicAction::create_knowledge_group ) );
     RegisterActionType( *new MagicActionType( "change_resource_links", sword::MagicAction::change_resource_network_properties ) );
+    RegisterActionType( *new MagicActionType( "fire_order_on_location", sword::MagicAction::create_fire_order_on_location ) );
 
     RegisterActionType( *new MagicActionType( "change_mode" ) ); 
     

@@ -24,6 +24,7 @@
 #include "UrbanType.h"
 #include "Agents/MIL_AgentTypePion.h"
 #include "Agents/MIL_AgentPion.h"
+#include "Actions/PHY_FireResults_Default.h"
 #include "Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Agents/Units/Categories/PHY_NatureAtlas.h"
@@ -1482,6 +1483,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
         if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
             throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
 
+        // Reporter
         MIL_Agent_ABC* reporter = ( msg.tasker().has_unit() && msg.tasker().unit().has_id() ) ? FindAgentPion( msg.tasker().unit().id() ) : 0;
         if( !reporter )
             throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_reporter );
@@ -1489,7 +1491,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
         // Target
         const sword::MissionParameter& target = msg.parameters().elem( 0 );
         if( target.value_size() != 1 || !target.value().Get(0).has_identifier() )
-            throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
 
         boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( target.value().Get(0).identifier() );
         if( !targetKn )
@@ -1498,7 +1500,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
         // Ammo
         const sword::MissionParameter& ammo = msg.parameters().elem( 1 );
         if( ammo.value_size() != 1 || !ammo.value().Get(0).has_resourcetype() )
-            throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_ammunition );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
         if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
@@ -1510,7 +1512,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
         // Iterations
         const sword::MissionParameter& iterations = msg.parameters().elem( 2 );
         if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
-            throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_iteration );
 
         PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
         unsigned int ammos = (unsigned int) pDotationCategory->GetIndirectFireData()->ConvertToNbrAmmo( iterations.value().Get(0).areal() );
@@ -1526,6 +1528,52 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveCreateFireOrderOnLocation
+// Created: ABR 2011-01-19
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const sword::MagicAction& msg, unsigned int nCtx )
+{
+    client::ActionCreateFireOrderAck ack;
+    ack().set_error_code( sword::ActionCreateFireOrderAck::no_error );
+    try
+    {
+        if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
+
+        // Location
+        const sword::MissionParameter& location = msg.parameters().elem( 0 );
+        if( location.value_size() != 1 || !location.value().Get( 0 ).has_location() )
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
+
+        // Ammo
+        const sword::MissionParameter& ammo = msg.parameters().elem( 1 );
+        if( ammo.value_size() != 1 || !ammo.value().Get( 0 ).has_resourcetype() )
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_ammunition );
+
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
+        if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_ammunition );
+
+        // Iterations
+        const sword::MissionParameter& iterations = msg.parameters().elem( 2 );
+        if( iterations.value_size() != 1 || !iterations.value().Get( 0 ).has_areal() )
+            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_iteration );
+
+        unsigned int ammos = (unsigned int) pDotationCategory->GetIndirectFireData()->ConvertToNbrAmmo( iterations.value().Get(0).areal() );
+
+        PHY_FireResults_Default fireResult;
+        MT_Vector2D targetPos;
+        MIL_Tools::ConvertCoordMosToSim( location.value().Get( 0 ).location().coordinates().elem( 0 ), targetPos );
+
+        pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
+    }
+    catch( NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+    }
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ChannelPopulations

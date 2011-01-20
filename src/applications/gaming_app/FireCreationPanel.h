@@ -13,6 +13,7 @@
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
+#include "clients_gui/ShapeHandler_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
@@ -22,11 +23,16 @@ namespace kernel
     class Controllers;
     class ModelLoaded;
     class Time_ABC;
+    class GlTools_ABC;
+    class Location_ABC;
+    class Viewport_ABC;
 }
 
 namespace gui
 {
     class PanelStack_ABC;
+    class LocationCreator;
+    class ParametersLayer;
 }
 
 namespace actions
@@ -35,6 +41,12 @@ namespace actions
 }
 
 class StaticModel;
+
+enum E_StrikeType 
+{
+    eStrikeOnUnit,
+    eStrikeOnPosition
+};
 
 // =============================================================================
 /** @class  FireCreationPanel
@@ -47,6 +59,7 @@ class FireCreationPanel : public gui::InfoPanel_ABC
                         , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                         , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                         , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
+                        , public gui::ShapeHandler_ABC
 {
     Q_OBJECT;
 
@@ -54,23 +67,29 @@ public:
     //! @name Constructors/Destructor
     //@{
              FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers
-                              , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel );
+                              , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel
+                              , gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools );
     virtual ~FireCreationPanel();
     //@}
 
-    //! @name Notification
+    //! @name Operations
     //@{
     virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::AgentKnowledge_ABC& kn, kernel::ContextMenu& menu );
+    virtual void Handle( kernel::Location_ABC& location );
+    void Draw( kernel::Viewport_ABC& viewport );
     //@}
 
 private slots:
     //! @name Slots
     //@{
+    void OnTypeChanged();
     void Commit();
     void MenuItemTargetValidated();
     void MenuItemReporterValidated();
     void UpdateCommitButton();
+    virtual void showEvent( QShowEvent* );
+    virtual void hideEvent( QHideEvent* );
     //@}
 
 private:
@@ -83,6 +102,11 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    void Reset();
+    void RegisterIfNeeded();
+    void UnregisterIfNeeded();
+    bool CheckValidity() const;
+    bool IsStrikeOnLocation() const;
     //@}
 
 private:
@@ -92,6 +116,18 @@ private:
     kernel::Controllers& controllers_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
+    const kernel::GlTools_ABC& tools_;
+
+    gui::ValuedComboBox< E_StrikeType >* strikeCombo_;
+    QHBox* locationBox_;
+    QHBox* targetBox_;
+    QHBox* reporterBox_;
+
+    gui::LocationCreator* locationCreator_;
+    kernel::Location_ABC* location_;
+    QLabel* locationLabel_;
+    QLabel* locationTitle_;
+    bool isLocationRegistered_;
 
     unsigned long potentialTarget_;
     unsigned long selectedTarget_;
@@ -101,6 +137,8 @@ private:
     QString potentialTargetName_;
     QLabel* targetLabel_;
     QLabel* reporterLabel_;
+    QLabel* targetTitle_;
+    QLabel* reporterTitle_;
     gui::ValuedComboBox< int >* ammunitionsBox_;
     QLineEdit* interventionType_;
     QPushButton* ok_;

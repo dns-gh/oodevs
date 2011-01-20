@@ -157,8 +157,7 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
     {
         popupPoint_ = point;
         QPopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
-        if( pointAllowed_ )
-            subMenu->insertItem( tools::translate( "Localisation", "Point" ), this, SLOT( StartPoint() ) );
+        subMenu->insertItem( tools::translate( "Localisation", "Point" ), this, SLOT( StartPoint() ) );
     }
 }
 

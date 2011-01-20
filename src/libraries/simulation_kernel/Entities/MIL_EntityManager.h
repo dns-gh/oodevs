@@ -169,6 +169,7 @@ public:
     void OnReceiveKnowledgeMagicAction        ( const sword::KnowledgeMagicAction&          message, unsigned int nCtx );
     void OnReceiveChangeDiplomacy             ( const sword::MagicAction&                   message, unsigned int nCtx );
     void OnReceiveChangeResourceLinks         ( const sword::MagicAction&                   message, unsigned int nCtx );
+    void OnReceiveCreateFireOrderOnLocation   ( const sword::MagicAction&                   message, unsigned int nCtx );
     // LTO begin
     void OnReceiveKnowledgeGroupCreation      ( const sword::MagicAction&                   message, unsigned int nCtx );
     // LTO end
@@ -194,21 +195,21 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ProcessAutomateChangeKnowledgeGroup( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessAutomateChangeLogisticLinks ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessAutomateChangeSuperior      ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessUnitChangeSuperior          ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessLogSupplyChangeQuotas       ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessAutomateChangeKnowledgeGroup         ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessAutomateChangeLogisticLinks          ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessAutomateChangeSuperior               ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessUnitChangeSuperior                   ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessLogSupplyChangeQuotas                ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessLogSupplyPushFlow                    ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessLogSupplyPullFlow                    ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMagicActionMoveTo                    ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     // LTO begin
-    void ProcessKnowledgeGroupUpdate        ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
-    void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessKnowledgeGroupUpdate                 ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
+    void ProcessMagicActionCreateFireOrder           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     // LTO end
-    void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
-    void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation );
-    void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, MIL_Army_ABC& army );
+    void ProcessAutomatCreationRequest               ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
+    void ProcessFormationCreationRequest             ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation );
+    void ProcessCrowdCreationRequest                 ( const sword::UnitMagicAction&      message, MIL_Army_ABC& army );
     //@}
 
     //! @name types

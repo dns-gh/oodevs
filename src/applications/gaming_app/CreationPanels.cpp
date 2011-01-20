@@ -38,7 +38,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
     AddPanel( intel_ = new IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
     AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, drawings ) );
-    AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, actionsModel, simulation, staticModel ) );
+    AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, actionsModel, simulation, staticModel, paramLayer, tools ) );
     AddPanel( weather_ = new WeatherCreationPanel( this, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
     AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
     controllers_.Register( *this );
@@ -60,6 +60,7 @@ CreationPanels::~CreationPanels()
 void CreationPanels::Draw( Viewport_ABC& viewport ) const
 {
     objects_->Draw( viewport );
+    fires_->Draw( viewport );
     weather_->Draw( viewport );
 }
 

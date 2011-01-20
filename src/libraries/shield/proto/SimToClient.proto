@@ -193,7 +193,8 @@ message MsgActionCreateFireOrderAck {
         error_invalid_reporter      = 1;
         error_invalid_target        = 2;
         error_invalid_munition      = 3;
-        error_target_no_illuminated = 4;
+        error_invalid_iteration     = 4;
+        error_target_no_illuminated = 5;
     }
     required EnumActionCreateFireOrderErrorCode  error_code = 2;
 }

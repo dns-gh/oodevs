@@ -231,7 +231,8 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         if( message.magic_action().type()== sword::MagicAction::global_weather
             || message.magic_action().type()== sword::MagicAction::local_weather
             || message.magic_action().type()== sword::MagicAction::create_knowledge_group
-            || message.magic_action().type()== sword::MagicAction::change_resource_network_properties )
+            || message.magic_action().type()== sword::MagicAction::change_resource_network_properties 
+            || message.magic_action().type()== sword::MagicAction::create_fire_order_on_location )
             return bSupervision_;
         return true;
     }

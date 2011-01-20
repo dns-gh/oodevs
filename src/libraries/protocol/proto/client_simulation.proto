@@ -309,6 +309,9 @@ message MagicAction {
         /** @brief A change resource network properties magic action.
         */
         change_resource_network_properties = 4;
+        /** @brief A fire order on location magic action.
+        */
+        create_fire_order_on_location      = 5;
     }
     /** @property type
         @brief The type of magic action

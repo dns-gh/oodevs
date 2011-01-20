@@ -70,7 +70,7 @@ PHY_DotationCategory_IndirectObjectCreationFire::~PHY_DotationCategory_IndirectO
 // Name: PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect
 // Created: LDC 2009-12-30
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
+void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& /*fireResult*/ ) const
 {
     MT_Vector2D vFireDirection( 0., 1. );
     if( vTargetPosition != vSourcePosition )
@@ -89,11 +89,14 @@ void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Age
 
     try
     {
-        MIL_Object_ABC* pObject = MIL_Singletons::GetEntityManager().CreateObject( objectType_, firer.GetArmy(), localisation );
-        ConstructionAttribute* pAttribute = pObject->RetrieveAttribute< ConstructionAttribute >();
-        if( pAttribute )
-            pAttribute->Build( 1. );
-        pObject->GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( nLifeDuration_ );
+        if( pFirer )
+        {
+            MIL_Object_ABC* pObject = MIL_Singletons::GetEntityManager().CreateObject( objectType_, pFirer->GetArmy(), localisation );
+            ConstructionAttribute* pAttribute = pObject->RetrieveAttribute< ConstructionAttribute >();
+            if( pAttribute )
+                pAttribute->Build( 1. );
+            pObject->GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( nLifeDuration_ );
+        }
     }
     catch( std::runtime_error& )
     {

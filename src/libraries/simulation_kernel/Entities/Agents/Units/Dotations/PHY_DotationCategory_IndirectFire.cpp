@@ -96,9 +96,9 @@ PHY_DotationCategory_IndirectFire::~PHY_DotationCategory_IndirectFire()
 // Name: PHY_DotationCategory_IndirectFire::ApplyEffect
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
 {
-    MT_Vector2D vFireDirection        = ( vTargetPosition - vSourcePosition ).Normalize();
+    MT_Vector2D vFireDirection        = ( ( vTargetPosition == vSourcePosition ) ? MT_Vector2D( 1.f, 0.f ) : ( vTargetPosition - vSourcePosition ) ).Normalize() ;
     MT_Vector2D vRotatedFireDirection = vFireDirection;
     vRotatedFireDirection.Rotate90();
 
@@ -178,9 +178,9 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
                 if( ratioComposanteHit > 0 )
                     targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit );
 
-                if( !bRCSent && firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
+                if( pFirer && !bRCSent && pFirer->GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
                 {
-                    MIL_Report::PostEvent( firer, MIL_Report::eReport_FratricideIndirectFire );
+                    MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_FratricideIndirectFire );
                     bRCSent = true;
                 }
             }
@@ -201,9 +201,9 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
             MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *it );
             pElement->ApplyIndirectFire( attritionCircle, fireResult );
         }
-        if( !concentrations.empty() && !bRCSent )
+        if( pFirer && !concentrations.empty() && !bRCSent )
         {
-            MIL_Report::PostEvent( firer, MIL_Report::eReport_IndirectFireOnPopulation );
+            MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_IndirectFireOnPopulation );
             bRCSent = true;
         }
 
@@ -214,9 +214,9 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
             MIL_PopulationFlow* pElement = static_cast< MIL_PopulationFlow* >( *it );
             pElement->ApplyIndirectFire( attritionCircle, fireResult );
         }
-        if( !flows.empty() && !bRCSent )
+        if( pFirer && !flows.empty() && !bRCSent )
         {
-            MIL_Report::PostEvent( firer, MIL_Report::eReport_IndirectFireOnPopulation );
+            MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_IndirectFireOnPopulation );
             bRCSent = true;
         }
     }

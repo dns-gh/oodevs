@@ -84,17 +84,17 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_control_date_time_change() )
         simulation_.SetRealTime( wrapper.message().control_date_time_change().date_time().data() );
     else if( wrapper.message().has_control_checkpoint_save_now() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow              ( wrapper.message().control_checkpoint_save_now()               );
+        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow           ( wrapper.message().control_checkpoint_save_now()               );
     else if( wrapper.message().has_control_checkpoint_set_frequency() )
-        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency         ( wrapper.message().control_checkpoint_set_frequency()          );
+        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency      ( wrapper.message().control_checkpoint_set_frequency()          );
     else if( wrapper.message().has_control_toggle_vision_cones() )
-        agentServer_                        .SetMustSendUnitVisionCones                 ( wrapper.message().control_toggle_vision_cones().vision_cones());
+        agentServer_                        .SetMustSendUnitVisionCones              ( wrapper.message().control_toggle_vision_cones().vision_cones());
     else if( wrapper.message().has_unit_order() )
         workspace.GetEntityManager        ().OnReceiveUnitOrder                      ( wrapper.message().unit_order()                         , nCtx );
     else if( wrapper.message().has_automat_order() )
         workspace.GetEntityManager        ().OnReceiveAutomatOrder                   ( wrapper.message().automat_order()                      , nCtx );
     else if( wrapper.message().has_crowd_order() )
-        workspace.GetEntityManager        ().OnReceiveCrowdOrder                ( wrapper.message().crowd_order()                   , nCtx );
+        workspace.GetEntityManager        ().OnReceiveCrowdOrder                     ( wrapper.message().crowd_order()                   , nCtx );
     else if( wrapper.message().has_frag_order() )
         workspace.GetEntityManager        ().OnReceiveFragOrder                      ( wrapper.message().frag_order()                         , nCtx );
     else if( wrapper.message().has_set_automat_mode() )
@@ -106,17 +106,19 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_unit_magic_action() )
         workspace.GetEntityManager        ().OnReceiveUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx );
     else if( wrapper.message().has_urban_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveUrbanMagicAction                ( wrapper.message().urban_magic_action()                 , nCtx );
+        workspace.GetEntityManager        ().OnReceiveUrbanMagicAction               ( wrapper.message().urban_magic_action()                 , nCtx );
     else if( wrapper.message().has_object_magic_action() )
         workspace.GetEntityManager        ().OnReceiveObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx );
     else if( wrapper.message().has_magic_action() )
         if( wrapper.message().magic_action().type() == sword::MagicAction::global_weather
          || wrapper.message().magic_action().type() == sword::MagicAction::local_weather )
-            workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                      ( wrapper.message().magic_action()                              );
+            workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                   ( wrapper.message().magic_action()                              );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::change_diplomacy )
             workspace.GetEntityManager        ().OnReceiveChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx );
         else if( wrapper.message().magic_action().type() == sword::MagicAction::change_resource_network_properties )
             workspace.GetEntityManager        ().OnReceiveChangeResourceLinks        ( wrapper.message().magic_action()                       , nCtx );
+        else if( wrapper.message().magic_action().type() == sword::MagicAction::create_fire_order_on_location )
+            workspace.GetEntityManager        ().OnReceiveCreateFireOrderOnLocation  ( wrapper.message().magic_action()                       , nCtx );
     // LTO BEGIN
         else if( wrapper.message().magic_action().type() == sword::MagicAction::create_knowledge_group )
             workspace.GetEntityManager        ().OnReceiveKnowledgeGroupCreation     ( wrapper.message().magic_action()                       , nCtx );

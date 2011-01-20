@@ -127,6 +127,7 @@ message MsgMagicAction {
         change_diplomacy                    = 2;
         create_knowledge_group              = 3;
         change_resource_network_properties  = 4;
+        create_fire_order_on_location       = 5;
     }
    required Type                        type       = 1;
    required Common.MsgMissionParameters parameters = 2;

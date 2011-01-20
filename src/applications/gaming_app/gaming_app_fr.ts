@@ -607,36 +607,72 @@ Reason: %3
 <context>
     <name>FireCreationPanel</name>
     <message>
-        <source>Fire</source>
-        <translation>Tir</translation>
+        <source>Strike</source>
+        <translation>Tir désincarné</translation>
     </message>
     <message>
-        <source>FireOrder description</source>
-        <translation>Description de l&apos;Ordre de Tir</translation>
+        <source>Strike on unit</source>
+        <translation>Tir sur unité</translation>
+    </message>
+    <message>
+        <source>Reporter:</source>
+        <translation>Illuminateur:</translation>
+    </message>
+    <message>
+        <source>Ammunition:</source>
+        <translation>Munitions:</translation>
+    </message>
+    <message>
+        <source>Iteration:</source>
+        <translation>Itération(s):</translation>
+    </message>
+    <message>
+        <source>Launch strike</source>
+        <translation>Déclancher le tir</translation>
+    </message>
+    <message>
+        <source>Strike order</source>
+        <translation>Ordre de feu</translation>
+    </message>
+    <message>
+        <source>Strike order on location</source>
+        <translation>Ordre de feu sur position</translation>
+    </message>
+    <message>
+        <source>Strike order: reporter</source>
+        <translation>Tir désincarné: illuminateur</translation>
+    </message>
+    <message>
+        <source>Strike order: unit target</source>
+        <translation>Tir désincarné: unité cible</translation>
+    </message>
+    <message>
+        <source>Strike order: location target</source>
+        <translation>Tir désincarné: position cible</translation>
+    </message>
+    <message>
+        <source>---</source>
+        <translation>---</translation>
+    </message>
+    <message>
+        <source>Strike order description</source>
+        <translation>Description de l&apos;ordre de tir</translation>
+    </message>
+    <message>
+        <source>Strike type:</source>
+        <translation>Type de tir:</translation>
+    </message>
+    <message>
+        <source>Strike on position</source>
+        <translation>Tir sur position</translation>
+    </message>
+    <message>
+        <source>Location target:</source>
+        <translation>Position cible:</translation>
     </message>
     <message>
         <source>Target:</source>
         <translation>Cible:</translation>
-    </message>
-    <message>
-        <source>Reporter:</source>
-        <translation>Reporter:</translation>
-    </message>
-    <message>
-        <source>Munitions:</source>
-        <translation>Munitions:</translation>
-    </message>
-    <message>
-        <source>IT:</source>
-        <translation>IT:</translation>
-    </message>
-    <message>
-        <source>ApplyFire</source>
-        <translation>AppliquerFeux</translation>
-    </message>
-    <message>
-        <source>Fire order</source>
-        <translation>Ordre de feu</translation>
     </message>
 </context>
 <context>
@@ -3086,15 +3122,15 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Change Threshold</source>
-        <translation>Changer Seuil</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Désactiver</translation>
+        <translation type="unfinished">Désactiver</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Activer</translation>
+        <translation type="unfinished">Activer</translation>
     </message>
 </context>
 <context>

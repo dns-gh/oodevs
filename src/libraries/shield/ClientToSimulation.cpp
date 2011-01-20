@@ -224,7 +224,8 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgMagicAction& from, s
                                   ( MsgsClientToSim::MsgMagicAction::local_weather, sword::MagicAction::local_weather )
                                   ( MsgsClientToSim::MsgMagicAction::change_diplomacy, sword::MagicAction::change_diplomacy )
                                   ( MsgsClientToSim::MsgMagicAction::create_knowledge_group, sword::MagicAction::create_knowledge_group )
-                                  ( MsgsClientToSim::MsgMagicAction::change_resource_network_properties, sword::MagicAction::change_resource_network_properties ) );
+                                  ( MsgsClientToSim::MsgMagicAction::change_resource_network_properties, sword::MagicAction::change_resource_network_properties )
+                                  ( MsgsClientToSim::MsgMagicAction::create_fire_order_on_location, sword::MagicAction::create_fire_order_on_location ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 
