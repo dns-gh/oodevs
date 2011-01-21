@@ -11,6 +11,7 @@
 #include "MIL_Inhabitant.h"
 #include "MIL_InhabitantType.h"
 #include "Entities/MIL_EntityManager.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Objects/MedicalCapacity.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "MIL_LivingArea.h"
@@ -87,7 +88,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
             >> xml::list( "entry", *this, &MIL_Inhabitant::ReadExtension )
         >> xml::end;
     unsigned long population = nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_;
-    pLivingArea_.reset( new MIL_LivingArea( xis, population ) );
+    pLivingArea_.reset( new MIL_LivingArea( xis, population, nID_ ) );
     pLivingArea_->Register( *this );
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
     pType_->InitializeSchedule( *pSchedule_ );
@@ -253,8 +254,8 @@ void MIL_Inhabitant::SendFullState() const
     msg().set_dead( nNbrDeadHumans_ );
     msg().set_wounded( nNbrWoundedHumans_ );
     msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
-    pLivingArea_->SendFullState( msg );
     msg.Send( NET_Publisher_ABC::Publisher() );
+    pLivingArea_->SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -263,7 +264,7 @@ void MIL_Inhabitant::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::UpdateState()
 {
-    // NOTHING
+    pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime() );
 }
 
 // -----------------------------------------------------------------------------

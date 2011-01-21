@@ -13,6 +13,7 @@
 #include "MIL_LivingArea_ABC.h"
 #include "MIL.h"
 #include <vector>
+#include <map>
 
 namespace xml
 {
@@ -46,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_LivingArea();
-             MIL_LivingArea( xml::xistream& xis, unsigned long population );
+             MIL_LivingArea( xml::xistream& xis, unsigned long population, unsigned int nID );
     virtual ~MIL_LivingArea();
     //@}
 
@@ -57,7 +58,7 @@ public:
     void Register( MIL_StructuralStateNotifier_ABC& structural );
     void WriteODB( xml::xostream& xos ) const;
     float HealthCount() const;
-    void SendFullState( client::PopulationUpdate& msg ) const;
+    void SendFullState() const;
     void SendCreation( client::PopulationCreation& msg ) const;
     //@}
 
@@ -69,25 +70,29 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void ReadUrbanBlock( xml::xistream& xis, float& area );
-    void DistributeHumans( float area, unsigned long population );
-    //@}
-
-private:
     //! @name Types
     //@{
     typedef std::pair< const urban::TerrainObject_ABC*, unsigned int > T_Block;
     typedef std::vector< T_Block >                                     T_Blocks;
     typedef T_Blocks::iterator                                        IT_Blocks;
     typedef T_Blocks::const_iterator                                 CIT_Blocks;
+
+    typedef std::map< unsigned long, unsigned int > T_Id;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void ReadUrbanBlock( xml::xistream& xis, float& area );
+    void DistributeHumans( float area, unsigned long population );
+    bool HasUsage( const urban::TerrainObject_ABC& terrain, const std::string& motivation ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     T_Blocks blocks_;
+    unsigned int nID_;
     //@}
 };
 

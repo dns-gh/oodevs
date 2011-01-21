@@ -14,9 +14,12 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Objects/MedicalCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
+#include <urban/MotivationsVisitor_ABC.h>
+#include <urban/PhysicalAttribute.h>
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -35,7 +38,8 @@ MIL_LivingArea::MIL_LivingArea()
 // Name: MIL_LivingArea constructor
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population )
+MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population, unsigned int nID )
+    : nID_( nID )
 {
     float totalArea = 0.f;
     xis >> xml::start( "living-area" )
@@ -112,6 +116,7 @@ void MIL_LivingArea::Register( MIL_StructuralStateNotifier_ABC& structural )
 void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_LivingArea_ABC >( *this );
+    file >> nID_;
     unsigned int size;
     file >> size;
     unsigned int blockId;
@@ -133,6 +138,7 @@ void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_LivingArea::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_LivingArea_ABC >( *this );
+    file << nID_;
     unsigned int size = blocks_.size();
     file << size;
     unsigned int id;
@@ -148,14 +154,17 @@ void MIL_LivingArea::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
 // Name: MIL_LivingArea::SendFullState
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::SendFullState( client::PopulationUpdate& msg ) const
+void MIL_LivingArea::SendFullState() const
 {
+    client::PopulationUpdate msg;
+    msg().mutable_id()->set_id( nID_ );
     BOOST_FOREACH( const T_Block& urbanBlock, blocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
         block.mutable_object()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *urbanBlock.first ).GetID() );
         block.set_number( urbanBlock.second );
     }
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,12 +210,78 @@ float MIL_LivingArea::HealthCount() const
     return healthCount;
 }
 
+namespace
+{
+    template< typename T >
+    bool Compare( const T& lhs, const T& rhs, const T& block )
+    {
+        return block.first->GetFootprint()->Barycenter().Distance( lhs.first->GetFootprint()->Barycenter() )
+             < block.first->GetFootprint()->Barycenter().Distance( rhs.first->GetFootprint()->Barycenter() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingArea::StartMotivation
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::StartMotivation( const std::string& /*motivation*/ )
+void MIL_LivingArea::StartMotivation( const std::string& motivation )
 {
-    // NOTHING
+    // $$$$ _RC_ LGY 2011-01-21: à optimiser
+    T_Id id;
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+        id[ block.first->GetId() ] = block.second;
+    T_Blocks tmp = blocks_;
+    BOOST_FOREACH( const T_Block& from, blocks_ )
+        if( from.second != 0 && !HasUsage( *from.first, motivation ) )
+        {
+            bool move = false;
+            std::sort( tmp.begin(), tmp.end(), boost::bind( &Compare< T_Block >, _1, _2, boost::cref( from ) ) );
+            BOOST_FOREACH( const T_Block& to, tmp )
+                if( !move && HasUsage( *to.first, motivation ) )
+                {
+                    id[ to.first->GetId() ] += id[ from.first->GetId() ];
+                    id[ from.first->GetId() ] = 0u;
+                    move = true;
+                }
+        }
+    BOOST_FOREACH( const T_Id::value_type& value, id )
+        BOOST_FOREACH( T_Block& block, blocks_ )
+            if( block.first->GetId() == value.first )
+                block.second = value.second;
+    SendFullState();
 }
 
+namespace
+{
+    class MotivationsVisitor : public urban::MotivationsVisitor_ABC
+    {
+    public:
+        explicit MotivationsVisitor( std::map< std::string, float >& motivations )
+            : motivations_( motivations )
+        {
+            // NOTHING
+        }
+        virtual void Visit( const std::string& motivation, float proportion )
+        {
+            motivations_[ motivation ] = proportion;
+        }
+        std::map< std::string, float >& motivations_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::HasUsage
+// Created: LGY 2011-01-21
+// -----------------------------------------------------------------------------
+bool MIL_LivingArea::HasUsage( const urban::TerrainObject_ABC& terrain, const std::string& motivation ) const
+{
+    const urban::PhysicalAttribute* pPhysical = terrain.Retrieve< urban::PhysicalAttribute >();
+    if( !pPhysical || !pPhysical->GetMotivations() )
+        return false;
+    std::map< std::string, float > motivations;
+    MotivationsVisitor visitor( motivations );
+    terrain.Accept( visitor );
+    if( motivations.find( motivation ) == motivations.end() )
+        return false;
+    return true;
+}
