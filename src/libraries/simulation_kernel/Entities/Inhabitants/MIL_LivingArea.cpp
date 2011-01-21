@@ -210,45 +210,66 @@ float MIL_LivingArea::HealthCount() const
     return healthCount;
 }
 
-namespace
-{
-    template< typename T >
-    bool Compare( const T& lhs, const T& rhs, const T& block )
-    {
-        return block.first->GetFootprint()->Barycenter().Distance( lhs.first->GetFootprint()->Barycenter() )
-             < block.first->GetFootprint()->Barycenter().Distance( rhs.first->GetFootprint()->Barycenter() );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingArea::StartMotivation
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::StartMotivation( const std::string& motivation )
 {
-    // $$$$ _RC_ LGY 2011-01-21: à optimiser
-    T_Id id;
+    T_Identifiers identifiers;
     BOOST_FOREACH( const T_Block& block, blocks_ )
-        id[ block.first->GetId() ] = block.second;
-    T_Blocks tmp = blocks_;
-    BOOST_FOREACH( const T_Block& from, blocks_ )
-        if( from.second != 0 && !HasUsage( *from.first, motivation ) )
+        identifiers[ block.first->GetId() ] = block.second;
+    BOOST_FOREACH( const T_Block& from, GetMovingBlock( motivation ) )
+    {
+        T_Blocks usages = GetBlockUsage( *from.first, motivation );
+        if( !usages.empty() )
         {
-            bool move = false;
-            std::sort( tmp.begin(), tmp.end(), boost::bind( &Compare< T_Block >, _1, _2, boost::cref( from ) ) );
-            BOOST_FOREACH( const T_Block& to, tmp )
-                if( !move && HasUsage( *to.first, motivation ) )
-                {
-                    id[ to.first->GetId() ] += id[ from.first->GetId() ];
-                    id[ from.first->GetId() ] = 0u;
-                    move = true;
-                }
+            identifiers[ usages.front().first->GetId() ] += identifiers[ from.first->GetId() ];
+            identifiers[ from.first->GetId() ] = 0u;
         }
-    BOOST_FOREACH( const T_Id::value_type& value, id )
+    }
+    BOOST_FOREACH( const T_Identifiers::value_type& identifier, identifiers )
         BOOST_FOREACH( T_Block& block, blocks_ )
-            if( block.first->GetId() == value.first )
-                block.second = value.second;
+            if( block.first->GetId() == identifier.first )
+                block.second = identifier.second;
     SendFullState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::GetMovingBlock
+// Created: LGY 2011-01-21
+// -----------------------------------------------------------------------------
+MIL_LivingArea::T_Blocks MIL_LivingArea::GetMovingBlock( const std::string& motivation ) const
+{
+    T_Blocks blocks;
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+        if( block.second != 0 && !HasUsage( *block.first, motivation ) )
+            blocks.push_back( block );
+    return blocks;
+}
+
+namespace
+{
+    template< typename T >
+    bool Compare( const T& lhs, const T& rhs, const urban::TerrainObject_ABC& terrain )
+    {
+        return terrain.GetFootprint()->Barycenter().Distance( lhs.first->GetFootprint()->Barycenter() )
+             < terrain.GetFootprint()->Barycenter().Distance( rhs.first->GetFootprint()->Barycenter() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::GetUsageBlock
+// Created: LGY 2011-01-21
+// -----------------------------------------------------------------------------
+MIL_LivingArea::T_Blocks MIL_LivingArea::GetBlockUsage( const urban::TerrainObject_ABC& terrain, const std::string& motivation ) const
+{
+    T_Blocks blocks;
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+        if( HasUsage( *block.first, motivation ) )
+            blocks.push_back( block );
+    std::sort( blocks.begin(), blocks.end(), boost::bind( &Compare< T_Block >, _1, _2, boost::cref( terrain ) ) );
+    return blocks;
 }
 
 namespace

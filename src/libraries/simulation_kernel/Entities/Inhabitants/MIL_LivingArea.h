@@ -77,7 +77,7 @@ private:
     typedef T_Blocks::iterator                                        IT_Blocks;
     typedef T_Blocks::const_iterator                                 CIT_Blocks;
 
-    typedef std::map< unsigned long, unsigned int > T_Id;
+    typedef std::map< unsigned long, unsigned int > T_Identifiers;
     //@}
 
 private:
@@ -86,6 +86,8 @@ private:
     void ReadUrbanBlock( xml::xistream& xis, float& area );
     void DistributeHumans( float area, unsigned long population );
     bool HasUsage( const urban::TerrainObject_ABC& terrain, const std::string& motivation ) const;
+    T_Blocks GetMovingBlock( const std::string& motivation ) const;
+    T_Blocks GetBlockUsage( const urban::TerrainObject_ABC& terrain, const std::string& motivation ) const;
     //@}
 
 private:
