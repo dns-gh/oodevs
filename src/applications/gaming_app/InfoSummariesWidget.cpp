@@ -95,7 +95,7 @@ void InfoSummariesWidget::NotifyUpdated( const Attributes_ABC& extension )
 // Name: InfoSummariesWidget::NotifyUpdated
 // Created: JSR 2010-07-26
 // -----------------------------------------------------------------------------
-void InfoSummariesWidget::NotifyUpdated( const kernel::Positions& extension )
+void InfoSummariesWidget::NotifyUpdated( const Positions& extension )
 {
     if( !selected_ || ( selected_->Retrieve< Positions >() != &extension ) )
         return;

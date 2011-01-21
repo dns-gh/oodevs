@@ -628,7 +628,7 @@ Reason: %3
     </message>
     <message>
         <source>Launch strike</source>
-        <translation>Déclancher le tir</translation>
+        <translation>Déclencher le tir</translation>
     </message>
     <message>
         <source>Strike order</source>

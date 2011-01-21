@@ -30,7 +30,7 @@ namespace kernel
     public:                                                                        
                  ObjectExtension() {}                                                    
         virtual ~ObjectExtension() {}                                                    
-                                                                                   
+
         virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& ) {}            
         virtual void DoUpdate( const sword::ObjectUpdate& ) {}                     
     };
