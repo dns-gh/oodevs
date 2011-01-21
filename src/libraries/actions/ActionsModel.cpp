@@ -222,7 +222,6 @@ void ActionsModel::Save( const std::string& filename, const ActionsFilter_ABC* f
             it->second->Serialize( xos );
             xos << xml::end;
         }
-    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +234,7 @@ void ActionsModel::Publish( const Action_ABC& action, int context )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::Publish
+// Name: ActionsModel::PublishForce
 // Created: HBD 2011-01-19
 // -----------------------------------------------------------------------------
 void ActionsModel::PublishForce( const Action_ABC& action )
