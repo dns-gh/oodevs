@@ -147,12 +147,36 @@ void ScoreVariableCreationWizard::hideEvent( QHideEvent* e )
 // -----------------------------------------------------------------------------
 void ScoreVariableCreationWizard::OnChangeName()
 {
+    QString variableName;
+
     ok_->setDisabled( name_->text().isEmpty() );
+
     if( name_->text().isEmpty() )
+    {
         name_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
+        variableName = tr( "Variable value: " );
+    }
     else
+    {
         name_->unsetPalette();
-    OnChangeType();
+        variableName = name_->text();
+    }
+
+    if ( parameter_ )
+    {
+        if( type_->GetValue() == "unit" )
+        {
+            static_cast< actions::gui::ParamAgent* >( parameter_.get() )->SetName( variableName );
+        }
+        else if ( type_->GetValue() == "unit list" )
+        {
+            static_cast< actions::gui::ParamAgentList* >( parameter_.get() )->SetName( variableName );
+        }
+        else if ( type_->GetValue() == "zone" )
+        {
+            static_cast< actions::gui::ParamLocation* >( parameter_.get() )->SetName( variableName );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

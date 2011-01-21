@@ -66,6 +66,7 @@ protected:
     bool Invalid();
     void AddToMenu( kernel::ContextMenu& menu );
     void Display( const QString& what );
+    void SetLabel( const QString& label );
     //@}
 
 private:

@@ -56,3 +56,12 @@ void ParamAgent::CommitTo( actions::ParameterContainer_ABC& action ) const
     action.AddParameter( *param.release() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ParamAgent::SetName
+// Created: ABR 2011-01-21
+// -----------------------------------------------------------------------------
+void ParamAgent::SetName( const QString& name )
+{
+    this->name_ = name;
+    EntityParameterBase::SetLabel( name );
+}

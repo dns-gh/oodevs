@@ -98,3 +98,13 @@ void EntityParameterBase::Display( const QString& what )
 {
     entityLabel_->setText( what );
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityParameterBase::SetLabel
+// Created: ABR 2011-01-21
+// -----------------------------------------------------------------------------
+void EntityParameterBase::SetLabel( const QString& label )
+{
+    if( pLabel_ )
+        pLabel_->setText( label );
+}

@@ -68,6 +68,12 @@ public:
     virtual void NotifyChanged( Param_ABC& param );
     //@}
 
+protected:
+    //! @name Member data
+    //@{
+    QString name_;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -78,7 +84,6 @@ private:
 private:
     //! @name Member data
     //@{
-    QString name_;
     kernel::ActionController* controller_;
     Param_ABC* listener_;
     //@}

@@ -57,6 +57,7 @@ protected:
     void Select( const Param_ABC& param );
     virtual void DeleteElement( Param_ABC& param );
     void EnableCreation( bool enabled );
+    void SetLabel( const QString& label );
     //@}
 
 protected slots:

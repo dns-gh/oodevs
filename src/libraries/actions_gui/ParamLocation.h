@@ -58,8 +58,8 @@ public:
     virtual bool CheckValidity();
     virtual void Handle( kernel::Location_ABC& location );
     void SetShapeFilter( bool point, bool line, bool polygon, bool circle, bool rectangle );
-
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    void SetName( const QString& name );
     //@}
 
 protected:

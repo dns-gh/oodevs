@@ -161,3 +161,16 @@ bool ParamLocation::IsOptional() const
 {
     return parameter_.IsOptional();
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation::SetName
+// Created: ABR 2011-01-21
+// -----------------------------------------------------------------------------
+void ParamLocation::SetName( const QString& name )
+{
+    this->name_ = name;
+    if( pLabel_ )
+        pLabel_->setText( name );
+    if( creator_ )
+        creator_->setName( name );
+}

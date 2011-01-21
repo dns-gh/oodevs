@@ -118,3 +118,13 @@ void ParamAgentList::AddHierarchy( const kernel::Entity_ABC& superior )
             AddHierarchy( children.NextElement() );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParamAgentList::SetName
+// Created: ABR 2011-01-21
+// -----------------------------------------------------------------------------
+void ParamAgentList::SetName( const QString& name )
+{
+    this->name_ = name;
+    ListParameter::SetLabel( name );
+}

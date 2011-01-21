@@ -37,6 +37,7 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    void SetName( const QString& name );
     //@}
 
 private:

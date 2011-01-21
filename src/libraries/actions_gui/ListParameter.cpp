@@ -297,3 +297,16 @@ bool ListParameter::IsOptional() const
 {
     return optional_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::SetLabel
+// Created: ABR 2011-01-21
+// -----------------------------------------------------------------------------
+void ListParameter::SetLabel( const QString& label )
+{
+    if ( list_ )
+    {
+        assert( list_->columns() == 1 );
+        list_->setColumnText( 0, label );
+    }
+}
