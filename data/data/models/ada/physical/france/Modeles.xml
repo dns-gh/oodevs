@@ -7644,6 +7644,7 @@
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
         </mission>
+        <mission name="MELEE Escorter"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Interdire"/>
@@ -7652,7 +7653,7 @@
         <mission name="MELEE Relever"/>
         <mission name="MELEE S'emparer"/>
         <mission name="MELEE Surveiller"/>
-        <mission name="STABILISATION Animer Poste De Controle"/>
+        <mission name="STABILISATION Animer Postes De Controle"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -11631,4 +11632,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1865279546" -->
+<!-- signature="3208162840" -->
