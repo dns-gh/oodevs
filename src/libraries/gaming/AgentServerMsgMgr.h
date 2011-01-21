@@ -233,7 +233,6 @@ public:
     virtual void Send( const sword::ClientToReplay& message );
     virtual void Send( const sword::ClientToAar& message );
     virtual void Send( const sword::ClientToMessenger& message ) ;
-    virtual void SetForceMode( bool /*force*/ ) {} 
 
     void SetElements( Model& model, Profile& profile );
     //@}
