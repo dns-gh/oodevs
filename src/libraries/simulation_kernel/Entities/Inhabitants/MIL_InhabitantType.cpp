@@ -12,6 +12,7 @@
 #include "MIL_Inhabitant.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MIL_Schedule_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 MIL_InhabitantType::T_InhabitantMap MIL_InhabitantType::inhabitants_;
@@ -75,7 +76,10 @@ MIL_InhabitantType::MIL_InhabitantType( const std::string& strName, xml::xistrea
     xis >> xml::start( "security-level" )
             >> xml::attribute( "gain-per-hour", securityGainPerHour_ )
             >> xml::attribute( "loss-on-fire", securityLossOnFire_ )
-        >> xml::end;
+        >> xml::end
+        >> xml::start( "schedule" );
+    pXisSchedule_.reset( new xml::xibufferstream( xis ) );
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -104,6 +108,15 @@ const MIL_PopulationType& MIL_InhabitantType::GetAssociatedCrowdType() const
 {
     assert( pModel_ );
     return *pModel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_InhabitantType::InitializeSchedule
+// Created: LGY 2011-01-19
+// -----------------------------------------------------------------------------
+void MIL_InhabitantType::InitializeSchedule( MIL_Schedule_ABC& schedule ) const
+{
+    schedule.Configure( *pXisSchedule_ );
 }
 
 // -----------------------------------------------------------------------------

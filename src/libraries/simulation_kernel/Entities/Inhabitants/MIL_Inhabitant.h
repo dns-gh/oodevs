@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Objects/MIL_StructuralStateNotifier_ABC.h"
+#include <memory>
 
 namespace xml
 {
@@ -20,14 +21,11 @@ namespace xml
     class xistream;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 class MIL_Army_ABC;
 class MIL_InhabitantType;
 class MIL_StructuralStateNotifier_ABC;
+class MIL_LivingArea;
+class MIL_Schedule_ABC;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -87,23 +85,16 @@ private:
     //@{
     void SendDestruction() const;
     void ReadExtension( xml::xistream& xis );
-    void ReadUrbanBlock( xml::xistream& xis, float& totalArea );
     //@}
 
     //! @name Helpers
     //@{
-    void DistributeHumans( float area );
     void ComputeHealthSatisfaction();
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::pair< const urban::TerrainObject_ABC*, unsigned int > T_UrbanBlock;
-    typedef std::vector< T_UrbanBlock >                                T_UrbanBlocks;
-    typedef T_UrbanBlocks::iterator                                   IT_UrbanBlocks;
-    typedef T_UrbanBlocks::const_iterator                            CIT_UrbanBlocks;
-
     typedef std::map< std::string, std::string > T_Extensions;
     typedef T_Extensions::const_iterator       CIT_Extensions;
     //@}
@@ -114,6 +105,8 @@ private:
     const MIL_InhabitantType* pType_;
     const unsigned int nID_;
     MIL_Army_ABC* pArmy_;
+    std::auto_ptr< MIL_LivingArea > pLivingArea_;
+    std::auto_ptr< MIL_Schedule_ABC > pSchedule_;
     std::string text_;
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;
@@ -121,7 +114,6 @@ private:
     float healthNeed_;
     float healthSatisfaction_;
     bool healthChanged_;
-    T_UrbanBlocks urbanBlocks_;
     T_Extensions extensions_;
     //@}
 

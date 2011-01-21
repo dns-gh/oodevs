@@ -59,13 +59,11 @@ namespace
 BOOST_CLASS_EXPORT_IMPLEMENT( MockArmy )
 BOOST_CLASS_EXPORT( ArmySerializationProxy )
 
-BOOST_FIXTURE_TEST_SUITE( ObjectKnowledgeSerializationTestSuite, ObjectKnowledgeSerializationFixture )
-
 // -----------------------------------------------------------------------------
 // Name: VerifyObjectKnowledge_Serialization
 // Created: LDC 2009-07-16
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSerializationFixture )
 {
     MIL_ObjectLoader loader;
     {
@@ -116,5 +114,3 @@ BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
     MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
     MOCK_EXPECT( army, UnregisterObject ).with( mock::same( *pObject ) ).once();
 }
-
-BOOST_AUTO_TEST_SUITE_END()

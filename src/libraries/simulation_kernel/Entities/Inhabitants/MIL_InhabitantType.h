@@ -11,15 +11,18 @@
 #define __MIL_InhabitantType_h_
 
 #include "MT_Tools/MT_Stl.h"
+#include <memory>
 
 namespace xml
 {
     class xistream;
+    class xibufferstream;
 }
 
 class MIL_Army_ABC;
 class MIL_Inhabitant;
 class MIL_PopulationType;
+class MIL_Schedule_ABC;
 
 // =============================================================================
 // @class  MIL_InhabitantType
@@ -40,7 +43,8 @@ public:
     //@{
     const std::string& GetName() const;
     unsigned int GetID() const;
-    const MIL_PopulationType& GetAssociatedCrowdType () const;
+    const MIL_PopulationType& GetAssociatedCrowdType() const;
+    void InitializeSchedule( MIL_Schedule_ABC& schedule ) const;
     //@}
 
     //! @name Operations
@@ -79,6 +83,7 @@ private:
     const MIL_PopulationType* pModel_;
     float securityGainPerHour_;
     float securityLossOnFire_;
+    std::auto_ptr< xml::xibufferstream > pXisSchedule_;
     static T_InhabitantMap inhabitants_;
     //@}
 };
