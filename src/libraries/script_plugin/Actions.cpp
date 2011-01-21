@@ -56,7 +56,7 @@ struct Actions::Publisher : public Publisher_ABC
     virtual void Send( const sword::ClientToReplay& ){}
     virtual void Send( const sword::ClientToAar& ) {}
     virtual void Send( const sword::ClientToMessenger& ) {}
-    virtual void SetForceMode( bool force ) {}
+
     dispatcher::SimulationPublisher_ABC* sim_;
 };
 
@@ -108,7 +108,7 @@ void Actions::IssueOrderFromFile( const std::string& name, const std::string& fi
 {
     try
     {
-        actions::ActionsModel model( *factory_, *publisher_ );
+        actions::ActionsModel model( *factory_, *publisher_, *publisher_ );
         model.Load( config_.BuildExerciseChildFile( "scripts/resources/" + filename + ".ord" ) );
         tools::Iterator< const actions::Action_ABC& > it = model.CreateIterator();
         while( it.HasMoreElements() )

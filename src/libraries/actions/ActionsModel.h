@@ -58,7 +58,7 @@ class ActionsModel : public tools::Resolver< Action_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher );
+             ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher, Publisher_ABC& defaultPublisher );
     virtual ~ActionsModel();
     //@}
 
@@ -77,7 +77,7 @@ public:
     void Load( const std::string& filename, bool readonly = false );
     void Save( const std::string& filename, const ActionsFilter_ABC* filter = 0 ) const;
     void Publish( const Action_ABC& action, int context = 0 );
-    void Publish( const Action_ABC& action, bool force );
+    void PublishForce( const Action_ABC& action );
     //@}
 
 private:
@@ -97,6 +97,7 @@ private:
     //@{
     ActionFactory_ABC& factory_;
     Publisher_ABC& publisher_;
+    Publisher_ABC& defaultPublisher_;
     //@}
 };
 

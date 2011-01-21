@@ -19,7 +19,7 @@
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
-#include <time.h>
+#include <ctime>
 
 // -----------------------------------------------------------------------------
 // Name: FormationLayer constructor

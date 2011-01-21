@@ -71,7 +71,7 @@ bool AutomatCreationListener::OnMessageReceived( const sword::SimToClient& messa
             actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( agentType, point_, *automat, controller_, agentTypes_, coordinateConverter_ );
             action->Attach( *new actions::ActionTiming( controller_, time_ ) );
             action->Attach( *new actions::ActionTasker( automat, false ) );
-            actionsModel_.Publish( *action, true );
+            actionsModel_.PublishForce( *action );
         }
     }
     return true;

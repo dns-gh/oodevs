@@ -21,7 +21,6 @@ ActionPublisher::ActionPublisher( Publisher_ABC& publisher, kernel::Controllers&
     : controllers_( controllers )
     , publisher_( publisher )
     , design_( false )
-    , force_ ( false )
 {
     controllers_.Register( *this );
 }
@@ -43,15 +42,6 @@ void ActionPublisher::Send( const sword::ClientToSim& msg )
 {
     if( !design_ || force_ )
         publisher_.Send( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionPublisher::SetForceMode
-// Created: HBD 2011-01-19
-// -----------------------------------------------------------------------------
-void ActionPublisher::SetForceMode( bool force )
-{
-    force_ = force;
 }
 
 // -----------------------------------------------------------------------------

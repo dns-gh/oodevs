@@ -27,9 +27,10 @@ using namespace actions;
 // Name: ActionsModel constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsModel::ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher )
+ActionsModel::ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher, Publisher_ABC& defaultPublisher )
     : factory_( factory )
     , publisher_( publisher )
+    , defaultPublisher_ ( defaultPublisher )
 {
     // NOTHING
 }
@@ -237,9 +238,7 @@ void ActionsModel::Publish( const Action_ABC& action, int context )
 // Name: ActionsModel::Publish
 // Created: HBD 2011-01-19
 // -----------------------------------------------------------------------------
-void ActionsModel::Publish( const Action_ABC& action, bool force /*= false*/ )
+void ActionsModel::PublishForce( const Action_ABC& action )
 {
-    publisher_.SetForceMode( true );
-    Publish( action );
-    publisher_.SetForceMode( false );
+    action.Publish( defaultPublisher_ );
 }

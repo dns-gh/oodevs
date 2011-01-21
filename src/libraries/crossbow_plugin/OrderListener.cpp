@@ -44,7 +44,6 @@ namespace
         virtual void Send( const sword::ClientToReplay& ){}
         virtual void Send( const sword::ClientToAar& ) {}
         virtual void Send( const sword::ClientToMessenger& ) {}
-        virtual void SetForceMode( bool force ) {} 
     
     private:
         dispatcher::SimulationPublisher_ABC& sim_;

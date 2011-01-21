@@ -31,7 +31,7 @@
 #include "clients_gui/ValuedDragObject.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "protocol/SimulationSenders.h"
-#include <time.h>
+#include <ctime>
 
 using namespace kernel;
 using namespace actions;

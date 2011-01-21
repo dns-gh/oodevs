@@ -94,7 +94,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , fires_( *new FiresModel( agents_, agents_ ) )
     , weather_( *new WeatherModel( controllers, *this ) )
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
-    , actions_( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ) ) )
+    , actions_( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ), publisher  ) )
     , folk_( *new FolkModel( controllers.controller_ ) )
     , aar_( *new AfterActionModel( controllers.controller_, publisher ) )
     , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )

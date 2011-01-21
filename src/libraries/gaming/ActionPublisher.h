@@ -37,8 +37,7 @@ public:
     virtual void Send( const sword::ClientToReplay& message );
     virtual void Send( const sword::ClientToAar& message );
     virtual void Send( const sword::ClientToMessenger& message );
-    
-    virtual void SetForceMode( bool force ); 
+   
     //@}
 
 private:
@@ -59,7 +58,6 @@ private:
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
     bool design_;
-    bool force_;
     //@}
 };
 

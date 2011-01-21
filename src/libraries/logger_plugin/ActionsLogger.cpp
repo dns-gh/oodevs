@@ -42,7 +42,7 @@ namespace
         virtual void Send( const sword::ClientToReplay& /*message*/ ) {}
         virtual void Send( const sword::ClientToAar& /*message*/ ) {}
         virtual void Send( const sword::ClientToMessenger& /*message*/ ) {}
-        virtual void SetForceMode( bool force ) {} 
+
     };
 }
 
@@ -61,7 +61,7 @@ ActionsLogger::ActionsLogger( const tools::SessionConfig& config, const dispatch
     , urbansKnowledges_ ( new dispatcher::UrbanKnowledgeConverter( model ) )
     , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, *urbansKnowledges_, *controller_ ) )
     , factory_          ( new actions::ActionFactory( *controller_, *parameters_, *entities_, staticModel, simulation ) )
-    , actions_          ( new actions::ActionsModel( *factory_, *publisher_ ) )
+    , actions_          ( new actions::ActionsModel( *factory_, *publisher_, *publisher_ ) )
     , ordersLoaded_     ( !config_.HasCheckpoint() )
 {
     // NOTHING
