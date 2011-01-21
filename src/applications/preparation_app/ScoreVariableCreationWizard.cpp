@@ -152,6 +152,7 @@ void ScoreVariableCreationWizard::OnChangeName()
         name_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
     else
         name_->unsetPalette();
+    OnChangeType();
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +225,7 @@ namespace
 // -----------------------------------------------------------------------------
 boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::CreateParameter( const std::string& type, const QString& name )
 {
-    const QString variableName = name.isEmpty() ? tr( "Variable value: " ) : QString( "%1: " ).arg( name );
+    const QString variableName = name.isEmpty() ? tr( "Variable value: " ) : name;
     const kernel::OrderParameter parameter( variableName.ascii(), type.c_str(), false );
     boost::shared_ptr< actions::gui::Param_ABC > result;
     if( type == "unit" )
