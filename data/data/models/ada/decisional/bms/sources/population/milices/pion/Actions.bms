@@ -2,6 +2,7 @@ includedFiles = includedFiles or {}
 includedFiles["sources/population/milices/pion/Actions.bms"] = true
 
 --[[// *****************************************************************************
+]]--[[// *****************************************************************************
 ]]--[[/** \file S VAB - Actions.hal
  *
  * $Author: Ggr $
@@ -176,14 +177,14 @@ elseif switch_1 == eActionObjetTerminee then
                 elseif switch_1 == eActionObjetPasDeCapacite then
                     DEC_Trace( "realisation objet : pas de capacites" )
                     self.actionID = DEC_StopAction( self.actionID )
-                    --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
-]]                    self:SendFeedback( eActionImpossible )
+                                        self:SendFeedback( eActionImpossible )
                     Halt( self )
                     do return end
 
                     _continue = false
                 elseif switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "realisation objet : manque dotation" )
+                    DEC_RC( eRC_PasDotationConstructionObjet )
                                 cases_switch_1[4] = true
                 end
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then

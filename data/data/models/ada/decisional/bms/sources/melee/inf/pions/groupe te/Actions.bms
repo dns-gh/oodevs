@@ -644,8 +644,8 @@ elseif switch_1 == eActionObjetTerminee then
                     _continue = false
                 elseif switch_1 == eActionObjetManqueDotation then
                     DEC_Trace( "realisation objet : manque dotation" )
-                --[[// DEC_RC( eRC_SituationLogDefavorable, eRCType_DotationMine );
-]]                cases_switch_1[4] = true
+                    DEC_RC( eRC_PasDotationConstructionObjet )
+                                cases_switch_1[4] = true
                 end
                 if cases_switch_1[4] or switch_1 == eActionObjetImpossible then
                     DEC_StopAction( self.actionID )
