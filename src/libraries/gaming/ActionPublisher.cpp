@@ -40,7 +40,7 @@ ActionPublisher::~ActionPublisher()
 // -----------------------------------------------------------------------------
 void ActionPublisher::Send( const sword::ClientToSim& msg )
 {
-    if( !design_ || force_ )
+    if( !design_ )
         publisher_.Send( msg );
 }
 
