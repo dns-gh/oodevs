@@ -854,7 +854,7 @@ message UnitKnowledgeCreation {
     required UnitType         type            = 4; //!< The unit type @see UnitType
 }
 
-/** @enum UnitIdentification
+/** @struct UnitIdentification
     @brief Encapsulates the unit identification levels
 */
 message UnitIdentification {
