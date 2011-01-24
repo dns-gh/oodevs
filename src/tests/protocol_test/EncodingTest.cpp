@@ -53,6 +53,7 @@ namespace
     {
         unsigned long size, tag;
         message >> size >> tag;
+        BOOST_CHECK_GE( size, sizeof( tag ) );
         return message;
     }
     template< typename M >
@@ -82,6 +83,16 @@ namespace
         static const unsigned long headerSize = 2 * sizeof( unsigned long );
         BOOST_CHECK_EQUAL( static_cast< unsigned long >( message.ByteSize() ), encodedMessage.Size() - headerSize );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EncodingTest_EncodeEmptyMessage
+// Created: SBO 2011-01-18
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( EncodingTest_EncodeEmptyMessage )
+{
+    EmptyMessage message;
+    Verify( message );
 }
 
 // -----------------------------------------------------------------------------
