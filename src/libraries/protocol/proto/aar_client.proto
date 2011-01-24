@@ -9,23 +9,50 @@
 
 package sword;
 
-message AarInformation {
+/** @struct AarInformation
+    @brief Indicators computation module information message
+    
+    This message is sent just after a client connexion to an indicator computation module.
+    It provides information about supported indicators.
+    
+    @bug This message is not correctly filled by AarPlugin but is filled by ScorePlugin.
+         We should probably use different messages for both plugins.
+*/
+message AarInformation
+{
+    /** @property information
+        @brief Definition of indicators supported by After Action Review module.
+        
+        Value corresponds to XML data read from:
+        @li "exercise/Scores.xml" file (for score plugin)
+        @li "applications/functions.xml" file (for aar plugin)
+    */
     required string information = 1;
 }
 
-message PlotResult {
+/** @struct PlotResult
+*/
+message PlotResult
+{
     required uint32 identifier = 1;
     repeated float  values     = 2;
     required string error      = 3;
 }
 
-message Indicator {
+/** @struct Indicator
+*/
+message Indicator
+{
     required string name  = 1;
     required float  value = 2;
 }
 
-message AarToClient {
-    message Content {
+/** @struct AarToClient
+*/
+message AarToClient
+{
+    message Content
+    {
         optional AarInformation aar_information = 1;
         optional PlotResult     plot_result     = 2;
         optional Indicator      indicator       = 3;
