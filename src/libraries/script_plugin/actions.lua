@@ -91,30 +91,24 @@ Polygon = {}
 Polygon.__index = Polygon
 
 
-function Polygon.create( name, type, points )
-
-    if not name and not type and not points then
-        return Location.create( "polygon", "1" )
-    end
-
+function Polygon.create( type, points, name )
     local new = {}
     setmetatable( new, Polygon )
-    new.type = type
-    new.name = name
-    new.children = { Location.create( "polygon", "1" ) }
-    for _,v in ipairs( points ) do
-        new.children[1]:AddPoint( v )
+    if ( type ) then
+        new.type = type
+    else
+        new = Location.create( "polygon", "1" )
     end
-    return new
-end
-
-function Polygon.creat( type, points )
-    local new = {}
-    setmetatable( new, Polygon )
-    new.type = type
-    new.children = { Location.create( "polygon", "1" ) }
-    for _,v in ipairs( points ) do
-        new.children[1]:AddPoint( v )
+    if ( name ) then
+        new.name = name
+    end
+    if ( points ) then
+        new.children = { Location.create( "polygon", "1" ) }
+        for _,v in ipairs( points ) do
+            new.children[1]:AddPoint( v )
+        end
+    else
+        new = Location.create( "polygon", "1" )
     end
     return new
 end
@@ -131,7 +125,7 @@ function LocationComposite.create( name, type, points )
     new.type = type
     new.name = name
     if type == "polygon" then
-        new.children = { Polygon.creat( "polygon", { points } ) }
+        new.children = { Polygon.create( "polygon", { points } ) }
     elseif type == "point" then
         new.children = { Point.create( points ) }
     end
@@ -151,7 +145,7 @@ function PolygonList.create( name, points )
     new[ "min-occurs" ] = "1"
     new[ "max-occurs" ] = "unbounded"
     new.name = name
-    new.children = { Polygon.create( "Position 1", "location", points ) }
+    new.children = { Polygon.create( "location", { points }, "Position 1" ) }
     return new
 end
 
@@ -169,7 +163,7 @@ function GenObject.create( name, points )
     new.name = name
     new.children = {}
     new.children[1] = { name="Obstacle type", type="obstacletype", value="0" }
-    new.children[2] = Polygon.create( "Location", "location", points )
+    new.children[2] = Polygon.create( "location", { points } , "Location" )
     return new
 end
 
@@ -191,7 +185,7 @@ function GenObject.creat( name, type, value, point )
     new.value = value
     new.name = name
     new.children = { Location.create( "polygon", "1" ) }
-    PointLocation.creat( point )
+    PointLocation.create( point )
     return new
 end
 
@@ -335,20 +329,19 @@ end
 PointLocation = {}
 PointLocation.__index = PointLocation
 
-function PointLocation.create( name, coordinates, type )
+function PointLocation.create( coordinates, name, type )
     local new = {}
     setmetatable( new, PointLocation )
-    new.name = name
-    new.type = type
-    new.children = { Point.create( coordinates ) }
-    return new
-end
-
-function PointLocation.creat( coordinates )
-    local new = {}
-    setmetatable( new, PointLocation )
-    new.name = "Location"
-    new.type = "location"
+    if ( name ) then
+        new.name = name
+    else
+        new.name= "Location"
+    end
+    if ( type ) then
+        new.type = type
+    else
+        new.type = "location"
+    end
     new.children = { Point.create( coordinates ) }
     return new
 end
