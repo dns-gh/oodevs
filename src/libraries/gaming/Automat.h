@@ -21,6 +21,7 @@ namespace kernel
     class Controller;
     class PropertiesDictionary;
     class LogisticLevel;
+    class StaticModel;
 }
 
 namespace sword
@@ -42,7 +43,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Automat( const sword::AutomatCreation& message, kernel::Controller& controller,
-                      const tools::Resolver_ABC< kernel::AutomatType >& resolver );
+                      const tools::Resolver_ABC< kernel::AutomatType >& resolver,
+                      const kernel::StaticModel& staticModel );
     virtual ~Automat();
     //@}
 

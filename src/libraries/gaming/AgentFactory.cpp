@@ -115,7 +115,7 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message )
 {
-    Automat* result = new Automat( message, controllers_.controller_, static_.types_ );
+    Automat* result = new Automat( message, controllers_.controller_, static_.types_, static_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
 
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
@@ -203,7 +203,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 // -----------------------------------------------------------------------------
 kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& message )
 {
-    Population* result = new Population( message, controllers_, static_.coordinateConverter_, static_.types_ );
+    Population* result = new Population( message, controllers_, static_.coordinateConverter_, static_.types_, static_ );
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );

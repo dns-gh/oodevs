@@ -107,7 +107,6 @@ private:
     void ReadFormationRights( xml::xistream& xis, T_FormationSet& container );
     void ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container );
     void ReadRights( const sword::Profile& message );
-    void SetRoleIdFromString( const std::string& role );
     //@}
 
 private:

@@ -29,9 +29,9 @@ namespace kernel
 // Created: JSR 2010-10-04
 // =============================================================================
 class OrbatAttributesPanel : public QDockWindow
-                               , public tools::Observer_ABC
-                               , public tools::SelectionObserver< kernel::Entity_ABC >
-                               , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                           , public tools::Observer_ABC
+                           , public tools::SelectionObserver< kernel::Entity_ABC >
+                           , public tools::ElementObserver_ABC< kernel::Entity_ABC >
 {
     Q_OBJECT
 public:

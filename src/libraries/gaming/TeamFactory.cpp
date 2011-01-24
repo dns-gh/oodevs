@@ -89,7 +89,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
         (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) :
         (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() );
 
-    Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_ );
+    Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_, static_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::TacticalHierarchies >    ( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
     result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );

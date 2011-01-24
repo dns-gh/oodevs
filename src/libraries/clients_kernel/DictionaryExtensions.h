@@ -21,6 +21,7 @@ namespace xml
 
 namespace kernel
 {
+    class ExtensionTypes;
 
 // =============================================================================
 /** @class  DictionaryExtensions
@@ -41,8 +42,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DictionaryExtensions();
-    explicit DictionaryExtensions( xml::xistream& xis );
+             DictionaryExtensions( const std::string& extensionType, const ExtensionTypes& resolver );
+    explicit DictionaryExtensions( const std::string& extensionType, xml::xistream& xis, const ExtensionTypes& resolver );
     virtual ~DictionaryExtensions();
     //@}
 
@@ -72,7 +73,9 @@ private:
     //! @name Member data
     //@{
     bool enabled_;
-    T_Extensions extensions_; 
+    T_Extensions extensions_;
+    const std::string extensionType_;
+    const ExtensionTypes& resolver_;
     //@}
 };
 

@@ -75,7 +75,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
     , agents_( *new AgentsModel( controllers, agentFactory_ ) ) // needs to be there : used in FormationModel
-    , formations_( *new FormationModel( controllers, formationFactory_, agents_ ) )
+    , formations_( *new FormationModel( controllers, formationFactory_, agents_, staticModel ) )
     , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
     , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
     , profiles_( *new ProfilesModel( profileFactory_ ) )

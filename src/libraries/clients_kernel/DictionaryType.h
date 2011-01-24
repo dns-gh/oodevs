@@ -28,7 +28,7 @@ class DictionaryEntryType;
 */
 // Created: JSR 2010-10-01
 // =============================================================================
-class DictionaryType : public tools::Resolver< DictionaryEntryType, std::string >
+class DictionaryType : public tools::StringResolver< DictionaryEntryType >
 {
 public:
     //! @name Constructors/Destructor

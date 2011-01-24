@@ -200,7 +200,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
     if( xis.has_child( "extensions" ) )
     {
         xis.start( "extensions" );
-        result->Attach( *new DictionaryExtensions( xis ) );
+        result->Attach( *new DictionaryExtensions( "orbat-attributes", xis, static_.extensions_ ) );
         xis.end();
     }
     result->Polish();
@@ -226,7 +226,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
     if( xis.has_child( "extensions" ) )
     {
         xis.start( "extensions" );
-        result->Attach( *new DictionaryExtensions( xis ) );
+        result->Attach( *new DictionaryExtensions( "orbat-attributes", xis, static_.extensions_ ) );
         xis.end();
     }
     result->Polish();
@@ -245,7 +245,7 @@ kernel::Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, kernel::Tea
     if( xis.has_child( "extensions" ) )
     {
         xis.start( "extensions" );
-        result->Attach( *new DictionaryExtensions( xis ) );
+        result->Attach( *new DictionaryExtensions( "orbat-attributes", xis, static_.extensions_ ) );
         xis.end();
     }
     if( Populations* popus = parent.Retrieve< Populations >() )

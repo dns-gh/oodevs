@@ -336,7 +336,7 @@ void OrbatAttributesPanel::OnActivationChanged( bool activate )
 {
     DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
     if( !ext )
-        selected_->Attach( *( ext = new DictionaryExtensions ) );
+        selected_->Attach( *( ext = new DictionaryExtensions( "orbat-attributes", extensions_ ) ) );
     ext->SetEnabled( activate );
     if( activate )
         Commit();

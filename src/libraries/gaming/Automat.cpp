@@ -11,6 +11,7 @@
 #include "Automat.h"
 #include "Diplomacies.h"
 #include "Tools.h"
+#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
@@ -30,7 +31,8 @@ using namespace kernel;
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 Automat::Automat( const sword::AutomatCreation& message, Controller& controller,
-                  const tools::Resolver_ABC< kernel::AutomatType >& resolver )
+                  const tools::Resolver_ABC< kernel::AutomatType >& resolver,
+                  const kernel::StaticModel& staticModel )
     : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ) )
     , type_( resolver.Get( message.type().id() ) )
     , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
@@ -39,7 +41,7 @@ Automat::Automat( const sword::AutomatCreation& message, Controller& controller,
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.automat().id() );
     if( message.has_extension() )
     {
-        DictionaryExtensions* extensions = new DictionaryExtensions;
+        DictionaryExtensions* extensions = new DictionaryExtensions( "orbat-attributes", staticModel.extensionTypes_ );
         for( int i = 0; i < message.extension().entries_size(); ++i )
             extensions->SetValue( message.extension().entries( i ).name(), message.extension().entries( i ).value() );
         Attach( *extensions );

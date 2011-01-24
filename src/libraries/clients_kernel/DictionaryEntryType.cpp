@@ -24,8 +24,8 @@ DictionaryEntryType::DictionaryEntryType( xml::xistream& xis )
     , alias_    ( xis.attribute< std::string >( "alias", std::string() ) )
 {
     xis >> xml::optional >> xml::start( "labels" )
-            >> xml::list( "label", *this, &DictionaryEntryType::ReadLabel )
-        >> xml::end;
+                           >> xml::list( "label", *this, &DictionaryEntryType::ReadLabel )
+                         >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

@@ -26,14 +26,14 @@
 // Created: LDC 2010-10-12
 // -----------------------------------------------------------------------------
 CreateFormationDialog::CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, kernel::AgentTypes& agentTypes, const kernel::Time_ABC& time )
-    : QDialog( parent )
-    , controllers_( controllers )
-    , profile_( profile )
-    , levels_( levels )
-    , actionsModel_( actionsModel )
+    : QDialog       ( parent )
+    , controllers_  ( controllers )
+    , profile_      ( profile )
+    , levels_       ( levels )
+    , actionsModel_ ( actionsModel )
     , currentEntity_( 0 )
-    , agentTypes_( agentTypes )
-    , time_( time )
+    , agentTypes_   ( agentTypes )
+    , time_         ( time )
 {
     controllers_.Register( *this );
 }

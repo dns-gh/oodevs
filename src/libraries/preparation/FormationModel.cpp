@@ -13,6 +13,7 @@
 #include "AgentsModel.h"
 #include "Model.h"
 #include "LimitsModel.h"
+#include "StaticModel.h"
 #include "IntelligencesModel.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/FormationLevels.h"
@@ -28,11 +29,12 @@ using namespace kernel;
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
 FormationModel::FormationModel( kernel::Controllers& controllers, FormationFactory_ABC& formationFactory,
-                               const tools::Resolver< kernel::Automat_ABC>& automatResolver )
-    : controllers_( controllers )
-    , factory_( formationFactory )
-    , levels_( *new FormationLevels() )
-    , automatResolver_ ( automatResolver )
+                                const tools::Resolver< kernel::Automat_ABC>& automatResolver, const StaticModel& staticModel )
+    : controllers_    ( controllers )
+    , factory_        ( formationFactory )
+    , levels_         ( *new FormationLevels() )
+    , automatResolver_( automatResolver )
+    , staticModel_    ( staticModel )
 {
     controllers_.Register( *this );
 }
@@ -78,7 +80,7 @@ void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Mod
     if( xis.has_child( "extensions" ) )
     {
         xis.start( "extensions" );
-        formation->Attach( *new DictionaryExtensions( xis ) );
+        formation->Attach( *new DictionaryExtensions( "orbat-attributes", xis, staticModel_.extensions_ ) );
         xis.end();
     }
 }

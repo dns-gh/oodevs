@@ -37,12 +37,11 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
     , clients_     ( clients )
     , strLogin_    ( strLogin )
     , bSupervision_( false )
-    , roleId_        ( -1 )
+    , roleId_      ( -1 )
 {
-    std::string role;
     xis >> xml::attribute( "password", strPassword_ )
         >> xml::attribute( "supervision", bSupervision_ )
-        >> xml::optional >> xml::attribute( "role", role )
+        >> xml::optional >> xml::attribute( "role", roleId_ )
         >> xml::start( "rights" )
             >> xml::start( "readonly" )
                 >> xml::list( "automat"   , *this, &Profile::ReadAutomatRights   , readOnlyAutomats_    )
@@ -57,7 +56,6 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
                 >> xml::list( "crowd", *this, &Profile::ReadPopulationRights, readWritePopulations_ )
             >> xml::end
         >> xml::end;
-    SetRoleIdFromString( role );
 }
 
 // -----------------------------------------------------------------------------
@@ -388,22 +386,4 @@ void Profile::SetRight( const kernel::Automat_ABC& entity, bool readonly, bool r
     updatemessage().set_login( strLogin_ );
     Send( *updatemessage().mutable_profile() );
     updatemessage.Send( clients_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Profile::SetRoleIdFromString
-// Created: RPD 2010-12-28
-// -----------------------------------------------------------------------------
-void Profile::SetRoleIdFromString( const std::string& role )
-{
-    roleId_ = -1;
-    DictionaryType* dictionary = model_.GetExtensionTypes().tools::StringResolver< DictionaryType >::Find( "T_User_Role" );
-    if ( dictionary )
-    {
-        DictionaryEntryType* entry = dictionary->Find( role );
-        if ( entry )
-        {
-            roleId_ = entry->GetId();
-        }
-    }
 }

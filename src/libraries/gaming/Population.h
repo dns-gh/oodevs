@@ -10,7 +10,7 @@
 #ifndef __Population_h_
 #define __Population_h_
 
-
+#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
@@ -30,6 +30,7 @@ namespace kernel
     class PopulationType;
     class CoordinateConverter_ABC;
     class Displayer_ABC;
+    class StaticModel;
 }
 
 class PopulationPart_ABC;
@@ -56,7 +57,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              Population( const sword::CrowdCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
-                         const tools::Resolver_ABC< kernel::PopulationType >& typeResolver );
+                         const tools::Resolver_ABC< kernel::PopulationType >& typeResolver, const kernel::StaticModel& staticModel );
     virtual ~Population();
     //@}
 
@@ -93,15 +94,13 @@ private:
     //@{
     unsigned int ComputeLivingHumans() const;
     unsigned int ComputeDeadHumans() const;
-
-    void DoUpdate( const sword::CrowdFlowCreation&             message );
-    void DoUpdate( const sword::CrowdFlowUpdate&               message );
-    void DoUpdate( const sword::CrowdFlowDestruction&          message );
-    void DoUpdate( const sword::CrowdUpdate&                   message );
-    void DoUpdate( const sword::CrowdConcentrationCreation&    message );
-    void DoUpdate( const sword::CrowdConcentrationUpdate&      message );
+    void DoUpdate( const sword::CrowdFlowCreation& message );
+    void DoUpdate( const sword::CrowdFlowUpdate& message );
+    void DoUpdate( const sword::CrowdFlowDestruction& message );
+    void DoUpdate( const sword::CrowdUpdate& message );
+    void DoUpdate( const sword::CrowdConcentrationCreation& message );
+    void DoUpdate( const sword::CrowdConcentrationUpdate& message );
     void DoUpdate( const sword::CrowdConcentrationDestruction& message );
-
     void ComputeCenter();
 
     virtual void NotifyUpdated( const Simulation::sEndTick& tick );
@@ -110,17 +109,15 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&                   controllers_;
+    kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
-    const kernel::PopulationType&          type_;
-
-    geometry::Rectangle2f                  boundingBox_;
-    geometry::Point2f                      center_;
-    kernel::OptionalValue< int >           nDomination_;
+    const kernel::PopulationType& type_;
+    geometry::Rectangle2f boundingBox_;
+    geometry::Point2f center_;
+    kernel::OptionalValue< int > nDomination_;
+    std::set< kernel::Displayer_ABC* > displayers_;
     //@}
 
-private:
-    std::set< kernel::Displayer_ABC* > displayers_;
 };
 
 #endif // __Population_h_

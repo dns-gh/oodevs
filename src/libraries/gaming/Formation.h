@@ -20,6 +20,11 @@ namespace sword
     class LogisticLevel;
 }
 
+namespace kernel
+{
+    class StaticModel;
+}
+
 // =============================================================================
 /** @class  Formation
     @brief  Formation
@@ -31,7 +36,8 @@ class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const sword::FormationCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver );
+             Formation( const sword::FormationCreation& message, kernel::Controller& controller,
+                 const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver, const kernel::StaticModel& staticModel );
     virtual ~Formation();
     //@}
 

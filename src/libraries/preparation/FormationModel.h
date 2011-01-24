@@ -31,6 +31,7 @@ namespace xml
 
 class FormationFactory_ABC;
 class Model;
+class StaticModel;
 
 // =============================================================================
 /** @class  FormationModel
@@ -46,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     FormationModel( kernel::Controllers& controllers, FormationFactory_ABC& formationFactory, 
-        const tools::Resolver< kernel::Automat_ABC>& automatResolver );
+                    const tools::Resolver< kernel::Automat_ABC>& automatResolver, const StaticModel& staticModel );
     virtual ~FormationModel();
     //@}
 
@@ -82,6 +83,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     FormationFactory_ABC& factory_;
+    const StaticModel& staticModel_;
     //@}
 
 public:

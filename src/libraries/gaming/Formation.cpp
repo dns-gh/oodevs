@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Formation.h"
 #include "Tools.h"
+#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -21,7 +22,7 @@ using namespace kernel;
 // Name: Formation constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Formation::Formation( const sword::FormationCreation& message, Controller& controller, const tools::Resolver_ABC< HierarchyLevel_ABC >& resolver  )
+Formation::Formation( const sword::FormationCreation& message, Controller& controller, const tools::Resolver_ABC< HierarchyLevel_ABC >& resolver, const kernel::StaticModel& staticModel )
     : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ) )
     , level_( resolver.Get( message.level() ) )
     , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
@@ -30,7 +31,7 @@ Formation::Formation( const sword::FormationCreation& message, Controller& contr
         name_ = QString( "%1 %2" ).arg( level_.GetName() ).arg( message.formation().id() );
     if( message.has_extension() )
     {
-        DictionaryExtensions* extensions = new DictionaryExtensions;
+        DictionaryExtensions* extensions = new DictionaryExtensions( "orbat-attributes", staticModel.extensionTypes_ );
         for( int i = 0; i < message.extension().entries_size(); ++i )
             extensions->SetValue( message.extension().entries( i ).name(), message.extension().entries( i ).value() );
         Attach( *extensions );
