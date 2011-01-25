@@ -10,7 +10,6 @@
 #include "preparation_app_pch.h"
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
-
 #include "AgentsLayer.h"
 #include "CommunicationListView.h"
 #include "ExerciseCreationDialog.h"
@@ -43,7 +42,6 @@
 #include "TemplatesPanel.h"
 #include "WeatherLayer.h"
 #include "WeatherPanel.h"
-
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
@@ -90,7 +88,6 @@
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/ElevationPainter.h"
-
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
@@ -99,7 +96,6 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Options.h"
-
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
 #include "preparation/IntelligencesModel.h"
@@ -108,9 +104,7 @@
 #include "preparation/StaticModel.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/Tools.h"
-
 #include "tools/ExerciseConfig.h"
-
 #include <graphics/DragMovementLayer.h>
 #include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
@@ -502,8 +496,11 @@ void MainWindow::LoadExercise()
             QSettings settings;
             settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
             if( settings.readNumEntry( "/Common/NoSignatureCheck", 0 ) != 1 )
+            {
                 QMessageBox::warning( this, tools::translate( "Application", "SWORD" )
                     , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + invalidSignedFiles_.c_str() + "\n" + missingSignedFiles_.c_str() );
+                SetWindowTitle( true );
+            }
         }
     }
     catch( std::exception& e )
