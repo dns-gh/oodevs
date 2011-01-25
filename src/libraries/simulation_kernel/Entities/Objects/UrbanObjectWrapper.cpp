@@ -101,7 +101,7 @@ void UrbanObjectWrapper::InitializeAttributes()
         urban::InfrastructureType* infraType = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::InfrastructureType >( infra->GetType() );
         if( infraType )
         {
-            InfrastructureCapacity* capacity = new InfrastructureCapacity();
+            InfrastructureCapacity* capacity = new InfrastructureCapacity( *infraType );
             capacity->Register( *this );
             if( infraType->medical_.hasMedicalCapacity )
             {

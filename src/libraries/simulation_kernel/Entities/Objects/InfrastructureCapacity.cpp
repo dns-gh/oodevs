@@ -12,10 +12,24 @@
 #include "StructuralCapacity.h"
 #include "ResourceNetworkCapacity.h"
 #include "MIL_Object_ABC.h"
+#include "urban/InfrastructureType.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InfrastructureCapacity )
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureCapacity::InfrastructureCapacity
+// Created: SLG 2010-01-13
+// -----------------------------------------------------------------------------
+InfrastructureCapacity::InfrastructureCapacity()
+: functionalState_( 100 )
+, enabled_( true )
+, threshold_( 0 )
+, needUpdate_( true )
+{
+    //NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: InfrastructureCapacity::InfrastructureCapacity
@@ -34,8 +48,9 @@ InfrastructureCapacity::InfrastructureCapacity( xml::xistream& xis )
 // Name: InfrastructureCapacity::InfrastructureCapacity
 // Created: SLG 2010-01-13
 // -----------------------------------------------------------------------------
-InfrastructureCapacity::InfrastructureCapacity()
+InfrastructureCapacity::InfrastructureCapacity( const urban::InfrastructureType& type )
     : functionalState_( 100 )
+    , role_( type.GetName() )
     , enabled_( true )
     , threshold_( 0 )
     , needUpdate_( true )

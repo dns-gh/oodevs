@@ -79,7 +79,7 @@ void InfrastructureAttribute::DoUpdate( const sword::UrbanCreation& message )
 template< typename T >
 void InfrastructureAttribute::UpdateData( const T& message )
 {
-    if( message.has_infrastructures() )
+    if( message.has_infrastructures() && message.infrastructures().has_infrastructure() )
     {
         enabled_ = message.infrastructures().infrastructure().active();
         threshold_ = message.infrastructures().infrastructure().threshold();
