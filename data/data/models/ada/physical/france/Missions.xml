@@ -4081,7 +4081,7 @@
     <mission dia-behavior="MIS_Population_CommettreExactions" dia-type="T_Mission_Population_CommettreExactions" id="334" name="Commettre Exactions">
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" id="3000" name="COMMUNES Faire Mouvement">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvementFoule" dia-type="net.masagroup.sword.france.military.platoon.tasks.FaireMouvementFoule" id="3000" name="COMMUNES Faire Mouvement">
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
   </populations>
@@ -4296,4 +4296,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1733810741" -->
+<!-- signature="4118426746" -->
