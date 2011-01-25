@@ -25,8 +25,7 @@ public:
     //@{
     enum E_UpdateType {
         eOnUpdate    = 0x02,
-        eOnHLAUpdate = 0x04,
-        eUpdateAll   = eOnHLAUpdate | eOnUpdate
+        eUpdateAll   = eOnUpdate
     };
     //@}
 

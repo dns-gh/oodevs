@@ -202,11 +202,7 @@ void GameConfigPanel::Commit( const std::string& exercise, const std::string& se
         action.SetOption( "session/config/simulation/GarbageCollector/@setpause"  , 100 );
         action.SetOption( "session/config/simulation/GarbageCollector/@setstepmul"  , 100 );
         //
-
         action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreads_->value() );
-        action.SetOption( "session/config/simulation/hla/@enabled", false ); // $$$$ AGE 2007-10-09:
-        action.SetOption( "session/config/simulation/hla/@federation", "MyFederation" );
-        action.SetOption( "session/config/simulation/hla/@federate", "Sword OT Power" );
     }
     {
         action.SetOption( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09:

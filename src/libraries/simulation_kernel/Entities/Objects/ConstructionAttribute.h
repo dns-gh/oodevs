@@ -17,11 +17,6 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
-namespace hla
-{
-    class Deserializer;
-}
-
 namespace xml
 {
     class xistream;
@@ -82,12 +77,6 @@ public:
     //! @name ODB
     //@{
     virtual void WriteODB( xml::xostream& xos ) const;
-    //@}
-
-    //! @name HLA
-    //@{
-    void Serialize( HLA_UpdateFunctor& functor ) const;
-    void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}
 
     //! @name Operations

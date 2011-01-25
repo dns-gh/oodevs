@@ -94,5 +94,5 @@ void SealOffAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 void SealOffAttribute::SetSealOffLevel( float level )
 {
     rSealOffLevel_ = std::max( 0.f, std::min( 1.f, level ) );
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    NotifyAttributeUpdated( eOnUpdate );
 }

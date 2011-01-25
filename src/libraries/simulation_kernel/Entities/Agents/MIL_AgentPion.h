@@ -35,7 +35,6 @@ class DEC_KnowledgeBlackBoard_AgentPion;
 class MIL_Army;
 class MIL_Automate;
 class MIL_EntityManager;
-class HLA_UpdateFunctor;
 
 // =============================================================================
 /** @class  MIL_AgentPion
@@ -130,11 +129,6 @@ public:
     void OnReceiveMagicSurrender();
     void OnReceiveMagicCancelSurrender();
     void OnReceiveMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate
-    //@}
-
-    //! @name HLA
-    //@{
-    void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}
 
     //! @name Misc operations

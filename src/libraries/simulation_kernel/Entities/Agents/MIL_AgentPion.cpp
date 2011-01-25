@@ -70,7 +70,6 @@
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
-#include <hla/HLA_UpdateFunctor.h>
 #include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
@@ -941,52 +940,6 @@ void MIL_AgentPion::OnReceiveChangeSuperior( const MIL_EntityManager& manager, c
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = pNewAutomate;
     pAutomate_->RegisterPion( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::Serialize
-// Created: AGE 2004-11-22
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    //@TODO MGD REPLACE BY COMPUTER HasChanged is not longer public
-    functor.Serialize( "armee", false, GetArmy().GetName() );
-    functor.Serialize( "type" , false, GetType().GetName() );
-    const bool bUpdateStatuses = true;/*GetRole< PHY_RolePion_Composantes      >().HasChanged()
-                              || GetRole< PHY_RolePion_Communications   >().HasChanged()
-                              || GetRole< nbc::PHY_RolePion_NBC         >().HasChanged()
-                              || GetRole< PHY_RolePion_Posture          >().HLAStatusHasChanged()
-                              || GetRole< transport::PHY_RoleInterface_Transported >().HasChanged()
-                              || GetRole< surrender::PHY_RoleInterface_Surrender   >().HasChanged()
-                              || GetRole< PHY_RolePion_Perceiver        >().HasRadarStateChanged()
-                              || GetRole< PHY_RolePion_Population       >().HasChanged();*/
-
-    // $$$$ AGE 2004-12-13: Test functor.MustUpdateAll() if performance issues (doubt it)
-    std::vector< std::string > statuses;
-    if( IsPC() )
-        statuses.push_back( "pc" );
-    if( GetRole< PHY_RolePion_Composantes >().IsNeutralized() )
-        statuses.push_back( "neutralized" );
-    if( !GetRole< PHY_RolePion_Communications >().CanEmit() &&  !GetRole< PHY_RolePion_Communications >().CanReceive() )
-        statuses.push_back( "brouille" );
-    if( GetRole< PHY_RolePion_Communications >().CanReceive() && !GetRole< PHY_RolePion_Communications >().CanEmit() )
-        statuses.push_back( "silenceradiopartiel" );
-    if( GetRole< nbc::PHY_RolePion_NBC >().IsContaminated() )
-        statuses.push_back( "contamine" );
-    if( GetRole< PHY_RolePion_Posture >().IsStealth() )
-        statuses.push_back( "furtif" );
-    if( GetRole< transport::PHY_RoleInterface_Transported >().IsTransported() )
-        statuses.push_back( "transporte" );
-    if( GetRole< PHY_RolePion_Perceiver >().IsUsingActiveRadar() )
-        statuses.push_back( "radaractif" );
-    if( GetRole< surrender::PHY_RoleInterface_Surrender >().IsPrisoner() )
-        statuses.push_back( "prisonnier" );
-    // $$$$ NLD 2007-02-14: Surrender
-    if( GetRole< refugee::PHY_RolePion_Refugee >().IsManaged() )
-        statuses.push_back( "refugie_prisencompte" );
-    if( GetRole< PHY_RolePion_Population >().IsInvulnerable() )
-        statuses.push_back( "invulnerable_population" );
-    functor.Serialize( "status", bUpdateStatuses, statuses );
 }
 
 // -----------------------------------------------------------------------------

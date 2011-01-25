@@ -22,17 +22,11 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "hla/HLA_Object_ABC.h"
-#include "hla/HLA_UpdateFunctor.h"
-#include <hla/Deserializer.h>
-#include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Object )
-
-using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Object constructor
@@ -110,27 +104,6 @@ void MIL_Object::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "attributes" );
         std::for_each( attributes_.begin(), attributes_.end(), boost::bind( &ObjectAttribute_ABC::WriteODB, _1, boost::ref( xos ) ) );
     xos << xml::end;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Object::Serialize
-// Created: SLG 2011-01-10
-// -----------------------------------------------------------------------------
-void MIL_Object::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &ObjectAttribute_ABC::Serialize, _1, boost::ref( functor ) ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Object::Deserialize
-// Created: SLG 2011-01-10
-// -----------------------------------------------------------------------------
-void MIL_Object::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
-{
-    std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &ObjectAttribute_ABC::Deserialize, _1, boost::cref( attributeID ), deserializer ) );
 }
 
 // -----------------------------------------------------------------------------

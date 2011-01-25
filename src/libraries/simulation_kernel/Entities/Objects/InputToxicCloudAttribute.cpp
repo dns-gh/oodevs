@@ -134,7 +134,7 @@ InputToxicCloudAttribute& InputToxicCloudAttribute::operator=( const InputToxicC
     extent_ = rhs.extent_;
     schedule_ = rhs.schedule_;
     quantities_ = rhs.quantities_;
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    NotifyAttributeUpdated( eOnUpdate );
     return *this;
 }
 
@@ -349,7 +349,7 @@ bool InputToxicCloudAttribute::Update( unsigned int time, TER_Polygon& polygon )
         LoadShape( it->second );
         if( ! export_.empty() )
             BuildConvexHull( polygon );
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         return true;
     }
     return false;

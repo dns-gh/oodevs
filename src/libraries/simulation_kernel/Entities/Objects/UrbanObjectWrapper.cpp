@@ -20,7 +20,6 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "hla/HLA_Object_ABC.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/ColorAttribute.h>
 #include <urban/GeometryAttribute.h>
@@ -45,7 +44,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
 UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object )
     : MIL_Object( 0, builder.GetType() )
     , object_   ( &object )
-    , pView_    ( 0 )
 {
     InitializeAttributes();
     builder.Build( *this );
@@ -58,7 +56,6 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
 UrbanObjectWrapper::UrbanObjectWrapper()
     : MIL_Object()
     , object_   ( 0 )
-    , pView_    ( 0 )
 {
     // NOTHING
 }
@@ -169,43 +166,6 @@ boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( c
 boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_KnowledgeGroup& /*group*/ )
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::GetHLAView
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-HLA_Object_ABC* UrbanObjectWrapper::GetHLAView() const
-{
-    return pView_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::SetHLAView
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::SetHLAView( HLA_Object_ABC& view )
-{
-    delete pView_;
-    pView_ = &view;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::Deserialize
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Deserialize( const hla::AttributeIdentifier& /*attributeID*/, hla::Deserializer /*deserializer*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::Serialize
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-void UrbanObjectWrapper::Serialize( HLA_UpdateFunctor& /*functor*/ ) const
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -347,8 +307,6 @@ void UrbanObjectWrapper::SendFullState() const
 {
     if( object_->HasChild() )
         return;
-    if( pView_ && pView_->HideObject() )
-        return;
     client::UrbanUpdate message;
     message().mutable_object()->set_id( GetID() );
     SendFullStateCapacity< StructuralCapacity >( *message().mutable_attributes() );
@@ -365,8 +323,6 @@ void UrbanObjectWrapper::SendFullState() const
 void UrbanObjectWrapper::UpdateState()
 {
     if( object_->HasChild() )
-        return;
-    if( pView_ && pView_->HideObject() )
         return;
     client::UrbanUpdate message;
     message().mutable_object()->set_id( GetID() );

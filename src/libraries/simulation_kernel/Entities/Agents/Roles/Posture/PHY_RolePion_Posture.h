@@ -17,7 +17,6 @@
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 
 class MIL_Agent_ABC;
-class HLA_UpdateFunctor;
 
 namespace dotation
 {
@@ -108,12 +107,6 @@ public:
     //@{
     virtual void SendChangedState( client::UnitAttributes& asnMsg ) const;
     virtual void SendFullState( client::UnitAttributes& asnMsg ) const;
-    //@}
-
-    //! @name HLA
-    //@{
-    void Serialize( HLA_UpdateFunctor& functor ) const;
-    bool HLAStatusHasChanged() const;
     //@}
 
 private:

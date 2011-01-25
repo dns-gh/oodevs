@@ -12,7 +12,6 @@
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "hla/HLA_Federate.h"
 
 namespace
 {
@@ -57,15 +56,6 @@ void MIL_Singletons::UnregisterTime( MIL_Time_ABC& time )
 MIL_EntityManager_ABC& MIL_Singletons::GetEntityManager()
 {
     return MIL_EntityManager_ABC::GetSingleton();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Singletons::GetHla
-// Created: AGE 2007-08-13
-// -----------------------------------------------------------------------------
-HLA_Federate* MIL_Singletons::GetHla()
-{
-    return HLA_Federate::GetSingleton();
 }
 
 // -----------------------------------------------------------------------------

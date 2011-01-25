@@ -12,7 +12,6 @@
 
 class MIL_Time_ABC;
 class MIL_EntityManager_ABC;
-class HLA_Federate;
 class MIL_ProfilerMgr;
 
 // =============================================================================
@@ -28,7 +27,6 @@ public:
     //@{
     static MIL_Time_ABC& GetTime();
     static MIL_EntityManager_ABC& GetEntityManager();
-    static HLA_Federate* GetHla();
     static MIL_ProfilerMgr& GetProfiler();
 
     static void RegisterTime( MIL_Time_ABC& time );

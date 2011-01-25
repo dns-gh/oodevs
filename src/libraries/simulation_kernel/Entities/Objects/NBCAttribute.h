@@ -17,11 +17,6 @@
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/split_member.hpp>
 
-namespace hla
-{
-    class Deserializer;
-}
-
 namespace xml
 {
     class xistream;
@@ -30,7 +25,6 @@ namespace xml
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 class MIL_NbcAgentType;
-class HLA_UpdateFunctor;
 
 // =============================================================================
 /** @class  NBCAttribute
@@ -84,12 +78,6 @@ public:
     //! @name ODB
     //@{
     virtual void WriteODB( xml::xostream& xos ) const;
-    //@}
-
-    //! @name HLA
-    //@{
-    void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
-    void Serialize( HLA_UpdateFunctor& functor ) const;
     //@}
 
     //! @name CheckPoints

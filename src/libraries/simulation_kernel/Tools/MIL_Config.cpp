@@ -48,8 +48,6 @@ MIL_Config::MIL_Config()
     , bFrozenMode_              ( false )
     , bEmbeddedDispatcher_      ( false )
     , bPausedAtStartup_         ( false )
-    , hlaHost_                  ( "localhost" )
-    , hlaPort_                  ( "8989" )
     , randomSeed_               ( 0 )
 {
     po::options_description desc( "Simulation options" );
@@ -147,13 +145,6 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                     >> xml::end
                     >> xml::start( "pathfinder" )
                         >> xml::attribute( "threads", pathFinderThreads_ )
-                    >> xml::end
-                    >> xml::start( "hla" )
-                        >> xml::attribute( "enabled"   , bHLAEnabled_ )
-                        >> xml::attribute( "federation", hlaFederation_ )
-                        >> xml::attribute( "federate"  , hlaFederate_ )
-                        >> xml::optional >> xml::attribute( "host" , hlaHost_ )
-                        >> xml::optional >> xml::attribute( "port" , hlaPort_ )
                     >> xml::end
                     >> xml::optional
                     >> xml::start( "random" )

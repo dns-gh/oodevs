@@ -12,10 +12,8 @@
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
-#include "hla/HLA_UpdateFunctor.h"
 #include "MIL_NbcAgentType.h"
 #include "protocol/Protocol.h"
-#include <hla/Deserializer.h>
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -23,8 +21,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( NBCAttribute )
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > )
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > )
-
-using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute constructor
@@ -265,20 +261,6 @@ unsigned int NBCAttribute::GetDangerLevel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttribute::Deserialize
-// Created: AGE 2004-12-01
-// -----------------------------------------------------------------------------
-void NBCAttribute::Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer )
-{
-    if( attributeID == "option" )
-    {
-        std::string strOption;
-        deserializer >> strOption;
-        ReadAgents( strOption );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Rota::ReadAgents
 // Created: AGE 2004-12-01
 // -----------------------------------------------------------------------------
@@ -290,15 +272,6 @@ bool NBCAttribute::ReadAgents( const std::string& strAgents )
         if( !Insert( strAgent ) )
             return false;
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NBCAttribute::Serialize
-// Created: AGE 2004-12-01
-// -----------------------------------------------------------------------------
-void NBCAttribute::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    functor.Serialize( "option", false, WriteAgents() );
 }
 
 // -----------------------------------------------------------------------------
@@ -321,17 +294,17 @@ bool NBCAttribute::Update( const NBCAttribute& rhs )
 {
     if( agents_ != rhs.agents_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         agents_ = rhs.agents_;
     }
     if( nForm_ != rhs.nForm_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         nForm_ = rhs.nForm_;
     }
     if( danger_ != rhs.danger_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         danger_ = rhs.danger_;
     }
     return NeedUpdate( eOnUpdate );

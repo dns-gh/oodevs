@@ -15,7 +15,6 @@
       <debug decisional="false" diadebugger="false" diadebuggerport="15000" networklogger="false" networkloggerport="20000" pathfind="false"/>
       <decisional useonlybinaries="false"/>
       <dispatcher embedded="true"/>
-      <hla enabled="false" federate="Sword OT Power" federation="MyFederation"/>
       <network port="10000"/>
       <orbat checkcomposition="false"/>
       <pathfinder threads="1"/>

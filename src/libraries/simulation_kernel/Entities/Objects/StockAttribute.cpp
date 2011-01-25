@@ -13,14 +13,10 @@
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "hla/HLA_UpdateFunctor.h"
-#include <hla/AttributeIdentifier.h>
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( StockAttribute )
-
-using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: StockAttribute constructor
@@ -205,7 +201,7 @@ void StockAttribute::OnUpdate( const sword::ObjectAttributes& asn )
     if( asn.has_stock() )
     {
         // Shold not be called
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
     }
 }
 

@@ -66,14 +66,6 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& group );
     //@}
 
-    //! @name HLA
-    //@{
-    virtual HLA_Object_ABC* GetHLAView() const;
-    virtual void SetHLAView( HLA_Object_ABC& view );
-    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
-    //@}
-
     //! @name Network
     //@{
     sword::UrbanMagicActionAck_ErrorCode OnUpdateStructuralState( int state );
@@ -116,11 +108,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, float > T_Motivations;
-    //@}
-
-    //! @name HLA
-    //@{
-    HLA_Object_ABC* pView_;
     //@}
 };
 

@@ -30,8 +30,6 @@
 #include "protocol/Protocol.h"
 #include <boost/serialization/vector.hpp>
 
-using namespace hla;
-
 MIL_IDManager MIL_Object_ABC::idManager_;
 
 //-----------------------------------------------------------------------------

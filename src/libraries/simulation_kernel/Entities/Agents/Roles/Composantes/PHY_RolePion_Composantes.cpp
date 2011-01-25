@@ -35,7 +35,6 @@
 #include "DotationsActionsNotificationHandler_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include <hla/HLA_UpdateFunctor.h>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/set.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -85,9 +84,6 @@ void PHY_RolePion_Composantes::T_ComposanteTypeProperties::serialize( Archive& f
 // -----------------------------------------------------------------------------
 PHY_RolePion_Composantes::PHY_RolePion_Composantes( MIL_Agent_ABC& pion, bool initialise )
     : pion_                       ( pion )
-    , composantes_                ()
-    , lentComposantes_            ()
-    , borrowedComposantes_        ()
     , nNbrComposanteChanged_      ( 0 )
     , nNbrUsableComposantes_      ( 0 )
     , rOperationalState_          ( 0. )
@@ -1082,28 +1078,6 @@ void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) c
 
     if( bLoansChanged_ )
         SendLoans( msg );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::Serialize
-// Created: AGE 2004-11-22
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    typedef std::pair< std::string, unsigned long > T_Composante;
-    std::vector< T_Composante > composantes;
-    for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
-    {
-        assert( it->first );
-        const PHY_ComposanteTypePion& composanteType = *it->first;
-        const T_ComposanteTypeProperties& properties = it->second;
-        const T_Composante hlaComposante = T_Composante( composanteType.GetName(), properties.nbrsPerState_[ PHY_ComposanteState::undamaged_.GetID() ] );
-        if( pMajorComposante_ && pMajorComposante_->GetType() == composanteType )
-            composantes.insert( composantes.begin(), hlaComposante );
-        else
-            composantes.push_back( hlaComposante );
-    }
-    functor.Serialize( "composantes", HasChanged(), composantes );
 }
 
 // -----------------------------------------------------------------------------

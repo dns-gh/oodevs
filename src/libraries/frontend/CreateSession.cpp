@@ -97,9 +97,6 @@ void CreateSession::SetDefaultValues()
         //
 
         setter_->SetValue( "session/config/simulation/pathfinder/@threads"         , 1 );
-        setter_->SetValue( "session/config/simulation/hla/@enabled"                , false );
-        setter_->SetValue( "session/config/simulation/hla/@federation"             , "MyFederation" );
-        setter_->SetValue( "session/config/simulation/hla/@federate"               , "Sword OT Power" );
     }
     {
         setter_->SetValue( "session/config/dispatcher/network/@client", "localhost:" +  // $$$$ AGE 2007-10-09:

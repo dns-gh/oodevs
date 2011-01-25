@@ -274,7 +274,7 @@ void MedicalTreatmentAttribute::OnUpdate( const sword::MissionParameter_Value& p
             capacities_[ typeId ].Update( value );
         }
     }
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -299,7 +299,7 @@ void MedicalTreatmentAttribute::Update( const sword::ObjectAttributeMedicalTreat
         if( bed_capacity.has_type_id() )
             capacities_[ bed_capacity.type_id() ].Update( bed_capacity );
     }
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -358,7 +358,7 @@ void MedicalTreatmentAttribute::RegisterPatients( unsigned int injuryID, unsigne
     if( capacities_[ injuryID ].occupied_.size() < category )
         throw std::runtime_error( std::string( __FUNCTION__ ) + " Unknown category id: " + boost::lexical_cast< std::string >( category ) );
     capacities_[ injuryID ].occupied_[ category ] += n;
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -403,7 +403,7 @@ void MedicalTreatmentAttribute::Update( float delay )
         lockedDoctors[it->first] = ( --remain >= 0 ) ? doctorPerCapacity : doctorPerCapacity + 1;
     for( T_TreatmentCapacityVector::iterator it = capacities_.begin(); it != capacities_.end(); ++it )
         it->second.Update( lockedDoctors[it->first], delay );
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -432,37 +432,37 @@ bool MedicalTreatmentAttribute::Update( const MedicalTreatmentAttribute& rhs )
 {
     if( medicalTreatmentMap_ != rhs.medicalTreatmentMap_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         medicalTreatmentMap_ = rhs.medicalTreatmentMap_;
     }
     if( doctors_ != rhs.doctors_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         doctors_ = rhs.doctors_;
     }
     if( availableDoctors_ != rhs.availableDoctors_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         availableDoctors_ = rhs.availableDoctors_;
     }
     if( initialDoctors_ != rhs.initialDoctors_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         initialDoctors_ = rhs.initialDoctors_;
     }
     if( capacities_ != rhs.capacities_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         capacities_ = rhs.capacities_;
     }
     if( referenceID_ != rhs.referenceID_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         referenceID_ = rhs.referenceID_;
     }
     if( status_ != rhs.status_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         status_ = rhs.status_;
     }    
     return NeedUpdate( eOnUpdate );

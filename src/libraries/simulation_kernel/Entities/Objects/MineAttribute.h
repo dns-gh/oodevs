@@ -22,11 +22,6 @@ namespace xml
     class xistream;
 }
 
-namespace hla
-{
-    class Deserializer;
-}
-
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -69,8 +64,6 @@ public:
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
     virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     virtual void OnUpdate( const sword::MissionParameter_Value& attribute );
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
-    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 

@@ -12,8 +12,6 @@
 
 #include "MIL_Object_ABC.h"
 
-
-
 //=============================================================================
 // Created: NLD 2002-12-12
 // Last modified: JVT 03-07-15
@@ -81,14 +79,6 @@ public:
     virtual       MIL_ObjectManipulator_ABC& operator()();
     //@}
 
-    //! @name HLA
-    //@{
-    virtual HLA_Object_ABC* GetHLAView() const = 0;
-    virtual void            SetHLAView( HLA_Object_ABC& view ) = 0;
-    virtual void    Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
-    virtual void    Serialize  ( HLA_UpdateFunctor& functor ) const = 0;
-    //@}
-
     //! @name Network
     //@{
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes ) = 0;
@@ -142,7 +132,6 @@ private:
     //! @name Network
     //@{
     mutable unsigned char xAttrToUpdate_;
-    mutable unsigned char xAttrToUpdateForHLA_;
     //@}
 };
 

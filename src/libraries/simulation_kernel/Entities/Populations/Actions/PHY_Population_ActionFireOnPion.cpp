@@ -28,7 +28,7 @@ PHY_Population_ActionFireOnPion::PHY_Population_ActionFireOnPion( MIL_Population
     , pTarget_      ( 0 )
 {
     assert( rIntensity_ > 0. );
-    pTarget_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( nID ); // $$$$ HLA
+    pTarget_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( nID );
     assert( pTarget_ );
 }
 

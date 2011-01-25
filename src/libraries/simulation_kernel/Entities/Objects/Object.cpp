@@ -29,17 +29,11 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "protocol/ClientSenders.h"
-#include "hla/HLA_Object_ABC.h"
-#include "hla/HLA_UpdateFunctor.h"
-#include <hla/Deserializer.h>
-#include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( Object )
-
-using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: Object constructor
@@ -48,7 +42,6 @@ using namespace hla;
 Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved )
     : MIL_Object( &army, builder.GetType(), xis.attribute< unsigned long >( "id" ) )
     , name_       ( xis.attribute< std::string >( "name", "" ) )
-    , pView_      ( 0 )
 {
     MIL_Object_ABC::Register();
     if( pLocation )
@@ -66,7 +59,6 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
 Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name /*= std::string()*/, bool reserved /*= true*/ )
     : MIL_Object( &army, builder.GetType() )
     , name_       ( name )
-    , pView_      ( 0 )
 {
     MIL_Object_ABC::Register();
     if( pLocation )
@@ -83,7 +75,6 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
 // -----------------------------------------------------------------------------
 Object::Object()
     : MIL_Object()
-    , pView_    ( 0 )
 {
     // NOTHING
 }
@@ -255,8 +246,6 @@ sword::ObjectMagicActionAck_ErrorCode Object::OnRequest( const google::protobuf:
 // -----------------------------------------------------------------------------
 void Object::SendCreation() const
 {
-    if( pView_ && pView_->HideObject() )
-        return;
     client::ObjectCreation asn;
     asn().mutable_object()->set_id( GetID() );
     asn().set_name( name_ );
@@ -273,8 +262,6 @@ void Object::SendCreation() const
 // -----------------------------------------------------------------------------
 void Object::SendDestruction() const
 {
-    if( pView_ && pView_->HideObject() )
-        return;
     client::ObjectDestruction asn;
     asn().mutable_object()->set_id( GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
@@ -286,8 +273,6 @@ void Object::SendDestruction() const
 // -----------------------------------------------------------------------------
 void Object::SendFullState() const
 {
-    if( pView_ && pView_->HideObject() )
-        return;
     MIL_Object::SendFullState();
 }
 
@@ -297,56 +282,6 @@ void Object::SendFullState() const
 // -----------------------------------------------------------------------------
 void Object::UpdateState()
 {
-    if( pView_ && pView_->HideObject() )
-        return;
     MIL_Object::UpdateState();
     MIL_Object_ABC::UpdateState();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::GetHLAView
-// Created: AGE 2004-11-30
-// -----------------------------------------------------------------------------
-HLA_Object_ABC* Object::GetHLAView() const
-{
-    return pView_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::SetView
-// Created: AGE 2004-11-30
-// -----------------------------------------------------------------------------
-void Object::SetHLAView( HLA_Object_ABC& view )
-{
-    delete pView_;
-    pView_ = &view;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Deserialize
-// Created: AGE 2004-11-30
-// -----------------------------------------------------------------------------
-void Object::Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer )
-{
-    if( attributeID == "coordonnees" )
-    {
-        TER_Localisation newLocalisation;
-        deserializer >> newLocalisation;
-        UpdateLocalisation( newLocalisation );
-    }
-    MIL_Object::Deserialize( attributeID, deserializer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::Serialize
-// Created: AGE 2004-11-30
-// -----------------------------------------------------------------------------
-void Object::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    functor.Serialize( "armee", false, GetArmy()->GetName() );
-    functor.Serialize( "type", false, GetType().GetName() );
-    functor.Serialize( "nom", false, name_ );
-    functor.Serialize( "coordonnees", ( xAttrToUpdateForHLA_ & eAttrUpdate_Localisation ) != 0, GetLocalisation() );
-    MIL_Object::Serialize( functor );
-    xAttrToUpdateForHLA_ = 0;
 }

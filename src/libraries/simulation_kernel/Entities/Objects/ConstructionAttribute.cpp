@@ -13,9 +13,7 @@
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "hla/HLA_UpdateFunctor.h"
 #include "protocol/Protocol.h"
-#include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ConstructionAttribute )
@@ -126,22 +124,22 @@ bool ConstructionAttribute::Update( const ConstructionAttribute& rhs )
 {
     if( dotation_ != rhs.dotation_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         dotation_ = rhs.dotation_;
     }
     if( nFullNbrDotation_ != rhs.nFullNbrDotation_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         nFullNbrDotation_ = rhs.nFullNbrDotation_;
     }
     if( nCurrentNbrDotation_ != rhs.nCurrentNbrDotation_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         nCurrentNbrDotation_ = rhs.nCurrentNbrDotation_;
     }
     constructionPercentage_.Set( rhs.constructionPercentage_.Get() );
     if( constructionPercentage_.NeedToBeSent() )
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
 
     return NeedUpdate( eOnUpdate );
 }
@@ -242,9 +240,9 @@ void ConstructionAttribute::OnUpdate( const sword::MissionParameter_Value& attri
 void ConstructionAttribute::Set( double percentage )
 {
     constructionPercentage_.Set( percentage );
-    unsigned int tmp = (unsigned int)( constructionPercentage_.Get() * nFullNbrDotation_ );
+    unsigned int tmp = static_cast< unsigned int >( constructionPercentage_.Get() * nFullNbrDotation_ );
     if( nCurrentNbrDotation_ != tmp || constructionPercentage_.NeedToBeSent() )
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
     nCurrentNbrDotation_ = tmp;
 }
 
@@ -311,32 +309,6 @@ unsigned int ConstructionAttribute::GetDotationRecoveredWhenDestroying( double r
 double ConstructionAttribute::GetState() const
 {
     return constructionPercentage_.Get();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::Serialize
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-void ConstructionAttribute::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    functor.Serialize( "completion", NeedUpdate( eOnHLAUpdate ), constructionPercentage_.Get() );
-    Reset( eOnHLAUpdate );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::Deserialize
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-void ConstructionAttribute::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
-{
-    if( attributeID == "completion" )
-    {
-        double rConstruction;
-        deserializer >> rConstruction;
-        if( rConstruction > 100 )
-            rConstruction -= 100;
-        Build( rConstruction );
-    }
 }
 
 // -----------------------------------------------------------------------------

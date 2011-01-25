@@ -54,7 +54,6 @@
 #include "Automates/MIL_Automate.h"
 #include "clients_kernel/PhysicalFileLoader.h"
 #include "Effects/MIL_EffectManager.h"
-#include "hla/HLA_Federate.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "MIL_Army.h"
 #include "MIL_Formation.h"

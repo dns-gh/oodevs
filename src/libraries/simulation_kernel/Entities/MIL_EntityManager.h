@@ -83,7 +83,6 @@ class InhabitantFactory_ABC;
 class PopulationFactory_ABC;
 class TER_Localisation;
 class UrbanObjectWrapper;
-class HLA_Federate;
 
 // =============================================================================
 // @class  MIL_EntityManager
@@ -94,7 +93,7 @@ class MIL_EntityManager : public MIL_EntityManager_ABC,
                           private boost::noncopyable
 {
 public:
-             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, unsigned int gcPause, unsigned int gcMult );
+             MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, unsigned int gcPause, unsigned int gcMult );
     virtual ~MIL_EntityManager();
 
     //! @name Factory
@@ -252,7 +251,6 @@ private:
     //! @name Member data
     //@{
     const MIL_Time_ABC& time_;
-    HLA_Federate*       hla_;
     MIL_EffectManager&  effectManager_;
 
     // Profiling

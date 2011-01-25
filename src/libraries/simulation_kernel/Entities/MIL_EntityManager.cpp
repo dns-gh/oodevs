@@ -73,7 +73,6 @@
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "hla/HLA_Federate.h"
 #include "Inhabitants/MIL_InhabitantType.h"
 #include "Inhabitants/MIL_Inhabitant.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -159,7 +158,7 @@ template< typename Archive >
 void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const unsigned int /*version*/ )
 {
     ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_EffectManager::GetEffectManager(),
-                                    MIL_Singletons::GetProfiler(), MIL_Singletons::GetHla(),
+                                    MIL_Singletons::GetProfiler(),
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(), 
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setStepMul() );
 }
@@ -168,9 +167,8 @@ void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const u
 // Name: MIL_EntityManager constructor
 // Created: NLD 2004-08-10
 // -----------------------------------------------------------------------------
-MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, HLA_Federate* hla, unsigned int gcPause, unsigned int gcMult )
+MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, unsigned int gcPause, unsigned int gcMult )
     : time_                         ( time )
-    , hla_                          ( hla )
     , effectManager_                ( effects )
     , profilerManager_              ( profiler )
     , nRandomBreakdownsNextTimeStep_( 0  )
@@ -464,10 +462,7 @@ void MIL_EntityManager::CreateAutomat( const MIL_AutomateType& type, unsigned in
 // -----------------------------------------------------------------------------
 MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
 {
-    MIL_AgentPion* pPion = agentFactory_->Create( type, automate, xis );
-    if( hla_ )
-        hla_->Register( *pPion );
-    return *pPion;
+    return *agentFactory_->Create( type, automate, xis );
 }
 
 // -----------------------------------------------------------------------------
@@ -479,8 +474,6 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
     MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition );
     if( !pPion )
         throw std::runtime_error( "Pion couldn't be created." );
-    if( hla_ )
-        hla_->Register( *pPion );
     pPion->SendCreation ();
     pPion->SendFullState();
     pPion->SendKnowledge();

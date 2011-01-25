@@ -84,16 +84,6 @@ MIL_ProfilerMgr& MIL_AgentServer::GetProfilerManager() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetHLAFederate
-// Created: AGE 2004-11-26
-// -----------------------------------------------------------------------------
-inline
-HLA_Federate* MIL_AgentServer::GetHLAFederate() const
-{
-    return pFederate_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetCheckPointManager
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------

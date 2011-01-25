@@ -162,7 +162,7 @@ void ObstacleAttribute::Activate()
     {
         bActivated_ = true;
         activationTime_ = 0;
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
     }
 }
 
@@ -242,7 +242,7 @@ void ObstacleAttribute::OnUpdate( const sword::MissionParameter_Value& attribute
     if( attribute.list_size() > 2 && bActivated_ != attribute.list( 2 ).booleanvalue() )
     {
         bActivated_ = attribute.list( 2 ).booleanvalue();
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
     }
 }
 
@@ -254,17 +254,17 @@ bool ObstacleAttribute::Update( const ObstacleAttribute& rhs )
 {
     if( obstacle_ != rhs.obstacle_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         obstacle_ = rhs.obstacle_;
     }
     if( bActivated_ != rhs.bActivated_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         bActivated_ = rhs.bActivated_;
     }
     if( activationTime_ != rhs.activationTime_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         activationTime_ = rhs.activationTime_;
     }
     return NeedUpdate( eOnUpdate );

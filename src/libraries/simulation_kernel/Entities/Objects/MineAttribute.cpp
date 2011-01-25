@@ -13,9 +13,7 @@
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "hla/HLA_UpdateFunctor.h"
 #include "protocol/Protocol.h"
-#include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MineAttribute )
@@ -201,7 +199,7 @@ void MineAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
     if( attribute.list_size() > 4 )
     {
         Set( attribute.list( 4 ).quantity() / 100. ); // four first parameters not used
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
     }
 }
 
@@ -214,7 +212,7 @@ void MineAttribute::Set( double percentage )
     miningPercentage_.Set( percentage );
     unsigned int tmp = (unsigned int)( miningPercentage_.Get() * nFullNbrDotation_ );
     if( nCurrentNbrDotation_ != tmp || miningPercentage_.NeedToBeSent() )
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
     nCurrentNbrDotation_ = tmp;
 }
 
@@ -245,30 +243,6 @@ unsigned int MineAttribute::GetDotationRecoveredWhenDestroying( double rDeltaPer
 {
     const double rNewPercentage = std::max( 0., std::min( 1., miningPercentage_.Get() - rDeltaPercentage ) );
     return nCurrentNbrDotation_ - (unsigned int)( rNewPercentage * nFullNbrDotation_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MineAttribute::Serialize
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-void MineAttribute::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    functor.Serialize( "valorisation", NeedUpdate( eOnHLAUpdate ), miningPercentage_.Get() );
-    Reset( eOnHLAUpdate );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MineAttribute::Deserialize
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-void MineAttribute::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
-{
-    if( attributeID == "valorisation" )
-    {
-        double percentage;
-        deserializer >> percentage;
-        Update( percentage );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -306,22 +280,22 @@ bool MineAttribute::Update( const MineAttribute& rhs )
 {
     if( dotation_ != rhs.dotation_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         dotation_ = rhs.dotation_;
     }
     if( nFullNbrDotation_ != rhs.nFullNbrDotation_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         nFullNbrDotation_ = rhs.nFullNbrDotation_;
     }
     if( nCurrentNbrDotation_ != rhs.nCurrentNbrDotation_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         nCurrentNbrDotation_ = rhs.nCurrentNbrDotation_;
     }
     miningPercentage_.Set( rhs.miningPercentage_.Get() );
     if( miningPercentage_.NeedToBeSent() )
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
 
     return NeedUpdate( eOnUpdate );
 }

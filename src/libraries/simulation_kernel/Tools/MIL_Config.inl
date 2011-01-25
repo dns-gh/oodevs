@@ -263,56 +263,6 @@ unsigned int MIL_Config::GetPathFinderThreads() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Config::IsHLAEnabled
-// Created: NLD 2007-01-11
-// -----------------------------------------------------------------------------
-inline
-bool MIL_Config::IsHLAEnabled() const
-{
-    return bHLAEnabled_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetHLAFederation
-// Created: NLD 2007-01-11
-// -----------------------------------------------------------------------------
-inline
-const std::string& MIL_Config::GetHLAFederation() const
-{
-    return hlaFederation_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetHLAFederate
-// Created: NLD 2007-01-11
-// -----------------------------------------------------------------------------
-inline
-const std::string& MIL_Config::GetHLAFederate() const
-{
-    return hlaFederate_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetHLAHost
-// Created: SLI 2010-10-04
-// -----------------------------------------------------------------------------
-inline
-const std::string& MIL_Config::GetHLAHost() const
-{
-    return hlaHost_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Config::GetHLAPort
-// Created: SLI 2010-10-04
-// -----------------------------------------------------------------------------
-inline
-const std::string& MIL_Config::GetHLAPort() const
-{
-    return hlaPort_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Config::GetCheckpointTestName
 // Created: JSR 2010-03-11
 // -----------------------------------------------------------------------------

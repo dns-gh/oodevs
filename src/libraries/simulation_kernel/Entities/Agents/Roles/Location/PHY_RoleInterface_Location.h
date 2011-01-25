@@ -25,7 +25,6 @@ class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
-class HLA_UpdateFunctor;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Location
@@ -78,8 +77,6 @@ public:
 
 //    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const = 0;
 //    virtual void SendFullState( client::UnitAttributes& asnMsg ) const = 0;
-
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
 
 private:
     //! @name Serialization

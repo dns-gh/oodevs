@@ -17,11 +17,6 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
-namespace hla
-{
-    class Deserializer;
-}
-
 // =============================================================================
 /** @class  BypassAttribute
     @brief  BypassAttribute
@@ -56,8 +51,6 @@ public:
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
     virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     virtual void OnUpdate( const sword::MissionParameter_Value& attribute );
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
-    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}
 
     //! @name Accessors

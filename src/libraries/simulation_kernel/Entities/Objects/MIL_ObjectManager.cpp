@@ -25,7 +25,6 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "protocol/ClientSenders.h"
 #include <urban/TerrainObject_ABC.h>
-#include <hla/HLA_Federate.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/serialization/export.hpp>
@@ -97,8 +96,6 @@ void MIL_ObjectManager::UpdateStates()
         if( object.IsReadyForDeletion() )
         {
             object.SendDestruction();
-            if( MIL_Singletons::GetHla() )
-                MIL_Singletons::GetHla()->Unregister( object );
             if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
                 urbanObjects_.erase( &wrapper->GetObject() );
             delete &object;
@@ -120,8 +117,6 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
 {
     if( !pObject )
         return;
-    if( MIL_Singletons::GetHla() )
-        MIL_Singletons::GetHla()->Register( *pObject );
     RegisterDistantObject( pObject );
 }
 

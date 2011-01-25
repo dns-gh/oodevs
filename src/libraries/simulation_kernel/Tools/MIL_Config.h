@@ -67,11 +67,6 @@ public:
     unsigned int       GetEndTick                () const;
     bool               GetPausedAtStartup        () const;
     unsigned int       GetPathFinderThreads      () const;
-    bool               IsHLAEnabled              () const;
-    const std::string& GetHLAFederation          () const;
-    const std::string& GetHLAFederate            () const;
-    const std::string& GetHLAHost                () const;
-    const std::string& GetHLAPort                () const;
     const std::string& GetCheckpointNameTestMode () const;
 
     int                GetRandomSeed             () const;
@@ -150,12 +145,7 @@ private:
     bool           bDeleteCheckpointTestMode_;
     bool           bFrozenMode_;
     bool           bEmbeddedDispatcher_;
-    bool           bHLAEnabled_;
     bool           bPausedAtStartup_;
-    std::string    hlaFederation_;
-    std::string    hlaFederate_;
-    std::string    hlaHost_;
-    std::string    hlaPort_;
     std::string    strCheckPointNameTestMode_;
     T_CRCMap       CRCMap_;
     int            randomSeed_;

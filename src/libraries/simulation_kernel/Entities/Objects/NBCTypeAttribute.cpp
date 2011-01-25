@@ -108,7 +108,7 @@ NBCTypeAttribute& NBCTypeAttribute::operator=( const NBCTypeAttribute& rhs )
     length_           = rhs.length_;
     propagationAngle_ = rhs.propagationAngle_;
 
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    NotifyAttributeUpdated( eOnUpdate );
     return *this;
 }
 
@@ -227,7 +227,7 @@ void NBCTypeAttribute::UpdateConcentration( int concentration )
 {
     if( concentration != concentration_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         concentration_ = concentration;
     }
 }

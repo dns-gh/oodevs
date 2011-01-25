@@ -63,7 +63,7 @@ BurnAttribute& BurnAttribute::operator=( const BurnAttribute& other )
     combustionEnergyCount_ = other.combustionEnergyCount_;
     currentCombustionEnergy_ = other.currentCombustionEnergy_;
 
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    NotifyAttributeUpdated( eOnUpdate );
     return *this;
 }
 
@@ -184,7 +184,7 @@ void BurnAttribute::Burn( MIL_Object_ABC& object )
         combustionEnergySum_ += currentHeat_;
         ++combustionEnergyCount_;
         currentCombustionEnergy_ = combustionEnergySum_ / combustionEnergyCount_;
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
     }
     else
     {
@@ -192,7 +192,7 @@ void BurnAttribute::Burn( MIL_Object_ABC& object )
         if( currentHeat_ != newCurrentHeat )
         {
             currentHeat_ = newCurrentHeat;
-            NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+            NotifyAttributeUpdated( eOnUpdate );
         }
     }
     if( currentHeat_ == 0 )

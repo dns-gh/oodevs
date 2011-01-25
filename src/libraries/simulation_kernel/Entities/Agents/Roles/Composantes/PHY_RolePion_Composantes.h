@@ -218,11 +218,6 @@ public:
     virtual void SendFullState   () const;
     //@}
 
-    //! @name HLA
-    //@{
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
-    //@}
-
     //! @name PHY_RoleInterface_ActiveProtection
     //@{
     virtual void UseAmmunition( const PHY_DotationCategory& );

@@ -97,11 +97,6 @@ public:
     virtual void SendFullState( client::UnitAttributes& asnMsg ) const;
     //@}
 
-    //! @name HLA
-    //@{
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
-    //@}
-
 private:
     //! @name Tools
     //@{

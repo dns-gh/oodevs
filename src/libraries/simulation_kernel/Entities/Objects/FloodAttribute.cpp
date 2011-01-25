@@ -93,7 +93,7 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
 {
     if( depth_ != rhs.depth_ || refDist_ != rhs.refDist_ || !( location_ == rhs.location_ ) )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         depth_ = rhs.depth_;
         refDist_ = rhs.refDist_;
         location_.Reset( rhs.location_ );

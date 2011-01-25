@@ -13,7 +13,6 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
-#include "hla/HLA_UpdateFunctor.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
@@ -289,16 +288,6 @@ void PHY_RolePion_Posture::SendFullState( client::UnitAttributes& msg ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::Serialize
-// Created: AGE 2004-11-10
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    const PHY_Posture* pPosture = rPostureCompletionPercentage_ < 0.5 ? pLastPosture_ : pCurrentPosture_;
-    functor.Serialize( "posture", HLAStatusHasChanged(), pPosture->GetName() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Posture::GetLastPosture
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
@@ -352,15 +341,6 @@ void PHY_RolePion_Posture::DisableDiscreteMode()
 bool PHY_RolePion_Posture::HasChanged() const
 {
     return bPostureHasChanged_ || bPercentageHasChanged_ || bInstallationStateHasChanged_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Posture::HLAStatusHasChanged
-// Created: AGE 2005-03-08
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Posture::HLAStatusHasChanged() const
-{
-    return bPostureHasChanged_ || bPercentageCrossed50_;
 }
 
 // -----------------------------------------------------------------------------

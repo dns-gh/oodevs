@@ -155,7 +155,7 @@ bool LogisticAttribute::Update( const LogisticAttribute& rhs )
     if( pTC2_ != rhs.pTC2_ )
     {        
         pTC2_ = rhs.pTC2_;
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         return true;
     }
     return false;

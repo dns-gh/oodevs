@@ -73,7 +73,6 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( HasChanged, 0 );
     MOCK_METHOD( IsUsable, 0 );
     MOCK_METHOD( GetPion, 0 );
-    MOCK_METHOD( Serialize, 1 );
     MOCK_METHOD( WoundLoadedHumans, 3 );
 };
 

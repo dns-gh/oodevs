@@ -10,20 +10,12 @@
 #ifndef __ObjectAttribute_ABC_h_
 #define __ObjectAttribute_ABC_h_
 
-#include <hla/Deserializer.h>
-
 namespace sword
 {
     class ObjectAttributes;
     class MissionParameter_Value;
 }
 
-namespace hla
-{
-    class AttributeIdentifier;
-}
-
-class HLA_UpdateFunctor;
 class MIL_Object_ABC;
 class DEC_Knowledge_Object;
 struct ASN1T_ObjectAttributes;
@@ -68,8 +60,6 @@ public:
     virtual void SendFullState( sword::ObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
     virtual void SendUpdate( sword::ObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
     virtual void OnUpdate( const sword::MissionParameter_Value& /*attribute*/ ) {} //<! Update from asn msg
-    virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {} //<! Send update to HLA client
-    virtual void Deserialize( const hla::AttributeIdentifier& /*attributeID*/, hla::Deserializer /*deserializer*/ ) {} //<! Update from HLA
     //@}
 
     //! @name ODB

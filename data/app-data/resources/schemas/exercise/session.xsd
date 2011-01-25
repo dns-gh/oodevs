@@ -243,38 +243,6 @@
             </xs:attribute>
           </xs:complexType>
         </xs:element>
-        <xs:element name="hla">
-          <xs:annotation>
-            <xs:documentation xml:lang="en">Defines HLA configuration.</xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:attribute name="enabled" type="xs:boolean">
-              <xs:annotation>
-                <xs:documentation xml:lang="en">Enables HLA federate.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="federate" type="xs:string">
-              <xs:annotation>
-                <xs:documentation xml:lang="en">Defines the name identifying the simulation federate.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="federation" type="xs:string">
-              <xs:annotation>
-                <xs:documentation xml:lang="en">Defines the name identifying the federation to join.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="host" type="xs:string">
-              <xs:annotation>
-                <xs:documentation xml:lang="en">Defines the host running the RTI .</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="port" type="T_NetworkPort">
-              <xs:annotation>
-                <xs:documentation xml:lang="en">Defines the port for RTI connection.</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
-          </xs:complexType>
-        </xs:element>
         <xs:element name="network">
           <xs:annotation>
             <xs:documentation xml:lang="en">Defines the network configuration.</xs:documentation>

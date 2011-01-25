@@ -82,14 +82,6 @@ public:
     virtual void SendFullState() const;
     //@}
 
-    //! @name HLA
-    //@{
-    HLA_Object_ABC* GetHLAView() const;
-    void SetHLAView( HLA_Object_ABC& view );
-    void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
-    void Serialize( HLA_UpdateFunctor& functor ) const;
-    //@}
-
     //! @name
     //@{
     const std::string& GetName() const;
@@ -117,13 +109,11 @@ private:
     //@{
     std::string name_;
     std::auto_ptr< Object > pChildObject_;
-    HLA_Object_ABC* pView_;
     //@}
 
     //! @name Network
     //@{
     mutable unsigned char xAttrToUpdate_;
-    mutable unsigned char xAttrToUpdateForHLA_;
     //@}
 };
 

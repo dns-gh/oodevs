@@ -63,7 +63,7 @@ BurnSurfaceAttribute::~BurnSurfaceAttribute()
 BurnSurfaceAttribute& BurnSurfaceAttribute::operator=( const BurnSurfaceAttribute& other )
 {
 	pObject_ = other.pObject_;
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    NotifyAttributeUpdated( eOnUpdate);
     return *this;
 }
 
@@ -133,8 +133,8 @@ void BurnSurfaceAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnUpdate ) && pObject_ )
     {
-		burningCells_.SendUpdate( asn, *pObject_ );
-		Reset( eOnUpdate );
+        burningCells_.SendUpdate( asn, *pObject_ );
+        Reset( eOnUpdate );
     }
 }
 
@@ -144,8 +144,8 @@ void BurnSurfaceAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::WriteODB( xml::xostream& xos ) const
 {
-	if( pObject_ )
-		burningCells_.WriteODB( xos, *pObject_ );
+    if( pObject_ )
+        burningCells_.WriteODB( xos, *pObject_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ void BurnSurfaceAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::NotifyCellsUpdated()
 {
-	NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+	NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +175,7 @@ bool BurnSurfaceAttribute::Update( const BurnSurfaceAttribute& rhs )
     // $$$$ BCI 2011-01-06: pas trop compris le but de cette méthode...
     if( pObject_ != rhs.pObject_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         pObject_ = rhs.pObject_;
     }
     return NeedUpdate( eOnUpdate );
@@ -190,6 +190,6 @@ void BurnSurfaceAttribute::OnRequest( const sword::MissionParameter_Value& param
     if( parameters.list_size() > 2 )
     {
         burningCells_.OnRequest( parameters.list( 1 ).areal(), parameters.list( 2 ).areal() );
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
     }
 }

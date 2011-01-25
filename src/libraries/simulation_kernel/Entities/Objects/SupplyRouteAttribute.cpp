@@ -12,16 +12,12 @@
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
-#include <hla/HLA_UpdateFunctor.h>
-#include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( SupplyRouteAttribute )
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute > )
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< SupplyRouteAttribute > )
-
-using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute constructor
@@ -176,41 +172,13 @@ void SupplyRouteAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyRouteAttribute::Deserialize
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-void SupplyRouteAttribute::Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer )
-{
-    if( attributeID == "option" )
-    {
-        std::string strEquipped;
-        deserializer >> strEquipped;
-        if( strEquipped == "equipped" )
-            bEquipped_ = true;
-        else
-            bEquipped_ = false;
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ItineraireLogistique::Serialize
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-void SupplyRouteAttribute::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    functor.Serialize( "option", NeedUpdate( eOnHLAUpdate ), bEquipped_ ? "equipped" : "not equipped" );
-    Reset( eOnHLAUpdate );
-}
-
-// -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::Equip
 // Created: LDC 2009-03-26
 // -----------------------------------------------------------------------------
 void SupplyRouteAttribute::Equip()
 {
     bEquipped_ = true;
-    NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    NotifyAttributeUpdated( eOnUpdate );
 }
 //
 // -----------------------------------------------------------------------------
@@ -266,27 +234,27 @@ bool SupplyRouteAttribute::Update( const SupplyRouteAttribute& rhs )
 {
     if( bEquipped_ != rhs.bEquipped_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         bEquipped_ = rhs.bEquipped_;
     }
     if( rWeightSupported_ != rhs.rWeightSupported_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         rWeightSupported_ = rhs.rWeightSupported_;
     }
     if( rWidth_ != rhs.rWidth_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         rWidth_ = rhs.rWidth_;
     }
     if( rLength_ != rhs.rLength_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         rLength_ = rhs.rLength_;
     }
     if( rFlow_ != rhs.rFlow_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         rFlow_ = rhs.rFlow_;
     }
     return NeedUpdate( eOnUpdate );

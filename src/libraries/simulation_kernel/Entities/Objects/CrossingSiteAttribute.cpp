@@ -222,22 +222,22 @@ bool CrossingSiteAttribute::Update( const CrossingSiteAttribute& rhs )
 {
     if( rWidth_ != rhs.rWidth_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         rWidth_ = rhs.rWidth_;
     }
     if( rDepth_ != rhs.rDepth_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         rDepth_ = rhs.rDepth_;
     }
     if( rCurrentSpeed_ != rhs.rCurrentSpeed_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         rCurrentSpeed_ = rhs.rCurrentSpeed_;
     }
     if( bBanksToFitOut_ != rhs.bBanksToFitOut_ )
     {
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
         bBanksToFitOut_ = rhs.bBanksToFitOut_;
     }
     return NeedUpdate( eOnUpdate );

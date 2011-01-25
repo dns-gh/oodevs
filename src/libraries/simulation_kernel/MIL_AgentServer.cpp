@@ -13,7 +13,6 @@
 #include "Entities/Objects/MIL_PropagationManager.h"
 #include "Entities/Objects/ResourceTools.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
-#include "hla/HLA_Federate.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
@@ -59,11 +58,10 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pProfilerMgr_         ( new MIL_ProfilerMgr( config.IsProfilingEnabled() ) )
     , pCheckPointManager_   ( 0 )
     , pAgentServer_         ( 0 )
-    , pFederate_            ( 0 )
     , pUrbanModel_          ( new urban::Model() )
     , pResourceTools_       ( new ResourceTools() )
-	, pBurningCells_        ( new MIL_BurningCells() )
-	, pPropagationManager_  ( new MIL_PropagationManager() )
+    , pBurningCells_        ( new MIL_BurningCells() )
+    , pPropagationManager_  ( new MIL_PropagationManager() )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
     , lastStep_             ( clock() )
@@ -78,7 +76,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     else
     {
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
-        pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pProfilerMgr_, pFederate_, config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
+        pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pProfilerMgr_, config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
         pEntityManager_->ReadODB( config_ );
@@ -99,12 +97,10 @@ MIL_AgentServer::~MIL_AgentServer()
 {
     MT_LOG_INFO_MSG( "Terminating Simulation..." );
     timerManager_.Unregister( *this );
-    MT_LOG_INFO_MSG( "Terminating HLA" );
-    delete pFederate_;
     MT_LOG_INFO_MSG( "Terminating pathfind threads" );
     delete pPathFindManager_;
-	delete pPropagationManager_;
-	delete pBurningCells_;
+    delete pPropagationManager_;
+    delete pBurningCells_;
     // $$$$ AGE 2005-02-21:
 //    MT_LOG_INFO_MSG( "Cleaning up simulation data" );
 //    delete pEntityManager_;
@@ -139,7 +135,6 @@ void MIL_AgentServer::ReadStaticData()
     MIL_EntityManager::Initialize( config_, *this );
     if( !config_.IsDataTestMode() )
         pPathFindManager_ = new DEC_PathFind_Manager( config_ );
-    ReadHLA();
 }
 
 // -----------------------------------------------------------------------------
@@ -179,26 +174,6 @@ void MIL_AgentServer::ReadTerData()
     MT_LOG_INFO_MSG( MT_FormatString( "Terrain size (w x h): %.2fkm x %.2fkm", TER_World::GetWorld().GetWidth() / 1000., TER_World::GetWorld().GetHeight()  / 1000. ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::ReadHLA
-// Created: AGE 2004-11-05
-// -----------------------------------------------------------------------------
-void MIL_AgentServer::ReadHLA()
-{
-    if( !config_.IsHLAEnabled() )
-        return;
-    MT_LOG_INFO_MSG( "Initializing HLA" );
-    pFederate_ = new HLA_Federate( config_.GetHLAFederate(), config_.GetHLAHost(), config_.GetHLAPort() );
-    if( !pFederate_->Join( config_.GetHLAFederation() ) )
-    {
-        MT_LOG_WARNING_MSG( "Could not join federation '" << config_.GetHLAFederation() << "'" );
-        delete pFederate_;
-        pFederate_ = 0;
-    }
-    else
-        MT_LOG_INFO_MSG( "Connected to federation '" << config_.GetHLAFederation() << "'" );
-}
-
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::Update
 // Created: NLD 2002-07-17
@@ -219,8 +194,6 @@ void MIL_AgentServer::WaitForNextStep()
     assert( pAgentServer_ );
     pAgentServer_->Update();
     pPathFindManager_->Update();
-    if( pFederate_ )
-        pFederate_->Tick();
     long sleepTime = 100;
     if( nSimState_ == eSimRunning )
     {
@@ -279,8 +252,6 @@ void MIL_AgentServer::MainSimLoop()
     }
     pProfilerMgr_->NotifyTickEnd( GetCurrentTimeStep() );
     SendMsgEndTick();
-    if( pFederate_ )
-        pFederate_->Step();
     pEntityManager_->Clean();
     pCheckPointManager_->Update();
 }
@@ -343,7 +314,6 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 //         << pProfilerMgr_         // pas de données
          << pCheckPointManager_
 //         << pAgentServer_         // moi-même ( static )
-//         << pFederate_            // reloadé à la main ( cf. MIL_AgentServer::Initialize )
          << nInitialRealTime_
          << nRealTime_;
 
@@ -370,7 +340,6 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
 //         >> pProfilerMgr_
          >> pCheckPointManager_
 //         >> pAgentServer_
-//         >> pFederate_
          >> nInitialRealTime_
          >> nRealTime_;
 

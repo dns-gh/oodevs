@@ -20,13 +20,6 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockMIL_Object_ABC, MIL_Object_ABC )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-             MockMIL_Object_ABC() {}
-    virtual ~MockMIL_Object_ABC() {}
-    //@}
-
     MOCK_METHOD( WriteODB, 1 );
     MOCK_METHOD( PreprocessAgent, 1 );
     MOCK_METHOD( ProcessAgentEntering, 1 );
@@ -39,10 +32,6 @@ public:
     MOCK_METHOD_EXT( CreateKnowledge, 1, boost::shared_ptr< DEC_Knowledge_Object >( const MIL_KnowledgeGroup& ) , CreateKnowledgeKnowledgeGroup );
     MOCK_CONST_METHOD_EXT( operator(), 0, const MIL_ObjectManipulator_ABC&(), OperatorConst );
     MOCK_NON_CONST_METHOD_EXT( operator(), 0, MIL_ObjectManipulator_ABC&(), OperatorNonConst );
-    MOCK_METHOD( GetHLAView, 0 );
-    MOCK_METHOD( SetHLAView, 1 );
-    MOCK_METHOD( Deserialize, 2 );
-    MOCK_METHOD( Serialize, 1 );
     MOCK_METHOD( OnUpdate, 1 );
     MOCK_METHOD( OnRequest, 1 );
     MOCK_METHOD( SendCreation, 0 );

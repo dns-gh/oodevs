@@ -21,7 +21,6 @@ namespace client
 }
 
 class PHY_Posture;
-class HLA_UpdateFunctor;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Posture
@@ -93,11 +92,6 @@ public:
 //    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const = 0;
 //    virtual void SendFullState   ( client::UnitAttributes& asnMsg ) const = 0;
     //@}
-
-    //! @name HLA
-    //@{
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
-    virtual bool HLAStatusHasChanged() const = 0;
 
 private:
     //! @name Serialization

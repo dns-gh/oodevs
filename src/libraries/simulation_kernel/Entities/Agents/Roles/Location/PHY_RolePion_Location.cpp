@@ -16,7 +16,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_PopulationInteraction.h"
-#include "hla/HLA_UpdateFunctor.h"
 #include "Network/NET_ASN_Tools.h"
 #include "AlgorithmsFactories.h"
 #include "LocationComputer_ABC.h"
@@ -371,18 +370,6 @@ void PHY_RolePion_Location::SendFullState( client::UnitAttributes& msg ) const
     NET_ASN_Tools::WriteDirection( vDirection_, *msg().mutable_direction() );
     msg().set_height( (unsigned int)rHeight_ );
     msg().set_speed( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Location::Serialize
-// Created: AGE 2004-11-10
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Location::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    functor.Serialize( "position" , bPositionHasChanged_    , MIL_Tools::ConvertCoordSimToMos( *pvPosition_ ) );
-    functor.Serialize( "hauteur"  , bHeightHasChanged_      , rHeight_       );
-    functor.Serialize( "direction", bDirectionHasChanged_   , vDirection_    );
-    functor.Serialize( "vitesse"  , bCurrentSpeedHasChanged_, rCurrentSpeed_ );
 }
 
 // -----------------------------------------------------------------------------

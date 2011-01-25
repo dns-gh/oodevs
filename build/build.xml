@@ -350,7 +350,7 @@
         depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll">
         <build-app name="simulation_app" depends="terrain,boost,xerces,xalan,flexlm,qt,protobuf"
             pattern="simulation_app"
-            libs="HLA,libFedTime,masalloc,directia-${platform}-mt-4_6,library-${platform}-mt,
+            libs="masalloc,directia-${platform}-mt-4_6,library-${platform}-mt,
                   gdal_i,gdal_ogr,geodata,
                   dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -765,7 +765,7 @@
 
     <target name="application.simulation_kernel_test" description="build Sword Simulation kernel test executable" depends="library.simulation_kernel">
         <build-test name="simulation_kernel"
-                   libs="HLA,libFedTime,masalloc,tools,directia-${platform}-mt-4_6,library-${platform}-mt,
+                   libs="masalloc,tools,directia-${platform}-mt-4_6,library-${platform}-mt,
                    gdal_i,gdal_ogr,geodata,
                    dispatcher-${platform}-mt@{suffix},
                    lib${ant.project.name}_tools-${platform}-mt@{suffix},

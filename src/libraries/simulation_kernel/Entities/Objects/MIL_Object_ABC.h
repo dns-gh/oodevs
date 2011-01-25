@@ -35,12 +35,6 @@ namespace sword
     class MissionParameter_Value;
 }
 
-namespace hla
-{
-    class Deserializer;
-    class AttributeIdentifier;
-}
-
 class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
@@ -51,8 +45,6 @@ class MIL_ObjectManipulator_ABC;
 class MIL_ObjectType_ABC;
 class MIL_PopulationElement_ABC;
 class TER_Localisation;
-class HLA_Object_ABC;
-class HLA_UpdateFunctor;
 
 //=============================================================================
 // Created: NLD 2002-12-12
@@ -160,14 +152,6 @@ public:
     bool IsMarkedForDestruction() const;
     bool IsReadyForDeletion() const;
     virtual bool IsUniversal() const;
-    //@}
-
-    //! @name HLA
-    //@{
-    virtual HLA_Object_ABC* GetHLAView() const = 0;
-    virtual void SetHLAView( HLA_Object_ABC& view ) = 0;
-    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer ) = 0;
-    virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
     //@}
 
     //! @name Network

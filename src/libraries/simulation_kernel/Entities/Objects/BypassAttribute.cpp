@@ -11,9 +11,7 @@
 #include "BypassAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "hla/HLA_UpdateFunctor.h"
 #include "protocol/Protocol.h"
-#include <hla/AttributeIdentifier.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BypassAttribute )
 
@@ -70,7 +68,7 @@ void BypassAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) c
 {
     std::string emptyString;
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    ar << (double)bypassPercentage_.Get();
+    ar << static_cast< double >( bypassPercentage_.Get() );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +120,7 @@ void BypassAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
     if( attribute.list_size() > 1 )
     {
         if( bypassPercentage_.Set( attribute.list( 1 ).quantity() / 100. ) )
-            NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+            NotifyAttributeUpdated( eOnUpdate );
     }
 }
 
@@ -133,7 +131,7 @@ void BypassAttribute::OnUpdate( const sword::MissionParameter_Value& attribute )
 void BypassAttribute::Update( double progress )
 {
     if( bypassPercentage_.Set( bypassPercentage_.Get() + progress ) )
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,30 +154,6 @@ bool BypassAttribute::IsBypassed() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: BypassAttribute::Serialize
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-void BypassAttribute::Serialize( HLA_UpdateFunctor& functor ) const
-{
-    functor.Serialize( "contournement", NeedUpdate( eOnHLAUpdate ), bypassPercentage_.Get() );
-    Reset( eOnHLAUpdate );
-}
-
-// -----------------------------------------------------------------------------
-// Name: BypassAttribute::Deserialize
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-void BypassAttribute::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
-{
-    if( attributeID == "contournement" )
-    {
-        double bypass;
-        deserializer >> bypass;
-        bypassPercentage_.Set( bypass );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: BypassAttribute::Update
 // Created: NLD 2010-10-26
 // -----------------------------------------------------------------------------
@@ -187,6 +161,6 @@ bool BypassAttribute::Update( const BypassAttribute& rhs )
 {
     bypassPercentage_.Set( rhs.bypassPercentage_.Get() );
     if( bypassPercentage_.NeedToBeSent() )
-        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+        NotifyAttributeUpdated( eOnUpdate );
     return NeedUpdate( eOnUpdate );
 }
