@@ -13,18 +13,12 @@
 #include "3a/IdentifierValue.h"
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
+#include "protocol/Protocol.h"
+#include "MockClientPublisher.h"
 #include <xeumeuleu/xml.hpp>
 #include <geocoord/geodetic.h>
 #include <geocoord/mgrs.h>
-#include "protocol/Protocol.h"
-#include "MockClientPublisher.h"
 
-using namespace sword;
-using namespace sword;
-using namespace sword;
-using namespace sword;
-using namespace sword;
-using namespace sword;
 using namespace sword;
 
 namespace
