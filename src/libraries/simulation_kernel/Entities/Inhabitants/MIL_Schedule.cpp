@@ -91,19 +91,19 @@ void MIL_Schedule::ReadEvent( xml::xistream& xis )
 // Name: MIL_Schedule::Update
 // Created: LGY 2011-01-19
 // -----------------------------------------------------------------------------
-void MIL_Schedule::Update( unsigned int date )
+void MIL_Schedule::Update( unsigned int date, unsigned int duration )
 {
     BOOST_FOREACH( const Event& event, events_ )
-        Check( event, date );
+        Check( event, date, duration );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Schedule::Check
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-void MIL_Schedule::Check( const Event& event, unsigned int date )
+void MIL_Schedule::Check( const Event& event, unsigned int date, unsigned int duration )
 {
     bpt::ptime pdate( bpt::from_time_t( date ) );
-    if( pdate.date().day_of_week() == event.day_ && pdate.time_of_day() == event.from_ )
+    if( pdate.date().day_of_week() == event.day_ && pdate.time_of_day() >= event.from_ && pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, duration ) ) )
         livingArea_.StartMotivation( event.motivation_ );
 }

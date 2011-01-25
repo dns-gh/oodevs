@@ -264,7 +264,7 @@ void MIL_Inhabitant::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::UpdateState()
 {
-    pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime() );
+    pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
 }
 
 // -----------------------------------------------------------------------------

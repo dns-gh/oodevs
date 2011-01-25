@@ -34,7 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual void Configure( xml::xistream& xis );
-    virtual void Update( unsigned int date );
+    virtual void Update( unsigned int date, unsigned int duration );
     //@}
 
 private:
@@ -55,7 +55,7 @@ private:
     //! @name Helpers
     //@{
     void ReadEvent( xml::xistream& xis );
-    void Check( const Event& event, unsigned int date );
+    void Check( const Event& event, unsigned int date, unsigned int duration );
     //@}
 
 private:
