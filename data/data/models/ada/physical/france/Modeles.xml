@@ -192,7 +192,6 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="TEST Observe"/>
         <mission name="MELEE Appui feu sur position"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler"/>
@@ -11632,4 +11631,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3208162840" -->
+<!-- signature="3484154804" -->
