@@ -24,8 +24,8 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_
     : EntityLayer< TerrainObjectProxy >( controllers, tools, strategy, view, profile )
     , controllers_( controllers )
     , selectedObject_( 0 )
+    , infraHandler_( *new InfrastructureHandler( controllers ) )
 {
-   // NOTHING;
 }
 
 // -----------------------------------------------------------------------------
@@ -34,16 +34,17 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_
 // -----------------------------------------------------------------------------
 UrbanLayer::~UrbanLayer()
 {
-    // NOTHING
+    delete &infraHandler_;
 }
 
 namespace
 {
     struct DrawExtensionsFunctor : boost::noncopyable
     {
-        DrawExtensionsFunctor( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools )
+        DrawExtensionsFunctor( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools, bool infraDisplayed )
             : viewport_( viewport )
             , tools_( tools )
+            , infraDisplayed_ ( infraDisplayed )
         {}
 
         void operator()( const kernel::Entity_ABC& proxy )
@@ -51,12 +52,14 @@ namespace
             // dessin du réseau en dernier par dessus les blocs
             if( const kernel::ResourceNetwork_ABC* resource = proxy.Retrieve< kernel::ResourceNetwork_ABC >() )
                 resource->Draw( viewport_, tools_ );
-            if( const kernel::Infrastructure_ABC* infra = proxy.Retrieve< kernel::Infrastructure_ABC >() )
+            const kernel::Infrastructure_ABC* infra = proxy.Retrieve< kernel::Infrastructure_ABC >();
+            if( infra  && infraDisplayed_ )
                 infra->Draw( viewport_, tools_ );
         }
 
         const kernel::Viewport_ABC& viewport_;
         const kernel::GlTools_ABC& tools_;
+        bool infraDisplayed_;
     };
 }
 
@@ -69,7 +72,7 @@ void UrbanLayer::Paint( kernel::Viewport_ABC& viewport )
     // dessin des blocs urbains
     EntityLayer< TerrainObjectProxy >::Paint( viewport );
     // dessin des extensions(en deux temps pour les afficher par dessus les blocs)
-    DrawExtensionsFunctor functor( viewport, tools_ );
+    DrawExtensionsFunctor functor( viewport, tools_, infraHandler_.ShouldBeDisplayed() );
     Apply( functor );
 }
 

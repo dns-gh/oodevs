@@ -13,12 +13,36 @@
 #include "Layer_ABC.h"
 #include "EntityLayer.h"
 #include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/OptionVariant.h"
 
 namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
     class Viewport_ABC;
+}
+
+namespace
+{
+    class InfrastructureHandler : public kernel::OptionsObserver_ABC, public tools::Observer_ABC
+    {
+    public:
+        InfrastructureHandler( kernel::Controllers& controllers ): infraDisplayed_( false )
+        {
+            controllers.Register( *this );
+        }
+        ~InfrastructureHandler(){}
+        virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+        {
+            if ( name == "Infra" )
+                infraDisplayed_ = value.To< bool >();
+        }
+        bool ShouldBeDisplayed(){ return infraDisplayed_; }
+    private:
+        bool infraDisplayed_;
+
+    };
 }
 
 namespace gui
@@ -68,6 +92,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const TerrainObjectProxy*   selectedObject_;
+    InfrastructureHandler& infraHandler_;
     //@}
 };
 

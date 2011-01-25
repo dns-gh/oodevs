@@ -60,6 +60,7 @@ private slots:
     void OnUp();
     void OnDown();
     void OnFogOfWarChanged( bool value );
+    void OnInfraChanged( bool value );
     //@}
 
 private:
@@ -91,6 +92,7 @@ private:
     T_Alphas new_;
     T_Names  names_;
     CheckBox* fogOfWar_;
+    CheckBox* infra_;
     QListView* layersList_;
     QSlider* transparency_;
     QLabel* transparencyLabel_;

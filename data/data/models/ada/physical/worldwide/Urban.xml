@@ -97,7 +97,7 @@
     <accomodation capacity="0.07" role="home"/>
   </accomodations>
   <infrastructures>
-    <infrastructure name="infras1" symbol="sfgpucaw">
+    <infrastructure name="infras1" symbol="hopital">
       <capacities>
         <medical night-doctors-rate="10">
           <emergency-plan beds-rate="10" doctors-rate="10"/>
@@ -106,4 +106,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="2182275125" -->
+<!-- signature="2289862087" -->

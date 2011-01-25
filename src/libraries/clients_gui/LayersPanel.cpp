@@ -37,6 +37,13 @@ LayersPanel::LayersPanel( QWidget* parent, kernel::Controllers& controllers )
         fogOfWar_ = new CheckBox( tr( "Display fog of war" ), box );
         connect( fogOfWar_, SIGNAL( toggled( bool ) ), SLOT( OnFogOfWarChanged( bool ) ) );
     }
+
+    {
+        QGroupBox* box = new QGroupBox( 1, Qt::Vertical, tr( "Infrastructures" ), this );
+        infra_ = new CheckBox( tr( "Display Infrastructures" ), box );
+        connect( infra_, SIGNAL( toggled( bool ) ), SLOT( OnInfraChanged( bool ) ) );
+    }
+
     {
         QGroupBox* groupBox = new QGroupBox( 1, Qt::Vertical, tr( "Layer display order and transparency" ), this );
         QVBox* vBox = new QVBox( groupBox );
@@ -103,6 +110,7 @@ void LayersPanel::AddLayer( const QString& name, Layer_ABC& layer )
 void LayersPanel::Commit()
 {
     fogOfWar_->Commit();
+    infra_->Commit();
     current_       = new_;
     currentLayers_ = newLayers_;
     for( unsigned i = 0; i < layers_.size(); ++i )
@@ -121,6 +129,7 @@ void LayersPanel::Commit()
 void LayersPanel::Reset()
 {
     fogOfWar_->Revert();
+    infra_->Revert();
     new_       = current_;
     newLayers_ = currentLayers_;
     for( unsigned i = 0; i < layers_.size(); ++i )
@@ -259,6 +268,11 @@ void LayersPanel::OptionChanged( const std::string& name, const kernel::OptionVa
         fogOfWar_->setChecked( value.To< bool >() );
         return;
     }
+    if( name == "Infra" )
+    {
+        infra_->setChecked( value.To< bool >() );
+        return;
+    }
     QString option( name.c_str() );
     if( !option.startsWith( "Layers/" ) )
         return;
@@ -294,4 +308,13 @@ void LayersPanel::OptionChanged( const std::string& name, const kernel::OptionVa
 void LayersPanel::OnFogOfWarChanged( bool value )
 {
     options_.Change( "FogOfWar", value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::OnInfraChanged
+// Created: SLG 2011-01-24
+// -----------------------------------------------------------------------------
+void LayersPanel::OnInfraChanged( bool value )
+{
+    options_.Change( "Infra", value );
 }

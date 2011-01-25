@@ -22,7 +22,7 @@ unsigned int InfrastructureType::nNextID_ = 0;
 InfrastructureType::InfrastructureType( xml::xistream& xis )
     : id_  ( nNextID_++ )
     , name_( xis.attribute< std::string >( "name" ) )
-    , symbol_( "symbols/" + xis.attribute< std::string >( "symbol" ) )
+    , symbol_( xis.attribute< std::string >( "symbol" ) )
 {
     xis >> xml::optional() >> xml::start( "capacities" )
         >> xml::list( *this, &InfrastructureType::ReadCapacities );

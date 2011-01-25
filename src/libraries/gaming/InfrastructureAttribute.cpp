@@ -96,9 +96,9 @@ void InfrastructureAttribute::UpdateData( const T& message )
 void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
     if( type_ )
-        tools.DrawApp6Symbol( type_->GetSymbol(), object_.Barycenter() , 0.1f, 1.f );
+        tools.DrawApp6Symbol( type_->GetSymbol(), object_.Barycenter() , 0.1, 0.1 );
     if( !enabled_ )
-        tools.DrawSvg( "infra.svg", object_.Barycenter(), 0.1f );
+        tools.DrawSvg( "infra.svg", object_.Barycenter(), 0.1 );
 }
 
 // -----------------------------------------------------------------------------

@@ -98,26 +98,26 @@
     <accomodation capacity="0.2" role="office"/>
   </accomodations>
   <infrastructures>
-    <infrastructure name="infras4" symbol="sfgpuc">
+    <infrastructure name="infras4" symbol="hopital">
       <capacities>
         <medical night-doctors-rate="55">
           <emergency-plan beds-rate="51" doctors-rate="14"/>
         </medical>
       </capacities>
     </infrastructure>
-    <infrastructure name="infras1" symbol="sfgpuc">
+    <infrastructure name="infras1" symbol="Administration">
       <capacities/>
     </infrastructure>
-    <infrastructure name="infras2" symbol="sfgpuc">
+    <infrastructure name="infras2" symbol="hopital">
       <capacities>
         <medical night-doctors-rate="30">
           <emergency-plan beds-rate="10" doctors-rate="20"/>
         </medical>
       </capacities>
     </infrastructure>
-    <infrastructure name="infras3" symbol="sfgpuc">
+    <infrastructure name="infras3" symbol="Industrie">
       <capacities/>
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="3751094997" -->
+<!-- signature="2796770282" -->
