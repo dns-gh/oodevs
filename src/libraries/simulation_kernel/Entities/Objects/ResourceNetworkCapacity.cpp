@@ -195,12 +195,12 @@ void ResourceNetworkCapacity::NotifyStructuralStateChanged( unsigned int structu
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetworkCapacity::GetNetworkState
+// Name: ResourceNetworkCapacity::GetFunctionalState
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-float ResourceNetworkCapacity::GetNetworkState() const
+float ResourceNetworkCapacity::GetFunctionalState() const
 {
     if( nodeProperties_ )
-        return nodeProperties_->GetNetworkState();
+        return nodeProperties_->GetFunctionalState();
     return 1.f;
 }

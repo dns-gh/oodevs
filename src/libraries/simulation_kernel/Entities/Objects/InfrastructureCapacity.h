@@ -36,7 +36,6 @@ public:
              InfrastructureCapacity::InfrastructureCapacity();
     explicit InfrastructureCapacity( const urban::InfrastructureType& type );
     explicit InfrastructureCapacity( xml::xistream& xis );
-
     virtual ~InfrastructureCapacity();
     //@}
 
@@ -56,7 +55,6 @@ public:
     void SetEnabled( bool enabled );
     void SetThreshold( float threshold );
     //@}
-
 
 private:
     //! @name Copy/Assignment

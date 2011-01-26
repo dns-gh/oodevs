@@ -72,7 +72,7 @@ public:
     void Push( int quantity, unsigned long resourceId );
     void SetModifier( unsigned int modifier );
     bool NeedUpdate() const;
-    float GetNetworkState() const;
+    float GetFunctionalState() const;
     //@}
 
     //! @name Network
@@ -106,7 +106,8 @@ private:
 private:
     //! @name Member data
     //@{
-    bool isFunctional_;
+    float functionalState_;
+    float oldFunctionalState_;
     const ResourceTools_ABC* tools_;
     mutable bool needUpdate_;
     //@}
@@ -120,7 +121,7 @@ template< typename Archive >
 void NodeProperties::load( Archive& file, const unsigned int )
 {
     unsigned int nNbr;
-    file >> isFunctional_
+    file >> functionalState_
          >> nNbr;
     unsigned long index;
     while( nNbr-- )
@@ -138,7 +139,7 @@ template< typename Archive >
 void NodeProperties::save( Archive& file, const unsigned int ) const
 {
     unsigned int size = tools::Resolver< NodeElement >::elements_.size();
-    file << isFunctional_
+    file << functionalState_
          << size;
     for( std::map< unsigned long, NodeElement* >::const_iterator it = tools::Resolver< NodeElement >::elements_.begin(); it != tools::Resolver< NodeElement >::elements_.end(); ++it )
         file << it->first

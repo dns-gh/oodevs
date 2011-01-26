@@ -56,9 +56,9 @@ public:
     void SetModel( const ResourceNetworkModel& model );
     void Update( xml::xistream& xis );
     void Finalize( const ResourceTools_ABC& tools );
-    void UpdateImmediateStock( bool isFunctional );
-    void Consume( bool& isFunctional );
-    void DistributeResource( bool isFunctional );
+    void UpdateImmediateStock( float functionalState );
+    void Consume( float& functionalState );
+    void DistributeResource( float functionalState );
     void Push( int quantity );
     void SetModifier( unsigned int modifier );
     bool NeedUpdate() const;

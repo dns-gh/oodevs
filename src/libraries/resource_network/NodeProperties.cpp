@@ -21,9 +21,10 @@ using namespace resource;
 // Created: JSR 2010-11-17
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties()
-    : isFunctional_( true )
-    , tools_       ( 0 )
-    , needUpdate_  ( true )
+    : functionalState_   ( 1.f )
+    , oldFunctionalState_( 1.f )
+    , tools_             ( 0 )
+    , needUpdate_        ( true )
 {
     // NOTHING
 }
@@ -33,9 +34,10 @@ NodeProperties::NodeProperties()
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties( const ResourceTools_ABC& tools )
-    : isFunctional_( true )
-    , tools_       ( &tools )
-    , needUpdate_  ( true )
+    : functionalState_   ( 1.f )
+    , oldFunctionalState_( 1.f )
+    , tools_             ( &tools )
+    , needUpdate_        ( true )
 {
     // NOTHING
 }
@@ -45,9 +47,10 @@ NodeProperties::NodeProperties( const ResourceTools_ABC& tools )
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties( xml::xistream& xis, const ResourceTools_ABC& tools )
-    : isFunctional_( true )
-    , tools_       ( &tools )
-    , needUpdate_  ( true )
+    : functionalState_   ( 1.f )
+    , oldFunctionalState_( 1.f )
+    , tools_             ( &tools )
+    , needUpdate_        ( true )
 {
     Update( xis );
 }
@@ -57,9 +60,10 @@ NodeProperties::NodeProperties( xml::xistream& xis, const ResourceTools_ABC& too
 // Created: JSR 2010-09-17
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties( const urban::ResourceNetworkAttribute& urbanAttribute, const ResourceTools_ABC& tools )
-    : isFunctional_( true )
-    , tools_       ( &tools )
-    , needUpdate_  ( true )
+    : functionalState_   ( 1.f)
+    , oldFunctionalState_( 1.f)
+    , tools_             ( &tools )
+    , needUpdate_        ( true )
 {
     const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = urbanAttribute.GetResourceNodes();
     for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
@@ -74,9 +78,10 @@ NodeProperties::NodeProperties( const urban::ResourceNetworkAttribute& urbanAttr
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeProperties::NodeProperties( const NodeProperties& from )
-    : isFunctional_( true )
-    , tools_       ( from.tools_ )
-    , needUpdate_  ( true )
+    : functionalState_   ( 1.f )
+    , oldFunctionalState_( 1.f )
+    , tools_             ( from.tools_ )
+    , needUpdate_        ( true )
 {
     for( CIT_Elements it = from.elements_.begin(); it != from.elements_.end(); ++it )
         Register( it->first, *new NodeElement( *it->second ) );
@@ -124,14 +129,17 @@ void NodeProperties::Update( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void NodeProperties::Update()
 {
-    bool oldFunctional = isFunctional_;
     // update intermediate stocks
-    Apply( boost::bind( &NodeElement::UpdateImmediateStock, _1, isFunctional_ ) );
+    Apply( boost::bind( &NodeElement::UpdateImmediateStock, _1, functionalState_ ) );
     // apply consumptions
-    isFunctional_ = true;
-    Apply( boost::bind( &NodeElement::Consume, _1, boost::ref( isFunctional_ ) ) );
-    Apply( boost::bind( &NodeElement::DistributeResource, _1, isFunctional_ ) );
-    needUpdate_ = oldFunctional != isFunctional_;
+    functionalState_ = 1.f;
+    Apply( boost::bind( &NodeElement::Consume, _1, boost::ref( functionalState_ ) ) );
+    Apply( boost::bind( &NodeElement::DistributeResource, _1, functionalState_ ) );
+    if( std::abs( oldFunctionalState_ - functionalState_ ) > 0.01 )
+    {
+        oldFunctionalState_ = functionalState_;
+        needUpdate_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -233,13 +241,10 @@ void NodeProperties::ReadNode( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NodeProperties::GetNetworkState
+// Name: NodeProperties::GetFunctionalState
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-float NodeProperties::GetNetworkState() const 
+float NodeProperties::GetFunctionalState() const 
 {
-    float state = 1.;
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        state *= it->second->GetFunctionalState();
-    return state;
+    return functionalState_;
 }

@@ -160,12 +160,12 @@ void NodeElement::Finalize( const ResourceTools_ABC& tools )
 // Name: NodeElement::UpdateImmediateStock
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void NodeElement::UpdateImmediateStock( bool isFunctional )
+void NodeElement::UpdateImmediateStock( float functionalState )
 {
     if( !isActivated_ )
         return;
     immediateStock_ = static_cast< unsigned int >( modifier_ * receivedQuantity_ ) + stockCapacity_;
-    if( isFunctional )
+    if( std::abs( functionalState ) > 0.01f )
         immediateStock_ += static_cast< unsigned int >( modifier_ * productionCapacity_ );
     receivedQuantity_ = 0;
 }
@@ -174,17 +174,16 @@ void NodeElement::UpdateImmediateStock( bool isFunctional )
 // Name: NodeElement::Consume
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void NodeElement::Consume( bool& isFunctional )
+void NodeElement::Consume( float& functionalState )
 {
     if( !isActivated_ )
         return;
     unsigned int consumption = static_cast< unsigned int >( modifier_ * consumptionAmount_ );
-    if( consumption > immediateStock_ )
+    if( consumption > 0 && consumption > immediateStock_ )
     {
-        functionalState_ = static_cast< float >( immediateStock_ ) / consumption;
         immediateStock_ = 0;
-        if( consumptionCritical_ )
-            isFunctional = false;
+        functionalState_ = consumptionCritical_ ? 0 : static_cast< float >( immediateStock_ ) / consumption;
+        functionalState *= functionalState_;
     }
     else
     {
@@ -197,11 +196,11 @@ void NodeElement::Consume( bool& isFunctional )
 // Name: NodeElement::DistributeResource
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void NodeElement::DistributeResource( bool isFunctional )
+void NodeElement::DistributeResource( float functionalState )
 {
     for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         ( *it )->ResetFlow();
-    if( !isActivated_ || !isFunctional )
+    if( !isActivated_ || std::abs( functionalState ) < 0.01f )
         return;
     if( immediateStock_ != 0 && links_.size() > 0 )
     {

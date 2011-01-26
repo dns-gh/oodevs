@@ -12,8 +12,8 @@
 #include "StructuralCapacity.h"
 #include "ResourceNetworkCapacity.h"
 #include "MIL_Object_ABC.h"
-#include "urban/InfrastructureType.h"
 #include "protocol/ClientSenders.h"
+#include <urban/InfrastructureType.h>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InfrastructureCapacity )
@@ -23,10 +23,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( InfrastructureCapacity )
 // Created: SLG 2010-01-13
 // -----------------------------------------------------------------------------
 InfrastructureCapacity::InfrastructureCapacity()
-: functionalState_( 100 )
-, enabled_( true )
-, threshold_( 0 )
-, needUpdate_( true )
+    : functionalState_( 1.f )
+    , enabled_        ( true )
+    , threshold_      ( 0 )
+    , needUpdate_     ( true )
 {
     //NOTHING
 }
@@ -36,10 +36,10 @@ InfrastructureCapacity::InfrastructureCapacity()
 // Created: SLG 2010-01-13
 // -----------------------------------------------------------------------------
 InfrastructureCapacity::InfrastructureCapacity( xml::xistream& xis )
-    : functionalState_( 100 )
-    , enabled_( true )
-    , threshold_( 0 )
-    , needUpdate_( true )
+    : functionalState_( 1.f )
+    , enabled_        ( true )
+    , threshold_      ( 0 )
+    , needUpdate_     ( true )
 {
     InitializeData( xis );
 }
@@ -49,11 +49,11 @@ InfrastructureCapacity::InfrastructureCapacity( xml::xistream& xis )
 // Created: SLG 2010-01-13
 // -----------------------------------------------------------------------------
 InfrastructureCapacity::InfrastructureCapacity( const urban::InfrastructureType& type )
-    : functionalState_( 100 )
-    , role_( type.GetName() )
-    , enabled_( true )
-    , threshold_( 0 )
-    , needUpdate_( true )
+    : functionalState_( 1.f )
+    , role_           ( type.GetName() )
+    , enabled_        ( true )
+    , threshold_      ( 0 )
+    , needUpdate_     ( true )
 {
     //NOTHING
 }
@@ -103,7 +103,6 @@ void InfrastructureCapacity::serialize( Archive& file, const unsigned int )
          & role_
          & enabled_
          & threshold_;
-         & needUpdate_;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,11 +131,12 @@ void InfrastructureCapacity::Update( MIL_Object_ABC& object, unsigned int /*time
 {
     // $$$$ _RC_ SLG 2011-01-19: trouver un moyen pour mettre les valeurs des capacités StructuralCapacity et ResourceNetworkCapacity dans des attributs
     StructuralCapacity* capacity = object.Retrieve< StructuralCapacity >(); 
+    functionalState_ = 1.f;
     if( capacity )
-        functionalState_ = capacity->GetStructuralState();
+        functionalState_ *= capacity->GetStructuralState();
     ResourceNetworkCapacity* resourceCapacity = object.Retrieve< ResourceNetworkCapacity >(); 
     if( resourceCapacity )
-        functionalState_ *= resourceCapacity->GetNetworkState();
+        functionalState_ *= resourceCapacity->GetFunctionalState();
 }
 
 // -----------------------------------------------------------------------------
@@ -146,9 +146,6 @@ void InfrastructureCapacity::Update( MIL_Object_ABC& object, unsigned int /*time
 void InfrastructureCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& /*object*/ )
 {
     InitializeData( xis );
-    /*InfrastructureAttribute* infrastructureAttribute = new InfrastructureAttribute( xis );
-    const_cast< MIL_Object_ABC& >( object ).tools::Extendable< ObjectAttribute_ABC >::Attach< ObjectAttribute_ABC >( *infrastructureAttribute );
-    const_cast< MIL_Object_ABC& >( object ).GetAttribute< InfrastructureAttribute >() = *infrastructureAttribute;*/
 }
 
 // -----------------------------------------------------------------------------
