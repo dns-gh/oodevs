@@ -38,11 +38,13 @@ public:
     bool CanMine     () const;
     bool CanDemine   () const;
     bool CanBypass   ( bool bObjectIsMined ) const;
+    bool CanExtinguish() const;
 
     double GetConstructionTime( double rSizeCoef ) const;
     double GetDestructionTime ( double rSizeCoef ) const;
     double GetMiningTime      () const;
     double GetDeminingTime    () const;
+    double GetExtinguishingTime() const;
     double GetBypassTime      ( double rSizeCoef, bool bObjectIsMined ) const;
     double GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
 
@@ -57,6 +59,7 @@ private:
 
     double rTimeMining_;
     double rTimeDemining_;
+    double rTimeExtinguishing_;
 
     double rCoefTimeBypass_;
     double rSpeedWithinWhenNotBypassed_;

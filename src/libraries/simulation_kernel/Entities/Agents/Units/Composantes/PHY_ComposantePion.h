@@ -200,12 +200,14 @@ public:
     bool CanMine( const MIL_ObjectType_ABC& objectType ) const;
     bool CanDemine( const MIL_ObjectType_ABC& objectType ) const;
     bool CanBypass( const MIL_ObjectType_ABC& objectType, bool bObjectIsMined ) const;
+    bool CanExtinguish( const MIL_ObjectType_ABC& objectType ) const;
 
     double GetConstructionTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef ) const;
     double GetDestructionTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef ) const;
     double GetMiningTime( const MIL_ObjectType_ABC& objectType ) const;
     double GetDeminingTime( const MIL_ObjectType_ABC& objectType ) const;
     double GetBypassTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef, bool bObjectIsMined ) const;
+    double GetExtinguishingTime( const MIL_ObjectType_ABC& objectType ) const;
     //@}
 
     //! @name Load / unload / transport

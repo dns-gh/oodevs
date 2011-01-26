@@ -18,6 +18,8 @@
 #include "Entities/Objects/DecontaminationCapacity.h"
 #include "Entities/Objects/IntoxicationCapacity.h"
 #include "Entities/Objects/MineAttribute.h"
+#include "Entities/Objects/BurnAttribute.h"
+#include "Entities/Objects/FireAttribute.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
@@ -389,6 +391,29 @@ float DEC_KnowledgeObjectFunctions::GetConstructionLevel( boost::shared_ptr< DEC
     }
     return 0.f;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::GetBurningLevel
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+float DEC_KnowledgeObjectFunctions::GetBurningLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge)
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+    {
+        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
+        {
+            const BurnAttribute* burnAttribute = object->RetrieveAttribute< BurnAttribute >();
+            const FireAttribute* fireAttribute = object->RetrieveAttribute< FireAttribute >();
+            if( burnAttribute && fireAttribute )
+            {
+                if( int maxHeat = fireAttribute->GetMaxHeat() )
+                    return burnAttribute->GetCurrentHeat() / float( maxHeat );
+            }
+        }
+    }
+    return 0.f;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::GetValorizationLevel
 // Created: MGD 2010-04-02

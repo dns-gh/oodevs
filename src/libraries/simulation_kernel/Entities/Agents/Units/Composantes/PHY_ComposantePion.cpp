@@ -1222,6 +1222,16 @@ bool PHY_ComposantePion::CanMine( const MIL_ObjectType_ABC& objectType ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CanExtinguish
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::CanExtinguish( const MIL_ObjectType_ABC& objectType ) const
+{
+    assert( pType_ );
+    return pType_->CanExtinguish( objectType ) && CanBeUsed() && pState_->IsUsable();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::CanDemine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
@@ -1275,6 +1285,18 @@ double PHY_ComposantePion::GetMiningTime( const MIL_ObjectType_ABC& objectType )
         return std::numeric_limits< double >::max();
     assert( pType_ );
     return pType_->GetMiningTime( objectType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetExtinguishingTime
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+double PHY_ComposantePion::GetExtinguishingTime( const MIL_ObjectType_ABC& objectType ) const
+{
+    if( !( CanBeUsed() && pState_->IsUsable() ) )
+        return std::numeric_limits< double >::max();
+    assert( pType_ );
+    return pType_->GetExtinguishingTime( objectType );
 }
 
 // -----------------------------------------------------------------------------

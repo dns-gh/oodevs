@@ -354,7 +354,9 @@ eRC_DroneDoitEtreMisEnOeuvre = 335
 eRC_ReussiteRenforcementPion = 336
 eRC_EchecRenforcementPion = 337
 eRC_LeaveLima = 338
-eNbr = 338
+eRC_StartExtinguishObject = 339
+eRC_ObjectExtinguished = 340
+eNbr = 340
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

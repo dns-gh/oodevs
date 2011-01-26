@@ -48,6 +48,7 @@
 #include "Entities/Agents/Actions/Objects/PHY_ActionPrepareObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionDestroyObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionMineObject.h"
+#include "Entities/Agents/Actions/Objects/PHY_ActionExtinguishObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionBypassObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionOccupyObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionAnimateObject.h"
@@ -271,6 +272,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_ConnaissanceObjet_ChangeDensitePopulationSortante" ] = &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity; 
     brain[ "DEC_ConnaissanceObjet_ResetDensitePopulationSortante" ] = &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity;
     brain[ "DEC_ConnaissanceObjet_PointEstDansZoneEvitement"] = &DEC_KnowledgeObjectFunctions::IsInAvoidanceArea;
+    brain[ "DEC_ConnaissanceObjet_BurningLevel" ] = &DEC_KnowledgeObjectFunctions::GetBurningLevel;
 
     // Urban knowledges accessors
     brain[ "DEC_NiveauDeProtectionMaterielComposantes" ] = &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel;
@@ -377,7 +379,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIllumination, boost::shared_ptr< DEC_Knowledge_Agent >, DEC_Decision_ABC* >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Orientate" ] =
         boost::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_ActionFunctions::Orientate, boost::ref( GetPion() ), _1 ) );
-
+    brain[ "DEC_StartExtinguishObject" ] =
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionExtinguishObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
 
     // Embarquement / debarquement
     brain[ "DEC_Agent_EstEmbarquable" ] =
@@ -1119,7 +1122,7 @@ void DEC_RolePion_Decision::RegisterSelf( directia::brain::Brain& brain, bool is
     brain[ "myself" ] = (DEC_Decision_ABC*)this;
     if( isMasalife )
     {
-        brain[ "InitMePlatoon" ](  brain[ "net.masagroup.sword.military.world.PlatoonAlly" ], brain[ "myself" ], groupName );
+        brain[ "InitMePlatoon" ](  brain[ "integration.ontology.types.body" ], brain[ "myself" ], groupName );
     }
 }
 

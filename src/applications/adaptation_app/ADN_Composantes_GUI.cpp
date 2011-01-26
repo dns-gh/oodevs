@@ -218,6 +218,9 @@ void ADN_Composantes_GUI::Build()
     // DevalorizationTime
     builder.AddOptionnalField<ADN_TimeField>( pObjectGrid, tr( "Demining time" ), vInfoObjectsConnectors[eHasDevalorizationTime], vInfoObjectsConnectors[eDevalorizationTime] );
 
+    // ExtinguishingTime
+    builder.AddOptionnalField<ADN_TimeField>( pObjectGrid, tr( "Extinguishing time" ), vInfoObjectsConnectors[eHasExtinguishingTime], vInfoObjectsConnectors[eExtinguishingTime] );
+
     // CoeffCircTime
     builder.AddOptionnalField<ADN_EditLine_Double>( pObjectGrid, tr( "Bypass coefficient" ), vInfoObjectsConnectors[eHasCoeffCircTime], vInfoObjectsConnectors[eCoeffCircTime], 0, eGreaterEqualZero );
 
@@ -541,6 +544,8 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
                 builder.ListItem( tr( "Mining duration" ), object.valorizationTime_.GetData().c_str() );
             if( object.bDevalorizationTime_.GetData() )
                 builder.ListItem( tr( "Mine clearing duration" ), object.devalorizationTime_.GetData().c_str() );
+            if( object.bExtinguishingTime_.GetData() )
+                builder.ListItem( tr( "Extinguishing duration" ), object.extinguishingTime_.GetData().c_str() );
             if( object.bCoeffCircTime_.GetData() )
                 builder.ListItem( tr( "Bypass factor" ), object.rCoeffCirc_.GetData() );
             if( object.bSpeedCirc_.GetData() )

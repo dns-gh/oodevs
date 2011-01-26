@@ -862,6 +862,19 @@ bool PHY_ComposanteTypePion::CanMine( const MIL_ObjectType_ABC& object ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanExtinguish
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanExtinguish( const MIL_ObjectType_ABC& object ) const
+{
+    if( objectData_.size() <= object.GetID() )
+        return false;
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
+    return pObjectData && pObjectData->CanExtinguish();
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::CanDemine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------
@@ -937,6 +950,20 @@ double PHY_ComposanteTypePion::GetDeminingTime( const MIL_ObjectType_ABC& object
     const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
     if( pObjectData )
         return pObjectData->GetDeminingTime();
+    return std::numeric_limits< double >::max();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetExtinguishingTime
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetExtinguishingTime( const MIL_ObjectType_ABC& object ) const
+{
+    if( objectData_.size() <= object.GetID() )
+        return std::numeric_limits< double >::max();
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
+    if( pObjectData )
+        return pObjectData->GetExtinguishingTime();
     return std::numeric_limits< double >::max();
 }
 

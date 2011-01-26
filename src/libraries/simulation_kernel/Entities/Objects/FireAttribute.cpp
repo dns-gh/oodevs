@@ -228,3 +228,21 @@ const MIL_FireClass& FireAttribute::GetClass() const
 {
     return *pClass_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::function< bool
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* FireAttribute::FindBestExtinguisherAgent( boost::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const
+{
+    return pClass_->FindBestExtinguisherAgent( isExtinguisherAgentOkFun );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::GetExtinguisherHeatDecreaseRate
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+int FireAttribute::GetExtinguisherHeatDecreaseRate( const PHY_DotationCategory& extinguisherAgent ) const
+{
+    return pClass_->GetExtinguisherHeatDecreaseRate( extinguisherAgent );
+}

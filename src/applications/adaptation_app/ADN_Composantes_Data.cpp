@@ -1382,6 +1382,7 @@ ADN_Composantes_Data::ObjectInfos::ObjectInfos()
 , coeffDestructionTime_     ( "-1s" )
 , valorizationTime_         ( "-1s" )
 , devalorizationTime_       ( "-1s" )
+, extinguishingTime_        ( "-1s" )
 , rCoeffCirc_               ( 0 )
 , rSpeedCirc_               ( 0 )
 , rSpeedNotCirc_            ( 0 )
@@ -1391,6 +1392,7 @@ ADN_Composantes_Data::ObjectInfos::ObjectInfos()
 , bCoeffDestructionTime_    ( false )
 , bValorizationTime_        ( false )
 , bDevalorizationTime_      ( false )
+, bExtinguishingTime_       ( false )
 , bCoeffCircTime_           ( false )
 , bSpeedCirc_               ( false )
 , bSpeedNotCirc_            ( false )
@@ -1409,6 +1411,8 @@ ADN_Composantes_Data::ObjectInfos::ObjectInfos()
     valorizationTime_.SetParentNode( *this );
     devalorizationTime_.SetDataName( "le temps de dévalorisation" );
     devalorizationTime_.SetParentNode( *this );
+    extinguishingTime_.SetDataName( "le temps d'extinction" );
+    extinguishingTime_.SetParentNode( *this );
     rCoeffCirc_.SetDataName( "le temps de contournement" );
     rCoeffCirc_.SetParentNode( *this );
     rSpeedCirc_.SetDataName( "la vitesse d'une unité si contourné" );
@@ -1451,6 +1455,7 @@ ADN_Composantes_Data::ObjectInfos* ADN_Composantes_Data::ObjectInfos::CreateCopy
     pCopy->coeffDestructionTime_ = coeffDestructionTime_.GetData();
     pCopy->valorizationTime_ = valorizationTime_.GetData();
     pCopy->devalorizationTime_ = devalorizationTime_.GetData();
+    pCopy->extinguishingTime_ = extinguishingTime_.GetData();
     pCopy->rCoeffCirc_ = rCoeffCirc_.GetData();
     pCopy->rSpeedCirc_ = rSpeedCirc_.GetData();
     pCopy->rSpeedNotCirc_ = rSpeedNotCirc_.GetData();
@@ -1461,6 +1466,7 @@ ADN_Composantes_Data::ObjectInfos* ADN_Composantes_Data::ObjectInfos::CreateCopy
     pCopy->bCoeffDestructionTime_ = bCoeffDestructionTime_.GetData();
     pCopy->bValorizationTime_ = bValorizationTime_.GetData();
     pCopy->bDevalorizationTime_ = bDevalorizationTime_.GetData();
+    pCopy->bExtinguishingTime_ = bExtinguishingTime_.GetData();
     pCopy->bCoeffCircTime_ = bCoeffCircTime_.GetData();
     pCopy->bSpeedCirc_ = bSpeedCirc_.GetData();
     pCopy->bSpeedNotCirc_ = bSpeedNotCirc_.GetData();
@@ -1488,6 +1494,7 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::attribute( "destruction-time-factor", coeffDestructionTime_ )
           >> xml::optional >> xml::attribute( "valorization-time", valorizationTime_ )
           >> xml::optional >> xml::attribute( "devalorization-time", devalorizationTime_ )
+          >> xml::optional >> xml::attribute( "extinguishing-time", extinguishingTime_ )
           >> xml::optional >> xml::attribute( "bypass-gain-factor", rCoeffCirc_ )
           >> xml::optional >> xml::attribute( "non-bypassed-speed", rSpeedCirc_ )
           >> xml::optional >> xml::attribute( "bypassed-speed", rSpeedNotCirc_ );
@@ -1498,6 +1505,7 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( xml::xistream& input )
     bCoeffDestructionTime_      = coeffDestructionTime_ != "-1s";
     bValorizationTime_          = valorizationTime_ != "-1s";
     bDevalorizationTime_        = devalorizationTime_ != "-1s";
+    bExtinguishingTime_         = bExtinguishingTime_ != "-1s";
     bCoeffCircTime_             = rCoeffCirc_ != 0;
     bSpeedCirc_                 = rSpeedCirc_ != 0;
     bSpeedNotCirc_              = rSpeedNotCirc_ != 0;
@@ -1523,6 +1531,8 @@ void ADN_Composantes_Data::ObjectInfos::WriteArchive( xml::xostream& output )
         output << xml::attribute( "valorization-time", valorizationTime_ );
     if( bDevalorizationTime_.GetData() )
         output << xml::attribute( "devalorization-time", devalorizationTime_ );
+    if( bExtinguishingTime_.GetData() )
+        output << xml::attribute( "extinguishing-time", extinguishingTime_ );
     if( bCoeffCircTime_.GetData() )
         output << xml::attribute( "bypass-gain-factor", rCoeffCirc_ );
     if( bSpeedCirc_.GetData() )

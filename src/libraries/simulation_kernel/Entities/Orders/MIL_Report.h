@@ -466,6 +466,8 @@ public:
         eRC_ReussiteRenforcementPion,
         eRC_EchecRenforcementPion,
         eRC_LeaveLima,
+        eRC_StartExtinguishObject,
+        eRC_ObjectExtinguished,
         eLast
     };
     //@}

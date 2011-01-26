@@ -26,6 +26,7 @@
 #include "Entities/Objects/OccupantAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
 #include "Entities/Objects/FireAttribute.h"
+#include "Entities/Objects/BurnAttribute.h"
 #include "Entities/Objects/MIL_FireFunctor.h"
 #include "Entities/Objects/ExtinguishableCapacity.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
@@ -301,36 +302,12 @@ int PHY_RoleAction_Objects::Bypass( boost::shared_ptr< DEC_Knowledge_Object >& p
     return eRunning;
 }
 
-/*
-namespace
-{
-    // -----------------------------------------------------------------------------
-    // Name: ExtinguishableCapacity::GetBestExtinguisherAgent
-    // Created: RFT 2004-09-16
-    // -----------------------------------------------------------------------------
-    int GetBestExtinguisher( const MIL_AgentPion* pPion, MIL_FireFunctor& functor )
-    {
-        MIL_AgentPion* pion = const_cast< MIL_AgentPion* >( pPion );
-        std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-        pion->Execute( *componentComputer );
-
-        const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pPion->GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
-        for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
-        {
-            std::auto_ptr< OnComponentComputer_ABC > componentComputer( (*itReinforcement)->GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
-            (*itReinforcement)->Execute( *componentComputer );
-        }
-        return functor.GetNumberOfTheExtinguisherAgent();
-    }
-}*/
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::Extinguish
 // Created: RFT 28/05/2008
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
-    /*
     MIL_Object_ABC* pObject = GetObject( pKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
         return eImpossible;
@@ -340,14 +317,24 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
     if( !capacity )
         return eImpossible;
 
-    pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
-    //selection numberOFireHoses, bestExtinguisherAgent
-    MIL_FireFunctor functor( object.GetAttribute< FireAttribute >().GetClass() );
-    int bestExtinguisherAgent = GetBestExtinguisher( &pion_, functor );
-    object().Extinguish( bestExtinguisherAgent, pion_.GetNumberOfFireHoses( bestExtinguisherAgent ) );
+    FireAttribute* fireAttribute = object.RetrieveAttribute< FireAttribute >();
+    if( !fireAttribute )
+        return eImpossible;
 
-    if( object.GetAttribute< FireAttribute >().IsExtinguished() )
-        return eFinished;*/
+    BurnAttribute* burnAttribute = object.RetrieveAttribute< BurnAttribute >();
+    if( !burnAttribute )
+        return eImpossible;
+
+    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eExtinguish, object );
+    const PHY_DotationCategory* pExtinguisherAgent = fireAttribute->FindBestExtinguisherAgent( boost::bind( &PHY_RoleAction_Objects_DataComputer::HasDotations, &dataComputer, _1, 1 ) );
+    if( !pExtinguisherAgent )
+        return eImpossible;
+
+    burnAttribute->Extinguish( object, *pExtinguisherAgent );
+    dataComputer.ConsumeDotations( *pExtinguisherAgent, 1  );
+
+    if( burnAttribute->IsExtinguished() )
+        return eFinished;
     return eRunning;
 }
 
@@ -370,9 +357,6 @@ int PHY_RoleAction_Objects::Supply( boost::shared_ptr< DEC_Knowledge_Object >& o
     if( attribute->IsFull() )
         return eFinished;
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eConstruct, object );
-    const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-    if( rDeltaPercentage == std::numeric_limits< double >::max() )
-        return eNoCapacity;
     typedef std::vector< std::pair< const PHY_DotationCategory*, unsigned int > > T_SelectionVector;
     typedef T_SelectionVector::iterator IT_SelectionVector;
     T_SelectionVector selection;

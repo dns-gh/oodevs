@@ -1119,6 +1119,14 @@ Arrêt moteur allumé</translation>
         <source>Active protection</source>
         <translation>Protection active</translation>
     </message>
+    <message>
+        <source>Extinguishing time</source>
+        <translation>Durée d&apos;extinction</translation>
+    </message>
+    <message>
+        <source>Extinguishing duration</source>
+        <translation>Durée d&apos;extinction</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>

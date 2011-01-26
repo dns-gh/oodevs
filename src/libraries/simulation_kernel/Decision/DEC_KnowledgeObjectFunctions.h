@@ -38,6 +38,7 @@ public:
     static int QueueForDecontamination( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool CanBeAnimated( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static float GetConstructionLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
+    static float GetBurningLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static float GetValorizationLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static float GetAnimationLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static bool CanBeOccupied( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );

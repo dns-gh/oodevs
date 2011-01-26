@@ -59,8 +59,9 @@ void PHY_RoleAction_Objects_DataComputerPionData::operator() ( const PHY_Composa
         case eConstruct: rDeltaTime = composante.GetConstructionTime( pObject_->GetType(), (*pObject_)().GetSizeCoef() ); break;
         case eDestroy  : rDeltaTime = composante.GetDestructionTime( pObject_->GetType(), (*pObject_)().GetSizeCoef() ); break;
         case eMine     : rDeltaTime = composante.GetMiningTime( pObject_->GetType() ); break;
-        case eDemine   : rDeltaTime = composante.GetDeminingTime ( pObject_->GetType() ); break;
-        case eBypass   : rDeltaTime = composante.GetBypassTime      ( pObject_->GetType(), (*pObject_)().GetSizeCoef(), (*pObject_)().IsMined() ); break;
+        case eDemine   : rDeltaTime = composante.GetDeminingTime( pObject_->GetType() ); break;
+        case eBypass   : rDeltaTime = composante.GetBypassTime( pObject_->GetType(), (*pObject_)().GetSizeCoef(), (*pObject_)().IsMined() ); break;
+        case eExtinguish   : rDeltaTime = composante.GetExtinguishingTime( pObject_->GetType() ); break;
         default: assert( false );
     }
     //@TODO MGD rDeltaTime can be negative to accelerate work with EBG, need to replace algorithm

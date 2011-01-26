@@ -87,6 +87,8 @@ MIL_FireClass::MIL_FireClass( const std::string& name, xml::xistream& xis )
         >> xml::start( "surfaces" )
             >> xml::list( "surface", *this, &MIL_FireClass::ReadSurface )
         >> xml::end;
+
+    std::sort( extinguisherAgentEffects_.begin(), extinguisherAgentEffects_.end(), boost::bind( &ExtinguisherAgentEffect::heatDecreaseRate_, _1 ) > boost::bind( &ExtinguisherAgentEffect::heatDecreaseRate_, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,10 +103,15 @@ void MIL_FireClass::ReadExtinguisherAgent( xml::xistream& xis )
     xis >> xml::attribute( "agent", agent )
         >> xml::attribute( "heat-decrease-rate", effect.heatDecreaseRate_ );
 
-    const PHY_DotationCategory* pExtinguisherAgent = PHY_DotationType::FindDotationCategory( agent );
-    if( !pExtinguisherAgent )
-        throw std::runtime_error( "Unknow extinguisher agent " + agent );
-    extinguisherAgentEffects_.insert( std::make_pair( pExtinguisherAgent, effect ) );
+    effect.pExtinguisherAgent_ = PHY_DotationType::FindDotationCategory( agent );
+    if( !effect.pExtinguisherAgent_ )
+        xis.error( "Unknow extinguisher agent " + agent );
+
+    for( T_ExtinguisherAgentEffectVector::const_iterator it = extinguisherAgentEffects_.begin(); it != extinguisherAgentEffects_.end(); ++it )
+        if( it->pExtinguisherAgent_ == effect.pExtinguisherAgent_ )
+            xis.error( "Duplicate extinguisher agent data: " + agent ); 
+
+    extinguisherAgentEffects_.push_back( effect );
 }
 
 // -----------------------------------------------------------------------------
@@ -333,4 +340,28 @@ void MIL_FireClass::GetSurfaceFirePotentials( const TerrainData& terrainData, in
 	}
 	if( maxCombustionEnergy == std::numeric_limits< int >::max() )
 		maxCombustionEnergy = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::function< bool
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory* MIL_FireClass::FindBestExtinguisherAgent( boost::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const
+{
+    for( T_ExtinguisherAgentEffectVector::const_iterator it = extinguisherAgentEffects_.begin(); it != extinguisherAgentEffects_.end(); ++it )
+        if( isExtinguisherAgentOkFun( *it->pExtinguisherAgent_ ) )
+            return it->pExtinguisherAgent_;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FireClass::GetExtinguisherHeatDecreaseRate
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+int MIL_FireClass::GetExtinguisherHeatDecreaseRate( const PHY_DotationCategory& extinguisherAgent ) const
+{
+    for( T_ExtinguisherAgentEffectVector::const_iterator it = extinguisherAgentEffects_.begin(); it != extinguisherAgentEffects_.end(); ++it )
+            if( it->pExtinguisherAgent_ == &extinguisherAgent )
+                return it->heatDecreaseRate_;
+    return 0;
 }

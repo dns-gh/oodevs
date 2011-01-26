@@ -199,3 +199,38 @@ void BurnAttribute::Burn( MIL_Object_ABC& object )
         object.MarkForDestruction();
 }
 
+// -----------------------------------------------------------------------------
+// Name: BurnAttribute::GetCurrentHeat
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+int BurnAttribute::GetCurrentHeat() const
+{
+    return currentHeat_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: BurnAttribute::Extinguish
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+void BurnAttribute::Extinguish( MIL_Object_ABC& object, const PHY_DotationCategory& extinguisherAgent )
+{
+    FireAttribute& fireAttribute = object.GetAttribute< FireAttribute >();
+    int decreaseRate = fireAttribute.GetExtinguisherHeatDecreaseRate( extinguisherAgent );
+    int newCurrentHeat = bound( 0, currentHeat_ - decreaseRate, fireAttribute.GetMaxHeat() );
+    if( currentHeat_ != newCurrentHeat )
+    {
+        currentHeat_ = newCurrentHeat;
+        NotifyAttributeUpdated( eOnUpdate );
+    }
+    if( currentHeat_ == 0 )
+        object.MarkForDestruction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: BurnAttribute::IsExtinguished
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+bool BurnAttribute::IsExtinguished() const
+{
+    return currentHeat_ == 0;
+}

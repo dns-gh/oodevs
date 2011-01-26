@@ -93,6 +93,7 @@ void ADN_ListView_Composantes_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eCoeffDestructionTime]->Connect( &pInfos->coeffDestructionTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eValorizationTime]->Connect( &pInfos->valorizationTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eDevalorizationTime]->Connect( &pInfos->devalorizationTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eExtinguishingTime]->Connect( &pInfos->extinguishingTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eCoeffCircTime]->Connect( &pInfos->rCoeffCirc_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eSpeedCirc]->Connect( &pInfos->rSpeedCirc_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eSpeedNotCirc]->Connect( &pInfos->rSpeedNotCirc_, bConnect );
@@ -103,6 +104,7 @@ void ADN_ListView_Composantes_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eHasCoeffDestructionTime]->Connect( &pInfos->bCoeffDestructionTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasValorizationTime]->Connect( &pInfos->bValorizationTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasDevalorizationTime]->Connect( &pInfos->bDevalorizationTime_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eHasExtinguishingTime]->Connect( &pInfos->bExtinguishingTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasCoeffCircTime]->Connect( &pInfos->bCoeffCircTime_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasSpeedCirc]->Connect( &pInfos->bSpeedCirc_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasSpeedNotCirc]->Connect( &pInfos->bSpeedNotCirc_, bConnect );

@@ -59,6 +59,8 @@ public:
     int GetWeatherDecreateRate( const weather::PHY_Precipitation& ) const;
     void GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const;
     static int GetCellSize();
+    const PHY_DotationCategory* FindBestExtinguisherAgent( boost::function< bool( const PHY_DotationCategory& ) > isExtinguisherAgentOkFun ) const;
+    int GetExtinguisherHeatDecreaseRate( const PHY_DotationCategory& extinguisherAgent ) const;
     //@}
 
     //! @name Operations
@@ -80,9 +82,10 @@ private:
 
     struct ExtinguisherAgentEffect
     {
+        const PHY_DotationCategory* pExtinguisherAgent_;
         int heatDecreaseRate_;
     };
-    typedef std::map< const PHY_DotationCategory*, ExtinguisherAgentEffect > T_ExtinguisherAgentEffectMap;
+    typedef std::vector< ExtinguisherAgentEffect > T_ExtinguisherAgentEffectVector;
 
     struct WeatherEffect
     {
@@ -121,7 +124,7 @@ private:
     //@}
 
 private:
-    T_ExtinguisherAgentEffectMap extinguisherAgentEffects_;
+    T_ExtinguisherAgentEffectVector extinguisherAgentEffects_;
     T_WeatherEffectMap weatherEffects_;
     T_InjuryMap injuries_;
     T_UrbanModifierMap urbanModifiers_;

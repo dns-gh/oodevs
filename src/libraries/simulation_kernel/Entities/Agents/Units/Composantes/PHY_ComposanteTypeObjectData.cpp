@@ -30,6 +30,7 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
     , rTimeDestructionCoef_       ( 1 )
     , rTimeMining_                ( std::numeric_limits< double >::max() )
     , rTimeDemining_              ( std::numeric_limits< double >::max() )
+    , rTimeExtinguishing_         ( std::numeric_limits< double >::max() )
     , rCoefTimeBypass_            ( 1. )
     , rSpeedWithinWhenNotBypassed_( std::numeric_limits< double >::max() )
     , rSpeedWithinWhenBypassed_   ( std::numeric_limits< double >::max() )
@@ -40,6 +41,7 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "initial-destruction-time" , rTimeBaseDestruction_ );
     tools::ReadTimeAttribute( xis, "valorization-time"        , rTimeMining_          );
     tools::ReadTimeAttribute( xis, "devalorization-time"      , rTimeDemining_        );
+    tools::ReadTimeAttribute( xis, "extinguishing-time"          , rTimeExtinguishing_        );
     tools::ReadTimeAttribute( xis, "construction-time-factor" , rTimeConstructionCoef_);
     tools::ReadTimeAttribute( xis, "destruction-time-factor"  , rTimeDestructionCoef_ );
     
@@ -109,6 +111,15 @@ bool PHY_ComposanteTypeObjectData::CanDestroy() const
 bool PHY_ComposanteTypeObjectData::CanMine() const
 {
     return rTimeMining_ != std::numeric_limits< double >::max();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypeObjectData::CanExtinguish
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypeObjectData::CanExtinguish() const
+{
+    return rTimeExtinguishing_ != std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
@@ -193,4 +204,13 @@ double PHY_ComposanteTypeObjectData::GetBypassTime( double rSizeCoef, bool bObje
 const PHY_ConsumptionType* PHY_ComposanteTypeObjectData::GetConsumptionMode() const
 {
     return pConsumptionMode_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypeObjectData::GetExtinguishingTime
+// Created: BCI 2011-01-25
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypeObjectData::GetExtinguishingTime() const
+{
+    return rTimeExtinguishing_;
 }

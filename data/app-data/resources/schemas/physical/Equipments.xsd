@@ -146,6 +146,7 @@
 					<xs:attribute name="destruction-time-factor" type="T_Time" use="optional"/>
 					<xs:attribute name="valorization-time" type="T_Time" use="optional"/>
 					<xs:attribute name="devalorization-time" type="T_Time" use="optional"/>
+                    <xs:attribute name="extinguishing-time" type="T_Time" use="optional"/>
 					<xs:attribute name="bypass-gain-factor" type="xs:double" use="optional"/>
 					<xs:attribute name="bypassed-speed" type="xs:integer" use="optional"/>
 					<xs:attribute name="non-bypassed-speed" type="xs:integer" use="optional"/>

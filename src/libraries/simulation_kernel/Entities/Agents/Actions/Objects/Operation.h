@@ -23,6 +23,7 @@ enum E_Operation
     eMine,
     eDemine,
     eBypass,
+    eExtinguish,
 };
 
 #endif // _Operation_h_

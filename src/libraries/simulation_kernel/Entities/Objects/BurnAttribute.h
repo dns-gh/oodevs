@@ -16,6 +16,7 @@
 
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
+class PHY_DotationCategory;
 
 // =============================================================================
 /** @class  BurnAttribute
@@ -54,6 +55,9 @@ public:
     //@{
     void StartBurn( MIL_Object_ABC& object );
     void Burn( MIL_Object_ABC& object );
+    void Extinguish( MIL_Object_ABC& object, const PHY_DotationCategory& extinguisherAgent );
+    bool IsExtinguished() const;
+    int GetCurrentHeat() const;
     //@}
 
     //! @name Operations
@@ -63,6 +67,7 @@ public:
     //@}
 
 private:
+
     //! @name Member data
     //@{
     int currentHeat_;

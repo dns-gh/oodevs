@@ -522,6 +522,7 @@ public:
         ADN_Type_Bool                                               bCoeffDestructionTime_;
         ADN_Type_Bool                                               bValorizationTime_;
         ADN_Type_Bool                                               bDevalorizationTime_;
+        ADN_Type_Bool                                               bExtinguishingTime_;
         ADN_Type_Bool                                               bCoeffCircTime_;
         ADN_Type_Bool                                               bSpeedCirc_;
         ADN_Type_Bool                                               bSpeedNotCirc_;
@@ -532,6 +533,7 @@ public:
         ADN_Type_Time                                               coeffDestructionTime_;
         ADN_Type_Time                                               valorizationTime_;
         ADN_Type_Time                                               devalorizationTime_;
+        ADN_Type_Time                                               extinguishingTime_;
         ADN_Type_Double                                             rCoeffCirc_;
         ADN_Type_Double                                             rSpeedCirc_;
         ADN_Type_Double                                             rSpeedNotCirc_;
