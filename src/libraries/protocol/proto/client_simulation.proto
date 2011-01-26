@@ -23,7 +23,7 @@ message ControlDateTimeChange {
         @brief The new date and/or time.
         @see DateTime
     */
-   required DateTime date_time = 1;
+    required DateTime date_time = 1;
 }
 
 /** @struct ControlCheckPointSaveNow
@@ -31,13 +31,13 @@ message ControlDateTimeChange {
 
     This message is sent by a client to trigger a checkpoint save.
 
-    @see ControlCheckPointSaveEnd
+    @see ControlCheckPointSaveNowAck
 */
 message ControlCheckPointSaveNow {
     /** @property name
         @brief The checkpoint name.
     */
-   optional string name = 1;
+    optional string name = 1;
 }
 
 /** @struct SetAutomatMode

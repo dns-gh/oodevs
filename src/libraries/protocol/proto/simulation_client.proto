@@ -1565,8 +1565,14 @@ message FolkGraphUpdate {
 message ControlCheckPointSetFrequencyAck {
 }
 
-message ControlCheckPointSaveNowAck {
-}
+/** @struct ControlCheckPointSaveNowAck
+    @brief A checkpoint save request acknowledge message.
+
+    This message is sent by the server in response to a ControlCheckPointSaveNow request.
+
+    @see ControlCheckPointSaveNowAck
+*/
+message ControlCheckPointSaveNowAck {}
 
 message ControlCheckPointSaveBegin {
 }
