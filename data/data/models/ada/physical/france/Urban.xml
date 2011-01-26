@@ -91,12 +91,12 @@
       <roof-shape-type name="Aucun"/>
     </roof-shape-types>
   </urban-block-types>
-  <accomodations>
-    <accomodation capacity="0.5" role="leisure"/>
-    <accomodation capacity="0.5" role="study"/>
-    <accomodation capacity="0.07" role="home"/>
-    <accomodation capacity="0.2" role="office"/>
-  </accomodations>
+  <accommodations>
+    <accommodation capacity="0.5" role="leisure"/>
+    <accommodation capacity="0.5" role="study"/>
+    <accommodation capacity="0.07" role="home"/>
+    <accommodation capacity="0.2" role="office"/>
+  </accommodations>
   <infrastructures>
     <infrastructure name="infras4" symbol="hopital">
       <capacities>
@@ -120,4 +120,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="2796770282" -->
+<!-- signature="1878301803" -->

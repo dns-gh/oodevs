@@ -374,8 +374,8 @@ void ADN_Urban_Data::WriteRoofShapes( xml::xostream& output ) const
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::ReadAccommodations( xml::xistream& input )
 {
-    input >> xml::optional() >>xml::start( "accomodations" )
-        >> xml::list( "accomodation", *this, &ADN_Urban_Data::ReadAccommodation )
+    input >> xml::optional() >>xml::start( "accommodations" )
+        >> xml::list( "accommodation", *this, &ADN_Urban_Data::ReadAccommodation )
         >> xml::end;
 }
 
@@ -396,7 +396,7 @@ void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
 {
     if( !vAccommodations_.empty() )
     {
-        output << xml::start( "accomodations" );
+        output << xml::start( "accommodations" );
         for( CIT_AccommodationInfos_Vector it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
             ( *it )->WriteAccommodation( output );
         output << xml::end;
@@ -410,7 +410,7 @@ void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
 void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& output )
 {
     std::string strData = strName_.GetData();
-    output << xml::start( "accomodation" )
+    output << xml::start( "accommodation" )
         << xml::attribute( "role",  trim( strData ) )
         << xml::attribute( "capacity", value_.GetData() )
         << xml::end();

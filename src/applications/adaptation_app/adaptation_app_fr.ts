@@ -5112,11 +5112,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Accommodations</source>
-        <translation>Accomodations</translation>
+        <translation>Accommodations</translation>
     </message>
     <message>
         <source>Accommodation</source>
-        <translation>Accomodation</translation>
+        <translation>Accommodation</translation>
     </message>
     <message>
         <source>Type</source>

@@ -64,10 +64,10 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="accomodations" minOccurs="0">
+        <xs:element name="accommodations" minOccurs="0">
           <xs:complexType>
             <xs:sequence minOccurs="0" maxOccurs="unbounded">
-              <xs:element name="accomodation">
+              <xs:element name="accommodation">
                 <xs:complexType>
                   <xs:attribute name="role" type="xs:string" use="required"/>
                   <xs:attribute name="capacity" type="xs:float" use="required">
