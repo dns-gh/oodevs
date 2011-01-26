@@ -71,13 +71,15 @@ void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis, float& area )
     blocks_.push_back( T_Block( object , 0 ) );
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::Compare
+// Created: LGY 2011-01-26
+// -----------------------------------------------------------------------------
+bool MIL_LivingArea::Compare( const T_Block& lhs, const T_Block& rhs )
 {
-    template< typename T >
-    bool Compare( const T& lhs, const T& rhs )
-    {
-        return lhs.first->GetFootprint()->ComputeArea() > rhs.first->GetFootprint()->ComputeArea();
-    }
+
+    return lhs.first->GetFootprint()->ComputeArea() * GetFloor( lhs ) * GetOccupation( lhs )
+           > rhs.first->GetFootprint()->ComputeArea() * GetFloor( rhs ) * GetOccupation( rhs );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +88,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::DistributeHumans( float area )
 {
-    std::sort( blocks_.begin(), blocks_.end(), boost::bind( &Compare< T_Block >, _1, _2 ) );
+    std::sort( blocks_.begin(), blocks_.end(), boost::bind( &MIL_LivingArea::Compare, this, _1, _2 ) );
     unsigned long tmp = population_;
     for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
@@ -249,7 +251,7 @@ MIL_LivingArea::T_Blocks MIL_LivingArea::GetBlockUsage( const std::string& motiv
 {
     T_Blocks blocks;
     BOOST_FOREACH( const T_Block& block, blocks_ )
-        if( HasUsage( *block.first, motivation ) )
+        if( HasUsage( block, motivation ) )
             blocks.push_back( block );
     return blocks;
 }
@@ -276,15 +278,39 @@ namespace
 // Name: MIL_LivingArea::HasUsage
 // Created: LGY 2011-01-21
 // -----------------------------------------------------------------------------
-bool MIL_LivingArea::HasUsage( const urban::TerrainObject_ABC& terrain, const std::string& motivation ) const
+bool MIL_LivingArea::HasUsage( const T_Block& block, const std::string& motivation ) const
 {
-    const urban::PhysicalAttribute* pPhysical = terrain.Retrieve< urban::PhysicalAttribute >();
+    const urban::PhysicalAttribute* pPhysical = block.first->Retrieve< urban::PhysicalAttribute >();
     if( !pPhysical || !pPhysical->GetMotivations() )
         return false;
     std::map< std::string, float > motivations;
     MotivationsVisitor visitor( motivations );
-    terrain.Accept( visitor );
+    block.first->Accept( visitor );
     if( motivations.find( motivation ) == motivations.end() )
         return false;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::GetFloor
+// Created: LGY 2011-01-26
+// -----------------------------------------------------------------------------
+unsigned int MIL_LivingArea::GetFloor( const T_Block& block ) const
+{
+    const urban::PhysicalAttribute* pPhysical = block.first->Retrieve< urban::PhysicalAttribute >();
+    if( !pPhysical || !pPhysical->GetArchitecture() )
+        return 1u;
+    return pPhysical->GetArchitecture()->GetFloorNumber() + 1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::GetOccupation
+// Created: LGY 2011-01-26
+// -----------------------------------------------------------------------------
+float MIL_LivingArea::GetOccupation( const T_Block& block ) const
+{
+    const urban::PhysicalAttribute* pPhysical = block.first->Retrieve< urban::PhysicalAttribute >();
+    if( !pPhysical || !pPhysical->GetArchitecture() )
+        return 1.f;
+    return pPhysical->GetArchitecture()->GetOccupation();
 }

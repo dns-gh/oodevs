@@ -28,7 +28,6 @@ namespace urban
 
 namespace client
 {
-    class PopulationUpdate;
     class PopulationCreation;
 }
 
@@ -86,8 +85,11 @@ private:
     //@{
     void ReadUrbanBlock( xml::xistream& xis, float& area );
     void DistributeHumans( float area );
-    bool HasUsage( const urban::TerrainObject_ABC& terrain, const std::string& motivation ) const;
+    bool HasUsage( const T_Block& block, const std::string& motivation ) const;
     T_Blocks GetBlockUsage( const std::string& motivation ) const;
+    unsigned int GetFloor( const T_Block& block ) const;
+    float GetOccupation( const T_Block& block ) const;
+    bool Compare( const T_Block& lhs, const T_Block& rhs );
     //@}
 
 private:
