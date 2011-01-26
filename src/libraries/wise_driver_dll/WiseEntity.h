@@ -25,7 +25,7 @@ class WiseEntity : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             WiseEntity( unsigned long id, const std::wstring& label );
+             WiseEntity( unsigned long id, const std::wstring& type );
     virtual ~WiseEntity();
     //@}
 
@@ -33,6 +33,11 @@ public:
     //@{
     virtual unsigned long GetId() const;
     virtual WISE_HANDLE GetHandle() const;
+    template< typename T >
+    bool IsA() const
+    {
+        return dynamic_cast< const T* >( this ) != 0;
+    }
     //@}
 
     //! @name Operations
@@ -44,9 +49,9 @@ public:
 protected:
     //! @name Helpers
     //@{
-    virtual std::wstring MakeIdentifier() const = 0;
     std::wstring FormatMessage( const std::wstring& message ) const;
     std::wstring GetAttribute( const WISE_HANDLE& handle ) const;
+    virtual std::wstring GetIdentifier() const;
     //@}
 
 private:
@@ -60,7 +65,7 @@ private:
     //! @name Member data
     //@{
     const unsigned long id_;
-    const std::wstring label_;
+    const std::wstring identifier_;
     //@}
 
 protected:

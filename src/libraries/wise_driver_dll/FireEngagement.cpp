@@ -77,13 +77,13 @@ void FireEngagement::Update( CWISEDriver& driver, const WISE_HANDLE& database, c
                 CHECK_WISE_RESULT_EX( driver.GetSink()->SetEventAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle, attributes[ L"Ammunition" ], long( ammunition_ ) ) );
                 SendDamages( driver, handle, *cache, attributes, damages.elem( i ) );
                 CHECK_WISE_RESULT_EX( driver.GetSink()->SendEvent( database, handle ) );
-                driver.NotifyInfoMessage( L"[fire-engagement-event] Created." );
+                driver.NotifyDebugMessage( L"[fire-engagement] Created.", 1 );
             }
         }
     }
     catch( WISE_RESULT& error )
     {
-        driver.NotifyErrorMessage( L"[fire-engagement-event] Creation failed.", error );
+        driver.NotifyErrorMessage( L"[fire-engagement] Creation failed.", error );
     }
 }
 

@@ -9,19 +9,30 @@
 
 #include "wise_driver_dll_pch.h"
 #include "WiseEntity.h"
+#include <sstream>
 #pragma warning( push )
 #pragma warning( disable: 4100 4201 )
 #include <wise/iwisedriversink.h>
 #include <wise/wisedriver.h>
 #pragma warning( pop )
 
+namespace
+{
+    std::wstring MakeIdentifier( unsigned long id, const std::wstring& type )
+    {
+        std::wstringstream ss;
+        ss << type << L":" << id;
+        return ss.str();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: WiseEntity constructor
 // Created: SEB 2010-12-13
 // -----------------------------------------------------------------------------
-WiseEntity::WiseEntity( unsigned long id, const std::wstring& label )
+WiseEntity::WiseEntity( unsigned long id, const std::wstring& type )
     : id_( id )
-    , label_( label )
+    , identifier_( MakeIdentifier( id_, type ) )
     , handle_( WISE_INVALID_HANDLE )
 {
     // NOTHING
@@ -55,12 +66,20 @@ WISE_HANDLE WiseEntity::GetHandle() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: WiseEntity::GetIdentifier
+// Created: SBO 2010-12-16
+// -----------------------------------------------------------------------------
+std::wstring WiseEntity::GetIdentifier() const
+{
+    return identifier_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: WiseEntity::Destroy
 // Created: SEB 2010-12-13
 // -----------------------------------------------------------------------------
 void WiseEntity::Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const
 {
-    const std::wstring identifier( MakeIdentifier() );
     try
     {
         if( handle_ != WISE_INVALID_HANDLE )
@@ -68,7 +87,7 @@ void WiseEntity::Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) con
             CHECK_WISE_RESULT_EX( driver.GetSink()->RemoveObjectFromDatabase( database, handle_ ) );
             handle_ = WISE_INVALID_HANDLE;
         }
-        driver.NotifyInfoMessage( FormatMessage( L"Destroyed." ) );
+        driver.NotifyDebugMessage( FormatMessage( L"Destroyed." ), 0 );
     }
     catch( WISE_RESULT& error )
     {
@@ -82,7 +101,7 @@ void WiseEntity::Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) con
 // -----------------------------------------------------------------------------
 std::wstring WiseEntity::FormatMessage( const std::wstring& message ) const
 {
-    return L"[" + label_ + L":" + MakeIdentifier() + L"] " + message;
+    return L"[" + GetIdentifier() + L"] " + message;
 }
 
 // -----------------------------------------------------------------------------

@@ -11,11 +11,13 @@
 #include "Agent.h"
 #include "Automat.h"
 #include "Equipment.h"
+#include "KnowledgeGroup.h"
 #include "Model.h"
 #include "Personnel.h"
 #include "Resource.h"
+#include "client_proxy/SwordMessagePublisher_ABC.h"
 #include "protocol/Simulation.h"
-#include <sstream>
+#include "protocol/SimulationSenders.h"
 #pragma warning( push )
 #pragma warning( disable: 4100 4201 )
 #include <wise/iwisedriversink.h>
@@ -28,6 +30,7 @@
 // -----------------------------------------------------------------------------
 Agent::Agent( const Model& model, const sword::UnitCreation& message )
     : WiseEntity( message.unit().id(), L"agent" )
+    , model_( model )
     , name_( message.name().begin(), message.name().end() )
     , type_( message.type().id() )
     , superior_( model.ResolveAutomat( message.automat().id() ) )
@@ -45,36 +48,24 @@ Agent::~Agent()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::MakeIdentifier
-// Created: SEB 2010-10-13
-// -----------------------------------------------------------------------------
-std::wstring Agent::MakeIdentifier() const
-{
-    std::wstringstream ss;
-    ss << GetId() << "-" << name_;
-    return ss.str();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::Create
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
 void Agent::Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const
 {
-    const std::wstring identifier( MakeIdentifier() );
     try
     {
-        handle_ = WISE_INVALID_HANDLE;
-        CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, identifier, L"Agent", handle_, attributes_ ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, GetIdentifier(), L"Orbat.Agent", handle_, attributes_ ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Identifier" ], long( GetId() ), currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Name" ], name_, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Type" ], long( type_ ), currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Superior" ], superior_ ? superior_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, handle_ ) );
-        driver.NotifyInfoMessage( FormatMessage( L"Created." ) );
+        driver.NotifyDebugMessage( FormatMessage( L"Created." ), 0 );
     }
     catch( WISE_RESULT& error )
     {
+        handle_ = WISE_INVALID_HANDLE;
         driver.NotifyErrorMessage( FormatMessage( L"Creation failed." ), error );
     }
 }
@@ -108,13 +99,25 @@ void Agent::Update( CWISEDriver& driver, const WISE_HANDLE& database, const time
         }
         if( message.has_speed() )
             CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Speed" ], long( message.speed() ), currentTime ) );
+        if( message.has_roe() )
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"RuleOfEngagement" ], unsigned char( message.roe() ), currentTime ) );
+        if( message.has_communications() )
+        {
+            if( message.communications().has_knowledge_group() )
+            {
+                const WiseEntity* entity = model_.ResolveKnowledgeGroup( message.communications().knowledge_group().id() );
+                CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Communication.KnowledgeGroup" ], entity ? entity->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
+            }
+            if( message.communications().has_jammed() )
+                CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Communication.Jammed" ], unsigned char( message.communications().jammed() ), currentTime ) );
+        }
         if( message.has_equipment_dotations() )
             UpdateComponents( driver, database, currentTime, message.equipment_dotations(), equipments_, L"Equipments" );
         if( message.has_human_dotations() )
             UpdateComponents( driver, database, currentTime, message.human_dotations(), personnel_, L"Personnel" );
         if( message.has_resource_dotations() )
             UpdateComponents( driver, database, currentTime, message.resource_dotations(), resources_, L"Resources" );
-        driver.NotifyDebugMessage( FormatMessage( L"Updated." ), MessageCategoryDebugLevel0 );
+        driver.NotifyDebugMessage( FormatMessage( L"Updated." ), 2 );
     }
     catch( WISE_RESULT& error )
     {
@@ -144,7 +147,6 @@ void Agent::UpdateComponents( CWISEDriver& driver, const WISE_HANDLE& database, 
 {
     IWISEStringCache* cache = dynamic_cast< IWISEStringCache* >( driver.GetSink() );
     CHECK_VALID_POINTER_EX( cache, MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_E_NOT_INITIATED ) );
-    std::list< CWISEAttributeGroup > list;
     for( int i = 0; i < message.elem_size(); ++i )
     {
         C*& component = components[ ExtractId( message.elem( i ) ) ];
@@ -153,7 +155,65 @@ void Agent::UpdateComponents( CWISEDriver& driver, const WISE_HANDLE& database, 
         else
             component->Update( message.elem( i ) );
     }
+    std::list< CWISEAttributeGroup > list;
     for( std::map< unsigned long, C* >::const_iterator it = components.begin(); it != components.end(); ++it )
         it->second->AddAttributeGroup( list, *cache );
     CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ fieldName ], list, currentTime ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: SBO 2011-01-05
+// -----------------------------------------------------------------------------
+void Agent::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::UnitChangeSuperior& message )
+{
+    try
+    {
+        if( message.has_parent() )
+        {
+            superior_ = model_.ResolveAutomat( message.parent().id() );
+            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Superior" ], superior_ ? superior_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
+        }
+        driver.NotifyDebugMessage( FormatMessage( L"Updated." ), 2 );
+    }
+    catch( WISE_RESULT& error )
+    {
+        driver.NotifyWarningMessage( FormatMessage( L"Update failed." ), error );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: SBO 2011-01-05
+// -----------------------------------------------------------------------------
+void Agent::Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& attribute, const CWISEValueUnion& value )
+{
+    // Position change triggers a Teleport magic action
+    if( attribute == attributes_[ L"Position" ] )
+    {
+        const CWISEVec3 position = value.GetVec3Value();
+        simulation::UnitMagicAction message;
+        message().mutable_tasker()->mutable_unit()->set_id( GetId() );
+        message().set_type( sword::UnitMagicAction::move_to );
+        sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
+        parameter.set_null_value( false );
+        sword::Location& location = *parameter.add_value()->mutable_point()->mutable_location();
+        location.set_type( sword::Location::point );
+        sword::CoordLatLong& coordinates = *location.mutable_coordinates()->add_elem();
+        coordinates.set_latitude( position.v1 );
+        coordinates.set_longitude( position.v2 );
+        message.Send( publisher );
+    }
+    // Superior change triggers a ChangeSuperior magic action
+    else if( attribute == attributes_[ L"Superior" ] )
+    {
+        const WiseEntity* superior = model_.ResolveEntity( value.GetHandleValue() );
+        simulation::UnitMagicAction message;
+        message().mutable_tasker()->mutable_unit()->set_id( GetId() );
+        message().set_type( sword::UnitMagicAction::unit_change_superior );
+        sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
+        parameter.set_null_value( false );
+        parameter.add_value()->mutable_automat()->set_id( superior ? superior->GetId() : 0 );
+        message.Send( publisher );
+    }
 }

@@ -46,11 +46,6 @@ private:
     Obstacle& operator=( const Obstacle& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual std::wstring MakeIdentifier() const;
-    //@}
-
 private:
     //! @name Member data
     //@{

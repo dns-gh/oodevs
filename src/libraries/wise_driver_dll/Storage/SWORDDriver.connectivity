@@ -1,22 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<connectivity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./schemas/connectivity.xsd">
-    <info author="Unknown" copyright="" modified="2010-10-11T13:59:52Z" version="1.0.0.0" description="Project for testing of MASAGroup.SWORD driver." />
-    <variables>
-      <variable name="SimulationHostAddress" datatype="string" default="127.0.0.1" validvalues="{IPAddress}" category="Communication" description="Host address of simulation server to connect to." />
-      <variable name="SimulationPort" datatype="long" default="10001" validvalues="1-65535" category="Communication" description="Simulation server port accepting connections." />
-      <variable name="ExerciseProfile" datatype="string" default="Supervisor" category="Exercise" description="User profile login (exercise specific) to use for authentication." />
-    </variables>
-    <drivers>
-        <driver id="NULLBackbone1" name="STS.NULL" description="Backbone LVC version 1.0 on a local NULL driver." />
-        <driver id="SwordDriver" name="MASAGroup.SWORD" description="SWORD connectivity driver">
-            <setting name="SimulationHost" value="@SimulationHostAddress" />
-            <setting name="SimulationPort" value="@SimulationPort" />
-            <setting name="ExerciseProfile" value="@ExerciseProfile" />
-        </driver>
-    </drivers>
-    <connections>
-        <connection id="Connection1" srcDriver="NULLBackbone1" srcTDB="LVC" srcTDBName="LVCTemplateDB" srcADBName="LVCApplicationDB" 
-                    destDriver="SwordDriver" destTDB="SWORD" destTDBName="SWORD_TDB" destADBName="SWORD_ADB" 
-                    url="EmptySWORD.connection" direction="inout" />
-    </connections>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<connectivity>
+
+  <info author="Unknown" copyright="" description="Project for testing of MASAGroup.SWORD driver." modified="2011-01-11T11:35:48.260Z" version="1.0.0.0"/>
+
+  <variables>
+    <variable category="Exercise" datatype="string" default="" description="User profile password (exercise specific) to use for authentication." name="ExercisePassword" validvalues=""/>
+    <variable category="Exercise" datatype="string" default="Supervisor" description="User profile login (exercise specific) to use for authentication." name="ExerciseProfile" validvalues=""/>
+    <variable category="Communication" datatype="string" default="127.0.0.1" description="Host address of simulation server to connect to." name="SimulationHost" validvalues="{IPAddress}"/>
+    <variable category="Communication" datatype="long" default="10001" description="Simulation server port accepting connections." name="SimulationPort" validvalues="1-65535"/>
+  </variables>
+
+  <drivers>
+    <driver description="Backbone LVC version 1.0 on a local NULL driver." id="NULLBackbone1" name="STS.NULL"/>
+    <driver description="SWORD connectivity driver" id="SwordDriver" name="MASAGroup.SWORD">
+      <setting name="ExercisePassword" value="@ExercisePassword"/>
+      <setting name="ExerciseProfile" value="@ExerciseProfile"/>
+      <setting name="SimulationHost" value="@SimulationHost"/>
+      <setting name="SimulationPort" value="@SimulationPort"/>
+    </driver>
+  </drivers>
+
+  <connections>
+    <connection destADBName="SWORD_ADB" destDriver="SwordDriver" destTDB="SWORD" destTDBName="SWORD_TDB" direction="inout" id="Connection1" srcADBName="LVCApplicationDB" srcDriver="NULLBackbone1" srcTDB="LVC" srcTDBName="LVCTemplateDB" url="EmptySWORD.connection"/>
+  </connections>
+
+  <notes/>
+
 </connectivity>

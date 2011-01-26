@@ -28,7 +28,7 @@ class SwordProxy : public SwordMessagePublisher_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SwordProxy( const std::string& host, unsigned short port, const std::string& profile );
+             SwordProxy( const std::string& host, unsigned short port, const std::string& profile, const std::string& password );
     virtual ~SwordProxy();
     //@}
 

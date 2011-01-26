@@ -22,6 +22,7 @@ class Automat;
 class BoundaryLimit;
 class CWISEDriver;
 class CWISEValueUnion;
+class Drawing;
 class FireEngagement;
 class Formation;
 class KnowledgeGroup;
@@ -30,7 +31,7 @@ class Party;
 class PhaseLine;
 class Simulation;
 class SwordMessagePublisher_ABC;
-class TaskFactory;
+class Weather;
 class WiseEntity;
 
 // =============================================================================
@@ -69,6 +70,7 @@ public:
     const Automat* ResolveAutomat( const unsigned long& id ) const;
     const Agent* ResolveAgent( const unsigned long& id ) const;
     const Obstacle* ResolveObstacle( const unsigned long& id ) const;
+    const WiseEntity* ResolveEntity( const WISE_HANDLE& handle ) const;
     //@}
 
 private:
@@ -101,7 +103,7 @@ private:
     WISE_HANDLE database_;
     SwordMessagePublisher_ABC& publisher_;
     std::auto_ptr< Simulation > simulation_;
-    std::auto_ptr< TaskFactory > taskFactory_;
+    std::auto_ptr< Weather > weather_;
     std::map< unsigned long, Party* > parties_;
     std::map< unsigned long, KnowledgeGroup* > knowledgeGroups_;
     std::map< unsigned long, Formation* > formations_;
@@ -110,6 +112,7 @@ private:
     std::map< unsigned long, BoundaryLimit* > boundaryLimits_;
     std::map< unsigned long, PhaseLine* > phaseLines_;
     std::map< unsigned long, Obstacle* > obstacles_;
+    std::map< unsigned long, Drawing* > drawings_;
     std::map< unsigned long, FireEngagement* > fireEngagements_;
     std::map< WISE_HANDLE, WiseEntity* > entities_;
     //@}

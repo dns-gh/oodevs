@@ -31,12 +31,13 @@ namespace
 
     SwordProxy* CreateProxy( IWISEDriverSettings& pSettings )
     {
-        std::wstring host, profile;
+        std::wstring host, profile, password;
         long port;
         CHECK_WISE_RESULT_EX( pSettings.GetSetting( L"SimulationHost", host ) );
         CHECK_WISE_RESULT_EX( pSettings.GetSetting( L"SimulationPort", port ) );
         CHECK_WISE_RESULT_EX( pSettings.GetSetting( L"ExerciseProfile", profile ) );
-        return new SwordProxy( ToString( host ), unsigned short( port ), ToString( profile ) );
+        CHECK_WISE_RESULT_EX( pSettings.GetSetting( L"ExercisePassword", password ) );
+        return new SwordProxy( ToString( host ), unsigned short( port ), ToString( profile ), ToString( password ) );
     }
 }
 
@@ -47,6 +48,7 @@ namespace
 SwordFacade::SwordFacade( IWISEDriverSettings& pSettings, CWISEDriver& driver )
     : driver_( driver )
     , proxy_( CreateProxy( pSettings ) )
+    , disconnect_( false )
 {
     // NOTHING
 }
@@ -80,8 +82,9 @@ void SwordFacade::Connect( const WISE_HANDLE& database )
 // -----------------------------------------------------------------------------
 void SwordFacade::Disconnect()
 {
-    model_.reset();
+    disconnect_ = true;
     proxy_->Disconnect();
+    model_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +146,10 @@ void SwordFacade::OnConnectionError( const std::string& endpoint, const std::str
 {
     std::wstringstream message;
     message << L"Connection to simulation '" << ToWideString( endpoint ) << L"' lost. Reason: " << ToWideString( reason );
-    driver_.NotifyErrorMessage( message.str(), MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_OPEN_FAILED ) );
+    if( disconnect_ )
+        driver_.NotifyInfoMessage( message.str() );
+    else
+        driver_.NotifyErrorMessage( message.str(), MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_OPEN_FAILED ) );
 }
 
 // -----------------------------------------------------------------------------

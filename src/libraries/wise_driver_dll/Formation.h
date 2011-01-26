@@ -44,11 +44,6 @@ private:
     Formation& operator=( const Formation& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual std::wstring MakeIdentifier() const;
-    //@}
-
 private:
     //! @name Member data
     //@{

@@ -13,14 +13,18 @@
 #include "Automat.h"
 #include "BoundaryLimit.h"
 #include "DetectionEvents.h"
+#include "Drawing.h"
 #include "FireEngagement.h"
 #include "Formation.h"
 #include "KnowledgeGroup.h"
 #include "Obstacle.h"
 #include "Party.h"
 #include "PhaseLine.h"
+#include "Report.h"
 #include "Simulation.h"
-#include "TaskFactory.h"
+#include "Task.h"
+#include "Weather.h"
+#include "WiseHelpers.h"
 #include "protocol/Messenger.h"
 #include "protocol/Simulation.h"
 #pragma warning( push )
@@ -37,7 +41,7 @@ Model::Model( CWISEDriver& driver, const WISE_HANDLE& database, SwordMessagePubl
     , database_   ( database )
     , publisher_  ( publisher )
     , simulation_ ( new Simulation( publisher ) )
-    , taskFactory_( new TaskFactory( *this, publisher ) )
+    , weather_( new Weather() )
 {
     // NOTHING
 }
@@ -57,44 +61,83 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::OnReceiveMessage( const sword::SimToClient& message )
 {
-    if( message.message().has_control_begin_tick() )
-        simulation_->Update( driver_, database_, GetTime(), message.message().control_begin_tick() );
-    else if( message.message().has_party_creation() )
-        Create( parties_, message.message().party_creation() );
-    else if( message.message().has_party_creation() )
-        Create( knowledgeGroups_, message.message().knowledge_group_creation() );
-    else if( message.message().has_formation_creation() )
-        Create( formations_, message.message().formation_creation() );
-    else if( message.message().has_automat_creation() )
-        Create( automats_, message.message().automat_creation() );
-    else if( message.message().has_automat_attributes() )
-        Update( automats_, message.message().automat_attributes().automat().id(), message.message().automat_attributes() );
-    else if( message.message().has_automat_change_superior() )
-        Update( automats_, message.message().automat_change_superior().automat().id(), message.message().automat_change_superior() );
-    else if( message.message().has_automat_change_knowledge_group() )
-        Update( automats_, message.message().automat_change_knowledge_group().automat().id(), message.message().automat_change_knowledge_group() );
-    else if( message.message().has_unit_creation() )
-        Create( agents_, message.message().unit_creation() );
-    else if( message.message().has_unit_attributes() )
-        Update( agents_, message.message().unit_attributes().unit().id(), message.message().unit_attributes() );
-    else if( message.message().has_control_information() )
-        simulation_->Create( driver_, database_, GetTime(), message.message().control_information() );
-    else if( message.message().has_control_change_time_factor_ack() )
-        simulation_->Update( driver_, database_, GetTime(), message.message().control_change_time_factor_ack() );
-    else if( message.message().has_start_unit_fire() )
-        Model::CreateEvent( fireEngagements_, message.message().start_unit_fire() );
-    else if( message.message().has_stop_unit_fire() )
-        Update( fireEngagements_, message.message().stop_unit_fire().fire().id(), message.message().stop_unit_fire() );
-    else if( message.message().has_unit_detection() )
-        DetectionEvents::Trigger( driver_, database_, GetTime(), *this, message.message().unit_detection() );
-    else if( message.message().has_object_detection() )
-        DetectionEvents::Trigger( driver_, database_, GetTime(), *this, message.message().object_detection() );
-    else if( message.message().has_object_creation() )
-        Create( obstacles_, message.message().object_creation() );
-    else if( message.message().has_object_destruction() )
-        Destroy( obstacles_, message.message().object_destruction().object().id() );
-    else if( message.message().has_change_diplomacy() )
-        Update( parties_, message.message().change_diplomacy().party1().id(), message.message().change_diplomacy() );
+    const sword::SimToClient::Content& content = message.message();
+    // simulation
+    if( content.has_control_begin_tick() )
+        simulation_->Update( driver_, database_, GetTime(), content.control_begin_tick() );
+    else if( content.has_control_resume_ack() )
+        simulation_->Update( driver_, database_, GetTime(), content.control_resume_ack() );
+    else if( content.has_control_pause_ack() )
+        simulation_->Update( driver_, database_, GetTime(), content.control_pause_ack() );
+    else if( content.has_control_information() )
+        simulation_->Create( driver_, database_, GetTime(), content.control_information() );
+    else if( content.has_control_change_time_factor_ack() )
+        simulation_->Update( driver_, database_, GetTime(), content.control_change_time_factor_ack() );
+    // parties
+    else if( content.has_party_creation() )
+        Create( parties_, content.party_creation() );
+    else if( content.has_change_diplomacy_ack() )
+        Update( parties_, content.change_diplomacy_ack().party1().id(), content.change_diplomacy_ack() );
+    else if( content.has_change_diplomacy() )
+        Update( parties_, content.change_diplomacy().party1().id(), content.change_diplomacy() );
+    // knowledge groups
+    else if( content.has_knowledge_group_creation() )
+        Create( knowledgeGroups_, content.knowledge_group_creation() );
+    else if( content.has_knowledge_group_destruction() )
+        Destroy( knowledgeGroups_, content.knowledge_group_destruction().knowledge_group().id() );
+    else if( content.has_knowledge_group_update() )
+        Update( knowledgeGroups_, content.knowledge_group_update().knowledge_group().id(), content.knowledge_group_update() );
+    // formations
+    else if( content.has_formation_creation() )
+        Create( formations_, content.formation_creation() );
+    else if( content.has_formation_destruction() )
+        Destroy( formations_, content.formation_destruction().formation().id() );
+    // automats
+    else if( content.has_automat_creation() )
+        Create( automats_, content.automat_creation() );
+    else if( content.has_automat_destruction() )
+        Destroy( automats_, content.automat_destruction().automat().id() );
+    else if( content.has_automat_attributes() )
+        Update( automats_, content.automat_attributes().automat().id(), content.automat_attributes() );
+    else if( content.has_automat_change_superior() )
+        Update( automats_, content.automat_change_superior().automat().id(), content.automat_change_superior() );
+    else if( content.has_automat_change_knowledge_group() )
+        Update( automats_, content.automat_change_knowledge_group().automat().id(), content.automat_change_knowledge_group() );
+    // units
+    else if( content.has_unit_creation() )
+        Create( agents_, content.unit_creation() );
+    else if( content.has_unit_destruction() )
+        Destroy( agents_, content.unit_destruction().unit().id() );
+    else if( content.has_unit_attributes() )
+        Update( agents_, content.unit_attributes().unit().id(), content.unit_attributes() );
+    else if( content.has_unit_change_superior() )
+        Update( agents_, content.unit_change_superior().unit().id(), content.unit_change_superior() );
+    // obstacles
+    else if( content.has_object_creation() )
+        Create( obstacles_, content.object_creation() );
+    else if( content.has_object_destruction() )
+        Destroy( obstacles_, content.object_destruction().object().id() );
+    // reports
+    else if( content.has_report() )
+        Report::Trigger( driver_, database_, GetTime(), *this, content.report() );
+    // fire engagements
+    else if( content.has_start_unit_fire() )
+        Model::CreateEvent( fireEngagements_, content.start_unit_fire() );
+    else if( content.has_stop_unit_fire() )
+        Update( fireEngagements_, content.stop_unit_fire().fire().id(), content.stop_unit_fire() );
+    // detections
+    else if( content.has_unit_detection() )
+        DetectionEvents::Trigger( driver_, database_, GetTime(), *this, content.unit_detection() );
+    else if( content.has_object_detection() )
+        DetectionEvents::Trigger( driver_, database_, GetTime(), *this, content.object_detection() );
+    // orders
+    else if( content.has_unit_order() )
+        Task::Notify( driver_, database_, GetTime(), *this, content.unit_order() );
+    else if( content.has_automat_order() )
+        Task::Notify( driver_, database_, GetTime(), *this, content.automat_order() );
+    // weather
+    else if( content.has_control_global_weather() )
+        weather_->Update( driver_, database_, GetTime(), content.control_global_weather() );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,20 +146,25 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void Model::OnReceiveMessage( const sword::MessengerToClient& message )
 {
-    if( message.message().has_limit_creation() )
-        Create( boundaryLimits_, message.message().limit_creation() );
-    else if( message.message().has_limit_destruction() )
-        Destroy( boundaryLimits_, message.message().limit_destruction().id().id() );
-    else if( message.message().has_phase_line_creation() )
-        Create( phaseLines_, message.message().phase_line_creation() );
-    else if( message.message().has_phase_line_destruction() )
-        Destroy( phaseLines_, message.message().phase_line_destruction().id().id() );
+    const sword::MessengerToClient::Content& content = message.message();
+    if( content.has_limit_creation() )
+        Create( boundaryLimits_, content.limit_creation() );
+    else if( content.has_limit_destruction() )
+        Destroy( boundaryLimits_, content.limit_destruction().id().id() );
+    else if( content.has_phase_line_creation() )
+        Create( phaseLines_, content.phase_line_creation() );
+    else if( content.has_phase_line_destruction() )
+        Destroy( phaseLines_, content.phase_line_destruction().id().id() );
+    else if( content.has_shape_creation() )
+        Create( drawings_, content.shape_creation() );
+    else if( content.has_shape_destruction() )
+        Destroy( drawings_, content.shape_destruction().id().id() );
 }
 
 namespace
 {
     template< class Entity >
-    const Entity* ResolveEntity( const std::map< unsigned long, Entity* >& entities, const unsigned long& id )
+    const Entity* Resolve( const std::map< unsigned long, Entity* >& entities, const unsigned long& id )
     {
         std::map< unsigned long, Entity* >::const_iterator it = entities.find( id );
         if( it != entities.end() )
@@ -131,7 +179,7 @@ namespace
 // -----------------------------------------------------------------------------
 const Party* Model::ResolveParty( const unsigned long& id ) const
 {
-    return ResolveEntity( parties_, id );
+    return Resolve( parties_, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,7 +188,7 @@ const Party* Model::ResolveParty( const unsigned long& id ) const
 // -----------------------------------------------------------------------------
 const KnowledgeGroup* Model::ResolveKnowledgeGroup( const unsigned long& id ) const
 {
-    return ResolveEntity( knowledgeGroups_, id );
+    return Resolve( knowledgeGroups_, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +197,7 @@ const KnowledgeGroup* Model::ResolveKnowledgeGroup( const unsigned long& id ) co
 // -----------------------------------------------------------------------------
 const Formation* Model::ResolveFormation( const unsigned long& id ) const
 {
-    return ResolveEntity( formations_, id );
+    return Resolve( formations_, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,7 +206,7 @@ const Formation* Model::ResolveFormation( const unsigned long& id ) const
 // -----------------------------------------------------------------------------
 const Automat* Model::ResolveAutomat( const unsigned long& id ) const
 {
-    return ResolveEntity( automats_, id );
+    return Resolve( automats_, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +215,7 @@ const Automat* Model::ResolveAutomat( const unsigned long& id ) const
 // -----------------------------------------------------------------------------
 const Agent* Model::ResolveAgent( const unsigned long& id ) const
 {
-    return ResolveEntity( agents_, id );
+    return Resolve( agents_, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +224,19 @@ const Agent* Model::ResolveAgent( const unsigned long& id ) const
 // -----------------------------------------------------------------------------
 const Obstacle* Model::ResolveObstacle( const unsigned long& id ) const
 {
-    return ResolveEntity( obstacles_, id );
+    return Resolve( obstacles_, id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ResolveEntity
+// Created: SEB 2010-12-29
+// -----------------------------------------------------------------------------
+const WiseEntity* Model::ResolveEntity( const WISE_HANDLE& handle ) const
+{
+    std::map< WISE_HANDLE, WiseEntity* >::const_iterator it = entities_.find( handle );
+    if( it != entities_.end() )
+        return it->second;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,9 +245,11 @@ const Obstacle* Model::ResolveObstacle( const unsigned long& id ) const
 // -----------------------------------------------------------------------------
 void Model::Reset()
 {
+    weather_->Destroy( driver_, database_ );
     simulation_->Destroy( driver_, database_ );
     Clear( phaseLines_ );
     Clear( boundaryLimits_ );
+    Clear( drawings_ );
     Clear( obstacles_ );
     Clear( agents_ );
     Clear( automats_ );
@@ -265,7 +327,6 @@ void Model::Destroy( std::map< unsigned long, Entity* >& entities, unsigned long
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Model::GetTime
 // Created: SEB 2010-10-13
@@ -293,15 +354,9 @@ timeb Model::GetTime()
 void Model::OnReceiveEvent( const WISE_HANDLE& handle )
 {
     std::wstring type;
-    WISE_HANDLE attribute = WISE_INVALID_HANDLE;
-    CHECK_WISE_RESULT_EX( driver_.GetSink()->GetEventAttributeHandle( database_, handle, L"WISE_TEMPLATE_EVENT_TYPE", attribute ) );
-    CHECK_WISE_RESULT_EX( driver_.GetSink()->GetEventAttributeValue( database_, handle, attribute, type ) );
-    if( type == L"SimulationStateUpdate" )
-        simulation_->OnUpdateState( driver_, database_, handle );
-    else if( type == L"SimulationAccelerationFactorUpdate" )
-        simulation_->OnUpdateAccelerationFactor( driver_, database_, handle );
-    else if( type == L"TaskCreation" )
-        taskFactory_->OnCreate( driver_, database_, handle );
+    wise::FetchEventAttribute( driver_, database_, handle, L"WISE_TEMPLATE_EVENT_TYPE", type );
+    if( type == L"TaskCreationRequest" )
+        Task::Issue( driver_, database_, *this, publisher_, handle );
     else
         driver_.NotifyWarningMessage( L"Unable to process event of type '" + type + L"'.", MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_W_INVALID_FORMAT ) );
 }
@@ -315,6 +370,6 @@ void Model::OnReceiveUpdate( const WISE_HANDLE& object, const WISE_HANDLE& attri
     std::map< WISE_HANDLE, WiseEntity* >::iterator it = entities_.find( object );
     if( it != entities_.end() )
         it->second->Update( publisher_, attribute, value );
-    else
+    else if( !simulation_->Update( attribute, value ) )
         driver_.NotifyWarningMessage( L"Unable to process attribute update.", MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_W_INVALID_FORMAT ) );
 }

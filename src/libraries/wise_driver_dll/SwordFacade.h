@@ -70,6 +70,7 @@ private:
     CWISEDriver& driver_;
     std::auto_ptr< SwordProxy > proxy_;
     std::auto_ptr< Model > model_;
+    bool disconnect_;
     //@}
 };
 

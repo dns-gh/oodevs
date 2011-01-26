@@ -11,10 +11,10 @@
 #include "Party.h"
 #include "Model.h"
 #include "protocol/Simulation.h"
-#include <sstream>
 #pragma warning( push )
 #pragma warning( disable: 4100 4201 )
 #include <wise/iwisedriversink.h>
+#include <wise/WISEAttributeGroupConverter.h> 
 #include <wise/wisedriver.h>
 #pragma warning( pop )
 
@@ -36,7 +36,7 @@ Party::Party( const Model& model, const sword::PartyCreation& message )
     : WiseEntity( message.party().id(), L"party" )
     , model_( model )
     , name_( message.name().begin(), message.name().end() )
-    , alignment_( unsigned char( message.type() ) )
+    , alignment_( ConvertAlignment( message.type() ) )
 {
     // NOTHING
 }
@@ -51,15 +51,6 @@ Party::~Party()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Party::MakeIdentifier
-// Created: SEB 2010-12-13
-// -----------------------------------------------------------------------------
-std::wstring Party::MakeIdentifier() const
-{
-    return name_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Party::Create
 // Created: SEB 2010-10-13
 // -----------------------------------------------------------------------------
@@ -67,44 +58,50 @@ void Party::Create( CWISEDriver& driver, const WISE_HANDLE& database, const time
 {
     try
     {
-        handle_ = WISE_INVALID_HANDLE;
-        std::map< std::wstring, WISE_HANDLE > attributes;
-        CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, name_, L"Party", handle_, attributes ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Identifier" ], long( GetId() ), currentTime ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Name" ], name_, currentTime ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Alignment" ], alignment_, currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, GetIdentifier(), L"Orbat.Party", handle_, attributes_ ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Identifier" ], long( GetId() ), currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Name" ], name_, currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Alignment" ], alignment_, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, handle_ ) );
-        driver.NotifyInfoMessage( FormatMessage( L"Created." ) );
+        driver.NotifyDebugMessage( FormatMessage( L"Created." ), 0 );
     }
     catch( WISE_RESULT& error )
     {
+        handle_ = WISE_INVALID_HANDLE;
         driver.NotifyErrorMessage( FormatMessage( L"Creation failed." ), error );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Party::Destroy
-// Created: SEB 2010-10-13
+// Name: Party::DoUpdate
+// Created: SEB 2011-01-07
 // -----------------------------------------------------------------------------
-void Party::Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const
+template< typename M >
+void Party::DoUpdate( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const M& message )
 {
-    for( T_Diplomacies::const_iterator it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
-        
-    WiseEntity::Destroy( driver, database );
-}
-
-namespace
-{
-    std::wstring MakeIdentifier( const Model& model, const sword::ChangeDiplomacy& message )
+    try
     {
-        if( const Party* party1 = model.ResolveParty( message.party1().id() ) )
-            if( const Party* party2 = model.ResolveParty( message.party2().id() ) )
-            {
-                std::wstringstream ss;
-                ss << L"PartyDiplomacy:" << party1->GetId() << L"->" << party2->GetId();
-                return ss.str();
-            }
-        return L"Unknown party diplomacy";
+        IWISEStringCache* cache = dynamic_cast< IWISEStringCache* >( driver.GetSink() );
+        CHECK_VALID_POINTER_EX( cache, MAKE_WISE_RESULT( WISE_FACILITY_COM_ADAPTER, WISE_E_NOT_INITIATED ) );
+        const Party* party = model_.ResolveParty( message.party2().id() );
+        if( !party )
+            return;
+        alliances_[ party->GetHandle() ] = ConvertAlignment( message.diplomacy() );
+        std::list< CWISEAttributeGroup > list;
+        for( T_Alliances::const_iterator it = alliances_.begin(); it != alliances_.end(); ++it )
+        {
+            CWISEAttributeGroupTemplate groupTemplate;
+            groupTemplate.Add( L"Party", it->first );
+            groupTemplate.Add( L"Type", it->second );
+            CWISEAttributeGroup group;
+            CHECK_WISE_RESULT_EX( CWISEAttributeGroupConverter::TemplateToValueGroup( groupTemplate, cache, L"Alliance", group ) );
+            list.push_back( group );
+        }
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, handle_, attributes_[ L"Alliances" ], list, currentTime ) );
+    }
+    catch( WISE_RESULT& error )
+    {
+        driver.NotifyWarningMessage( FormatMessage( L"Alliance update failed." ), error );
     }
 }
 
@@ -114,27 +111,15 @@ namespace
 // -----------------------------------------------------------------------------
 void Party::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ChangeDiplomacy& message )
 {
-    const std::wstring identifier = ::MakeIdentifier( model_, message );
-    try
-    {
-        WiseReference*& diplomacy = diplomacies_[ message.party2().id() ];
-        if( !diplomacy )
-        {
-            CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, identifier, L"PartyDiplomacy", diplomacy->handle_, diplomacy->attributes_ ) );
-            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, diplomacy->handle_, diplomacy->attributes_[ L"PartyFrom" ], long( message.party1().id() ), currentTime ) );
-            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, diplomacy->handle_, diplomacy->attributes_[ L"PartyTo" ], long( message.party2().id() ), currentTime ) );
-            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, diplomacy->handle_, diplomacy->attributes_[ L"Diplomacy" ], unsigned char( message.diplomacy() ), currentTime ) );
-            CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, diplomacy->handle_ ) );
-            driver.NotifyInfoMessage( FormatMessage( identifier + L"' created." ) );
-        }
-        else
-        {
-            CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( database, diplomacy->handle_, diplomacy->attributes_[ L"Diplomacy" ], unsigned char( message.diplomacy() ), currentTime ) );       
-            driver.NotifyInfoMessage( FormatMessage( identifier + L"' updated." ) );
-        }
-    }
-    catch( WISE_RESULT& error )
-    {
-        driver.NotifyWarningMessage( FormatMessage( identifier + L"' update failed." ), error );
-    }
+    DoUpdate( driver, database, currentTime, message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Party::Update
+// Created: SEB 2011-01-07
+// -----------------------------------------------------------------------------
+void Party::Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ChangeDiplomacyAck& message )
+{
+    // $$$$ SEB 2011-01-07: Should not be needed as MsgChangeDiplomacy should be sent
+    DoUpdate( driver, database, currentTime, message );
 }

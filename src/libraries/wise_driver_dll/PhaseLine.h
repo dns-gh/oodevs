@@ -46,11 +46,6 @@ private:
     PhaseLine& operator=( const PhaseLine& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual std::wstring MakeIdentifier() const;
-    //@}
-
 private:
     //! @name Member data
     //@{

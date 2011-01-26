@@ -29,5 +29,6 @@
       <setting name="SimulationHost" datatype="string" required="true" default="localhost" validvalues="{Host}" description="Host name or IP address to connect to." />
       <setting name="SimulationPort" datatype="long" required="true" default="10001" validvalues="1-65535" description="Socket port number to connect to." />
       <setting name="ExerciseProfile" datatype="string" required="true" default="" description="User profile login to use to authenticate." />
+      <setting name="ExercisePassword" datatype="string" required="true" default="" description="User profile password to use to authenticate." />
     </settings>
 </driver>

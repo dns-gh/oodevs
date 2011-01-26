@@ -12,7 +12,11 @@
 
 #include "WiseEntity.h"
 
-namespace sword { class KnowledgeGroupCreation; }
+namespace sword
+{
+    class KnowledgeGroupCreation;
+    class KnowledgeGroupUpdate;
+}
 
 class Model;
 
@@ -35,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const;
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::KnowledgeGroupUpdate& message );
     //@}
 
 private:
@@ -44,16 +49,13 @@ private:
     KnowledgeGroup& operator=( const KnowledgeGroup& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual std::wstring MakeIdentifier() const;
-    //@}
-
 private:
     //! @name Member data
     //@{
-    const std::wstring type_;
+    const Model& model_;
+    std::wstring type_;
     const bool scrambled_;
+    bool enabled_;
     const Entity_ABC* party_;
     const Entity_ABC* superior_;
     //@}

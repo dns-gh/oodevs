@@ -12,8 +12,12 @@
 
 #include "WiseEntity.h"
 
-namespace sword { class PartyCreation; }
-namespace sword { class ChangeDiplomacy; }
+namespace sword
+{
+    class ChangeDiplomacy;
+    class ChangeDiplomacyAck;
+    class PartyCreation;
+}
 
 class Model;
 
@@ -36,8 +40,8 @@ public:
     //! @name Operations
     //@{
     virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const;
-    virtual void Destroy( CWISEDriver& driver, const WISE_HANDLE& database ) const;
     void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ChangeDiplomacy& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ChangeDiplomacyAck& message );
     //@}
 
 private:
@@ -49,18 +53,13 @@ private:
 
     //! @name Helpers
     //@{
-    virtual std::wstring MakeIdentifier() const;
+    template< typename M >
+    void DoUpdate( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const M& message );
     //@}
 
     //! @name Types
     //@{
-    struct WiseReference
-    {
-        WiseReference() : handle_( WISE_INVALID_HANDLE ) {}
-        WISE_HANDLE handle_;
-        std::map< std::wstring, WISE_HANDLE > attributes_;
-    };
-    typedef std::map< unsigned long, WiseReference* > T_Diplomacies;
+    typedef std::map< WISE_HANDLE, unsigned char > T_Alliances;
     //@}
 
 private:
@@ -69,7 +68,7 @@ private:
     const Model& model_;
     const std::wstring name_;
     const unsigned char alignment_;
-    T_Diplomacies diplomacies_;
+    T_Alliances alliances_;
     //@}
 };
 

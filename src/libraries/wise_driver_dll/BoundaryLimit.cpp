@@ -13,7 +13,6 @@
 #include "Formation.h"
 #include "Model.h"
 #include "protocol/Messenger.h"
-#include <sstream>
 #pragma warning( push )
 #pragma warning( disable: 4100 4201 )
 #include <wise/iwisedriversink.h>
@@ -64,17 +63,6 @@ BoundaryLimit::~BoundaryLimit()
 }
 
 // -----------------------------------------------------------------------------
-// Name: BoundaryLimit::MakeIdentifier
-// Created: SEB 2010-10-27
-// -----------------------------------------------------------------------------
-std::wstring BoundaryLimit::MakeIdentifier() const
-{
-    std::wstringstream ss;
-    ss << GetId() << "-" << name_;
-    return ss.str();
-}
-
-// -----------------------------------------------------------------------------
 // Name: BoundaryLimit::Create
 // Created: SEB 2010-10-27
 // -----------------------------------------------------------------------------
@@ -82,19 +70,17 @@ void BoundaryLimit::Create( CWISEDriver& driver, const WISE_HANDLE& database, co
 {
     try
     {
-        const std::wstring identifier( MakeIdentifier() );
-        handle_ = WISE_INVALID_HANDLE;
-        std::map< std::wstring, WISE_HANDLE > attributes;
-        CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, identifier, L"BoundaryLimit", handle_, attributes ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Identifier" ], long( GetId() ), currentTime ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Name" ], name_, currentTime ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Superior" ], superior_ ? superior_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
-        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes[ L"Points" ], points_, currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->CreateObjectFromTemplate( database, GetIdentifier(), L"Environment.BoundaryLimit", handle_, attributes_ ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Identifier" ], long( GetId() ), currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Name" ], name_, currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Superior" ], superior_ ? superior_->GetHandle() : WISE_INVALID_HANDLE, currentTime ) );
+        CHECK_WISE_RESULT_EX( driver.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle_, attributes_[ L"Points" ], points_, currentTime ) );
         CHECK_WISE_RESULT_EX( driver.GetSink()->AddObjectToDatabase( database, handle_ ) );
-        driver.NotifyInfoMessage( FormatMessage( L"Created." ) );
+        driver.NotifyDebugMessage( FormatMessage( L"Created." ), 0 );
     }
     catch( WISE_RESULT& error )
     {
+        handle_ = WISE_INVALID_HANDLE;
         driver.NotifyErrorMessage( FormatMessage( L"Creation failed." ), error );
     }
 }

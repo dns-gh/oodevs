@@ -25,10 +25,11 @@
 
 namespace
 {
-    const std::string    defaultHost    = "127.0.0.1";
-    const unsigned short defaultPort    = 10101;
-    const std::string    defaultProfile = "Supervisor";
-    const unsigned int   timeOut        = 1000;
+    const std::string    defaultHost     = "127.0.0.1";
+    const unsigned short defaultPort     = 10101;
+    const std::string    defaultProfile  = "Supervisor";
+    const std::string    defaultPassword = "";
+    const unsigned int   timeOut         = 1000;
 
     struct Timeout
     {
@@ -128,7 +129,7 @@ namespace
 BOOST_AUTO_TEST_CASE( ClientConnectsAndAuthenticatesToSimulation )
 {
     MockServer server( defaultPort );
-    SwordProxy client( defaultHost, defaultPort, defaultProfile );
+    SwordProxy client( defaultHost, defaultPort, defaultProfile, defaultPassword );
     MockConnectionHandler connectionHandler;
     MOCK_EXPECT( connectionHandler, OnConnectionSucceeded ).once().with( MakeHost( defaultHost, defaultPort ) );
     MOCK_EXPECT( connectionHandler, OnAuthenticationSucceeded ).once().with( defaultProfile );
@@ -149,7 +150,7 @@ BOOST_AUTO_TEST_CASE( ClientConnectsAndAuthenticatesToSimulation )
 BOOST_AUTO_TEST_CASE( MessageHandlersCanBeRegistered )
 {
     MockServer server( defaultPort );
-    SwordProxy client( defaultHost, defaultPort, defaultProfile );
+    SwordProxy client( defaultHost, defaultPort, defaultProfile, defaultPassword );
     MockConnectionHandler connectionHandler;
     MOCK_EXPECT( connectionHandler, OnConnectionSucceeded ).once().with( MakeHost( defaultHost, defaultPort ) );
     MOCK_EXPECT( connectionHandler, OnAuthenticationSucceeded ).once().with( defaultProfile );

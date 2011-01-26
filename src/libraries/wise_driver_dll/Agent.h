@@ -15,10 +15,8 @@
 
 namespace sword
 {
-    class EquipmentDotations;
-    class HumanDotations;
-    class ResourceDotations;
     class UnitAttributes;
+    class UnitChangeSuperior;
     class UnitCreation;
 }
 
@@ -46,7 +44,9 @@ public:
     //! @name Operations
     //@{
     virtual void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime ) const;
+    virtual void Update( SwordMessagePublisher_ABC& publisher, const WISE_HANDLE& attribute, const CWISEValueUnion& value );
     void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::UnitAttributes& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::UnitChangeSuperior& message );
     //@}
 
 private:
@@ -58,7 +58,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual std::wstring MakeIdentifier() const;
     template< class M, class C >
     void UpdateComponents( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const M& message, std::map< unsigned long, C* >& components, const std::wstring& fieldName );
     //@}
@@ -66,6 +65,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const Model& model_;
     const std::wstring name_;
     const unsigned long type_;
     const Entity_ABC* superior_;

@@ -58,11 +58,6 @@ private:
     Automat& operator=( const Automat& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual std::wstring MakeIdentifier() const;
-    //@}
-
 private:
     //! @name Member data
     //@{

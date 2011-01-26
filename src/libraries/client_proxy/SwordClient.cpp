@@ -25,11 +25,12 @@
 // Name: SwordClient constructor
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-SwordClient::SwordClient( const std::string& host, unsigned short port, const std::string& profile )
+SwordClient::SwordClient( const std::string& host, unsigned short port, const std::string& profile, const std::string& password )
     : tools::ClientNetworker( "", false )
     , host_( host )
     , port_( port )
     , profile_( profile )
+    , password_( password )
     , loggedIn_( false )
     , connectionHandler_( new ConnectionHandlerProxy() )
 {
@@ -73,7 +74,7 @@ void SwordClient::ConnectionSucceeded( const std::string& endpoint )
         authentication::AuthenticationRequest message;
         message().mutable_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
         message().set_login( profile_ );
-        message().set_password( "" );
+        message().set_password( password_ );
         message.Send( *publisher_ );
     }
 }
@@ -132,7 +133,7 @@ void SwordClient::HandleAuthenticationToClient( const std::string& /*endpoint*/,
         if( loggedIn_ )
             connectionHandler_->OnAuthenticationSucceeded( login );
         else
-            connectionHandler_->OnAuthenticationFailed( login, ToString( message.message().authentication_response().error_code() ) );
+            connectionHandler_->OnAuthenticationFailed( profile_, ToString( message.message().authentication_response().error_code() ) );
     }
 }
 

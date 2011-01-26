@@ -14,8 +14,8 @@
 class SwordProxy::SwordProxyImplementation
 {
 public:
-    SwordProxyImplementation( const std::string& host, unsigned short port, const std::string& profile )
-        : client_( new SwordClient( host, port, profile ) ) {}
+    SwordProxyImplementation( const std::string& host, unsigned short port, const std::string& profile, const std::string& password )
+        : client_( new SwordClient( host, port, profile, password ) ) {}
     ~SwordProxyImplementation() {}
 
     void Connect( SwordConnectionHandler_ABC* handler ) { client_->Connect( handler ); }
@@ -32,8 +32,8 @@ private:
 // Name: SwordProxy constructor
 // Created: SEB 2010-10-12
 // -----------------------------------------------------------------------------
-SwordProxy::SwordProxy( const std::string& host, unsigned short port, const std::string& profile )
-    : pimpl_( new SwordProxyImplementation( host, port, profile ) )
+SwordProxy::SwordProxy( const std::string& host, unsigned short port, const std::string& profile, const std::string& password )
+    : pimpl_( new SwordProxyImplementation( host, port, profile, password ) )
 {
     // NOTHING
 }

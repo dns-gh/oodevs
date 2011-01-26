@@ -31,6 +31,9 @@
 !ifndef PLATFORM
     !define PLATFORM "vc80"
 !endif
+!ifndef SRCDIR
+    !define SRCDIR "..\..\src"
+!endif
 !ifndef RUNDIR
     !define RUNDIR "..\..\run\${PLATFORM}"
 !endif
@@ -54,7 +57,7 @@ Section "!${PRODUCT_NAME}"
 
     SetOutPath "$INSTDIR\Storage"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${RUNDIR}\WISE\Storage\*"
+    File /r /x ".svn" "${SRCDIR}\libraries\wise_driver_dll\Storage\*"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
    
     SetOutPath "$INSTDIR\bin"

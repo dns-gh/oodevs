@@ -21,9 +21,12 @@ namespace sword
     class ControlInformation;
     class ControlBeginTick;
     class ControlChangeTimeFactorAck;
+    class ControlPauseAck;
+    class ControlResumeAck;
 }
 
 class CWISEDriver;
+class CWISEValueUnion;
 class SwordMessagePublisher_ABC;
 
 // =============================================================================
@@ -47,13 +50,10 @@ public:
     void Create( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlInformation& message );
     void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlBeginTick& message );
     void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlChangeTimeFactorAck& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlResumeAck& message );
+    void Update( CWISEDriver& driver, const WISE_HANDLE& database, const timeb& currentTime, const sword::ControlPauseAck& message );
+    bool Update( const WISE_HANDLE& attribute, const CWISEValueUnion& value );
     void Destroy( CWISEDriver& driver, const WISE_HANDLE& database );
-    //@}
-
-    //! @name Event handlers
-    //@{
-    void OnUpdateState( CWISEDriver& driver, const WISE_HANDLE& database, const WISE_HANDLE& handle );
-    void OnUpdateAccelerationFactor( CWISEDriver& driver, const WISE_HANDLE& database, const WISE_HANDLE& handle );
     //@}
 
 private:
@@ -61,6 +61,11 @@ private:
     //@{
     Simulation( const Simulation& );            //!< Copy constructor
     Simulation& operator=( const Simulation& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    bool IsInitialized( CWISEDriver& driver ) const;
     //@}
 
 private:

@@ -3,35 +3,35 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __BoundaryLimit_h_
-#define __BoundaryLimit_h_
+#ifndef __Drawing_h_
+#define __Drawing_h_
 
 #include "WiseEntity.h"
 #include <list>
 #include <wise/wisevec3.h>
 
-namespace sword { class LimitCreation; }
+namespace sword { class ShapeCreation; }
 
 class Model;
 
 // =============================================================================
-/** @class  BoundaryLimit
-    @brief  BoundaryLimit
+/** @class  Drawing
+    @brief  Drawing
 */
-// Created: SEB 2010-10-27
+// Created: SEB 2011-01-07
 // =============================================================================
-class BoundaryLimit : public WiseEntity
+class Drawing : public WiseEntity
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             BoundaryLimit( const Model& model, const sword::LimitCreation& message );
-    virtual ~BoundaryLimit();
+             Drawing( const Model& model, const sword::ShapeCreation& message );
+    virtual ~Drawing();
     //@}
 
     //! @name Operations
@@ -42,17 +42,18 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    BoundaryLimit( const BoundaryLimit& );            //!< Copy constructor
-    BoundaryLimit& operator=( const BoundaryLimit& ); //!< Assignment operator
+    Drawing( const Drawing& );            //!< Copy constructor
+    Drawing& operator=( const Drawing& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::wstring name_;
-    const Entity_ABC* superior_;
+    const std::wstring category_;
+    const std::wstring color_;
+    const std::wstring pattern_;
     const std::list< CWISEVec3 > points_;
     //@}
 };
 
-#endif // __BoundaryLimit_h_
+#endif // __Drawing_h_
