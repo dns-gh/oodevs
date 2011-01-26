@@ -120,7 +120,7 @@ void InfrastructureAttribute::CreateDictionary( kernel::PropertiesDictionary& di
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawApp6Symbol( type_.GetSymbol(), object_.Barycenter(), 0.1, 0.1 );
+    tools.DrawApp6Symbol( type_.GetSymbol(), object_.Barycenter(), 0.1f, 0.1f );
 }
 
 
