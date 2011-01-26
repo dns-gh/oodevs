@@ -39,13 +39,14 @@ MIL_LivingArea::MIL_LivingArea()
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
 MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population, unsigned int nID )
-    : nID_( nID )
+    : nID_       ( nID )
+    , population_( population )
 {
     float totalArea = 0.f;
     xis >> xml::start( "living-area" )
             >> xml::list( "urban-block", *this, &MIL_LivingArea::ReadUrbanBlock, totalArea )
         >> xml::end;
-    DistributeHumans( totalArea, population );
+    DistributeHumans( totalArea );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,13 +84,13 @@ namespace
 // Name: MIL_LivingArea::DistributeHumans
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::DistributeHumans( float area, unsigned long population )
+void MIL_LivingArea::DistributeHumans( float area )
 {
     std::sort( blocks_.begin(), blocks_.end(), boost::bind( &Compare< T_Block >, _1, _2 ) );
-    unsigned long tmp = population;
+    unsigned long tmp = population_;
     for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
-        unsigned long person = static_cast< unsigned long >( it->first->GetFootprint()->ComputeArea() * population / area );
+        unsigned long person = static_cast< unsigned long >( it->first->GetFootprint()->ComputeArea() * population_ / area );
         if( tmp - person < 0 )
             person = tmp;
         it->second = person;
@@ -116,7 +117,8 @@ void MIL_LivingArea::Register( MIL_StructuralStateNotifier_ABC& structural )
 void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_LivingArea_ABC >( *this );
-    file >> nID_;
+    file >> nID_
+        >> population_;
     unsigned int size;
     file >> size;
     unsigned int blockId;
@@ -138,7 +140,8 @@ void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_LivingArea::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_LivingArea_ABC >( *this );
-    file << nID_;
+    file << nID_
+         << population_;
     unsigned int size = blocks_.size();
     file << size;
     unsigned int id;
@@ -216,59 +219,38 @@ float MIL_LivingArea::HealthCount() const
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::StartMotivation( const std::string& motivation )
 {
-    T_Identifiers identifiers;
-    BOOST_FOREACH( const T_Block& block, blocks_ )
-        identifiers[ block.first->GetId() ] = block.second;
-    BOOST_FOREACH( const T_Block& from, GetMovingBlock( motivation ) )
+    T_Blocks blocks = GetBlockUsage( motivation );
+    if( !blocks.empty() )
     {
-        T_Blocks usages = GetBlockUsage( *from.first, motivation );
-        if( !usages.empty() )
+        unsigned int part = static_cast< unsigned int >( population_ / blocks.size() );
+        unsigned long tmp = population_;
+        T_Identifiers identifiers;
+        BOOST_FOREACH( const T_Block& block, blocks )
         {
-            identifiers[ usages.front().first->GetId() ] += identifiers[ from.first->GetId() ];
-            identifiers[ from.first->GetId() ] = 0u;
+            identifiers[ block.first->GetId() ] = part;
+            tmp -= part;
         }
-    }
-    BOOST_FOREACH( const T_Identifiers::value_type& identifier, identifiers )
-        BOOST_FOREACH( T_Block& block, blocks_ )
-            if( block.first->GetId() == identifier.first )
-                block.second = identifier.second;
-    SendFullState();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::GetMovingBlock
-// Created: LGY 2011-01-21
-// -----------------------------------------------------------------------------
-MIL_LivingArea::T_Blocks MIL_LivingArea::GetMovingBlock( const std::string& motivation ) const
-{
-    T_Blocks blocks;
-    BOOST_FOREACH( const T_Block& block, blocks_ )
-        if( block.second != 0 && !HasUsage( *block.first, motivation ) )
-            blocks.push_back( block );
-    return blocks;
-}
-
-namespace
-{
-    template< typename T >
-    bool Compare( const T& lhs, const T& rhs, const urban::TerrainObject_ABC& terrain )
-    {
-        return terrain.GetFootprint()->Barycenter().Distance( lhs.first->GetFootprint()->Barycenter() )
-             < terrain.GetFootprint()->Barycenter().Distance( rhs.first->GetFootprint()->Barycenter() );
+        if( tmp > 0 )
+            identifiers.begin()->second += tmp;
+       BOOST_FOREACH( T_Block& block, blocks_ )
+        {
+            CIT_Identifiers it = identifiers.find( block.first->GetId() );
+            block.second = ( it == identifiers.end() ) ? 0u : it->second;
+        }
+        SendFullState();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::GetUsageBlock
+// Name: MIL_LivingArea::GetBlockUsage
 // Created: LGY 2011-01-21
 // -----------------------------------------------------------------------------
-MIL_LivingArea::T_Blocks MIL_LivingArea::GetBlockUsage( const urban::TerrainObject_ABC& terrain, const std::string& motivation ) const
+MIL_LivingArea::T_Blocks MIL_LivingArea::GetBlockUsage( const std::string& motivation ) const
 {
     T_Blocks blocks;
     BOOST_FOREACH( const T_Block& block, blocks_ )
         if( HasUsage( *block.first, motivation ) )
             blocks.push_back( block );
-    std::sort( blocks.begin(), blocks.end(), boost::bind( &Compare< T_Block >, _1, _2, boost::cref( terrain ) ) );
     return blocks;
 }
 
