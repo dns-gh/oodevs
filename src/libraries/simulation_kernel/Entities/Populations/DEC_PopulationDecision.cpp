@@ -529,5 +529,5 @@ void DEC_PopulationDecision::RegisterSelf( directia::brain::Brain& brain, bool i
 {
     brain[ "myself" ] = (DEC_Decision_ABC*)this;
     if( isMasalife )
-        brain[ "InitMePlatoon" ](  brain[ "net.masagroup.sword.military.world.CrowdAlly" ], brain[ "myself" ], groupName );
+        brain[ "InitMePlatoon" ](  brain[ "integration.ontology.types.body" ], brain[ "myself" ], groupName );
 }

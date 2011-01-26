@@ -430,7 +430,7 @@ bool PointFunctionBM( directia::brain::Brain& brain, directia::tools::binders::S
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToPoint( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Point" ] , name, value, false );     
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.point" ] , name, value, false );     
         return true;
     }
     return false;
@@ -441,7 +441,7 @@ bool PointListFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPointList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Point" ], name, value, true );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.point" ], name, value, true );
         return true;
     }
     return false;
@@ -463,7 +463,7 @@ bool AreaFunctionBM( directia::brain::Brain& brain, directia::tools::binders::Sc
     boost::shared_ptr< TER_Localisation > value;
     if( element.ToPolygon( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Area" ], name, value, false );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.area" ], name, value, false );
         return true;
     }
     return false;
@@ -473,7 +473,7 @@ bool AreaListFunctionBM( directia::brain::Brain& brain, directia::tools::binders
     std::vector< boost::shared_ptr< TER_Localisation > > value;
     if( element.ToPolygonList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Area" ], name, value, true );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.area" ], name, value, true );
         return true;
     }
     return false;
@@ -507,7 +507,7 @@ bool PathFunctionBM( directia::brain::Brain& brain, directia::tools::binders::Sc
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPath( value ) && !value.empty() )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Point" ], name, value, true );       
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.point" ], name, value, true );       
         return true;
     }
     return false;
@@ -521,7 +521,7 @@ bool DirectionFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToDirection( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission,  brain[ "net.masagroup.sword.military.world.Direction" ] , name, value, false );     
+        knowledgeCreateFunction( refMission,  brain[ "integration.ontology.types.direction" ] , name, value, false );     
         return true;
     }
     return false;
@@ -548,7 +548,7 @@ bool AutomatFunctionBM( directia::brain::Brain& brain, directia::tools::binders:
     DEC_Decision_ABC* value = 0;
     if( element.ToAutomat( value ) )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Company" ], name, value, false );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.automat" ], name, value, false );
         return true;
     }
     return false;
@@ -564,7 +564,7 @@ bool AutomatListFunctionBM( directia::brain::Brain& brain, directia::tools::bind
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAutomatList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Company" ], name, value, true );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.automat" ], name, value, true );
         return true;
     }
     return false;
@@ -580,7 +580,7 @@ bool AgentFunctionBM( directia::brain::Brain& brain, directia::tools::binders::S
     DEC_Decision_ABC* value = 0; // $$$$ LDC: Parfois on se sert de champs dessus comme eniEnCours_...
     if( element.ToAgent( value ) )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.PlatoonAlly" ], name, value, false );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.agent" ], name, value, false );
         return true;
     }
     return false;
@@ -596,7 +596,7 @@ bool AgentListFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.PlatoonAlly" ], name, value, true );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.agent" ], name, value, true );
         return true;
     }
     return false;
@@ -612,7 +612,7 @@ bool AgentKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::b
     boost::shared_ptr< DEC_Knowledge_Agent > value;//@TODO SEE how to bind agent and knowledge agent with the same BM knowledge
     if( element.ToAgentKnowledge( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Platoon" ], name, value, false );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.agentKnowledge" ], name, value, false );
         return true;
     }
     return false;
@@ -628,7 +628,7 @@ bool AgentKnowledgeListFunctionBM( directia::brain::Brain& brain, directia::tool
     std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > value;
     if( element.ToAgentKnowledgeList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Platoon" ], name, value, true );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.agentKnowledge" ], name, value, true );
         return true;
     }
     return false;
@@ -644,7 +644,7 @@ bool ObjectKnowledgeFunctionBM( directia::brain::Brain& brain, directia::tools::
     boost::shared_ptr< DEC_Knowledge_Object > value;
     if( element.ToObjectKnowledge( value ) && value )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Object" ], name, value, false );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.object" ], name, value, false );
         return true;
     }
     return false;
@@ -660,7 +660,7 @@ bool ObjectKnowledgeListFunctionBM( directia::brain::Brain& brain, directia::too
     std::vector< boost::shared_ptr< DEC_Knowledge_Object > > value;
     if( element.ToObjectKnowledgeList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Object" ], name, value, true );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.object" ], name, value, true );
         return true;
     }
     return false;
@@ -676,7 +676,7 @@ bool PopulationKnowledgeFunctionBM( directia::brain::Brain& brain, directia::too
     DEC_Knowledge_Population* value = 0;
     if( element.ToPopulationKnowledge( value ) && value )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.Population" ], name, value, false );//@TODO MGD Add CompositeReachable for Population?
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.population" ], name, value, false );//@TODO MGD Add CompositeReachable for Population?
          return true;
     }
     return false;
@@ -687,7 +687,7 @@ bool UrbanBlockFunctionBM( directia::brain::Brain& brain, directia::tools::binde
     boost::shared_ptr< DEC_Knowledge_Urban > value;
     if( element.ToUrbanBlock( value ) && value )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.UrbanBlock" ], name, value, false );  
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.urbanBlock" ], name, value, false );  
         return true;
     }
     return false;
@@ -745,7 +745,7 @@ bool GenObjectFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     boost::shared_ptr< DEC_Gen_Object > value;
     if( element.ToGenObject( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.EngineerObject" ], name, value, false );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.genObject" ], name, value, false );
         return true;
     }
     return false;
@@ -761,7 +761,7 @@ bool GenObjectListFunctionBM( directia::brain::Brain& brain, directia::tools::bi
     std::vector< boost::shared_ptr< DEC_Gen_Object > > value;
     if( element.ToGenObjectList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.EngineerObject" ], name, value, true );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.genObject" ], name, value, true );
         return true;
     }
     return false;
@@ -843,7 +843,7 @@ bool PhaseLineFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     boost::shared_ptr< TER_Localisation > value;
     if( element.ToLima( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.LimaStatique" ], name, value, false );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.limaStatique" ], name, value, false );
         return true;
     }
     return false;
@@ -854,7 +854,7 @@ bool PhaseLineListFunctionBM( directia::brain::Brain& brain, directia::tools::bi
     std::vector< boost::shared_ptr< TER_Localisation > > value;
     if( element.ToLimaList( value ) )
     {
-        knowledgeCreateFunction( refMission, brain[ "net.masagroup.sword.military.world.LimaStatique" ], name, value, true );
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.limaStatique" ], name, value, true );
         return true;
     }
     return false;
