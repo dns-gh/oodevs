@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-#include <geometry/Types.h>
 #include "simulation_kernel/Tools/MIL_Geometry.h"
+#include <geometry/Types.h>
 
 // -----------------------------------------------------------------------------
 // Name: TestComputePolygonHull
