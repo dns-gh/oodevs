@@ -15,8 +15,11 @@
 #include "Entities/Objects/MedicalCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "UrbanType.h"
 #include "protocol/ClientSenders.h"
 #include <urban/Model.h>
+#include <urban/StaticModel.h>
+#include <urban/MotivationType.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/MotivationsVisitor_ABC.h>
 #include <urban/PhysicalAttribute.h>
@@ -31,7 +34,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LivingArea )
 // -----------------------------------------------------------------------------
 MIL_LivingArea::MIL_LivingArea()
 {
-    // NOTHING
+    LoadAccommodations();
 }
 
 // -----------------------------------------------------------------------------
@@ -46,6 +49,7 @@ MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population, un
     xis >> xml::start( "living-area" )
             >> xml::list( "urban-block", *this, &MIL_LivingArea::ReadUrbanBlock, totalArea )
         >> xml::end;
+    LoadAccommodations();
     DistributeHumans( totalArea );
 }
 
@@ -56,6 +60,20 @@ MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population, un
 MIL_LivingArea::~MIL_LivingArea()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::LoadAccommodations
+// Created: LGY 2011-01-26
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::LoadAccommodations()
+{
+    tools::Iterator< const urban::MotivationType& > it = UrbanType::GetUrbanType().GetStaticModel().CreateIterator< urban::MotivationType >();
+    while( it.HasMoreElements() )
+    {
+        const urban::MotivationType& type = it.NextElement();
+        accommodations_[ type.GetName() ] = type.GetCapacity();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -71,15 +89,13 @@ void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis, float& area )
     blocks_.push_back( T_Block( object , 0 ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::Compare
-// Created: LGY 2011-01-26
-// -----------------------------------------------------------------------------
-bool MIL_LivingArea::Compare( const T_Block& lhs, const T_Block& rhs )
+namespace
 {
-
-    return lhs.first->GetFootprint()->ComputeArea() * GetFloor( lhs ) * GetOccupation( lhs )
-           > rhs.first->GetFootprint()->ComputeArea() * GetFloor( rhs ) * GetOccupation( rhs );
+    template< typename T >
+    bool Compare( const T& lhs, const T& rhs )
+    {
+        return lhs.first->GetLivingSpace() > rhs.first->GetLivingSpace();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +104,7 @@ bool MIL_LivingArea::Compare( const T_Block& lhs, const T_Block& rhs )
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::DistributeHumans( float area )
 {
-    std::sort( blocks_.begin(), blocks_.end(), boost::bind( &MIL_LivingArea::Compare, this, _1, _2 ) );
+    std::sort( blocks_.begin(), blocks_.end(), boost::bind( &Compare< T_Block >, _1, _2 ) );
     unsigned long tmp = population_;
     for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
@@ -120,7 +136,7 @@ void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_LivingArea_ABC >( *this );
     file >> nID_
-        >> population_;
+         >> population_;
     unsigned int size;
     file >> size;
     unsigned int blockId;
@@ -289,28 +305,4 @@ bool MIL_LivingArea::HasUsage( const T_Block& block, const std::string& motivati
     if( motivations.find( motivation ) == motivations.end() )
         return false;
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::GetFloor
-// Created: LGY 2011-01-26
-// -----------------------------------------------------------------------------
-unsigned int MIL_LivingArea::GetFloor( const T_Block& block ) const
-{
-    const urban::PhysicalAttribute* pPhysical = block.first->Retrieve< urban::PhysicalAttribute >();
-    if( !pPhysical || !pPhysical->GetArchitecture() )
-        return 1u;
-    return pPhysical->GetArchitecture()->GetFloorNumber() + 1;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::GetOccupation
-// Created: LGY 2011-01-26
-// -----------------------------------------------------------------------------
-float MIL_LivingArea::GetOccupation( const T_Block& block ) const
-{
-    const urban::PhysicalAttribute* pPhysical = block.first->Retrieve< urban::PhysicalAttribute >();
-    if( !pPhysical || !pPhysical->GetArchitecture() )
-        return 1.f;
-    return pPhysical->GetArchitecture()->GetOccupation();
 }

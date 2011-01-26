@@ -78,26 +78,27 @@ private:
 
     typedef std::map< unsigned long, unsigned int > T_Identifiers;
     typedef T_Identifiers::const_iterator         CIT_Identifiers;
+
+    typedef std::map< std::string, float > T_Accommodations;
     //@}
 
 private:
     //! @name Helpers
     //@{
     void ReadUrbanBlock( xml::xistream& xis, float& area );
+    void LoadAccommodations();
     void DistributeHumans( float area );
     bool HasUsage( const T_Block& block, const std::string& motivation ) const;
     T_Blocks GetBlockUsage( const std::string& motivation ) const;
-    unsigned int GetFloor( const T_Block& block ) const;
-    float GetOccupation( const T_Block& block ) const;
-    bool Compare( const T_Block& lhs, const T_Block& rhs );
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_Blocks blocks_;
     unsigned int nID_;
     unsigned long population_;
+    T_Accommodations accommodations_;
+    T_Blocks blocks_;
     //@}
 };
 
