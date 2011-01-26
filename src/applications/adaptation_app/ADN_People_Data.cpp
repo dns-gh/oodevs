@@ -186,7 +186,7 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "transfer-time", transferTime_ )
             >> xml::list( "event", *this, &ADN_People_Data::PeopleInfos::ReadEvent, index )
           >> xml::end
-          >> xml::start( "security-level" )
+          >> xml::start( "safety-level" )
             >> xml::attribute( "loss-on-fire", securityLossOnFire_ )
             >> xml::attribute( "gain-per-hour", securityGainPerHour_ )
           >> xml::end;
@@ -214,7 +214,7 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
     for( IT_Events it = schedule_.begin(); it != schedule_.end(); ++it )
         it->second->WriteArchive( output );
     output  << xml::end
-          << xml::start( "security-level" )
+          << xml::start( "safety-level" )
             << xml::attribute( "loss-on-fire", securityLossOnFire_.GetData() / 100.0 )
             << xml::attribute( "gain-per-hour", securityGainPerHour_.GetData() / 100.0 )
           << xml::end

@@ -61,6 +61,12 @@ public:
     virtual void ApplyStructuralState( unsigned int structuralState ) const;
     //@}
 
+    //! @name Fires
+    //@{
+    virtual void ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation );
+    virtual void ApplyDirectFire() const;
+    //@}
+
     //! @name Instanciate / Build / Copy object
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const; //<! create and register every prototyped capacity

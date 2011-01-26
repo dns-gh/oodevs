@@ -9,7 +9,7 @@
             <xs:all>
               <xs:element name="schedule" type="T_Schedule"/>
               <xs:element name="repartition" type="T_Repartition"/>
-              <xs:element name="security-level" type="T_SecurityLevel"/>
+              <xs:element name="safety-level" type="T_SafetyLevel"/>
             </xs:all>
             <xs:attribute name="associated-crowd" type="xs:string" use="required"/>
             <xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
@@ -24,7 +24,7 @@
     <xs:attribute name="female" type="xs:float" use="required"/>
     <xs:attribute name="children" type="xs:float" use="required"/>
   </xs:complexType>
-  <xs:complexType name="T_SecurityLevel">
+  <xs:complexType name="T_SafetyLevel">
     <xs:attribute name="loss-on-fire" type="T_ZeroToOneDouble" use="required"/>
     <xs:attribute name="gain-per-hour" type="T_ZeroToOneDouble" use="required"/>
   </xs:complexType>

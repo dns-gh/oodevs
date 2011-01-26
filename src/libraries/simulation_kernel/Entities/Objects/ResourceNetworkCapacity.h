@@ -79,6 +79,7 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
 
     virtual void NotifyStructuralStateChanged( unsigned int structuralState, const MIL_Object_ABC& object );
+    virtual void NotifyFired() {}
 
     void RegisterNode( unsigned int id );
     void SendState( sword::UrbanAttributes& message ) const;

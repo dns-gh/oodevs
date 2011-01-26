@@ -33,6 +33,7 @@ Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg )
     , nNbrDeadHumans_    ( 0 )
     , nNbrWoundedHumans_ ( 0 )
     , healthSatisfaction_( 0 )
+    , safetySatisfaction_( 0 )
 {
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
@@ -68,6 +69,8 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     {
         if( msg.satisfaction().has_health() )
             healthSatisfaction_ = msg.satisfaction().health();
+        if( msg.satisfaction().has_safety() )
+            safetySatisfaction_ = msg.satisfaction().safety();
     }
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
@@ -113,6 +116,7 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     msg().set_wounded( nNbrWoundedHumans_ );
     msg().set_dead( nNbrDeadHumans_ );
     msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
+    msg().mutable_satisfaction()->set_safety( safetySatisfaction_ );
     BOOST_FOREACH( const T_UrbanBlocks::value_type& urbanBlock, urbanBlocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();

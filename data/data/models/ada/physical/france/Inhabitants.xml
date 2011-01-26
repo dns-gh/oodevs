@@ -3,12 +3,12 @@
   <population associated-crowd="Population standard" id="0" name="PopType1">
     <repartition children="10" female="40" male="50"/>
     <schedule transfer-time=""/>
-    <security-level gain-per-hour="0.2" loss-on-fire="0.1"/>
+    <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
   </population>
   <population associated-crowd="Population standard" id="1" name="PopType2">
     <repartition children="10" female="50" male="40"/>
     <schedule transfer-time=""/>
-    <security-level gain-per-hour="0.2" loss-on-fire="0.1"/>
+    <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
   </population>
 </populations>
-<!-- signature="1798374079" -->
+<!-- signature="3530166811" -->

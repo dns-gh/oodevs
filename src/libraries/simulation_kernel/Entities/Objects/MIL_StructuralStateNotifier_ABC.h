@@ -32,6 +32,7 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyStructuralStateChanged( unsigned int structuralState, const MIL_Object_ABC& object ) = 0;
+    virtual void NotifyFired() = 0;
     //@}
 };
 

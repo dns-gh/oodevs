@@ -253,6 +253,26 @@ void MIL_Object::ApplyStructuralState( unsigned int structuralState ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Object::ApplyIndirectFire
+// Created: JSR 2011-01-25
+// -----------------------------------------------------------------------------
+void MIL_Object::ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation )
+{
+    MIL_Object_ABC::ApplyIndirectFire( attritionSurface, dotation );
+    if( attritionSurface.IsIntersecting( GetLocalisation() ) )
+        std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(), boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyFired, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object::ApplyDirectFire
+// Created: JSR 2011-01-25
+// -----------------------------------------------------------------------------
+void MIL_Object::ApplyDirectFire() const
+{
+    std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(), boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyFired, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Object::SendFullState
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------

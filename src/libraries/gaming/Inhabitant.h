@@ -98,7 +98,8 @@ private:
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;
-    float healthSatisfaction_;
+    unsigned int healthSatisfaction_;
+    unsigned int safetySatisfaction_;
     T_UrbanObjectVector livingUrbanObject_;
     T_Extensions extensions_;
     //@}

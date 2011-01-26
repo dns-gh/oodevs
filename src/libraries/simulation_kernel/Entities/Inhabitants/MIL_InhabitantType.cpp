@@ -73,9 +73,9 @@ MIL_InhabitantType::MIL_InhabitantType( const std::string& strName, xml::xistrea
     pModel_ = MIL_PopulationType::Find( xis.attribute< std::string >( "associated-crowd" ) );
     if( !pModel_ )
         xis.error( "Unknown crowd type" );
-    xis >> xml::start( "security-level" )
-            >> xml::attribute( "gain-per-hour", securityGainPerHour_ )
-            >> xml::attribute( "loss-on-fire", securityLossOnFire_ )
+    xis >> xml::start( "safety-level" )
+            >> xml::attribute( "gain-per-hour", safetyGainPerHour_ )
+            >> xml::attribute( "loss-on-fire", safetyLossOnFire_ )
         >> xml::end
         >> xml::start( "schedule" );
     pXisSchedule_.reset( new xml::xibufferstream( xis ) );
@@ -117,6 +117,24 @@ const MIL_PopulationType& MIL_InhabitantType::GetAssociatedCrowdType() const
 void MIL_InhabitantType::InitializeSchedule( MIL_Schedule_ABC& schedule ) const
 {
     schedule.Configure( *pXisSchedule_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_InhabitantType::GetSafetyGainPerHour
+// Created: JSR 2011-01-25
+// -----------------------------------------------------------------------------
+float MIL_InhabitantType::GetSafetyGainPerHour() const
+{
+    return safetyGainPerHour_;
+}
+    
+// -----------------------------------------------------------------------------
+// Name: MIL_InhabitantType::GetSafetyLossOnFire
+// Created: JSR 2011-01-25
+// -----------------------------------------------------------------------------
+float MIL_InhabitantType::GetSafetyLossOnFire() const
+{
+    return safetyLossOnFire_;
 }
 
 // -----------------------------------------------------------------------------

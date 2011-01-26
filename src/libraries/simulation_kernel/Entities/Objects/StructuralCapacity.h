@@ -16,7 +16,7 @@
 class PHY_ComposanteState;
 class PHY_DotationCategory;
 class PHY_Protection;
-class MT_Ellipse;
+class TER_Localisation;
 
 namespace xml
 {
@@ -56,7 +56,7 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
 
-    void ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation );
+    void ApplyIndirectFire( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation );
     void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
     const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
     unsigned int GetStructuralState() const;

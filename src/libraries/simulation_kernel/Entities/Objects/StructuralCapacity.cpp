@@ -123,37 +123,18 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
     object.ApplyStructuralState( structuralState_ );
 }
 
-namespace
-{
-    geometry::Polygon2d EllipseToPolygon( const MT_Ellipse& ellipse )
-    {
-        geometry::Polygon2d polygon;
-        const MT_Vector2D major = ellipse.GetMajorAxisHighPoint();
-        const MT_Vector2D minor = ellipse.GetMinorAxisHighPoint();
-        polygon.Add( geometry::Point2d( major.rX_ + minor.rX_ - ellipse.GetCenter().rX_, major.rY_ + minor.rY_ - ellipse.GetCenter().rY_ ) );
-        polygon.Add( geometry::Point2d( major.rX_ - minor.rX_ + ellipse.GetCenter().rX_, major.rY_ - minor.rY_ + ellipse.GetCenter().rY_ ) );
-        polygon.Add( geometry::Point2d( 3 * ellipse.GetCenter().rX_ - major.rX_ - minor.rX_, 3 * ellipse.GetCenter().rY_ - major.rY_ - minor.rY_ ) );
-        polygon.Add( geometry::Point2d( ellipse.GetCenter().rX_ - major.rX_ + minor.rX_, ellipse.GetCenter().rY_ - major.rY_ + minor.rY_ ) );
-        return polygon;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: StructuralCapacity::ApplyIndirectFire
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const MT_Ellipse& attritionSurface, const PHY_DotationCategory& dotation )
+void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation )
 {
     const double objectArea = object.GetLocalisation().GetArea();
     if( !objectArea )
         return;
     if( const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >() )
     {
-        CT_PointVector points = object.GetLocalisation().GetPoints();
-        geometry::Polygon2d p;
-        for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
-            p.Add( geometry::Point2d( it->rX_, it->rY_ ) );
-        const double ratio = MIL_Geometry::IntersectionArea( EllipseToPolygon( attritionSurface ), p ) / objectArea;
+        const double ratio = MIL_Geometry::IntersectionArea( attritionSurface, object.GetLocalisation() ) / objectArea;
         const unsigned int oldStructuralState = structuralState_;
         double attrition = dotation.GetAttrition(  materialAttribute->GetMaterial().GetId() );
         unsigned int damage = static_cast< unsigned int >( 100. * ratio * attrition );

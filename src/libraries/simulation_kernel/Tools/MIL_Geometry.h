@@ -11,6 +11,13 @@
 #define __MIL_Geometry_h_
 
 #include <geometry/Types.h>
+#pragma warning( push, 0 )
+#include <boost/geometry/geometry.hpp>
+#pragma warning( pop )
+
+namespace bg = boost::geometry;
+
+class TER_Localisation;
 
 // =============================================================================
 /** @class  MIL_Geometry
@@ -33,6 +40,14 @@ public:
     static void ComputeHull( geometry::Polygon2f& result, const geometry::Polygon2f& polygon );
     template< typename T >
     static T IntersectionArea( const geometry::Polygon2< T >& polygon1, const geometry::Polygon2< T >& polygon2 );
+    static double IntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    template< typename T >
+    static T PrivateIntersectionArea( const bg::polygon< bg::point_xy< T > >& polygon1, const bg::polygon< bg::point_xy< T > >& polygon2 );
     //@}
 };
 

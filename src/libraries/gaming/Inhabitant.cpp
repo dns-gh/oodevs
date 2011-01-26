@@ -96,7 +96,9 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     if( msg.has_satisfaction() )
     {
         if( msg.satisfaction().has_health() )
-            healthSatisfaction_ = msg.satisfaction().health();
+            healthSatisfaction_ = static_cast< unsigned int >( 100 * ( msg.satisfaction().health() + 0.005f ) );
+        if( msg.satisfaction().has_safety() )
+            safetySatisfaction_ = static_cast< unsigned int >( 100 * ( msg.satisfaction().safety()  + 0.005f ) );
     }
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
@@ -106,6 +108,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         if( it != livingUrbanObject_.end() )
             it->second->UpdateHumans( name_.ascii(), occupation.number() );
     }
+    controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,6 +201,7 @@ void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Inhabitant", "Wounded:" ), nNbrWoundedHumans_ );
     displayer.Display( tools::translate( "Inhabitant", "Dead:" ), nNbrDeadHumans_ );
     displayer.Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ );
+    displayer.Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +225,8 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
             (*it)->Display( tools::translate( "Inhabitant", "Alive:" ), nNbrHealthyHumans_ )
                   .Display( tools::translate( "Inhabitant", "Dead:" ), nNbrDeadHumans_ )
                   .Display( tools::translate( "Inhabitant", "Wounded:" ), nNbrWoundedHumans_ )
-                  .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ );
+                  .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ )
+                  .Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
         displayers_.clear();
     }
 }

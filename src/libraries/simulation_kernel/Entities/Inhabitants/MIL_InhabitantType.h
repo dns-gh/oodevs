@@ -45,6 +45,8 @@ public:
     unsigned int GetID() const;
     const MIL_PopulationType& GetAssociatedCrowdType() const;
     void InitializeSchedule( MIL_Schedule_ABC& schedule ) const;
+    float GetSafetyGainPerHour() const;
+    float GetSafetyLossOnFire() const;
     //@}
 
     //! @name Operations
@@ -81,8 +83,8 @@ private:
     const std::string strName_;
     unsigned int nID_;
     const MIL_PopulationType* pModel_;
-    float securityGainPerHour_;
-    float securityLossOnFire_;
+    float safetyGainPerHour_;
+    float safetyLossOnFire_;
     std::auto_ptr< xml::xibufferstream > pXisSchedule_;
     static T_InhabitantMap inhabitants_;
     //@}

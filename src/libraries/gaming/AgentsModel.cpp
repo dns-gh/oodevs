@@ -45,6 +45,7 @@ void AgentsModel::Purge()
     tools::Resolver< Agent_ABC >::DeleteAll();
     tools::Resolver< Automat_ABC >::DeleteAll();
     tools::Resolver< Population_ABC >::DeleteAll();
+    tools::Resolver< Inhabitant_ABC >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------

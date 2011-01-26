@@ -11,7 +11,6 @@
 #define __PHY_DotationCategory_IndirectFire_h_
 
 #include "PHY_DotationCategory_IndirectFire_ABC.h"
-#include "MIL_Random.h"
 
 namespace xml
 {
@@ -40,14 +39,14 @@ public:
     //@{
     virtual void ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
     virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
-    virtual bool HasHit     ( const MIL_Agent_ABC& target, double ratio ) const;
+    virtual bool HasHit( const MIL_Agent_ABC& target, double ratio ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< double >       T_PhVector;
-    typedef T_PhVector::const_iterator  CIT_PhVector;
+    typedef std::vector< double >        T_PhVector;
+    typedef T_PhVector::const_iterator CIT_PhVector;
     //@}
 
     //! @name Helpers
@@ -58,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    double   rNeutralizationCoef_;
+    double rNeutralizationCoef_;
     T_PhVector phs_;
     //@}
 };

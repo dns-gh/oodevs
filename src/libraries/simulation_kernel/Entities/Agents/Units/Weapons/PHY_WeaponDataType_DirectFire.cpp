@@ -303,6 +303,10 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
     const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
     NotifyFirerPerception(firer, target );
 
+    const UrbanObjectWrapper* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
+    if( urbanObject )
+        urbanObject->ApplyDirectFire();
+
     if( bUsePH )
     {
         const PHY_Volume& targetVolume = compTarget.GetType().GetVolume(); //$$$$ ENCAPSULER
@@ -312,9 +316,8 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
 
         const double rPH = GetPH( firer, target, targetVolume, firerPosition, targetPosition );
         target.GetRole< PHY_RoleInterface_ActiveProtection >().UseAmmunition( weaponType_.GetDotationCategory() );
-        if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH ) )
+        if( 1. - MIL_Random::rand_io( MIL_Random::eFire ) > rPH )
         {
-            const UrbanObjectWrapper* urbanObject = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
             if( urbanObject )
             {
                 StructuralCapacity* capacity = const_cast< StructuralCapacity* >( urbanObject->Retrieve< StructuralCapacity >() );

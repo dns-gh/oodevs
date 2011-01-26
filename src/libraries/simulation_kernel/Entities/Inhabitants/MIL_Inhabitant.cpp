@@ -68,6 +68,8 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , nNbrWoundedHumans_ ( 0 )
     , healthNeed_        ( 0 )
     , healthSatisfaction_( 0 )
+    , safetySatisfaction_( 1.f )
+    , lastSafety_        ( 1.f )
     , healthChanged_     ( false )
 {
     float totalArea = 0.f;
@@ -112,6 +114,8 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     , nNbrWoundedHumans_ ( 0 )
     , healthNeed_        ( 0 )
     , healthSatisfaction_( 0 )
+    , safetySatisfaction_( 0 )
+    , lastSafety_        ( 0 )
     , healthChanged_     ( false )
 {
     // NOTHING
@@ -144,6 +148,7 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> nNbrWoundedHumans_
          >> healthNeed_
          >> healthSatisfaction_
+         >> safetySatisfaction_
          >> pLivingArea;
     pLivingArea_.reset( pLivingArea );
     unsigned int size;
@@ -176,6 +181,7 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << nNbrWoundedHumans_
          << healthNeed_
          << healthSatisfaction_
+         << safetySatisfaction_
          << pLivingArea;
     unsigned int size;
     size = extensions_.size();
@@ -254,6 +260,7 @@ void MIL_Inhabitant::SendFullState() const
     msg().set_dead( nNbrDeadHumans_ );
     msg().set_wounded( nNbrWoundedHumans_ );
     msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
+    msg().mutable_satisfaction()->set_safety( safetySatisfaction_ );
     msg.Send( NET_Publisher_ABC::Publisher() );
     pLivingArea_->SendFullState();
 }
@@ -265,6 +272,7 @@ void MIL_Inhabitant::SendFullState() const
 void MIL_Inhabitant::UpdateState()
 {
     pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
+    safetySatisfaction_ = std::min( 1.f, safetySatisfaction_ + MIL_AgentServer::GetWorkspace().GetTickDuration() * pType_->GetSafetyGainPerHour() / 3600 );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,14 +281,23 @@ void MIL_Inhabitant::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::UpdateNetwork()
 {
-    if( healthChanged_ )
+    bool safetyChanged = std::abs( lastSafety_ - safetySatisfaction_ ) > 0.01f;
+    if( healthChanged_ || safetyChanged )
     {
         client::PopulationUpdate msg;
         msg().mutable_id()->set_id( nID_ );
-        msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
+        if( healthChanged_ )
+        {
+            msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
+            healthChanged_ = false;
+        }
+        if( safetyChanged )
+        {
+            msg().mutable_satisfaction()->set_safety( safetySatisfaction_ );
+            lastSafety_ = safetySatisfaction_;
+        }
         msg.Send( NET_Publisher_ABC::Publisher() );
     }
-    healthChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -320,6 +337,15 @@ void MIL_Inhabitant::NotifyStructuralStateChanged( unsigned int /*structuralStat
 {
     if( object.Retrieve< MedicalCapacity >() )
         ComputeHealthSatisfaction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::NotifyFired
+// Created: JSR 2011-01-25
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::NotifyFired()
+{
+    safetySatisfaction_ = std::max( 0.f, safetySatisfaction_ - pType_->GetSafetyLossOnFire() );
 }
 
 // -----------------------------------------------------------------------------

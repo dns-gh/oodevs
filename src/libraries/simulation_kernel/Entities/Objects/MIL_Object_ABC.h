@@ -45,6 +45,7 @@ class MIL_ObjectManipulator_ABC;
 class MIL_ObjectType_ABC;
 class MIL_PopulationElement_ABC;
 class TER_Localisation;
+class PHY_DotationCategory;
 
 //=============================================================================
 // Created: NLD 2002-12-12
@@ -103,6 +104,12 @@ public:
     void NotifyAgentMovingOutside( MIL_Agent_ABC& agent );
     void NotifyAgentPutInside    ( MIL_Agent_ABC& agent );
     void NotifyAgentPutOutside   ( MIL_Agent_ABC& agent );
+    //@}
+
+    //! @name Fires
+    //@{
+    virtual void ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation );
+    virtual void ApplyDirectFire() const;
     //@}
 
     //! @name InteractiveContainer

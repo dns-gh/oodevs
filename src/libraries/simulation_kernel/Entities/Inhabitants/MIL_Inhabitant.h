@@ -66,6 +66,7 @@ public:
     //! @name From MIL_StructuralStateNotifier_ABC
     //@{
     virtual void NotifyStructuralStateChanged( unsigned int structuralState, const MIL_Object_ABC& object );
+    virtual void NotifyFired();
     //@}
 
 protected:
@@ -114,6 +115,8 @@ private:
     float healthNeed_;
     float healthSatisfaction_;
     bool healthChanged_;
+    float safetySatisfaction_;
+    float lastSafety_;
     T_Extensions extensions_;
     //@}
 

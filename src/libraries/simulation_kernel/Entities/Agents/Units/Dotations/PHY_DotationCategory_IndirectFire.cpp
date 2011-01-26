@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectFire.h"
 #include "PHY_DotationCategory.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -34,9 +33,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_AgentManager.h"
-#include "Tools/MIL_Geometry.h"
 #include <urban/Model.h>
-#include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -54,9 +51,9 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
-    , phs_( PHY_Posture::GetPostures().size(), 1. )
+    , phs_                                 ( PHY_Posture::GetPostures().size(), 1. )
 {
-    xis >> xml::attribute( "neutralization-ratio", rNeutralizationCoef_ );
+    rNeutralizationCoef_ = xis.attribute< double >( "neutralization-ratio" );
     if( rNeutralizationCoef_ < 1. )
         xis.error( "neutralization-ratio < 1" );
     if( !dotationCategory.HasAttritions() )
@@ -71,12 +68,10 @@ PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_
 void PHY_DotationCategory_IndirectFire::ReadPh( xml::xistream& xis )
 {
     const PHY_Posture::T_PostureMap& postures = PHY_Posture::GetPostures();
-    std::string postureType;
-    xis >> xml::attribute( "target-posture", postureType );
-    PHY_Posture::CIT_PostureMap it = postures.find( postureType );
+    PHY_Posture::CIT_PostureMap it = postures.find( xis.attribute< std::string >( "target-posture" ) );
     const PHY_Posture& posture = *it->second;
     assert( phs_.size() > posture.GetID() );
-    xis >> xml::attribute( "value", phs_[ posture.GetID() ] );
+    phs_[ posture.GetID() ] = xis.attribute< double >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,9 +83,22 @@ PHY_DotationCategory_IndirectFire::~PHY_DotationCategory_IndirectFire()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
+namespace
+{
+    TER_Localisation EllipseToPolygon( const MT_Ellipse& ellipse )
+    {
+        T_PointVector vector;
+        const MT_Vector2D major = ellipse.GetMajorAxisHighPoint();
+        const MT_Vector2D minor = ellipse.GetMinorAxisHighPoint();
+        vector.push_back( MT_Vector2D( major.rX_ + minor.rX_ - ellipse.GetCenter().rX_, major.rY_ + minor.rY_ - ellipse.GetCenter().rY_ ) );
+        vector.push_back( MT_Vector2D( major.rX_ - minor.rX_ + ellipse.GetCenter().rX_, major.rY_ - minor.rY_ + ellipse.GetCenter().rY_ ) );
+        vector.push_back( MT_Vector2D( 3 * ellipse.GetCenter().rX_ - major.rX_ - minor.rX_, 3 * ellipse.GetCenter().rY_ - major.rY_ - minor.rY_ ) );
+        vector.push_back( MT_Vector2D( ellipse.GetCenter().rX_ - major.rX_ + minor.rX_, ellipse.GetCenter().rY_ - major.rY_ + minor.rY_ ) );
+        TER_Polygon polygon;
+        polygon.Reset( vector );
+        return TER_Localisation( polygon );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire::ApplyEffect
@@ -98,11 +106,11 @@ PHY_DotationCategory_IndirectFire::~PHY_DotationCategory_IndirectFire()
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const
 {
-    MT_Vector2D vFireDirection        = ( ( vTargetPosition == vSourcePosition ) ? MT_Vector2D( 1.f, 0.f ) : ( vTargetPosition - vSourcePosition ) ).Normalize() ;
+    MT_Vector2D vFireDirection = ( ( vTargetPosition == vSourcePosition ) ? MT_Vector2D( 1.f, 0.f ) : ( vTargetPosition - vSourcePosition ) ).Normalize() ;
     MT_Vector2D vRotatedFireDirection = vFireDirection;
     vRotatedFireDirection.Rotate90();
 
-    vFireDirection        *= ( rInterventionTypeFired * rDispersionX_ );
+    vFireDirection*= ( rInterventionTypeFired * rDispersionX_ );
     vRotatedFireDirection *= ( rInterventionTypeFired * rDispersionY_ );
 
     // Agents
@@ -114,7 +122,6 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( attritionSurface, category_, 20 , false ) );
         MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( neutralizationSurface, category_, 20, true ) );
         
-        
         bool bRCSent = false;
 
         TER_Agent_ABC::T_AgentPtrVector targets;
@@ -123,18 +130,19 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
         TER_Agent_ABC::T_AgentPtrVector allTargets;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle(vTargetPosition, 500., allTargets );
         
-        std::set< const urban::TerrainObject_ABC* > urbanList;
-        if( MIL_AgentServer::IsInitialized() )
-            MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ),
-                                                                   static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
-        
-        for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )
+        if( !allTargets.empty() )
         {
-            MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itAllTarget ).GetAgent();
-            const UrbanObjectWrapper* wrapper = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-            if( wrapper )
-                if( std::find( targets.begin(), targets.end(), *itAllTarget ) == targets.end() || std::find( urbanList.begin(), urbanList.end(), &wrapper->GetObject() ) != urbanList.end() )
-                    targets.push_back( *itAllTarget );
+            std::set< const urban::TerrainObject_ABC* > urbanList;
+            if( MIL_AgentServer::IsInitialized() )
+                MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ),
+                                                                   static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
+            for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )
+            {
+                MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itAllTarget ).GetAgent();
+                if( const UrbanObjectWrapper* wrapper = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() )
+                    if( std::find( targets.begin(), targets.end(), *itAllTarget ) == targets.end() || std::find( urbanList.begin(), urbanList.end(), &wrapper->GetObject() ) != urbanList.end() )
+                        targets.push_back( *itAllTarget );
+            }
         }
 
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
@@ -152,15 +160,9 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
 
         std::vector< TER_Object_ABC* > objects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
-
         
         for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
-        {
-            MIL_Object_ABC& object = *static_cast< MIL_Object_ABC* >( *it );
-            StructuralCapacity* capacity = object.Retrieve< StructuralCapacity >();
-            if( capacity )
-                capacity->ApplyIndirectFire( object, attritionSurface, dotationCategory_ );
-        }
+            static_cast< MIL_Object_ABC* >( *it )->ApplyIndirectFire( EllipseToPolygon( attritionSurface ), dotationCategory_ );
 
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
@@ -177,7 +179,6 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 float ratioComposanteHit = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( attritionSurface );
                 if( ratioComposanteHit > 0 )
                     targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit );
-
                 if( pFirer && !bRCSent && pFirer->GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
                 {
                     MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_FratricideIndirectFire );
@@ -190,7 +191,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
     // Populations
     {
         const double  rAttritionRadius = std::min( vTargetPosition.Distance( vTargetPosition + vFireDirection ),
-                                                     vTargetPosition.Distance( vTargetPosition + vRotatedFireDirection ) );
+                                                   vTargetPosition.Distance( vTargetPosition + vRotatedFireDirection ) );
         const MT_Circle attritionCircle( vTargetPosition, rAttritionRadius );
         bool bRCSent = false;
 
@@ -266,9 +267,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
 bool PHY_DotationCategory_IndirectFire::HasHit( const MIL_Agent_ABC& target, double ratio ) const
 {
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
-
-    const double rPH =   phs_[ targetPosture.GetCurrentPosture().GetID() ] *        targetPosture.GetPostureCompletionPercentage()
-                         + phs_[ targetPosture.GetLastPosture   ().GetID() ] * ( 1. - targetPosture.GetPostureCompletionPercentage() );
-
-    return ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) ) <= (rPH * ratio ) ;
+    const double rPH = phs_[ targetPosture.GetCurrentPosture().GetID() ] *        targetPosture.GetPostureCompletionPercentage()
+                     + phs_[ targetPosture.GetLastPosture   ().GetID() ] * ( 1. - targetPosture.GetPostureCompletionPercentage() );
+    return ( 1. - MIL_Random::rand_io( MIL_Random::eFire ) ) <= ( rPH * ratio ) ;
 }

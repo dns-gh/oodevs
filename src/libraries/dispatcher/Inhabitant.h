@@ -75,6 +75,7 @@ private:
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;
     float healthSatisfaction_;
+    float safetySatisfaction_;
     T_UrbanObjectId urbanObjectId_;
     T_UrbanBlocks urbanBlocks_;
     T_Extensions extensions_;
