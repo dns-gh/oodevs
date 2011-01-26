@@ -103,6 +103,7 @@ namespace sword
     class StopCrowdFire;
     class PopulationCreation;
     class PopulationUpdate;
+    class ChangePopulationMagicActionAck;
     class CrowdCreation;
     class CrowdUpdate;
     class CrowdConcentrationCreation;
@@ -430,8 +431,9 @@ private:
 
 
     // Population
-    void OnPopulationCreation           ( const sword::PopulationCreation& message );
-    void OnPopulationUpdate             ( const sword::PopulationUpdate&   message );
+    void OnPopulationCreation                   ( const sword::PopulationCreation&              message );
+    void OnPopulationUpdate                     ( const sword::PopulationUpdate&                message );
+    void OnReceiveChangePopulationMagicActionAck( const sword::ChangePopulationMagicActionAck&  message, unsigned long nCtx );
 
     // Crowd
     void OnCrowdCreation                ( const sword::CrowdCreation&                 message );

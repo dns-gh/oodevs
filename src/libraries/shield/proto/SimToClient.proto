@@ -205,6 +205,7 @@ message MsgChangePopulationMagicActionAck {
        error_invalid_population     = 1;
        error_invalid_adhesion       = 2; // unknown party for instance
        error_invalid_number         = 3; // negative number of dead for instance?
+       error_invalid_parameter      = 4; // at least one parameters invalid
     }
   required ErrorCode error_code = 1;
 }

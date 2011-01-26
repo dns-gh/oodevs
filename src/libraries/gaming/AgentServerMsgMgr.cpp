@@ -1310,6 +1310,15 @@ void AgentServerMsgMgr::OnPopulationUpdate( const sword::PopulationUpdate& messa
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveChangePopulationMagicActionAck
+// Created: ABR 2011-01-26
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveChangePopulationMagicActionAck( const sword::ChangePopulationMagicActionAck& message, unsigned long /* nCtx */)
+{
+    CheckAcknowledge( logger_, message.error_code(), "ChangePopulationAck" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnCrowdCreation
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
@@ -2007,6 +2016,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
         OnReceiveControlMeteoLocalCreation ( wrapper.message().control_local_weather_creation() );
     else if( wrapper.message().has_control_local_weather_destruction() )
         OnReceiveControlMeteoLocalDestruction( wrapper.message().control_local_weather_destruction() );
+    else if( wrapper.message().has_change_population_magic_action_ack() )
+        OnReceiveChangePopulationMagicActionAck( wrapper.message().change_population_magic_action_ack(), wrapper.context() );
     else
         UnhandledMessage( &wrapper.message() );
 }

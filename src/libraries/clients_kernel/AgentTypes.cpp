@@ -404,6 +404,8 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "log_supply_push_flow", sword::UnitMagicAction::log_supply_push_flow ) );
     RegisterActionType( *new MagicActionType( "log_supply_pull_flow", sword::UnitMagicAction::log_supply_pull_flow ) );
     RegisterActionType( *new MagicActionType( "log_supply_change_quotas", sword::UnitMagicAction::log_supply_change_quotas ) );
+    RegisterActionType( *new MagicActionType( "inhabitant_change_health_state", sword::UnitMagicAction::inhabitant_change_health_state ) );
+    RegisterActionType( *new MagicActionType( "inhabitant_change_adhesion_list", sword::UnitMagicAction::inhabitant_change_adhesion_list ) );
 
     // Knowledge Magic Actions
     RegisterActionType( *new MagicActionType( "knowledge_group_enable", sword::KnowledgeMagicAction::enable ) );

@@ -71,9 +71,6 @@ private:
     //! @name Member data
     //@{
     const kernel::InhabitantType& type_;
-    unsigned int healthy_;
-    unsigned int wounded_;
-    unsigned int dead_;
     float healthNeed_;
     QString text_;
     T_Extensions extensions_;

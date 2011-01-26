@@ -30,9 +30,6 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& c
     : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
     , controllers_      ( controllers )
     , type_             ( typeResolver.Get( message.type().id() ) )
-    , nNbrHealthyHumans_( 0 )
-    , nNbrDeadHumans_   ( 0 )
-    , nNbrWoundedHumans_( 0 )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
@@ -88,11 +85,11 @@ void Inhabitant::CreateDictionary( Controller& controller )
 void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 {
     if( msg.has_healthy() )
-        nNbrHealthyHumans_ = msg.healthy();
+        healthy_ = msg.healthy();
     if( msg.has_dead() )
-        nNbrDeadHumans_ = msg.dead();
+        dead_ = msg.dead();
     if( msg.has_wounded() )
-        nNbrWoundedHumans_ = msg.wounded();
+        wounded_ = msg.wounded();
     if( msg.has_satisfaction() )
     {
         if( msg.satisfaction().has_health() )
@@ -197,9 +194,9 @@ void Inhabitant::Accept( LocationVisitor_ABC& /*visitor*/ ) const
 void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" ).Start( Styles::bold ).Add( static_cast< const Inhabitant_ABC* >( this ) ).End();
-    displayer.Display( tools::translate( "Inhabitant", "Alive:" ), nNbrHealthyHumans_ );
-    displayer.Display( tools::translate( "Inhabitant", "Wounded:" ), nNbrWoundedHumans_ );
-    displayer.Display( tools::translate( "Inhabitant", "Dead:" ), nNbrDeadHumans_ );
+    displayer.Display( tools::translate( "Inhabitant", "Alive:" ), healthy_ );
+    displayer.Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ );
+    displayer.Display( tools::translate( "Inhabitant", "Dead:" ), dead_ );
     displayer.Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
 }
@@ -222,9 +219,9 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
     if( !displayers_.empty() )
     {
         for( std::set< Displayer_ABC* >::iterator it = displayers_.begin(); it != displayers_.end(); ++it )
-            (*it)->Display( tools::translate( "Inhabitant", "Alive:" ), nNbrHealthyHumans_ )
-                  .Display( tools::translate( "Inhabitant", "Dead:" ), nNbrDeadHumans_ )
-                  .Display( tools::translate( "Inhabitant", "Wounded:" ), nNbrWoundedHumans_ )
+            (*it)->Display( tools::translate( "Inhabitant", "Alive:" ), healthy_ )
+                  .Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ )
+                  .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ )
                   .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ )
                   .Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
         displayers_.clear();

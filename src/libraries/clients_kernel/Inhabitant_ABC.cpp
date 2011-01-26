@@ -20,6 +20,9 @@ const QString Inhabitant_ABC::typeName_ = "inhabitant";
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
 Inhabitant_ABC::Inhabitant_ABC()
+    : healthy_( 0 )
+    , dead_   ( 0 )
+    , wounded_( 0 )
 {
     // NOTHING
 }

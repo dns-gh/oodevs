@@ -145,6 +145,7 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlGlobalWeather                   , control_global_weather                    )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlLocalWeatherCreation            , control_local_weather_creation            )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlLocalWeatherDestruction         , control_local_weather_destruction         )
+    GENERATE_MESSAGE( sword::SimToClient, sword, ChangePopulationMagicActionAck         , change_population_magic_action_ack        )
 }
 
 #endif // __protocol_ClientSenders_h_

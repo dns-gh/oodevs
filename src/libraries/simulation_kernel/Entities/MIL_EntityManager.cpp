@@ -131,6 +131,8 @@ namespace
             return tasker.formation().id();
         if( tasker.has_party() )
             return tasker.party().id();
+        if( tasker.has_population() )
+            return tasker.population().id();
         throw std::exception( "Misformed tasker in protocol message" );
     }
 }
@@ -829,7 +831,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const sword::UnitMagicAction& 
         case sword::UnitMagicAction::crowd_kill:
         case sword::UnitMagicAction::crowd_resurrect:
         case sword::UnitMagicAction::crowd_change_attitude:
-            if( MIL_Population* pPopulation = pPopulation = populationFactory_->Find ( id ) )
+            if( MIL_Population* pPopulation = populationFactory_->Find ( id ) )
                 pPopulation->OnReceiveCrowdMagicAction( message );
             else
                 throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_unit );
@@ -883,6 +885,14 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const sword::UnitMagicAction& 
             else
                 throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
             break;
+        case sword::UnitMagicAction::inhabitant_change_health_state:
+        case sword::UnitMagicAction::inhabitant_change_adhesion_list:
+            if( MIL_Inhabitant* pInhabitant = inhabitantFactory_->Find ( id ) )
+                pInhabitant->OnReceiveInhabitantMagicAction( message );
+            else
+                throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_population );
+            break;
+
         default:
             if( MIL_Automate* pAutomate = FindAutomate( id ) )
                 pAutomate->OnReceiveUnitMagicAction( message, *armyFactory_ );

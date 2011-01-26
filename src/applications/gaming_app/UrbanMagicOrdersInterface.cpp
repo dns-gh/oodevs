@@ -119,7 +119,7 @@ int UrbanMagicOrdersInterface::AddMagic( const QString& label, const char* slot,
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationMagicOrdersInterface::AddValuedMagic
+// Name: UrbanMagicOrdersInterface::AddValuedMagic
 // Created: SLG 2010-12-21
 // -----------------------------------------------------------------------------
 void UrbanMagicOrdersInterface::AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot )

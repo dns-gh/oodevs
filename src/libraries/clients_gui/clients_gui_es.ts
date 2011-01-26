@@ -949,6 +949,14 @@ Please check access permissions or write protection.</source>
         <source>for %1:</source>
         <translation>de %1:</translation>
     </message>
+    <message>
+        <source>Infrastructures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Infrastructures</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::LightingPanel</name>

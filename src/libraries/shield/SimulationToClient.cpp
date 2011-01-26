@@ -2394,7 +2394,8 @@ void SimulationToClient::Convert( const sword::ChangePopulationMagicActionAck& f
     CONVERT_ENUM( error_code, ( sword::ChangePopulationMagicActionAck::no_error, MsgsSimToClient::MsgChangePopulationMagicActionAck::no_error )
                               ( sword::ChangePopulationMagicActionAck::error_invalid_population, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_population )
                               ( sword::ChangePopulationMagicActionAck::error_invalid_adhesion, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_adhesion )
-                              ( sword::ChangePopulationMagicActionAck::error_invalid_number, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_number ) );
+                              ( sword::ChangePopulationMagicActionAck::error_invalid_number, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_number ) 
+                              ( sword::ChangePopulationMagicActionAck::error_invalid_parameter, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_parameter ) );
 }
 
 // -----------------------------------------------------------------------------

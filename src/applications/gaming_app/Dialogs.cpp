@@ -14,6 +14,9 @@
 #include "ChangeHumanFactorsDialog.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "CreateFormationDialog.h"
+#include "InhabitantChangeHealthStateDialog.h"
+#include "InhabitantChangeAdhesionListDialog.h"
+#include "InhabitantExtractCrowdDialog.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "LogisticSupplyPullFlowDialog.h"
 #include "LogisticSupplyPushFlowDialog.h"
@@ -44,6 +47,9 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new BriefingDialog( parent, controllers, publisher, handler, config );
     new CreateFormationDialog( parent, controllers, model.formations_, profile, actionsModel, staticModel.types_, simulation );
     new OrbatAttributesDialog( parent, controllers );
+    new InhabitantChangeHealthStateDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new InhabitantChangeAdhesionListDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new InhabitantExtractCrowdDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
 }
 
 // -----------------------------------------------------------------------------

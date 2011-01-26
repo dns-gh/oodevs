@@ -127,9 +127,8 @@ void MedicalCapacityUpdateDialog::CreateCanvas()
     }
     {
         QGroupBox* canvas = new QGroupBox( 1, Qt::Horizontal, tr( "Bed Capacities (Patients/Baseline)" ), this );
-        QVBoxLayout* vlayout = new QVBoxLayout( canvas );
+        QVBox* vlayout = new QVBox( canvas );
         vbox_ = new QVBox( canvas );
-        vlayout->addWidget( vbox_ );
         // new QLabel( tr( "Bed Capacities:" ), vbox_ );
         // FillCapacityTypes( vbox_ );
         layout->add( canvas );

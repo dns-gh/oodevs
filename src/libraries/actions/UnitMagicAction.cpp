@@ -15,6 +15,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
@@ -96,6 +97,8 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher, int context ) const
         message().mutable_tasker()->mutable_crowd()->set_id( entity.GetId() );
     else if( dynamic_cast< const kernel::Team_ABC* >( &entity ) )
         message().mutable_tasker()->mutable_party()->set_id( entity.GetId() );
+    else if( dynamic_cast< const kernel::Inhabitant_ABC* >( &entity ) )
+        message().mutable_tasker()->mutable_population()->set_id( entity.GetId() );
     else
         throw std::runtime_error( "Unknown tasker" );
     message().set_type( type );

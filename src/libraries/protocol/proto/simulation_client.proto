@@ -361,6 +361,7 @@ message ChangePopulationMagicActionAck {
         error_invalid_population = 1; //!< Operation failed because no existing population with the provided identifier could be found.
         error_invalid_adhesion   = 2; //!< Operation failed because no existing party with the provided identifier could be found
         error_invalid_number     = 3; //!< Operation failed because of an invalid number (for instance a negative number of dead was provided) @todo change numbers to unsigned integers ?
+        error_invalid_parameter  = 4; //!< Operation failed because one of the parameters is invalid
     }
     required ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
 }

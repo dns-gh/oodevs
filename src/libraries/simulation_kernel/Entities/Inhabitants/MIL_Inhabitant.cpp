@@ -17,6 +17,7 @@
 #include "MIL_LivingArea.h"
 #include "MIL_Schedule.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "tools/MIL_IDManager.h"
@@ -60,17 +61,18 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army )
     : MIL_Entity_ABC( xis )
-    , pType_             ( &type )
-    , nID_               ( xis.attribute< unsigned int >( "id" ) )
-    , pArmy_             ( &army )
-    , nNbrHealthyHumans_ ( 0 )
-    , nNbrDeadHumans_    ( 0 )
-    , nNbrWoundedHumans_ ( 0 )
-    , healthNeed_        ( 0 )
-    , healthSatisfaction_( 0 )
-    , safetySatisfaction_( 1.f )
-    , lastSafety_        ( 1.f )
-    , healthChanged_     ( false )
+    , pType_                      ( &type )
+    , nID_                        ( xis.attribute< unsigned int >( "id" ) )
+    , pArmy_                      ( &army )
+    , nNbrHealthyHumans_          ( 0 )
+    , nNbrDeadHumans_             ( 0 )
+    , nNbrWoundedHumans_          ( 0 )
+    , healthNeed_                 ( 0 )
+    , healthSatisfaction_         ( 0 )
+    , safetySatisfaction_         ( 1.f )
+    , lastSafetySatisfaction_     ( 1.f )
+    , healthSatisfactionChanged_  ( false )
+    , healthStateChanged_         ( false )
 {
     float totalArea = 0.f;
     idManager_.Lock( nID_ );
@@ -104,19 +106,20 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     : MIL_Entity_ABC( type.GetName() )
-    , pType_             ( &type )
-    , nID_               ( 0 )
-    , pArmy_             ( 0 )
-    , pLivingArea_       ( 0 )
-    , pSchedule_         ( 0 )
-    , nNbrHealthyHumans_ ( 0 )
-    , nNbrDeadHumans_    ( 0 )
-    , nNbrWoundedHumans_ ( 0 )
-    , healthNeed_        ( 0 )
-    , healthSatisfaction_( 0 )
-    , safetySatisfaction_( 0 )
-    , lastSafety_        ( 0 )
-    , healthChanged_     ( false )
+    , pType_                      ( &type )
+    , nID_                        ( 0 )
+    , pArmy_                      ( 0 )
+    , pLivingArea_                ( 0 )
+    , pSchedule_                  ( 0 )
+    , nNbrHealthyHumans_          ( 0 )
+    , nNbrDeadHumans_             ( 0 )
+    , nNbrWoundedHumans_          ( 0 )
+    , healthNeed_                 ( 0 )
+    , healthSatisfaction_         ( 0 )
+    , safetySatisfaction_         ( 0 )
+    , lastSafetySatisfaction_     ( 0 )
+    , healthSatisfactionChanged_  ( false )
+    , healthStateChanged_         ( false )
 {
     // NOTHING
 }
@@ -281,23 +284,97 @@ void MIL_Inhabitant::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::UpdateNetwork()
 {
-    bool safetyChanged = std::abs( lastSafety_ - safetySatisfaction_ ) > 0.01f;
-    if( healthChanged_ || safetyChanged )
+    bool safetyChanged = std::abs( lastSafetySatisfaction_ - safetySatisfaction_ ) > 0.01f;
+    if( healthSatisfactionChanged_ || safetyChanged || healthStateChanged_ )
     {
         client::PopulationUpdate msg;
         msg().mutable_id()->set_id( nID_ );
-        if( healthChanged_ )
+        if( healthSatisfactionChanged_ )
         {
             msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
-            healthChanged_ = false;
+            healthSatisfactionChanged_ = false;
         }
         if( safetyChanged )
         {
             msg().mutable_satisfaction()->set_safety( safetySatisfaction_ );
-            lastSafety_ = safetySatisfaction_;
+            lastSafetySatisfaction_ = safetySatisfaction_;
+        }
+        if( healthStateChanged_ )
+        {
+            msg().set_healthy( nNbrHealthyHumans_ );
+            msg().set_wounded( nNbrWoundedHumans_ );
+            msg().set_dead( nNbrDeadHumans_ );
+            healthStateChanged_ = false;
         }
         msg.Send( NET_Publisher_ABC::Publisher() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::OnReceiveInhabitantMagicAction
+// Created: ABR 2011-01-26
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::OnReceiveInhabitantMagicAction( const sword::UnitMagicAction& msg )
+{
+    client::ChangePopulationMagicActionAck ack;
+    ack().set_error_code( sword::ChangePopulationMagicActionAck::no_error );
+    try
+    {
+        switch( msg.type() )
+        {
+        case sword::UnitMagicAction::inhabitant_change_health_state:
+            OnReceiveMsgChangeHealthState( msg );
+            break;
+        case sword::UnitMagicAction::inhabitant_change_adhesion_list:
+            OnReceiveMsgChangeAdhesionList( msg );
+            break;
+        default:
+            assert( false );
+        }
+    }
+    catch( NET_AsnException< sword::ChangePopulationMagicActionAck::ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+    }
+    ack.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::OnReceiveMsgChangeHealthState
+// Created: ABR 2011-01-26
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg )
+{
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
+        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
+
+    const sword::MissionParameter& healthy = msg.parameters().elem( 0 );
+    const sword::MissionParameter& wounded = msg.parameters().elem( 1 );
+    const sword::MissionParameter& dead    = msg.parameters().elem( 2 );
+
+    if( healthy.value_size() != 1 || !healthy.value().Get( 0 ).has_quantity() ||
+        wounded.value_size() != 1 || !wounded.value().Get( 0 ).has_quantity() ||
+        dead.value_size() != 1    || !dead.value().Get( 0 ).has_quantity() )
+        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
+
+    if( healthy.value().Get( 0 ).quantity() < 0 || 
+        wounded.value().Get( 0 ).quantity() < 0 || 
+        dead.value().Get( 0 ).quantity() < 0 )
+        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_number );
+
+    nNbrHealthyHumans_ = healthy.value().Get( 0 ).quantity();
+    nNbrWoundedHumans_ = wounded.value().Get( 0 ).quantity();
+    nNbrDeadHumans_    = dead.value().Get( 0 ).quantity();
+    healthStateChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::OnReceiveMsgChangeAdhesionList
+// Created: ABR 2011-01-26
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::OnReceiveMsgChangeAdhesionList( const sword::UnitMagicAction& msg )
+{
+
 }
 
 // -----------------------------------------------------------------------------
@@ -361,7 +438,7 @@ void MIL_Inhabitant::ComputeHealthSatisfaction()
         healthSatisfaction = std::min( 1.f, pLivingArea_->HealthCount() / healthNeed_ );
     if( healthSatisfaction != healthSatisfaction_ )
     {
-        healthChanged_ = true;
+        healthSatisfactionChanged_ = true;
         healthSatisfaction_ = healthSatisfaction;
     }
 }

@@ -272,7 +272,6 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Urban", "bool" );
         CreateOrderParameter( "Nodes", "list" );
     }
-
     else if( name_ == "update_urban" )
     {
         CreateOrderParameter( "Target", "identifier" );
@@ -285,6 +284,14 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "KnowledgeGroup", "identifier" );
         CreateOrderParameter( "Location", "point" );
     }
-
-
+    else if( name_ == "inhabitant_change_health_state" )
+    {
+        CreateOrderParameter( "Healthy", "quantity" );
+        CreateOrderParameter( "Wounded", "quantity" );
+        CreateOrderParameter( "Dead", "quantity" );
+    }
+    else if( name_ == "inhabitant_change_adhesion_list" )
+    {
+        CreateOrderParameter( "Adhesion", "list" );
+    }
 }

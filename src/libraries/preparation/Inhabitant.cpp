@@ -22,11 +22,9 @@
 Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QString& name, kernel::Controller& controller, IdManager& idManager )
     : kernel::EntityImplementation< kernel::Inhabitant_ABC >( controller, idManager.GetNextId(), "" )
     , type_      ( type )
-    , healthy_   ( number )
-    , dead_      ( 0 )
-    , wounded_   ( 0 )
     , healthNeed_( 0 )
 {
+    healthy_ = number;
     extensions_[ "nationality" ] = "";
     extensions_[ "ethnicity" ] = "";
     extensions_[ "religion" ] = "";
@@ -92,8 +90,8 @@ void Inhabitant::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( constEntity, tools::translate( "Inhabitant", "Info/Type" ), constSelf.type_ );
     dictionary.Register( constEntity, tools::translate( "Inhabitant", "Info/Info" ), text_ );
     dictionary.Register( constEntity, tools::translate( "Inhabitant", "Human/Alive" ), healthy_ );
-    dictionary.Register( constEntity, tools::translate( "Inhabitant", "Human/Dead" ), dead_ );
     dictionary.Register( constEntity, tools::translate( "Inhabitant", "Human/Wounded" ), wounded_ );
+    dictionary.Register( constEntity, tools::translate( "Inhabitant", "Human/Dead" ), dead_ );
     dictionary.Register( constEntity, tools::translate( "Inhabitant", "Health/Infrastructures needed" ), healthNeed_ );
 
     for( IT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
@@ -114,8 +112,8 @@ void Inhabitant::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "type", type_.GetName() )
         << xml::start( "composition" )
             << xml::attribute( "healthy", healthy_ )
-            << xml::attribute( "dead", dead_ )
             << xml::attribute( "wounded", wounded_ )
+            << xml::attribute( "dead", dead_ )
         << xml::end
         << xml::start( "health-need" )
             << xml::attribute( "quantity", healthNeed_ )

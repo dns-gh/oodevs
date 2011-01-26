@@ -15,6 +15,11 @@
 #include "Entities/Objects/MIL_StructuralStateNotifier_ABC.h"
 #include <memory>
 
+namespace sword
+{
+    class UnitMagicAction;
+}
+
 namespace xml
 {
     class xostream;
@@ -53,6 +58,7 @@ public:
     void SendFullState() const;
     void UpdateState();
     void UpdateNetwork();
+    void OnReceiveInhabitantMagicAction( const sword::UnitMagicAction& msg );
     //@}
 
     //! @name CheckPoints
@@ -82,6 +88,12 @@ private:
     MIL_Inhabitant& operator=( const MIL_Inhabitant& ); //!< Assignment operator
     //@}
 
+    //! @name Magic actions
+    //@{
+    void OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg );
+    void OnReceiveMsgChangeAdhesionList( const sword::UnitMagicAction& msg );
+    //@}
+
     //! @name Network
     //@{
     void SendDestruction() const;
@@ -109,14 +121,15 @@ private:
     std::auto_ptr< MIL_LivingArea > pLivingArea_;
     std::auto_ptr< MIL_Schedule_ABC > pSchedule_;
     std::string text_;
+    bool healthStateChanged_;
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;
     float healthNeed_;
     float healthSatisfaction_;
-    bool healthChanged_;
+    bool healthSatisfactionChanged_;
     float safetySatisfaction_;
-    float lastSafety_;
+    float lastSafetySatisfaction_;
     T_Extensions extensions_;
     //@}
 
