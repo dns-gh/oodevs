@@ -64,7 +64,7 @@ private:
     //@{
     unsigned id_;
     Localisation localisation_;
-    sword::EnumFireEffectType  type_;
+    sword::StartFireEffect::EnumFireEffectType  type_;
     //@}
 };
 

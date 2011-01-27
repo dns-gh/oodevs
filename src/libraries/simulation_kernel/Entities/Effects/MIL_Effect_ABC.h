@@ -19,8 +19,11 @@
 class MIL_Effect_ABC : private boost::noncopyable
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              MIL_Effect_ABC() {}
     virtual ~MIL_Effect_ABC() {}
+    //@}
 
     //! @name Operations
     //@{

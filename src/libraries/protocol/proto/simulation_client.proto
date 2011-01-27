@@ -1043,78 +1043,116 @@ message Explosion {
     optional CrowdsFireDamages crowds_damages = 3; //!< The resulting damages dealt to crowds
 }
 
-enum EnumFireEffectType { //!< @todo move into StartFireEffect
-   smoke = 0;
-   light = 1;
-   explosion = 2;
-   neutralization = 3;
-}
-
+/** @struct StartFireEffect
+    @brief Notifies of a start fire effect
+*/
 message StartFireEffect {
-    required FireEffectId       fire_effect = 1;
-    required Location           location    = 2;
-    required EnumFireEffectType type        = 3;
-}
-
-message StopFireEffect {
-    required FireEffectId fire_effect = 1;
-}
-
-message Report {
-    enum EnumReportType {
-        information       = 0;
-        operational       = 1;
-        exceptional_event = 2;
-        warning           = 3;
+    /** @enum EnumFireEffectType
+        @brief Defines the fire type
+    */
+    enum EnumFireEffectType {
+       smoke          = 0; //!< Smoke effect
+       light          = 1; //!< Light effect
+       explosion      = 2; //!< Explosion effect
+       neutralization = 3; //!< Neutralization effect
     }
-    required ReportId          report     = 1;
-    required Tasker            source     = 2;
-    required ReportType        type       = 3;
-    required EnumReportType    category   = 4;
-    required DateTime          time       = 5;
-    optional MissionParameters parameters = 6;
+    required FireEffectId       fire_effect = 1; //!< The fire effect identifier
+    required Location           location    = 2; //!< The fire location
+    required EnumFireEffectType type        = 3; //!< The fire type
 }
 
+/** @struct StopFireEffect
+    @brief Notifies of a stop fire effect
+*/
+message StopFireEffect {
+    required FireEffectId fire_effect = 1; //!< The fire effect identifier
+}
+
+/** @struct Report
+    @brief Describes a report
+*/
+message Report {
+    /** @enum EnumReportType
+        @brief Defines the report category type
+    */
+    enum EnumReportType {
+        information       = 0; //!< Information
+        operational       = 1; //!< Operational
+        exceptional_event = 2; //!< Exceptional event
+        warning           = 3; //!< Warning
+    }
+    required ReportId          report     = 1; //!< The report identifier
+    required Tasker            source     = 2; //!< The report source
+    required ReportType        type       = 3; //!< The report type
+    required EnumReportType    category   = 4; //!< The report category type
+    required DateTime          time       = 5; //!< The report time
+    optional MissionParameters parameters = 6; //!< The report parameters
+}
+
+/** @struct InvalidateReport
+    @brief Notifies a report has become invalid
+*/
 message InvalidateReport {
-    required ReportId report = 1;
-    required Tasker   source = 2;
+    required ReportId report = 1; //!< The report identifier
+    required Tasker   source = 2; //!< The report source
 }
 
+/** @struct Trace
+    @brief Describes a trace
+*/
 message Trace {
-    required Tasker source  = 1;
-    required string message = 2;
+    required Tasker source  = 1; //!< The trace source
+    required string message = 2; //!< The trace description
 }
 
+/** @struct DecisionalState
+    @brief Describes a decisional state
+*/
 message DecisionalState {
-    required Tasker source = 1;
-    required string key    = 2;
-    required string value  = 3;
+    required Tasker source = 1; //!< The state source
+    required string key    = 2; //!< The state key
+    required string value  = 3; //!< The state value
 }
 
+/** @struct DebugPoints
+    @brief Defines debug points
+*/
 message DebugPoints {
-    required Tasker           source      = 1;
-    required CoordLatLongList coordinates = 2;
+    required Tasker           source      = 1; //!< The source
+    required CoordLatLongList coordinates = 2; //!< The coordinates
 }
 
+/** @struct SeqOfHeading
+    @brief Defines a list of headings
+*/
 message SeqOfHeading {
-    repeated Heading elem = 1;
+    repeated Heading elem = 1; //!< The headings
 }
 
+/** @struct VisionCone
+    @brief Defines a vision cone
+*/
 message VisionCone {
-    required CoordLatLong origin     = 1;
-    required int32        height     = 2;
-    required string       sensor     = 3;
-    required SeqOfHeading directions = 4;
+    required CoordLatLong origin     = 1; //!< The origin
+    required int32        height     = 2; //!< The height
+    required string       sensor     = 3; //!< The sensor
+    required SeqOfHeading directions = 4; //!< The directions
 }
 
+/** @struct SeqOfVisionCone
+    @brief Defines a list of vision cones
+*/
 message SeqOfVisionCone {
-    repeated VisionCone elem = 1;
+    repeated VisionCone elem = 1; //!< The cones
 }
 
+/** @struct UnitVisionCones
+    @brief Updates the vision cones of a unit
+*/
 message UnitVisionCones {
-    required UnitId          unit       = 1;
-    required SeqOfVisionCone cones      = 2;
-    required float           elongation = 3;
+    required UnitId          unit       = 1; //!< The unit identifier
+    required SeqOfVisionCone cones      = 2; //!< The vision cones
+    required float           elongation = 3; //!< The elongation
 }
 
 message UnitVisibility {
@@ -1200,9 +1238,9 @@ message ObjectKnowledgeDestruction {
 }
 
 message UrbanKnowledgeCreation {
-    required UrbanObjectKnowledgeId knowledge   = 1;
-    required PartyId                party       = 2;
-    required ObjectId               object      = 3;
+    required UrbanObjectKnowledgeId knowledge = 1;
+    required PartyId                party     = 2;
+    required ObjectId               object    = 3;
 }
 
 message UrbanKnowledgeUpdate {

@@ -55,7 +55,7 @@ private:
     //@{
     kernel::Controller& controller_;
     unsigned long id_;
-    sword::EnumFireEffectType type_;
+    sword::StartFireEffect::EnumFireEffectType type_;
     MSEllipse ellipse_;
     weather::PHY_Meteo meteo_;
     //@}

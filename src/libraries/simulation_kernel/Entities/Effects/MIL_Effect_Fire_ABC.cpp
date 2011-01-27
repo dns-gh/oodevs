@@ -46,7 +46,7 @@ MIL_Effect_Fire_ABC::~MIL_Effect_Fire_ABC()
 // Name: MIL_Effect_Fire_ABC::SendMsgStartEffect
 // Created: JVT 04-03-25
 //-----------------------------------------------------------------------------
-void MIL_Effect_Fire_ABC::SendMsgStartEffect( sword::EnumFireEffectType fireEffectType ) const
+void MIL_Effect_Fire_ABC::SendMsgStartEffect( sword::StartFireEffect::EnumFireEffectType fireEffectType ) const
 {
     client::StartFireEffect asnMsg;
 

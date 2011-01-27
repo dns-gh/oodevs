@@ -16,7 +16,8 @@
 #include "MT_Tools/MT_Ellipse.h"
 #include "tools/MIL_IDManager.h"
 
-namespace sword {
+namespace sword
+{
     enum EnumFireEffectType;
 }
 
@@ -29,22 +30,27 @@ class PHY_IndirectFireDotationClass;
 class MIL_Effect_Fire_ABC : public MIL_Effect_ABC
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              MIL_Effect_Fire_ABC( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& ammoCategory );
     virtual ~MIL_Effect_Fire_ABC();
-
-protected:
-    //! @name Network
-    //@{
-    void SendMsgStartEffect( sword::EnumFireEffectType fireEffectType ) const;
-    void SendMsgStopEffect () const;
     //@}
 
 protected:
+    //! @name Operations
+    //@{
+    void SendMsgStartEffect( sword::StartFireEffect::EnumFireEffectType fireEffectType ) const;
+    void SendMsgStopEffect() const;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
     const unsigned int                   nID_;
     const MT_Ellipse                     surface_;
     const PHY_IndirectFireDotationClass& ammoCategory_;
-
     static MIL_IDManager idManager_;
+    //@}
 };
 
 #endif // __MIL_Effect_Fire_ABC_h_
