@@ -30,10 +30,8 @@
 #include <urban/MotivationsVisitor_ABC.h>
 #include <urban/StaticModel.h>
 #include <urban/InfrastructureType.h>
-#include <urban/MaterialCompositionType.h>
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
-#include <map>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
 
@@ -43,7 +41,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( UrbanObjectWrapper )
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, const urban::TerrainObject_ABC& object )
     : MIL_Object( 0, builder.GetType() )
-    , object_   ( &object )
+    , object_( &object )
 {
     InitializeAttributes();
     builder.Build( *this );
@@ -55,7 +53,7 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
 // -----------------------------------------------------------------------------
 UrbanObjectWrapper::UrbanObjectWrapper()
     : MIL_Object()
-    , object_   ( 0 )
+    , object_( 0 )
 {
     // NOTHING
 }
@@ -286,7 +284,6 @@ void UrbanObjectWrapper::SendCreation() const
             }
         }
     }
-
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -399,4 +396,3 @@ sword::UrbanMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateInfrastructure(
         capacity->SetThreshold( msg.threshold() );
     return sword::UrbanMagicActionAck::no_error;
 }
-

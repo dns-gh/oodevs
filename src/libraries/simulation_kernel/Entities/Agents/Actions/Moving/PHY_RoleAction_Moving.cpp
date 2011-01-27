@@ -31,7 +31,6 @@
 #include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
-#include "simulation_kernel/UrbanBlockCollisionNotificationHandler_ABC.h"
 #include "AlgorithmsFactories.h"
 #include "SpeedComputerStrategy.h"
 

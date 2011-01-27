@@ -687,24 +687,6 @@ void MIL_PopulationFlow::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_Path
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::NotifyMovingInsideUrbanBlock
-// Created: SLI 2010-07-09
-// -----------------------------------------------------------------------------
-void MIL_PopulationFlow::NotifyMovingInsideUrbanBlock( const urban::TerrainObject_ABC&  )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationFlow::NotifyMovingOutsideUrbanBlock
-// Created: SLI 2010-07-09
-// -----------------------------------------------------------------------------
-void MIL_PopulationFlow::NotifyMovingOutsideUrbanBlock( const urban::TerrainObject_ABC&  )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::NotifyEnvironmentChanged
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------

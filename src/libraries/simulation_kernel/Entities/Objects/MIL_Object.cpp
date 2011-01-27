@@ -348,7 +348,7 @@ void MIL_Object::UpdateLocalisation( const TER_Localisation& location )
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge
+// Name: MIL_Object::CreateKnowledge
 // Created: SLG 2011-01-10
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL_Army_ABC& team )
@@ -360,7 +360,7 @@ boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge
+// Name: MIL_Object::CreateKnowledge
 // Created: SLG 2011-01-10
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > MIL_Object::CreateKnowledge( const MIL_KnowledgeGroup& group )

@@ -11,6 +11,7 @@
 #define __UrbanObjectWrapper_h_
 
 #include "MIL_Object.h"
+#include <map>
 
 class MIL_ObjectBuilder_ABC;
 
@@ -28,7 +29,7 @@ namespace urban
 
 // =============================================================================
 /** @class  UrbanObjectWrapper
-    @brief  UrbanObjectWrapper
+    @brief  Urban object wrapper
 */
 // Created: SLG 2010-06-18
 // =============================================================================
@@ -71,7 +72,6 @@ public:
     sword::UrbanMagicActionAck_ErrorCode OnUpdateStructuralState( int state );
     sword::UrbanMagicActionAck_ErrorCode OnUpdateInfrastructure( const sword::UrbanMagicAction_Infrastructure& msg );
 
-
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
     virtual sword::ObjectMagicActionAck_ErrorCode OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
 
@@ -100,14 +100,15 @@ private:
     //@}
 
 private:
-    //! @name Member data
-    //@{
-    const urban::TerrainObject_ABC* object_;
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< std::string, float > T_Motivations;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const urban::TerrainObject_ABC* object_;
     //@}
 };
 
