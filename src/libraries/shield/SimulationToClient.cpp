@@ -924,7 +924,7 @@ void SimulationToClient::Convert( const sword::StartFireEffect& from, MsgsSimToC
     CONVERT_ID( fire_effect );
     ConvertLocation( from.location(), to->mutable_location() );
     CONVERT_ENUM( type, ( sword::StartFireEffect::smoke, Common::smoke )
-                        ( sword::StartFireEffect::smoke, Common::smoke )
+                        ( sword::StartFireEffect::light, Common::light )
                         ( sword::StartFireEffect::explosion, Common::explosion )
                         ( sword::StartFireEffect::neutralization, Common::neutralization ) );
 }
