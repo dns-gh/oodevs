@@ -89,12 +89,6 @@ private:
     PHY_RolePion_UrbanLocation& operator=( const PHY_RolePion_UrbanLocation& ); //!< Assignment operator
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::vector< const urban::TerrainObject_ABC* > T_Cities;
-    typedef T_Cities::const_iterator                     CIT_Cities;
-    //@}
-
 private:
     //! @name Member data
     //@{
