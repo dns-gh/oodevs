@@ -49,7 +49,6 @@ public:
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Object& knowledge ) const;
     virtual const PHY_PerceptionLevel& Compute( const MIL_Object_ABC&   object ) const;
 
-    virtual void                       Execute( const std::vector< const urban::TerrainObject_ABC* >& perceivables );
     virtual const PHY_PerceptionLevel& Compute( const urban::Block& block ) const;
 
     virtual void                       Execute( const TER_PopulationFlow_ABC::T_PopulationFlowVector& perceivableFlows );

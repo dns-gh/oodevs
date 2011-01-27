@@ -110,15 +110,6 @@ const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const MIL_Object_ABC& /*
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Perception_ABC::Execute
-// Created: MGD 2009-11-20
-// -----------------------------------------------------------------------------
-void PHY_Perception_ABC::Execute( const std::vector< const urban::TerrainObject_ABC* >& /*perceivables*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_Perception_ABC::Compute
 // Created: MGD 2009-11-25
 // -----------------------------------------------------------------------------
