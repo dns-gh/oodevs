@@ -29,8 +29,8 @@ AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& contr
 {
     if( type_ == sword::eclairant )
         meteo_.Update( weather::PHY_Lighting::eclairant_ );
-    else if( type_ == sword::smoke )
-        meteo_.Update( weather::PHY_Precipitation::smoke_  );
+    else if( type_ == sword::StartFireEffect::smoke )
+        meteo_.Update( weather::PHY_Precipitation::smoke_ );
     controller_.Create( *this );
 }
 

@@ -74,7 +74,7 @@ void FireManager::ReceiveFire( const sword::StartUnitFire& message )
 void FireManager::UpdateFireEffect( const sword::StartFireEffect& message )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
-    pdu.SetBurst( 1, 1, message.type() == sword::smoke ? BurstDescriptor::smoke : BurstDescriptor::illumination );
+    pdu.SetBurst( 1, 1, message.type() == sword::StartFireEffect::smoke ? BurstDescriptor::smoke : BurstDescriptor::illumination );
     pdu.SetPosition( message.location().coordinates().elem(0).latitude(), message.location().coordinates().elem(0).longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
     network_.Send( pdu );
 }
