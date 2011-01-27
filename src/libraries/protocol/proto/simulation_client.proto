@@ -889,22 +889,22 @@ message SeqOfAutomatPerception {
     @brief Notifies of an update in the knowledge of a unit
 */
 message UnitKnowledgeUpdate {
-    required UnitKnowledgeId             knowledge                = 1;  //!< The unit knowledge @see UnitKnowledgeId
-    required KnowledgeGroupId            knowledge_group          = 2;  //!< The knowledge group identifier @see KnowledgeGroupId
-    optional int32                       pertinence               = 3;  //!< The relevance of the knowledge in percent
+    required UnitKnowledgeId          knowledge                = 1;  //!< The unit knowledge @see UnitKnowledgeId
+    required KnowledgeGroupId         knowledge_group          = 2;  //!< The knowledge group identifier @see KnowledgeGroupId
+    optional int32                    pertinence               = 3;  //!< The relevance of the knowledge in percent
     optional UnitIdentification.Level identification_level     = 4;  //!< The identification level @see UnitIdentification.Level
     optional UnitIdentification.Level max_identification_level = 5;  //!< The maximum identification level @see UnitIdentification.Level
-    optional int32                       operational_state        = 6;  //!< The operational state of the unit in percent
-    optional bool                        dead                     = 7;  //!< Whether the unit is dead or not
-    optional CoordLatLong                position                 = 8;  //!< The unit position @see CoordLatLong
-    optional Heading                     direction                = 9;  //!< The unit heading @see Heading
-    optional int32                       speed                    = 10; //!< The unit speed in kilometers per hour
-    optional PartyId                     party                    = 11; //!< The unit party identifier @see PartyId
-    optional bool                        command_post             = 12; //!< Whether the unit is a command post or not
-    optional SeqOfAutomatPerception      perceptions              = 13; //!< The perceptions for each automat
-    optional UnitId                      surrendered_unit         = 14; //!< The unit to which this unit has surrendered @see UnitId
-    optional bool                        prisoner                 = 15; //!< Whether the unit has been made prisoner or not
-    optional bool                        refugees_managed         = 16; //!< Whether refugees are being handled by the unit or not
+    optional int32                    operational_state        = 6;  //!< The operational state of the unit in percent
+    optional bool                     dead                     = 7;  //!< Whether the unit is dead or not
+    optional CoordLatLong             position                 = 8;  //!< The unit position @see CoordLatLong
+    optional Heading                  direction                = 9;  //!< The unit heading @see Heading
+    optional int32                    speed                    = 10; //!< The unit speed in kilometers per hour
+    optional PartyId                  party                    = 11; //!< The unit party identifier @see PartyId
+    optional bool                     command_post             = 12; //!< Whether the unit is a command post or not
+    optional SeqOfAutomatPerception   perceptions              = 13; //!< The perceptions for each automat
+    optional UnitId                   surrendered_unit         = 14; //!< The unit to which this unit has surrendered @see UnitId
+    optional bool                     prisoner                 = 15; //!< Whether the unit has been made prisoner or not
+    optional bool                     refugees_managed         = 16; //!< Whether refugees are being handled by the unit or not
 }
 
 /** @struct UnitKnowledgeDestruction
@@ -915,26 +915,37 @@ message UnitKnowledgeDestruction {
     required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier @see KnowledgeGroupId
 }
 
-enum UnitFireType { //!< @todo move into StartUnitFire @todo why isn't that a boolean ?
-   direct   = 0;
-   indirect = 1;
-}
-
+/** @struct StartUnitFire
+    @brief Notifies of a unit fire start
+*/
 message StartUnitFire {
+    /** @struct UnitFireTarget
+        @brief Defines the target
+    */
     message UnitFireTarget {
-        optional UnitId       unit     = 1;
-        optional CrowdId      crowd    = 2;
-        optional CoordLatLong position = 3;
+        optional UnitId       unit     = 1; //!< The target unit @see UnitId
+        optional CrowdId      crowd    = 2; //!< The target crowd @see CrowdId
+        optional CoordLatLong position = 3; //!< The target position @see CoordLatLong
     }
-    required FireId         fire        = 1;
-    required UnitId         firing_unit = 2;
-    required UnitFireTarget target      = 3;
-    required UnitFireType   type        = 4;
-    optional ResourceType   ammunition  = 5;
+    /** @enum UnitFireType
+        @brief Defines the fire type
+    */
+    enum UnitFireType {
+       direct   = 0; //!< Direct fire
+       indirect = 1; //!< Indirect fire
+    }
+    required FireId         fire        = 1; //!< The fire identifier @see FireId
+    required UnitId         firing_unit = 2; //!< The firing unit identifier @see UnitId
+    required UnitFireTarget target      = 3; //!< The target @see UnitFireTarget
+    required UnitFireType   type        = 4; //!< The fire type @see UnitFireType
+    optional ResourceType   ammunition  = 5; //!< The ammunition type @see ResourceType
 }
 
+/** @struct UnitHumanFireDamage
+    @brief Defines the personal damage inflicted to a unit
+*/
 message UnitHumanFireDamage {
-    required EnumHumanRank rank       = 1;
+    required EnumHumanRank rank       = 1; //!< The unit rank @see EnumHumanRank
     required int32         alive      = 2;
     required int32         dead       = 3;
     required int32         wounded_u1 = 4;

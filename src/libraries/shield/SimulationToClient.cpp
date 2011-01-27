@@ -832,8 +832,8 @@ void SimulationToClient::Convert( const sword::StartUnitFire& from, MsgsSimToCli
     CONVERT_ID( fire );
     CONVERT_ID( firing_unit );
     ConvertUnitFireTarget( from.target(), to->mutable_target() );
-    CONVERT_ENUM( type, ( sword::direct, Common::direct )
-                        ( sword::indirect, Common::indirect ) );
+    CONVERT_ENUM( type, ( sword::StartUnitFire::direct, Common::direct )
+                        ( sword::StartUnitFire::indirect, Common::indirect ) );
     CONVERT_ID( ammunition );
 }
 

@@ -14,44 +14,18 @@ package sword;
 
 /** @struct AuthenticationRequest
     @brief A message sent to request authentication.
-    
-    This message is sent to request profile authentication.
-    An AuthenticationResponse is sent in response.
+
+    @see AuthenticationResponse
 */
 message AuthenticationRequest {
-    /** @property login
-        @brief The login to use for authentication.
-
-        The login uniquely identifies a profile loaded from "exercise/profiles.xml"
-        or dynamically created during the game.
-
-        @note An error message is sent if login does not exist.
-    */
-    required string          login    = 1;
-    /** @property password
-        @brief The password to use for authentication.
-
-        The password is checked the one associated with login in the profile loaded 
-        from "exercise/profiles.xml" or dynamically created during the game.
-
-        @note An error message is sent if password does not match.
-    */
-    required string          password = 2;
-    /** @property version
-        @brief The protocol version used by the client application.
-        @see ProtocolVersion
-
-        The protocol version used by the client is compared to the server protocol version
-        in order to determine if protocols are compatible.
-
-        @note An error message is sent if there is a protocol mismatch.
-    */
-    required ProtocolVersion version  = 3;
+    required string          login    = 1; //!< The login uniquely identifies a profile loaded from "exercise/profiles.xml" or dynamically created during the game. @note An error message is sent if login does not exist
+    required string          password = 2; //!< The password is checked the one associated with login in the profile loaded from "exercise/profiles.xml" or dynamically created during the game. @note An error message is sent if password does not match
+    required ProtocolVersion version  = 3; //!< The protocol version used by the client is compared to the server protocol version in order to determine if protocols are compatible. @note An error message is sent if there is a protocol mismatch
 }
 
 /** @struct ProfileCreationRequest
     @brief Message sent to request profile creation.
-    
+
     This message is sent to request profile creation.
     @li A ProfileCreationRequestAck message is sent only to sender to acknowledge the creation.
     @li A ProfileCreation message is sent to every client to actually create the requested profile.
@@ -59,12 +33,7 @@ message AuthenticationRequest {
     @warning This action is only allowed to profiles with supervisor rights.
 */
 message ProfileCreationRequest {
-    /** @property profile
-        @brief Describes the profile to be created.
-        @see Profile
-        @note An error message is sent if login already exists.
-    */
-    required Profile profile = 1;
+    required Profile profile = 1; //!< Describes the profile to be created. @note An error message is sent if login already exists
 }
 
 /** @struct ProfileUpdateRequest
@@ -77,17 +46,8 @@ message ProfileCreationRequest {
     @warning This action is only allowed to profiles with supervisor rights.
 */
 message ProfileUpdateRequest {
-    /** @property login
-        @brief Identifies the profile to be updated.
-        @note An error message is sent if login does not exist.
-    */
-    required string login = 1;
-    /** @property profile
-        @brief Describes the profile information to be updated.
-        @see Profile
-        @note An error message is sent if login is changed to an existing one.
-    */
-    required Profile profile = 2;
+    required string  login   = 1; //!< Identifies the profile to be updated. @note An error message is sent if login does not exist
+    required Profile profile = 2; //!< Describes the profile information to be updated. @note An error message is sent if login is changed to an existing one
 }
 
 /** @struct ProfileDestructionRequest
@@ -100,16 +60,12 @@ message ProfileUpdateRequest {
     @warning This action is only allowed to profiles with supervisor rights.
 */
 message ProfileDestructionRequest {
-    /** @property login
-        @brief Identifies the profile to be destroyed.
-        @note An error message is sent if login does not exist.
-    */
-    required string login = 1;
+    required string login = 1; //!< Identifies the profile to be destroyed. @note An error message is sent if login does not exist
 }
 
 /** @struct ClientToAuthentication
     @brief A facade for all available messages going from client to authentication.
-    
+
     This is the actual message sent over the network.
 */
 message ClientToAuthentication {
@@ -125,17 +81,14 @@ message ClientToAuthentication {
     }
     /** @property context
         @brief Identifies the request matching the response.
-        
+
         This field is used to fill the "context" fields in the response message
         (from AuthenticationToClient).
-        
-        This context allows the client application to put an unique identifier 
-        (based for instance on MAC address), thus allowing to track response 
+
+        This context allows the client application to put an unique identifier
+        (based for instance on MAC address), thus allowing to track response
         message matching a specific request emitted by the client.
     */
     optional int32   context = 1;
-    /** @property message
-        @brief A field containing one of the messages to be sent.
-    */
-    required Content message = 2;
+    required Content message = 2; //!< A field containing one of the messages to be sent
 }

@@ -87,7 +87,7 @@ namespace extractors
         bool IsCreation( const sword::SimToClient& wrapper ) const
         {
             return wrapper.message().has_start_unit_fire() &&
-                   wrapper.message().start_unit_fire().type() == sword::direct;
+                wrapper.message().start_unit_fire().type() == sword::StartUnitFire::direct;
         }
         NumericValue Extract( const sword::SimToClient& wrapper ) const
         { 
@@ -104,7 +104,7 @@ namespace extractors
         bool IsCreation( const sword::SimToClient& wrapper ) const
         {
             return wrapper.message().has_start_unit_fire() &&
-                   wrapper.message().start_unit_fire().type() == sword::indirect;
+                   wrapper.message().start_unit_fire().type() == sword::StartUnitFire::indirect;
         }
         NumericValue Extract( const sword::SimToClient& wrapper ) const
         { 

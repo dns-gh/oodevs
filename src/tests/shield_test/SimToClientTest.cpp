@@ -540,7 +540,7 @@ BOOST_FIXTURE_TEST_CASE( start_unit_fire_to_client_is_converted, ContextFixture<
     content.mutable_start_unit_fire()->mutable_target()->mutable_unit()->set_id( 9 );
     content.mutable_start_unit_fire()->mutable_target()->mutable_crowd()->set_id( 10 );
     FillCoordLatLong( content.mutable_start_unit_fire()->mutable_target()->mutable_position() );
-    content.mutable_start_unit_fire()->set_type( sword::indirect );
+    content.mutable_start_unit_fire()->set_type( sword::StartUnitFire::indirect );
     content.mutable_start_unit_fire()->mutable_ammunition()->set_id( 11 );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { start_unit_fire { fire { id: 7 } firing_unit { id: 8 } target { unit { id: 9 } crowd { id: 10 } position { latitude: 17.23 longitude: 23.17 } } type: indirect ammunition { id: 11 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );

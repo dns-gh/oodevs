@@ -814,7 +814,7 @@ message ClientObjectCreationRequestAck {
     /** @property error_code
         @brief Reason for the failure of
                a client object creation operation.
-        @see ClienObjectAck.ErrorCode
+        @see ClientObjectAck.ErrorCode
     */
     required ClientObjectAck.ErrorCode error_code = 2;
 }
@@ -833,7 +833,7 @@ message ClientObjectUpdateRequestAck {
     /** @property error_code
         @brief Reason for the failure of
                a client object update operation.
-        @see ClienObjectAck.ErrorCode
+        @see ClientObjectAck.ErrorCode
     */
     required ClientObjectAck.ErrorCode error_code = 2;
 }
@@ -852,7 +852,7 @@ message ClientObjectDestructionRequestAck {
     /** @property error_code
         @brief Reason for the failure of
                a client object destruction operation.
-        @see ClienObjectAck.ErrorCode
+        @see ClientObjectAck.ErrorCode
     */
     required ClientObjectAck.ErrorCode error_code = 2;
 }
