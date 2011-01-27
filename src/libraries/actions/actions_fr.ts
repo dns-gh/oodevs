@@ -52,6 +52,10 @@
         <source>Automat Creation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Inhabitant Change Health State Action</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameter</name>

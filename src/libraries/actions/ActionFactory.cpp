@@ -26,6 +26,7 @@
 #include "ParameterFactory_ABC.h"
 #include "Point.h"
 #include "PopulationMission.h"
+#include "Quantity.h"
 #include "String.h"
 #include "UnitMagicAction.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -735,5 +736,20 @@ actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::Pop
     action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter, location ) );
     action->AddParameter( *new parameters::Numeric( it.NextElement(), number ) );
     action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateInhabitantChangeHealthStateAction
+// Created: ABR 2011-01-26
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const
+{
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "inhabitant_change_health_state" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Inhabitant Change Health State Action" ), true );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new actions::parameters::Quantity( it.NextElement(), healthy ) );
+    action->AddParameter( *new actions::parameters::Quantity( it.NextElement(), wounded ) );
+    action->AddParameter( *new actions::parameters::Quantity( it.NextElement(), dead ) );
     return action;
 }

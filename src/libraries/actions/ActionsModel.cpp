@@ -138,6 +138,17 @@ Action_ABC* ActionsModel::CreateCrowdCreationAction( const kernel::PopulationTyp
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateInhabitantChangeHealthStateAction
+// Created: ABR 2011-01-26
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes )
+{
+    Action_ABC* action = factory_.CreateInhabitantChangeHealthStateAction( healthy, wounded, dead, selected, controller, agentTypes );
+    Register( action->GetId(), *action );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::CreateObjectMagicAction
 // Created: BCI 2011-01-10
 // -----------------------------------------------------------------------------

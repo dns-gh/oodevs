@@ -60,6 +60,7 @@ private slots:
     void Validate();
     void Reject();
     void closeEvent( QCloseEvent * e );
+    void OnValuesChanged( int newValue = 0 );
     //@}
 
 private:
@@ -83,6 +84,14 @@ private:
     const kernel::Profile_ABC& profile_;
 
     kernel::SafePointer< kernel::Inhabitant_ABC > selected_;
+
+    QSpinBox* healthySpinBox_;
+    QSpinBox* woundedSpinBox_;
+    QLabel*   crowdTypeLabel_;
+    QLabel*   crowdSizeLabel_;
+    QLabel*   deadSizeLabel_;
+    QLabel*   remainingInhabitantLabel_;
+    int       originalInhabitantSize_;
     //@}
 };
 

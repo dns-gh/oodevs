@@ -11,13 +11,12 @@
 #include "InhabitantChangeHealthStateDialog.h"
 #include "moc_InhabitantChangeHealthStateDialog.cpp"
 
+#include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
-#include "actions/Quantity.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Inhabitant_ABC.h"
-#include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/tools.h"
 #include "gaming/StaticModel.h"
@@ -39,9 +38,10 @@ InhabitantChangeHealthStateDialog::InhabitantChangeHealthStateDialog( QWidget* p
     setCaption( tools::translate( "InhabitantChangeHealthDialog", "Change health state" ) );
     resize( 250, 150 );
 
-    // Health informations
-    QGridLayout* grid = new QGridLayout( this, 6, 2, 5, 5 );
+    // Main layout
+    QGridLayout* grid = new QGridLayout( this, 7, 2, 5, 5 );
 
+    // SpinBoxs
     grid->addWidget( new QLabel( tools::translate( "InhabitantChangeHealthDialog", "Alive:" ), this ), 0, 0 );
     healthySpinBox_ = new QSpinBox ( this );
     grid->addWidget( healthySpinBox_, 0, 1 );
@@ -52,38 +52,49 @@ InhabitantChangeHealthStateDialog::InhabitantChangeHealthStateDialog( QWidget* p
     deadSpinBox_ = new QSpinBox ( this );
     grid->addWidget( deadSpinBox_, 2, 1 );
 
-    grid->addWidget( new QLabel( tools::translate( "InhabitantChangeHealthDialog", "New total:" ), this ), 3, 0 );
-    newTotalLabel_ = new QLabel( tools::translate( "InhabitantChangeHealthDialog", "0" ), this );
-    grid->addWidget( newTotalLabel_, 3, 1 );
-    grid->addWidget( new QLabel( tools::translate( "InhabitantChangeHealthDialog", "Original total:" ), this ), 4, 0 );
-    originalTotalLabel_ = new QLabel( tools::translate( "InhabitantChangeHealthDialog", "0" ), this );
-    grid->addWidget( originalTotalLabel_, 4, 1 );
+    // Separator
+    QFrame* hline = new QFrame( this );
+    hline->setFrameStyle( QFrame::HLine | QFrame::Sunken );
+    grid->addMultiCellWidget( hline, 3, 3, 0, 1 );
 
+    // Labels
+    grid->addWidget( new QLabel( tools::translate( "InhabitantChangeHealthDialog", "New total:" ), this ), 4, 0 );
+    newTotalLabel_ = new QLabel( "0", this );
+    grid->addWidget( newTotalLabel_, 4, 1 );
+    grid->addWidget( new QLabel( tools::translate( "InhabitantChangeHealthDialog", "Original total:" ), this ), 5, 0 );
+    originalTotalLabel_ = new QLabel( "0", this );
+    grid->addWidget( originalTotalLabel_, 5, 1 );
+
+    //Configurations
     healthySpinBox_->setMinValue( 0 );
     healthySpinBox_->setMaxValue( std::numeric_limits< int >::max() );
+    healthySpinBox_->setLineStep( 10 );
     woundedSpinBox_->setMinValue( 0 );
     woundedSpinBox_->setMaxValue( std::numeric_limits< int >::max() );
+    woundedSpinBox_->setLineStep( 10 );
     deadSpinBox_->setMinValue( 0 );
     deadSpinBox_->setMaxValue( std::numeric_limits< int >::max() );
+    deadSpinBox_->setLineStep( 10 );
 
     newTotalLabel_->setAlignment( Qt::AlignCenter );
     newTotalLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
     originalTotalLabel_->setAlignment( Qt::AlignCenter );
     originalTotalLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    // ok / cancel butons
+    // Buttons
     QHBox* buttonLayout = new QHBox( this );
-    QPushButton* okButton     = new QPushButton( tools::translate( "InhabitantChangeHealthDialog","Ok ")    , buttonLayout );
-    QPushButton* cancelButton = new QPushButton( tools::translate( "InhabitantChangeHealthDialog","Cancel" ), buttonLayout );
-    grid->addMultiCellWidget( buttonLayout, 5, 5, 0, 1 );
+    QPushButton* okButton     = new QPushButton( tr( "Ok ")    , buttonLayout );
+    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout );
+    grid->addMultiCellWidget( buttonLayout, 6, 6, 0, 1 );
     okButton->setDefault( TRUE );
 
+    // Connect signals
     connect( okButton        , SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelButton    , SIGNAL( clicked() ), SLOT( Reject() ) );
 
-    connect( healthySpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( UpdateNewTotal( int ) ) );
-    connect( woundedSpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( UpdateNewTotal( int ) ) );
-    connect( deadSpinBox_    , SIGNAL( valueChanged( int ) ), SLOT( UpdateNewTotal( int ) ) );
+    connect( healthySpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( OnValuesChanged( int ) ) );
+    connect( woundedSpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( OnValuesChanged( int ) ) );
+    connect( deadSpinBox_    , SIGNAL( valueChanged( int ) ), SLOT( OnValuesChanged( int ) ) );
 
     // Base
     selected_ = 0;
@@ -109,12 +120,13 @@ void InhabitantChangeHealthStateDialog::Show()
     if( !selected_ )
         return;
 
-    healthySpinBox_->setValue( selected_->GetHealty() );
+    // Initialization
+    healthySpinBox_->setValue( selected_->GetHealthy() );
     woundedSpinBox_->setValue( selected_->GetWounded() );
     deadSpinBox_->setValue( selected_->GetDead() );
 
     originalTotalLabel_->setText( QString::number( healthySpinBox_->value() + woundedSpinBox_->value() + deadSpinBox_->value() ) );
-    UpdateNewTotal();
+    OnValuesChanged();
 
     show();
 }
@@ -129,20 +141,11 @@ void InhabitantChangeHealthStateDialog::Validate()
         return;
 
     accept();
-
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "inhabitant_change_health_state" );
-
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "FireCreationPanel", "Strike order on location" ), true );
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-
-    action->AddParameter( *new actions::parameters::Quantity( it.NextElement(), healthySpinBox_->value() ) );
-    action->AddParameter( *new actions::parameters::Quantity( it.NextElement(), woundedSpinBox_->value() ) );
-    action->AddParameter( *new actions::parameters::Quantity( it.NextElement(), deadSpinBox_->value() ) );
-
+    actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeHealthStateAction( healthySpinBox_->value(), woundedSpinBox_->value(), deadSpinBox_->value(),
+                                                                                         *selected_, controllers_.controller_, static_.types_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
-    action->RegisterAndPublish( actionsModel_ );
-
+    actionsModel_.Publish( *action );
     selected_ = 0;
 }
 
@@ -166,10 +169,10 @@ void InhabitantChangeHealthStateDialog::closeEvent( QCloseEvent * /* e */ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantChangeHealthStateDialog::UpdateNewTotal
+// Name: InhabitantChangeHealthStateDialog::OnValuesChanged
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-void InhabitantChangeHealthStateDialog::UpdateNewTotal( int /* newValue */ )
+void InhabitantChangeHealthStateDialog::OnValuesChanged( int /* newValue */ )
 {
     newTotalLabel_->setText( QString::number( healthySpinBox_->value() + woundedSpinBox_->value() + deadSpinBox_->value() ) );
 }

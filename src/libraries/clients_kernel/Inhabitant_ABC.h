@@ -44,7 +44,7 @@ public:
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
-    unsigned int GetHealty() const { return healthy_; }
+    unsigned int GetHealthy() const { return healthy_; }
     unsigned int GetWounded() const { return wounded_; }
     unsigned int GetDead() const { return dead_; }
     //@}

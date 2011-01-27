@@ -17,7 +17,7 @@ const QString Inhabitant_ABC::typeName_ = "inhabitant";
 
 // -----------------------------------------------------------------------------
 // Name: Inhabitant_ABC constructor
-// Created: SLG 2010-11-23
+// Created: ABR 2011-01-26
 // -----------------------------------------------------------------------------
 Inhabitant_ABC::Inhabitant_ABC()
     : healthy_( 0 )

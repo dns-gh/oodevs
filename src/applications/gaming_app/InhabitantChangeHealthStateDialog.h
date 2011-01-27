@@ -60,7 +60,7 @@ private slots:
     void Validate();
     void Reject();
     void closeEvent( QCloseEvent * e );
-    void UpdateNewTotal( int newValue = 0 );
+    void OnValuesChanged( int newValue = 0 );
     //@}
 
 private:
