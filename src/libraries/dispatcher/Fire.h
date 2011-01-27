@@ -67,7 +67,7 @@ private:
     //@{
     sword::FireId                oid_tir_;
     sword::UnitId                tireur_;
-    sword::UnitFireType          type_;
+    sword::StartUnitFire::UnitFireType type_;
     bool                          munitionPresent_;
     sword::ResourceType          munition_;
     int                           typeCible_;
