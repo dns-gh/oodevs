@@ -45,18 +45,12 @@ void PropertiesDictionary::Remove( const QString& name )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesDictionary::FindKey
-// Created: SBO 2006-10-19
+// Name: PropertiesDictionary::HasKey
+// Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-QStringList PropertiesDictionary::FindKey( QString name ) const
+bool PropertiesDictionary::HasKey( QString name ) const
 {
-    QStringList result;
-    for( CIT_Properties it = properties_.begin(); it != properties_.end(); ++it )
-    {
-        if( it->first.find( name, 0, false ) != -1 )
-            result.append( it->first );
-    }
-    return result;
+    return properties_.find( name ) != properties_.end();
 }
 
 // -----------------------------------------------------------------------------

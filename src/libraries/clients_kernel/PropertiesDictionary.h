@@ -36,8 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    QStringList FindKey( QString name ) const;
-
+    bool HasKey( QString name ) const;
 
     template< typename T, typename Owner, typename Setter >
     void Register( const Owner& owner, const QString& name, T& value, const Setter& setter )
