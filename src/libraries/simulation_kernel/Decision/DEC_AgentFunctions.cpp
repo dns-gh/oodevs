@@ -36,6 +36,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_Suicide.h"
 #include "Entities/Objects/ActivableCapacity.h"
+#include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -290,7 +291,7 @@ bool DEC_AgentFunctions::HasDotationForBuilding( MIL_Agent_ABC& callerAgent, con
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanBypassObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return objectKnowledge && objectKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() !=0 && callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
 }
 
 // -----------------------------------------------------------------------------
