@@ -51,7 +51,7 @@ bool MIL_Effect_Weather::Execute()
     if( !bIsDeployed_ && nDeploymentTimeStep_ <= nCurrentTimeStep )
     {
         MIL_AgentServer::GetWorkspace().GetMeteoDataManager().RegisterWeatherEffect( surface_, ammoCategory_ );
-        SendMsgStartEffect( ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? sword::smoke : sword::light );
+        SendMsgStartEffect( ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? sword::StartFireEffect::smoke : sword::StartFireEffect::light );
         bIsDeployed_ = true;
     }
 

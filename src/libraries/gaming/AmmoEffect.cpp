@@ -51,10 +51,10 @@ void AmmoEffect::Draw( const GlTools_ABC& tools ) const
 {
     switch( type_ )
     {
-        case sword::smoke:          glColor4f( COLOR_AMMO_EFFECT_SMOKE ); break;
-        case sword::light:          glColor4f( COLOR_AMMO_EFFECT_LIGHT ); break;
-        case sword::explosion:      glColor4f( COLOR_AMMO_EFFECT_EXPLOSION ); break;
-        case sword::neutralization: glColor4f( COLOR_AMMO_EFFECT_NEUTRALIZATION ); break;
+        case sword::StartFireEffect::smoke:          glColor4f( COLOR_AMMO_EFFECT_SMOKE ); break;
+        case sword::StartFireEffect::light:          glColor4f( COLOR_AMMO_EFFECT_LIGHT ); break;
+        case sword::StartFireEffect::explosion:      glColor4f( COLOR_AMMO_EFFECT_EXPLOSION ); break;
+        case sword::StartFireEffect::neutralization: glColor4f( COLOR_AMMO_EFFECT_NEUTRALIZATION ); break;
         default:
             ;
     }

@@ -50,10 +50,9 @@ bool MIL_Effect_Explosion::Execute()
 {
     if( !started_ )
     {
-        SendMsgStartEffect( neutralization_ ? sword::neutralization : sword::explosion );
+        SendMsgStartEffect( neutralization_ ? sword::StartFireEffect::neutralization : sword::StartFireEffect::explosion );
         started_ = true;
     }
-
     if( nLifeLastTimeStep_ <= MIL_Singletons::GetTime().GetCurrentTick() )
     {
         SendMsgStopEffect();
