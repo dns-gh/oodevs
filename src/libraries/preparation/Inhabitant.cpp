@@ -21,7 +21,7 @@
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QString& name, kernel::Controller& controller, IdManager& idManager )
     : kernel::EntityImplementation< kernel::Inhabitant_ABC >( controller, idManager.GetNextId(), "" )
-    , type_      ( &type )
+    , type_      ( type )
     , healthNeed_( 0 )
 {
     healthy_ = number;
