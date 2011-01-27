@@ -627,7 +627,7 @@ BOOST_FIXTURE_TEST_CASE( start_fire_effect_to_client_is_converted, ContextFixtur
 {
     content.mutable_start_fire_effect()->mutable_fire_effect()->set_id( 7 );
     FillLocation( content.mutable_start_fire_effect()->mutable_location() );
-    content.mutable_start_fire_effect()->set_type( sword::StartFireEffect::StartFireEffect::light );
+    content.mutable_start_fire_effect()->set_type( sword::StartFireEffect::light );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { start_fire_effect { fire_effect { id: 7 } location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } type: light } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
