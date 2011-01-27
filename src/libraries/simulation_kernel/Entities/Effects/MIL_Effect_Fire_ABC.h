@@ -18,7 +18,7 @@
 
 namespace sword
 {
-    enum EnumFireEffectType;
+    enum StartFireEffect_EnumFireEffectType;
 }
 
 class PHY_IndirectFireDotationClass;
@@ -39,7 +39,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    void SendMsgStartEffect( sword::StartFireEffect::EnumFireEffectType fireEffectType ) const;
+    void SendMsgStartEffect( sword::StartFireEffect_EnumFireEffectType fireEffectType ) const;
     void SendMsgStopEffect() const;
     //@}
 
