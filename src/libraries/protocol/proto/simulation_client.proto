@@ -911,21 +911,21 @@ message UnitKnowledgeUpdate {
     @brief Notifies of the destruction of a unit knowledge
 */
 message UnitKnowledgeDestruction {
-    required UnitKnowledgeId  knowledge       = 1; //!< The unit knowledge @see UnitKnowledgeId
-    required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier @see KnowledgeGroupId
+    required UnitKnowledgeId  knowledge       = 1; //!< The unit knowledge
+    required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier
 }
 
 /** @struct StartUnitFire
-    @brief Notifies of a unit fire start
+    @brief Notifies of the beginning of a unit firing
 */
 message StartUnitFire {
     /** @struct UnitFireTarget
         @brief Defines the target
     */
     message UnitFireTarget {
-        optional UnitId       unit     = 1; //!< The target unit @see UnitId
-        optional CrowdId      crowd    = 2; //!< The target crowd @see CrowdId
-        optional CoordLatLong position = 3; //!< The target position @see CoordLatLong
+        optional UnitId       unit     = 1; //!< The target unit
+        optional CrowdId      crowd    = 2; //!< The target crowd
+        optional CoordLatLong position = 3; //!< The target position
     }
     /** @enum UnitFireType
         @brief Defines the fire type
@@ -934,80 +934,113 @@ message StartUnitFire {
        direct   = 0; //!< Direct fire
        indirect = 1; //!< Indirect fire
     }
-    required FireId         fire        = 1; //!< The fire identifier @see FireId
-    required UnitId         firing_unit = 2; //!< The firing unit identifier @see UnitId
-    required UnitFireTarget target      = 3; //!< The target @see UnitFireTarget
-    required UnitFireType   type        = 4; //!< The fire type @see UnitFireType
-    optional ResourceType   ammunition  = 5; //!< The ammunition type @see ResourceType
+    required FireId         fire        = 1; //!< The fire identifier
+    required UnitId         firing_unit = 2; //!< The firing unit identifier
+    required UnitFireTarget target      = 3; //!< The target
+    required UnitFireType   type        = 4; //!< The fire type
+    optional ResourceType   ammunition  = 5; //!< The ammunition type
 }
 
 /** @struct UnitHumanFireDamage
-    @brief Defines the personal damage inflicted to a unit
+    @brief Defines the damage inflicted the humans of a unit
 */
 message UnitHumanFireDamage {
-    required EnumHumanRank rank       = 1; //!< The unit rank @see EnumHumanRank
-    required int32         alive      = 2;
-    required int32         dead       = 3;
-    required int32         wounded_u1 = 4;
-    required int32         wounded_u2 = 5;
-    required int32         wounded_u3 = 6;
-    required int32         wounded_ue = 7;
+    required EnumHumanRank rank       = 1; //!< The unit rank
+    required int32         alive      = 2; //!< The number of alive humans
+    required int32         dead       = 3; //!< The number of dead humans
+    required int32         wounded_u1 = 4; //!< The number of wounded humans urgency level 1
+    required int32         wounded_u2 = 5; //!< The number of wounded humans urgency level 2
+    required int32         wounded_u3 = 6; //!< The number of wounded humans urgency level 3
+    required int32         wounded_ue = 7; //!< The number of wounded humans urgency level extreme
 }
 
+/** @struct SeqOfUnitHumanFireDamage
+    @brief Defines a list of damages inflicted the humans of a unit
+*/
 message SeqOfUnitHumanFireDamage {
-    repeated UnitHumanFireDamage elem = 1;
+    repeated UnitHumanFireDamage elem = 1; //!< The list of human damages
 }
 
+/** @struct UnitEquipmentFireDamage
+    @brief Defines the damage inflicted the equipment of a unit
+*/
 message UnitEquipmentFireDamage {
-    required EquipmentType equipement  = 1;
-    required uint32        available   = 2;
-    required uint32        unavailable = 3;
-    required uint32        repairable  = 4;
+    required EquipmentType equipement  = 1; //!< The equipment
+    required uint32        available   = 2; //!< The number of available equipements
+    required uint32        unavailable = 3; //!< The number of unavailable equipements
+    required uint32        repairable  = 4; //!< The number of repairable equipements
 }
 
+/** @struct SeqOfUnitEquipmentFireDamage
+    @brief Defines a list of damages inflicted to the equipments of a unit
+*/
 message SeqOfUnitEquipmentFireDamage {
-    repeated UnitEquipmentFireDamage elem = 1;
+    repeated UnitEquipmentFireDamage elem = 1; //!< The list of equipment damages
 }
 
+/** @struct UnitFireDamages
+    @brief Aggregates the damages to a unit
+*/
 message UnitFireDamages {
-    required UnitId                       target     = 1;
-    required SeqOfUnitHumanFireDamage     humans     = 2;
-    required SeqOfUnitEquipmentFireDamage equipments = 3;
+    required UnitId                       target     = 1; //!< The unit identifier
+    required SeqOfUnitHumanFireDamage     humans     = 2; //!< The damages to the humans
+    required SeqOfUnitEquipmentFireDamage equipments = 3; //!< The damages to the equipments
 }
 
+/** @struct UnitsFireDamages
+    @brief Defines a list of damages to several units
+*/
 message UnitsFireDamages {
-    repeated UnitFireDamages elem = 1;
+    repeated UnitFireDamages elem = 1; //!< The list of damages
 }
 
+/** @struct CrowdFireDamages
+    @brief Defines the damage inflicted to a crowd
+*/               
 message CrowdFireDamages {
-    required CrowdId target = 1;
-    required int32   dead   = 2;
+    required CrowdId target = 1; //!< The crowd identifier
+    required int32   dead   = 2; //!< The number of dead persons
 }
 
+/** @struct CrowdsFireDamages
+    @brief Defines the damage inflicted to several crowds
+*/
 message CrowdsFireDamages {
-    repeated CrowdFireDamages elem = 1;
+    repeated CrowdFireDamages elem = 1; //!< The list of damages
 }
 
+/** @struct StopUnitFire
+    @brief Notifies of the end of a unit firing
+*/
 message StopUnitFire {
-    required FireId            fire           = 1;
-    optional UnitsFireDamages  units_damages  = 2;
-    optional CrowdsFireDamages crowds_damages = 3;
+    required FireId            fire           = 1; //!< The fire identifier
+    optional UnitsFireDamages  units_damages  = 2; //!< The resulting damages dealt to units
+    optional CrowdsFireDamages crowds_damages = 3; //!< The resulting damages dealt to crowds
 }
 
+/** @struct StartCrowdFire
+    @brief Notifies of the beginning of a crowd firing
+*/
 message StartCrowdFire {
-   required FireId  fire         = 1;
-   required CrowdId firing_crowd = 2;
+   required FireId  fire         = 1; //!< The fire identifier
+   required CrowdId firing_crowd = 2; //!< The crowd identifier
 }
 
+/** @struct StopCrowdFire
+    @brief Notifies of the end of a crowd firing
+*/
 message StopCrowdFire {
-    required FireId           fire          = 1;
-    required UnitsFireDamages units_damages = 2;
+    required FireId           fire          = 1; //!< The fire identifier
+    required UnitsFireDamages units_damages = 2; //!< The resulting damages dealt to units
 }
 
+/** @struct Explosion
+    @brief Notifies of an explosion
+*/
 message Explosion {
-    required ObjectId          object         = 1;
-    optional UnitsFireDamages  units_damages  = 2;
-    optional CrowdsFireDamages crowds_damages = 3;
+    required ObjectId          object         = 1; //!< The explosion object identifier
+    optional UnitsFireDamages  units_damages  = 2; //!< The resulting damages dealt to units
+    optional CrowdsFireDamages crowds_damages = 3; //!< The resulting damages dealt to crowds
 }
 
 enum EnumFireEffectType { //!< @todo move into StartFireEffect
