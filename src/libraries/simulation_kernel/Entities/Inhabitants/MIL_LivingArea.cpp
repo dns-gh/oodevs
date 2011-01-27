@@ -240,23 +240,41 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
     T_Blocks blocks = GetBlockUsage( motivation );
     if( !blocks.empty() )
     {
-        unsigned int part = static_cast< unsigned int >( population_ / blocks.size() );
-        unsigned long tmp = population_;
-        T_Identifiers identifiers;
+        unsigned int occupation = 0u;
         BOOST_FOREACH( const T_Block& block, blocks )
+            occupation += GetOccupation( block, motivation );
+        if( occupation != 0u )
         {
-            identifiers[ block.first->GetId() ] = part;
-            tmp -= part;
+            T_Identifiers identifiers;
+            unsigned long tmp = population_;
+            BOOST_FOREACH( const T_Block& block, blocks )
+            {
+                unsigned int part = static_cast< unsigned int >( population_ * GetOccupation( block, motivation ) / occupation );
+                identifiers[ block.first->GetId() ] = part;
+                tmp -= part;
+            }
+            if( tmp > 0 )
+                identifiers.begin()->second += tmp;
+            BOOST_FOREACH( T_Block& block, blocks_ )
+            {
+                CIT_Identifiers it = identifiers.find( block.first->GetId() );
+                block.second = ( it == identifiers.end() ) ? 0u : it->second;
+            }
+            SendFullState();
         }
-        if( tmp > 0 )
-            identifiers.begin()->second += tmp;
-       BOOST_FOREACH( T_Block& block, blocks_ )
-        {
-            CIT_Identifiers it = identifiers.find( block.first->GetId() );
-            block.second = ( it == identifiers.end() ) ? 0u : it->second;
-        }
-        SendFullState();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::GetOccupation
+// Created: LGY 2011-01-26
+// -----------------------------------------------------------------------------
+unsigned int MIL_LivingArea::GetOccupation( const T_Block& block, const std::string& motivation ) const
+{
+    CIT_Accommodations it = accommodations_.find( motivation );
+    if( it != accommodations_.end() )
+        return static_cast< unsigned int >( block.first->GetLivingSpace() * GetProportion( block, motivation ) * it->second );
+    return 0u;
 }
 
 // -----------------------------------------------------------------------------
@@ -267,7 +285,7 @@ MIL_LivingArea::T_Blocks MIL_LivingArea::GetBlockUsage( const std::string& motiv
 {
     T_Blocks blocks;
     BOOST_FOREACH( const T_Block& block, blocks_ )
-        if( HasUsage( block, motivation ) )
+        if( GetProportion( block, motivation ) != 0.f )
             blocks.push_back( block );
     return blocks;
 }
@@ -291,18 +309,19 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::HasUsage
-// Created: LGY 2011-01-21
+// Name: MIL_LivingArea::GetProportion
+// Created: LGY 2011-01-26
 // -----------------------------------------------------------------------------
-bool MIL_LivingArea::HasUsage( const T_Block& block, const std::string& motivation ) const
+float MIL_LivingArea::GetProportion( const T_Block& block, const std::string& motivation ) const
 {
     const urban::PhysicalAttribute* pPhysical = block.first->Retrieve< urban::PhysicalAttribute >();
     if( !pPhysical || !pPhysical->GetMotivations() )
-        return false;
-    std::map< std::string, float > motivations;
+        return 0.f;
+    T_Accommodations motivations;
     MotivationsVisitor visitor( motivations );
     block.first->Accept( visitor );
-    if( motivations.find( motivation ) == motivations.end() )
-        return false;
-    return true;
+    CIT_Accommodations it = motivations.find( motivation );
+    if( it == motivations.end() )
+        return 0.f;
+    return it->second;
 }
