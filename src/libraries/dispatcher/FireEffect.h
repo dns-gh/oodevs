@@ -20,7 +20,7 @@ namespace kernel
 
 namespace sword
 {
-    enum EnumFireEffectType;
+    enum StartFireEffect_EnumFireEffectType;
     class StartFireEffect;
 }
 
@@ -64,7 +64,7 @@ private:
     //@{
     unsigned id_;
     Localisation localisation_;
-    sword::StartFireEffect::EnumFireEffectType  type_;
+    sword::StartFireEffect_EnumFireEffectType type_;
     //@}
 };
 
