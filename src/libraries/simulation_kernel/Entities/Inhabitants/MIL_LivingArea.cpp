@@ -14,13 +14,13 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Objects/MedicalCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "UrbanType.h"
 #include "protocol/ClientSenders.h"
 #include <urban/Model.h>
 #include <urban/StaticModel.h>
 #include <urban/MotivationType.h>
-#include <urban/TerrainObject_ABC.h>
 #include <urban/MotivationsVisitor_ABC.h>
 #include <urban/PhysicalAttribute.h>
 #include <boost/foreach.hpp>
@@ -83,19 +83,19 @@ void MIL_LivingArea::LoadAccommodations()
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis, float& area )
 {
-    const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( xis.attribute< int >( "id" ) );
+    unsigned int simId = MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) );
+    UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
     if( !object )
         xis.error( "Error in loading living urban block of population" );
-    area += object->GetFootprint()->ComputeArea();
+    area += object->GetLocalisation().GetArea();
     blocks_.push_back( T_Block( object , 0 ) );
 }
 
 namespace
 {
-    float GetStructuralState( const urban::TerrainObject_ABC& object )
+    float GetStructuralState( const UrbanObjectWrapper& object )
     {
-        UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( object );
-        const StructuralCapacity* structural = wrapper.Retrieve< StructuralCapacity >();
+        const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();
         return structural ? 0.01f * structural->GetStructuralState() : 1.f;
     }
 
@@ -116,7 +116,7 @@ void MIL_LivingArea::DistributeHumans( float area )
     unsigned long tmp = population_;
     for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
-        unsigned long person = static_cast< unsigned long >( it->first->GetFootprint()->ComputeArea() * population_ / area );
+        unsigned long person = static_cast< unsigned long >( it->first->GetLocalisation().GetArea() * population_ / area );
         if( tmp - person < 0 )
             person = tmp;
         it->second = person;
@@ -132,8 +132,8 @@ void MIL_LivingArea::DistributeHumans( float area )
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::Register( MIL_StructuralStateNotifier_ABC& structural )
 {
-    BOOST_FOREACH( const T_Block& block, blocks_ )
-        MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *block.first ).Register( structural );
+    BOOST_FOREACH( T_Block& block, blocks_ )
+        block.first->Register( structural );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,13 +146,13 @@ void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> population_;
     unsigned int size;
     file >> size;
-    unsigned int blockId;
+    unsigned int objectId;
     unsigned int person;
     for( unsigned int i = 0; i < size; ++i )
     {
-        file >> blockId
+        file >> objectId
              >> person;
-        const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( blockId );
+        UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( objectId ) );
         if( object )
             blocks_.push_back( T_Block( object , person ) );
     }
@@ -171,7 +171,7 @@ void MIL_LivingArea::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     unsigned int id;
     BOOST_FOREACH( const T_Block& block, blocks_ )
     {
-        id = block.first->GetId();
+        id = block.first->GetID();
         file << id
              << block.second;
     }
@@ -186,7 +186,7 @@ void MIL_LivingArea::SendFullState( client::PopulationUpdate& msg ) const
     BOOST_FOREACH( const T_Block& urbanBlock, blocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
-        block.mutable_object()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *urbanBlock.first ).GetID() );
+        block.mutable_object()->set_id( urbanBlock.first->GetID() );
         block.set_number( urbanBlock.second );
     }
 }
@@ -211,7 +211,7 @@ void MIL_LivingArea::UpdateNetwork( client::PopulationUpdate& msg ) const
 void MIL_LivingArea::SendCreation( client::PopulationCreation& msg ) const
 {
     BOOST_FOREACH( const T_Block& block, blocks_ )
-        msg().add_objects()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *block.first ).GetID() );
+        msg().add_objects()->set_id( block.first->GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,9 +222,11 @@ void MIL_LivingArea::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "living-area" );
     BOOST_FOREACH( const T_Block& block, blocks_ )
-        xos << xml::start( "urban-block" )
-                << xml::attribute( "id", block.first->GetId() )
-            << xml::end;
+    {
+        xos << xml::start( "urban-block" );
+            block.first->WriteUrbanIdAttribute( xos );
+        xos << xml::end;
+    }
     xos << xml::end;
 }
 
@@ -261,12 +263,8 @@ float MIL_LivingArea::HealthCount() const
     float healthCount = 0;
     BOOST_FOREACH( const T_Block& block, blocks_ )
     {
-        MIL_Object_ABC& object = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *block.first );
-        if( object.Retrieve< MedicalCapacity >() )
-        {
-            const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();
-            healthCount += structural ? 0.01f * structural->GetStructuralState() : 1.f;
-        }
+        if( block.first->Retrieve< MedicalCapacity >() )
+            healthCount += GetStructuralState( *block.first);
     }
     return healthCount;
 }
@@ -290,14 +288,14 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
             BOOST_FOREACH( const T_Block& block, blocks )
             {
                 unsigned int part = static_cast< unsigned int >( population_ * GetOccupation( block, motivation ) / occupation );
-                identifiers[ block.first->GetId() ] = part;
+                identifiers[ block.first->GetID() ] = part;
                 tmp -= part;
             }
             if( tmp > 0 )
                 identifiers.begin()->second += tmp;
             BOOST_FOREACH( T_Block& block, blocks_ )
             {
-                CIT_Identifiers it = identifiers.find( block.first->GetId() );
+                CIT_Identifiers it = identifiers.find( block.first->GetID() );
                 block.second = ( it == identifiers.end() ) ? 0u : it->second;
             }
             hasChanged_ = true;
@@ -354,9 +352,6 @@ namespace
 // -----------------------------------------------------------------------------
 float MIL_LivingArea::GetProportion( const T_Block& block, const std::string& motivation ) const
 {
-    const urban::PhysicalAttribute* pPhysical = block.first->Retrieve< urban::PhysicalAttribute >();
-    if( !pPhysical || !pPhysical->GetMotivations() )
-        return 0.f;
     T_Accommodations motivations;
     MotivationsVisitor visitor( motivations );
     block.first->Accept( visitor );

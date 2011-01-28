@@ -25,6 +25,7 @@ namespace sword
 namespace urban
 {
     class TerrainObject_ABC;
+    class MotivationsVisitor_ABC;
 }
 
 // =============================================================================
@@ -54,6 +55,7 @@ public:
     //! @name ODB
     //@{
     virtual void WriteODB( xml::xostream& xos ) const;
+    void WriteUrbanIdAttribute( xml::xostream& xos ) const;
     //@}
 
     //! @name Interaction
@@ -87,6 +89,8 @@ public:
     const std::string& GetName() const;
     const urban::TerrainObject_ABC& GetObject();
     const urban::TerrainObject_ABC& GetObject() const;
+    void Accept( urban::MotivationsVisitor_ABC& visitor ) const;
+    float GetLivingSpace() const;
     //@}
 
 private:

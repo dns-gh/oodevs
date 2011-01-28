@@ -21,11 +21,6 @@ namespace xml
     class xostream;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 namespace client
 {
     class PopulationCreation;
@@ -34,6 +29,7 @@ namespace client
 
 class MIL_StructuralStateNotifier_ABC;
 class MIL_CheckPointOutArchive;
+class UrbanObjectWrapper;
 
 // =============================================================================
 /** @class  MIL_LivingArea
@@ -75,10 +71,11 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::pair< const urban::TerrainObject_ABC*, unsigned int > T_Block;
-    typedef std::vector< T_Block >                                     T_Blocks;
-    typedef T_Blocks::iterator                                        IT_Blocks;
-    typedef T_Blocks::const_iterator                                 CIT_Blocks;
+    typedef std::pair< UrbanObjectWrapper*, unsigned int > T_Block;
+
+    typedef std::vector< T_Block >     T_Blocks;
+    typedef T_Blocks::iterator        IT_Blocks;
+    typedef T_Blocks::const_iterator CIT_Blocks;
 
     typedef std::map< unsigned long, unsigned int > T_Identifiers;
     typedef T_Identifiers::const_iterator         CIT_Identifiers;

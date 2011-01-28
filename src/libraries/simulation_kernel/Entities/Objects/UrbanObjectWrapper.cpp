@@ -140,6 +140,15 @@ void UrbanObjectWrapper::WriteODB( xml::xostream& /*xos*/ ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::WriteUrbanIdAttribute
+// Created: JSR 2011-01-28
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::WriteUrbanIdAttribute( xml::xostream& xos ) const
+{
+    xos << xml::attribute( "id", object_->GetId() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Object::CanInteractWith
 // Created: SLG 2010-01-05
 // -----------------------------------------------------------------------------
@@ -329,6 +338,24 @@ void UrbanObjectWrapper::UpdateState()
     if ( message().attributes().has_structure() || message().attributes().has_infrastructures() )
         message.Send( NET_Publisher_ABC::Publisher() );
     MIL_Object::UpdateState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::Accept
+// Created: JSR 2011-01-28
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::Accept( urban::MotivationsVisitor_ABC& visitor ) const
+{
+    object_->Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetLivingSpace
+// Created: JSR 2011-01-28
+// -----------------------------------------------------------------------------
+float UrbanObjectWrapper::GetLivingSpace() const
+{
+    return object_->GetLivingSpace();
 }
 
 // -----------------------------------------------------------------------------
