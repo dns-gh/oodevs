@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::HelpSystem */
+
 #include "clients_gui_pch.h"
 #include "HelpSystem.h"
 #include "moc_HelpSystem.cpp"
@@ -84,7 +86,7 @@ std::string HelpSystem::FindWidget( const QWidget* root )
 // -----------------------------------------------------------------------------
 void HelpSystem::ShowHelp()
 {
-    std::string resource = tools::GeneralConfig::BuildResourceChildFile( tools::translate( "HelpSystem", "help/en/Reference Guide.chm" ).ascii() );
+    std::string resource = tools::GeneralConfig::BuildResourceChildFile( tools::translate( "gui::HelpSystem", "help/en/Reference Guide.chm" ).ascii() );
     const std::string page = FindWidget( root_ );
     if( !page.empty() )
         resource += "::/" + page;

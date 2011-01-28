@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::PresetDialog */
+
 #include "clients_gui_pch.h"
 #include "PresetDialog.h"
 #include "moc_PresetDialog.cpp"

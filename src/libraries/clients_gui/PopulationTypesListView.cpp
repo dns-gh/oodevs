@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::PopulationTypesListView */
+
 #include "clients_gui_pch.h"
 #include "PopulationTypesListView.h"
 #include "moc_PopulationTypesListView.cpp"
@@ -29,7 +31,7 @@ PopulationTypesListView::PopulationTypesListView( QWidget* parent, kernel::Contr
     , types_( types )
 {
     setMinimumSize( 1, 1 );
-    addColumn( tools::translate( "PopulationTypesListView", "Crowd type" ) );
+    addColumn( tools::translate( "gui::PopulationTypesListView", "Crowd type" ) );
     setRootIsDecorated( true );
     header()->hide();
     setSorting( -1 );

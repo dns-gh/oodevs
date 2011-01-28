@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::LocationCreator */
+
 #include "clients_gui_pch.h"
 #include "LocationCreator.h"
 #include "moc_LocationCreator.cpp"
@@ -137,13 +139,13 @@ void LocationCreator::NotifyContextMenu( const kernel::Nothing&, kernel::Context
     {
         QPopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
         if( lineAllowed_ )
-            subMenu->insertItem( tools::translate( "Localisation", "Line" ), this, SLOT( StartLine() ) );
+            subMenu->insertItem( tools::translate( "gui::LocationCreator", "Line" ), this, SLOT( StartLine() ) );
         if( polygonAllowed_ )
-            subMenu->insertItem( tools::translate( "Localisation", "Polygon" ), this, SLOT( StartPolygon() ) );
+            subMenu->insertItem( tools::translate( "gui::LocationCreator", "Polygon" ), this, SLOT( StartPolygon() ) );
         if( circleAllowed_ )
-            subMenu->insertItem( tools::translate( "Localisation", "Circle" ), this, SLOT( StartCircle() ) );
+            subMenu->insertItem( tools::translate( "gui::LocationCreator", "Circle" ), this, SLOT( StartCircle() ) );
         if( rectangleAllowed_ )
-            subMenu->insertItem( tools::translate( "Localisation", "Rectangle" ), this, SLOT( StartRectangle() ) );
+            subMenu->insertItem( tools::translate( "gui::LocationCreator", "Rectangle" ), this, SLOT( StartRectangle() ) );
     }
 }
 
@@ -157,7 +159,7 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
     {
         popupPoint_ = point;
         QPopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
-        subMenu->insertItem( tools::translate( "Localisation", "Point" ), this, SLOT( StartPoint() ) );
+        subMenu->insertItem( tools::translate( "gui::LocationCreator", "Point" ), this, SLOT( StartPoint() ) );
     }
 }
 

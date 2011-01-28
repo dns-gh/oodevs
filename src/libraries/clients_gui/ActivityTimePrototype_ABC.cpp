@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::ActivityTimePrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "ActivityTimePrototype_ABC.h"
 #include "Tools.h"
@@ -18,9 +20,9 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ActivityTimePrototype_ABC::ActivityTimePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "ActivityTimePrototype_ABC", "Activity time" ) )
+: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ActivityTimePrototype_ABC", "Activity time" ) )
 {
-    new QLabel( tools::translate( "ActivityTimePrototype_ABC", "Activity time:" ), this );
+    new QLabel( tools::translate( "gui::ActivityTimePrototype_ABC", "Activity time:" ), this );
     activityTime_ = new QTimeEdit( this );
 }
 

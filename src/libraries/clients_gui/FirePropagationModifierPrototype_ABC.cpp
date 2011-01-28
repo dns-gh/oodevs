@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::FirePropagationModifierPrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "FirePropagationModifierPrototype_ABC.h"
 #include "clients_kernel/FireClass.h"
@@ -20,7 +22,7 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 FirePropagationModifierPrototype_ABC::FirePropagationModifierPrototype_ABC( QWidget* parent )
-: ObjectAttributePrototype_ABC( parent, tools::translate( "FirePropagationModifierPrototype_ABC", "Fire propagation modifier" ) )
+: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FirePropagationModifierPrototype_ABC", "Fire propagation modifier" ) )
 {
     //NOTHING
 }

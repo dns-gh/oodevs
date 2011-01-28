@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::DelayPrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "DelayPrototype_ABC.h"
 #include "Tools.h"
@@ -18,9 +20,9 @@ using namespace gui;
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
 DelayPrototype_ABC::DelayPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "DelayPrototype_ABC", "Delay time" ) )
+: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::DelayPrototype_ABC", "Delay time" ) )
 {
-    new QLabel( tools::translate( "DelayPrototype_ABC", "Delay time:" ), this );
+    new QLabel( tools::translate( "gui::DelayPrototype_ABC", "Delay time:" ), this );
     delayTime_ = new QTimeEdit( this );
 }
 

@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::TerrainProfile */
+
 #include "clients_gui_pch.h"
 #include "TerrainProfile.h"
 #include "Tools.h"
@@ -27,7 +29,7 @@ TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& det
     setFocusPolicy( QWidget::ClickFocus );
     YAxis().ShowAxis( true );
     YAxis().ShowGrid( true );
-    YAxis().SetAxisCaption( tools::translate( "TerrainProfile", "Altitude (m)" ).ascii() );
+    YAxis().SetAxisCaption( tools::translate( "gui::TerrainProfile", "Altitude (m)" ).ascii() );
     YAxis().ShowTicks( 50 );
     YAxis().ShowTicksValue( true );
     YAxis().SetCaptionMargin( 8 );
@@ -36,7 +38,7 @@ TerrainProfile::TerrainProfile( QWidget* parent, const kernel::DetectionMap& det
     XAxis().ShowGrid( false );
     XAxis().ShowTicks( 1 );
     XAxis().ShowTicksValue( true );
-    XAxis().SetAxisCaption( tools::translate( "TerrainProfile", "Distance (km)" ).ascii() );
+    XAxis().SetAxisCaption( tools::translate( "gui::TerrainProfile", "Distance (km)" ).ascii() );
 
     SetBackgroundColor( Qt::white );
     setMinimumWidth( 320 );

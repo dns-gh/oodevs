@@ -26,10 +26,10 @@ namespace
     ValuedComboBox< std::string >* BuildNatureFieldsCombo( QWidget* parent )
     {
         ValuedComboBox< std::string >* combo = new ValuedComboBox< std::string >( parent );
-        combo->AddItem( tools::translate( "UnitsPanel", "Hierarchical view" ), "" );
-        combo->AddItem( tools::translate( "UnitsPanel", "Level" ), "level" );
-        combo->AddItem( tools::translate( "UnitsPanel", "Nature" ), "nature" );
-        combo->AddItem( tools::translate( "UnitsPanel", "Atlas qualifier" ), "atlas" );
+        combo->AddItem( tools::translate( "gui::UnitsPanel", "Hierarchical view" ), "" );
+        combo->AddItem( tools::translate( "gui::UnitsPanel", "Level" ), "level" );
+        combo->AddItem( tools::translate( "gui::UnitsPanel", "Nature" ), "nature" );
+        combo->AddItem( tools::translate( "gui::UnitsPanel", "Atlas qualifier" ), "atlas" );
         return combo;
     }
 }

@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::GraphicPreferences */
+
 #include "clients_gui_pch.h"
 #include "GraphicPreferences.h"
 #include "TerrainPreference.h"
@@ -67,7 +69,7 @@ void GraphicPreferences::ReadTerrainPreference( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void GraphicPreferences::Display( QWidget* parent ) const
 {
-    QGroupBox* colorBox = new QGroupBox( displays_.size(), Qt::Vertical, tools::translate( "GraphicPreferences", "Colors" ), parent );
+    QGroupBox* colorBox = new QGroupBox( displays_.size(), Qt::Vertical, tools::translate( "gui::GraphicPreferences", "Colors" ), parent );
     for( CIT_Displays it = displays_.begin(); it != displays_.end(); ++it )
         (*it)->Display( colorBox );
 }

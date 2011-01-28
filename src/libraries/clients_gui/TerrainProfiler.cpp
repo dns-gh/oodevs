@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::TerrainProfiler */
+
 #include "clients_gui_pch.h"
 #include "TerrainProfiler.h"
 #include "moc_TerrainProfiler.cpp"
@@ -31,7 +33,7 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
     , detection_  ( detection )
     , layer_      ( layer )
 {
-    setCaption( tools::translate( "TerrainProfiler", "Terrain profile" ) );
+    setCaption( tools::translate( "gui::TerrainProfiler", "Terrain profile" ) );
     {
         QHBox* box = new QHBox( this );
         {
@@ -74,8 +76,8 @@ void TerrainProfiler::NotifyContextMenu( const geometry::Point2f& point, kernel:
     if( !isVisible() || detection_.Extent().IsOutside( point ) )
         return;
     candidatePoint_ = point;
-    menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile from here" ), this, SLOT( SetFromPosition() ) );
-    menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile to here" ), this, SLOT( SetToPosition() ) );
+    menu.InsertItem( "Helpers", tools::translate( "gui::TerrainProfiler", "Terrain profile from here" ), this, SLOT( SetFromPosition() ) );
+    menu.InsertItem( "Helpers", tools::translate( "gui::TerrainProfiler", "Terrain profile to here" ), this, SLOT( SetToPosition() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,8 +90,8 @@ void TerrainProfiler::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel
         return;
     candidateUnitPoint_ = entity.Get< kernel::Positions >().GetPosition();
     candidateHeight_ = entity.Get< kernel::Positions >().GetHeight();
-    menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile from unit" ), this, SLOT( SetFromUnitPosition() ) );
-    menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile to unit" ), this, SLOT( SetToUnitPosition() ) );
+    menu.InsertItem( "Helpers", tools::translate( "gui::TerrainProfiler", "Terrain profile from unit" ), this, SLOT( SetFromUnitPosition() ) );
+    menu.InsertItem( "Helpers", tools::translate( "gui::TerrainProfiler", "Terrain profile to unit" ), this, SLOT( SetToUnitPosition() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::InputPropagationPrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "InputPropagationPrototype_ABC.h"
 #include "moc_InputPropagationPrototype_ABC.cpp"
@@ -27,20 +29,20 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "InputPropagationPrototype_ABC", "Propagation" ) )
+: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation" ) )
     , root_ ( config.GetRootDir() )
 {
-    new QLabel( tools::translate( "InputPropagationPrototype_ABC", "Propagation Model:" ), this );
+    new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation Model:" ), this );
     propagationFiles_ = new ValuedComboBox< std::string >( this );
     FillInPaths();
 
-    new QLabel( tools::translate( "InputPropagationPrototype_ABC", "Lookup data:" ), this );
+    new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Lookup data:" ), this );
     dataField_ = new ValuedComboBox< std::string >( this );
     // TODO : %TMP%
-    dataField_->AddItem( tools::translate( "InputPropagationPrototype_ABC", "Mesure C" ), std::string( "nom_var_shp_mesure_C" ) );
-    dataField_->AddItem( tools::translate( "InputPropagationPrototype_ABC", "Mesure Ct" ), std::string( "nom_var_shp_mesure_Ct" ) );
+    dataField_->AddItem( tools::translate( "gui::InputPropagationPrototype_ABC", "Mesure C" ), std::string( "nom_var_shp_mesure_C" ) );
+    dataField_->AddItem( tools::translate( "gui::InputPropagationPrototype_ABC", "Mesure Ct" ), std::string( "nom_var_shp_mesure_Ct" ) );
 
-    new QLabel( tools::translate( "InputPropagationPrototype_ABC", "Send data:" ), this );
+    new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Send data:" ), this );
     exportData_ = new QCheckBox( this );
 }
 

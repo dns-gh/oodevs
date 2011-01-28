@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::PopulationsPanel */
+
 #include "clients_gui_pch.h"
 #include "PopulationsPanel.h"
 #include "moc_PopulationsPanel.cpp"
@@ -26,14 +28,14 @@ using namespace kernel;
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
 PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tools::translate( "PopulationsPanel", "Crowds" ), "PopulationsPanel" )
+    : InfoPanel_ABC( parent, panel, tools::translate( "gui::PopulationsPanel", "Crowds" ), "PopulationsPanel" )
     , controllers_( controllers )
     , selected_( 0 )
 {
     list_ = new PopulationTypesListView( this, controllers_, types, factory );
     connect( list_, SIGNAL( StartDrag( const kernel::PopulationType* ) ), this, SLOT( OnStartDrag( const kernel::PopulationType* ) ) );
     QHBox* box = new QHBox( this );
-    new QLabel( tools::translate( "PopulationsPanel", "Number:" ), box );
+    new QLabel( tools::translate( "gui::PopulationsPanel", "Number:" ), box );
     number_ = new QLineEdit( QString::number( 1000 ), box );
     number_->setValidator( new QIntValidator( 1, 1000000, number_ ) );
     controllers_.Register( *this );

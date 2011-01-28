@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::PropertiesPanel */
+
 #include "clients_gui_pch.h"
 #include "PropertiesPanel.h"
 #include "clients_kernel/EditorFactory_ABC.h"
@@ -39,7 +41,7 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controll
     box->setMargin( 5 );
     box->setSpacing( 5 );
 
-    table_ = new gui::PropertiesWidget( controllers_.controller_, box, tools::translate( "PropertiesPanel", "Properties" ), factory, displayer_ );
+    table_ = new gui::PropertiesWidget( controllers_.controller_, box, tools::translate( "gui::PropertiesPanel", "Properties" ), factory, displayer_ );
     controllers_.Register( *this );
 }
 

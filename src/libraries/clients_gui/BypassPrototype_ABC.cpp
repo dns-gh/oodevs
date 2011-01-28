@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::BypassPrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "BypassPrototype_ABC.h"
 #include "Tools.h"
@@ -18,7 +20,7 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 BypassPrototype_ABC::BypassPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "BypassPrototype_ABC", "Bypass parameters" ) )
+: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::BypassPrototype_ABC", "Bypass parameters" ) )
 {
     // NOTHING
 }

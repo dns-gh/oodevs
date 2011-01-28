@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::MinePrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "MinePrototype_ABC.h"
 #include "clients_kernel/Units.h"
@@ -21,9 +23,9 @@ using namespace gui;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "MinePrototype_ABC", "Mine parameters" ) )
+: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MinePrototype_ABC", "Mine parameters" ) )
 {
-    densityLabel_ = new QLabel( tools::translate( "MinePrototype_ABC", "Density:" ), this );
+    densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Density:" ), this );
     densityBox_ = new QHBox( this );
     density_ = new QLineEdit( QString::number( 0. ), densityBox_ );
     density_->setValidator( new QDoubleValidator( 0, 5, 3, density_ ) );

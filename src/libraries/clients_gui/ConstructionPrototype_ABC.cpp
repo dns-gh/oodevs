@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::ConstructionPrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "ConstructionPrototype_ABC.h"
 #include "Tools.h"
@@ -19,9 +21,9 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ConstructionPrototype_ABC::ConstructionPrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "ConstructionPrototype_ABC", "Construction" ) )
+: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ConstructionPrototype_ABC", "Construction" ) )
 {
-    new QLabel( tools::translate( "ConstructionPrototype_ABC", "Construction:" ), this );
+    new QLabel( tools::translate( "gui::ConstructionPrototype_ABC", "Construction:" ), this );
     completion_ = new QSpinBox( 0, 100, 1, this );
     completion_->setSuffix( kernel::Units::percentage.AsString() );
 }

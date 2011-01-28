@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::NBCPrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "NBCPrototype_ABC.h"
 #include "clients_kernel/NBCAgent.h"
@@ -23,23 +25,23 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< NBCAgent >& resolver, int maxToxic )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "NBCPrototype_ABC", "NBC parameters" ) )
+: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::NBCPrototype_ABC", "NBC parameters" ) )
     , resolver_( resolver )
     , maxToxic_( maxToxic )
 {
-    new QLabel( tools::translate( "NBCPrototype_ABC", "Danger level:" ), this );
+    new QLabel( tools::translate( "gui::NBCPrototype_ABC", "Danger level:" ), this );
     danger_ = new QSpinBox( 0, 10, 1, this );
-    nbcAgentsLabel_ = new RichLabel( tools::translate( "NBCPrototype_ABC", "NBC agent(s):" ), this );
+    nbcAgentsLabel_ = new RichLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent(s):" ), this );
     nbcAgents_ = new QListView( this );
     if( maxToxic == 1 )
         nbcAgents_->setSelectionMode( QListView::Single );
     else
         nbcAgents_->setSelectionMode( QListView::Multi );
     nbcAgents_->setMinimumHeight( 3 * nbcAgents_->height() ); // 3 lines visible
-    nbcAgents_->addColumn( tools::translate( "NBCPrototype_ABC", "Type" ) );
+    nbcAgents_->addColumn( tools::translate( "gui::NBCPrototype_ABC", "Type" ) );
 
 
-    new QLabel( tools::translate( "NBCPrototype_ABC", "NBC agent state:" ), this );
+    new QLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent state:" ), this );
     nbcStates_ = new ValuedComboBox< std::string >( this );
     nbcStates_->AddItem( std::string( "Liquid" ), std::string( "liquid" ) );
     nbcStates_->AddItem( std::string( "Gaseous" ), std::string( "gaseous" ) );

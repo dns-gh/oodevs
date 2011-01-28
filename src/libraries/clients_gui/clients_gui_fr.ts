@@ -1,6 +1,6 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>ActivityTimePrototype_ABC</name>
+    <name>gui::ActivityTimePrototype_ABC</name>
     <message>
         <source>Activity time</source>
         <translation>Durée d&apos;activité</translation>
@@ -77,14 +77,14 @@
     </message>
 </context>
 <context>
-    <name>BypassPrototype_ABC</name>
+    <name>gui::BypassPrototype_ABC</name>
     <message>
         <source>Bypass parameters</source>
         <translation>Paramètres de contournement</translation>
     </message>
 </context>
 <context>
-    <name>ConstructionPrototype_ABC</name>
+    <name>gui::ConstructionPrototype_ABC</name>
     <message>
         <source>Construction</source>
         <translation>Construction</translation>
@@ -95,7 +95,7 @@
     </message>
 </context>
 <context>
-    <name>CrossingSitePrototype_ABC</name>
+    <name>gui::CrossingSitePrototype_ABC</name>
     <message>
         <source>Crossing site</source>
         <translation>Site de franchissement</translation>
@@ -118,7 +118,7 @@
     </message>
 </context>
 <context>
-    <name>DelayPrototype_ABC</name>
+    <name>gui::DelayPrototype_ABC</name>
     <message>
         <source>Delay time</source>
         <translation>Temps de retard</translation>
@@ -129,7 +129,7 @@
     </message>
 </context>
 <context>
-    <name>DiplomacyDialog_ABC</name>
+    <name>gui::DiplomacyDialog_ABC</name>
     <message>
         <source>Diplomacy</source>
         <translation>Diplomatie</translation>
@@ -144,7 +144,7 @@
     </message>
 </context>
 <context>
-    <name>DisplayToolbar</name>
+    <name>gui::DisplayToolbar</name>
     <message>
         <source>Display toolbar</source>
         <translation>Affichage</translation>
@@ -159,7 +159,7 @@
     </message>
 </context>
 <context>
-    <name>DrawerLayer</name>
+    <name>gui::DrawerLayer</name>
     <message>
         <source>Edit drawing...</source>
         <translation>Editer le dessin...</translation>
@@ -170,7 +170,7 @@
     </message>
 </context>
 <context>
-    <name>EditorFactory</name>
+    <name>gui::EditorFactory</name>
     <message>
         <source>True</source>
         <translation>Vrai</translation>
@@ -181,14 +181,14 @@
     </message>
 </context>
 <context>
-    <name>FirePropagationModifierPrototype_ABC</name>
+    <name>gui::FirePropagationModifierPrototype_ABC</name>
     <message>
         <source>Fire propagation modifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificateur de propagation du feu</translation>
     </message>
 </context>
 <context>
-    <name>FirePrototype_ABC</name>
+    <name>gui::FirePrototype_ABC</name>
     <message>
         <source>Fire parameters</source>
         <translation>Paramètres de feu</translation>
@@ -203,7 +203,7 @@
     </message>
 </context>
 <context>
-    <name>FloodPrototype_ABC</name>
+    <name>gui::FloodPrototype_ABC</name>
     <message>
         <source>Flood</source>
         <translation>Inondation</translation>
@@ -218,7 +218,7 @@
     </message>
 </context>
 <context>
-    <name>GisToolBar</name>
+    <name>gui::GisToolBar</name>
     <message>
         <source>GIS tools</source>
         <translation>Outils cartographiques</translation>
@@ -257,21 +257,21 @@
     </message>
 </context>
 <context>
-    <name>GraphicPreferences</name>
+    <name>gui::GraphicPreferences</name>
     <message>
         <source>Colors</source>
         <translation>Couleurs</translation>
     </message>
 </context>
 <context>
-    <name>HelpSystem</name>
+    <name>gui::HelpSystem</name>
     <message>
         <source>help/en/Reference Guide.chm</source>
         <translation>help/fr/Guide de Reference.chm</translation>
     </message>
 </context>
 <context>
-    <name>HighlightColorModifier</name>
+    <name>gui::HighlightColorModifier</name>
     <message>
         <source>Highlight</source>
         <translation>Mettre en évidence</translation>
@@ -282,7 +282,7 @@
     </message>
 </context>
 <context>
-    <name>InhabitantPanel</name>
+    <name>gui::InhabitantPanel</name>
     <message>
         <source>Colors</source>
         <translation>Couleurs</translation>
@@ -297,7 +297,7 @@
     </message>
 </context>
 <context>
-    <name>InputPropagationPrototype_ABC</name>
+    <name>gui::InputPropagationPrototype_ABC</name>
     <message>
         <source>Propagation</source>
         <translation>Propagation</translation>
@@ -324,7 +324,7 @@
     </message>
 </context>
 <context>
-    <name>LimitsLayer</name>
+    <name>gui::TacticalLinesLayer</name>
     <message>
         <source>Create limit</source>
         <translation>Créer une limite</translation>
@@ -335,7 +335,7 @@
     </message>
 </context>
 <context>
-    <name>Localisation</name>
+    <name>gui::LocationCreator</name>
     <message>
         <source>Point</source>
         <translation>Point</translation>
@@ -356,16 +356,13 @@
         <source>Rectangle</source>
         <translation>Rectangle</translation>
     </message>
-</context>
-<context>
-    <name>LocationCreator</name>
     <message>
         <source>Add drawing as &apos;%1&apos;</source>
         <translation>Ajouter le dessin en tant que &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
-    <name>MedicalTreatmentPrototype_ABC</name>
+    <name>gui::MedicalTreatmentPrototype_ABC</name>
     <message>
         <source>MedicalTreatment parameters</source>
         <translation>Paramètres de traitement médical</translation>
@@ -380,15 +377,15 @@
     </message>
     <message>
         <source>Hospital ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifiant d'hôpital</translation>
     </message>
     <message>
         <source>Bed Capacities:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombres de lits:</translation>
     </message>
 </context>
 <context>
-    <name>MinePrototype_ABC</name>
+    <name>gui::MinePrototype_ABC</name>
     <message>
         <source>Mine parameters</source>
         <translation>Paramètres des mines</translation>
@@ -399,7 +396,7 @@
     </message>
 </context>
 <context>
-    <name>NBCPrototype_ABC</name>
+    <name>gui::NBCPrototype_ABC</name>
     <message>
         <source>NBC parameters</source>
         <translation>Paramètres NBC</translation>
@@ -422,14 +419,14 @@
     </message>
 </context>
 <context>
-    <name>ObjectPanel</name>
+    <name>gui::ObjectPanel</name>
     <message>
         <source>Object state</source>
         <translation>Etat de l&apos;objet</translation>
     </message>
 </context>
 <context>
-    <name>ObstaclePrototype_ABC</name>
+    <name>gui::ObstaclePrototype_ABC</name>
     <message>
         <source>Obstacle</source>
         <translation>Obstacle</translation>
@@ -448,7 +445,7 @@
     </message>
 </context>
 <context>
-    <name>PopulationPanel</name>
+    <name>gui::PopulationPanel</name>
     <message>
         <source>Information</source>
         <translation>Information</translation>
@@ -491,14 +488,14 @@
     </message>
 </context>
 <context>
-    <name>PopulationTypesListView</name>
+    <name>gui::PopulationTypesListView</name>
     <message>
         <source>Crowd type</source>
         <translation>Type de foule</translation>
     </message>
 </context>
 <context>
-    <name>PopulationsPanel</name>
+    <name>gui::PopulationsPanel</name>
     <message>
         <source>Number:</source>
         <translation>Nombre:</translation>
@@ -509,14 +506,14 @@
     </message>
 </context>
 <context>
-    <name>PreferencesList</name>
+    <name>gui::PreferencesList</name>
     <message>
         <source>Category</source>
         <translation>Catégorie</translation>
     </message>
 </context>
 <context>
-    <name>PresetDialog</name>
+    <name>gui::PresetDialog</name>
     <message>
         <source>Rename preset</source>
         <translation>Renommer le dégradé</translation>
@@ -547,14 +544,14 @@
     </message>
 </context>
 <context>
-    <name>PropertiesPanel</name>
+    <name>gui::PropertiesPanel</name>
     <message>
         <source>Properties</source>
         <translation>Propriétés</translation>
     </message>
 </context>
 <context>
-    <name>ResourceLinksDialog_ABC</name>
+    <name>gui::ResourceLinksDialog_ABC</name>
     <message>
         <source>Target</source>
         <translation>Cible</translation>
@@ -612,7 +609,7 @@
     </message>
 </context>
 <context>
-    <name>SupplyRoutePrototype_ABC</name>
+    <name>gui::SupplyRoutePrototype_ABC</name>
     <message>
         <source>Logistic route</source>
         <translation>Itinéraire logistique</translation>
@@ -639,7 +636,7 @@
     </message>
 </context>
 <context>
-    <name>TerrainPreference</name>
+    <name>gui::TerrainPreference</name>
     <message>
         <source>Line thickness: </source>
         <translation>Epaisseur du trait: </translation>
@@ -650,7 +647,7 @@
     </message>
 </context>
 <context>
-    <name>TerrainProfile</name>
+    <name>gui::TerrainProfile</name>
     <message>
         <source>Altitude (m)</source>
         <translation>Altitude (m)</translation>
@@ -661,7 +658,7 @@
     </message>
 </context>
 <context>
-    <name>TerrainProfiler</name>
+    <name>gui::TerrainProfiler</name>
     <message>
         <source>Terrain profile</source>
         <translation>Coupe de terrain</translation>
@@ -691,7 +688,7 @@
     </message>
 </context>
 <context>
-    <name>UnitListView</name>
+    <name>gui::UnitListView</name>
     <message>
         <source>Unit type</source>
         <translation>Type d&apos;unité</translation>
@@ -699,25 +696,6 @@
     <message>
         <source>Count</source>
         <translation>Nombre</translation>
-    </message>
-</context>
-<context>
-    <name>UnitsPanel</name>
-    <message>
-        <source>Hierarchical view</source>
-        <translation>Vue hiérarchique</translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation>Niveau</translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation>Nature</translation>
-    </message>
-    <message>
-        <source>Atlas qualifier</source>
-        <translation>Qualificatif Atlas</translation>
     </message>
 </context>
 <context>
@@ -1260,6 +1238,22 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Display type: </source>
         <translation>Type d&apos;affichage: </translation>
+    </message>
+        <message>
+        <source>Hierarchical view</source>
+        <translation>Vue hiérarchique</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation>Niveau</translation>
+    </message>
+    <message>
+        <source>Nature</source>
+        <translation>Nature</translation>
+    </message>
+    <message>
+        <source>Atlas qualifier</source>
+        <translation>Qualificatif Atlas</translation>
     </message>
 </context>
 <context>

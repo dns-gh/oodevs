@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::SupplyRoutePrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "SupplyRoutePrototype_ABC.h"
 #include "clients_kernel/Units.h"
@@ -19,25 +21,25 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 SupplyRoutePrototype_ABC::SupplyRoutePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "SupplyRoutePrototype_ABC", "Logistic route" ) )
+: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::SupplyRoutePrototype_ABC", "Logistic route" ) )
 {
-    new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Flow:" ), this );
+    new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Flow:" ), this );
     flow_ = new QSpinBox( 1, 10000, 1, this );
     flow_->setSuffix( kernel::Units::vehiclesPerHour.AsString() );
 
-    new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Width:" ), this );
+    new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Width:" ), this );
     width_ = new QSpinBox( 1, 10000, 1, this );
     width_->setSuffix( kernel::Units::meters.AsString() );
 
-    new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Length:" ), this );
+    new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Length:" ), this );
     length_ = new QSpinBox( 1, 10000, 1, this );
     length_->setSuffix( kernel::Units::meters.AsString() );
 
-    new QLabel( tools::translate( "SupplyRoutePrototype_ABC", "Maximum weight:" ), this );
+    new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Maximum weight:" ), this );
     maxWeight_ = new QSpinBox( 1, 10000, 1, this );
     maxWeight_->setSuffix( kernel::Units::tons.AsString() );
 
-    equipped_ = new QCheckBox( tools::translate( "SupplyRoutePrototype_ABC", "Equipped:" ), this );
+    equipped_ = new QCheckBox( tools::translate( "gui::SupplyRoutePrototype_ABC", "Equipped:" ), this );
 }
 
 // -----------------------------------------------------------------------------

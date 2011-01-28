@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::MedicalTreatmentPrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "MedicalTreatmentPrototype_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
@@ -22,23 +24,23 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType, std::string >& resolver )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "MedicalTreatmentPrototype_ABC", "MedicalTreatment parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment parameters" ) )
     , resolver_( resolver )
 {
-    QVBox* vbox = new QVBox( this, tools::translate( "MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ) );
+    QVBox* vbox = new QVBox( this, tools::translate( "gui::MedicalTreatmentPrototype_ABC", "MedicalTreatment Type:" ) );
     {
         QHBox* canvas = new QHBox( vbox );
-        new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Hospital ID:" ), canvas );
+        new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Hospital ID:" ), canvas );
         referenceID_ = new QLineEdit( canvas );
     }
     {
         QHBox* canvas = new QHBox( vbox );
-        new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Doctors:" ), canvas );
+        new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Doctors:" ), canvas );
         doctors_ = new QSpinBox( 0, 1000, 1, canvas );
     }
     {
         QVBox* bedCapacities = new QVBox( vbox );
-        new QLabel( tools::translate( "MedicalTreatmentPrototype_ABC", "Bed Capacities:" ), bedCapacities );
+        new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Bed Capacities:" ), bedCapacities );
         FillCapacityTypes( bedCapacities );
     }
 }

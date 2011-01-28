@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::DisplayToolbar */
+
 #include "clients_gui_pch.h"
 #include "DisplayToolbar.h"
 #include "BooleanOptionButton.h"
@@ -33,11 +35,11 @@ namespace
 DisplayToolbar::DisplayToolbar( QMainWindow* pParent, kernel::Controllers& controllers )
     : QToolBar( pParent, "display toolbar" )
 {
-    setLabel( tools::translate( "DisplayToolbar", "Display toolbar" ) );
+    setLabel( tools::translate( "gui::DisplayToolbar", "Display toolbar" ) );
     //QButtonGroup* group = new QButtonGroup(this);
     //group->setExclusive(TRUE);
-    new BooleanOptionButton( MAKE_ICON( threed ), tools::translate( "DisplayToolbar", "3D" ), this, controllers.options_, "3D" );
-    new BooleanOptionButton( MakeIcon( "images/gui/fogofwar.png" ), tools::translate( "DisplayToolbar", "Fog of war" ), this, controllers.options_, "FogOfWar" );
+    new BooleanOptionButton( MAKE_ICON( threed ), tools::translate( "gui::DisplayToolbar", "3D" ), this, controllers.options_, "3D" );
+    new BooleanOptionButton( MakeIcon( "images/gui/fogofwar.png" ), tools::translate( "gui::DisplayToolbar", "Fog of war" ), this, controllers.options_, "FogOfWar" );
     // $$$$ SBO 2008-08-19: uncomment when there is something connected to the button
 //    new BooleanOptionButton( MAKE_ICON( twodnoterrain ), tools::translate( "DisplayToolbar", "2D no terrain" ), this, controllers.options_, "2DnoTerrain" );
 }

@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::PreferencesList */
+
 #include "clients_gui_pch.h"
 #include "PreferencesList.h"
 #include "Tools.h"
@@ -21,7 +23,7 @@ PreferencesList::PreferencesList( QWidget* parent, QWidgetStack& pages )
     : QListView( parent )
     , pages_( pages )
 {
-    addColumn( tools::translate( "PreferencesList", "Category" ) );
+    addColumn( tools::translate( "gui::PreferencesList", "Category" ) );
     setColumnWidthMode( 0, QListView::Maximum );
     header()->hide();
     setRootIsDecorated( true );

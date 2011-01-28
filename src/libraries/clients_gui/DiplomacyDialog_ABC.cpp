@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::DiplomacyDialog_ABC */
+
 #include "clients_gui_pch.h"
 #include "DiplomacyDialog_ABC.h"
 #include "moc_DiplomacyDialog_ABC.cpp"
@@ -31,7 +33,7 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, kernel::Controllers& 
     , profile_    ( profile )
 {
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-    setCaption( tools::translate( "DiplomacyDialog_ABC", "Diplomacy" ) );
+    setCaption( tools::translate( "gui::DiplomacyDialog_ABC", "Diplomacy" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
 
     table_ = new QTable( this );
@@ -41,8 +43,8 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, kernel::Controllers& 
 
     QHBoxLayout* pButtonLayout = new QHBoxLayout( pMainLayout );
     pButtonLayout->setAlignment( Qt::Right );
-    QPushButton* okBtn     = new QPushButton( tools::translate( "DiplomacyDialog_ABC", "Ok" ), this );
-    QPushButton* cancelBtn = new QPushButton( tools::translate( "DiplomacyDialog_ABC", "Cancel" ), this );
+    QPushButton* okBtn     = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Ok" ), this );
+    QPushButton* cancelBtn = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Cancel" ), this );
     pButtonLayout->addWidget( okBtn );
     pButtonLayout->addWidget( cancelBtn );
     okBtn->setDefault( true );
@@ -119,7 +121,7 @@ void DiplomacyDialog_ABC::NotifyDeleted( const kernel::Team_ABC& team )
 void DiplomacyDialog_ABC::NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu )
 {
     if( profile_.CanDoMagic( team ) )
-        menu.InsertItem( "Command", tools::translate( "DiplomacyDialog_ABC", "Diplomacy" ), this, SLOT( show() ) );
+        menu.InsertItem( "Command", tools::translate( "gui::DiplomacyDialog_ABC", "Diplomacy" ), this, SLOT( show() ) );
 }
 
 // -----------------------------------------------------------------------------

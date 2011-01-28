@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::ResourceLinksDialog_ABC */
+
 #include "clients_gui_pch.h"
 #include "ResourceLinksDialog_ABC.h"
 #include "moc_ResourceLinksDialog_ABC.cpp"
@@ -36,7 +38,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
 {
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
-    setCaption( tools::translate( "ResourceLinksDialog_ABC", "Resource Networks" ) );
+    setCaption( tools::translate( "gui::ResourceLinksDialog_ABC", "Resource Networks" ) );
     QVBox* mainLayout = new QVBox( this );
     setWidget( mainLayout );
     pMainLayout_ = new QVBox( mainLayout );
@@ -46,32 +48,32 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     dotationList_ = new QListBox( pNodeBox );
     dotationList_->setMaximumHeight( 60 );
     connect( dotationList_, SIGNAL( selectionChanged() ), this, SLOT( Update() ) );
-    groupBox_ = new QGroupBox( 1, Qt::Horizontal, tools::translate( "ResourceLinksDialog_ABC", "Enabled" ), pNodeBox );
+    groupBox_ = new QGroupBox( 1, Qt::Horizontal, tools::translate( "gui::ResourceLinksDialog_ABC", "Enabled" ), pNodeBox );
     groupBox_->setCheckable( true );
     connect( groupBox_, SIGNAL( toggled( bool ) ), this, SLOT( OnActivationChanged( bool ) ) );
     {
         QHBox* box = new QHBox( groupBox_ );
-        new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Production:" ), box );
+        new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Production:" ), box );
         production_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
         connect( production_, SIGNAL( valueChanged( int ) ), this, SLOT( OnProductionChanged( int ) ) );
     }
     {
         QHBox* box = new QHBox( groupBox_ );
-        new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Consumption:" ), box );
+        new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Consumption:" ), box );
         consumption_  = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
         connect( consumption_, SIGNAL( valueChanged( int ) ), this, SLOT( OnConsumptionChanged( int ) ) );
     }
-    critical_ = new QCheckBox( tools::translate( "ResourceLinksDialog_ABC", "Vital consumption" ), groupBox_ );
+    critical_ = new QCheckBox( tools::translate( "gui::ResourceLinksDialog_ABC", "Vital consumption" ), groupBox_ );
     connect( critical_, SIGNAL( toggled( bool ) ), this, SLOT( OnCriticalChanged( bool ) ) );
     {
         QHBox* box = new QHBox( groupBox_ );
-        new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Maximal stock:" ), box );
+        new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Maximal stock:" ), box );
         maxStock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
         connect( maxStock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnMaxStockChanged( int ) ) );
     }
     {
         stockBox_ = new QHBox( groupBox_ );
-        new QLabel( tools::translate( "ResourceLinksDialog_ABC", "Initial stock:" ), stockBox_ );
+        new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Initial stock:" ), stockBox_ );
         stock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, stockBox_ );
         connect( stock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnStockChanged( int ) ) );
         stockBox_->hide();
@@ -79,12 +81,12 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     table_ = new QTable( groupBox_ );
     table_->setSelectionMode( QTable::NoSelection );
     table_->setNumCols( 3 );
-    table_->horizontalHeader()->setLabel( 0, tools::translate( "ResourceLinksDialog_ABC", "Target" ) );
-    table_->horizontalHeader()->setLabel( 1, tools::translate( "ResourceLinksDialog_ABC", "Limited" ) );
-    table_->horizontalHeader()->setLabel( 2, tools::translate( "ResourceLinksDialog_ABC", "Capacity" ) );
+    table_->horizontalHeader()->setLabel( 0, tools::translate( "gui::ResourceLinksDialog_ABC", "Target" ) );
+    table_->horizontalHeader()->setLabel( 1, tools::translate( "gui::ResourceLinksDialog_ABC", "Limited" ) );
+    table_->horizontalHeader()->setLabel( 2, tools::translate( "gui::ResourceLinksDialog_ABC", "Capacity" ) );
     table_->setColumnWidth( 1, 50 );
     connect( table_, SIGNAL( valueChanged( int, int ) ), SLOT( OnValueChanged( int, int ) ) );
-    QPushButton* okBtn = new QPushButton( tools::translate( "ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
+    QPushButton* okBtn = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
     okBtn->setDefault( true );
     connect( okBtn, SIGNAL( clicked() ), SLOT( Validate() ) );
     controllers_.Register( *this );

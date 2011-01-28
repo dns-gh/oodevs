@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::CrossingSitePrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "CrossingSitePrototype_ABC.h"
 #include "clients_kernel/Units.h"
@@ -19,21 +21,21 @@ using namespace gui;
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
 CrossingSitePrototype_ABC::CrossingSitePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "CrossingSitePrototype_ABC", "Crossing site" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::CrossingSitePrototype_ABC", "Crossing site" ) )
 {
-    new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Width:" ), this );
+    new QLabel( tools::translate( "gui::CrossingSitePrototype_ABC", "Width:" ), this );
     width_ = new QSpinBox( 1, 10000, 10, this );
     width_->setSuffix( kernel::Units::meters.AsString() );
 
-    new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Depth:" ), this );
+    new QLabel( tools::translate( "gui::CrossingSitePrototype_ABC", "Depth:" ), this );
     depth_ = new QSpinBox( 1, 1000, 10, this );
     depth_->setSuffix( kernel::Units::meters.AsString() );
 
-    new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Stream speed:" ), this );
+    new QLabel( tools::translate( "gui::CrossingSitePrototype_ABC", "Stream speed:" ), this );
     speed_ = new QSpinBox( 0, 100, 1, this );
     speed_->setSuffix( kernel::Units::metersPerSecond.AsString() );
 
-    new QLabel( tools::translate( "CrossingSitePrototype_ABC", "Build river banks:" ), this );
+    new QLabel( tools::translate( "gui::CrossingSitePrototype_ABC", "Build river banks:" ), this );
     needsConstruction_ = new QCheckBox( this );
 }
 

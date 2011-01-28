@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::EditorFactory */
+
 #include "clients_gui_pch.h"
 #include "EditorFactory.h"
 #include "clients_kernel/ValueEditor.h"
@@ -262,8 +264,8 @@ namespace
         BooleanEditor( QWidget* parent )
             : ValuedComboBox< bool >( parent )
         {
-            AddItem( tools::translate( "EditorFactory", "True" ), true );
-            AddItem( tools::translate( "EditorFactory", "False" ), false );
+            AddItem( tools::translate( "gui::EditorFactory", "True" ), true );
+            AddItem( tools::translate( "gui::EditorFactory", "False" ), false );
         }
         virtual ~BooleanEditor() {}
 

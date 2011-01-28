@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::DrawerLayer */
+
 #include "clients_gui_pch.h"
 #include "DrawerLayer.h"
 #include "moc_DrawerLayer.cpp"
@@ -44,8 +46,8 @@ void DrawerLayer::NotifyContextMenu( const Drawing_ABC& drawing, kernel::Context
 {
     if( selected_ != &drawing )
         NotifySelected( &drawing );
-    menu.InsertItem( "Creation", tools::translate( "DrawerLayer", "Edit drawing..." ), this, SLOT( OnEditDrawing() ) );
-    menu.InsertItem( "Creation", tools::translate( "DrawerLayer", "Erase drawing" )  , this, SLOT( OnDeleteDrawing() ) );
+    menu.InsertItem( "Creation", tools::translate( "gui::DrawerLayer", "Edit drawing..." ), this, SLOT( OnEditDrawing() ) );
+    menu.InsertItem( "Creation", tools::translate( "gui::DrawerLayer", "Erase drawing" )  , this, SLOT( OnDeleteDrawing() ) );
 }
 
 // -----------------------------------------------------------------------------

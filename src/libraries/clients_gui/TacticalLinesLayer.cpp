@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::TacticalLinesLayer */
+
 #include "clients_gui_pch.h"
 #include "TacticalLinesLayer.h"
 #include "moc_TacticalLinesLayer.cpp"
@@ -79,8 +81,8 @@ void TacticalLinesLayer::NotifyContextMenu( const kernel::Nothing&, kernel::Cont
 {
     if( CanCreateLine() )
     {
-        menu.InsertItem( "Creation", tools::translate( "LimitsLayer", "Create limit" ),       this, SLOT( OnCreateLimit() ) );
-        menu.InsertItem( "Creation", tools::translate( "LimitsLayer", "Create phase line"  ), this, SLOT( OnCreateLima() ) );
+        menu.InsertItem( "Creation", tools::translate( "gui::TacticalLinesLayer", "Create limit" ),       this, SLOT( OnCreateLimit() ) );
+        menu.InsertItem( "Creation", tools::translate( "gui::TacticalLinesLayer", "Create phase line"  ), this, SLOT( OnCreateLima() ) );
     }
 }
 

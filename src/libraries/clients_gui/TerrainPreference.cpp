@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::TerrainPreference */
+
 #include "clients_gui_pch.h"
 #include "TerrainPreference.h"
 #include "ColorButton.h"
@@ -55,8 +57,8 @@ void TerrainPreference::Display( QWidget* parent )
     showCheckbox_ = new QCheckBox( name_.c_str(), pBox );
     showCheckbox_->setChecked( shown_ );
     pBox->setStretchFactor( showCheckbox_, 2 );
-    sizeButton_  = new SizeButton ( pBox, tools::translate( "TerrainPreference", "Line thickness: " ), lineWidth_ );
-    sizeButton_->EnableValueLabel( tools::translate( "TerrainPreference", " px" ) );
+    sizeButton_  = new SizeButton ( pBox, tools::translate( "gui::TerrainPreference", "Line thickness: " ), lineWidth_ );
+    sizeButton_->EnableValueLabel( tools::translate( "gui::TerrainPreference", " px" ) );
     colorButton_ = new ColorButton( pBox, "", color_ );
 }
 

@@ -37,8 +37,8 @@ UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const Age
     , types_      ( list )
 {
     setMinimumSize( 1, 1 );
-    addColumn( tools::translate( "UnitListView", "Unit type" ) );
-    addColumn( tools::translate( "UnitListView", "Count" ) );
+    addColumn( tools::translate( "gui::UnitListView", "Unit type" ) );
+    addColumn( tools::translate( "gui::UnitListView", "Count" ) );
     setRootIsDecorated( true );
     header()->hide();
     setSorting( 0 );

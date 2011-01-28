@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::HighlightColorModifier */
+
 #include "clients_gui_pch.h"
 #include "HighlightColorModifier.h"
 #include "moc_HighlightColorModifier.cpp"
@@ -59,9 +61,9 @@ void HighlightColorModifier::NotifyContextMenu( const kernel::Entity_ABC& entity
 {
     selected_ = &entity;
     if( highlighted_.find( &entity ) == highlighted_.end() )
-        menu.InsertItem( "Interface", tools::translate( "HighlightColorModifier", "Highlight" ), this, SLOT( Highlight() ) );
+        menu.InsertItem( "Interface", tools::translate( "gui::HighlightColorModifier", "Highlight" ), this, SLOT( Highlight() ) );
     else
-        menu.InsertItem( "Interface", tools::translate( "HighlightColorModifier", "Remove highlight" ), this, SLOT( Unhighlight() ) );
+        menu.InsertItem( "Interface", tools::translate( "gui::HighlightColorModifier", "Remove highlight" ), this, SLOT( Unhighlight() ) );
 }
 
 // -----------------------------------------------------------------------------

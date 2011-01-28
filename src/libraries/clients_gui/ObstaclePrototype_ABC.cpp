@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+/* TRANSLATOR gui::ObstaclePrototype_ABC */
+
 #include "clients_gui_pch.h"
 #include "ObstaclePrototype_ABC.h"
 #include "moc_ObstaclePrototype_ABC.cpp"
@@ -31,14 +33,14 @@ namespace
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "ObstaclePrototype_ABC", "Obstacle" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle" ) )
 {
     {
-        new QLabel( tools::translate( "ObstaclePrototype_ABC", "Obstacle type:" ), this );
+        new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Obstacle type:" ), this );
         types_ = new ValuedComboBox< E_DemolitionTargetType >( this );
     }
     {
-        QLabel* label = new QLabel( tools::translate( "ObstaclePrototype_ABC", "Reserved obstacle activated:" ), this );
+        QLabel* label = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Reserved obstacle activated:" ), this );
         activation_ = new QCheckBox( this );
         label->hide();
         activation_->hide();
@@ -46,7 +48,7 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
         connect( this, SIGNAL( ToggleActivable( bool ) ), activation_, SLOT( setShown( bool ) ) );
     }
     {
-        QLabel* label = new QLabel( tools::translate( "ObstaclePrototype_ABC", "Activation time:" ), this );
+        QLabel* label = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ), this );
         activationTime_ = new QTimeEdit( this );
         label->hide();
         activationTime_->hide();
