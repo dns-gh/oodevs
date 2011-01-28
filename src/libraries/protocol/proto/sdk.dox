@@ -36,15 +36,26 @@
         <td>Protobuf</td>
         <td><a href="http://code.google.com/p/protobuf">Google Protocol Buffer</a> : the binary protocol used for communicating with the simulation</td>
       </tr>
+      <tr>
+        <td>ORBAT</td>
+        <td>ORder of BATtle : the description of the initial state of the simulation</td>
+      </tr>
     </table>
 
     @section contents Contents
 
     The following sections provide further documentation about specific topics :
-    @li @ref environment : presents the prerequisites for developping a client application
+    @li @ref interfacing : presents the prerequisites for developping a client application
     @li @ref creating : provides a detailed explanation of how to write a client application
+    @li @ref initializing : describes what happens after connecting to the simulation
 
-    @page environment Understanding the environment
+    Moreover messages are grouped according to their role :
+    @li @ref orbat
+    @li @ref environment
+    @li @ref controlling
+    @li @ref orders
+
+    @page interfacing Interfacing with the simulation
 
     @section system System overview
 
@@ -75,9 +86,9 @@
         <th colspan="2">Body</th>
       </tr>
       <tr align="center">
-        <td>Size</td>
-        <td>Tag</td>
-        <td>Content</td>
+        <td>SIZE</td>
+        <td>TAG</td>
+        <td>CONTENT</td>
       </tr>
     </table>
 
@@ -90,19 +101,65 @@
         <th>Size</th>
       </tr>
       <tr>
-        <td>Size</td>
+        <td>SIZE</td>
         <td>Contains the size of the Body in bytes</td>
         <td>4 bytes in network by order</td>
       </tr>
       <tr>
-        <td>Tag</td>
-        <td>Contains the type of message in the Content field (see list of tags below)</td>
+        <td>TAG</td>
+        <td>Contains the type of message in the CONTENT field (see list of tags below)</td>
         <td>4 bytes in network by order</td>
       </tr>
       <tr>
-        <td>Content</td>
+        <td>CONTENT</td>
         <td>Contains the encoded Protobuf message</td>
-        <td>(Size - 4) bytes</td>
+        <td>(SIZE - 4) bytes</td>
+      </tr>
+    </table>
+
+    The TAG field in messages indicates the type of message contained into the CONTENT field. @n
+    This tag is a constant which can take the following values :
+
+    <table border="1" style="border-collapse: collapse; border:1px solid gray;">
+      <tr>
+        <th>Message</th>
+        <th>Tag</th>
+      </tr>
+      <tr>
+        <td>sword::SimToClient</td>
+        <td>3540368649</td>
+      </tr>
+      <tr>
+        <td>sword::AuthenticationToClient</td>
+        <td>468259588</td>
+      </tr>
+      <tr>
+        <td>sword::ReplayToClient</td>
+        <td>2824568610</td>
+      </tr>
+      <tr>
+        <td>sword::AarToClient</td>
+        <td>3335378374</td>
+      </tr>
+      <tr>
+        <td>sword::MessengerToClient</td>
+        <td>4281023046</td>
+      </tr>
+      <tr>
+        <td>sword::DispatcherToClient</td>
+        <td>3012412245</td>
+      </tr>
+      <tr>
+        <td>sword::ClientToAuthentication</td>
+        <td>3393095543</td>
+      </tr>
+      <tr>
+        <td>sword::ClientToSim</td>
+        <td>496449857</td>
+      </tr>
+      <tr>
+        <td>sword::ClientToMessenger</td>
+        <td>2651046712</td>
       </tr>
     </table>
 
@@ -114,7 +171,212 @@
 
     Currently, Protobuf supports generating C++, Java and Python code.
 
-    @see <a href="http://code.google.com/p/protobuf">Google Protocol Buffer</a>
+    @section Prerequisites
+    @subsection installing Installing SWORD
+
+    Require Windows operating system, license...
+
+    @subsection development Development environment
+
+    Any language supported by Protobuf (C++, Java, Python...). @n
+    Any operating system with TCP/IP network support.
+
+    @section Contents
+    @subsection Documentation
+
+    User manual, this document, protocol reference (generated documentation)
+
+    @subsection data Data model schemas
+
+    *.xsd
+
+    @subsection protobuf Protobuf definition files
+
+    *.proto
+
+    @subsection Samples
+
+    C++ sample applications
 
     @page creating Creating a client application
+
+    @section Concepts
+
+    The creation of a simple SWORD client application basically requires 3 features to be implemented :
+    @li Establish a TCP/IP connection with the Dispatcher
+    @li Send messages (such as an authentication message)
+    @li Receive and process incoming messages (such as authentication response)
+
+    @section Connecting
+
+    @subsection network Setting up the network
+
+    Client must first establish a TCP connection to a running Dispatcher. @n
+    The network port on which the Simulation and Dispatcher accept connections are defined for each exercise session into the session.xml file :
+    @code
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<session>
+  <config>
+    <dispatcher>
+      <network client="localhost:10000" server="10001"/>
+    </dispatcher>
+[...]
+    <simulation>
+[...]
+      <network port="10000"/>
+[...]
+    </simulation>
+  </config>
+</session>
+    @endcode
+
+    <table border="1" style="border-collapse: collapse; border:1px solid gray;">
+      <tr>
+        <th>Attribute</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>dispatcher/network/@@client</td>
+        <td>Defines the Simulation host and port the Dispatcher needs to connect to</td>
+      </tr>
+      <tr>
+        <td>dispatcher/network/@@server</td>
+        <td>Defines the port on which the Dispatcher is to accept client connections</td>
+      </tr>
+      <tr>
+        <td>server/network/@@port</td>
+        <td>Defines the port on which the Simulation is to accept Dispatcher connections</td>
+      </tr>
+    </table>
+
+    Once connected, the client application must listen for incoming data on the established connection.
+
+    @subsection decoding Message decoding
+
+    When receiving data from the wire, you first need to read the message body size from the message header. @n
+    To do so, you need to read the first 4 bytes and convert the read value back from network byte order (using a function such as ntohl in C). @n
+    Next, you need to read the next 4 bytes of the message TAG field in order to determine which type of message you are going to decode. @n
+    Next, you need to allocate a message from the type defined by the tag. This message will act as a container for the result of the decoding process. @n
+    Finally, call the decoding function of the Protobuf with the remaining buffer data to fill the result message with the decoded data. @n
+
+    Here is a short C++ example of message decoding :
+
+    @code
+void Decode( std::istream& input, MessageHandler& handler )
+{
+    // read header and tag
+    unsigned long size, tag;
+    input >> size >> tag;
+    size = ntohl( size );
+    tag = ntohl( size );
+    // read message content buffer
+    const unsigned long contentSize = size - sizeof( tag );
+    char* buffer = new char[ contentSize ];
+    input.read( buffer, contentSize ];
+    // check tag to determine the type of message
+    if( tag == MESSAGE_AUTHENTICATION_TO_CLIENT )
+    {
+        // allocate result container message
+        sword::AuthenticationToClient result;
+        // decode message buffer to result
+        if( !result.ParseFromString( std::string( buffer, contentSize ) ) )
+        {
+            delete[] buffer;
+            throw std::runtime_error( "message decoding failed" );
+        }
+        // notify result message reception
+        handler.NotifyMessage( result );
+    }
+    delete[] buffer;
+}
+@endcode
+
+    @subsection encoding Message encoding
+
+    Messages sent to the Dispatcher follow the same format as messages sent by the Dispatcher. @n
+    In order to send a message to the wire, you will need to fill the same fields : SIZE, TAG and CONTENT. @n
+    First, you need to create and fill the message you want to send using the Protobuf generated message wrappers. @n
+    Next, an encoding buffer of the necessary size must be allocated and then the encoding process is executed. @n
+    Finally, message SIZE and TAG fields are sent to the output with the encoded buffer.
+
+    Here is a short C++ example of message decoding:
+
+@code
+void Encode( std::ostream& output, const sword::ClientToSim& message )
+{
+    // allocate output buffer
+    google::protobuf::uint8* buffer = new google::protobuf::uint8[ message.ByteSize() ];
+    // serialize message to buffer
+    if( !message.SerializeWithCachedSizesToArray( buffer ) )
+        throw std::runtime_error( "message encoding failed" );
+    const unsigned long tag = MESSAGE_CLIENT_TO_AUTHENTICATION;
+    // write size and tag to output
+    output << htonl( message.GetCachedSize() + sizeof( tag ) ) << htonl( tag );
+    // write buffer to output
+    output.write( buffer, message.GetCachedSize() );
+}
+@endcode
+
+  @page initializing Initializing the situation
+
+  @section Announcement
+
+  Upon connection to a Dispatcher using specified host and port, some messages are sent to connecting clients :
+  @li A list of optional additional services provided by the dispatcher (such as for instance scores computation)
+  @li An announcement message depending on application running behind the dispatcher (live simulation or replay)
+
+  Once those messages have been received, the client must authenticate to the Dispatcher. That is provide a valid login and password to be allowed to join the exercise.
+
+  @section Authentication
+
+  Profiles are defined using the SWORD Preparation application. @n
+  They are specific to an exercise and stored into the exercise folder usually into a file called "profiles.xml" (the name can be changed and is referenced from "exercise.xml" file).
+
+  The connecting client must send a sword::AuthenticationRequest containing login and password to the Dispatcher in order to request log-in. @n
+  A sword::AuthenticationReponse message is sent in response to the request. This response contains :
+  @li The full profile definition, if login and password match a valid profile, containing profile access rights over exercises entities and additional information (such as supervisors rights)
+  @li A list of existing profiles, if login and password do not match a valid profile, allowing the client application to prompt the user for a list of available profiles to choose from
+
+  @note Creating a special profile with access rights over the whole ORBAT and supervisor capabilities can sometimes be useful when an application needs to connect to the Dispatcher without any restrictions
+
+  @section state Current state
+
+  Once authenticated, the current simulation situation is sent to the client using a potentially large amount of messages. @n
+  Therefore, to ensure the consistency of the client state, the current state publication is bounded by two messages : sword::ControlSendCurrentStateBegin and sword::ControlSendCurrentStateEnd. @n
+  Between those two messages, the Dispatcher sends all messages needed to get the current simulation state into a client application. @n
+  This includes essentially entities and environment creation and update messages.
+
+  The client should be considered initialized after receiving the sword::ControlSendCurrentStateEnd message.
+
+  @page orbat Altering the ORBAT
+
+  @section Parties
+  @section Formations
+  @section Automats
+  @section Agents
+
+  @page environment Modifying the environment
+
+  @section Obstacles
+  @section Populations
+  @section Weather
+
+  @page controlling Controlling the simulation
+
+  @section pause Pause/Resume
+  @section acceleration Acceleration factor
+  @section Checkpoints
+
+  To trigger the saving of a checkpoint, a message sword::ControlCheckPointSaveNow must be sent. @n
+  This message contains an optional name field used to specify the name of the checkpoint. If not specified, the created checkpoint is named using the current date and time.
+
+  In response to the sword::ControlCheckPointSaveNow message, a sword::ControlCheckPointSaveNowAck acknowledge message is sent by the simulation server.
+
+  @page orders Issuing orders
+
+  @section automat Automat missions
+  @section company Company automation
+  @section agent Agent missions
+  @section population Population missions
+  @section magic Magic orders
 */
