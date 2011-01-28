@@ -1,0 +1,120 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+/** @mainpage
+
+    @section introduction Introduction
+
+    This document describes the technical details required to develop a SWORD client application. @n
+    This includes an overview of the system, a presentation of the data model and an in-depth view of the communication protocol.
+
+    The reader is expected to have basic knowledge of the SWORD applications and a global understanding of the elements involved into the training process (such as: what is an ORBAT? what is an effect-based aggregated simulation?...). @n
+    Reading the user documentation provided with any SWORD installation is strongly encouraged.
+
+    In order to fully understand this document, the reader must also have knowledge in software development and networking.
+
+    @section definitions Definitions
+
+    The following definitions are used throughout the document.
+
+    <table border="1" style="border-collapse: collapse; border:1px solid gray;">
+      <tr>
+        <th>Definition</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>SWORD</td>
+        <td>Simulation Wargaming for Operational Research on Doctrine : the system used to simulate the training environment</td>
+      </tr>
+      <tr>
+        <td>Protobuf</td>
+        <td><a href="http://code.google.com/p/protobuf">Google Protocol Buffer</a> : the binary protocol used for communicating with the simulation</td>
+      </tr>
+    </table>
+
+    @section contents Contents
+
+    The following sections provide further documentation about specific topics :
+    @li @ref environment : presents the prerequisites for developping a client application
+    @li @ref creating : provides a detailed explanation of how to write a client application
+
+    @page environment Understanding the environment
+
+    @section system System overview
+
+    @subsection components Components overview
+
+    @subsection layout Directories layout
+
+    @section model Data model
+
+    @subsection terrain Terrain
+    @subsection physical Physical model
+    @subsection exercise Exercise model
+
+    @section communication Communication protocol
+
+    @subsection network Network protocol
+
+    SWORD client and server applications communicate using TCP/IP network. @n
+    The simulation server listens for connections from the Dispatcher which listens for connections from client applications (such as Gaming).
+
+    @subsection format Message format
+
+    Messages sent over the network contain 3 fields which are formatted in the following format :
+
+    <table border="1" style="border-collapse: collapse; border:1px solid gray;">
+      <tr>
+        <th>Header</th>
+        <th colspan="2">Body</th>
+      </tr>
+      <tr align="center">
+        <td>Size</td>
+        <td>Tag</td>
+        <td>Content</td>
+      </tr>
+    </table>
+
+    Whereas :
+
+    <table border="1" style="border-collapse: collapse; border:1px solid gray;">
+      <tr>
+        <th>Field</th>
+        <th>Description</th>
+        <th>Size</th>
+      </tr>
+      <tr>
+        <td>Size</td>
+        <td>Contains the size of the Body in bytes</td>
+        <td>4 bytes in network by order</td>
+      </tr>
+      <tr>
+        <td>Tag</td>
+        <td>Contains the type of message in the Content field (see list of tags below)</td>
+        <td>4 bytes in network by order</td>
+      </tr>
+      <tr>
+        <td>Content</td>
+        <td>Contains the encoded Protobuf message</td>
+        <td>(Size - 4) bytes</td>
+      </tr>
+    </table>
+
+    @subsection generation Code generation
+
+    The message protocol is defined using Protobuf. @n
+    This set of tools provides a way to define message content into a specific format (.proto files). @n
+    Those files are then compiled using a provided tool in order to generate code usable into the final application. @n
+
+    Currently, Protobuf supports generating C++, Java and Python code.
+
+    @see <a href="http://code.google.com/p/protobuf">Google Protocol Buffer</a>
+
+    @page creating Creating a client application
+*/

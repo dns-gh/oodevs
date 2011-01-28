@@ -870,13 +870,17 @@
         <doxygen-report name="sword" input="${src.dir}/libraries/protocol/proto">
             <property name="PROJECT_NAME" value="SWORD - API Reference"/>
             <property name="PROJECT_NUMBER" value="${version.major}"/>
-            <property name="FILE_PATTERNS" value="*.proto"/>
+            <property name="FILE_PATTERNS" value='"*.proto *.dox"'/>
+            <!--
+            <property name="EXCLUDE" value="dispatcher_simulation.proto"/>
+            -->
             <property name="FILTER_PATTERNS" value="*.proto=protofilter.py"/>
             <property name="HIDE_UNDOC_CLASSES" value="NO"/>
             <property name="HIDE_UNDOC_MEMBERS" value="NO"/>
             <property name="COLLABORATION_GRAPH" value="NO"/>
-            <property name="GENERATE_TREEVIEW" value="YES"/>
             <property name="DISABLE_INDEX" value="NO"/>
+            <property name="SHOW_NAMESPACES" value="NO"/>
+            <property name="BRIEF_MEMBER_DESC" value="NO"/>
             <property name="ENUM_VALUES_PER_LINE" value="1"/>
             <property name="WARNINGS" value="YES"/>
             <property name="ALIASES" value='""rule=@par Rule:\n" "index=@par Index:\n" "default=@par Default value:\n""'/>
