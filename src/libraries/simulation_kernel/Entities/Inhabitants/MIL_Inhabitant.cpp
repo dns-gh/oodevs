@@ -10,13 +10,14 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Inhabitant.h"
 #include "MIL_InhabitantType.h"
-#include "Entities/MIL_EntityManager.h"
 #include "MIL_AgentServer.h"
-#include "Entities/Objects/MedicalCapacity.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
+#include "MIL_InhabitantSatisfactions.h"
 #include "MIL_LivingArea.h"
 #include "MIL_Schedule.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityManager.h"
+#include "Entities/Objects/MedicalCapacity.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -61,18 +62,13 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army )
     : MIL_Entity_ABC( xis )
-    , pType_                      ( &type )
-    , nID_                        ( xis.attribute< unsigned int >( "id" ) )
-    , pArmy_                      ( &army )
-    , nNbrHealthyHumans_          ( 0 )
-    , nNbrDeadHumans_             ( 0 )
-    , nNbrWoundedHumans_          ( 0 )
-    , healthNeed_                 ( 0 )
-    , healthSatisfaction_         ( 0 )
-    , safetySatisfaction_         ( 1.f )
-    , lastSafetySatisfaction_     ( 1.f )
-    , healthSatisfactionChanged_  ( false )
-    , healthStateChanged_         ( false )
+    , pType_             ( &type )
+    , nID_               ( xis.attribute< unsigned int >( "id" ) )
+    , pArmy_             ( &army )
+    , nNbrHealthyHumans_ ( 0 )
+    , nNbrDeadHumans_    ( 0 )
+    , nNbrWoundedHumans_ ( 0 )
+    , healthStateChanged_( false )
 {
     float totalArea = 0.f;
     idManager_.Lock( nID_ );
@@ -84,20 +80,22 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
         >> xml::start( "information" )
             >> xml::optional >> text_
         >> xml::end
-        >> xml::start( "health-need" )
-            >> xml::attribute( "quantity", healthNeed_ )
-        >> xml::end
         >> xml::optional
         >> xml::start( "extensions" )
             >> xml::list( "entry", *this, &MIL_Inhabitant::ReadExtension )
         >> xml::end;
     unsigned long population = nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_;
-    pLivingArea_.reset( new MIL_LivingArea( xis, population, nID_ ) );
+    pLivingArea_.reset( new MIL_LivingArea( xis, population ) );
     pLivingArea_->Register( *this );
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
     pType_->InitializeSchedule( *pSchedule_ );
+    pSatisfactions_.reset( new MIL_InhabitantSatisfactions( xis ) );
     pArmy_->RegisterInhabitant( *this );
-    ComputeHealthSatisfaction();
+    pSatisfactions_->ComputeHealthSatisfaction( nNbrHealthyHumans_, nNbrWoundedHumans_, pLivingArea_->HealthCount() );
+    pSatisfactions_->ComputeLodgingSatisfaction( nNbrHealthyHumans_ + nNbrWoundedHumans_, pLivingArea_->GetTotalOccupation() );
+    std::map< std::string, unsigned int > occupations;
+    pLivingArea_->GetUsagesOccupation( occupations );
+    pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,11 +112,6 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     , nNbrHealthyHumans_          ( 0 )
     , nNbrDeadHumans_             ( 0 )
     , nNbrWoundedHumans_          ( 0 )
-    , healthNeed_                 ( 0 )
-    , healthSatisfaction_         ( 0 )
-    , safetySatisfaction_         ( 0 )
-    , lastSafetySatisfaction_     ( 0 )
-    , healthSatisfactionChanged_  ( false )
     , healthStateChanged_         ( false )
 {
     // NOTHING
@@ -141,6 +134,7 @@ MIL_Inhabitant::~MIL_Inhabitant()
 void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_LivingArea* pLivingArea;
+    MIL_InhabitantSatisfactions* pSatisfactions;
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army_ABC*& >( pArmy_ );
@@ -149,11 +143,10 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> nNbrHealthyHumans_
          >> nNbrDeadHumans_
          >> nNbrWoundedHumans_
-         >> healthNeed_
-         >> healthSatisfaction_
-         >> safetySatisfaction_
+         >> pSatisfactions
          >> pLivingArea;
     pLivingArea_.reset( pLivingArea );
+    pSatisfactions_.reset( pSatisfactions );
     unsigned int size;
     file >> size;
     std::string first;
@@ -175,6 +168,7 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const MIL_LivingArea* const pLivingArea = pLivingArea_.get();
+    const MIL_InhabitantSatisfactions* const pSatisfactions = pSatisfactions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file << nID_
          << pArmy_
@@ -182,9 +176,7 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << nNbrHealthyHumans_
          << nNbrDeadHumans_
          << nNbrWoundedHumans_
-         << healthNeed_
-         << healthSatisfaction_
-         << safetySatisfaction_
+         << pSatisfactions
          << pLivingArea;
     unsigned int size;
     size = extensions_.size();
@@ -211,13 +203,9 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "wounded", nNbrWoundedHumans_ )
             << xml::attribute( "dead", nNbrDeadHumans_ )
         << xml::end
-        << xml::start( "health-need" )
-            << xml::attribute( "quantity", healthNeed_ )
-        << xml::end
-        << xml::content( "information", text_ )
-        << xml::start( "living-area" );
+        << xml::content( "information", text_ );
     pLivingArea_->WriteODB( xos );
-        xos << xml::end;
+    pSatisfactions_->WriteODB( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,10 +250,9 @@ void MIL_Inhabitant::SendFullState() const
     msg().set_healthy( nNbrHealthyHumans_ );
     msg().set_dead( nNbrDeadHumans_ );
     msg().set_wounded( nNbrWoundedHumans_ );
-    msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
-    msg().mutable_satisfaction()->set_safety( safetySatisfaction_ );
+    pLivingArea_->SendFullState( msg );
+    pSatisfactions_->SendFullState( msg );
     msg.Send( NET_Publisher_ABC::Publisher() );
-    pLivingArea_->SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -275,7 +262,7 @@ void MIL_Inhabitant::SendFullState() const
 void MIL_Inhabitant::UpdateState()
 {
     pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
-    safetySatisfaction_ = std::min( 1.f, safetySatisfaction_ + MIL_AgentServer::GetWorkspace().GetTickDuration() * pType_->GetSafetyGainPerHour() / 3600 );
+    pSatisfactions_->IncreaseSafety( pType_->GetSafetyGainPerHour() );
 }
 
 // -----------------------------------------------------------------------------
@@ -284,30 +271,19 @@ void MIL_Inhabitant::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::UpdateNetwork()
 {
-    bool safetyChanged = std::abs( lastSafetySatisfaction_ - safetySatisfaction_ ) > 0.01f;
-    if( healthSatisfactionChanged_ || safetyChanged || healthStateChanged_ )
+    client::PopulationUpdate msg;
+    msg().mutable_id()->set_id( nID_ );
+    if( healthStateChanged_ )
     {
-        client::PopulationUpdate msg;
-        msg().mutable_id()->set_id( nID_ );
-        if( healthSatisfactionChanged_ )
-        {
-            msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
-            healthSatisfactionChanged_ = false;
-        }
-        if( safetyChanged )
-        {
-            msg().mutable_satisfaction()->set_safety( safetySatisfaction_ );
-            lastSafetySatisfaction_ = safetySatisfaction_;
-        }
-        if( healthStateChanged_ )
-        {
-            msg().set_healthy( nNbrHealthyHumans_ );
-            msg().set_wounded( nNbrWoundedHumans_ );
-            msg().set_dead( nNbrDeadHumans_ );
-            healthStateChanged_ = false;
-        }
-        msg.Send( NET_Publisher_ABC::Publisher() );
+        msg().set_healthy( nNbrHealthyHumans_ );
+        msg().set_wounded( nNbrWoundedHumans_ );
+        msg().set_dead( nNbrDeadHumans_ );
     }
+    pLivingArea_->UpdateNetwork( msg );
+    pSatisfactions_->UpdateNetwork( msg );
+    if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() )
+        msg.Send( NET_Publisher_ABC::Publisher() );
+    healthStateChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -366,6 +342,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     nNbrWoundedHumans_ = wounded.value().Get( 0 ).quantity();
     nNbrDeadHumans_    = dead.value().Get( 0 ).quantity();
     healthStateChanged_ = true;
+    pSatisfactions_->ComputeHealthSatisfaction( nNbrHealthyHumans_, nNbrWoundedHumans_, pLivingArea_->HealthCount() );
 }
 
 // -----------------------------------------------------------------------------
@@ -413,7 +390,11 @@ MIL_Army_ABC& MIL_Inhabitant::GetArmy() const
 void MIL_Inhabitant::NotifyStructuralStateChanged( unsigned int /*structuralState*/, const MIL_Object_ABC& object )
 {
     if( object.Retrieve< MedicalCapacity >() )
-        ComputeHealthSatisfaction();
+        pSatisfactions_->ComputeHealthSatisfaction( nNbrHealthyHumans_, nNbrWoundedHumans_, pLivingArea_->HealthCount() );
+    pSatisfactions_->ComputeLodgingSatisfaction( nNbrHealthyHumans_ + nNbrWoundedHumans_, pLivingArea_->GetTotalOccupation() );
+    std::map< std::string, unsigned int > occupations;
+    pLivingArea_->GetUsagesOccupation( occupations );
+    pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -422,23 +403,5 @@ void MIL_Inhabitant::NotifyStructuralStateChanged( unsigned int /*structuralStat
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::NotifyFired()
 {
-    safetySatisfaction_ = std::max( 0.f, safetySatisfaction_ - pType_->GetSafetyLossOnFire() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Inhabitant::ComputeHealthSatisfaction
-// Created: JSR 2011-01-14
-// -----------------------------------------------------------------------------
-void MIL_Inhabitant::ComputeHealthSatisfaction()
-{
-    float healthSatisfaction;
-    if( healthNeed_ == 0 )
-        healthSatisfaction = 1.f;
-    else
-        healthSatisfaction = std::min( 1.f, pLivingArea_->HealthCount() / healthNeed_ );
-    if( healthSatisfaction != healthSatisfaction_ )
-    {
-        healthSatisfactionChanged_ = true;
-        healthSatisfaction_ = healthSatisfaction;
-    }
+    pSatisfactions_->DecreaseSafety( pType_->GetSafetyLossOnFire() );
 }

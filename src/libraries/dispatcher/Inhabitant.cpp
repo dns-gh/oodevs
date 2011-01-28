@@ -24,16 +24,17 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg )
     : Inhabitant_ABC( msg.id().id(), QString( msg.name().c_str() ) )
-    , model_             ( model )
-    , nType_             ( msg.type().id() )
-    , strName_           ( msg.name() )
-    , text_              ( msg.text() )
-    , side_              ( model.Sides().Get( msg.party().id() ) )
-    , nNbrHealthyHumans_ ( 0 )
-    , nNbrDeadHumans_    ( 0 )
-    , nNbrWoundedHumans_ ( 0 )
-    , healthSatisfaction_( 0 )
-    , safetySatisfaction_( 0 )
+    , model_              ( model )
+    , nType_              ( msg.type().id() )
+    , strName_            ( msg.name() )
+    , text_               ( msg.text() )
+    , side_               ( model.Sides().Get( msg.party().id() ) )
+    , nNbrHealthyHumans_  ( 0 )
+    , nNbrDeadHumans_     ( 0 )
+    , nNbrWoundedHumans_  ( 0 )
+    , healthSatisfaction_ ( 0 )
+    , safetySatisfaction_ ( 0 )
+    , lodgingSatisfaction_( 0 )
 {
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
@@ -71,6 +72,10 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             healthSatisfaction_ = msg.satisfaction().health();
         if( msg.satisfaction().has_safety() )
             safetySatisfaction_ = msg.satisfaction().safety();
+        if( msg.satisfaction().has_lodging() )
+            lodgingSatisfaction_ = msg.satisfaction().lodging();
+        for( int i = 0; i < msg.satisfaction().motivations_size(); ++i )
+            motivationSatisfactions_[ msg.satisfaction().motivations( i ).motivation() ] = msg.satisfaction().motivations( i ).percentage();
     }
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
@@ -117,6 +122,13 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     msg().set_dead( nNbrDeadHumans_ );
     msg().mutable_satisfaction()->set_health( healthSatisfaction_ );
     msg().mutable_satisfaction()->set_safety( safetySatisfaction_ );
+    msg().mutable_satisfaction()->set_lodging( lodgingSatisfaction_ );
+    for( CIT_MotivationSatisfactions it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
+    {
+        sword::PopulationUpdate_MotivationSatisfaction* motivation = msg().mutable_satisfaction()->add_motivations();
+        motivation->set_motivation( it->first );
+        motivation->set_percentage( it->second );
+    }
     BOOST_FOREACH( const T_UrbanBlocks::value_type& urbanBlock, urbanBlocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();

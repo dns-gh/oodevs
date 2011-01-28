@@ -491,6 +491,65 @@
     </message>
 </context>
 <context>
+    <name>Inhabitant</name>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished">Info/Identificador</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished">Info/Nombre</translation>
+    </message>
+    <message>
+        <source>Satisfaction/Health</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfaction/Safety</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfaction/Lodging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfaction/Usage/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alive:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation type="unfinished">Muerto:</translation>
+    </message>
+    <message>
+        <source>Health satisfaction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Safety satisfaction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lodging satisfaction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage %1 satisfaction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Intelligence</name>
     <message>
         <source>Info/Identifier</source>

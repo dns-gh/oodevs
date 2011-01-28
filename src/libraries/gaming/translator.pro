@@ -22,6 +22,7 @@ BurnSurfaceAttribute.cpp \
 FloodAttribute.cpp \
 Formation.cpp \
 HumanFactors.cpp \
+Inhabitant.cpp\
 Intelligence.cpp \
 InfrastructureAttribute.cpp \
 IntelligenceFactory.cpp \

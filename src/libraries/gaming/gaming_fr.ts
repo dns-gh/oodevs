@@ -491,6 +491,65 @@
     </message>
 </context>
 <context>
+    <name>Inhabitant</name>
+    <message>
+        <source>Info/Identifier</source>
+        <translation>Info/Identifiant</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation>Info/Nom</translation>
+    </message>
+    <message>
+        <source>Satisfaction/Health</source>
+        <translation>Satisfaction/Santé</translation>
+    </message>
+    <message>
+        <source>Satisfaction/Safety</source>
+        <translation>Satisfaction/Sécurité</translation>
+    </message>
+    <message>
+        <source>Satisfaction/Lodging</source>
+        <translation>Satisfaction/Hébergement</translation>
+    </message>
+    <message>
+        <source>Details/</source>
+        <translation>Details/</translation>
+    </message>
+    <message>
+        <source>Satisfaction/Usage/</source>
+        <translation>Satisfaction/Motivation/</translation>
+    </message>
+    <message>
+        <source>Alive:</source>
+        <translation>Vivants:</translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation>Blessés</translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation>Morts:</translation>
+    </message>
+    <message>
+        <source>Health satisfaction:</source>
+        <translation>Satisfaction en santé:</translation>
+    </message>
+    <message>
+        <source>Safety satisfaction:</source>
+        <translation>Satisfaction en sécurité:</translation>
+    </message>
+    <message>
+        <source>Lodging satisfaction:</source>
+        <translation>Satisfaction en hébergement:</translation>
+    </message>
+    <message>
+        <source>%1 satisfaction:</source>
+        <translation>Satisfaction en %1:</translation>
+    </message>
+</context>
+<context>
     <name>Intelligence</name>
     <message>
         <source>Info/Identifier</source>

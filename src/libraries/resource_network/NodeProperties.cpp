@@ -135,7 +135,7 @@ void NodeProperties::Update()
     functionalState_ = 1.f;
     Apply( boost::bind( &NodeElement::Consume, _1, boost::ref( functionalState_ ) ) );
     Apply( boost::bind( &NodeElement::DistributeResource, _1, functionalState_ ) );
-    if( std::abs( oldFunctionalState_ - functionalState_ ) > 0.01 )
+    if( std::abs( oldFunctionalState_ - functionalState_ ) >= 0.01 )
     {
         oldFunctionalState_ = functionalState_;
         needUpdate_ = true;

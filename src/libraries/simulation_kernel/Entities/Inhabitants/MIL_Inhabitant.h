@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Objects/MIL_StructuralStateNotifier_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <memory>
 
 namespace sword
@@ -31,12 +32,14 @@ class MIL_InhabitantType;
 class MIL_StructuralStateNotifier_ABC;
 class MIL_LivingArea;
 class MIL_Schedule_ABC;
+class MIL_InhabitantSatisfactions;
 
 // =============================================================================
 // Created: NLD 2005-09-28
 // =============================================================================
 class MIL_Inhabitant : public MIL_Entity_ABC
                      , public MIL_StructuralStateNotifier_ABC
+                     , boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -82,12 +85,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_Inhabitant( const MIL_Inhabitant& );            //!< Copy constructor
-    MIL_Inhabitant& operator=( const MIL_Inhabitant& ); //!< Assignment operator
-    //@}
-
     //! @name Magic actions
     //@{
     void OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg );
@@ -98,11 +95,6 @@ private:
     //@{
     void SendDestruction() const;
     void ReadExtension( xml::xistream& xis );
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ComputeHealthSatisfaction();
     //@}
 
 private:
@@ -120,16 +112,12 @@ private:
     MIL_Army_ABC* pArmy_;
     std::auto_ptr< MIL_LivingArea > pLivingArea_;
     std::auto_ptr< MIL_Schedule_ABC > pSchedule_;
+    std::auto_ptr< MIL_InhabitantSatisfactions > pSatisfactions_;
     std::string text_;
-    bool healthStateChanged_;
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;
-    float healthNeed_;
-    float healthSatisfaction_;
-    bool healthSatisfactionChanged_;
-    float safetySatisfaction_;
-    float lastSafetySatisfaction_;
+    bool healthStateChanged_;
     T_Extensions extensions_;
     //@}
 

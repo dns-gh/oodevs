@@ -28,9 +28,9 @@ InhabitantType::InhabitantType( xml::xistream& xis, const tools::Resolver_ABC< P
         >> xml::attribute( "associated-crowd", model );
     type_ = &modelResolver.Get( model );
     xis >> xml::start( "repartition" )
-        >> xml::attribute( "male", male_ )
-        >> xml::attribute( "female", female_ )
-        >> xml::attribute( "children", children_ )
+            >> xml::attribute( "male", male_ )
+            >> xml::attribute( "female", female_ )
+            >> xml::attribute( "children", children_ )
         >> xml::end;
 }
 
@@ -47,7 +47,7 @@ InhabitantType::~InhabitantType()
 // Name: InhabitantType::GetName
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-std::string InhabitantType::GetName() const
+const std::string& InhabitantType::GetName() const
 {
     return name_;
 }

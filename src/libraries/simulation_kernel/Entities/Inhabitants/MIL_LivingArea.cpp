@@ -33,6 +33,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LivingArea )
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
 MIL_LivingArea::MIL_LivingArea()
+    : hasChanged_( false )
 {
     LoadAccommodations();
 }
@@ -41,9 +42,9 @@ MIL_LivingArea::MIL_LivingArea()
 // Name: MIL_LivingArea constructor
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population, unsigned int nID )
-    : nID_       ( nID )
-    , population_( population )
+MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population )
+    : population_( population )
+    , hasChanged_( false )
 {
     float totalArea = 0.f;
     xis >> xml::start( "living-area" )
@@ -91,10 +92,17 @@ void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis, float& area )
 
 namespace
 {
-    template< typename T >
-    bool Compare( const T& lhs, const T& rhs )
+    float GetStructuralState( const urban::TerrainObject_ABC& object )
     {
-        return lhs.first->GetLivingSpace() > rhs.first->GetLivingSpace();
+        UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( object );
+        const StructuralCapacity* structural = wrapper.Retrieve< StructuralCapacity >();
+        return structural ? 0.01f * structural->GetStructuralState() : 1.f;
+    }
+
+    template< typename T >
+    bool CompareLivingSpace( const T& lhs, const T& rhs )
+    {
+        return lhs.first->GetLivingSpace() * GetStructuralState( *lhs.first ) > rhs.first->GetLivingSpace() * GetStructuralState( *rhs.first );
     }
 }
 
@@ -104,7 +112,7 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::DistributeHumans( float area )
 {
-    std::sort( blocks_.begin(), blocks_.end(), boost::bind( &Compare< T_Block >, _1, _2 ) );
+    std::sort( blocks_.begin(), blocks_.end(), boost::bind( &CompareLivingSpace< T_Block >, _1, _2 ) );
     unsigned long tmp = population_;
     for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
@@ -135,8 +143,7 @@ void MIL_LivingArea::Register( MIL_StructuralStateNotifier_ABC& structural )
 void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_LivingArea_ABC >( *this );
-    file >> nID_
-         >> population_;
+    file >> population_;
     unsigned int size;
     file >> size;
     unsigned int blockId;
@@ -158,8 +165,7 @@ void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_LivingArea::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_LivingArea_ABC >( *this );
-    file << nID_
-         << population_;
+    file << population_;
     unsigned int size = blocks_.size();
     file << size;
     unsigned int id;
@@ -175,17 +181,27 @@ void MIL_LivingArea::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
 // Name: MIL_LivingArea::SendFullState
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::SendFullState() const
+void MIL_LivingArea::SendFullState( client::PopulationUpdate& msg ) const
 {
-    client::PopulationUpdate msg;
-    msg().mutable_id()->set_id( nID_ );
     BOOST_FOREACH( const T_Block& urbanBlock, blocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
         block.mutable_object()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *urbanBlock.first ).GetID() );
         block.set_number( urbanBlock.second );
     }
-    msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::UpdateNetwork
+// Created: JSR 2011-01-27
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::UpdateNetwork( client::PopulationUpdate& msg ) const
+{
+    if( hasChanged_ )
+    {
+        SendFullState( msg );
+        hasChanged_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -204,12 +220,36 @@ void MIL_LivingArea::SendCreation( client::PopulationCreation& msg ) const
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::WriteODB( xml::xostream& xos ) const
 {
+    xos << xml::start( "living-area" );
     BOOST_FOREACH( const T_Block& block, blocks_ )
-    {
         xos << xml::start( "urban-block" )
                 << xml::attribute( "id", block.first->GetId() )
             << xml::end;
-    }
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::GetTotalOccupation
+// Created: JSR 2011-01-27
+// -----------------------------------------------------------------------------
+unsigned int MIL_LivingArea::GetTotalOccupation() const
+{
+    unsigned int totalOccupation = 0;
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+        for( CIT_Accommodations it = accommodations_.begin(); it != accommodations_.end(); ++it )
+            totalOccupation += GetOccupation( block, it->first );
+    return totalOccupation;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::GetUsagesOccupation
+// Created: JSR 2011-01-27
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::GetUsagesOccupation( std::map< std::string, unsigned int >& occupations ) const
+{
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+        for( CIT_Accommodations it = accommodations_.begin(); it != accommodations_.end(); ++it )
+            occupations[ it->first ] += GetOccupation( block, it->first );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,7 +300,7 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
                 CIT_Identifiers it = identifiers.find( block.first->GetId() );
                 block.second = ( it == identifiers.end() ) ? 0u : it->second;
             }
-            SendFullState();
+            hasChanged_ = true;
         }
     }
 }
@@ -273,7 +313,7 @@ unsigned int MIL_LivingArea::GetOccupation( const T_Block& block, const std::str
 {
     CIT_Accommodations it = accommodations_.find( motivation );
     if( it != accommodations_.end() )
-        return static_cast< unsigned int >( block.first->GetLivingSpace() * GetProportion( block, motivation ) * it->second );
+        return static_cast< unsigned int >( block.first->GetLivingSpace() * GetStructuralState( *block.first ) * GetProportion( block, motivation ) * it->second );
     return 0u;
 }
 

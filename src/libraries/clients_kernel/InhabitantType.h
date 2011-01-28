@@ -12,7 +12,10 @@
 
 #include "tools/Resolver_ABC.h"
 
-namespace xml { class xistream; };
+namespace xml
+{
+    class xistream;
+}
 
 namespace kernel
 {
@@ -35,13 +38,11 @@ public:
 
     //! @name Operations
     //@{
-    std::string GetName() const;
+    const std::string& GetName() const;
     unsigned long GetId() const;
     const float GetMalePercentage() const;
     const float GetFemalePercentage() const;
     const float GetChildrenPercentage() const;
-
-
     const PopulationType& GetCrowdType() const;
     //@}
 

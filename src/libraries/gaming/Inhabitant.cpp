@@ -28,21 +28,18 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const tools::Resolver_ABC< InhabitantType >& typeResolver, UrbanModel& model )
     : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
-    , controllers_      ( controllers )
-    , type_             ( typeResolver.Get( message.type().id() ) )
+    , controllers_( controllers )
+    , type_       ( typeResolver.Get( message.type().id() ) )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
     if( message.has_extension() )
-    {
         for( int i = 0; i < message.extension().entries_size(); ++i )
             extensions_[ message.extension().entries( i ).name() ] = message.extension().entries( i ).value();
-    }
     for( int i = 0; i < message.objects_size(); ++i )
     {
         int id = message.objects( i ).id(); 
-        gui::TerrainObjectProxy& urbanObject = model.GetObject( id );
-        livingUrbanObject_[ id ] = &urbanObject;
+        livingUrbanObject_[ id ] = &model.GetObject( id );
     }
     CreateDictionary( controllers.controller_ );
     RegisterSelf( *this );
@@ -71,10 +68,20 @@ void Inhabitant::CreateDictionary( Controller& controller )
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Info/Identifier" ), self.id_ );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Info/Name" ), self.name_ );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Health" ), self.healthSatisfaction_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Safety" ), self.safetySatisfaction_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Lodging" ), self.lodgingSatisfaction_ );
     BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
     {
-        std::string info = "Details/" + extension.first;
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", info.c_str() ), extension.second );
+        QString info = tools::translate( "Inhabitant", "Details/" ) + extension.first.c_str();
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), info, extension.second );
+    }
+}
+
+namespace
+{
+    unsigned int ToInt( float value )
+    {
+        return static_cast< unsigned int >( 100 * ( value + 0.005f ) );
     }
 }
 
@@ -93,9 +100,23 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     if( msg.has_satisfaction() )
     {
         if( msg.satisfaction().has_health() )
-            healthSatisfaction_ = static_cast< unsigned int >( 100 * ( msg.satisfaction().health() + 0.005f ) );
+            healthSatisfaction_ = ToInt( msg.satisfaction().health() );
         if( msg.satisfaction().has_safety() )
-            safetySatisfaction_ = static_cast< unsigned int >( 100 * ( msg.satisfaction().safety()  + 0.005f ) );
+            safetySatisfaction_ = ToInt( msg.satisfaction().safety() );
+        if( msg.satisfaction().has_lodging() )
+            lodgingSatisfaction_ = ToInt( msg.satisfaction().lodging() );
+        for( int i = 0; i < msg.satisfaction().motivations_size(); ++i )
+        {
+            const sword::PopulationUpdate_MotivationSatisfaction& motivation = msg.satisfaction().motivations( i );
+            motivationSatisfactions_[ motivation.motivation() ] = ToInt( motivation.percentage() );
+            const QString key = tools::translate( "Inhabitant", "Satisfaction/Usage/" ) + motivation.motivation().c_str();
+            PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+            if( !dictionary.HasKey( key ) )
+            {
+                const T_MotivationSatisfactions::const_iterator it = motivationSatisfactions_.find( motivation.motivation() );
+                dictionary.Register( *static_cast< const Entity_ABC* >( this ), key, it->second );
+            }
+        }
     }
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
@@ -199,6 +220,9 @@ void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Inhabitant", "Dead:" ), dead_ );
     displayer.Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
+    displayer.Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
+    for( T_MotivationSatisfactions::const_iterator it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
+        displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( it->first.c_str() ), it->second );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,11 +243,16 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
     if( !displayers_.empty() )
     {
         for( std::set< Displayer_ABC* >::iterator it = displayers_.begin(); it != displayers_.end(); ++it )
-            (*it)->Display( tools::translate( "Inhabitant", "Alive:" ), healthy_ )
-                  .Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ )
-                  .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ )
-                  .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ )
-                  .Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
+        {
+            ( *it )->Display( tools::translate( "Inhabitant", "Alive:" ), healthy_ )
+                    .Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ )
+                    .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ )
+                    .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ )
+                    .Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ )
+                    .Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
+            for( T_MotivationSatisfactions::const_iterator satisfaction = motivationSatisfactions_.begin(); satisfaction != motivationSatisfactions_.end(); ++satisfaction )
+                ( *it )->Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( satisfaction->first.c_str() ), satisfaction->second );
+        }
         displayers_.clear();
     }
 }

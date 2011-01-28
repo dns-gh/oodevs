@@ -165,7 +165,7 @@ void NodeElement::UpdateImmediateStock( float functionalState )
     if( !isActivated_ )
         return;
     immediateStock_ = static_cast< unsigned int >( modifier_ * receivedQuantity_ ) + stockCapacity_;
-    if( std::abs( functionalState ) > 0.01f )
+    if( std::abs( functionalState ) >= 0.01f )
         immediateStock_ += static_cast< unsigned int >( modifier_ * productionCapacity_ );
     receivedQuantity_ = 0;
 }

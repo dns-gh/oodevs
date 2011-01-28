@@ -29,6 +29,7 @@ namespace urban
 namespace client
 {
     class PopulationCreation;
+    class PopulationUpdate;
 }
 
 class MIL_StructuralStateNotifier_ABC;
@@ -46,7 +47,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_LivingArea();
-             MIL_LivingArea( xml::xistream& xis, unsigned long population, unsigned int nID );
+             MIL_LivingArea( xml::xistream& xis, unsigned long population );
     virtual ~MIL_LivingArea();
     //@}
 
@@ -57,8 +58,11 @@ public:
     void Register( MIL_StructuralStateNotifier_ABC& structural );
     void WriteODB( xml::xostream& xos ) const;
     float HealthCount() const;
-    void SendFullState() const;
     void SendCreation( client::PopulationCreation& msg ) const;
+    void SendFullState( client::PopulationUpdate& msg ) const;
+    void UpdateNetwork( client::PopulationUpdate& msg ) const;
+    unsigned int GetTotalOccupation() const;
+    void GetUsagesOccupation( std::map< std::string, unsigned int >& occupations ) const;
     //@}
 
     //! @name CheckPoints
@@ -97,10 +101,10 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int nID_;
     unsigned long population_;
     T_Accommodations accommodations_;
     T_Blocks blocks_;
+    mutable bool hasChanged_;
     //@}
 };
 

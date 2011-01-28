@@ -86,8 +86,8 @@ private:
     //@{
     typedef std::map< unsigned int, gui::TerrainObjectProxy* > T_UrbanObjectVector;
     typedef T_UrbanObjectVector::const_iterator              CIT_UrbanObjectVector;
-
     typedef std::map< std::string, std::string > T_Extensions;
+    typedef std::map< std::string, unsigned int > T_MotivationSatisfactions;
     //@}
 
 private:
@@ -98,6 +98,8 @@ private:
     std::set< kernel::Displayer_ABC* > displayers_;
     unsigned int healthSatisfaction_;
     unsigned int safetySatisfaction_;
+    unsigned int lodgingSatisfaction_;
+    T_MotivationSatisfactions motivationSatisfactions_;
     T_UrbanObjectVector livingUrbanObject_;
     T_Extensions extensions_;
     //@}
