@@ -91,7 +91,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     pType_->InitializeSchedule( *pSchedule_ );
     pSatisfactions_.reset( new MIL_InhabitantSatisfactions( xis ) );
     pArmy_->RegisterInhabitant( *this );
-    pSatisfactions_->ComputeHealthSatisfaction( nNbrHealthyHumans_, nNbrWoundedHumans_, pLivingArea_->HealthCount() );
+    pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
     pSatisfactions_->ComputeLodgingSatisfaction( nNbrHealthyHumans_ + nNbrWoundedHumans_, pLivingArea_->GetTotalOccupation() );
     std::map< std::string, unsigned int > occupations;
     pLivingArea_->GetUsagesOccupation( occupations );
@@ -342,7 +342,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     nNbrWoundedHumans_ = wounded.value().Get( 0 ).quantity();
     nNbrDeadHumans_    = dead.value().Get( 0 ).quantity();
     healthStateChanged_ = true;
-    pSatisfactions_->ComputeHealthSatisfaction( nNbrHealthyHumans_, nNbrWoundedHumans_, pLivingArea_->HealthCount() );
+    pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
 }
 
 // -----------------------------------------------------------------------------
@@ -390,7 +390,7 @@ MIL_Army_ABC& MIL_Inhabitant::GetArmy() const
 void MIL_Inhabitant::NotifyStructuralStateChanged( unsigned int /*structuralState*/, const MIL_Object_ABC& object )
 {
     if( object.Retrieve< MedicalCapacity >() )
-        pSatisfactions_->ComputeHealthSatisfaction( nNbrHealthyHumans_, nNbrWoundedHumans_, pLivingArea_->HealthCount() );
+        pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
     pSatisfactions_->ComputeLodgingSatisfaction( nNbrHealthyHumans_ + nNbrWoundedHumans_, pLivingArea_->GetTotalOccupation() );
     std::map< std::string, unsigned int > occupations;
     pLivingArea_->GetUsagesOccupation( occupations );

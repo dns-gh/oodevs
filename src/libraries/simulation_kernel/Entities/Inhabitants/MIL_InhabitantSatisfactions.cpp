@@ -162,15 +162,11 @@ void MIL_InhabitantSatisfactions::UpdateNetwork( client::PopulationUpdate& msg )
 // Name: MIL_InhabitantSatisfactions::ComputeHealthSatisfaction
 // Created: JSR 2011-01-14
 // -----------------------------------------------------------------------------
-void MIL_InhabitantSatisfactions::ComputeHealthSatisfaction( unsigned long healthy, unsigned long wounded, float healthCount )
+void MIL_InhabitantSatisfactions::ComputeHealthSatisfaction( float healthCount )
 {
     float health = 1.f;
-    if( healthNeed_ != 0 && wounded != 0 )
-    {
-        float needRatio = healthCount / healthNeed_;
-        if( needRatio < wounded / ( wounded + healthy ) )
-            health = needRatio * healthy / ( wounded + healthy );
-    }
+    if( healthNeed_ != 0 )
+        health = std::min( 1.f, static_cast< float >( healthCount )/ healthNeed_ );
     if( std::abs( health - health_ ) >= 0.01f )
     {
         healthChanged_ = true;

@@ -43,7 +43,7 @@ public:
     //@{
     void SendFullState( client::PopulationUpdate& msg ) const;
     void UpdateNetwork( client::PopulationUpdate& msg ) const;
-    void ComputeHealthSatisfaction( unsigned long healthy, unsigned long wounded, float healthCount );
+    void ComputeHealthSatisfaction( float healthCount );
     void ComputeLodgingSatisfaction( unsigned long living, unsigned int totalOccupation );
     void ComputeMotivationSatisfactions( const std::map< std::string, unsigned int >& occupations, unsigned long living );
     void IncreaseSafety( float gainPerHour );
