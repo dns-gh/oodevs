@@ -170,13 +170,13 @@
     <parameter name="Limit 1" type="Limit">
       <location type="line">
         <point coordinates="31UCP1974952195"/>
-        <point coordinates="31UCP1081434797"/>
+        <point coordinates="31UCP0926829940"/>
       </location>
     </parameter>
     <parameter name="Limit 2" type="Limit">
       <location type="line">
         <point coordinates="31UCP1263553666"/>
-        <point coordinates="31UCP0421438035"/>
+        <point coordinates="31UCP0229834919"/>
       </location>
     </parameter>
     <parameter name="Renseignements" type="IntelligenceList"/>
@@ -260,13 +260,13 @@
     <parameter name="Limit 1" type="Limit">
       <location type="line">
         <point coordinates="31UCP1974952195"/>
-        <point coordinates="31UCP1081434797"/>
+        <point coordinates="31UCP0926829940"/>
       </location>
     </parameter>
     <parameter name="Limit 2" type="Limit">
       <location type="line">
         <point coordinates="31UCP1263553666"/>
-        <point coordinates="31UCP0421438035"/>
+        <point coordinates="31UCP0229834919"/>
       </location>
     </parameter>
     <parameter name="Renseignements" type="IntelligenceList"/>
