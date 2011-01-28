@@ -35,7 +35,6 @@ PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel,
     QHBox* box = new QHBox( this );
     new QLabel( tools::translate( "PopulationsPanel", "Number:" ), box );
     number_ = new QLineEdit( QString::number( 1000 ), box );
-    number_->setValidator( new QIntValidator( 1, 1000000, number_ ) );
     controllers_.Register( *this );
 }
 
