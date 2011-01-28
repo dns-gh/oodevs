@@ -53,6 +53,7 @@ InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent, gui::PanelSta
 
     new QLabel( tr( "Number:" ), groupBox );
     number_ = new QLineEdit( QString::number( 1000 ), groupBox );
+    number_->setValidator( new QIntValidator( 1, 1000000000, number_ ) );
 
     locationCreator_ = new gui::LocationCreator( 0, tr( "New Population" ), layer, *this );
 
