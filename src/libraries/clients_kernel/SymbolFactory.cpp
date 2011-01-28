@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "SymbolFactory.h"
 #include "SymbolRule.h"
+#include "SymbolCase.h"
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -28,6 +29,7 @@ SymbolFactory::SymbolFactory()
         levelRule_ .reset( ReadRule( xis, "levels", levelBase_ ) );
                            ReadRule( xis, "automats", automatSymbol_ );
     xis >> xml::end;
+    //ListSymbols();
 }
 
 // -----------------------------------------------------------------------------
@@ -37,6 +39,62 @@ SymbolFactory::SymbolFactory()
 SymbolFactory::~SymbolFactory()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::ListSymbols
+// Created: RPD 2011-01-26
+// -----------------------------------------------------------------------------
+void SymbolFactory::ListSymbols()
+{
+    xml::xofstream out("UnitSymbols.xml");
+    out << xml::start("unit-symbols");
+    TraverseTree(out, *symbolRule_.get());
+    out << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::TraverseTree
+// Created: RPD 2011-01-26
+// -----------------------------------------------------------------------------
+void SymbolFactory::TraverseTree( xml::xofstream& out, const SymbolRule& rule )
+{
+    currentChain_.push_back( new std::string() );
+    currentSymbol_.push_back( new std::string() );
+    for( SymbolRule::CIT_Cases it = rule.GetCases().begin(); it != rule.GetCases().end(); ++it )
+    {
+        out << xml::start("unit-symbol");
+        *currentChain_.back() = it->first;
+        *currentSymbol_.back() = it->second->GetValue();
+        std::string current;
+        std::string symbol ("s*gpu");
+
+        for( std::vector< std::string* >::iterator iter = currentChain_.begin(); iter != currentChain_.end(); ++iter )
+        {
+            if ( iter != currentChain_.begin() )
+                current +="/";
+            current += **(iter);
+        }
+        for( std::vector< std::string* >::iterator iter = currentSymbol_.begin(); iter != currentSymbol_.end(); ++iter )
+        {
+            symbol += **(iter);
+        }
+
+        std::string tail ("----------*****");
+        tail = tail.substr( symbol.size(), 15-symbol.size() );
+        symbol += tail;
+        out << xml::attribute( "value", current );
+        out << xml::attribute( "symbol", symbol );
+        out << xml::end;
+        if ( it->second && (it->second)->GetRule() )
+        {
+            TraverseTree( out, *(it->second)->GetRule() );
+        }
+    }
+    delete ( currentChain_.back() );
+    delete ( currentSymbol_.back() );
+    currentChain_.pop_back();
+    currentSymbol_.pop_back();
 }
 
 // -----------------------------------------------------------------------------

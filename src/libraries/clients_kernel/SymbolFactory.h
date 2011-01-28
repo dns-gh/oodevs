@@ -10,7 +10,10 @@
 #ifndef __SymbolFactory_h_
 #define __SymbolFactory_h_
 
-namespace xml { class xistream; }
+namespace xml {
+    class xistream;
+    class xofstream;
+}
 
 namespace kernel
 {
@@ -44,6 +47,8 @@ private:
     //@{
     SymbolFactory( const SymbolFactory& );            //!< Copy constructor
     SymbolFactory& operator=( const SymbolFactory& ); //!< Assignment operator
+    void ListSymbols();
+    void TraverseTree( xml::xofstream& xos, const SymbolRule& rule );
     //@}
 
     //! @name Helpers
@@ -60,6 +65,8 @@ private:
     std::string levelBase_;
     std::auto_ptr< SymbolRule > levelRule_;
     std::string automatSymbol_;
+    std::vector< std::string* > currentChain_;
+    std::vector< std::string* > currentSymbol_;
     //@}
 };
 

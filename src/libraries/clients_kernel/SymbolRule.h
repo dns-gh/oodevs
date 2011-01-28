@@ -38,6 +38,13 @@ public:
     void Accept( SymbolVisitor_ABC& visitor ) const;
     //@}
 
+public:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, SymbolCase* >   T_Cases;
+    typedef T_Cases::const_iterator              CIT_Cases;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -47,14 +54,13 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadCase( xml::xistream& xis );
+    void          ReadCase( xml::xistream& xis );
     //@}
 
-private:
-    //! @name Types
+public:
+    //! @name Getters
     //@{
-    typedef std::map< std::string, SymbolCase* >   T_Cases;
-    typedef T_Cases::const_iterator              CIT_Cases;
+    const SymbolRule::T_Cases& GetCases() const;
     //@}
 
 private:

@@ -50,6 +50,13 @@ private:
     void ReadRule( xml::xistream& xis );
     //@}
 
+public:
+    //! @name Getters
+    //@{
+    const std::string& GetValue() const;
+    const SymbolRule* GetRule() const;
+    //@}
+
 private:
     //! @name Member data
     //@{
