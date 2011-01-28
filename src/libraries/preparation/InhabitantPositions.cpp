@@ -65,6 +65,7 @@ namespace
 // -----------------------------------------------------------------------------
 InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const UrbanModel& urbanModel )
     : converter_ ( converter )
+    , position_( 0, 0 ) 
 {
     IntersectionVisitor visitor( urbanModel, livingUrbanObject_ );
     location.Accept( visitor );
@@ -77,6 +78,7 @@ InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC&
 // -----------------------------------------------------------------------------
 InhabitantPositions::InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel )
     : converter_ ( converter )
+    , position_( 0, 0 ) 
 {
     ReadLocation( xis, urbanModel );
     ComputePosition();
@@ -124,7 +126,8 @@ void InhabitantPositions::ComputePosition()
     geometry::Polygon2f poly;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         poly.Add( ( *it )->Barycenter() );
-    position_ = poly.Barycenter();
+    if( !poly.IsEmpty() )
+        position_ = poly.Barycenter();
 }
 
 // -----------------------------------------------------------------------------

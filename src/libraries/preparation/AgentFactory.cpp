@@ -149,8 +149,15 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
         top = const_cast< kernel::Entity_ABC* >( &hierarchies->GetTop() );
     else
         top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
+
+    Positions& positions = *new InhabitantPositions( static_.coordinateConverter_, location, model_.urban_ );
+    if( positions.GetPosition() == geometry::Point2f( 0, 0 ) )
+    {
+        delete &positions;
+        return 0;
+    }
     Inhabitant* result = new Inhabitant( type, number, name, controllers_.controller_, idManager_ );
-    result->Attach< Positions >( *new InhabitantPositions( static_.coordinateConverter_, location, model_.urban_ ) );
+    result->Attach< Positions >( positions );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, top ) );
     if( Inhabitants* inhabs = top->Retrieve< Inhabitants >() )
         inhabs->AddInhabitant( *result );

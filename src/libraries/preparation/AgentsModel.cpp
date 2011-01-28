@@ -241,7 +241,8 @@ Population_ABC* AgentsModel::FindPopulation( unsigned long id )
 void AgentsModel::CreateInhabitant( Entity_ABC& parent, const InhabitantType& type, int number, const QString& name, const kernel::Location_ABC& location )
 {
     Inhabitant_ABC* inhab = agentFactory_.Create( parent, type, number, name, location );
-    tools::Resolver< Inhabitant_ABC >::Register( inhab->GetId(), *inhab );
+    if( inhab )
+        tools::Resolver< Inhabitant_ABC >::Register( inhab->GetId(), *inhab );
 }
 
 // -----------------------------------------------------------------------------
