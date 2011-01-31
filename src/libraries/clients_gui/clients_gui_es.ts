@@ -1,16 +1,5 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>gui::ActivityTimePrototype_ABC</name>
-    <message>
-        <source>Activity time</source>
-        <translation>Duración de actividad</translation>
-    </message>
-    <message>
-        <source>Activity time:</source>
-        <translation>duración de actividad:</translation>
-    </message>
-</context>
-<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
@@ -77,6 +66,72 @@
     </message>
 </context>
 <context>
+    <name>R&#xe8;gle GL</name>
+    <message>
+        <source>2D: %1m
+3D: %2m
+%3&#xb0;</source>
+        <translation>2D: %1m
+3D: %2m
+%3°</translation>
+    </message>
+</context>
+<context>
+    <name>Time Format</name>
+    <message>
+        <source>hh:mm:ss</source>
+        <translation>hh:mm:ss</translation>
+    </message>
+</context>
+<context>
+    <name>Yes/No</name>
+    <message>
+        <source>Yes</source>
+        <translation>Oui</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Non</translation>
+    </message>
+</context>
+<context>
+    <name>gui::AboutDialog</name>
+    <message>
+        <source>About</source>
+        <translation>A proposito</translation>
+    </message>
+    <message>
+        <source>&lt;br&gt;License will expire on </source>
+        <translation>&lt;br&gt;La licence expire le </translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ActivityTimePrototype_ABC</name>
+    <message>
+        <source>Activity time</source>
+        <translation>Duración de actividad</translation>
+    </message>
+    <message>
+        <source>Activity time:</source>
+        <translation>duración de actividad:</translation>
+    </message>
+</context>
+<context>
+    <name>gui::AutomatsLayer</name>
+    <message>
+        <source>Aggregate</source>
+        <translation>Agréger</translation>
+    </message>
+    <message>
+        <source>Disaggregate</source>
+        <translation>Désagréger</translation>
+    </message>
+</context>
+<context>
     <name>gui::BypassPrototype_ABC</name>
     <message>
         <source>Bypass parameters</source>
@@ -92,6 +147,17 @@
     <message>
         <source>Construction:</source>
         <translation>Construction:</translation>
+    </message>
+</context>
+<context>
+    <name>gui::CoordinateSystemsPanel</name>
+    <message>
+        <source>Coordinate System</source>
+        <translation>Système de coordonnées</translation>
+    </message>
+    <message>
+        <source>Select current coordinate system:</source>
+        <translation>Sélectionner un système de coordonnées:</translation>
     </message>
 </context>
 <context>
@@ -170,6 +236,46 @@
     </message>
 </context>
 <context>
+    <name>gui::DrawerPanel</name>
+    <message>
+        <source>Load drawings file</source>
+        <translation>Charge le fichier de dessins</translation>
+    </message>
+    <message>
+        <source>Save drawings to file</source>
+        <translation>Sauvegarder le fichier de dessins</translation>
+    </message>
+    <message>
+        <source>Clear drawings</source>
+        <translation>Effacer les dessins</translation>
+    </message>
+    <message>
+        <source>Drawings (*.xml)</source>
+        <translation>Dessins (*.xml)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a valid drawings file.</source>
+        <translation>&apos;%1&apos; n&apos;est pas un fichier de dessins valide.</translation>
+    </message>
+    <message>
+        <source>Unable to save drawings to file &apos;%1&apos;. 
+Please check access permissions or write protection.</source>
+        <translation>Impossible de sauvegarder les dessins dans le fichier &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Drawings</source>
+        <translation>Dessins</translation>
+    </message>
+    <message>
+        <source>Start drawing</source>
+        <translation>Dessiner</translation>
+    </message>
+</context>
+<context>
     <name>gui::EditorFactory</name>
     <message>
         <source>True</source>
@@ -178,6 +284,33 @@
     <message>
         <source>False</source>
         <translation>Faux</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ElevationPanel</name>
+    <message>
+        <source>Elevation colors</source>
+        <translation>Couleurs de l&apos;hypsométrie</translation>
+    </message>
+    <message>
+        <source>Fit color gradient to viewport</source>
+        <translation>Adapter le dégradé à la zone affichée</translation>
+    </message>
+    <message>
+        <source>Gradient map</source>
+        <translation>Dégradé</translation>
+    </message>
+    <message>
+        <source>Hillshade</source>
+        <translation>Ombrage du relief</translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation>Direction</translation>
+    </message>
+    <message>
+        <source>Strength</source>
+        <translation>Intensité</translation>
     </message>
 </context>
 <context>
@@ -200,6 +333,25 @@
     <message>
         <source>Max combustion energy:</source>
         <translation>Energie de combustion max:</translation>
+    </message>
+</context>
+<context>
+    <name>gui::FixedLightWidget</name>
+    <message>
+        <source>Light direction</source>
+        <translation>Direction de la lumière</translation>
+    </message>
+    <message>
+        <source>Light colors</source>
+        <translation>Couleurs</translation>
+    </message>
+    <message>
+        <source>Ambient</source>
+        <translation>Ambiante</translation>
+    </message>
+    <message>
+        <source>Diffuse</source>
+        <translation>Diffuse</translation>
     </message>
 </context>
 <context>
@@ -257,6 +409,21 @@
     </message>
 </context>
 <context>
+    <name>gui::GradientWidget</name>
+    <message>
+        <source>Copy preset</source>
+        <translation>Copier le dégradé</translation>
+    </message>
+    <message>
+        <source>Delete preset</source>
+        <translation>Supprimer le dégradé</translation>
+    </message>
+    <message>
+        <source>Rename preset</source>
+        <translation>Cambiar nombre</translation>
+    </message>
+</context>
+<context>
     <name>gui::GraphicPreferences</name>
     <message>
         <source>Colors</source>
@@ -268,6 +435,13 @@
     <message>
         <source>help/en/Reference Guide.chm</source>
         <translation>help/fr/Guide de Reference.chm</translation>
+    </message>
+</context>
+<context>
+    <name>gui::HierarchyListView_ABC</name>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
     </message>
 </context>
 <context>
@@ -321,537 +495,6 @@
     <message>
         <source>Mesure Ct</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::TacticalLinesLayer</name>
-    <message>
-        <source>Create limit</source>
-        <translation>Créer une limite</translation>
-    </message>
-    <message>
-        <source>Create phase line</source>
-        <translation>Créer une lima</translation>
-    </message>
-</context>
-<context>
-    <name>gui::LocationCreator</name>
-    <message>
-        <source>Point</source>
-        <translation>Point</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation>Ligne</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation>Polygone</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation>Cercle</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation>Rectangle</translation>
-    </message>
-    <message>
-        <source>Add drawing as &apos;%1&apos;</source>
-        <translation>Ajouter le dessin en tant que &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>gui::MedicalTreatmentPrototype_ABC</name>
-    <message>
-        <source>MedicalTreatment parameters</source>
-        <translation>Paramètres de traitement médical</translation>
-    </message>
-    <message>
-        <source>MedicalTreatment Type:</source>
-        <translation>Type de traitement médical:</translation>
-    </message>
-    <message>
-        <source>Doctors:</source>
-        <translation>Médecins:</translation>
-    </message>
-    <message>
-        <source>Hospital ID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bed Capacities:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::MinePrototype_ABC</name>
-    <message>
-        <source>Mine parameters</source>
-        <translation>Paramètres des mines</translation>
-    </message>
-    <message>
-        <source>Density:</source>
-        <translation>Densité:</translation>
-    </message>
-</context>
-<context>
-    <name>gui::NBCPrototype_ABC</name>
-    <message>
-        <source>NBC parameters</source>
-        <translation>Paramètres NBC</translation>
-    </message>
-    <message>
-        <source>NBC agent(s):</source>
-        <translation>Agent(s) NBC:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>NBC agent state:</source>
-        <translation>Etat agent NBC:</translation>
-    </message>
-    <message>
-        <source>Danger level:</source>
-        <translation>Niveau de danger: </translation>
-    </message>
-</context>
-<context>
-    <name>gui::ObjectPanel</name>
-    <message>
-        <source>Object state</source>
-        <translation>Etat de l&apos;objet</translation>
-    </message>
-</context>
-<context>
-    <name>gui::ObstaclePrototype_ABC</name>
-    <message>
-        <source>Obstacle</source>
-        <translation>Obstacle</translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation>Type d&apos;obstacle:</translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstacle de manoeuvre activé:</translation>
-    </message>
-    <message>
-        <source>Activation time:</source>
-        <translation>Délai avant activation:</translation>
-    </message>
-</context>
-<context>
-    <name>gui::PopulationPanel</name>
-    <message>
-        <source>Information</source>
-        <translation>Information</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation>Nom:</translation>
-    </message>
-    <message>
-        <source>Alive people:</source>
-        <translation>Personnes vivantes:</translation>
-    </message>
-    <message>
-        <source>Dead people:</source>
-        <translation>Personnes décédées:</translation>
-    </message>
-    <message>
-        <source>Chunks</source>
-        <translation>Portions</translation>
-    </message>
-    <message>
-        <source>Alive</source>
-        <translation>Vivants</translation>
-    </message>
-    <message>
-        <source>Dead</source>
-        <translation>Décédés</translation>
-    </message>
-    <message>
-        <source>Mood</source>
-        <translation>Attitude</translation>
-    </message>
-    <message>
-        <source>Alive density</source>
-        <translation>Densité des vivants</translation>
-    </message>
-    <message>
-        <source>Crowd state</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::PopulationTypesListView</name>
-    <message>
-        <source>Crowd type</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::PopulationsPanel</name>
-    <message>
-        <source>Number:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::PreferencesList</name>
-    <message>
-        <source>Category</source>
-        <translation>Catégorie</translation>
-    </message>
-</context>
-<context>
-    <name>gui::PresetDialog</name>
-    <message>
-        <source>Rename preset</source>
-        <translation>Cambiar nombre</translation>
-    </message>
-    <message>
-        <source>New Name:</source>
-        <translation>Nuevo nombre :</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preset name is empty.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preset name already exists.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gui::PropertiesPanel</name>
-    <message>
-        <source>Properties</source>
-        <translation>Propriétés</translation>
-    </message>
-</context>
-<context>
-    <name>gui::ResourceLinksDialog_ABC</name>
-    <message>
-        <source>Target</source>
-        <translation>Cible</translation>
-    </message>
-    <message>
-        <source>Capacity</source>
-        <translation>Capacité</translation>
-    </message>
-    <message>
-        <source>Limited</source>
-        <translation>Limité</translation>
-    </message>
-    <message>
-        <source>Production:</source>
-        <translation>Production:</translation>
-    </message>
-    <message>
-        <source>Consumption:</source>
-        <translation>Consommation:</translation>
-    </message>
-    <message>
-        <source>Maximal stock:</source>
-        <translation>Stock maximal:</translation>
-    </message>
-    <message>
-        <source>Vital consumption</source>
-        <translation>Consommation vitale</translation>
-    </message>
-    <message>
-        <source>Resource Networks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Initial stock:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Validate</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>R&#xe8;gle GL</name>
-    <message>
-        <source>2D: %1m
-3D: %2m
-%3&#xb0;</source>
-        <translation>2D: %1m
-3D: %2m
-%3°</translation>
-    </message>
-</context>
-<context>
-    <name>gui::SupplyRoutePrototype_ABC</name>
-    <message>
-        <source>Logistic route</source>
-        <translation>Itinéraire logistique</translation>
-    </message>
-    <message>
-        <source>Flow:</source>
-        <translation>Débit:</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Largeur:</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation>Longueur:</translation>
-    </message>
-    <message>
-        <source>Maximum weight:</source>
-        <translation>Poids maximum:</translation>
-    </message>
-    <message>
-        <source>Equipped:</source>
-        <translation>Equipé:</translation>
-    </message>
-</context>
-<context>
-    <name>gui::TerrainPreference</name>
-    <message>
-        <source>Line thickness: </source>
-        <translation>Epaisseur du trait: </translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation> px</translation>
-    </message>
-</context>
-<context>
-    <name>gui::TerrainProfile</name>
-    <message>
-        <source>Altitude (m)</source>
-        <translation>Altitude (m)</translation>
-    </message>
-    <message>
-        <source>Distance (km)</source>
-        <translation>Distance (km)</translation>
-    </message>
-</context>
-<context>
-    <name>gui::TerrainProfiler</name>
-    <message>
-        <source>Terrain profile</source>
-        <translation>Coupe de terrain</translation>
-    </message>
-    <message>
-        <source>Terrain profile from here</source>
-        <translation>Coupe de terrain depuis ici</translation>
-    </message>
-    <message>
-        <source>Terrain profile to here</source>
-        <translation>Coupe de terrain jusqu&apos;ici</translation>
-    </message>
-    <message>
-        <source>Terrain profile from unit</source>
-        <translation>Coupe de terrain depuis cette unité</translation>
-    </message>
-    <message>
-        <source>Terrain profile to unit</source>
-        <translation>Coupe de terrain jusqu&apos;à cette unité</translation>
-    </message>
-</context>
-<context>
-    <name>Time Format</name>
-    <message>
-        <source>hh:mm:ss</source>
-        <translation>hh:mm:ss</translation>
-    </message>
-</context>
-<context>
-    <name>gui::UnitListView</name>
-    <message>
-        <source>Unit type</source>
-        <translation>Type d&apos;unité</translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation>Nombre</translation>
-    </message>
-</context>
-<context>
-    <name>Yes/No</name>
-    <message>
-        <source>Yes</source>
-        <translation>Oui</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation>Non</translation>
-    </message>
-</context>
-<context>
-    <name>gui::AboutDialog</name>
-    <message>
-        <source>About</source>
-        <translation>A proposito</translation>
-    </message>
-    <message>
-        <source>&lt;br&gt;License will expire on </source>
-        <translation>&lt;br&gt;La licence expire le </translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Fermer</translation>
-    </message>
-</context>
-<context>
-    <name>gui::AutomatsLayer</name>
-    <message>
-        <source>Aggregate</source>
-        <translation>Agréger</translation>
-    </message>
-    <message>
-        <source>Disaggregate</source>
-        <translation>Désagréger</translation>
-    </message>
-</context>
-<context>
-    <name>gui::CoordinateSystemsPanel</name>
-    <message>
-        <source>Coordinate System</source>
-        <translation>Système de coordonnées</translation>
-    </message>
-    <message>
-        <source>Select current coordinate system:</source>
-        <translation>Sélectionner un système de coordonnées:</translation>
-    </message>
-</context>
-<context>
-    <name>gui::DrawerPanel</name>
-    <message>
-        <source>Load drawings file</source>
-        <translation>Charge le fichier de dessins</translation>
-    </message>
-    <message>
-        <source>Save drawings to file</source>
-        <translation>Sauvegarder le fichier de dessins</translation>
-    </message>
-    <message>
-        <source>Clear drawings</source>
-        <translation>Effacer les dessins</translation>
-    </message>
-    <message>
-        <source>Drawings (*.xml)</source>
-        <translation>Dessins (*.xml)</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
-    </message>
-    <message>
-        <source>&apos;%1&apos; is not a valid drawings file.</source>
-        <translation>&apos;%1&apos; n&apos;est pas un fichier de dessins valide.</translation>
-    </message>
-    <message>
-        <source>Unable to save drawings to file &apos;%1&apos;. 
-Please check access permissions or write protection.</source>
-        <translation>Impossible de sauvegarder les dessins dans le fichier &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Drawings</source>
-        <translation>Dessins</translation>
-    </message>
-    <message>
-        <source>Start drawing</source>
-        <translation>Dessiner</translation>
-    </message>
-</context>
-<context>
-    <name>gui::ElevationPanel</name>
-    <message>
-        <source>Elevation colors</source>
-        <translation>Couleurs de l&apos;hypsométrie</translation>
-    </message>
-    <message>
-        <source>Fit color gradient to viewport</source>
-        <translation>Adapter le dégradé à la zone affichée</translation>
-    </message>
-    <message>
-        <source>Gradient map</source>
-        <translation>Dégradé</translation>
-    </message>
-    <message>
-        <source>Hillshade</source>
-        <translation>Ombrage du relief</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation>Direction</translation>
-    </message>
-    <message>
-        <source>Strength</source>
-        <translation>Intensité</translation>
-    </message>
-</context>
-<context>
-    <name>gui::FixedLightWidget</name>
-    <message>
-        <source>Light direction</source>
-        <translation>Direction de la lumière</translation>
-    </message>
-    <message>
-        <source>Light colors</source>
-        <translation>Couleurs</translation>
-    </message>
-    <message>
-        <source>Ambient</source>
-        <translation>Ambiante</translation>
-    </message>
-    <message>
-        <source>Diffuse</source>
-        <translation>Diffuse</translation>
-    </message>
-</context>
-<context>
-    <name>gui::GradientWidget</name>
-    <message>
-        <source>Copy preset</source>
-        <translation>Copier le dégradé</translation>
-    </message>
-    <message>
-        <source>Delete preset</source>
-        <translation>Supprimer le dégradé</translation>
-    </message>
-    <message>
-        <source>Rename preset</source>
-        <translation>Cambiar nombre</translation>
-    </message>
-</context>
-<context>
-    <name>gui::HierarchyListView_ABC</name>
-    <message>
-        <source>Units</source>
-        <translation>Unités</translation>
     </message>
 </context>
 <context>
@@ -972,6 +615,33 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::LocationCreator</name>
+    <message>
+        <source>Point</source>
+        <translation>Point</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation>Ligne</translation>
+    </message>
+    <message>
+        <source>Polygon</source>
+        <translation>Polygone</translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation>Cercle</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation>Rectangle</translation>
+    </message>
+    <message>
+        <source>Add drawing as &apos;%1&apos;</source>
+        <translation>Ajouter le dessin en tant que &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>gui::LocationEditorBox</name>
     <message>
         <source>Location: </source>
@@ -1078,6 +748,40 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::MedicalTreatmentPrototype_ABC</name>
+    <message>
+        <source>MedicalTreatment parameters</source>
+        <translation>Paramètres de traitement médical</translation>
+    </message>
+    <message>
+        <source>MedicalTreatment Type:</source>
+        <translation>Type de traitement médical:</translation>
+    </message>
+    <message>
+        <source>Doctors:</source>
+        <translation>Médecins:</translation>
+    </message>
+    <message>
+        <source>Hospital ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bed Capacities:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::MinePrototype_ABC</name>
+    <message>
+        <source>Mine parameters</source>
+        <translation>Paramètres des mines</translation>
+    </message>
+    <message>
+        <source>Density:</source>
+        <translation>Densité:</translation>
+    </message>
+</context>
+<context>
     <name>gui::MiniViews</name>
     <message>
         <source>Miniviews</source>
@@ -1093,10 +797,40 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::NBCPrototype_ABC</name>
+    <message>
+        <source>NBC parameters</source>
+        <translation>Paramètres NBC</translation>
+    </message>
+    <message>
+        <source>NBC agent(s):</source>
+        <translation>Agent(s) NBC:</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>NBC agent state:</source>
+        <translation>Etat agent NBC:</translation>
+    </message>
+    <message>
+        <source>Danger level:</source>
+        <translation>Niveau de danger: </translation>
+    </message>
+</context>
+<context>
     <name>gui::ObjectListView</name>
     <message>
         <source>Objects</source>
         <translation>Objets</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ObjectPanel</name>
+    <message>
+        <source>Object state</source>
+        <translation>Etat de l&apos;objet</translation>
     </message>
 </context>
 <context>
@@ -1135,6 +869,25 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::ObstaclePrototype_ABC</name>
+    <message>
+        <source>Obstacle</source>
+        <translation>Obstacle</translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation>Type d&apos;obstacle:</translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation>Obstacle de manoeuvre activé:</translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation>Délai avant activation:</translation>
+    </message>
+</context>
+<context>
     <name>gui::OptionsPanel</name>
     <message>
         <source>3D metric computation</source>
@@ -1146,6 +899,67 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Populations</source>
         <translation>Populations</translation>
+    </message>
+</context>
+<context>
+    <name>gui::PopulationPanel</name>
+    <message>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Alive people:</source>
+        <translation>Personnes vivantes:</translation>
+    </message>
+    <message>
+        <source>Dead people:</source>
+        <translation>Personnes décédées:</translation>
+    </message>
+    <message>
+        <source>Chunks</source>
+        <translation>Portions</translation>
+    </message>
+    <message>
+        <source>Alive</source>
+        <translation>Vivants</translation>
+    </message>
+    <message>
+        <source>Dead</source>
+        <translation>Décédés</translation>
+    </message>
+    <message>
+        <source>Mood</source>
+        <translation>Attitude</translation>
+    </message>
+    <message>
+        <source>Alive density</source>
+        <translation>Densité des vivants</translation>
+    </message>
+    <message>
+        <source>Crowd state</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::PopulationTypesListView</name>
+    <message>
+        <source>Crowd type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::PopulationsPanel</name>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1187,8 +1001,100 @@ Voulez-vous le supprimer?</translation>
         <translation>Echelles de Visualisation</translation>
     </message>
     <message>
-        <source>2D/Inhabitant</source>
+        <source>2D/Population</source>
         <translation>2D/Population couvrante</translation>
+    </message>
+</context>
+<context>
+    <name>gui::PreferencesList</name>
+    <message>
+        <source>Category</source>
+        <translation>Catégorie</translation>
+    </message>
+</context>
+<context>
+    <name>gui::PresetDialog</name>
+    <message>
+        <source>Rename preset</source>
+        <translation>Cambiar nombre</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Nuevo nombre :</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preset name is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preset name already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::PropertiesPanel</name>
+    <message>
+        <source>Properties</source>
+        <translation>Propriétés</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ResourceLinksDialog_ABC</name>
+    <message>
+        <source>Target</source>
+        <translation>Cible</translation>
+    </message>
+    <message>
+        <source>Capacity</source>
+        <translation>Capacité</translation>
+    </message>
+    <message>
+        <source>Limited</source>
+        <translation>Limité</translation>
+    </message>
+    <message>
+        <source>Production:</source>
+        <translation>Production:</translation>
+    </message>
+    <message>
+        <source>Consumption:</source>
+        <translation>Consommation:</translation>
+    </message>
+    <message>
+        <source>Maximal stock:</source>
+        <translation>Stock maximal:</translation>
+    </message>
+    <message>
+        <source>Vital consumption</source>
+        <translation>Consommation vitale</translation>
+    </message>
+    <message>
+        <source>Resource Networks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial stock:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1223,6 +1129,100 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::SupplyRoutePrototype_ABC</name>
+    <message>
+        <source>Logistic route</source>
+        <translation>Itinéraire logistique</translation>
+    </message>
+    <message>
+        <source>Flow:</source>
+        <translation>Débit:</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Largeur:</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation>Longueur:</translation>
+    </message>
+    <message>
+        <source>Maximum weight:</source>
+        <translation>Poids maximum:</translation>
+    </message>
+    <message>
+        <source>Equipped:</source>
+        <translation>Equipé:</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TacticalLinesLayer</name>
+    <message>
+        <source>Create limit</source>
+        <translation>Créer une limite</translation>
+    </message>
+    <message>
+        <source>Create phase line</source>
+        <translation>Créer une lima</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TerrainPreference</name>
+    <message>
+        <source>Line thickness: </source>
+        <translation>Epaisseur du trait: </translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation> px</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TerrainProfile</name>
+    <message>
+        <source>Altitude (m)</source>
+        <translation>Altitude (m)</translation>
+    </message>
+    <message>
+        <source>Distance (km)</source>
+        <translation>Distance (km)</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TerrainProfiler</name>
+    <message>
+        <source>Terrain profile</source>
+        <translation>Coupe de terrain</translation>
+    </message>
+    <message>
+        <source>Terrain profile from here</source>
+        <translation>Coupe de terrain depuis ici</translation>
+    </message>
+    <message>
+        <source>Terrain profile to here</source>
+        <translation>Coupe de terrain jusqu&apos;ici</translation>
+    </message>
+    <message>
+        <source>Terrain profile from unit</source>
+        <translation>Coupe de terrain depuis cette unité</translation>
+    </message>
+    <message>
+        <source>Terrain profile to unit</source>
+        <translation>Coupe de terrain jusqu&apos;à cette unité</translation>
+    </message>
+</context>
+<context>
+    <name>gui::UnitListView</name>
+    <message>
+        <source>Unit type</source>
+        <translation>Type d&apos;unité</translation>
+    </message>
+    <message>
+        <source>Count</source>
+        <translation>Nombre</translation>
+    </message>
+</context>
+<context>
     <name>gui::UnitPreviewIcon</name>
     <message>
         <source>Drag and drop symbol to map to create a new unit.</source>
@@ -1239,7 +1239,7 @@ Voulez-vous le supprimer?</translation>
         <source>Display type: </source>
         <translation>Typo de affichage: </translation>
     </message>
-        <message>
+    <message>
         <source>Hierarchical view</source>
         <translation>Vista hierarchica</translation>
     </message>

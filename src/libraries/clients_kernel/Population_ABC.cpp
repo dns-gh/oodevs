@@ -13,7 +13,7 @@
 
 using namespace kernel;
 
-const QString Population_ABC::typeName_ = "population";
+const QString Population_ABC::typeName_ = "crowd";
 
 // -----------------------------------------------------------------------------
 // Name: Population_ABC constructor

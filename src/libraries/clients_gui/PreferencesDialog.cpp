@@ -78,7 +78,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" )        , *layersPanel_ );
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
-    AddPage( tr( "2D/Inhabitant" ), *new InhabitantPanel( this, controllers ) );
+    AddPage( tr( "2D/Population" ), *new InhabitantPanel( this, controllers ) );
 
     box = new QHBox( this );
     box->setMargin( 5 );

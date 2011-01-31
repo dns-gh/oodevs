@@ -578,6 +578,38 @@
         <source>%1 [%2]</source>
         <translation type="unfinished">%1 [%2]</translation>
     </message>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished">Info/Identifiant</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished">Info/Nom</translation>
+    </message>
+    <message>
+        <source>Info/Type</source>
+        <translation type="unfinished">Info/Type</translation>
+    </message>
+    <message>
+        <source>Info/Info</source>
+        <translation type="unfinished">Info/Info</translation>
+    </message>
+    <message>
+        <source>Human/Alive</source>
+        <translation type="unfinished">Humains/Vivants</translation>
+    </message>
+    <message>
+        <source>Human/Dead</source>
+        <translation type="unfinished">Humains/Morts</translation>
+    </message>
+    <message>
+        <source>Human/Wounded</source>
+        <translation type="unfinished">Humains/Blessés</translation>
+    </message>
+    <message>
+        <source>Health/Infrastructures needed</source>
+        <translation type="unfinished">Santé/Infrastructures nécessaires</translation>
+    </message>
 </context>
 <context>
     <name>Preparation</name>

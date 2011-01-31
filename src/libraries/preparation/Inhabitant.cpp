@@ -85,19 +85,19 @@ void Inhabitant::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     const Inhabitant& constSelf = *this;
     const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
-    dictionary.Register( constEntity, tools::translate( "Inhabitant", "Info/Identifier" ), constSelf.id_ );
-    dictionary.Register( constEntity, tools::translate( "Inhabitant", "Info/Name" ), name_ );
-    dictionary.Register( constEntity, tools::translate( "Inhabitant", "Info/Type" ), constSelf.type_ );
-    dictionary.Register( constEntity, tools::translate( "Inhabitant", "Info/Info" ), text_ );
-    dictionary.Register( constEntity, tools::translate( "Inhabitant", "Human/Alive" ), healthy_ );
-    dictionary.Register( constEntity, tools::translate( "Inhabitant", "Human/Wounded" ), wounded_ );
-    dictionary.Register( constEntity, tools::translate( "Inhabitant", "Human/Dead" ), dead_ );
-    dictionary.Register( constEntity, tools::translate( "Inhabitant", "Health/Infrastructures needed" ), healthNeed_ );
+    dictionary.Register( constEntity, tools::translate( "Population", "Info/Identifier" ), constSelf.id_ );
+    dictionary.Register( constEntity, tools::translate( "Population", "Info/Name" ), name_ );
+    dictionary.Register( constEntity, tools::translate( "Population", "Info/Type" ), constSelf.type_ );
+    dictionary.Register( constEntity, tools::translate( "Population", "Info/Info" ), text_ );
+    dictionary.Register( constEntity, tools::translate( "Population", "Human/Alive" ), healthy_ );
+    dictionary.Register( constEntity, tools::translate( "Population", "Human/Wounded" ), wounded_ );
+    dictionary.Register( constEntity, tools::translate( "Population", "Human/Dead" ), dead_ );
+    dictionary.Register( constEntity, tools::translate( "Population", "Health/Infrastructures needed" ), healthNeed_ );
 
     for( IT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
     {
         std::string info = "Details/" + it->first;
-        dictionary.Register( constEntity, tools::translate( "Inhabitant", info.c_str() ), it->second );
+        dictionary.Register( constEntity, tools::translate( "Population", info.c_str() ), it->second );
     }
 }
 

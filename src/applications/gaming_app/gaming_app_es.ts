@@ -1384,7 +1384,7 @@ Motivo: %3
     </message>
     <message>
         <source>Populations</source>
-        <translation>Poblaciones</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Orbat</source>
@@ -1460,10 +1460,6 @@ Motivo: %3
     </message>
     <message>
         <source>Crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inhabitants</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

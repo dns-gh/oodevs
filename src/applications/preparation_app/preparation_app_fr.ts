@@ -299,10 +299,6 @@ Merci de sélectionner un autre fichier à importer.</translation>
 <context>
     <name>InhabitantCreationPanel</name>
     <message>
-        <source>Inhabitants</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
         <source>Information</source>
         <translation type="unfinished">Information</translation>
     </message>
@@ -329,6 +325,10 @@ Merci de sélectionner un autre fichier à importer.</translation>
     <message>
         <source>Create</source>
         <translation>Créer</translation>
+    </message>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -444,10 +444,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Populations</source>
         <translation>Populations</translation>
-    </message>
-    <message>
-        <source>Inhabitants</source>
-        <translation type="unfinished">Populations</translation>
     </message>
 </context>
 <context>

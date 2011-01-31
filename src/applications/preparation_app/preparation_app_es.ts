@@ -299,10 +299,6 @@ Por favor seleccione un archivo de orden de batalla para importar.</translation>
 <context>
     <name>InhabitantCreationPanel</name>
     <message>
-        <source>Inhabitants</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
@@ -329,6 +325,10 @@ Por favor seleccione un archivo de orden de batalla para importar.</translation>
     <message>
         <source>Create</source>
         <translation type="unfinished">Crear</translation>
+    </message>
+    <message>
+        <source>Inhabitants</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -443,10 +443,6 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>Crowd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inhabitants</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

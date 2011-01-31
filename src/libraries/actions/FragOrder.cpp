@@ -98,7 +98,7 @@ void FragOrder::Publish( Publisher_ABC& publisher, int ) const
     simulation::FragOrder message;
     if( GetEntity().GetTypeName() == "automat" )
         message().mutable_tasker()->mutable_automat()->set_id( GetEntity().GetId() );
-    else if( GetEntity().GetTypeName() == "population" )
+    else if( GetEntity().GetTypeName() == "crowd" )
         message().mutable_tasker()->mutable_crowd()->set_id( GetEntity().GetId() );
     else if( GetEntity().GetTypeName() == "agent" )
         message().mutable_tasker()->mutable_unit()->set_id( GetEntity().GetId() );
