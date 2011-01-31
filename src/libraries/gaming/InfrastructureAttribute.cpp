@@ -14,7 +14,6 @@
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "protocol/Protocol.h"
 
@@ -24,13 +23,13 @@ using namespace kernel;
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( kernel::Controller& controller, const gui::TerrainObjectProxy& object, const tools::StringResolver< InfrastructureType >& resolver, PropertiesDictionary& dictionary )
-    : controller_     ( controller )
-    , resolver_( resolver )
-    , object_( object )
-    , enabled_( true )
-    , threshold_( 30 )
-    , type_( 0 )
+InfrastructureAttribute::InfrastructureAttribute( Controller& controller, const gui::TerrainObjectProxy& object, const tools::StringResolver< InfrastructureType >& resolver, PropertiesDictionary& dictionary )
+    : controller_( controller )
+    , resolver_  ( resolver )
+    , object_    ( object )
+    , enabled_   ( true )
+    , threshold_ ( 30 )
+    , type_      ( 0 )
 {
     CreateDictionary( dictionary );
 }
@@ -41,13 +40,14 @@ InfrastructureAttribute::InfrastructureAttribute( kernel::Controller& controller
 // -----------------------------------------------------------------------------
 InfrastructureAttribute::~InfrastructureAttribute()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute::CreateDictionary
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico ) const
 {
     dico.Register( *this, tools::translate( "Block", "Infrastructure/Enable" ), enabled_ );
     dico.Register( *this, tools::translate( "Block", "Infrastructure/Threshold" ), threshold_ );
@@ -93,7 +93,7 @@ void InfrastructureAttribute::UpdateData( const T& message )
 // Name: InfrastructureAttribute::Draw
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
     if( type_ )
         tools.DrawApp6Symbol( type_->GetSymbol(), object_.Barycenter() , 0.1f, 0.1f );

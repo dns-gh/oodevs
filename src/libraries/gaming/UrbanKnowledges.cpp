@@ -24,9 +24,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 UrbanKnowledges::UrbanKnowledges( const Team_ABC& team, Controller& controller, UrbanKnowledgeFactory& factory )
     : Creatable< UrbanKnowledges >( controller, this )
-    , team_( team )
+    , team_      ( team )
     , controller_( controller )
-    , factory_( factory )
+    , factory_   ( factory )
 {
     // NOTHING
 }
@@ -48,7 +48,7 @@ UrbanKnowledges::~UrbanKnowledges()
 void UrbanKnowledges::DoUpdate( const sword::UrbanKnowledgeCreation& message )
 {
     if( ! Find( message.knowledge().id() ) )
-        Register( message.knowledge().id(), * factory_.Create( team_, message ) );
+        Register( message.knowledge().id(), *factory_.Create( team_, message ) );
     controller_.Update( *this );
 }
 

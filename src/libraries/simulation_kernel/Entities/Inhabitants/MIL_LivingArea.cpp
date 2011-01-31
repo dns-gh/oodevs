@@ -238,7 +238,8 @@ unsigned int MIL_LivingArea::GetTotalOccupation() const
     unsigned int totalOccupation = 0;
     BOOST_FOREACH( const T_Block& block, blocks_ )
         for( CIT_Accommodations it = accommodations_.begin(); it != accommodations_.end(); ++it )
-            totalOccupation += GetOccupation( block, it->first );
+            if( block.second != 0 )
+                totalOccupation += GetOccupation( block, it->first );
     return totalOccupation;
 }
 

@@ -10,16 +10,10 @@
 #include "gaming_pch.h"
 #include "UrbanKnowledgeFactory.h"
 #include "UrbanKnowledge.h"
-
 #include "Model.h"
-#include "clients_kernel/Controllers.h"
 #include "AgentsModel.h"
-#include "TeamsModel.h"
 #include "UrbanPerceptions.h"
 #include "UrbanModel.h"
-#include "StaticModel.h"
-#include <urban/TerrainObject_ABC.h>
-#include <urban/Model.h>
 
 using namespace kernel;
 
@@ -27,9 +21,9 @@ using namespace kernel;
 // Name: UrbanKnowledgeFactory constructor
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-UrbanKnowledgeFactory::UrbanKnowledgeFactory( Controllers& controllers, Model& model )
-    : controllers_( controllers )
-    , model_( model )
+UrbanKnowledgeFactory::UrbanKnowledgeFactory( Controller& controller, Model& model )
+    : controller_( controller )
+    , model_     ( model )
 {
     // NOTHING
 }
@@ -50,8 +44,8 @@ UrbanKnowledgeFactory::~UrbanKnowledgeFactory()
 UrbanKnowledge_ABC* UrbanKnowledgeFactory::Create( const Team_ABC& owner, const sword::UrbanKnowledgeCreation& message )
 {
     // $$$ FDS 2009-01-11: remove public blocks, use knowledgeConverter if possible
-    UrbanKnowledge* knowledge = new UrbanKnowledge( owner, message, controllers_.controller_, model_.urbanObjects_ );
-    knowledge->Attach( *new UrbanPerceptions( controllers_.controller_, model_.agents_ ) );
+    UrbanKnowledge* knowledge = new UrbanKnowledge( owner, message, controller_, model_.urbanObjects_ );
+    knowledge->Attach( *new UrbanPerceptions( controller_, model_.agents_ ) );
     knowledge->Polish();
     return knowledge;
 }

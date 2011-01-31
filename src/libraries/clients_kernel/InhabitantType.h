@@ -40,9 +40,9 @@ public:
     //@{
     const std::string& GetName() const;
     unsigned long GetId() const;
-    const float GetMalePercentage() const;
-    const float GetFemalePercentage() const;
-    const float GetChildrenPercentage() const;
+    float GetMalePercentage() const;
+    float GetFemalePercentage() const;
+    float GetChildrenPercentage() const;
     const PopulationType& GetCrowdType() const;
     //@}
 

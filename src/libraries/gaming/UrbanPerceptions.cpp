@@ -9,19 +9,16 @@
 
 #include "gaming_pch.h"
 #include "UrbanPerceptions.h"
-
-#include "clients_kernel/Automat_ABC.h"
 #include "protocol/Simulation.h"
 
 using namespace kernel;
-
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPerceptions constructor
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
 UrbanPerceptions::UrbanPerceptions( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& agentResolver )
-    : controller_( controller )
+    : controller_   ( controller )
     , agentResolver_( agentResolver )
 {
     // NOTHING

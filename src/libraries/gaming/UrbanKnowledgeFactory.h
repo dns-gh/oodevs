@@ -12,7 +12,7 @@
 
 namespace kernel
 {
-    class Controllers;
+    class Controller;
     class Team_ABC;
     class UrbanKnowledge_ABC;
 }
@@ -35,7 +35,7 @@ class UrbanKnowledgeFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanKnowledgeFactory( kernel::Controllers& controllers, Model& model );
+             UrbanKnowledgeFactory( kernel::Controller& controller, Model& model );
     virtual ~UrbanKnowledgeFactory();
     //@}
 
@@ -54,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
+    kernel::Controller& controller_;
     Model& model_;
     //@}
 };

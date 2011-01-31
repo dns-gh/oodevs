@@ -74,7 +74,7 @@ const PopulationType& InhabitantType::GetCrowdType() const
 // Name: InhabitantType::GetMalePercentage
 // Created: SLG 2010-12-07
 // -----------------------------------------------------------------------------
-const float InhabitantType::GetMalePercentage() const
+float InhabitantType::GetMalePercentage() const
 {
     return male_;
 }
@@ -83,7 +83,7 @@ const float InhabitantType::GetMalePercentage() const
 // Name: InhabitantType::GetFemalePercentage
 // Created: SLG 2010-12-07
 // -----------------------------------------------------------------------------
-const float InhabitantType::GetFemalePercentage() const
+float InhabitantType::GetFemalePercentage() const
 {
     return female_;
 }
@@ -92,7 +92,7 @@ const float InhabitantType::GetFemalePercentage() const
 // Name: InhabitantType::GetChildrenPercentage
 // Created: SLG 2010-12-07
 // -----------------------------------------------------------------------------
-const float InhabitantType::GetChildrenPercentage() const
+float InhabitantType::GetChildrenPercentage() const
 {   
     return children_;
 }

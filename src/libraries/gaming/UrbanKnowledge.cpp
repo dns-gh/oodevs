@@ -9,20 +9,8 @@
 
 #include "gaming_pch.h"
 #include "UrbanKnowledge.h"
-#include "clients_kernel/ActionController.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/Units.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "Tools.h"
-#include "statusicons.h"
-#include "protocol/Simulation.h"
-#include <urban/TerrainObject_ABC.h>
 
 using namespace kernel;
 
@@ -33,8 +21,8 @@ using namespace kernel;
 UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const sword::UrbanKnowledgeCreation& message, Controller& controller,
                                 const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver )
     : EntityImplementation< UrbanKnowledge_ABC >( controller, message.knowledge().id(), "" )
-    , owner_                ( owner )
     , terrainObjectResolver_( terrainObjectResolver )
+    , owner_                ( owner )
     , pRealUrban_           ( 0 )
 {
     RegisterSelf( *this );

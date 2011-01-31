@@ -28,20 +28,19 @@ namespace
     class InfrastructureHandler : public kernel::OptionsObserver_ABC, public tools::Observer_ABC
     {
     public:
-        InfrastructureHandler( kernel::Controllers& controllers ): infraDisplayed_( false )
+        InfrastructureHandler( kernel::Controllers& controllers ) : infraDisplayed_( false )
         {
             controllers.Register( *this );
         }
-        ~InfrastructureHandler(){}
+        ~InfrastructureHandler() {}
         virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value )
         {
-            if ( name == "Infra" )
+            if( name == "Infra" )
                 infraDisplayed_ = value.To< bool >();
         }
-        bool ShouldBeDisplayed(){ return infraDisplayed_; }
+        bool ShouldBeDisplayed() { return infraDisplayed_; }
     private:
         bool infraDisplayed_;
-
     };
 }
 

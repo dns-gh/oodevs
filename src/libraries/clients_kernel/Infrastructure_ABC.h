@@ -12,7 +12,6 @@
 
 #include "UrbanExtensions.h"
 
-
 namespace kernel
 {
 class GlTools_ABC;

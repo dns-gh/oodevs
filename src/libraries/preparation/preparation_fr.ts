@@ -187,41 +187,6 @@
     </message>
 </context>
 <context>
-    <name>Inhabitant</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
-        <source>Info/Type</source>
-        <translation>Info/Type</translation>
-    </message>
-    <message>
-        <source>Info/Info</source>
-        <translation>Info/Info</translation>
-    </message>
-    <message>
-        <source>Human/Alive</source>
-        <translation>Humains/Vivants</translation>
-    </message>
-    <message>
-        <source>Human/Wounded</source>
-        <translation>Humains/Blessés</translation>
-    </message>
-    <message>
-        <source>Human/Dead</source>
-        <translation>Humains/Morts</translation>
-    </message>
-    <message>
-        <source>Health/Infrastructures needed</source>
-        <translation>Santé/Infrastructures requises</translation>
-    </message>
-</context>
-<context>
     <name>Intelligence</name>
     <message>
         <source>Intelligence [%1]</source>

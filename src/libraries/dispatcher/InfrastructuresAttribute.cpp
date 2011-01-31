@@ -32,6 +32,7 @@ InfrastructuresAttribute::~InfrastructuresAttribute()
 {
     // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: InfrastructuresAttribute::Update
 // Created: JSR 2010-08-17
@@ -40,10 +41,9 @@ void InfrastructuresAttribute::Update( const sword::UrbanAttributes& message )
 {
     if( !message.has_infrastructures() )
         return;
-
-    enabled_   = message.infrastructures().infrastructure().active();
+    enabled_ = message.infrastructures().infrastructure().active();
     threshold_ = message.infrastructures().infrastructure().threshold();
-    role_     = message.infrastructures().infrastructure().type();
+    role_ = message.infrastructures().infrastructure().type();
     // Infrastructures
     // TODO
 }

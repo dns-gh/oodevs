@@ -12,16 +12,12 @@
 
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
-#include "tools/Resolver_ABC.h"
-#include "tools/Extendable.h"
-#include "tools/SortedInterfaceContainer.h"
 #include <map>
 
 namespace kernel
 {
     class Displayer_ABC;
     class InfrastructureType;
-    class MedicalTreatmentType;
     class PropertiesDictionary;
 }
 
@@ -60,7 +56,6 @@ public:
     void Update( xml::xistream& xis );
     void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     bool IsEnabled() const;
-
     //@}
 
 private:
@@ -83,7 +78,6 @@ public:
     float threshold_;
     std::string role_;
     const gui::TerrainObjectProxy& object_;
-
     //@}
 };
 

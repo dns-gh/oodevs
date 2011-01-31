@@ -44,8 +44,8 @@ AggregatedPositions::~AggregatedPositions()
 Point2f AggregatedPositions::GetPosition( bool ) const
 {
     Point2f aggregatedPosition;
-    unsigned count = 0;
-    geometry::Point2f fallback;
+    unsigned int count = 0;
+    Point2f fallback;
     tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
@@ -68,12 +68,12 @@ Point2f AggregatedPositions::GetPosition( bool ) const
 float AggregatedPositions::GetHeight( bool ) const
 {
     float height = 0;
-    unsigned count = 0;
+    unsigned int count = 0;
     tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
         const Positions& childPositions = children.NextElement().Get< Positions >();
-        height+=childPositions.GetHeight( false );
+        height += childPositions.GetHeight( false );
         ++count;
     }
     return count ? height / count : height;
@@ -87,7 +87,7 @@ bool AggregatedPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/,
 {
     // $$$$ AGE 2006-10-06: CP de AgentPositions...
     const float halfSizeX = 500.f * 0.5f * 2.f; // $$$$ SBO 2006-03-21: use font size?
-    const float sizeY     = 400.f * 2.f;
+    const float sizeY = 400.f * 2.f;
     const Point2f position = GetPosition( true );
     const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
                                  position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
@@ -123,7 +123,7 @@ Rectangle2f AggregatedPositions::GetBoundingBox() const
 // Name: AggregatedPositions::Accept
 // Created: SBO 2009-05-25
 // -----------------------------------------------------------------------------
-void AggregatedPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
+void AggregatedPositions::Accept( LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitPoint( GetPosition( true ) );
 }
@@ -132,7 +132,7 @@ void AggregatedPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: AggregatedPositions::Draw
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AggregatedPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void AggregatedPositions::Draw( const Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsHotpointVisible() )
         tools.DrawCross( where, GL_CROSSSIZE );

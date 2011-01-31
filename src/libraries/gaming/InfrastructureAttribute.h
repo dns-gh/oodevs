@@ -24,6 +24,7 @@ namespace gui
 {
     class TerrainObjectProxy;
 }
+
 // =============================================================================
 /** @class  InfrastructureAttribute
     @brief  InfrastructureAttribute
@@ -35,7 +36,7 @@ class InfrastructureAttribute : public kernel::Infrastructure_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    InfrastructureAttribute( kernel::Controller& controller, const gui::TerrainObjectProxy& object, const tools::StringResolver< kernel::InfrastructureType >& resolver, kernel::PropertiesDictionary& dictionary );
+             InfrastructureAttribute( kernel::Controller& controller, const gui::TerrainObjectProxy& object, const tools::StringResolver< kernel::InfrastructureType >& resolver, kernel::PropertiesDictionary& dictionary );
     virtual ~InfrastructureAttribute();
     //@}
 
@@ -72,7 +73,7 @@ private:
     bool enabled_;
     float threshold_;
     std::string role_;
-    kernel::InfrastructureType* type_;
+    const kernel::InfrastructureType* type_;
     //@}
 };
 

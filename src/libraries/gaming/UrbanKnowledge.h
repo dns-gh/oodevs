@@ -22,12 +22,6 @@ namespace kernel
 {
     class Displayer_ABC;
     class Controller;
-    class Agent_ABC;
-}
-
-namespace urban
-{
-    class TerrainObject_ABC;
 }
 
 namespace sword
@@ -90,9 +84,7 @@ private:
     //@{
     const tools::Resolver< gui::TerrainObjectProxy >& terrainObjectResolver_;
     const kernel::Team_ABC& owner_;
-
     gui::TerrainObjectProxy* pRealUrban_;
-
     kernel::OptionalValue< bool > bIsPerceived_;
     kernel::OptionalValue< int > rProgress_;
     kernel::OptionalValue< int > rMaxProgress_;

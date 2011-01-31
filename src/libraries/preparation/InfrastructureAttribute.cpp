@@ -13,7 +13,6 @@
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -24,11 +23,11 @@ using namespace kernel;
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy& object, const kernel::InfrastructureType& infrastructureType, kernel::PropertiesDictionary& dico )
-    : enabled_  ( true )
-    , threshold_ ( 30 )
-    , type_ ( infrastructureType )
-    , object_( object )
+InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy& object, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
+    : type_     ( infrastructureType )
+    , enabled_  ( true )
+    , threshold_( 30 )
+    , object_   ( object )
 {
     CreateDictionary( dico );
 }
@@ -37,11 +36,11 @@ InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy&
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy& object, xml::xistream& xis, const kernel::InfrastructureType& infrastructureType, kernel::PropertiesDictionary& dico )
-    : enabled_  ( true )
-    , threshold_ ( 30 )
-    , type_ ( infrastructureType )
-    , object_( object )
+InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy& object, xml::xistream& xis, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
+    : type_     ( infrastructureType )
+    , enabled_  ( true )
+    , threshold_( 30 )
+    , object_   ( object )
 {
     xis >> xml::attribute( "enable", enabled_ )
         >> xml::attribute( "threshold", threshold_ );
@@ -96,10 +95,10 @@ void InfrastructureAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "infrastructure" )
-        << xml::attribute( "role", role_ )
-        << xml::attribute( "enabled", enabled_ )
-        << xml::attribute( "threshold", threshold_ );
-    xos << xml::end;
+            << xml::attribute( "role", role_ )
+            << xml::attribute( "enabled", enabled_ )
+            << xml::attribute( "threshold", threshold_ )
+        << xml::end;
 
 }
 
@@ -107,7 +106,7 @@ void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 // Name: InfrastructureAttribute::CreateDictionary
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico )
 {
     dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_.GetName() );
     dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
@@ -118,11 +117,10 @@ void InfrastructureAttribute::CreateDictionary( kernel::PropertiesDictionary& di
 // Name: InfrastructureAttribute::Draw
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-void InfrastructureAttribute::Draw( const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void InfrastructureAttribute::Draw( const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
     tools.DrawApp6Symbol( type_.GetSymbol(), object_.Barycenter(), 0.1f, 0.1f );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute::IsEnabled

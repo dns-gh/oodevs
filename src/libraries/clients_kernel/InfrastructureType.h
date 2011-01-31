@@ -10,18 +10,16 @@
 #ifndef __KernelInfrastructureType_h_
 #define __KernelInfrastructureType_h_
 
-#include <string>
 #include <boost/shared_ptr.hpp>
 
 namespace xml
 {
     class xibufferstream;
     class xistream;
-};
+}
 
 namespace kernel
 {
-
 // =============================================================================
 /** @class  InfrastructureType
 @brief  InfrastructureType
@@ -40,16 +38,15 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, boost::shared_ptr< xml::xibufferstream > >  T_Capacities;
-    typedef T_Capacities::const_iterator                                       CIT_Capacities;
+    typedef std::map< std::string, boost::shared_ptr< xml::xibufferstream > > T_Capacities;
+    typedef T_Capacities::const_iterator                                    CIT_Capacities;
     //@}
-
 
     //! @name Operations
     //@{
     unsigned int GetId() const;
     const std::string& GetName() const;
-    const std::string GetSymbol() const;
+    const std::string& GetSymbol() const;
     xml::xistream* FindCapacity( const std::string& capacity ) const;
     //@}
 
@@ -61,7 +58,7 @@ private:
     //@}
     //! @name Helper
     //@{
-    void ReadCapacities( const std::string& capacity, xml::xistream& xis );
+    void ReadCapacity( const std::string& capacity, xml::xistream& xis );
     //@}
 
 private:

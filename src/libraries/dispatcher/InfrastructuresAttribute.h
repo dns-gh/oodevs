@@ -33,7 +33,7 @@ public:
     //! @name Operations
     //@{
     virtual void Update( const sword::UrbanAttributes& message );
-    virtual void Send  (       sword::UrbanAttributes& message ) const;
+    virtual void Send( sword::UrbanAttributes& message ) const;
     //@}
 
 private:

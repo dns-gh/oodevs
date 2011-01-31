@@ -22,10 +22,11 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
     : EntityLayer< TerrainObjectProxy >( controllers, tools, strategy, view, profile )
-    , controllers_( controllers )
+    , controllers_   ( controllers )
     , selectedObject_( 0 )
-    , infraHandler_( *new InfrastructureHandler( controllers ) )
+    , infraHandler_  ( *new InfrastructureHandler( controllers ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,9 +43,9 @@ namespace
     struct DrawExtensionsFunctor : boost::noncopyable
     {
         DrawExtensionsFunctor( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools, bool infraDisplayed )
-            : viewport_( viewport )
-            , tools_( tools )
-            , infraDisplayed_ ( infraDisplayed )
+            : viewport_      ( viewport )
+            , tools_         ( tools )
+            , infraDisplayed_( infraDisplayed )
         {}
 
         void operator()( const kernel::Entity_ABC& proxy )

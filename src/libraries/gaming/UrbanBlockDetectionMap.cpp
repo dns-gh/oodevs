@@ -40,20 +40,18 @@ void UrbanBlockDetectionMap::AddUrbanBlock( urban::TerrainObject_ABC& object )
     float cellsize = map_.GetCellSize();
     const geometry::Polygon2f* footprint = object.GetFootprint();
     geometry::Rectangle2f boundingBox = footprint->BoundingBox();
-    const unsigned int imin = static_cast< unsigned int >( boundingBox.Left()/cellsize );
-    const unsigned int jmin = static_cast< unsigned int >( boundingBox.Bottom()/cellsize );
-    const unsigned int imax = static_cast< unsigned int >( boundingBox.Right()/cellsize );
-    const unsigned int jmax = static_cast< unsigned int >( boundingBox.Top()/cellsize );
+    const unsigned int imin = static_cast< unsigned int >( boundingBox.Left() / cellsize );
+    const unsigned int jmin = static_cast< unsigned int >( boundingBox.Bottom() / cellsize );
+    const unsigned int imax = static_cast< unsigned int >( boundingBox.Right() / cellsize );
+    const unsigned int jmax = static_cast< unsigned int >( boundingBox.Top() / cellsize );
 
     for( unsigned int j = jmin; j < jmax; ++j )
-    {
         for( unsigned int i = imin; i < imax; ++i )
         {
             geometry::Point2f cellCenter( i * cellsize + cellsize/2, j * cellsize + cellsize/2 );
             if( footprint->IsInside( cellCenter ) )
                 urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ].data_ = &object;
         }
-    }
 }
 
 // -----------------------------------------------------------------------------

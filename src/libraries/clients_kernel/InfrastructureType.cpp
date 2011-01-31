@@ -20,12 +20,13 @@ unsigned int InfrastructureType::nNextID_ = 0;
 // Created: SLG 2010-12-29
 // -----------------------------------------------------------------------------
 InfrastructureType::InfrastructureType( xml::xistream& xis )
-    : id_  ( nNextID_++ )
-    , name_( xis.attribute< std::string >( "name" ) )
+    : id_    ( nNextID_++ )
+    , name_  ( xis.attribute< std::string >( "name" ) )
     , symbol_( xis.attribute< std::string >( "symbol" ) )
 {
     xis >> xml::optional() >> xml::start( "capacities" )
-        >> xml::list( *this, &InfrastructureType::ReadCapacities );
+        >> xml::list( *this, &InfrastructureType::ReadCapacity )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -37,12 +38,11 @@ InfrastructureType::~InfrastructureType()
     //NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: InfrastructureType::ReadCapacities
+// Name: InfrastructureType::ReadCapacity
 // Created: SLG 2010-12-29
 // -----------------------------------------------------------------------------
-void InfrastructureType::ReadCapacities( const std::string& capacity, xml::xistream& xis )
+void InfrastructureType::ReadCapacity( const std::string& capacity, xml::xistream& xis )
 {
     capacities_[ capacity ].reset( new xml::xibufferstream( xis ) );
 }
@@ -81,7 +81,7 @@ unsigned int InfrastructureType::GetId() const
 // Name: InfrastructureType::GetSymbol
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-const std::string InfrastructureType::GetSymbol() const
+const std::string& InfrastructureType::GetSymbol() const
 {
     return symbol_;
 }

@@ -38,11 +38,11 @@ class UrbanKnowledgeFactory;
 // Created: MGD 2009-12-09
 // =============================================================================
 class UrbanKnowledges : public kernel::Extension_ABC
-    , public kernel::Updatable_ABC< sword::UrbanKnowledgeCreation >
-    , public kernel::Updatable_ABC< sword::UrbanKnowledgeUpdate >
-    , public kernel::Updatable_ABC< sword::UrbanKnowledgeDestruction >
-    , public tools::Resolver< kernel::UrbanKnowledge_ABC >
-    , public kernel::Creatable< UrbanKnowledges >
+                      , public kernel::Updatable_ABC< sword::UrbanKnowledgeCreation >
+                      , public kernel::Updatable_ABC< sword::UrbanKnowledgeUpdate >
+                      , public kernel::Updatable_ABC< sword::UrbanKnowledgeDestruction >
+                      , public tools::Resolver< kernel::UrbanKnowledge_ABC >
+                      , public kernel::Creatable< UrbanKnowledges >
 {
 public:
     //! @name Constructors/Destructor

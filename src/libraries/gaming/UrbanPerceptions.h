@@ -32,7 +32,7 @@ namespace sword
 // Created: MGD 2009-12-09
 // =============================================================================
 class UrbanPerceptions : public kernel::Extension_ABC
-    , public kernel::Updatable_ABC< sword::UrbanKnowledgeUpdate >
+                       , public kernel::Updatable_ABC< sword::UrbanKnowledgeUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -58,11 +58,16 @@ private:
     typedef std::vector< const kernel::Automat_ABC* > T_Agents;
     //@}
 
+private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& agentResolver_;
+    //@}
+
 public:
+    //! @name Member data
+    //@{
     T_Agents detectingAutomats_;
     //@}
 };
