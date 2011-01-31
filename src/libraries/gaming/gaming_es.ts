@@ -545,7 +545,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Usage %1 satisfaction:</source>
+        <source>%1 satisfaction:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

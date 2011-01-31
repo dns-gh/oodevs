@@ -81,23 +81,23 @@
     <name>Crowd</name>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identifiant</translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished">Info/Nom</translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Type</source>
-        <translation type="unfinished">Info/Type</translation>
+        <translation>Info/Type</translation>
     </message>
     <message>
         <source>Info/Humans</source>
-        <translation type="unfinished">Info/Personnes</translation>
+        <translation>Info/Personnes</translation>
     </message>
     <message>
         <source>Info/Mood</source>
-        <translation type="unfinished">Info/Moral</translation>
+        <translation>Info/Moral</translation>
     </message>
 </context>
 <context>
@@ -184,6 +184,41 @@
     <message>
         <source>Info/Infrastructure/Threshold</source>
         <translation>Info/Infrastructure/Seuil</translation>
+    </message>
+</context>
+<context>
+    <name>Inhabitant</name>
+    <message>
+        <source>Info/Identifier</source>
+        <translation>Info/Identifiant</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation>Info/Nom</translation>
+    </message>
+    <message>
+        <source>Info/Type</source>
+        <translation>Info/Type</translation>
+    </message>
+    <message>
+        <source>Info/Info</source>
+        <translation>Info/Info</translation>
+    </message>
+    <message>
+        <source>Human/Alive</source>
+        <translation>Humains/Vivants</translation>
+    </message>
+    <message>
+        <source>Human/Wounded</source>
+        <translation>Humains/Blessés</translation>
+    </message>
+    <message>
+        <source>Human/Dead</source>
+        <translation>Humains/Morts</translation>
+    </message>
+    <message>
+        <source>Health/Infrastructures needed</source>
+        <translation>Santé/Infrastructures requises</translation>
     </message>
 </context>
 <context>
@@ -535,6 +570,13 @@
     <message>
         <source>Reference distance:</source>
         <translation>Distance de référence:</translation>
+    </message>
+</context>
+<context>
+    <name>Population</name>
+    <message>
+        <source>%1 [%2]</source>
+        <translation type="unfinished">%1 [%2]</translation>
     </message>
 </context>
 <context>
