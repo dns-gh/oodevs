@@ -121,7 +121,6 @@ message MsgClientToMessenger {
         optional MsgShapeCreationRequest           shape_creation_request            = 10;
         optional MsgShapeDestructionRequest        shape_destruction_request         = 11;
         optional MsgShapeUpdateRequest             shape_update_request              = 12;
-        optional Common.MsgTextMessage             text_message                      = 13;
         optional MsgMarkerCreationRequest          marker_creation_request              = 14;
         optional MsgMarkerUpdateRequest            marker_update_request                = 15;
         optional MsgMarkerDestructionRequest       marker_destruction_request           = 16;

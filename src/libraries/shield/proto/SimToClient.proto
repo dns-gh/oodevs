@@ -685,11 +685,6 @@ message MsgInvalidateReport {
     required Common.Tasker   source = 2;
 }
 
-message MsgTrace {
-   required Common.Tasker source  = 1;
-   required string        message = 2;
-}
-
 message MsgDecisionalState {
    required Common.Tasker source = 1;
    required string        key    = 2;
@@ -808,11 +803,6 @@ message MsgUrbanKnowledgeUpdate {
     optional int32                         maxProgress          = 5;
     optional bool                          perceived            = 6;
     optional Common.AutomatIdList          automat_perceptions  = 7;
-}
-
-message MsgUrbanKnowledgeDestruction {
-    required Common.UrbanObjectKnowledgeId knowledge = 1;
-    required Common.PartyId                party     = 2;
 }
 
 message MsgLogMedicalHandlingCreation {
@@ -1234,11 +1224,6 @@ message MsgKnowledgeGroupCreationAck {
     required KnowledgeGroupAck.ErrorCode error_code      = 2;
 }
 
-message MsgKnowledgeGroupUpdateAck {
-    required Common.KnowledgeGroupId     knowledge_group = 1;
-    required KnowledgeGroupAck.ErrorCode error_code      = 2;
-}
-
 message MsgKnowledgeGroupDestruction {
     required Common.KnowledgeGroupId knowledge_group = 1;
     required Common.PartyId          party           = 2;
@@ -1363,7 +1348,6 @@ message MsgSimToClient {
         optional MsgStopFireEffect                              stop_fire_effect                               = 51;
         optional MsgReport                                      report                                         = 52;
         optional MsgInvalidateReport                            invalidate_report                              = 53;
-        optional MsgTrace                                       trace                                          = 54;
         optional MsgDecisionalState                             decisional_state                               = 55;
         optional MsgDebugPoints                                 debug_points                                   = 56;
         optional MsgUnitVisionCones                             unit_vision_cones                              = 57;
@@ -1423,14 +1407,12 @@ message MsgSimToClient {
         optional MsgUrbanUpdate                                 urban_update                                   = 111;
         optional MsgUrbanKnowledgeCreation                      urban_knowledge_creation                       = 112;
         optional MsgUrbanKnowledgeUpdate                        urban_knowledge_update                         = 113;
-        optional MsgUrbanKnowledgeDestruction                   urban_knowledge_destruction                    = 114;
         optional Common.StockResource                           stock_resource                                 = 115;
         optional MsgUrbanDetection                              urban_detection                                = 116;
         optional MsgKnowledgeGroupMagicActionAck                knowledge_group_magic_action_ack               = 117;
         optional MsgKnowledgeGroupCreation                      knowledge_group_creation                       = 118;
         optional MsgKnowledgeGroupUpdate                        knowledge_group_update                         = 119;
         optional MsgKnowledgeGroupCreationAck                   knowledge_group_creation_ack                   = 120;
-        optional MsgKnowledgeGroupUpdateAck                     knowledge_group_update_ack                     = 121;
         optional MsgKnowledgeGroupDestruction                   knowledge_group_destruction                    = 122;
         optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 123;
         optional MsgControlGlobalWeather                        control_global_weather                         = 124;

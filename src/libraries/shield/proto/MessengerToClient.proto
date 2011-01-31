@@ -246,7 +246,6 @@ message MsgMessengerToClient {
         optional MsgShapeCreationRequestAck             shape_creation_request_ack              = 22;
         optional MsgShapeDestructionRequestAck          shape_destruction_request_ack           = 23;
         optional MsgShapeUpdateRequestAck               shape_update_request_ack                = 24;
-        optional Common.MsgTextMessage                  text_message                            = 25;
         optional MsgMarkerCreation                      marker_creation                           = 26;
         optional MsgMarkerUpdate                        marker_update                             = 27;
         optional MsgMarkerDestruction                   marker_destruction                        = 28;

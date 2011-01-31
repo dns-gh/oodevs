@@ -81,7 +81,6 @@ public:
     static void Convert( const sword::StopFireEffect& from, MsgsSimToClient::MsgStopFireEffect* to );
     static void Convert( const sword::Report& from, MsgsSimToClient::MsgReport* to );
     static void Convert( const sword::InvalidateReport& from, MsgsSimToClient::MsgInvalidateReport* to );
-    static void Convert( const sword::Trace& from, MsgsSimToClient::MsgTrace* to );
     static void Convert( const sword::DecisionalState& from, MsgsSimToClient::MsgDecisionalState* to );
     static void Convert( const sword::DebugPoints& from, MsgsSimToClient::MsgDebugPoints* to );
     static void Convert( const sword::UnitVisionCones& from, MsgsSimToClient::MsgUnitVisionCones* to );
@@ -141,14 +140,12 @@ public:
     static void Convert( const sword::UrbanUpdate& from, MsgsSimToClient::MsgUrbanUpdate* to );
     static void Convert( const sword::UrbanKnowledgeCreation& from, MsgsSimToClient::MsgUrbanKnowledgeCreation* to );
     static void Convert( const sword::UrbanKnowledgeUpdate& from, MsgsSimToClient::MsgUrbanKnowledgeUpdate* to );
-    static void Convert( const sword::UrbanKnowledgeDestruction& from, MsgsSimToClient::MsgUrbanKnowledgeDestruction* to );
     static void Convert( const sword::StockResource& from, Common::StockResource* to );
     static void Convert( const sword::UrbanDetection& from, MsgsSimToClient::MsgUrbanDetection* to );
     static void Convert( const sword::KnowledgeGroupMagicActionAck& from, MsgsSimToClient::MsgKnowledgeGroupMagicActionAck* to );
     static void Convert( const sword::KnowledgeGroupCreation& from, MsgsSimToClient::MsgKnowledgeGroupCreation* to );
     static void Convert( const sword::KnowledgeGroupUpdate& from, MsgsSimToClient::MsgKnowledgeGroupUpdate* to );
     static void Convert( const sword::KnowledgeGroupCreationAck& from, MsgsSimToClient::MsgKnowledgeGroupCreationAck* to );
-    static void Convert( const sword::KnowledgeGroupUpdateAck& from, MsgsSimToClient::MsgKnowledgeGroupUpdateAck* to );
     static void Convert( const sword::KnowledgeGroupDestruction& from, MsgsSimToClient::MsgKnowledgeGroupDestruction* to );
     static void Convert( const sword::ActionCreateFireOrderAck& from, MsgsSimToClient::MsgActionCreateFireOrderAck* to );
     static void Convert( const sword::ControlGlobalWeather& from, MsgsSimToClient::MsgControlGlobalWeather* to );

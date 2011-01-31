@@ -134,15 +134,6 @@ BOOST_FIXTURE_TEST_CASE( shape_destruction_request_from_client_is_converted, Con
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( text_message_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
-{
-    content.mutable_text_message()->mutable_source()->set_profile( "source" );
-    content.mutable_text_message()->mutable_target()->set_profile( "target" );
-    content.mutable_text_message()->set_message( "message" );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { text_message { source { profile: \"source\" } target { profile: \"target\" } message: \"message\" } }" ) );
-    converter.ReceiveClientToMessenger( "client endpoint", msg );
-}
-
 BOOST_FIXTURE_TEST_CASE( marker_creation_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
 {
     FillMarker( content.mutable_marker_creation_request()->mutable_marker() );

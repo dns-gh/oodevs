@@ -966,16 +966,6 @@ void SimulationToClient::Convert( const sword::InvalidateReport& from, MsgsSimTo
 // Name: SimulationToClient::Convert
 // Created: MCO 2010-11-10
 // -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::Trace& from, MsgsSimToClient::MsgTrace* to )
-{
-    ConvertTasker( from.source(), to->mutable_source() );
-    CONVERT( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-10
-// -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::DecisionalState& from, MsgsSimToClient::MsgDecisionalState* to )
 {
     ConvertTasker( from.source(), to->mutable_source() );
@@ -2082,16 +2072,6 @@ void SimulationToClient::Convert( const sword::UrbanKnowledgeUpdate& from, MsgsS
 // Name: SimulationToClient::Convert
 // Created: MCO 2010-11-24
 // -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::UrbanKnowledgeDestruction& from, MsgsSimToClient::MsgUrbanKnowledgeDestruction* to )
-{
-    CONVERT_ID( knowledge );
-    CONVERT_ID( party );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-24
-// -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::StockResource& from, Common::StockResource* to )
 {
     ConvertStockResource( from, to );
@@ -2163,15 +2143,6 @@ void SimulationToClient::Convert( const sword::KnowledgeGroupUpdate& from, MsgsS
 // Created: MCO 2010-11-24
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::KnowledgeGroupCreationAck& from, MsgsSimToClient::MsgKnowledgeGroupCreationAck* to )
-{
-    ConvertKnowledgeGroupAck( from, to );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-24
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::KnowledgeGroupUpdateAck& from, MsgsSimToClient::MsgKnowledgeGroupUpdateAck* to )
 {
     ConvertKnowledgeGroupAck( from, to );
 }

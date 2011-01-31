@@ -760,14 +760,6 @@ BOOST_FIXTURE_TEST_CASE( invalidate_report_to_client_is_converted, ContextFixtur
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( trace_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    FillTasker( content.mutable_trace()->mutable_source() );
-    content.mutable_trace()->set_message( "message" );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { trace { source { automat { id: 7 } formation { id: 8 } crowd { id: 9 } unit { id: 10 } party { id: 11 } } message: \"message\" } }" ) );
-    converter.ReceiveSimToClient( "unused endpoint", msg );
-}
-
 BOOST_FIXTURE_TEST_CASE( decisional_state_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     FillTasker( content.mutable_decisional_state()->mutable_source() );
@@ -1608,14 +1600,6 @@ BOOST_FIXTURE_TEST_CASE( urban_knowledge_update_to_client_is_converted, ContextF
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( urban_knowledge_destruction_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_urban_knowledge_destruction()->mutable_knowledge()->set_id( 7 );
-    content.mutable_urban_knowledge_destruction()->mutable_party()->set_id( 8 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { urban_knowledge_destruction { knowledge { id: 7 } party { id: 8 } } }" ) );
-    converter.ReceiveSimToClient( "unused endpoint", msg );
-}
-
 BOOST_FIXTURE_TEST_CASE( stock_resource_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     FillStockResource( content.mutable_stock_resource() );
@@ -1667,14 +1651,6 @@ BOOST_FIXTURE_TEST_CASE( knowledge_group_creation_ack_to_client_is_converted, Co
     content.mutable_knowledge_group_creation_ack()->mutable_knowledge_group()->set_id( 7 );
     content.mutable_knowledge_group_creation_ack()->set_error_code( sword::KnowledgeGroupAck::error_invalid_unit );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { knowledge_group_creation_ack { knowledge_group { id: 7 } error_code: error_invalid_unit } }" ) );
-    converter.ReceiveSimToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( knowledge_group_update_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_knowledge_group_update_ack()->mutable_knowledge_group()->set_id( 7 );
-    content.mutable_knowledge_group_update_ack()->set_error_code( sword::KnowledgeGroupAck::error_invalid_unit );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { knowledge_group_update_ack { knowledge_group { id: 7 } error_code: error_invalid_unit } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
