@@ -76,21 +76,6 @@ void MIL_LivingArea::LoadAccommodations()
         accommodations_[ type.GetName() ] = type.GetCapacity();
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::ReadUrbanBlock
-// Created: LGY 2011-01-20
-// -----------------------------------------------------------------------------
-void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis, float& area )
-{
-    unsigned int simId = MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) );
-    UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
-    if( !object )
-        xis.error( "Error in loading living urban block of population" );
-    area += object->GetLocalisation().GetArea();
-    blocks_.push_back( T_Block( object , 0 ) );
-}
-
 namespace
 {
     float GetStructuralState( const UrbanObjectWrapper& object )
@@ -107,6 +92,20 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::ReadUrbanBlock
+// Created: LGY 2011-01-20
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis, float& area )
+{
+    unsigned int simId = MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) );
+    UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
+    if( !object )
+        xis.error( "Error in loading living urban block of population" );
+    area += object->GetLivingSpace() * GetStructuralState( *object );
+    blocks_.push_back( T_Block( object , 0 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_LivingArea::DistributeHumans
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
@@ -116,7 +115,7 @@ void MIL_LivingArea::DistributeHumans( float area )
     unsigned long tmp = population_;
     for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
-        unsigned long person = static_cast< unsigned long >( it->first->GetLocalisation().GetArea() * population_ / area );
+        unsigned long person = static_cast< unsigned long >( it->first->GetLivingSpace() * GetStructuralState( *it->first ) * population_ / area );
         if( tmp - person < 0 )
             person = tmp;
         it->second = person;
