@@ -15,10 +15,9 @@
 #include "protocol/ReplaySenders.h"
 #include "protocol/DispatcherSenders.h"
 #include "protocol/MessengerSenders.h"
-#include "protocol/ProtocolVersionChecker.h"
+#include <google/protobuf/Descriptor.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/foreach.hpp>
-#include <google/protobuf/Descriptor.h>
 
 // -----------------------------------------------------------------------------
 // Name: LoggerApplication constructor
@@ -35,10 +34,8 @@ LoggerApplication::LoggerApplication( const std::string& hostname, const std::st
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgAuthenticationToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgDispatcherToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgMessengerToClient );
-
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgReplayToClient );
     RegisterMessage( *this, &LoggerApplication::OnReceiveMsgAarToClient );
-
     Connect( hostname, false );
 }
 
@@ -59,18 +56,18 @@ int LoggerApplication::Run()
 {
     try
     {
-        while ( !bConnectionLost_ )
+        while( !bConnectionLost_ )
         {
             Update();
             boost::this_thread::sleep( boost::posix_time::milliseconds( 50 ) ) ;
         }
     }
-    catch (std::runtime_error& err )
+    catch( std::runtime_error& err )
     {
         file_ << "Error: " << err.what() << std::endl;
         return 2;
     }
-    catch (...)
+    catch(...)
     {
         file_ << "Unexpected exception caught" << std::endl;
         return 3;
@@ -86,7 +83,7 @@ void LoggerApplication::ConnectionSucceeded( const std::string& endpoint )
 {
     endpoint_ = endpoint;
     authentication::AuthenticationRequest message;
-    message().mutable_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
+    message().mutable_version()->set_value( sword::ProtocolVersion().value() );
     message().set_login( login_.c_str() );
     message().set_password( password_.c_str() );
     message.Send( *this );

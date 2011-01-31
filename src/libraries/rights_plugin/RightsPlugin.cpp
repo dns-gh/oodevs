@@ -15,7 +15,7 @@
 #include "dispatcher/DefaultProfile.h"
 #include "dispatcher/Services.h"
 #include "protocol/AuthenticationSenders.h"
-#include "protocol/ProtocolVersionChecker.h"
+#include "protocol/Version.h"
 #include "tools/MessageDispatcher_ABC.h"
 
 using namespace plugins::rights;
@@ -113,10 +113,9 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
 void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, const sword::AuthenticationRequest& message )
 {
     ClientPublisher_ABC& client = base_.GetPublisher( link );
-    ProtocolVersionChecker checker( message.version() );
     authentication::AuthenticationResponse ack;
-    ack().mutable_server_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
-    if( !checker.CheckCompatibility() )
+    ack().mutable_server_version()->set_value( sword::ProtocolVersion().value() );
+    if( ! sword::CheckCompatibility( message.version() ) )
     {
         ack().set_error_code( sword::AuthenticationResponse::mismatched_protocol_version );
         profiles_->Send( ack() );

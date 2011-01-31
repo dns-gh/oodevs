@@ -9,7 +9,7 @@
 
 #include "protocol_test_pch.h"
 #include "protocol/Protocol.h"
-#include "protocol/ProtocolVersionChecker.h"
+#include "protocol/Version.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
@@ -17,14 +17,13 @@
 #pragma warning( pop )
 
 // -----------------------------------------------------------------------------
-// Name: ProtocolVersionChecker_current_version_is_compatible_with_itself
+// Name: current_version_is_compatible_with_itself
 // Created: MCO 2010-12-14
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ProtocolVersionChecker_current_version_is_compatible_with_itself )
+BOOST_AUTO_TEST_CASE( current_version_is_compatible_with_itself )
 {
     const sword::ProtocolVersion msg;
-    const ProtocolVersionChecker checker( msg );
-    BOOST_CHECK( checker.CheckCompatibility() );
+    BOOST_CHECK( sword::CheckCompatibility( msg ) );
 }
 
 namespace
@@ -33,14 +32,13 @@ namespace
     {
     public:
         Fixture()
-            : values( Extract( ProtocolVersionChecker::GetCurrentProtocolVersion() ) )
+            : values( Extract( sword::ProtocolVersion().value() ) )
         {}
         bool IsCompatible()
         {
             sword::ProtocolVersion msg;
             msg.set_value( Build( values ) );
-            ProtocolVersionChecker checker( msg );
-            return checker.CheckCompatibility();
+            return sword::CheckCompatibility( msg );
         }
         std::vector< int > values;
     private:
@@ -68,30 +66,30 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProtocolVersionChecker_versions_are_compatible_if_major_and_minor_match
+// Name: versions_are_compatible_if_major_and_minor_match
 // Created: MCO 2010-12-14
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( ProtocolVersionChecker_versions_are_compatible_if_major_and_minor_match, Fixture )
+BOOST_FIXTURE_TEST_CASE( versions_are_compatible_if_major_and_minor_match, Fixture )
 {
     ++values[2];
     BOOST_CHECK( IsCompatible() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProtocolVersionChecker_versions_are_incompatible_if_majors_dont_match
+// Name: versions_are_incompatible_if_majors_dont_match
 // Created: MCO 2010-12-14
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( ProtocolVersionChecker_versions_are_incompatible_if_majors_dont_match, Fixture )
+BOOST_FIXTURE_TEST_CASE( versions_are_incompatible_if_majors_dont_match, Fixture )
 {
     ++values[0];
     BOOST_CHECK( ! IsCompatible() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProtocolVersionChecker_versions_are_incompatible_if_minors_dont_match
+// Name: versions_are_incompatible_if_minors_dont_match
 // Created: MCO 2010-12-14
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( ProtocolVersionChecker_versions_are_incompatible_if_minors_dont_match, Fixture )
+BOOST_FIXTURE_TEST_CASE( versions_are_incompatible_if_minors_dont_match, Fixture )
 {
     ++values[1];
     BOOST_CHECK( ! IsCompatible() );

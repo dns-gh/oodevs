@@ -18,7 +18,6 @@
 #include "protocol/MessengerSenders.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/SimulationSenders.h"
-#include "protocol/ProtocolVersionChecker.h"
 #include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
@@ -72,7 +71,7 @@ void SwordClient::ConnectionSucceeded( const std::string& endpoint )
     publisher_.reset( new MessageSender( *this, endpoint ) );
     {
         authentication::AuthenticationRequest message;
-        message().mutable_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
+        message().mutable_version()->set_value( sword::ProtocolVersion().value() );
         message().set_login( profile_ );
         message().set_password( password_ );
         message.Send( *publisher_ );

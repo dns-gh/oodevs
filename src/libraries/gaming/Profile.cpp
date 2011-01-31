@@ -30,7 +30,6 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Object_ABC.h"
-#include "protocol/ProtocolVersionChecker.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/AuthenticationSenders.h"
 #include <boost/bind.hpp>
@@ -70,7 +69,7 @@ Profile::~Profile()
 void Profile::Login() const
 {
     authentication::AuthenticationRequest message;
-    message().mutable_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
+    message().mutable_version()->set_value( sword::ProtocolVersion().value() );
     message().set_login( login_.c_str() );
     message().set_password( password_.c_str() );
     message.Send( publisher_ );

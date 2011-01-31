@@ -15,7 +15,6 @@
 #include "protocol/Aar.h"
 #include "protocol/Replay.h"
 #include "protocol/Messenger.h"
-#include "protocol/ProtocolVersionChecker.h"
 #include "protocol/Simulation.h"
 #include "tools/ServerNetworker.h"
 #pragma warning( push, 0 )
@@ -73,11 +72,10 @@ namespace
             container.set_context( 0 );
             sword::AuthenticationResponse& response = *container.mutable_message()->mutable_authentication_response();
             response.set_error_code( sword::AuthenticationResponse::success );
-            response.mutable_server_version()->set_value( ProtocolVersionChecker::GetCurrentProtocolVersion() );
+            response.mutable_server_version()->set_value( sword::ProtocolVersion().value() );
             response.mutable_profile()->set_login( defaultProfile );
             response.mutable_profile()->set_supervisor( true );
             tools::MessageSender_ABC::Send( client_, container );
-
             SendMessageStub< sword::SimToClient >();
             SendMessageStub< sword::MessengerToClient >();
         }

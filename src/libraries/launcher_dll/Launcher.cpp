@@ -14,7 +14,7 @@
 #include "LauncherService.h"
 #include "ProcessService.h"
 #include "protocol/LauncherSenders.h"
-#include "protocol/ProtocolVersionChecker.h"
+#include "protocol/Version.h"
 
 using namespace launcher;
 
@@ -74,7 +74,7 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::
 void Launcher::HandleRequest( const std::string& endpoint, const sword::ConnectionRequest& message )
 {
     launcher::ConnectionAck response;
-    const bool valid = ProtocolVersionChecker( message.client_version() ).CheckCompatibility();
+    const bool valid = sword::CheckCompatibility( message.client_version() );
     response().set_error_code( valid ? sword::ConnectionAck::success : sword::ConnectionAck::incompatible_protocol_version );
     response().mutable_server_version()->set_value( sword::ProtocolVersion().value() );
 //    if( valid )
