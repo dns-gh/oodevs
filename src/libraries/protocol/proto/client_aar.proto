@@ -13,17 +13,42 @@ package sword;
  *  @{
  */
 
+/** @struct PlotRequest
+    @brief Defines a plot request
+
+    This message is sent to request a plot.
+
+    @see PlotResult
+*/
 message PlotRequest {
-   required uint32 identifier = 1;
-   required string request    = 2;
+   required uint32 identifier = 1; //!< An identifier for the request
+   required string request    = 2; //!< The request
 }
 
+/** @struct ClientToAar
+    @brief A facade for all available messages going from client to AAR
+
+    This is the actual message sent over the network.
+*/
 message ClientToAar {
+    /** @struct Content
+        @brief The possible messages contained in a client to AAR message
+        @warning Each Content message must contain exactly one of the possible messages.
+    */
     message Content {
-        optional PlotRequest plot_request = 1;
+        optional PlotRequest plot_request = 1; //!< A plot request message
     }
+    /** @property context
+        @brief Identifies the request matching the response.
+
+        This field is used to fill the "context" fields in the response messages.
+
+        This context allows the client application to put an unique identifier
+        (based for instance on MAC address), thus allowing to track response
+        message matching a specific request emitted by the client.
+    */
     optional int32   context = 1;
-    required Content message = 2;
+    required Content message = 2; //!< A field containing one of the messages to be sent
 }
 
 /** @}*/

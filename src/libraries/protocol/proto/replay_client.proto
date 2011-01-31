@@ -16,32 +16,58 @@ package sword;
  *  @{
  */
 
+/** @struct ControlReplayInformation
+    @brief Aggregates the replay information
+*/
 message ControlReplayInformation {
-   required int32               current_tick      = 1;
-   required DateTime            initial_date_time = 2;
-   required DateTime            date_time         = 3;
-   required int32               tick_duration     = 4;
-   required int32               time_factor       = 5;
-   required EnumSimulationState status            = 6;
-   required int32               tick_count        = 7;
+   required int32               current_tick      = 1; //!< The current tick number
+   required DateTime            initial_date_time = 2; //!< The starting date and time
+   required DateTime            date_time         = 3; //!< The current date and time
+   required int32               tick_duration     = 4; //!< The current tick duration in seconds
+   required int32               time_factor       = 5; //!< The simulation time multiplier
+   required EnumSimulationState status            = 6; //!< The simulation status
+   required int32               tick_count        = 7; //!< The total number of ticks in the replay
 }
 
+/** @struct ControlSkipToTick
+    @brief Acknowledges a tick skip message
+
+    @see ControlSkipToTick
+*/
 message ControlSkipToTickAck {
-   required int32                tick       = 1;
-   required ControlAck.ErrorCode error_code = 2;
+   required int32                tick       = 1; //!< The tick number
+   required ControlAck.ErrorCode error_code = 2; //!< The error code
 }
 
+/** @struct ReplayToClient
+    @brief A facade for all available messages going from replay to client
+
+    This is the actual message sent over the network.
+*/
 message ReplayToClient {
+    /** @struct Content
+        @brief The possible messages contained in a replay to client message
+        @warning Each Content message must contain exactly one of the possible messages.
+    */
     message Content {
-        optional ControlReplayInformation   control_replay_information      = 1;
-        optional ControlSkipToTickAck       control_skip_to_tick_ack        = 2;
-        optional ControlStopAck             control_stop_ack                = 3;
-        optional ControlPauseAck            control_pause_ack               = 4;
-        optional ControlResumeAck           control_resume_ack              = 5;
-        optional ControlChangeTimeFactorAck control_change_time_factor_ack  = 6;
+        optional ControlReplayInformation   control_replay_information      = 1; //!< @copybrief ControlReplayInformation
+        optional ControlSkipToTickAck       control_skip_to_tick_ack        = 2; //!< @copybrief ControlSkipToTickAck
+        optional ControlStopAck             control_stop_ack                = 3; //!< @copybrief ControlStopAck
+        optional ControlPauseAck            control_pause_ack               = 4; //!< @copybrief ControlPauseAck
+        optional ControlResumeAck           control_resume_ack              = 5; //!< @copybrief ControlResumeAck
+        optional ControlChangeTimeFactorAck control_change_time_factor_ack  = 6; //!< @copybrief ControlChangeTimeFactorAck
     }
+    /** @property context
+        @brief Identifies the request matching the response.
+
+        This field is used to fill the "context" fields in the response messages.
+
+        This context allows the client application to put an unique identifier
+        (based for instance on MAC address), thus allowing to track response
+        message matching a specific request emitted by the client.
+    */
     optional int32   context = 1;
-    required Content message = 2;
+    required Content message = 2; //!< A field containing one of the messages to be sent
 }
 
 /** @}*/

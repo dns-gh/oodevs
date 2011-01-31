@@ -9,6 +9,10 @@
 
 package sword;
 
+/** @addtogroup Common
+ *  @{
+ */
+
 /** @struct ProtocolVersion
     @brief A message containing the current protocol version.
 
@@ -28,3 +32,5 @@ message ProtocolVersion {
     */
     required string value = 1 [default = "4.3.0"];
 }
+
+/** @}*/
