@@ -130,7 +130,7 @@ namespace
     {
         T function = (T)GetProcAddress( module, name.c_str() );
         if( !function )
-            throw std::exception( std::string( "unable to find function '" + name + "'" ).c_str() );
+            throw std::runtime_error( "unable to find function '" + name + "'" );
         return function;
     }
 }
@@ -146,7 +146,7 @@ void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
         const std::string library( SetLibraryConfiguration( xis.attribute< std::string >( "library" ) ) );
         HMODULE module = LoadLibrary( library.c_str() );
         if( !module )
-            throw std::exception( std::string( "failed to load library: '" + library + "'" ).c_str() );
+            throw std::runtime_error( "failed to load library: '" + library + "'" );
         CreateFunctor createFunction = LoadFunction< CreateFunctor >( module, "CreateInstance" );
         DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
         handler_.Add( boost::shared_ptr< Plugin_ABC >( createFunction( model_, config_, xis ), destroyFunction ) );
@@ -155,5 +155,9 @@ void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
     catch( std::exception& e )
     {
         MT_LOG_ERROR_MSG( "Failed to load plugin '" << name << "' reason: " << e.what() );
+    }
+    catch( ... )
+    {
+        MT_LOG_ERROR_MSG( "Failed to load plugin '" << name << "', unknown reason" );
     }
 }
