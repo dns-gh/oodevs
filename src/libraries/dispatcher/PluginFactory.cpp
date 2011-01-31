@@ -23,9 +23,9 @@
 #include "saver_plugin/SaverPlugin.h"
 #include "script_plugin/ScriptPlugin.h"
 #include "score_plugin/ScorePlugin.h"
+#include <xeumeuleu/xml.hpp>
 #include <boost/filesystem.hpp>
 #include <windows.h>
-#include <xeumeuleu/xml.hpp>
 
 using namespace dispatcher;
 using namespace plugins;
@@ -143,7 +143,7 @@ void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
 {
     try
     {
-        const std::string library( SetLibraryConfiguration( xis.attribute< std::string >( "library" ) ) );
+        const std::string library = SetLibraryConfiguration( xis.attribute< std::string >( "library" ) );
         HMODULE module = LoadLibrary( library.c_str() );
         if( !module )
             throw std::runtime_error( "failed to load library: '" + library + "'" );
