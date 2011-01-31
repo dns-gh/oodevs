@@ -173,6 +173,18 @@ ADN_ResourceNetworks_Data::T_ResourceNetworkInfosVector& ADN_ResourceNetworks_Da
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_ResourceNetworks_Data::FindResourceNetwork
+// Created: JSR 2011-01-31
+// -----------------------------------------------------------------------------
+ADN_ResourceNetworks_Data::ResourceNetworkInfos* ADN_ResourceNetworks_Data::FindResourceNetwork( const std::string& strName )
+{
+    IT_ResourceNetworkInfosVector it = std::find_if( resourceNetworks_.begin(), resourceNetworks_.end(), ADN_Tools::NameCmp< ResourceNetworkInfos >( strName ) );
+    if( it == resourceNetworks_.end() )
+        return 0;
+    return *it;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_ResourceNetworks_Data::ReadArchive
 // Created: JSR 2010-09-13
 // -----------------------------------------------------------------------------

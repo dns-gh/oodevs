@@ -15,7 +15,7 @@
 #include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::EventInfos
+// Name: EventInfos::EventInfos
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
 ADN_People_Data::EventInfos::EventInfos()
@@ -26,7 +26,7 @@ ADN_People_Data::EventInfos::EventInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::~EventInfos
+// Name: EventInfos::~EventInfos
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
 ADN_People_Data::EventInfos::~EventInfos()
@@ -35,7 +35,7 @@ ADN_People_Data::EventInfos::~EventInfos()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::GetNodeName
+// Name: EventInfos::GetNodeName
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
 std::string ADN_People_Data::EventInfos::GetNodeName()
@@ -44,7 +44,7 @@ std::string ADN_People_Data::EventInfos::GetNodeName()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::GetItemName
+// Name: EventInfos::GetItemName
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
 std::string ADN_People_Data::EventInfos::GetItemName()
@@ -53,7 +53,7 @@ std::string ADN_People_Data::EventInfos::GetItemName()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::CreateCopy
+// Name: EventInfos::CreateCopy
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
 ADN_People_Data::EventInfos* ADN_People_Data::EventInfos::CreateCopy()
@@ -62,7 +62,7 @@ ADN_People_Data::EventInfos* ADN_People_Data::EventInfos::CreateCopy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::ReadArchive
+// Name: EventInfos::ReadArchive
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
 void ADN_People_Data::EventInfos::ReadArchive( xml::xistream& input )
@@ -74,7 +74,7 @@ void ADN_People_Data::EventInfos::ReadArchive( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::WriteArchive
+// Name: EventInfos::WriteArchive
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
 void ADN_People_Data::EventInfos::WriteArchive( xml::xostream& output )
@@ -85,6 +85,68 @@ void ADN_People_Data::EventInfos::WriteArchive( xml::xostream& output )
            << xml::attribute( "to", to_ )
            << xml::attribute( "motivation", motivation_ )
            << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PeopleInfosConsumption::PeopleInfosConsumption
+// Created: JSR 2011-01-31
+// -----------------------------------------------------------------------------
+ADN_People_Data::PeopleInfosConsumption::PeopleInfosConsumption()
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , ptrResource_( ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos(), 0 )
+    , consumption_( 0 )
+{
+    BindExistenceTo( &ptrResource_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PeopleInfosConsumption::GetItemName
+// Created: JSR 2011-01-31
+// -----------------------------------------------------------------------------
+std::string ADN_People_Data::PeopleInfosConsumption::GetItemName()
+{
+    return ptrResource_.GetData()->strName_.GetData().c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PeopleInfosConsumption::CreateCopy
+// Created: JSR 2011-01-31
+// -----------------------------------------------------------------------------
+ADN_People_Data::PeopleInfosConsumption* ADN_People_Data::PeopleInfosConsumption::CreateCopy()
+{
+    PeopleInfosConsumption* pCopy = new PeopleInfosConsumption();
+    pCopy->ptrResource_ = ptrResource_.GetData();
+    pCopy->ptrResource_.SetVector( ptrResource_.GetVector() );
+    pCopy->consumption_ = consumption_.GetData();
+    return pCopy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PeopleInfosConsumption::ReadArchive
+// Created: JSR 2011-01-31
+// -----------------------------------------------------------------------------
+void ADN_People_Data::PeopleInfosConsumption::ReadArchive( xml::xistream& xis )
+{
+    std::string strResource;
+    xis >> xml::attribute( "type", strResource )
+        >> xml::attribute( "need", consumption_ );
+    ADN_ResourceNetworks_Data::ResourceNetworkInfos* pResource = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().FindResourceNetwork( strResource );
+    if( !pResource )
+        throw ADN_DataException( tools::translate( "People_Data", "Invalid data" ).ascii(), tools::translate( "People_Data", "Population - Invalid resource '%1/%2'" ).arg( strResource.c_str() ).ascii() );
+    ptrResource_ = pResource;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PeopleInfosConsumption::WriteArchive
+// Created: JSR 2011-01-31
+// -----------------------------------------------------------------------------
+void ADN_People_Data::PeopleInfosConsumption::WriteArchive( xml::xostream& xos )
+{
+    xos << xml::start( "resource" )
+            << xml::attribute( "type", ptrResource_.GetData()->strName_ )
+            << xml::attribute( "need", consumption_ )
+        << xml::end;
 }
 
 // =============================================================================
@@ -107,6 +169,8 @@ ADN_People_Data::PeopleInfos::PeopleInfos()
     , transferTime_       ( "0h" )
 {
     BindExistenceTo( &ptrModel_ );
+    consumptions_.SetParentNode( *this );
+    consumptions_.SetItemTypeName( "une consommation" );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +179,7 @@ ADN_People_Data::PeopleInfos::PeopleInfos()
 // -----------------------------------------------------------------------------
 ADN_People_Data::PeopleInfos::~PeopleInfos()
 {
-    // NOTHING
+    consumptions_.Delete();
 }
 
 // -----------------------------------------------------------------------------
@@ -158,6 +222,11 @@ ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
         pCopy->schedule_[ it->first ]->to_ = it->second->to_.GetData();
         pCopy->schedule_[ it->first ]->motivation_ = it->second->motivation_.GetData();
     }
+    for( IT_PeopleInfosConsumptionVector itConsumption = consumptions_.begin(); itConsumption != consumptions_.end(); ++itConsumption )
+    {
+        PeopleInfosConsumption* pNew = ( *itConsumption )->CreateCopy();
+        pCopy->consumptions_.AddItem( pNew );
+    }
     return pCopy;
 }
 
@@ -189,6 +258,9 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
           >> xml::start( "safety-level" )
             >> xml::attribute( "loss-on-fire", securityLossOnFire_ )
             >> xml::attribute( "gain-per-hour", securityGainPerHour_ )
+          >> xml::end
+          >> xml::start( "consumption" )
+            >> xml::list( "resource", *this, &ADN_People_Data::PeopleInfos::ReadConsumption )
           >> xml::end;
     securityLossOnFire_ = 100 * securityLossOnFire_.GetData();
     securityGainPerHour_ = 100 * securityGainPerHour_.GetData();
@@ -214,11 +286,15 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
     for( IT_Events it = schedule_.begin(); it != schedule_.end(); ++it )
         it->second->WriteArchive( output );
     output  << xml::end
-          << xml::start( "safety-level" )
-            << xml::attribute( "loss-on-fire", securityLossOnFire_.GetData() / 100.0 )
-            << xml::attribute( "gain-per-hour", securityGainPerHour_.GetData() / 100.0 )
-          << xml::end
-         << xml::end;
+            << xml::start( "safety-level" )
+                << xml::attribute( "loss-on-fire", securityLossOnFire_.GetData() / 100.0 )
+                << xml::attribute( "gain-per-hour", securityGainPerHour_.GetData() / 100.0 )
+            << xml::end
+            << xml::start( "consumption" );
+    for( IT_PeopleInfosConsumptionVector it = consumptions_.begin(); it != consumptions_.end(); ++it )
+        ( *it )->WriteArchive( output );
+    output  << xml::end
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -230,6 +306,17 @@ void ADN_People_Data::PeopleInfos::ReadEvent( xml::xistream& input, int& index )
     schedule_[ index ].reset( new EventInfos() );
     schedule_[ index ]->ReadArchive( input );
     index++;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PeopleInfos::ReadConsumption
+// Created: JSR 2011-01-31
+// -----------------------------------------------------------------------------
+void ADN_People_Data::PeopleInfos::ReadConsumption( xml::xistream& input )
+{
+    std::auto_ptr< PeopleInfosConsumption > spNew( new PeopleInfosConsumption() );
+    spNew->ReadArchive( input );
+    consumptions_.AddItem( spNew.release() );
 }
 
 // =============================================================================

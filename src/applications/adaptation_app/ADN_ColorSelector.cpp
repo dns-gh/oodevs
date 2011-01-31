@@ -57,7 +57,10 @@ void ADN_ColorSelector::setEnabled( bool b )
 // -----------------------------------------------------------------------------
 void ADN_ColorSelector::setText( const QString& string )
 {
-    color_.setNamedColor( "#" + string.right( 6 ) );
+    if( string.length() >= 6 )
+        color_.setNamedColor( "#" + string.right( 6 ) );
+    else
+        color_.setNamedColor( "#000000" );
 }
 
 // -----------------------------------------------------------------------------

@@ -14,6 +14,7 @@
 #include "ADN_People_Data.h"
 #include "ADN_People_ListView.h"
 #include "ADN_ComboBox_Vector.h"
+#include "ADN_Consumptions_Table.h"
 #include "ADN_Schedule_Table.h"
 
 // -----------------------------------------------------------------------------
@@ -78,6 +79,10 @@ void ADN_People_GUI::Build()
     builder.AddField< ADN_TimeField >( pScheduleGroup, tr( "Transfer time" ), vInfosConnectors[ eTransferTime ] );
     ADN_Schedule_Table* pTable = new ADN_Schedule_Table( pScheduleGroup );
     connect( pPeopleList_, SIGNAL( ItemSelected( void* ) ), pTable, SLOT( OnPeopleChanged( void* ) ) );
+
+    QHGroupBox* pConsumptionsGroup = new QHGroupBox( tr( "Consumptions" ), pGroup );
+    ADN_Consumptions_Table* pConsumptions = new ADN_Consumptions_Table( pConsumptionsGroup );
+    vInfosConnectors[ eConsumptions ] = &pConsumptions->GetConnector();
 
     pPeopleList_->SetItemConnectors( vInfosConnectors );
 

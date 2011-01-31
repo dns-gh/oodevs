@@ -21,13 +21,15 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_AttritionInfos.h"
 #include "ADN_CapacityInfos.h"
-
-
 #include <string>
 #include <map>
 #include <boost/shared_ptr.hpp>
 
-namespace xml { class xistream; }
+namespace xml
+{
+    class xistream;
+}
+
 class ADN_Objects_Data;
 class ADN_TypeCapacity_Infos;
 
@@ -36,14 +38,13 @@ class ADN_TypeCapacity_Infos;
 //*****************************************************************************
 class ADN_Urban_Data : public ADN_Data_ABC
 {
-
 //*****************************************************************************
 public:
     class AccommodationInfos : public ADN_Ref_ABC
-                            , public ADN_DataTreeNode_ABC
+                             , public ADN_DataTreeNode_ABC
     {
     public:
-        AccommodationInfos();
+                 AccommodationInfos();
         explicit AccommodationInfos( xml::xistream& input );
         virtual ~AccommodationInfos();
 
@@ -51,7 +52,6 @@ public:
         virtual std::string GetItemName();
         bool operator==( const std::string& str );
         void WriteAccommodation( xml::xostream& output );
-
     public:
         //! @name Member Data
         //@{
@@ -68,10 +68,10 @@ public:
 //*****************************************************************************
 public:
     class InfrastructureInfos : public ADN_Ref_ABC
-        , public ADN_DataTreeNode_ABC
+                              , public ADN_DataTreeNode_ABC
     {
     public:
-        InfrastructureInfos();
+                 InfrastructureInfos();
         explicit InfrastructureInfos( xml::xistream& input );
         virtual ~InfrastructureInfos();
 
@@ -96,7 +96,7 @@ public:
         //@}
     };   
 
-    typedef ADN_Type_Vector_ABC< InfrastructureInfos >      T_InfrastructureInfos_Vector;
+    typedef ADN_Type_Vector_ABC< InfrastructureInfos >     T_InfrastructureInfos_Vector;
     typedef T_InfrastructureInfos_Vector::iterator        IT_InfrastructureInfos_Vector;
     typedef T_InfrastructureInfos_Vector::const_iterator CIT_InfrastructureInfos_Vector;
 
@@ -151,32 +151,32 @@ public:
     virtual void WriteArchive( xml::xostream& output );
 
     T_UrbanMaterialInfos_Vector& GetMaterialsInfos();  
-    UrbanMaterialInfos*          FindMaterial( const std::string& strName );
-    T_UrbanInfos_Vector&         GetFacadesInfos();  
-    UrbanInfos*                  FindFacade( const std::string& strName );
-    T_UrbanInfos_Vector&         GetRoofShapesInfos();  
-    UrbanInfos*                  FindRoofShape( const std::string& strName );
-    T_AccommodationInfos_Vector&  GetAccommodationsInfos();  
-    AccommodationInfos*           FindAccommodation( const std::string& strName );
-    T_InfrastructureInfos_Vector&  GetInfrastructuresInfos();  
-    InfrastructureInfos*           FindInfrastructure( const std::string& strName );
+    UrbanMaterialInfos* FindMaterial( const std::string& strName );
+    T_UrbanInfos_Vector& GetFacadesInfos();  
+    UrbanInfos* FindFacade( const std::string& strName );
+    T_UrbanInfos_Vector& GetRoofShapesInfos();  
+    UrbanInfos* FindRoofShape( const std::string& strName );
+    T_AccommodationInfos_Vector& GetAccommodationsInfos();  
+    AccommodationInfos* FindAccommodation( const std::string& strName );
+    T_InfrastructureInfos_Vector& GetInfrastructuresInfos();  
+    InfrastructureInfos* FindInfrastructure( const std::string& strName );
 
 private:
     //! @name Helpers
     //@{
-    void ReadMaterial   ( xml::xistream& input );
-    void ReadMaterials  ( xml::xistream& input );
-    void WriteMaterials ( xml::xostream& output ) const;
+    void ReadMaterial  ( xml::xistream& input );
+    void ReadMaterials ( xml::xistream& input );
+    void WriteMaterials( xml::xostream& output ) const;
 
-    void ReadFacade     ( xml::xistream& input );
-    void ReadFacades    ( xml::xistream& input );
-    void WriteFacades   ( xml::xostream& output ) const;
+    void ReadFacade  ( xml::xistream& input );
+    void ReadFacades ( xml::xistream& input );
+    void WriteFacades( xml::xostream& output ) const;
 
     void ReadRoofShape  ( xml::xistream& input );
     void ReadRoofShapes ( xml::xistream& input );
     void WriteRoofShapes( xml::xostream& output ) const;
 
-    void ReadAccommodation   ( xml::xistream& input );
+    void ReadAccommodation  ( xml::xistream& input );
     void ReadAccommodations ( xml::xistream& input );
     void WriteAccommodations( xml::xostream& output ) const;
     
@@ -247,7 +247,7 @@ inline
 ADN_Urban_Data::UrbanInfos* ADN_Urban_Data::FindFacade( const std::string& strName )
 {
     for( IT_UrbanInfos_Vector it = vFacades_.begin(); it != vFacades_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
+        if( ADN_Tools::CaselessCompare( ( *it )->GetData(), strName ) )
             return *it;
     return 0;
 }
@@ -270,7 +270,7 @@ inline
 ADN_Urban_Data::UrbanInfos* ADN_Urban_Data::FindRoofShape( const std::string& strName )
 {
     for( IT_UrbanInfos_Vector it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
-        if( ADN_Tools::CaselessCompare( (*it)->GetData(), strName ) )
+        if( ADN_Tools::CaselessCompare( ( *it )->GetData(), strName ) )
             return *it;
     return 0;
 }

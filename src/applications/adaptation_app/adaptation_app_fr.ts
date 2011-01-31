@@ -1224,6 +1224,25 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Consumptions_Table</name>
+    <message>
+        <source>Resource network</source>
+        <translation>Réseau de ressource</translation>
+    </message>
+    <message>
+        <source>Consumption</source>
+        <translation>Consommation</translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation>Ajouter une ressource</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation>Supprimer une ressource</translation>
+    </message>
+</context>
+<context>
     <name>ADN_DataException</name>
     <message>
         <source>Data error</source>
@@ -3167,6 +3186,10 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>Transfer time</source>
         <translation>Temps de transfert</translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation>Consommations</translation>
     </message>
 </context>
 <context>
@@ -5872,6 +5895,17 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Flood - Invalid wound type &apos;%1&apos;</source>
         <translation>Inondation - Type de blessure invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>People_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Population - Invalid resource &apos;%1/%2&apos;</source>
+        <translation>Population - Resource &apos;%1/%2&apos; invalide</translation>
     </message>
 </context>
 <context>

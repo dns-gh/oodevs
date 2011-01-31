@@ -14,6 +14,7 @@
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Population_Data.h"
+#include "ADN_ResourceNetworks_Data.h"
 #include <map>
 #include <boost/shared_ptr.hpp>
 
@@ -52,12 +53,35 @@ public:
         ADN_Type_String to_;
         ADN_Type_String motivation_;
     };
+
+    class PeopleInfosConsumption
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+
+    public:
+                 PeopleInfosConsumption();
+        virtual ~PeopleInfosConsumption() {}
+        std::string GetItemName();
+
+        PeopleInfosConsumption* CreateCopy();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& xos );
+
+    public:
+        ADN_TypePtr_InVector_ABC< ADN_ResourceNetworks_Data::ResourceNetworkInfos > ptrResource_;
+        ADN_Type_Int consumption_;
+    };
+
+    typedef ADN_Type_Vector_ABC< PeopleInfosConsumption > T_PeopleInfosConsumptionVector;
+    typedef T_PeopleInfosConsumptionVector::iterator     IT_PeopleInfosConsumptionVector;
+
 // *****************************************************************************
     class PeopleInfos
         : public ADN_Ref_ABC
         , public ADN_DataTreeNode_ABC
     {
-
     public:
          PeopleInfos();
         ~PeopleInfos();
@@ -75,6 +99,7 @@ public:
 
     private:
         void ReadEvent( xml::xistream& input, int& index );
+        void ReadConsumption( xml::xistream& input );
 
     public:
         ADN_Type_String strName_;
@@ -86,6 +111,7 @@ public:
         ADN_Type_Double securityLossOnFire_;
         ADN_Type_Double securityGainPerHour_;
         T_Events schedule_;
+        T_PeopleInfosConsumptionVector consumptions_;
     };
 
     typedef ADN_Type_Vector_ABC< PeopleInfos > T_PeopleInfosVector;
@@ -128,7 +154,7 @@ ADN_People_Data::T_PeopleInfosVector& ADN_People_Data::GetPeople()
 inline
 ADN_People_Data::PeopleInfos* ADN_People_Data::FindPeople( const std::string& strName )
 {
-    IT_PeopleInfosVector it = std::find_if( vPeople_.begin(), vPeople_.end(), ADN_Tools::NameCmp<PeopleInfos>( strName ) );
+    IT_PeopleInfosVector it = std::find_if( vPeople_.begin(), vPeople_.end(), ADN_Tools::NameCmp< PeopleInfos >( strName ) );
     if( it == vPeople_.end() )
         return 0;
     return *it;

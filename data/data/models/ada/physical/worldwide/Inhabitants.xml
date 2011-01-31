@@ -4,11 +4,13 @@
     <repartition children="30" female="30" male="40"/>
     <schedule transfer-time="1h"/>
     <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
+    <consumption/>
   </population>
   <population associated-crowd="Population standard" id="1" name="popType2">
     <repartition children="40" female="30" male="30"/>
     <schedule transfer-time="1h"/>
     <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
+    <consumption/>
   </population>
 </populations>
-<!-- signature="1959617609" -->
+<!-- signature="0050068414" -->

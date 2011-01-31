@@ -10,7 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Urban_Data.h"
-
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Objects_Data.h"
@@ -80,11 +79,13 @@ void ADN_Urban_Data::Reset()
 class ADN_String_Cmp : public std::unary_function< ADN_Type_String* , bool >
 {
 public:
-    ADN_String_Cmp(const std::string& val) : val_(val) {}
+    ADN_String_Cmp(const std::string& val) : val_( val ) {}
     virtual ~ADN_String_Cmp() {}
 
     bool operator()( ADN_Type_String* tgtnfos ) const
-    {   return tgtnfos->GetData() == val_; }
+    {
+        return tgtnfos->GetData() == val_;
+    }
 
 private:
     std::string val_;
@@ -138,7 +139,7 @@ void ADN_Urban_Data::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::WriteArchive( xml::xostream& output )
 {
-    output  << xml::start( "urban" );
+    output << xml::start( "urban" );
     ADN_Tools::AddSchema( output, "UrbanTypes" );
     output  << xml::start( "urban-block-types" );
     WriteMaterials( output );
@@ -147,7 +148,7 @@ void ADN_Urban_Data::WriteArchive( xml::xostream& output )
     output  << xml::end;
     WriteAccommodations( output );
     WriteInfrastructures( output );
-    output  << xml::end;
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +245,7 @@ void ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition( xml::xistream& input )
     helpers::IT_AttritionInfos_Vector itAttrition = std::find_if( vAttritionInfos_.begin(), vAttritionInfos_.end(), helpers::AttritionInfos::Cmp( protection ));
     if( itAttrition == vAttritionInfos_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).ascii() );
-    (*itAttrition)->ReadArchive( input );
+    ( *itAttrition )->ReadArchive( input );
 }
 
 
@@ -357,13 +358,12 @@ void ADN_Urban_Data::WriteRoofShapes( xml::xostream& output ) const
     output << xml::start( "roof-shape-types" );
     for( T_UrbanInfos_Vector::const_iterator itRoofShape = vRoofShapes_.begin(); itRoofShape != vRoofShapes_.end(); ++itRoofShape )
     {
-        if( (*itRoofShape)->GetData().empty() )
+        if( ( *itRoofShape )->GetData().empty() )
             throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "RoofShape - Invalid roofShape type name" ).ascii() );
         std::string strData = ( *itRoofShape )->GetData();
         output << xml::start( "roof-shape-type" )
             << xml::attribute( "name", trim( strData ) )
             << xml::end;
-
     }
     output << xml::end;
 }
@@ -421,8 +421,8 @@ void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& outp
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input )
-: strName_ ( "" )
-, value_( 0 )
+    : strName_ ( "" )
+    , value_   ( 0 )
 {
     input >> xml::attribute( "role", strName_ )
           >> xml::attribute( "capacity", value_ );
@@ -433,8 +433,8 @@ ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input )
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::AccommodationInfos::AccommodationInfos()
-: strName_ ( "" )
-, value_( 0 )
+    : strName_ ( "" )
+    , value_   ( 0 )
 {
     strName_.SetDataName( "le nom de la motivation" );
     strName_.SetParentNode( *this );
@@ -473,7 +473,7 @@ std::string ADN_Urban_Data::AccommodationInfos::GetItemName()
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::ReadInfrastructures( xml::xistream& input )
 {
-    input >> xml::optional() >>xml::start( "infrastructures" )
+    input >> xml::optional() >> xml::start( "infrastructures" )
         >> xml::list( "infrastructure", *this, &ADN_Urban_Data::ReadInfrastructure )
         >> xml::end;
 }
@@ -545,8 +545,8 @@ void ADN_Urban_Data::InfrastructureInfos::ReadCapacityArchive( const std::string
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
-: strName_ ( "" )
-, symbol_( "" )
+    : strName_ ( "" )
+    , symbol_  ( "" )
 {
     capacities_[ "medical" ].reset( new ADN_Objects_Data::ADN_CapacityInfos_Medical() );
     input >> xml::attribute( "name", strName_ )
@@ -561,8 +561,8 @@ ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos()
-: strName_ ( "" )
-, symbol_( "" )
+    : strName_( "" )
+    , symbol_ ( "" )
 {
     strName_.SetDataName( "le nom de l'infrastructure" );
     strName_.SetParentNode( *this );

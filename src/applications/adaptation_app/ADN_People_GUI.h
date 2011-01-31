@@ -39,6 +39,7 @@ public:
         eLossOnFire,
         eGainPerHour,
         eTransferTime,
+        eConsumptions,
         eNbrGuiElements,
     };
     //@}

@@ -56,8 +56,8 @@ public:
 
     //! @name Types
     //@{
-    typedef ADN_Type_Vector_ABC<ResourceNetworkInfos>  T_ResourceNetworkInfosVector;
-    typedef T_ResourceNetworkInfosVector::iterator    IT_ResourceNetworkInfosVector;
+    typedef ADN_Type_Vector_ABC< ResourceNetworkInfos >  T_ResourceNetworkInfosVector;
+    typedef T_ResourceNetworkInfosVector::iterator      IT_ResourceNetworkInfosVector;
     //@}
 
 public:
@@ -72,6 +72,7 @@ public:
     void FilesNeeded( T_StringList& l ) const;
     void Reset();
     T_ResourceNetworkInfosVector& GetResourceNetworksInfos();
+    ResourceNetworkInfos* FindResourceNetwork( const std::string& strName );
     //@}
 
 private:
