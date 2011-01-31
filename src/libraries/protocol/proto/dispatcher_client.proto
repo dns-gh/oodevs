@@ -9,6 +9,10 @@
 
 package sword;
 
+/** @addtogroup Dispatcher
+ *  @{
+ */
+
 /** @struct ServicesDescription
     @brief A message sent by the Dispatcher to announce available services.
     
@@ -43,3 +47,5 @@ message DispatcherToClient {
     */
     required Content message = 1;
 }
+
+/** @}*/

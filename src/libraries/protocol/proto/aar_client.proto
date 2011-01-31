@@ -9,6 +9,10 @@
 
 package sword;
 
+/** @addtogroup aar After action review
+ *  @{
+ */
+
 /** @struct AarInformation
     @brief Indicators computation module information message
     
@@ -60,3 +64,5 @@ message AarToClient
     optional int32   context = 1;
     optional Content message = 2;
 }
+
+/** @}*/

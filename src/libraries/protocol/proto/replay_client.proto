@@ -12,6 +12,10 @@ import "simulation_client.proto";
 
 package sword;
 
+/** @addtogroup Replay
+ *  @{
+ */
+
 message ControlReplayInformation {
    required int32               current_tick      = 1;
    required DateTime            initial_date_time = 2;
@@ -39,3 +43,5 @@ message ReplayToClient {
     optional int32   context = 1;
     required Content message = 2;
 }
+
+/** @}*/

@@ -11,6 +11,10 @@ import "common.proto";
 
 package sword;
 
+/** @addtogroup Simulation
+ *  @{
+ */
+
 /** @struct ControlDateTimeChange
     @brief A date and/or time change request.
 
@@ -605,3 +609,5 @@ message ClientToSim {
     */
     required Content message = 2;
 }
+
+/** @}*/

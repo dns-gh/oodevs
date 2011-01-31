@@ -14,6 +14,11 @@ import "version.proto";
 
 package sword;
 
+/** @internal
+ *  @addtogroup Launcher
+ *  @{
+ */
+
 message ConnectionAck {
     enum ErrorCode {
         success                       = 0;
@@ -102,3 +107,5 @@ message LauncherToAdmin {
     optional int32   context = 1;
     required Content message = 2;
 }
+
+/** @}*/

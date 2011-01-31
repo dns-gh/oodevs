@@ -11,6 +11,10 @@ import "common.proto";
 
 package sword;
 
+/** @addtogroup Messenger
+ *  @{
+ */
+
 /** @struct PhaseLineCreationRequest
     @brief A message to request the creation of a phase line
 
@@ -336,3 +340,5 @@ message ClientToMessenger {
     */
     required Content message = 2;
 }
+
+/** @}*/

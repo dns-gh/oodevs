@@ -9,6 +9,11 @@
 
 package sword;
 
+/** @internal
+ *  @addtogroup Internal
+ *  @{
+ */
+
 message CtrlClientAnnouncement {
     optional bool announce = 1;
 }
@@ -20,3 +25,5 @@ message DispatcherToSim {
     optional int32   context = 1;
     required Content message = 2;
 }
+
+/** @}*/

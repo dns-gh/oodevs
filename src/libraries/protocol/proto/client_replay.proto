@@ -11,6 +11,10 @@ import "common.proto";
 
 package sword;
 
+/** @addtogroup Replay
+ *  @{
+ */
+
 message ControlSkipToTick {
    required int32 tick = 1;
 }
@@ -26,3 +30,5 @@ message ClientToReplay {
     optional int32   context = 1;
     required Content message = 2;
 }
+
+/** @}*/

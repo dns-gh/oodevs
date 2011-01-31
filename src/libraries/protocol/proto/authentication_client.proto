@@ -12,6 +12,10 @@ import "version.proto";
 
 package sword;
 
+/** @addtogroup Authentication
+ *  @{
+ */
+
 /** @struct AuthenticationResponse
     @brief A response message to an authentication request
 
@@ -217,3 +221,5 @@ message AuthenticationToClient {
     optional int32   context = 1;
     required Content message = 2; //!< A field containing one of the messages to be sent
 }
+
+/** @}*/
