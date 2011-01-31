@@ -88,6 +88,7 @@ private:
     typedef T_UrbanObjectVector::const_iterator              CIT_UrbanObjectVector;
     typedef std::map< std::string, std::string > T_Extensions;
     typedef std::map< std::string, unsigned int > T_MotivationSatisfactions;
+    typedef std::map< unsigned int, unsigned int > T_Humans;
     //@}
 
 private:
@@ -100,6 +101,7 @@ private:
     unsigned int safetySatisfaction_;
     unsigned int lodgingSatisfaction_;
     T_MotivationSatisfactions motivationSatisfactions_;
+    T_Humans humans_;
     T_UrbanObjectVector livingUrbanObject_;
     T_Extensions extensions_;
     //@}

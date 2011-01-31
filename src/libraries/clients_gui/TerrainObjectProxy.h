@@ -97,6 +97,7 @@ public:
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     void UpdateHumans( const std::string& inhabitant, unsigned int number );
+    unsigned int GetHumans() const;
     //@}
 
 private:
@@ -107,7 +108,6 @@ private:
     void UpdateColor();
     void Restore();
     float GetDensity() const;
-    unsigned int GetHumans() const;
     //@}
 
     //! @name Types

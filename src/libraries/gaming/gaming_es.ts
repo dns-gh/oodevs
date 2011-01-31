@@ -548,6 +548,10 @@
         <source>%1 satisfaction:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Living Area/</source>
+        <translation>Zone de vie</translation>
+    </message>
 </context>
 <context>
     <name>Intelligence</name>

@@ -18,6 +18,7 @@
 #include "clients_kernel/Styles.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace geometry;
 using namespace kernel;
@@ -124,7 +125,17 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         unsigned int id = occupation.object().id();
         CIT_UrbanObjectVector it = livingUrbanObject_.find( id );
         if( it != livingUrbanObject_.end() )
+        {
             it->second->UpdateHumans( name_.ascii(), occupation.number() );
+            humans_[ id ] = occupation.number();
+            const QString key = tools::translate( "Inhabitant", "Living Area/" ) + "[id: " + boost::lexical_cast< std::string >( id ).c_str() + "] " + it->second->GetName().ascii();
+            PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+            if( !dictionary.HasKey( key ) )
+            {
+                const T_Humans::const_iterator it = humans_.find( id );
+                dictionary.Register( *static_cast< const Entity_ABC* >( this ), key, it->second );
+            }
+        }
     }
     controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
