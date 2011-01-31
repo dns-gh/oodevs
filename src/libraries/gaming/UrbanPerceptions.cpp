@@ -39,7 +39,7 @@ UrbanPerceptions::~UrbanPerceptions()
 // -----------------------------------------------------------------------------
 void UrbanPerceptions::DoUpdate( const sword::UrbanKnowledgeUpdate& message )
 {
-    if( message.automat_perceptions().elem_size() )
+    if( message.automat_perceptions().elem_size() ) // $$$$ MCO : shouldn't it be if( message.has_automat_perceptions() ) ?
     {
         detectingAutomats_.clear();
         detectingAutomats_.reserve( message.automat_perceptions().elem_size() );

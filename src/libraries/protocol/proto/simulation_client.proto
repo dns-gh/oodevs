@@ -1159,215 +1159,295 @@ message UnitVisionCones {
     required float           elongation = 3; //!< The elongation
 }
 
+/** @struct UnitVisibility
+    @brief Defines the visibility levels for a unit
+*/
 message UnitVisibility {
+    /** @enum Level
+        @brief The visibility levels for a unit
+    */
     enum Level {
-       invisible  = 0;
-       detected   = 1;
-       recognized = 2;
-       identified = 3;
-       recorded   = 4;
+       invisible  = 0; //!< Invisible
+       detected   = 1; //!< Detected
+       recognized = 2; //!< Recognized
+       identified = 3; //!< Identified
+       recorded   = 4; //!< Recorded
     }
 }
 
+/** @struct UnitDetection
+    @brief Notifies the detection of a unit
+*/
 message UnitDetection {
-    required UnitId               observer           = 1;
-    required UnitId               detected_unit      = 2; //!< @todo rename to unit
-    required UnitVisibility.Level current_visibility = 3;
-    required UnitVisibility.Level max_visibility     = 4;
+    required UnitId               observer           = 1; //!< The observer unit identifier
+    required UnitId               detected_unit      = 2; //!< The detected unit identifier @todo rename to unit
+    required UnitVisibility.Level current_visibility = 3; //!< The current visibility level @todo rename to visibility
+    required UnitVisibility.Level max_visibility     = 4; //!< The maximum visibility level
 }
 
+/** @struct ObjectDetection
+    @brief Notifies the detection of an object
+*/
 message ObjectDetection {
-    required UnitId               observer        = 1;
-    required ObjectId             detected_object = 2; //!< @todo rename to object
-    required UnitVisibility.Level visibility      = 3;
+    required UnitId               observer        = 1; //!< The observer unit identifier
+    required ObjectId             detected_object = 2; //!< The detected object identifier @todo rename to object
+    required UnitVisibility.Level visibility      = 3; //!< The current visibility level
 }
 
+/** @struct CrowdConcentrationDetection
+    @brief Notifies the detection of a crowd concentration
+*/
 message CrowdConcentrationDetection {
-    required UnitId               observer               = 1;
-    required CrowdId              detected_crowd         = 2; //!< @todo rename to crowd
-    required CrowdConcentrationId detected_concentration = 3; //!< @todo rename to concentration
-    required UnitVisibility.Level visibility             = 4;
+    required UnitId               observer               = 1; //!< The observer unit identifier
+    required CrowdId              detected_crowd         = 2; //!< The detected crowd identifier @todo rename to crowd
+    required CrowdConcentrationId detected_concentration = 3; //!< The detected concentration @todo rename to concentration
+    required UnitVisibility.Level visibility             = 4; //!< The current visibility level
 }
 
+/** @struct CrowdFlowDetection
+    @brief Notifies the detection of a crowd flow
+*/
 message CrowdFlowDetection {
-    required UnitId      observer       = 1;
-    required CrowdId     detected_crowd = 2; //!< @todo rename to crowd
-    required CrowdFlowId detected_flow  = 3; //!< @todo rename to flow
-    required Path        visible_flow   = 4; //!< @todo rename to path
+    required UnitId      observer       = 1; //!< The observer unit identifier
+    required CrowdId     detected_crowd = 2; //!< The detected crowd identifier @todo rename to crowd
+    required CrowdFlowId detected_flow  = 3; //!< The detected flow identifier @todo rename to flow
+    required Path        visible_flow   = 4; //!< The flow path @todo rename to path
 }
 
+/** @struct ObjectCreation
+    @brief Notifies the creation of an object
+*/
 message ObjectCreation {
-    required ObjectId         object     = 1;
-    required ObjectType       type       = 2;
-    required string           name       = 3;
-    required PartyId          party      = 4;
-    required Location         location   = 5;
-    required ObjectAttributes attributes = 6;
+    required ObjectId         object     = 1; //!< The object identifier
+    required ObjectType       type       = 2; //!< The object type
+    required string           name       = 3; //!< The object name
+    required PartyId          party      = 4; //!< The object party
+    required Location         location   = 5; //!< The object location
+    required ObjectAttributes attributes = 6; //!< The object attributes
 }
 
+/** @struct ObjectDestruction
+    @brief Notifies the destruction of an object
+*/
 message ObjectDestruction {
-    required ObjectId object = 1;
+    required ObjectId object = 1; //!< The object identifier
 }
 
+/** @struct ObjectUpdate
+    @brief Notifies the update of an object
+*/
 message ObjectUpdate {
-    required ObjectId         object     = 1;
-    optional Location         location   = 2;
-    required ObjectAttributes attributes = 3;
+    required ObjectId         object     = 1; //!< The object identifier
+    optional Location         location   = 2; //!< The object location
+    required ObjectAttributes attributes = 3; //!< The object attributes
 }
 
+/** @struct ObjectUpdate
+    @brief Notifies the creation of an object knowledge
+*/
 message ObjectKnowledgeCreation {
-    required ObjectKnowledgeId knowledge       = 1;
-    required PartyId           party           = 2;
-    required ObjectId          object          = 3;
-    required ObjectType        type            = 4;
-    required ObjectAttributes  attributes      = 5;
-    optional KnowledgeGroupId  knowledge_group = 6;
+    required ObjectKnowledgeId knowledge       = 1; //!< The knowledge identifier
+    required PartyId           party           = 2; //!< The party identifier
+    required ObjectId          object          = 3; //!< The object identifier
+    required ObjectType        type            = 4; //!< The object type
+    required ObjectAttributes  attributes      = 5; //!< The object attributes
+    optional KnowledgeGroupId  knowledge_group = 6; //!< The knowledge group identifier
 }
 
+/** @struct ObjectKnowledgeUpdate
+    @brief Notifies the update of an object knowledge
+*/                 
 message ObjectKnowledgeUpdate {
-    required ObjectKnowledgeId knowledge           = 1;
-    required PartyId           party               = 2;
-    optional ObjectId          object              = 3;
-    optional int32             relevance           = 4;
-    optional Location          location            = 5;
-    optional ObjectAttributes  attributes          = 6;
-    optional bool              perceived           = 7;
-    optional AutomatIdList     perceiving_automats = 8;
-    optional KnowledgeGroupId  knowledge_group     = 9;
+    required ObjectKnowledgeId knowledge           = 1; //!< The knowledge identifier
+    required PartyId           party               = 2; //!< The party identifier
+    optional ObjectId          object              = 3; //!< The object identifier
+    optional int32             relevance           = 4; //!< The percentage of relevance
+    optional Location          location            = 5; //!< The object location
+    optional ObjectAttributes  attributes          = 6; //!< The object attributes
+    optional bool              perceived           = 7; //!< Whether the object is currently perceived or not
+    optional AutomatIdList     perceiving_automats = 8; //!< The list of automats perceiving the object
+    optional KnowledgeGroupId  knowledge_group     = 9; //!< The knowledge group identifier
 }
 
+/** @struct ObjectKnowledgeDestruction
+    @brief Notifies the destruction of an object knowledge
+*/                 
 message ObjectKnowledgeDestruction {
-    required ObjectKnowledgeId knowledge = 1;
-    required PartyId           party     = 2;
+    required ObjectKnowledgeId knowledge = 1; //!< The knowledge identifier
+    required PartyId           party     = 2; //!< The knowledge party identifier @deprecated to be maintained by the client if needed
 }
 
+/** @struct UrbanKnowledgeCreation
+    @brief Notifies the creation of a urban knowledge
+*/                 
 message UrbanKnowledgeCreation {
-    required UrbanObjectKnowledgeId knowledge = 1;
-    required PartyId                party     = 2;
-    required ObjectId               object    = 3;
+    required UrbanObjectKnowledgeId knowledge = 1; //!< The knowledge identifier
+    required PartyId                party     = 2; //!< The party identifier
+    required ObjectId               object    = 3; //!< The object identifier
 }
 
+/** @struct UrbanKnowledgeUpdate
+    @brief Notifies the update of a urban knowledge
+*/                   
 message UrbanKnowledgeUpdate {
-    required UrbanObjectKnowledgeId knowledge           = 1;
-    required PartyId                party               = 2;
-    required ObjectId               object              = 3;
-    optional int32                  progress            = 4;
-    optional int32                  max_progress        = 5;
-    optional bool                   perceived           = 6;
-    optional AutomatIdList          automat_perceptions = 7;
+    required UrbanObjectKnowledgeId knowledge           = 1; //!< The knowledge identifier
+    required PartyId                party               = 2; //!< The party identifier
+    required ObjectId               object              = 3; //!< The object identifier
+    optional int32                  progress            = 4; //!< The percentage of completion
+    optional int32                  max_progress        = 5; //!< The maximum percentage of completion ever reached
+    optional bool                   perceived           = 6; //!< Whether the object is currently perceived or not
+    optional AutomatIdList          automat_perceptions = 7; //!< The list of automats perceiving the object @todo rename along ObjectKnowledgeUpdate::perceiving_automats
 }
 
+/** @struct UrbanKnowledgeDestruction
+    @brief Notifies the destruction of a urban knowledge
+*/                    
 message UrbanKnowledgeDestruction {
-    required UrbanObjectKnowledgeId knowledge = 1;
-    required PartyId                party     = 2;
+    required UrbanObjectKnowledgeId knowledge = 1; //!< The knowledge identifier
+    required PartyId                party     = 2; //!< The party identifier
 }
 
+/** @struct LogMedicalHandlingCreation
+    @brief Notifies the creation of a medical handling
+*/                    
 message LogMedicalHandlingCreation {
-    required MedicalRequestId request          = 1;
-    required UnitId           unit             = 2;
-    required int32            tick             = 3;
-    required EnumHumanRank    rank             = 4;
-    required EnumHumanWound   wound            = 5;
-    optional bool             mental_wound     = 6;
-    optional bool             nbc_contaminated = 7;
+    required MedicalRequestId request          = 1; //!< The medical request identifier
+    required UnitId           unit             = 2; //!< The unit identifier
+    required int32            tick             = 3; //!< The creation tick number
+    required EnumHumanRank    rank             = 4; //!< The rank
+    required EnumHumanWound   wound            = 5; //!< The type wound
+    optional bool             mental_wound     = 6; //!< Whether the unit is mentally wounded or not
+    optional bool             nbc_contaminated = 7; //!< Whether the unit is NBC contaminated or not
 }
 
+/** @struct LogMedicalHandlingUpdate
+    @brief Notifies the update of a medical handling
+*/
 message LogMedicalHandlingUpdate {
+    /** @enum EnumLogMedicalHandlingStatus
+        @brief Defines the medical handling states
+    */
     enum EnumLogMedicalHandlingStatus {
-       waiting_for_evacuation                    = 0;
-       evacuation_ambulance_moving_in            = 1;
-       evacuation_ambulance_loading              = 2;
-       waiting_for_evacuation_loading_completion = 3;
-       evacuation_ambulance_moving_out           = 4;
-       evacuation_ambulance_unloading            = 5;
-       waiting_for_diagnostic                    = 6;
-       diagnosing                                = 7;
-       looking_for_triage                        = 8;
-       waiting_for_triage                        = 9;
-       triaging                                  = 10;
-       looking_for_medical_attention             = 11;
-       waiting_for_medical_attention             = 12;
-       receiving_medical_attention               = 13;
-       resting                                   = 14;
-       waiting_for_collection                    = 15;
-       collection_ambulance_loading              = 16;
-       waiting_for_collection_loading_completion = 17;
-       collection_ambulance_moving_in            = 18;
-       collection_ambulance_unloading            = 19;
-       finished                                  = 20;
+       waiting_for_evacuation                    = 0;  //!< Waiting for evacuation
+       evacuation_ambulance_moving_in            = 1;  //!< Evacuation ambulance moving in
+       evacuation_ambulance_loading              = 2;  //!< Evacuation ambulance loading
+       waiting_for_evacuation_loading_completion = 3;  //!< Waiting for evacuation loading completion
+       evacuation_ambulance_moving_out           = 4;  //!< Evacuation ambulance moving out
+       evacuation_ambulance_unloading            = 5;  //!< Evacuation ambulance unloading
+       waiting_for_diagnostic                    = 6;  //!< Waiting for diagnostic
+       diagnosing                                = 7;  //!< Being diagnosed
+       looking_for_triage                        = 8;  //!< Looking for triage
+       waiting_for_triage                        = 9;  //!< Waiting for triage
+       triaging                                  = 10; //!< Being triaged
+       looking_for_medical_attention             = 11; //!< Looking for medical attention
+       waiting_for_medical_attention             = 12; //!< Waiting for medical attention
+       receiving_medical_attention               = 13; //!< Receiving medical attention
+       resting                                   = 14; //!< Resting
+       waiting_for_collection                    = 15; //!< Waiting for collection
+       collection_ambulance_loading              = 16; //!< Collection ambulance loading
+       waiting_for_collection_loading_completion = 17; //!< Waiting for collection loading completion
+       collection_ambulance_moving_in            = 18; //!< Collection ambulance moving in
+       collection_ambulance_unloading            = 19; //!< Collection ambulance unloading
+       finished                                  = 20; //!< Finished
     }
-    required MedicalRequestId             request          = 1;
-    required UnitId                       unit             = 2;
-    optional UnitId                       provider         = 3;
-    optional EnumHumanWound               wound            = 4;
-    optional bool                         mental_wound     = 5;
-    optional bool                         nbc_contaminated = 6;
-    optional EnumLogMedicalHandlingStatus state            = 7;
-    optional bool                         diagnosed        = 8;
+    required MedicalRequestId             request          = 1; //!< The request identifier
+    required UnitId                       unit             = 2; //!< The unit identifier
+    optional UnitId                       provider         = 3; //!< The provider identifier
+    optional EnumHumanWound               wound            = 4; //!< The type of wound
+    optional bool                         mental_wound     = 5; //!< Whether the unit is mentally wounded or not
+    optional bool                         nbc_contaminated = 6; //!< Whether the unit is NBC contaminated or not
+    optional EnumLogMedicalHandlingStatus state            = 7; //!< The current state
+    optional bool                         diagnosed        = 8; //!< Whether a diagnostic has been established or not
 }
 
+/** @struct LogMedicalHandlingDestruction
+    @brief Notifies the destruction of a medical handling
+*/
 message LogMedicalHandlingDestruction {
-    required MedicalRequestId request = 1;
-    required UnitId           unit    = 2;
+    required MedicalRequestId request = 1; //!< The request identifier
+    required UnitId           unit    = 2; //!< The unit identifier
 }
 
-message LogMedicalEquipmentAvailability{
-    required EquipmentType equipment = 1;
-    required int32         total     = 2;
-    required int32         available = 3;
-    required int32         working   = 4;
-    optional int32         lent      = 5;
-    optional int32         resting   = 6;
+/** @struct LogMedicalEquipmentAvailability
+    @brief Regroups the information about the availability of a medical equipment
+
+    @todo explain a bit what are the different amounts
+*/
+message LogMedicalEquipmentAvailability {
+    required EquipmentType equipment = 1; //!< The equipment type
+    required int32         total     = 2; //!< The total
+    required int32         available = 3; //!< The number of equipments available
+    required int32         working   = 4; //!< The number of equipments working
+    optional int32         lent      = 5; //!< The number of equipments lent
+    optional int32         resting   = 6; //!< The number of equipments resting
 }
 
+/** @struct SeqOfLogMedicalEquipmentAvailability
+    @brief Lists several medical equipment availabilities
+*/
 message SeqOfLogMedicalEquipmentAvailability {
-    repeated LogMedicalEquipmentAvailability elem = 1;
+    repeated LogMedicalEquipmentAvailability elem = 1; //!< The equipment availabilities
 }
 
+/** @struct LogMedicalState
+    @brief Updates the medical state of a unit
+*/
 message LogMedicalState {
-    required UnitId                               unit                  = 1;
-    optional bool                                 chain                 = 2;
-    optional LogMedicalPriorities                 priorities            = 3;
-    optional AutomatIdList                        tactical_priorities   = 4;
-    optional SeqOfLogMedicalEquipmentAvailability evacuation_ambulances = 5;
-    optional SeqOfLogMedicalEquipmentAvailability collection_ambulances = 6;
-    optional SeqOfLogMedicalEquipmentAvailability doctors               = 7;
+    required UnitId                               unit                  = 1; //!< The unit identifier
+    optional bool                                 chain                 = 2; //!< Whether the supply chain is in place or not
+    optional LogMedicalPriorities                 priorities            = 3; //!< The medical priorities
+    optional AutomatIdList                        tactical_priorities   = 4; //!< The tactical priorities @todo What's this ?
+    optional SeqOfLogMedicalEquipmentAvailability evacuation_ambulances = 5; //!< The status of evacuation ambulances @todo explain the difference between evacuation and collection somewhere
+    optional SeqOfLogMedicalEquipmentAvailability collection_ambulances = 6; //!< The status of collection ambulances @todo explain the difference between evacuation and collection somewhere
+    optional SeqOfLogMedicalEquipmentAvailability doctors               = 7; //!< The status of doctors
 }
 
+/** @struct LogMaintenanceHandlingCreation
+    @brief Notifies the creation of a maintenance handling
+*/
 message LogMaintenanceHandlingCreation {
-    required MaintenanceRequestId request    = 1;
-    required UnitId               unit       = 2;
-    required int32                tick       = 3;
-    required EquipmentType        equipement = 4;
-    required BreakdownType        breakdown  = 5;
+    required MaintenanceRequestId request    = 1; //!< The request identifier
+    required UnitId               unit       = 2; //!< The unit identifier
+    required int32                tick       = 3; //!< The creation tick number
+    required EquipmentType        equipement = 4; //!< The equipment type under maintenance
+    required BreakdownType        breakdown  = 5; //!< The breakdown type
 }
 
+/** @struct LogMaintenanceHandlingUpdate
+    @brief Notifies the update of a maintenance handling
+*/
 message LogMaintenanceHandlingUpdate {
+    /** @enum EnumLogMaintenanceHandlingStatus
+        @brief Defines the maintenance handling states
+    */
     enum EnumLogMaintenanceHandlingStatus {
-       moving_to_supply             = 0;
-       waiting_for_transporter      = 1;
-       transporter_moving_to_supply = 2;
-       transporter_loading          = 3;
-       transporter_moving_back      = 4;
-       transporter_unloading        = 5;
-       diagnosing                   = 6;
-       searching_upper_levels       = 7;
-       waiting_for_parts            = 8;
-       waiting_for_repairer         = 9;
-       repairing                    = 10;
-       moving_back                  = 11;
-       finished                     = 12;
+       moving_to_supply             = 0;  //!< Moving to supply
+       waiting_for_transporter      = 1;  //!< Waiting for transporter
+       transporter_moving_to_supply = 2;  //!< Transporter moving to supply
+       transporter_loading          = 3;  //!< Transporter loading
+       transporter_moving_back      = 4;  //!< Transporter moving back
+       transporter_unloading        = 5;  //!< Transporter unloading
+       diagnosing                   = 6;  //!< Being diagnosed
+       searching_upper_levels       = 7;  //!< Searching maintenance upper levels
+       waiting_for_parts            = 8;  //!< Waiting for parts
+       waiting_for_repairer         = 9;  //!< Waiting for a repairer
+       repairing                    = 10; //!< Being repaired
+       moving_back                  = 11; //!< Moving back
+       finished                     = 12; //!< Finished
     }
-    required MaintenanceRequestId             request   = 1;
-    required UnitId                           unit      = 2;
-    required UnitId                           provider  = 3;
-    optional EnumLogMaintenanceHandlingStatus state     = 4;
-    optional bool                             diagnosed = 5;
+    required MaintenanceRequestId             request   = 1; //!< The request identifier
+    required UnitId                           unit      = 2; //!< The unit identifier
+    required UnitId                           provider  = 3; //!< The maintenance provider identifier
+    optional EnumLogMaintenanceHandlingStatus state     = 4; //!< The maintenance state
+    optional bool                             diagnosed = 5; //!< Whether a diagnostic has been established or not
 }
 
+/** @struct LogMaintenanceHandlingDestruction
+    @brief Notifies the destruction of a maintenance handling
+*/
 message LogMaintenanceHandlingDestruction {
-    required MaintenanceRequestId request = 1;
-    required UnitId               unit    = 2;
+    required MaintenanceRequestId request = 1; //!< The request identifier
+    required UnitId               unit    = 2; //!< The unit identifier
 }
 
 message LogMaintenanceEquipmentAvailability {

@@ -16,9 +16,9 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "protocol/ClientSenders.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/Model.h>
-#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Urban )
 
@@ -81,16 +81,13 @@ DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> boost::serialization::base_object< DEC_Knowledge_Object >( *this )
-         >> nTimeLastUpdate_;
-
     unsigned long urbanId;
-    file >> urbanId;
+    file >> boost::serialization::base_object< DEC_Knowledge_Object >( *this )
+         >> nTimeLastUpdate_
+         >> urbanId;
     object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
-
-    file >> const_cast< MIL_Army_ABC*& >( army_ );
-
-    file >> rProgressPercent_
+    file >> const_cast< MIL_Army_ABC*& >( army_ )
+         >> rProgressPercent_
          >> rMaxProgressPercent_
          >> bCreatedOnNetwork_
          >> bCurrentProgressUpdated_
@@ -143,10 +140,10 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::ComputeProgress( const MIL_Agent_ABC& agent )
 {
-    float complexity = object_->ComputeComplexity(); // ALGO TEMPORAIRE
+    float complexity = object_->ComputeComplexity(); // $$$$ ALGO TEMPORAIRE
     float progress = 0.f;
     if( complexity != 0.f )
-        progress = 10 / complexity;//@TODO MGD Add true physical configuration in ADN
+        progress = 10 / complexity;// $$$$ @TODO MGD Add true physical configuration in ADN
     const UrbanObjectWrapper* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     float maxRecce = ( urbanBlock && object_ == &urbanBlock->GetObject() ) ? 1.0f : 0.25f;
     maxRecce = std::max( maxRecce, rProgressPercent_ );
@@ -200,12 +197,8 @@ void DEC_Knowledge_Urban::UpdateRelevance()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::WriteMsgPerceptionSources( sword::UrbanKnowledgeUpdate& message ) const
 {
-    if( !perceivedByAutomate_.empty() )
-        for( CIT_PerceptionSource it = perceivedByAutomate_.begin(); it != perceivedByAutomate_.end(); ++it )
-        {
-            sword::AutomatId& data = *message.mutable_automat_perceptions()->add_elem();
-            data.set_id( ( *it )->GetID() );
-        }
+    for( CIT_PerceptionSource it = perceivedByAutomate_.begin(); it != perceivedByAutomate_.end(); ++it )
+        message.mutable_automat_perceptions()->add_elem()->set_id( ( *it )->GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,16 +209,14 @@ void DEC_Knowledge_Urban::SendChangedState()
 {
     client::UrbanKnowledgeUpdate message;
     bool bMustSend = false;
-
     if( std::abs( rLastProgressSent_ - rProgressPercent_ ) >= 0.05 )
     {
-        float rProgress = static_cast< float >( rProgressPercent_ * 100 ) / 5 * 0.05f;
+        float rProgress = static_cast< float >( rProgressPercent_ * 100 ) / 5 * 0.05f; // $$$$ MCO : ^c^v bloc from SendFullState + WTF magic numbers + WTF float computations and casts !
         message().set_progress( static_cast< int >( rProgress * 100 ) );
         message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
         rLastProgressSent_ = rProgress;
         bMustSend = true;
     }
-
     if( perceivedByAutomate_.size() == 0 && bLastPerceived_ )
     {
         message().set_perceived( false );
@@ -243,7 +234,6 @@ void DEC_Knowledge_Urban::SendChangedState()
         WriteMsgPerceptionSources( message() );
         bMustSend = true;
     }
-
     if( bMustSend )
     {
         nTimeLastUpdate_ = GetCurrentTimeStep();
@@ -264,14 +254,15 @@ void DEC_Knowledge_Urban::SendFullState()
     message().mutable_knowledge()->set_id( GetID() );
     message().mutable_party()->set_id( army_->GetID() );
     message().mutable_object()->set_id( GetObjectKnown()->GetID() );
-    float rProgress = static_cast< float >( rProgressPercent_ * 100 ) / 5 * 0.05f;
+    float rProgress = static_cast< float >( rProgressPercent_ * 100 ) / 5 * 0.05f; // $$$$ MCO : WTF ^c^v bloc from SendChangedState + WTF magic numbers + WTF float computations and casts !
     message().set_progress( static_cast< int >( rProgress * 100 ) );
-    rLastProgressSent_ = rProgress;
     message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
+    rLastProgressSent_ = rProgress;
     message().set_perceived( bLastPerceived_ );
     WriteMsgPerceptionSources( message() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::UpdateOnNetwork
 // Created:MGD 2009-11-26
@@ -281,7 +272,7 @@ void DEC_Knowledge_Urban::UpdateOnNetwork()
     if( !bCreatedOnNetwork_ )
     {
         SendMsgCreation();
-        bCreatedOnNetwork_  = true;
+        bCreatedOnNetwork_ = true;
         SendFullState();
         return;
     }
@@ -297,7 +288,7 @@ void DEC_Knowledge_Urban::SendStateToNewClient()
     if( bCreatedOnNetwork_ )
     {
         SendMsgCreation();
-        SendFullState  ();
+        SendFullState();
         DEC_Knowledge_Object::SendStateToNewClient();
     }
 }
@@ -333,7 +324,7 @@ void DEC_Knowledge_Urban::SendMsgDestruction() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Urban::Clean() const
 {
-    return false;//always maintain knowledge
+    return false; // always maintain knowledge
 }
 
 // -----------------------------------------------------------------------------
@@ -365,6 +356,10 @@ const geometry::Point2f DEC_Knowledge_Urban::GetBarycenter() const
     return object_->GetFootprint()->Barycenter();
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Urban::GetTerrainObjectKnown
+// Created: MGD 2010-02-01
+// -----------------------------------------------------------------------------
 const urban::TerrainObject_ABC& DEC_Knowledge_Urban::GetTerrainObjectKnown() const
 {
     return *object_;

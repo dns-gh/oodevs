@@ -1660,7 +1660,6 @@ void PHY_RolePion_Composantes::GetConvoyTransportersUse( T_ComposanteUseMap& com
                     ++data.nNbrUsed_;
             }
         }
-
     for( CIT_LoanMap itLoan = lentComposantes_.begin(); itLoan != lentComposantes_.end(); ++itLoan )
     {
         const PHY_ComposantePion::T_ComposantePionVector& composantes = itLoan->second;

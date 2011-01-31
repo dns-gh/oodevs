@@ -246,10 +246,8 @@ void PHY_MedicalHumanState::SendChangedState() const
 {
     if( !( bHasChanged_ || bHumanStateHasChanged_ || ( pConsign_ && pConsign_->HasChanged() ) ) )
         return;
-
     assert( pPion_ );
     assert( pHuman_ );
-
     client::LogMedicalHandlingUpdate asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
@@ -267,7 +265,6 @@ void PHY_MedicalHumanState::SendChangedState() const
         asn().set_nbc_contaminated( pHuman_->IsContaminated() );
     }
     asn().set_diagnosed( bDiagnosed_ );
-
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -277,7 +274,7 @@ void PHY_MedicalHumanState::SendChangedState() const
 // -----------------------------------------------------------------------------
 void PHY_MedicalHumanState::Clean()
 {
-    bHasChanged_           = false;
+    bHasChanged_ = false;
     bHumanStateHasChanged_ = false;
     if( pConsign_ )
         pConsign_->Clean();
@@ -291,7 +288,6 @@ void PHY_MedicalHumanState::SendMsgCreation() const
 {
     assert( pPion_ );
     assert( pHuman_ );
-
     client::LogMedicalHandlingCreation asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
@@ -310,7 +306,6 @@ void PHY_MedicalHumanState::SendMsgCreation() const
 void PHY_MedicalHumanState::SendMsgDestruction() const
 {
     assert( pPion_ );
-
     client::LogMedicalHandlingDestruction asn;
     asn().mutable_request()->set_id( nID_ );
     asn().mutable_unit()->set_id( pPion_->GetID() );
@@ -335,7 +330,6 @@ void PHY_MedicalHumanState::SetConsign( PHY_MedicalConsign_ABC* pConsign )
 {
     if( pConsign == pConsign_ )
         return;
-
     pConsign_    = pConsign;
     bHasChanged_ = true;
 }

@@ -685,6 +685,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::Update( bool /*bIsDead*/ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -742,12 +743,10 @@ void PHY_RolePionLOG_Medical::Clean()
 // -----------------------------------------------------------------------------
 double PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const
 {
-
     unsigned int nNbrTotal = 0;
     unsigned int nNbrAvailableAllowedToWork = 0;
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
-
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         nNbrTotal += it->second.nNbrTotal_;
@@ -790,25 +789,22 @@ void PHY_RolePionLOG_Medical::StopUsingForLogistic( PHY_ComposantePion& composan
     composante.StopUsingForLogistic();
 }
 
-// -----------------------------------------------------------------------------
-// Name: SendComposanteUse
-// Created: NLD 2005-01-05
-// -----------------------------------------------------------------------------
-static
-void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogMedicalEquipmentAvailability& asn )
+namespace
 {
-    if( data.empty() )
-        return;
-    for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
+    void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, sword::SeqOfLogMedicalEquipmentAvailability& asn )
     {
-        sword::LogMedicalEquipmentAvailability& data = *asn.add_elem();
-        data.mutable_equipment()->set_id( itData->first->GetMosID().id() );
-        assert( itData->second.nNbrTotal_ );
-
-        data.set_total( itData->second.nNbrTotal_ );
-        data.set_working( itData->second.nNbrUsed_ );
-        data.set_available( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
-        data.set_lent( itData->second.nNbrLent_ );
+        if( data.empty() )
+            return;
+        for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
+        {
+            sword::LogMedicalEquipmentAvailability& data = *asn.add_elem();
+            data.mutable_equipment()->set_id( itData->first->GetMosID().id() );
+            assert( itData->second.nNbrTotal_ );
+            data.set_total( itData->second.nNbrTotal_ );
+            data.set_working( itData->second.nNbrUsed_ );
+            data.set_available( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
+            data.set_lent( itData->second.nNbrLent_ );
+        }
     }
 }
 
