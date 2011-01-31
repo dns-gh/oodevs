@@ -12,9 +12,10 @@
 
 #include "HlaExtension_ABC.h"
 #include "Formation.h"
-#include "EntityIdentifier.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "dispatcher/Observer.h"
 #include "protocol/Protocol.h"
+#include "rpr_tools/EntityIdentifier.h"
 
 namespace dispatcher
 {
@@ -32,28 +33,28 @@ namespace hla
 // Created: SBO 2008-02-18
 // =============================================================================
 class AgentExtension : public HlaExtension_ABC
-                     , public kernel::Updatable_ABC< sword::UnitAttributes >
-                     , public kernel::Updatable_ABC< sword::UnitEnvironmentType >
+                     , private dispatcher::Observer< sword::UnitAttributes >
+                     , private dispatcher::Observer< sword::UnitEnvironmentType >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Agent_ABC& holder, const EntityIdentifier& id );
+             AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes
+                           , dispatcher::Observable< sword::UnitEnvironmentType >& environment
+                           , dispatcher::Agent_ABC& holder, const rpr::EntityIdentifier& id );
     virtual ~AgentExtension();
     //@}
 
     //! @name Operations
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-    virtual void DoUpdate( const sword::UnitAttributes& attributes );
-    virtual void DoUpdate( const sword::UnitEnvironmentType& attributes );
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Observer
     //@{
-    AgentExtension( const AgentExtension& );            //!< Copy constructor
-    AgentExtension& operator=( const AgentExtension& ); //!< Assignment operator
+    virtual void Notify( const sword::UnitAttributes& attributes );
+    virtual void Notify( const sword::UnitEnvironmentType& attributes );
     //@}
 
     //! @name Helpers
@@ -71,7 +72,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::Agent_ABC& holder_;
-    EntityIdentifier id_;
+    rpr::EntityIdentifier id_;
     Formation formation_;
     mutable bool spatialChanged_;
     mutable bool compositionChanged_;

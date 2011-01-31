@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "plugins_test_pch.h"
-#include "hla_plugin/Coordinates.h"
+#include "rpr_tools/Coordinates.h"
 
-using namespace plugins::hla;
+using namespace rpr;
 
 namespace
 {

@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "hla_plugin/EntityIdentifier.h"
+#include "rpr_tools/EntityIdentifier.h"
 #include "tic_plugin/PlatformVisitor_ABC.h"
 #include "protocol/Protocol.h"
 
@@ -71,7 +71,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const plugins::tic::Platform_ABC*, hla::EntityIdentifier > T_Identifiers;
+    typedef std::map< const plugins::tic::Platform_ABC*, rpr::EntityIdentifier > T_Identifiers;
     typedef T_Identifiers::iterator                                             IT_Identifiers;
     //@}
 

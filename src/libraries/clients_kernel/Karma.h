@@ -10,6 +10,10 @@
 #ifndef __Karma_h_
 #define __Karma_h_
 
+#pragma warning( push, 0 )
+#include <qstring.h>
+#pragma warning( pop )
+
 namespace kernel
 {
     class Team_ABC;

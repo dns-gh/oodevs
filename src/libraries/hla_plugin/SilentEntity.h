@@ -10,7 +10,7 @@
 #ifndef __SilentEntity_h_
 #define __SilentEntity_h_
 
-#include "EntityType.h"
+#include "rpr_tools/EntityType.h"
 
 namespace plugins
 {
@@ -27,7 +27,7 @@ class SilentEntity
 public:
     //! @name Constructors/Destructor
     //@{
-             SilentEntity( const EntityType& type, unsigned short number );
+             SilentEntity( const rpr::EntityType& type, unsigned short number );
     virtual ~SilentEntity();
     //@}
 
@@ -54,7 +54,7 @@ private:
     //@{
     unsigned short numberOfEntitiesOfThisType_;
     unsigned short numberOfAppearanceRecords_;
-    EntityType entityType_;
+    rpr::EntityType entityType_;
     unsigned long entityAppearance_;
     //@}
 };

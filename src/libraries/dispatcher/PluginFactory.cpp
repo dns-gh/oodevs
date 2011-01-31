@@ -19,9 +19,12 @@
 #include "rights_plugin/RightsPlugin.h"
 #include "logger_plugin/LoggerPlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
+#include "MT_Tools/MT_Logger.h"
 #include "saver_plugin/SaverPlugin.h"
 #include "script_plugin/ScriptPlugin.h"
 #include "score_plugin/ScorePlugin.h"
+#include <boost/filesystem.hpp>
+#include <windows.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace dispatcher;
@@ -88,8 +91,10 @@ void PluginFactory::Instanciate()
 // Name: PluginFactory::ReadPlugin
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis ) const
+void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
 {
+    if( name == "hla" )
+        LoadPlugin( name, xis );
     if( name == "recorder" )
     {
         handler_.Add( new plugins::saver::SaverPlugin( model_, config_ ) );
@@ -100,5 +105,55 @@ void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis ) co
         std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, staticModel_, simulation_, clients_, clients_ , clients_, registrables_ ) );
         if( plugin.get() )
             handler_.Add( plugin.release() );
+    }
+}
+
+namespace
+{
+#ifdef _DEBUG
+# define EXTENSION "-gd"
+#else
+# define EXTENSION ""
+#endif
+
+    std::string SetLibraryConfiguration( const std::string& libraryPath )
+    {
+        boost::filesystem::path p( libraryPath );
+        return boost::filesystem::basename( p ) + EXTENSION + boost::filesystem::extension( p );
+    }
+
+    typedef dispatcher::Plugin_ABC* (*CreateFunctor)( dispatcher::Model_ABC&, const dispatcher::Config&, xml::xistream& );
+    typedef void (*DestroyFunctor)( dispatcher::Plugin_ABC* );
+
+    template< typename T >
+    T LoadFunction( HMODULE& module, const std::string& name )
+    {
+        T function = (T)GetProcAddress( module, name.c_str() );
+        if( !function )
+            throw std::exception( std::string( "unable to find function '" + name + "'" ).c_str() );
+        return function;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PluginFactory::LoadPlugin
+// Created: SBO 2011-01-31
+// -----------------------------------------------------------------------------
+void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
+{
+    try
+    {
+        const std::string library( SetLibraryConfiguration( xis.attribute< std::string >( "library" ) ) );
+        HMODULE module = LoadLibrary( library.c_str() );
+        if( !module )
+            throw std::exception( std::string( "failed to load library: '" + library + "'" ).c_str() );
+        CreateFunctor createFunction = LoadFunction< CreateFunctor >( module, "CreateInstance" );
+        DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
+        handler_.Add( boost::shared_ptr< Plugin_ABC >( createFunction( model_, config_, xis ), destroyFunction ) );
+        MT_LOG_INFO_MSG( "Plugin '" << name << "' loaded (file: " << library << ")" );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Failed to load plugin '" << name << "' reason: " << e.what() );
     }
 }

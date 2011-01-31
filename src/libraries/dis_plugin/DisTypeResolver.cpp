@@ -13,7 +13,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::dis;
-using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: DisTypeResolver constructor
@@ -27,7 +26,7 @@ DisTypeResolver::DisTypeResolver( const std::string& mappingFile )
             >> xml::attribute( "default", defaultType )
             >> xml::list( "entry", *this, &DisTypeResolver::ReadEntry )
         >> xml::end;
-    default_ = EntityType( defaultType );
+    default_ = rpr::EntityType( defaultType );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,12 +42,12 @@ DisTypeResolver::~DisTypeResolver()
 // Name: DisTypeResolver::Find
 // Created: AGE 2008-04-04
 // -----------------------------------------------------------------------------
-EntityType DisTypeResolver::Find( const kernel::ComponentType& component ) const
+rpr::EntityType DisTypeResolver::Find( const kernel::ComponentType& component ) const
 {
-    EntityType& type = resolved_[ &component ];
-    if( type == EntityType() )
+    rpr::EntityType& type = resolved_[ &component ];
+    if( type == rpr::EntityType() )
     {
-        const EntityType* resolved = types_.Find( component.GetName() );
+        const rpr::EntityType* resolved = types_.Find( component.GetName() );
         type = resolved ? *resolved : default_;
     }
     return type;
@@ -60,5 +59,5 @@ EntityType DisTypeResolver::Find( const kernel::ComponentType& component ) const
 // -----------------------------------------------------------------------------
 void DisTypeResolver::ReadEntry( xml::xistream& xis )
 {
-    types_.Add( xis.attribute< std::string >( "name" ), EntityType( xis.attribute< std::string >( "dis" ) ) );
+    types_.Add( xis.attribute< std::string >( "name" ), rpr::EntityType( xis.attribute< std::string >( "dis" ) ) );
 }

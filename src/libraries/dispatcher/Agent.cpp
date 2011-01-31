@@ -223,7 +223,6 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     UPDATE_ASN_ATTRIBUTE( refugees_managed, bRefugeeManaged_ );
 
     if( message.has_equipment_dotations()  )
-    {
         for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
         {
             const sword::EquipmentDotations_EquipmentDotation& asn = message.equipment_dotations().elem( i );
@@ -236,10 +235,7 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
                 equipments_.Register( asn.type().id(), *pEquipment );
             }
         }
-    }
-
     if( message.has_human_dotations() )
-    {
         for( int i = 0; i < message.human_dotations().elem_size(); ++i )
         {
             const sword::HumanDotations_HumanDotation& asn = message.human_dotations().elem( i );
@@ -252,10 +248,7 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
                 troops_.Register( asn.rank(), *pHumans );
             }
         }
-    }
-
     if( message.has_resource_dotations() )
-    {
         for( int i = 0; i < message.resource_dotations().elem_size(); ++i )
         {
             const sword::ResourceDotations_ResourceDotation& asn = message.resource_dotations().elem().Get(i);
@@ -268,8 +261,6 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
                 dotations_.Register( asn.type().id(), *pDotation );
             }
         }
-    }
-
     if( message.has_lent_equipments() )
     {
         lendings_.DeleteAll();
@@ -279,7 +270,6 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
             lendings_.Register( i, *loan );
         }
     }
-
     if( message.has_borrowed_equipments() )
     {
         borrowings_.DeleteAll();
@@ -292,6 +282,7 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_extension() )
         for( int i = 0; i < message.extension().entries_size(); ++i )
             extensions_[ message.extension().entries( i ).name() ] = message.extension().entries( i ).value();
+    Observable< sword::UnitAttributes >::Notify( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -366,6 +357,15 @@ void Agent::DoUpdate( const sword::UnitOrder& message )
 void Agent::DoUpdate( const sword::UnitPathFind& message )
 {
     currentPath_.Update( message.path().location() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DoUpdate
+// Created: SBO 2011-01-31
+// -----------------------------------------------------------------------------
+void Agent::DoUpdate( const sword::UnitEnvironmentType& message )
+{
+    Observable< sword::UnitEnvironmentType >::Notify( message );
 }
 
 // -----------------------------------------------------------------------------

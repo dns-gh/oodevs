@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __Hla_Coordinates_h_
-#define __Hla_Coordinates_h_
+#ifndef __rpr_Coordinates_h_
+#define __rpr_Coordinates_h_
 
-namespace plugins
-{
-namespace hla
+#include <string>
+
+namespace rpr
 {
 // =============================================================================
 /** @class  WorldLocation
@@ -26,7 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              WorldLocation();
-             WorldLocation( const std::string mgrs, float altitude );
+             WorldLocation( const std::string& mgrs, float altitude );
              WorldLocation( double latitude, double longitude, float altitude );
     virtual ~WorldLocation();
     //@}
@@ -137,6 +137,5 @@ private:
 };
 
 }
-}
 
-#endif // __Hla_Coordinates_h_
+#endif // __rpr_Coordinates_h_

@@ -64,7 +64,7 @@ public:
     virtual void Create( dispatcher::Automat&   entity );
     virtual void Create( dispatcher::Formation& entity );
     virtual void Create( dispatcher::Side&      entity );
-    virtual hla::EntityIdentifier CreateNewIdentifier();
+    virtual rpr::EntityIdentifier CreateNewIdentifier();
     //@}
 
 private:

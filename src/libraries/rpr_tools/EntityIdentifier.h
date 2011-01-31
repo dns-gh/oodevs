@@ -7,12 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __EntityIdentifier_h_
-#define __EntityIdentifier_h_
+#ifndef __rpr_EntityIdentifier_h_
+#define __rpr_EntityIdentifier_h_
 
-namespace plugins
-{
-namespace hla
+namespace rpr
 {
 // =============================================================================
 /** @class  EntityIdentifier
@@ -66,6 +64,5 @@ private:
 };
 
 }
-}
 
-#endif // __EntityIdentifier_h_
+#endif // __rpr_EntityIdentifier_h_

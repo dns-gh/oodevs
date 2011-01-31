@@ -7,10 +7,9 @@
 //
 // *****************************************************************************
 
-#include "hla_plugin_pch.h"
 #include "EntityIdentifier.h"
 
-using namespace plugins::hla;
+using namespace rpr;
 
 // -----------------------------------------------------------------------------
 // Name: EntityIdentifier constructor

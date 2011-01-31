@@ -10,7 +10,7 @@
 #ifndef __FireManager_h_
 #define __FireManager_h_
 
-#include "hla_plugin/EntityIdentifier.h"
+#include "rpr_tools/EntityIdentifier.h"
 #include "protocol/Protocol.h"
 
 namespace plugins

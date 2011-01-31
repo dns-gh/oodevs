@@ -72,7 +72,8 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadPlugin( const std::string& name, xml::xistream& xis ) const;
+    void ReadPlugin( const std::string& name, xml::xistream& xis );
+    void LoadPlugin( const std::string& name, xml::xistream& xis );
     //@}
 
     //! @name Types

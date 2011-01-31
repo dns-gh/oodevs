@@ -10,7 +10,7 @@
 #ifndef __BurstDescriptor_h_
 #define __BurstDescriptor_h_
 
-#include "hla_plugin/EntityType.h"
+#include "rpr_tools/EntityType.h"
 
 namespace plugins
 {
@@ -57,7 +57,7 @@ public:
 private:
     //! @name Member data
     //@{
-    hla::EntityType type_;
+    rpr::EntityType type_;
     unsigned short  warhead_;
     unsigned short  fuse_;
     unsigned short  quantity_;

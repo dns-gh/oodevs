@@ -16,7 +16,7 @@ using namespace plugins::hla;
 // Name: SilentEntity constructor
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
-SilentEntity::SilentEntity( const EntityType& type, unsigned short number )
+SilentEntity::SilentEntity( const rpr::EntityType& type, unsigned short number )
     : numberOfEntitiesOfThisType_( number )
     , numberOfAppearanceRecords_ ( 0 )
     , entityType_                ( type )

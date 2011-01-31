@@ -11,7 +11,6 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/Dispatcher.h"
 #include "bml_plugin/BmlPluginFactory.h"
-#include "hla_plugin/HlaPluginFactory.h"
 #include "dis_plugin/DisPluginFactory.h"
 #include "tic_plugin/TicPluginFactory.h"
 #include "edxlhave_plugin/EdxlHavePluginFactory.h"
@@ -36,7 +35,6 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
     try
     {
         dispatcher_.reset( new dispatcher::Dispatcher( *config_, maxConnections ) );
-        dispatcher_->RegisterPluginFactory( *new hla::HlaPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new dis::DisPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new tic::TicPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new edxl::EdxlHavePluginFactory() );

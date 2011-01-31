@@ -10,10 +10,17 @@
 #ifndef __dispatcher_Agent_ABC_h_
 #define __dispatcher_Agent_ABC_h_
 
+#include "Observable.h"
 #include "Sendable.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+namespace sword
+{
+    class UnitAttributes;
+    class UnitEnvironmentType;
+}
 
 namespace dispatcher
 {
@@ -29,6 +36,8 @@ namespace dispatcher
 // Created: SBO 2010-06-07
 // =============================================================================
 class Agent_ABC : public Sendable< kernel::Agent_ABC >
+                , public Observable< sword::UnitAttributes >
+                , public Observable< sword::UnitEnvironmentType >
 {
 public:
     //! @name Constructors/Destructor

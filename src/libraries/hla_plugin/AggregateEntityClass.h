@@ -11,6 +11,8 @@
 #define plugins_hla_AggregateEntityClass_h
 
 #include "AgentListener_ABC.h"
+#include <boost/shared_ptr.hpp>
+#include <vector>
 
 namespace hla
 {
@@ -22,8 +24,9 @@ namespace plugins
 {
 namespace hla
 {
-    class HlaExtension_ABC;
+    class AgentExtension;
     class AgentSubject_ABC;
+    class HlaExtension_ABC;
 
 // =============================================================================
 /** @class  AggregateEntityClass
@@ -58,6 +61,7 @@ private:
     AgentSubject_ABC& subject_;
     std::auto_ptr< UnitRegistration > registration_;
     std::auto_ptr< ::hla::Class< HlaExtension_ABC > > hlaClass_;
+    std::vector< boost::shared_ptr< AgentExtension > > extensions_;
     //@}
 };
 

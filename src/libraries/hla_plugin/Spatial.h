@@ -10,7 +10,7 @@
 #ifndef __Spatial_h_
 #define __Spatial_h_
 
-#include "Coordinates.h"
+#include "rpr_tools/Coordinates.h"
 
 namespace plugins
 {
@@ -57,10 +57,10 @@ private:
             orientation_.Serialize( archive );
             velocityVector_.Serialize( archive );
         }
-        WorldLocation worldLocation_;
+        rpr::WorldLocation worldLocation_;
         bool isFrozen_;
-        VelocityVector velocityVector_;
-        Orientation orientation_;
+        rpr::VelocityVector velocityVector_;
+        rpr::Orientation orientation_;
     };
     //@}
 

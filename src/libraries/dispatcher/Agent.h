@@ -53,6 +53,7 @@ class Agent : public dispatcher::Agent_ABC
             , public kernel::Updatable_ABC< sword::UnitChangeSuperior >
             , public kernel::Updatable_ABC< sword::UnitOrder >
             , public kernel::Updatable_ABC< sword::UnitPathFind >
+            , public kernel::Updatable_ABC< sword::UnitEnvironmentType >
 {
 public:
     //! @name Constructors/Destructor
@@ -72,6 +73,7 @@ public:
     virtual void DoUpdate( const sword::UnitChangeSuperior&  asnMsg );
     virtual void DoUpdate( const sword::UnitOrder&           asnMsg );
     virtual void DoUpdate( const sword::UnitPathFind&        asnMsg );
+    virtual void DoUpdate( const sword::UnitEnvironmentType& message );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;

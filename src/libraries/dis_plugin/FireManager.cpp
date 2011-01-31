@@ -15,7 +15,6 @@
 #include "protocol/Protocol.h"
 
 using namespace plugins::dis;
-using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: FireManager constructor
@@ -73,7 +72,7 @@ void FireManager::ReceiveFire( const sword::StartUnitFire& message )
 // -----------------------------------------------------------------------------
 void FireManager::UpdateFireEffect( const sword::StartFireEffect& message )
 {
-    DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
+    DetonationPDU pdu( rpr::EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
     pdu.SetBurst( 1, 1, message.type() == sword::StartFireEffect::smoke ? BurstDescriptor::smoke : BurstDescriptor::illumination );
     pdu.SetPosition( message.location().coordinates().elem(0).latitude(), message.location().coordinates().elem(0).longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
     network_.Send( pdu );
@@ -85,7 +84,7 @@ void FireManager::UpdateFireEffect( const sword::StartFireEffect& message )
 // -----------------------------------------------------------------------------
 void FireManager::ReceiveFire( const sword::StopUnitFire& message )
 {
-    DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
+    DetonationPDU pdu( rpr::EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
     pdu.SetPosition( activeFires_[ message.fire().id() ].latitude(), activeFires_[ message.fire().id() ].longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
     network_.Send( pdu );
 

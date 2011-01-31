@@ -11,13 +11,12 @@
 #include "DetonationPDU.h"
 
 using namespace plugins::dis;
-using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: DetonationPDU constructor
 // Created: AGE 2008-04-30
 // -----------------------------------------------------------------------------
-DetonationPDU::DetonationPDU( const EntityIdentifier& firer, unsigned long time, unsigned char exercise )
+DetonationPDU::DetonationPDU( const rpr::EntityIdentifier& firer, unsigned long time, unsigned char exercise )
     : header_                        ( DisHeader::DetonationPDU( time, exercise ) )
     , firer_                         ( firer )
     , detonationResult_              ( 3 ) // Ground Impact
@@ -51,5 +50,5 @@ void DetonationPDU::SetBurst( unsigned short quantity, unsigned seconds, BurstDe
 // -----------------------------------------------------------------------------
 void DetonationPDU::SetPosition( double latitude, double longitude, float altitude )
 {
-    location_ = WorldLocation( latitude, longitude, altitude );
+    location_ = rpr::WorldLocation( latitude, longitude, altitude );
 }

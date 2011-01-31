@@ -11,7 +11,7 @@
 #define __DisTypeResolver_h_
 
 #include "clients_kernel/ApproximativeMap.h"
-#include "hla_plugin/EntityType.h"
+#include "rpr_tools/EntityType.h"
 #include <map>
 
 namespace kernel
@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    hla::EntityType Find( const kernel::ComponentType& component ) const;
+    rpr::EntityType Find( const kernel::ComponentType& component ) const;
     //@}
 
 private:
@@ -64,9 +64,9 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::ApproximativeMap< hla::EntityType > types_;
-    mutable std::map< const kernel::ComponentType*, hla::EntityType > resolved_;
-    hla::EntityType default_;
+    kernel::ApproximativeMap< rpr::EntityType > types_;
+    mutable std::map< const kernel::ComponentType*, rpr::EntityType > resolved_;
+    rpr::EntityType default_;
     //@}
 };
 

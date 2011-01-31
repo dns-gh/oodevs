@@ -9,16 +9,16 @@
 
 #include "hla_plugin_pch.h"
 #include "AggregateEntityClass.h"
-#include "AgentSubject_ABC.h"
 #include "AgentExtension.h"
-#include "EntityIdentifier.h"
-#include "dispatcher/Agent.h"
+#include "AgentSubject_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include <hla/ObjectRegistration_ABC.h>
+#include "dispatcher/Agent.h"
+#include "rpr_tools/EntityIdentifier.h"
 #include <hla/Class.h>
-#include <hla/Federate.h>
 #include <hla/ClassIdentifier.h>
 #include <hla/Deserializer.h>
+#include <hla/Federate.h>
+#include <hla/ObjectRegistration_ABC.h>
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
@@ -75,9 +75,9 @@ AggregateEntityClass::~AggregateEntityClass()
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::Created( dispatcher::Agent_ABC& agent )
 {
-    EntityIdentifier id( 1, 1, id_ ); // site, application, id
-    std::auto_ptr< AgentExtension > extension( new AgentExtension( agent, id ) );
+    rpr::EntityIdentifier id( 1, 1, id_ ); // site, application, id
+    boost::shared_ptr< AgentExtension > extension( new AgentExtension( agent, agent, agent, id ) );
     hlaClass_->Register( *extension, agent.GetType().GetName() + boost::lexical_cast< std::string >( agent.GetId() ) );
-    agent.Attach( *extension.release() );
+    extensions_.push_back( extension );
     ++id_;
 }

@@ -10,31 +10,34 @@
 #include "hla_plugin_pch.h"
 #include "AgentExtension.h"
 #include "Spatial.h"
-#include "EntityType.h"
 #include "AggregateMarking.h"
 #include "SilentEntity.h"
 #include "SerializationTools.h"
+#include "clients_kernel/Karma.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Side.h"
 #include "dispatcher/Equipment.h"
-#include "clients_kernel/Karma.h"
+#include "protocol/Protocol.h"
+#include "rpr_tools/EntityType.h"
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
 #include <boost/bind.hpp>
-#include "protocol/Protocol.h"
 
 using namespace plugins::hla;
 using namespace hla;
-using namespace sword;
-using namespace sword;
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Agent_ABC& holder, const EntityIdentifier& id )
-    : holder_            ( holder )
+AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes
+                              , dispatcher::Observable< sword::UnitEnvironmentType >& environment
+                              , dispatcher::Agent_ABC& holder
+                              , const rpr::EntityIdentifier& id )
+    : Observer< sword::UnitAttributes >( attributes )
+    , Observer< sword::UnitEnvironmentType >( environment )
+    , holder_            ( holder )
     , id_                ( id )
     , spatialChanged_    ( true )
     , compositionChanged_( true )
@@ -75,10 +78,10 @@ void AgentExtension::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) co
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::DoUpdate
+// Name: AgentExtension::Notify
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const UnitAttributes& attributes )
+void AgentExtension::Notify( const sword::UnitAttributes& attributes )
 {
     spatialChanged_ = spatialChanged_ || attributes.has_position()
                                       || attributes.has_height()
@@ -88,10 +91,10 @@ void AgentExtension::DoUpdate( const UnitAttributes& attributes )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::DoUpdate
+// Name: AgentExtension::Notify
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const UnitEnvironmentType& attributes )
+void AgentExtension::Notify( const sword::UnitEnvironmentType& attributes )
 {
     formation_.Update( attributes );
 }
@@ -102,7 +105,7 @@ void AgentExtension::DoUpdate( const UnitEnvironmentType& attributes )
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateEntityType( UpdateFunctor_ABC& functor ) const
 {
-    EntityType type( "1 1 225 1" );
+    rpr::EntityType type( "1 1 225 1" );
     Serializer serializer;
     type.Serialize( serializer );
     functor.Visit( AttributeIdentifier( "EntityType" ), serializer );
@@ -116,7 +119,7 @@ void AgentExtension::UpdateEntityIdentifier( UpdateFunctor_ABC& functor ) const
 {
     Serializer serializer;
     id_.Serialize( serializer );
-    functor.Visit( AttributeIdentifier( "EntityIdentifier" ), serializer );
+    functor.Visit( AttributeIdentifier( "rpr::EntityIdentifier" ), serializer );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +190,7 @@ namespace
         void SerializeEquipment( const dispatcher::Equipment& e )
         {
             ++count_;
-            EntityType type( "1 1 225 1" );
+            rpr::EntityType type( "1 1 225 1" );
             SilentEntity entity( type, static_cast< unsigned short >( e.nNbrAvailable_ ) );
             entity.Serialize( serializer_ );
         }

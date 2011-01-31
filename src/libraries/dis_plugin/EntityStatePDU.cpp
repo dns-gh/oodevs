@@ -11,20 +11,19 @@
 #include "EntityStatePDU.h"
 
 using namespace plugins::dis;
-using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: EntityStatePDU constructor
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-EntityStatePDU::EntityStatePDU( unsigned long time, unsigned char exercise, const EntityIdentifier& id )
-    : header_ ( DisHeader::EntityStatePDU( time, exercise ) )
-    , id_     ( id )
-    , forceID_( 0 )
+EntityStatePDU::EntityStatePDU( unsigned long time, unsigned char exercise, const rpr::EntityIdentifier& id )
+    : header_                        ( DisHeader::EntityStatePDU( time, exercise ) )
+    , id_                            ( id )
+    , forceID_                       ( 0 )
     , numberOfArticulationParameters_( 0 )
-    , appearance_( 0 )
-    , deadReckoningAlgorithm_( 2 )
-    , capabilities_( 0 )
+    , appearance_                    ( 0 )
+    , deadReckoningAlgorithm_        ( 2 )
+    , capabilities_                  ( 0 )
 {
     ::memset( otherParameters_, 0, 15 );
 }
@@ -60,7 +59,7 @@ void EntityStatePDU::SetEntityName( const std::string& name )
 // Name: EntityStatePDU::SetEntityType
 // Created: AGE 2008-04-04
 // -----------------------------------------------------------------------------
-void EntityStatePDU::SetEntityType( const EntityType& type )
+void EntityStatePDU::SetEntityType( const rpr::EntityType& type )
 {
     entityType_ = alternativeType_ = type;
 }
@@ -71,9 +70,9 @@ void EntityStatePDU::SetEntityType( const EntityType& type )
 // -----------------------------------------------------------------------------
 void EntityStatePDU::SetPosition( double latitude, double longitude, float altitude, float speed, float heading )
 {
-    entityLocation_       = WorldLocation( latitude, longitude, altitude );
-    entityLinearVelocity_ = VelocityVector( entityLocation_, speed, heading );
-    entityOrientation_    = Orientation( entityLocation_, entityLinearVelocity_ );
+    entityLocation_       = rpr::WorldLocation( latitude, longitude, altitude );
+    entityLinearVelocity_ = rpr::VelocityVector( entityLocation_, speed, heading );
+    entityOrientation_    = rpr::Orientation( entityLocation_, entityLinearVelocity_ );
     if( speed > 0 )
         appearance_ |= 1 << 6; // engine smoke
 }
@@ -92,4 +91,3 @@ void EntityStatePDU::SetAppearance( unsigned damageLevel, bool smoking, bool fla
     if( flaming )
         appearance_ |= 1 << 15;
 }
-

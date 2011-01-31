@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __EntityType_h_
-#define __EntityType_h_
+#ifndef __rpr_EntityType_h_
+#define __rpr_EntityType_h_
 
-namespace plugins
-{
-namespace hla
+#include <string>
+
+namespace rpr
 {
 // =============================================================================
 /** @class  EntityType
@@ -59,6 +59,5 @@ private:
 };
 
 }
-}
 
-#endif // __EntityType_h_
+#endif // __rpr_EntityType_h_

@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-#include "hla_plugin_pch.h"
 #include "Coordinates.h"
 #include <geocoord/MGRS.h>
 #include <geocoord/geodetic.h>
@@ -15,7 +14,7 @@
 #include <geometry/types.h>
 #include <cmath>
 
-using namespace plugins::hla;
+using namespace rpr;
 
 // -----------------------------------------------------------------------------
 // Name: WorldLocation::WorldLocation
@@ -33,7 +32,7 @@ WorldLocation::WorldLocation()
 // Name: WorldLocation::WorldLocation
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
-WorldLocation::WorldLocation( const std::string mgrs, float altitude )
+WorldLocation::WorldLocation( const std::string& mgrs, float altitude )
 {
     geocoord::MGRS base( mgrs );
     geocoord::Geodetic geodetic( base );

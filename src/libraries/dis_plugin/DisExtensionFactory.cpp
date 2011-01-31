@@ -21,7 +21,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::dis;
-using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
 // Name: DisExtensionFactory constructor
@@ -96,9 +95,9 @@ void DisExtensionFactory::Create( dispatcher::Side& entity )
 // Name: DisExtensionFactory::CreateNewIdentifier
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-EntityIdentifier DisExtensionFactory::CreateNewIdentifier()
+rpr::EntityIdentifier DisExtensionFactory::CreateNewIdentifier()
 {
-    EntityIdentifier id( site_, application_, id_ ); // site, application, id
+    rpr::EntityIdentifier id( site_, application_, id_ ); // site, application, id
     ++id_;
     return id;
 }

@@ -10,7 +10,7 @@
 #ifndef __IdentifierFactory_ABC_h_
 #define __IdentifierFactory_ABC_h_
 
-#include "hla_plugin/EntityIdentifier.h"
+#include "rpr_tools/EntityIdentifier.h"
 
 namespace plugins
 {
@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual hla::EntityIdentifier CreateNewIdentifier() = 0;
+    virtual rpr::EntityIdentifier CreateNewIdentifier() = 0;
     //@}
 };
 
