@@ -195,36 +195,35 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     for( std::set<const PHY_SensorTypeAgent*>::const_iterator itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
     {
         double worstFactor = 1.;
-        if( !list.empty() )
-            for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
-                if( perceiverUrbanBlock == 0 || !( &perceiverUrbanBlock->GetObject() == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
+        for( std::set< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
+            if( perceiverUrbanBlock == 0 || !( &perceiverUrbanBlock->GetObject() == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
+            {
+                const urban::TerrainObject_ABC& object = **it;
+                const geometry::Polygon2f* footPrint = object.GetFootprint();
+                if( footPrint )
                 {
-                    const urban::TerrainObject_ABC& object = **it;
-                    const geometry::Polygon2f* footPrint = object.GetFootprint();
-                    if( footPrint )
+                    std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( segment );
+                    if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
                     {
-                        std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( segment );
-                        if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
-                        {
-                            float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
-                            float objectHeight = 2; //2 = SensorHeight
+                        float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
+                        float objectHeight = 2; //2 = SensorHeight
 
-                            const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
-                            if( perceiverUrbanBlock )
-                            {
-                                const urban::PhysicalAttribute* perceiverUrbanBlockPhysical = perceiverUrbanBlock->GetObject().Retrieve< urban::PhysicalAttribute >();
-                                if( perceiverUrbanBlockPhysical && perceiverUrbanBlockPhysical->GetArchitecture() )
-                                    perceiverUrbanBlockHeight += perceiverUrbanBlockPhysical->GetArchitecture()->GetHeight();
-                            }
-                            if( pPhysical && pPhysical->GetArchitecture() )
-                                objectHeight += pPhysical->GetArchitecture()->GetHeight();
-                            double urbanFactor = ( *itSensor )->GetUrbanBlockFactor( object ) * perceiverUrbanBlockHeight / objectHeight;
-                            if( pPhysical && pPhysical->GetArchitecture() )
-                                urbanFactor = 1. + pPhysical->GetArchitecture()->GetOccupation() * ( urbanFactor - 1. ) ;
-                            worstFactor = std::min( worstFactor, urbanFactor );
+                        const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
+                        if( perceiverUrbanBlock )
+                        {
+                            const urban::PhysicalAttribute* perceiverUrbanBlockPhysical = perceiverUrbanBlock->GetObject().Retrieve< urban::PhysicalAttribute >();
+                            if( perceiverUrbanBlockPhysical && perceiverUrbanBlockPhysical->GetArchitecture() )
+                                perceiverUrbanBlockHeight += perceiverUrbanBlockPhysical->GetArchitecture()->GetHeight();
                         }
+                        if( pPhysical && pPhysical->GetArchitecture() )
+                            objectHeight += pPhysical->GetArchitecture()->GetHeight();
+                        double urbanFactor = ( *itSensor )->GetUrbanBlockFactor( object ) * perceiverUrbanBlockHeight / objectHeight;
+                        if( pPhysical && pPhysical->GetArchitecture() )
+                            urbanFactor = 1. + pPhysical->GetArchitecture()->GetOccupation() * ( urbanFactor - 1. ) ;
+                        worstFactor = std::min( worstFactor, urbanFactor );
                     }
-        }
+                }
+            }
         sensorsParameters.distances_.identificationDist_ = std::max( sensorsParameters.distances_.identificationDist_,
             worstFactor * ( *itSensor )->ComputeIdentificationDist( perceiver_, target ) );
         sensorsParameters.distances_.recognitionDist_ = std::max( sensorsParameters.distances_.recognitionDist_,

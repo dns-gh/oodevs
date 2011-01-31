@@ -23,6 +23,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Effects/MIL_Effect_KillOfficers.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
@@ -34,8 +35,8 @@
 #include "UrbanType.h"
 #include <urban/StaticModel.h>
 #include <urban/PhysicalAttribute.h>
-#include <urban/TerrainObject_ABC.h>
 #include <urban/MaterialCompositionType.h>
+#include <urban/TerrainObject_ABC.h>
 #include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
@@ -326,7 +327,6 @@ void DEC_Knowledge_Agent::Update( const DEC_Knowledge_Agent& knowledge, int curr
     bMaxPerceptionLevelUpdated_ = true;
     bCurrentPerceptionLevelUpdated_ = true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::ChangeRelevance
@@ -657,9 +657,9 @@ double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( boost::shared_
         const PHY_RolePion_Composantes& role = GetAgentKnown().GetRole< PHY_RolePion_Composantes >();
         unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() )->GetId();
 
-        if (GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_)
-            return role.GetAttritionIndexComposante(materialID);
-        else if ((GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_) || (GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_) )
+        if( GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
+            return role.GetAttritionIndexComposante( materialID );
+        else if( ( GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ ) || ( GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ ) )
             return PHY_DotationCategory::FindUrbanProtection( materialID );
         else
             return -1;
@@ -804,16 +804,15 @@ const MT_Vector2D& DEC_Knowledge_Agent::GetPosition() const
 // Name: DEC_Knowledge_Agent::GetPosition
 // Created: MGD 2010-05-05
 // -----------------------------------------------------------------------------
-bool DEC_Knowledge_Agent::IsInUrbanBlock( const urban::TerrainObject_ABC& urban ) const
+bool DEC_Knowledge_Agent::IsInUrbanBlock( const MIL_Object_ABC& urban ) const
 {
-    const MT_Vector2D& pos = GetPosition();
-    return urban.IsInside( geometry::Point2f( static_cast< float >( pos.rX_ ), static_cast< float >( pos.rY_ ) ) );
+    return urban.GetLocalisation().IsInside( GetPosition(), 0 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::GetDirection
 // Created: JVT 2005-02-17
-// -----------------------------------------------------------------------------
+// -----------------------------------------------------ivi------------------------
 const MT_Vector2D& DEC_Knowledge_Agent::GetDirection() const
 {
     return dataDetection_.GetDirection();

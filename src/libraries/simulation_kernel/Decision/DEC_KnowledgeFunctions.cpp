@@ -11,16 +11,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeFunctions.h"
-
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
-
-#include "urban/TerrainObject_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau
@@ -186,16 +184,10 @@ T_KnowledgeUrbanVector DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCircle( c
     T_KnowledgeUrbanVector urbansKn;
     T_KnowledgeUrbanVector result;
     pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
-    geometry::Point2f geoCenter( (float)center->rX_, (float)center->rY_ );
-
     for( T_KnowledgeUrbanVector::iterator it = urbansKn.begin(); it != urbansKn.end(); it++ )
-    {
-        if( (*it)->GetTerrainObjectKnown().GetFootprint()->Intersect( geoCenter, radius ) )
+        if( ( *it )->GetObjectKnown() && ( *it )->GetObjectKnown()->GetLocalisation().Intersect2DWithCircle( *center, radius ) )
             result.push_back( (*it) );
-    }
-
     return result;
-
 }
 
 

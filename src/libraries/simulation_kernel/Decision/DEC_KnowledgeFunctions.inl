@@ -135,13 +135,14 @@ std::vector< unsigned int > DEC_KnowledgeFunctions::GetPopulations( const T& cal
 template< typename T, typename B >
 float DEC_KnowledgeFunctions::ComputeEnemiesRatio( const T& caller, const B& boundaries, bool unloaded )
 {
+    // $$$$ _RC_ JSR 2011-01-28: Semble non utilisé. à vérifier et supprimer? surchargé par T = MIL_Automate dans le cpp
     unsigned int nNbrTotalLivingEnemies = 0;
     unsigned int nNbrSelectedLivingEnemies = 0;
     const T_KnowledgeAgentVector& enemies = caller.GetKnowledgeGroup().GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )
     {
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge = **itKnowledgeAgent;
-        if( knowledsge->IsValid() && !knowledge->IsDead() && boundaries.IsInside( knowledge->GetPosition() ) )
+        if( knowledge->IsValid() && !knowledge->IsDead() && boundaries.IsInside( knowledge->GetPosition() ) )
         {
             ++ nNbrTotalLivingEnemies;
             if( knowledge->IsHuman() == unloaded )
@@ -150,7 +151,7 @@ float DEC_KnowledgeFunctions::ComputeEnemiesRatio( const T& caller, const B& bou
     }
     if( nNbrTotalLivingEnemies == 0 )
         return 0.;
-    return (float)nNbrSelectedLivingEnemies / (float)nNbrTotalLivingEnemies;
+    return static_cast< float >( nNbrSelectedLivingEnemies ) / nNbrTotalLivingEnemies;
 }
 
 namespace 

@@ -12,6 +12,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "DetectionComputer_ABC.h"
@@ -19,7 +20,7 @@
 #include "MIL_Random.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
-#include <urban/TerrainObject_ABC.h>
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoUrbanBlockReco constructor
@@ -28,11 +29,9 @@
 PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
     : urbanBlock_( urbanBlock )
 {
-    T_PointVector points;
-    const geometry::Polygon2f::T_Vertices footprint = urbanBlock_->GetTerrainObjectKnown().GetFootprint()->Vertices();
-    for( geometry::Polygon2f::T_Vertices::const_iterator it = footprint.begin(); it != footprint.end(); ++it )
-        points.push_back( MT_Vector2D( it->X(), it->Y() ) );
-    localisation_.Reset( TER_Localisation::ePolygon, points );
+    if( urbanBlock->GetObjectKnown() == 0 )
+        throw std::runtime_error( "urban knowledge invalid" );
+    localisation_.Reset( urbanBlock->GetObjectKnown()->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------

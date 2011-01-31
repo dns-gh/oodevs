@@ -50,11 +50,10 @@ float DEC_KnowledgeUrbanFunctions::GetCurrentRecceProgress( boost::shared_ptr< D
 T_ConstKnowledgeAgentVector DEC_KnowledgeUrbanFunctions::GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
 {
     T_ConstKnowledgeAgentVector knowledges;
-
     const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); it++ )
-      if( (*it)->IsInUrbanBlock( pKnowledge->GetTerrainObjectKnown() ) )
-        knowledges.push_back( *it );
+        if( pKnowledge->GetObjectKnown() && ( *it )->IsInUrbanBlock( *pKnowledge->GetObjectKnown() ) )
+            knowledges.push_back( *it );
     return knowledges;
 }
 
@@ -82,18 +81,13 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_KnowledgeUrbanFunctions::Get
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( pKnowledge.get() && pKnowledge->IsValid() )
     {
-        const geometry::Polygon2f* pBoundingBox = pKnowledge->GetTerrainObjectKnown().GetFootprint();
-        if( pBoundingBox )
+        if( const MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
         {
-            const geometry::Polygon2f::T_Vertices& points = pBoundingBox->Vertices();
-            const geometry::Point2f barycenter = pBoundingBox->Barycenter();
-            for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
-            {
-                const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
-                geometry::Vector2f vector( barycenter, *it );
-                geometry::Point2f point = *it + vector.Normalize() * distance;
-                result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point.X(), point.Y() ) ) );
-            }
+            const T_PointVector& points = object->GetLocalisation().GetPoints();
+            const MT_Vector2D barycenter = object->GetLocalisation().ComputeBarycenter();
+            static const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
+            for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+                result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + ( *it - barycenter ).Normalize() * distance ) ) );
         }
     }
     return result;
@@ -124,25 +118,21 @@ float DEC_KnowledgeUrbanFunctions::GetRapForLocal( const MIL_AgentPion& callerAg
 
     const T_KnowledgeAgentVector& enemies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); it++ )
-    {
-        if( (*it)->IsInUrbanBlock( pKnowledge->GetTerrainObjectKnown() ) )
+        if( pKnowledge->GetObjectKnown() && ( *it )->IsInUrbanBlock( *pKnowledge->GetObjectKnown() ) )
         {
-            rTotalFightScoreEnemy += static_cast< float >( (*it)->GetDangerosity( callerAgent ) );
+            rTotalFightScoreEnemy += static_cast< float >( ( *it )->GetDangerosity( callerAgent ) );
             dangerousEnemies_.push_back( *it );
         }
-    }
 
     const T_KnowledgeAgentVector& allies = callerAgent.GetKnowledgeGroup().GetKnowledge().GetFriends();
     for( CIT_KnowledgeAgentVector it = allies.begin(); it != allies.end(); it++ )
-    {
-        if( (*it)->IsInUrbanBlock( pKnowledge->GetTerrainObjectKnown() ) )
+        if( pKnowledge->GetObjectKnown() && ( *it )->IsInUrbanBlock( *pKnowledge->GetObjectKnown() ) )
         {
             double rTotalDangerosity = 0.;
             for( CIT_ConstKnowledgeAgentVector itAgentEnemy = dangerousEnemies_.begin(); itAgentEnemy != dangerousEnemies_.end(); ++itAgentEnemy )
-                rTotalDangerosity += ( (*it)->GetDangerosity( **itAgentEnemy ) * (*it)->GetOperationalState() );
+                rTotalDangerosity += ( ( *it )->GetDangerosity( **itAgentEnemy ) * ( *it )->GetOperationalState() );
             rTotalFightScoreFriend += ( rTotalDangerosity / dangerousEnemies_.size() );
         }
-    }
 
     double rRapForValue = 1.;
     if( rTotalFightScoreEnemy != 0. )
@@ -150,7 +140,7 @@ float DEC_KnowledgeUrbanFunctions::GetRapForLocal( const MIL_AgentPion& callerAg
 
     // Add bonus if the pion is posted in this urbanbloc
     const UrbanObjectWrapper* urbanBlock = callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-    if( urbanBlock && &pKnowledge->GetTerrainObjectKnown() == &urbanBlock->GetObject() && callerAgent.GetRole< PHY_RoleInterface_Posture >().IsInstalled() )
+    if( urbanBlock && pKnowledge->GetObjectKnown() == urbanBlock && callerAgent.GetRole< PHY_RoleInterface_Posture >().IsInstalled() )
         rRapForValue *= 1.2;
     rRapForValue = std::max( 0.2, std::min( 5., rRapForValue ) );
     return static_cast< float >( rRapForValue );

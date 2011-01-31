@@ -937,12 +937,15 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUr
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( pKnowledge->IsValid() )
     {
-        const urban::TerrainObject_ABC& terrainObject = pKnowledge->GetTerrainObjectKnown();
-        const geometry::Polygon2f* pVertices = terrainObject.GetFootprint();
-        const geometry::Point2f barycenter = pVertices->Barycenter();
-        boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( barycenter.X(), barycenter.Y() ) );
-        result.push_back( position );
-        DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( terrainObject, false, result );
+        const MIL_Object_ABC* object = pKnowledge->GetObjectKnown();
+        if( object )
+        {
+            boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( object->GetLocalisation().ComputeBarycenter() ) );
+            result.push_back( position );
+            // $$$$ _RC_ JSR 2011-01-28: TODO temp : cleaner ComputeLocalisationsInsideBlock
+            if( const UrbanObjectWrapper* wrapper = dynamic_cast< const UrbanObjectWrapper* >( object ) )
+                DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( wrapper->GetObject(), false, result );
+        }
     }
     return result;
 }

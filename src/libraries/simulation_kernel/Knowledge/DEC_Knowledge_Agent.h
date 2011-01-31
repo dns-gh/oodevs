@@ -25,15 +25,11 @@ namespace sword
     class UnitKnowledgeUpdate;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 class MIL_Agent_ABC;
+class MIL_Object_ABC;
+class MIL_Army_ABC;
 class MIL_KnowledgeGroup;
 class MIL_Automate;
-class MIL_Army_ABC;
 class PHY_PerceptionLevel;
 class PHY_Posture;
 class PHY_SensorTypeAgent;
@@ -120,7 +116,7 @@ public:
     bool IsHuman() const; // $$$$ NLD 2007-04-19: A CHIER
     E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const;
     E_Tristate IsAFriend( const MIL_Army_ABC& army ) const;
-    bool IsInUrbanBlock( const urban::TerrainObject_ABC& urban ) const;
+    bool IsInUrbanBlock( const MIL_Object_ABC& urban ) const;
     //@}
 
     //! @name Perception
