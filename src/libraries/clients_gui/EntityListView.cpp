@@ -11,6 +11,7 @@
 #include "EntityListView.h"
 #include "moc_EntityListView.cpp"
 #include "ItemFactory_ABC.h"
+#include "ListItemToolTip.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 
@@ -27,6 +28,7 @@ EntityListView::EntityListView( QWidget* pParent, Controllers& controllers, Item
     , profile_    ( profile )
     , factory_    ( factory )
 {
+    new ListItemToolTip( viewport(), *this );
     setMinimumSize( 1, 1 );
     setRootIsDecorated( true );
     setResizeMode( QListView::LastColumn );

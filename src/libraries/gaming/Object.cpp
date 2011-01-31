@@ -83,6 +83,7 @@ void Object::Display( Displayer_ABC& displayer ) const
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" ).Start( Styles::bold ).Add( *(Object_ABC*)this ).End();
+    displayer.Display( tools::translate( "Object", "Type:" ), type_ );
 }
 
 // -----------------------------------------------------------------------------

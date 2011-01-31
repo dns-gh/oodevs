@@ -897,8 +897,8 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::PopulationListView</name>
     <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
+        <source>Crowds</source>
+        <translation>Foules</translation>
     </message>
 </context>
 <context>

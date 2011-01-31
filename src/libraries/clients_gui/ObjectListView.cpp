@@ -77,6 +77,7 @@ void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
     ValuedListItem* item = factory_.CreateItem( typeItem );
     item->SetNamed( (const Entity_ABC&)object );
     item->setVisible( profile_.IsVisible( object ) );
+    item->SetToolTip( QString( "%1 [%2]" ).arg( object.GetName() ).arg( object.GetId() ) );
 }
 
 namespace

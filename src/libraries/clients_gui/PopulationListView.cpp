@@ -29,7 +29,7 @@ PopulationListView::PopulationListView( QWidget* pParent, Controllers& controlle
     , controllers_( controllers )
     , factory_    ( factory )
 {
-    addColumn( tr( "Populations" ) );
+    addColumn( tr( "Crowds" ) );
     setAcceptDrops( true );
     controllers_.Register( *this );
 }
@@ -59,6 +59,7 @@ void PopulationListView::NotifyCreated( const Population_ABC& popu )
     ValuedListItem* popItem = factory_.CreateItem( teamItem );
     popItem->SetNamed( (const Entity_ABC&)popu );
     popItem->setDragEnabled( true );
+    popItem->SetToolTip( QString( "%1 [%2]" ).arg( popu.GetName() ).arg( popu.GetId() ) );
 }
 
 // -----------------------------------------------------------------------------
