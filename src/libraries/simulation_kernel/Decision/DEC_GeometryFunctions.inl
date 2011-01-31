@@ -82,6 +82,44 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::RecursiveSplitLocalisationInSurfaces
+// Created: BCI 2011-01-31
+// -----------------------------------------------------------------------------
+template< typename T >
+std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > DEC_GeometryFunctions::RecursiveSplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea )
+{
+    assert( pLocalisation );
+
+    typedef std::vector< boost::shared_ptr< TER_Localisation > > T_ResultVector;
+    T_ResultVector result;
+    
+    TER_Localisation clippedLocalisation;
+    unsigned int errCode = eError_LocalisationPasDansFuseau;
+    if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
+    {
+        const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( pLocalisation->GetArea() / rAverageArea ) );
+        if( nNbrParts < 4 )
+            pLocalisation->Split( nNbrParts, result );
+        else
+        {
+            result.push_back( boost::shared_ptr< TER_Localisation >( new TER_Localisation( *pLocalisation ) ) );
+            for( unsigned int n = 1; n < nNbrParts; n *= 4 )
+            {
+                T_ResultVector splitted;
+                std::for_each( result.begin(), result.end(), boost::bind( &TER_Localisation::Split, _1, 4, boost::ref( splitted ) ) );
+                std::swap( result, splitted );
+            }
+        }
+        if( result.size() != nNbrParts )
+            errCode = eWarning_DecoupageIncomplet;
+        else
+            errCode = eNoError;
+    }
+    return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name:DEC_GeometryFunctions::SplitLocalisationInSections
 // Created: JVT 2004-11-04
 // -----------------------------------------------------------------------------

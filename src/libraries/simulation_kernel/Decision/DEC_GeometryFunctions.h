@@ -126,6 +126,7 @@ public:
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLimaInFuseau( const T& caller, unsigned int limaID, double rDistBeforeLima, const MIL_Fuseau* pFuseau );
     template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > SplitLocalisationInParts( const T& caller, TER_Localisation* pLocalisation, unsigned int nNbrParts );
     template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > SplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea );
+    template< typename T > static std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > RecursiveSplitLocalisationInSurfaces( const T& caller, TER_Localisation* pLocalisation, const double rAverageArea );
     template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SplitLocalisationInSections( const T& caller, const double rSectionLength );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenterInFuseau( const T& caller, TER_Localisation* pLocalisation );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeLocalisationPointsForPionsInFuseau( const std::vector< DEC_Decision_ABC* >& pions, TER_Localisation* pLocalisation, MT_Vector2D* pDirDanger, double rDistMaxBtwPoints );

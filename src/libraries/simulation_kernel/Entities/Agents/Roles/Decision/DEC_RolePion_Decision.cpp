@@ -817,6 +817,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInParts< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Geometry_SplitLocalisationSurface" ] =
         boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSurfaces< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
+    brain[ "DEC_Geometry_RecursiveSplitLocalisationSurface" ] =
+        boost::function< std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::RecursiveSplitLocalisationInSurfaces< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Geometrie_DecoupeFuseauEnTroncons" ] =
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const double ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisationInSections< MIL_AgentPion >, boost::ref( GetPion() ), _1  ) );
     brain[ "DEC_Geometrie_CalculerPositionObstacle" ] =
@@ -881,7 +883,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Pion_AutoriserToutesMunitions" ] =
         boost::bind( &DEC_FireFunctions::AllowAllAmmunitions,        boost::ref( GetPion() ) );
 
-    //
+    // $$$$ BCI 2011-01-28: obsolète?
     brain[ "DEC_Fire_GetRangeToExtinguish" ] =
         boost::function< float ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_DynamicFireFunctions::GetRangeToExtinguish, boost::cref( GetPion() ), _1 ) );
 
