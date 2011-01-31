@@ -514,7 +514,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
 
             const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
 
-            if( ( pPhysical == 0 || !pPhysical->GetArchitecture() )
+            if( pPhysical == 0 || !pPhysical->GetArchitecture() )
                 continue;
 
             const geometry::Polygon2f* footPrint = object.GetFootprint();
