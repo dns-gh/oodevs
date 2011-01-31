@@ -1176,7 +1176,7 @@ message UnitVisibility {
 }
 
 /** @struct UnitDetection
-    @brief Notifies the detection of a unit
+    @brief Notifies of the detection of a unit
 */
 message UnitDetection {
     required UnitId               observer           = 1; //!< The observer unit identifier
@@ -1186,7 +1186,7 @@ message UnitDetection {
 }
 
 /** @struct ObjectDetection
-    @brief Notifies the detection of an object
+    @brief Notifies of the detection of an object
 */
 message ObjectDetection {
     required UnitId               observer        = 1; //!< The observer unit identifier
@@ -1195,7 +1195,7 @@ message ObjectDetection {
 }
 
 /** @struct CrowdConcentrationDetection
-    @brief Notifies the detection of a crowd concentration
+    @brief Notifies of the detection of a crowd concentration
 */
 message CrowdConcentrationDetection {
     required UnitId               observer               = 1; //!< The observer unit identifier
@@ -1205,7 +1205,7 @@ message CrowdConcentrationDetection {
 }
 
 /** @struct CrowdFlowDetection
-    @brief Notifies the detection of a crowd flow
+    @brief Notifies of the detection of a crowd flow
 */
 message CrowdFlowDetection {
     required UnitId      observer       = 1; //!< The observer unit identifier
@@ -1215,7 +1215,7 @@ message CrowdFlowDetection {
 }
 
 /** @struct ObjectCreation
-    @brief Notifies the creation of an object
+    @brief Notifies of the creation of an object
 */
 message ObjectCreation {
     required ObjectId         object     = 1; //!< The object identifier
@@ -1227,14 +1227,14 @@ message ObjectCreation {
 }
 
 /** @struct ObjectDestruction
-    @brief Notifies the destruction of an object
+    @brief Notifies of the destruction of an object
 */
 message ObjectDestruction {
     required ObjectId object = 1; //!< The object identifier
 }
 
 /** @struct ObjectUpdate
-    @brief Notifies the update of an object
+    @brief Notifies of the update of an object
 */
 message ObjectUpdate {
     required ObjectId         object     = 1; //!< The object identifier
@@ -1243,7 +1243,7 @@ message ObjectUpdate {
 }
 
 /** @struct ObjectUpdate
-    @brief Notifies the creation of an object knowledge
+    @brief Notifies of the creation of an object knowledge
 */
 message ObjectKnowledgeCreation {
     required ObjectKnowledgeId knowledge       = 1; //!< The knowledge identifier
@@ -1255,7 +1255,7 @@ message ObjectKnowledgeCreation {
 }
 
 /** @struct ObjectKnowledgeUpdate
-    @brief Notifies the update of an object knowledge
+    @brief Notifies of the update of an object knowledge
 */                 
 message ObjectKnowledgeUpdate {
     required ObjectKnowledgeId knowledge           = 1; //!< The knowledge identifier
@@ -1270,7 +1270,7 @@ message ObjectKnowledgeUpdate {
 }
 
 /** @struct ObjectKnowledgeDestruction
-    @brief Notifies the destruction of an object knowledge
+    @brief Notifies of the destruction of an object knowledge
 */                 
 message ObjectKnowledgeDestruction {
     required ObjectKnowledgeId knowledge = 1; //!< The knowledge identifier
@@ -1278,7 +1278,7 @@ message ObjectKnowledgeDestruction {
 }
 
 /** @struct UrbanKnowledgeCreation
-    @brief Notifies the creation of a urban knowledge
+    @brief Notifies of the creation of a urban knowledge
 */                 
 message UrbanKnowledgeCreation {
     required UrbanObjectKnowledgeId knowledge = 1; //!< The knowledge identifier
@@ -1287,7 +1287,7 @@ message UrbanKnowledgeCreation {
 }
 
 /** @struct UrbanKnowledgeUpdate
-    @brief Notifies the update of a urban knowledge
+    @brief Notifies of the update of a urban knowledge
 */                   
 message UrbanKnowledgeUpdate {
     required UrbanObjectKnowledgeId knowledge           = 1; //!< The knowledge identifier
@@ -1300,7 +1300,7 @@ message UrbanKnowledgeUpdate {
 }
 
 /** @struct UrbanKnowledgeDestruction
-    @brief Notifies the destruction of a urban knowledge
+    @brief Notifies of the destruction of a urban knowledge
 */                    
 message UrbanKnowledgeDestruction {
     required UrbanObjectKnowledgeId knowledge = 1; //!< The knowledge identifier
@@ -1308,7 +1308,7 @@ message UrbanKnowledgeDestruction {
 }
 
 /** @struct LogMedicalHandlingCreation
-    @brief Notifies the creation of a medical handling
+    @brief Notifies of the creation of a medical handling
 */                    
 message LogMedicalHandlingCreation {
     required MedicalRequestId request          = 1; //!< The medical request identifier
@@ -1321,7 +1321,7 @@ message LogMedicalHandlingCreation {
 }
 
 /** @struct LogMedicalHandlingUpdate
-    @brief Notifies the update of a medical handling
+    @brief Notifies of the update of a medical handling
 */
 message LogMedicalHandlingUpdate {
     /** @enum EnumLogMedicalHandlingStatus
@@ -1361,7 +1361,7 @@ message LogMedicalHandlingUpdate {
 }
 
 /** @struct LogMedicalHandlingDestruction
-    @brief Notifies the destruction of a medical handling
+    @brief Notifies of the destruction of a medical handling
 */
 message LogMedicalHandlingDestruction {
     required MedicalRequestId request = 1; //!< The request identifier
@@ -1403,7 +1403,7 @@ message LogMedicalState {
 }
 
 /** @struct LogMaintenanceHandlingCreation
-    @brief Notifies the creation of a maintenance handling
+    @brief Notifies of the creation of a maintenance handling
 */
 message LogMaintenanceHandlingCreation {
     required MaintenanceRequestId request    = 1; //!< The request identifier
@@ -1414,7 +1414,7 @@ message LogMaintenanceHandlingCreation {
 }
 
 /** @struct LogMaintenanceHandlingUpdate
-    @brief Notifies the update of a maintenance handling
+    @brief Notifies of the update of a maintenance handling
 */
 message LogMaintenanceHandlingUpdate {
     /** @enum EnumLogMaintenanceHandlingStatus
@@ -1443,45 +1443,51 @@ message LogMaintenanceHandlingUpdate {
 }
 
 /** @struct LogMaintenanceHandlingDestruction
-    @brief Notifies the destruction of a maintenance handling
+    @brief Notifies of the destruction of a maintenance handling
 */
 message LogMaintenanceHandlingDestruction {
     required MaintenanceRequestId request = 1; //!< The request identifier
     required UnitId               unit    = 2; //!< The unit identifier
 }
 
+/** @struct LogMaintenanceEquipmentAvailability
+    @brief Regroups the information about the availability of a maintenance equipment
+
+    @todo explain a bit what are the different amounts
+    @todo seems a copy-paste of LogMedicalEquipmentAvailability
+*/
 message LogMaintenanceEquipmentAvailability {
-    required EquipmentType equipment = 1;
-    required int32         total     = 2;
-    required int32         available = 3;
-    required int32         working   = 4;
-    optional int32         lent      = 5;
-    optional int32         resting   = 6;
+    required EquipmentType equipment = 1; //!< The equipment type
+    required int32         total     = 2; //!< The total
+    required int32         available = 3; //!< The number of equipments available
+    required int32         working   = 4; //!< The number of equipments working
+    optional int32         lent      = 5; //!< The number of equipments lent
+    optional int32         resting   = 6; //!< The number of equipments resting
 }
 
+/** @struct SeqOfLogMaintenanceEquipmentAvailability
+    @brief Lists several maintenance equipment availabilities
+*/
 message SeqOfLogMaintenanceEquipmentAvailability {
-    repeated LogMaintenanceEquipmentAvailability elem = 1;
+    repeated LogMaintenanceEquipmentAvailability elem = 1; //!< The equipment availabilities
 }
 
+/** @struct LogMaintenanceState
+    @brief Notifies of the state of a maintenance
+*/
 message LogMaintenanceState {
-    required UnitId                                   unit                = 1;
-    optional bool                                     chain               = 2;
-    optional EnumLogMaintenanceWorkRate               work_rate           = 3;
-    optional LogMaintenancePriorities                 priorities          = 4;
-    optional AutomatIdList                            tactical_priorities = 5;
-    optional SeqOfLogMaintenanceEquipmentAvailability haulers             = 6;
-    optional SeqOfLogMaintenanceEquipmentAvailability repairers           = 7;
-}
-
-message LogSupplyHandlingCreation {
-    optional SupplyRequestId    request   = 1;
-    optional AutomatId          consumer  = 2;
-    optional int32              tick      = 3;
-    optional SeqOfDotationQuery dotations = 4;
+    required UnitId                                   unit                = 1; //!< The unit identifier
+    optional bool                                     chain               = 2; //!< Whether the supply chain is in place or not
+    optional EnumLogMaintenanceWorkRate               work_rate           = 3; //!< The work rate
+    optional LogMaintenancePriorities                 priorities          = 4; //!< The maintenance priorities
+    optional AutomatIdList                            tactical_priorities = 5; //!< The tactical priorities @todo What's this ?
+    optional SeqOfLogMaintenanceEquipmentAvailability haulers             = 6; //!< The haulers availabilities
+    optional SeqOfLogMaintenanceEquipmentAvailability repairers           = 7; //!< The repairers availabilities
 }
 
 /** @struct DotationQuery
     @brief Queries a dotation
+    @todo What's this ?
 */
 message DotationQuery {
     optional ResourceType resource  = 1; //!< The type of the resource @see ResourceType
@@ -1490,12 +1496,25 @@ message DotationQuery {
     optional int32        convoyed  = 4; //!< The amount being convoyed
 }
 
+/** @struct SeqOfDotationQuery
+    @brief Lists several dotation queries
+*/
 message SeqOfDotationQuery {
-    repeated DotationQuery elem = 1;
+    repeated DotationQuery elem = 1; //!< the queries
+}
+
+/** @struct LogSupplyHandlingCreation
+    @brief Notifies of the creation of a supply handling
+*/
+message LogSupplyHandlingCreation {
+    optional SupplyRequestId    request   = 1; //!< The request identifier
+    optional AutomatId          consumer  = 2; //!< The consumer identifier
+    optional int32              tick      = 3; //!< The creation tick number
+    optional SeqOfDotationQuery dotations = 4; //!< The dotations @todo What's this ?
 }
 
 /** @struct LogSupplyHandlingUpdate
-    @brief Notified of a log supply handling update
+    @brief Notifies of the update of a log supply handling
 */
 message LogSupplyHandlingUpdate {
     /** @enum EnumConvoyState
@@ -1511,18 +1530,21 @@ message LogSupplyHandlingUpdate {
         convoy_moving_back_to_loading_point = 6; //!< Convoy is returning to forming point
         convoy_finished                     = 7; //!< Convoying operation is finished
     }
-    optional SupplyRequestId    request         = 1;
-    optional AutomatId          consumer        = 2;
-    optional ParentEntity       supplier        = 3;
-    optional ParentEntity       convoy_provider = 4; //!< @todo rename to provider
-    optional UnitId             convoying_unit  = 5; //!< @todo rename to convoyer
-    optional EnumConvoyState    state           = 6;
-    optional SeqOfDotationQuery dotations       = 7;
+    optional SupplyRequestId    request         = 1; //!< The request identifier
+    optional AutomatId          consumer        = 2; //!< The consumer identifier
+    optional ParentEntity       supplier        = 3; //!< The supplier
+    optional ParentEntity       convoy_provider = 4; //!< The provider @todo rename to provider
+    optional UnitId             convoying_unit  = 5; //!< The convoyer @todo rename to convoyer
+    optional EnumConvoyState    state           = 6; //!< The current state of the handling
+    optional SeqOfDotationQuery dotations       = 7; //!< The dotations @todo What's this ?
 }
 
+/** @struct LogSupplyHandlingDestruction
+    @brief Notifies of the destruction of a log supply handling
+*/
 message LogSupplyHandlingDestruction {
-    required SupplyRequestId request  = 1;
-    required AutomatId       consumer = 2;
+    required SupplyRequestId request  = 1; //!< The request identifier
+    required AutomatId       consumer = 2; //!< The consumer identifier
 }
 
 message LogSupplyEquimentAvailability {
@@ -1543,7 +1565,7 @@ message DotationStock {
    required int32        quantity     = 2;
 }
 
-message SeqOfDotationStock { //!< @todo move into LogSupplyState
+message SeqOfDotationStock {
    repeated DotationStock elem = 1;
 }
 
@@ -1559,7 +1581,7 @@ message DotationQuota {
    required int32        quota_disponible = 2;
 }
 
-message SeqOfDotationQuota { //!< @todo move into SeqOfDotationQuota
+message SeqOfDotationQuota {
    repeated DotationQuota elem = 1;
 }
 
