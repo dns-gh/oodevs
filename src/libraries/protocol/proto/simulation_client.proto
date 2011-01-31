@@ -1293,8 +1293,8 @@ message UrbanKnowledgeUpdate {
     required UrbanObjectKnowledgeId knowledge           = 1; //!< The knowledge identifier
     required PartyId                party               = 2; //!< The party identifier
     required ObjectId               object              = 3; //!< The object identifier
-    optional int32                  progress            = 4; //!< The percentage of completion
-    optional int32                  max_progress        = 5; //!< The maximum percentage of completion ever reached
+    optional int32                  progress            = 4; //!< The percentage of knowledge
+    optional int32                  max_progress        = 5; //!< The maximum percentage of knowledge ever reached
     optional bool                   perceived           = 6; //!< Whether the object is currently perceived or not
     optional AutomatIdList          automat_perceptions = 7; //!< The list of automats perceiving the object @todo rename along ObjectKnowledgeUpdate::perceiving_automats
 }
