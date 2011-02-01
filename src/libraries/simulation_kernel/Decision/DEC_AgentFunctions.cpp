@@ -713,6 +713,16 @@ void DEC_AgentFunctions::ChannelPopulations( const TER_Localisation* location )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AlertInhabitants
+// Created: BCI 2011-02-01
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::AlertInhabitants( const TER_Localisation* location )
+{
+    assert( location );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().AlertInhabitants( *location );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsInstalled
 // Created: NLD 2006-08-10
 // -----------------------------------------------------------------------------

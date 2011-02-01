@@ -30,6 +30,7 @@ namespace client
 class MIL_StructuralStateNotifier_ABC;
 class MIL_CheckPointOutArchive;
 class UrbanObjectWrapper;
+class TER_Localisation;
 
 // =============================================================================
 /** @class  MIL_LivingArea
@@ -59,6 +60,7 @@ public:
     void UpdateNetwork( client::PopulationUpdate& msg ) const;
     unsigned int GetTotalOccupation() const;
     void GetUsagesOccupation( std::map< std::string, unsigned int >& occupations ) const;
+    bool Intersect2DWithLocalisation( const TER_Localisation& localisation ) const;
     //@}
 
     //! @name CheckPoints

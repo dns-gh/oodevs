@@ -423,6 +423,10 @@ message ChangePopulationMagicAction {
         @todo What is that ?
     */
     optional string         motivation = 6;
+    /** @property alerted
+        @brief True if the population have been received an alert.
+    */
+    optional bool           alerted    = 7;
 }
 
 /** @struct UrbanMagicAction

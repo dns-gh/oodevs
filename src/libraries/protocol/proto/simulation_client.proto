@@ -2086,6 +2086,7 @@ message PopulationUpdate {
     optional Satisfaction    satisfaction = 6;
     optional string          motivation   = 7;
     repeated BlockOccupation occupations  = 8;
+    optional bool            alerted      = 9;
 }
 
 // Message container

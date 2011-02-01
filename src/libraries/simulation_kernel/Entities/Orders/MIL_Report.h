@@ -468,6 +468,8 @@ public:
         eRC_LeaveLima,
         eRC_StartExtinguishObject,
         eRC_ObjectExtinguished,
+        eRC_ArrivedOnAlertZone,
+        eRC_ZoneAlerted,
         eLast
     };
     //@}

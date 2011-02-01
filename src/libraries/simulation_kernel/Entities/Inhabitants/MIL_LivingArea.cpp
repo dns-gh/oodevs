@@ -360,3 +360,17 @@ float MIL_LivingArea::GetProportion( const T_Block& block, const std::string& mo
         return 0.f;
     return it->second;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::NotifyAlerted
+// Created: BCI 2011-02-01
+// -----------------------------------------------------------------------------
+bool MIL_LivingArea::Intersect2DWithLocalisation( const TER_Localisation& localisation ) const
+{
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+    {
+        if( block.first->Intersect2DWithLocalisation( localisation ) )
+            return true;
+    }
+    return false;
+}

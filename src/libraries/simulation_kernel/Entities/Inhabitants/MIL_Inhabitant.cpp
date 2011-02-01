@@ -70,6 +70,8 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , nNbrWoundedHumans_ ( 0 )
     , healthStateChanged_( false )
     , affinitiesChanged_          ( false )
+    , alerted_( false )
+    , alertedStateHasChanged_( false )
 {
     float totalArea = 0.f;
     idManager_.Lock( nID_ );
@@ -118,6 +120,8 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     , nNbrWoundedHumans_          ( 0 )
     , healthStateChanged_         ( false )
     , affinitiesChanged_          ( false )
+    , alerted_( false )
+    , alertedStateHasChanged_( false )
 {
     // NOTHING
 }
@@ -335,12 +339,17 @@ void MIL_Inhabitant::UpdateNetwork()
             adhesion.set_value( it->second );
         }
     }
+    if( alertedStateHasChanged_ )
+    {
+        msg().set_alerted( alerted_ );
+    }
     pLivingArea_->UpdateNetwork( msg );
     pSatisfactions_->UpdateNetwork( msg );
-    if( healthStateChanged_ || affinitiesChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() )
+    if( healthStateChanged_ || affinitiesChanged_ || alertedStateHasChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() )
         msg.Send( NET_Publisher_ABC::Publisher() );
     healthStateChanged_ = false;
     affinitiesChanged_ = false;
+    alertedStateHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -474,4 +483,17 @@ void MIL_Inhabitant::NotifyStructuralStateChanged( unsigned int /*structuralStat
 void MIL_Inhabitant::NotifyFired()
 {
     pSatisfactions_->DecreaseSafety( pType_->GetSafetyLossOnFire() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::NotifyAlerted
+// Created: BCI 2011-02-01
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::NotifyAlerted( const TER_Localisation& localisation )
+{
+    if( !alerted_ && pLivingArea_->Intersect2DWithLocalisation( localisation ) )
+    {
+        alerted_ = true;
+        alertedStateHasChanged_ = true;
+    }
 }

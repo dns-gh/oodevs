@@ -1588,6 +1588,15 @@ void MIL_EntityManager::ChannelPopulations( const TER_Localisation& localisation
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::AlertInhabitants
+// Created: BCI 2011-02-01
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::AlertInhabitants( const TER_Localisation& localisation )
+{
+    inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::NotifyAlerted, _1, localisation ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------

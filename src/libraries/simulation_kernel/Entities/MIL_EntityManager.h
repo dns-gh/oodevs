@@ -177,6 +177,7 @@ public:
     //! @name Population channeling
     //@{
     void ChannelPopulations( const TER_Localisation& localisation );
+    void AlertInhabitants( const TER_Localisation& localisation );
     //@}
 
     //! @name CheckPoints

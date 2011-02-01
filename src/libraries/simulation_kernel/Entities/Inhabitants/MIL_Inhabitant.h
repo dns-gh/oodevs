@@ -33,6 +33,7 @@ class MIL_StructuralStateNotifier_ABC;
 class MIL_LivingArea;
 class MIL_Schedule_ABC;
 class MIL_InhabitantSatisfactions;
+class TER_Localisation;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -78,6 +79,10 @@ public:
     virtual void NotifyFired();
     //@}
 
+    //! @name Operations
+    //@{
+    void NotifyAlerted( const TER_Localisation& localisation );
+    //@}
 protected:
     //! @name Constructor
     //@{
@@ -124,6 +129,8 @@ private:
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;
     bool healthStateChanged_;
+    bool alerted_;
+    bool alertedStateHasChanged_;
     T_Extensions extensions_;
     T_Affinities affinities_;
     //@}

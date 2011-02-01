@@ -104,6 +104,7 @@ private:
     T_Humans humans_;
     T_UrbanObjectVector livingUrbanObject_;
     T_Extensions extensions_;
+    bool alerted_;
     //@}
 };
 

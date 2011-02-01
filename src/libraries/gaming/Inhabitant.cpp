@@ -72,6 +72,7 @@ void Inhabitant::CreateDictionary( Controller& controller )
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Health" ), self.healthSatisfaction_ );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Safety" ), self.safetySatisfaction_ );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Lodging" ), self.lodgingSatisfaction_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "State/Alerted" ), self.alerted_ );
     BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
     {
         QString info = tools::translate( "Inhabitant", "Details/" ) + extension.first.c_str();
@@ -138,6 +139,8 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             }
         }
     }
+    if( msg.has_alerted() )
+        alerted_ = msg.alerted();
     controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
 
@@ -233,6 +236,7 @@ void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
+    displayer.Display( tools::translate( "Inhabitant", "Alerted:" ), alerted_ );
     for( T_MotivationSatisfactions::const_iterator it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
         displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( it->first.c_str() ), it->second );
     Get< InhabitantAffinities >().Display( &displayer );
@@ -262,7 +266,8 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
                     .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ )
                     .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ )
                     .Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ )
-                    .Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
+                    .Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ )
+                    .Display( tools::translate( "Inhabitant", "Alerted:" ), alerted_ );
             for( T_MotivationSatisfactions::const_iterator satisfaction = motivationSatisfactions_.begin(); satisfaction != motivationSatisfactions_.end(); ++satisfaction )
                 ( *it )->Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( satisfaction->first.c_str() ), satisfaction->second );
             Get< InhabitantAffinities >().Display( *it );
