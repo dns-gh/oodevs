@@ -10,7 +10,7 @@
 #ifndef __BurstDescriptor_h_
 #define __BurstDescriptor_h_
 
-#include "rpr_tools/EntityType.h"
+#include "rpr/EntityType.h"
 
 namespace plugins
 {

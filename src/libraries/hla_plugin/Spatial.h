@@ -10,7 +10,7 @@
 #ifndef __Spatial_h_
 #define __Spatial_h_
 
-#include "rpr_tools/Coordinates.h"
+#include "rpr/Coordinates.h"
 
 namespace plugins
 {

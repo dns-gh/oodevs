@@ -11,7 +11,7 @@
 #define __DisTypeResolver_h_
 
 #include "clients_kernel/ApproximativeMap.h"
-#include "rpr_tools/EntityType.h"
+#include "rpr/EntityType.h"
 #include <map>
 
 namespace kernel

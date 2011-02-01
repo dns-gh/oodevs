@@ -12,9 +12,9 @@
 
 #include "DisHeader.h"
 #include "EntityMarking.h"
-#include "rpr_tools/EntityIdentifier.h"
-#include "rpr_tools/EntityType.h"
-#include "rpr_tools/Coordinates.h"
+#include "rpr/EntityIdentifier.h"
+#include "rpr/EntityType.h"
+#include "rpr/Coordinates.h"
 
 namespace plugins
 {

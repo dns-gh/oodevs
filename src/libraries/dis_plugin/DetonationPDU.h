@@ -12,8 +12,8 @@
 
 #include "DisHeader.h"
 #include "BurstDescriptor.h"
-#include "rpr_tools/Coordinates.h"
-#include "rpr_tools/EntityIdentifier.h"
+#include "rpr/Coordinates.h"
+#include "rpr/EntityIdentifier.h"
 
 namespace plugins
 {

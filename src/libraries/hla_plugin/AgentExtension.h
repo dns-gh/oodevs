@@ -15,7 +15,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "dispatcher/Observer.h"
 #include "protocol/Protocol.h"
-#include "rpr_tools/EntityIdentifier.h"
+#include "rpr/EntityIdentifier.h"
 
 namespace dispatcher
 {

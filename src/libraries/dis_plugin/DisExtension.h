@@ -12,7 +12,7 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "rpr_tools/EntityIdentifier.h"
+#include "rpr/EntityIdentifier.h"
 #include "tic_plugin/PlatformVisitor_ABC.h"
 #include "protocol/Protocol.h"
 

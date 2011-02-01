@@ -13,7 +13,7 @@
 #include "AgentSubject_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "dispatcher/Agent.h"
-#include "rpr_tools/EntityIdentifier.h"
+#include "rpr/EntityIdentifier.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
 #include <hla/Deserializer.h>

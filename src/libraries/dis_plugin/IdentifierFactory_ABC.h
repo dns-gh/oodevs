@@ -10,7 +10,7 @@
 #ifndef __IdentifierFactory_ABC_h_
 #define __IdentifierFactory_ABC_h_
 
-#include "rpr_tools/EntityIdentifier.h"
+#include "rpr/EntityIdentifier.h"
 
 namespace plugins
 {

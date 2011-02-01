@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "plugins_test_pch.h"
-#include "rpr_tools/Coordinates.h"
+#include "rpr/Coordinates.h"
 
 using namespace rpr;
 

@@ -19,13 +19,12 @@
 #include "dispatcher/Side.h"
 #include "dispatcher/Equipment.h"
 #include "protocol/Protocol.h"
-#include "rpr_tools/EntityType.h"
+#include "rpr/EntityType.h"
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
 #include <boost/bind.hpp>
 
 using namespace plugins::hla;
-using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension constructor
@@ -58,7 +57,7 @@ AgentExtension::~AgentExtension()
 // Name: AgentExtension::Serialize
 // Created: SBO 2008-02-20
 // -----------------------------------------------------------------------------
-void AgentExtension::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const
+void AgentExtension::Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const
 {
     if( bUpdateAll )
         UpdateEntityType( functor );
@@ -103,35 +102,35 @@ void AgentExtension::Notify( const sword::UnitEnvironmentType& attributes )
 // Name: AgentExtension::UpdateEntityType
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateEntityType( UpdateFunctor_ABC& functor ) const
+void AgentExtension::UpdateEntityType( ::hla::UpdateFunctor_ABC& functor ) const
 {
     rpr::EntityType type( "1 1 225 1" );
-    Serializer serializer;
+    ::hla::Serializer serializer;
     type.Serialize( serializer );
-    functor.Visit( AttributeIdentifier( "EntityType" ), serializer );
+    functor.Visit( ::hla::AttributeIdentifier( "EntityType" ), serializer );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension::UpdateEntityIdentifier
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateEntityIdentifier( UpdateFunctor_ABC& functor ) const
+void AgentExtension::UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
 {
-    Serializer serializer;
+    ::hla::Serializer serializer;
     id_.Serialize( serializer );
-    functor.Visit( AttributeIdentifier( "rpr::EntityIdentifier" ), serializer );
+    functor.Visit( ::hla::AttributeIdentifier( "rpr::EntityIdentifier" ), serializer );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension::UpdateSpatial
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateSpatial( UpdateFunctor_ABC& functor ) const
+void AgentExtension::UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const
 {
     Spatial spatial( holder_.GetPosition().X(), holder_.GetPosition().Y(), static_cast< float >( holder_.GetAltitude() ), static_cast< float >( holder_.GetSpeed() ), static_cast< float >( holder_.GetDirection() ) );
-    Serializer archive;
+    ::hla::Serializer archive;
     spatial.Serialize( archive );
-    functor.Visit( AttributeIdentifier( "Spatial" ), archive );
+    functor.Visit( ::hla::AttributeIdentifier( "Spatial" ), archive );
     spatialChanged_ = false;
 }
 
@@ -139,31 +138,31 @@ void AgentExtension::UpdateSpatial( UpdateFunctor_ABC& functor ) const
 // Name: AgentExtension::UpdateAggregateMarking
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateAggregateMarking( UpdateFunctor_ABC& functor ) const
+void AgentExtension::UpdateAggregateMarking( ::hla::UpdateFunctor_ABC& functor ) const
 {
     AggregateMarking marking( holder_.GetName().ascii() );
-    Serializer archive;
+    ::hla::Serializer archive;
     marking.Serialize( archive );
-    functor.Visit( AttributeIdentifier( "AggregateMarking" ), archive );
+    functor.Visit( ::hla::AttributeIdentifier( "AggregateMarking" ), archive );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension::UpdateAggregateState
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateAggregateState( UpdateFunctor_ABC& functor ) const
+void AgentExtension::UpdateAggregateState( ::hla::UpdateFunctor_ABC& functor ) const
 {
     unsigned char state = 1; // fully aggregated
-    Serializer archive;
+    ::hla::Serializer archive;
     archive << state;
-    functor.Visit( AttributeIdentifier( "AggregateState" ), archive );
+    functor.Visit( ::hla::AttributeIdentifier( "AggregateState" ), archive );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension::UpdateForceIdentifier
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateForceIdentifier( UpdateFunctor_ABC& functor ) const
+void AgentExtension::UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
 {
     unsigned char force = 0; // Other
     const kernel::Karma& karma = holder_.GetSuperior().GetTeam().GetKarma();
@@ -173,9 +172,9 @@ void AgentExtension::UpdateForceIdentifier( UpdateFunctor_ABC& functor ) const
         force = 2;
     else if( karma == kernel::Karma::neutral_ )
         force = 3;
-    Serializer archive;
+    ::hla::Serializer archive;
     archive << force;
-    functor.Visit( AttributeIdentifier( "ForceIdentifier" ), archive );
+    functor.Visit( ::hla::AttributeIdentifier( "ForceIdentifier" ), archive );
 }
 
 namespace
@@ -194,17 +193,17 @@ namespace
             SilentEntity entity( type, static_cast< unsigned short >( e.nNbrAvailable_ ) );
             entity.Serialize( serializer_ );
         }
-        void Commit( UpdateFunctor_ABC& functor )
+        void Commit( ::hla::UpdateFunctor_ABC& functor )
         {
             {
-                Serializer archive;
+                ::hla::Serializer archive;
                 archive << count_;
-                functor.Visit( AttributeIdentifier( "NumberOfSilentEntities" ), archive );
+                functor.Visit( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ), archive );
             }
-            functor.Visit( AttributeIdentifier( "SilentEntities" ), serializer_ );
+            functor.Visit( ::hla::AttributeIdentifier( "SilentEntities" ), serializer_ );
         }
         unsigned short count_;
-        Serializer serializer_;
+        ::hla::Serializer serializer_;
     };
 }
 
@@ -212,7 +211,7 @@ namespace
 // Name: AgentExtension::UpdateComposition
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateComposition( UpdateFunctor_ABC& functor ) const
+void AgentExtension::UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) const
 {
     SilentEntitiesSerializer serializer;
     holder_.Equipments().Apply( boost::bind( &SilentEntitiesSerializer::SerializeEquipment, boost::ref( serializer ), _1 ) );

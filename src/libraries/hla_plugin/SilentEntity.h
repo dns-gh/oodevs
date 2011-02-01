@@ -10,7 +10,7 @@
 #ifndef __SilentEntity_h_
 #define __SilentEntity_h_
 
-#include "rpr_tools/EntityType.h"
+#include "rpr/EntityType.h"
 
 namespace plugins
 {
