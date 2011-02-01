@@ -872,9 +872,7 @@
     </target>
 
     <target name="flood_test" depends="library.flood">
-        <build-test name="flood" depends="boost"
-            libs="lib${ant.project.name}_flood-${platform}-mt">
-        </build-test>
+        <build-test name="flood" depends="boost" libs="lib${ant.project.name}_flood-${platform}-mt"/>
     </target>
     <!--
     ============================================================================

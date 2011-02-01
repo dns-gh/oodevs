@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "flood_test_pch.h"
+#include "flood/FloodModel.h"
 #include "MockElevationGetter.h"
 
 namespace
@@ -24,7 +25,6 @@ namespace
             , middleElevation_( 5u )
             , deepElevation_  ( 10u )
         {}
-
         MockElevationGetter elevationGetter_;
         flood::FloodModel flood_;
         geometry::Point2f center_;

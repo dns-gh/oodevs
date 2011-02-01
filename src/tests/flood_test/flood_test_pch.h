@@ -21,6 +21,4 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
-#include "flood/FloodModel.h"
-
 #endif // __flood_test_pch_h_
