@@ -242,6 +242,8 @@ void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) co
 void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number )
 {
     humans_[ inhabitant ] = number;
+    if( number == 0u )
+        humans_.erase( inhabitant );
     UpdateColor();
 }
 
