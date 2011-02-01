@@ -29,7 +29,7 @@ Dotation::Dotation( const sword::ResourceDotations_ResourceDotation& asnMsg )
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
 Dotation::Dotation( const sword::DotationStock & asnMsg )
-   : nDotationType_( asnMsg.ressource_id().id() )
+   : nDotationType_( asnMsg.resource().id() )
    , nNbr_         ( asnMsg.quantity() )
 {
     // NOTHING
@@ -78,6 +78,6 @@ void Dotation::Send( sword::ResourceDotations_ResourceDotation& asnMsg ) const
 // -----------------------------------------------------------------------------
 void Dotation::Send( sword::DotationStock& asnMsg ) const
 {
-    asnMsg.mutable_ressource_id()->set_id( nDotationType_ );
+    asnMsg.mutable_resource()->set_id( nDotationType_ );
     asnMsg.set_quantity( nNbr_ );
 }

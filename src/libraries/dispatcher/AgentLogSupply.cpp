@@ -55,13 +55,13 @@ void AgentLogSupply::Update( const sword::LogSupplyState& asnMsg )
     if( asnMsg.has_stocks() )
         for( int i = 0; i < asnMsg.stocks().elem_size(); ++i )
         {
-            Dotation* pDotation = stocks_.Find( asnMsg.stocks().elem( i ).ressource_id().id() );
+            Dotation* pDotation = stocks_.Find( asnMsg.stocks().elem( i ).resource().id() );
             if( pDotation )
                 pDotation->Update( asnMsg.stocks().elem( i ) );
             else
             {
                 pDotation = new Dotation( asnMsg.stocks().elem( i ) );
-                stocks_.Register( asnMsg.stocks().elem( i ).ressource_id().id(), *pDotation );
+                stocks_.Register( asnMsg.stocks().elem( i ).resource().id(), *pDotation );
             }
         }
 }

@@ -18,8 +18,8 @@ using namespace dispatcher;
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 DotationQuota::DotationQuota( const sword::DotationQuota& message )
-   : nDotationType_( message.ressource_id().id() )
-   , nQuota_       ( message.quota_disponible() )
+   : nDotationType_( message.resource().id() )
+   , nQuota_       ( message.quantity() )
 {
     // NOTHING
 }
@@ -39,7 +39,7 @@ DotationQuota::~DotationQuota()
 // -----------------------------------------------------------------------------
 void DotationQuota::Update( const sword::DotationQuota& message )
 {
-    nQuota_ = message.quota_disponible();
+    nQuota_ = message.quantity();
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +48,6 @@ void DotationQuota::Update( const sword::DotationQuota& message )
 // -----------------------------------------------------------------------------
 void DotationQuota::Send( sword::DotationQuota& message ) const
 {
-    message.mutable_ressource_id()->set_id( nDotationType_ );
-    message.set_quota_disponible( nQuota_ );
+    message.mutable_resource()->set_id( nDotationType_ );
+    message.set_quantity( nQuota_ );
 }

@@ -1582,7 +1582,7 @@ namespace
     template< typename From, typename To >
     void ConvertDotationStock( const From& from, To* to )
     {
-        CONVERT_ID( ressource_id );
+        CONVERT_ID_TO( resource, ressource_id );
         CONVERT_TO( quantity, quantite_disponible );
     }
     template< typename From, typename To >
@@ -1614,8 +1614,8 @@ namespace
     template< typename From, typename To >
     void ConvertDotationQuota( const From& from, To* to )
     {
-        CONVERT_ID( ressource_id );
-        CONVERT( quota_disponible );
+        CONVERT_ID_TO( resource, ressource_id );
+        CONVERT_TO( quantity, quota_disponible );
     }
 }
 

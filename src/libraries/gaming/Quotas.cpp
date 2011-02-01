@@ -40,8 +40,8 @@ void Quotas::DoUpdate( const sword::LogSupplyQuotas& message )
 {
     quotas_.resize( message.quotas().elem_size() );
     for( int i = 0; i < message.quotas().elem_size(); ++i )
-        quotas_[ i ] = Dotation( dotationResolver_.Get( message.quotas().elem( i ).ressource_id().id() )
-                               , message.quotas().elem( i ).quota_disponible() );
+        quotas_[ i ] = Dotation( dotationResolver_.Get( message.quotas().elem( i ).resource().id() )
+                               , message.quotas().elem( i ).quantity() );
     controller_.Update( *this );
 }
 

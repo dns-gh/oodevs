@@ -530,11 +530,11 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             sword::LogSupplyQuotas& message = *expected.mutable_message()->mutable_log_supply_quotas();
             message.mutable_supplied()->mutable_automat()->set_id( 1 );
             message.mutable_quotas()->add_elem();
-            message.mutable_quotas()->mutable_elem( 0 )->mutable_ressource_id()->set_id( 42 );
-            message.mutable_quotas()->mutable_elem( 0 )->set_quota_disponible( 5112 );
+            message.mutable_quotas()->mutable_elem( 0 )->mutable_resource()->set_id( 42 );
+            message.mutable_quotas()->mutable_elem( 0 )->set_quantity( 5112 );
             message.mutable_quotas()->add_elem();
-            message.mutable_quotas()->mutable_elem( 1 )->mutable_ressource_id()->set_id( 69 );
-            message.mutable_quotas()->mutable_elem( 1 )->set_quota_disponible( 6945 );
+            message.mutable_quotas()->mutable_elem( 1 )->mutable_resource()->set_id( 69 );
+            message.mutable_quotas()->mutable_elem( 1 )->set_quantity( 6945 );
             CheckInitialized( message );
             automats.Get( 1 ).Update( message );
 

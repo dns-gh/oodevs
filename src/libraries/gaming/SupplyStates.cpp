@@ -66,12 +66,12 @@ void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
         while( nSize > 0 )
         {
             const sword::DotationStock& value = message.stocks().elem( --nSize );
-            DotationType& type = dotationResolver_.Get( value.ressource_id().id() );
-            Dotation* dotation = Find( value.ressource_id().id() );
+            DotationType& type = dotationResolver_.Get( value.resource().id() );
+            Dotation* dotation = Find( value.resource().id() );
             if( dotation )
                 dotation->quantity_ = value.quantity();
             else
-                Register( value.ressource_id().id(), *new Dotation( type, value.quantity() ) );
+                Register( value.resource().id(), *new Dotation( type, value.quantity() ) );
         }
     }
     controller_.Update( *this );

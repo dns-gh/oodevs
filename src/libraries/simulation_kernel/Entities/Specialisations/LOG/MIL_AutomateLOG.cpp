@@ -261,7 +261,7 @@ void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
         {
            const PHY_DotationCategory& dotation = *it->first;
            xos << xml::start( "resource" )
-                   << xml::attribute( "name", dotation.GetName()  )
+                   << xml::attribute( "name", dotation.GetName() )
                    << xml::attribute( "quantity", it->second.rQuota_ )
                << xml::end; // dotation
         }
@@ -570,8 +570,8 @@ void MIL_AutomateLOG::SendQuotas() const
         for( CIT_DotationQuotaMap it = stockQuotasSuperior_.begin(); it != stockQuotasSuperior_.end(); ++it, ++i )
         {
             sword::DotationQuota& dotQuota = *asn().mutable_quotas()->add_elem();
-            dotQuota.mutable_ressource_id()->set_id( it->first->GetMosID() );
-            dotQuota.set_quota_disponible( (unsigned int)it->second.rQuota_ );
+            dotQuota.mutable_resource()->set_id( it->first->GetMosID() );
+            dotQuota.set_quantity( (unsigned int)it->second.rQuota_ );
         }
     }
     else

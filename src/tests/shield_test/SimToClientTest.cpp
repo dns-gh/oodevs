@@ -1217,7 +1217,7 @@ namespace
     template< typename S >
     void FillDotationStock( S* s )
     {
-        s->mutable_ressource_id()->set_id( 10 );
+        s->mutable_resource()->set_id( 10 );
         s->set_quantity( 11 );
     }
     template< typename A >
@@ -1249,8 +1249,8 @@ namespace
     template< typename Q >
     void FillDotationQuota( Q* q )
     {
-        q->mutable_ressource_id()->set_id( 10 );
-        q->set_quota_disponible( 11 );
+        q->mutable_resource()->set_id( 10 );
+        q->set_quantity( 11 );
     }
 }
 

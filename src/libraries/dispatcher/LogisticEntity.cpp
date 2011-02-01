@@ -87,7 +87,7 @@ void LogisticEntity::DoUpdate( const sword::LogSupplyQuotas& msg )
     for( int i = 0; i < msg.quotas().elem_size(); ++i )
     {
         DotationQuota* quota = new DotationQuota( msg.quotas().elem( i ) );
-        quotas_.Register( msg.quotas().elem( i ).ressource_id().id(), *quota );
+        quotas_.Register( msg.quotas().elem( i ).resource().id(), *quota );
     }
 }
 
