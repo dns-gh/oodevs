@@ -47,7 +47,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              Inhabitant( const sword::PopulationCreation& message, kernel::Controllers& controllers,
-                         const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver, UrbanModel& model );
+                         const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver, const UrbanModel& model );
     virtual ~Inhabitant();
     //@}
 

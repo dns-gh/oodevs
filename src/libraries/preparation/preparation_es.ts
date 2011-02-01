@@ -540,10 +540,6 @@
 <context>
     <name>Population</name>
     <message>
-        <source>%1 [%2]</source>
-        <translation type="unfinished">%1 [%2]</translation>
-    </message>
-    <message>
         <source>Info/Identifier</source>
         <translation type="unfinished">Info/Identificador</translation>
     </message>
@@ -573,6 +569,17 @@
     </message>
     <message>
         <source>Health/Infrastructures needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 [%2]</source>
+        <translation type="unfinished">%1 [%2]</translation>
+    </message>
+</context>
+<context>
+    <name>PopulationAffinities</name>
+    <message>
+        <source>Affinities/%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

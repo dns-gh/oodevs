@@ -61,8 +61,12 @@ private:
     typedef std::map< unsigned int, unsigned int > T_UrbanBlocks;
     typedef std::map< std::string, std::string > T_Extensions;
     typedef std::vector< int > T_UrbanObjectId;
+
     typedef std::map< std::string, float >              T_MotivationSatisfactions;
     typedef T_MotivationSatisfactions::const_iterator CIT_MotivationSatisfactions;
+
+    typedef std::map< unsigned long, float >     T_Affinities;
+    typedef T_Affinities::const_iterator       CIT_Affinities;
     //@}
 
 private:
@@ -83,6 +87,7 @@ private:
     T_UrbanObjectId urbanObjectId_;
     T_UrbanBlocks urbanBlocks_;
     T_Extensions extensions_;
+    T_Affinities affinities_;
     //@}
 };
 

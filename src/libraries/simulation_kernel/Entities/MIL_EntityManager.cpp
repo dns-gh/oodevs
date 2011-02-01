@@ -886,7 +886,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const sword::UnitMagicAction& 
                 throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
             break;
         case sword::UnitMagicAction::inhabitant_change_health_state:
-        case sword::UnitMagicAction::inhabitant_change_adhesion_list:
+        case sword::UnitMagicAction::inhabitant_change_affinities:
             if( MIL_Inhabitant* pInhabitant = inhabitantFactory_->Find ( id ) )
                 pInhabitant->OnReceiveInhabitantMagicAction( message );
             else

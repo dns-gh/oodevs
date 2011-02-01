@@ -300,11 +300,11 @@ Merci de sélectionner un autre fichier à importer.</translation>
     <name>InhabitantCreationPanel</name>
     <message>
         <source>Information</source>
-        <translation type="unfinished">Information</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Nom:</translation>
+        <translation>Nom:</translation>
     </message>
     <message>
         <source>Side:</source>

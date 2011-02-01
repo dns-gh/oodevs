@@ -746,10 +746,10 @@ actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::Pop
 actions::Action_ABC* ActionFactory::CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "inhabitant_change_health_state" );
-    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Inhabitant Change Health State Action" ), true );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Population Change Health State" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *new actions::parameters::Quantity( it.NextElement(), healthy ) );
-    action->AddParameter( *new actions::parameters::Quantity( it.NextElement(), wounded ) );
-    action->AddParameter( *new actions::parameters::Quantity( it.NextElement(), dead ) );
+    action->AddParameter( *new parameters::Quantity( it.NextElement(), healthy ) );
+    action->AddParameter( *new parameters::Quantity( it.NextElement(), wounded ) );
+    action->AddParameter( *new parameters::Quantity( it.NextElement(), dead ) );
     return action;
 }

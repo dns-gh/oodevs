@@ -86,7 +86,7 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
         entity = tasker->GetTasker();
         if( entity )
             name = entity->GetName();
-   }
+    }
     else if ((action.GetType().GetName()=="global_weather") || (action.GetType().GetName()=="local_weather"))
     {
         name = "Weather";

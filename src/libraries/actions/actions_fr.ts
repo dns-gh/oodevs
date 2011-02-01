@@ -50,11 +50,11 @@
     </message>
     <message>
         <source>Automat Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Création d&apos;automate</translation>
     </message>
     <message>
-        <source>Inhabitant Change Health State Action</source>
-        <translation type="unfinished"></translation>
+        <source>Population Change Health State</source>
+        <translation>Changer l&apos;état de santé de la population</translation>
     </message>
 </context>
 <context>

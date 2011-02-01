@@ -12,6 +12,8 @@
 
 #include "clients_kernel/EditorFactory_ABC.h"
 
+class AffinityFloat;
+
 namespace gui
 {
 
@@ -29,6 +31,7 @@ class EditorFactory : public kernel::EditorFactory_ABC
                     , public tools::Caller< unsigned int* >
                     , public tools::Caller< bool* >
                     , public tools::Caller< kernel::Unit* >
+                    , public tools::Caller< AffinityFloat* > 
 {
 public:
     //! @name Constructors/Destructor
@@ -53,6 +56,7 @@ private:
     virtual void Call( unsigned int* const& value );
     virtual void Call( bool* const& value );
     virtual void Call( kernel::Unit* const& value );
+    virtual void Call( AffinityFloat* const& value );
 
     virtual void BeginEditor( QWidget* parent );
     virtual QWidget* EndEditor();

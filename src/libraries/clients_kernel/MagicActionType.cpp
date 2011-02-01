@@ -290,8 +290,8 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Wounded", "quantity" );
         CreateOrderParameter( "Dead", "quantity" );
     }
-    else if( name_ == "inhabitant_change_adhesion_list" )
+    else if( name_ == "inhabitant_change_affinities" )
     {
-        CreateOrderParameter( "Adhesion", "list" );
+        CreateOrderParameter( "Affinities", "list" );
     }
 }

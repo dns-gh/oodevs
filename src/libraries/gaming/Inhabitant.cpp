@@ -11,6 +11,7 @@
 #include "Inhabitant.h"
 #include "Tools.h"
 #include "UrbanModel.h"
+#include "InhabitantAffinities.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InhabitantType.h"
@@ -27,7 +28,7 @@ using namespace kernel;
 // Name: Inhabitant constructor
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const tools::Resolver_ABC< InhabitantType >& typeResolver, UrbanModel& model )
+Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const tools::Resolver_ABC< InhabitantType >& typeResolver, const UrbanModel& model )
     : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
     , controllers_( controllers )
     , type_       ( typeResolver.Get( message.type().id() ) )
@@ -234,6 +235,7 @@ void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
     for( T_MotivationSatisfactions::const_iterator it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
         displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( it->first.c_str() ), it->second );
+    Get< InhabitantAffinities >().Display( &displayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +255,7 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
 {
     if( !displayers_.empty() )
     {
-        for( std::set< Displayer_ABC* >::iterator it = displayers_.begin(); it != displayers_.end(); ++it )
+        for( std::set< Displayer_ABC* >::const_iterator it = displayers_.begin(); it != displayers_.end(); ++it )
         {
             ( *it )->Display( tools::translate( "Inhabitant", "Alive:" ), healthy_ )
                     .Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ )
@@ -263,6 +265,7 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
                     .Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
             for( T_MotivationSatisfactions::const_iterator satisfaction = motivationSatisfactions_.begin(); satisfaction != motivationSatisfactions_.end(); ++satisfaction )
                 ( *it )->Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( satisfaction->first.c_str() ), satisfaction->second );
+            Get< InhabitantAffinities >().Display( *it );
         }
         displayers_.clear();
     }

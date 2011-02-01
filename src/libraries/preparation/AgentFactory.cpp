@@ -26,6 +26,7 @@
 #include "LogisticBaseStates.h"
 #include "Model.h"
 #include "Inhabitant.h"
+#include "InhabitantAffinities.h"
 #include "InhabitantHierarchies.h"
 #include "InhabitantPositions.h"
 #include "Inhabitants.h"
@@ -157,8 +158,10 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
         return 0;
     }
     Inhabitant* result = new Inhabitant( type, number, name, controllers_.controller_, idManager_ );
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( positions );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, top ) );
+    result->Attach( *new InhabitantAffinities( controllers_, model_, *result, dico ) );
     if( Inhabitants* inhabs = top->Retrieve< Inhabitants >() )
         inhabs->AddInhabitant( *result );
     result->Polish();
@@ -268,8 +271,11 @@ kernel::Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, kernel::Tea
 kernel::Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, kernel::Team_ABC& parent )
 {
     Inhabitant* result = new Inhabitant( xis, controllers_.controller_, idManager_, static_.types_ );
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
+
     result->Attach< Positions >( *new InhabitantPositions( xis, static_.coordinateConverter_, model_.urban_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
+    result->Attach( *new InhabitantAffinities( xis, controllers_, model_, *result, dico ) );
     if( Inhabitants* popus = parent.Retrieve< Inhabitants >() )
         popus->AddInhabitant( *result );
     result->Polish();

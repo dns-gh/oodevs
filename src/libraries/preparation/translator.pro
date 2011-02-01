@@ -14,9 +14,9 @@ Dotations.cpp \
 FireAttribute.cpp \
 FloodAttribute.cpp \
 Formation.cpp \
-Inhabitant.cpp \
 InfrastructureAttribute.cpp \
 Inhabitant.cpp \
+InhabitantAffinities.cpp \
 InputToxicCloudAttribute.cpp \
 Intelligence.cpp \
 KnowledgeGroup.cpp \

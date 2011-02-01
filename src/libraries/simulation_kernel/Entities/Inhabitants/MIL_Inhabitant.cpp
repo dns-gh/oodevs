@@ -69,6 +69,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , nNbrDeadHumans_    ( 0 )
     , nNbrWoundedHumans_ ( 0 )
     , healthStateChanged_( false )
+    , affinitiesChanged_          ( false )
 {
     float totalArea = 0.f;
     idManager_.Lock( nID_ );
@@ -80,10 +81,13 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
         >> xml::start( "information" )
             >> xml::optional >> text_
         >> xml::end
-        >> xml::optional
-        >> xml::start( "extensions" )
+        >> xml::optional >> xml::start( "extensions" )
             >> xml::list( "entry", *this, &MIL_Inhabitant::ReadExtension )
+        >> xml::end
+        >> xml::optional >> xml::start( "affinities" )
+            >> xml::list( "affinity", *this, &MIL_Inhabitant::ReadAffinity )
         >> xml::end;
+
     unsigned long population = nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_;
     pLivingArea_.reset( new MIL_LivingArea( xis, population ) );
     pLivingArea_->Register( *this );
@@ -113,6 +117,7 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     , nNbrDeadHumans_             ( 0 )
     , nNbrWoundedHumans_          ( 0 )
     , healthStateChanged_         ( false )
+    , affinitiesChanged_          ( false )
 {
     // NOTHING
 }
@@ -149,13 +154,26 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
     pSatisfactions_.reset( pSatisfactions );
     unsigned int size;
     file >> size;
-    std::string first;
-    std::string second;
-    for( unsigned int i = 0; i < size; ++i )
     {
-        file >> first
-             >> second;
-        extensions_[ first ] = second;
+        std::string first;
+        std::string second;
+        for( unsigned int i = 0; i < size; ++i )
+        {
+            file >> first
+                >> second;
+            extensions_[ first ] = second;
+        }
+    }
+    file >> size;
+    {
+        unsigned long first;
+        float second;
+        for( unsigned int i = 0; i < size; ++i )
+        {
+            file >> first
+                >> second;
+            affinities_[ first ] = second;
+        }
     }
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
     pType_->InitializeSchedule( *pSchedule_ );
@@ -184,6 +202,11 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
         file << it->first
              << it->second;
+    size = affinities_.size();
+    file << size;
+    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+        file << it->first
+             << it->second;
 }
 
 // -----------------------------------------------------------------------------
@@ -204,8 +227,17 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "dead", nNbrDeadHumans_ )
         << xml::end
         << xml::content( "information", text_ );
-    pLivingArea_->WriteODB( xos );
+            pLivingArea_->WriteODB( xos );
     pSatisfactions_->WriteODB( xos );
+        xos << xml::start( "affinities" );
+            for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+            {
+                xos << xml::start( "affinity" )
+                    << xml::attribute( "id", it->first )
+                    << xml::attribute( "value", it->second )
+                    << xml::end;
+            }
+        xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -215,6 +247,15 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
 void MIL_Inhabitant::ReadExtension( xml::xistream& xis )
 {
     extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::ReadAffinity
+// Created: ABR 2011-01-28
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::ReadAffinity( xml::xistream& xis )
+{
+    affinities_[ xis.attribute< unsigned long >( "id" ) ] = xis.attribute< float >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,6 +293,12 @@ void MIL_Inhabitant::SendFullState() const
     msg().set_wounded( nNbrWoundedHumans_ );
     pLivingArea_->SendFullState( msg );
     pSatisfactions_->SendFullState( msg );
+    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    {
+        sword::PartyAdhesion& adhesion = *msg().add_adhesions();
+        adhesion.mutable_party()->set_id( it->first );
+        adhesion.set_value( it->second );
+    }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -279,11 +326,21 @@ void MIL_Inhabitant::UpdateNetwork()
         msg().set_wounded( nNbrWoundedHumans_ );
         msg().set_dead( nNbrDeadHumans_ );
     }
+    if( affinitiesChanged_ )
+    {
+        for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+        {
+            sword::PartyAdhesion& adhesion = *msg().add_adhesions();
+            adhesion.mutable_party()->set_id( it->first );
+            adhesion.set_value( it->second );
+        }
+    }
     pLivingArea_->UpdateNetwork( msg );
     pSatisfactions_->UpdateNetwork( msg );
-    if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() )
+    if( healthStateChanged_ || affinitiesChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() )
         msg.Send( NET_Publisher_ABC::Publisher() );
     healthStateChanged_ = false;
+    affinitiesChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -301,8 +358,8 @@ void MIL_Inhabitant::OnReceiveInhabitantMagicAction( const sword::UnitMagicActio
         case sword::UnitMagicAction::inhabitant_change_health_state:
             OnReceiveMsgChangeHealthState( msg );
             break;
-        case sword::UnitMagicAction::inhabitant_change_adhesion_list:
-            OnReceiveMsgChangeAdhesionList( msg );
+        case sword::UnitMagicAction::inhabitant_change_affinities:
+            OnReceiveMsgChangeAffinities( msg );
             break;
         default:
             assert( false );
@@ -349,9 +406,22 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
 // Name: MIL_Inhabitant::OnReceiveMsgChangeAdhesionList
 // Created: ABR 2011-01-26
 // -----------------------------------------------------------------------------
-void MIL_Inhabitant::OnReceiveMsgChangeAdhesionList( const sword::UnitMagicAction& msg )
+void MIL_Inhabitant::OnReceiveMsgChangeAffinities( const sword::UnitMagicAction& msg )
 {
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
 
+    const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list = msg.parameters().elem( 0 ).value();
+
+    for( int i = 0; i < list.size(); ++i )
+    {
+        sword::MissionParameter_Value element = list.Get( i );
+        IT_Affinities affinity = affinities_.find( element.list( 0 ).identifier() );
+        if ( affinity == affinities_.end() )
+            throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
+        affinity->second = element.list( 1 ).areal();
+    }
+    affinitiesChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------

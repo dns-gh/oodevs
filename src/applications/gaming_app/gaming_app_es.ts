@@ -1050,6 +1050,111 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>InhabitantChangeAffinitiesDialog</name>
+    <message>
+        <source>Change affinities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population Change Affinities</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InhabitantChangeHealthStateDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Change health state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alive:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation type="unfinished">Muerto:</translation>
+    </message>
+    <message>
+        <source>New total:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Original total:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InhabitantExtractCrowdDialog</name>
+    <message>
+        <source>Extract crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alive:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation type="unfinished">Muerto:</translation>
+    </message>
+    <message>
+        <source>Crowd size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remaining population:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeGroupMagicOrdersInterface</name>
     <message>
         <source>Magic orders</source>

@@ -23,6 +23,7 @@ FloodAttribute.cpp \
 Formation.cpp \
 HumanFactors.cpp \
 Inhabitant.cpp\
+InhabitantAffinities.cpp \
 Intelligence.cpp \
 InfrastructureAttribute.cpp \
 IntelligenceFactory.cpp \

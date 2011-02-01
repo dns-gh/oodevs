@@ -71,7 +71,7 @@ message MsgUnitMagicAction {
         log_supply_pull_flow              = 29;
         create_wound                      = 30;
         inhabitant_change_health_state    = 31;
-        inhabitant_change_adhesion_list   = 32;
+        inhabitant_change_affinities      = 32;
     }
    required Common.Tasker               tasker     = 1;
    required Type                        type       = 2;

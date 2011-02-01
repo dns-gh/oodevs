@@ -140,8 +140,8 @@ message UnitMagicAction {
         crowd_creation                    = 28; //!< A crowd creation magic action
         log_supply_pull_flow              = 29; //!< A log supply pull flow magic action
         create_wound                      = 30; //!< A create wound magic action
-        inhabitant_change_health_state    = 31; //!< A change_health_state on inhabitant magic action.
-        inhabitant_change_adhesion_list   = 32; //!< A change adhesion list on inhabitant magic action.
+        inhabitant_change_health_state    = 31; //!< A change of health state on inhabitant magic action.
+        inhabitant_change_affinities      = 32; //!< A change of affinities on inhabitant magic action.
     }
     /** @property tasker
         @brief The tasker.

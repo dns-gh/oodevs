@@ -540,40 +540,47 @@
 <context>
     <name>Population</name>
     <message>
-        <source>%1 [%2]</source>
-        <translation type="unfinished">%1 [%2]</translation>
-    </message>
-    <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identifiant</translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished">Info/Nom</translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Type</source>
-        <translation type="unfinished">Info/Type</translation>
+        <translation>Info/Type</translation>
     </message>
     <message>
         <source>Info/Info</source>
-        <translation type="unfinished">Info/Info</translation>
+        <translation>Info/Info</translation>
     </message>
     <message>
         <source>Human/Alive</source>
-        <translation type="unfinished">Humains/Vivants</translation>
+        <translation>Humains/Vivants</translation>
     </message>
     <message>
         <source>Human/Dead</source>
-        <translation type="unfinished">Humains/Morts</translation>
+        <translation>Humains/Morts</translation>
     </message>
     <message>
         <source>Human/Wounded</source>
-        <translation type="unfinished">Humains/Blessés</translation>
+        <translation>Humains/Blessés</translation>
     </message>
     <message>
         <source>Health/Infrastructures needed</source>
-        <translation type="unfinished">Santé/Infrastructures nécessaires</translation>
+        <translation>Santé/Infrastructures nécessaires</translation>
+    </message>
+    <message>
+        <source>%1 [%2]</source>
+        <translation>%1 [%2]</translation>
+    </message>
+</context>
+<context>
+    <name>PopulationAffinities</name>
+    <message>
+        <source>Affinities/%1</source>
+        <translation>Adhésions/%1</translation>
     </message>
 </context>
 <context>

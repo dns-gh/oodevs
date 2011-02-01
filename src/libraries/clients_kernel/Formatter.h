@@ -22,6 +22,8 @@ namespace urban
     class TerrainObject_ABC;
 }
 
+class AffinityFloat;
+
 namespace kernel
 {
     class UrbanKnowledge_ABC;
@@ -95,6 +97,12 @@ template< >
 struct Formatter< QDateTime >
 {
     void operator()( const QDateTime& value, Displayer_ABC& displayer ) const;
+};
+
+template< >
+struct Formatter< AffinityFloat >
+{
+    void operator()( const AffinityFloat& value, Displayer_ABC& displayer ) const;
 };
 
 // =============================================================================

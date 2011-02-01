@@ -48,7 +48,7 @@ void PropertiesDictionary::Remove( const QString& name )
 // Name: PropertiesDictionary::HasKey
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-bool PropertiesDictionary::HasKey( QString name ) const
+bool PropertiesDictionary::HasKey( const QString& name ) const
 {
     return properties_.find( name ) != properties_.end();
 }

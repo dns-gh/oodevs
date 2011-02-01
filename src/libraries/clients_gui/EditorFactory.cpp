@@ -11,10 +11,12 @@
 
 #include "clients_gui_pch.h"
 #include "EditorFactory.h"
+#include "DecimalSpinBoxAndSlider.h"
 #include "clients_kernel/ValueEditor.h"
 #include "clients_kernel/Units.h"
 #include "ValuedComboBox.h"
 #include "Tools.h"
+#include "preparation/InhabitantAffinities.h"
 
 using namespace gui;
 using namespace kernel;
@@ -285,4 +287,13 @@ void EditorFactory::Call( bool* const& value )
     BooleanEditor* editor = new BooleanEditor( parent_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: ABR 2011-02-01
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( AffinityFloat* const& value )
+{
+    result_ = new DecimalSpinBoxAndSlider( parent_, value->Value(), 2, -1.f, 1.f, 0.01f );
 }

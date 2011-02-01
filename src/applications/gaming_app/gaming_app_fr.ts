@@ -1050,6 +1050,111 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>InhabitantChangeAffinitiesDialog</name>
+    <message>
+        <source>Change affinities</source>
+        <translation>Modifier la liste d&apos;adhésions</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
+    </message>
+    <message>
+        <source>Population Change Affinities</source>
+        <translation>Changer la liste d&apos;adhésion de la population</translation>
+    </message>
+</context>
+<context>
+    <name>InhabitantChangeHealthStateDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Change health state</source>
+        <translation>Modifier l&apos;état de santé</translation>
+    </message>
+    <message>
+        <source>Alive:</source>
+        <translation>Vivants:</translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation>Blessés</translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation>Morts:</translation>
+    </message>
+    <message>
+        <source>New total:</source>
+        <translation>Nouveau total:</translation>
+    </message>
+    <message>
+        <source>Original total:</source>
+        <translation>Total original:</translation>
+    </message>
+</context>
+<context>
+    <name>InhabitantExtractCrowdDialog</name>
+    <message>
+        <source>Extract crowd</source>
+        <translation>Extraire une foule</translation>
+    </message>
+    <message>
+        <source>Crowd type:</source>
+        <translation>Type de foule:</translation>
+    </message>
+    <message>
+        <source>Alive:</source>
+        <translation>Sains:</translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation>Blessés</translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation>Morts:</translation>
+    </message>
+    <message>
+        <source>Crowd size:</source>
+        <translation>Taille de la foule:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
+    </message>
+    <message>
+        <source>Remaining population:</source>
+        <translation>Population restante:</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+</context>
+<context>
     <name>KnowledgeGroupMagicOrdersInterface</name>
     <message>
         <source>Magic orders</source>
@@ -1460,7 +1565,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Populations</source>
-        <translation type="unfinished"></translation>
+        <translation>Populations</translation>
     </message>
 </context>
 <context>

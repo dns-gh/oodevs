@@ -552,6 +552,10 @@
         <source>Living Area/</source>
         <translation>Zone de vie</translation>
     </message>
+    <message>
+        <source>Affinity %1:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Intelligence</name>

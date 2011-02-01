@@ -53,7 +53,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Inhabitant Change Health State Action</source>
+        <source>Population Change Health State</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

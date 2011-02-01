@@ -49,6 +49,9 @@ InfoStancesWidget.cpp \
 InfoStatusWidget.cpp \
 InfoSupplyDialog.cpp \
 InfoWidget.cpp \
+InhabitantChangeAffinitiesDialog.cpp \
+InhabitantChangeHealthStateDialog.cpp \
+InhabitantExtractCrowdDialog.cpp \
 KnowledgeGroupMagicOrdersInterface.cpp \
 LendingsListView.cpp \
 LoginDialog.cpp \

@@ -7,11 +7,16 @@
 //
 // *****************************************************************************
 
-#ifndef __InhabitantChangeAdhesionListDialog_h_
-#define __InhabitantChangeAdhesionListDialog_h_
+#ifndef __InhabitantChangeAffinitiesDialog_h_
+#define __InhabitantChangeAffinitiesDialog_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+
+namespace gui
+{
+    class DecimalSpinBoxAndSlider;
+}
 
 namespace kernel
 {
@@ -28,24 +33,25 @@ namespace actions
 }
 
 class StaticModel;
+class TeamsModel;
 
 // =============================================================================
-/** @class  InhabitantChangeAdhesionListDialog
-    @brief  InhabitantChangeAdhesionListDialog
+/** @class  InhabitantChangeAffinitiesDialog
+    @brief  InhabitantChangeAffinitiesDialog
 */
 // Created: ABR 2011-01-25
 // =============================================================================
-class InhabitantChangeAdhesionListDialog : public QDialog
-                                         , public tools::Observer_ABC
-                                         , public kernel::ContextMenuObserver_ABC< kernel::Inhabitant_ABC >
+class InhabitantChangeAffinitiesDialog : public QDialog
+                                       , public tools::Observer_ABC
+                                       , public kernel::ContextMenuObserver_ABC< kernel::Inhabitant_ABC >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantChangeAdhesionListDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
-    virtual ~InhabitantChangeAdhesionListDialog();
+             InhabitantChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers, const TeamsModel& teams, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
+    virtual ~InhabitantChangeAffinitiesDialog();
     //@}
 
     //! @name Operations
@@ -65,25 +71,31 @@ private slots:
 private:
     //! @name Copy/Assignment
     //@{
-    InhabitantChangeAdhesionListDialog( const InhabitantChangeAdhesionListDialog& );            //!< Copy constructor
-    InhabitantChangeAdhesionListDialog& operator=( const InhabitantChangeAdhesionListDialog& ); //!< Assignment operator
+    InhabitantChangeAffinitiesDialog( const InhabitantChangeAffinitiesDialog& );            //!< Copy constructor
+    InhabitantChangeAffinitiesDialog& operator=( const InhabitantChangeAffinitiesDialog& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
+private:
+    //! @name Type
     //@{
+    typedef std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >  T_AffinitiesSpinBoxs;
+    typedef T_AffinitiesSpinBoxs::iterator                           IT_AffinitiesSpinBoxs;
+    typedef T_AffinitiesSpinBoxs::const_iterator                    CIT_AffinitiesSpinBoxs;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const TeamsModel& teams_;
     const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
-
     kernel::SafePointer< kernel::Inhabitant_ABC > selected_;
+    QGrid* affinitiesGrid_;
+    T_AffinitiesSpinBoxs affinitiesSpinboxs_;
     //@}
 };
 
-#endif // __InhabitantChangeAdhesionListDialog_h_
+#endif // __InhabitantChangeAffinitiesDialog_h_
