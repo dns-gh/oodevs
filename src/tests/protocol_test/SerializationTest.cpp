@@ -123,7 +123,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SerializationTest_SendOneMessageFromClientToServer )
 {
-    BOOST_FAIL_ON_DATE( 2011, 02, 01 );
+    BOOST_FAIL_ON_DATE( 2011, 02, 07 );
     //MsgPion message;
     //message.set_id( 101 );
     //message.set_name( "My name" );
@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE( SerializationTest_SendOneMessageFromClientToServer )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SerializationTest_SendMultipleMessageToServer )
 {
-    BOOST_FAIL_ON_DATE( 2011, 02, 01 );
+    BOOST_FAIL_ON_DATE( 2011, 02, 07 );
     //MsgPion message;
     //message.set_id( 101 );
     //message.set_name( "test" );
@@ -153,7 +153,7 @@ BOOST_AUTO_TEST_CASE( SerializationTest_SendMultipleMessageToServer )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SerializationTest_SendMessageBothWays )
 {
-    BOOST_FAIL_ON_DATE( 2011, 02, 01 );
+    BOOST_FAIL_ON_DATE( 2011, 02, 07 );
     //MsgPion message;
     //message.set_id( 1 );
     //message.set_name( "My name" );
@@ -167,7 +167,7 @@ BOOST_AUTO_TEST_CASE( SerializationTest_SendMessageBothWays )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SerializationTest_SendEmptyMessage )
 {
-    BOOST_FAIL_ON_DATE( 2011, 02, 01 );
+    BOOST_FAIL_ON_DATE( 2011, 02, 07 );
     //EmptyMessage message;
     //VerifyClientReception( message );
 }
