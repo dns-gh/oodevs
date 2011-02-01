@@ -128,7 +128,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         {
             it->second->UpdateHumans( name_.ascii(), occupation.number() );
             humans_[ id ] = occupation.number();
-            const QString key = tools::translate( "Inhabitant", "Living Area/" ) + "[id: " + boost::lexical_cast< std::string >( id ).c_str() + "] " + it->second->GetName().ascii();
+            const QString key = tools::translate( "Inhabitant", "Living Area/" ) + it->second->GetName().ascii() + " [" + boost::lexical_cast< std::string >( id ).c_str() + "]";
             PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
             if( !dictionary.HasKey( key ) )
             {
