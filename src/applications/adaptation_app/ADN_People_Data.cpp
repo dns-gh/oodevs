@@ -13,6 +13,11 @@
 #include "ADN_Project_Data.h"
 #include "ADN_DataException.h"
 #include "ADN_Tr.h"
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
+#include <boost/lexical_cast.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: EventInfos::EventInfos
@@ -266,12 +271,57 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
     securityGainPerHour_ = 100 * securityGainPerHour_.GetData();
 }
 
+namespace
+{
+    QTime CreateTime( const std::string& date )
+    {
+        std::vector< std::string > result;
+        boost::algorithm::split( result, date, boost::algorithm::is_any_of( ":" ) );
+        if( result.size() != 2 )
+            throw std::runtime_error( "Invalid date event" );
+        try
+        {
+            return QTime( boost::lexical_cast< int >( result.front() ), boost::lexical_cast< int >( result.back() ) );
+        }
+        catch( boost::bad_lexical_cast& /*e*/ )
+        {
+            throw std::runtime_error( "Invalid date event" );
+        }
+    }
+
+    bool CheckTime( const std::string& from, const std::string& to, const std::string& dataFrom, const std::string& dataTo )
+    {
+        QTime qFrom( CreateTime( from ) );
+        QTime qTo( CreateTime( to ) );
+        QTime qDataFrom( CreateTime( dataFrom ) );
+        QTime qDataTo( CreateTime( dataTo ) );
+        return ( qFrom < qDataFrom && qTo < qDataFrom ) || ( qFrom > qDataTo && qTo > qDataTo );
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_People_Data::CheckErrors
+// Created: LGY 2011-01-31
+// -----------------------------------------------------------------------------
+std::string ADN_People_Data::PeopleInfos::CheckErrors()
+{
+    for( IT_Events it1 = schedule_.begin(); it1 != schedule_.end(); ++it1 )
+        for( IT_Events it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
+            if( it1->first != it2->first && it1->second->day_.GetData() == it2->second->day_.GetData() &&
+                !CheckTime( it1->second->from_.GetData(), it1->second->to_.GetData(), it2->second->from_.GetData(), it2->second->to_.GetData() ) )
+                    return "- " + it1->second->day_.GetData() + " : " + it1->second->from_.GetData() + " / " + it1->second->to_.GetData() + "\n" +
+                           "- " + it2->second->day_.GetData() + " : " + it2->second->from_.GetData() + " / " + it2->second->to_.GetData() + "\n";
+    return "";
+}
+
 // -----------------------------------------------------------------------------
 // Name: PeopleInfos::WriteArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
 void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosId )
 {
+    const std::string error = CheckErrors();
+    if( error != "" )
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).ascii() + std::string( "\n" ) + error );
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", mosId )

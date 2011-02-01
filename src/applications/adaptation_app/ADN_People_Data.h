@@ -100,6 +100,7 @@ public:
     private:
         void ReadEvent( xml::xistream& input, int& index );
         void ReadConsumption( xml::xistream& input );
+        std::string CheckErrors();
 
     public:
         ADN_Type_String strName_;
