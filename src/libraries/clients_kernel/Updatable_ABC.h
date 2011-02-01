@@ -25,8 +25,8 @@ class Updatable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Updatable_ABC() {};
-    virtual ~Updatable_ABC() {};
+             Updatable_ABC() {}
+    virtual ~Updatable_ABC() {}
     //@}
 
     //! @name Operations

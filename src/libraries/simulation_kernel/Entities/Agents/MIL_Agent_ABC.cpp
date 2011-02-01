@@ -20,8 +20,8 @@ MIL_IDManager MIL_Agent_ABC::idManager_;
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Agent_ABC::MIL_Agent_ABC( xml::xistream& xis )
-    : MIL_Entity_ABC ( xis )
-    , nID_           ( xis.attribute< unsigned long >( "id" ) )
+    : MIL_Entity_ABC( xis )
+    , nID_          ( xis.attribute< unsigned long >( "id" ) )
 {
     idManager_.Lock( nID_ );
 }

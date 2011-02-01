@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 {
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
-    DEC_RolePion_Decision decision ( *fixture.pPion_, 100, 100 );
+    DEC_RolePion_Decision decision( *fixture.pPion_, 100, 100 );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ protected:
         if( pOther_ )
             brain[ "other" ] = pOther_;
     }
-    virtual void RegisterUserArchetypeFunctions(directia::brain::Brain &) {}
+    virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& ) {}
 private:
     DEC_TestPopulationDecision* pOther_;
 };

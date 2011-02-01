@@ -97,7 +97,7 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void MIL_Agent_ABC::serialize
+// Name: MIL_Agent_ABC::serialize
 // Created: SBO 2009-07-01
 // -----------------------------------------------------------------------------
 template< typename Archive >

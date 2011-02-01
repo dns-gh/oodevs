@@ -23,7 +23,7 @@ static const double rIteratorEpsilon = 1e-10;
 //-----------------------------------------------------------------------------
 void PHY_RawVisionDataIterator::AlignFirstPointOnGrid()
 {
-    double rNextY = rA0_ * (double)( nNextCellCol_ + 1 ) + rB0_;
+    double rNextY = rA0_ * static_cast< double >( nNextCellCol_ + 1 ) + rB0_;
 
     // calcul de la prochaine position de l'iterateur dans l'espace de l'algorithme -> vOutPoint
     // calcul de la longueur réelle parcourue                                       -> rLenght
@@ -89,8 +89,6 @@ void PHY_RawVisionDataIterator::AlignFirstPointOnGrid()
     vOutPoint_.rZ_ += rLenght_ * rDz_;
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator::PHY_RawVisionDataIterator
 // Created: JVT 03-03-29
@@ -109,29 +107,11 @@ _ le calcul du gradian de hauteur se fait par projection de ce gradian sur la lo
 PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginPos, const MT_Vector3D& vEndPos )
     : data_             ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
     , rDz_              ( vEndPos.rZ_ - vBeginPos.rZ_ )
-    , rDl_              ()
-    , rA0_              ()
-    , rA1_              ()
-    , rB0_              ()
-    , rB1_              ()
-    , bSwap_            ()
-    , bNegX_            ()
-    , bNegY_            ()
-    , bSwapOffset_      ()
-    , nCellColOffset_   ()
-    , nCellRowOffset_   ()
     , eIteratorState_   ( eRunning )
-    , rLenght_          ()
-    , rRemainingLength_ ()
-    , rAlreadyUsedDX_   ()
     , nNextCellCol_     ( 0 )
     , nNextCellRow_     ( 0 )
     , vOutPoint_        ( vBeginPos )
-    , rGroundCoeff_     ()
-    , rEnvCoeff_        ()
     , pCurrentCell_     ( 0 )
-    , bIsInGround_      ()
-    , bIsInEnv_         ()
 {
     double rDx = vEndPos.rX_ - vOutPoint_.rX_;
     double rDy = vEndPos.rY_ - vOutPoint_.rY_;
@@ -206,8 +186,8 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
 // Name: PHY_RawVisionDataIterator::operator ++
 // Created: JVT 03-03-29
 // Last modified: JVT 03-06-24
-    //-------------------------------------------------------------------x----------
-PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++ ()
+//-----------------------------------------------------------------------------
+PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++()
 {
     if( End() )
         return *this;
@@ -215,7 +195,7 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++ ()
     int nCellXOffset = 0;
     int nCellYOffset = 0;
 
-    double rNextY = rA0_ * (double)( nNextCellCol_ + 1 ) + rB0_;
+    double rNextY = rA0_ * static_cast< double >( nNextCellCol_ + 1 ) + rB0_;
 
     // calcul de la prochaine position de l'iterateur dans l'espace de l'algorithme -> vOutPoint
     // calcul de la longueur réelle parcourue                                       -> rLenght
@@ -247,7 +227,7 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++ ()
         nCellYOffset    = 1;
         vOutPoint_.rY_  = nNextCellRow_;
         vOutPoint_.rX_  = rA1_ * vOutPoint_.rY_ + rB1_;
-        rAlreadyUsedDX_ = vOutPoint_.rX_ - (int)vOutPoint_.rX_;
+        rAlreadyUsedDX_ = vOutPoint_.rX_ - static_cast< int >( vOutPoint_.rX_ );
         rLenght_        = rDl_ * rAlreadyUsedDX_;
         rNextY          = rAlreadyUsedDX_;
 
@@ -297,9 +277,9 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++ ()
     OffsetToRealSpace( nCellXOffset, nCellYOffset );
     ToRealSpace      ( nRealCellCol, nRealCellRow );
 
-    pCurrentCell_ = &data_( (unsigned int)nRealCellCol, (unsigned int)nRealCellRow );
+    pCurrentCell_ = &data_( static_cast< unsigned int >( nRealCellCol ), static_cast< unsigned int >( nRealCellRow ) );
 
-    double rGroundHeight  = rNextY * data_( (unsigned int)( nRealCellCol + nCellYOffset ), (unsigned int)( nRealCellRow + nCellXOffset ) ).GetAltitude() + pCurrentCell_->GetAltitude() * ( 1. - rNextY );
+    double rGroundHeight  = rNextY * data_( static_cast< unsigned int >( nRealCellCol + nCellYOffset ), static_cast< unsigned int >( nRealCellRow + nCellXOffset ) ).GetAltitude() + pCurrentCell_->GetAltitude() * ( 1. - rNextY );
 
     // calcul des coefficients de changement d'environnement
     double rOldGroundCoeff = rGroundCoeff_;

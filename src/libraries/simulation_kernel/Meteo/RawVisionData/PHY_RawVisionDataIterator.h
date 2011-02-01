@@ -30,14 +30,14 @@ public:
 
     PHY_RawVisionDataIterator& operator ++ ();
 
-    bool                       End             () const;
-    double                   Length          () const;
-    PHY_RawVisionData::envBits GetCurrentEnv   () const;
-    const weather::PHY_Lighting&       GetLighting     () const;
-    const weather::PHY_Precipitation&  GetPrecipitation() const;
+    bool End() const;
+    double Length() const;
+    PHY_RawVisionData::envBits GetCurrentEnv() const;
+    const weather::PHY_Lighting& GetLighting() const;
+    const weather::PHY_Precipitation& GetPrecipitation() const;
 
-    const MT_Vector2D          GetPos()               const;
-    void                       GetPos( MT_Vector2D& ) const;
+    const MT_Vector2D GetPos() const;
+    void GetPos( MT_Vector2D& ) const;
 
 protected:
     // Transformations entre l'espace réel et l'espace de l'algorithme

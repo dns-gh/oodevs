@@ -72,9 +72,12 @@ bool PHY_RawVisionDataIterator::End() const
 inline
 void PHY_RawVisionDataIterator::ToRealSpace( double& rX, double& rY ) const
 {
-    if ( bNegX_ ) rX = -rX;
-    if ( bNegY_ ) rY = -rY;
-    if ( bSwap_ ) std::swap( rX, rY );
+    if( bNegX_ )
+        rX = -rX;
+    if( bNegY_ )
+        rY = -rY;
+    if( bSwap_ )
+        std::swap( rX, rY );
 }
 
 //-----------------------------------------------------------------------------
@@ -84,9 +87,12 @@ void PHY_RawVisionDataIterator::ToRealSpace( double& rX, double& rY ) const
 inline
 void PHY_RawVisionDataIterator::ToRealSpace( int& nX, int& nY ) const
 {
-    if ( bNegX_ ) nX = -nX;
-    if ( bNegY_ ) nY = -nY;
-    if ( bSwap_ ) std::swap( nX, nY );
+    if( bNegX_ )
+        nX = -nX;
+    if( bNegY_ )
+        nY = -nY;
+    if( bSwap_ )
+        std::swap( nX, nY );
 }
 
 //-----------------------------------------------------------------------------
@@ -107,9 +113,12 @@ void PHY_RawVisionDataIterator::OffsetToRealSpace( int& dX, int& dY ) const
 inline
 void PHY_RawVisionDataIterator::ToAlgorithmSpace( double& rX, double& rY ) const
 {
-    if ( bSwap_ ) std::swap( rX, rY );
-    if ( bNegX_ ) rX = -rX;
-    if ( bNegY_ ) rY = -rY;
+    if( bSwap_ )
+        std::swap( rX, rY );
+    if( bNegX_ )
+        rX = -rX;
+    if( bNegY_ )
+        rY = -rY;
 }
 
 //-----------------------------------------------------------------------------
@@ -119,9 +128,12 @@ void PHY_RawVisionDataIterator::ToAlgorithmSpace( double& rX, double& rY ) const
 inline
 void PHY_RawVisionDataIterator::ToAlgorithmSpace( int& nX, int& nY ) const
 {
-    if ( bSwap_ ) std::swap( nX, nY );
-    if ( bNegX_ ) nX = -nX;
-    if ( bNegY_ ) nY = -nY;
+    if( bSwap_ )
+        std::swap( nX, nY );
+    if( bNegX_ )
+        nX = -nX;
+    if( bNegY_ )
+        nY = -nY;
 }
 
 //-----------------------------------------------------------------------------
