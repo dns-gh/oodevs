@@ -3118,15 +3118,15 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Change Threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Changement seuil</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation type="unfinished">Désactiver</translation>
+        <translation>Désactiver</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation type="unfinished">Activer</translation>
+        <translation>Activer</translation>
     </message>
 </context>
 <context>
