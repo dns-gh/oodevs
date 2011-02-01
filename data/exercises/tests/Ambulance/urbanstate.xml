@@ -2,13 +2,9 @@
 <urban-state model-version="4.2.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/urbanstate.xsd">
   <urban-objects>
     <urban-object id="3"/>
-    <urban-object id="6">
-      <structural-state value="99"/>
-      <infrastructure enabled="true" role="infras1" threshold="30"/>
-      <medical-treatment doctors="18">
-        <bed-capacities/>
-      </medical-treatment>
-    </urban-object>
+    <urban-object id="4"/>
+    <urban-object id="5"/>
+    <urban-object id="10"/>
   </urban-objects>
 </urban-state>
-<!-- signature="2249772476" -->
+<!-- signature="1771447213" -->

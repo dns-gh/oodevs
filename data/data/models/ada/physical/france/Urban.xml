@@ -98,26 +98,76 @@
     <accommodation capacity="0.2" role="office"/>
   </accommodations>
   <infrastructures>
-    <infrastructure name="infras4" symbol="hopital">
-      <capacities>
-        <medical night-doctors-rate="55">
-          <emergency-plan beds-rate="51" doctors-rate="14"/>
-        </medical>
-      </capacities>
-    </infrastructure>
-    <infrastructure name="infras1" symbol="Administration">
+    <infrastructure name="Ressources eau" symbol="Ressources-eau">
       <capacities/>
     </infrastructure>
-    <infrastructure name="infras2" symbol="hopital">
+    <infrastructure name="Ressources electricite" symbol="Ressources-electricite">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Ressources gaz" symbol="Ressources-gaz">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Ressources nourriture" symbol="Ressources-nourriture">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Sports" symbol="Sports">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Transport" symbol="Transport">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Transport air" symbol="Transport-air">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Hopital" symbol="hopital">
       <capacities>
-        <medical night-doctors-rate="30">
-          <emergency-plan beds-rate="10" doctors-rate="20"/>
+        <medical night-doctors-rate="10">
+          <emergency-plan beds-rate="10" doctors-rate="10"/>
         </medical>
       </capacities>
     </infrastructure>
-    <infrastructure name="infras3" symbol="Industrie">
+    <infrastructure name="Industrie" symbol="Industrie">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Logement" symbol="Logement">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Media" symbol="Media">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Monument" symbol="Monument">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Bureaux" symbol="Bureaux">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Caserne" symbol="Caserne">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Caserne militaire" symbol="Caserne-militaire">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Caserne pompier" symbol="Caserne-pompier">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Commerce" symbol="Commerce">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Edifice Religieux" symbol="Edifice Religieux">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Education" symbol="Education">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Entrepot" symbol="Entrepot">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Transport naval" symbol="Transport-naval">
+      <capacities/>
+    </infrastructure>
+    <infrastructure name="Administration" symbol="Administration">
       <capacities/>
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="1878301803" -->
+<!-- signature="1706639761" -->
