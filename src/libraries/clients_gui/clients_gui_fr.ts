@@ -572,11 +572,11 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Infrastructures</source>
-        <translation type="unfinished"></translation>
+        <translation>Infrastructures</translation>
     </message>
     <message>
         <source>Display Infrastructures</source>
-        <translation type="unfinished"></translation>
+        <translation>Affichage Infrastructures</translation>
     </message>
 </context>
 <context>
