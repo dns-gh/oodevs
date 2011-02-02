@@ -122,6 +122,7 @@ public:
         eReport_IndirectFireOnTarget,
         eReport_MunitionInterdite,
         eReport_MunitionAutorise,
+        eRC_ArrivedOnGaragePosition,
         eNbrReport
     };
 
@@ -466,7 +467,7 @@ public:
         eRC_ReussiteRenforcementPion,
         eRC_EchecRenforcementPion,
         eRC_LeaveLima,
-        eRC_StartExtinguishObject,
+        eRC_ArrivedOnExtinguishableObject,
         eRC_ObjectExtinguished,
         eRC_ArrivedOnAlertZone,
         eRC_ZoneAlerted,
