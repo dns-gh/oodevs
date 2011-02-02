@@ -1866,14 +1866,24 @@ message ControlCheckPointSetFrequencyAck {
 message ControlCheckPointSaveNowAck {
 }
 
+/** @struct ControlCheckPointSaveBegin
+    @brief Notify of the beginning of a checkpoint save
+
+    @see ControlCheckPointSaveNow ControlCheckPointSaveEnd
+*/
 message ControlCheckPointSaveBegin {
 }
 
 message ControlCheckPointSaveBeginAck {
 }
 
+/** @struct ControlCheckPointSaveEnd
+    @brief Notify of the end of a checkpoint save
+
+    @see ControlCheckPointSaveNow ControlCheckPointSaveBegin
+*/
 message ControlCheckPointSaveEnd {
-    optional string name = 1;
+    optional string name = 1; //!< The checkpoint name
 }
 
 message ControlCheckPointListAck {
@@ -1886,9 +1896,19 @@ message ControlCheckPointList {
 message ControlCheckPointDeleteAck {
 }
 
+/** @struct ControlSendCurrentStateBegin
+    @brief Notify of the start of the sending of the simulation state
+
+    @see ControlSendCurrentStateEnd
+*/
 message ControlSendCurrentStateBegin {
 }
 
+/** @struct ControlSendCurrentStateEnd
+    @brief Notify of the end of the sending of the simulation state
+
+    @see ControlSendCurrentStateBegin
+*/
 message ControlSendCurrentStateEnd {
 }
 
