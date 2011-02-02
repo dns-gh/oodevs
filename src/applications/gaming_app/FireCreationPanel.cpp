@@ -249,6 +249,15 @@ void FireCreationPanel::NotifyUpdated( const kernel::ModelLoaded& )
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireCreationPanel::NotifyUpdated
+// Created: JSR 2011-02-02
+// -----------------------------------------------------------------------------
+void FireCreationPanel::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    ammunitionsBox_->Clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireCreationPanel::NotifyContextMenu
 // Created: MGD 2010-02-23
 // -----------------------------------------------------------------------------

@@ -22,6 +22,7 @@ namespace kernel
     class AgentKnowledge_ABC;
     class Controllers;
     class ModelLoaded;
+    class ModelUnLoaded;
     class Time_ABC;
     class GlTools_ABC;
     class Location_ABC;
@@ -57,6 +58,7 @@ enum E_StrikeType
 class FireCreationPanel : public gui::InfoPanel_ABC
                         , public tools::Observer_ABC
                         , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                        , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
                         , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                         , public kernel::ContextMenuObserver_ABC< kernel::AgentKnowledge_ABC >
                         , public gui::ShapeHandler_ABC
@@ -102,6 +104,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     void Reset();
     void RegisterIfNeeded();
     void UnregisterIfNeeded();
