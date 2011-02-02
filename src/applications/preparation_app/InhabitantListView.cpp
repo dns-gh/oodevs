@@ -21,6 +21,7 @@
 // -----------------------------------------------------------------------------
 InhabitantListView::InhabitantListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
     : gui::InhabitantListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
+    , modelBuilder_( modelBuilder )
     , selected_    ( controllers )
 {
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
@@ -42,8 +43,12 @@ InhabitantListView::~InhabitantListView()
 void InhabitantListView::keyPressEvent( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
-        delete (const kernel::Entity_ABC*)selected_;
-    gui::InhabitantListView::keyPressEvent( key );
+    {
+        modelBuilder_.DeleteEntity( *selected_ );
+        key->accept();
+    }
+    else
+        gui::InhabitantListView::keyPressEvent( key );
 }
 
 // -----------------------------------------------------------------------------

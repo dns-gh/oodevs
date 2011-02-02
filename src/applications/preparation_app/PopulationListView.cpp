@@ -21,6 +21,7 @@
 // -----------------------------------------------------------------------------
 PopulationListView::PopulationListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
     : gui::PopulationListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
+    , modelBuilder_( modelBuilder )
     , selected_    ( controllers )
 {
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
@@ -42,8 +43,12 @@ PopulationListView::~PopulationListView()
 void PopulationListView::keyPressEvent( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
-        delete (const kernel::Entity_ABC*)selected_;
-    gui::PopulationListView::keyPressEvent( key );
+    {
+        modelBuilder_.DeleteEntity( *selected_ );
+        key->accept();
+    }
+    else
+        gui::PopulationListView::keyPressEvent( key );
 }
 
 // -----------------------------------------------------------------------------

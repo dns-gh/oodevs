@@ -50,6 +50,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ModelBuilder& modelBuilder_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
