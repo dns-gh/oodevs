@@ -12,162 +12,94 @@
 #include "MessageHelpers.h"
 #include "MockClient.h"
 #include "MockServer.h"
-#pragma warning( push, 0 )
-#include <boost/date_time/gregorian/gregorian.hpp>
-#pragma warning( pop )
-
-#define BOOST_FAIL_ON_DATE( year, month, day )                                                                  \
-    const boost::gregorian::date expected( year, month, day );                                                  \
-    const boost::gregorian::date actual( boost::gregorian::day_clock::local_day() );                            \
-    if( actual >= expected )                                                                                    \
-        BOOST_FAIL( "expected date '" + boost::gregorian::to_simple_string( expected ) + "' has been reached" );
+#include <boost/lambda/lambda.hpp>
+#include <boost/thread.hpp>
 
 namespace
 {
-    struct Timeout : private boost::noncopyable
+    template< typename F >
+    void wait( bool& condition, F flush, int timeout = 100, int sleep = 100 )
     {
-        explicit Timeout( unsigned int duration )
-            : duration_( duration )
+        while( !condition && timeout > 0 )
         {
-            Start();
+            --timeout;
+            if( sleep > 0 )
+                boost::this_thread::sleep( boost::posix_time::milliseconds( sleep ) );
+            flush();
         }
-        void Start()
-        {
-            start_ = boost::posix_time::microsec_clock::universal_time();
-        }
-        bool Expired() const
-        {
-            return ( boost::posix_time::microsec_clock::universal_time() - start_ ).total_milliseconds() > duration_;
-        }
-        const unsigned int duration_;
-        boost::posix_time::ptime start_;
-    };
+    }
 
-    struct MessageSendingFixture
+    struct Fixture
     {
-        MessageSendingFixture()
+        Fixture()
             : endpoint_( "127.0.0.1:33333" )
-            , port_    ( 33333 )
             , client_  ( endpoint_ )
-            , server_  ( port_ )
+            , server_  ( 33333 )
         {
-            MOCK_EXPECT( server_.OnConnectionSucceeded, _ ).once();
-            MOCK_EXPECT( client_.OnConnectionSucceeded, _ ).once().with( endpoint_ );
-            Timeout timeout( 1000 );
-            while( !client_.Connected() && !timeout.Expired() )
-            {
-                client_.Update();
-                server_.Update();
-            }
-            BOOST_REQUIRE( client_.Connected() );
+            bool connected = false;
+            MOCK_EXPECT( server_, ConnectionSucceeded ).once().with( mock::retrieve( link_ ) );
+            MOCK_EXPECT( client_, ConnectionSucceeded ).once().with( endpoint_ ).calls( boost::lambda::var( connected ) = true );
+            wait( connected, boost::bind( &Fixture::Update, this ) );
             mock::verify();
-        }
-        template< typename M >
-        void VerifyServerReception( M& message, unsigned int count = 1 )
-        {
-            MOCK_EXPECT( server_.OnReceivePion, _ ).exactly( count ).with( mock::any, message );
-            const boost::posix_time::ptime start = boost::posix_time::microsec_clock::universal_time();
-            for( unsigned int i = 0; i < count; ++i )
-            {
-                server_.ResetReceived();
-                client_.Send( endpoint_, message );
-                client_.Update();
-                Timeout timeout( 100 );
-                while( !server_.Received() && !timeout.Expired() )
-                    server_.Update();
-            }
-            BOOST_TEST_MESSAGE( "sent " << count << " message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
-            mock::verify();
+            mock::reset();
         }
 
-        template< typename M >
-        void VerifyClientReception( M& message, unsigned int count = 1 )
+        template< typename From, typename Message, typename Expectation >
+        void VerifyReception( From& from, const std::string& endpoint, const Message& message, Expectation& expectation ) // $$$$ MCO : expectation should be copiable but isn't due to a bug in turtle
         {
-            AddClientExpectation( message, count );
-            const boost::posix_time::ptime start = boost::posix_time::microsec_clock::universal_time();
-            for( unsigned int i = 0; i < count; ++i )
-            {
-                client_.ResetReceived();
-                server_.Send( message );
-                Timeout timeout( 100 );
-                while( !client_.Received() && !timeout.Expired() )
-                {
-                    server_.Update();
-                    client_.Update();
-                }
-            }
-            BOOST_TEST_MESSAGE( "Sent " << count << " message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
-            mock::verify();
+            from.Send( endpoint, message );
+            bool received = false;
+            expectation.once().with( mock::any, message ).calls( boost::lambda::var( received ) = true );
+            wait( received, boost::bind( &Fixture::Update, this ) );
         }
 
-        void AddClientExpectation( MsgPion& message, unsigned int count = 1 )
+        void VerifyServerReception( const MsgPion& message )
         {
-            MOCK_EXPECT( client_.OnReceivePion, _ ).exactly( count ).with( endpoint_, message );
+            VerifyReception( client_, endpoint_, message, MOCK_EXPECT( server_, OnReceivePion ) );
         }
 
-        void AddClientExpectation( EmptyMessage& message, unsigned int count = 1 )
+        void VerifyClientReception( const MsgPion& message )
         {
-            MOCK_EXPECT( client_.OnReceiveEmpty, _ ).exactly( count ).with( endpoint_, message );
+            VerifyReception( server_, link_, message, MOCK_EXPECT( client_, OnReceivePion ) );
         }
 
-        const std::string endpoint_;
-        const unsigned short port_;
+        void VerifyClientReception( const EmptyMessage& message )
+        {
+            VerifyReception( server_, link_, message, MOCK_EXPECT( client_, OnReceiveEmpty ) );
+        }
+
+        void Update()
+        {
+            client_.Update();
+            server_.Update();
+        }
+
+        std::string endpoint_;
+        std::string link_;
         MockClient client_;
         MockServer server_;
     };
 }
 
-// -----------------------------------------------------------------------------
-// Name: SerializationTest_SendOneMessageFromClientToServer
-// Created: FHD 2009-08-24
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( SerializationTest_SendOneMessageFromClientToServer )
+BOOST_FIXTURE_TEST_CASE( a_message_sent_from_client_is_received_on_server, Fixture )
 {
-    BOOST_FAIL_ON_DATE( 2011, 02, 07 );
-    //MsgPion message;
-    //message.set_id( 101 );
-    //message.set_name( "My name" );
-    //VerifyServerReception( message );
+    MsgPion message;
+    message.set_id( 101 );
+    message.set_name( "My name" );
+    VerifyServerReception( message );
 }
 
-// -----------------------------------------------------------------------------
-// Name: SerializationTest_SendMultipleMessageToServer
-// Created: SBO 2009-10-26
-// $$$$ SBO 2009-10-26: mainly tests network interface performance
-//                      see below for encoding performance tests
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( SerializationTest_SendMultipleMessageToServer )
+BOOST_FIXTURE_TEST_CASE( a_message_sent_both_ways_is_received_on_each_other_side, Fixture )
 {
-    BOOST_FAIL_ON_DATE( 2011, 02, 07 );
-    //MsgPion message;
-    //message.set_id( 101 );
-    //message.set_name( "test" );
-    //VerifyServerReception( message, 10 );
-    //VerifyServerReception( message, 100 );
-    //VerifyServerReception( message, 1000 );
+    MsgPion message;
+    message.set_id( 1 );
+    message.set_name( "My name" );
+    VerifyClientReception( message );
+    VerifyServerReception( message );
 }
 
-// -----------------------------------------------------------------------------
-// Name: SerializationTest_SendMessageBothWays
-// Created: FHD 2009-08-24
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( SerializationTest_SendMessageBothWays )
+BOOST_FIXTURE_TEST_CASE( an_empty_message_sent_is_received_on_the_other_side, Fixture )
 {
-    BOOST_FAIL_ON_DATE( 2011, 02, 07 );
-    //MsgPion message;
-    //message.set_id( 1 );
-    //message.set_name( "My name" );
-    //VerifyClientReception( message );
-    //VerifyServerReception( message );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SerializationTest_SendEmptyMessage
-// Created: FHD 2009-08-24
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( SerializationTest_SendEmptyMessage )
-{
-    BOOST_FAIL_ON_DATE( 2011, 02, 07 );
-    //EmptyMessage message;
-    //VerifyClientReception( message );
+    EmptyMessage message;
+    VerifyClientReception( message );
 }
