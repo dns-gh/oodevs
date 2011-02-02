@@ -57,15 +57,13 @@ void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
     const TacticalHierarchies* hierarchies = object.Retrieve< TacticalHierarchies >();
     if( !hierarchies ) // urban block or other object not attached to a side
         return;
-    const Team_ABC& team = static_cast< const Team_ABC& >( hierarchies->GetUp() );
-
+    const Entity_ABC& team = hierarchies->GetTop();
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
     {
         teamItem = factory_.CreateItem( this );
         teamItem->SetNamed( team );
     }
-
     const ObjectType& type = object.GetType();
     ValuedListItem* typeItem = FindChild( &type, teamItem );
     if( ! typeItem )
@@ -73,7 +71,6 @@ void ObjectListView::NotifyCreated( const kernel::Object_ABC& object )
         typeItem = factory_.CreateItem( teamItem );
         typeItem->SetNamed( type );
     }
-
     ValuedListItem* item = factory_.CreateItem( typeItem );
     item->SetNamed( (const Entity_ABC&)object );
     item->setVisible( profile_.IsVisible( object ) );

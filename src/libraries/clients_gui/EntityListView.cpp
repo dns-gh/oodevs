@@ -14,6 +14,7 @@
 #include "ListItemToolTip.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 
 using namespace gui;
 using namespace kernel;
@@ -147,11 +148,11 @@ void EntityListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EntityListView::NotifyCreated( const kernel::Team_ABC& team )
 {
-    ValuedListItem* teamItem = FindSibling( &team, firstChild() );
+    ValuedListItem* teamItem = FindSibling( static_cast< const kernel::Entity_ABC* >( &team ), firstChild() );
     if( ! teamItem )
     {
         teamItem = factory_.CreateItem( this );
-        teamItem->SetNamed( (const Entity_ABC&)team );
+        teamItem->SetNamed( static_cast< const kernel::Entity_ABC& >( team ) );
     }
 }
 
@@ -161,5 +162,5 @@ void EntityListView::NotifyCreated( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 void EntityListView::NotifyDeleted( const kernel::Team_ABC& team )
 {
-    delete FindSibling( (const Entity_ABC*)&team, firstChild() );
+    delete FindSibling( static_cast< const kernel::Entity_ABC* >( &team ), firstChild() );
 }
