@@ -74,7 +74,7 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
         filter_.reset( new RunningExerciseFilter( *host_, *port_ ) );
         exercises_ = new ExerciseList( box, config_, controllers, true, true, true, false );
         exercises_->SetFilter( *filter_ );
-        connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
+        connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
         connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
     }
     EnableButton( eButtonJoin, false );

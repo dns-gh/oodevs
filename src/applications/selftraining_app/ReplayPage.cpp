@@ -41,7 +41,7 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend:
         hbox->setSpacing( 10 );
         {
             exercises_ = new ExerciseList( hbox, config, controllers, false, true, false );
-            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const Profile& ) ) );
+            connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
         }
         {
