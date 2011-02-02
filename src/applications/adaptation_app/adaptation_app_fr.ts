@@ -3180,8 +3180,8 @@ Assurez vous que le fichier existe.</translation>
         <translation>Gain par heure</translation>
     </message>
     <message>
-        <source>Schedule</source>
-        <translation>Calendier</translation>
+        <source>Moving weekly schedule</source>
+        <translation>Agenda hebdomadaire des déplacements</translation>
     </message>
     <message>
         <source>Transfer time</source>
