@@ -39,7 +39,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& mod
     {
         joined_ = federate_->Join( name, false, true );
     }
-    catch( HLAException& e )
+    catch( HLAException& /*e*/ )
     {
         // NOTHING
     }
