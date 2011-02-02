@@ -13,6 +13,8 @@
 #include "clients_gui/ObjectListView.h"
 #include "clients_kernel/SafePointer.h"
 
+class ModelBuilder;
+
 // =============================================================================
 /** @class  ObjectListView
     @brief  Object list view
@@ -24,7 +26,7 @@ class ObjectListView : public gui::ObjectListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory );
+             ObjectListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder );
     virtual ~ObjectListView();
     //@}
 
@@ -44,6 +46,7 @@ private:
 private:
     //! @name Member data
     //@{
+    ModelBuilder& modelBuilder_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };

@@ -179,7 +179,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pListsTabWidget->addTab( pAgentsTabWidget, tr( "Units" ) );
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Object_ABC >( listsTabBox, controllers );
-    new ::ObjectListView( listsTabBox, controllers, *factory );
+    new ::ObjectListView( listsTabBox, controllers, *factory, *modelBuilder_ );
     pListsTabWidget->addTab( listsTabBox, tr( "Objects" ) );
     listsTabBox = new QVBox( pListsTabWidget );
     new EntitySearchBox< Population_ABC >( listsTabBox, controllers );

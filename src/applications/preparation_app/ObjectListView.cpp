@@ -9,14 +9,16 @@
 
 #include "preparation_app_pch.h"
 #include "ObjectListView.h"
+#include "ModelBuilder.h"
 #include "PreparationProfile.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectListView constructor
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
-ObjectListView::ObjectListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+ObjectListView::ObjectListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ModelBuilder& modelBuilder )
     : gui::ObjectListView( pParent, controllers, factory, PreparationProfile::GetProfile() )
+    , modelBuilder_( modelBuilder )
     , selected_( controllers )
 {
     // NOTHING
@@ -38,8 +40,12 @@ ObjectListView::~ObjectListView()
 void ObjectListView::keyPressEvent( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
-        delete (const kernel::Entity_ABC*)selected_;
-    gui::ObjectListView::keyPressEvent( key );
+    {
+        modelBuilder_.DeleteEntity( *selected_ );
+        key->accept();
+    }
+    else
+        gui::ObjectListView::keyPressEvent( key );
 }
 
 // -----------------------------------------------------------------------------
