@@ -26,8 +26,8 @@ class Symbol_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Symbol_ABC() {};
-    virtual ~Symbol_ABC() {};
+             Symbol_ABC() {}
+    virtual ~Symbol_ABC() {}
     //@}
 
     virtual const Entity_ABC& GetEntity() const = 0;
@@ -47,8 +47,8 @@ class TacticalHierarchies : public Hierarchies, public Symbol_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalHierarchies() {};
-    virtual ~TacticalHierarchies() {};
+             TacticalHierarchies() {}
+    virtual ~TacticalHierarchies() {}
     //@}
 
     //! @name Operations

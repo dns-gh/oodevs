@@ -29,8 +29,8 @@ class Hierarchies : public Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Hierarchies() {};
-    virtual ~Hierarchies() {};
+             Hierarchies() {}
+    virtual ~Hierarchies() {}
     //@}
 
     //! @name Accessors
