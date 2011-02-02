@@ -12,7 +12,6 @@
 #include "AggregateEntityClass.h"
 #include "ExtensionFactory.h"
 #include "RtiAmbassadorFactory_ABC.h"
-#include "MT_Tools/MT_Logger.h"
 #include <hla/hla_lib.h>
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
@@ -32,7 +31,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& mod
     , subject_        ( new ExtensionFactory( model ) )
     , timeFactory_    ( new SimpleTimeFactory() )
     , intervalFactory_( new SimpleTimeIntervalFactory() )
-    , ambassador_     ( factory.CreateAmbassador( *timeFactory_, *intervalFactory_, RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host" ), xis.attribute< std::string >( "port", "8989" ) ) )
+    , ambassador_     ( factory.CreateAmbassador( *timeFactory_, *intervalFactory_, RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
     , federate_       ( new Federate( *ambassador_, xis.attribute< std::string >( "name" ), SimpleTime(), SimpleTimeInterval( lookAhead ) ) )
 {
     const std::string name = xis.attribute< std::string >( "federation" );
@@ -42,9 +41,10 @@ FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& mod
     }
     catch( HLAException& e )
     {
-        MT_LOG_ERROR_MSG( "Error joining federation '" << name << "' : " << e.what() );
+        // NOTHING
     }
-    agentClass_.reset( new AggregateEntityClass( *federate_, *subject_ ) );
+    if( joined_ )
+        agentClass_.reset( new AggregateEntityClass( *federate_, *subject_ ) );
 }
 
 // -----------------------------------------------------------------------------

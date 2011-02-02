@@ -7,9 +7,8 @@
 //
 // *****************************************************************************
 
-#include "hla_plugin_pch.h"
 #include "DllConfig.h"
-#include "HlaPlugin.h"
+#include "hla_plugin/HlaPlugin.h"
 #include <windows.h>
 
 // -----------------------------------------------------------------------------
