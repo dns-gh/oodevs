@@ -9,9 +9,9 @@
 
 #include "preparation_pch.h"
 #include "TeamCommunications.h"
-#include "preparation/KnowledgeGroupCommunications.h"
-#include <xeumeuleu/xml.hpp>
 #include "KnowledgeGroup.h"
+#include "KnowledgeGroupCommunications.h"
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 

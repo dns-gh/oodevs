@@ -49,7 +49,7 @@ void EditorFactory::BeginEditor( QWidget* parent )
 {
     parent_ = parent;
     result_ = 0;
-    unit_   = 0;
+    unit_ = 0;
 }
 
 // -----------------------------------------------------------------------------

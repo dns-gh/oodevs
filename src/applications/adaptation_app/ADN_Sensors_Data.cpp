@@ -658,10 +658,7 @@ void ADN_Sensors_Data::PopulationInfos::WriteArchive( xml::xostream& output )
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::SensorInfos::SensorInfos()
-    : ADN_Ref_ABC          ()
-    , ADN_DataTreeNode_ABC ()
-    , strName_             ()
-    , bCanDetectAgents_    ( false )
+    : bCanDetectAgents_    ( false )
     , bCanDetectObjects_   ( false )
     , bCanScan_            ( false )
     , rFirerDetectionRange_( 0 )
@@ -678,7 +675,6 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     , vModifUrbanBlocks_   ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
     , vModifStance_        ( false )
     , vModifTargetStance_  ( false )
-    , populationInfos_     ()
     , detectionDelay_      ( "0h" )
 {
     strName_.SetDataName( "le nom" );
@@ -726,29 +722,29 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     vModifSizes_.SetParentNode( *this );
 
     // initialize illumination modificator infos
-    uint i=0;
-    for( i= 0 ; i< eNbrTimeCategory ; ++i)
+    unsigned int i = 0;
+    for( i = 0; i< eNbrTimeCategory; ++i )
     {
         ModificatorIlluminationInfos* pInfo = new ModificatorIlluminationInfos((E_TimeCategory)i);
         vModifIlluminations_.AddItem( pInfo );
     }
 
     // initialize meteo modificator infos
-    for( i= 0 ; i< eNbrSensorWeatherModifiers ; ++i)
+    for( i = 0; i< eNbrSensorWeatherModifiers; ++i )
     {
         ModificatorMeteoInfos* pInfo = new ModificatorMeteoInfos((E_SensorWeatherModifiers)i);
         vModifWeather_.AddItem( pInfo );
     }
 
     // initialize environment modificator infos
-    for( i= 0 ; i< eNbrVisionObjects ; ++i)
+    for( i = 0; i< eNbrVisionObjects; ++i )
     {
         ModificatorEnvironmentInfos* pInfo = new ModificatorEnvironmentInfos((E_VisionObject)i);
         vModifEnvironments_.AddItem( pInfo );
     }
 
     // initialize posture modificator infos
-    for( i=0 ; i< eNbrUnitPosture ; ++i)
+    for( i = 0; i< eNbrUnitPosture; ++i )
     {
         ModificatorPostureInfos* pInfo1 = new ModificatorPostureInfos((E_UnitPosture)i);
         vModifStance_.AddItem( pInfo1 );
@@ -779,7 +775,7 @@ ADN_Sensors_Data::SensorInfos::~SensorInfos()
 // -----------------------------------------------------------------------------
 std::string ADN_Sensors_Data::SensorInfos::GetNodeName()
 {
-    std::string strResult( "du senseur " );
+    const std::string strResult( "du senseur " ); // $$$$ _RC_ SLI 2011-02-02: translation?
     return strResult + strName_.GetData();
 }
 
@@ -875,7 +871,7 @@ void ADN_Sensors_Data::SensorInfos::ReadLimitedToSensorsList( xml::xistream& inp
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadBaseDistance( xml::xistream& input )
 {
-    std::string level = input.attribute< std::string >( "level" );
+    const std::string level = input.attribute< std::string >( "level" );
     if( level == "identification" )
         input >> xml::attribute( "distance", rDistIdent_ );
     else if( level == "recognition" )
@@ -892,10 +888,9 @@ void ADN_Sensors_Data::SensorInfos::ReadSize( xml::xistream& input )
 {
     const std::string type = input.attribute< std::string >( "type" );
     IT_ModificatorSizeInfos_Vector it = std::find_if( vModifSizes_.begin(), vModifSizes_.end(), ModificatorSizeInfos::Cmp( type ) );
-    if( it != vModifSizes_.end() )
-        (*it)->ReadArchive( input );
-    else
-    throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(), tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).ascii() );
+    if( it == vModifSizes_.end() )
+        throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(), tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).ascii() );
+    (*it)->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -910,8 +905,7 @@ void ADN_Sensors_Data::SensorInfos::ReadPrecipitation( xml::xistream& input )
         {
             vModifWeather_.at( i )->ReadArchive( input );
             return;
-
-    }
+        }
     throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(),tools::translate( "Sensor_Data", "Sensors - Invalid weather '%1'" ).arg( type.c_str() ).ascii() );
 }
 
@@ -977,10 +971,9 @@ void ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial( xml::xistream& input
 {
     const std::string type = input.attribute< std::string >( "type" );
     IT_ModificatorUrbanBlockInfos_Vector it = std::find_if( vModifUrbanBlocks_.begin(), vModifUrbanBlocks_.end(), ModificatorUrbanBlockInfos::Cmp( type ) );
-    if( it != vModifUrbanBlocks_.end() )
-        (*it)->ReadArchive( input );
-    else
+    if( it == vModifUrbanBlocks_.end() )
         throw ADN_DataException( tools::translate( "Sensor_Data", "Invalid data" ).ascii(), tools::translate( "Sensor_Data", "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).ascii() );
+    (*it)->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -991,11 +984,9 @@ void ADN_Sensors_Data::SensorInfos::ReadUnitDetection( xml::xistream& input )
 {
     bCanDetectAgents_ = true;
 
-    input >> xml::attribute( "scanning", bCanScan_ );
-
-    input >> xml::attribute( "firer-detection-distance", rFirerDetectionRange_ );
-
-    input >> xml::attribute( "angle", rAngle_ )
+    input >> xml::attribute( "scanning", bCanScan_ )
+          >> xml::attribute( "firer-detection-distance", rFirerDetectionRange_ )
+          >> xml::attribute( "angle", rAngle_ )
           >> xml::optional >> xml::start( "limited-to-sensors" ) // LTO
             >> xml::list( "sensor", *this, &ADN_Sensors_Data::SensorInfos::ReadLimitedToSensorsList ) // LTO
           >> xml::end // LTO
@@ -1068,10 +1059,9 @@ void ADN_Sensors_Data::SensorInfos::ReadObjectDetection( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ );
-    input >> xml::attribute( "detection-delay", detectionDelay_ );
-
-    input >> xml::list( *this, &ADN_Sensors_Data::SensorInfos::ReadItem );
+    input >> xml::attribute( "name", strName_ )
+          >> xml::attribute( "detection-delay", detectionDelay_ )
+          >> xml::list( *this, &ADN_Sensors_Data::SensorInfos::ReadItem );
 }
 
 // -----------------------------------------------------------------------------
@@ -1175,7 +1165,7 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
 ADN_Sensors_Data::ALATInfos::ALATInfos()
 {
     for( int n = 1; n < eNbrVisionObjects; ++n )
-        surveyTimes_[n-1] = "0s";
+        surveyTimes_[ n - 1 ] = "0s";
 }
 
 // -----------------------------------------------------------------------------
@@ -1184,6 +1174,7 @@ ADN_Sensors_Data::ALATInfos::ALATInfos()
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::ALATInfos::~ALATInfos()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1232,6 +1223,7 @@ void ADN_Sensors_Data::ALATInfos::WriteArchive( xml::xostream& output )
 ADN_Sensors_Data::CobraInfos::CobraInfos()
     : rRange_( 0. )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1240,6 +1232,7 @@ ADN_Sensors_Data::CobraInfos::CobraInfos()
 // -----------------------------------------------------------------------------
 ADN_Sensors_Data::CobraInfos::~CobraInfos()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -1264,19 +1257,14 @@ void ADN_Sensors_Data::CobraInfos::WriteArchive( xml::xostream& output )
            << xml::end;
 }
 
-// =============================================================================
-//
-// =============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data constructor
 // Created: JDY 03-06-30
 //-----------------------------------------------------------------------------
 ADN_Sensors_Data::ADN_Sensors_Data()
-: ADN_Data_ABC      ()
-, radarData_        ( *new ADN_Radars_Data() )
+    : radarData_( *new ADN_Radars_Data() )
 {
-    vSensors_.SetItemTypeName( "le senseur" );
+    vSensors_.SetItemTypeName( "le senseur" ); // $$$$ _RC_ SLI 2011-02-02: translation ?
 }
 
 //-----------------------------------------------------------------------------

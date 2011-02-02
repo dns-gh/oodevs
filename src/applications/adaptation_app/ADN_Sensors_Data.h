@@ -27,7 +27,6 @@
 //*****************************************************************************
 class ADN_Sensors_Data : public ADN_Data_ABC
 {
-
 public:
 // LTO begin
 //*****************************************************************************
@@ -68,40 +67,44 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos>       ptrSize_;
-        ADN_Type_Double                                                rCoeff_;
+        ADN_TypePtr_InVector_ABC< ADN_Categories_Data::SizeInfos > ptrSize_;
+        ADN_Type_Double rCoeff_;
 
     public:
         typedef ADN_Categories_Data::SizeInfos                  T_Item;
 
-        class Cmp : public std::unary_function< ModificatorSizeInfos* , bool >
+        class Cmp : public std::unary_function< ModificatorSizeInfos*, bool >
         {
         public:
-            Cmp(const std::string& val) : val_(val) {}
-            ~Cmp() {}
+            explicit Cmp( const std::string& val ) : val_( val ) {}
+            virtual ~Cmp() {}
 
             bool operator()( ModificatorSizeInfos* tgtnfos ) const
-            {   return tgtnfos->ptrSize_.GetData() && tgtnfos->ptrSize_.GetData()->GetData()==val_;}
+            {
+                return tgtnfos->ptrSize_.GetData() && tgtnfos->ptrSize_.GetData()->GetData() == val_;
+            }
 
         private:
             std::string val_;
         };
 
-        class CmpRef : public std::unary_function< ModificatorSizeInfos* , bool >
+        class CmpRef : public std::unary_function< ModificatorSizeInfos*, bool >
         {
         public:
-            CmpRef(ADN_Categories_Data::SizeInfos* val) : val_(val) {}
-            ~CmpRef(){}
+            explicit CmpRef( ADN_Categories_Data::SizeInfos* val ) : val_( val ) {}
+            virtual ~CmpRef(){}
 
             bool operator()( ModificatorSizeInfos* tgtnfos ) const
-            {   return tgtnfos->ptrSize_.GetData() == val_;}
+            {
+                return tgtnfos->ptrSize_.GetData() == val_;
+            }
 
         private:
             ADN_Categories_Data::SizeInfos* val_;
         };
     };
 
-    typedef ADN_Type_VectorFixed_ABC<ModificatorSizeInfos> T_ModificatorSizeInfos_Vector;
+    typedef ADN_Type_VectorFixed_ABC<ModificatorSizeInfos>  T_ModificatorSizeInfos_Vector;
     typedef T_ModificatorSizeInfos_Vector::iterator        IT_ModificatorSizeInfos_Vector;
 
 
@@ -119,25 +122,27 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        E_TimeCategory      eType_;
-        ADN_Type_Double     rCoeff_;
+        E_TimeCategory eType_;
+        ADN_Type_Double rCoeff_;
 
     public:
-        class Cmp : public std::unary_function< ModificatorIlluminationInfos* , bool >
+        class Cmp : public std::unary_function< ModificatorIlluminationInfos*, bool >
         {
         public:
-            Cmp(const E_TimeCategory& val) : val_(val) {}
-            ~Cmp() {}
+            explicit Cmp( const E_TimeCategory& val ) : val_( val ) {}
+            virtual ~Cmp() {}
 
             bool operator()( ModificatorIlluminationInfos* tgtnfos ) const
-            { return tgtnfos->eType_==val_; }
+            {
+                return tgtnfos->eType_==val_;
+            }
 
         private:
             E_TimeCategory val_;
         };
     };
 
-    typedef ADN_Type_Vector_ABC<ModificatorIlluminationInfos > T_ModificatorIlluminationInfos_Vector;
+    typedef ADN_Type_Vector_ABC<ModificatorIlluminationInfos >  T_ModificatorIlluminationInfos_Vector;
     typedef T_ModificatorIlluminationInfos_Vector::iterator    IT_ModificatorIlluminationInfos_Vector;
 
 
@@ -155,15 +160,15 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        E_SensorWeatherModifiers       eType_;
-        ADN_Type_Double     rCoeff_;
+        E_SensorWeatherModifiers eType_;
+        ADN_Type_Double rCoeff_;
 
     public:
-        class Cmp : public std::unary_function< ModificatorMeteoInfos* , bool >
+        class Cmp : public std::unary_function< ModificatorMeteoInfos*, bool >
         {
         public:
-            Cmp(const E_SensorWeatherModifiers& val) : val_(val) {}
-            ~Cmp() {}
+            explicit Cmp( const E_SensorWeatherModifiers& val ) : val_( val ) {}
+            virtual ~Cmp() {}
 
             bool operator()( ModificatorMeteoInfos* tgtnfos ) const
             { return tgtnfos->eType_==val_; }
@@ -198,18 +203,20 @@ public:
         class Cmp : public std::unary_function< ModificatorEnvironmentInfos* , bool >
         {
         public:
-            Cmp(const E_VisionObject& val) : val_(val) {}
-            ~Cmp() {}
+            explicit Cmp( const E_VisionObject& val ) : val_( val ) {}
+            virtual ~Cmp() {}
 
             bool operator()( ModificatorEnvironmentInfos* tgtnfos ) const
-            { return tgtnfos->eType_==val_; }
+            {
+                return tgtnfos->eType_ == val_;
+            }
 
         private:
             E_VisionObject val_;
         };
     };
 
-    typedef ADN_Type_Vector_ABC<ModificatorEnvironmentInfos>  T_ModificatorEnvironmentInfos_Vector;
+    typedef ADN_Type_Vector_ABC< ModificatorEnvironmentInfos >  T_ModificatorEnvironmentInfos_Vector;
     typedef T_ModificatorEnvironmentInfos_Vector::iterator    IT_ModificatorEnvironmentInfos_Vector;
 
     //*****************************************************************************
@@ -226,8 +233,8 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Urban_Data::UrbanMaterialInfos>         ptrMaterial_;
-        ADN_Type_Double                                                rCoeff_;
+        ADN_TypePtr_InVector_ABC< ADN_Urban_Data::UrbanMaterialInfos > ptrMaterial_;
+        ADN_Type_Double rCoeff_;
 
     public:
         typedef ADN_Urban_Data::UrbanMaterialInfos                  T_Item;
@@ -235,11 +242,13 @@ public:
         class Cmp : public std::unary_function< ModificatorUrbanBlockInfos* , bool >
         {
         public:
-            Cmp(const std::string& val) : val_(val) {}
-            ~Cmp() {}
+            explicit Cmp( const std::string& val ) : val_( val ) {}
+            virtual ~Cmp() {}
 
             bool operator()( ModificatorUrbanBlockInfos* tgtnfos ) const
-            { return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->strName_ == val_; }
+            {
+                return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->strName_ == val_;
+            }
 
         private:
             std::string val_;
@@ -247,11 +256,13 @@ public:
         class CmpRef : public std::unary_function< ModificatorUrbanBlockInfos* , bool >
         {
         public:
-            CmpRef(ADN_Urban_Data::UrbanMaterialInfos* val) : val_(val) {}
-            ~CmpRef(){}
+            explicit CmpRef( ADN_Urban_Data::UrbanMaterialInfos* val ) : val_( val ) {}
+            virtual ~CmpRef() {}
 
             bool operator()( ModificatorUrbanBlockInfos* tgtnfos ) const
-            {   return tgtnfos->ptrMaterial_.GetData() == val_;}
+            {
+                return tgtnfos->ptrMaterial_.GetData() == val_;
+            }
 
         private:
             ADN_Urban_Data::UrbanMaterialInfos* val_;
@@ -279,14 +290,16 @@ public:
         ADN_Type_Double     rCoeff_;
 
     public:
-        class Cmp : public std::unary_function< ModificatorPostureInfos* , bool >
+        class Cmp : public std::unary_function< ModificatorPostureInfos*, bool >
         {
         public:
-            Cmp(const E_UnitPosture& val) : val_(val) {}
-            ~Cmp() {}
+            explicit Cmp( const E_UnitPosture& val ) : val_( val ) {}
+            virtual ~Cmp() {}
 
             bool operator()( ModificatorPostureInfos* tgtnfos ) const
-            { return tgtnfos->eType_==val_; }
+            {
+                return tgtnfos->eType_ == val_;
+            }
 
         private:
             E_UnitPosture val_;
@@ -294,7 +307,7 @@ public:
     };
 
     typedef ADN_Type_Vector_ABC<ModificatorPostureInfos>  T_ModificatorPostureInfos_Vector;
-    typedef T_ModificatorPostureInfos_Vector::iterator    IT_ModificatorPostureInfos_Vector;
+    typedef T_ModificatorPostureInfos_Vector::iterator   IT_ModificatorPostureInfos_Vector;
 
 
 //*****************************************************************************
@@ -339,7 +352,6 @@ public:
         ADN_Type_Double                                           rDistanceDetection_;
         T_ModificatorPostureInfos_Vector                          vModifStance_;
         PopulationInfos                                           populationInfos_;
-
     };
 
     typedef ADN_Type_Vector_ABC<TargetInfos> T_TargetsInfos_Vector;
@@ -355,7 +367,6 @@ public:
 
         virtual std::string GetNodeName();
         std::string GetItemName();
-
         SensorInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
@@ -376,7 +387,6 @@ public:
 
     public:
         ADN_Type_String                         strName_;
-
         ADN_Type_Bool                           bCanDetectAgents_;
         ADN_Type_Bool                           bCanScan_;
         ADN_Type_Double                         rFirerDetectionRange_;
@@ -403,7 +413,6 @@ public:
 
     typedef ADN_Type_Vector_ABC<SensorInfos> T_SensorsInfos_Vector;
     typedef T_SensorsInfos_Vector::iterator  IT_SensorsInfos_Vector;
-
 
 //*****************************************************************************
     class ALATInfos : private boost::noncopyable
@@ -433,8 +442,6 @@ public:
     public:
         ADN_Type_Double rRange_;
     };
-
-
 
 //*****************************************************************************
 public:

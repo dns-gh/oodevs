@@ -30,7 +30,7 @@ using namespace kernel;
 PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::PopulationType >& types, gui::ItemFactory_ABC& factory )
     : InfoPanel_ABC( parent, panel, tools::translate( "gui::PopulationsPanel", "Crowds" ), "PopulationsPanel" )
     , controllers_( controllers )
-    , selected_( 0 )
+    , selected_   ( 0 )
 {
     list_ = new PopulationTypesListView( this, controllers_, types, factory );
     connect( list_, SIGNAL( StartDrag( const kernel::PopulationType* ) ), this, SLOT( OnStartDrag( const kernel::PopulationType* ) ) );

@@ -26,14 +26,13 @@
 // =============================================================================
 class ADN_Radars_Data : public ADN_Data_ABC
 {
-
 public:
 //*****************************************************************************
     class DetectTimes : private boost::noncopyable
     {
     public:
-         DetectTimes();
-        ~DetectTimes();
+                 DetectTimes();
+        virtual ~DetectTimes();
 
         void ReadArchive( xml::xistream& input, bool bHq );
         void ReadAcquisitionTime( xml::xistream& input, bool bHq );
@@ -47,7 +46,6 @@ public:
         ADN_Type_Bool bRecoTime_;
         ADN_Type_Time identTime_;
     };
-
 
 //*****************************************************************************
     class RadarInfos : public ADN_Ref_ABC

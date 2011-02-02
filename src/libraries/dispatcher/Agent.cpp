@@ -35,53 +35,53 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Resolver_ABC< kernel::AgentType >& types )
-    : dispatcher::Agent_ABC         ( msg.unit().id(), QString( msg.name().c_str() ) )
-    , model_                        ( model )
-    , type_                         ( types.Get( msg.type().id() ) )
-    , name_                         ( msg.name() )
-    , automat_                      ( &model.Automats().Get( msg.automat().id() ) )
-    , bPC_                          ( msg.pc() != 0 )
-    , nDirection_                   ( 0 )
-    , nHeight_                      ( 0 )
-    , nAltitude_                    ( 0 )
-    , nSpeed_                       ( 0 )
-    , nOperationalStateValue_       ( 100 )
-    , pReinforced_                  ( 0 )
-    , bDead_                        ( false )
-    , bNeutralized_                 ( false )
-    , bStealthModeEnabled_          ( false )
-    , isMounted_                    ( false )
-    , bHumanTransportersAvailable_  ( false )
-    , nLastPosture_                 ( sword::UnitAttributes::stopping )
-    , nCurrentPosture_              ( sword::UnitAttributes::stopping )
-    , nPostureCompletion_           ( 100 )
-    , nInstallationState_           ( 0 )
-    , bNbcProtectionSuitEnabled_    ( false )
-    , contaminationPercentage_      ( 0 )
-    , contaminationQuantity_        ( 0.f )
-    , communicationJammed_          ( false )
-    , knowledgeGroupJammed_         ( 0 )
-    , bRadioRecieverEnabled_        ( true )
-    , bRadioEmitterEnabled_         ( true )
-    , bRadarEnabled_                ( false )
-    , pTransporter_                 ( 0 )
-    , nForceRatioState_             ( sword::ForceRatio::neutral )
-    , nCloseCombatState_            ( sword::avoiding )
-    , nOperationalState_            ( sword::operational )
-    , nIndirectFireAvailability_    ( sword::UnitAttributes::fire_unavailable )
-    , nRoe_                         ( sword::RulesOfEngagement::free_fire )
-    , nPopulationRoe_               ( sword::UnitAttributes::no_force )
-    , nTiredness_                   ( sword::rested )
-    , nMorale_                      ( sword::high )
-    , nExperience_                  ( sword::expert )
-    , pSideSurrenderedTo_           ( 0 )
-    , bPrisonner_                   ( false )
-    , bRefugeeManaged_              ( false )
-    , decisionalInfos_              ( model )
-    , pLogMedical_                  ( 0 )
-    , pLogMaintenance_              ( 0 )
-    , pLogSupply_                   ( 0 )
-    , order_                        ( 0 )
+    : dispatcher::Agent_ABC( msg.unit().id(), QString( msg.name().c_str() ) )
+    , model_                      ( model )
+    , type_                       ( types.Get( msg.type().id() ) )
+    , name_                       ( msg.name() )
+    , automat_                    ( &model.Automats().Get( msg.automat().id() ) )
+    , bPC_                        ( msg.pc() != 0 )
+    , nDirection_                 ( 0 )
+    , nHeight_                    ( 0 )
+    , nAltitude_                  ( 0 )
+    , nSpeed_                     ( 0 )
+    , nOperationalStateValue_     ( 100 )
+    , pReinforced_                ( 0 )
+    , bDead_                      ( false )
+    , bNeutralized_               ( false )
+    , bStealthModeEnabled_        ( false )
+    , isMounted_                  ( false )
+    , bHumanTransportersAvailable_( false )
+    , nLastPosture_               ( sword::UnitAttributes::stopping )
+    , nCurrentPosture_            ( sword::UnitAttributes::stopping )
+    , nPostureCompletion_         ( 100 )
+    , nInstallationState_         ( 0 )
+    , bNbcProtectionSuitEnabled_  ( false )
+    , contaminationPercentage_    ( 0 )
+    , contaminationQuantity_      ( 0.f )
+    , communicationJammed_        ( false )
+    , knowledgeGroupJammed_       ( 0 )
+    , bRadioRecieverEnabled_      ( true )
+    , bRadioEmitterEnabled_       ( true )
+    , bRadarEnabled_              ( false )
+    , pTransporter_               ( 0 )
+    , nForceRatioState_           ( sword::ForceRatio::neutral )
+    , nCloseCombatState_          ( sword::avoiding )
+    , nOperationalState_          ( sword::operational )
+    , nIndirectFireAvailability_  ( sword::UnitAttributes::fire_unavailable )
+    , nRoe_                       ( sword::RulesOfEngagement::free_fire )
+    , nPopulationRoe_             ( sword::UnitAttributes::no_force )
+    , nTiredness_                 ( sword::rested )
+    , nMorale_                    ( sword::high )
+    , nExperience_                ( sword::expert )
+    , pSideSurrenderedTo_         ( 0 )
+    , bPrisonner_                 ( false )
+    , bRefugeeManaged_            ( false )
+    , decisionalInfos_            ( model )
+    , pLogMedical_                ( 0 )
+    , pLogMaintenance_            ( 0 )
+    , pLogSupply_                 ( 0 )
+    , order_                      ( 0 )
 {
     automat_->Register( *this );
     RegisterSelf( *this );
@@ -586,7 +586,7 @@ unsigned short Agent::GetOperationalStateValue() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::Resolver< dispatcher::Equipment >& Agent::Equipments
+// Name: Agent::Equipments
 // Created: SBO 2010-06-07
 // -----------------------------------------------------------------------------
 const tools::Resolver< dispatcher::Equipment >& Agent::Equipments() const
@@ -595,7 +595,7 @@ const tools::Resolver< dispatcher::Equipment >& Agent::Equipments() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: tools::Resolver< dispatcher::Humans >& Agent::Troops
+// Name: Agent::Troops
 // Created: SBO 2010-06-07
 // -----------------------------------------------------------------------------
 const tools::Resolver< dispatcher::Humans >& Agent::Troops() const

@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-05-03 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Radars_Data.cpp $
-// $Author: Ape $
-// $Modtime: 7/06/05 10:24 $
-// $Revision: 3 $
-// $Workfile: ADN_Radars_Data.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Radars_Data.h"
@@ -75,16 +66,18 @@ void ADN_Radars_Data::DetectTimes::ReadAcquisitionTime( xml::xistream& input, bo
           >> xml::attribute( "level", level );
     if( time.empty() )
         return;
-
-    if( level == "identification" ) {
+    if( level == "identification" )
+    {
         bIdentTime_ = true;
         identTime_ = time;
     }
-    else if( level == "recognition" ) {
+    else if( level == "recognition" )
+    {
         bRecoTime_ = true;
         recoTime_ = time;
     }
-    else if( level == "detection" ) {
+    else if( level == "detection" )
+    {
         bDetectTime_ = true;
         detectTime_ = time;
     }
@@ -121,9 +114,7 @@ void ADN_Radars_Data::DetectTimes::WriteArchive( xml::xostream& output, bool bHq
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
 ADN_Radars_Data::RadarInfos::RadarInfos()
-    : ADN_Ref_ABC()
-    , ADN_DataTreeNode_ABC()
-    , strName_                  (  tools::translate( "Radars_Data", "New special sensor" ).ascii() )
+    : strName_                 ( tools::translate( "Radars_Data", "New special sensor" ).ascii() )
     , rRange_                  ( 0 )
     , bHasMaxHeight_           ( false )
     , rMaxHeight_              ( 0 )
@@ -134,7 +125,7 @@ ADN_Radars_Data::RadarInfos::RadarInfos()
     , bHasHQDetectTimes_       ( false )
 {
     for( int n = 0; n < eNbrConsumptionType; ++n )
-        detectableActivities_[n] = false;
+        detectableActivities_[ n ] = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +143,7 @@ ADN_Radars_Data::RadarInfos::~RadarInfos()
 // -----------------------------------------------------------------------------
 std::string ADN_Radars_Data::RadarInfos::GetNodeName()
 {
-    return std::string( "" );
+    return "";
 }
 
 // -----------------------------------------------------------------------------
@@ -161,7 +152,7 @@ std::string ADN_Radars_Data::RadarInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Radars_Data::RadarInfos::GetItemName()
 {
-    return std::string( "" );
+    return "";
 }
 
 // -----------------------------------------------------------------------------
@@ -208,7 +199,7 @@ void ADN_Radars_Data::RadarInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "type", type );
     nType_ = ADN_Tr::ConvertToRadarType( type );
     if( nType_ == E_RadarType(-1 ) )
-        throw ADN_DataException( tools::translate( "Radars_Data", "Invalid data").ascii(),  tools::translate( "Radars_Data", "Sensors - Invalid radar type '%1'" ).arg( type.c_str() ).ascii() );
+        throw ADN_DataException( tools::translate( "Radars_Data", "Invalid data").ascii(), tools::translate( "Radars_Data", "Sensors - Invalid radar type '%1'" ).arg( type.c_str() ).ascii() );
 
     input >> xml::attribute( "action-range", rRange_ )
           >> xml::optional >> xml::attribute( "min-height", rMinHeight_ )
@@ -239,11 +230,12 @@ void ADN_Radars_Data::RadarInfos::ReadDetectableActivity( xml::xistream& input )
     std::string consumption;
     bool value = false;
     input >> xml::attribute( "type", consumption )
-          >> xml::optional >> xml::attribute( "value", value );
+          >> xml::optional
+          >> xml::attribute( "value", value );
     unsigned n = (unsigned)ADN_Tr::ConvertToConsumptionType( consumption );
     if( n == unsigned( -1 ) )
         throw ADN_DataException( tools::translate( "Radars_Data", "Invalid data" ).ascii(), tools::translate( "Radars_Data", "Sensors - Invalid activity '%1'" ).arg( consumption.c_str() ).ascii() );
-    detectableActivities_[n] = value;
+    detectableActivities_[n ] = value;
     bHasDetectableActivities_ = bHasDetectableActivities_.GetData() || value;
 }
 
@@ -265,14 +257,12 @@ void ADN_Radars_Data::RadarInfos::WriteArchive( xml::xostream& output )
     if( bHasDetectableActivities_.GetData() )
     {
         output << xml::start( "detectable-activities" );
-
         for( int n = 0; n < eNbrConsumptionType; ++n )
-            if( detectableActivities_[n].GetData() )
+            if( detectableActivities_[ n ].GetData() )
                 output << xml::start( "detectable-activity" )
                         << xml::attribute( "type", ADN_Tr::ConvertFromConsumptionType( (E_ConsumptionType)n ) )
                         << xml::attribute( "value", true )
                        << xml::end;
-
         output << xml::end;
     }
     if( bHasDetectTimes_.GetData() || bHasHQDetectTimes_.GetData() )
