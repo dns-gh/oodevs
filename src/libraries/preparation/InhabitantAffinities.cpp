@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "InhabitantAffinities.h"
-
 #include "Model.h"
 #include "TeamsModel.h"
 #include "clients_kernel/Controllers.h"
@@ -26,9 +25,9 @@
 // -----------------------------------------------------------------------------
 InhabitantAffinities::InhabitantAffinities( kernel::Controllers& controllers, Model& model, const kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary )
     : controllers_( controllers )
-    , model_( model )
-    , inhabitant_( inhabitant )
-    , dictionary_( dictionary )
+    , model_      ( model )
+    , inhabitant_ ( inhabitant )
+    , dictionary_ ( dictionary )
 {
     InitializeAffinities();
     UpdateDictionary();
@@ -41,12 +40,13 @@ InhabitantAffinities::InhabitantAffinities( kernel::Controllers& controllers, Mo
 // -----------------------------------------------------------------------------
 InhabitantAffinities::InhabitantAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, const kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary )
     : controllers_( controllers )
-    , model_( model )
-    , inhabitant_( inhabitant )
-    , dictionary_( dictionary )
+    , model_      ( model )
+    , inhabitant_ ( inhabitant )
+    , dictionary_ ( dictionary )
 {
-    xis >> xml::optional >> xml::start( "affinities" )
-        >> xml::list( "affinity", *this, &InhabitantAffinities::ReadAffinity )
+    xis >> xml::optional
+        >> xml::start( "affinities" )
+            >> xml::list( "affinity", *this, &InhabitantAffinities::ReadAffinity )
         >> xml::end;
     if( affinities_.empty() )
         InitializeAffinities();
@@ -78,7 +78,7 @@ void InhabitantAffinities::ReadAffinity( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void InhabitantAffinities::UpdateDictionary()
 {
-    for( IT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    for( T_Affinities::iterator it = affinities_.begin(); it != affinities_.end(); ++it )
         if( const kernel::Team_ABC* team = model_.teams_.Find( it->first ) )
         {
             dictionary_.Register( inhabitant_, tools::translate( "PopulationAffinities", "Affinities/%1" ).arg( team->GetName() ), it->second );
@@ -98,8 +98,8 @@ void InhabitantAffinities::SerializeAttributes( xml::xostream& xos ) const
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
     {
         xos << xml::start( "affinity" )
-            << xml::attribute( "id", it->first )
-            << xml::attribute( "value", it->second.Value() )
+                << xml::attribute( "id", it->first )
+                << xml::attribute( "value", it->second )
             << xml::end;
     }
     xos << xml::end;

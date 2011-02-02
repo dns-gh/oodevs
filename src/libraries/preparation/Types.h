@@ -29,4 +29,6 @@ DECLARE_SUBTYPE( LogisticBaseSuperior, const kernel::Formation_ABC* );
 DECLARE_SUBTYPE( TeamKarma, const kernel::Karma* );
 DECLARE_SUBTYPE( IntelligenceKarma, const kernel::Karma* );
 
+DECLARE_SUBTYPE( InhabitantAffinity, float );
+
 #endif // __Preparation_Types_h_

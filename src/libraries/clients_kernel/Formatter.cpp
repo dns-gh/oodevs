@@ -13,7 +13,6 @@
 #include "Units.h"
 #include "UrbanKnowledge_ABC.h"
 #include <urban/TerrainObject_ABC.h>
-#include "preparation/InhabitantAffinities.h"
 
 using namespace kernel;
 
@@ -48,11 +47,6 @@ void Formatter< std::string >::operator()( const std::string& value, Displayer_A
 void Formatter< QDateTime >::operator()( const QDateTime& value, Displayer_ABC& displayer ) const
 {
     displayer.AddToDisplay( value.toString() );
-}
-
-void Formatter< AffinityFloat >::operator()( const AffinityFloat& value, Displayer_ABC& displayer ) const
-{
-    displayer.AddToDisplay( value.Value() );
 }
 
 void Formatter< ValueNotSet >::operator()( const ValueNotSet& , Displayer_ABC& displayer ) const

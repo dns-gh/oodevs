@@ -19,6 +19,7 @@
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
 #include "preparation/IntelligenceKarmas.h"
+#include "clients_gui/DecimalSpinBox.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/ValueEditor.h"
@@ -315,4 +316,35 @@ void EditorFactory::Call( kernel::Moveable_ABC** const& value )
         positionEditor->SetValue( *value );
         result_ = 0;
     }
+}
+
+namespace
+{
+    class BoundedFloatEditor : public gui::DecimalSpinBox
+                             , public kernel::ValueEditor< InhabitantAffinity >
+    {
+    public:
+        explicit BoundedFloatEditor( QWidget* parent, float value = 0.f, unsigned short precision = 2, float min = 0.f, float max = 10.f, float gap = 0.1f )
+            : gui::DecimalSpinBox( parent, value, precision, min, max, gap )
+            , factor_( std::pow( 10.f, precision ) )
+        {
+            // NOTHING
+        }
+        virtual ~BoundedFloatEditor() {}
+
+        virtual InhabitantAffinity GetValue()
+        {
+            return value() / factor_;
+        }
+        const float factor_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2011-02-02
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( InhabitantAffinity* const& value )
+{
+    result_ = new BoundedFloatEditor( parent_, *value, 2, -1.f, 1.f, 0.01f );
 }

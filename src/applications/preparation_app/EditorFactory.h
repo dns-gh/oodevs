@@ -53,6 +53,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< Enum_DemolitionTargetType* >
                     , public tools::Caller< DotationsItem** >
                     , public tools::Caller< kernel::Moveable_ABC** >
+                    , public tools::Caller< InhabitantAffinity* >
 {
 public:
     //! @name Constructors/Destructor
@@ -75,6 +76,7 @@ public:
     virtual void Call( DotationsItem** const& value );
     virtual void Call( kernel::LogisticLevel** const& value );
     virtual void Call( kernel::Moveable_ABC** const& value );
+    virtual void Call( InhabitantAffinity* const& value );
     //@}
 
 private:
