@@ -1678,8 +1678,8 @@ BOOST_FIXTURE_TEST_CASE( control_global_weather_to_client_is_converted, ContextF
     content.mutable_control_global_weather()->mutable_attributes()->set_cloud_floor( 11 );
     content.mutable_control_global_weather()->mutable_attributes()->set_cloud_ceiling( 12 );
     content.mutable_control_global_weather()->mutable_attributes()->set_cloud_density( 13 );
-    content.mutable_control_global_weather()->mutable_attributes()->set_precipitation( sword::neige );
-    content.mutable_control_global_weather()->mutable_attributes()->set_lighting( sword::eclairant );
+    content.mutable_control_global_weather()->mutable_attributes()->set_precipitation( sword::WeatherAttributes::snow );
+    content.mutable_control_global_weather()->mutable_attributes()->set_lighting( sword::WeatherAttributes::artificial_light );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { control_global_weather { weather { id: 7 } attributes { temperature: 8 wind_speed: 9 wind_direction { heading: 10 } cloud_floor: 11 cloud_ceiling: 12 cloud_density: 13 precipitation: neige lighting: eclairant } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -1695,8 +1695,8 @@ BOOST_FIXTURE_TEST_CASE( control_local_weather_creation_to_client_is_converted, 
     content.mutable_control_local_weather_creation()->mutable_attributes()->set_cloud_floor( 11 );
     content.mutable_control_local_weather_creation()->mutable_attributes()->set_cloud_ceiling( 12 );
     content.mutable_control_local_weather_creation()->mutable_attributes()->set_cloud_density( 13 );
-    content.mutable_control_local_weather_creation()->mutable_attributes()->set_precipitation( sword::neige );
-    content.mutable_control_local_weather_creation()->mutable_attributes()->set_lighting( sword::eclairant );
+    content.mutable_control_local_weather_creation()->mutable_attributes()->set_precipitation( sword::WeatherAttributes::snow );
+    content.mutable_control_local_weather_creation()->mutable_attributes()->set_lighting( sword::WeatherAttributes::artificial_light );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { control_local_weather_creation { weather { id: 7 } top_left_coordinate { latitude: 17.23 longitude: 23.17 } bottom_right_coordinate { latitude: 17.23 longitude: 23.17 } attributes { temperature: 8 wind_speed: 9 wind_direction { heading: 10 } cloud_floor: 11 cloud_ceiling: 12 cloud_density: 13 precipitation: neige lighting: eclairant } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

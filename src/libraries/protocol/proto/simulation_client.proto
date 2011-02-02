@@ -2075,39 +2075,46 @@ message ControlGlobalWeatherAck {
 message ControlLocalWeatherAck {
 }
 
-enum EnumPrecipitationType { // !< @todo move into WeatherAttributes
-   pas_de_precipitation = 0;
-   tempete_sable        = 1;
-   brouillard           = 2;
-   crachin              = 3;
-   pluie                = 4;
-   neige                = 5;
-}
-
-enum EnumLightingType { //!< @todo move into WeatherAttributes
-   jour_sans_nuage          = 0;
-   jour_peu_nuageux         = 1;
-   jour_moyennement_nuageux = 2;
-   jour_assez_nuageux       = 3;
-   jour_tres_nuageux        = 4;
-   nuit_pleine_lune         = 5;
-   nuit_trois_quart_de_lune = 6;
-   nuit_demi_lune           = 7;
-   nuit_quart_de_lune       = 8;
-   nuit_nouvelle_lune       = 9;
-   eclairant                = 10;
-   global_weather           = 11;
-}
-
+/** @struct WeatherAttributes
+    @brief Defines the weather attributes
+*/
 message WeatherAttributes {
-   required int32                 temperature    = 1;
-   required int32                 wind_speed     = 2;
-   required Heading               wind_direction = 3;
-   required int32                 cloud_floor    = 4;
-   required int32                 cloud_ceiling  = 5;
-   required int32                 cloud_density  = 6;
-   required EnumPrecipitationType precipitation  = 7;
-   required EnumLightingType      lighting       = 8;
+    /** @enum EnumPrecipitationType
+        @brief Defines the different types of precipitation
+    */
+    enum EnumPrecipitationType {
+        dry        = 0; //!< Dry
+        sand_storm = 1; //!< Sand storm
+        fog        = 2; //!< Fog
+        drizzle    = 3; //!< Drizzle
+        rain       = 4; //!< Rain
+        snow       = 5; //!< Snow
+    }
+    /** @enum EnumLightingType
+        @brief Defines the different types of lighting
+    */
+    enum EnumLightingType {
+        clear_day               = 0;  //!< Clear day
+        slightly_cloudy_day     = 1;  //!< Slightly cloudy day
+        mildly_cloudy_day       = 2;  //!< Mildly cloudy day
+        fairly_cloudy_day       = 3;  //!< Fairly cloudy day
+        very_cloudy_day         = 4;  //!< Very cloudy day
+        full_moon_night         = 5;  //!< Full moon night
+        three_quater_moon_night = 6;  //!< Three quater moon night
+        half_quater_moon_night  = 7;  //!< Half quater moon night
+        quater_moon_night       = 8;  //!< Quater moon night
+        new_moon_night          = 9;  //!< New moon night
+        artificial_light        = 10; //!< Artificial light
+        global_weather          = 11; //!< Global weather
+    }
+    required int32                 temperature    = 1; //!< The temperatur in Celsius
+    required int32                 wind_speed     = 2; //!< The speed of wind in km/h
+    required Heading               wind_direction = 3; //!< The direction of wind
+    required int32                 cloud_floor    = 4; //!< The cloud floor altitude in meters
+    required int32                 cloud_ceiling  = 5; //!< The cloud ceiling altitude in meters
+    required int32                 cloud_density  = 6; //!< The cloud density in percent
+    required EnumPrecipitationType precipitation  = 7; //!< The precipiration type
+    required EnumLightingType      lighting       = 8; //!< The lighting type
 }
 
 message ControlGlobalWeather {
@@ -2116,15 +2123,14 @@ message ControlGlobalWeather {
 }
 
 message ControlLocalWeatherCreation {
-   required WeatherId         weather                 = 1;
-   optional CoordLatLong      top_left_coordinate     = 2;
-   optional CoordLatLong      bottom_right_coordinate = 3;
-   optional WeatherAttributes attributes              = 4;
-
+    required WeatherId         weather                 = 1;
+    optional CoordLatLong      top_left_coordinate     = 2;
+    optional CoordLatLong      bottom_right_coordinate = 3;
+    optional WeatherAttributes attributes              = 4;
 }
 
 message ControlLocalWeatherDestruction {
-   required WeatherId weather = 1;
+    required WeatherId weather = 1;
 }
 
 // Populations

@@ -2181,24 +2181,24 @@ namespace
         CONVERT( cloud_floor );
         CONVERT( cloud_ceiling );
         CONVERT( cloud_density );
-        CONVERT_ENUM( precipitation, ( sword::pas_de_precipitation, Common::pas_de_precipitation )
-                                     ( sword::tempete_sable, Common::tempete_sable )
-                                     ( sword::brouillard, Common::brouillard )
-                                     ( sword::crachin, Common::crachin )
-                                     ( sword::pluie, Common::pluie )
-                                     ( sword::neige, Common::neige ) );
-        CONVERT_ENUM( lighting, ( sword::jour_sans_nuage, Common::jour_sans_nuage )
-                                ( sword::jour_peu_nuageux, Common::jour_peu_nuageux )
-                                ( sword::jour_moyennement_nuageux, Common::jour_moyennement_nuageux )
-                                ( sword::jour_assez_nuageux, Common::jour_assez_nuageux )
-                                ( sword::jour_tres_nuageux, Common::jour_tres_nuageux )
-                                ( sword::nuit_pleine_lune, Common::nuit_pleine_lune )
-                                ( sword::nuit_trois_quart_de_lune, Common::nuit_trois_quart_de_lune )
-                                ( sword::nuit_demi_lune, Common::nuit_demi_lune )
-                                ( sword::nuit_quart_de_lune, Common::nuit_quart_de_lune )
-                                ( sword::nuit_nouvelle_lune, Common::nuit_nouvelle_lune )
-                                ( sword::eclairant, Common::eclairant )
-                                ( sword::global_weather, Common::global_weather ) );
+        CONVERT_ENUM( precipitation, ( sword::WeatherAttributes::dry, Common::pas_de_precipitation )
+                                     ( sword::WeatherAttributes::sand_storm, Common::tempete_sable )
+                                     ( sword::WeatherAttributes::fog, Common::brouillard )
+                                     ( sword::WeatherAttributes::drizzle, Common::crachin )
+                                     ( sword::WeatherAttributes::rain, Common::pluie )
+                                     ( sword::WeatherAttributes::snow, Common::neige ) );
+        CONVERT_ENUM( lighting, ( sword::WeatherAttributes::clear_day, Common::jour_sans_nuage )
+                                ( sword::WeatherAttributes::slightly_cloudy_day, Common::jour_peu_nuageux )
+                                ( sword::WeatherAttributes::mildly_cloudy_day, Common::jour_moyennement_nuageux )
+                                ( sword::WeatherAttributes::fairly_cloudy_day, Common::jour_assez_nuageux )
+                                ( sword::WeatherAttributes::very_cloudy_day, Common::jour_tres_nuageux )
+                                ( sword::WeatherAttributes::full_moon_night, Common::nuit_pleine_lune )
+                                ( sword::WeatherAttributes::three_quater_moon_night, Common::nuit_trois_quart_de_lune )
+                                ( sword::WeatherAttributes::half_quater_moon_night, Common::nuit_demi_lune )
+                                ( sword::WeatherAttributes::quater_moon_night, Common::nuit_quart_de_lune )
+                                ( sword::WeatherAttributes::new_moon_night, Common::nuit_nouvelle_lune )
+                                ( sword::WeatherAttributes::artificial_light, Common::eclairant )
+                                ( sword::WeatherAttributes::global_weather, Common::global_weather ) );
     }
 }
 

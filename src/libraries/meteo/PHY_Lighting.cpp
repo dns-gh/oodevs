@@ -15,17 +15,17 @@ using namespace weather;
 
 PHY_Lighting::T_LightingMap PHY_Lighting::lightings_;
 
-PHY_Lighting PHY_Lighting::jourSansNuage_         ( "JourSansNuage"         , eLightingType_JourSansNuage          , &jourPeuNuageux_         , sword::jour_sans_nuage  );
-PHY_Lighting PHY_Lighting::jourPeuNuageux_        ( "JourPeuNuageux"        , eLightingType_JourPeuNuageux         , &jourMoyennementNuageux_ , sword::jour_peu_nuageux );
-PHY_Lighting PHY_Lighting::jourMoyennementNuageux_( "JourMoyennementNuageux", eLightingType_JourMoyennementNuageux , &jourAssezNuageux_       , sword::jour_moyennement_nuageux );
-PHY_Lighting PHY_Lighting::jourAssezNuageux_      ( "JourAssezNuageux"      , eLightingType_JourAssezNuageux       , &jourTresNuageux_        , sword::jour_assez_nuageux );
-PHY_Lighting PHY_Lighting::jourTresNuageux_       ( "JourTresNuageux"       , eLightingType_JourTresNuageux        , 0                        , sword::jour_tres_nuageux );
-PHY_Lighting PHY_Lighting::nuitPleineLune_        ( "NuitPleineLune"        , eLightingType_NuitPleineLune         , &nuitTroisQuartDeLune_   , sword::nuit_pleine_lune );
-PHY_Lighting PHY_Lighting::nuitTroisQuartDeLune_  ( "NuitTroisQuartDeLune"  , eLightingType_NuitTroisQuartDeLune   , &nuitDemiLune_           , sword::nuit_trois_quart_de_lune );
-PHY_Lighting PHY_Lighting::nuitDemiLune_          ( "NuitDemiLune"          , eLightingType_NuitDemiLune           , &nuitQuartDeLune_        , sword::nuit_demi_lune );
-PHY_Lighting PHY_Lighting::nuitQuartDeLune_       ( "NuitQuartDeLune"       , eLightingType_NuitQuartDeLune        , &nuitNouvelleLune_       , sword::nuit_quart_de_lune );
-PHY_Lighting PHY_Lighting::nuitNouvelleLune_      ( "NuitNouvelleLune"      , eLightingType_NuitNouvelleLune       , 0                        , sword::nuit_nouvelle_lune );
-PHY_Lighting PHY_Lighting::eclairant_             ( "Eclairant"             , eLightingType_Eclairant              , 0                        , sword::eclairant );
+PHY_Lighting PHY_Lighting::jourSansNuage_         ( "JourSansNuage"         , eLightingType_JourSansNuage          , &jourPeuNuageux_         , sword::WeatherAttributes::clear_day );
+PHY_Lighting PHY_Lighting::jourPeuNuageux_        ( "JourPeuNuageux"        , eLightingType_JourPeuNuageux         , &jourMoyennementNuageux_ , sword::WeatherAttributes::slightly_cloudy_day );
+PHY_Lighting PHY_Lighting::jourMoyennementNuageux_( "JourMoyennementNuageux", eLightingType_JourMoyennementNuageux , &jourAssezNuageux_       , sword::WeatherAttributes::mildly_cloudy_day );
+PHY_Lighting PHY_Lighting::jourAssezNuageux_      ( "JourAssezNuageux"      , eLightingType_JourAssezNuageux       , &jourTresNuageux_        , sword::WeatherAttributes::fairly_cloudy_day );
+PHY_Lighting PHY_Lighting::jourTresNuageux_       ( "JourTresNuageux"       , eLightingType_JourTresNuageux        , 0                        , sword::WeatherAttributes::very_cloudy_day );
+PHY_Lighting PHY_Lighting::nuitPleineLune_        ( "NuitPleineLune"        , eLightingType_NuitPleineLune         , &nuitTroisQuartDeLune_   , sword::WeatherAttributes::full_moon_night );
+PHY_Lighting PHY_Lighting::nuitTroisQuartDeLune_  ( "NuitTroisQuartDeLune"  , eLightingType_NuitTroisQuartDeLune   , &nuitDemiLune_           , sword::WeatherAttributes::three_quater_moon_night );
+PHY_Lighting PHY_Lighting::nuitDemiLune_          ( "NuitDemiLune"          , eLightingType_NuitDemiLune           , &nuitQuartDeLune_        , sword::WeatherAttributes::half_quater_moon_night );
+PHY_Lighting PHY_Lighting::nuitQuartDeLune_       ( "NuitQuartDeLune"       , eLightingType_NuitQuartDeLune        , &nuitNouvelleLune_       , sword::WeatherAttributes::quater_moon_night );
+PHY_Lighting PHY_Lighting::nuitNouvelleLune_      ( "NuitNouvelleLune"      , eLightingType_NuitNouvelleLune       , 0                        , sword::WeatherAttributes::new_moon_night );
+PHY_Lighting PHY_Lighting::eclairant_             ( "Eclairant"             , eLightingType_Eclairant              , 0                        , sword::WeatherAttributes::artificial_light );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Lighting::Initialize
@@ -60,7 +60,7 @@ void PHY_Lighting::Terminate()
 // Name: PHY_Lighting constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Lighting::PHY_Lighting( const std::string& strName, E_LightingType nType, const PHY_Lighting* pNextDegradedLighting, sword::EnumLightingType nAsnID )
+PHY_Lighting::PHY_Lighting( const std::string& strName, E_LightingType nType, const PHY_Lighting* pNextDegradedLighting, sword::WeatherAttributes::EnumLightingType nAsnID )
     : strName_              ( strName )
     , nType_                ( nType )
     , pNextDegradedLighting_( pNextDegradedLighting )

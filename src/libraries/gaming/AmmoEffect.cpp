@@ -22,12 +22,12 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter )
     : controller_( controller )
-    , id_( message.fire_effect().id() )
-    , type_( message.type() )
-    , ellipse_( message.location(), converter )
-    , meteo_( weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_ )
+    , id_        ( message.fire_effect().id() )
+    , type_      ( message.type() )
+    , ellipse_   ( message.location(), converter )
+    , meteo_     ( weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_ )
 {
-    if( type_ == sword::eclairant )
+    if( type_ == sword::WeatherAttributes::artificial_light )
         meteo_.Update( weather::PHY_Lighting::eclairant_ );
     else if( type_ == sword::StartFireEffect::smoke )
         meteo_.Update( weather::PHY_Precipitation::smoke_ );

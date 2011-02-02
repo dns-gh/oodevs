@@ -205,7 +205,7 @@ void PHY_Meteo::Update( const sword::MissionParameters& msg )
     const sword::MissionParameter& precipitation = msg.elem( 6 );
     if( precipitation.null_value() || !precipitation.value().Get(0).has_enumeration() )
         throw std::exception( "Meteo : bad attribute for precipitation" );
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (sword::EnumPrecipitationType ) precipitation.value().Get(0).enumeration() );
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (sword::WeatherAttributes::EnumPrecipitationType ) precipitation.value().Get(0).enumeration() );
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
 
