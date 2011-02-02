@@ -1447,7 +1447,6 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const sword::MagicActio
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ProcessKnowledgeGroupUpdate
 // Created: FDS 2010-01-13
@@ -1463,7 +1462,7 @@ void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const sword::KnowledgeMagic
         MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
         if( !pReceiver || pReceiver->IsJammed() )
             throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_type );
-        pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_  );
+        pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
     }
     catch( NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >& e )
     {

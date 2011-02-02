@@ -1912,106 +1912,166 @@ message ControlSendCurrentStateBegin {
 message ControlSendCurrentStateEnd {
 }
 
+/** @struct UrbanAttributes
+    @brief Regroups the attributes of a urban object
+    @see UrbanCreation UrbanUpdate
+*/
 message UrbanAttributes {
+    /** @struct Architecture
+        @brief Defines the architecture of a urban object
+    */
     message Architecture {
-        required float  height            = 1;
-        required int32  floor_number      = 2;
-        required string roof_shape        = 3;
-        required string material          = 4;
-        required float  occupation        = 5;
-        required float  trafficability    = 6;
-        required bool   parking_available = 7 [default = false];
+        required float  height            = 1;                   //!< The height in meters
+        required int32  floor_number      = 2;                   //!< The floor number starting at 0 for the ground floor
+        required string roof_shape        = 3;                   //!< The roof shape
+        required string material          = 4;                   //!< The material
+        required float  occupation        = 5;                   //!< The occupation in percent
+        required float  trafficability    = 6;                   //!< The trafficability in tons used in path-finding
+        required bool   parking_available = 7 [default = false]; //!< Whether parking is available or not
     }
+    /** @struct Structure
+        @brief Defines the structure of a urban object
+    */
     message Structure {
-        required uint32 state = 1;
+        required uint32 state = 1; //!< The structural state in percent
     }
+    /** @struct Infrastructures
+        @brief Defines the infrastructures of a urban object
+    */
     message Infrastructures {
+        /** @struct Infrastructure
+            @brief Defines the infrastructure of a urban object
+        */
         message Infrastructure {
-          required string type      = 1;
-          required bool   active    = 2;
-          required float  threshold = 3;
+          required string type      = 1; //!< The infrastructure type
+          required bool   active    = 2; //!< Whether the infrastructure is active or not
+          required float  threshold = 3; //!< The threshold in percent below which the infrastructure stops working
         }
-        repeated ResourceNetwork resource_network = 1;
-        optional Infrastructure infrastructure = 2;
+        repeated ResourceNetwork resource_network = 1; //!< The resource networks
+        optional Infrastructure infrastructure    = 2; //!< The infrastructure
     }
-    optional Architecture    architecture    = 1;
-    optional Structure       structure       = 2;
-    optional RgbaColor       color           = 3;
-    optional Infrastructures infrastructures = 4;
-    repeated UrbanUsage      usages          = 5;
+    optional Architecture    architecture    = 1; //!< The architecture
+    optional Structure       structure       = 2; //!< The structure
+    optional RgbaColor       color           = 3; //!< The color
+    optional Infrastructures infrastructures = 4; //!< The infrastructures
+    repeated UrbanUsage      usages          = 5; //!< The usages
 }
 
+/** @struct UrbanCreation
+    @brief Notifies of the creation of a urban object
+*/
 message UrbanCreation {
-   required ObjectId        object       = 1;
-   required string          name         = 2;
-   required Location        location     = 3;
-   optional UrbanAttributes attributes   = 4;
-   optional ObjectId        parent       = 5;
+   required ObjectId        object       = 1; //!< The object identifier
+   required string          name         = 2; //!< The object name
+   required Location        location     = 3; //!< The object location
+   optional UrbanAttributes attributes   = 4; //!< The object attributes
+   optional ObjectId        parent       = 5; //!< The parent object
 }
 
+/** @struct UrbanDetection
+    @brief Notifies of the detection of a urban object
+*/
 message UrbanDetection {
-    required UnitId               observer     = 1;
-    required ObjectId             object       = 2;
-    required UnitVisibility.Level visibility   = 3;
+    required UnitId               observer     = 1; //!< The unit identifier
+    required ObjectId             object       = 2; //!< The object identifier
+    required UnitVisibility.Level visibility   = 3; //!< The visibility level
 }
 
+/** @struct UrbanUpdate
+    @brief Notifies of the update of a urban object
+*/
 message UrbanUpdate {
-   required ObjectId        object     = 1;
-   optional Location        location   = 2;
-   optional UrbanAttributes attributes = 3;
+   required ObjectId        object     = 1; //!< The object identifier
+   optional Location        location   = 2; //!< The object location
+   optional UrbanAttributes attributes = 3; //!< The object attributes
 }
 
-// Knowledge groups
+/** @struct KnowledgeGroupCreation
+    @brief Notifies of the creation of a knowledge group
+*/
 message KnowledgeGroupCreation {
-   required KnowledgeGroupId knowledge_group = 1;
-   required PartyId          party           = 2;
-   optional KnowledgeGroupId parent          = 3;
-   required string           type            = 4;
-   optional bool             jam             = 5;
+   required KnowledgeGroupId knowledge_group = 1; //!< The knowledge group identifier
+   required PartyId          party           = 2; //!< The party identifier
+   optional KnowledgeGroupId parent          = 3; //!< The parent group
+   required string           type            = 4; //!< The group type
+   optional bool             jam             = 5; //!< Whether the communication of the group is jammed or not
 }
 
+/** @struct KnowledgeGroupUpdate
+    @brief Notifies of the update of a knowledge group
+*/
 message KnowledgeGroupUpdate {
-   required KnowledgeGroupId knowledge_group = 1;
-   optional PartyId          party           = 2;
-   optional KnowledgeGroupId parent          = 3;
-   optional bool             enabled         = 4;
-   optional string           type            = 5;
+   required KnowledgeGroupId knowledge_group = 1; //!< The knowledge group identifier
+   optional PartyId          party           = 2; //!< The party identifier
+   optional KnowledgeGroupId parent          = 3; //!< The parent group
+   optional bool             enabled         = 4; //!< Whether the group is enabled or not
+   optional string           type            = 5; //!< The group type
 }
 
+/** @struct KnowledgeGroupDestruction
+    @brief Notifies of the destruction of a knowledge group
+*/
+message KnowledgeGroupDestruction {
+    required KnowledgeGroupId knowledge_group = 1; //!< The knowledge group identifier
+    required PartyId          party           = 2; //!< The party identifier
+}
+
+/** @struct KnowledgeGroupDestruction
+    @brief Factorizes knowledge group related magic action error codes
+    @todo This is pointless to factorize this...
+*/
 message KnowledgeGroupAck {
+    /** @enum ErrorCode
+        @brief Defines the error codes
+    */
     enum ErrorCode {
-       no_error                     = 0;
-       error_invalid_unit           = 1;
-       error_invalid_superior       = 2;
-       error_invalid_party          = 3;
-       error_invalid_knowledgegroup = 4;
-       error_invalid_type           = 5;
+       no_error                     = 0; //!< No error
+       error_invalid_unit           = 1; //!< The unit identifier provided is invalid
+       error_invalid_superior       = 2; //!< The superior identifier provided is invalid
+       error_invalid_party          = 3; //!< The party identifier provided is invalid
+       error_invalid_knowledgegroup = 4; //!< The knowledge group identifier provided is invalid @todo rename to error_invalid_knowledge_group
+       error_invalid_type           = 5; //!< The type provided is invalid
     }
 }
 
+/** @struct KnowledgeGroupMagicActionAck
+    @brief Acknowledges a knowledge group magic action
+    @see KnowledgeMagicAction
+*/
 message KnowledgeGroupMagicActionAck {
-    required KnowledgeGroupId            knowledge_group = 1;
-    required KnowledgeGroupAck.ErrorCode error_code      = 2;
+    required KnowledgeGroupId            knowledge_group = 1; //!< The knowledge group identifier
+    required KnowledgeGroupAck.ErrorCode error_code      = 2; //!< The error code
 }
 
+/** @struct KnowledgeGroupCreationAck
+    @brief Acknowledges a knowledge group creation magic action
+    @see MagicAction
+*/
 message KnowledgeGroupCreationAck {
-    required KnowledgeGroupId            knowledge_group = 1;
-    required KnowledgeGroupAck.ErrorCode error_code      = 2;
+    required KnowledgeGroupId            knowledge_group = 1; //!< The knowledge group identifier
+    required KnowledgeGroupAck.ErrorCode error_code      = 2; //!< The error code
 }
 
+/** @struct KnowledgeGroupUpdateAck
+    @brief Acknowledges a knowledge group update magic action
+    @see KnowledgeMagicAction
+*/
 message KnowledgeGroupUpdateAck {
-    required KnowledgeGroupId            knowledge_group = 1;
-    required KnowledgeGroupAck.ErrorCode error_code      = 2;
+    required KnowledgeGroupId            knowledge_group = 1; //!< The knowledge group identifier
+    required KnowledgeGroupAck.ErrorCode error_code      = 2; //!< The error code
 }
 
-message KnowledgeGroupDestruction {
-    required KnowledgeGroupId knowledge_group = 1;
-    required PartyId          party           = 2;
-}
-
+/** @struct ControlGlobalWeatherAck
+    @brief Acknowledges a global weather magic action
+    @see MagicAction
+*/
 message ControlGlobalWeatherAck {
 }
 
+/** @struct ControlLocalWeatherAck
+    @brief Acknowledges a local weather magic action
+    @see MagicAction
+*/
 message ControlLocalWeatherAck {
 }
 

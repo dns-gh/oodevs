@@ -171,40 +171,17 @@ message UnitMagicAction {
 message KnowledgeMagicAction {
     /** @enum Type
         @brief The type of magic action.
-
-        Specific parameters are expected for each type.
-
         @todo Explain what parameters are expected for each type
     */
    enum Type {
-        /** @brief A enable knowledge magic action.
-        */
-        enable              = 0;
-        /** @brief A update party knowledge magic action.
-        */
-        update_party        = 1;
-        /** @brief A update party parent knowledge magic action.
-        */
-        update_party_parent = 2;
-        /** @brief A update type knowledge magic action.
-        */
-        update_type         = 3;
+        enable              = 0; //!< A enable knowledge magic action
+        update_party        = 1; //!< A update party knowledge magic action
+        update_party_parent = 2; //!< A update party parent knowledge magic action
+        update_type         = 3; //!< A update type knowledge magic action
     }
-    /** @property knowledge_group
-        @brief The knowledge group identifier.
-        @see KnowledgeGroupId
-    */
-    required KnowledgeGroupId  knowledge_group = 1;
-    /** @property type
-        @brief The magic action type.
-        @see Type
-    */
-    required Type              type            = 2;
-    /** @property parameters
-        @brief The magic action parameters, depending on the magic action type.
-        @see MissionParameters
-    */
-    required MissionParameters parameters      = 3;
+    required KnowledgeGroupId  knowledge_group = 1; //!< The knowledge group identifier
+    required Type              type            = 2; //!< The magic action type
+    required MissionParameters parameters      = 3; //!< The magic action parameters, depending on the magic action type
 }
 
 /** @struct ObjectMagicAction
@@ -300,35 +277,15 @@ message MagicAction {
         @todo Explain what parameters are expected for each type
     */
    enum Type {
-        /** @brief A global weather magic action.
-        */
-        global_weather                     = 0;
-        /** @brief A local weather magic action.
-        */
-        local_weather                      = 1;
-        /** @brief A change diplomacy magic action.
-        */
-        change_diplomacy                   = 2;
-        /** @brief A create knowledge magic action.
-        */
-        create_knowledge_group             = 3;
-        /** @brief A change resource network properties magic action.
-        */
-        change_resource_network_properties = 4;
-        /** @brief A fire order on location magic action.
-        */
-        create_fire_order_on_location      = 5;
+        global_weather                     = 0; //!< A global weather magic action
+        local_weather                      = 1; //!< A local weather magic action
+        change_diplomacy                   = 2; //!< A change diplomacy magic action
+        create_knowledge_group             = 3; //!< A create knowledge magic action
+        change_resource_network_properties = 4; //!< A change resource network properties magic action
+        create_fire_order_on_location      = 5; //!< A fire order on location magic action
     }
-    /** @property type
-        @brief The type of magic action
-        @see Type
-    */
-    required Type              type       = 1;
-    /** @property parameters
-        @brief The parameters of the magic action
-        @see MissionParameters
-    */
-    required MissionParameters parameters = 2;
+    required Type              type       = 1; //!< The type of magic action
+    required MissionParameters parameters = 2; //!< The parameters of the magic action
 }
 
 /** @struct ControlCheckPointSetFrequency

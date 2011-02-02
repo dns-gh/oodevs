@@ -110,18 +110,18 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& asnMsg )
+void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg )
 {
-    if( asnMsg.type() == sword::MagicAction::global_weather )
+    if( msg.type() == sword::MagicAction::global_weather )
     {
         assert( pGlobalMeteo_ );
-        pGlobalMeteo_->Update( asnMsg.parameters() );
-        client::ControlGlobalWeatherAck asnReplyMsg;
-        asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
+        pGlobalMeteo_->Update( msg.parameters() );
+        client::ControlGlobalWeatherAck reply;
+        reply.Send( NET_Publisher_ABC::Publisher() );
     }
-    else if( asnMsg.type() == sword::MagicAction::local_weather )
+    else if( msg.type() == sword::MagicAction::local_weather )
     {
-        weather::PHY_Meteo* meteo = new PHY_LocalMeteo( idManager_.GetFreeId(), asnMsg.parameters(), this );
+        weather::PHY_Meteo* meteo = new PHY_LocalMeteo( idManager_.GetFreeId(), msg.parameters(), this );
         RegisterMeteo( *meteo );
         client::ControlLocalWeatherAck replyMsg;
         replyMsg.Send( NET_Publisher_ABC::Publisher() );
