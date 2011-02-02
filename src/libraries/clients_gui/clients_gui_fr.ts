@@ -57,8 +57,8 @@
         <translation>Densité :</translation>
     </message>
     <message>
-        <source>Populations:</source>
-        <translation>Populations :</translation>
+        <source>Populations/</source>
+        <translation>Populations/</translation>
     </message>
     <message>
         <source>PhysicalFeatures/Motivations/</source>

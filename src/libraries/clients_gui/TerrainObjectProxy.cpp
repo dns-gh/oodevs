@@ -16,6 +16,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/MotivationsVisitor_ABC.h>
@@ -206,6 +207,11 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
                 dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + QString( motivation.first.c_str() ), motivation.second );
         }
     }
+    BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
+    {
+        const QString key = tools::translate( "Block", "Populations/" ) + human.first.c_str();
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), key, human.second );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -223,16 +229,7 @@ void TerrainObjectProxy::SetSelected( bool selected ) const
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
-    if( !humans_.empty() )
-    {
-        displayer.Display( tools::translate( "Block", "Density:" ), GetDensity() );
-        displayer.Display( tools::translate( "Block", "Populations:" ), "" );
-        BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
-        {
-            const std::string name = " - " + boost::lexical_cast< std::string >( human.first ) + ":";
-            displayer.Display( name.c_str(), human.second );
-        }
-    }
+    displayer.Display( tools::translate( "Block", "Density:" ), GetDensity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -242,8 +239,15 @@ void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) co
 void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number )
 {
     humans_[ inhabitant ] = number;
+    const QString key = tools::translate( "Block", "Populations/" ) + inhabitant.c_str();
+    kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
+    if( !dictionary.HasKey( key ) )
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), key, humans_[ inhabitant ] );
     if( number == 0u )
+    {
+        dictionary.Remove( key );
         humans_.erase( inhabitant );
+    }
     UpdateColor();
 }
 
