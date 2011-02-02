@@ -46,10 +46,10 @@ public:
 
     //! @name Messages
     //@{
-    void OnReceive( const sword::SimToClient& asnMsg );
+    void OnReceive( const sword::SimToClient& msg );
 
-    virtual void Send( const sword::DispatcherToSim& asnMsg );
-    virtual void Send( const sword::ClientToSim& asnMsg );
+    virtual void Send( const sword::DispatcherToSim& msg );
+    virtual void Send( const sword::ClientToSim& msg );
     //@}
 
 private:

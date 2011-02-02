@@ -61,10 +61,6 @@ MIL_CheckPointManager::~MIL_CheckPointManager()
     // NOTHING
 }
 
-// =============================================================================
-// MAIN
-// =============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::LoadCheckPoint
 // Created: JVT 03-07-23
@@ -74,20 +70,15 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading Checkpoint  ----" );
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
-
     MT_LOG_INFO_MSG( MT_FormatString( "Loading SIM state from checkpoint '%s'", config.BuildCheckpointChildFile( "" ).c_str() ) )
-
     if( config.UseCheckPointCRC() )
         CheckCRC( config );
-
     std::ifstream file( config.BuildCheckpointChildFile( "data" ).c_str(), std::ios::in | std::ios::binary );
     if( !file || !file.is_open() )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file '%s'", config.BuildCheckpointChildFile( "data" ).c_str() ) );
-
     MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file );
     MIL_AgentServer::GetWorkspace().load( *pArchive );
     file.close();
-
 #ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
     delete pArchive;
 #endif
@@ -101,7 +92,6 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
 void MIL_CheckPointManager::SaveCheckPointDirectory( const std::string& name, const std::string userName )
 {
     SaveCheckPoint( name, userName );
-
     client::ControlCheckPointSaveNowAck asnReplyMsg;
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -114,18 +104,12 @@ void MIL_CheckPointManager::Update()
 {
     if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() < nNextCheckPointTick_ )
         return;
-
     const std::string name = BuildCheckPointName();
     if( SaveCheckPoint( name ) )
         RotateCheckPoints( name );
-
     nLastCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     UpdateNextCheckPointTick();
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::UpdateNextCheckPointTick
@@ -134,7 +118,6 @@ void MIL_CheckPointManager::Update()
 void MIL_CheckPointManager::UpdateNextCheckPointTick()
 {
     unsigned int nTick = nLastCheckPointTick_ + (unsigned int)MIL_Tools::ConvertSecondsToSim( nCheckPointsFrequency_ );
-
     if( nTick < MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
         nNextCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     else
@@ -146,7 +129,6 @@ void MIL_CheckPointManager::UpdateNextCheckPointTick()
 // Name: MIL_CheckPointManager::BuildCheckPointName
 // Created: JVT 2005-02-28
 // -----------------------------------------------------------------------------
-// static
 const std::string MIL_CheckPointManager::BuildCheckPointName()
 {
     // récupération du temps courrant
@@ -154,7 +136,6 @@ const std::string MIL_CheckPointManager::BuildCheckPointName()
     time( &t );
     struct tm * time;
     time = localtime( &t );
-
     // Création du nom ( IDEX__YYYY_MM_DD__HHhMMmSEC )
     std::stringstream name;
     name << std::setfill( '0' ) << std::setw( 4 ) << ( 1900 + time->tm_year ) << '_';
@@ -163,7 +144,6 @@ const std::string MIL_CheckPointManager::BuildCheckPointName()
     name << std::setfill( '0' ) << std::setw( 2 ) << time->tm_hour << 'h';
     name << std::setfill( '0' ) << std::setw( 2 ) << time->tm_min << 'm';
     name << std::setfill( '0' ) << std::setw( 2 ) << time->tm_sec;
-
     return name.str();
 }
 
@@ -171,22 +151,19 @@ const std::string MIL_CheckPointManager::BuildCheckPointName()
 // Name: MIL_CheckPointManager::CreateMetaData
 // Created: JVT 2005-03-22
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::CreateMetaData( const std::string& strFileName, const std::string& strCheckPointName, const boost::crc_32_type::value_type& nDataCRC, const boost::crc_32_type::value_type& nCRCCRC )
+void MIL_CheckPointManager::CreateMetaData( const std::string& strFileName, const std::string& name, const boost::crc_32_type::value_type& nDataCRC, const boost::crc_32_type::value_type& nCRCCRC )
 {
     try
     {
         xml::xofstream xos( strFileName );
         xos << xml::start( "checkpoint" )
-                << xml::content( "name", strCheckPointName )
+                << xml::content( "name", name )
                 << xml::start( "crc" )
                     << xml::start( "configuration" )
                         << xml::attribute( "crc", nCRCCRC )
                     << xml::end
                     << xml::start( "save" )
-                        << xml::attribute( "crc", nDataCRC )
-                    << xml::end
-                << xml::end
-            << xml::end;
+                        << xml::attribute( "crc", nDataCRC );
     }
     catch( ... )
     {
@@ -201,18 +178,14 @@ void MIL_CheckPointManager::CreateMetaData( const std::string& strFileName, cons
 boost::crc_32_type::value_type MIL_CheckPointManager::CreateData( const std::string& strFileName )
 {
     std::ofstream file( strFileName.c_str(), std::ios::out | std::ios::binary );
-
     if( !file || !file.is_open() )
         throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__, MT_FormatString( "Cannot open file '%s'", strFileName.c_str() ) );
-
     MIL_CheckPointOutArchive* pArchive = new MIL_CheckPointOutArchive( file );
     MIL_AgentServer::GetWorkspace().save( *pArchive );
     file.close();
-
 #ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
     delete pArchive;
 #endif
-
     return MIL_Tools::ComputeCRC( strFileName );
 }
 
@@ -259,12 +232,9 @@ void MIL_CheckPointManager::CheckCRC( const MIL_Config& config )
         >> xml::start( "configuration" )
             >> xml::attribute( "crc", nCRC )
         >> xml::end;
-
     if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "CRCs.xml" ) ) != nCRC )
         throw MT_ScipioException( __FILE__, __FUNCTION__, __LINE__ , "Cannot load checkpoint - File 'CRCs.xml' has changed since the checkpoint creation" );
-
     CheckFilesCRC( config );
-
     xis >> xml::start( "save" )
             >> xml::attribute( "crc", nCRC );
     if( MIL_Tools::ComputeCRC( config.BuildCheckpointChildFile( "data" ) ) != nCRC )
@@ -292,10 +262,6 @@ void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
     }
     currentCheckPoints_.push( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", newName ) );
 }
-
-// =============================================================================
-// SERIALIZATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::SaveOrbatCheckPoint
@@ -334,7 +300,6 @@ bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const s
     {
         const boost::crc_32_type::value_type nDataFileCRC = CreateData( config.BuildCheckpointChildFile( "data", name ) );
         const boost::crc_32_type::value_type nCRCFileCRC  = config.serialize( config.BuildCheckpointChildFile( "CRCs.xml" , name ) );
-
         CreateMetaData( config.BuildCheckpointChildFile( "MetaData.xml", name ), userName, nDataFileCRC, nCRCFileCRC );
     }
     catch( MT_ScipioException& exception )
@@ -362,51 +327,37 @@ bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const s
 // -----------------------------------------------------------------------------
 bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::string userName /*= ""*/ )
 {
-    // création du fichier
     MT_LOG_INFO_MSG( "Begin save checkpoint " << name );
-    client::ControlCheckPointSaveBegin asnSaveBeginMsg;
-    asnSaveBeginMsg.Send( NET_Publisher_ABC::Publisher() );
-
+    client::ControlCheckPointSaveBegin().Send( NET_Publisher_ABC::Publisher() );
     ::_mkdir( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", name ).c_str() );
-
-    const bool bNotOk = !SaveOrbatCheckPoint( name ) || !SaveFullCheckPoint ( name, userName );
-
+    const bool bNotOk = !SaveOrbatCheckPoint( name ) || !SaveFullCheckPoint( name, userName );
     MT_LOG_INFO_MSG( "End save checkpoint" );
-    client::ControlCheckPointSaveEnd asnSaveEndMsg;
-    asnSaveEndMsg().set_name(name);
-    asnSaveEndMsg.Send( NET_Publisher_ABC::Publisher() );
-
-    return !bNotOk;
+    client::ControlCheckPointSaveEnd msg;
+    msg().set_name( name );
+    msg.Send( NET_Publisher_ABC::Publisher() );
+    return ! bNotOk;
 }
-
-// =============================================================================
-// NETWORK
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const sword::ControlCheckPointSaveNow& asnMsg )
+void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const sword::ControlCheckPointSaveNow& msg )
 {
-    std::string strCheckPointName;
-    if( asnMsg.has_name()  )
-        strCheckPointName = asnMsg.name();
-
-    SaveCheckPointDirectory( BuildCheckPointName(), strCheckPointName );
+    std::string name;
+    if( msg.has_name() )
+        name = msg.name();
+    SaveCheckPointDirectory( BuildCheckPointName(), name );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const sword::ControlCheckPointSetFrequency& asnMsg )
+void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const sword::ControlCheckPointSetFrequency& msg )
 {
-    nCheckPointsFrequency_ = asnMsg.frequency() * 60; // $$$$ NLD 2007-01-11: beeeeeeaaaaah
-
-    client::ControlCheckPointSetFrequencyAck asnReplyMsg;
-    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
-
+    nCheckPointsFrequency_ = msg.frequency() * 60; // $$$$ NLD 2007-01-11: beeeeeeaaaaah
+    client::ControlCheckPointSetFrequencyAck().Send( NET_Publisher_ABC::Publisher() );
     UpdateNextCheckPointTick();
 }
 
@@ -418,10 +369,8 @@ void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const unsigned 
 {
     file >> nCheckPointsFrequency_
          >> nMaxCheckPointNbr_;
-
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
-
     nLastCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     UpdateNextCheckPointTick();
 }

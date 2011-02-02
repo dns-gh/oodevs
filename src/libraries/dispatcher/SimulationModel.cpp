@@ -149,17 +149,17 @@ void SimulationModel::Update( const sword::ControlEndTick& msg )
 // -----------------------------------------------------------------------------
 void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 {
-    client::ControlInformation asn;
-    asn().set_current_tick         ( nCurrentTick_);
-    asn().mutable_initial_date_time()->set_data( initialDate_.c_str() );
-    asn().mutable_date_time()->set_data( date_.c_str() );
-    asn().set_tick_duration        ( nTickDuration_);
-    asn().set_time_factor          ( nTimeFactor_);
-    asn().set_checkpoint_frequency ( nCheckpointFrequency_);
-    asn().set_status               ( nSimState_);
-    asn().set_send_vision_cones    (bSendVisionCones_);
-    asn().set_profiling_enabled    ( bProfilingEnabled_);
-    asn.Send( publisher );
+    client::ControlInformation msg;
+    msg().set_current_tick         ( nCurrentTick_);
+    msg().mutable_initial_date_time()->set_data( initialDate_.c_str() );
+    msg().mutable_date_time()->set_data( date_.c_str() );
+    msg().set_tick_duration        ( nTickDuration_ );
+    msg().set_time_factor          ( nTimeFactor_);
+    msg().set_checkpoint_frequency ( nCheckpointFrequency_ );
+    msg().set_status               ( nSimState_);
+    msg().set_send_vision_cones    ( bSendVisionCones_ );
+    msg().set_profiling_enabled    ( bProfilingEnabled_ );
+    msg.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,15 +168,15 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned factor ) const
 {
-    replay::ControlReplayInformation asn;
-    asn().set_current_tick      ( nCurrentTick_ );
-    asn().mutable_initial_date_time()->set_data( initialDate_.c_str() );
-    asn().mutable_date_time()->set_data( date_.c_str() );
-    asn().set_tick_duration     ( nTickDuration_ );
-    asn().set_time_factor       ( factor );
-    asn().set_status            ( status );
-    asn().set_tick_count        ( totalTicks );
-    asn.Send( publisher );
+    replay::ControlReplayInformation msg;
+    msg().set_current_tick      ( nCurrentTick_ );
+    msg().mutable_initial_date_time()->set_data( initialDate_.c_str() );
+    msg().mutable_date_time()->set_data( date_.c_str() );
+    msg().set_tick_duration     ( nTickDuration_ );
+    msg().set_time_factor       ( factor );
+    msg().set_status            ( status );
+    msg().set_tick_count        ( totalTicks );
+    msg.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,8 +185,8 @@ void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned t
 // -----------------------------------------------------------------------------
 void SimulationModel::SendFirstTick( ClientPublisher_ABC& publisher ) const
 {
-    client::ControlBeginTick asn;
-    asn().set_current_tick ( 0 );
-    asn().mutable_date_time()->set_data( date_.c_str() );
-    asn.Send( publisher );
+    client::ControlBeginTick msg;
+    msg().set_current_tick ( 0 );
+    msg().mutable_date_time()->set_data( date_.c_str() );
+    msg.Send( publisher );
 }

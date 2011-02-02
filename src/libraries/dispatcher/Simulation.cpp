@@ -44,25 +44,25 @@ Simulation::~Simulation()
 // Name: Simulation::OnReceive
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
-void Simulation::OnReceive( const sword::SimToClient& asnMsg )
+void Simulation::OnReceive( const sword::SimToClient& msg )
 {
-    handler_.Receive( asnMsg );
+    handler_.Receive( msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Simulation::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void Simulation::Send( const sword::DispatcherToSim& asnMsg )
+void Simulation::Send( const sword::DispatcherToSim& msg )
 {
-    messageService_.Send( endpoint_, asnMsg );
+    messageService_.Send( endpoint_, msg );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Simulation::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Simulation::Send( const sword::ClientToSim& asnMsg )
+void Simulation::Send( const sword::ClientToSim& msg )
 {
-    messageService_.Send( endpoint_, asnMsg );
+    messageService_.Send( endpoint_, msg );
 }

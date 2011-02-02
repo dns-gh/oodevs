@@ -56,8 +56,8 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgCheckPointSaveNow     ( const sword::ControlCheckPointSaveNow&      asnMsg );
-    void OnReceiveMsgCheckPointSetFrequency( const sword::ControlCheckPointSetFrequency& /*int&*/ asnMsg );
+    void OnReceiveMsgCheckPointSaveNow     ( const sword::ControlCheckPointSaveNow&      msg );
+    void OnReceiveMsgCheckPointSetFrequency( const sword::ControlCheckPointSetFrequency& msg );
     //@}
 
     //! @name CheckPoints
