@@ -18,7 +18,6 @@
 #include "PHY_DotationLogisticType.h"
 #include "PHY_DotationNature.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
-#include "tools/Resolver.h"
 #include "UrbanType.h"
 #include <urban/StaticModel.h>
 #include <urban/MaterialCompositionType.h>
@@ -27,7 +26,7 @@
 PHY_DotationCategory::T_UrbanMaterialAttritionMap PHY_DotationCategory::urbanBestValue_;
 
 //-----------------------------------------------------------------------------
-// Name: PHY_DotationType::Initialize
+// Name: PHY_DotationCategory::PHY_DotationCategory
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
 PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, xml::xistream& xis )
@@ -52,20 +51,16 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     std::string strNature;
     xis >> xml::attribute( "id", nMosID_ )
         >> xml::attribute( "nature", strNature );
-
     pNature_ = PHY_DotationNature::Find( strNature );
     if( !pNature_ )
         xis.error( "Unknown dotation nature" );
-
     InitializePackagingData   ( xis );
     InitializeAttritions      ( xis );
     InitializeUrbanAttritions ( xis );
     InitializeIndirectFireData( xis );
     InitializeLogisticType    ( xis );
-
     InitializeIllumination    ( xis );
     InitializeGuidance        ( xis );
-
     if( !attritions_.empty() || pIndirectFireData_ )
     {
         std::string strTmp; // $$$$ Check validity
@@ -82,7 +77,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
 }
 
 //-----------------------------------------------------------------------------
-// Name: PHY_DotationType::Initialize
+// Name: PHY_DotationCategory::~PHY_DotationCategory
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
 PHY_DotationCategory::~PHY_DotationCategory()
@@ -158,7 +153,6 @@ void PHY_DotationCategory::ReadAttrition( xml::xistream& xis )
 void PHY_DotationCategory::InitializeUrbanAttritions( xml::xistream& xis )
 {
     xis >> xml::list( "urban-modifiers", *this, &PHY_DotationCategory::ListUrbanAttrition );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -183,14 +177,14 @@ void PHY_DotationCategory::ReadUrbanAttritionModifier( xml::xistream& xis )
     urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( materialType );
     if( rFactor < 0 || rFactor > 1 )
         xis.error( "urbanBlock-modifier: value not in [0..1]" );
-    if( !material || static_cast< int >( urbanAttritionFactors_.size() ) <  material->GetId() )
+    if( !material || static_cast< int >( urbanAttritionFactors_.size() ) < material->GetId() )
         throw std::runtime_error( "error in loading material type" );
     urbanAttritionFactors_[ material->GetId() ] = rFactor;
 
     CIT_UrbanMaterialAttritionMap it = urbanBestValue_.find( material->GetId() );
     if( it == urbanBestValue_.end() )
-        urbanBestValue_[material->GetId()] = 0.;
-    urbanBestValue_[material->GetId()] = std::max( urbanBestValue_[material->GetId()] , rFactor );
+        urbanBestValue_[ material->GetId() ] = 0.;
+    urbanBestValue_[ material->GetId() ] = std::max( urbanBestValue_[ material->GetId() ], rFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,14 +203,9 @@ void PHY_DotationCategory::InitializeIndirectFireData( xml::xistream& xis )
 void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis )
 {
     pIndirectFireData_ = 0;
-    std::string strType;
-
-    xis >> xml::attribute( "type", strType );
-
-    const PHY_IndirectFireDotationClass* pType = PHY_IndirectFireDotationClass::Find( strType );
+    const PHY_IndirectFireDotationClass* pType = PHY_IndirectFireDotationClass::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         xis.error( "Unknown indirect fire data type" );
-
     pIndirectFireData_ = &pType->InstanciateDotationCategory( *this, xis );
 }
 
@@ -228,7 +217,6 @@ void PHY_DotationCategory::InitializeLogisticType( xml::xistream& xis )
 {
     pLogisticType_ = &type_.GetDefaultLogisticType();
     bool dTranche = false;
-
     xis >> xml::optional >> xml::attribute( "d-type", dTranche );
     if( dTranche )
         pLogisticType_ = &PHY_DotationLogisticType::uniteFeuTD_;
@@ -498,7 +486,7 @@ float PHY_DotationCategory::GetIlluminatingRange( ) const
 // -----------------------------------------------------------------------------
 double PHY_DotationCategory::GetAttrition( unsigned materialId ) const
 {
-    if (materialId < urbanAttritionFactors_.size() )
+    if( materialId < urbanAttritionFactors_.size() )
         return urbanAttritionFactors_[ materialId ];
     else
         return 0.;

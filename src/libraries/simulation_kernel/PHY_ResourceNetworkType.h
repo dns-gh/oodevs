@@ -48,6 +48,7 @@ public:
     //@{
     const std::string& GetName() const;
     unsigned int GetId() const;
+    const PHY_DotationCategory& GetDotationCategory() const;
     //@}
 
 private:

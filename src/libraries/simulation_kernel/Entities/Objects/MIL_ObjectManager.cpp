@@ -273,9 +273,16 @@ void MIL_ObjectManager::UpdateCapacity( const std::string& capacity, xml::xistre
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 {
-    MIL_Object_ABC* urbanObject = Find( ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) ) );
-    if( urbanObject )
-        xis >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *urbanObject );
+    try
+    {
+        MIL_Object_ABC* urbanObject = Find( ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) ) );
+        if( urbanObject )
+            xis >> xml::list( *this, &MIL_ObjectManager::UpdateCapacity, *urbanObject );
+    }
+    catch( std::exception& )
+    {
+        // Avoid crash if id in urban state is not coherent with urban.xml
+    }
 }
 
 // -----------------------------------------------------------------------------

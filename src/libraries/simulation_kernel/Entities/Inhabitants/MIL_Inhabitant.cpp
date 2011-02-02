@@ -31,18 +31,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Inhabitant )
 namespace
 {
     MIL_IDManager idManager_;
-    template< typename R >
-    void SaveRole( const MIL_Inhabitant& population, MIL_CheckPointOutArchive& file )
-    {
-        const R* const role = &population.GetRole< R >();
-        file << role;
-    }
 }
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_Inhabitant* population, const unsigned int /*version*/ )
 {
-    unsigned int nTypeID = population->GetType().GetID();
+    unsigned int nTypeID = population->type_.GetID();
     archive << nTypeID;
 }
 
@@ -53,7 +47,7 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
     archive >> nTypeID;
     const MIL_InhabitantType* pType = MIL_InhabitantType::Find( nTypeID );
     if( pType )
-        ::new( population )MIL_Inhabitant( *pType);
+        ::new( population )MIL_Inhabitant( *pType );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,15 +56,15 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army )
     : MIL_Entity_ABC( xis )
-    , pType_             ( &type )
-    , nID_               ( xis.attribute< unsigned int >( "id" ) )
-    , pArmy_             ( &army )
-    , nNbrHealthyHumans_ ( 0 )
-    , nNbrDeadHumans_    ( 0 )
-    , nNbrWoundedHumans_ ( 0 )
-    , healthStateChanged_( false )
-    , affinitiesChanged_          ( false )
-    , alerted_( false )
+    , type_                  ( type )
+    , nID_                   ( xis.attribute< unsigned int >( "id" ) )
+    , pArmy_                 ( &army )
+    , nNbrHealthyHumans_     ( 0 )
+    , nNbrDeadHumans_        ( 0 )
+    , nNbrWoundedHumans_     ( 0 )
+    , healthStateChanged_    ( false )
+    , affinitiesChanged_     ( false )
+    , alerted_               ( false )
     , alertedStateHasChanged_( false )
 {
     float totalArea = 0.f;
@@ -94,7 +88,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     pLivingArea_.reset( new MIL_LivingArea( xis, population ) );
     pLivingArea_->Register( *this );
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
-    pType_->InitializeSchedule( *pSchedule_ );
+    type_.InitializeSchedule( *pSchedule_ );
     pSatisfactions_.reset( new MIL_InhabitantSatisfactions( xis ) );
     pArmy_->RegisterInhabitant( *this );
     pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
@@ -110,17 +104,17 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     : MIL_Entity_ABC( type.GetName() )
-    , pType_                      ( &type )
-    , nID_                        ( 0 )
-    , pArmy_                      ( 0 )
-    , pLivingArea_                ( 0 )
-    , pSchedule_                  ( 0 )
-    , nNbrHealthyHumans_          ( 0 )
-    , nNbrDeadHumans_             ( 0 )
-    , nNbrWoundedHumans_          ( 0 )
-    , healthStateChanged_         ( false )
-    , affinitiesChanged_          ( false )
-    , alerted_( false )
+    , type_                  ( type )
+    , nID_                   ( 0 )
+    , pArmy_                 ( 0 )
+    , pLivingArea_           ( 0 )
+    , pSchedule_             ( 0 )
+    , nNbrHealthyHumans_     ( 0 )
+    , nNbrDeadHumans_        ( 0 )
+    , nNbrWoundedHumans_     ( 0 )
+    , healthStateChanged_    ( false )
+    , affinitiesChanged_     ( false )
+    , alerted_               ( false )
     , alertedStateHasChanged_( false )
 {
     // NOTHING
@@ -152,6 +146,7 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> nNbrHealthyHumans_
          >> nNbrDeadHumans_
          >> nNbrWoundedHumans_
+         >> alerted_
          >> pSatisfactions
          >> pLivingArea;
     pLivingArea_.reset( pLivingArea );
@@ -180,7 +175,7 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
         }
     }
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
-    pType_->InitializeSchedule( *pSchedule_ );
+    type_.InitializeSchedule( *pSchedule_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -198,6 +193,7 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << nNbrHealthyHumans_
          << nNbrDeadHumans_
          << nNbrWoundedHumans_
+         << alerted_
          << pSatisfactions
          << pLivingArea;
     unsigned int size;
@@ -219,12 +215,11 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
 {
-    assert( pType_ );
     assert( pArmy_ );
     xos << xml::start( "inhabitant" );
     MIL_Entity_ABC::WriteODB ( xos ) ;
     xos << xml::attribute( "id", nID_ )
-        << xml::attribute( "type", pType_->GetName() )
+        << xml::attribute( "type", type_.GetName() )
         << xml::start( "composition" )
             << xml::attribute( "healthy", nNbrHealthyHumans_ )
             << xml::attribute( "wounded", nNbrWoundedHumans_ )
@@ -270,7 +265,7 @@ void MIL_Inhabitant::SendCreation() const
 {
     client::PopulationCreation msg;
     msg().mutable_id()->set_id( nID_ );
-    msg().mutable_type()->set_id( pType_->GetID() );
+    msg().mutable_type()->set_id( type_.GetID() );
     msg().mutable_party()->set_id( pArmy_->GetID() );
     msg().set_text( text_ );
     msg().set_name( GetName() );
@@ -313,7 +308,10 @@ void MIL_Inhabitant::SendFullState() const
 void MIL_Inhabitant::UpdateState()
 {
     pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
-    pSatisfactions_->IncreaseSafety( pType_->GetSafetyGainPerHour() );
+    pSatisfactions_->IncreaseSafety( type_.GetSafetyGainPerHour() );
+    const MIL_InhabitantType::T_ConsumptionsMap& consumptions = type_.GetConsumptions();
+    for( MIL_InhabitantType::CIT_ConsumptionsMap it = consumptions.begin(); it != consumptions.end(); ++it )
+        pSatisfactions_->SetResourceSatisfaction( *it->first, pLivingArea_->Consume( *it->first, it->second ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -331,18 +329,14 @@ void MIL_Inhabitant::UpdateNetwork()
         msg().set_dead( nNbrDeadHumans_ );
     }
     if( affinitiesChanged_ )
-    {
         for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         {
             sword::PartyAdhesion& adhesion = *msg().add_adhesions();
             adhesion.mutable_party()->set_id( it->first );
             adhesion.set_value( it->second );
         }
-    }
     if( alertedStateHasChanged_ )
-    {
         msg().set_alerted( alerted_ );
-    }
     pLivingArea_->UpdateNetwork( msg );
     pSatisfactions_->UpdateNetwork( msg );
     if( healthStateChanged_ || affinitiesChanged_ || alertedStateHasChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() )
@@ -443,16 +437,6 @@ unsigned int MIL_Inhabitant::GetID() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Inhabitant::GetType
-// Created: SLG 2010-11-29
-// -----------------------------------------------------------------------------
-const MIL_InhabitantType& MIL_Inhabitant::GetType() const
-{
-    assert( pType_ );
-    return *pType_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant::GetArmy
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
@@ -482,7 +466,7 @@ void MIL_Inhabitant::NotifyStructuralStateChanged( unsigned int /*structuralStat
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::NotifyFired()
 {
-    pSatisfactions_->DecreaseSafety( pType_->GetSafetyLossOnFire() );
+    pSatisfactions_->DecreaseSafety( type_.GetSafetyLossOnFire() );
 }
 
 // -----------------------------------------------------------------------------

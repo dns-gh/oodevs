@@ -14,6 +14,7 @@
 #include <boost/bind.hpp>
 #include <urban/ResourceNetworkAttribute.h>
 #include <xeumeuleu/xml.hpp>
+
 using namespace resource;
 
 // -----------------------------------------------------------------------------
@@ -172,6 +173,17 @@ void NodeProperties::SetModifier( unsigned int modifier )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::AddConsumption
+// Created: JSR 2011-02-01
+// -----------------------------------------------------------------------------
+void NodeProperties::AddConsumption( unsigned long resourceId, unsigned int consumption )
+{
+    NodeElement* element = Find( resourceId );
+    if( element )
+        element->AddConsumption( consumption );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::NeedUpdate
 // Created: JSR 2010-11-30
 // -----------------------------------------------------------------------------
@@ -192,7 +204,6 @@ bool NodeProperties::NeedUpdate() const
 // -----------------------------------------------------------------------------
 void NodeProperties::Serialize( sword::UrbanAttributes_Infrastructures& msg ) const
 {
-    // TODO sérialiser isFunctional_?
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
         it->second->Serialize( *msg.add_resource_network() );
     needUpdate_ = false;
@@ -247,4 +258,16 @@ void NodeProperties::ReadNode( xml::xistream& xis )
 float NodeProperties::GetFunctionalState() const 
 {
     return functionalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::GetConsumptionState
+// Created: JSR 2011-02-02
+// -----------------------------------------------------------------------------
+float NodeProperties::GetConsumptionState( unsigned long resourceId ) const
+{
+    NodeElement* element = Find( resourceId );
+    if( element )
+        return element->GetConsumptionState();
+    return 0;
 }

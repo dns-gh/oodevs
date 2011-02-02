@@ -76,6 +76,8 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             lodgingSatisfaction_ = msg.satisfaction().lodging();
         for( int i = 0; i < msg.satisfaction().motivations_size(); ++i )
             motivationSatisfactions_[ msg.satisfaction().motivations( i ).motivation() ] = msg.satisfaction().motivations( i ).percentage();
+        for( int i = 0; i < msg.satisfaction().resources_size(); ++i )
+            resourcesSatisfactions_[ msg.satisfaction().resources( i ).resource().id() ] = msg.satisfaction().resources( i ).value();
     }
     for( int i = 0; i < msg.occupations_size(); ++i )
     {
@@ -133,6 +135,12 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         sword::PopulationUpdate_MotivationSatisfaction* motivation = msg().mutable_satisfaction()->add_motivations();
         motivation->set_motivation( it->first );
         motivation->set_percentage( it->second );
+    }
+    for( CIT_ResourcesSatisfactions it = resourcesSatisfactions_.begin(); it != resourcesSatisfactions_.end(); ++it )
+    {
+        sword::PopulationUpdate_ResourceSatisfaction* resource = msg().mutable_satisfaction()->add_resources();
+        resource->mutable_resource()->set_id( it->first );
+        resource->set_value( it->second );
     }
     BOOST_FOREACH( const T_UrbanBlocks::value_type& urbanBlock, urbanBlocks_ )
     {

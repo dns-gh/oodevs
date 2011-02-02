@@ -81,11 +81,14 @@ public:
     virtual void NotifyStructuralStateChanged( unsigned int structuralState, const MIL_Object_ABC& object );
     virtual void NotifyFired() {}
 
+    void AddConsumption( unsigned long resourceId, unsigned int consumption );
+    float GetConsumptionState( unsigned long resourceId ) const;
+    float GetFunctionalState() const;
+
     void RegisterNode( unsigned int id );
     void SendState( sword::UrbanAttributes& message ) const;
     void SendState( sword::ObjectAttributes& asn ) const;
     void SendFullState( sword::UrbanAttributes& message ) const;
-    float GetFunctionalState() const;
     //@}
 
 private:
@@ -98,7 +101,7 @@ private:
 private:
     //! @name Member data
     //@{
-    resource::NodeProperties* nodeProperties_;
+    std::auto_ptr< resource::NodeProperties> nodeProperties_;
     //@}
 };
 

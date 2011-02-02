@@ -259,7 +259,7 @@ void MIL_Object::ApplyStructuralState( unsigned int structuralState ) const
 void MIL_Object::ApplyIndirectFire( const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation )
 {
     MIL_Object_ABC::ApplyIndirectFire( attritionSurface, dotation );
-    if( attritionSurface.IsIntersecting( GetLocalisation() ) )
+    if( GetLocalisation().IsInside( attritionSurface.ComputeBarycenter() ) )
         std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(), boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyFired, _1 ) );
 }
 

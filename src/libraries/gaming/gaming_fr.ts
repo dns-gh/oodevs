@@ -556,6 +556,18 @@
         <source>Affinity %1:</source>
         <translation>Adhésion %1:</translation>
     </message>
+    <message>
+        <source>State/Alerted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alerted:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfaction/Resource/</source>
+        <translation>Satisfaction/Ressource/</translation>
+    </message>
 </context>
 <context>
     <name>Intelligence</name>

@@ -30,10 +30,12 @@ NodeElement::NodeElement()
     , immediateStock_     ( 0 )
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( 0 )
+    , externalConsumption_( 0 )
     , consumptionCritical_( false )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
     , functionalState_    ( 0 )
+    , consumptionState_   ( 0 )
 {
     // NOTHING
 }
@@ -53,10 +55,12 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
     , immediateStock_     ( 0 )
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( 0 )
+    , externalConsumption_( 0 )
     , consumptionCritical_( false )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
     , functionalState_    ( 0 )
+    , consumptionState_   ( 0 )
 {
     Update( xis );
 }
@@ -76,10 +80,12 @@ NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& n
     , immediateStock_     ( 0 )
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( node.consumption_ )
+    , externalConsumption_( 0 )
     , consumptionCritical_( node.critical_ )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
     , functionalState_    ( 0 )
+    , consumptionState_   ( 0 )
 {
     for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator it = node.links_.begin(); it != node.links_.end(); ++it )
         links_.push_back( new ResourceLink( it->id_, ResourceLink::eTargetKindUrban, it->capacity_ ) );
@@ -101,10 +107,12 @@ NodeElement::NodeElement( const NodeElement& from )
     , immediateStock_     ( from.immediateStock_ )
     , receivedQuantity_   ( from.receivedQuantity_ )
     , consumptionAmount_  ( from.consumptionAmount_ )
+    , externalConsumption_( from.externalConsumption_ )
     , consumptionCritical_( from.consumptionCritical_ )
     , modifier_           ( from.modifier_ )
     , needUpdate_         ( true )
     , functionalState_    ( 0 )
+    , consumptionState_   ( 0 )
 {
     for( CIT_ResourceLinks it = from.links_.begin(); it != from.links_.end(); ++it )
         links_.push_back( new ResourceLink( **it ) );
@@ -171,24 +179,48 @@ void NodeElement::UpdateImmediateStock( float functionalState )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::AddConsumption
+// Created: JSR 2011-02-01
+// -----------------------------------------------------------------------------
+void NodeElement::AddConsumption( unsigned int consumption )
+{
+    externalConsumption_ += consumption;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::Consume
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
 void NodeElement::Consume( float& functionalState )
 {
-    if( !isActivated_ )
-        return;
-    unsigned int consumption = static_cast< unsigned int >( modifier_ * consumptionAmount_ );
-    if( consumption > 0 && consumption > immediateStock_ )
+    if( isActivated_ )
     {
-        immediateStock_ = 0;
-        functionalState_ = consumptionCritical_ ? 0 : static_cast< float >( immediateStock_ ) / consumption;
-        functionalState *= functionalState_;
+        unsigned int consumption = static_cast< unsigned int >( modifier_ * consumptionAmount_ );
+        if( consumption > 0 && consumption > immediateStock_ )
+        {
+            immediateStock_ = 0;
+            functionalState_ = consumptionCritical_ ? 0 : static_cast< float >( immediateStock_ ) / consumption;
+            functionalState *= functionalState_;
+        }
+        else
+        {
+            functionalState_ = 1;
+            immediateStock_ -= consumption;
+        }
     }
-    else
+    if( externalConsumption_ > 0 )
     {
-        functionalState_ = 1;
-        immediateStock_ -= consumption;
+        if( immediateStock_ > externalConsumption_ )
+        {
+            consumptionState_ = 1.f;
+            immediateStock_ -= externalConsumption_;
+        }
+        else
+        {
+            consumptionState_ = static_cast< float >( immediateStock_ ) / externalConsumption_;
+            immediateStock_ = 0;
+        }
+        externalConsumption_ = 0;
     }
 }
 
@@ -387,4 +419,13 @@ void NodeElement::ReadLink( xml::xistream& xis )
 float NodeElement::GetFunctionalState() const
 {
     return functionalState_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement::GetConsumptionState
+// Created: JSR 2011-02-02
+// -----------------------------------------------------------------------------
+float NodeElement::GetConsumptionState() const
+{
+    return consumptionState_;
 }

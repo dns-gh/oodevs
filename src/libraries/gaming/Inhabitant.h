@@ -26,9 +26,10 @@ namespace gui
 namespace kernel
 {
     class Controller;
-    class InhabitantType;
+    class DotationType;
     class Displayer_ABC;
     class GlTools_ABC;
+    class InhabitantType;
 }
 
 class UrbanModel;
@@ -46,8 +47,9 @@ class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             Inhabitant( const sword::PopulationCreation& message, kernel::Controllers& controllers,
-                         const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver, const UrbanModel& model );
+             Inhabitant( const sword::PopulationCreation& message, kernel::Controllers& controllers, const UrbanModel& model, 
+                         const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver,
+                         const tools::Resolver_ABC< kernel::DotationType >& dotationResolver );
     virtual ~Inhabitant();
     //@}
 
@@ -86,8 +88,15 @@ private:
     //@{
     typedef std::map< unsigned int, gui::TerrainObjectProxy* > T_UrbanObjectVector;
     typedef T_UrbanObjectVector::const_iterator              CIT_UrbanObjectVector;
+
     typedef std::map< std::string, std::string > T_Extensions;
-    typedef std::map< std::string, unsigned int > T_MotivationSatisfactions;
+
+    typedef std::map< std::string, unsigned int >       T_MotivationSatisfactions;
+    typedef T_MotivationSatisfactions::const_iterator CIT_MotivationSatisfactions;
+
+    typedef std::map< const kernel::DotationType*, unsigned int > T_ResourceSatisfactions;
+    typedef T_ResourceSatisfactions::const_iterator             CIT_ResourceSatisfactions;
+
     typedef std::map< unsigned int, unsigned int > T_Humans;
     //@}
 
@@ -96,11 +105,13 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::InhabitantType& type_;
+    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
     std::set< kernel::Displayer_ABC* > displayers_;
     unsigned int healthSatisfaction_;
     unsigned int safetySatisfaction_;
     unsigned int lodgingSatisfaction_;
     T_MotivationSatisfactions motivationSatisfactions_;
+    T_ResourceSatisfactions resourceSatisfactions_;
     T_Humans humans_;
     T_UrbanObjectVector livingUrbanObject_;
     T_Extensions extensions_;

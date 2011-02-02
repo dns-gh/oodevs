@@ -56,8 +56,9 @@ ResourceNetworkCapacity::ResourceNetworkCapacity( const urban::ResourceNetworkAt
 // Created: JSR 2010-08-12
 // -----------------------------------------------------------------------------
 ResourceNetworkCapacity::ResourceNetworkCapacity( const ResourceNetworkCapacity& from )
+    : nodeProperties_ ( new NodeProperties( *from.nodeProperties_ ) )
 {
-    nodeProperties_ = new NodeProperties( *from.nodeProperties_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,8 +76,6 @@ ResourceNetworkCapacity::~ResourceNetworkCapacity()
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& /*object*/ )
 {
-    if( nodeProperties_ == 0 )
-        throw std::exception( "RegisterResource : Node Properties not instanciated" );
     nodeProperties_->Update( xis );
 }
 
@@ -95,8 +94,10 @@ void ResourceNetworkCapacity::Update( const google::protobuf::RepeatedPtrField< 
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    NodeProperties* nodeProperties;
     file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         >> nodeProperties_;
+         >> nodeProperties;
+    nodeProperties_.reset( nodeProperties );
     nodeProperties_->SetTools( MIL_AgentServer::GetWorkspace().GetResourceTools() );
 }
 
@@ -106,8 +107,9 @@ void ResourceNetworkCapacity::load( MIL_CheckPointInArchive& file, const unsigne
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    NodeProperties* nodeProperties = nodeProperties_.get();
     file << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         << nodeProperties_;
+         << nodeProperties;
 }
 
 // -----------------------------------------------------------------------------
@@ -145,8 +147,6 @@ void ResourceNetworkCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::RegisterNode( unsigned int id )
 {
-    if( nodeProperties_ == 0 )
-        throw std::exception( "RegisterResource : Node Properties not instanciated" );
     MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().RegisterNode( *nodeProperties_, id );
 }
 
@@ -156,8 +156,6 @@ void ResourceNetworkCapacity::RegisterNode( unsigned int id )
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::SendState( sword::UrbanAttributes& message ) const
 {
-    if( nodeProperties_ == 0 )
-        throw std::exception( "RegisterResource : Node Properties not instanciated" );
     if( nodeProperties_->NeedUpdate() )
         nodeProperties_->Serialize( *message.mutable_infrastructures() );
 }
@@ -168,8 +166,6 @@ void ResourceNetworkCapacity::SendState( sword::UrbanAttributes& message ) const
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::SendState( sword::ObjectAttributes& asn ) const
 {
-    if( nodeProperties_ == 0 )
-        throw std::exception( "RegisterResource : Node Properties not instanciated" );
     if( nodeProperties_->NeedUpdate() )
         nodeProperties_->Serialize( *asn.mutable_resource_networks() );
 }
@@ -180,8 +176,6 @@ void ResourceNetworkCapacity::SendState( sword::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::SendFullState( sword::UrbanAttributes& message ) const
 {
-    if( nodeProperties_ == 0 )
-        throw std::exception( "RegisterResource : Node Properties not instanciated" );
     nodeProperties_->Serialize( *message.mutable_infrastructures() );
 }
 
@@ -195,12 +189,28 @@ void ResourceNetworkCapacity::NotifyStructuralStateChanged( unsigned int structu
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::AddConsumption
+// Created: JSR 2011-02-01
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::AddConsumption( unsigned long resourceId, unsigned int consumption )
+{
+    nodeProperties_->AddConsumption( resourceId, consumption );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::GetConsumptionState
+// Created: JSR 2011-02-02
+// -----------------------------------------------------------------------------
+float ResourceNetworkCapacity::GetConsumptionState( unsigned long resourceId ) const
+{
+    return nodeProperties_->GetConsumptionState( resourceId );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::GetFunctionalState
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
 float ResourceNetworkCapacity::GetFunctionalState() const
 {
-    if( nodeProperties_ )
-        return nodeProperties_->GetFunctionalState();
-    return 1.f;
+    return nodeProperties_->GetFunctionalState();
 }

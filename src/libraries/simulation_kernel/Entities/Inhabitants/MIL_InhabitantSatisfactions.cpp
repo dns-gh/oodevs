@@ -10,6 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_InhabitantSatisfactions.h"
 #include "MIL_AgentServer.h"
+#include "PHY_ResourceNetworkType.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_InhabitantSatisfactions )
@@ -20,11 +22,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_InhabitantSatisfactions )
 // -----------------------------------------------------------------------------
 MIL_InhabitantSatisfactions::MIL_InhabitantSatisfactions( xml::xistream& xis )
     : health_           ( 0 )
-    , healthChanged_    ( false )
     , safety_           ( 1.f )
-    , lastSafety_       ( 1.f )
     , lodging_          ( 1.f )
+    , healthChanged_    ( false )
+    , lastSafety_       ( 1.f )
     , lodgingChanged_   ( false )
+    , resourceChanged_  ( false )
     , motivationChanged_( false )
 {
     xis >> xml::start( "health-need" )
@@ -39,11 +42,12 @@ MIL_InhabitantSatisfactions::MIL_InhabitantSatisfactions( xml::xistream& xis )
 MIL_InhabitantSatisfactions::MIL_InhabitantSatisfactions()
     : healthNeed_       ( 0 )
     , health_           ( 0 )
-    , healthChanged_    ( false )
     , safety_           ( 0 )
+    , lodging_          ( 0 )
+    , healthChanged_    ( false )
     , lastSafety_       ( 0 )
-    , lodging_          ( 1.f )
     , lodgingChanged_   ( false )
+    , resourceChanged_  ( false )
     , motivationChanged_( false )
 {
     // NOTHING
@@ -78,6 +82,15 @@ void MIL_InhabitantSatisfactions::load( MIL_CheckPointInArchive& file, const uns
              >> satisfaction;
         motivations_[ motivation ] = satisfaction;
     }
+    file >> size;
+    unsigned int id;
+    for( unsigned int i = 0; i < size; ++i )
+    {
+        file >> id
+             >> satisfaction;
+        if( const PHY_ResourceNetworkType* resource = PHY_ResourceNetworkType::Find( id ) )
+            resources_[ resource ] = satisfaction;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -95,6 +108,14 @@ void MIL_InhabitantSatisfactions::save( MIL_CheckPointOutArchive& file, const un
     for( CIT_Motivations it = motivations_.begin(); it != motivations_.end(); ++it )
         file << it->first
              << it->second;
+    size = resources_.size();
+    file << size;
+    for( CIT_Resources it = resources_.begin(); it != resources_.end(); ++it )
+    {
+        unsigned int id = it->first->GetId();
+        file << id
+             << it->second;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -117,11 +138,18 @@ void MIL_InhabitantSatisfactions::SendFullState( client::PopulationUpdate& msg )
     msg().mutable_satisfaction()->set_health( health_ );
     msg().mutable_satisfaction()->set_safety( safety_ );
     msg().mutable_satisfaction()->set_lodging( lodging_ );
+    msg().mutable_satisfaction()->set_lodging( lodging_ );
     for( CIT_Motivations it = motivations_.begin(); it != motivations_.end(); ++it )
     {
         sword::PopulationUpdate_MotivationSatisfaction* motivation = msg().mutable_satisfaction()->add_motivations();
         motivation->set_motivation( it->first );
         motivation->set_percentage( it->second );
+    }
+    for( CIT_Resources it = resources_.begin(); it != resources_.end(); ++it )
+    {
+        sword::PopulationUpdate_ResourceSatisfaction* resource = msg().mutable_satisfaction()->add_resources();
+        resource->mutable_resource()->set_id( it->first->GetDotationCategory().GetMosID() );
+        resource->set_value( it->second );
     }
 }
 
@@ -155,6 +183,16 @@ void MIL_InhabitantSatisfactions::UpdateNetwork( client::PopulationUpdate& msg )
             motivation->set_percentage( it->second );
         }
         motivationChanged_ = false;
+    }
+    if( resourceChanged_ )
+    {
+        for( CIT_Resources it = resources_.begin(); it != resources_.end(); ++it )
+        {
+            sword::PopulationUpdate_ResourceSatisfaction* resource = msg().mutable_satisfaction()->add_resources();
+            resource->mutable_resource()->set_id( it->first->GetDotationCategory().GetMosID() );
+            resource->set_value( it->second );
+        }
+        resourceChanged_ = false;
     }
 }
 
@@ -203,6 +241,19 @@ void MIL_InhabitantSatisfactions::ComputeMotivationSatisfactions( const std::map
              motivationChanged_ = true;
          motivations_[ it->first ] = satisfaction;
     }    
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_InhabitantSatisfactions::SetResourceSatisfaction
+// Created: JSR 2011-02-02
+// -----------------------------------------------------------------------------
+void MIL_InhabitantSatisfactions::SetResourceSatisfaction( const PHY_ResourceNetworkType& resource, float satisfaction )
+{
+    if( resources_.find( &resource ) == resources_.end() || resources_[ &resource ] != satisfaction )
+    {
+        resources_[ &resource ] = satisfaction;
+        resourceChanged_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------

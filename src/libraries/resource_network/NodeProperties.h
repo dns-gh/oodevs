@@ -71,8 +71,10 @@ public:
     void Finalize();
     void Push( int quantity, unsigned long resourceId );
     void SetModifier( unsigned int modifier );
+    void AddConsumption( unsigned long resourceId, unsigned int consumption );
     bool NeedUpdate() const;
     float GetFunctionalState() const;
+    float GetConsumptionState( unsigned long resourceId ) const;
     //@}
 
     //! @name Network

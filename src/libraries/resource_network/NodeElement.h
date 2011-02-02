@@ -57,12 +57,14 @@ public:
     void Update( xml::xistream& xis );
     void Finalize( const ResourceTools_ABC& tools );
     void UpdateImmediateStock( float functionalState );
+    void AddConsumption( unsigned int consumption );
     void Consume( float& functionalState );
     void DistributeResource( float functionalState );
     void Push( int quantity );
     void SetModifier( unsigned int modifier );
     bool NeedUpdate() const;
     float GetFunctionalState() const;
+    float GetConsumptionState() const;
     //@}
 
     //! @name Network
@@ -115,10 +117,12 @@ private:
     unsigned int immediateStock_;
     unsigned int receivedQuantity_;
     unsigned int consumptionAmount_;
+    unsigned int externalConsumption_;
     bool consumptionCritical_;
     double modifier_;
     mutable bool needUpdate_;
     float functionalState_;
+    float consumptionState_;
     //@}
 };
 

@@ -10,19 +10,18 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_LivingArea.h"
 #include "MIL_AgentServer.h"
+#include "PHY_ResourceNetworkType.h"
+#include "UrbanType.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Objects/MedicalCapacity.h"
+#include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "UrbanType.h"
 #include "protocol/ClientSenders.h"
-#include <urban/Model.h>
 #include <urban/StaticModel.h>
 #include <urban/MotivationType.h>
 #include <urban/MotivationsVisitor_ABC.h>
-#include <urban/PhysicalAttribute.h>
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -76,6 +75,7 @@ void MIL_LivingArea::LoadAccommodations()
         accommodations_[ type.GetName() ] = type.GetCapacity();
     }
 }
+
 namespace
 {
     float GetStructuralState( const UrbanObjectWrapper& object )
@@ -252,6 +252,28 @@ void MIL_LivingArea::GetUsagesOccupation( std::map< std::string, unsigned int >&
     BOOST_FOREACH( const T_Block& block, blocks_ )
         for( CIT_Accommodations it = accommodations_.begin(); it != accommodations_.end(); ++it )
             occupations[ it->first ] += GetOccupation( block, it->first );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::Consume
+// Created: JSR 2011-02-01
+// -----------------------------------------------------------------------------
+float MIL_LivingArea::Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption )
+{
+    if( population_ == 0 )
+        return 1.f;
+    double personalConsumption = static_cast< double >( consumption ) / population_;
+    float satisfaction = 0;
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+    {
+        if( block.second > 0 )
+            if( ResourceNetworkCapacity* capacity = block.first->Retrieve< ResourceNetworkCapacity >() )
+            {
+                satisfaction += block.second * capacity->GetConsumptionState( resource.GetId() );
+                capacity->AddConsumption( resource.GetId(), static_cast< unsigned int >( block.second * personalConsumption + 0.5 ) );
+            }
+    }
+    return satisfaction / population_;
 }
 
 // -----------------------------------------------------------------------------

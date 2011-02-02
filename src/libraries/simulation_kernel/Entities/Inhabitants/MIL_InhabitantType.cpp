@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_InhabitantType.h"
 #include "MIL_Inhabitant.h"
+#include "PHY_ResourceNetworkType.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MIL_Schedule_ABC.h"
@@ -79,7 +80,22 @@ MIL_InhabitantType::MIL_InhabitantType( const std::string& strName, xml::xistrea
         >> xml::end
         >> xml::start( "schedule" );
     pXisSchedule_.reset( new xml::xibufferstream( xis ) );
-    xis >> xml::end;
+    xis >> xml::end
+        >> xml::start( "consumption" )
+            >> xml::list( "resource", *this, &MIL_InhabitantType::ReadConsumption )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_InhabitantType::ReadConsumption
+// Created: JSR 2011-01-31
+// -----------------------------------------------------------------------------
+void MIL_InhabitantType::ReadConsumption( xml::xistream& xis )
+{
+    const PHY_ResourceNetworkType* resource = PHY_ResourceNetworkType::Find( xis.attribute< std::string >( "type" ) );
+    if( resource == 0)
+        xis.error( "Unknown resource network type" );
+    consumptions_[ resource ] = xis.attribute< unsigned int >( "need" );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,6 +151,15 @@ float MIL_InhabitantType::GetSafetyGainPerHour() const
 float MIL_InhabitantType::GetSafetyLossOnFire() const
 {
     return safetyLossOnFire_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_InhabitantType::GetConsumptions
+// Created: JSR 2011-01-31
+// -----------------------------------------------------------------------------
+const MIL_InhabitantType::T_ConsumptionsMap& MIL_InhabitantType::GetConsumptions() const
+{
+    return consumptions_;
 }
 
 // -----------------------------------------------------------------------------

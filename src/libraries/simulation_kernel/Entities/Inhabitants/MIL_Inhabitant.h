@@ -52,7 +52,6 @@ public:
     //! @name Accessors
     //@{
     unsigned int GetID() const;
-    const MIL_InhabitantType& GetType() const;
     virtual MIL_Army_ABC& GetArmy() const;
     //@}
 
@@ -117,7 +116,7 @@ private:
 private:
     //! @name Member Data
     //@{
-    const MIL_InhabitantType* pType_;
+    const MIL_InhabitantType& type_;
     const unsigned int nID_;
     MIL_Army_ABC* pArmy_;
     std::auto_ptr< MIL_LivingArea > pLivingArea_;

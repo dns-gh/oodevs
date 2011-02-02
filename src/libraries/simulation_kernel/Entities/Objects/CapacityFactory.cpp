@@ -69,7 +69,10 @@ namespace
     {
         static void Update( MIL_Object_ABC& object, xml::xistream& xis )
         {
-            object.Get< T >().Update( xis, object ); // should exist
+            if( T* capacity = object.Retrieve< T >() )
+                capacity->Update( xis, object );
+            else
+                object.AddCapacity( new T( xis ) );
         }
     };
 
@@ -248,7 +251,6 @@ void CapacityFactory::RegisterFinalizeCreate( FinalizePrototype_CallBack finaliz
 {
     finalizePrototypeCallbacks_.push_back( finalizePrototypeCallback );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: CapacityFactory::Update

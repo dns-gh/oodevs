@@ -104,6 +104,15 @@ unsigned int PHY_ResourceNetworkType::GetId() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ResourceNetworkType::GetDotationCategory
+// Created: JSR 2011-02-02
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory& PHY_ResourceNetworkType::GetDotationCategory() const
+{
+    return dotationCategory_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ResourceNetworkType constructor
 // Created: JSR 2010-09-10
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 #include "UrbanModel.h"
 #include "InhabitantAffinities.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/DotationType.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -28,10 +29,12 @@ using namespace kernel;
 // Name: Inhabitant constructor
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const tools::Resolver_ABC< InhabitantType >& typeResolver, const UrbanModel& model )
+Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const UrbanModel& model, const tools::Resolver_ABC< InhabitantType >& typeResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver )
     : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
-    , controllers_( controllers )
-    , type_       ( typeResolver.Get( message.type().id() ) )
+    , controllers_     ( controllers )
+    , type_            ( typeResolver.Get( message.type().id() ) )
+    , dotationResolver_( dotationResolver )
+    , alerted_         ( false )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
@@ -116,7 +119,22 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
             if( !dictionary.HasKey( key ) )
             {
-                const T_MotivationSatisfactions::const_iterator it = motivationSatisfactions_.find( motivation.motivation() );
+                CIT_MotivationSatisfactions it = motivationSatisfactions_.find( motivation.motivation() );
+                dictionary.Register( *static_cast< const Entity_ABC* >( this ), key, it->second );
+            }
+        }
+        for( int i = 0; i < msg.satisfaction().resources_size(); ++i )
+        {
+            const sword::PopulationUpdate_ResourceSatisfaction& resource = msg.satisfaction().resources( i );
+            const kernel::DotationType* dotation = dotationResolver_.Find( resource.resource().id() );
+            if( !dotation )
+                continue;
+            resourceSatisfactions_[ dotation ] = ToInt( resource.value() );
+            const QString key = tools::translate( "Inhabitant", "Satisfaction/Resource/" ) + dotation->GetName().c_str();
+            PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+            if( !dictionary.HasKey( key ) )
+            {
+                const T_ResourceSatisfactions::const_iterator it = resourceSatisfactions_.find( dotation );
                 dictionary.Register( *static_cast< const Entity_ABC* >( this ), key, it->second );
             }
         }
@@ -237,8 +255,10 @@ void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Alerted:" ), alerted_ );
-    for( T_MotivationSatisfactions::const_iterator it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
+    for( CIT_MotivationSatisfactions it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
         displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( it->first.c_str() ), it->second );
+    for( CIT_ResourceSatisfactions it = resourceSatisfactions_.begin(); it != resourceSatisfactions_.end(); ++it )
+        displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( it->first->GetName().c_str() ), it->second );
     Get< InhabitantAffinities >().Display( &displayer );
 }
 
@@ -268,8 +288,10 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
                     .Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ )
                     .Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ )
                     .Display( tools::translate( "Inhabitant", "Alerted:" ), alerted_ );
-            for( T_MotivationSatisfactions::const_iterator satisfaction = motivationSatisfactions_.begin(); satisfaction != motivationSatisfactions_.end(); ++satisfaction )
+            for( CIT_MotivationSatisfactions satisfaction = motivationSatisfactions_.begin(); satisfaction != motivationSatisfactions_.end(); ++satisfaction )
                 ( *it )->Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( satisfaction->first.c_str() ), satisfaction->second );
+            for( CIT_ResourceSatisfactions resource = resourceSatisfactions_.begin(); resource != resourceSatisfactions_.end(); ++resource )
+                ( *it )->Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( resource->first->GetName().c_str() ), resource->second );
             Get< InhabitantAffinities >().Display( *it );
         }
         displayers_.clear();

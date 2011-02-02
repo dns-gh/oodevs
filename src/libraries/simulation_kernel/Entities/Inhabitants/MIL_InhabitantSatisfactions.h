@@ -23,6 +23,8 @@ namespace xml
     class xistream;
 }
 
+class PHY_ResourceNetworkType;
+
 // =============================================================================
 /** @class  MIL_InhabitantSatisfactions
     @brief  MIL_InhabitantSatisfactions
@@ -46,6 +48,7 @@ public:
     void ComputeHealthSatisfaction( float healthCount );
     void ComputeLodgingSatisfaction( unsigned long living, unsigned int totalOccupation );
     void ComputeMotivationSatisfactions( const std::map< std::string, unsigned int >& occupations, unsigned long living );
+    void SetResourceSatisfaction( const PHY_ResourceNetworkType& resource, float satisfaction );
     void IncreaseSafety( float gainPerHour );
     void DecreaseSafety( float lossByFire );
     //@}
@@ -63,6 +66,9 @@ private:
     //@{
     typedef std::map< std::string, float >  T_Motivations;
     typedef T_Motivations::const_iterator CIT_Motivations;
+
+    typedef std::map< const PHY_ResourceNetworkType*, float > T_Resources;
+    typedef T_Resources::const_iterator                     CIT_Resources;
     //@}
 
 private:
@@ -73,9 +79,11 @@ private:
     float safety_;
     float lodging_;
     T_Motivations motivations_;
+    T_Resources resources_;
     mutable bool healthChanged_;
     mutable float lastSafety_;
     mutable bool lodgingChanged_;
+    mutable bool resourceChanged_;
     mutable bool motivationChanged_;
     //@}
 };

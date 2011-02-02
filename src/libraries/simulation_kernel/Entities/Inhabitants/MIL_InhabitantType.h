@@ -23,6 +23,7 @@ class MIL_Army_ABC;
 class MIL_Inhabitant;
 class MIL_PopulationType;
 class MIL_Schedule_ABC;
+class PHY_ResourceNetworkType;
 
 // =============================================================================
 // @class  MIL_InhabitantType
@@ -30,6 +31,13 @@ class MIL_Schedule_ABC;
 // =============================================================================
 class MIL_InhabitantType : private boost::noncopyable
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::map< const PHY_ResourceNetworkType*, unsigned int > T_ConsumptionsMap;
+    typedef T_ConsumptionsMap::const_iterator                      CIT_ConsumptionsMap;
+    //@}
+
 public:
     //! @name Manager
     //@{
@@ -47,6 +55,7 @@ public:
     void InitializeSchedule( MIL_Schedule_ABC& schedule ) const;
     float GetSafetyGainPerHour() const;
     float GetSafetyLossOnFire() const;
+    const T_ConsumptionsMap& GetConsumptions() const;
     //@}
 
     //! @name Operations
@@ -75,6 +84,7 @@ private:
     //@{
     struct LoadingWrapper;
     static void ReadInhabitant( xml::xistream& xis );
+    void ReadConsumption( xml::xistream& xis );
     //@}
 
 private:
@@ -85,6 +95,7 @@ private:
     const MIL_PopulationType* pModel_;
     float safetyGainPerHour_;
     float safetyLossOnFire_;
+    T_ConsumptionsMap consumptions_;
     std::auto_ptr< xml::xibufferstream > pXisSchedule_;
     static T_InhabitantMap inhabitants_;
     //@}
