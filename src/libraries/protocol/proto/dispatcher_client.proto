@@ -30,7 +30,7 @@ message ServicesDescription {
 }
 
 /** @struct DispatcherToClient
-    @brief A facade for all available messages going from Dispatcher to client.
+    @brief Wraps available messages going from Dispatcher to client.
     
     This is the actual message sent over the network.
 */

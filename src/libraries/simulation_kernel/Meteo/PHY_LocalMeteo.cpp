@@ -115,11 +115,11 @@ void PHY_LocalMeteo::SendCreation() const
     att->set_lighting( pLighting_->GetAsnID() );
     sword::CoordLatLong longlat;
     MIL_Tools::ConvertCoordSimToMos( downRight_, longlat);
-    msg().mutable_bottom_right_coordinate()->set_latitude( longlat.latitude()  );
-    msg().mutable_bottom_right_coordinate()->set_longitude( longlat.longitude()  );
+    msg().mutable_bottom_right()->set_latitude( longlat.latitude()  );
+    msg().mutable_bottom_right()->set_longitude( longlat.longitude()  );
     MIL_Tools::ConvertCoordSimToMos( upLeft_, longlat);
-    msg().mutable_top_left_coordinate()->set_latitude( longlat.latitude()  );
-    msg().mutable_top_left_coordinate()->set_longitude( longlat.longitude()  );
+    msg().mutable_top_left()->set_latitude( longlat.latitude()  );
+    msg().mutable_top_left()->set_longitude( longlat.longitude()  );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 

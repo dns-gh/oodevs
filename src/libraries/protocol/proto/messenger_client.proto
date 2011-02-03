@@ -862,7 +862,7 @@ message ClientObjectDestructionRequestAck {
 }
 
 /** @struct MessengerToClient
-    @brief A facade for all messages from messenger to client.
+    @brief Wraps messages from messenger to client.
 
     This is the actual message sent over the network.
 */

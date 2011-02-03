@@ -58,7 +58,7 @@ message Indicator
 }
 
 /** @struct AarToClient
-    @brief A facade for all available messages going from AAR to client
+    @brief Wraps available messages going from AAR to client
 
     This is the actual message sent over the network.
 */

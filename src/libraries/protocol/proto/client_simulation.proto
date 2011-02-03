@@ -16,86 +16,44 @@ package sword;
  */
 
 /** @struct ControlDateTimeChange
-    @brief A date and/or time change request.
-
-    This message is sent by a client to change the current date and/or time.
-
+    @brief A date and/or time change request
     @see ControlDateTimeChangeAck
 */
 message ControlDateTimeChange {
-    /** @property date_time
-        @brief The new date and/or time.
-        @see DateTime
-    */
-    required DateTime date_time = 1;
+    required DateTime date_time = 1; //!< The new date and/or time
 }
 
 /** @struct ControlCheckPointSaveNow
-    @brief A checkpoint save request.
-
-    This message is sent by a client to trigger a checkpoint save.
-
+    @brief A checkpoint save request
     @see ControlCheckPointSaveNowAck
 */
 message ControlCheckPointSaveNow {
-    /** @property name
-        @brief The checkpoint name.
-    */
-    optional string name = 1;
+    optional string name = 1; //!< The checkpoint name
 }
 
 /** @struct SetAutomatMode
     @brief An automate mode change request.
-
-    This message is sent by a client to activate or deactivate an automate.
-
     @see SetAutomatModeAck
 */
 message SetAutomatMode {
-    /** @property automate
-        @brief The automate identifier.
-        @see AutomatId
-    */
-    required AutomatId       automate = 1;
-    /** @property mode
-        @brief The new mode.
-        @see EnumAutomatMode
-    */
-    required EnumAutomatMode mode     = 2;
+    required AutomatId       automate = 1; //!< The automate identifier
+    required EnumAutomatMode mode     = 2; //!< The new mode
 }
 
 /** @struct UnitCreationRequest
-    @brief An agent creation request.
-
-    This message is sent by a client to create an agent.
-
+    @brief An agent creation request
     @see UnitCreationRequestAck
     @todo rename into AgentCreationRequest
     @todo no clue what the fields are exactly...
 */
 message UnitCreationRequest {
-    /** @property type
-        @brief The agent type.
-        @see UnitType
-    */
-    required UnitType     type     = 1;
-    /** @property superior
-        @brief The superior identifier.
-        @see AutomatId
-    */
-    required AutomatId    superior = 2;
-    /** @property position
-        @brief The position.
-        @see CoordLatLong
-    */
-    required CoordLatLong position = 3;
+    required UnitType     type     = 1; //!< The agent typ
+    required AutomatId    superior = 2; //!< The superior identifier
+    required CoordLatLong position = 3; //!< The position
 }
 
 /** @struct UnitMagicAction
-    @brief An agent magic action request.
-
-    This message is sent by a client to perform a magic action.
-
+    @brief An agent magic action request
     @see UnitMagicActionAck
     @todo rename into AgentMagicAction
 */
@@ -143,29 +101,13 @@ message UnitMagicAction {
         inhabitant_change_health_state    = 31; //!< A change of health state on inhabitant magic action.
         inhabitant_change_affinities      = 32; //!< A change of affinities on inhabitant magic action.
     }
-    /** @property tasker
-        @brief The tasker.
-        @see Tasker
-        @todo Explain what is a "tasker"
-    */
-    required Tasker            tasker     = 1;
-    /** @property type
-        @brief The magic action type.
-        @see Type
-    */
-    required Type              type       = 2;
-    /** @property parameters
-        @brief The magic action parameters, depending on the magic action type.
-        @see MissionParameters
-    */
-    required MissionParameters parameters = 3;
+    required Tasker            tasker     = 1; //!< The tasker @todo Explain what is a "tasker"
+    required Type              type       = 2; //!< The magic action typ
+    required MissionParameters parameters = 3; //!< The magic action parameters depending on the magic action type
 }
 
 /** @struct KnowledgeMagicAction
-    @brief A knowledge magic action request.
-
-    This message is sent by a client to perform a magic action.
-
+    @brief A knowledge magic action request
     @todo no corresponding ack message ?
 */
 message KnowledgeMagicAction {
@@ -185,10 +127,7 @@ message KnowledgeMagicAction {
 }
 
 /** @struct ObjectMagicAction
-    @brief An object magic action request.
-
-    This message is sent by a client to perform a magic action.
-
+    @brief An object magic action request
     @see ObjectMagicActionAck
 */
 message ObjectMagicAction {
@@ -200,18 +139,10 @@ message ObjectMagicAction {
         @todo Explain what parameters are expected for each type
     */
     enum Type {
-        /** @brief A create object magic action.
-        */
-        create  = 0;
-        /** @brief An update object magic action.
-        */
-        update  = 1;
-        /** @brief A destroy object magic action.
-        */
-        destroy = 2;
-        /** @brief A request (ie retrieve specific data) object magic action
-        */
-        request = 3;
+        create  = 0; //!< A create object magic action
+        update  = 1; //!< An update object magic action
+        destroy = 2; //!< A destroy object magic action
+        request = 3; //!< A request object magic action in order to retrieve specific data
     }
     /** @enum Attribute
         @brief The type of object.
@@ -242,30 +173,13 @@ message ObjectMagicAction {
         flood              = 16;
         burn_surface       = 17;
     }
-    /** @property object
-        @brief The object identifier
-        @see ObjectId
-    */
-    required ObjectId          object     = 1;
-    /** @property type
-        @brief The type of magic action
-        @see Type
-    */
-    required Type              type       = 2;
-    /** @property parameters
-        @brief The parameters of the magic action
-               The first parameter must be the object type name
-               The second parameter must be the object location
-        @see MissionParameters
-    */
-    required MissionParameters parameters = 3;
+    required ObjectId          object     = 1; //!< The object identifier
+    required Type              type       = 2; //!< The type of magic action
+    required MissionParameters parameters = 3; //!< The parameters of the magic action : the first parameter must be the object type name and the second parameter must be the object location
 }
 
 /** @struct MagicAction
-    @brief A magic action request.
-
-    This message is sent by a client to perform a magic action.
-
+    @brief A magic action request
     @see MagicActionAck
 */
 message MagicAction {
@@ -289,40 +203,24 @@ message MagicAction {
 }
 
 /** @struct ControlCheckPointSetFrequency
-    @brief A checkpoint frequency change request.
-
-    This message is sent by a client to change the frequency of automatic checkpoints.
-
+    @brief Requests a checkpoint frequency change
     @see ControlCheckPointSetFrequencyAck
     @todo rename to ControlCheckpointSetFrequency
 */
 message ControlCheckPointSetFrequency {
-    /** @property frequency
-        @brief The frequency of checkpoints in minutes
-    */
-   required int32 frequency = 1;
+   required int32 frequency = 1; //!< The frequency of checkpoints in minutes
 }
 
 /** @struct ControlCheckPointDeleteRequest
-    @brief A checkpoint deletion request.
-
-    This message is sent by a client to delete a checkpoint.
-
-    @see ControlCheckPointListRequest
+    @brief Request the deletion of a checkpoint
     @see ControlCheckPointDeleteAck
 */
 message ControlCheckPointDeleteRequest {
-    /** @property checkpoint
-        @brief The checkpoint identifier
-    */
-    required string checkpoint = 1;
+    required string checkpoint = 1; //!< The checkpoint identifier
 }
 
 /** @struct ControlCheckPointListRequest
-    @brief A checkpoint list request.
-
-    This message is sent by a client to retrieve the list of checkpoints.
-
+    @brief Request the list of previously saved checkpoints
     @see ControlCheckPointListAck
     @see ControlCheckPointList
 */
@@ -340,50 +238,21 @@ message ControlCheckPointListRequest {
     @todo see how it is related to ControlInformation::send_vision_cones
 */
 message ControlEnableVisionCones {
-   required bool vision_cones = 1;
+   required bool vision_cones = 1; //!< Whether to activate vision cones or not
 }
 
 /** @struct ChangePopulationMagicAction
     @brief A change population magic action.
-
-    This message is sent by a client to alter a population with a magic action.
-
     @see ChangePopulationMagicActionAck
 */
 message ChangePopulationMagicAction {
-    /** @property tasker
-        @brief The population identifier.
-        @see PopulationId
-        @todo rename to population
-    */
-    required PopulationId   tasker     = 1;
-    /** @property adhesions
-        @brief The party adhesions.
-        @see PartyAdhesion
-    */
-    repeated PartyAdhesion  adhesions  = 2;
-    /** @property healthy
-        @brief The number of healthy persons.
-    */
-    optional int32          healthy    = 3;
-    /** @property wounded
-        @brief The number of wounded persons.
-    */
-    optional int32          wounded    = 4;
-    /** @property dead
-        @brief The number of dead persons.
-    */
-    optional int32          dead       = 5;
-    /** @property motivation
-        @brief The motivation.
-        @see MotivationType
-        @todo What is that ?
-    */
-    optional string         motivation = 6;
-    /** @property alerted
-        @brief True if the population have been received an alert.
-    */
-    optional bool           alerted    = 7;
+    required PopulationId   tasker     = 1; //!< The population identifier @todo rename to population
+    repeated PartyAdhesion  adhesions  = 2; //!< The party adhesions
+    optional int32          healthy    = 3; //!< The number of healthy persons
+    optional int32          wounded    = 4; //!< The number of wounded persons
+    optional int32          dead       = 5; //!< The number of dead persons
+    optional string         motivation = 6; //!< The motivation @todo What is that ?
+    optional bool           alerted    = 7; //!< Whether the population have received an alert
 }
 
 /** @struct UrbanMagicAction
@@ -396,46 +265,20 @@ message ChangePopulationMagicAction {
 message UrbanMagicAction {
     /** @struct Infrastructure
         @brief An infrastructure.
+        @todo Is this inner message really usefull ?
     */
     message Infrastructure {
-        /** @property active
-            @brief Whether the infrastructure is active or not
-            @todo What does it mean ?
-            @todo Is this inner message really usefull ?
-        */
-        optional bool  active    = 1;
-        /** @property threshold
-            @brief The threshold
-            @todo What does it mean ?
-        */
-        optional float threshold = 2;
+        optional bool  active    = 1; //!< Whether the infrastructure is currently working or not
+        optional float threshold = 2; //!< The threshold below which the infrastructure stops working
     }
-    /** @property id
-        @brief The identifier.
-        @see ObjectId
-    */
-    required ObjectId       id               = 1;
-    /** @property usages
-        @brief The usages.
-        @see UrbanUsage
-    */
-    repeated UrbanUsage     usages           = 2;
-    /** @property infrastructure
-        @brief The infrastructure.
-        @see Infrastructure
-    */
-    optional Infrastructure infrastructure   = 3;
-    /** @property structural_state
-        @brief The structural state.
-        @todo What does it mean ? Unit ?
-    */
-    optional uint32         structural_state = 4;
+    required ObjectId       id               = 1; //!< The object identifier
+    repeated UrbanUsage     usages           = 2; //!< The usages
+    optional Infrastructure infrastructure   = 3; //!< The infrastructure
+    optional uint32         structural_state = 4; //!< The structural state in percent
 }
 
 /** @struct ClientToSim
-    @brief A facade for all messages from clients to the simulation.
-
-    This is the actual message sent over the network.
+    @brief Wraps messages from clients to the simulation
 */
 message ClientToSim {
     /** @struct Content
@@ -443,119 +286,31 @@ message ClientToSim {
         @warning Each Content message must contain exactly one of the possible messages.
     */
     message Content {
-        /** @property control_stop
-            @brief @copybrief ControlStop
-            @see ControlStop
-        */
-        optional ControlStop                    control_stop                      = 1;
-        /** @property control_pause
-            @brief @copybrief ControlPause
-            @see ControlPause
-        */
-        optional ControlPause                   control_pause                     = 2;
-        /** @property control_resume
-            @brief @copybrief ControlResume
-            @see ControlResume
-        */
-        optional ControlResume                  control_resume                    = 3;
-        /** @property control_change_time_factor
-            @brief @copybrief ControlChangeTimeFactor
-            @see ControlChangeTimeFactor
-        */
-        optional ControlChangeTimeFactor        control_change_time_factor        = 4;
-        /** @property control_date_time_change
-            @brief @copybrief ControlDateTimeChange
-            @see ControlDateTimeChange
-        */
-        optional ControlDateTimeChange          control_date_time_change          = 5;
-        /** @property control_checkpoint_save_now
-            @brief @copybrief ControlCheckPointSaveNow
-            @see ControlCheckPointSaveNow
-        */
-        optional ControlCheckPointSaveNow       control_checkpoint_save_now       = 6;
-        /** @property control_checkpoint_set_frequency
-            @brief @copybrief ControlCheckPointSetFrequency
-            @see ControlCheckPointSetFrequency
-        */
-        optional ControlCheckPointSetFrequency  control_checkpoint_set_frequency  = 7;
-        /** @property control_toggle_vision_cones
-            @brief @copybrief ControlEnableVisionCones
-            @see ControlEnableVisionCones
-        */
-        optional ControlEnableVisionCones       control_toggle_vision_cones       = 8;
-        /** @property unit_order
-            @brief @copybrief UnitOrder
-            @see UnitOrder
-        */
-        optional UnitOrder                      unit_order                        = 9;
-        /** @property automat_order
-            @brief @copybrief AutomatOrder
-            @see AutomatOrder
-        */
-        optional AutomatOrder                   automat_order                     = 10;
-        /** @property crowd_order
-            @brief @copybrief CrowdOrder
-            @see CrowdOrder
-        */
-        optional CrowdOrder                     crowd_order                       = 11;
-        /** @property frag_order
-            @brief @copybrief FragOrder
-            @see FragOrder
-        */
-        optional FragOrder                      frag_order                        = 12;
-        /** @property set_automat_mode
-            @brief @copybrief SetAutomatMode
-            @see SetAutomatMode
-        */
-        optional SetAutomatMode                 set_automat_mode                  = 13;
-        /** @property unit_creation_request
-            @brief @copybrief UnitCreationRequest
-            @see UnitCreationRequest
-        */
-        optional UnitCreationRequest            unit_creation_request             = 14;
-        /** @property unit_magic_action
-            @brief @copybrief UnitCreationRequest
-            @see UnitCreationRequest
-        */
-        optional UnitMagicAction                unit_magic_action                 = 15;
-        /** @property object_magic_action
-            @brief @copybrief ObjectMagicAction
-            @see ObjectMagicAction
-        */
-        optional ObjectMagicAction              object_magic_action               = 16;
-        /** @property knowledge_magic_action
-            @brief @copybrief KnowledgeMagicAction
-            @see KnowledgeMagicAction
-        */
-        optional KnowledgeMagicAction           knowledge_magic_action            = 17;
-        /** @property magic_action
-            @brief @copybrief MagicAction
-            @see MagicAction
-        */
-        optional MagicAction                    magic_action                      = 18;
-        /** @property control_checkpoint_list_request
-            @brief @copybrief ControlCheckPointListRequest
-            @see ControlCheckPointListRequest
-        */
-        optional ControlCheckPointListRequest   control_checkpoint_list_request   = 19;
-        /** @property control_checkpoint_delete_request
-            @brief @copybrief ControlCheckPointDeleteRequest
-            @see ControlCheckPointDeleteRequest
-        */
-        optional ControlCheckPointDeleteRequest control_checkpoint_delete_request = 20;
-        /** @property change_population_magic_action
-            @brief @copybrief ChangePopulationMagicAction
-            @see ChangePopulationMagicAction
-        */
-        optional ChangePopulationMagicAction    change_population_magic_action    = 21;
-        /** @property urban_magic_action
-            @brief @copybrief UrbanMagicAction
-            @see UrbanMagicAction
-        */
-        optional UrbanMagicAction               urban_magic_action                = 22;
+        optional ControlStop                    control_stop                      = 1; //!< @copybrief ControlStop
+        optional ControlPause                   control_pause                     = 2; //!< @copybrief ControlPause
+        optional ControlResume                  control_resume                    = 3; //!< @copybrief ControlResume
+        optional ControlChangeTimeFactor        control_change_time_factor        = 4; //!< @copybrief ControlChangeTimeFactor
+        optional ControlDateTimeChange          control_date_time_change          = 5; //!< @copybrief ControlDateTimeChange
+        optional ControlCheckPointSaveNow       control_checkpoint_save_now       = 6; //!< @copybrief ControlCheckPointSaveNow
+        optional ControlCheckPointSetFrequency  control_checkpoint_set_frequency  = 7; //!< @copybrief ControlCheckPointSetFrequency
+        optional ControlEnableVisionCones       control_toggle_vision_cones       = 8; //!< @copybrief ControlEnableVisionCones
+        optional UnitOrder                      unit_order                        = 9; //!< @copybrief UnitOrder
+        optional AutomatOrder                   automat_order                     = 10; //!< @copybrief AutomatOrder
+        optional CrowdOrder                     crowd_order                       = 11; //!< @copybrief CrowdOrder
+        optional FragOrder                      frag_order                        = 12; //!< @copybrief FragOrder
+        optional SetAutomatMode                 set_automat_mode                  = 13; //!< @copybrief SetAutomatMode
+        optional UnitCreationRequest            unit_creation_request             = 14; //!< @copybrief UnitCreationRequest
+        optional UnitMagicAction                unit_magic_action                 = 15; //!< @copybrief UnitCreationRequest
+        optional ObjectMagicAction              object_magic_action               = 16; //!< @copybrief ObjectMagicAction
+        optional KnowledgeMagicAction           knowledge_magic_action            = 17; //!< @copybrief KnowledgeMagicAction
+        optional MagicAction                    magic_action                      = 18; //!< @copybrief MagicAction
+        optional ControlCheckPointListRequest   control_checkpoint_list_request   = 19; //!< @copybrief ControlCheckPointListRequest
+        optional ControlCheckPointDeleteRequest control_checkpoint_delete_request = 20; //!< @copybrief ControlCheckPointDeleteRequest
+        optional ChangePopulationMagicAction    change_population_magic_action    = 21; //!< @copybrief ChangePopulationMagicAction
+        optional UrbanMagicAction               urban_magic_action                = 22; //!< @copybrief UrbanMagicAction
     }
     /** @property context
-        @brief Identifies the request matching the response.
+        @brief Identifies the request matching the response
 
         This field is used to fill the "context" fields in the response message
         (from SimToClient).
@@ -565,10 +320,7 @@ message ClientToSim {
         message matching a specific request emitted by the client.
     */
     optional int32   context = 1;
-    /** @property message
-        @brief A field containing one of the messages to be sent.
-    */
-    required Content message = 2;
+    required Content message = 2; //!< The content od the message
 }
 
 /** @}*/

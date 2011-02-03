@@ -1687,8 +1687,8 @@ BOOST_FIXTURE_TEST_CASE( control_global_weather_to_client_is_converted, ContextF
 BOOST_FIXTURE_TEST_CASE( control_local_weather_creation_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_control_local_weather_creation()->mutable_weather()->set_id( 7 );
-    FillCoordLatLong( content.mutable_control_local_weather_creation()->mutable_top_left_coordinate() );
-    FillCoordLatLong( content.mutable_control_local_weather_creation()->mutable_bottom_right_coordinate() );
+    FillCoordLatLong( content.mutable_control_local_weather_creation()->mutable_top_left() );
+    FillCoordLatLong( content.mutable_control_local_weather_creation()->mutable_bottom_right() );
     content.mutable_control_local_weather_creation()->mutable_attributes()->set_temperature( 8 );
     content.mutable_control_local_weather_creation()->mutable_attributes()->set_wind_speed( 9 );
     content.mutable_control_local_weather_creation()->mutable_attributes()->mutable_wind_direction()->set_heading( 10 );

@@ -293,7 +293,7 @@ message ClientObjectDestructionRequest {
 }
 
 /** @struct ClientToMessenger
-    @brief A facade for all available messages going from client to messenger.
+    @brief Wraps available messages going from client to messenger.
 
     This is the actual message sent over the network.
 */

@@ -68,7 +68,7 @@ message ProfileDestructionRequest {
 }
 
 /** @struct ClientToAuthentication
-    @brief A facade for all available messages going from client to authentication
+    @brief Wraps available messages going from client to authentication
 
     This is the actual message sent over the network.
 */

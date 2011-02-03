@@ -66,13 +66,13 @@ void MeteoData::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 
     geometry::Point2f downRight( rect_.Right(), rect_.Bottom() );
     geometry::Point2d latlong = converter_.ConvertToGeo( downRight );
-    msg().mutable_bottom_right_coordinate()->set_longitude( latlong.X() );
-    msg().mutable_bottom_right_coordinate()->set_latitude( latlong.Y() );
+    msg().mutable_bottom_right()->set_longitude( latlong.X() );
+    msg().mutable_bottom_right()->set_latitude( latlong.Y() );
 
     geometry::Point2f upLeft( rect_.Left(), rect_.Top() );
     latlong = converter_.ConvertToGeo( upLeft );
-    msg().mutable_top_left_coordinate()->set_longitude( latlong.X() );
-    msg().mutable_top_left_coordinate()->set_latitude( latlong.Y() );
+    msg().mutable_top_left()->set_longitude( latlong.X() );
+    msg().mutable_top_left()->set_latitude( latlong.Y() );
     msg.Send( publisher );
 }
 

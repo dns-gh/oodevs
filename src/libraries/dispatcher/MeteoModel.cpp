@@ -74,9 +74,9 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& msg )
 {
-    const geometry::Point2d topLeft( msg.top_left_coordinate().longitude(), msg.top_left_coordinate().latitude() );
+    const geometry::Point2d topLeft( msg.top_left().longitude(), msg.top_left().latitude() );
     const geometry::Point2f vUpLeft = converter_->ConvertFromGeo( topLeft );
-    const geometry::Point2d bottomRight( msg.bottom_right_coordinate().longitude(), msg.bottom_right_coordinate().latitude() );
+    const geometry::Point2d bottomRight( msg.bottom_right().longitude(), msg.bottom_right().latitude() );
     const geometry::Point2f vDownRight = converter_->ConvertFromGeo( bottomRight );
     if( msg.has_attributes() )
     {

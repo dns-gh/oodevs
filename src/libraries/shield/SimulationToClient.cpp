@@ -2219,10 +2219,10 @@ void SimulationToClient::Convert( const sword::ControlGlobalWeather& from, MsgsS
 void SimulationToClient::Convert( const sword::ControlLocalWeatherCreation& from, MsgsSimToClient::MsgControlLocalWeatherCreation* to )
 {
     CONVERT_ID( weather );
-    if( from.has_top_left_coordinate() )
-        ConvertCoordLatLong( from.top_left_coordinate(), to->mutable_top_left_coordinate() );
-    if( from.has_bottom_right_coordinate() )
-        ConvertCoordLatLong( from.bottom_right_coordinate(), to->mutable_bottom_right_coordinate() );
+    if( from.has_top_left() )
+        ConvertCoordLatLong( from.top_left(), to->mutable_top_left_coordinate() );
+    if( from.has_bottom_right() )
+        ConvertCoordLatLong( from.bottom_right(), to->mutable_bottom_right_coordinate() );
     if( from.has_attributes() )
         ConvertWeatherAttributes( from.attributes(), to->mutable_attributes() );
 }

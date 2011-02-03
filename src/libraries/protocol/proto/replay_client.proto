@@ -40,7 +40,7 @@ message ControlSkipToTickAck {
 }
 
 /** @struct ReplayToClient
-    @brief A facade for all available messages going from replay to client
+    @brief Wraps available messages going from replay to client
 
     This is the actual message sent over the network.
 */

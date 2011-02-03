@@ -188,7 +188,7 @@ message ProfileDescription {
 }
 
 /** @struct AuthenticationToClient
-    @brief A facade for all available messages going from authentication to client.
+    @brief Wraps available messages going from authentication to client.
 
     This is the actual message sent over the network.
 */

@@ -25,7 +25,7 @@ message ControlSkipToTick {
 }
 
 /** @struct ClientToReplay
-    @brief A facade for all available messages going from client to replay
+    @brief Wraps available messages going from client to replay
 
     This is the actual message sent over the network.
 */

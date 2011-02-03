@@ -9,11 +9,11 @@
 
 #include "gaming_pch.h"
 #include "MeteoModel.h"
-#include "clients_kernel/CoordinateConverter.h"
 #include "meteo/PHY_Meteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 #include "meteo/MeteoData.h"
+#include "clients_kernel/CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel constructor
@@ -21,10 +21,9 @@
 // -----------------------------------------------------------------------------
 MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
-    , pGlobalMeteo_()
 {
     weather::PHY_Precipitation::Initialize();
-    weather::PHY_Lighting     ::Initialize();
+    weather::PHY_Lighting::Initialize();
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +32,7 @@ MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter )
 // -----------------------------------------------------------------------------
 MeteoModel::~MeteoModel()
 {
-    weather::PHY_Lighting     ::Terminate();
+    weather::PHY_Lighting::Terminate();
     weather::PHY_Precipitation::Terminate();
 }
 
@@ -75,16 +74,17 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& msg )
 {
-    const geometry::Point2f topLeft = converter_.ConvertFromGeo(
-        geometry::Point2d( float( msg.top_left_coordinate().longitude() ), float( msg.top_left_coordinate().latitude() ) ) );
-    const geometry::Point2f bottomRight = converter_.ConvertFromGeo(
-        geometry::Point2d( float( msg.bottom_right_coordinate().longitude() ), float( msg.bottom_right_coordinate().latitude() ) ) );
-
-    weather::PHY_Meteo* pTmp = 0;
     if( msg.has_attributes() )
     {
-        pTmp = new weather::MeteoData( msg.weather().id(), topLeft, bottomRight, msg.attributes(), *this, converter_ );
-        RegisterMeteo( *pTmp );
+        const geometry::Point2f topLeft = converter_.ConvertFromGeo(
+            geometry::Point2d(
+                msg.top_left().longitude(),
+                msg.top_left().latitude() ) );
+        const geometry::Point2f bottomRight = converter_.ConvertFromGeo(
+            geometry::Point2d(
+                msg.bottom_right().longitude(),
+                msg.bottom_right().latitude() ) );
+        RegisterMeteo( *new weather::MeteoData( msg.weather().id(), topLeft, bottomRight, msg.attributes(), *this, converter_ ) );
     }
 }
 
@@ -120,7 +120,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWea
         {
             weather::PHY_Meteo* meteo = *it;
             meteos_.remove( meteo );
-            delete meteo;
+            delete meteo; // $$$$ MCO : use boost::shared_ptr
             return;
         }
 }
@@ -131,15 +131,14 @@ void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWea
 // -----------------------------------------------------------------------------
 void MeteoModel::Purge()
 {
-    if( !meteos_.empty() )
+    if( !meteos_.empty() ) // $$$$ MCO : useless
     {
         for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); )
         {
             weather::PHY_Meteo* meteo = *it;
             it = meteos_.erase( it );
-            delete meteo;
+            delete meteo; // $$$$ MCO : use boost::shared_ptr
         }
     }
-
     pGlobalMeteo_.reset();
 }
