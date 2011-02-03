@@ -16,6 +16,7 @@
 #include "CreateFormationDialog.h"
 #include "InhabitantChangeHealthStateDialog.h"
 #include "InhabitantChangeAffinitiesDialog.h"
+#include "InhabitantChangeAlertedStateDialog.h"
 #include "InhabitantExtractCrowdDialog.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "LogisticSupplyPullFlowDialog.h"
@@ -49,6 +50,7 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new OrbatAttributesDialog( parent, controllers );
     new InhabitantChangeAffinitiesDialog( parent, controllers, model.teams_, staticModel, actionsModel, simulation, profile );
     new InhabitantChangeHealthStateDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new InhabitantChangeAlertedStateDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new InhabitantExtractCrowdDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
 }
 

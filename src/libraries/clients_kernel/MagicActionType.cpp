@@ -294,4 +294,8 @@ void MagicActionType::Initialize()
     {
         CreateOrderParameter( "Affinities", "list" );
     }
+    else if( name_ == "inhabitant_change_alerted_state" )
+    {
+        CreateOrderParameter( "Alerted", "bool" );
+    }
 }

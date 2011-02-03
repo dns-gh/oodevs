@@ -96,7 +96,7 @@ public:
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
-    void UpdateHumans( const std::string& inhabitant, unsigned int number );
+    void UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted );
     unsigned int GetHumans() const;
     //@}
 
@@ -114,7 +114,12 @@ private:
     //@{
     typedef std::map< std::string, float > T_Motivations;
 
-    typedef std::map< std::string, unsigned int > T_Humans;
+    struct T_Human
+    {
+        unsigned int number_;
+        bool alerted_;
+    };
+    typedef std::map< std::string, T_Human > T_Humans;
     typedef T_Humans::const_iterator            CIT_Humans;
 
     struct BaseColor

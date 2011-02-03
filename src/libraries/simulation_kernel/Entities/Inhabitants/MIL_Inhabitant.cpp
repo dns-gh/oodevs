@@ -64,8 +64,6 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , nNbrDeadHumans_        ( 0 )
     , nNbrWoundedHumans_     ( 0 )
     , healthStateChanged_    ( false )
-    , alerted_               ( false )
-    , alertedStateHasChanged_( false )
 {
     float totalArea = 0.f;
     idManager_.Lock( nID_ );
@@ -111,8 +109,6 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     , nNbrDeadHumans_        ( 0 )
     , nNbrWoundedHumans_     ( 0 )
     , healthStateChanged_    ( false )
-    , alerted_               ( false )
-    , alertedStateHasChanged_( false )
 {
     // NOTHING
 }
@@ -144,7 +140,6 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> nNbrHealthyHumans_
          >> nNbrDeadHumans_
          >> nNbrWoundedHumans_
-         >> alerted_
          >> pSatisfactions
          >> pLivingArea
          >> pAffinities;
@@ -183,7 +178,6 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << nNbrHealthyHumans_
          << nNbrDeadHumans_
          << nNbrWoundedHumans_
-         << alerted_
          << pSatisfactions
          << pLivingArea
          << pAffinities;
@@ -292,15 +286,12 @@ void MIL_Inhabitant::UpdateNetwork()
         msg().set_wounded( nNbrWoundedHumans_ );
         msg().set_dead( nNbrDeadHumans_ );
     }
-    if( alertedStateHasChanged_ )
-        msg().set_alerted( alerted_ );
     pAffinities_->UpdateNetwork( msg );
     pLivingArea_->UpdateNetwork( msg );
     pSatisfactions_->UpdateNetwork( msg );
-    if( healthStateChanged_ || alertedStateHasChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().adhesions_size() > 0 )
+    if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().adhesions_size() > 0 )
         msg.Send( NET_Publisher_ABC::Publisher() );
     healthStateChanged_ = false;
-    alertedStateHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -320,6 +311,9 @@ void MIL_Inhabitant::OnReceiveInhabitantMagicAction( const sword::UnitMagicActio
             break;
         case sword::UnitMagicAction::inhabitant_change_affinities:
             pAffinities_->OnReceiveMsgChangeAffinities( msg );
+            break;
+        case sword::UnitMagicAction::inhabitant_change_alerted_state:
+            OnReceiveMsgChangeAlertedState( msg );
             break;
         default:
             assert( false );
@@ -361,6 +355,19 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     healthStateChanged_ = true;
     pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
     pLivingArea_->DistributeHumans( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::OnReceiveMsgChangeAlertedState
+// Created: BCI 2011-02-03
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::OnReceiveMsgChangeAlertedState( const sword::UnitMagicAction& msg )
+{
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
+
+    bool alerted = msg.parameters().elem( 0 ).value( 0 ).booleanvalue();
+    pLivingArea_->SetAlerted( alerted );
 }
 
 // -----------------------------------------------------------------------------
@@ -411,9 +418,5 @@ void MIL_Inhabitant::NotifyFired()
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::NotifyAlerted( const TER_Localisation& localisation )
 {
-    if( !alerted_ && pLivingArea_->Intersect2DWithLocalisation( localisation ) )
-    {
-        alerted_ = true;
-        alertedStateHasChanged_ = true;
-    }
+    pLivingArea_->Alert( localisation );
 }

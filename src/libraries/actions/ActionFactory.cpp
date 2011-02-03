@@ -28,6 +28,7 @@
 #include "PopulationMission.h"
 #include "Quantity.h"
 #include "String.h"
+#include "Bool.h"
 #include "UnitMagicAction.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
@@ -751,5 +752,18 @@ actions::Action_ABC* ActionFactory::CreateInhabitantChangeHealthStateAction( int
     action->AddParameter( *new parameters::Quantity( it.NextElement(), healthy ) );
     action->AddParameter( *new parameters::Quantity( it.NextElement(), wounded ) );
     action->AddParameter( *new parameters::Quantity( it.NextElement(), dead ) );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateInhabitantChangeAlertedStateAction
+// Created: BCI 2011-02-03
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const
+{
+    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "inhabitant_change_alerted_state" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Population Change Alerted State" ), true );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Bool( it.NextElement(), alerted ) );
     return action;
 }

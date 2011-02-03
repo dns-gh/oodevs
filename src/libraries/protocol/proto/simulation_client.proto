@@ -2163,6 +2163,7 @@ message PopulationUpdate {
     message BlockOccupation {
          required ObjectId object = 1; //!< The block object identifier
          required int32    number = 2; //!< The number of persons
+         required bool     alerted = 3;
      }
     required PopulationId    id           = 1; //!< The population identifier
     optional int32           healthy      = 2; //!< The number of healthy persons
@@ -2172,7 +2173,6 @@ message PopulationUpdate {
     optional Satisfaction    satisfaction = 6; //!< The current satisfaction
     optional string          motivation   = 7; //!< The current motivation @see MotivationSatisfaction
     repeated BlockOccupation occupations  = 8; //!< The current block occupations
-    optional bool            alerted      = 9; //!< Whether the population has been alerted or not
 }
 
 message SimToClient {

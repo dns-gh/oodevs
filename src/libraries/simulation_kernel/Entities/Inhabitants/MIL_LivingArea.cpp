@@ -87,7 +87,7 @@ namespace
     template< typename T >
     bool CompareLivingSpace( const T& lhs, const T& rhs )
     {
-        return lhs.first->GetLivingSpace() * GetStructuralState( *lhs.first ) > rhs.first->GetLivingSpace() * GetStructuralState( *rhs.first );
+        return lhs.pUrbanObject_->GetLivingSpace() * GetStructuralState( *lhs.pUrbanObject_ ) > rhs.pUrbanObject_->GetLivingSpace() * GetStructuralState( *rhs.pUrbanObject_ );
     }
 }
 
@@ -102,7 +102,7 @@ void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis )
     if( !object )
         xis.error( "Error in loading living urban block of population" );
     area_ += object->GetLivingSpace() * GetStructuralState( *object );
-    blocks_.push_back( T_Block( object , 0 ) );
+    blocks_.push_back( T_Block( object ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,14 +116,14 @@ void MIL_LivingArea::DistributeHumans( unsigned long population )
     unsigned long tmp = population_;
     for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
-        unsigned long person = static_cast< unsigned long >( it->first->GetLivingSpace() * GetStructuralState( *it->first ) * population_ / area_ );
+        unsigned long person = static_cast< unsigned long >( it->pUrbanObject_->GetLivingSpace() * GetStructuralState( *it->pUrbanObject_ ) * population_ / area_ );
         if( tmp - person < 0 )
             person = tmp;
-        it->second = person;
+        it->person_ = person;
         tmp -= person;
     }
     if( tmp > 0 && !blocks_.empty() )
-        blocks_.front().second += tmp;
+        blocks_.front().person_ += tmp;
     hasChanged_ = true;
 }
 
@@ -134,7 +134,7 @@ void MIL_LivingArea::DistributeHumans( unsigned long population )
 void MIL_LivingArea::Register( MIL_StructuralStateNotifier_ABC& structural )
 {
     BOOST_FOREACH( T_Block& block, blocks_ )
-        block.first->Register( structural );
+        block.pUrbanObject_->Register( structural );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,13 +149,15 @@ void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> size;
     unsigned int objectId;
     unsigned int person;
+    bool alerted;
     for( unsigned int i = 0; i < size; ++i )
     {
         file >> objectId
-             >> person;
+             >> person
+             >> alerted;
         UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( objectId ) );
         if( object )
-            blocks_.push_back( T_Block( object , person ) );
+            blocks_.push_back( T_Block( object, person, alerted ) );
     }
 }
 
@@ -172,9 +174,11 @@ void MIL_LivingArea::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     unsigned int id;
     BOOST_FOREACH( const T_Block& block, blocks_ )
     {
-        id = block.first->GetID();
+        id = block.pUrbanObject_->GetID();
         file << id
-             << block.second;
+             << block.person_
+             << block.alerted_;
+                
     }
 }
 
@@ -187,8 +191,9 @@ void MIL_LivingArea::SendFullState( client::PopulationUpdate& msg ) const
     BOOST_FOREACH( const T_Block& urbanBlock, blocks_ )
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
-        block.mutable_object()->set_id( urbanBlock.first->GetID() );
-        block.set_number( urbanBlock.second );
+        block.mutable_object()->set_id( urbanBlock.pUrbanObject_->GetID() );
+        block.set_number( urbanBlock.person_ );
+        block.set_alerted( urbanBlock.alerted_ );
     }
 }
 
@@ -212,7 +217,7 @@ void MIL_LivingArea::UpdateNetwork( client::PopulationUpdate& msg ) const
 void MIL_LivingArea::SendCreation( client::PopulationCreation& msg ) const
 {
     BOOST_FOREACH( const T_Block& block, blocks_ )
-        msg().add_objects()->set_id( block.first->GetID() );
+        msg().add_objects()->set_id( block.pUrbanObject_->GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +230,7 @@ void MIL_LivingArea::WriteODB( xml::xostream& xos ) const
     BOOST_FOREACH( const T_Block& block, blocks_ )
     {
         xos << xml::start( "urban-block" );
-            block.first->WriteUrbanIdAttribute( xos );
+            block.pUrbanObject_->WriteUrbanIdAttribute( xos );
         xos << xml::end;
     }
     xos << xml::end;
@@ -240,7 +245,7 @@ unsigned int MIL_LivingArea::GetTotalOccupation() const
     unsigned int totalOccupation = 0;
     BOOST_FOREACH( const T_Block& block, blocks_ )
         for( CIT_Accommodations it = accommodations_.begin(); it != accommodations_.end(); ++it )
-            if( block.second != 0 )
+            if( block.person_ != 0 )
                 totalOccupation += GetOccupation( block, it->first );
     return totalOccupation;
 }
@@ -267,11 +272,11 @@ float MIL_LivingArea::Consume( const PHY_ResourceNetworkType& resource, unsigned
     double personalConsumption = static_cast< double >( consumption ) / population_;
     float satisfaction = 0;
     BOOST_FOREACH( const T_Block& block, blocks_ )
-        if( block.second > 0 )
-            if( ResourceNetworkCapacity* capacity = block.first->Retrieve< ResourceNetworkCapacity >() )
+        if( block.person_ > 0 )
+            if( ResourceNetworkCapacity* capacity = block.pUrbanObject_->Retrieve< ResourceNetworkCapacity >() )
             {
-                satisfaction += block.second * capacity->GetConsumptionState( resource.GetId() );
-                capacity->AddConsumption( resource.GetId(), static_cast< unsigned int >( block.second * personalConsumption + 0.5 ) );
+                satisfaction += block.person_ * capacity->GetConsumptionState( resource.GetId() );
+                capacity->AddConsumption( resource.GetId(), static_cast< unsigned int >( block.person_ * personalConsumption + 0.5 ) );
             }
     return satisfaction / population_;
 }
@@ -284,8 +289,8 @@ float MIL_LivingArea::HealthCount() const
 {
     float healthCount = 0;
     BOOST_FOREACH( const T_Block& block, blocks_ )
-        if( block.first->Retrieve< MedicalCapacity >() )
-            healthCount += GetStructuralState( *block.first);
+        if( block.pUrbanObject_->Retrieve< MedicalCapacity >() )
+            healthCount += GetStructuralState( *block.pUrbanObject_);
     return healthCount;
 }
 
@@ -308,15 +313,15 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
             BOOST_FOREACH( const T_Block& block, blocks )
             {
                 unsigned int part = static_cast< unsigned int >( population_ * GetOccupation( block, motivation ) / occupation );
-                identifiers[ block.first->GetID() ] = part;
+                identifiers[ block.pUrbanObject_->GetID() ] = part;
                 tmp -= part;
             }
             if( tmp > 0 )
                 identifiers.begin()->second += tmp;
             BOOST_FOREACH( T_Block& block, blocks_ )
             {
-                CIT_Identifiers it = identifiers.find( block.first->GetID() );
-                block.second = ( it == identifiers.end() ) ? 0u : it->second;
+                CIT_Identifiers it = identifiers.find( block.pUrbanObject_->GetID() );
+                block.person_ = ( it == identifiers.end() ) ? 0u : it->second;
             }
             hasChanged_ = true;
         }
@@ -331,7 +336,7 @@ unsigned int MIL_LivingArea::GetOccupation( const T_Block& block, const std::str
 {
     CIT_Accommodations it = accommodations_.find( motivation );
     if( it != accommodations_.end() )
-        return static_cast< unsigned int >( block.first->GetLivingSpace() * GetStructuralState( *block.first ) * GetProportion( block, motivation ) * it->second );
+        return static_cast< unsigned int >( block.pUrbanObject_->GetLivingSpace() * GetStructuralState( *block.pUrbanObject_ ) * GetProportion( block, motivation ) * it->second );
     return 0u;
 }
 
@@ -374,7 +379,7 @@ float MIL_LivingArea::GetProportion( const T_Block& block, const std::string& mo
 {
     T_Accommodations motivations;
     MotivationsVisitor visitor( motivations );
-    block.first->Accept( visitor );
+    block.pUrbanObject_->Accept( visitor );
     CIT_Accommodations it = motivations.find( motivation );
     if( it == motivations.end() )
         return 0.f;
@@ -382,13 +387,28 @@ float MIL_LivingArea::GetProportion( const T_Block& block, const std::string& mo
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::NotifyAlerted
+// Name: MIL_LivingArea::Alert
 // Created: BCI 2011-02-01
 // -----------------------------------------------------------------------------
-bool MIL_LivingArea::Intersect2DWithLocalisation( const TER_Localisation& localisation ) const
+void MIL_LivingArea::Alert( const TER_Localisation& localisation )
 {
-    BOOST_FOREACH( const T_Block& block, blocks_ )
-        if( block.first->Intersect2DWithLocalisation( localisation ) )
-            return true;
-    return false;
+    BOOST_FOREACH( T_Block& block, blocks_ )
+    {
+        if( block.pUrbanObject_->Intersect2DWithLocalisation( localisation ) )
+        {
+            block.alerted_ = true;
+            hasChanged_ = true;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::SetAlerted
+// Created: BCI 2011-02-03
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::SetAlerted( bool alerted )
+{
+    BOOST_FOREACH( T_Block& block, blocks_ )
+        block.alerted_ = alerted;
+    hasChanged_ = true;
 }

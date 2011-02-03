@@ -887,6 +887,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const sword::UnitMagicAction& 
             break;
         case sword::UnitMagicAction::inhabitant_change_health_state:
         case sword::UnitMagicAction::inhabitant_change_affinities:
+        case sword::UnitMagicAction::inhabitant_change_alerted_state:
             if( MIL_Inhabitant* pInhabitant = inhabitantFactory_->Find ( id ) )
                 pInhabitant->OnReceiveInhabitantMagicAction( message );
             else

@@ -61,7 +61,8 @@ public:
     void UpdateNetwork( client::PopulationUpdate& msg ) const;
     unsigned int GetTotalOccupation() const;
     void GetUsagesOccupation( std::map< std::string, unsigned int >& occupations ) const;
-    bool Intersect2DWithLocalisation( const TER_Localisation& localisation ) const;
+    void Alert( const TER_Localisation& localisation );
+    void SetAlerted( bool );
     float Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption );
     //@}
 
@@ -75,7 +76,18 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::pair< UrbanObjectWrapper*, unsigned int > T_Block;
+    struct T_Block
+    {
+        T_Block( UrbanObjectWrapper* pUrbanObject, unsigned int person = 0, bool alerted = false )
+            : pUrbanObject_( pUrbanObject )
+            , person_( person )
+            , alerted_( alerted )
+        {}
+
+        UrbanObjectWrapper* pUrbanObject_;
+        unsigned int person_;
+        bool alerted_;
+    };
     typedef std::vector< T_Block >                         T_Blocks;
     typedef T_Blocks::iterator                            IT_Blocks;
     typedef T_Blocks::const_iterator                     CIT_Blocks;

@@ -97,7 +97,12 @@ private:
     typedef std::map< const kernel::DotationType*, unsigned int > T_ResourceSatisfactions;
     typedef T_ResourceSatisfactions::const_iterator             CIT_ResourceSatisfactions;
 
-    typedef std::map< unsigned int, unsigned int > T_Humans;
+    struct T_Human
+    {
+        unsigned int number_;
+        bool alerted_;
+    };
+    typedef std::map< unsigned int/*occupation object id*/, T_Human > T_Humans;
     //@}
 
 private:
@@ -115,7 +120,6 @@ private:
     T_Humans humans_;
     T_UrbanObjectVector livingUrbanObject_;
     T_Extensions extensions_;
-    bool alerted_;
     //@}
 };
 

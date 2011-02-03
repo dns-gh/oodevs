@@ -209,8 +209,11 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
     }
     BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
     {
-        const QString key = tools::translate( "Block", "Populations/" ) + human.first.c_str();
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), key, human.second );
+        const QString keyBase = tools::translate( "Block", "Populations/" ) + human.first.c_str();
+        const QString keyNumber = keyBase + tools::translate( "Block", "/Number" );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, human.second.number_ );
+        const QString keyAlerted = keyBase + tools::translate( "Block", "/Alerted" );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.second.alerted_ );
     }
 }
 
@@ -236,16 +239,23 @@ void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) co
 // Name: TerrainObjectProxy::UpdateHumans
 // Created: LGY 2010-12-30
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number )
+void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted )
 {
-    humans_[ inhabitant ] = number;
-    const QString key = tools::translate( "Block", "Populations/" ) + inhabitant.c_str();
+    T_Human& mutableHuman = humans_[ inhabitant ];
+    mutableHuman.number_ = number;
+    mutableHuman.alerted_ = alerted;
+    const T_Human& human = mutableHuman;
+    const QString keyBase = tools::translate( "Block", "Populations/" ) + inhabitant.c_str();
     kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
-    if( !dictionary.HasKey( key ) )
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), key, humans_[ inhabitant ] );
-    if( number == 0u )
+    const QString keyNumber = keyBase + tools::translate( "Block", "/Number" );
+    if( !dictionary.HasKey( keyNumber ) )
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, human.number_ );
+    const QString keyAlerted = keyBase + tools::translate( "Block", "/Alerted" );
+    if( !dictionary.HasKey( keyAlerted ) )
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.alerted_ );
+    if( human.number_ == 0u )
     {
-        dictionary.Remove( key );
+        dictionary.Remove( keyBase );
         humans_.erase( inhabitant );
     }
     UpdateColor();
@@ -367,6 +377,6 @@ unsigned int TerrainObjectProxy::GetHumans() const
 {
     unsigned int humans = 0;
     BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
-        humans += human.second;
+        humans += human.second.number_;
     return humans;
 }

@@ -91,6 +91,7 @@ private:
     //! @name Magic actions
     //@{
     void OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg );
+    void OnReceiveMsgChangeAlertedState( const sword::UnitMagicAction& msg );
     //@}
 
     //! @name Network
@@ -122,8 +123,6 @@ private:
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;
     bool healthStateChanged_;
-    bool alerted_;
-    bool alertedStateHasChanged_;
     T_Extensions extensions_;
     //@}
 

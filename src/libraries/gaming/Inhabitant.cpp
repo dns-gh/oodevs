@@ -34,7 +34,6 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& c
     , controllers_     ( controllers )
     , type_            ( typeResolver.Get( message.type().id() ) )
     , dotationResolver_( dotationResolver )
-    , alerted_         ( false )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
@@ -75,7 +74,6 @@ void Inhabitant::CreateDictionary( Controller& controller )
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Health" ), self.healthSatisfaction_ );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Safety" ), self.safetySatisfaction_ );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Lodging" ), self.lodgingSatisfaction_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "State/Alerted" ), self.alerted_ );
     BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
     {
         QString info = tools::translate( "Inhabitant", "Details/" ) + extension.first.c_str();
@@ -146,19 +144,21 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         CIT_UrbanObjectVector it = livingUrbanObject_.find( id );
         if( it != livingUrbanObject_.end() )
         {
-            it->second->UpdateHumans( name_.ascii(), occupation.number() );
-            humans_[ id ] = occupation.number();
-            const QString key = tools::translate( "Inhabitant", "Living Area/" ) + it->second->GetName().ascii() + " [" + boost::lexical_cast< std::string >( id ).c_str() + "]";
+            it->second->UpdateHumans( name_.ascii(), occupation.number(), occupation.alerted() );
+            T_Human& mutableHuman = humans_[ id ];
+            mutableHuman.number_ = occupation.number();
+            mutableHuman.alerted_ = occupation.alerted();
+            const T_Human& human = mutableHuman;
             PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-            if( !dictionary.HasKey( key ) )
-            {
-                const T_Humans::const_iterator it = humans_.find( id );
-                dictionary.Register( *static_cast< const Entity_ABC* >( this ), key, it->second );
-            }
+            const QString keyHuman = tools::translate( "Inhabitant", "Living Area/" ) + it->second->GetName().ascii() + " [" + boost::lexical_cast< std::string >( id ).c_str() + "]";
+            const QString keyNumber = keyHuman + tools::translate( "Inhabitant", "/Number" );
+            if( !dictionary.HasKey( keyNumber ) )
+                dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, human.number_ );
+            const QString keyAlerted = keyHuman + tools::translate( "Inhabitant", "/Alerted" );
+            if( !dictionary.HasKey( keyAlerted ) )
+                dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.alerted_ );
         }
     }
-    if( msg.has_alerted() )
-        alerted_ = msg.alerted();
     controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
 
@@ -254,7 +254,6 @@ void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ );
     displayer.Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
-    displayer.Display( tools::translate( "Inhabitant", "Alerted:" ), alerted_ );
     for( CIT_MotivationSatisfactions it = motivationSatisfactions_.begin(); it != motivationSatisfactions_.end(); ++it )
         displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( it->first.c_str() ), it->second );
     for( CIT_ResourceSatisfactions it = resourceSatisfactions_.begin(); it != resourceSatisfactions_.end(); ++it )
@@ -286,8 +285,7 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
                     .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ )
                     .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ )
                     .Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ )
-                    .Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ )
-                    .Display( tools::translate( "Inhabitant", "Alerted:" ), alerted_ );
+                    .Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
             for( CIT_MotivationSatisfactions satisfaction = motivationSatisfactions_.begin(); satisfaction != motivationSatisfactions_.end(); ++satisfaction )
                 ( *it )->Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( satisfaction->first.c_str() ), satisfaction->second );
             for( CIT_ResourceSatisfactions resource = resourceSatisfactions_.begin(); resource != resourceSatisfactions_.end(); ++resource )

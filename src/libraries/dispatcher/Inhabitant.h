@@ -58,7 +58,12 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< unsigned int, unsigned int > T_UrbanBlocks;
+    struct T_Block
+    {
+        unsigned int number_;
+        bool alerted_;
+    };
+    typedef std::map< unsigned int, T_Block > T_UrbanBlocks;
     typedef std::map< std::string, std::string > T_Extensions;
     typedef std::vector< int > T_UrbanObjectId;
 

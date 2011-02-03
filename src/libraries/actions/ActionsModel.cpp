@@ -149,6 +149,17 @@ Action_ABC* ActionsModel::CreateInhabitantChangeHealthStateAction( int healthy, 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateInhabitantChangeAlertedStateAction
+// Created: BCI 2011-02-03
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes )
+{
+    Action_ABC* action = factory_.CreateInhabitantChangeAlertedStateAction( alerted, selected, controller, agentTypes );
+    Register( action->GetId(), *action );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::CreateObjectMagicAction
 // Created: BCI 2011-01-10
 // -----------------------------------------------------------------------------
