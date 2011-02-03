@@ -16,7 +16,6 @@
 #include "actions/Enumeration.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
-#include "preparation/Weather.h"
 #include "meteo/PHY_Precipitation.h"
 #include "protocol/SimulationSenders.h"
 
@@ -29,7 +28,7 @@ using namespace parameters;
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
-: QGroupBox( 2, Qt::Horizontal, title, parent, "WeatherWidget" )
+    : QGroupBox( 2, Qt::Horizontal, title, parent, "WeatherWidget" )
 {
     new QLabel( tools::translate( "WeatherWidget", "Wind speed/direction:" ), this );
     QHBox* box = new QHBox( this );

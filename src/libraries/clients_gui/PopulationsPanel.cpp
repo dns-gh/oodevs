@@ -18,7 +18,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/PopulationPrototype.h"
 #include "clients_kernel/Team_ABC.h"
-#include "preparation/Tools.h"
+#include "Tools.h"
 
 using namespace gui;
 using namespace kernel;

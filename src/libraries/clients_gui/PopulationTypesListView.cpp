@@ -14,7 +14,7 @@
 #include "moc_PopulationTypesListView.cpp"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PopulationType.h"
-#include "preparation/Tools.h"
+#include "Tools.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
 

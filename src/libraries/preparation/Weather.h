@@ -29,7 +29,7 @@ class Weather
 public:
     //! @name Constructors/Destructor
     //@{
-    Weather();
+             Weather();
     explicit Weather( xml::xistream& xis );
     virtual ~Weather();
     //@}
