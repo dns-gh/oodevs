@@ -28,7 +28,6 @@ namespace client
 }
 
 class MIL_StructuralStateNotifier_ABC;
-class MIL_CheckPointOutArchive;
 class PHY_ResourceNetworkType;
 class UrbanObjectWrapper;
 class TER_Localisation;

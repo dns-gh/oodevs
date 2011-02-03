@@ -11,6 +11,7 @@
 #define __MIL_AffinitiesMap_h_
 
 #include <map>
+#include "MIL.h"
 
 namespace xml
 {
@@ -27,9 +28,6 @@ namespace sword
 {
     class UnitMagicAction;
 }
-
-class MIL_CheckPointInArchive;
-class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  MIL_AffinitiesMap
@@ -83,5 +81,7 @@ private:
     bool hasChanged_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_AffinitiesMap )
 
 #endif // __MIL_AffinitiesMap_h_
