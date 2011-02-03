@@ -213,6 +213,8 @@ namespace
 // -----------------------------------------------------------------------------
 double DEC_KnowledgeUrbanFunctions::GetPerception( const MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget )
 {
+    if( !pTarget.get() || !pPoint.get() )
+        return 0.;
     Functor dataFunctor( callerAgent, *pPoint, *pTarget );
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( callerAgent.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     const_cast< MIL_AgentPion& >( callerAgent ).Execute( *dataComputer );

@@ -1023,6 +1023,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
         DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( *terrainObject, false, result );
+    else
+        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point ) ));
     return result;
 }
 

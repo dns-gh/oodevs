@@ -93,7 +93,8 @@ void DEC_PerceptionFunctions::SetVisionModePoint( MIL_Agent_ABC& callerAgent, co
 // -----------------------------------------------------------------------------
 void DEC_PerceptionFunctions::SetVisionModePointPtr( MIL_Agent_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > point )
 {
-    callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModePoint( *point );
+    if( point.get() )
+        callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModePoint( *point );
 }
 
 // -----------------------------------------------------------------------------
