@@ -44,13 +44,13 @@ MIL_LivingArea::MIL_LivingArea()
 MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population )
     : population_( population )
     , hasChanged_( false )
+    , area_      ( 0.f )
 {
-    float totalArea = 0.f;
     xis >> xml::start( "living-area" )
-            >> xml::list( "urban-block", *this, &MIL_LivingArea::ReadUrbanBlock, totalArea )
+            >> xml::list( "urban-block", *this, &MIL_LivingArea::ReadUrbanBlock )
         >> xml::end;
     LoadAccommodations();
-    DistributeHumans( totalArea );
+    DistributeHumans( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,13 +95,13 @@ namespace
 // Name: MIL_LivingArea::ReadUrbanBlock
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis, float& area )
+void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis )
 {
-    unsigned int simId = MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) );
+    const unsigned int simId = MIL_AgentServer::GetWorkspace().GetEntityManager().ConvertUrbanIdToSimId( xis.attribute< unsigned int >( "id" ) );
     UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( simId ) );
     if( !object )
         xis.error( "Error in loading living urban block of population" );
-    area += object->GetLivingSpace() * GetStructuralState( *object );
+    area_ += object->GetLivingSpace() * GetStructuralState( *object );
     blocks_.push_back( T_Block( object , 0 ) );
 }
 
@@ -109,13 +109,14 @@ void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis, float& area )
 // Name: MIL_LivingArea::DistributeHumans
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::DistributeHumans( float area )
+void MIL_LivingArea::DistributeHumans( unsigned long population )
 {
+    population_ = population;
     std::sort( blocks_.begin(), blocks_.end(), boost::bind( &CompareLivingSpace< T_Block >, _1, _2 ) );
     unsigned long tmp = population_;
     for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
-        unsigned long person = static_cast< unsigned long >( it->first->GetLivingSpace() * GetStructuralState( *it->first ) * population_ / area );
+        unsigned long person = static_cast< unsigned long >( it->first->GetLivingSpace() * GetStructuralState( *it->first ) * population_ / area_ );
         if( tmp - person < 0 )
             person = tmp;
         it->second = person;
@@ -123,6 +124,7 @@ void MIL_LivingArea::DistributeHumans( float area )
     }
     if( tmp > 0 && !blocks_.empty() )
         blocks_.front().second += tmp;
+    hasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------

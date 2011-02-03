@@ -38,11 +38,10 @@
 // Created: SBO 2006-10-25
 // -----------------------------------------------------------------------------
 EditorFactory::EditorFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel )
-    : gui::EditorFactory()
-    , controllers_( controllers )
-    , model_( model )
+    : controllers_( controllers )
+    , model_      ( model )
     , staticModel_( staticModel )
-    , selected_( controllers )
+    , selected_   ( controllers )
     , modalDialog_( 0 )
 {
     controllers_.Register( *this );
@@ -57,7 +56,6 @@ EditorFactory::~EditorFactory()
     delete modalDialog_;
     controllers_.Unregister( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
@@ -303,6 +301,7 @@ void EditorFactory::Call( DotationsItem** const& value )
         result_ = 0;
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: EditorFactory::Call
 // Created: AME 2010-03-08

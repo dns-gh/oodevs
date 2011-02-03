@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Inhabitant.h"
 #include "MIL_InhabitantType.h"
+#include "MIL_AffinitiesMap.h"
 #include "MIL_AgentServer.h"
 #include "MIL_InhabitantSatisfactions.h"
 #include "MIL_LivingArea.h"
@@ -63,7 +64,6 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , nNbrDeadHumans_        ( 0 )
     , nNbrWoundedHumans_     ( 0 )
     , healthStateChanged_    ( false )
-    , affinitiesChanged_     ( false )
     , alerted_               ( false )
     , alertedStateHasChanged_( false )
 {
@@ -79,9 +79,6 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
         >> xml::end
         >> xml::optional >> xml::start( "extensions" )
             >> xml::list( "entry", *this, &MIL_Inhabitant::ReadExtension )
-        >> xml::end
-        >> xml::optional >> xml::start( "affinities" )
-            >> xml::list( "affinity", *this, &MIL_Inhabitant::ReadAffinity )
         >> xml::end;
 
     unsigned long population = nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_;
@@ -96,6 +93,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     std::map< std::string, unsigned int > occupations;
     pLivingArea_->GetUsagesOccupation( occupations );
     pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
+    pAffinities_.reset( new MIL_AffinitiesMap( xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +111,6 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     , nNbrDeadHumans_        ( 0 )
     , nNbrWoundedHumans_     ( 0 )
     , healthStateChanged_    ( false )
-    , affinitiesChanged_     ( false )
     , alerted_               ( false )
     , alertedStateHasChanged_( false )
 {
@@ -138,6 +135,7 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_LivingArea* pLivingArea;
     MIL_InhabitantSatisfactions* pSatisfactions;
+    MIL_AffinitiesMap* pAffinities;
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army_ABC*& >( pArmy_ );
@@ -148,9 +146,11 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> nNbrWoundedHumans_
          >> alerted_
          >> pSatisfactions
-         >> pLivingArea;
+         >> pLivingArea
+         >> pAffinities;
     pLivingArea_.reset( pLivingArea );
     pSatisfactions_.reset( pSatisfactions );
+    pAffinities_.reset( pAffinities );
     unsigned int size;
     file >> size;
     {
@@ -161,17 +161,6 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
             file >> first
                 >> second;
             extensions_[ first ] = second;
-        }
-    }
-    file >> size;
-    {
-        unsigned long first;
-        float second;
-        for( unsigned int i = 0; i < size; ++i )
-        {
-            file >> first
-                >> second;
-            affinities_[ first ] = second;
         }
     }
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
@@ -186,6 +175,7 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
 {
     const MIL_LivingArea* const pLivingArea = pLivingArea_.get();
     const MIL_InhabitantSatisfactions* const pSatisfactions = pSatisfactions_.get();
+    const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file << nID_
          << pArmy_
@@ -195,16 +185,12 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << nNbrWoundedHumans_
          << alerted_
          << pSatisfactions
-         << pLivingArea;
+         << pLivingArea
+         << pAffinities;
     unsigned int size;
     size = extensions_.size();
     file << size;
     for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
-        file << it->first
-             << it->second;
-    size = affinities_.size();
-    file << size;
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         file << it->first
              << it->second;
 }
@@ -228,15 +214,7 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
         << xml::content( "information", text_ );
             pLivingArea_->WriteODB( xos );
     pSatisfactions_->WriteODB( xos );
-        xos << xml::start( "affinities" );
-            for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-            {
-                xos << xml::start( "affinity" )
-                    << xml::attribute( "id", it->first )
-                    << xml::attribute( "value", it->second )
-                    << xml::end;
-            }
-        xos << xml::end;
+    pAffinities_->WriteODB( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,15 +224,6 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
 void MIL_Inhabitant::ReadExtension( xml::xistream& xis )
 {
     extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Inhabitant::ReadAffinity
-// Created: ABR 2011-01-28
-// -----------------------------------------------------------------------------
-void MIL_Inhabitant::ReadAffinity( xml::xistream& xis )
-{
-    affinities_[ xis.attribute< unsigned long >( "id" ) ] = xis.attribute< float >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -290,14 +259,9 @@ void MIL_Inhabitant::SendFullState() const
     msg().set_healthy( nNbrHealthyHumans_ );
     msg().set_dead( nNbrDeadHumans_ );
     msg().set_wounded( nNbrWoundedHumans_ );
+    pAffinities_->SendFullState( msg );
     pLivingArea_->SendFullState( msg );
     pSatisfactions_->SendFullState( msg );
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-    {
-        sword::PartyAdhesion& adhesion = *msg().add_adhesions();
-        adhesion.mutable_party()->set_id( it->first );
-        adhesion.set_value( it->second );
-    }
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -328,21 +292,14 @@ void MIL_Inhabitant::UpdateNetwork()
         msg().set_wounded( nNbrWoundedHumans_ );
         msg().set_dead( nNbrDeadHumans_ );
     }
-    if( affinitiesChanged_ )
-        for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-        {
-            sword::PartyAdhesion& adhesion = *msg().add_adhesions();
-            adhesion.mutable_party()->set_id( it->first );
-            adhesion.set_value( it->second );
-        }
     if( alertedStateHasChanged_ )
         msg().set_alerted( alerted_ );
+    pAffinities_->UpdateNetwork( msg );
     pLivingArea_->UpdateNetwork( msg );
     pSatisfactions_->UpdateNetwork( msg );
-    if( healthStateChanged_ || affinitiesChanged_ || alertedStateHasChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() )
+    if( healthStateChanged_ || alertedStateHasChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().adhesions_size() > 0 )
         msg.Send( NET_Publisher_ABC::Publisher() );
     healthStateChanged_ = false;
-    affinitiesChanged_ = false;
     alertedStateHasChanged_ = false;
 }
 
@@ -362,7 +319,7 @@ void MIL_Inhabitant::OnReceiveInhabitantMagicAction( const sword::UnitMagicActio
             OnReceiveMsgChangeHealthState( msg );
             break;
         case sword::UnitMagicAction::inhabitant_change_affinities:
-            OnReceiveMsgChangeAffinities( msg );
+            pAffinities_->OnReceiveMsgChangeAffinities( msg );
             break;
         default:
             assert( false );
@@ -403,28 +360,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     nNbrDeadHumans_    = dead.value().Get( 0 ).quantity();
     healthStateChanged_ = true;
     pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Inhabitant::OnReceiveMsgChangeAdhesionList
-// Created: ABR 2011-01-26
-// -----------------------------------------------------------------------------
-void MIL_Inhabitant::OnReceiveMsgChangeAffinities( const sword::UnitMagicAction& msg )
-{
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
-
-    const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list = msg.parameters().elem( 0 ).value();
-
-    for( int i = 0; i < list.size(); ++i )
-    {
-        sword::MissionParameter_Value element = list.Get( i );
-        IT_Affinities affinity = affinities_.find( element.list( 0 ).identifier() );
-        if ( affinity == affinities_.end() )
-            throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
-        affinity->second = element.list( 1 ).areal();
-    }
-    affinitiesChanged_ = true;
+    pLivingArea_->DistributeHumans( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -53,6 +53,7 @@ public:
     //@{
     virtual void StartMotivation( const std::string& motivation );
 
+    void DistributeHumans( unsigned long population );
     void Register( MIL_StructuralStateNotifier_ABC& structural );
     void WriteODB( xml::xostream& xos ) const;
     float HealthCount() const;
@@ -90,9 +91,8 @@ private:
 private:
     //! @name Helpers
     //@{
-    void ReadUrbanBlock( xml::xistream& xis, float& area );
+    void ReadUrbanBlock( xml::xistream& xis );
     void LoadAccommodations();
-    void DistributeHumans( float area );
     float GetProportion( const T_Block& block, const std::string& motivation ) const;
     T_Blocks GetBlockUsage( const std::string& motivation ) const;
     unsigned int GetOccupation( const T_Block& block, const std::string& motivation ) const;
@@ -105,6 +105,7 @@ private:
     T_Accommodations accommodations_;
     T_Blocks blocks_;
     mutable bool hasChanged_;
+    float area_;
     //@}
 };
 

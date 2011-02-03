@@ -26,6 +26,7 @@ namespace xml
     class xistream;
 }
 
+class MIL_AffinitiesMap;
 class MIL_Army_ABC;
 class MIL_InhabitantType;
 class MIL_StructuralStateNotifier_ABC;
@@ -90,14 +91,12 @@ private:
     //! @name Magic actions
     //@{
     void OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg );
-    void OnReceiveMsgChangeAffinities( const sword::UnitMagicAction& msg );
     //@}
 
     //! @name Network
     //@{
     void SendDestruction() const;
     void ReadExtension( xml::xistream& xis );
-    void ReadAffinity( xml::xistream& xis );
     //@}
 
 private:
@@ -105,10 +104,6 @@ private:
     //@{
     typedef std::map< std::string, std::string > T_Extensions;
     typedef T_Extensions::const_iterator       CIT_Extensions;
-
-    typedef std::map< unsigned long, float >     T_Affinities;
-    typedef T_Affinities::iterator              IT_Affinities;
-    typedef T_Affinities::const_iterator       CIT_Affinities;
     //@}
 
 private:
@@ -120,6 +115,7 @@ private:
     std::auto_ptr< MIL_LivingArea > pLivingArea_;
     std::auto_ptr< MIL_Schedule_ABC > pSchedule_;
     std::auto_ptr< MIL_InhabitantSatisfactions > pSatisfactions_;
+    std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
     std::string text_;
     bool affinitiesChanged_;
     unsigned long nNbrHealthyHumans_;
@@ -129,7 +125,6 @@ private:
     bool alerted_;
     bool alertedStateHasChanged_;
     T_Extensions extensions_;
-    T_Affinities affinities_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Inhabitant* inhabitant, const unsigned int /*version*/ );
