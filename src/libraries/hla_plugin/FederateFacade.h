@@ -34,7 +34,7 @@ namespace plugins
 {
 namespace hla
 {
-    class AgentListener_ABC;
+    class AggregateEntityClass;
     class AgentSubject_ABC;
     class RtiAmbassadorFactory_ABC;
 
@@ -49,7 +49,7 @@ class FederateFacade : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, const RtiAmbassadorFactory_ABC& factory, unsigned int lookAhead );
+             FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& factory, unsigned int lookAhead );
     virtual ~FederateFacade();
     //@}
 
@@ -62,8 +62,7 @@ private:
     //! @name Member data
     //@{
     bool joined_;
-    std::auto_ptr< AgentListener_ABC > agentClass_;
-    std::auto_ptr< AgentSubject_ABC > subject_;
+    std::auto_ptr< AggregateEntityClass > agentClass_;
     std::auto_ptr< ::hla::TimeFactory_ABC > timeFactory_;
     std::auto_ptr< ::hla::TimeIntervalFactory_ABC > intervalFactory_;
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;

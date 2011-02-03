@@ -34,7 +34,7 @@ namespace hla
 */
 // Created: AGE 2008-02-22
 // =============================================================================
-class AggregateEntityClass : public AgentListener_ABC
+class AggregateEntityClass : private AgentListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -43,6 +43,7 @@ public:
     virtual ~AggregateEntityClass();
     //@}
 
+private:
     //! @name Operations
     //@{
     virtual void Created( dispatcher::Agent_ABC& agent );

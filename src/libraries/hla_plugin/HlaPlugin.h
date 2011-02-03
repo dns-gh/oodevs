@@ -31,6 +31,7 @@ namespace hla
 {
     class FederateFacade;
     class RtiAmbassadorFactory_ABC;
+    class AgentSubject_ABC;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -59,6 +60,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< RtiAmbassadorFactory_ABC > pFactory_;
+    std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< FederateFacade > federate_;
     //@}
 };

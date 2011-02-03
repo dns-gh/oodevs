@@ -10,7 +10,6 @@
 #include "hla_plugin_pch.h"
 #include "FederateFacade.h"
 #include "AggregateEntityClass.h"
-#include "ExtensionFactory.h"
 #include "RtiAmbassadorFactory_ABC.h"
 #include <hla/hla_lib.h>
 #include <hla/SimpleTimeFactory.h>
@@ -26,9 +25,8 @@ using namespace hla;
 // Name: FederateFacade constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& model, const RtiAmbassadorFactory_ABC& factory, unsigned int lookAhead )
+FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& factory, unsigned int lookAhead )
     : joined_         ( false )
-    , subject_        ( new ExtensionFactory( model ) )
     , timeFactory_    ( new SimpleTimeFactory() )
     , intervalFactory_( new SimpleTimeIntervalFactory() )
     , ambassador_     ( factory.CreateAmbassador( *timeFactory_, *intervalFactory_, RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
@@ -44,7 +42,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& mod
         // NOTHING
     }
     if( joined_ )
-        agentClass_.reset( new AggregateEntityClass( *federate_, *subject_ ) );
+        agentClass_.reset( new AggregateEntityClass( *federate_, subject ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +51,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, dispatcher::Model_ABC& mod
 // -----------------------------------------------------------------------------
 FederateFacade::~FederateFacade()
 {
-    agentClass_.release();
+    agentClass_.reset();
     if( joined_ )
         federate_->Resign();
 }
