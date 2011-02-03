@@ -16,7 +16,7 @@ package sword;
  */
 
 /** @struct OrderAck
-    @brief A container for order acknowledgement error message
+    @brief Defines order acknowledgement error codes
     @see UnitOrder AutomatOrder CrowdOrder FragOrder
 */
 message OrderAck {
@@ -40,30 +40,27 @@ message OrderAck {
 }
 
 /** @struct TaskCreationRequestAck
-    @brief An agent order execution request acknowledgement message
-
+    @brief Acknowledges an agent task creation request
     @see UnitOrder
     @todo gather UnitOrder, AutomatOrder and CrowdOrder into one message
 */
 message TaskCreationRequestAck {
-    required Tasker             tasker     = 1; //!< Identifier of the agent, automat, crowd on which the order was issued @see Tasker
-    required OrderAck.ErrorCode error_code = 2; //!< Reason for the failure of an agent order execution operation @see OrderAck.ErrorCode
+    required Tasker             tasker     = 1; //!< Identifier of the agent, automat, crowd on which the order was issued
+    required OrderAck.ErrorCode error_code = 2; //!< Reason for the failure of an agent order execution operation
 }
 
 /** @struct FragOrderAck
     @brief A fragmentary order execution request acknowledgement message
-
     @see FragOrder
     @todo gather with UnitOrder, AutomatOrder and CrowdOrder into one message ?
 */
 message FragOrderAck {
-    required Tasker             tasker     = 1; //!< Identifier of the agent, automat or crowd on which the fragmentary order was issued @see Tasker
-    required OrderAck.ErrorCode error_code = 2; //!< Reason for the failure of a fragmentary order execution operation @see OrderAck.ErrorCode
+    required Tasker             tasker     = 1; //!< Identifier of the agent, automat or crowd on which the fragmentary order was issued
+    required OrderAck.ErrorCode error_code = 2; //!< Reason for the failure of a fragmentary order execution operation
 }
 
 /** @struct SetAutomatModeAck
-    @brief An automat mode change request acknowledgement message
-
+    @brief Acknowledges an automat mode change request
     @see SetAutomatMode
 */
 message SetAutomatModeAck {
@@ -80,7 +77,7 @@ message SetAutomatModeAck {
 }
 
 /** @struct UnitActionAck
-    @brief A container for agent action acknowledgement error message
+    @brief Acknowledges an agent action request
     @todo rename to AgentActionAck
 */
 message UnitActionAck {
@@ -97,10 +94,7 @@ message UnitActionAck {
 }
 
 /** @struct UnitCreationRequestAck
-    @brief An agent creation request acknowledgement message
-
-    This message is sent in response to an agent creation request.
-
+    @brief Acknowledges an agent creation request
     @see UnitCreationRequest
     @todo rename to AgentCreationRequestAck
 */
@@ -109,9 +103,7 @@ message UnitCreationRequestAck {
 }
 
 /** @struct UnitMagicActionAck
-    @brief An agent magic action execution request acknowledgement message.
-
-    This message is sent in response to an agent magic action request
+    @brief Acknowledges an agent magic action request
     @see UnitMagicAction
     @todo rename to AgentMagicActionRequestAck
 */
@@ -121,10 +113,7 @@ message UnitMagicActionAck {
 }
 
 /** @struct MagicActionAck
-    @brief A magic action execution request acknowledgement message
-
-    This message is sent when a magic action is issued in response to a client request.
-
+    @brief Acknowledges a magic action request
     @see MagicAction
     @todo rename to MagicActionRequestAck
 */
@@ -140,10 +129,7 @@ message MagicActionAck {
 }
 
 /** @struct ObjectMagicActionAck
-    @brief An object magic action execution request acknowledgement message
-
-    This message is sent when an object magic action is issued in response to a client request
-
+    @brief Acknowledges an object magic action request
     @see ObjectMagicAction
     @todo rename to ObjectMagicActionRequestAck
 */
@@ -226,10 +212,7 @@ message HierarchyModificationAck {
 }
 
 /** @struct AutomatChangeKnowledgeGroupAck
-    @brief An acknowledgement message to an automat's knowledge group change request
-
-    This message is sent when an automat's knowledge group change is realized in response to a client request.
-
+    @brief Acknowledges an automat knowledge group change request
     @see UnitMagicAction of type "change_knowledge_group"
     @todo gather magic action acks
 */
@@ -237,11 +220,17 @@ message AutomatChangeKnowledgeGroupAck {
     required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat knowledge group change operation @see HierarchyModificationAck.ErrorCode
 }
 
+/** @struct AutomatChangeKnowledgeGroup
+    @brief Notifies of an automat knowledge group change
+*/
+message AutomatChangeKnowledgeGroup {
+   required AutomatId        automat         = 1; //!< The automat identifier
+   required PartyId          party           = 2; //!< The party identifier
+   required KnowledgeGroupId knowledge_group = 3; //!< The knowledge group identifier
+}
+
 /** @struct ChangeLogisticLinksAck
-    @brief An acknowledgement message to an automat's logistic links change request
-
-    This message is sent when an automat's logistic links change is realized in response to a client request.
-
+    @brief Acknowledges an automat logistic links change request
     @see UnitMagicAction of type UnitMagiAction.Type.change_logistic_links
     @todo gather magic action acks
 */
@@ -250,10 +239,7 @@ message ChangeLogisticLinksAck {
 }
 
 /** @struct AutomatChangeSuperiorAck
-    @brief An acknowledgement message to an automat's superior change request
-
-    This message is sent when an automat's superior change is realized in response to a client request.
-
+    @brief Acknowledges an automat superior change request
     @see UnitMagicAction of UnitMagiAction.Type.change_automat_superior
     @todo gather magic action acks
 */
@@ -262,10 +248,7 @@ message AutomatChangeSuperiorAck {
 }
 
 /** @struct UnitChangeSuperiorAck
-    @brief An acknowledgement message to an agent's superior change request
-
-    This message is sent when an agent's superior change is realized in response to a client request.
-
+    @brief Acknowledges an agent superior change request
     @see UnitMagicAction of UnitMagiAction.Type.unit_change_superior
     @todo gather magic action acks
 */
@@ -274,10 +257,7 @@ message UnitChangeSuperiorAck {
 }
 
 /** @struct LogSupplyPushFlowAck
-    @brief An acknowledgement message to a logistic pushed flow request
-
-    This message is sent when a logistic pushed flow is realized in response to a client request.
-
+    @brief Acknowledges a push flow request
     @see UnitMagicAction of UnitMagiAction.Type.log_supply_push_flow
     @todo gather magic action acks
 */
@@ -294,10 +274,7 @@ message LogSupplyPushFlowAck {
 }
 
 /** @struct LogSupplyPullFlowAck
-    @brief An acknowledgement message to a logistic pulled flow request
-
-    This message is sent when a logistic pulled flow is realized in response to a client request.
-
+    @brief Acknowledges a pull flow request
     @see UnitMagicAction of UnitMagiAction.Type.log_supply_pull_flow
     @todo gather magic action acks
 */
@@ -314,10 +291,7 @@ message LogSupplyPullFlowAck {
 }
 
 /** @struct LogSupplyChangeQuotasAck
-    @brief An acknowledgement message to a quota allocation change request
-
-    This message is sent when a quota allocation is changed in response to a client request.
-
+    @brief Acknowledges a quota allocation change request
     @see UnitMagicAction of UnitMagiAction.Type.log_supply_change_quotas
     @todo gather magic action acks
 */
@@ -334,7 +308,7 @@ message LogSupplyChangeQuotasAck {
 }
 
 /** @struct ActionCreateFireOrderAck
-    @brief An acknowledgement message to a creation fire order request
+    @brief Acknowledges a creation fire order request
     @see ActionCreateFireOrder
 */
 message ActionCreateFireOrderAck {
@@ -353,7 +327,7 @@ message ActionCreateFireOrderAck {
 }
 
 /** @struct ChangePopulationMagicActionAck
-    @brief An acknowledgement message to a population change magic action request
+    @brief Acknowledges a population change magic action request
     @see ChangePopulationMagicAction
 */
 message ChangePopulationMagicActionAck {
@@ -371,7 +345,7 @@ message ChangePopulationMagicActionAck {
 }
 
 /** @struct UrbanMagicActionAck
-    @brief An acknowledgement message to a urban magic action request
+    @brief Acknowledges a urban magic action request
     @see UrbanMagicAction
 */
 message UrbanMagicActionAck {
@@ -388,7 +362,7 @@ message UrbanMagicActionAck {
 }
 
 /** @struct ControlInformation
-    @brief A control information message containing various global informations
+    @brief Provides various global informations
     @todo Find when and why this is sent (probably when a client connects ?)
 */
 message ControlInformation {
@@ -404,7 +378,7 @@ message ControlInformation {
 }
 
 /** @struct ControlProfilingInformation
-    @brief A control profiling information message
+    @brief Provides profiling information message
     @deprecated The message seems to never be actually sent by the simulation
 */
 message ControlProfilingInformation {

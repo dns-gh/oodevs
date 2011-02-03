@@ -9,46 +9,199 @@
 
 package sword;
 
-// Entity Id types
-message AutomatId                     { required uint32              id = 1; }
-message AutomatIdList                 { repeated AutomatId         elem = 1; }
-message FormationId                   { required uint32              id = 1; }
-message FormationIdList               { repeated FormationId       elem = 1; }
-message KnowledgeGroupId              { required uint32              id = 1; }
-message ObjectId                      { required uint32              id = 1; }
-message ObjectKnowledgeId             { required uint32              id = 1; }
-message ObjectKnowledgeIdList         { repeated ObjectKnowledgeId elem = 1; }
-message PartyId                       { required uint32              id = 1; }
-message PartyIdList                   { repeated PartyId           elem = 1; }
-message CrowdId                       { required uint32              id = 1; }
-message CrowdIdList                   { repeated CrowdId           elem = 1; }
-message CrowdKnowledgeId              { required uint32              id = 1; }
-message CrowdConcentrationId          { required uint32              id = 1; }
-message CrowdConcentrationKnowledgeId { required uint32              id = 1; }
-message CrowdFlowId                   { required uint32              id = 1; }
-message CrowdFlowKnowledgeId          { required uint32              id = 1; }
-message UnitId                        { required uint32              id = 1; }
-message UnitIdList                    { repeated UnitId            elem = 1; }
-message UnitKnowledgeId               { required uint32              id = 1; }
-message UnitKnowledgeIdList           { repeated UnitKnowledgeId   elem = 1; }
-message UrbanObjectKnowledgeId        { required uint32              id = 1; }
-message ClientObjectId                { required uint32              id = 1; }
-message PlannedWorkId                 { required uint32              id = 1; }
-message PopulationId                  { required uint32              id = 1; }
-message PopulationIdList              { repeated uint32              id = 1; }
-
-message Tasker {
-    optional AutomatId    automat    = 1;
-    optional FormationId  formation  = 2;
-    optional CrowdId      crowd      = 3;
-    optional UnitId       unit       = 4;
-    optional PartyId      party      = 5;
-    optional PopulationId population = 6;
+/** @struct AutomatId
+    @brief Defines an automat identifier
+*/
+message AutomatId {
+    required uint32 id = 1; //!< The identifier
 }
 
+/** @struct AutomatIdList
+    @brief Defines a list of automat identifiers
+*/
+message AutomatIdList {
+    repeated AutomatId elem = 1; //!< The identifiers
+}
+
+/** @struct FormationId
+    @brief Defines a formation identifier
+*/
+message FormationId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct FormationIdList
+    @brief Defines a list of formation identifiers
+*/
+message FormationIdList {
+    repeated FormationId elem = 1; //!< The identifiers
+}
+
+/** @struct KnowledgeGroupId
+    @brief Defines a knowledge group identifier
+*/
+message KnowledgeGroupId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct ObjectId
+    @brief Defines an object identifier
+*/
+message ObjectId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct ObjectKnowledgeId
+    @brief Defines an object knowledge identifier
+*/
+message ObjectKnowledgeId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct ObjectKnowledgeIdList
+    @brief Defines a list of object knowledge identifiers
+*/
+message ObjectKnowledgeIdList {
+    repeated ObjectKnowledgeId elem = 1; //!< The identifiers
+}
+
+/** @struct PartyId
+    @brief Defines a party identifier
+*/
+message PartyId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct PartyIdList
+    @brief Defines a list of party identifiers
+*/
+message PartyIdList {
+    repeated PartyId elem = 1; //!< The identifiers
+}
+
+/** @struct CrowdId
+    @brief Defines a crowd identifier
+*/
+message CrowdId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct CrowdIdList
+    @brief Defines a list of crowd identifiers
+*/
+message CrowdIdList {
+    repeated CrowdId elem = 1; //!< The identifiers
+}
+
+/** @struct CrowdKnowledgeId
+    @brief Defines a crowd knowledge identifier
+*/
+message CrowdKnowledgeId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct CrowdConcentrationId
+    @brief Defines a crowd concentration identifier
+*/
+message CrowdConcentrationId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct CrowdConcentrationKnowledgeId
+    @brief Defines a crowd concentration knowledge identifier
+*/
+message CrowdConcentrationKnowledgeId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct CrowdFlowId
+    @brief Defines a crowd flow identifier
+*/
+message CrowdFlowId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct CrowdFlowKnowledgeId
+    @brief Defines a crowd flow knowledge identifier
+*/
+message CrowdFlowKnowledgeId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct UnitId
+    @brief Defines a unit identifier
+*/
+message UnitId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct UnitIdList
+    @brief Defines a list of unit identifiers
+*/
+message UnitIdList {
+    repeated UnitId elem = 1; //!< The identifiers
+}
+
+/** @struct UnitKnowledgeId
+    @brief Defines a unit knowledge identifier
+*/
+message UnitKnowledgeId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct UnitKnowledgeIdList
+    @brief Defines a list of unit knowledge identifiers
+*/
+message UnitKnowledgeIdList {
+    repeated UnitKnowledgeId elem = 1; //!< The identifiers
+}
+
+/** @struct UrbanObjectKnowledgeId
+    @brief Defines a urban object knowledge identifier
+*/
+message UrbanObjectKnowledgeId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct ClientObjectId
+    @brief Defines a client object identifier
+*/
+message ClientObjectId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct PlannedWorkId
+    @brief Defines a planned work identifier
+*/
+message PlannedWorkId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct PopulationId
+    @brief Defines a population identifier
+*/
+message PopulationId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct Tasker
+    @brief Encapsulates all possible actors
+*/
+message Tasker {
+    optional AutomatId    automat    = 1; //!< An automat
+    optional FormationId  formation  = 2; //!< A formation
+    optional CrowdId      crowd      = 3; //!< A crowd
+    optional UnitId       unit       = 4; //!< A unit
+    optional PartyId      party      = 5; //!< A party
+    optional PopulationId population = 6; //!< A population
+}
+
+/** @struct ParentEntity
+    @brief Defines a parent entity which can be either an automat or a formation
+*/
 message ParentEntity {
-    optional AutomatId   automat   = 1;
-    optional FormationId formation = 2;
+    optional AutomatId   automat   = 1; //!< An automat
+    optional FormationId formation = 2; //!< A formation
 }
 
 // messenger entities
@@ -84,18 +237,15 @@ message NationalityType       { required uint32 id = 1; }
 message ResourceNetworkType   { required string name = 1; }
 message PopulationType        { required uint32 id = 1; }
 
+/** @struct Heading
+    @brief Defines a heading
+*/
 message Heading {
-   required int32 heading = 1;
+   required int32 heading = 1; //!< The direction in degrees
 }
 
 message DateTime {
    required string data = 1;
-}
-
-message AutomatChangeKnowledgeGroup {
-   required AutomatId        automat         = 1;
-   required PartyId          party           = 2;
-   required KnowledgeGroupId knowledge_group = 3;
 }
 
 message ChangeLogisticLinks {
