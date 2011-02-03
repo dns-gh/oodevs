@@ -76,10 +76,9 @@ private:
     //! @name Types
     //@{
     typedef std::pair< UrbanObjectWrapper*, unsigned int > T_Block;
-
-    typedef std::vector< T_Block >     T_Blocks;
-    typedef T_Blocks::iterator        IT_Blocks;
-    typedef T_Blocks::const_iterator CIT_Blocks;
+    typedef std::vector< T_Block >                         T_Blocks;
+    typedef T_Blocks::iterator                            IT_Blocks;
+    typedef T_Blocks::const_iterator                     CIT_Blocks;
 
     typedef std::map< unsigned long, unsigned int > T_Identifiers;
     typedef T_Identifiers::const_iterator         CIT_Identifiers;

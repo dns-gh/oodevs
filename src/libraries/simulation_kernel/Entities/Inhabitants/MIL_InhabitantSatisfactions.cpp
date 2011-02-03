@@ -240,7 +240,7 @@ void MIL_InhabitantSatisfactions::ComputeMotivationSatisfactions( const std::map
          if( motivations_.find( it->first ) != motivations_.end() && motivations_[ it->first ] != satisfaction )
              motivationChanged_ = true;
          motivations_[ it->first ] = satisfaction;
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------

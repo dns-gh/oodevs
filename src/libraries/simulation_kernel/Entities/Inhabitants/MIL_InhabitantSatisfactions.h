@@ -31,7 +31,7 @@ class PHY_ResourceNetworkType;
 */
 // Created: JSR 2011-01-27
 // =============================================================================
-class MIL_InhabitantSatisfactions : boost::noncopyable
+class MIL_InhabitantSatisfactions : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

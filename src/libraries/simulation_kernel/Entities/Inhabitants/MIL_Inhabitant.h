@@ -13,7 +13,6 @@
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Objects/MIL_StructuralStateNotifier_ABC.h"
-#include <boost/noncopyable.hpp>
 #include <memory>
 
 namespace sword
@@ -40,7 +39,6 @@ class TER_Localisation;
 // =============================================================================
 class MIL_Inhabitant : public MIL_Entity_ABC
                      , public MIL_StructuralStateNotifier_ABC
-                     , boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

@@ -265,14 +265,12 @@ float MIL_LivingArea::Consume( const PHY_ResourceNetworkType& resource, unsigned
     double personalConsumption = static_cast< double >( consumption ) / population_;
     float satisfaction = 0;
     BOOST_FOREACH( const T_Block& block, blocks_ )
-    {
         if( block.second > 0 )
             if( ResourceNetworkCapacity* capacity = block.first->Retrieve< ResourceNetworkCapacity >() )
             {
                 satisfaction += block.second * capacity->GetConsumptionState( resource.GetId() );
                 capacity->AddConsumption( resource.GetId(), static_cast< unsigned int >( block.second * personalConsumption + 0.5 ) );
             }
-    }
     return satisfaction / population_;
 }
 
@@ -284,10 +282,8 @@ float MIL_LivingArea::HealthCount() const
 {
     float healthCount = 0;
     BOOST_FOREACH( const T_Block& block, blocks_ )
-    {
         if( block.first->Retrieve< MedicalCapacity >() )
             healthCount += GetStructuralState( *block.first);
-    }
     return healthCount;
 }
 
@@ -390,9 +386,7 @@ float MIL_LivingArea::GetProportion( const T_Block& block, const std::string& mo
 bool MIL_LivingArea::Intersect2DWithLocalisation( const TER_Localisation& localisation ) const
 {
     BOOST_FOREACH( const T_Block& block, blocks_ )
-    {
         if( block.first->Intersect2DWithLocalisation( localisation ) )
             return true;
-    }
     return false;
 }
