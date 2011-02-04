@@ -161,7 +161,7 @@ namespace
             QFont result( font_ );
             result.setBold( result.bold() || styles_.contains( 'b' ) );
             result.setItalic( result.italic() || styles_.contains( 'i' ) );
-            result.setUnderline( result.underline() || styles_.contains( 'u' ) );
+            result.setUnderline( result.underline() || styles_.contains( 'u' ) || styles_.contains( 'a' ) );
             return result;
         }
         QColor color_;
@@ -180,15 +180,14 @@ void GlTooltip::EndDisplay()
         message_ = currentItem_ + " " + message_ + "\n";
     else if( ! message_.isEmpty() )
         message_ += "\n";
-
-    QRegExp rx( "[<>](/?[biu])[<>]" );
+    message_.replace( QRegExp( "<a *href=\".*\" *>" ), "<a>" );
+    QRegExp rx( "<(/?[abiu])>" );
     QStringList styles;
     if( rx.search( message_ ) > 0 )
     {
         styles = rx.capturedTexts();
         styles.pop_front();
     }
-
     const QStringList list = QStringList::split( rx, message_ );
     ::Style style( font_ );
     QStringList::const_iterator itStyle = styles.begin();
