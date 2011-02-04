@@ -10,6 +10,7 @@
 #ifndef shield_Tools_h
 #define shield_Tools_h
 
+#include <google/protobuf/descriptor.h>
 #include <boost/assign/list_of.hpp>
 
 namespace shield
@@ -39,15 +40,26 @@ namespace shield
 #define CONVERT( field ) \
     CONVERT_TO( field, field )
 
-#define CONVERT_ENUM_TO( from_field, to_field, mapping ) \
-    if( from.has_##from_field() ) to->set_##to_field( ConvertEnum( from.from_field(), boost::assign::map_list_of mapping ) )
+#define CONVERT_ENUM_EXT( from_field, to_field, mapping ) \
+    { \
+        const ::google::protobuf::FieldDescriptor* fromField = from.descriptor()->FindFieldByName( BOOST_PP_STRINGIZE( from_field ) ); \
+        const ::google::protobuf::FieldDescriptor* toField = to->descriptor()->FindFieldByName( BOOST_PP_STRINGIZE( to_field ) ); \
+        if( ! fromField || ! fromField->enum_type() ) \
+            throw std::runtime_error( "enumeration field '" BOOST_PP_STRINGIZE( from_field ) "' not found in '" + from.descriptor()->full_name() + "'" ); \
+        if( ! toField || ! toField->enum_type() ) \
+            throw std::runtime_error( "enumeration field '" BOOST_PP_STRINGIZE( to_field ) "' not found in '" + to->descriptor()->full_name() + "'" ); \
+        if( fromField->enum_type()->value_count() > \
+            toField->enum_type()->value_count() ) \
+               throw std::runtime_error( "source values cannot all be mapped to destination values of field '" BOOST_PP_STRINGIZE( to_field ) "'" ); \
+        if( fromField->enum_type()->value_count() != \
+            int( boost::assign::map_list_of mapping .size() ) ) \
+                throw std::runtime_error( "missing values pair in mapping for field '" BOOST_PP_STRINGIZE( from_field ) "'" ); \
+        if( from.has_##from_field() ) to->set_##to_field( ConvertEnum( from.from_field(), boost::assign::map_list_of mapping ) ); \
+    }
 #define CONVERT_ENUM( field, mapping ) \
-    CONVERT_ENUM_TO( field, field, mapping )
-
-#define CONVERT_ENUM_EXT( field, type, mapping ) \
-    assert( from.type##_descriptor()->value_count() == to->type##_descriptor()->value_count() ); \
-    assert( from.type##_descriptor()->value_count() == int( boost::assign::map_list_of mapping .size() ) ); \
-    CONVERT_ENUM( field, mapping )
+    CONVERT_ENUM_EXT( field, field, mapping )
+#define CONVERT_ENUM_TO( from_field, to_field, mapping ) \
+    CONVERT_ENUM_EXT( from_field, to_field, mapping )
 
 #define CONVERT_ID_TO( from_field, to_field ) \
     to->mutable_##to_field()->set_id( from.from_field().id() )

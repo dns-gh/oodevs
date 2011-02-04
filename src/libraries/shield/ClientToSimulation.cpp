@@ -9,7 +9,6 @@
 
 #include "ClientToSimulation.h"
 #include "ClientTools.h"
-#include <google/protobuf/descriptor.h>
 
 using namespace shield;
 
@@ -195,10 +194,10 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& fro
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgObjectMagicAction& from, sword::ObjectMagicAction* to )
 {
     CONVERT_ID( object );
-    CONVERT_ENUM_EXT( type, Type, ( MsgsClientToSim::MsgObjectMagicAction::create, sword::ObjectMagicAction::create )
-                                  ( MsgsClientToSim::MsgObjectMagicAction::update, sword::ObjectMagicAction::update )
-                                  ( MsgsClientToSim::MsgObjectMagicAction::destroy, sword::ObjectMagicAction::destroy )
-                                  ( MsgsClientToSim::MsgObjectMagicAction::request, sword::ObjectMagicAction::request ) );
+    CONVERT_ENUM( type, ( MsgsClientToSim::MsgObjectMagicAction::create, sword::ObjectMagicAction::create )
+                        ( MsgsClientToSim::MsgObjectMagicAction::update, sword::ObjectMagicAction::update )
+                        ( MsgsClientToSim::MsgObjectMagicAction::destroy, sword::ObjectMagicAction::destroy )
+                        ( MsgsClientToSim::MsgObjectMagicAction::request, sword::ObjectMagicAction::request ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 
@@ -209,10 +208,10 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgObjectMagicAction& f
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgKnowledgeMagicAction& from, sword::KnowledgeMagicAction* to )
 {
     CONVERT_ID( knowledge_group );
-    CONVERT_ENUM_EXT( type, Type, ( MsgsClientToSim::MsgKnowledgeMagicAction::enable, sword::KnowledgeMagicAction::enable )
-                                  ( MsgsClientToSim::MsgKnowledgeMagicAction::update_party, sword::KnowledgeMagicAction::update_party )
-                                  ( MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent, sword::KnowledgeMagicAction::update_party_parent )
-                                  ( MsgsClientToSim::MsgKnowledgeMagicAction::update_type, sword::KnowledgeMagicAction::update_type ) );
+    CONVERT_ENUM( type, ( MsgsClientToSim::MsgKnowledgeMagicAction::enable, sword::KnowledgeMagicAction::enable )
+                        ( MsgsClientToSim::MsgKnowledgeMagicAction::update_party, sword::KnowledgeMagicAction::update_party )
+                        ( MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent, sword::KnowledgeMagicAction::update_party_parent )
+                        ( MsgsClientToSim::MsgKnowledgeMagicAction::update_type, sword::KnowledgeMagicAction::update_type ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 
@@ -222,12 +221,12 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgKnowledgeMagicAction
 // -----------------------------------------------------------------------------
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgMagicAction& from, sword::MagicAction* to )
 {
-    CONVERT_ENUM_EXT( type, Type, ( MsgsClientToSim::MsgMagicAction::global_weather, sword::MagicAction::global_weather )
-                                  ( MsgsClientToSim::MsgMagicAction::local_weather, sword::MagicAction::local_weather )
-                                  ( MsgsClientToSim::MsgMagicAction::change_diplomacy, sword::MagicAction::change_diplomacy )
-                                  ( MsgsClientToSim::MsgMagicAction::create_knowledge_group, sword::MagicAction::create_knowledge_group )
-                                  ( MsgsClientToSim::MsgMagicAction::change_resource_network_properties, sword::MagicAction::change_resource_network_properties )
-                                  ( MsgsClientToSim::MsgMagicAction::create_fire_order_on_location, sword::MagicAction::create_fire_order_on_location ) );
+    CONVERT_ENUM( type, ( MsgsClientToSim::MsgMagicAction::global_weather, sword::MagicAction::global_weather )
+                        ( MsgsClientToSim::MsgMagicAction::local_weather, sword::MagicAction::local_weather )
+                        ( MsgsClientToSim::MsgMagicAction::change_diplomacy, sword::MagicAction::change_diplomacy )
+                        ( MsgsClientToSim::MsgMagicAction::create_knowledge_group, sword::MagicAction::create_knowledge_group )
+                        ( MsgsClientToSim::MsgMagicAction::change_resource_network_properties, sword::MagicAction::change_resource_network_properties )
+                        ( MsgsClientToSim::MsgMagicAction::create_fire_order_on_location, sword::MagicAction::create_fire_order_on_location ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 

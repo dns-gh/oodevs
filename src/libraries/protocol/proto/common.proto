@@ -420,14 +420,6 @@ enum EnumSimulationState {
     loading = 3; //!< Loading
 }
 
-/** @enum EnumDispatcherState
-    @brief Defines the different states of the dispatcher
-*/
-enum EnumDispatcherState {
-    available   = 0; //!< Available
-    unavailable = 1; //!< Unvailable
-}
-
 /** @enum EnumAutomatMode
     @brief Defines the different states of an automat
 */

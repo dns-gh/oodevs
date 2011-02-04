@@ -19,19 +19,19 @@ package sword;
  */
 
 message ConnectionRequest {
-   required ProtocolVersion client_version = 1;
+    required ProtocolVersion client_version = 1;
 }
 
 message ControlStartExercise {
-   enum GameMode {
-        play  = 0;
+    enum GameMode {
+        play   = 0;
         replay = 1;
     }
-   required Exercise exercise                  = 1;
-   required GameMode mode                      = 2;
-   optional bool     use_after_action_analysis = 3;
-   optional bool     use_external_systems      = 4;
-   optional string   checkpoint                = 5;
+    required Exercise exercise                  = 1;
+    required GameMode mode                      = 2;
+    optional bool     use_after_action_analysis = 3;
+    optional bool     use_external_systems      = 4;
+    optional string   checkpoint                = 5;
 }
 
 message ControlStopExercise {

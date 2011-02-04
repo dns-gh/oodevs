@@ -9,7 +9,6 @@
 
 #include "SimulationToClient.h"
 #include "SimulationTools.h"
-#include <google/protobuf/descriptor.h>
 
 using namespace shield;
 
@@ -1204,8 +1203,8 @@ namespace
     template< typename From, typename To >
     void ConvertLink( const From& from, To* to )
     {
-        CONVERT_ENUM_EXT( kind, TargetKind, ( sword::ResourceNetwork::Link::urban, Common::ResourceNetwork::Link::urban )
-                                            ( sword::ResourceNetwork::Link::object, Common::ResourceNetwork::Link::object ) );
+        CONVERT_ENUM( kind, ( sword::ResourceNetwork::Link::urban, Common::ResourceNetwork::Link::urban )
+                            ( sword::ResourceNetwork::Link::object, Common::ResourceNetwork::Link::object ) );
         CONVERT( target_id );
         CONVERT( capacity );
         CONVERT( flow );
@@ -2168,6 +2167,7 @@ void SimulationToClient::Convert( const sword::ActionCreateFireOrderAck& from, M
                               ( sword::ActionCreateFireOrderAck::error_invalid_reporter, MsgsSimToClient::MsgActionCreateFireOrderAck::error_invalid_reporter )
                               ( sword::ActionCreateFireOrderAck::error_invalid_target, MsgsSimToClient::MsgActionCreateFireOrderAck::error_invalid_target )
                               ( sword::ActionCreateFireOrderAck::error_invalid_ammunition, MsgsSimToClient::MsgActionCreateFireOrderAck::error_invalid_munition )
+                              ( sword::ActionCreateFireOrderAck::error_invalid_iteration, MsgsSimToClient::MsgActionCreateFireOrderAck::error_invalid_iteration )
                               ( sword::ActionCreateFireOrderAck::error_target_not_illuminated, MsgsSimToClient::MsgActionCreateFireOrderAck::error_target_no_illuminated ) );
 }
 

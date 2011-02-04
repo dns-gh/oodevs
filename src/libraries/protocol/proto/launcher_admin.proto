@@ -77,6 +77,14 @@ message ControlStopExerciseAck {
     optional EnumSimulationState simulation_state = 3;
 }
 
+/** @enum EnumDispatcherState
+    @brief Defines the different states of the dispatcher
+*/
+enum EnumDispatcherState {
+    available   = 0; //!< Available
+    unavailable = 1; //!< Unvailable
+}
+
 message SimulationComponentState {
     required EnumSimulationState simulation_state = 1;
     optional EnumDispatcherState dispatcher_state = 2;
