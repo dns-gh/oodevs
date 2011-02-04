@@ -11223,7 +11223,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonINF" id="426" name="Section . CDT CIE INF VAB" type="Pion INF">
@@ -11253,7 +11253,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonABC" id="427" name="Peloton . LECLERC CDP OFF" type="Pion ABC">
@@ -11280,7 +11280,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="10" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" id="428" name="Section de Tir . AUF1 CDS OFF" type="Pion ASS">
@@ -11318,7 +11318,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" id="429" name="Groupe GEN . EBG" type="Pion GEN">
@@ -11337,7 +11337,7 @@
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
     <nbc decontamination-delay="450s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" id="430" name="Groupe GEN . MPG" type="Pion GEN">
@@ -11356,7 +11356,7 @@
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
     <nbc decontamination-delay="450s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="PC INF" id="431" name="Section PC INF Capteur Test" type="Pion INF">
@@ -11547,7 +11547,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.terrorism.roles.Sniper" id="438" name="Tireur" type="Pion ASY">
@@ -11572,7 +11572,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonTest" id="439" name="Pion de tests" type="Pion INF">
@@ -11606,7 +11606,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="100" counter-mobility-support="100" engineering-support="100" mobility-support="100" protection-support="100" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Terroriste" id="440" name="Observateur virtuel" type="Pion INF">
@@ -11659,7 +11659,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PIA" id="442" name="PIA Dominante ABC" type="Pion ABC">
@@ -11693,7 +11693,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PIA" id="443" name="PIA Dominante Reco" type="Pion RENS">
@@ -11722,7 +11722,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="10" combat-support="10" counter-mobility-support="0" engineering-support="5" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PC" id="444" name="PC SGTIA" type="Pion INF">
@@ -11754,7 +11754,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonINF" id="445" name="Section . CBT INF VAB CDS SOFF" type="Pion INF">
@@ -11786,7 +11786,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonINF" id="446" name="Groupe . MO81 VAB" type="Pion INF">
@@ -11817,7 +11817,7 @@
       <distance-before-point type="carrefour" value="500"/>
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="80"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonABC" id="447" name="Peloton . LECLERC CDP SOFF" type="Pion ABC">
@@ -11844,7 +11844,7 @@
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="10" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PlatoonABC" id="448" name="Peloton . d appui direct" type="Pion ABC">
@@ -11871,7 +11871,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.military.platoon.roles.PC" id="449" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
@@ -11902,8 +11902,8 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0604639573" -->
+<!-- signature="2533856174" -->
