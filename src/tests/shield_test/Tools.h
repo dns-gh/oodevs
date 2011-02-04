@@ -135,7 +135,9 @@ namespace shield
             : expected_( expected )
             , fields_  ( msg.descriptor()->field_count() )
         {
-            BOOST_REQUIRE_MESSAGE( msg.IsInitialized(), msg.InitializationErrorString() );
+            BOOST_REQUIRE_MESSAGE( msg.IsInitialized(),
+                "The message has not been fully initialized, probably some fields are missing : "
+                    + msg.InitializationErrorString() );
         }
 
         template< typename Actual >
