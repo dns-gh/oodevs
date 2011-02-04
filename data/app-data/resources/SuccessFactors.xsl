@@ -21,9 +21,6 @@ function Start()
     }
 
     function GetIndicator( name )
-        if indicators[name] == nil then
-            return 0
-        end
         return indicators[name]
     end
 
@@ -148,6 +145,9 @@ end
 	
 	<xsl:template match="condition">
 	    <xsl:text>( GetIndicator( "</xsl:text>
+	    <xsl:value-of select="@property"/>
+	    <xsl:text>" ) ~= nil and </xsl:text>
+        <xsl:text> GetIndicator( "</xsl:text>
 	    <xsl:value-of select="@property"/>
 	    <xsl:text>" ) </xsl:text>
 	    <xsl:call-template name="comparison-operator">
