@@ -49,18 +49,6 @@ class InhabitantAffinities : public kernel::Extension_ABC
                            , public kernel::Updatable_ABC< sword::PopulationUpdate > 
 {
 public:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned long, float >             T_Affinities;
-    typedef T_Affinities::iterator                      IT_Affinities;
-    typedef T_Affinities::const_iterator               CIT_Affinities;
-
-    typedef std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >  T_AffinitiesSpinBoxs;
-    typedef T_AffinitiesSpinBoxs::iterator                           IT_AffinitiesSpinBoxs;
-    typedef T_AffinitiesSpinBoxs::const_iterator                    CIT_AffinitiesSpinBoxs;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
              InhabitantAffinities( TeamsModel& teams );
@@ -70,7 +58,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC* displayer ) const;
-    void CreateAffinitiesSpinBoxs( QGrid* grid, T_AffinitiesSpinBoxs& spinboxs );
+    void CreateAffinitiesSpinBoxs( QGrid* grid, std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >& spinboxs );
     void FillParameterList( actions::parameters::ParameterList* parameterList ) const;
     //@}
 
@@ -84,6 +72,13 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::PopulationUpdate& message );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< unsigned long, float >             T_Affinities;
+    typedef T_Affinities::iterator                      IT_Affinities;
+    typedef T_Affinities::const_iterator               CIT_Affinities;
     //@}
 
 private:

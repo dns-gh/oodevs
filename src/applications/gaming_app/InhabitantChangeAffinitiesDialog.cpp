@@ -32,30 +32,24 @@
 // -----------------------------------------------------------------------------
 InhabitantChangeAffinitiesDialog::InhabitantChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers, const TeamsModel& teams, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : QDialog( pParent, tools::translate( "InhabitantChangeAffinitiesDialog", "Change affinities" ) )
-    , controllers_  ( controllers )
-    , teams_        ( teams )
-    , static_       ( staticModel )
-    , actionsModel_ ( actionsModel )
-    , simulation_   ( simulation )
-    , profile_      ( profile )
-    , selected_     ( controllers )
+    , controllers_   ( controllers )
+    , teams_         ( teams )
+    , static_        ( staticModel )
+    , actionsModel_  ( actionsModel )
+    , simulation_    ( simulation )
+    , profile_       ( profile )
+    , selected_      ( controllers )
+    , affinitiesGrid_( 0 )
 {
-    // Init dialog
     setCaption( tools::translate( "InhabitantChangeAffinitiesDialog", "Change affinities" ) );
     resize( 320, 150 );
-    // Main layout
-    QVBoxLayout* mainLayout = new QVBoxLayout( this );
-    affinitiesGrid_ = new QGrid( 2, this );
-    mainLayout->addWidget( affinitiesGrid_ );
-    // ok / cancel butons
-    QHBox* buttonLayout = new QHBox( this );
-    QPushButton* okButton     = new QPushButton( tr( "Ok" )    , buttonLayout );
-    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout );
+    mainLayout_ = new QVBoxLayout( this );
+    buttonLayout_ = new QHBox( this );
+    QPushButton* okButton     = new QPushButton( tr( "Ok" )    , buttonLayout_ );
+    QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout_ );
     okButton->setDefault( TRUE );
-    mainLayout->addWidget( buttonLayout );
     connect( okButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
-
     selected_ = 0;
     controllers_.Register( *this );
     hide();
@@ -78,8 +72,15 @@ void InhabitantChangeAffinitiesDialog::Show()
 {
     if( !selected_ )
         return;
-    if( affinitiesSpinboxs_.empty() )
-        selected_.ConstCast()->Get< InhabitantAffinities >().CreateAffinitiesSpinBoxs( affinitiesGrid_, affinitiesSpinboxs_ );
+    affinitiesSpinboxs_.clear();
+    mainLayout_->remove( affinitiesGrid_ );
+    mainLayout_->remove( buttonLayout_ );
+    if( affinitiesGrid_ != 0 )
+        delete affinitiesGrid_;
+    affinitiesGrid_ = new QGrid( 2, this );
+    mainLayout_->add( affinitiesGrid_ );
+    mainLayout_->add( buttonLayout_ );
+    selected_.ConstCast()->Get< InhabitantAffinities >().CreateAffinitiesSpinBoxs( affinitiesGrid_, affinitiesSpinboxs_ );
     show();
 }
 

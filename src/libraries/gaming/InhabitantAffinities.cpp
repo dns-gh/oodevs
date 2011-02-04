@@ -69,7 +69,7 @@ void InhabitantAffinities::Display(kernel::Displayer_ABC* displayer) const
 // Name: InhabitantAffinities::FillDialog
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::CreateAffinitiesSpinBoxs( QGrid* grid, T_AffinitiesSpinBoxs& spinboxs )
+void InhabitantAffinities::CreateAffinitiesSpinBoxs( QGrid* grid, std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >& spinboxs )
 {
     for( IT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
     {

@@ -76,14 +76,6 @@ private:
     //@}
 
 private:
-    //! @name Type
-    //@{
-    typedef std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >  T_AffinitiesSpinBoxs;
-    typedef T_AffinitiesSpinBoxs::iterator                           IT_AffinitiesSpinBoxs;
-    typedef T_AffinitiesSpinBoxs::const_iterator                    CIT_AffinitiesSpinBoxs;
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
@@ -93,8 +85,10 @@ private:
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Inhabitant_ABC > selected_;
+    QVBoxLayout* mainLayout_;
     QGrid* affinitiesGrid_;
-    T_AffinitiesSpinBoxs affinitiesSpinboxs_;
+    QHBox* buttonLayout_;
+    std::map< unsigned long, gui::DecimalSpinBoxAndSlider* > affinitiesSpinboxs_;
     //@}
 };
 
