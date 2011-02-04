@@ -59,7 +59,7 @@ public:
     void SendCreation( client::PopulationCreation& msg ) const;
     void SendFullState( client::PopulationUpdate& msg ) const;
     void UpdateNetwork( client::PopulationUpdate& msg ) const;
-    unsigned int GetTotalOccupation() const;
+    float ComputeOccupationFactor() const;
     void GetUsagesOccupation( std::map< std::string, unsigned int >& occupations ) const;
     void Alert( const TER_Localisation& localisation );
     void SetAlerted( bool );
@@ -80,8 +80,8 @@ private:
     {
         T_Block( UrbanObjectWrapper* pUrbanObject, unsigned int person = 0, bool alerted = false )
             : pUrbanObject_( pUrbanObject )
-            , person_( person )
-            , alerted_( alerted )
+            , person_      ( person )
+            , alerted_     ( alerted )
         {}
 
         UrbanObjectWrapper* pUrbanObject_;

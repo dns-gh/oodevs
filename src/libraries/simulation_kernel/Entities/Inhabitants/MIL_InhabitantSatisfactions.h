@@ -46,7 +46,7 @@ public:
     void SendFullState( client::PopulationUpdate& msg ) const;
     void UpdateNetwork( client::PopulationUpdate& msg ) const;
     void ComputeHealthSatisfaction( float healthCount );
-    void ComputeLodgingSatisfaction( unsigned long living, unsigned int totalOccupation );
+    void SetLodgingSatisfaction( float occupationFactor );
     void ComputeMotivationSatisfactions( const std::map< std::string, unsigned int >& occupations, unsigned long living );
     void SetResourceSatisfaction( const PHY_ResourceNetworkType& resource, float satisfaction );
     void IncreaseSafety( float gainPerHour );

@@ -213,18 +213,15 @@ void MIL_InhabitantSatisfactions::ComputeHealthSatisfaction( float healthCount )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_InhabitantSatisfactions::ComputeLodgingSatisfaction
+// Name: MIL_InhabitantSatisfactions::SetLodgingSatisfaction
 // Created: JSR 2011-01-26
 // -----------------------------------------------------------------------------
-void MIL_InhabitantSatisfactions::ComputeLodgingSatisfaction( unsigned long living, unsigned int totalOccupation )
+void MIL_InhabitantSatisfactions::SetLodgingSatisfaction( float occupationFactor )
 {
-    float lodging = 0.f;
-    if( living != 0 )
-        lodging = std::min( 1.f, static_cast< float >( totalOccupation ) / living );
-    if( std::abs( lodging - lodging_ ) >= 0.01f )
+    if( std::abs( occupationFactor - lodging_ ) >= 0.01f )
     {
         lodgingChanged_ = true;
-        lodging_ = lodging;
+        lodging_ = occupationFactor;
     }
 }
 

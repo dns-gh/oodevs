@@ -423,3 +423,26 @@ sword::UrbanMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateInfrastructure(
         capacity->SetThreshold( msg.threshold() );
     return sword::UrbanMagicActionAck::no_error;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::UpdateInhabitants
+// Created: JSR 2011-02-02
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::UpdateInhabitants( const MIL_LivingArea& livingArea, unsigned int number )
+{
+    inhabitants_[ &livingArea ] = number;
+    if( number == 0 )
+        inhabitants_.erase( &livingArea );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetTotalInhabitants
+// Created: JSR 2011-02-02
+// -----------------------------------------------------------------------------
+unsigned int UrbanObjectWrapper::GetTotalInhabitants() const
+{
+    unsigned int ret = 0;
+    for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+        ret += it->second;
+    return ret;
+}

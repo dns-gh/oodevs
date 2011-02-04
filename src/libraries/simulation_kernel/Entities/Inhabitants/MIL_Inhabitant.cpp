@@ -87,10 +87,6 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     pSatisfactions_.reset( new MIL_InhabitantSatisfactions( xis ) );
     pArmy_->RegisterInhabitant( *this );
     pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
-    pSatisfactions_->ComputeLodgingSatisfaction( nNbrHealthyHumans_ + nNbrWoundedHumans_, pLivingArea_->GetTotalOccupation() );
-    std::map< std::string, unsigned int > occupations;
-    pLivingArea_->GetUsagesOccupation( occupations );
-    pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
     pAffinities_.reset( new MIL_AffinitiesMap( xis ) );
 }
 
@@ -267,9 +263,13 @@ void MIL_Inhabitant::UpdateState()
 {
     pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
     pSatisfactions_->IncreaseSafety( type_.GetSafetyGainPerHour() );
+    pSatisfactions_->SetLodgingSatisfaction( pLivingArea_->ComputeOccupationFactor() );
     const MIL_InhabitantType::T_ConsumptionsMap& consumptions = type_.GetConsumptions();
     for( MIL_InhabitantType::CIT_ConsumptionsMap it = consumptions.begin(); it != consumptions.end(); ++it )
         pSatisfactions_->SetResourceSatisfaction( *it->first, pLivingArea_->Consume( *it->first, it->second ) );
+    std::map< std::string, unsigned int > occupations;
+    pLivingArea_->GetUsagesOccupation( occupations );
+    pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -397,10 +397,6 @@ void MIL_Inhabitant::NotifyStructuralStateChanged( unsigned int /*structuralStat
 {
     if( object.Retrieve< MedicalCapacity >() )
         pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
-    pSatisfactions_->ComputeLodgingSatisfaction( nNbrHealthyHumans_ + nNbrWoundedHumans_, pLivingArea_->GetTotalOccupation() );
-    std::map< std::string, unsigned int > occupations;
-    pLivingArea_->GetUsagesOccupation( occupations );
-    pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
 }
 
 // -----------------------------------------------------------------------------

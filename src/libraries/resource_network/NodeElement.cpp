@@ -230,11 +230,15 @@ void NodeElement::Consume( float& functionalState )
 // -----------------------------------------------------------------------------
 void NodeElement::DistributeResource( float functionalState )
 {
+    if( immediateStock_ == 0 || !isActivated_ || std::abs( functionalState ) < 0.01f )
+    {
+        for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+            ( *it )->SetFlow( 0 );
+        return;
+    }
     for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         ( *it )->ResetFlow();
-    if( !isActivated_ || std::abs( functionalState ) < 0.01f )
-        return;
-    if( immediateStock_ != 0 && links_.size() > 0 )
+    if( links_.size() > 0 )
     {
         T_ResourceLinks links = links_;
         DoDistributeResource( links );

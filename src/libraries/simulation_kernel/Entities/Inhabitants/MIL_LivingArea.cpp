@@ -42,8 +42,8 @@ MIL_LivingArea::MIL_LivingArea()
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
 MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population )
-    : population_( population )
-    , hasChanged_( false )
+    : population_      ( population )
+    , hasChanged_      ( false )
     , area_      ( 0.f )
 {
     xis >> xml::start( "living-area" )
@@ -125,6 +125,8 @@ void MIL_LivingArea::DistributeHumans( unsigned long population )
     if( tmp > 0 && !blocks_.empty() )
         blocks_.front().person_ += tmp;
     hasChanged_ = true;
+    for( IT_Blocks it = blocks_.begin(); it != blocks_.end(); ++it )
+        it->pUrbanObject_->UpdateInhabitants( *this, it->person_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,17 +239,24 @@ void MIL_LivingArea::WriteODB( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::GetTotalOccupation
-// Created: JSR 2011-01-27
+// Name: MIL_LivingArea::ComputeOccupationFactor
+// Created: JSR 2011-02-02
 // -----------------------------------------------------------------------------
-unsigned int MIL_LivingArea::GetTotalOccupation() const
+float MIL_LivingArea::ComputeOccupationFactor() const
 {
-    unsigned int totalOccupation = 0;
-    BOOST_FOREACH( const T_Block& block, blocks_ )
-        for( CIT_Accommodations it = accommodations_.begin(); it != accommodations_.end(); ++it )
-            if( block.person_ != 0 )
-                totalOccupation += GetOccupation( block, it->first );
-    return totalOccupation;
+    if( population_ == 0 )
+        return 1.f;
+    float occupationFactor = 0;
+    for( CIT_Blocks it = blocks_.begin(); it != blocks_.end(); ++it )
+        if( it->person_ != 0 )
+        {
+            int blockOccupation = 0;
+            for( CIT_Accommodations accomodation = accommodations_.begin(); accomodation != accommodations_.end(); ++accomodation )
+                blockOccupation += GetOccupation( *it, accomodation->first );
+            int totalPopulation = it->pUrbanObject_->GetTotalInhabitants() - it->person_;
+            occupationFactor += std::min( static_cast< int >( it->person_ ), std::max( 0, blockOccupation - totalPopulation ) );
+        }
+    return occupationFactor / population_;
 }
 
 // -----------------------------------------------------------------------------
@@ -322,6 +331,7 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
             {
                 CIT_Identifiers it = identifiers.find( block.pUrbanObject_->GetID() );
                 block.person_ = ( it == identifiers.end() ) ? 0u : it->second;
+                block.pUrbanObject_->UpdateInhabitants( *this, block.person_ );
             }
             hasChanged_ = true;
         }

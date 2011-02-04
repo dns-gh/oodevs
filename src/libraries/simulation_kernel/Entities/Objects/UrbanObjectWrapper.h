@@ -28,6 +28,8 @@ namespace urban
     class MotivationsVisitor_ABC;
 }
 
+class MIL_LivingArea;
+
 // =============================================================================
 /** @class  UrbanObjectWrapper
     @brief  Urban object wrapper
@@ -93,6 +95,12 @@ public:
     float GetLivingSpace() const;
     //@}
 
+    //! @name Inhabitants
+    //@{
+    void UpdateInhabitants( const MIL_LivingArea& livingArea, unsigned int number );
+    unsigned int GetTotalInhabitants() const;
+    //@}
+
 private:
     //!@name Helpers
     //@{
@@ -107,12 +115,15 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, float > T_Motivations;
+    typedef std::map< const MIL_LivingArea*, unsigned int > T_Inhabitants;
+    typedef T_Inhabitants::const_iterator                 CIT_Inhabitants;
     //@}
 
 private:
     //! @name Member data
     //@{
     const urban::TerrainObject_ABC* object_;
+    T_Inhabitants inhabitants_;
     //@}
 };
 
