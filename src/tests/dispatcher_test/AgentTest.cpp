@@ -191,9 +191,9 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_indirect_fire_availability( sword::UnitAttributes::fire_ready );
                 message.set_roe( sword::RulesOfEngagement::retaliation_only );
                 message.set_roe_crowd( sword::UnitAttributes::non_lethal_force );
-                message.set_tiredness( sword::tired );
-                message.set_morale( sword::fanatical );
-                message.set_experience( sword::veteran );
+                message.set_tiredness( sword::UnitAttributes::tired );
+                message.set_morale( sword::UnitAttributes::fanatical );
+                message.set_experience( sword::UnitAttributes::veteran );
                 message.mutable_surrendered_unit()->set_id( 0 );
                 message.set_prisoner( true );
                 message.set_refugees_managed( true );

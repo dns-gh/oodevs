@@ -909,11 +909,8 @@ void MIL_Automate::SendLogisticLinks() const
 {
     client::ChangeLogisticLinks message;
     message().mutable_requester()->mutable_automat()->set_id( nID_ );
-
     if( pTC2_ )
-    {
         message().mutable_combat_train()->set_id( pTC2_->GetID() );
-    }
     if( pBrainLogistic_.get() && pBrainLogistic_->GetSuperior() )
     {
         if( pBrainLogistic_->GetSuperior()->GetAssociatedAutomat() )
@@ -922,7 +919,6 @@ void MIL_Automate::SendLogisticLinks() const
             message().mutable_logistic_base()->mutable_formation()->set_id( pBrainLogistic_->GetSuperior()->GetID() );
     }
     message.Send( NET_Publisher_ABC::Publisher() );
-
     if( pBrainLogistic_.get() )
         pBrainLogistic_->SendFullState();
 }

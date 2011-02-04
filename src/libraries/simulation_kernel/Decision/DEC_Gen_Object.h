@@ -68,7 +68,7 @@ public:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     std::string type_;
     TER_Localisation localisation_;

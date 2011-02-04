@@ -37,7 +37,7 @@ public:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     std::string fireClass_;// XML reference - no resolved by dispatcher
     int maxCombustionEnergy_;

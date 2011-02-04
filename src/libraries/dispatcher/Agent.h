@@ -150,9 +150,9 @@ private:
     sword::UnitAttributes::FireAvailability    nIndirectFireAvailability_;
     sword::RulesOfEngagement::Value            nRoe_;
     sword::UnitAttributes::CrowdRoe            nPopulationRoe_;
-    sword::EnumUnitTiredness                   nTiredness_;
-    sword::EnumUnitMorale                      nMorale_;
-    sword::EnumUnitExperience                  nExperience_;
+    sword::UnitAttributes::EnumUnitTiredness   nTiredness_;
+    sword::UnitAttributes::EnumUnitMorale      nMorale_;
+    sword::UnitAttributes::EnumUnitExperience  nExperience_;
     const kernel::Team_ABC*                    pSideSurrenderedTo_;
     bool                                       bPrisonner_;
     bool                                       bRefugeeManaged_;

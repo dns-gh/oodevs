@@ -640,16 +640,16 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
                              ( sword::UnitAttributes::non_lethal_force, MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux )
                              ( sword::UnitAttributes::active_defense, MsgsSimToClient::MsgUnitAttributes::dispersion_par_moyens_de_defense_actifs )
                              ( sword::UnitAttributes::lethal_force, MsgsSimToClient::MsgUnitAttributes::armes_letales_autorisees ) );
-    CONVERT_ENUM_TO( tiredness, fatigue, ( sword::rested, Common::normal )
-                                         ( sword::tired, Common::fatigue )
-                                         ( sword::exhausted, Common::epuise ) );
-    CONVERT_ENUM_TO( morale, moral, ( sword::fanatical, Common::fanatique )
-                                    ( sword::high, Common::bon )
-                                    ( sword::standard, Common::moyen )
-                                    ( sword::low, Common::mauvais ) );
-    CONVERT_ENUM( experience, ( sword::veteran, Common::veteran )
-                              ( sword::expert, Common::experimente )
-                              ( sword::novice, Common::conscrit ) );
+    CONVERT_ENUM_TO( tiredness, fatigue, ( sword::UnitAttributes::rested, Common::normal )
+                                         ( sword::UnitAttributes::tired, Common::fatigue )
+                                         ( sword::UnitAttributes::exhausted, Common::epuise ) );
+    CONVERT_ENUM_TO( morale, moral, ( sword::UnitAttributes::fanatical, Common::fanatique )
+                                    ( sword::UnitAttributes::high, Common::bon )
+                                    ( sword::UnitAttributes::standard, Common::moyen )
+                                    ( sword::UnitAttributes::low, Common::mauvais ) );
+    CONVERT_ENUM( experience, ( sword::UnitAttributes::veteran, Common::veteran )
+                              ( sword::UnitAttributes::expert, Common::experimente )
+                              ( sword::UnitAttributes::novice, Common::conscrit ) );
     CONVERT_ID( surrendered_unit );
     CONVERT_TO( prisoner, prisonnier );
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );

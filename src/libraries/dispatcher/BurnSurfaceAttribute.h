@@ -15,12 +15,11 @@
 
 namespace sword
 {
-	enum EnumBurningCellPhase;
-};
+    enum EnumBurningCellPhase;
+}
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  BurnSurfaceAttribute
     @brief  BurnSurfaceAttribute
@@ -32,46 +31,49 @@ class BurnSurfaceAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit BurnSurfaceAttribute( const sword::ObjectAttributes& asnMsg );
+    explicit BurnSurfaceAttribute( const sword::ObjectAttributes& msg );
     virtual ~BurnSurfaceAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const sword::ObjectAttributes& asnMsg );
-    virtual void Send  ( sword::ObjectAttributes& asnMsg ) const;
+    virtual void Update( const sword::ObjectAttributes& msg );
+    virtual void Send( sword::ObjectAttributes& msg ) const;
     //@}
 
 private:
-
-	//! @name Operations
+    //! @name Operations
     //@{
-    void DoUpdate( const sword::ObjectAttributes& asnMsg );
+    void DoUpdate( const sword::ObjectAttributes& msg );
     //@}
 
+private:
+    //! @name Types
+    //@{
+    typedef geometry::Point2< int > BurningCellOrigin;
 
-	typedef geometry::Point2< int > BurningCellOrigin;
-
-	struct BurningCell
-	{
+    struct BurningCell
+    {
         BurningCell()
             : bSendFullState_( false )
         {
         }
-		sword::EnumBurningCellPhase phase_;
-		int ignitionEnergy_;
-		int ignitionThreshold_;
-		int combustionEnergy_;
-		int currentHeat_;
-		int maxCombustionEnergy_;
+        sword::EnumBurningCellPhase phase_;
+        int ignitionEnergy_;
+        int ignitionThreshold_;
+        int combustionEnergy_;
+        int currentHeat_;
+        int maxCombustionEnergy_;
         bool bSendFullState_;
-	};
+    };
+    //@}
 
-    //! @name Data members
+private:
+    //! @name Member data
     //@{
-	typedef std::map< BurningCellOrigin, BurningCell > BurningCellsByCoordinatesMap;
-	BurningCellsByCoordinatesMap burningCellsByCoordinates_;
-	int cellSize_;
+    typedef std::map< BurningCellOrigin, BurningCell > BurningCellsByCoordinatesMap;
+    BurningCellsByCoordinatesMap burningCellsByCoordinates_;
+    int cellSize_;
     //@}
 };
 

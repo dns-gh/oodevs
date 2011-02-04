@@ -24,7 +24,7 @@ namespace kernel
 
 namespace sword
 {
-	enum EnumBurningCellPhase;
+    enum EnumBurningCellPhase;
 }
 
 namespace actions
@@ -39,8 +39,8 @@ namespace actions
 // Created: BCI 2010-12-13
 // =============================================================================
 class BurnSurfaceAttribute : public kernel::BurnSurfaceAttribute_ABC
-						   , public kernel::Drawable_ABC
-						   , public kernel::Pickable_ABC
+                           , public kernel::Drawable_ABC
+                           , public kernel::Pickable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -49,32 +49,21 @@ public:
     virtual ~BurnSurfaceAttribute();
     //@}
 
-    //! @name Overrides of kernel::Drawable_ABC
+    //! @name Operations
     //@{
-	virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    //@}
-
-    //! @name Overrides of kernel::Pickable_ABC
-    //@{
-	virtual void TerrainPicked( const geometry::Point2f& terrainCoordinates, QStringList& outputInfos );
-    //@}
-
-    //! @name Overrides of kernel::Displayable_ABC
-    //@{
-    virtual void Display         ( kernel::Displayer_ABC& ) const;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void TerrainPicked( const geometry::Point2f& terrainCoordinates, QStringList& outputInfos );
+    virtual void Display( kernel::Displayer_ABC& ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& ) const;
     //@}
+
 private:
-    //! @name Copy/Assignment
+    //! @name Types
     //@{
-    BurnSurfaceAttribute( const BurnSurfaceAttribute& );            //!< Copy constructor
-    BurnSurfaceAttribute& operator=( const BurnSurfaceAttribute& ); //!< Assignment operator
-    //@}
+    typedef geometry::Point2< int > BurningCellOrigin;
 
-	typedef geometry::Point2< int > BurningCellOrigin;
-
-	struct BurningCell
-	{
+    struct BurningCell
+    {
         BurningCell()
             : ignitionEnergy_( -1 )
             , ignitionThreshold_( -1 )
@@ -90,6 +79,14 @@ private:
         int currentHeat_;
         int maxCombustionEnergy_;
     };
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    BurnSurfaceAttribute( const BurnSurfaceAttribute& );            //!< Copy constructor
+    BurnSurfaceAttribute& operator=( const BurnSurfaceAttribute& ); //!< Assignment operator
+    //@}
 
     //! @name Helpers
     //@{
@@ -101,17 +98,18 @@ private:
     template< typename T >
     void UpdateBurningCellData( const T& message );
 
-	BurningCellOrigin ComputeCellOriginFromPoint( const geometry::Point2f& terrainCoordinates ) const;
+    BurningCellOrigin ComputeCellOriginFromPoint( const geometry::Point2f& terrainCoordinates ) const;
     //@}
 
+private:
     //! @name Member data
     //@{
-	typedef std::map< BurningCellOrigin, BurningCell > BurningCellsByCoordinatesMap;
-	BurningCellsByCoordinatesMap burningCellsByCoordinates_;
+    typedef std::map< BurningCellOrigin, BurningCell > BurningCellsByCoordinatesMap;
+    BurningCellsByCoordinatesMap burningCellsByCoordinates_;
     kernel::Controller& controller_;
     actions::ActionsModel& actionsModel_;
     kernel::Entity_ABC& entity_;
-	int cellSize_;
+    int cellSize_;
     //@}
 };
 

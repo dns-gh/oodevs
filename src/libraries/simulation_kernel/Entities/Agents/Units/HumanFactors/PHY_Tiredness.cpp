@@ -17,9 +17,9 @@
 
 PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;
 
-const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , eNormal , sword::rested , 1. );
-const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", eFatigue, sword::tired, 1. );
-const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , eEpuise , sword::exhausted , 1. );
+const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , eNormal , sword::UnitAttributes::rested , 1. );
+const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", eFatigue, sword::UnitAttributes::tired, 1. );
+const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , eEpuise , sword::UnitAttributes::exhausted , 1. );
 
 struct PHY_Tiredness::LoadingWrapper
 {
@@ -76,7 +76,7 @@ void PHY_Tiredness::Terminate()
 // Name: PHY_Tiredness constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Tiredness::PHY_Tiredness( const std::string& strName, E_TirednessType nType, sword::EnumUnitTiredness nAsnID, double rDIAWeight )
+PHY_Tiredness::PHY_Tiredness( const std::string& strName, E_TirednessType nType, sword::UnitAttributes::EnumUnitTiredness nAsnID, double rDIAWeight )
     : strName_                       ( strName )
     , nType_                         ( nType   )
     , nAsnID_                        ( nAsnID  )
@@ -127,9 +127,9 @@ void PHY_Tiredness::Read( xml::xistream& xis )
 // Name: PHY_Tiredness::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_Tiredness* PHY_Tiredness::Find( sword::EnumUnitTiredness nAsnID )
+const PHY_Tiredness* PHY_Tiredness::Find( sword::UnitAttributes::EnumUnitTiredness nAsnID )
 {
-    CIT_TirednessMap it = std::find_if( tirednesses_.begin(), tirednesses_.end(), std::compose1( std::bind2nd( std::equal_to< sword::EnumUnitTiredness >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Tiredness::GetAsnID ), std::select2nd< T_TirednessMap::value_type >() ) ) );
+    CIT_TirednessMap it = std::find_if( tirednesses_.begin(), tirednesses_.end(), std::compose1( std::bind2nd( std::equal_to< sword::UnitAttributes::EnumUnitTiredness >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Tiredness::GetAsnID ), std::select2nd< T_TirednessMap::value_type >() ) ) );
 
     return it == tirednesses_.end() ? 0 : it->second;
 }
@@ -170,7 +170,7 @@ const std::string& PHY_Tiredness::GetName() const
 // Name: PHY_Tiredness::GetAsnID
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-sword::EnumUnitTiredness PHY_Tiredness::GetAsnID() const
+sword::UnitAttributes::EnumUnitTiredness PHY_Tiredness::GetAsnID() const
 {
     return nAsnID_;
 }

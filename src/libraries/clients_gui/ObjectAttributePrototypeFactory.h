@@ -58,7 +58,7 @@ private:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     T_CallBacks callbacks_;
     //@}

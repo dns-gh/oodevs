@@ -97,7 +97,7 @@ private:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     std::auto_ptr< CapacityFactory > factory_;
     std::auto_ptr< AttributeFactory > attributes_;

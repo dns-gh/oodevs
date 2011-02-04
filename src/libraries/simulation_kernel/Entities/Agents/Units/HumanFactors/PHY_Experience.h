@@ -16,7 +16,7 @@
 
 namespace sword
 {
-    enum EnumUnitExperience;
+    enum UnitAttributes_EnumUnitExperience;
 }
 
 namespace xml
@@ -51,7 +51,7 @@ public:
     static       void            Initialize( xml::xistream& xis );
     static       void            Terminate ();
     static const PHY_Experience* Find      ( const std::string& strName );
-    static const PHY_Experience* Find      ( sword::EnumUnitExperience nAsnID );
+    static const PHY_Experience* Find      ( sword::UnitAttributes_EnumUnitExperience nAsnID );
     static const PHY_Experience* Find      ( unsigned int nID );
     //@}
 
@@ -59,7 +59,7 @@ public:
     //@{
     const std::string&             GetName                         () const;
           unsigned int                     GetID                           () const;
-          sword::EnumUnitExperience GetAsnID                        () const;
+          sword::UnitAttributes_EnumUnitExperience GetAsnID                        () const;
           double                 GetWeight                       () const;
           double                 GetCoefMaxSpeedModificator      () const;
           double                 GetCoefReloadingTimeModificator () const;
@@ -86,7 +86,7 @@ private:
     //@}
 
 private:
-     PHY_Experience( const std::string& strName, E_ExperienceType nType, sword::EnumUnitExperience nAsnID, double rDIAWeight );
+     PHY_Experience( const std::string& strName, E_ExperienceType nType, sword::UnitAttributes_EnumUnitExperience nAsnID, double rDIAWeight );
     ~PHY_Experience();
 
     //! @name Init
@@ -97,7 +97,7 @@ private:
 private:
     const std::string              strName_;
     const E_ExperienceType         nType_;
-    const sword::EnumUnitExperience nAsnID_;
+    const sword::UnitAttributes_EnumUnitExperience nAsnID_;
     const double                 rDIAWeight_;
 
     double rCoefMaxSpeedModificator_;

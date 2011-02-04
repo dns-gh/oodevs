@@ -56,7 +56,7 @@ private:
 
 private:
 
-    //! @name Data members
+    //! @name Member data
     //@{
     std::vector< StockResource > stocks_;
     //@}

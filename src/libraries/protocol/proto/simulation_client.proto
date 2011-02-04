@@ -238,6 +238,15 @@ message ChangeLogisticLinksAck {
     required HierarchyModificationAck.ErrorCode error_code = 1; //!< Reason for the failure of the automat logistic links change operation @see HierarchyModificationAck.ErrorCode
 }
 
+/** @struct ChangeLogisticLinks
+    @brief Notifies a change to the logistic links of an automat
+*/
+message ChangeLogisticLinks {
+   required ParentEntity requester     = 1; //!< What's this ?
+   optional AutomatId    combat_train  = 2; //!< What's this ?
+   optional ParentEntity logistic_base = 3; //!< What's this ?
+}
+
 /** @struct AutomatChangeSuperiorAck
     @brief Acknowledges an automat superior change request
     @see UnitMagicAction of UnitMagiAction.Type.change_automat_superior
@@ -484,6 +493,15 @@ message PartyCreation {
    optional RgbColor      color     = 5; //!< The party color @see RgbColor
 }
 
+/** @enum EnumLogisticLevel
+    @brief Defines the different levels of logistic
+*/
+enum EnumLogisticLevel {
+    none          = 0; //!< No logistic @todo rename to no_logistic
+    combat_train  = 1; //!< Combat train
+    logistic_base = 2; //!< Logistic base
+}
+
 /** @struct FormationCreation
     @brief A formation creation message
 */
@@ -555,16 +573,35 @@ message ForceRatio {
     }
 }
 
+/** @enum EnumMeetingEngagementStatus
+    @brief Defines the states of a meeting engagement
+*/
+enum EnumMeetingEngagementStatus {
+    no_contact              = 0; //!< No engagement
+    avoiding                = 1; //!< Avoiding engagement
+    pinned_down             = 2; //!< Pinned down
+    proceeding_with_mission = 3; //!< Proceeding with the mission
+}
+
+/** @enum EnumOperationalStatus
+    @brief Defines the states of the operational status
+*/
+enum EnumOperationalStatus {
+    totally_destroyed    = 0; //!< Totally destroyed
+    tactically_destroyed = 1; //!< Tactically Destroyed
+    operational          = 2; //!< Operational
+}
+
 /** @struct AutomatAttributes
     @brief An automat attributes update message
 */
 message AutomatAttributes {
-   required AutomatId                   automat               = 1; //!< The automat identifier @see AutomatId
-   optional EnumAutomatMode             mode                  = 2; //!< The automat mode @see EnumAutomatMode
-   optional ForceRatio.Value            force_ratio           = 3; //!< The automat force ratio @see ForceRatio
-   optional EnumMeetingEngagementStatus meeting_engagement    = 4; //!< The meeting engagement status @see EnumMeetingEngagementStatus
+   required AutomatId                   automat               = 1; //!< The automat identifier
+   optional EnumAutomatMode             mode                  = 2; //!< The automat mode
+   optional ForceRatio.Value            force_ratio           = 3; //!< The automat force ratio
+   optional EnumMeetingEngagementStatus meeting_engagement    = 4; //!< The meeting engagement status
    optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational state
-   optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement @see RulesOfEngagement
+   optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement
    optional AutomatId                   tc2_organic           = 7; //!< @deprecated
    optional ParentEntity                logistic_base_organic = 8; //!< @deprecated
 }
@@ -650,6 +687,15 @@ message EquipmentDotations {
     repeated EquipmentDotation elem = 1; //!< The equipment dotations @see EquipmentDotation
 }
 
+/** @enum EnumHumanRank
+    @brief Defines the different ranks
+*/
+enum EnumHumanRank {
+    officer     = 0; //!< Commissioned Officer
+    sub_officer = 1; //!< Non-commissioned Officer
+    trooper     = 2; //!< Other Enlisted Rank
+}
+
 /** @struct HumanDotations
     @brief A human dotations message
 */
@@ -658,7 +704,7 @@ message HumanDotations {
         @brief A human dotation message
     */
     message HumanDotation {
-        required EnumHumanRank rank                = 1;  //!< The rank @see EnumHumanRank
+        required EnumHumanRank rank                = 1;  //!< The rank
         required int32         total               = 2;  //!< The total number of persons
         required int32         operational         = 3;  //!< The number of persons operational
         required int32         dead                = 4;  //!< The number of deads
@@ -669,7 +715,7 @@ message HumanDotations {
         required int32         maintenance         = 9;  //!< The number of persons performing maintenance
         required int32         unevacuated_wounded = 10; //!< The number of non-evacuated wounded persons
     }
-    repeated HumanDotation elem = 1; //!< The human dotations @see HumanDotation
+    repeated HumanDotation elem = 1; //!< The human dotations
 }
 
 /** @struct ContaminationState
@@ -750,6 +796,31 @@ message UnitAttributes {
         active_defense   = 3; //!< Disperse civilians by active defense means
         lethal_force     = 4; //!< Lethal weapons authorized for use
     }
+    /** @enum EnumUnitTiredness
+        @brief Defines the different states of a unit's tiredness
+    */
+    enum EnumUnitTiredness {
+        rested     = 0; //!< Rested
+        tired      = 1; //!< Tired
+        exhausted  = 2; //!< Exhausted
+    }
+    /** @enum EnumUnitMorale
+        @brief Defines the different states of a unit's morale
+    */
+    enum EnumUnitMorale {
+        fanatical = 0; //!< Fanatical
+        high      = 1; //!< High
+        standard  = 2; //!< Standard
+        low       = 3; //!< Low
+    }
+    /** @enum EnumUnitExperience
+        @brief Defines the different states of a unit's experience
+    */
+    enum EnumUnitExperience {
+        veteran = 0; //!< Veteran
+        expert  = 1; //!< Expert
+        novice  = 2; //!< Novice
+    }
     required UnitId                      unit                       = 1;  //!< The unit identifier @see UnitId
     optional HumanDotations              human_dotations            = 2;  //!< The human dotations @see HumanDotations
     optional EquipmentDotations          equipment_dotations        = 3;  //!< The equipment dotations @see EquipmentDotations
@@ -783,9 +854,9 @@ message UnitAttributes {
     optional UnitIdList                  transported_units          = 31; //!< The transported units @see UnitIdList
     optional UnitId                      transporting_unit          = 32; //!< The transporting unit @see UnitId
     optional ForceRatio.Value            force_ratio                = 33; //!< The force ratio @see ForceRatio
-    optional EnumMeetingEngagementStatus meeting_engagement         = 34; //!< The meeting engagement status @see EnumMeetingEngagementStatus
-    optional EnumOperationalStatus       operational_state          = 35; //!< The operational state @see EnumOperationalStatus
-    optional FireAvailability            indirect_fire_availability = 36; //!< The indirect fire availability @see FireAvailability
+    optional EnumMeetingEngagementStatus meeting_engagement         = 34; //!< The meeting engagement status
+    optional EnumOperationalStatus       operational_state          = 35; //!< The operational state
+    optional FireAvailability            indirect_fire_availability = 36; //!< The indirect fire availability
     optional RulesOfEngagement.Value     roe                        = 37; //!< The rules of engagement @see RulesOfEngagement @todo rename to rules_of_engagement
     optional CrowdRoe                    roe_crowd                  = 38; //!< The rules of engagement against crowds @see CrowdRoe @todo rename to ?
     optional EnumUnitTiredness           tiredness                  = 39; //!< The tiredness @see EnumUnitTiredness
@@ -1446,6 +1517,16 @@ message SeqOfLogMaintenanceEquipmentAvailability {
     repeated LogMaintenanceEquipmentAvailability elem = 1; //!< The equipment availabilities
 }
 
+/** @enum EnumLogMaintenanceWorkRate
+    @brief Defines the different work rates
+*/
+enum EnumLogMaintenanceWorkRate {
+    rate_1 = 0; //!< Rate 1
+    rate_2 = 1; //!< Rate 2
+    rate_3 = 2; //!< Rate 3
+    rate_4 = 3; //!< Rate 4
+}
+
 /** @struct LogMaintenanceState
     @brief Notifies of the state of a maintenance
 */
@@ -1629,6 +1710,16 @@ message CrowdConcentrationCreation {
 message CrowdConcentrationDestruction {
    required CrowdConcentrationId concentration = 1; //!< The crowd concentration identifier
    required CrowdId              crowd         = 2; //!< The crowd identifier
+}
+
+/** @enum EnumCrowdAttitude
+    @brief Defines the different states of a crowd
+*/
+enum EnumCrowdAttitude {
+    peaceful  = 0; //!< Peaceful
+    agitated  = 1; //!< Agitated
+    excited   = 2; //!< Excited
+    agressive = 3; //!< Agressive
 }
 
 /** @struct CrowdConcentrationUpdate

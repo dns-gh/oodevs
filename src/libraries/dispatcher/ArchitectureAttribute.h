@@ -38,7 +38,7 @@ public:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     float           height_;
     unsigned int    floorNumber_;

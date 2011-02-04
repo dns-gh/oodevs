@@ -398,9 +398,9 @@ BOOST_FIXTURE_TEST_CASE( unit_attributes_to_client_is_converted, ContextFixture<
     content.mutable_unit_attributes()->set_indirect_fire_availability( sword::UnitAttributes::fire_ready );
     content.mutable_unit_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
     content.mutable_unit_attributes()->set_roe_crowd( sword::UnitAttributes::no_force );
-    content.mutable_unit_attributes()->set_tiredness( sword::exhausted );
-    content.mutable_unit_attributes()->set_morale( sword::high );
-    content.mutable_unit_attributes()->set_experience( sword::novice );
+    content.mutable_unit_attributes()->set_tiredness( sword::UnitAttributes::exhausted );
+    content.mutable_unit_attributes()->set_morale( sword::UnitAttributes::high );
+    content.mutable_unit_attributes()->set_experience( sword::UnitAttributes::novice );
     content.mutable_unit_attributes()->mutable_surrendered_unit()->set_id( 120 );
     content.mutable_unit_attributes()->set_prisoner( true );
     content.mutable_unit_attributes()->set_refugees_managed( true );

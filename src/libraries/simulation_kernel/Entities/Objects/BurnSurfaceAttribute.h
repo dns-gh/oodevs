@@ -22,7 +22,7 @@ class MT_Vector2D;
 
 namespace sword
 {
-	enum EnumBurningCellPhase;
+    enum EnumBurningCellPhase;
 }
 
 // =============================================================================
@@ -60,9 +60,9 @@ public:
 
     //! @name Notifications
     //@{
-	void NotifyCellsUpdated();
+    void NotifyCellsUpdated();
     void OnRequest( const sword::MissionParameter_Value& parameters );
-	//@}
+    //@}
 
     //! @name Operations
     //@{
@@ -76,10 +76,10 @@ private:
 
     typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< BurnSurfaceAttribute > T_KnowledgeProxyType;
 
-	//! @name Member data
+    //! @name Member data
     //@{
-	MIL_BurningCells& burningCells_;
-	MIL_Object_ABC* pObject_;
+    MIL_BurningCells& burningCells_;
+    MIL_Object_ABC* pObject_;
     //@}
 };
 

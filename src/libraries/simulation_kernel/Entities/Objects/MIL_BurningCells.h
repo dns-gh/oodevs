@@ -10,8 +10,8 @@
 #ifndef __MIL_BurningCells_h_
 #define __MIL_BurningCells_h_
 
-#include <map>
 #include <geometry/types.h>
+#include <map>
 
 class MIL_Object_ABC;
 class MIL_Agent_ABC;
@@ -87,7 +87,8 @@ private:
         eFull
     };
     //@}
-    
+
+private:
     //! @name Helpers
     //@{
     static MIL_BurningCellOrigin ComputeCellOriginFromPoint( double x, double y );
@@ -99,11 +100,12 @@ private:
     void UpdateCombustion( MIL_BurningCell& cell );
     void UpdateDecline( MIL_BurningCell& cell );
 
-
     void SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& object, MIL_BurningCells::SendStateMode mode ) const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     typedef std::map< MIL_BurningCellOrigin, MIL_BurningCell* > BurningCellsByCoordinatesMap;
     typedef std::vector< MIL_BurningCell* > BurningCellsVector;
     typedef std::map< unsigned int/*object id*/, BurningCellsVector > BurningCellsByObjectsMap;
@@ -112,6 +114,7 @@ private:
     BurningCellsByObjectsMap burningCellsByObjects_;
     PropagationModifierObjects propagationModifierObjects_;
     std::size_t lastCellIndexIncludedInLocalization_;
+    //@}
 };
 
 #endif // __MIL_MIL_BurningCells_h_

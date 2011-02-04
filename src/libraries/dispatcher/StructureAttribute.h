@@ -37,7 +37,7 @@ public:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     unsigned int structuralState_;
     //@}

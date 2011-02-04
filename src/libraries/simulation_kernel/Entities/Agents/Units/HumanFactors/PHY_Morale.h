@@ -16,7 +16,7 @@
 
 namespace sword
 {
-    enum EnumUnitMorale;
+    enum UnitAttributes_EnumUnitMorale;
 }
 
 // =============================================================================
@@ -47,7 +47,7 @@ public:
     static       void        Initialize();
     static       void        Terminate ();
     static const PHY_Morale* Find      ( const std::string& strName );
-    static const PHY_Morale* Find      ( sword::EnumUnitMorale nAsnID );
+    static const PHY_Morale* Find      ( sword::UnitAttributes_EnumUnitMorale nAsnID );
     static const PHY_Morale* Find      ( unsigned int nID );
     //@}
 
@@ -56,7 +56,7 @@ public:
     const std::string&        GetName  () const;
           unsigned int                GetID    () const;
           double            GetWeight() const;
-          sword::EnumUnitMorale GetAsnID () const;
+          sword::UnitAttributes_EnumUnitMorale GetAsnID () const;
     //@}
 
     //! @name Operators
@@ -78,13 +78,13 @@ private:
     //@}
 
 private:
-     PHY_Morale( const std::string& strName, E_MoraleType nType, sword::EnumUnitMorale nAsnID, double rDIAWeight );
+     PHY_Morale( const std::string& strName, E_MoraleType nType, sword::UnitAttributes_EnumUnitMorale nAsnID, double rDIAWeight );
     ~PHY_Morale();
 
 private:
     const std::string          strName_;
     const E_MoraleType         nType_;
-    const sword::EnumUnitMorale nAsnID_;
+    const sword::UnitAttributes_EnumUnitMorale nAsnID_;
     const double             rDIAWeight_;
 
 private:

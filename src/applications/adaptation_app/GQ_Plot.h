@@ -221,7 +221,7 @@ private:
     E_SelectionMode nSelectionMode_;
     //@}
 
-    //! @name Data members
+    //! @name Member data
     //@{
     GQ_PlotAxis x_;
     GQ_PlotAxis y_;

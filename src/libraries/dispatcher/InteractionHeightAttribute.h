@@ -37,7 +37,7 @@ public:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     float height_;
     //@}

@@ -66,7 +66,7 @@ private:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     std::string                 referenceID_;
     EnumMedicalTreatmentStatus  status_;

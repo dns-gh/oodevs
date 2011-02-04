@@ -150,15 +150,15 @@ message RoleType {
     @li During exercise gaming, manually creating or editing profile information.
 */
 message Profile {
-    required string          login                 = 1; // !< The profile unique identifier
-    optional string          password              = 2; // !< The password is optional and allows the protection of a profile during the authentication process
-    optional FormationIdList read_only_formations  = 3; // !< Profiles with read-only permissions can only see the situation from the specified formations but cannot control them
-    optional FormationIdList read_write_formations = 4; // !< Profiles with read-write permissions can see the situation from the specified formations and control them
-    optional AutomatIdList   read_only_automates   = 5; // !< Profiles with read-only permissions can only see the situation from the specified automats but cannot control them
-    optional AutomatIdList   read_write_automates  = 6; // !< Profiles with read-write permissions can see the situation from the specified automats and control them
-    optional PartyIdList     read_only_parties     = 7; // !< Profiles with read-only permissions can only see the situation from the specified parties but cannot control them
-    optional PartyIdList     read_write_parties    = 8; // !< Profiles with read-write permissions can see the situation from the specified parties and control them
-    optional CrowdIdList     read_only_crowds      = 9; // !< Profiles with read-only permissions can only see the situation from the specified crowds but cannot control them
+    required string          login                 = 1;  // !< The profile unique identifier
+    optional string          password              = 2;  // !< The password is optional and allows the protection of a profile during the authentication process
+    optional FormationIdList read_only_formations  = 3;  // !< Profiles with read-only permissions can only see the situation from the specified formations but cannot control them
+    optional FormationIdList read_write_formations = 4;  // !< Profiles with read-write permissions can see the situation from the specified formations and control them
+    optional AutomatIdList   read_only_automates   = 5;  // !< Profiles with read-only permissions can only see the situation from the specified automats but cannot control them
+    optional AutomatIdList   read_write_automates  = 6;  // !< Profiles with read-write permissions can see the situation from the specified automats and control them
+    optional PartyIdList     read_only_parties     = 7;  // !< Profiles with read-only permissions can only see the situation from the specified parties but cannot control them
+    optional PartyIdList     read_write_parties    = 8;  // !< Profiles with read-write permissions can see the situation from the specified parties and control them
+    optional CrowdIdList     read_only_crowds      = 9;  // !< Profiles with read-only permissions can only see the situation from the specified crowds but cannot control them
     optional CrowdIdList     read_write_crowds     = 10; // !< Profiles with read-write permissions can see the situation from the specified crowds and control them
     required bool            supervisor            = 11; // !< Supervisor access grants a profile the right to execute "magic actions" such as teleporting or recompleting a unit, and also edit profiles and control the simulation (pause, resume, changing speed factor)
     optional RoleType        role                  = 12; // !< The role has no impact on the simulation, it is purely intended for exercise organisation purpose, so that the different roles can be identified (DIREX, ENIEX...). The list of roles can be customized from the file "resources/Extensions.xml"

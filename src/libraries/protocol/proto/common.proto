@@ -204,38 +204,173 @@ message ParentEntity {
     optional FormationId formation = 2; //!< A formation
 }
 
-// messenger entities
-message DrawingId             { required uint32  id = 1; }
-message IntelligenceId        { required uint32  id = 1; }
-message TacticalLineId        { required uint32  id = 1; }
-message MarkerId              { required uint32  id = 1; }
+/** @struct DrawingId
+    @brief Defines a drawing identifier
+*/
+message DrawingId {
+    required uint32 id = 1; //!< The identifier
+}
 
-// reports
-message FireId                { required uint32 id = 1; }
-message FireEffectId          { required uint32 id = 1; }
-message ReportId              { required uint32 id = 1; }
-message WeatherId             { required uint32 id = 1; }
+/** @struct IntelligenceId
+    @brief Defines an intelligence identifier
+*/
+message IntelligenceId {
+    required uint32 id = 1; //!< The identifier
+}
 
-// logistics requests
-message MaintenanceRequestId  { required uint32 id = 1; }
-message MedicalRequestId      { required uint32 id = 1; }
-message SupplyRequestId       { required uint32 id = 1; }
+/** @struct TacticalLineId
+    @brief Defines a tactical line identifier
+*/
+message TacticalLineId {
+    required uint32 id = 1; //!< The identifier
+}
 
-// Static types & categories
-message AutomatType           { required uint32 id = 1; }
-message BreakdownType         { required uint32 id = 1; }
-message EquipmentType         { required uint32 id = 1; }
-message FragOrderType         { required uint32 id = 1; }
-message MissionType           { required uint32 id = 1; }
-message NBCAgentType          { required uint32 id = 1; }
-message ObjectType            { required string id = 1; } // should be an integer
-message CrowdType             { required uint32 id = 1; }
-message ReportType            { required uint32 id = 1; }
-message ResourceType          { required uint32 id = 1; }
-message UnitType              { required uint32 id = 1; }
-message NationalityType       { required uint32 id = 1; }
-message ResourceNetworkType   { required string name = 1; }
-message PopulationType        { required uint32 id = 1; }
+/** @struct MarkerId
+    @brief Defines a marker identifier
+*/
+message MarkerId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct FireId
+    @brief Defines a fire identifier
+*/
+message FireId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct FireEffectId
+    @brief Defines a fire effect identifier
+*/
+message FireEffectId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct ReportId
+    @brief Defines a report identifier
+*/
+message ReportId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct WeatherId
+    @brief Defines a weather identifier
+*/
+message WeatherId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct MaintenanceRequestId
+    @brief Defines a maintenance request identifier
+*/
+message MaintenanceRequestId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct MedicalRequestId
+    @brief Defines a medical request identifier
+*/
+message MedicalRequestId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct SupplyRequestId
+    @brief Defines a supply request identifier
+*/
+message SupplyRequestId {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct AutomatType
+    @brief Defines an automat type
+*/
+message AutomatType {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct BreakdownType
+    @brief Defines a breakdown type
+*/
+message BreakdownType {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct EquipmentType
+    @brief Defines an equipment type
+*/
+message EquipmentType {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct FragOrderType
+    @brief Defines a frag order type
+*/
+message FragOrderType {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct MissionType
+    @brief Defines a mission type
+*/
+message MissionType {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct NBCAgentType
+    @brief Defines a NBC agent type
+*/
+message NBCAgentType {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct ObjectType
+    @brief Defines an object type
+*/
+message ObjectType {
+    required string id = 1; //!< The identifier @todo should be an integer
+}
+
+/** @struct CrowdType
+    @brief Defines a crowd type
+*/
+message CrowdType {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct ReportType
+    @brief Defines a report type
+*/
+message ReportType {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct ResourceType
+    @brief Defines a resource type
+*/
+message ResourceType {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct UnitType
+    @brief Defines a unit type
+*/
+message UnitType {
+    required uint32 id = 1; //!< The identifier
+}
+
+/** @struct ResourceNetworkType
+    @brief Defines a resource network type
+*/
+message ResourceNetworkType {
+    required string name = 1;
+}
+
+/** @struct PopulationType
+    @brief Defines a population type
+*/
+message PopulationType {
+    required uint32 id = 1; //!< The identifier
+}
 
 /** @struct Heading
     @brief Defines a heading
@@ -244,143 +379,103 @@ message Heading {
    required int32 heading = 1; //!< The direction in degrees
 }
 
+/** @struct DateTime
+    @brief Defines a date/time
+*/
 message DateTime {
-   required string data = 1;
+   required string data = 1; //!< The date-time formatted according to ISO 8601
 }
 
-message ChangeLogisticLinks {
-   required ParentEntity requester     = 1;
-   optional AutomatId    combat_train  = 2;
-   optional ParentEntity logistic_base = 3;
-}
-
+/** @struct AutomatChangeSuperior
+    @brief Notifies of an automat changing superior
+*/
 message AutomatChangeSuperior {
+    /** @struct Superior
+        @brief Defines a superior
+        @todo why not use a ParentEntity ?
+    */
     message Superior {
-       optional FormationId formation = 1;
-       optional AutomatId   automat   = 2;
+       optional FormationId formation = 1; //!< An automat
+       optional AutomatId   automat   = 2; //!< A formation
     }
-   required AutomatId automat  = 1;
-   required Superior  superior = 2;
+    required AutomatId automat  = 1; //!< The automat identifier
+    required Superior  superior = 2; //!< The superior
 }
 
+/** @struct UnitChangeSuperior
+    @brief Notifies of a unit changing superior
+*/
 message UnitChangeSuperior {
-   required UnitId    unit   = 1;
-   required AutomatId parent = 2;
+    required UnitId    unit   = 1; //!< The unit identifier
+    required AutomatId parent = 2; //!< The parent identifier
 }
 
+/** @enum EnumSimulationState
+    @brief Defines the different states of the simulation
+*/
 enum EnumSimulationState {
-   running = 0;
-   paused  = 1;
-   stopped = 2;
-   loading = 3;
+    running = 0; //!< Running
+    paused  = 1; //!< Paused
+    stopped = 2; //!< Stopped
+    loading = 3; //!< Loading
 }
 
+/** @enum EnumDispatcherState
+    @brief Defines the different states of the dispatcher
+*/
 enum EnumDispatcherState {
-    available   = 0;
-    unavailable = 1;
+    available   = 0; //!< Available
+    unavailable = 1; //!< Unvailable
 }
 
-enum EnumMeetingEngagementStatus {
-   no_contact              = 0; //!< No engagement
-   avoiding                = 1; //!< Avoiding engagement
-   pinned_down             = 2; //!< Pinned down
-   proceeding_with_mission = 3; //!< Proceeding with the mission
-}
-
-enum EnumOperationalStatus {
-   totally_destroyed    = 0; //!< Totally destroyed
-   tactically_destroyed = 1; //!< Tactically Destroyed
-   operational          = 2; //!< Operational
-}
-
+/** @enum EnumAutomatMode
+    @brief Defines the different states of an automat
+*/
 enum EnumAutomatMode {
    engaged    = 0; //!< Engaged
    disengaged = 1; //!< Disengaged
 }
 
-enum EnumCrowdAttitude {
-   peaceful  = 0; //!< Peaceful
-   agitated  = 1; //!< Agitated
-   excited   = 2; //!< Excited
-   agressive = 3; //!< Agressive
-}
-
-enum EnumUnitTiredness {
-   rested     = 0; //!< Rested
-   tired      = 1; //!< Tired
-   exhausted  = 2; //!< Exhausted
-}
-
-enum EnumUnitMorale {
-   fanatical = 0; //!< Fanatical
-   high      = 1; //!< High
-   standard  = 2; //!< Standard
-   low       = 3; //!< Low
-}
-
-enum EnumUnitExperience {
-   veteran = 0; //!< Veteran
-   expert  = 1; //!< Expert
-   novice  = 2; //!< Novice
-}
-
-enum EnumHumanRank {
-   officer     = 0; //!< Commissioned Officer
-   sub_officer = 1; //!< Non-commissioned Officer
-   trooper     = 2; //!< Other Enlisted Rank
-}
-
+/** @enum EnumDiplomacy
+    @brief Defines the different states of a diplomacy
+*/
 enum EnumDiplomacy {
-   unknown  = 0;
-   friendly = 1;
-   enemy    = 2;
-   neutral  = 3;
+    unknown  = 0; //!< Unknown
+    friendly = 1; //!< Friendly
+    enemy    = 2; //!< Enemy
+    neutral  = 3; //!< Neutral
 }
 
+/** @enum EnumHumanWound
+    @brief Defines the different types of wounds
+*/
 enum EnumHumanWound {
-   unwounded               = 0; //!< Unwounded
-   dead                    = 1; //!< Dead
-   wounded_urgency_1       = 2; //!< Wounded urgency level 1
-   wounded_urgency_2       = 3; //!< Wounded urgency level 2
-   wounded_urgency_3       = 4; //!< Wounded urgency level 3
-   wounded_extreme_urgency = 5; //!< Wounded extreme urgency
+    unwounded               = 0; //!< Unwounded
+    dead                    = 1; //!< Dead
+    wounded_urgency_1       = 2; //!< Wounded urgency level 1
+    wounded_urgency_2       = 3; //!< Wounded urgency level 2
+    wounded_urgency_3       = 4; //!< Wounded urgency level 3
+    wounded_extreme_urgency = 5; //!< Wounded extreme urgency
 }
 
-enum EnumLogMaintenanceWorkRate {
-   rate_1 = 0; //!< Rate 1
-   rate_2 = 1; //!< Rate 2
-   rate_3 = 2; //!< Rate 3
-   rate_4 = 3; //!< Rate 4
-}
-
+/** @enum EnumNatureLevel
+    @brief Defines the different nature levels
+*/
 enum EnumNatureLevel {
-   none_naturelevel = 0;
-   b                = 1;
-   o                = 2;
-   c                = 3;
-   oo               = 4;
-   ooo              = 5;
-   i                = 6;
-   ii               = 7;
-   iii              = 8;
-   x                = 9;
-   xx               = 10;
-   xxx              = 11;
-   xxxx             = 12;
-   xxxxx            = 13;
-}
-
-enum EnumLogisticLevel {
-   none          = 0;
-   combat_train  = 1;
-   logistic_base = 2;
-}
-
-enum EnumBurningCellPhase {
-    pre_ignition = 0;
-    combustion   = 1;
-    decline      = 2;
-    extinguished = 3;
+    none_naturelevel = 0;  //!< No nature @todo rename to no_nature
+    b                = 1;  //!< What's this ?
+    o                = 2;  //!< What's this ?
+    c                = 3;  //!< What's this ?
+    oo               = 4;  //!< What's this ?
+    ooo              = 5;  //!< What's this ?
+    i                = 6;  //!< What's this ?
+    ii               = 7;  //!< What's this ?
+    iii              = 8;  //!< What's this ?
+    x                = 9;  //!< What's this ?
+    xx               = 10; //!< What's this ?
+    xxx              = 11; //!< What's this ?
+    xxxx             = 12; //!< What's this ?
+    xxxxx            = 13; //!< What's this ?
 }
 
 message ControlStop {
@@ -393,18 +488,18 @@ message ControlResume {
 }
 
 message ControlChangeTimeFactor {
-   required int32 time_factor = 1;
+    required int32 time_factor = 1;
 }
 
 message Exercise  {
-   required string name    = 1;
-   optional bool   running = 2;
-   optional uint32 port    = 3;
+    required string name    = 1;
+    optional bool   running = 2;
+    optional uint32 port    = 3;
 }
 
 message NetworkAddress  {
-   required string  ip   = 1;
-   required int32   port = 2 [default = 8080];
+    required string  ip   = 1;
+    required int32   port = 2 [default = 8080];
 }
 
 message RgbColor
@@ -817,6 +912,13 @@ message ObjectAttributeFire {
 message ObjectAttributeBurn {
    required int32 current_heat      = 1;
    required int32 combustion_energy = 2;
+}
+
+enum EnumBurningCellPhase {
+    pre_ignition = 0;
+    combustion   = 1;
+    decline      = 2;
+    extinguished = 3;
 }
 
 message ObjectAttributeBurnSurface {

@@ -72,7 +72,7 @@ private:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     ValuedComboBox< std::string >* combo_;

@@ -686,7 +686,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
 {
     if( msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value().Get(0).has_enumeration() )
     {
-        sword::EnumUnitTiredness tiredness = static_cast< sword::EnumUnitTiredness >( msg.elem( 0 ).value().Get(0).enumeration() );
+        sword::UnitAttributes::EnumUnitTiredness tiredness = static_cast< sword::UnitAttributes::EnumUnitTiredness >( msg.elem( 0 ).value().Get(0).enumeration() );
         const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
         if( !pTiredness )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
@@ -694,7 +694,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
     }
     if( msg.elem( 1 ).value_size() == 1 && msg.elem( 1 ).value().Get(0).has_enumeration() )
     {
-        sword::EnumUnitMorale morale = static_cast< sword::EnumUnitMorale >( msg.elem( 1 ).value().Get(0).enumeration() );
+        sword::UnitAttributes::EnumUnitMorale morale = static_cast< sword::UnitAttributes::EnumUnitMorale >( msg.elem( 1 ).value().Get(0).enumeration() );
         const PHY_Morale* pMoral = PHY_Morale::Find( morale );
         if( !pMoral )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
@@ -702,7 +702,7 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
     }
     if( msg.elem( 2 ).value_size() == 1 && msg.elem( 2 ).value().Get(0).has_enumeration() )
     {
-        sword::EnumUnitExperience experience = static_cast< sword::EnumUnitExperience >( msg.elem( 2 ).value().Get(0).enumeration() );
+        sword::UnitAttributes::EnumUnitExperience experience = static_cast< sword::UnitAttributes::EnumUnitExperience >( msg.elem( 2 ).value().Get(0).enumeration() );
         const PHY_Experience* pExperience = PHY_Experience::Find( experience );
         if( !pExperience )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );

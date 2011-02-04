@@ -37,7 +37,7 @@ public:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     int currentHeat_;
     int combustionEnergy_;

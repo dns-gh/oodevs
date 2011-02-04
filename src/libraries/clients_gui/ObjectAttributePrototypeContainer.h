@@ -83,7 +83,7 @@ private:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     const ObjectAttributePrototypeFactory_ABC& factory_;
     const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver_;

@@ -16,7 +16,7 @@
 
 namespace sword
 {
-    enum EnumUnitTiredness;
+    enum UnitAttributes_EnumUnitTiredness;
 }
 
 namespace xml
@@ -51,15 +51,15 @@ public:
     static       void           Initialize( xml::xistream& xis );
     static       void           Terminate ();
     static const PHY_Tiredness* Find      ( const std::string& strName );
-    static const PHY_Tiredness* Find      ( sword::EnumUnitTiredness nAsnID );
+    static const PHY_Tiredness* Find      ( sword::UnitAttributes_EnumUnitTiredness nAsnID );
     static const PHY_Tiredness* Find      ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&          GetName                         () const;
-          unsigned int                  GetID                           () const;
-          sword::EnumUnitTiredness GetAsnID                        () const;
+    const std::string&          GetName                       () const;
+          unsigned int                  GetID                 () const;
+          sword::UnitAttributes_EnumUnitTiredness GetAsnID    () const;
           double              GetWeight                       () const;
           double              GetCoefMaxSpeedModificator      () const;
           double              GetCoefReloadingTimeModificator () const;
@@ -86,7 +86,7 @@ private:
     //@}
 
 private:
-     PHY_Tiredness( const std::string& strName, E_TirednessType nType, sword::EnumUnitTiredness nAsnID, double rWeight );
+     PHY_Tiredness( const std::string& strName, E_TirednessType nType, sword::UnitAttributes_EnumUnitTiredness nAsnID, double rWeight );
     ~PHY_Tiredness();
 
     //! @name Init
@@ -97,7 +97,7 @@ private:
 private:
     const std::string           strName_;
     const E_TirednessType       nType_;
-    const sword::EnumUnitTiredness nAsnID_;
+    const sword::UnitAttributes_EnumUnitTiredness nAsnID_;
     const double              rDIAWeight_;
 
     double rCoefMaxSpeedModificator_;
