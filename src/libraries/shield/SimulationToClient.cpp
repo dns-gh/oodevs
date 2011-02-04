@@ -2334,7 +2334,7 @@ namespace
     {
         CONVERT_ID( object );
         CONVERT( number );
-#ifndef SHIELD_SIMULATION
+#ifdef SHIELD_CLIENT
         CONVERT( alerted )
 #endif
     }
