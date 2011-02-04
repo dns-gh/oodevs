@@ -19,6 +19,11 @@ package sword;
  *  @{
  */
 
+message NetworkAddress  {
+    required string  ip   = 1;
+    required int32   port = 2 [default = 8080];
+}
+
 message ConnectionAck {
     enum ErrorCode {
         success                       = 0;

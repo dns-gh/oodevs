@@ -451,36 +451,52 @@ enum EnumHumanWound {
 }
 
 /** @enum EnumNatureLevel
-    @brief Defines the different nature levels
+    @brief Defines the different nature levels using APP-6A symbols
+    @see http://en.wikipedia.org/wiki/Military_organization
 */
 enum EnumNatureLevel {
     none_naturelevel = 0;  //!< No nature @todo rename to no_nature
-    b                = 1;  //!< What's this ?
-    o                = 2;  //!< What's this ?
-    c                = 3;  //!< What's this ?
-    oo               = 4;  //!< What's this ?
-    ooo              = 5;  //!< What's this ?
-    i                = 6;  //!< What's this ?
-    ii               = 7;  //!< What's this ?
-    iii              = 8;  //!< What's this ?
-    x                = 9;  //!< What's this ?
-    xx               = 10; //!< What's this ?
-    xxx              = 11; //!< What's this ?
-    xxxx             = 12; //!< What's this ?
+    b                = 1;  //!< Fire and maneuver team
+    o                = 2;  //!< Fireteam
+    c                = 3;  //!< Squad or crew
+    oo               = 4;  //!< Section or patrol
+    ooo              = 5;  //!< Platoon or Commonwealth troop
+    i                = 6;  //!< Infantry company, artillery battery, U.S. Cavalry troop, or Commonwealth armour or combat engineering squadron
+    ii               = 7;  //!< Infantry battalion, U.S. Cavalry squadron, or Commonwealth armoured regiment
+    iii              = 8;  //!< Regiment or group
+    x                = 9;  //!< Brigade
+    xx               = 10; //!< Division
+    xxx              = 11; //!< Corps
+    xxxx             = 12; //!< Army
     xxxxx            = 13; //!< What's this ?
 }
 
+/** @struct ControlStop
+    @brief Stops the simulation
+    @see ControlStopAck
+*/
 message ControlStop {
 }
 
+/** @struct ControlPause
+    @brief Pauses the simulation
+    @see ControlPauseAck
+*/
 message ControlPause {
 }
 
+/** @struct ControlResume
+    @brief Resumes the simulation
+    @see ControlResumeAck
+*/
 message ControlResume {
 }
 
+/** @struct ControlChangeTimeFactor
+    @brief Changes the simulation time factor
+*/
 message ControlChangeTimeFactor {
-    required int32 time_factor = 1;
+    required int32 time_factor = 1; //!< The new time multiplier
 }
 
 message Exercise  {
@@ -489,58 +505,101 @@ message Exercise  {
     optional uint32 port    = 3;
 }
 
-message NetworkAddress  {
-    required string  ip   = 1;
-    required int32   port = 2 [default = 8080];
-}
-
-message RgbColor
-{
-    required int32 red   = 1;
-    required int32 green = 2;
-    required int32 blue  = 3;
-}
-
-message RgbaColor
-{
-    required int32 red   = 1;
-    required int32 green = 2;
-    required int32 blue  = 3;
-    required float alpha = 4;
-}
-
+/** @struct CoordLatLong
+    @brief Defines coordinates
+*/
 message CoordLatLong {
-    required double latitude  = 1;
-    required double longitude = 2;
+    required double latitude  = 1; //!< The latitude
+    required double longitude = 2; //!< The longitude
 }
 
+/** @struct CoordLatLongList
+    @brief Defines a list of coordinates
+*/
 message CoordLatLongList {
-    repeated CoordLatLong elem = 2;
+    repeated CoordLatLong elem = 2; //!< The coordinates
 }
 
+/** @struct Location
+    @brief Defines a location as an area at given coordinates
+*/
 message Location {
+    /** @enum Geometry
+        @brief Defines the different geometries available
+    */
     enum Geometry {
-        circle    = 0;
-        ellipse   = 1;
-        line      = 2;
-        rectangle = 3;
-        polygon   = 4;
-        point     = 5;
-        sector    = 6;
-        none      = 7;
+        circle    = 0; //!< Circle
+        ellipse   = 1; //!< Ellipse
+        line      = 2; //!< Line
+        rectangle = 3; //!< Rectangle
+        polygon   = 4; //!< Polygon
+        point     = 5; //!< Point
+        sector    = 6; //!< Sector
+        none      = 7; //!< None
     }
-    required Geometry         type        = 1;
-    optional CoordLatLongList coordinates = 2;
+    required Geometry         type        = 1; //!< The type of geometry
+    optional CoordLatLongList coordinates = 2; //!< The coordinates associated to the geometry
 }
 
-message Line         { required Location location = 1; }
-message LocationList { repeated Location elem = 1; }
-message Path         { required Location location = 1; }
-message PathList     { repeated Path     elem = 1; }
-message Point        { required Location location = 1; }
-message PointList    { repeated Point    elem = 1; }
-message Polygon      { required Location location = 1; }
-message PolygonList  { repeated Polygon  elem = 1; }
+/** @struct LocationList
+    @brief Defines a list of locations
+*/
+message LocationList {
+    repeated Location elem = 1; //!< The locations
+}
+
+/** @struct Line
+    @brief Defines a line location
+    @todo Why is there a type in location ?
+*/
+message Line {
+    required Location location = 1; //!< The location
+}
+
+/** @struct Path
+    @brief Defines a path
+    @todo Why is there a type in location ?
+*/
+message Path {
+    required Location location = 1; //!< The location
+}
+
+/** @struct PathList
+    @brief Defines a list of paths
+*/
+message PathList {
+    repeated Path elem = 1; //!< The paths
+}
+
+/** @struct Point
+    @brief Defines a point location
+    @todo Why is there a type in location ?
+*/
+message Point {
+    required Location location = 1; //!< The location
+}
+
+/** @struct PointList
+    @brief Defines a list of points
+*/
+message PointList {
+    repeated Point elem = 1; //!< The points
+}
+
+/** @struct Polygon
+    @brief Defines a polygon location
+    @todo Why is there a type in location ?
+*/
+message Polygon {
+    required Location location = 1; //!< The location
+}
+
+/** @struct PointList
+    @brief Defines a list of polygons
+*/
+message PolygonList {
+    repeated Polygon  elem = 1; //!< The polygons
+}
 
 message LogMedicalPriorities {
    repeated EnumHumanWound elem = 1;

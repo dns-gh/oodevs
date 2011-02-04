@@ -482,6 +482,16 @@ message ControlResumeAck {
    required ControlAck.ErrorCode error_code = 1; //!< Reason for the failure of the request
 }
 
+/** @struct RgbColor
+    @brief Defines a color
+*/
+message RgbColor
+{
+    required int32 red   = 1; //!< The red component between 0 and 255
+    required int32 green = 2; //!< The green component between 0 and 255
+    required int32 blue  = 3; //!< The blue component between 0 and 255
+}
+
 /** @struct PartyCreation
     @brief A party creation message
 */
@@ -1975,6 +1985,17 @@ message ControlSendCurrentStateBegin {
     @see ControlSendCurrentStateBegin
 */
 message ControlSendCurrentStateEnd {
+}
+
+/** @struct RgbaColor
+    @brief Defines a color with alpha channel
+*/
+message RgbaColor
+{
+    required int32 red   = 1; //!< The red component between 0 and 255
+    required int32 green = 2; //!< The green component between 0 and 255
+    required int32 blue  = 3; //!< The blue component between 0 and 255
+    required float alpha = 4; //!< The alpha channel between 0 and 1
 }
 
 /** @struct UrbanAttributes

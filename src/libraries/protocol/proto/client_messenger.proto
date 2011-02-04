@@ -97,13 +97,13 @@ message IntelligenceCreationRequest {
 */
 message IntelligenceUpdateRequest {
     required IntelligenceId  intelligence = 1; //!< The identifier of the intelligence to update @see IntelligenceId @todo should be named "id" instead of "intelligence" (coherence)
-    optional FormationId     formation    = 2; //!< The new identifier of the parent formation of the intelligence @see FormationId
+    optional FormationId     formation    = 2; //!< The new identifier of the parent formation of the intelligence
     optional string          name         = 3; //!< The new name of the intelligence
     optional string          nature       = 4; //!< The new nature (MIL2525B APP-6 string) of the intelligence
-    optional EnumNatureLevel level        = 5; //!< The new hierarchical level/echelon of the intelligence @see EnumNatureLevel
+    optional EnumNatureLevel level        = 5; //!< The new hierarchical level/echelon of the intelligence
     optional bool            embarked     = 6; //!< The new embarkment state of the intelligence @note Only needs to be set if data has changed.
-    optional CoordLatLong    location     = 7; //!< The new location of the intelligence @see CoordLatLong
-    optional EnumDiplomacy   diplomacy    = 8; //!< The new diplomacy/alignment of the intelligence @see EnumDiplomacy
+    optional CoordLatLong    location     = 7; //!< The new location of the intelligence
+    optional EnumDiplomacy   diplomacy    = 8; //!< The new diplomacy/alignment of the intelligence
 }
 
 /** @struct IntelligenceDestructionRequest
