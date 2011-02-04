@@ -231,7 +231,7 @@
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
-						<xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
+            <xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
           </xs:choice>
           <xs:attribute name="type" type="karmaType" use="required">
             <xs:annotation>
@@ -537,33 +537,31 @@
       <xs:documentation xml:lang="fr">Définit une population couvrante.</xs:documentation>
     </xs:annotation>
     <xs:complexType>
-      <xs:all>
-        <xs:element name="extensions" type="T_ExtensionsType"/>
-        <xs:element name="information"/>
-        <xs:element ref="living-area"/>
-        <xs:element ref="composition"/>
-        <xs:element ref="adhesions"/>
-        <xs:element name="health-need">
-          <xs:annotation>
-            <xs:documentation>Defines the health satisfaction level, i.e. the number of medical infrastructures needed  to satisfy the population (not necessarily an integer value)</xs:documentation>
-          </xs:annotation>
-          <xs:complexType>
-            <xs:attribute name="quantity" type="xs:float" use="required"/>
-          </xs:complexType>
-        </xs:element>
-      </xs:all>
-      <xs:attribute name="name" type="xs:string" use="required">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Defines the population name.</xs:documentation>
-          <xs:documentation xml:lang="fr">Définit le nom de la population.</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
-      <xs:attribute name="type" type="xs:nonNegativeInteger" use="required">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Defines the type of population. References an existing population type from "Populations.xml".</xs:documentation>
-          <xs:documentation xml:lang="fr">Définit le type de la population. Renvoie vers "Populations.xml".</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
+      <xs:complexContent>
+        <xs:extension base="entityType">
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="extensions" type="T_ExtensionsType"/>
+            <xs:element name="information"/>
+            <xs:element ref="living-area"/>
+            <xs:element ref="composition"/>
+            <xs:element ref="adhesions"/>
+            <xs:element name="health-need">
+              <xs:annotation>
+                <xs:documentation>Defines the health satisfaction level, i.e. the number of medical infrastructures needed  to satisfy the population (not necessarily an integer value)</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="quantity" type="xs:float" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+          <xs:attribute name="type" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the type of population. References an existing population type from "Populations.xml".</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le type de la population. Renvoie vers "Populations.xml".</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
     </xs:complexType>
   </xs:element>
   <xs:element name="living-area">
