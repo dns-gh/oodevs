@@ -1796,6 +1796,7 @@ namespace
     {
         o->mutable_object()->set_id( 12 );
         o->set_number( 13 );
+        o->set_alerted( true ); // $$$$ SBO 2011-02-04: in sword but not in shield
     }
 }
 
