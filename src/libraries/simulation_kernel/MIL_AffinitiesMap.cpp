@@ -32,8 +32,8 @@ MIL_AffinitiesMap::MIL_AffinitiesMap( xml::xistream& xis )
     : hasChanged_ ( false )
 {
     xis >> xml::optional
-        >> xml::start( "affinities" )
-            >> xml::list( "affinity", *this, &MIL_AffinitiesMap::ReadAffinity )
+        >> xml::start( "adhesions" )
+            >> xml::list( "adhesion", *this, &MIL_AffinitiesMap::ReadAffinity )
         >> xml::end;
 }
 
@@ -52,7 +52,7 @@ MIL_AffinitiesMap::~MIL_AffinitiesMap()
 // -----------------------------------------------------------------------------
 void MIL_AffinitiesMap::ReadAffinity( xml::xistream& xis )
 {
-    affinities_[ xis.attribute< unsigned long >( "id" ) ] = xis.attribute< float >( "value" );
+    affinities_[ xis.attribute< unsigned long >( "party" ) ] = xis.attribute< float >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,10 +61,10 @@ void MIL_AffinitiesMap::ReadAffinity( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AffinitiesMap::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "affinities" );
+    xos << xml::start( "adhesions" );
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-        xos << xml::start( "affinity" )
-                << xml::attribute( "id", it->first )
+        xos << xml::start( "adhesion" )
+                << xml::attribute( "party", it->first )
                 << xml::attribute( "value", it->second )
             << xml::end;
     xos << xml::end;

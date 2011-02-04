@@ -45,8 +45,8 @@ InhabitantAffinities::InhabitantAffinities( xml::xistream& xis, kernel::Controll
     , dictionary_ ( dictionary )
 {
     xis >> xml::optional
-        >> xml::start( "affinities" )
-            >> xml::list( "affinity", *this, &InhabitantAffinities::ReadAffinity )
+        >> xml::start( "adhesions" )
+            >> xml::list( "adhesion", *this, &InhabitantAffinities::ReadAffinity )
         >> xml::end;
     if( affinities_.empty() )
         InitializeAffinities();
@@ -69,7 +69,7 @@ InhabitantAffinities::~InhabitantAffinities()
 // -----------------------------------------------------------------------------
 void InhabitantAffinities::ReadAffinity( xml::xistream& xis )
 {
-    affinities_[ xis.attribute< unsigned long >( "id" ) ] = xis.attribute< float >( "value" );
+    affinities_[ xis.attribute< unsigned long >( "party" ) ] = xis.attribute< float >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,11 +94,11 @@ void InhabitantAffinities::SerializeAttributes( xml::xostream& xos ) const
 {
     if ( !VerifyAffinitiesContent() )
         throw std::runtime_error( __FUNCTION__ ": affinities list differs from team list" ); 
-    xos << xml::start( "affinities" );
+    xos << xml::start( "adhesions" );
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
     {
-        xos << xml::start( "affinity" )
-                << xml::attribute( "id", it->first )
+        xos << xml::start( "adhesion" )
+                << xml::attribute( "party", it->first )
                 << xml::attribute( "value", it->second )
             << xml::end;
     }
