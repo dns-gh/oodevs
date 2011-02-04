@@ -9,6 +9,7 @@
 
 #include "SimulationToClient.h"
 #include "SimulationTools.h"
+#include <google/protobuf/descriptor.h>
 
 using namespace shield;
 
@@ -86,7 +87,7 @@ void SimulationToClient::ConvertOrderAckToSpecificOrderAck( const sword::TaskCre
     {
         to->mutable_crowd_order_ack()->mutable_tasker()->set_id( from.tasker().crowd().id() );
         ConvertOrderAckErrorCode( from, to->mutable_crowd_order_ack() );
-    } 
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1176,9 +1177,9 @@ namespace
         CONVERT( origin_x );
         CONVERT( origin_y );
         CONVERT_ENUM( phase, ( sword::pre_ignition, Common::pre_ignition )
-            ( sword::combustion, Common::combustion )
-            ( sword::decline, Common::decline )
-            ( sword::extinguished, Common::extinguished ));
+                             ( sword::combustion, Common::combustion )
+                             ( sword::decline, Common::decline )
+                             ( sword::extinguished, Common::extinguished ) );
         if( from.has_pre_ignition() )
             ConvertPreIgnition( from.pre_ignition(), to->mutable_pre_ignition() );
         if( from.has_combustion() )
@@ -1203,8 +1204,8 @@ namespace
     template< typename From, typename To >
     void ConvertLink( const From& from, To* to )
     {
-        CONVERT_ENUM( kind, ( sword::ResourceNetwork::Link::urban, Common::ResourceNetwork::Link::urban )
-                            ( sword::ResourceNetwork::Link::object, Common::ResourceNetwork::Link::object ) );
+        CONVERT_ENUM_EXT( kind, TargetKind, ( sword::ResourceNetwork::Link::urban, Common::ResourceNetwork::Link::urban )
+                                            ( sword::ResourceNetwork::Link::object, Common::ResourceNetwork::Link::object ) );
         CONVERT( target_id );
         CONVERT( capacity );
         CONVERT( flow );
