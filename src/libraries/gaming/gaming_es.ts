@@ -557,15 +557,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>State/Alerted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alerted:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Satisfaction/Resource/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/Alerted</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

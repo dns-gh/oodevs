@@ -56,6 +56,10 @@
         <source>Population Change Health State</source>
         <translation>Changer l&apos;état de santé de la population</translation>
     </message>
+    <message>
+        <source>Population Change Alerted State</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameter</name>

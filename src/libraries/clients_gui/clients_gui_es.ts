@@ -64,6 +64,14 @@
         <source>PhysicalFeatures/Motivations/</source>
         <translation>PhysicalFeatures/Motivations/</translation>
     </message>
+    <message>
+        <source>/Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/Alerted</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>R&#xe8;gle GL</name>
