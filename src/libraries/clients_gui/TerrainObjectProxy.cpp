@@ -255,7 +255,8 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned i
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.alerted_ );
     if( human.number_ == 0u )
     {
-        dictionary.Remove( keyBase );
+        dictionary.Remove( keyNumber );
+        dictionary.Remove( keyAlerted );
         humans_.erase( inhabitant );
     }
     UpdateColor();
