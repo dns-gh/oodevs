@@ -133,12 +133,3 @@ bool MIL_Schedule::IsMoving() const
 {
     return isMoving_;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Schedule::GetTransfertTime
-// Created: SLG 2011-02-01
-// -----------------------------------------------------------------------------
-double MIL_Schedule::GetTransfertTime() const
-{
-    return transferTime_;
-}
