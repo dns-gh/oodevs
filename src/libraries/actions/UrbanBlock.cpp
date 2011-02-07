@@ -149,15 +149,6 @@ void UrbanBlock::CommitTo( sword::UrbanObjectKnowledgeId& message ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanBlock::ThrowInvalidKnowledge
-// Created: JSR 2010-05-20
-// -----------------------------------------------------------------------------
-void UrbanBlock::ThrowInvalidKnowledge() const
-{
-    throw std::exception( tools::translate( "Parameter", "Invalid object knowledge." ).ascii() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanBlock::GetPosition
 // Created: LGY 2011-02-04
 // -----------------------------------------------------------------------------

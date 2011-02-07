@@ -120,12 +120,3 @@ void ObjectKnowledge::CommitTo( sword::ObjectKnowledgeId& message ) const
 {
     Entity< ObjectKnowledge_ABC >::CommitTo< sword::ObjectKnowledgeId >( message );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ObjectKnowledge::ThrowInvalidKnowledge
-// Created: JSR 2010-05-20
-// -----------------------------------------------------------------------------
-void ObjectKnowledge::ThrowInvalidKnowledge() const
-{
-    throw std::exception( tools::translate( "Parameter", "Invalid object knowledge." ).ascii() );
-}

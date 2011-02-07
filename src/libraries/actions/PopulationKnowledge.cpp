@@ -93,12 +93,3 @@ void PopulationKnowledge::CommitTo( sword::CrowdKnowledgeId& message ) const
 {
     Entity< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( message );
 }
-
-// -----------------------------------------------------------------------------
-// Name: PopulationKnowledge::ThrowInvalidKnowledge
-// Created: JSR 2010-05-20
-// -----------------------------------------------------------------------------
-void PopulationKnowledge::ThrowInvalidKnowledge() const
-{
-    throw std::exception( tools::translate( "Parameter", "Invalid population knowledge." ).ascii() );
-}

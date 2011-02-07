@@ -114,12 +114,3 @@ void AgentKnowledge::CommitTo( sword::UnitKnowledgeId& message ) const
 {
     Entity< AgentKnowledge_ABC >::CommitTo( message );
 }
-
-// -----------------------------------------------------------------------------
-// Name: AgentKnowledge::ThrowInvalidKnowledge
-// Created: JSR 2010-05-20
-// -----------------------------------------------------------------------------
-void AgentKnowledge::ThrowInvalidKnowledge() const
-{
-    throw std::exception( tools::translate( "Parameter", "Invalid agent knowledge." ).ascii() );
-}

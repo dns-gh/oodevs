@@ -46,7 +46,6 @@ private:
     //! @name Helpers
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual void ThrowInvalidKnowledge() const = 0;
     virtual void NotifyValueSet();
     //@}
 

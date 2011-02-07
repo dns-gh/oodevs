@@ -55,12 +55,6 @@ public:
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     void CommitTo( sword::ObjectKnowledgeId& message ) const;
     //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void ThrowInvalidKnowledge() const;
-    //@}
 };
 
     }

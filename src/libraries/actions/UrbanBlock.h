@@ -57,12 +57,6 @@ public:
     virtual geometry::Point2f GetPosition() const;
     void CommitTo( sword::UrbanObjectKnowledgeId& message ) const;
     //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual void ThrowInvalidKnowledge() const;
-    //@}
 };
 
 }
