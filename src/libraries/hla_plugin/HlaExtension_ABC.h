@@ -10,7 +10,7 @@
 #ifndef __HlaExtension_ABC_h_
 #define __HlaExtension_ABC_h_
 
-#include "clients_kernel/Extension_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <stdexcept>
 
 namespace hla
@@ -30,7 +30,7 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class HlaExtension_ABC : public kernel::Extension_ABC
+class HlaExtension_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
