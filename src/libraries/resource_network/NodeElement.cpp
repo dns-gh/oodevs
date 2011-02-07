@@ -174,7 +174,7 @@ void NodeElement::UpdateImmediateStock( float functionalState )
         return;
     immediateStock_ = static_cast< unsigned int >( modifier_ * receivedQuantity_ ) + stockCapacity_;
     if( std::abs( functionalState ) >= 0.01f )
-        immediateStock_ += static_cast< unsigned int >( modifier_ * productionCapacity_ );
+        immediateStock_ += static_cast< unsigned int >( modifier_ * functionalState * productionCapacity_ );
     receivedQuantity_ = 0;
 }
 
@@ -199,7 +199,7 @@ void NodeElement::Consume( float& functionalState )
         if( consumption > 0 && consumption > immediateStock_ )
         {
             immediateStock_ = 0;
-            functionalState_ = consumptionCritical_ ? 0 : static_cast< float >( immediateStock_ ) / consumption;
+            functionalState_ = consumptionCritical_ ? static_cast< float >( immediateStock_ ) / consumption : 1;
             functionalState *= functionalState_;
         }
         else
