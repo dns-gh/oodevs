@@ -146,6 +146,11 @@ int PHY_RoleAction_Loading::Load()
 {
     bHasBeenUpdated_ = true;
 
+    if( nState_ == eUnloading )
+    {
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentInterrupted );
+        nState_ = eNothing;
+    }
     if( bIsLoaded_ )
         return eEnd;
 
@@ -181,6 +186,11 @@ int PHY_RoleAction_Loading::Unload()
 {
     bHasBeenUpdated_ = true;
 
+    if( nState_ == eLoading )
+    {
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_EmbarkmentInterrupted );
+        nState_ = eNothing;
+    }
     if( !bIsLoaded_ )
         return eEnd;
 
@@ -193,8 +203,9 @@ int PHY_RoleAction_Loading::Unload()
             return eErrorNoCarried;
         nEndTimeStep_ = (unsigned int)rUnloadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         nState_       = eUnloading;
-        MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentStarted );    }
-
+        MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentStarted );
+    }
+    
     if( nState_ == eUnloading )
     {
         if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )
