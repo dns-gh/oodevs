@@ -9,11 +9,9 @@
 
 #include "hla_plugin_pch.h"
 #include "AgentProxy.h"
-#include "clients_kernel/AgentType.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Team_ABC.h"
-#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -39,30 +37,12 @@ AgentProxy::~AgentProxy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentProxy::GetId
-// Created: SLI 2011-02-04
-// -----------------------------------------------------------------------------
-std::string AgentProxy::GetId() const
-{
-    return boost::lexical_cast< std::string >( agent_.GetId() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentProxy::GetName
 // Created: SLI 2011-02-04
 // -----------------------------------------------------------------------------
 std::string AgentProxy::GetName() const
 {
     return agent_.GetName().ascii();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentProxy::GetType
-// Created: SLI 2011-02-04
-// -----------------------------------------------------------------------------
-std::string AgentProxy::GetType() const
-{
-    return agent_.GetType().GetName();
 }
 
 // -----------------------------------------------------------------------------

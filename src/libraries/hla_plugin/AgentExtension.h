@@ -36,9 +36,9 @@ class AgentExtension : public HlaExtension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes
-                           , dispatcher::Observable< sword::UnitEnvironmentType >& environment
-                           , Agent_ABC& holder, const rpr::EntityIdentifier& id );
+             AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes,
+                             dispatcher::Observable< sword::UnitEnvironmentType >& environment,
+                             Agent_ABC& holder, const rpr::EntityIdentifier& id );
     virtual ~AgentExtension();
     //@}
 

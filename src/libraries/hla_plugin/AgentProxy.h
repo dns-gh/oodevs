@@ -40,9 +40,7 @@ public:
 
     //! @name Getters
     //@{
-    virtual std::string GetId() const;
     virtual std::string GetName() const;
-    virtual std::string GetType() const;
     virtual geometry::Point2d GetPosition() const;
     virtual unsigned short GetAltitude() const;
     virtual unsigned short GetSpeed() const;

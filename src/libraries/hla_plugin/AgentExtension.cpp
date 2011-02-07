@@ -28,10 +28,9 @@ using namespace plugins::hla;
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes
-                              , dispatcher::Observable< sword::UnitEnvironmentType >& environment
-                              , Agent_ABC& holder
-                              , const rpr::EntityIdentifier& id )
+AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes,
+                                dispatcher::Observable< sword::UnitEnvironmentType >& environment,
+                                Agent_ABC& holder, const rpr::EntityIdentifier& id )
     : Observer< sword::UnitAttributes >( attributes )
     , Observer< sword::UnitEnvironmentType >( environment )
     , holder_            ( holder )

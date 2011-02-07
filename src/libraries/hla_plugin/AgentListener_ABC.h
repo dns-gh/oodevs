@@ -10,6 +10,7 @@
 #ifndef plugins_hla_AgentListener_ABC_h
 #define plugins_hla_AgentListener_ABC_h
 
+#include <string>
 #include <boost/noncopyable.hpp>
 
 namespace plugins
@@ -35,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Created( Agent_ABC& agent ) = 0;
+    virtual void Created( Agent_ABC& agent, const std::string& identifier ) = 0;
     //@}
 };
 

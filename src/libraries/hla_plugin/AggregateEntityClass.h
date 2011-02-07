@@ -46,7 +46,7 @@ public:
 private:
     //! @name Operations
     //@{
-    virtual void Created( Agent_ABC& agent );
+    virtual void Created( Agent_ABC& agent, const std::string& identifier );
     //@}
 
 private:

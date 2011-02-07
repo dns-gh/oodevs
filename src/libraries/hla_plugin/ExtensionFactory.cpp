@@ -13,6 +13,8 @@
 #include "AgentProxy.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Agent.h"
+#include "clients_kernel/AgentType.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -43,7 +45,7 @@ void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
     agents_.push_back( T_Agent( new AgentProxy( entity ) ) );
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->Created( *agents_.back() );
+        (*it)->Created( *agents_.back(), entity.GetType().GetName() + boost::lexical_cast< std::string >( entity.GetId() ) );
 }
 
 // -----------------------------------------------------------------------------
