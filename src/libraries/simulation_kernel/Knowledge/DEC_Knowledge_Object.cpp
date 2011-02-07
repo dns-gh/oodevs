@@ -19,6 +19,7 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
 #include "Entities/Objects/ActivableCapacity.h"
+#include "Entities/Objects/CrowdCapacity.h"
 #include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/InteractionHeightAttribute.h"
 #include "Entities/Objects/ConstructionAttribute.h"
@@ -422,6 +423,8 @@ void DEC_Knowledge_Object::UpdateRelevance()
     // L'objet réel va être détruit
     if( pObjectKnown_ && pObjectKnown_->IsMarkedForDestruction() )
     {
+        if( pObjectKnown_->Retrieve< CrowdCapacity >() )
+            rRelevance_ = 0.;
         pObjectKnown_ = 0;
         NotifyAttributeUpdated( eAttr_RealObject );
     }
