@@ -360,14 +360,7 @@ void TerrainObjectProxy::UpdateColor()
 // -----------------------------------------------------------------------------
 float TerrainObjectProxy::GetDensity() const
 {
-    float surface = object_.GetFootprint()->ComputeArea();
-    if( surface == 0.f )
-        return 0.f;
-    unsigned int floors = 1u;
-    const urban::PhysicalAttribute* pPhysical = object_.Retrieve< urban::PhysicalAttribute >();
-    if( pPhysical && pPhysical->GetArchitecture() )
-        floors += pPhysical->GetArchitecture()->GetFloorNumber();
-    return GetHumans() / ( surface * floors );
+    return GetHumans() / object_.GetLivingSpace();
 }
 
 // -----------------------------------------------------------------------------

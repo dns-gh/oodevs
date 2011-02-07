@@ -120,9 +120,9 @@ private:
         bool alerted_;
     };
     typedef std::map< std::string, T_Human > T_Humans;
-    typedef T_Humans::const_iterator            CIT_Humans;
+    typedef T_Humans::const_iterator       CIT_Humans;
 
-    struct BaseColor
+    struct T_BaseColor
     {
         unsigned short red_;
         unsigned short green_;
@@ -136,7 +136,7 @@ private:
     urban::TerrainObject_ABC& object_;
     kernel::Controllers& controllers_;
     T_Humans humans_;
-    BaseColor color_;
+    T_BaseColor color_;
     bool densityColor_;
     float minDensity_;
     float maxDensity_;
