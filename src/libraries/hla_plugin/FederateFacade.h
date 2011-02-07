@@ -25,11 +25,6 @@ namespace hla
     class Federate;
 }
 
-namespace dispatcher
-{
-    class Model_ABC;
-}
-
 namespace plugins
 {
 namespace hla

@@ -19,6 +19,7 @@
 #include <hla/AttributeIdentifier.h>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
+#include <algorithm>
 
 using namespace plugins::hla;
 

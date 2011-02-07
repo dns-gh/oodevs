@@ -11,7 +11,6 @@
 #define hla_plugin_EventListener_ABC_h
 
 #include <boost/noncopyable.hpp>
-#include <geometry/Types.h>
 
 namespace plugins
 {
