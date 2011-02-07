@@ -11,7 +11,9 @@ import "common.proto";
 
 package sword;
 
-/** @addtogroup Simulation
+/** @file
+ *  @brief Messages from clients to the simulation
+ *  @addtogroup Simulation
  *  @{
  */
 

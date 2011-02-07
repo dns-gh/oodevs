@@ -901,14 +901,13 @@
             <property name="PROJECT_NAME" value="SWORD - API Reference"/>
             <property name="PROJECT_NUMBER" value="${version.major}"/>
             <property name="FILE_PATTERNS" value='"*.proto *.dox"'/>
-            <!--
-            <property name="EXCLUDE" value="dispatcher_simulation.proto"/>
-            -->
+            <property name="EXCLUDE_PATTERNS" value='"*launcher* *dispatcher_simulation*"'/>
             <property name="FILTER_PATTERNS" value="*.proto=protofilter.py"/>
-            <property name="HIDE_UNDOC_CLASSES" value="NO"/>
-            <property name="HIDE_UNDOC_MEMBERS" value="NO"/>
             <property name="COLLABORATION_GRAPH" value="NO"/>
+            <property name="EXTRACT_ALL" value="NO"/>
             <property name="DISABLE_INDEX" value="NO"/>
+            <property name="SHOW_USED_FILES" value="NO"/>
+            <property name="SHOW_FILES" value="NO"/>
             <property name="SHOW_NAMESPACES" value="NO"/>
             <property name="BRIEF_MEMBER_DESC" value="NO"/>
             <property name="ENUM_VALUES_PER_LINE" value="1"/>
@@ -934,7 +933,7 @@
     <target name="package" description="package the installers" depends="package.app,package.exo,package.debug,package.wise-driver"/>
 
     <!-- standard packages -->
-    <target name="package.defense" description="package the standard installer: worldwide, no license">
+    <target name="package.defense" description="package the standard installer : worldwide, no license">
         <nsis name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
@@ -953,7 +952,7 @@
         </nsis>
     </target>
 
-    <target name="package.security.demo" description="Create the security installer with all demo exercices">
+    <target name="package.security.demo" description="create the security installer with all demo exercices">
         <nsis name="sword-security" script="sword-security.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
@@ -964,7 +963,7 @@
         </nsis>
     </target>
 
-    <target name="package.eval" description="package the standard installer: worlwide, 3 months license">
+    <target name="package.eval" description="package the standard installer : worlwide, 3 months license">
         <nsis name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
@@ -974,7 +973,7 @@
         </nsis>
     </target>
 
-    <target name="package.france" description="package the french version of installer: france, no license">
+    <target name="package.france" description="package the french version of installer : france, no license">
         <nsis name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>

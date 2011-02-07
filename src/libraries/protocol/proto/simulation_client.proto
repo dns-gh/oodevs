@@ -11,7 +11,9 @@ import "common.proto";
 
 package sword;
 
-/** @addtogroup Simulation
+/** @file
+ *  @brief Messages from the simulation to clients
+ *  @addtogroup Simulation
  *  @{
  */
 
@@ -777,7 +779,7 @@ message Extension {
     @brief A unit attributes message
 */
 message UnitAttributes {
-    /** @struct Posture
+    /** @enum Posture
         @brief Posture states
     */
     enum Posture {
@@ -789,7 +791,7 @@ message UnitAttributes {
         parked_on_self_prepared_area     = 5; //!< Parked on self-prepared area
         parked_on_engineer_prepared_area = 6; //!< Parked on engineer-prepared area
     }
-    /** @struct FireAvailability
+    /** @enum FireAvailability
         @brief Fire availability states
     */
     enum FireAvailability {
@@ -797,7 +799,7 @@ message UnitAttributes {
         fire_ready       = 1; //!< Fire ready
         fire_unavailable = 2; //!< Fire unavailable
     }
-    /** @struct CrowdRoe
+    /** @enum CrowdRoe
         @brief Rules of engagement against crowds
         @todo rename to RulesOfEngagementAgainstCrowds or something along
     */
@@ -852,8 +854,8 @@ message UnitAttributes {
     optional bool                        stealth                    = 17; //!< Whether the unit is in stealth mode
     optional bool                        embarked                   = 18; //!< Whether the unit has been embarked or not
     optional bool                        transporters_available     = 19; //!< Whether the unit has transporters available or not
-    optional Posture                     old_posture                = 20; //!< The posture which the unit is transitioning from @see Posture
-    optional Posture                     new_posture                = 21; //!< The posture which the unit is transitioning to @see Posture
+    optional Posture                     old_posture                = 20; //!< The posture which the unit is transitioning from
+    optional Posture                     new_posture                = 21; //!< The posture which the unit is transitioning to
     optional int32                       posture_transition         = 22; //!< The completion of the posture transition in percent
     optional int32                       installation               = 23; //!< The completion of the installation in percent
     optional bool                        protective_suits           = 24; //!< Whether the unit is wearing NBC protective suits or not

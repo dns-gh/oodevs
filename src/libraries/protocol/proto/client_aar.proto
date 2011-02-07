@@ -9,7 +9,9 @@
 
 package sword;
 
-/** @addtogroup aar After action review
+/** @file
+ *  @brief Messages from clients to the after action review module
+ *  @addtogroup aar After action review
  *  @{
  */
 

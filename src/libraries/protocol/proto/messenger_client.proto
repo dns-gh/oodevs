@@ -11,7 +11,9 @@ import "common.proto";
 
 package sword;
 
-/** @addtogroup Messenger
+/** @file
+ *  @brief Messages from the messenger module to clients
+ *  @addtogroup Messenger
  *  @{
  */
 

@@ -12,7 +12,9 @@ import "simulation_client.proto";
 
 package sword;
 
-/** @addtogroup Replay
+/** @file
+ *  @brief Messages from the replay module to clients
+ *  @addtogroup Replay
  *  @{
  */
 

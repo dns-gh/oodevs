@@ -9,7 +9,9 @@
 
 package sword;
 
-/** @addtogroup Dispatcher
+/** @file
+ *  @brief Messages from the dispatcher to clients
+ *  @addtogroup Dispatcher
  *  @{
  */
 

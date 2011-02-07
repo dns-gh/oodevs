@@ -9,6 +9,10 @@
 
 package sword;
 
+/** @file
+ *  @brief Messages common to various modules
+ */
+
 /** @struct AutomatId
     @brief Defines an automat identifier
 */
@@ -667,7 +671,7 @@ message MissionObjectiveList {
     @brief Defines a phase line order
 */
 message PhaseLineOrder {
-    /** @struct Function
+    /** @enum Function
         @brief Defines a phase line function
     */
     enum Function {
@@ -738,9 +742,12 @@ message Nature {
 
 /** @struct MissionParameter
     @brief Defines a mission parameter
-    @todo clean-up field names
 */
 message MissionParameter {
+    /** @struct Value
+        @brief Wraps the different possible values of a mission parameter
+        @todo clean-up field names
+    */
     message Value {
         optional bool                     booleanValue             = 1;  //!< A boolean
         optional int32                    intValue                 = 2;  //!< An integer

@@ -12,7 +12,9 @@ import "version.proto";
 
 package sword;
 
-/** @addtogroup Authentication
+/** @file
+ *  @brief Messages from clients to the authentication module
+ *  @addtogroup Authentication
  *  @{
  */
 

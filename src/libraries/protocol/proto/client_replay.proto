@@ -11,7 +11,9 @@ import "common.proto";
 
 package sword;
 
-/** @addtogroup Replay
+/** @file
+ *  @brief Messages from clients to the replay module
+ *  @addtogroup Replay
  *  @{
  */
 

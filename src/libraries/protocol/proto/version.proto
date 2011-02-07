@@ -9,12 +9,13 @@
 
 package sword;
 
-/** @addtogroup Common
+/** @file
+ *  @brief Message containing the current protocol version
  *  @{
  */
 
 /** @struct ProtocolVersion
-    @brief A message containing the current protocol version.
+    @brief Encapsulates the current protocol version.
 
     This message is meant to be used when the client/server needs to 
     send its current procotol version.
