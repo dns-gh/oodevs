@@ -246,10 +246,10 @@ void ADN_Units_GUI::Build()
 void ADN_Units_GUI::OnTypeChanged()
 {
     QString strType = pTypeCombo_->currentText();
-    if( strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLDRavitaillement ).c_str()
-        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLTRavitaillement ).c_str()
-        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGConvoi ).c_str()
-        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGTC2 ).c_str() )
+    if( strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLDRavitaillement, ENT_Tr_ABC::eToTr ).c_str()
+        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGBLTRavitaillement, ENT_Tr_ABC::eToTr ).c_str()
+        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGConvoi, ENT_Tr_ABC::eToTr ).c_str()
+        || strType == ADN_Tr::ConvertFromAgentTypePion( eAgentTypePionLOGTC2, ENT_Tr_ABC::eToTr ).c_str() )
     {
         // insert stock category list if not exist yet
         ADN_Units_Data::UnitInfos* pInfos = (ADN_Units_Data::UnitInfos*)pListUnits_->GetCurrentData();
