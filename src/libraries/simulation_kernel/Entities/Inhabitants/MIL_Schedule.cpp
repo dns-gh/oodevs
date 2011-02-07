@@ -21,7 +21,6 @@
 // -----------------------------------------------------------------------------
 MIL_Schedule::MIL_Schedule( MIL_LivingArea_ABC& livingArea )
     : livingArea_( livingArea )
-    , startingMovingTime_( bpt::from_time_t( 0 ) )
     , occurence_( 0 )
     , isMoving_( false )
 {
@@ -130,7 +129,7 @@ void MIL_Schedule::Check( const Event& event, unsigned int date, unsigned int du
 // Name: MIL_Schedule::IsMoving
 // Created: SLG 2011-01-26
 // -----------------------------------------------------------------------------
-bool MIL_Schedule::IsMoving( unsigned int date ) const
+bool MIL_Schedule::IsMoving() const
 {
     return isMoving_;
 }

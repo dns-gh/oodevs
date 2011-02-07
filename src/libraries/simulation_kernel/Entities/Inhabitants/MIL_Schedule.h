@@ -36,7 +36,7 @@ public:
     //@{
     virtual void Configure( xml::xistream& xis );
     virtual void Update( unsigned int date, unsigned int duration );
-    virtual bool IsMoving( unsigned int date ) const;
+    virtual bool IsMoving() const;
     virtual double GetTransfertTime() const;
     //@}
 
@@ -67,7 +67,6 @@ private:
     MIL_LivingArea_ABC& livingArea_;
     double transferTime_;
     T_Events events_;
-    bpt::ptime startingMovingTime_;
     int occurence_;
     bool isMoving_;
     //@}

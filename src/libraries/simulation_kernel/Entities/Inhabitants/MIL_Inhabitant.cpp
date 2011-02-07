@@ -271,9 +271,9 @@ void MIL_Inhabitant::SendFullState() const
 void MIL_Inhabitant::UpdateState()
 {
     pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
-    if ( pSchedule_->IsMoving( MIL_AgentServer::GetWorkspace().GetRealTime() ) && !pPopulationMovingObject_ )
+    if ( pSchedule_->IsMoving() && !pPopulationMovingObject_ )
         CreateInhabitantMovingObject();
-    if( !pSchedule_->IsMoving( MIL_AgentServer::GetWorkspace().GetRealTime() ) && pPopulationMovingObject_ )
+    if( !pSchedule_->IsMoving() && pPopulationMovingObject_ )
         DestroyInhabitantMovingObject();
     pSatisfactions_->IncreaseSafety( type_.GetSafetyGainPerHour() );
     pSatisfactions_->SetLodgingSatisfaction( pLivingArea_->ComputeOccupationFactor() );
