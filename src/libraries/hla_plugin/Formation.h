@@ -10,7 +10,6 @@
 #ifndef __Formation_h_
 #define __Formation_h_
 
-#include "protocol/Protocol.h"
 #include <boost/noncopyable.hpp>
 
 namespace hla
@@ -39,14 +38,13 @@ public:
 
     //! @name Operations
     //@{
-    void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-    void Update( const sword::UnitEnvironmentType& message );
+    void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const;
+    void Update( bool isOnRoad );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    static bool IsOnRoad( const sword::UnitEnvironmentType& message );
     void SerializeFormation( ::hla::UpdateFunctor_ABC& functor ) const;
     void SerializeDimension( ::hla::UpdateFunctor_ABC& functor ) const;
     //@}

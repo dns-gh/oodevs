@@ -13,10 +13,8 @@
 #include "Dimension.h"
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
-#include <pathfind/TerrainData.h>
 
 using namespace plugins::hla;
-using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: Formation constructor
@@ -42,9 +40,9 @@ Formation::~Formation()
 // Name: Formation::Serialize
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void Formation::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const
+void Formation::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
 {
-    if( bUpdateAll || changed_ )
+    if( updateAll || changed_ )
     {
         SerializeFormation( functor );
         SerializeDimension( functor );
@@ -56,46 +54,34 @@ void Formation::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) const
 // Name: Formation::SerializeFormation
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void Formation::SerializeFormation( UpdateFunctor_ABC& functor ) const
+void Formation::SerializeFormation( ::hla::UpdateFunctor_ABC& functor ) const
 {
     long value = onRoad_ ? 5 : 1; // column, assembly
-    Serializer serializer;
+    ::hla::Serializer serializer;
     serializer << value;
-    functor.Visit( AttributeIdentifier( "Formation" ), serializer );
+    functor.Visit( ::hla::AttributeIdentifier( "Formation" ), serializer );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Formation::SerializeDimension
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void Formation::SerializeDimension( UpdateFunctor_ABC& functor ) const
+void Formation::SerializeDimension( ::hla::UpdateFunctor_ABC& functor ) const
 {
     Dimension dim( ( onRoad_ ? 200.f : 100.f ),
                    ( onRoad_ ?  50.f : 100.f ),
                    3.f );
-    Serializer serializer;
+    ::hla::Serializer serializer;
     dim.Serialize( serializer );
-    functor.Visit( AttributeIdentifier( "Dimensions" ), serializer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Formation::IsOnRoad
-// Created: AGE 2008-02-25
-// -----------------------------------------------------------------------------
-bool Formation::IsOnRoad( const sword::UnitEnvironmentType& message )
-{
-    const unsigned int mask = TerrainData::motorway_  | TerrainData::largeroad_  | TerrainData::mediumroad_
-                            | TerrainData::smallroad_ | TerrainData::bridge_;
-    return ( message.linear() & mask ) != 0;
+    functor.Visit( ::hla::AttributeIdentifier( "Dimensions" ), serializer );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Formation::Update
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void Formation::Update( const sword::UnitEnvironmentType& message )
+void Formation::Update( bool isOnRoad )
 {
-    bool onRoad = IsOnRoad( message );
-    changed_ = onRoad != onRoad_;
-    onRoad_ = onRoad;
+    changed_ = isOnRoad != onRoad_;
+    onRoad_ = isOnRoad;
 }

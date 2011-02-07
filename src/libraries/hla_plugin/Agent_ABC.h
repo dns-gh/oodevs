@@ -13,8 +13,6 @@
 #include "dispatcher/Observable.h"
 #include "protocol/Protocol.h"
 #include "tools/Resolver.h"
-#include <geometry/Types.h>
-#include <string>
 
 namespace kernel
 {
@@ -39,7 +37,6 @@ namespace hla
 // Created: SLI 2011-02-04
 // =============================================================================
 class Agent_ABC : public dispatcher::Observable< sword::UnitAttributes >
-                , public dispatcher::Observable< sword::UnitEnvironmentType >
 {
 public:
     //! @name Constructors/Destructor

@@ -11,6 +11,7 @@
 #include "AgentProxy.h"
 #include "EventListener_ABC.h"
 #include "dispatcher/Agent_ABC.h"
+#include <pathfind/TerrainData.h> // $$$$ _RC_ SLI 2011-02-07: dependency on pathfind!!!
 #include <algorithm>
 #include <boost/foreach.hpp>
 
@@ -79,11 +80,23 @@ void AgentProxy::Notify( const sword::UnitAttributes& attributes )
     dispatcher::Observable< sword::UnitAttributes >::Notify( attributes );
 }
 
+namespace
+{
+    bool IsOnRoad( const sword::UnitEnvironmentType& message )
+    {
+        const unsigned int mask = TerrainData::motorway_  | TerrainData::largeroad_  | TerrainData::mediumroad_
+                                | TerrainData::smallroad_ | TerrainData::bridge_;
+        return ( message.linear() & mask ) != 0;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AgentProxy::Notify
 // Created: SLI 2011-02-04
 // -----------------------------------------------------------------------------
-void AgentProxy::Notify( const sword::UnitEnvironmentType& attributes )
+void AgentProxy::Notify( const sword::UnitEnvironmentType& message )
 {
-    dispatcher::Observable< sword::UnitEnvironmentType >::Notify( attributes );
+    const bool isOnRoad = IsOnRoad( message );
+    BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
+        listener->FormationChanged( isOnRoad );
 }

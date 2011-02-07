@@ -54,7 +54,7 @@ private:
     //! @name Observer
     //@{
     virtual void Notify( const sword::UnitAttributes& attributes );
-    virtual void Notify( const sword::UnitEnvironmentType& attributes );
+    virtual void Notify( const sword::UnitEnvironmentType& message );
     //@}
 
 private:

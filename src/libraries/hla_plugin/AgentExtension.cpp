@@ -28,11 +28,9 @@ using namespace plugins::hla;
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes,
-                                dispatcher::Observable< sword::UnitEnvironmentType >& environment,
                                 Agent_ABC& holder, const rpr::EntityIdentifier& id,
                                 const std::string& name, rpr::ForceIdentifier force )
     : Observer< sword::UnitAttributes >( attributes )
-    , Observer< sword::UnitEnvironmentType >( environment )
     , holder_            ( holder )
     , id_                ( id )
     , name_              ( name )
@@ -57,22 +55,22 @@ AgentExtension::~AgentExtension()
 // Name: AgentExtension::Serialize
 // Created: SBO 2008-02-20
 // -----------------------------------------------------------------------------
-void AgentExtension::Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const
+void AgentExtension::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
 {
-    if( bUpdateAll )
+    if( updateAll )
         UpdateEntityType( functor );
-    if( bUpdateAll )
+    if( updateAll )
         UpdateEntityIdentifier( functor );
-    if( bUpdateAll || spatialChanged_ )
+    if( updateAll || spatialChanged_ )
         UpdateSpatial( functor );
-    if( bUpdateAll )
+    if( updateAll )
         UpdateAggregateMarking( functor );
-    if( bUpdateAll )
+    if( updateAll )
         UpdateAggregateState( functor );
-    if( bUpdateAll )
+    if( updateAll )
         UpdateForceIdentifier( functor );
-    formation_.Serialize( functor, bUpdateAll );
-    if( bUpdateAll || compositionChanged_ )
+    formation_.Serialize( functor, updateAll );
+    if( updateAll || compositionChanged_ )
         UpdateComposition( functor );
 }
 
@@ -96,12 +94,12 @@ void AgentExtension::SpatialChanged( double latitude, double longitude, float al
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::Notify
-// Created: AGE 2008-02-25
+// Name: AgentExtension::FormationChanged
+// Created: SLI 2011-02-07
 // -----------------------------------------------------------------------------
-void AgentExtension::Notify( const sword::UnitEnvironmentType& attributes )
+void AgentExtension::FormationChanged( bool isOnRoad )
 {
-    formation_.Update( attributes );
+    formation_.Update( isOnRoad );
 }
 
 // -----------------------------------------------------------------------------

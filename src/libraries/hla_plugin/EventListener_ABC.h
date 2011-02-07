@@ -35,6 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction ) = 0;
+    virtual void FormationChanged( bool isOnRoad ) = 0;
     //@}
 };
 

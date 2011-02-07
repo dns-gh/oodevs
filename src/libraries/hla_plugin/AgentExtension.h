@@ -34,13 +34,11 @@ namespace hla
 class AgentExtension : public HlaExtension_ABC
                      , private EventListener_ABC
                      , private dispatcher::Observer< sword::UnitAttributes >
-                     , private dispatcher::Observer< sword::UnitEnvironmentType >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes,
-                             dispatcher::Observable< sword::UnitEnvironmentType >& environment,
                              Agent_ABC& holder, const rpr::EntityIdentifier& id,
                              const std::string& name, rpr::ForceIdentifier force );
     virtual ~AgentExtension();
@@ -55,8 +53,8 @@ private:
     //! @name Observer
     //@{
     virtual void Notify( const sword::UnitAttributes& attributes );
-    virtual void Notify( const sword::UnitEnvironmentType& attributes );
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
+    virtual void FormationChanged( bool isOnRoad );
     //@}
 
     //! @name Helpers
