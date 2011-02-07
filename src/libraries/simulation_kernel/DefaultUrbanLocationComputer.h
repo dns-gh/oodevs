@@ -31,8 +31,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SetUrbanDeployment( float urbanDeployment );
-    virtual void SetPosition( geometry::Point2f position );
+    virtual void SetUrbanDeployment( double urbanDeployment );
+    virtual void SetPosition( const MT_Vector2D& position );
     virtual Results& Result();
     //@}
 

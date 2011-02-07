@@ -112,7 +112,7 @@ public:
     bool IsOnBorder           ( const MT_Vector2D& vPos ) const;
     bool IsIntersecting       ( const TER_Localisation& localisation ) const;
     bool IsIntersecting       ( const TER_Polygon& polygon ) const;
-    bool Intersect2D          ( const MT_Line& orientedLine, T_PointSet& collisions ) const;
+    bool Intersect2D          ( const MT_Line& orientedLine, T_PointSet& collisions, double rPrecision = rPrecision_ ) const;
     bool Intersect2D          ( const MT_Line& line ) const;
 
     bool ComputeNearestPoint            ( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const; // Calcule la position de la localisation la plus proche de vSrc

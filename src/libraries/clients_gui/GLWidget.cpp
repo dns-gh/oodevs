@@ -570,7 +570,6 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     glColor4fv( color );
     glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &footprintPoints.front() ) );
     glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
-    glPopAttrib();
     if( decoration->Selected() )
     {
         UpdateStipple();

@@ -104,7 +104,7 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
             if( !urbanObject->GetObject().HasChild() )
             {
                 urbanObject_ = urbanObject;
-                delegate_.reset( new InsideUrbanBlockPosition( &urbanObject_->GetObject() ) );
+                delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
                 return;
             }
         }
@@ -123,7 +123,7 @@ void PHY_RolePion_UrbanLocation::NotifyMovingInsideObject( MIL_Object_ABC& objec
         if( !urbanObject->GetObject().HasChild() )
         {
             urbanObject_ = urbanObject;
-            delegate_.reset( new InsideUrbanBlockPosition( &urbanObject_->GetObject() ) );
+            delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
         }
         isInCity_ = true;
     }
@@ -202,7 +202,7 @@ double PHY_RolePion_UrbanLocation::ComputeUrbanProtection( const PHY_DotationCat
 // Name: PHY_RolePion_UrbanLocation::GetFirerPosition
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
-geometry::Point2f PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& target ) const
+MT_Vector2D PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& target ) const
 {
     std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
     const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *firerComputer );
@@ -214,7 +214,7 @@ geometry::Point2f PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& t
 // Name: PHY_RolePion_UrbanLocation::GetTargetPosition
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
-geometry::Point2f PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& firer ) const
+MT_Vector2D PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& firer ) const
 {
     std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > targetComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
     const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *targetComputer );

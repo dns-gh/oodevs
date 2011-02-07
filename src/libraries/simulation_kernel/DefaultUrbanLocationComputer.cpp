@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DefaultUrbanLocationComputer.h"
-#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 
 using namespace urbanLocation;
 
@@ -36,7 +35,7 @@ DefaultUrbanLocationComputer::~DefaultUrbanLocationComputer()
 // Name: DefaultUrbanLocationComputer::SetUrbanDeployment
 // Created: SLG 2010-04-12
 // -----------------------------------------------------------------------------
-void DefaultUrbanLocationComputer::SetUrbanDeployment( float urbanDeployment )
+void DefaultUrbanLocationComputer::SetUrbanDeployment( double urbanDeployment )
 {
     results_.urbanDeployment_ = urbanDeployment;
 }
@@ -45,7 +44,7 @@ void DefaultUrbanLocationComputer::SetUrbanDeployment( float urbanDeployment )
 // Name: DefaultUrbanLocationComputer::SetPosition
 // Created: SLG 2010-04-12
 // -----------------------------------------------------------------------------
-void DefaultUrbanLocationComputer::SetPosition( geometry::Point2f position )
+void DefaultUrbanLocationComputer::SetPosition( const MT_Vector2D& position )
 {
     results_.position_ = position;
 }

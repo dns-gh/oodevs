@@ -59,8 +59,8 @@ public:
     //@{
     virtual void MagicMove( MT_Vector2D vPosition );
     virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
-    virtual geometry::Point2f GetFirerPosition( MIL_Agent_ABC& target ) const;
-    virtual geometry::Point2f GetTargetPosition( MIL_Agent_ABC& target ) const;
+    virtual MT_Vector2D GetFirerPosition( MIL_Agent_ABC& target ) const;
+    virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& target ) const;
     virtual float ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
     virtual float ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
     virtual float ComputeRatioPionInside( const geometry::Polygon2f& polygon, float modificator ) const;

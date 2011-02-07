@@ -11,6 +11,8 @@
 #define __UrbanBlockPosition_ABC_h_
 
 #include "UrbanLocationComputer_ABC.h"
+#include <boost/noncopyable.hpp>
+#include "geometry/types.h"
 
 class MIL_Agent_ABC;
 class PHY_DotationCategory;
@@ -22,7 +24,7 @@ class MT_Ellipse;
 */
 // Created: SLG 2010-04-27
 // =============================================================================
-class UrbanBlockPosition_ABC
+class UrbanBlockPosition_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -33,18 +35,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual geometry::Point2f   GetFirerPosition( MIL_Agent_ABC& target, urbanLocation::UrbanLocationComputer_ABC::Results& firerResult ) const = 0;
-    virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& firer, urbanLocation::UrbanLocationComputer_ABC::Results& targetResult ) const = 0;
-    virtual float               ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const = 0;
-    virtual float               ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float /*modificator*/ ) const = 0;
-    virtual double            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    UrbanBlockPosition_ABC( const UrbanBlockPosition_ABC& );            //!< Copy constructor
-    UrbanBlockPosition_ABC& operator=( const UrbanBlockPosition_ABC& ); //!< Assignment operator
+    virtual MT_Vector2D GetFirerPosition( MIL_Agent_ABC& target, urbanLocation::UrbanLocationComputer_ABC::Results& firerResult ) const = 0;
+    virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& firer, urbanLocation::UrbanLocationComputer_ABC::Results& targetResult ) const = 0;
+    virtual float ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const = 0;
+    virtual float ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float /*modificator*/ ) const = 0;
+    virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const = 0;
     //@}
 };
 

@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "OutsideUrbanBlockPosition.h"
 #include "UrbanLocationComputer_ABC.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "MT_Tools/MT_Ellipse.h"
 
 using namespace urbanLocation;
@@ -37,7 +36,7 @@ OutsideUrbanBlockPosition::~OutsideUrbanBlockPosition()
 // Name: OutsideUrbanBlockPosition::GetFirerPosition
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-geometry::Point2f OutsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& /*target*/, UrbanLocationComputer_ABC::Results& firerResult ) const
+MT_Vector2D OutsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& /*target*/, UrbanLocationComputer_ABC::Results& firerResult ) const
 {
     return firerResult.position_;
 }
@@ -46,7 +45,7 @@ geometry::Point2f OutsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& /*
 // Name: OutsideUrbanBlockPosition::GetTargetPosition
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-geometry::Point2f OutsideUrbanBlockPosition::GetTargetPosition( MIL_Agent_ABC& /*firer*/, UrbanLocationComputer_ABC::Results& targetResult ) const
+MT_Vector2D OutsideUrbanBlockPosition::GetTargetPosition( MIL_Agent_ABC& /*firer*/, UrbanLocationComputer_ABC::Results& targetResult ) const
 {
     return targetResult.position_;
 }
@@ -57,7 +56,7 @@ geometry::Point2f OutsideUrbanBlockPosition::GetTargetPosition( MIL_Agent_ABC& /
 // -----------------------------------------------------------------------------
 float OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const
 {
-    if( attritionSurface.IsInside( MT_Vector2D( result.position_.X(), result.position_.Y() ) ) )
+    if( attritionSurface.IsInside( result.position_ ) )
         return 1.0;
     else
         return 0.0;
@@ -69,7 +68,7 @@ float OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
 // -----------------------------------------------------------------------------
 float OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float /*modificator*/ ) const
 {
-    if( polygon.IsInside( result.position_ ) )
+    if( polygon.IsInside( geometry::Point2f( result.position_.rX_, result.position_.rY_ ) ) )
         return 1.0;
     else
         return 0.0;

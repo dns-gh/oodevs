@@ -14,6 +14,7 @@
 #include "AlgorithmsFactories.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanLocationComputerFactory_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "UrbanType.h"
 #include "Tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
@@ -32,7 +33,7 @@ using namespace urbanLocation;
 // Name: InsideUrbanBlockPosition constructor
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-InsideUrbanBlockPosition::InsideUrbanBlockPosition( const urban::TerrainObject_ABC* urbanObject )
+InsideUrbanBlockPosition::InsideUrbanBlockPosition( const UrbanObjectWrapper& urbanObject )
     : urbanObject_( urbanObject )
 {
     // NOTHING
@@ -51,79 +52,36 @@ InsideUrbanBlockPosition::~InsideUrbanBlockPosition()
 // Name: InsideUrbanBlockPosition::GetFirerPosition
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-geometry::Point2f InsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& target, UrbanLocationComputer_ABC::Results& firerResult ) const
+MT_Vector2D InsideUrbanBlockPosition::GetFirerPosition( MIL_Agent_ABC& target, UrbanLocationComputer_ABC::Results& firerResult ) const
 {
     std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > targetComputer( target.GetAlgorithms().urbanLocationComputerFactory_->Create() );
     target.Execute( *targetComputer );
     UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
-
-    std::vector< geometry::Point2f > points = urbanObject_->GetFootprint()->Intersect( geometry::Segment2f( firerResult.position_, targetResult.position_ ) );
-    if( points.empty() )
+    TER_DistanceLess cmp ( targetResult.position_ );
+    T_PointSet collisions( cmp );
+    if( !urbanObject_.GetLocalisation().Intersect2D( MT_Line( targetResult.position_, firerResult.position_ ), collisions, 0 ) )
         return firerResult.position_; //// $$$$ _RC_ SBO 2010-07-07: devrait etre throw std::exception( "error in urbanBlock intersection for firer" );
-    return GetNearestUrbanBlockPoint( targetResult.position_, points );
+    return *collisions.begin(); // Nearest point from targetResult
 }
 
 // -----------------------------------------------------------------------------
 // Name: InsideUrbanBlockPosition::GetTargetPosition
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-geometry::Point2f InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& firer, UrbanLocationComputer_ABC::Results& targetResult ) const
+MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& firer, UrbanLocationComputer_ABC::Results& targetResult ) const
 {
     std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( firer.GetAlgorithms().urbanLocationComputerFactory_->Create() );
     firer.Execute( *firerComputer );
     UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
-
-    geometry::Line2f lineTmp( firerResult.position_, targetResult.position_ );
-    std::vector< geometry::Point2f > points = urbanObject_->GetFootprint()->Intersect( lineTmp );
-    if( points.size() < 2 )
+    TER_DistanceLess cmp ( firerResult.position_ );
+    T_PointSet collisions( cmp );
+    urbanObject_.GetLocalisation().Intersect2D( MT_Line( targetResult.position_, firerResult.position_ ), collisions, 0 );
+    if( collisions.size() < 2 )
         return targetResult.position_;  // $$$$ _RC_ SBO 2010-07-07: devrait etre throw std::exception( " error in urbanBlock intersection for target" );
-    geometry::Point2f pfirst = GetNearestUrbanBlockPoint( firerResult.position_, points );
-    geometry::Point2f pSecond = GetFurthestUrbanBlockPoint( firerResult.position_, points );
-    geometry::Vector2f vector( pfirst, pSecond );
-    vector = vector * ( 1 - targetResult.urbanDeployment_ );
-    geometry::Point2f pM = pfirst + vector;
-    vector = geometry::Vector2f( pM, pSecond ) * static_cast< float >( MIL_Random::rand_ii() );
-    return pM + vector;
-}
-
-// -----------------------------------------------------------------------------
-// Name: InsideUrbanBlockPosition::GetNearestUrbanBlockPoint
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-geometry::Point2f InsideUrbanBlockPosition::GetNearestUrbanBlockPoint( const geometry::Point2f& pionPosition, const std::vector< geometry::Point2f >& points ) const
-{
-    geometry::Point2f nearestPosition;
-    float distance = std::numeric_limits< float >::max();
-    for( std::vector< geometry::Point2f >::const_iterator it = points.begin(); it != points.end(); ++it )
-    {
-        float distanceTemp = ( *it ).Distance( pionPosition );
-        if( distanceTemp < distance )
-        {
-            distance = distanceTemp;
-            nearestPosition = *it;
-        }
-    }
-    return nearestPosition;
-}
-
-// -----------------------------------------------------------------------------
-// Name: InsideUrbanBlockPosition::GetFurthestUrbanBlockPoint
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-geometry::Point2f InsideUrbanBlockPosition::GetFurthestUrbanBlockPoint( const geometry::Point2f& pionPosition, const std::vector< geometry::Point2f >& points ) const
-{
-    geometry::Point2f furthestPosition;
-    float distance = 0;
-    for( std::vector< geometry::Point2f >::const_iterator it = points.begin(); it != points.end(); ++it )
-    {
-        float distanceTemp = ( *it ).Distance( pionPosition );
-        if( distanceTemp > distance )
-        {
-            distance = distanceTemp;
-            furthestPosition = *it;
-        }
-    }
-    return furthestPosition;
+    MT_Vector2D vector( *collisions.rbegin() - *collisions.begin() );
+    vector *= ( 1 - targetResult.urbanDeployment_ );
+    MT_Vector2D pM = *collisions.begin() + vector;
+    return pM + MIL_Random::rand_ii() * ( *collisions.rbegin() - pM );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,12 +102,12 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
     bg::assign( attritionPolygon, ellipseKeyPoints );
     bg::correct( attritionPolygon );
 
-    const geometry::Polygon2f::T_Vertices& urbanBlockVertices = urbanObject_->GetFootprint()->Vertices();
+    const T_PointVector& urbanBlockVertices = urbanObject_.GetLocalisation().GetPoints();
     bg::polygon< bg::point_xy< double > > blockGeometry;
     std::vector< bg::point_xy< double > > vectorTemp;
-    for( geometry::Polygon2f::CIT_Vertices it = urbanBlockVertices.begin(); it != urbanBlockVertices.end(); ++it )
+    for( CIT_PointVector it = urbanBlockVertices.begin(); it != urbanBlockVertices.end(); ++it )
     {
-        bg::point_xy< double > p( it->X(), it->Y() );
+        bg::point_xy< double > p( it->rX_, it->rY_ );
         vectorTemp.push_back( p );
     }
     bg::assign( blockGeometry, vectorTemp );
@@ -160,7 +118,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
     double intersectArea = 0;
     for( std::vector< bg::polygon< bg::point_xy< double > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
         intersectArea += area( *it );
-    return static_cast< float >( ( intersectArea / ( urbanObject_->GetFootprint()->ComputeArea() ) ) * result.urbanDeployment_ );
+    return static_cast< float >( ( intersectArea / ( urbanObject_.GetLocalisation().GetArea() ) ) * result.urbanDeployment_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,17 +127,17 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
 // -----------------------------------------------------------------------------
 float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float modicator ) const
 {
-    float urbanObjectArea = urbanObject_->GetFootprint()->ComputeArea();
+    float urbanObjectArea = urbanObject_.GetLocalisation().GetArea();
     if( modicator > result.urbanDeployment_ ) // SLG : permet d'éviter des incohérence dans la percpetion d'unité quand la cible passe en état posté.
     {
-        if( polygon.IsInside( result.position_ ) )
+        if( polygon.IsInside( geometry::Point2f( result.position_.rX_, result.position_.rY_ ) ) )
             return 1.0;
         else
             return 0.0;
     }
     else if( urbanObjectArea )
     {
-        float intersectArea = MIL_Geometry::IntersectionArea( polygon, *urbanObject_->GetFootprint() );
+        float intersectArea = MIL_Geometry::IntersectionArea( polygon, *urbanObject_.GetObject().GetFootprint() );
         return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
     }
     return 0.;
@@ -191,7 +149,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
 // -----------------------------------------------------------------------------
 double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
-    const urban::PhysicalAttribute* pPhysical = urbanObject_->Retrieve< urban::PhysicalAttribute >();
+    const urban::PhysicalAttribute* pPhysical = urbanObject_.GetObject().Retrieve< urban::PhysicalAttribute >();
     if( pPhysical && pPhysical->GetArchitecture() )
     {
         unsigned int materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() )->GetId();

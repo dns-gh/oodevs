@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include "MT_Tools/MT_Droite.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/MT_Vector3D.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
@@ -45,8 +46,8 @@ namespace
             : firerFixture ( effectManager )
             , targetFixture( effectManager )
         {
-            vertices = boost::assign::list_of( geometry::Point2f( -1, -1 ) )( geometry::Point2f( -1, 1 ) )
-                                             ( geometry::Point2f( 1, 1 ) )( geometry::Point2f( 1, -1 ) );
+            vertices = boost::assign::list_of( geometry::Point2f( 0, 0 ) )( geometry::Point2f( 0, 2 ) )
+                                             ( geometry::Point2f( 2, 2 ) )( geometry::Point2f( 2, 0 ) );
         }
         MIL_EffectManager effectManager;
         FixturePion firerFixture;
@@ -95,12 +96,12 @@ BOOST_FIXTURE_TEST_CASE( PhComputerFirerPositionTest, Fixture )
     urbanRole->NotifyMovingInsideObject( *pObject);
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* firerlocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
-    firerlocationRole->MagicMove( MT_Vector2D( -0.1, -0.1 ) );
+    firerlocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerlocationRole );
     PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
-    targetLocationRole->MagicMove( MT_Vector2D( 2, 1 ) );
+    targetLocationRole->MagicMove( MT_Vector2D( 3, 2 ) );
     targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
-    geometry::Point2f result( 1, 0.5 );
+    MT_Vector2D result( 2, 1.5 );
     BOOST_CHECK_EQUAL( result, urbanRole->GetFirerPosition( *targetFixture.pPion_ ) );
     pObject.reset();
 }
@@ -119,16 +120,17 @@ BOOST_FIXTURE_TEST_CASE( PhComputerTargetPositionTest, Fixture )
     urbanRole->NotifyMovingInsideObject( *pObject );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
-    targetLocationRole->MagicMove( MT_Vector2D( 0, 0 ) );
+    targetLocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
     PHY_RolePion_Location* firerLocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
-    firerLocationRole->MagicMove( MT_Vector2D( 2, 1 ) );
+    firerLocationRole->MagicMove( MT_Vector2D( 3, 2 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerLocationRole );
-    const geometry::Point2f firerPosition( 2, 1 );
-    const geometry::Point2f targetPosition( 0, 0 );
-    geometry::Point2f result = urbanRole->GetTargetPosition( *targetFixture.pPion_ );
-    BOOST_CHECK_CLOSE( std::sqrt( 5.0 ), firerPosition.Distance( result ), 50 );
-    BOOST_CHECK_EQUAL( true, geometry::Vector2f( firerPosition, targetPosition ).IsParallel( geometry::Vector2f( firerPosition, result ) ) );
+    const MT_Vector2D firerPosition( 3, 2 );
+    const MT_Vector2D targetPosition( 1, 1 );
+    MT_Vector2D result = urbanRole->GetTargetPosition( *targetFixture.pPion_ );
+    BOOST_CHECK_CLOSE( std::sqrt( 1.25 ), firerPosition.Distance( result ), 1. );
+    MT_Vector2D tmp;
+    BOOST_CHECK_EQUAL( eCollinear, MT_Droite( firerPosition, targetPosition ).Intersect2D( MT_Droite( firerPosition, result ), tmp ) );
 }
 
 BOOST_AUTO_TEST_CASE( PhComputerDistanceInSameBUTest )
@@ -150,8 +152,8 @@ BOOST_FIXTURE_TEST_CASE( PhComputerIndirectPhModifier, Fixture )
     urbanRole->NotifyMovingInsideObject( *pObject );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* locationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
-    locationRole->MagicMove( MT_Vector2D( 0, 0 ) );
+    locationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *locationRole );
-    const MT_Ellipse attritionSurface( MT_Vector2D( 2, 1 ), MT_Vector2D( 4, 1 ),  MT_Vector2D( 2, 2 ) );
+    const MT_Ellipse attritionSurface( MT_Vector2D( 3, 2 ), MT_Vector2D( 5, 2 ),  MT_Vector2D( 3, 3 ) );
     BOOST_CHECK_CLOSE( 0.0, urbanRole->ComputeRatioPionInside( attritionSurface ), 1. ); // $$$$ _RC_ SLG 2010-04-26: trouver un moyen de changer la posture du pion pour tester le résultat
 }

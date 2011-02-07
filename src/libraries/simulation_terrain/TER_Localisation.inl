@@ -138,7 +138,7 @@ bool TER_Localisation::IsOnBorder( const MT_Vector2D& vPos ) const
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
 inline 
-bool TER_Localisation::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisions ) const
+bool TER_Localisation::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisions, double rPrecision /*= rPrecision_*/ ) const
 {
     switch( nType_ )
     {
@@ -151,9 +151,9 @@ bool TER_Localisation::Intersect2D( const MT_Line& orientedLine, T_PointSet& col
                 }
                 return false;
             }                */
-        case ePoint:   return polygon_ .Intersect2D( orientedLine, collisions, rPrecision_ );
-        case ePolygon: return polygon_ .Intersect2D( orientedLine, collisions, rPrecision_ );
-        case eLine:    return polyline_.Intersect2D( orientedLine, collisions, rPrecision_ );
+        case ePoint:   return polygon_ .Intersect2D( orientedLine, collisions, rPrecision );
+        case ePolygon: return polygon_ .Intersect2D( orientedLine, collisions, rPrecision );
+        case eLine:    return polyline_.Intersect2D( orientedLine, collisions, rPrecision );
         default:
             return false;
     }

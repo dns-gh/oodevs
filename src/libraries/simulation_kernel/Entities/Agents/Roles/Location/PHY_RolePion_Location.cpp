@@ -505,6 +505,5 @@ void PHY_RolePion_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& objec
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Location::Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const
 {
-    geometry::Point2f position( static_cast< float >( pvPosition_->rX_ ), static_cast< float >( pvPosition_->rY_ ) );
-    algorithm.SetPosition( position );
+    algorithm.SetPosition( *pvPosition_ );
 }

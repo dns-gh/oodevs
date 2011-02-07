@@ -10,12 +10,7 @@
 #ifndef __UrbanLocationComputer_ABC_h_
 #define __UrbanLocationComputer_ABC_h_
 
-#include <geometry/Types.h>
-
-namespace urban
-{
-    class TerrainObject_ABC;
-}
+#include "MT_Tools/MT_Vector2D.h"
 
 namespace urbanLocation
 {
@@ -39,8 +34,8 @@ public:
         {
             // NOTHING
         }
-        float urbanDeployment_;
-        geometry::Point2f position_;
+        double urbanDeployment_;
+        MT_Vector2D position_;
     };
     //@}
 
@@ -53,8 +48,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SetUrbanDeployment( float urbanDeployment ) = 0;
-    virtual void SetPosition( geometry::Point2f position ) = 0;
+    virtual void SetUrbanDeployment( double urbanDeployment ) = 0;
+    virtual void SetPosition( const MT_Vector2D& position ) = 0;
     virtual Results& Result() = 0;
     //@}
 };
