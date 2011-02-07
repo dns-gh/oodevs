@@ -13,9 +13,10 @@
 #include "Parameter.h"
 #include <boost/function.hpp>
 
-namespace actions {
-    namespace parameters {
-
+namespace actions
+{
+namespace parameters
+{
 // =============================================================================
 /** @class  Bool
     @brief  Bool
@@ -58,7 +59,7 @@ private:
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ActionParameterBool_h_

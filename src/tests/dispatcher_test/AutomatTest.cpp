@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
         message.set_logistic_level( sword::none );
         message.set_app6symbol( "sfgpu----------" );
         CheckInitialized( message );
-        
+
         // creation
         MOCK_EXPECT( formation, RegisterAutomat ).once();
         MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();

@@ -56,10 +56,10 @@ void Equipment::Update( const sword::EquipmentDotations_EquipmentDotation& messa
 // -----------------------------------------------------------------------------
 void Equipment::Send( sword::EquipmentDotations_EquipmentDotation& message ) const
 {
-    message.mutable_type()->set_id         ( nEquipmentType_ );
-    message.set_available             ( nNbrAvailable_ );
-    message.set_unavailable           ( nNbrUnavailable_ );
-    message.set_repairable              ( nNbrRepairable_ );
-    message.set_repairing ( nNbrInMaintenance_ );
-    message.set_captured             ( nNbrPrisoner_ );
+    message.mutable_type()->set_id( nEquipmentType_ );
+    message.set_available( nNbrAvailable_ );
+    message.set_unavailable( nNbrUnavailable_ );
+    message.set_repairable( nNbrRepairable_ );
+    message.set_repairing( nNbrInMaintenance_ );
+    message.set_captured( nNbrPrisoner_ );
 }

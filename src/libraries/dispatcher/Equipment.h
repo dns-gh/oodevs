@@ -17,7 +17,6 @@ namespace sword
 
 namespace dispatcher
 {
-
 // =============================================================================
 /** @class  Equipment
     @brief  Equipment
