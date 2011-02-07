@@ -10,6 +10,8 @@
 #ifndef __AggregateMarking_h_
 #define __AggregateMarking_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace plugins
 {
 namespace hla
@@ -20,7 +22,7 @@ namespace hla
 */
 // Created: AGE 2008-02-21
 // =============================================================================
-class AggregateMarking
+class AggregateMarking : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -37,13 +39,6 @@ public:
         archive << markingType_;
         archive << markingData_;
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AggregateMarking( const AggregateMarking& );            //!< Copy constructor
-    AggregateMarking& operator=( const AggregateMarking& ); //!< Assignment operator
     //@}
 
 private:

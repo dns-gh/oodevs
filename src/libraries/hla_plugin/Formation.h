@@ -11,6 +11,7 @@
 #define __Formation_h_
 
 #include "protocol/Protocol.h"
+#include <boost/noncopyable.hpp>
 
 namespace hla
 {
@@ -27,7 +28,7 @@ namespace hla
 */
 // Created: AGE 2008-02-25
 // =============================================================================
-class Formation
+class Formation : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -43,12 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Formation( const Formation& );            //!< Copy constructor
-    Formation& operator=( const Formation& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     static bool IsOnRoad( const sword::UnitEnvironmentType& message );

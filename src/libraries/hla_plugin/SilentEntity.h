@@ -11,6 +11,7 @@
 #define __SilentEntity_h_
 
 #include "rpr/EntityType.h"
+#include <boost/noncopyable.hpp>
 
 namespace plugins
 {
@@ -22,7 +23,7 @@ namespace hla
 */
 // Created: AGE 2008-02-21
 // =============================================================================
-class SilentEntity
+class SilentEntity : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -40,13 +41,6 @@ public:
         entityType_.Serialize( archive );
         archive << entityAppearance_;
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    SilentEntity( const SilentEntity& );            //!< Copy constructor
-    SilentEntity& operator=( const SilentEntity& ); //!< Assignment operator
     //@}
 
 private:

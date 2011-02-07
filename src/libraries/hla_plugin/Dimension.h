@@ -10,6 +10,8 @@
 #ifndef __Dimension_h_
 #define __Dimension_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace plugins
 {
 namespace hla
@@ -20,7 +22,7 @@ namespace hla
 */
 // Created: AGE 2008-02-21
 // =============================================================================
-class Dimension
+class Dimension : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -36,13 +38,6 @@ public:
     {
         archive << xAxisLength_ << yAxisLength_ << zAxisLength_;
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Dimension( const Dimension& );            //!< Copy constructor
-    Dimension& operator=( const Dimension& ); //!< Assignment operator
     //@}
 
 private:
