@@ -13,7 +13,6 @@
 #include "PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
