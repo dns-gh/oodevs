@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     template< typename Archive >
-    void Serialize( Archive& archive )
+    void Serialize( Archive& archive ) const
     {
         archive << numberOfEntitiesOfThisType_  << numberOfAppearanceRecords_;
         entityType_.Serialize( archive );

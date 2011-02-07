@@ -14,12 +14,11 @@
 #include "AggregateMarking.h"
 #include "SilentEntity.h"
 #include "SerializationTools.h"
-#include "dispatcher/Equipment.h"
-#include "protocol/Protocol.h"
 #include "rpr/EntityType.h"
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -27,11 +26,9 @@ using namespace plugins::hla;
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes,
-                                Agent_ABC& holder, const rpr::EntityIdentifier& id,
+AgentExtension::AgentExtension( Agent_ABC& agent, const rpr::EntityIdentifier& id,
                                 const std::string& name, rpr::ForceIdentifier force )
-    : Observer< sword::UnitAttributes >( attributes )
-    , holder_            ( holder )
+    : agent_            ( agent )
     , id_                ( id )
     , name_              ( name )
     , force_             ( force )
@@ -39,7 +36,7 @@ AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >&
     , pSpatial_          ( 0 )
     , compositionChanged_( true )
 {
-    holder_.Register( *this );
+    agent_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +45,7 @@ AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >&
 // -----------------------------------------------------------------------------
 AgentExtension::~AgentExtension()
 {
-    holder_.Unregister( *this );
+    agent_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,13 +71,26 @@ void AgentExtension::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAl
         UpdateComposition( functor );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AgentExtension::Notify
-// Created: AGE 2008-02-22
-// -----------------------------------------------------------------------------
-void AgentExtension::Notify( const sword::UnitAttributes& attributes )
+namespace
 {
-    compositionChanged_ = compositionChanged_ || attributes.has_equipment_dotations();
+    bool Find( unsigned int type, const std::pair< unsigned int, unsigned int >& value )
+    {
+        return value.first == type;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentExtension::EquipmentChanged
+// Created: SLI 2011-02-07
+// -----------------------------------------------------------------------------
+void AgentExtension::EquipmentChanged( unsigned int type, unsigned int available )
+{
+    compositionChanged_ = true;
+    IT_Equipments result = std::find_if( equipments_.begin(), equipments_.end(), boost::bind( &::Find, type, _1 ) );
+    if( result == equipments_.end() )
+        equipments_.push_back( std::make_pair( type, available ) );
+    else
+        result->second = available;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,43 +182,23 @@ void AgentExtension::UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) 
     functor.Visit( ::hla::AttributeIdentifier( "ForceIdentifier" ), archive );
 }
 
-namespace
-{
-    struct SilentEntitiesSerializer
-    {
-        SilentEntitiesSerializer()
-            : count_( 0 )
-        {
-            // NOTHING
-        }
-        void SerializeEquipment( const dispatcher::Equipment& e )
-        {
-            ++count_;
-            rpr::EntityType type( "1 1 225 1" );
-            SilentEntity entity( type, static_cast< unsigned short >( e.nNbrAvailable_ ) );
-            entity.Serialize( serializer_ );
-        }
-        void Commit( ::hla::UpdateFunctor_ABC& functor )
-        {
-            {
-                ::hla::Serializer archive;
-                archive << count_;
-                functor.Visit( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ), archive );
-            }
-            functor.Visit( ::hla::AttributeIdentifier( "SilentEntities" ), serializer_ );
-        }
-        unsigned short count_;
-        ::hla::Serializer serializer_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: AgentExtension::UpdateComposition
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) const
 {
-    SilentEntitiesSerializer serializer;
-    holder_.GetEquipments().Apply( boost::bind( &SilentEntitiesSerializer::SerializeEquipment, &serializer, _1 ) );
-    serializer.Commit( functor );
+    {
+        ::hla::Serializer serializer;
+        serializer << static_cast< unsigned short >( equipments_.size() );
+        functor.Visit( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ), serializer );
+    }
+    ::hla::Serializer serializer;
+    BOOST_FOREACH( const T_Equipment& equipment, equipments_ )
+    {
+        const rpr::EntityType type( "1 1 225 1" );
+        const SilentEntity entity( type, static_cast< unsigned short >( equipment.second ) );
+        entity.Serialize( serializer );
+    }
+    functor.Visit( ::hla::AttributeIdentifier( "SilentEntities" ), serializer );
 }

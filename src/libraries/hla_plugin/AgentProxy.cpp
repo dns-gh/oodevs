@@ -11,9 +11,11 @@
 #include "AgentProxy.h"
 #include "EventListener_ABC.h"
 #include "dispatcher/Agent_ABC.h"
+#include "dispatcher/Equipment.h"
 #include <pathfind/TerrainData.h> // $$$$ _RC_ SLI 2011-02-07: dependency on pathfind!!!
 #include <algorithm>
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
 
 using namespace plugins::hla;
 
@@ -58,13 +60,12 @@ void AgentProxy::Unregister( EventListener_ABC& listener )
     listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: AgentProxy::GetEquipments
-// Created: SLI 2011-02-04
-// -----------------------------------------------------------------------------
-const tools::Resolver< dispatcher::Equipment >& AgentProxy::GetEquipments() const
+namespace
 {
-    return agent_.Equipments();
+    void NotifyEquipment( EventListener_ABC& listener, const dispatcher::Equipment& equipment )
+    {
+        listener.EquipmentChanged( equipment.nEquipmentType_, equipment.nNbrAvailable_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +78,9 @@ void AgentProxy::Notify( const sword::UnitAttributes& attributes )
         BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
             listener->SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
                                       agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
-    dispatcher::Observable< sword::UnitAttributes >::Notify( attributes );
+    if( attributes.has_equipment_dotations() )
+        BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
+            agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( *listener ), _1 ) );
 }
 
 namespace

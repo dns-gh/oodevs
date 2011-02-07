@@ -13,10 +13,9 @@
 #include "HlaExtension_ABC.h"
 #include "EventListener_ABC.h"
 #include "Formation.h"
-#include "dispatcher/Observer.h"
-#include "protocol/Protocol.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/ForceIdentifier.h"
+#include <vector>
 
 namespace plugins
 {
@@ -33,13 +32,11 @@ namespace hla
 // =============================================================================
 class AgentExtension : public HlaExtension_ABC
                      , private EventListener_ABC
-                     , private dispatcher::Observer< sword::UnitAttributes >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes,
-                             Agent_ABC& holder, const rpr::EntityIdentifier& id,
+             AgentExtension( Agent_ABC& agent, const rpr::EntityIdentifier& id,
                              const std::string& name, rpr::ForceIdentifier force );
     virtual ~AgentExtension();
     //@}
@@ -52,9 +49,9 @@ public:
 private:
     //! @name Observer
     //@{
-    virtual void Notify( const sword::UnitAttributes& attributes );
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     virtual void FormationChanged( bool isOnRoad );
+    virtual void EquipmentChanged( unsigned int type, unsigned int available );
     //@}
 
     //! @name Helpers
@@ -69,9 +66,17 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::pair< unsigned int, unsigned int > T_Equipment;
+    typedef std::vector< T_Equipment >  T_Equipments;
+    typedef T_Equipments::iterator     IT_Equipments;
+    //@}
+
+private:
     //! @name Member data
     //@{
-    Agent_ABC& holder_;
+    Agent_ABC& agent_;
     rpr::EntityIdentifier id_;
     const std::string name_;
     const rpr::ForceIdentifier force_;
@@ -79,6 +84,7 @@ private:
     mutable bool spatialChanged_;
     std::auto_ptr< Spatial > pSpatial_;
     mutable bool compositionChanged_;
+    T_Equipments equipments_;
     //@}
 };
 

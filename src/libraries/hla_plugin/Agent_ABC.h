@@ -10,19 +10,7 @@
 #ifndef hla_plugin_Agent_ABC_h
 #define hla_plugin_Agent_ABC_h
 
-#include "dispatcher/Observable.h"
-#include "protocol/Protocol.h"
-#include "tools/Resolver.h"
-
-namespace kernel
-{
-    class Karma;
-}
-
-namespace dispatcher
-{
-    class Equipment;
-}
+#include <boost/noncopyable.hpp>
 
 namespace plugins
 {
@@ -36,7 +24,7 @@ namespace hla
 */
 // Created: SLI 2011-02-04
 // =============================================================================
-class Agent_ABC : public dispatcher::Observable< sword::UnitAttributes >
+class Agent_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -49,11 +37,6 @@ public:
     //@{
     virtual void Register( EventListener_ABC& listener ) = 0;
     virtual void Unregister( EventListener_ABC& listener ) = 0;
-    //@}
-
-    //! @name Getters
-    //@{
-    virtual const tools::Resolver< dispatcher::Equipment >& GetEquipments() const = 0;
     //@}
 };
 

@@ -11,6 +11,8 @@
 #define hla_plugin_AgentProxy_h_
 
 #include "Agent_ABC.h"
+#include "dispatcher/Observer.h"
+#include "protocol/Protocol.h"
 #include <vector>
 
 namespace dispatcher
@@ -43,11 +45,6 @@ public:
     //@{
     virtual void Register( EventListener_ABC& listener );
     virtual void Unregister( EventListener_ABC& listener );
-    //@}
-
-    //! @name Getters
-    //@{
-    virtual const tools::Resolver< dispatcher::Equipment >& GetEquipments() const;
     //@}
 
 private:
