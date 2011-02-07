@@ -19,7 +19,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
-using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: FederateFacade constructor
@@ -27,17 +26,17 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& factory, unsigned int lookAhead )
     : joined_         ( false )
-    , timeFactory_    ( new SimpleTimeFactory() )
-    , intervalFactory_( new SimpleTimeIntervalFactory() )
-    , ambassador_     ( factory.CreateAmbassador( *timeFactory_, *intervalFactory_, RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
-    , federate_       ( new Federate( *ambassador_, xis.attribute< std::string >( "name" ), SimpleTime(), SimpleTimeInterval( lookAhead ) ) )
+    , timeFactory_    ( new ::hla::SimpleTimeFactory() )
+    , intervalFactory_( new ::hla::SimpleTimeIntervalFactory() )
+    , ambassador_     ( factory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
+    , federate_       ( new ::hla::Federate( *ambassador_, xis.attribute< std::string >( "name" ), ::hla::SimpleTime(), ::hla::SimpleTimeInterval( lookAhead ) ) )
 {
     const std::string name = xis.attribute< std::string >( "federation" );
     try
     {
         joined_ = federate_->Join( name, false, true );
     }
-    catch( HLAException& /*e*/ )
+    catch( ::hla::HLAException& /*e*/ )
     {
         // NOTHING
     }

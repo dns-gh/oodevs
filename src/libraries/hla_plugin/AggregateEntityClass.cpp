@@ -20,11 +20,10 @@
 #include <hla/ObjectRegistration_ABC.h>
 
 using namespace plugins::hla;
-using namespace hla;
 
-struct AggregateEntityClass::UnitRegistration : public ObjectRegistration_ABC< HlaExtension_ABC >
+struct AggregateEntityClass::UnitRegistration : public ::hla::ObjectRegistration_ABC< HlaExtension_ABC >
 {
-    virtual HlaExtension_ABC& Create( const ObjectIdentifier&, const std::string& )
+    virtual HlaExtension_ABC& Create( const ::hla::ObjectIdentifier&, const std::string& )
     {
         throw std::runtime_error( __FUNCTION__ );
     }
@@ -38,23 +37,23 @@ struct AggregateEntityClass::UnitRegistration : public ObjectRegistration_ABC< H
 // Name: AggregateEntityClass constructor
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-AggregateEntityClass::AggregateEntityClass( Federate& federate, AgentSubject_ABC& subject )
+AggregateEntityClass::AggregateEntityClass( ::hla::Federate& federate, AgentSubject_ABC& subject )
     : id_          ( 1 )
     , subject_     ( subject )
     , registration_( new UnitRegistration() )
-    , hlaClass_    ( new Class< HlaExtension_ABC >( *registration_ ) )
+    , hlaClass_    ( new ::hla::Class< HlaExtension_ABC >( *registration_ ) )
 {
-    hlaClass_->Register( AttributeIdentifier( "EntityType" ) );             // static
-    hlaClass_->Register( AttributeIdentifier( "EntityIdentifier" ) );       // static
-    hlaClass_->Register( AttributeIdentifier( "Spatial" ) );                // dynamic
-    hlaClass_->Register( AttributeIdentifier( "AggregateMarking" ) );       // static
-    hlaClass_->Register( AttributeIdentifier( "AggregateState" ) );         // static
-    hlaClass_->Register( AttributeIdentifier( "Dimensions" ) );             // static
-    hlaClass_->Register( AttributeIdentifier( "ForceIdentifier" ) );        // static
-    hlaClass_->Register( AttributeIdentifier( "Formation" ) );              // dynamic
-    hlaClass_->Register( AttributeIdentifier( "NumberOfSilentEntities" ) ); // dynamic
-    hlaClass_->Register( AttributeIdentifier( "SilentEntities" ) );         // dynamic
-    federate.Register( ClassIdentifier( "BaseEntity.AggregateEntity" ), *hlaClass_, true, false );
+    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityType" ) );             // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );       // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "Spatial" ) );                // dynamic
+    hlaClass_->Register( ::hla::AttributeIdentifier( "AggregateMarking" ) );       // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "AggregateState" ) );         // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "Dimensions" ) );             // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "ForceIdentifier" ) );        // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "Formation" ) );              // dynamic
+    hlaClass_->Register( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ) ); // dynamic
+    hlaClass_->Register( ::hla::AttributeIdentifier( "SilentEntities" ) );         // dynamic
+    federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity" ), *hlaClass_, true, false );
     subject_.Register( *this );
 }
 
