@@ -165,8 +165,8 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
         return equipmentResolver_.Get( value.equipmenttype().id() ).GetName().c_str();
     if( value.has_resourcetype() )
         return dotationResolver_.Get( value.resourcetype().id() ).GetName().c_str();
-    if( value.has_tirindirect() )
-        return QString::number( value.tirindirect().id() );
+    if( value.has_indirectfire() )
+        return QString::number( value.indirectfire().id() );
     if( value.has_acharstr() )
         return QString( value.acharstr().c_str() );
     throw std::runtime_error( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).ascii() );

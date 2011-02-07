@@ -435,14 +435,14 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Lima )
     parameter.CommitTo( *message->mutable_value()->Add()->mutable_limasorder()->add_elem() );
     CheckSet( *message );
     const sword::PhaseLineOrder& lima = message->value().Get( 0 ).limasorder().elem(0);
-    BOOST_CHECK_EQUAL( 2, lima.lima().location().type() );
-    BOOST_CHECK_EQUAL( 5, lima.lima().location().coordinates().elem_size() );
+    BOOST_CHECK_EQUAL( 2, lima.line().location().type() );
+    BOOST_CHECK_EQUAL( 5, lima.line().location().coordinates().elem_size() );
     BOOST_CHECK_EQUAL( "20081211T190022", lima.time().data() );
-    CheckCoordinate( converter, "31TCN7270936833", lima.lima().location().coordinates().elem( 0 ) );
-    CheckCoordinate( converter, "31TCN7776344465", lima.lima().location().coordinates().elem( 1 ) );
-    CheckCoordinate( converter, "31TCN8594043967", lima.lima().location().coordinates().elem( 2 ) );
-    CheckCoordinate( converter, "31TCN9106845579", lima.lima().location().coordinates().elem( 3 ) );
-    CheckCoordinate( converter, "31TCN9737753024", lima.lima().location().coordinates().elem( 4 ) );
+    CheckCoordinate( converter, "31TCN7270936833", lima.line().location().coordinates().elem( 0 ) );
+    CheckCoordinate( converter, "31TCN7776344465", lima.line().location().coordinates().elem( 1 ) );
+    CheckCoordinate( converter, "31TCN8594043967", lima.line().location().coordinates().elem( 2 ) );
+    CheckCoordinate( converter, "31TCN9106845579", lima.line().location().coordinates().elem( 3 ) );
+    CheckCoordinate( converter, "31TCN9737753024", lima.line().location().coordinates().elem( 4 ) );
 }
 
 // -----------------------------------------------------------------------------

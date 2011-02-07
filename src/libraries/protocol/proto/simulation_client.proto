@@ -148,10 +148,7 @@ message ObjectMagicActionAck {
 }
 
 /** @struct CrowdMagicActionAck
-    @brief A crowd magic action execution request acknowledgement message
-
-    This message is sent when a crowd magic action is issued in response to a client request.
-
+    @brief Acknowledges a crowd magic action request
     @see CrowdMagicAction
     @todo rename to CrowdMagicActionRequestAck
 */
@@ -168,13 +165,18 @@ message CrowdMagicActionAck {
     required ErrorCode error_code = 2; //!< Reason for the failure of the crowd magic action execution operation @see ErrorCode
 }
 
+/** @struct ChangeDiplomacy
+    @brief Notifies of a change in diplomacy
+*/
+message ChangeDiplomacy {
+   required PartyId       party1    = 1; //!< Identifier of the party from which the diplomacy is defined
+   required PartyId       party2    = 2; //!< Identifier of the party to which the diplomacy is defined
+   required EnumDiplomacy diplomacy = 3; //!< Definition of the diplomacy between specified parties
+}
+
 /** @struct ChangeDiplomacyAck
-    @brief A diplomacy change request acknowledgement message
-
-    This message is sent when a diplomacy change is realized in response to a client request.
-
-    @see ChangeDiplomacy
-    @todo rename to DiplomacyChangeRequestAck
+    @brief Acknowledges a diplomacy change magic action
+    @see MagicAction
 */
 message ChangeDiplomacyAck {
     /** @enum ErrorCode
@@ -184,14 +186,14 @@ message ChangeDiplomacyAck {
         no_error_diplomacy            = 0; //!< Operation succeeded @todo rename to no_error
         error_invalid_party_diplomacy = 1; //!< Operation failed because the provided diplomacy is invalid
     }
-    required PartyId       party1     = 1; //!< Identifier of the party from which the diplomacy is defined @see PartyId
-    required PartyId       party2     = 2; //!< Identifier of the party to which the diplomacy is defined @see PartyId
-    required EnumDiplomacy diplomacy  = 3; //!< Definition of the diplomacy between specified parties @see EnumDiplomacy
-    required ErrorCode     error_code = 4; //!< Reason for the failure of the diplomacy change operation @see ErrorCode
+    required PartyId       party1     = 1; //!< Identifier of the party from which the diplomacy is defined
+    required PartyId       party2     = 2; //!< Identifier of the party to which the diplomacy is defined
+    required EnumDiplomacy diplomacy  = 3; //!< Definition of the diplomacy between specified parties
+    required ErrorCode     error_code = 4; //!< Reason for the failure of the diplomacy change operation
 }
 
 /** @struct HierarchyModificationAck
-    @brief A container for hierarchy modification action acknowledgement error message
+    @brief Factorizes hierarchy modification action acknowledgement errors
     @todo split into different types
 */
 message HierarchyModificationAck {
@@ -2273,9 +2275,9 @@ message PopulationUpdate {
         @brief Defines a block occupation
     */
     message BlockOccupation {
-         required ObjectId object = 1; //!< The block object identifier
-         required int32    number = 2; //!< The number of persons
-         required bool     alerted = 3;
+         required ObjectId object  = 1; //!< The block object identifier
+         required int32    number  = 2; //!< The number of persons
+         required bool     alerted = 3; //!< Whether the population has been alerted or not
      }
     required PopulationId    id           = 1; //!< The population identifier
     optional int32           healthy      = 2; //!< The number of healthy persons

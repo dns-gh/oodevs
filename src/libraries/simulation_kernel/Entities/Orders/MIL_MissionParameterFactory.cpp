@@ -118,10 +118,10 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_DotationTypeParameter( message.resourcetype() );
     else if( message.has_equipmenttype() )
         ptr = new MIL_EquipmentTypeParameter( message.equipmenttype() );
-    else if( message.has_tirindirect() )
+    else if( message.has_indirectfire() )
     {
         sword::FireId msg;
-        msg.set_id( message.tirindirect().id() );
+        msg.set_id( message.indirectfire().id() );
         ptr = new MIL_TirIndirectParameter( msg );
     }
     else if( message.has_urbanknowledge() )

@@ -55,6 +55,6 @@ bool MIL_TirIndirectParameter::ToId( int& id ) const
 // -----------------------------------------------------------------------------
 bool MIL_TirIndirectParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    elem.mutable_tirindirect()->set_id( data_ );
+    elem.mutable_indirectfire()->set_id( data_ );
     return true;
 }

@@ -147,7 +147,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         return new actions::parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, message.logmaintenancepriorities() );
     if( message.has_logmedicalpriorities() )
         return new actions::parameters::MedicalPriorities( parameter, message.logmedicalpriorities() );
-    if( message.has_tirindirect() ) // $$$$ SBO 2007-05-21: reports only, not to be used!
+    if( message.has_indirectfire() ) // $$$$ SBO 2007-05-21: reports only, not to be used!
         return 0;
     if( message.has_limit() )
         return new actions::parameters::Limit( parameter, converter_, message.limit() );

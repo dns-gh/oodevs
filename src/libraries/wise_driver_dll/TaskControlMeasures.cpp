@@ -182,7 +182,7 @@ bool TaskControlMeasures::AddParameter( const sword::MissionParameter& parameter
     else if( value.has_locationlist() )
         CreateLocationList( value.locationlist() );
     else if( value.has_limit() )
-        CreateBoundaryLimit( value.limit() ); 
+        CreateBoundaryLimit( value.limit() );
     else if( value.has_phaseline() )
         CreatePhaseLine( value.phaseline() );
     else
@@ -286,7 +286,7 @@ void TaskControlMeasures::CreatePhaseLine( const sword::PhaseLinesOrder& paramet
 
             WISE_HANDLE handle = WISE_INVALID_HANDLE;
             std::map< std::wstring, WISE_HANDLE > attributes;
-            std::list< CWISEVec3 > points( ReadPoints( phaseline.lima().location() ) );
+            std::list< CWISEVec3 > points( ReadPoints( phaseline.line().location() ) );
             // $$$$ SEB 2010-12-29: TODO: handle multiple phase line functions
             const unsigned int function = phaseline.fonctions_size() > 0 ? phaseline.fonctions( 0 ) : 0;
             const std::string schedule = phaseline.time().data();
@@ -531,7 +531,7 @@ namespace
                 std::wstring schedule;
                 wise::FetchObjectAttribute( driver, database, handles.front(), L"Schedule", schedule );
                 sword::PhaseLineOrder& phaseline = *parameter.mutable_phaseline()->add_elem();
-                FillLocation( *phaseline.mutable_lima()->mutable_location(), sword::Location::line, points );
+                FillLocation( *phaseline.mutable_line()->mutable_location(), sword::Location::line, points );
                 phaseline.add_fonctions( sword::PhaseLineOrder::Function( function ) );
                 phaseline.mutable_time()->set_data( std::string( schedule.begin(), schedule.end() ) );
                 handles.pop_front();

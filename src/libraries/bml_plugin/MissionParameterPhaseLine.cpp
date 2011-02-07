@@ -90,7 +90,7 @@ void MissionParameterPhaseLine::Serialize( sword::PhaseLineOrder& message ) cons
     boost::algorithm::split( functions, functions_, boost::algorithm::is_any_of( "," ) );
     for( std::vector< std::string >::const_iterator it = functions.begin(); it != functions.end(); ++it )
         message.add_fonctions( ToPhaseLineType( *it ) );
-    message.mutable_lima()->mutable_location()->set_type( sword::Location::line );
-    points_->Serialize( *message.mutable_lima()->mutable_location()->mutable_coordinates() );
+    message.mutable_line()->mutable_location()->set_type( sword::Location::line );
+    points_->Serialize( *message.mutable_line()->mutable_location()->mutable_coordinates() );
     message.mutable_time()->set_data( bpt::to_iso_string( bpt::from_time_t( 0 ) ).c_str() );
 }

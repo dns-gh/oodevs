@@ -21,20 +21,20 @@
 // Name: DEC_Gen_Object constructor
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
-    : type_              ( &entityManager.FindObjectType( asn.type() )? asn.type(): "" )
-    , pObstacleType_     ( asn.type_obstacle() )
-    , rDensity_          ( asn.densite() )
-    , nMinesActivityTime_( asn.activity_time() )
+DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityManager_ABC& entityManager )
+    : type_              ( &entityManager.FindObjectType( msg.type() )? msg.type(): "" )
+    , pObstacleType_     ( msg.type_obstacle() )
+    , rDensity_          ( msg.density() )
+    , nMinesActivityTime_( msg.activity_time() )
     , pTC2_              ( 0 )
 {
     if( type_.empty() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
-    if( !NET_ASN_Tools::ReadLocation( asn.position(), localisation_ ) )
+    if( !NET_ASN_Tools::ReadLocation( msg.position(), localisation_ ) )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
-    if( asn.combat_train().id() != 0 )
+    if( msg.combat_train().id() != 0 )
     {
-        pTC2_ = entityManager.FindAutomate( asn.combat_train().id() );
+        pTC2_ = entityManager.FindAutomate( msg.combat_train().id() );
         if( !pTC2_ )
             throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     }
@@ -99,12 +99,12 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
 // Name: DEC_Gen_Object::Serialize
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-void DEC_Gen_Object::Serialize( sword::PlannedWork& asn ) const
+void DEC_Gen_Object::Serialize( sword::PlannedWork& msg ) const
 {
-    asn.set_type( type_.c_str() );
-    asn.set_type_obstacle( pObstacleType_ );
-    asn.mutable_combat_train()->set_id( pTC2_ ? pTC2_->GetID() : 0 );
-    asn.set_densite( static_cast< float >( rDensity_ ) );
-    asn.set_activity_time( nMinesActivityTime_ );
-    NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_position() );
+    msg.set_type( type_.c_str() );
+    msg.set_type_obstacle( pObstacleType_ );
+    msg.mutable_combat_train()->set_id( pTC2_ ? pTC2_->GetID() : 0 );
+    msg.set_density( static_cast< float >( rDensity_ ) );
+    msg.set_activity_time( nMinesActivityTime_ );
+    NET_ASN_Tools::WriteLocation( localisation_, *msg.mutable_position() );
 }

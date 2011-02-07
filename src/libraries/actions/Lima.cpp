@@ -42,7 +42,7 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
     for( int i = 0; i < message.fonctions_size(); ++i )
         functions.append( tools::ToShortString( (E_FuncLimaType)message.fonctions(i) ) );
     SetValue( functions.join( ", " ) );
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, message.lima().location() ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, message.line().location() ) );
     AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), message.time() ) );
 }
 
@@ -145,7 +145,7 @@ void Lima::CommitTo( sword::PhaseLineOrder& message ) const
     {
         const std::string type = it->second->GetType();
         if( type == "location" )
-            static_cast< const Location* >( it->second )->CommitTo( *message.mutable_lima()->mutable_location() );
+            static_cast< const Location* >( it->second )->CommitTo( *message.mutable_line()->mutable_location() );
         else if( type == "datetime" )
             static_cast< const DateTime* >( it->second )->CommitTo( *message.mutable_time() );
     }

@@ -101,8 +101,8 @@ std::string ReportFactory::RenderParameter( const sword::MissionParameter& value
 //        ss << value.value().equipmenttype(); // $$$$ SBO 2007-08-27: resolve...
 //    else if( value.value().has_dotationtype() )
 //        ss << value.value().dotationtype(); // $$$$ SBO 2007-08-27: resolve...
-//    else if( value.value().has_tirindirect() )
-//        ss << value.value().tirindirect();
+//    else if( value.value().has_indirectfire() )
+//        ss << value.value().indirectfire();
 //    else if( value.value().has_acharstr() )
 //        ss << value.value().acharstr();
     else

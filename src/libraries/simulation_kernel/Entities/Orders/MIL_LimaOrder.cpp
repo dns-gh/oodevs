@@ -32,7 +32,7 @@ MIL_LimaOrder::MIL_LimaOrder( const sword::PhaseLineOrder& asn )
 
     T_PointVector points;
     localisation_ = boost::shared_ptr< TER_Localisation >( new TER_Localisation( TER_Localisation::eLine, points ) );
-    if( !NET_ASN_Tools::ReadLine( asn.lima(), *localisation_ ) )
+    if( !NET_ASN_Tools::ReadLine( asn.line(), *localisation_ ) )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_lima );
 
     for( int i = 0; i < asn.fonctions_size(); ++i )
@@ -101,7 +101,7 @@ bool MIL_LimaOrder::Intersect2D( const T_PointVector& polyline, T_PointSet& inte
 // -----------------------------------------------------------------------------
 void MIL_LimaOrder::Serialize( sword::PhaseLineOrder& asn ) const
 {
-    NET_ASN_Tools::WriteLine( *localisation_, *asn.mutable_lima() );
+    NET_ASN_Tools::WriteLine( *localisation_, *asn.mutable_line() );
     NET_ASN_Tools::WriteTick( nSchedule_, *asn.mutable_time() );
 
     for( CIT_LimaFunctions it = functions_.begin(); it != functions_.end(); ++it )

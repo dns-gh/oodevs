@@ -485,7 +485,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
     asnIn.set_type( typeName.c_str() );
     FillRlyehLocation( *asnIn.mutable_position() );
     asnIn.set_type_obstacle( ObstacleType_DemolitionTargetType_reserved );
-    asnIn.set_densite( 1 );
+    asnIn.set_density( 1 );
     asnIn.mutable_combat_train()->set_id( 0 );
     asnIn.set_activity_time( 2 );
     MockMIL_EntityManager_ABC entityManager;
@@ -502,7 +502,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
     BOOST_CHECK_EQUAL( typeName, asnOut.plannedwork().type() );
     CompareLocationToRlyeh( asnOut.plannedwork().position() );
     BOOST_CHECK_EQUAL( ObstacleType_DemolitionTargetType_reserved, asnOut.plannedwork().type_obstacle() );
-    BOOST_CHECK_EQUAL( 1, asnOut.plannedwork().densite() );
+    BOOST_CHECK_EQUAL( 1, asnOut.plannedwork().density() );
     BOOST_CHECK_EQUAL( 0u, asnOut.plannedwork().combat_train().id() );
     BOOST_CHECK_EQUAL( 2, asnOut.plannedwork().activity_time() );
     TER_World::DestroyWorld();
@@ -603,8 +603,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_TirIndirectParameter_ToASN )
     MIL_TirIndirectParameter param( asnIn );
     MissionParameter_Value asnOut;
     BOOST_CHECK_EQUAL( true, param.ToElement( asnOut ) );
-    BOOST_CHECK_EQUAL( true, asnOut.has_tirindirect() );
-    BOOST_CHECK_EQUAL( 33u, asnOut.tirindirect().id() );
+    BOOST_CHECK_EQUAL( true, asnOut.has_indirectfire() );
+    BOOST_CHECK_EQUAL( 33u, asnOut.indirectfire().id() );
 }
 
 namespace

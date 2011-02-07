@@ -186,10 +186,11 @@ namespace shield
         ConvertLocation( from.position(), to->mutable_position() );
         CONVERT_ENUM( type_obstacle, ( sword::ObstacleType::preliminary, Common::ObstacleType::preliminary )
                                      ( sword::ObstacleType::reserved, Common::ObstacleType::reserved ) );
-        CONVERT( densite );
 #ifdef SHIELD_SIMULATION
+        CONVERT_TO( density, densite );
         CONVERT_ID_TO( combat_train, tc2 );
 #else
+        CONVERT_TO( densite, density );
         CONVERT_ID_TO( tc2, combat_train );
 #endif
         CONVERT( activity_time );
@@ -214,10 +215,11 @@ namespace shield
     template< typename From, typename To >
     void ConvertLimaOrder( const From& from, To* to )
     {
-        ConvertLocation( from.lima().location(), to->mutable_lima()->mutable_location() );
 #ifdef SHIELD_CLIENT
+        ConvertLocation( from.lima().location(), to->mutable_line()->mutable_location() );
         to->mutable_time()->set_data( from.horaire().data() );
 #elif defined SHIELD_SIMULATION
+        ConvertLocation( from.line().location(), to->mutable_lima()->mutable_location() );
         to->mutable_horaire()->set_data( from.time().data() );
 #endif
         CONVERT_ENUM_LIST( fonctions, ( sword::PhaseLineOrder::line_of_departure, Common::MsgLimaOrder::ligne_debouche )
@@ -282,7 +284,11 @@ namespace shield
         CONVERT_LIST( objectknowledgelist, elem, ConvertIdentifier );
         CONVERT_LIST( plannedworklist, elem, ConvertPlannedWork );
         CONVERT_ID( equipmenttype );
-        CONVERT_ID( tirindirect );
+#ifdef SHIELD_CLIENT
+        CONVERT_ID_TO( tirindirect, indirectfire );
+#elif defined SHIELD_SIMULATION
+        CONVERT_ID_TO( indirectfire, tirindirect );
+#endif
         CONVERT( acharstr );
         if( from.has_missionobjective() )
             ConvertObjective( from.missionobjective(), to->mutable_missionobjective() );

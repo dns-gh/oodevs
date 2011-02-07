@@ -647,7 +647,7 @@ namespace
         w->set_type( "type" );
         FillLocation( w->mutable_position() );
         w->set_type_obstacle( sword::ObstacleType::reserved );
-        w->set_densite( 1.23f );
+        w->set_density( 1.23f );
         w->mutable_combat_train()->set_id( 40 );
         w->set_activity_time( 41 );
         w->mutable_planned_work()->set_id( 42 );
@@ -661,7 +661,7 @@ namespace
     template< typename O >
     void FillLimaOrder( O* o )
     {
-        FillLocation( o->mutable_lima()->mutable_location() );
+        FillLocation( o->mutable_line()->mutable_location() );
         o->mutable_time()->set_data( "horaire2" );
         o->add_fonctions( sword::PhaseLineOrder::handover_line );
         o->add_fonctions( sword::PhaseLineOrder::objective_line );
@@ -713,7 +713,7 @@ namespace
         FillPlannedWork( v->mutable_plannedworklist()->add_elem() );
         FillPlannedWork( v->mutable_plannedworklist()->add_elem() );
         v->mutable_equipmenttype()->set_id( 71 );
-        v->mutable_tirindirect()->set_id( 72 );
+        v->mutable_indirectfire()->set_id( 72 );
         v->set_acharstr( "acharstr" );
         FillMissionObjective( v->mutable_missionobjective() );
         FillMissionObjective( v->mutable_missionobjectivelist()->add_elem() );

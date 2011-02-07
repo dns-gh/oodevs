@@ -209,10 +209,10 @@ void RegisterEngineerObjectsFunctions( directia::brain::Brain& brain )
 {
     brain[ "DEC_GenObject_Type" ] = &DEC_ObjectFunctions::GetGenObjectType;
     brain[ "DEC_GenObject_Localisation" ] = &DEC_ObjectFunctions::GetGenObjectLocalisation;
-    brain.Register( "DEC_GenObject_Densite",               &DEC_Gen_Object::GetDensity );
+    brain.Register( "DEC_GenObject_Densite", &DEC_Gen_Object::GetDensity );
     brain[ "DEC_GenObject_TypeObstacleManoeuvre" ] = &DEC_ObjectFunctions::GetGenObjectReservedObstacle;
     brain[ "DEC_GenObject_TC2" ] = &DEC_ObjectFunctions::GetGenObjectTC2;
-    brain.Register( "DEC_GenObject_DelaiActiviteMines",    &DEC_Gen_Object::GetMinesActivityTime );
+    brain.Register( "DEC_GenObject_DelaiActiviteMines", &DEC_Gen_Object::GetMinesActivityTime );
 }
 
 // -----------------------------------------------------------------------------
@@ -293,7 +293,6 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignMissionDotationTypeParameter" ] = &MIL_MissionParameterFactory::SetDotationTypeParameter;
     brain[ "DEC_AssignMissionNumericTypeParameter" ] = &MIL_MissionParameterFactory::SetNumericTypeParameter;
     brain[ "DEC_IsMissionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
-
     directia::tools::binders::ScriptRef initParameterFunction = brain[ "InitTaskParameter" ];
     brain[ "DEC_FillMissionParameters" ] =
         boost::function< void( const directia::tools::binders::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2, isMasalife ) );

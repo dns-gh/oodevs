@@ -21,7 +21,7 @@ GenObject::GenObject( const sword::PlannedWork& asn )
     : type_              ( asn.type() )
     , location_          ( asn.position() )
     , typeObstacle_      ( asn.type_obstacle() )
-    , density_           ( asn.densite() )
+    , density_           ( asn.density() )
     , tc2_               ( asn.combat_train().id() )
     , delaiActiviteMines_( asn.activity_time() )
 {
@@ -60,7 +60,7 @@ void GenObject::Send( sword::PlannedWork& message ) const
 {
     message.set_type( type_ );
     message.set_type_obstacle( typeObstacle_ );
-    message.set_densite( density_ );
+    message.set_density( density_ );
     message.mutable_combat_train()->set_id( tc2_ );
     message.set_activity_time( delaiActiviteMines_ );
     location_.Send( *message.mutable_position() );
