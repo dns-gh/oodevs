@@ -9,8 +9,8 @@
     </medical-treatment>
     <medical-treatment id="1" name="AdultICU">
         <injuries>
-           <injury category="UA" treatment-time="120m" hospitalisation-time="72h" threshold="2"/>
-           <injury category="UR" treatment-time="30m" hospitalisation-time="3h" threshold="1"/>
+           <injury category="UA" treatment-time="120m" hospitalisation-time="72h" life-expectancy="144h" threshold="2"/>
+           <injury category="UR" treatment-time="30m" hospitalisation-time="3h" life-expectancy="144h" threshold="1"/>
         </injuries>
     </medical-treatment>
     <medical-treatment id="2" name="OperatingRooms" death-threshold="3">
@@ -27,8 +27,8 @@
     </medical-treatment>
     <medical-treatment id="4" name="Psychiatric"> <!-- MEntalDisease -->
         <injuries>
-            <injury category="UA" treatment-time="120m" hospitalisation-time="72h" threshold="150"/>
-            <injury category="UR" treatment-time="30m" hospitalisation-time="3h" threshold="100"/>
+            <injury category="UA" treatment-time="120m" hospitalisation-time="72h" life-expectancy="144h" threshold="150"/>
+            <injury category="UR" treatment-time="30m" hospitalisation-time="3h" life-expectancy="144h" threshold="100"/>
         </injuries>
     </medical-treatment>
     <medical-treatment id="5" name="PediatricICU"/>
@@ -37,3 +37,4 @@
     <medical-treatment id="8" name="OtherIsolation"/>
 </medical-treatments>
 <!-- signature="2728789115" -->
+<!-- signature="2776772331" -->

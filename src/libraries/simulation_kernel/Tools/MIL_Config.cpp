@@ -94,7 +94,9 @@ void MIL_Config::ReadSessionFile( const std::string& file )
     setstepmul_ = 200;
     MIL_Tools::CheckXmlCrc32Signature( file );
     xml::xifstream xis( file );
+    xis >> xml::start( "session" );
     const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+    xis >> xml::end();
     if( schema.empty() )
         ReadSessionXml( xis );
     else

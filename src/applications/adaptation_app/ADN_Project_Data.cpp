@@ -17,6 +17,7 @@
 #include "ADN_Resources.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
+#include "SchemaReader.h"
 
 #include <tools/XmlCrc32Signature.h>
 #include <windows.h>
@@ -82,7 +83,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "supply", szSupply_);
     ReadFile( input, "communications", szCom_);
     ReadFile( input, "populations", szPopulation_);
-    ReadFile( input, "people", szPeople_);
+    ReadFile( input, "inhabitants", szPeople_);
     ReadFile( input, "reports", szReports_);
     ReadFile( input, "pathfinder", szPathfinder_);
     ReadFile( input, "object-names", szObjectNames_ );
@@ -117,7 +118,6 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "units", szUnits_ );
     WriteFile( output, "automats", szAutomata_ );
     WriteFile( output, "nbc", szNBC_ );
-    WriteFile( output, "fire", szFire_ );
     WriteFile( output, "fires", szFireClasses_ );
     WriteFile( output, "medical-treatment", szMedicalTreatment_ );
     WriteFile( output, "health", szHealth_ );
@@ -129,7 +129,7 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "communications", szCom_ );
     WriteFile( output, "pathfinder", szPathfinder_ );
     WriteFile( output, "populations", szPopulation_ );
-    WriteFile( output, "people", szPeople_ );
+    WriteFile( output, "inhabitants", szPeople_ );
     WriteFile( output, "reports", szReports_ );
     WriteFile( output, "models", szModels_ );
     WriteFile( output, "missions", szMissions_ );
@@ -314,6 +314,14 @@ namespace
         tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( workingDir + filename );
         if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
             invalidSignedFiles.append( "\n" + filename );
+        SchemaReader reader;
+        xml::xifstream xis( workingDir + filename );
+        xis >> xml::list( reader, &SchemaReader::ReadSchema );
+        const std::string& schema = reader.GetSchema();
+        if( !schema.empty() )
+        {
+            xml::xifstream input( workingDir + filename, xml::external_grammar( std::string( "resources/" ) + schema ) );
+        }
     }
 }
 
@@ -330,15 +338,11 @@ void ADN_Project_Data::Load( std::string& invalidSignedFiles )
     xml::xifstream input( szFile_.GetFileNameFull() );
     dataInfos_.ReadArchive( input );
     // Check XML Validity for files not loaded
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szFire_.GetData(), invalidSignedFiles );
     CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szPathfinder_.GetData(), invalidSignedFiles );
     CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szObjectNames_.GetData(), invalidSignedFiles );
     CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szHumanProtections_.GetData(), invalidSignedFiles );
     CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szMedicalTreatment_.GetData(), invalidSignedFiles );
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), "dis.xml", invalidSignedFiles );
     CheckSignature( workDir_.GetWorkingDirectory().GetData(), "DrawingTemplates.xml", invalidSignedFiles );
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), "FOM.xml", invalidSignedFiles );
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), "mapping.xml", invalidSignedFiles );
     CheckSignature( workDir_.GetWorkingDirectory().GetData(), "templates.xml", invalidSignedFiles );
 }
 
@@ -358,7 +362,6 @@ void ADN_Project_Data::Save()
     }
     tools::WriteXmlCrc32Signature( szFile );
     // Save XML Signature for files not loaded, bypassing "temp" folder
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szFire_.GetData() );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData() );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData() );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData() );

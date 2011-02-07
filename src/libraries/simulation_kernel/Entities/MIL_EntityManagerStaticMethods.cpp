@@ -162,7 +162,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_MedicalResourcesAlarms     >( config, "health"             );
     InitializeType< PHY_RolePion_Communications    >( config, "communications"     );
     InitializeType< MIL_PopulationType             >( config, "populations"        );
-    InitializeType< MIL_InhabitantType             >( config, "people"             );
+    InitializeType< MIL_InhabitantType             >( config, "inhabitants"        );
     InitializeMedical( config );
 
     xis >> xml::end; // physical

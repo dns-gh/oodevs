@@ -9,8 +9,8 @@
     </medical-treatment>
     <medical-treatment id="2" name="Contaminate" death-threshold="-1">
     <injuries>
-           <injury category="UA" treatment-time="120m" hospitalisation-time="72h" threshold="2"/>
-         <injury category="UR" treatment-time="30m" hospitalisation-time="3h" threshold="1"/>
+           <injury category="UA" treatment-time="120m" hospitalisation-time="72h" life-expectancy="144h" threshold="2"/>
+         <injury category="UR" treatment-time="30m" hospitalisation-time="3h" life-expectancy="144h" threshold="1"/>
        </injuries>
   </medical-treatment>
   <medical-treatment id="3" name="Poison" death-threshold="3">
@@ -27,9 +27,10 @@
     </medical-treatment>
     <medical-treatment id="5" name="MentalDisease" death-threshold="-1">
     <injuries>
-        <injury category="UA" treatment-time="120m" hospitalisation-time="72h" threshold="150"/>
-           <injury category="UR" treatment-time="30m" hospitalisation-time="3h" threshold="100"/>
+        <injury category="UA" treatment-time="120m" hospitalisation-time="72h" life-expectancy="144h" threshold="150"/>
+           <injury category="UR" treatment-time="30m" hospitalisation-time="3h" life-expectancy="144h" threshold="100"/>
     </injuries>
     </medical-treatment>
 </medical-treatments>
 <!-- signature="3821221918" -->
+<!-- signature="1498706475" -->

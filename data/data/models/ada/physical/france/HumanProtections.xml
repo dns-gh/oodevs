@@ -10,7 +10,8 @@
                 <type name="Soman"/>
             </types>
             <effects>
-                <effect threshold="1" protection-decrease-rate="0.1"/>                          <effect threshold="4" protection-decrease-rate="0.15"/>
+                <effect threshold="1" protection-decrease-rate="0.1"/>
+                <effect threshold="4" protection-decrease-rate="0.15"/>
                 <effect threshold="8" protection-decrease-rate="0.2"/>
                 <effect threshold="10" protection-decrease-rate="0.25"/>
              </effects>
@@ -24,7 +25,8 @@
                 <type name="Class A"/>
             </types>
             <effects>
-                <effect threshold="1" protection-decrease-rate="0.1"/>                          <effect threshold="4" protection-decrease-rate="0.15"/>
+                <effect threshold="1" protection-decrease-rate="0.1"/>
+                <effect threshold="4" protection-decrease-rate="0.15"/>
                 <effect threshold="8" protection-decrease-rate="0.2"/>
                 <effect threshold="10" protection-decrease-rate="0.25"/>
              </effects>
@@ -33,3 +35,4 @@
   </protection>  
 </protections>
 <!-- signature="1591835059" -->
+<!-- signature="1949261683" -->

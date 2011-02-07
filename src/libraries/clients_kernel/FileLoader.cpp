@@ -78,6 +78,21 @@ void FileLoader::CheckSignatures( const std::string& file, std::string& invalidS
 
 namespace
 {
+    class SchemaReader
+    {
+    public:
+        void ReadSchema( const std::string&, xml::xistream& xis )
+        {
+            schema_ = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+        }
+        const std::string& GetSchema()
+        {
+            return schema_;
+        }
+    private:
+        std::string schema_;
+    };
+
     struct CheckedLoader
     {
         typedef boost::function< void ( xml::xisubstream ) > T_Loader;
@@ -102,7 +117,9 @@ namespace
     private:
         void LoadFile( xml::xistream& xis, const std::string& xslTransform )
         {
-            const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+            SchemaReader reader;
+            xis >> xml::list( reader, &SchemaReader::ReadSchema );
+            const std::string& schema = reader.GetSchema();
             if( !xslTransform.empty() )
             {
                 xsl::xstringtransform xst( xslTransform );

@@ -67,9 +67,9 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
 , strCodeLFRIL_         ()
 , strCodeNNO_           ()
 , ptrResourceNature_    ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-, rNbrInPackage_        ( 0. )
-, rPackageVolume_       ( 0. )
-, rPackageWeight_       ( 0. )
+, rNbrInPackage_        ( 1. )
+, rPackageVolume_       ( 1. )
+, rPackageWeight_       ( 1. )
 {
     strName_.SetDataName( "le nom d'" );
     strName_.SetParentNode( *this );

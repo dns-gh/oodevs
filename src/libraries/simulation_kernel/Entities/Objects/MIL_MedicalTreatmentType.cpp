@@ -89,7 +89,7 @@ namespace
 {
     float GetSimTimeValue( xml::xistream& xis, const std::string& /*tag*/, const MIL_Time_ABC& time )
     {
-        double value;
+        double value = 0.;
         tools::ReadTimeAttribute( xis, "life-expectancy", value );
         return static_cast< float >( MIL_Tools::ConvertSecondsToSim( value, time ) );
     }

@@ -142,7 +142,9 @@ void Model::Load()
         else if( error == tools::eXmlCrc32SignatureError_NotSigned )
             MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).leaf() << " is not signed." )
         xml::xifstream xis( filename );
+        xis >> xml::start( "messenger" );
         const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+        xis >> xml::end();
         if( !schema.empty() )
             xml::xifstream xis( filename, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) );
         ReadMessenger( xis );

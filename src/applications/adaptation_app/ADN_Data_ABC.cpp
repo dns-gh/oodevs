@@ -16,6 +16,7 @@
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
 #include "ADN_GuiTools.h"
+#include "SchemaReader.h"
 #include <tools/XmlCrc32Signature.h>
 
 // -----------------------------------------------------------------------------
@@ -35,24 +36,6 @@ ADN_Data_ABC::ADN_Data_ABC()
 ADN_Data_ABC::~ADN_Data_ABC()
 {
     // NOTHING
-}
-
-namespace
-{
-    class SchemaReader
-    {
-    public:
-    void ReadSchema( const std::string&, xml::xistream& xis )
-    {
-        schema_ = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-    }
-    const std::string& GetSchema()
-    {
-        return schema_;
-    }
-    private:
-        std::string schema_;
-    };
 }
 
 // -----------------------------------------------------------------------------

@@ -75,7 +75,9 @@ void DrawingsModel::Load( const dispatcher::Config& config )
         {
             {
                 xml::xifstream xis( filename );
+                xis >> xml::start( "shapes" );
                 const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+                xis >> xml::end();
                 if( schema.empty() )
                     ReadShapes( xis );
                 else

@@ -15,7 +15,6 @@
   <units file="Pions.xml"/>
   <automats file="Automates.xml"/>
   <nbc file="NBC.xml"/>
-  <fire file=""/>
   <fires file="Fires.xml"/>
   <medical-treatment file="MedicalTreatment.xml"/>
   <health file="Sante.xml"/>
@@ -27,7 +26,7 @@
   <communications file="Communications.xml"/>
   <pathfinder file="Pathfind.xml"/>
   <populations file="Populations.xml"/>
-  <people file="Inhabitants.xml"/>
+  <inhabitants file="Inhabitants.xml"/>
   <reports file="Reports.xml"/>
   <models file="Modeles.xml"/>
   <missions file="Missions.xml"/>
@@ -35,4 +34,4 @@
   <urban file="Urban.xml"/>
   <resource-networks file="ResourceNetworks.xml"/>
 </physical>
-<!-- signature="0182862815" -->
+<!-- signature="2448163758" -->

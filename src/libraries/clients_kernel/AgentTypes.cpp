@@ -77,7 +77,7 @@ void AgentTypes::Load( const tools::ExerciseConfig& config, std::string& invalid
         .Load( "units", boost::bind( &AgentTypes::ReadAgents, this, _1 ) )
         .Load( "automats", boost::bind( &AgentTypes::ReadAutomats, this, _1 ) )
         .Load( "populations", boost::bind( &AgentTypes::ReadPopulations, this, _1 ) )
-        .Load( "people", boost::bind( &AgentTypes::ReadInhabitants, this, _1 ) )
+        .Load( "inhabitants", boost::bind( &AgentTypes::ReadInhabitants, this, _1 ) )
         .Load( "knowledge-groups", boost::bind( &AgentTypes::ReadKnowledgeGroups, this, _1 ) );
 
     CreateMagicActionTypes();

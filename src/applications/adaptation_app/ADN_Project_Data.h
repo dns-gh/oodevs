@@ -66,7 +66,6 @@ public:
         ADN_Type_String szFireClasses_;
 
         // $$$$ NLD 2007-01-15: files not loaded!
-        ADN_Type_String szFire_;
         ADN_Type_String szPathfinder_;
         ADN_Type_String szObjectNames_;
         ADN_Type_String szHumanProtections_;
