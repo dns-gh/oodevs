@@ -130,6 +130,7 @@ void InfrastructureCapacity::Instanciate( MIL_Object_ABC& object ) const
 void InfrastructureCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
 {
     // $$$$ _RC_ SLG 2011-01-19: trouver un moyen pour mettre les valeurs des capacités StructuralCapacity et ResourceNetworkCapacity dans des attributs
+    float previousFunctionalState = functionalState_;
     StructuralCapacity* capacity = object.Retrieve< StructuralCapacity >(); 
     functionalState_ = 1.f;
     if( capacity )
@@ -137,6 +138,8 @@ void InfrastructureCapacity::Update( MIL_Object_ABC& object, unsigned int /*time
     ResourceNetworkCapacity* resourceCapacity = object.Retrieve< ResourceNetworkCapacity >(); 
     if( resourceCapacity )
         functionalState_ *= resourceCapacity->GetFunctionalState();
+    if( previousFunctionalState != functionalState_ )
+        needUpdate_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +169,7 @@ void InfrastructureCapacity::SendState( sword::UrbanAttributes& message ) const
 void InfrastructureCapacity::SendFullState( sword::UrbanAttributes& message ) const
 {
     message.mutable_infrastructures()->mutable_infrastructure()->set_type( role_ );
-    message.mutable_infrastructures()->mutable_infrastructure()->set_active( enabled_ );
+    message.mutable_infrastructures()->mutable_infrastructure()->set_active( enabled_ && functionalState_ >= threshold_ );
     message.mutable_infrastructures()->mutable_infrastructure()->set_threshold( threshold_ );
 }
 

@@ -92,10 +92,8 @@ void UrbanMagicOrdersInterface::NotifyContextMenu( const kernel::Object_ABC& obj
     if( infra )
     {
         AddValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ) );
-        if( infra->IsEnabled() )
-            AddMagic( tr( "Disable" ), SLOT( Disable() ), magicMenu );
-        else
-            AddMagic( tr( "Enable" ), SLOT( Enable() ), magicMenu );
+        AddMagic( tr( "Disable" ), SLOT( Disable() ), magicMenu );
+        AddMagic( tr( "Enable" ), SLOT( Enable() ), magicMenu );
     }
 }
 
