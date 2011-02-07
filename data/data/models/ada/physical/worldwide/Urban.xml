@@ -97,76 +97,76 @@
     <accommodation capacity="0.07" role="home"/>
   </accommodations>
   <infrastructures>
-    <infrastructure name="Water Resources" symbol="Ressources-eau">
+    <infrastructure name="Water Resources" symbol="resource-water">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Electricity Resources" symbol="Ressources-electricite">
+    <infrastructure name="Electricity Resources" symbol="resource-electricity">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Gaz resources" symbol="Ressources-gaz">
+    <infrastructure name="Gaz resources" symbol="resource-gas">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Food resources" symbol="Ressources-nourriture">
+    <infrastructure name="Food resources" symbol="resource-food">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Sports" symbol="Sports">
+    <infrastructure name="Sports" symbol="sports">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Transport" symbol="Transport">
+    <infrastructure name="Transport" symbol="transportation">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Air Transport" symbol="Transport-air">
+    <infrastructure name="Air Transport" symbol="transportation-air">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Hospital" symbol="hopital">
+    <infrastructure name="Hospital" symbol="hospital">
       <capacities>
         <medical night-doctors-rate="10">
           <emergency-plan beds-rate="10" doctors-rate="10"/>
         </medical>
       </capacities>
     </infrastructure>
-    <infrastructure name="Industrie" symbol="Industrie">
+    <infrastructure name="Industrie" symbol="industry">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Accommodation" symbol="Logement">
+    <infrastructure name="Housing" symbol="housing">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Media" symbol="Media">
+    <infrastructure name="Media" symbol="media">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Monument" symbol="Monument">
+    <infrastructure name="Landmark" symbol="landmark">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Office" symbol="Bureaux">
+    <infrastructure name="Office" symbol="office">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Station" symbol="Caserne">
+    <infrastructure name="Barrack" symbol="barrack">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Barracks" symbol="Caserne-militaire">
+    <infrastructure name="Military Barrack" symbol="military-barrack">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Fire station" symbol="Caserne-pompier">
+    <infrastructure name="Fire station" symbol="fire-station">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Store" symbol="Commerce">
+    <infrastructure name="Shops" symbol="shops">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Religious monument" symbol="Edifice Religieux">
+    <infrastructure name="Religious" symbol="religious">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Education" symbol="Education">
+    <infrastructure name="Education" symbol="education">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Storage" symbol="Entrepot">
+    <infrastructure name="Warehouse" symbol="warehouse">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Naval Transport" symbol="Transport-naval">
+    <infrastructure name="Naval Transport" symbol="transportation-naval">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Administration" symbol="Administration">
+    <infrastructure name="Administration" symbol="administration">
       <capacities/>
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="0105025940" -->
+<!-- signature="0829946084" -->

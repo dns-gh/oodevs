@@ -93,81 +93,80 @@
   </urban-block-types>
   <accommodations>
     <accommodation capacity="0.5" role="leisure"/>
-    <accommodation capacity="0.5" role="study"/>
     <accommodation capacity="0.07" role="home"/>
     <accommodation capacity="0.2" role="office"/>
   </accommodations>
   <infrastructures>
-    <infrastructure name="Ressources eau" symbol="Ressources-eau">
+    <infrastructure name="Ressources eau" symbol="resource-water">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Ressources electricite" symbol="Ressources-electricite">
+    <infrastructure name="Ressources electricite" symbol="resource-electricity">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Ressources gaz" symbol="Ressources-gaz">
+    <infrastructure name="Ressources gaz" symbol="resource-gas">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Ressources nourriture" symbol="Ressources-nourriture">
+    <infrastructure name="Ressources nourriture" symbol="resource-food">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Sports" symbol="Sports">
+    <infrastructure name="Sports" symbol="sports">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Transport" symbol="Transport">
+    <infrastructure name="Transport" symbol="transportation">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Transport air" symbol="Transport-air">
+    <infrastructure name="Transport air" symbol="transportation-air">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Hopital" symbol="hopital">
+    <infrastructure name="Hopital" symbol="hospital">
       <capacities>
         <medical night-doctors-rate="10">
           <emergency-plan beds-rate="10" doctors-rate="10"/>
         </medical>
       </capacities>
     </infrastructure>
-    <infrastructure name="Industrie" symbol="Industrie">
+    <infrastructure name="Industrie" symbol="industry">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Logement" symbol="Logement">
+    <infrastructure name="Logement" symbol="housing">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Media" symbol="Media">
+    <infrastructure name="Media" symbol="media">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Monument" symbol="Monument">
+    <infrastructure name="Monument" symbol="landmark">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Bureaux" symbol="Bureaux">
+    <infrastructure name="Bureaux" symbol="office">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Caserne" symbol="Caserne">
+    <infrastructure name="Caserne" symbol="barrack">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Caserne militaire" symbol="Caserne-militaire">
+    <infrastructure name="Caserne militaire" symbol="military-barrack">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Caserne pompier" symbol="Caserne-pompier">
+    <infrastructure name="Caserne pompier" symbol="fire-station">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Commerce" symbol="Commerce">
+    <infrastructure name="Commerce" symbol="shops">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Edifice Religieux" symbol="Edifice Religieux">
+    <infrastructure name="Edifice Religieux" symbol="religious">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Education" symbol="Education">
+    <infrastructure name="Education" symbol="education">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Entrepot" symbol="Entrepot">
+    <infrastructure name="Entrepot" symbol="warehouse">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Transport naval" symbol="Transport-naval">
+    <infrastructure name="Transport naval" symbol="transportation-naval">
       <capacities/>
     </infrastructure>
-    <infrastructure name="Administration" symbol="Administration">
+    <infrastructure name="Administration" symbol="administration">
       <capacities/>
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="1706639761" -->
+<!-- signature="0568784476" -->
