@@ -30,7 +30,7 @@ namespace parameters {
 
 // =============================================================================
 /** @class  UrbanBlock
-@brief  UrbanBlock
+    @brief  UrbanBlock
 // $$$$ SBO 2007-05-24: watch for deletion !!!
 */
 // Created: SBO 2007-05-24
@@ -50,9 +50,11 @@ public:
     //! @name Operations
     //@{
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
+    virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
-
+    virtual geometry::Point2f GetPosition() const;
     void CommitTo( sword::UrbanObjectKnowledgeId& message ) const;
     //@}
 
