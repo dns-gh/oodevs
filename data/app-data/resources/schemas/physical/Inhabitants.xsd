@@ -11,6 +11,7 @@
               <xs:element name="repartition" type="T_Repartition"/>
               <xs:element name="safety-level" type="T_SafetyLevel"/>
               <xs:element name="consumption" type="T_Resources"/>
+              <xs:element name="health-need" type="T_HealthNeed"/>
             </xs:all>
             <xs:attribute name="associated-crowd" type="xs:string" use="required"/>
             <xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
@@ -38,6 +39,9 @@
   <xs:complexType name="T_SafetyLevel">
     <xs:attribute name="loss-on-fire" type="T_ZeroToOneDouble" use="required"/>
     <xs:attribute name="gain-per-hour" type="T_ZeroToOneDouble" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="T_HealthNeed">
+    <xs:attribute name="people-per-facility" type="xs:nonNegativeInteger" use="required"/>
   </xs:complexType>
   <xs:complexType name="T_Schedule">
     <xs:sequence>

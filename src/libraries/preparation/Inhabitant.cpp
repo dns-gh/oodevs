@@ -25,6 +25,9 @@ Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QS
     , healthNeed_( 0 )
 {
     healthy_ = number;
+    unsigned int healthPeopleNumber = type_.GetHealthPeopleNumber();
+    if( healthPeopleNumber )
+        healthNeed_ = static_cast< float >( number ) / healthPeopleNumber;
     extensions_[ "nationality" ] = "";
     extensions_[ "ethnicity" ] = "";
     extensions_[ "religion" ] = "";

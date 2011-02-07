@@ -43,6 +43,7 @@ public:
     float GetMalePercentage() const;
     float GetFemalePercentage() const;
     float GetChildrenPercentage() const;
+    unsigned int GetHealthPeopleNumber() const;
     const PopulationType& GetCrowdType() const;
     //@}
 
@@ -62,6 +63,7 @@ private:
     float male_;
     float female_;
     float children_;
+    unsigned int healthNeed_;
     //@}
 };
 

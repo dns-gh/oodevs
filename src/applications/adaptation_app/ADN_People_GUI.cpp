@@ -75,6 +75,9 @@ void ADN_People_GUI::Build()
     builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Loss on fire" ), vInfosConnectors[ eLossOnFire ], tr( "%" ), ePercentage );
     builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Gain per hour" ), vInfosConnectors[ eGainPerHour ], tr( "%" ), ePercentage );
 
+    QGroupBox* pHealthGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Health satisfaction" ), pGroup );
+    builder.AddField< ADN_EditLine_Int >( pHealthGroup, tr( "Number of people per medical infrastructure" ), vInfosConnectors[ eHealthNeed ] );
+
     QGroupBox* pScheduleGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Moving weekly schedule" ), pGroup );
     builder.AddField< ADN_TimeField >( pScheduleGroup, tr( "Transfer time" ), vInfosConnectors[ eTransferTime ] );
     ADN_Schedule_Table* pTable = new ADN_Schedule_Table( pScheduleGroup );

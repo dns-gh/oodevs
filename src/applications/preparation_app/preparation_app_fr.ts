@@ -328,7 +328,7 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
     <message>
         <source>Inhabitants</source>
-        <translation type="unfinished"></translation>
+        <translation>Populations</translation>
     </message>
 </context>
 <context>

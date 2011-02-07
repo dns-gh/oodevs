@@ -171,6 +171,7 @@ ADN_People_Data::PeopleInfos::PeopleInfos()
     , children_           ( 0 )
     , securityLossOnFire_ ( 0 )
     , securityGainPerHour_( 0 )
+    , healthNeed_         ( 0 )
     , transferTime_       ( "0h" )
 {
     BindExistenceTo( &ptrModel_ );
@@ -219,6 +220,7 @@ ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
     pCopy->transferTime_ = transferTime_.GetData();
     pCopy->securityLossOnFire_ = securityLossOnFire_.GetData();
     pCopy->securityGainPerHour_ = securityGainPerHour_.GetData();
+    pCopy->healthNeed_ = healthNeed_.GetData();
     for( IT_Events it = schedule_.begin(); it != schedule_.end(); ++it )
     {
         pCopy->schedule_[ it->first ].reset( new EventInfos() );
@@ -266,6 +268,9 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
           >> xml::end
           >> xml::start( "consumption" )
             >> xml::list( "resource", *this, &ADN_People_Data::PeopleInfos::ReadConsumption )
+          >> xml::end
+          >> xml::start( "health-need" )
+            >> xml::attribute( "people-per-facility", healthNeed_ )
           >> xml::end;
     securityLossOnFire_ = 100 * securityLossOnFire_.GetData();
     securityGainPerHour_ = 100 * securityGainPerHour_.GetData();
@@ -339,6 +344,9 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
             << xml::start( "safety-level" )
                 << xml::attribute( "loss-on-fire", securityLossOnFire_.GetData() / 100.0 )
                 << xml::attribute( "gain-per-hour", securityGainPerHour_.GetData() / 100.0 )
+            << xml::end
+            << xml::start( "health-need" )
+                << xml::attribute( "people-per-facility", healthNeed_ )
             << xml::end
             << xml::start( "consumption" );
     for( IT_PeopleInfosConsumptionVector it = consumptions_.begin(); it != consumptions_.end(); ++it )

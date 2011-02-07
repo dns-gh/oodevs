@@ -111,6 +111,7 @@ public:
         ADN_Type_Time transferTime_;
         ADN_Type_Double securityLossOnFire_;
         ADN_Type_Double securityGainPerHour_;
+        ADN_Type_Int healthNeed_;
         T_Events schedule_;
         T_PeopleInfosConsumptionVector consumptions_;
     };

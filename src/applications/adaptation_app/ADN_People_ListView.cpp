@@ -57,6 +57,7 @@ void ADN_People_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_People_GUI::eFemale ]->Connect( &pInfos->female_, bConnect );
     vItemConnectors_[ ADN_People_GUI::eChildren ]->Connect( &pInfos->children_, bConnect );
     vItemConnectors_[ ADN_People_GUI::eLossOnFire ]->Connect( &pInfos->securityLossOnFire_, bConnect );
+    vItemConnectors_[ ADN_People_GUI::eHealthNeed ]->Connect( &pInfos->healthNeed_, bConnect );
     vItemConnectors_[ ADN_People_GUI::eGainPerHour ]->Connect( &pInfos->securityGainPerHour_, bConnect );
     vItemConnectors_[ ADN_People_GUI::eTransferTime ]->Connect( &pInfos->transferTime_, bConnect );
     vItemConnectors_[ ADN_People_GUI::eConsumptions ]->Connect( &pInfos->consumptions_, bConnect );

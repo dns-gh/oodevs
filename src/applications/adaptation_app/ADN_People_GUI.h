@@ -38,6 +38,7 @@ public:
         eChildren,
         eLossOnFire,
         eGainPerHour,
+        eHealthNeed,
         eTransferTime,
         eConsumptions,
         eNbrGuiElements,

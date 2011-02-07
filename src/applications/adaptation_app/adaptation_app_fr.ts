@@ -2211,11 +2211,11 @@ du tireur</translation>
     <name>ADN_ListView_UrbanMaterial_Type</name>
     <message>
         <source>New</source>
-        <translation type="unfinished">Nouveau</translation>
+        <translation>Nouveau</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
@@ -3043,11 +3043,11 @@ du tireur</translation>
     </message>
     <message>
         <source>Population</source>
-        <translation type="unfinished">Population</translation>
+        <translation>Population</translation>
     </message>
     <message>
         <source>Density: </source>
-        <translation type="unfinished"></translation>
+        <translation>Densité:</translation>
     </message>
     <message>
         <source>Universal</source>
@@ -3190,6 +3190,14 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>Consumptions</source>
         <translation>Consommations</translation>
+    </message>
+    <message>
+        <source>Health satisfaction</source>
+        <translation>Satisfaction en santé</translation>
+    </message>
+    <message>
+        <source>Number of people per medical infrastructure</source>
+        <translation>Nombre de personnes par infrastructure médicale</translation>
     </message>
 </context>
 <context>

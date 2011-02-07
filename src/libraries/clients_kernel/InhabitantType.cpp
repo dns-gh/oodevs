@@ -31,6 +31,9 @@ InhabitantType::InhabitantType( xml::xistream& xis, const tools::Resolver_ABC< P
             >> xml::attribute( "male", male_ )
             >> xml::attribute( "female", female_ )
             >> xml::attribute( "children", children_ )
+        >> xml::end
+        >> xml::start( "health-need" )
+            >> xml::attribute( "people-per-facility", healthNeed_ )
         >> xml::end;
 }
 
@@ -95,4 +98,13 @@ float InhabitantType::GetFemalePercentage() const
 float InhabitantType::GetChildrenPercentage() const
 {   
     return children_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantType::GetHealthNeed
+// Created: JSR 2011-02-07
+// -----------------------------------------------------------------------------
+unsigned int InhabitantType::GetHealthPeopleNumber() const
+{
+    return healthNeed_;
 }
