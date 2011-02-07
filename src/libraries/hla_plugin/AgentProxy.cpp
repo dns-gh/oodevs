@@ -9,7 +9,10 @@
 
 #include "hla_plugin_pch.h"
 #include "AgentProxy.h"
+#include "EventListener_ABC.h"
 #include "dispatcher/Agent_ABC.h"
+#include <algorithm>
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -35,39 +38,23 @@ AgentProxy::~AgentProxy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentProxy::GetPosition
-// Created: SLI 2011-02-04
+// Name: AgentProxy::Register
+// Created: SLI 2011-02-07
 // -----------------------------------------------------------------------------
-geometry::Point2d AgentProxy::GetPosition() const
+void AgentProxy::Register( EventListener_ABC& listener )
 {
-    return agent_.GetPosition();
+    listeners_.push_back( &listener );
+    listener.SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
+                             agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentProxy::GetAltitude
-// Created: SLI 2011-02-04
+// Name: AgentProxy::Unregister
+// Created: SLI 2011-02-07
 // -----------------------------------------------------------------------------
-unsigned short AgentProxy::GetAltitude() const
+void AgentProxy::Unregister( EventListener_ABC& listener )
 {
-    return agent_.GetAltitude();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentProxy::GetSpeed
-// Created: SLI 2011-02-04
-// -----------------------------------------------------------------------------
-unsigned short AgentProxy::GetSpeed() const
-{
-    return agent_.GetSpeed();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentProxy::GetDirection
-// Created: SLI 2011-02-04
-// -----------------------------------------------------------------------------
-unsigned short AgentProxy::GetDirection() const
-{
-    return agent_.GetDirection();
+    listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,6 +72,10 @@ const tools::Resolver< dispatcher::Equipment >& AgentProxy::GetEquipments() cons
 // -----------------------------------------------------------------------------
 void AgentProxy::Notify( const sword::UnitAttributes& attributes )
 {
+    if( attributes.has_position() || attributes.has_height() || attributes.has_speed() || attributes.has_direction() )
+        BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
+            listener->SpatialChanged( agent_.GetPosition().X(), agent_.GetPosition().Y(),
+                                      agent_.GetAltitude(), agent_.GetSpeed(), agent_.GetDirection() );
     dispatcher::Observable< sword::UnitAttributes >::Notify( attributes );
 }
 

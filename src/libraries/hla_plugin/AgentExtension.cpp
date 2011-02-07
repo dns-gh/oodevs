@@ -38,9 +38,10 @@ AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >&
     , name_              ( name )
     , force_             ( force )
     , spatialChanged_    ( true )
+    , pSpatial_          ( 0 )
     , compositionChanged_( true )
 {
-    // NOTHING
+    holder_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +50,7 @@ AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >&
 // -----------------------------------------------------------------------------
 AgentExtension::~AgentExtension()
 {
-    // NOTHING
+    holder_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,11 +82,17 @@ void AgentExtension::Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateA
 // -----------------------------------------------------------------------------
 void AgentExtension::Notify( const sword::UnitAttributes& attributes )
 {
-    spatialChanged_ = spatialChanged_ || attributes.has_position()
-                                      || attributes.has_height()
-                                      || attributes.has_speed()
-                                      || attributes.has_direction();
     compositionChanged_ = compositionChanged_ || attributes.has_equipment_dotations();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentExtension::SpatialChanged
+// Created: SLI 2011-02-07
+// -----------------------------------------------------------------------------
+void AgentExtension::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
+{
+    spatialChanged_ = true;
+    pSpatial_.reset( new Spatial( latitude, longitude, altitude, speed, direction ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,9 +133,8 @@ void AgentExtension::UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor )
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const
 {
-    Spatial spatial( holder_.GetPosition().X(), holder_.GetPosition().Y(), static_cast< float >( holder_.GetAltitude() ), static_cast< float >( holder_.GetSpeed() ), static_cast< float >( holder_.GetDirection() ) );
     ::hla::Serializer archive;
-    spatial.Serialize( archive );
+    pSpatial_->Serialize( archive );
     functor.Visit( ::hla::AttributeIdentifier( "Spatial" ), archive );
     spatialChanged_ = false;
 }

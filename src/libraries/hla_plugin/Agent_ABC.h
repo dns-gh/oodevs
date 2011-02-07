@@ -30,6 +30,8 @@ namespace plugins
 {
 namespace hla
 {
+    class EventListener_ABC;
+
 // =============================================================================
 /** @class  Agent_ABC
     @brief  Agent definition
@@ -46,12 +48,14 @@ public:
     virtual ~Agent_ABC() {}
     //@}
 
+    //! @name Registration
+    //@{
+    virtual void Register( EventListener_ABC& listener ) = 0;
+    virtual void Unregister( EventListener_ABC& listener ) = 0;
+    //@}
+
     //! @name Getters
     //@{
-    virtual geometry::Point2d GetPosition() const = 0;
-    virtual unsigned short GetAltitude() const = 0;
-    virtual unsigned short GetSpeed() const = 0;
-    virtual unsigned short GetDirection() const = 0;
     virtual const tools::Resolver< dispatcher::Equipment >& GetEquipments() const = 0;
     //@}
 };

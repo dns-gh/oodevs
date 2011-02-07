@@ -11,6 +11,7 @@
 #define __AgentExtension_h_
 
 #include "HlaExtension_ABC.h"
+#include "EventListener_ABC.h"
 #include "Formation.h"
 #include "dispatcher/Observer.h"
 #include "protocol/Protocol.h"
@@ -22,6 +23,7 @@ namespace plugins
 namespace hla
 {
     class Agent_ABC;
+    class Spatial;
 
 // =============================================================================
 /** @class  AgentExtension
@@ -30,6 +32,7 @@ namespace hla
 // Created: SBO 2008-02-18
 // =============================================================================
 class AgentExtension : public HlaExtension_ABC
+                     , private EventListener_ABC
                      , private dispatcher::Observer< sword::UnitAttributes >
                      , private dispatcher::Observer< sword::UnitEnvironmentType >
 {
@@ -53,6 +56,7 @@ private:
     //@{
     virtual void Notify( const sword::UnitAttributes& attributes );
     virtual void Notify( const sword::UnitEnvironmentType& attributes );
+    virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     //@}
 
     //! @name Helpers
@@ -75,6 +79,7 @@ private:
     const rpr::ForceIdentifier force_;
     Formation formation_;
     mutable bool spatialChanged_;
+    std::auto_ptr< Spatial > pSpatial_;
     mutable bool compositionChanged_;
     //@}
 };

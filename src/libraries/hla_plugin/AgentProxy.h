@@ -11,6 +11,7 @@
 #define hla_plugin_AgentProxy_h_
 
 #include "Agent_ABC.h"
+#include <vector>
 
 namespace dispatcher
 {
@@ -38,12 +39,14 @@ public:
     virtual ~AgentProxy();
     //@}
 
+    //! @name Registration
+    //@{
+    virtual void Register( EventListener_ABC& listener );
+    virtual void Unregister( EventListener_ABC& listener );
+    //@}
+
     //! @name Getters
     //@{
-    virtual geometry::Point2d GetPosition() const;
-    virtual unsigned short GetAltitude() const;
-    virtual unsigned short GetSpeed() const;
-    virtual unsigned short GetDirection() const;
     virtual const tools::Resolver< dispatcher::Equipment >& GetEquipments() const;
     //@}
 
@@ -55,9 +58,16 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::vector< EventListener_ABC* > T_Listeners;
+    //@}
+
+private:
     //! @name Member data
     //@{
     dispatcher::Agent_ABC& agent_;
+    T_Listeners listeners_;
     //@}
 };
 

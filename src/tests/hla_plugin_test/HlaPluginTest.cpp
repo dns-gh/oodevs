@@ -82,12 +82,14 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( hla_plugin_publishes_agent_instance, Fixture )
 {
+    MockAgent agent;
     FederateFacade facade( xis >> xml::start( "root" ), subject, factory, 0u );
     BOOST_REQUIRE( listener );
     mock::sequence s;
-    MockAgent agent;
+    MOCK_EXPECT( agent, Register ).once().in( s );
     MOCK_EXPECT( rtiAmbassador, ReserveObjectInstance ).once().in( s ).with( "id", mock::any ).calls( boost::bind( &hla::FederateAmbassador_ABC::ReservationSucceded, boost::ref( federateAmbassador ) ) );;
     MOCK_EXPECT( rtiAmbassador, RegisterObjectInstance ).once().in( s ).with( "BaseEntity.AggregateEntity", "id" ).returns( hla::ObjectIdentifier( 42u ) );
     listener->Created( agent, "id", "name", rpr::Friendly );
+    MOCK_EXPECT( agent, Unregister ).once().in( s );
     MOCK_EXPECT( rtiAmbassador, DeleteObjectInstance ).once().in( s ).with( hla::ObjectIdentifier( 42u ) );
 }
