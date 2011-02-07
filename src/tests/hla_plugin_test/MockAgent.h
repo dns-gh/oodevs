@@ -24,12 +24,10 @@ namespace hla
 // =============================================================================
 MOCK_BASE_CLASS( MockAgent, Agent_ABC )
 {
-    MOCK_METHOD( GetName, 0 )
     MOCK_METHOD( GetPosition, 0 )
     MOCK_METHOD( GetAltitude, 0 )
     MOCK_METHOD( GetSpeed, 0 )
     MOCK_METHOD( GetDirection, 0 )
-    MOCK_METHOD( GetForce, 0 )
     MOCK_METHOD( GetEquipments, 0 )
 };
 

@@ -40,12 +40,10 @@ public:
 
     //! @name Getters
     //@{
-    virtual std::string GetName() const;
     virtual geometry::Point2d GetPosition() const;
     virtual unsigned short GetAltitude() const;
     virtual unsigned short GetSpeed() const;
     virtual unsigned short GetDirection() const;
-    virtual const kernel::Karma& GetForce() const;
     virtual const tools::Resolver< dispatcher::Equipment >& GetEquipments() const;
     //@}
 

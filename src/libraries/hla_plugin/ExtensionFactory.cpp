@@ -12,8 +12,11 @@
 #include "AgentListener_ABC.h"
 #include "AgentProxy.h"
 #include "dispatcher/Model_ABC.h"
+#include "dispatcher/Automat_ABC.h"
+#include "dispatcher/Team_ABC.h"
 #include "dispatcher/Agent.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/Karma.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
@@ -37,6 +40,21 @@ ExtensionFactory::~ExtensionFactory()
     model_.UnregisterFactory( *this );
 }
 
+namespace
+{
+    rpr::ForceIdentifier GetForce( const dispatcher::Agent_ABC& agent )
+    {
+        const kernel::Karma& karma = agent.GetSuperior().GetTeam().GetKarma();
+        if( karma == kernel::Karma::friend_ )
+            return rpr::Friendly;
+        if( karma == kernel::Karma::enemy_ )
+            return rpr::Opposing;
+        if( karma == kernel::Karma::neutral_ )
+            return rpr::Neutral;
+        return rpr::Other;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ExtensionFactory::Create
 // Created: SBO 2008-02-18
@@ -45,7 +63,7 @@ void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
     agents_.push_back( T_Agent( new AgentProxy( entity ) ) );
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->Created( *agents_.back(), entity.GetType().GetName() + boost::lexical_cast< std::string >( entity.GetId() ) );
+        (*it)->Created( *agents_.back(), entity.GetType().GetName() + boost::lexical_cast< std::string >( entity.GetId() ), entity.GetName().ascii(), GetForce( entity ) );
 }
 
 // -----------------------------------------------------------------------------

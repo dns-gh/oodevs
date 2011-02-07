@@ -14,7 +14,6 @@
 #include "AggregateMarking.h"
 #include "SilentEntity.h"
 #include "SerializationTools.h"
-#include "clients_kernel/Karma.h"
 #include "dispatcher/Equipment.h"
 #include "protocol/Protocol.h"
 #include "rpr/EntityType.h"
@@ -30,11 +29,14 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes,
                                 dispatcher::Observable< sword::UnitEnvironmentType >& environment,
-                                Agent_ABC& holder, const rpr::EntityIdentifier& id )
+                                Agent_ABC& holder, const rpr::EntityIdentifier& id,
+                                const std::string& name, rpr::ForceIdentifier force )
     : Observer< sword::UnitAttributes >( attributes )
     , Observer< sword::UnitEnvironmentType >( environment )
     , holder_            ( holder )
     , id_                ( id )
+    , name_              ( name )
+    , force_             ( force )
     , spatialChanged_    ( true )
     , compositionChanged_( true )
 {
@@ -137,7 +139,7 @@ void AgentExtension::UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateAggregateMarking( ::hla::UpdateFunctor_ABC& functor ) const
 {
-    AggregateMarking marking( holder_.GetName() );
+    AggregateMarking marking( name_ );
     ::hla::Serializer archive;
     marking.Serialize( archive );
     functor.Visit( ::hla::AttributeIdentifier( "AggregateMarking" ), archive );
@@ -161,16 +163,8 @@ void AgentExtension::UpdateAggregateState( ::hla::UpdateFunctor_ABC& functor ) c
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
 {
-    unsigned char force = 0; // Other
-    const kernel::Karma& karma = holder_.GetForce();
-    if( karma == kernel::Karma::friend_ )
-        force = 1;
-    else if( karma == kernel::Karma::enemy_ )
-        force = 2;
-    else if( karma == kernel::Karma::neutral_ )
-        force = 3;
     ::hla::Serializer archive;
-    archive << force;
+    archive << static_cast< unsigned char >( force_ );
     functor.Visit( ::hla::AttributeIdentifier( "ForceIdentifier" ), archive );
 }
 

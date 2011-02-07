@@ -10,8 +10,6 @@
 #include "hla_plugin_pch.h"
 #include "AgentProxy.h"
 #include "dispatcher/Agent_ABC.h"
-#include "dispatcher/Automat_ABC.h"
-#include "dispatcher/Team_ABC.h"
 
 using namespace plugins::hla;
 
@@ -34,15 +32,6 @@ AgentProxy::AgentProxy( dispatcher::Agent_ABC& agent )
 AgentProxy::~AgentProxy()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentProxy::GetName
-// Created: SLI 2011-02-04
-// -----------------------------------------------------------------------------
-std::string AgentProxy::GetName() const
-{
-    return agent_.GetName().ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -79,15 +68,6 @@ unsigned short AgentProxy::GetSpeed() const
 unsigned short AgentProxy::GetDirection() const
 {
     return agent_.GetDirection();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentProxy::GetForce
-// Created: SLI 2011-02-04
-// -----------------------------------------------------------------------------
-const kernel::Karma& AgentProxy::GetForce() const
-{
-    return agent_.GetSuperior().GetTeam().GetKarma();
 }
 
 // -----------------------------------------------------------------------------

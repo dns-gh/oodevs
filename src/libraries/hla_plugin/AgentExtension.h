@@ -12,10 +12,10 @@
 
 #include "HlaExtension_ABC.h"
 #include "Formation.h"
-#include "clients_kernel/Updatable_ABC.h"
 #include "dispatcher/Observer.h"
 #include "protocol/Protocol.h"
 #include "rpr/EntityIdentifier.h"
+#include "rpr/ForceIdentifier.h"
 
 namespace plugins
 {
@@ -38,7 +38,8 @@ public:
     //@{
              AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes,
                              dispatcher::Observable< sword::UnitEnvironmentType >& environment,
-                             Agent_ABC& holder, const rpr::EntityIdentifier& id );
+                             Agent_ABC& holder, const rpr::EntityIdentifier& id,
+                             const std::string& name, rpr::ForceIdentifier force );
     virtual ~AgentExtension();
     //@}
 
@@ -70,6 +71,8 @@ private:
     //@{
     Agent_ABC& holder_;
     rpr::EntityIdentifier id_;
+    const std::string name_;
+    const rpr::ForceIdentifier force_;
     Formation formation_;
     mutable bool spatialChanged_;
     mutable bool compositionChanged_;

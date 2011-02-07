@@ -88,6 +88,6 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_publishes_agent_instance, Fixture )
     MockAgent agent;
     MOCK_EXPECT( rtiAmbassador, ReserveObjectInstance ).once().in( s ).with( "id", mock::any ).calls( boost::bind( &hla::FederateAmbassador_ABC::ReservationSucceded, boost::ref( federateAmbassador ) ) );;
     MOCK_EXPECT( rtiAmbassador, RegisterObjectInstance ).once().in( s ).with( "BaseEntity.AggregateEntity", "id" ).returns( hla::ObjectIdentifier( 42u ) );
-    listener->Created( agent, "id" );
+    listener->Created( agent, "id", "name", rpr::Friendly );
     MOCK_EXPECT( rtiAmbassador, DeleteObjectInstance ).once().in( s ).with( hla::ObjectIdentifier( 42u ) );
 }

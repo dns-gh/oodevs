@@ -10,6 +10,7 @@
 #ifndef plugins_hla_AgentListener_ABC_h
 #define plugins_hla_AgentListener_ABC_h
 
+#include "rpr/ForceIdentifier.h"
 #include <string>
 #include <boost/noncopyable.hpp>
 
@@ -36,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Created( Agent_ABC& agent, const std::string& identifier ) = 0;
+    virtual void Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force ) = 0;
     //@}
 };
 

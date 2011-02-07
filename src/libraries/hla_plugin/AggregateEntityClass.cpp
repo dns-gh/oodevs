@@ -71,10 +71,10 @@ AggregateEntityClass::~AggregateEntityClass()
 // Name: AggregateEntityClass::Created
 // Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identifier )
+void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force )
 {
     rpr::EntityIdentifier id( 1, 1, id_ ); // site, application, id
-    boost::shared_ptr< AgentExtension > extension( new AgentExtension( agent, agent, agent, id ) );
+    boost::shared_ptr< AgentExtension > extension( new AgentExtension( agent, agent, agent, id, name, force ) );
     hlaClass_->Register( *extension, identifier );
     extensions_.push_back( extension );
     ++id_;
