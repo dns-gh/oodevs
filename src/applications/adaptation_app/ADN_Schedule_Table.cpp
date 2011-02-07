@@ -52,13 +52,13 @@ ADN_Schedule_Table::~ADN_Schedule_Table()
 QStringList ADN_Schedule_Table::CreateWeek() const
 {
     QStringList list;
-    list.append( "monday" );
-    list.append( "tuesday" );
-    list.append( "wednesday" );
-    list.append( "thursday" );
-    list.append( "friday" );
-    list.append( "saturday" );
-    list.append( "sunday" );
+    list.append( qApp->translate( "ADN_Schedule_Table", "monday" ) );
+    list.append( qApp->translate( "ADN_Schedule_Table", "tuesday" ) );
+    list.append( qApp->translate( "ADN_Schedule_Table", "wednesday" ) );
+    list.append( qApp->translate( "ADN_Schedule_Table", "thursday" ) );
+    list.append( qApp->translate( "ADN_Schedule_Table", "friday" ) );
+    list.append( qApp->translate( "ADN_Schedule_Table", "saturday" ) );
+    list.append( qApp->translate( "ADN_Schedule_Table", "sunday" ) );
     return list;
 }
 
@@ -116,11 +116,48 @@ void ADN_Schedule_Table::OnContextMenu( int row, int col, const QPoint& point )
         AddRow( rows );
         QTime toTime = static_cast< QTimeEdit* >( cellWidget( rows, 2 ) )->time();
         QTime fromTime = static_cast< QTimeEdit* >( cellWidget( rows, 1 ) )->time();
-        AddEvent( rows, item( rows, 0 )->text().ascii(), fromTime.toString( "hh:mm" ).ascii(),
+        AddEvent( rows, 0u, fromTime.toString( "hh:mm" ).ascii(),
                   toTime.toString( "hh:mm" ).ascii(), item( rows, 3 )->text().ascii() );
     }
     else if( item( row, col ) )
             Remove( row );
+}
+
+namespace
+{
+    std::string ConvertDay( unsigned int day )
+    {
+        switch( day )
+        {
+            case 0u : return "monday";
+            case 1u : return "tuesday";
+            case 2u : return "wednesday";
+            case 3u : return "thursday";
+            case 4u : return "friday";
+            case 5u : return "saturday";
+            case 6u : return "sunday";
+            default : return "monday";
+        }
+    }
+
+    unsigned int ConvertDay( const std::string& day )
+    {
+        if( day == "monday" )
+            return 0u;
+        if( day == "tuesday" )
+            return 1u;
+        if( day == "wednesday" )
+            return 2u;
+        if( day == "thursday" )
+            return 3u;
+        if( day == "friday" )
+            return 4u;
+        if( day == "saturday" )
+            return 5u;
+        if( day == "sunday" )
+            return 6u;
+        return 0u;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -139,7 +176,7 @@ void ADN_Schedule_Table::OnPeopleChanged( void* pData )
         if( pInfos == 0 )
             return;
         for( ADN_People_Data::PeopleInfos::IT_Events it = pInfos->schedule_.begin(); it != pInfos->schedule_.end(); ++it )
-            AddRow( it->first, it->second->day_.GetData(),  it->second->from_.GetData(), it->second->to_.GetData(),
+            AddRow( it->first, ConvertDay( it->second->day_.GetData() ), it->second->from_.GetData(), it->second->to_.GetData(),
                     it->second->motivation_.GetData() );
     }
 }
@@ -154,7 +191,8 @@ void ADN_Schedule_Table::OnValueChanged( int row, int /*col*/ )
     {
         QTime toTime = static_cast< QTimeEdit* >( cellWidget( row, 2 ) )->time();
         QTime fromTime = static_cast< QTimeEdit* >( cellWidget( row, 1 ) )->time();
-        AddEvent( row, item( row, 0 )->text().ascii(), fromTime.toString( "hh:mm" ).ascii(),
+        QComboTableItem* pDay = static_cast< QComboTableItem* >( item( row, 0 ) );
+        AddEvent( row, pDay->currentItem(), fromTime.toString( "hh:mm" ).ascii(),
                   toTime.toString( "hh:mm" ).ascii(), item( row, 3 )->text().ascii() );
     }
 }
@@ -163,7 +201,7 @@ void ADN_Schedule_Table::OnValueChanged( int row, int /*col*/ )
 // Name: ADN_Schedule_Table::AddEvent
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-void ADN_Schedule_Table::AddEvent( int index, const std::string& day, const std::string& from,
+void ADN_Schedule_Table::AddEvent( int index, unsigned int day, const std::string& from,
                                    const std::string& to, const std::string& motivation )
 {
     ADN_People_Data::PeopleInfos* pInfos = static_cast< ADN_People_Data::PeopleInfos* >( pCurData_ );
@@ -171,7 +209,7 @@ void ADN_Schedule_Table::AddEvent( int index, const std::string& day, const std:
         return;
     if( pInfos->schedule_.find( index ) == pInfos->schedule_.end() )
          pInfos->schedule_[ index ].reset( new ADN_People_Data::EventInfos() );
-    pInfos->schedule_[ index ]->day_ = day;
+    pInfos->schedule_[ index ]->day_ = ConvertDay( day );
     pInfos->schedule_[ index ]->motivation_ = motivation;
     pInfos->schedule_[ index ]->from_ = from;
     pInfos->schedule_[ index ]->to_ = to;
@@ -181,13 +219,13 @@ void ADN_Schedule_Table::AddEvent( int index, const std::string& day, const std:
 // Name: ADN_Schedule_Table::AddRow
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-void ADN_Schedule_Table::AddRow( int rows, const std::string& day, const std::string& from, const std::string& to,
+void ADN_Schedule_Table::AddRow( int rows, unsigned int day, const std::string& from, const std::string& to,
                                  const std::string& accommodation )
 {
     insertRows( rows );
 
     QComboTableItem* pCombo = new QComboTableItem( this, CreateWeek() );
-    pCombo->setCurrentItem( day.c_str() );
+    pCombo->setCurrentItem( day );
     setItem( rows, 0, pCombo );
 
     QTimeEdit* pFrom = CreateItem( this, from );

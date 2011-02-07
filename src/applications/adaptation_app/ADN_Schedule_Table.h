@@ -41,9 +41,9 @@ private:
     //@{
     QStringList CreateWeek() const;
     QStringList CreateAccommodations() const;
-    void AddEvent( int index, const std::string& day, const std::string& from,
+    void AddEvent( int index, unsigned int day, const std::string& from,
                    const std::string& to, const std::string& motivation );
-    void AddRow( int rows, const std::string& day = "monday", const std::string& from = "00:00", const std::string& to = "00:00",
+    void AddRow( int rows, unsigned int day = 0u, const std::string& from = "00:00", const std::string& to = "00:00",
                  const std::string& accommodation = "" );
     void Remove( int rows );
     //@}

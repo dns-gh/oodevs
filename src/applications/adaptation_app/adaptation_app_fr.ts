@@ -3584,6 +3584,34 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Remove</source>
         <translation>Supprimer</translation>
     </message>
+    <message>
+        <source>monday</source>
+        <translation>lundi</translation>
+    </message>
+    <message>
+        <source>tuesday</source>
+        <translation>mardi</translation>
+    </message>
+    <message>
+        <source>wednesday</source>
+        <translation>mercredi</translation>
+    </message>
+    <message>
+        <source>thursday</source>
+        <translation>jeudi</translation>
+    </message>
+    <message>
+        <source>friday</source>
+        <translation>vendredi</translation>
+    </message>
+    <message>
+        <source>saturday</source>
+        <translation>samedi</translation>
+    </message>
+    <message>
+        <source>sunday</source>
+        <translation>dimanche</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensor_Wizard</name>
