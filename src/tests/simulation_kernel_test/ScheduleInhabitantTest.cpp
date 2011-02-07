@@ -98,7 +98,7 @@ BOOST_FIXTURE_TEST_CASE( schedule_notifies_living_area, Fixture )
     }
     {
         MOCK_EXPECT( livingArea, FinishMoving ).once();
-        schedule.Update( Convert( 2011, 1, 21, 22, 40, 0 ), 1u );
+        schedule.Update( Convert( 2011, 1, 17, 22, 40, 0 ), 1u );
     }
 }
 
