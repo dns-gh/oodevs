@@ -80,7 +80,7 @@ public:
     //! @name
     //@{
     virtual bool HasMobilityInfluence      () const;
-    virtual double ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed ) const;
+    virtual double ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, const MIL_Agent_ABC& agent ) const;
     //@}
 
 private:

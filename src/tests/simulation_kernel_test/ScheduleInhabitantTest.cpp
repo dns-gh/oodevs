@@ -41,7 +41,7 @@ namespace
     {
     public:
         Fixture()
-            : xis( "<root transfer-time='0h'>"
+            : xis( "<root transfer-time='40m'>"
                    "    <event day='monday' from='22:00' motivation='leisure' to='23:00'/>"
                    "    <event day='friday' from='09:00' motivation='office' to='10:00'/>"
                    "</root>" )
@@ -88,9 +88,31 @@ BOOST_FIXTURE_TEST_CASE( schedule_notifies_living_area, Fixture )
         MOCK_EXPECT( livingArea, StartMotivation ).once().with( "leisure" );
         schedule.Update( Convert( 2011, 1, 17, 22, 0, 0 ), 1u );
     }
+    {
+        MOCK_EXPECT( livingArea, MovePeople ).once().with( 3 );
+        schedule.Update( Convert( 2011, 1, 17, 22, 15, 0 ), 1u );
+    }
+    {
+        MOCK_EXPECT( livingArea, MovePeople ).once().with( 3 );
+        schedule.Update( Convert( 2011, 1, 17, 22, 30, 0 ), 1u );
+    }
+    {
+        MOCK_EXPECT( livingArea, FinishMoving );
+        schedule.Update( Convert( 2011, 1, 21, 22, 40, 0 ), 1u );
+    }
+}
+
+
+BOOST_FIXTURE_TEST_CASE( schedule_time_magic_action_notifies_living_area, Fixture )
+{
+    {
+        MOCK_EXPECT( livingArea, StartMotivation ).once().with( "leisure" );
+        schedule.Update( Convert( 2011, 1, 17, 22, 0, 0 ), 1u );
+    }
     MOCK_EXPECT( livingArea, StartMotivation ).once().with( "office" );
     schedule.Update( Convert( 2011, 1, 21, 9, 0, 0 ), 1u );
 }
+
 
 BOOST_FIXTURE_TEST_CASE( every_week_schedule_notifies_living_area, Fixture )
 {
@@ -99,8 +121,8 @@ BOOST_FIXTURE_TEST_CASE( every_week_schedule_notifies_living_area, Fixture )
         schedule.Update( Convert( 2011, 1, 3, 22, 0, 0 ), 1u );
     }
     {
-        MOCK_EXPECT( livingArea, StartMotivation ).once().with( "leisure" );
-        schedule.Update( Convert( 2011, 1, 10, 22, 0, 0 ), 1u );
+        MOCK_EXPECT( livingArea, FinishMoving );
+        schedule.Update( Convert( 2011, 1, 3, 22, 40, 0 ), 1u );
     }
     MOCK_EXPECT( livingArea, StartMotivation ).once().with( "leisure" );
     schedule.Update( Convert( 2011, 1, 17, 22, 0, 0 ), 1u );

@@ -51,6 +51,10 @@ public:
     //! @name Operations
     //@{
     virtual void StartMotivation( const std::string& motivation );
+    virtual void MovePeople( int occurence );
+    virtual void FinishMoving();
+    virtual geometry::Polygon2f ComputeMovingArea() const;
+    virtual geometry::Polygon2f ComputeLivingArea() const;
 
     void DistributeHumans( unsigned long population );
     void Register( MIL_StructuralStateNotifier_ABC& structural );
@@ -115,6 +119,8 @@ private:
     unsigned long population_;
     T_Accommodations accommodations_;
     T_Blocks blocks_;
+    T_Identifiers peopleMovingBlock_;
+    T_Identifiers identifiers_;
     mutable bool hasChanged_;
     float area_;
     //@}

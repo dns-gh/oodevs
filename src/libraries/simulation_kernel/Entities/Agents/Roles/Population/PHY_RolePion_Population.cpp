@@ -12,9 +12,14 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Population.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Objects/CrowdCapacity.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_PopulationCollision.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
+#include "simulation_terrain/TER_ObjectManager.h"
+#include "simulation_terrain/TER_World.h"
 
 #include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 
@@ -107,14 +112,22 @@ void PHY_RolePion_Population::Execute( firing::WeaponReloadingComputer_ABC& algo
 // -----------------------------------------------------------------------------
 double PHY_RolePion_Population::GetCollidingPopulationDensity() const
 {
-
-
     T_KnowledgePopulationCollisionVector populationsColliding;
     pion_.GetKnowledge().GetPopulationsColliding( populationsColliding );
+    
     double rPopulationDensity = 0.;
     for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
         rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );
 
+    std::vector< const TER_Object_ABC* > objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), 500, objects );
+    for( std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+    {
+        const MIL_Object_ABC* object = static_cast< const MIL_Object_ABC* >( *it );
+        const CrowdCapacity* capacity = object->Retrieve< CrowdCapacity >();
+        if( capacity )
+            rPopulationDensity = std::max( rPopulationDensity, capacity->GetDensity() );
+    }
     return rPopulationDensity;
 }
 

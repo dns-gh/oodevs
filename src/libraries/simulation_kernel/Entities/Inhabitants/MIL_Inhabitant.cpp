@@ -13,6 +13,11 @@
 #include "MIL_AffinitiesMap.h"
 #include "MIL_AgentServer.h"
 #include "MIL_InhabitantSatisfactions.h"
+#include "Entities/Objects/CrowdCapacity.h"
+#include "Entities/Populations/MIL_PopulationType.h"
+#include "Entities/Populations/MIL_PopulationAttitude.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "MIL_LivingArea.h"
 #include "MIL_Schedule.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -28,6 +33,8 @@
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Inhabitant )
+
+#define VECTOR_TO_POINT( point ) geometry::Point2f( static_cast< float >( ( point ).rX_ ), static_cast< float >( ( point ).rY_ ) )
 
 namespace
 {
@@ -60,6 +67,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , type_                  ( type )
     , nID_                   ( xis.attribute< unsigned int >( "id" ) )
     , pArmy_                 ( &army )
+    , pPopulationMovingObject_    ( 0 )
     , nNbrHealthyHumans_     ( 0 )
     , nNbrDeadHumans_        ( 0 )
     , nNbrWoundedHumans_     ( 0 )
@@ -99,6 +107,7 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     , type_                  ( type )
     , nID_                   ( 0 )
     , pArmy_                 ( 0 )
+    , pPopulationMovingObject_    ( 0 )
     , pLivingArea_           ( 0 )
     , pSchedule_             ( 0 )
     , nNbrHealthyHumans_     ( 0 )
@@ -262,6 +271,10 @@ void MIL_Inhabitant::SendFullState() const
 void MIL_Inhabitant::UpdateState()
 {
     pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
+    if ( pSchedule_->IsMoving( MIL_AgentServer::GetWorkspace().GetRealTime() ) && !pPopulationMovingObject_ )
+        CreateInhabitantMovingObject();
+    if( !pSchedule_->IsMoving( MIL_AgentServer::GetWorkspace().GetRealTime() ) && pPopulationMovingObject_ )
+        DestroyInhabitantMovingObject();
     pSatisfactions_->IncreaseSafety( type_.GetSafetyGainPerHour() );
     pSatisfactions_->SetLodgingSatisfaction( pLivingArea_->ComputeOccupationFactor() );
     const MIL_InhabitantType::T_ConsumptionsMap& consumptions = type_.GetConsumptions();
@@ -415,4 +428,31 @@ void MIL_Inhabitant::NotifyFired()
 void MIL_Inhabitant::NotifyAlerted( const TER_Localisation& localisation )
 {
     pLivingArea_->Alert( localisation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::ComputeSpeed
+// Created: SLG 2011-01-27
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::CreateInhabitantMovingObject()
+{
+    geometry::Polygon2f::T_Vertices hull = pLivingArea_->ComputeMovingArea().Vertices();
+    T_PointVector finalPoints;
+    BOOST_FOREACH( const geometry::Point2f& point, hull )
+        finalPoints.push_back( MT_Vector2D( point.X(), point.Y() ) );
+    TER_Localisation( TER_Localisation::ePolygon, finalPoints );
+
+    pPopulationMovingObject_ = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "PopulationMoving", *pArmy_, TER_Localisation( TER_Localisation( TER_Localisation::ePolygon, finalPoints ) ) );
+    CrowdCapacity* capacity = new CrowdCapacity( type_.GetAssociatedCrowdType(), ( nNbrDeadHumans_ + nNbrHealthyHumans_ + nNbrWoundedHumans_) / pLivingArea_->ComputeLivingArea().ComputeArea() );
+    capacity->Register( *pPopulationMovingObject_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::DestroyInhabitantMovingObject
+// Created: SLG 2011-02-02
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::DestroyInhabitantMovingObject()
+{
+    pPopulationMovingObject_->MarkForDestruction();
+    pPopulationMovingObject_ = 0;
 }

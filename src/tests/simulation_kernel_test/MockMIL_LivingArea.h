@@ -21,6 +21,10 @@
 MOCK_BASE_CLASS( MockMIL_LivingArea, MIL_LivingArea_ABC )
 {
     MOCK_METHOD( StartMotivation, 1 );
+    MOCK_METHOD( MovePeople, 1 );
+    MOCK_METHOD( FinishMoving, 0 );
+    MOCK_METHOD( ComputeMovingArea, 0 );
+    MOCK_METHOD( ComputeLivingArea, 0 );
 };
 
 #endif // __MockMIL_LivingArea_h

@@ -13,6 +13,7 @@
 #include "PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -219,7 +220,7 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
     if( !object().HasMobilityInfluence() )
         return std::numeric_limits< double >::max();
 
-    SpeedComputerStrategy strategy(false,true,object);
+    SpeedComputerStrategy strategy( false, true, object );
     std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
     pion_.Execute( *computer );
     double rObjectSpeed = computer->GetSpeed();
@@ -229,7 +230,7 @@ double PHY_RoleAction_Moving::GetSpeedWithReinforcement( const TerrainData& envi
 
     rObjectSpeed = std::min( rObjectSpeed, rCurrentMaxSpeed );
     rObjectSpeed = ApplySpeedModificators( rObjectSpeed );
-    return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed );
+    return object().ApplySpeedPolicy( rObjectSpeed, rCurrentEnvSpeed, rCurrentMaxSpeed, pion_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -27,6 +27,8 @@ public:
     //@{
     static void Scale( geometry::Polygon2f& result, const geometry::Polygon2f& polygon, float distance ); // $$$$ MCO : where are the unit tests ?!
     static void ComputeHull( geometry::Polygon2f& result, const geometry::Polygon2f& polygon );
+    static void ComputeHull( geometry::Polygon2f& result, const geometry::Polygon2f::T_Vertices& vertices );
+    static void ComputeHull( geometry::Polygon2f::T_Vertices& result, const geometry::Polygon2f::T_Vertices& vertices );
     static float IntersectionArea( const geometry::Polygon2f& polygon1, const geometry::Polygon2f& polygon2 );
     static double IntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 );
     //@}

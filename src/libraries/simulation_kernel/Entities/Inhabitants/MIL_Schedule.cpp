@@ -10,11 +10,10 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Schedule.h"
 #include "MIL_LivingArea_ABC.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "tools/xmlcodecs.h"
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
-
-namespace bpt = boost::posix_time;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Schedule constructor
@@ -22,6 +21,9 @@ namespace bpt = boost::posix_time;
 // -----------------------------------------------------------------------------
 MIL_Schedule::MIL_Schedule( MIL_LivingArea_ABC& livingArea )
     : livingArea_( livingArea )
+    , startingMovingTime_( bpt::from_time_t( 0 ) )
+    , occurence_( 0 )
+    , isMoving_( false )
 {
     // NOTHING
 }
@@ -105,5 +107,39 @@ void MIL_Schedule::Check( const Event& event, unsigned int date, unsigned int du
 {
     bpt::ptime pdate( bpt::from_time_t( date ) );
     if( pdate.date().day_of_week() == event.day_ && pdate.time_of_day() >= event.from_ && pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, duration ) ) )
+    {
+        occurence_ = 0;
         livingArea_.StartMotivation( event.motivation_ );
+        isMoving_ = true;
+        occurence_++;
+    }
+    if( pdate.date().day_of_week() == event.day_ && pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, 900 * occurence_ ) && pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, 900 * occurence_ ) + bpt::time_duration( 0, 0, duration ) ) )
+    {
+        livingArea_.MovePeople( 1 + static_cast< unsigned int >( transferTime_ / 900 ) );
+        occurence_++;
+    }
+    if( pdate.date().day_of_week() == event.day_ && pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, transferTime_ ) && pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, transferTime_ ) + bpt::time_duration( 0, 0, duration ) ) ) 
+    {
+        livingArea_.FinishMoving();
+        occurence_ = 0;
+        isMoving_ = false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Schedule::IsMoving
+// Created: SLG 2011-01-26
+// -----------------------------------------------------------------------------
+bool MIL_Schedule::IsMoving( unsigned int date ) const
+{
+    return isMoving_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Schedule::GetTransfertTime
+// Created: SLG 2011-02-01
+// -----------------------------------------------------------------------------
+double MIL_Schedule::GetTransfertTime() const
+{
+    return transferTime_;
 }

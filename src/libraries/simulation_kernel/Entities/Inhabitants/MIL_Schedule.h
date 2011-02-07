@@ -16,6 +16,7 @@
 
 class MIL_LivingArea_ABC;
 
+namespace bpt = boost::posix_time;
 // =============================================================================
 /** @class  MIL_Schedule
     @brief  MIL schedule
@@ -35,6 +36,8 @@ public:
     //@{
     virtual void Configure( xml::xistream& xis );
     virtual void Update( unsigned int date, unsigned int duration );
+    virtual bool IsMoving( unsigned int date ) const;
+    virtual double GetTransfertTime() const;
     //@}
 
 private:
@@ -64,6 +67,9 @@ private:
     MIL_LivingArea_ABC& livingArea_;
     double transferTime_;
     T_Events events_;
+    bpt::ptime startingMovingTime_;
+    int occurence_;
+    bool isMoving_;
     //@}
 };
 

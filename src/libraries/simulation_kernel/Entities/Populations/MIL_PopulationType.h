@@ -46,13 +46,13 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&                         GetName                () const;
-          unsigned int                                 GetID                  () const;
+    const std::string&                       GetName                () const;
+          unsigned int                       GetID                  () const;
           double                             GetConcentrationDensity() const;
           double                             GetDefaultFlowDensity  () const;
           double                             GetMaxSpeed            () const;
 
-    const DEC_Model_ABC&                       GetModel               () const;
+    const DEC_Model_ABC&                     GetModel               () const;
     //@}
 
     //! @name Operations
@@ -62,14 +62,14 @@ public:
 
     //! @name Effects
     //@{
-          double           GetPionMaxSpeed           ( const MIL_PopulationAttitude& populationAttitude, double rPopulationDensity, const PHY_Volume& pionVolume ) const;
-          double           GetPionReloadingTimeFactor( double rPopulationDensity ) const;
+          double             GetPionMaxSpeed           ( const MIL_PopulationAttitude& populationAttitude, double rPopulationDensity, const PHY_Volume& pionVolume ) const;
+          double             GetPionReloadingTimeFactor( double rPopulationDensity ) const;
 
     const PHY_AttritionData& GetAttritionData          ( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
-          double           GetPH                     ( const MIL_PopulationAttitude& attitude, double rDensity ) const;
+          double             GetPH                     ( const MIL_PopulationAttitude& attitude, double rDensity ) const;
 
-          double           GetDamageSurface          ( const PHY_RoePopulation& roeFirer ) const;
-          double           GetDamagePH               ( const PHY_RoePopulation& roeFirer ) const;
+          double             GetDamageSurface          ( const PHY_RoePopulation& roeFirer ) const;
+          double             GetDamagePH               ( const PHY_RoePopulation& roeFirer ) const;
     //@}
 
 protected:
@@ -123,16 +123,16 @@ private:
     //@}
 
 private:
-    const std::string                          strName_;
-          unsigned int                                 nID_;
-          double                             rConcentrationDensity_;
-          double                             rDefaultFlowDensity_;
-          double                             rMaxSpeed_;
-          T_AttitudeSlowDownData               slowDownData_;
-          MIL_PopulationPionAttritionData      attritionData_;
-          T_DamageData                         damageData_;
+    const std::string                       strName_;
+          unsigned int                      nID_;
+          double                            rConcentrationDensity_;
+          double                            rDefaultFlowDensity_;
+          double                            rMaxSpeed_;
+          T_AttitudeSlowDownData            slowDownData_;
+          MIL_PopulationPionAttritionData   attritionData_;
+          T_DamageData                      damageData_;
 
-    const DEC_Model_ABC*                       pModel_;
+    const DEC_Model_ABC*                    pModel_;
 
 private:
     static T_PopulationMap populations_;

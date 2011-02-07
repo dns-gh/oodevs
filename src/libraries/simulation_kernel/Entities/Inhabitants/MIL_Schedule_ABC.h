@@ -36,6 +36,8 @@ public:
     //@{
     virtual void Configure( xml::xistream& xis ) = 0;
     virtual void Update( unsigned int date, unsigned int duration ) = 0;
+    virtual bool IsMoving( unsigned int date ) const = 0;
+    virtual double GetTransfertTime() const = 0;
     //@}
 };
 

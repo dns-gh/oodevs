@@ -15,6 +15,7 @@
 #include "BypassableCapacity.h"
 #include "ActivableCapacity.h"
 #include "AttritionCapacity.h"
+#include "CrowdCapacity.h"
 #include "MobilityCapacity.h"
 #include "ExtinguishableCapacity.h"
 #include "WorkableCapacity.h"
@@ -331,7 +332,7 @@ bool MIL_ObjectManipulator::IsBuilt() const
 // -----------------------------------------------------------------------------
 bool MIL_ObjectManipulator::HasMobilityInfluence() const
 {
-    return !object_.IsMarkedForDestruction() && object_.Retrieve< MobilityCapacity >() != 0;
+    return !object_.IsMarkedForDestruction() && ( object_.Retrieve< MobilityCapacity >() != 0 || object_.Retrieve< CrowdCapacity >() != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -349,13 +350,17 @@ bool MIL_ObjectManipulator::CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const
 // Name: MIL_ObjectManipulator::ApplySpeedPolicy
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed ) const
+double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, const MIL_Agent_ABC& agent ) const
 {
+    double speed = std::numeric_limits< double >::max();
     const MobilityCapacity* capacity = object_.Retrieve< MobilityCapacity >();
     const StructuralCapacity* structuralcapacity = object_.Retrieve< StructuralCapacity >();
     if ( capacity )
-        return capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? 0.01 * structuralcapacity->GetStructuralState() : 1. );
-    return std::numeric_limits< double >::max();
+        speed =  std::min( speed, capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? 0.01 * structuralcapacity->GetStructuralState() : 1. ) );
+    const CrowdCapacity* crowdcapacity = object_.Retrieve< CrowdCapacity >();
+    if ( crowdcapacity )
+        speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( agent ) );
+    return speed;
 }
 
 

@@ -19,7 +19,7 @@
 UrbanType* UrbanType::urbanType_ = 0;
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Volume::Initialize
+// Name: UrbanType::Initialize
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
 void UrbanType::Initialize( xml::xistream& xis )
@@ -29,7 +29,7 @@ void UrbanType::Initialize( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Volume::Terminate
+// Name: UrbanType::Terminate
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
 void UrbanType::Terminate()

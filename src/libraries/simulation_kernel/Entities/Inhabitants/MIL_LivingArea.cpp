@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_LivingArea.h"
 #include "MIL_AgentServer.h"
+#include "Tools/MIL_Geometry.h"
 #include "PHY_ResourceNetworkType.h"
 #include "UrbanType.h"
 #include "Entities/MIL_EntityManager.h"
@@ -21,6 +22,7 @@
 #include "protocol/ClientSenders.h"
 #include <urban/StaticModel.h>
 #include <urban/MotivationType.h>
+#include <urban/TerrainObject_ABC.h>
 #include <urban/MotivationsVisitor_ABC.h>
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -309,6 +311,8 @@ float MIL_LivingArea::HealthCount() const
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::StartMotivation( const std::string& motivation )
 {
+    identifiers_.erase( identifiers_.begin(), identifiers_.end() ) ;
+    peopleMovingBlock_.erase( peopleMovingBlock_.begin(), peopleMovingBlock_.end() ) ;
     T_Blocks blocks = GetBlockUsage( motivation );
     if( !blocks.empty() )
     {
@@ -317,24 +321,71 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
             occupation += GetOccupation( block, motivation );
         if( occupation != 0u )
         {
-            T_Identifiers identifiers;
             unsigned long tmp = population_;
             BOOST_FOREACH( const T_Block& block, blocks )
             {
                 unsigned int part = static_cast< unsigned int >( population_ * GetOccupation( block, motivation ) / occupation );
-                identifiers[ block.pUrbanObject_->GetID() ] = part;
+                identifiers_[ block.pUrbanObject_->GetID() ] = part;
                 tmp -= part;
             }
             if( tmp > 0 )
-                identifiers.begin()->second += tmp;
-            BOOST_FOREACH( T_Block& block, blocks_ )
-            {
-                CIT_Identifiers it = identifiers.find( block.pUrbanObject_->GetID() );
-                block.person_ = ( it == identifiers.end() ) ? 0u : it->second;
-                block.pUrbanObject_->UpdateInhabitants( *this, block.person_ );
-            }
-            hasChanged_ = true;
+                identifiers_.begin()->second += tmp;
         }
+        BOOST_FOREACH( T_Block& block, blocks_ )
+            peopleMovingBlock_[ block.pUrbanObject_->GetID() ] = block.person_;
+        hasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::MovePeople
+// Created: SLG 2011-02-03
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::MovePeople( int occurence )
+{
+    if( !identifiers_.empty() )
+    {
+        int temp = 0;
+        BOOST_FOREACH( T_Block& block, blocks_ )
+        {
+            CIT_Identifiers it = identifiers_.find( block.pUrbanObject_->GetID() );
+            if( it == identifiers_.end() )
+                block.person_ -= ( peopleMovingBlock_.find( block.pUrbanObject_->GetID() )->second ) / occurence;
+            else
+            {
+                int peopleToMove = ( it->second - peopleMovingBlock_.find( block.pUrbanObject_->GetID() )->second );
+                peopleToMove /= occurence;
+                block.person_ += peopleToMove;
+            }
+            temp += block.person_;
+        }
+        if( population_ > temp )
+            blocks_.begin()->person_ += population_ - temp;
+
+        BOOST_FOREACH( T_Block& block, blocks_ )
+            block.pUrbanObject_->UpdateInhabitants( *this, block.person_ );
+
+        hasChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::MovePeople
+// Created: SLG 2011-02-03
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::FinishMoving()
+{
+    if( !identifiers_.empty() )
+    {
+        BOOST_FOREACH( T_Block& block, blocks_ )
+        {
+            CIT_Identifiers it = identifiers_.find( block.pUrbanObject_->GetID() );
+            block.person_ = ( it == identifiers_.end() ) ? 0u : it->second;
+            block.pUrbanObject_->UpdateInhabitants( *this, block.person_ );
+        }
+        identifiers_.erase( identifiers_.begin(), identifiers_.end() ) ;
+        peopleMovingBlock_.erase( peopleMovingBlock_.begin(), peopleMovingBlock_.end() ) ;
+        hasChanged_ = true;
     }
 }
 
@@ -421,4 +472,43 @@ void MIL_LivingArea::SetAlerted( bool alerted )
     BOOST_FOREACH( T_Block& block, blocks_ )
         block.alerted_ = alerted;
     hasChanged_ = true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::ComputeLivingArea
+// Created: SLG 2011-01-26
+// -----------------------------------------------------------------------------
+geometry::Polygon2f MIL_LivingArea::ComputeMovingArea() const
+{
+    std::vector< geometry::Point2f > vertices;
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+    {
+        CIT_Identifiers it = identifiers_.find( block.pUrbanObject_->GetID() );
+        if( it != identifiers_.end() || block.person_ != 0 )
+        {
+            const geometry::Polygon2f::T_Vertices& objectVertices = block.pUrbanObject_->GetObject().GetFootprint()->Vertices();
+            vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
+        }
+    }
+    geometry::Polygon2f hull;
+    MIL_Geometry::ComputeHull( hull, vertices );
+    return hull;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::ComputeLivingArea
+// Created: SLG 2011-01-26
+// -----------------------------------------------------------------------------
+geometry::Polygon2f MIL_LivingArea::ComputeLivingArea() const
+{
+    std::vector< geometry::Point2f > vertices;
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+    {
+        const geometry::Polygon2f::T_Vertices& objectVertices = block.pUrbanObject_->GetObject().GetFootprint()->Vertices();
+        vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
+    }
+    geometry::Polygon2f hull;
+    MIL_Geometry::ComputeHull( hull, vertices );
+    return hull;
 }

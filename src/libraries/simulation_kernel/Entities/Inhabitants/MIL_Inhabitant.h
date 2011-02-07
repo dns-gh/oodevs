@@ -28,10 +28,12 @@ namespace xml
 
 class MIL_AffinitiesMap;
 class MIL_Army_ABC;
+class MIL_Object_ABC;
 class MIL_InhabitantType;
 class MIL_StructuralStateNotifier_ABC;
 class MIL_LivingArea;
 class MIL_Schedule_ABC;
+class MIL_Agent_ABC;
 class MIL_InhabitantSatisfactions;
 class TER_Localisation;
 
@@ -100,6 +102,12 @@ private:
     void ReadExtension( xml::xistream& xis );
     //@}
 
+    //! @name Helpers
+    //@{
+    void DestroyInhabitantMovingObject();
+    void CreateInhabitantMovingObject(); 
+    //@}
+
 private:
     //! @name Types
     //@{
@@ -115,6 +123,7 @@ private:
     MIL_Army_ABC* pArmy_;
     std::auto_ptr< MIL_LivingArea > pLivingArea_;
     std::auto_ptr< MIL_Schedule_ABC > pSchedule_;
+    MIL_Object_ABC* pPopulationMovingObject_;
     std::auto_ptr< MIL_InhabitantSatisfactions > pSatisfactions_;
     std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
     std::string text_;

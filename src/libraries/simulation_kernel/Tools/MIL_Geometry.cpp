@@ -57,11 +57,54 @@ void MIL_Geometry::Scale( geometry::Polygon2f& result, const geometry::Polygon2f
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Geometry::ComputeHull
+// Created: SLG 2011-02-02
+// -----------------------------------------------------------------------------
+void MIL_Geometry::ComputeHull( geometry::Polygon2f::T_Vertices& hull, const geometry::Polygon2f::T_Vertices& vertices )
+{
+    std::vector< geometry::Point2f >::const_iterator maxLeft = vertices.begin();
+    std::vector< geometry::Point2f >::const_iterator maxRight = vertices.begin();
+    for( std::vector< geometry::Point2f >::const_iterator it = vertices.begin(); it != vertices.end() ; ++it )
+    {
+        if( it->X() < maxLeft->X() )
+            maxLeft = it;
+        if( it->X() > maxRight->X() )
+            maxRight = it;
+    }
+    hull.push_back( *maxLeft );
+    hull.push_back( *maxRight );
+    unsigned int nPoint = 0;
+    geometry::Point2f worst;
+    while( nPoint != hull.size() )
+    {
+        unsigned int nFollowingPoint = ( nPoint + 1 ) % hull.size();
+        geometry::Vector2f direction( hull[ nPoint ], hull[ nFollowingPoint ] );
+        direction.Normalize();
+        if( FindOuterPoint( vertices, hull[ nPoint ], direction, worst ) )
+        {
+            hull.insert( hull.begin() + nFollowingPoint, worst );
+            nPoint = 0;
+        }
+        else
+            ++nPoint;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Geometry::ComputeHull
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
 void MIL_Geometry::ComputeHull( geometry::Polygon2f& result, const geometry::Polygon2f& polygon )
 {
     const geometry::Polygon2f::T_Vertices& vertices = polygon.Vertices();
+    ComputeHull( result, vertices );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Geometry::ComputeHull
+// Created: SLG 2011-02-01
+// -----------------------------------------------------------------------------
+void MIL_Geometry::ComputeHull( geometry::Polygon2f& result, const geometry::Polygon2f::T_Vertices& vertices )
+{
     std::vector< geometry::Point2f >::const_iterator maxLeft = vertices.begin();
     std::vector< geometry::Point2f >::const_iterator maxRight = vertices.begin();
     for( std::vector< geometry::Point2f >::const_iterator it = vertices.begin(); it != vertices.end() ; ++it )
@@ -91,6 +134,7 @@ void MIL_Geometry::ComputeHull( geometry::Polygon2f& result, const geometry::Pol
     }
     result = geometry::Polygon2f( hull );
 }
+
 
 namespace
 {
