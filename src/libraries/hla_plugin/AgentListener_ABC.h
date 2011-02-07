@@ -12,15 +12,12 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace dispatcher
-{
-    class Agent_ABC;
-}
-
 namespace plugins
 {
 namespace hla
 {
+    class Agent_ABC;
+
 // =============================================================================
 /** @class  AgentListener_ABC
     @brief  Agent listener definition
@@ -38,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Created( dispatcher::Agent_ABC& agent ) = 0;
+    virtual void Created( Agent_ABC& agent ) = 0;
     //@}
 };
 

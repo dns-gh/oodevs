@@ -17,15 +17,12 @@
 #include "protocol/Protocol.h"
 #include "rpr/EntityIdentifier.h"
 
-namespace dispatcher
-{
-    class Agent_ABC;
-}
-
 namespace plugins
 {
 namespace hla
 {
+    class Agent_ABC;
+
 // =============================================================================
 /** @class  AgentExtension
     @brief  Agent extension
@@ -41,7 +38,7 @@ public:
     //@{
              AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes
                            , dispatcher::Observable< sword::UnitEnvironmentType >& environment
-                           , dispatcher::Agent_ABC& holder, const rpr::EntityIdentifier& id );
+                           , Agent_ABC& holder, const rpr::EntityIdentifier& id );
     virtual ~AgentExtension();
     //@}
 
@@ -71,7 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Agent_ABC& holder_;
+    Agent_ABC& holder_;
     rpr::EntityIdentifier id_;
     Formation formation_;
     mutable bool spatialChanged_;

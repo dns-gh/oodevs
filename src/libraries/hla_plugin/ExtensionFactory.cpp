@@ -10,6 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "ExtensionFactory.h"
 #include "AgentListener_ABC.h"
+#include "AgentProxy.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Agent.h"
 
@@ -40,8 +41,9 @@ ExtensionFactory::~ExtensionFactory()
 // -----------------------------------------------------------------------------
 void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
+    agents_.push_back( T_Agent( new AgentProxy( entity ) ) );
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->Created( entity );
+        (*it)->Created( *agents_.back() );
 }
 
 // -----------------------------------------------------------------------------

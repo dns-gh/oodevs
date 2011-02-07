@@ -13,6 +13,7 @@
 #include "AgentSubject_ABC.h"
 #include "dispatcher/ExtensionFactory_ABC.h"
 #include <vector>
+#include <boost/shared_ptr.hpp>
 
 namespace dispatcher
 {
@@ -24,6 +25,8 @@ namespace plugins
 {
 namespace hla
 {
+    class Agent_ABC;
+
 // =============================================================================
 /** @class  ExtensionFactory
     @brief  Extension factory
@@ -42,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Create( dispatcher::Agent& entity );
+    virtual void Create( dispatcher::Agent& entity ); // $$$$ _RC_ SLI 2011-02-04: handle also destruction
     virtual void Register( AgentListener_ABC& listener );
     virtual void Unregister( AgentListener_ABC& listener );
     //@}
@@ -52,6 +55,8 @@ private:
     //@{
     typedef std::vector< AgentListener_ABC* > T_Listeners;
     typedef T_Listeners::const_iterator     CIT_Listeners;
+    typedef boost::shared_ptr< Agent_ABC > T_Agent;
+    typedef std::vector< T_Agent >         T_Agents;
     //@}
 
 private:
@@ -59,6 +64,7 @@ private:
     //@{
     dispatcher::Model_ABC& model_;
     T_Listeners listeners_;
+    T_Agents agents_;
     //@}
 };
 

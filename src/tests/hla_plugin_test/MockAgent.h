@@ -7,29 +7,35 @@
 //
 // *****************************************************************************
 
-#ifndef hla_plugin_MockAgentSubject_h
-#define hla_plugin_MockAgentSubject_h
+#ifndef hla_plugin_MockAgent_h
+#define hla_plugin_MockAgent_h
 
-#include "hla_plugin/AgentSubject_ABC.h"
+#include "hla_plugin/Agent_ABC.h"
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  MockAgentSubject
-    @brief  Mock agent subject
+/** @class  MockAgent
+    @brief  Mock agent
 */
 // Created: SLI 2011-01-11
 // =============================================================================
-MOCK_BASE_CLASS( MockAgentSubject, AgentSubject_ABC )
+MOCK_BASE_CLASS( MockAgent, Agent_ABC )
 {
-    MOCK_METHOD( Register, 1 );
-    MOCK_METHOD( Unregister, 1 );
+    MOCK_METHOD( GetId, 0 )
+    MOCK_METHOD( GetName, 0 )
+    MOCK_METHOD( GetType, 0 )
+    MOCK_METHOD( GetPosition, 0 )
+    MOCK_METHOD( GetAltitude, 0 )
+    MOCK_METHOD( GetSpeed, 0 )
+    MOCK_METHOD( GetDirection, 0 )
+    MOCK_METHOD( GetForce, 0 )
+    MOCK_METHOD( GetEquipments, 0 )
 };
 
 }
-
 }
 
-#endif // hla_plugin_MockAgentSubject_h
+#endif // hla_plugin_MockAgent_h

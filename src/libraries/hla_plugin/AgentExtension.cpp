@@ -9,14 +9,12 @@
 
 #include "hla_plugin_pch.h"
 #include "AgentExtension.h"
+#include "Agent_ABC.h"
 #include "Spatial.h"
 #include "AggregateMarking.h"
 #include "SilentEntity.h"
 #include "SerializationTools.h"
 #include "clients_kernel/Karma.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat.h"
-#include "dispatcher/Side.h"
 #include "dispatcher/Equipment.h"
 #include "protocol/Protocol.h"
 #include "rpr/EntityType.h"
@@ -32,7 +30,7 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 AgentExtension::AgentExtension( dispatcher::Observable< sword::UnitAttributes >& attributes
                               , dispatcher::Observable< sword::UnitEnvironmentType >& environment
-                              , dispatcher::Agent_ABC& holder
+                              , Agent_ABC& holder
                               , const rpr::EntityIdentifier& id )
     : Observer< sword::UnitAttributes >( attributes )
     , Observer< sword::UnitEnvironmentType >( environment )
@@ -118,7 +116,7 @@ void AgentExtension::UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor )
 {
     ::hla::Serializer serializer;
     id_.Serialize( serializer );
-    functor.Visit( ::hla::AttributeIdentifier( "rpr::EntityIdentifier" ), serializer );
+    functor.Visit( ::hla::AttributeIdentifier( "EntityIdentifier" ), serializer );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,7 +138,7 @@ void AgentExtension::UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const
 // -----------------------------------------------------------------------------
 void AgentExtension::UpdateAggregateMarking( ::hla::UpdateFunctor_ABC& functor ) const
 {
-    AggregateMarking marking( holder_.GetName().ascii() );
+    AggregateMarking marking( holder_.GetName() );
     ::hla::Serializer archive;
     marking.Serialize( archive );
     functor.Visit( ::hla::AttributeIdentifier( "AggregateMarking" ), archive );
@@ -165,7 +163,7 @@ void AgentExtension::UpdateAggregateState( ::hla::UpdateFunctor_ABC& functor ) c
 void AgentExtension::UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
 {
     unsigned char force = 0; // Other
-    const kernel::Karma& karma = holder_.GetSuperior().GetTeam().GetKarma();
+    const kernel::Karma& karma = holder_.GetForce();
     if( karma == kernel::Karma::friend_ )
         force = 1;
     else if( karma == kernel::Karma::enemy_ )
@@ -214,6 +212,6 @@ namespace
 void AgentExtension::UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) const
 {
     SilentEntitiesSerializer serializer;
-    holder_.Equipments().Apply( boost::bind( &SilentEntitiesSerializer::SerializeEquipment, boost::ref( serializer ), _1 ) );
+    holder_.GetEquipments().Apply( boost::bind( &SilentEntitiesSerializer::SerializeEquipment, &serializer, _1 ) );
     serializer.Commit( functor );
 }
