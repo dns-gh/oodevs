@@ -313,8 +313,10 @@ std::string ADN_People_Data::PeopleInfos::CheckErrors()
         for( IT_Events it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
             if( it1->first != it2->first && it1->second->day_.GetData() == it2->second->day_.GetData() &&
                 !CheckTime( it1->second->from_.GetData(), it1->second->to_.GetData(), it2->second->from_.GetData(), it2->second->to_.GetData() ) )
-                    return "- " + it1->second->day_.GetData() + " : " + it1->second->from_.GetData() + " / " + it1->second->to_.GetData() + "\n" +
+                    return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).ascii() + std::string( "\n" ) + "- " + it1->second->day_.GetData() + " : " + it1->second->from_.GetData() + " / " + it1->second->to_.GetData() + "\n" +
                            "- " + it2->second->day_.GetData() + " : " + it2->second->from_.GetData() + " / " + it2->second->to_.GetData() + "\n";
+    if ( male_.GetData() + female_.GetData() + children_.GetData() != 100 )
+        return tools::translate( "People_Data", "Invalid repartition - Male/Female/Children repartition doesn't fit 100%" ).ascii();
     return "";
 }
 
@@ -326,7 +328,7 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
 {
     const std::string error = CheckErrors();
     if( error != "" )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).ascii() + std::string( "\n" ) + error );
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), error );
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", mosId )
