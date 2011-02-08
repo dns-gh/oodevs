@@ -110,6 +110,8 @@ namespace
         {
             setMinValue( 0 );
             setMaxValue( std::numeric_limits< int >::max() );
+            if( decimals != 0 )
+                setValidator( new QDoubleValidator ( 0, std::numeric_limits< int >::max(), decimals, this ) );
         }
 
         virtual ~DecimalSpinBox()
@@ -130,9 +132,8 @@ namespace
             const char* ascii = textValue.ascii();
             if( !ascii )
                 return 0;
-            std::string txt = ascii;
             if( decimals_ > 1 )
-                return int( textValue.toDouble( ok ) * decimals_ );
+                return static_cast< int >( textValue.toDouble( ok ) * decimals_ );
             return textValue.toInt( ok );
         }
 
@@ -140,13 +141,13 @@ namespace
         template< typename T >
         T DecimalValue()
         {
-            return T( value() ) / T( decimals_ );
+            return static_cast< T >( value() ) / static_cast< T >( decimals_ );
         }
 
         template< typename T >
         void SetValue( const T& value )
         {
-            setValue( int( value * T( decimals_ ) ) );
+            setValue( static_cast< int >( value * static_cast< T >( decimals_ ) + 0.5 ) );
         }
 
     private:
@@ -245,7 +246,7 @@ void EditorFactory::Call( unsigned int* const& value )
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-30
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( kernel::Unit* const& value )
+void EditorFactory::Call( Unit* const& value )
 {
     unit_ = value;
 }
