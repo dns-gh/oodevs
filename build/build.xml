@@ -897,7 +897,7 @@
     ============================================================================
     -->
     <target name="documentation" description="generate SWORD SDK documentation">
-        <doxygen-report name="sword" input="${src.dir}/libraries/protocol/proto">
+        <doxygen-report name="sword" input="${src.dir}/libraries/protocol/proto" outdir="${out.dir}/sdk">
             <property name="PROJECT_NAME" value="SWORD - API Reference"/>
             <property name="PROJECT_NUMBER" value="${version.major}"/>
             <property name="FILE_PATTERNS" value='"*.proto *.dox"'/>
@@ -922,6 +922,7 @@
                 <length file="${reports.dir}/doxygen.log" when="greater" length="0"/>
             </condition>
         </fail>
+        <htmlhelp input="${out.dir}/sdk" outdir="${out.dir}/sdk"/>
     </target>
 
     <!--
