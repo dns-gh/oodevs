@@ -29,12 +29,12 @@ namespace hla
 
 // =============================================================================
 /** @class  AgentController
-    @brief  Extension factory
+    @brief  Agent controller
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class AgentController : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >,
-                         public AgentSubject_ABC
+class AgentController : public AgentSubject_ABC
+                      , private dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
 {
 public:
     //! @name Constructors/Destructor
@@ -45,9 +45,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Create( dispatcher::Agent& entity ); // $$$$ _RC_ SLI 2011-02-04: handle also destruction
     virtual void Register( AgentListener_ABC& listener );
     virtual void Unregister( AgentListener_ABC& listener );
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void Create( dispatcher::Agent& entity ); // $$$$ _RC_ SLI 2011-02-04: handle also destruction
     //@}
 
 private:
