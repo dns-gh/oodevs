@@ -36,7 +36,8 @@ namespace shield
 }
 
 #define CONVERT_TO( from_field, to_field ) \
-    if( from.has_##from_field() ) to->set_##to_field( from.from_field() )
+    if( from.has_##from_field() ) \
+        to->set_##to_field( from.from_field() )
 #define CONVERT( field ) \
     CONVERT_TO( field, field )
 
@@ -62,7 +63,8 @@ namespace shield
     CONVERT_ENUM_EXT( from_field, to_field, mapping )
 
 #define CONVERT_ID_TO( from_field, to_field ) \
-    to->mutable_##to_field()->set_id( from.from_field().id() )
+    if( from.has_##from_field() ) \
+        to->mutable_##to_field()->set_id( from.from_field().id() )
 #define CONVERT_ID( field ) \
     CONVERT_ID_TO( field, field )
 
