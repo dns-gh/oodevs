@@ -62,7 +62,7 @@ private:
     AgentSubject_ABC& subject_;
     std::auto_ptr< UnitRegistration > registration_;
     std::auto_ptr< ::hla::Class< AggregateEntity > > hlaClass_;
-    std::vector< T_Entity > extensions_;
+    std::vector< T_Entity > entities_;
     //@}
 };
 
