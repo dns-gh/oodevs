@@ -38,7 +38,7 @@ Score::~Score()
 // -----------------------------------------------------------------------------
 void Score::Update( const sword::Indicator& message )
 {
-    values_.push_back( message.value() );
+    push_back( message.value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,12 +47,12 @@ void Score::Update( const sword::Indicator& message )
 // -----------------------------------------------------------------------------
 void Score::Send( dispatcher::ClientPublisher_ABC& publisher, int context ) const
 {
-    std::vector< double > values; values.reserve( values_.size() );
-    std::copy( values_.begin(), values_.end(), std::back_inserter( values ) );
+    std::vector< double > values; values.reserve( size() );
+    std::copy( begin(), end(), std::back_inserter( values ) );
     aar::PlotResult result;
     result().set_identifier( context );
     result().set_error( "" );
-    for( std::vector< double >::const_iterator it = values_.begin(); it != values_.end(); ++it )
+    for( std::vector< double >::const_iterator it = begin(); it != end(); ++it )
         result().mutable_values()->Add( static_cast< float >( *it ) );
     result.Send( publisher );
 }

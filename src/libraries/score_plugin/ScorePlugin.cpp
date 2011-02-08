@@ -17,8 +17,8 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
-#include "tools/ExerciseConfig.h"
 #include "tools/MessageDispatcher_ABC.h"
+#include "tools/SessionConfig.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
@@ -32,7 +32,7 @@ using namespace plugins::score;
 // Name: ScorePlugin constructor
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-ScorePlugin::ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config, dispatcher::CompositeRegistrable& registrables )
+ScorePlugin::ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::SessionConfig& config, dispatcher::CompositeRegistrable& registrables )
     : resolver_( resolver )
     , config_  ( config )
     , scores_  ( new ScoresModel( clients ) )
@@ -67,6 +67,8 @@ void ScorePlugin::Register( dispatcher::Services& services )
 void ScorePlugin::Receive( const sword::SimToClient& wrapper )
 {
     scores_->Update( wrapper );
+    if( wrapper.message().has_control_checkpoint_save_end() )
+        scores_->Export( config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() ) );
 }
 
 // -----------------------------------------------------------------------------

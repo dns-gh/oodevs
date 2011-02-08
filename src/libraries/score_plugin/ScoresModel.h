@@ -15,6 +15,11 @@
 #include <vector>
 #include <map>
 
+#pragma warning( push )
+#pragma warning( disable : 4996 ) // $$$$ ABR 2011-02-08: vc80 deprecation
+#include <qdatetime.h>
+#pragma warning( pop )
+
 namespace sword
 {
     class SimToClient;
@@ -76,6 +81,7 @@ public:
     void Update( const sword::Indicator& message );
     void Update( const sword::SimToClient& message );
     void RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const sword::PlotRequest& request );
+    void Export( const std::string& path ) const;
     //@}
 
 private:
@@ -106,6 +112,9 @@ private:
     std::vector< boost::shared_ptr< Task > > tasks_;
     std::auto_ptr< IndicatorBuilder > builder_;
     T_Scores scores_;
+    QDateTime initialDateTime_;
+    bool dateTimeInitialized_;
+    unsigned int tickDuration_;
     //@}
 };
 

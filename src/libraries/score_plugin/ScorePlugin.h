@@ -26,7 +26,7 @@ namespace xml
 
 namespace tools
 {
-    class ExerciseConfig;
+    class SessionConfig;
     class MessageDispatcher_ABC;
 }
 
@@ -53,7 +53,7 @@ class ScorePlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config, dispatcher::CompositeRegistrable& registrables );
+             ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::SessionConfig& config, dispatcher::CompositeRegistrable& registrables );
     virtual ~ScorePlugin();
     //@}
 
@@ -85,7 +85,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::LinkResolver_ABC& resolver_;
-    const tools::ExerciseConfig& config_;
+    const tools::SessionConfig& config_;
     std::auto_ptr< ScoresModel > scores_;
     //@}
 };

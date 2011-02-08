@@ -19,18 +19,33 @@
 #include <boost/foreach.hpp>
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
+#include <fstream>
 
 namespace bfs = boost::filesystem;
 
 using namespace plugins::score;
+
+namespace
+{
+    QDateTime MakeDate( const std::string& str )
+    {
+        // $$$$ AGE 2007-10-12: ...
+        QString extended( str.c_str() );
+        extended.insert( 13, ':' ); extended.insert( 11, ':' );
+        extended.insert(  6, '-' ); extended.insert(  4, '-' );
+        return QDateTime::fromString( extended, Qt::ISODate );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ScoresModel constructor
 // Created: SBO 2009-08-20
 // -----------------------------------------------------------------------------
 ScoresModel::ScoresModel( dispatcher::ClientPublisher_ABC& clients )
-    : clients_( clients )
-    , builder_( new IndicatorBuilder() )
+    : clients_            ( clients )
+    , builder_            ( new IndicatorBuilder() )
+    , dateTimeInitialized_( false )
+    , tickDuration_       ( 0 )
 {
     // NOTHING
 }
@@ -108,6 +123,12 @@ void ScoresModel::Update( const sword::SimToClient& message )
 {
     BOOST_FOREACH( const std::vector< boost::shared_ptr< Task > >::value_type& task, tasks_ )
         task->Receive( message );
+    if( !dateTimeInitialized_ && message.message().has_control_information() )
+    {
+        initialDateTime_ = MakeDate( message.message().control_information().initial_date_time().data() );
+        tickDuration_ = message.message().control_information().tick_duration();
+        dateTimeInitialized_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -172,4 +193,42 @@ void ScoresModel::ComputeIndicator( const std::string& name, const std::string& 
     {
         MT_LOG_ERROR_MSG( "Error in indicator '" << name << "' definition: " << e.what() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoresModel::Export
+// Created: ABR 2011-02-08
+// -----------------------------------------------------------------------------
+void ScoresModel::Export( const std::string& path ) const
+{
+    if( dateTimeInitialized_ )
+        try
+        {
+            std::ofstream file( ( path + std::string( "/scores.csv" ) ).c_str() );
+            const std::string sep = ";";
+            unsigned int size = 0;
+
+            file << "Tick" << sep << "Time";
+            BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
+            {
+                file << sep << score.first;
+                if ( ! size )
+                    size = score.second->size();
+                else if ( size != score.second->size() )
+                    throw std::runtime_error( __FUNCTION__ ": not the same number of score." );
+            }
+            file << std::endl;
+            for( unsigned int index = 0; index < size; ++index )
+            {
+                file << index << sep << initialDateTime_.addSecs( index * tickDuration_ ).toString( Qt::ISODate ).ascii();
+                BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
+                    file << sep << score.second->at( index );
+                file << std::endl;
+            }
+            file.close();
+        }
+        catch ( exception* e )
+        {
+            throw std::runtime_error( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e->what() ) );
+        }
 }

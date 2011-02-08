@@ -38,7 +38,7 @@ namespace score
 */
 // Created: SBO 2009-04-29
 // =============================================================================
-class Score
+class Score : public std::vector< double >
 {
 public:
     //! @name Constructors/Destructor
@@ -58,12 +58,6 @@ private:
     //@{
     Score( const Score& );            //!< Copy constructor
     Score& operator=( const Score& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::vector< double > values_;
     //@}
 };
 
