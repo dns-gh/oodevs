@@ -27,10 +27,10 @@ using namespace plugins::hla;
 // Name: AgentExtension constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( Agent_ABC& agent, const rpr::EntityIdentifier& id,
+AgentExtension::AgentExtension( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
                                 const std::string& name, rpr::ForceIdentifier force )
-    : agent_            ( agent )
-    , id_                ( id )
+    : agent_             ( agent )
+    , identifier_        ( identifier )
     , name_              ( name )
     , force_             ( force )
     , spatialChanged_    ( true )
@@ -132,7 +132,7 @@ void AgentExtension::UpdateEntityType( ::hla::UpdateFunctor_ABC& functor ) const
 void AgentExtension::UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
 {
     ::hla::Serializer serializer;
-    id_.Serialize( serializer );
+    identifier_.Serialize( serializer );
     functor.Visit( ::hla::AttributeIdentifier( "EntityIdentifier" ), serializer );
 }
 

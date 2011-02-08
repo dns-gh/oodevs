@@ -36,7 +36,7 @@ class AgentExtension : public HlaExtension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( Agent_ABC& agent, const rpr::EntityIdentifier& id,
+             AgentExtension( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
                              const std::string& name, rpr::ForceIdentifier force );
     virtual ~AgentExtension();
     //@}
@@ -77,7 +77,7 @@ private:
     //! @name Member data
     //@{
     Agent_ABC& agent_;
-    rpr::EntityIdentifier id_;
+    rpr::EntityIdentifier identifier_;
     const std::string name_;
     const rpr::ForceIdentifier force_;
     Formation formation_;
