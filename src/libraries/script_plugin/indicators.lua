@@ -15,6 +15,7 @@
 --
 --------------------------------------------------------------------------------
 
+require "debug"
 require "io"
 require "table"
 
@@ -30,7 +31,7 @@ Recorder = {
 
 -- Add indicator to be tracked
 function Recorder.Track( name )
-    Recorder.data[name] = {}
+    Recorder.data[ name ] = {}
 end
 
 -- Start recorder
@@ -79,7 +80,8 @@ end
 
 -- Save data to specific file (csv format with headers)
 function Recorder.Save( filename )
-    local output = io.open( events.indicators:PrependSessionPath( filename ), "w+" )
+    local output, errMessage = io.open( events.indicators:PrependSessionPath( filename ), "w+" )
+    if( errMessage ) then error( errMessage ) end
     Recorder._SaveHeader( output )
     local last = {}
     for i = 1, Recorder.ticks, 1 do
@@ -106,6 +108,9 @@ function Recorder._SaveHeader( output )
 end
 
 function Recorder._SaveLine( output, line )
+    if not output then
+        error( debug.traceback() )
+    end
     output:write( table.concat( line, "," ) .. ",\n" )
 end
 

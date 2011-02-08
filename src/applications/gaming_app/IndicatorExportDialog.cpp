@@ -131,7 +131,7 @@ void IndicatorExportDialog::OnAccept()
                 const unsigned int size = request->Result().size();
                 file << sep;
                 if( index < size )
-                    file << request->Result()[index];
+                    file << request->Result()[ index ];
                 else if( index == size )
                     --hasData;
             }
@@ -142,8 +142,8 @@ void IndicatorExportDialog::OnAccept()
         requests_.clear();
         accept();
     }
-    catch ( exception* e)
+    catch ( exception* e )
     {
-        QMessageBox::critical( this, tr( "Can not save indicator file :" ), tr("Error message")  + e->what() );
+        QMessageBox::critical( this, tr( "Can not save indicator file :" ), tr( "Error message" )  + e->what() );
     }
 }

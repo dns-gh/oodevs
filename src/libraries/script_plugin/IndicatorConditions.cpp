@@ -46,6 +46,7 @@ void IndicatorConditions::RegisterIn( directia::brain::Brain& brain )
     brain.Register( "IndicatorChanged", &IndicatorConditions::IndicatorChanged );
     brain.Register( "PrependSessionPath", &IndicatorConditions::PrependSessionPath );
 }
+
 // -----------------------------------------------------------------------------
 // Name: IndicatorConditions::PrependSessionPath
 // Created: HBD 2010-11-26
@@ -54,7 +55,6 @@ std::string IndicatorConditions::PrependSessionPath( const std::string& filename
 {
     return config_.BuildSessionChildFile( filename );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorConditions::IndicatorChanged
