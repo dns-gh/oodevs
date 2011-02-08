@@ -24,7 +24,7 @@ namespace plugins
 {
 namespace hla
 {
-    class AgentExtension;
+    class AggregateEntity;
     class AgentSubject_ABC;
 
 // =============================================================================
@@ -60,8 +60,8 @@ private:
     unsigned short id_;
     AgentSubject_ABC& subject_;
     std::auto_ptr< UnitRegistration > registration_;
-    std::auto_ptr< ::hla::Class< AgentExtension > > hlaClass_;
-    std::vector< boost::shared_ptr< AgentExtension > > extensions_;
+    std::auto_ptr< ::hla::Class< AggregateEntity > > hlaClass_;
+    std::vector< boost::shared_ptr< AggregateEntity > > extensions_;
     //@}
 };
 

@@ -31,19 +31,19 @@ namespace hla
     class Spatial;
 
 // =============================================================================
-/** @class  AgentExtension
+/** @class  AggregateEntity
     @brief  Agent extension
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class AgentExtension : private EventListener_ABC
+class AggregateEntity : private EventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentExtension( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
-                             const std::string& name, rpr::ForceIdentifier force );
-    virtual ~AgentExtension();
+             AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
+                              const std::string& name, rpr::ForceIdentifier force );
+    virtual ~AggregateEntity();
     //@}
 
     //! @name Operations

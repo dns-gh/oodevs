@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "AggregateEntityClass.h"
-#include "AgentExtension.h"
+#include "AggregateEntity.h"
 #include "AgentSubject_ABC.h"
 #include "Agent_ABC.h"
 #include "rpr/EntityIdentifier.h"
@@ -21,13 +21,13 @@
 
 using namespace plugins::hla;
 
-struct AggregateEntityClass::UnitRegistration : public ::hla::ObjectRegistration_ABC< AgentExtension >
+struct AggregateEntityClass::UnitRegistration : public ::hla::ObjectRegistration_ABC< AggregateEntity >
 {
-    virtual AgentExtension& Create( const ::hla::ObjectIdentifier&, const std::string& )
+    virtual AggregateEntity& Create( const ::hla::ObjectIdentifier&, const std::string& )
     {
         throw std::runtime_error( __FUNCTION__ );
     }
-    virtual void Destroy( AgentExtension& )
+    virtual void Destroy( AggregateEntity& )
     {
         throw std::runtime_error( __FUNCTION__ );
     }
@@ -41,7 +41,7 @@ AggregateEntityClass::AggregateEntityClass( ::hla::Federate& federate, AgentSubj
     : id_          ( 1 )
     , subject_     ( subject )
     , registration_( new UnitRegistration() )
-    , hlaClass_    ( new ::hla::Class< AgentExtension >( *registration_ ) )
+    , hlaClass_    ( new ::hla::Class< AggregateEntity >( *registration_ ) )
 {
     hlaClass_->Register( ::hla::AttributeIdentifier( "EntityType" ) );             // static
     hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );       // static
@@ -73,7 +73,7 @@ AggregateEntityClass::~AggregateEntityClass()
 void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force )
 {
     rpr::EntityIdentifier id( 1, 1, id_ ); // site, application, id
-    boost::shared_ptr< AgentExtension > extension( new AgentExtension( agent, id, name, force ) );
+    boost::shared_ptr< AggregateEntity > extension( new AggregateEntity( agent, id, name, force ) );
     hlaClass_->Register( *extension, identifier );
     extensions_.push_back( extension );
     ++id_;

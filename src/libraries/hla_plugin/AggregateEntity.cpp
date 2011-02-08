@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "AgentExtension.h"
+#include "AggregateEntity.h"
 #include "Agent_ABC.h"
 #include "Spatial.h"
 #include "AggregateMarking.h"
@@ -24,11 +24,11 @@
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension constructor
+// Name: AggregateEntity constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentExtension::AgentExtension( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
-                                const std::string& name, rpr::ForceIdentifier force )
+AggregateEntity::AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
+                                  const std::string& name, rpr::ForceIdentifier force )
     : agent_             ( agent )
     , identifier_        ( identifier )
     , name_              ( name )
@@ -41,19 +41,19 @@ AgentExtension::AgentExtension( Agent_ABC& agent, const rpr::EntityIdentifier& i
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension destructor
+// Name: AggregateEntity destructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentExtension::~AgentExtension()
+AggregateEntity::~AggregateEntity()
 {
     agent_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::Serialize
+// Name: AggregateEntity::Serialize
 // Created: SBO 2008-02-20
 // -----------------------------------------------------------------------------
-void AgentExtension::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
+void AggregateEntity::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
 {
     if( updateAll )
         UpdateEntityType( functor );
@@ -73,10 +73,10 @@ void AgentExtension::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAl
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::Deserialize
+// Name: AggregateEntity::Deserialize
 // Created: SLI 2011-02-08
 // -----------------------------------------------------------------------------
-void AgentExtension::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, const ::hla::Deserializer& /*deserializer*/ )
+void AggregateEntity::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, const ::hla::Deserializer& /*deserializer*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
@@ -90,10 +90,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::EquipmentChanged
+// Name: AggregateEntity::EquipmentChanged
 // Created: SLI 2011-02-07
 // -----------------------------------------------------------------------------
-void AgentExtension::EquipmentChanged( unsigned int type, unsigned int available )
+void AggregateEntity::EquipmentChanged( unsigned int type, unsigned int available )
 {
     compositionChanged_ = true;
     IT_Equipments result = std::find_if( equipments_.begin(), equipments_.end(), boost::bind( &::Find, type, _1 ) );
@@ -104,29 +104,29 @@ void AgentExtension::EquipmentChanged( unsigned int type, unsigned int available
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::SpatialChanged
+// Name: AggregateEntity::SpatialChanged
 // Created: SLI 2011-02-07
 // -----------------------------------------------------------------------------
-void AgentExtension::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
+void AggregateEntity::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
 {
     spatialChanged_ = true;
     pSpatial_.reset( new Spatial( latitude, longitude, altitude, speed, direction ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::FormationChanged
+// Name: AggregateEntity::FormationChanged
 // Created: SLI 2011-02-07
 // -----------------------------------------------------------------------------
-void AgentExtension::FormationChanged( bool isOnRoad )
+void AggregateEntity::FormationChanged( bool isOnRoad )
 {
     formation_.Update( isOnRoad );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::UpdateEntityType
+// Name: AggregateEntity::UpdateEntityType
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateEntityType( ::hla::UpdateFunctor_ABC& functor ) const
+void AggregateEntity::UpdateEntityType( ::hla::UpdateFunctor_ABC& functor ) const
 {
     rpr::EntityType type( "1 1 225 1" );
     ::hla::Serializer serializer;
@@ -135,10 +135,10 @@ void AgentExtension::UpdateEntityType( ::hla::UpdateFunctor_ABC& functor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::UpdateEntityIdentifier
+// Name: AggregateEntity::UpdateEntityIdentifier
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
+void AggregateEntity::UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
 {
     ::hla::Serializer serializer;
     identifier_.Serialize( serializer );
@@ -146,10 +146,10 @@ void AgentExtension::UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::UpdateSpatial
+// Name: AggregateEntity::UpdateSpatial
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const
+void AggregateEntity::UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const
 {
     ::hla::Serializer archive;
     pSpatial_->Serialize( archive );
@@ -158,10 +158,10 @@ void AgentExtension::UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::UpdateAggregateMarking
+// Name: AggregateEntity::UpdateAggregateMarking
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateAggregateMarking( ::hla::UpdateFunctor_ABC& functor ) const
+void AggregateEntity::UpdateAggregateMarking( ::hla::UpdateFunctor_ABC& functor ) const
 {
     AggregateMarking marking( name_ );
     ::hla::Serializer archive;
@@ -170,10 +170,10 @@ void AgentExtension::UpdateAggregateMarking( ::hla::UpdateFunctor_ABC& functor )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::UpdateAggregateState
+// Name: AggregateEntity::UpdateAggregateState
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateAggregateState( ::hla::UpdateFunctor_ABC& functor ) const
+void AggregateEntity::UpdateAggregateState( ::hla::UpdateFunctor_ABC& functor ) const
 {
     unsigned char state = 1; // fully aggregated
     ::hla::Serializer archive;
@@ -182,10 +182,10 @@ void AgentExtension::UpdateAggregateState( ::hla::UpdateFunctor_ABC& functor ) c
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::UpdateForceIdentifier
+// Name: AggregateEntity::UpdateForceIdentifier
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
+void AggregateEntity::UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
 {
     ::hla::Serializer archive;
     archive << static_cast< unsigned char >( force_ );
@@ -193,10 +193,10 @@ void AgentExtension::UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentExtension::UpdateComposition
+// Name: AggregateEntity::UpdateComposition
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) const
+void AggregateEntity::UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) const
 {
     {
         ::hla::Serializer serializer;
