@@ -151,8 +151,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         return 0;
     if( message.has_limit() )
         return new actions::parameters::Limit( parameter, converter_, message.limit() );
-    if( message.has_limasorder() )
-        return new actions::parameters::LimaList( parameter, converter_, message.limasorder() );
+    if( message.has_phaselines() )
+        return new actions::parameters::LimaList( parameter, converter_, message.phaselines() );
     if( message.has_datetime() )
         return new actions::parameters::DateTime( parameter, message.datetime() );
     if( message.has_urbanknowledge() )

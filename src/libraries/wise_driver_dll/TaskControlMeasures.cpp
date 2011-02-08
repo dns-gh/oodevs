@@ -183,8 +183,8 @@ bool TaskControlMeasures::AddParameter( const sword::MissionParameter& parameter
         CreateLocationList( value.locationlist() );
     else if( value.has_limit() )
         CreateBoundaryLimit( value.limit() );
-    else if( value.has_phaseline() )
-        CreatePhaseLine( value.phaseline() );
+    else if( value.has_phaselines() )
+        CreatePhaseLine( value.phaselines() );
     else
         return false;
     return true;
@@ -282,14 +282,14 @@ void TaskControlMeasures::CreatePhaseLine( const sword::PhaseLinesOrder& paramet
     {
         for( int i = 0; i < parameter.elem_size(); ++i )
         {
-            const sword::PhaseLineOrder& phaseline = parameter.elem( i );
+            const sword::PhaseLineOrder& phaselines = parameter.elem( i );
 
             WISE_HANDLE handle = WISE_INVALID_HANDLE;
             std::map< std::wstring, WISE_HANDLE > attributes;
-            std::list< CWISEVec3 > points( ReadPoints( phaseline.line().location() ) );
+            std::list< CWISEVec3 > points( ReadPoints( phaselines.line().location() ) );
             // $$$$ SEB 2010-12-29: TODO: handle multiple phase line functions
-            const unsigned int function = phaseline.fonctions_size() > 0 ? phaseline.fonctions( 0 ) : 0;
-            const std::string schedule = phaseline.time().data();
+            const unsigned int function = phaselines.fonctions_size() > 0 ? phaselines.fonctions( 0 ) : 0;
+            const std::string schedule = phaselines.time().data();
             CHECK_WISE_RESULT_EX( driver_.GetSink()->CreateObjectFromTemplate( database_, MakeIdentifier( L"PhaseLine" ), L"ControlMeasure.PhaseLine", handle, attributes ) );
             CHECK_WISE_RESULT_EX( driver_.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle, attributes[ L"Points" ], points, currentTime_ ) );
             CHECK_WISE_RESULT_EX( driver_.GetSink()->SetAttributeValue( WISE_TRANSITION_CACHE_DATABASE, handle, attributes[ L"Function" ], unsigned char( function ), currentTime_ ) );
@@ -530,10 +530,10 @@ namespace
                 wise::FetchObjectAttribute( driver, database, handles.front(), L"Function", function );
                 std::wstring schedule;
                 wise::FetchObjectAttribute( driver, database, handles.front(), L"Schedule", schedule );
-                sword::PhaseLineOrder& phaseline = *parameter.mutable_phaseline()->add_elem();
-                FillLocation( *phaseline.mutable_line()->mutable_location(), sword::Location::line, points );
-                phaseline.add_fonctions( sword::PhaseLineOrder::Function( function ) );
-                phaseline.mutable_time()->set_data( std::string( schedule.begin(), schedule.end() ) );
+                sword::PhaseLineOrder& phaselines = *parameter.mutable_phaselines()->add_elem();
+                FillLocation( *phaselines.mutable_line()->mutable_location(), sword::Location::line, points );
+                phaselines.add_fonctions( sword::PhaseLineOrder::Function( function ) );
+                phaselines.mutable_time()->set_data( std::string( schedule.begin(), schedule.end() ) );
                 handles.pop_front();
             }
             return;

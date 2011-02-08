@@ -119,10 +119,6 @@
         <translation>Valor</translation>
     </message>
     <message>
-        <source>Invalid agent knowledge.</source>
-        <translation>Conocimiento de agente inválido.</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
@@ -155,10 +151,6 @@
         <translation>Cronograma</translation>
     </message>
     <message>
-        <source>Invalid object knowledge.</source>
-        <translation>Conocimiento de objeto inválido.</translation>
-    </message>
-    <message>
         <source>Destination</source>
         <translation>Destino</translation>
     </message>
@@ -169,10 +161,6 @@
     <message>
         <source>Parameter</source>
         <translation>Parametro</translation>
-    </message>
-    <message>
-        <source>Invalid population knowledge.</source>
-        <translation>Conocimiento de población inválido.</translation>
     </message>
     <message>
         <source>%1 (item %2)</source>

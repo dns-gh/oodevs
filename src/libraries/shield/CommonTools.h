@@ -293,7 +293,11 @@ namespace shield
         if( from.has_missionobjective() )
             ConvertObjective( from.missionobjective(), to->mutable_missionobjective() );
         CONVERT_LIST( missionobjectivelist, elem, ConvertObjective );
-        CONVERT_LIST( limasorder, elem, ConvertLimaOrder );
+#ifdef SHIELD_CLIENT
+        CONVERT_LIST_TO( limasorder, phaselines, elem, ConvertLimaOrder );
+#elif defined SHIELD_SIMULATION
+        CONVERT_LIST_TO( phaselines, limasorder, elem, ConvertLimaOrder );
+#endif
         CONVERT_LIST( intelligencelist, elem, ConvertIntelligence );
         CONVERT_ID( object );
         CONVERT_ID( party );

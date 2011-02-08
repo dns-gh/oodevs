@@ -154,7 +154,7 @@ message ObjectMagicAction {
         MissionParameter::Value::identifier and must be reinterpreted as a value
         of this enumeration.
 
-        @todo This must be a joke !
+        @todo to be refactored
     */
     enum Attribute {
         construction       = 0;

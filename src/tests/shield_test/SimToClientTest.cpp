@@ -718,8 +718,8 @@ namespace
         FillMissionObjective( v->mutable_missionobjective() );
         FillMissionObjective( v->mutable_missionobjectivelist()->add_elem() );
         FillMissionObjective( v->mutable_missionobjectivelist()->add_elem() );
-        FillLimaOrder( v->mutable_limasorder()->add_elem() );
-        FillLimaOrder( v->mutable_limasorder()->add_elem() );
+        FillLimaOrder( v->mutable_phaselines()->add_elem() );
+        FillLimaOrder( v->mutable_phaselines()->add_elem() );
         FillIntelligence( v->mutable_intelligencelist()->add_elem() );
         FillIntelligence( v->mutable_intelligencelist()->add_elem() );
         v->mutable_object()->set_id( 73 );

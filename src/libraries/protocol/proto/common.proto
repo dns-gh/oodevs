@@ -758,7 +758,7 @@ message MissionParameter {
         optional Polygon                  area                     = 7;  //!< A polygon
         optional Path                     path                     = 8;  //!< A path
         optional Line                     limit                    = 9;  //!< A limit
-        optional PhaseLinesOrder          phaseLine                = 10; //!< A phase line list @deprecated use limasOrder ?
+        optional PhaseLinesOrder          phaseLine                = 10; //!< @deprecated use phaseLines
         optional AutomatId                automat                  = 11; //!< An automat identifier
         optional UnitId                   agent                    = 12; //!< An agent identifier
         optional UnitKnowledgeId          agentKnowledge           = 13; //!< An agent knowledge identifier
@@ -787,7 +787,7 @@ message MissionParameter {
         optional string                   aCharStr                 = 35; //!< A string
         optional MissionObjective         missionObjective         = 36; //!< A mission objective
         optional MissionObjectiveList     missionObjectiveList     = 37; //!< A mission objective list
-        optional PhaseLinesOrder          limasOrder               = 38; //!< A phase line list @todo rename to phase_lines
+        optional PhaseLinesOrder          phaseLines               = 38; //!< A phase line list
         optional IntelligenceList         intelligenceList         = 39; //!< An intelligence list
         optional ObjectId                 object                   = 40; //!< An object identifier
         optional PartyId                  party                    = 41; //!< A party identifier

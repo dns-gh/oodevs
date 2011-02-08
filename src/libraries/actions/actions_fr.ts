@@ -115,10 +115,6 @@
 <context>
     <name>Parameter</name>
     <message>
-        <source>Invalid agent knowledge.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Parameter</source>
         <translation type="unfinished">Paramètre</translation>
     </message>
@@ -171,10 +167,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invalid object knowledge.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Objective location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -184,10 +176,6 @@
     </message>
     <message>
         <source>Way point %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid population knowledge.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
