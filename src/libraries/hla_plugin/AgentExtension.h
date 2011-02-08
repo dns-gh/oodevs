@@ -10,12 +10,18 @@
 #ifndef __AgentExtension_h_
 #define __AgentExtension_h_
 
-#include "HlaExtension_ABC.h"
 #include "EventListener_ABC.h"
 #include "Formation.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/ForceIdentifier.h"
 #include <vector>
+
+namespace hla
+{
+    class AttributeIdentifier;
+    class Deserializer;
+    class UpdateFunctor_ABC;
+}
 
 namespace plugins
 {
@@ -30,8 +36,7 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class AgentExtension : public HlaExtension_ABC
-                     , private EventListener_ABC
+class AgentExtension : private EventListener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -43,7 +48,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
+    void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const;
+    void Deserialize( const ::hla::AttributeIdentifier& identifier, const ::hla::Deserializer& deserializer );
     //@}
 
 private:

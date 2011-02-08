@@ -72,6 +72,15 @@ void AgentExtension::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAl
         UpdateComposition( functor );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentExtension::Deserialize
+// Created: SLI 2011-02-08
+// -----------------------------------------------------------------------------
+void AgentExtension::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, const ::hla::Deserializer& /*deserializer*/ )
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
 namespace
 {
     bool Find( unsigned int type, const std::pair< unsigned int, unsigned int >& value )

@@ -21,13 +21,13 @@
 
 using namespace plugins::hla;
 
-struct AggregateEntityClass::UnitRegistration : public ::hla::ObjectRegistration_ABC< HlaExtension_ABC >
+struct AggregateEntityClass::UnitRegistration : public ::hla::ObjectRegistration_ABC< AgentExtension >
 {
-    virtual HlaExtension_ABC& Create( const ::hla::ObjectIdentifier&, const std::string& )
+    virtual AgentExtension& Create( const ::hla::ObjectIdentifier&, const std::string& )
     {
         throw std::runtime_error( __FUNCTION__ );
     }
-    virtual void Destroy( HlaExtension_ABC& )
+    virtual void Destroy( AgentExtension& )
     {
         throw std::runtime_error( __FUNCTION__ );
     }
@@ -41,7 +41,7 @@ AggregateEntityClass::AggregateEntityClass( ::hla::Federate& federate, AgentSubj
     : id_          ( 1 )
     , subject_     ( subject )
     , registration_( new UnitRegistration() )
-    , hlaClass_    ( new ::hla::Class< HlaExtension_ABC >( *registration_ ) )
+    , hlaClass_    ( new ::hla::Class< AgentExtension >( *registration_ ) )
 {
     hlaClass_->Register( ::hla::AttributeIdentifier( "EntityType" ) );             // static
     hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );       // static

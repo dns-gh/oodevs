@@ -26,7 +26,6 @@ namespace hla
 {
     class AgentExtension;
     class AgentSubject_ABC;
-    class HlaExtension_ABC;
 
 // =============================================================================
 /** @class  AggregateEntityClass
@@ -61,7 +60,7 @@ private:
     unsigned short id_;
     AgentSubject_ABC& subject_;
     std::auto_ptr< UnitRegistration > registration_;
-    std::auto_ptr< ::hla::Class< HlaExtension_ABC > > hlaClass_;
+    std::auto_ptr< ::hla::Class< AgentExtension > > hlaClass_;
     std::vector< boost::shared_ptr< AgentExtension > > extensions_;
     //@}
 };
