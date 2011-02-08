@@ -17,9 +17,11 @@
 #include "tic_plugin/Platform_ABC.h"
 #include "tic_plugin/PlatformAdapter.h"
 #include "dispatcher/Agent.h"
-#include "dispatcher/EntitySymbols_ABC.h"
+#include "dispatcher/Automat_ABC.h"
+#include "dispatcher/Team_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ComponentType.h"
+#include "clients_kernel/Karma.h"
 #include "UdpNetwork.h"
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
@@ -38,7 +40,7 @@ DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, con
     , network_  ( network )
     , resolver_ ( resolver )
     , holder_   ( holder )
-    , forceId_  ( 0 )
+    , forceId_  ( rpr::Other )
     , exercise_ ( exercise )
     , lagAFrame_( lagAFrame )
     , adapted_  ( new plugins::tic::PlatformAdapter( holder_, converter ) )
@@ -57,24 +59,16 @@ DisExtension::~DisExtension()
 
 namespace
 {
-    unsigned char ExtractForceId( const std::string& app6 )
+    rpr::ForceIdentifier GetForce( const dispatcher::Agent_ABC& agent )
     {
-        if( app6.size() < 2 )
-            return 0;
-        switch( app6.at( 1 ) )
-        {
-        case 'f': case 'F': return 1;
-        case 'h': case 'H': return 2;
-        case 'n': case 'N': return 3;
-        }
-        return 0;
-    }
-
-    unsigned char ForceId( const dispatcher::Agent& entity )
-    {
-        if( const dispatcher::EntitySymbols_ABC* symbol = entity.Retrieve< dispatcher::EntitySymbols_ABC >() )
-            return ExtractForceId( symbol->BuildSymbol( true ) );
-        return 0;
+        const kernel::Karma& karma = agent.GetSuperior().GetTeam().GetKarma();
+        if( karma == kernel::Karma::friend_ )
+            return rpr::Friendly;
+        if( karma == kernel::Karma::enemy_ )
+            return rpr::Opposing;
+        if( karma == kernel::Karma::neutral_ )
+            return rpr::Neutral;
+        return rpr::Other;
     }
 }
 
@@ -84,7 +78,7 @@ namespace
 // -----------------------------------------------------------------------------
 void DisExtension::DoUpdate( const sword::UnitAttributes& )
 {
-    forceId_ = ForceId( holder_ ); // $$$$ SBO 2009-12-11: doesn't need to be computed every time
+    forceId_ = GetForce( holder_ ); // $$$$ SBO 2009-12-11: doesn't need to be computed every time
     if( tic::TicExtension_ABC* extension = holder_.Retrieve< tic::TicExtension_ABC >() )
         extension->Accept( *this );
     else

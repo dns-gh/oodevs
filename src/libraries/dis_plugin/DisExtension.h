@@ -13,6 +13,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "rpr/EntityIdentifier.h"
+#include "rpr/ForceIdentifier.h"
 #include "tic_plugin/PlatformVisitor_ABC.h"
 #include "protocol/Protocol.h"
 
@@ -84,7 +85,7 @@ private:
     UdpNetwork&            network_;
     const DisTypeResolver& resolver_;
     dispatcher::Agent&     holder_;
-    unsigned char          forceId_;
+    rpr::ForceIdentifier   forceId_;
     const unsigned char    exercise_;
     bool                   lagAFrame_;
     T_Identifiers          ids_;

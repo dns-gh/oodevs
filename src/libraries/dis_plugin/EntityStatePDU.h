@@ -12,9 +12,10 @@
 
 #include "DisHeader.h"
 #include "EntityMarking.h"
+#include "rpr/Coordinates.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/EntityType.h"
-#include "rpr/Coordinates.h"
+#include "rpr/ForceIdentifier.h"
 
 namespace plugins
 {
@@ -44,7 +45,7 @@ public:
 
     //! @name Modifiers
     //@{
-    void SetForceId( unsigned char forceId );
+    void SetForceId( const rpr::ForceIdentifier& forceId );
     void SetEntityName( const std::string& name );
     void SetEntityType( const rpr::EntityType& type );
     void SetPosition( double latitude, double longitude, float altitude, float speed, float heading );
@@ -59,7 +60,8 @@ public:
     {
         header_.Serialize( archive );
         id_    .Serialize( archive );
-        archive << forceID_ << numberOfArticulationParameters_;
+        archive << static_cast< unsigned char >( forceID_ )
+                << numberOfArticulationParameters_;
         entityType_.Serialize( archive );
         alternativeType_.Serialize( archive );
 
@@ -80,7 +82,7 @@ private:
     //@{
     DisHeader             header_;                          // 12
     rpr::EntityIdentifier id_;                              // 6
-    unsigned char         forceID_;                         // 1
+    rpr::ForceIdentifier  forceID_;                         // 1
     unsigned char         numberOfArticulationParameters_;  // 1    20
     rpr::EntityType       entityType_;                      // 8
     rpr::EntityType       alternativeType_;                 // 8    36

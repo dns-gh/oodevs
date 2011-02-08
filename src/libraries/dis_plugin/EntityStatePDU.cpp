@@ -19,7 +19,7 @@ using namespace plugins::dis;
 EntityStatePDU::EntityStatePDU( unsigned long time, unsigned char exercise, const rpr::EntityIdentifier& id )
     : header_                        ( DisHeader::EntityStatePDU( time, exercise ) )
     , id_                            ( id )
-    , forceID_                       ( 0 )
+    , forceID_                       ( rpr::Other )
     , numberOfArticulationParameters_( 0 )
     , appearance_                    ( 0 )
     , deadReckoningAlgorithm_        ( 2 )
@@ -41,7 +41,7 @@ EntityStatePDU::~EntityStatePDU()
 // Name: EntityStatePDU::SetForceId
 // Created: SBO 2009-12-11
 // -----------------------------------------------------------------------------
-void EntityStatePDU::SetForceId( unsigned char forceId )
+void EntityStatePDU::SetForceId( const rpr::ForceIdentifier& forceId )
 {
     forceID_ = forceId;
 }

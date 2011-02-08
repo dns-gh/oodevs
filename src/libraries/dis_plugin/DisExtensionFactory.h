@@ -46,9 +46,6 @@ namespace dis
 // Created: AGE 2008-03-10
 // =============================================================================
 class DisExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
-                          , public dispatcher::ExtensionFactory_ABC< dispatcher::Automat >
-                          , public dispatcher::ExtensionFactory_ABC< dispatcher::Formation >
-                          , public dispatcher::ExtensionFactory_ABC< dispatcher::Side >
                           , private IdentifierFactory_ABC
 {
 public:
@@ -61,9 +58,6 @@ public:
     //! @name Operations
     //@{
     virtual void Create( dispatcher::Agent&     entity );
-    virtual void Create( dispatcher::Automat&   entity );
-    virtual void Create( dispatcher::Formation& entity );
-    virtual void Create( dispatcher::Side&      entity );
     virtual rpr::EntityIdentifier CreateNewIdentifier();
     //@}
 
