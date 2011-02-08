@@ -28,19 +28,19 @@ namespace hla
     class Agent_ABC;
 
 // =============================================================================
-/** @class  ExtensionFactory
+/** @class  AgentController
     @brief  Extension factory
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >,
+class AgentController : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >,
                          public AgentSubject_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ExtensionFactory( dispatcher::Model_ABC& model );
-    virtual ~ExtensionFactory();
+    explicit AgentController( dispatcher::Model_ABC& model );
+    virtual ~AgentController();
     //@}
 
     //! @name Operations

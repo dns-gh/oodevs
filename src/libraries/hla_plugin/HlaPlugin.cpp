@@ -9,7 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "HlaPlugin.h"
-#include "ExtensionFactory.h"
+#include "AgentController.h"
 #include "FederateFacade.h"
 #include "RtiAmbassadorFactory.h"
 #include "dispatcher/Config.h"
@@ -36,7 +36,7 @@ namespace
 // -----------------------------------------------------------------------------
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
     : pFactory_( new RtiAmbassadorFactory() )
-    , pSubject_( new ExtensionFactory( model ) )
+    , pSubject_( new AgentController( model ) )
     , federate_( new FederateFacade( xis, *pSubject_, *pFactory_, ReadTimeStep( config.GetSessionFile() ) ) )
 {
     // NOTHING

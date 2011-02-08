@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "hla_plugin_pch.h"
-#include "ExtensionFactory.h"
+#include "AgentController.h"
 #include "AgentListener_ABC.h"
 #include "AgentProxy.h"
 #include "dispatcher/Model_ABC.h"
@@ -22,20 +22,20 @@
 using namespace plugins::hla;
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory constructor
+// Name: AgentController constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( dispatcher::Model_ABC& model )
+AgentController::AgentController( dispatcher::Model_ABC& model )
     : model_( model )
 {
     model_.RegisterFactory( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory destructor
+// Name: AgentController destructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-ExtensionFactory::~ExtensionFactory()
+AgentController::~AgentController()
 {
     model_.UnregisterFactory( *this );
 }
@@ -56,10 +56,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Create
+// Name: AgentController::Create
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Create( dispatcher::Agent& entity )
+void AgentController::Create( dispatcher::Agent& entity )
 {
     agents_.push_back( T_Agent( new AgentProxy( entity ) ) );
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
@@ -67,19 +67,19 @@ void ExtensionFactory::Create( dispatcher::Agent& entity )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Register
+// Name: AgentController::Register
 // Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Register( AgentListener_ABC& listener )
+void AgentController::Register( AgentListener_ABC& listener )
 {
     listeners_.push_back( &listener );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtensionFactory::Unregister
+// Name: AgentController::Unregister
 // Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-void ExtensionFactory::Unregister( AgentListener_ABC& listener )
+void AgentController::Unregister( AgentListener_ABC& listener )
 {
     listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
 }
