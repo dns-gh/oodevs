@@ -52,6 +52,7 @@ private:
     //! @name Types
     //@{
     struct UnitRegistration;
+    typedef boost::shared_ptr< AggregateEntity > T_Entity;
     //@}
 
 private:
@@ -61,7 +62,7 @@ private:
     AgentSubject_ABC& subject_;
     std::auto_ptr< UnitRegistration > registration_;
     std::auto_ptr< ::hla::Class< AggregateEntity > > hlaClass_;
-    std::vector< boost::shared_ptr< AggregateEntity > > extensions_;
+    std::vector< T_Entity > extensions_;
     //@}
 };
 
