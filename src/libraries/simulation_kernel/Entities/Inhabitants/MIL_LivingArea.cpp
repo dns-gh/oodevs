@@ -15,6 +15,7 @@
 #include "UrbanType.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MedicalCapacity.h"
+#include "Entities/Objects/InfrastructureCapacity.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
@@ -301,7 +302,11 @@ float MIL_LivingArea::HealthCount() const
     float healthCount = 0;
     BOOST_FOREACH( const T_Block& block, blocks_ )
         if( block.pUrbanObject_->Retrieve< MedicalCapacity >() )
-            healthCount += GetStructuralState( *block.pUrbanObject_);
+        {
+            const InfrastructureCapacity* infrastructure = block.pUrbanObject_->Retrieve< InfrastructureCapacity >();
+            if( !infrastructure || infrastructure->IsActive() )
+                healthCount += GetStructuralState( *block.pUrbanObject_ );
+        }
     return healthCount;
 }
 

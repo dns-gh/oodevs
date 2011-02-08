@@ -54,6 +54,7 @@ public:
     void SendFullState( sword::UrbanAttributes& message ) const;
     void SetEnabled( bool enabled );
     void SetThreshold( float threshold );
+    bool IsActive() const;
     //@}
 
 private:

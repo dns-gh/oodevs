@@ -169,7 +169,7 @@ void InfrastructureCapacity::SendState( sword::UrbanAttributes& message ) const
 void InfrastructureCapacity::SendFullState( sword::UrbanAttributes& message ) const
 {
     message.mutable_infrastructures()->mutable_infrastructure()->set_type( role_ );
-    message.mutable_infrastructures()->mutable_infrastructure()->set_active( enabled_ && functionalState_ >= threshold_ );
+    message.mutable_infrastructures()->mutable_infrastructure()->set_active( IsActive() );
     message.mutable_infrastructures()->mutable_infrastructure()->set_threshold( threshold_ );
 }
 
@@ -191,4 +191,13 @@ void InfrastructureCapacity::SetThreshold( float threshold )
 {
     threshold_ = threshold;
     needUpdate_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InfrastructureCapacity::IsActive
+// Created: JSR 2011-02-08
+// -----------------------------------------------------------------------------
+bool InfrastructureCapacity::IsActive() const
+{
+    return enabled_ && functionalState_ >= threshold_;
 }
