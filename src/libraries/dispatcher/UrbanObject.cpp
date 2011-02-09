@@ -156,7 +156,7 @@ void UrbanObject::DoUpdate( const sword::UrbanUpdate& msg )
                 hasResourceNetwork_ = true;
                 AddAttribute( new ResourceNetworkAttribute( msg.attributes() ) );
             }
-            if( !hasInfrastructures_ )
+            if( msg.attributes().infrastructures().has_infrastructure() && !hasInfrastructures_ )
             {
                 hasInfrastructures_ = true;
                 AddAttribute( new InfrastructuresAttribute( msg.attributes() ) );
