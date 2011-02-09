@@ -27,7 +27,6 @@
 #include "Entities/Objects/StockAttribute.h"
 #include "Entities/Objects/FireAttribute.h"
 #include "Entities/Objects/BurnAttribute.h"
-#include "Entities/Objects/MIL_FireFunctor.h"
 #include "Entities/Objects/ExtinguishableCapacity.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"

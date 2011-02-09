@@ -5967,6 +5967,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Population - Invalid resource &apos;%1/%2&apos;</source>
         <translation>Population - Resource &apos;%1/%2&apos; invalide</translation>
     </message>
+    <message>
+        <source>Invalid repartition - Male/Female/Children repartition doesn&apos;t fit 100%</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Population_Data</name>

@@ -1046,8 +1046,7 @@ bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, b
                 + PLUGIN( "masalife_brain" )
                 + PLUGIN( "knowledge" )
                 + PLUGIN( "communication" )
-                + PLUGIN( "services" )
-                + PLUGIN( "default_engine" );
+                + PLUGIN( "services" );
             std::string brainInit = plugins
                 + "} cwd='" + includePath + "'";
             pArchetypeBrain.reset( new directia::brain::Brain( brainInit ) );
