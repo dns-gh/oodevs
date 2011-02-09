@@ -75,7 +75,7 @@ public:
     //@{
     const kernel::InfrastructureType& type_;
     bool enabled_;
-    float threshold_;
+    unsigned int threshold_;
     std::string role_;
     const gui::TerrainObjectProxy& object_;
     //@}

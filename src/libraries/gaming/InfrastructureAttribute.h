@@ -71,7 +71,7 @@ private:
     const tools::StringResolver< kernel::InfrastructureType >& resolver_;
     const gui::TerrainObjectProxy& object_;
     bool enabled_;
-    float threshold_;
+    unsigned int threshold_;
     std::string role_;
     const kernel::InfrastructureType* type_;
     //@}

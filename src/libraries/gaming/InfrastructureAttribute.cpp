@@ -82,7 +82,7 @@ void InfrastructureAttribute::UpdateData( const T& message )
     if( message.has_infrastructures() && message.infrastructures().has_infrastructure() )
     {
         enabled_ = message.infrastructures().infrastructure().active();
-        threshold_ = message.infrastructures().infrastructure().threshold();
+        threshold_ = static_cast< unsigned int >( message.infrastructures().infrastructure().threshold() * 100 );
         role_ = message.infrastructures().infrastructure().type();
         type_ = resolver_.Find( role_ );
         controller_.Update( *static_cast< Infrastructure_ABC* >( this ) );

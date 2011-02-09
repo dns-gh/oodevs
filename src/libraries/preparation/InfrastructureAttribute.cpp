@@ -42,8 +42,10 @@ InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy&
     , threshold_( 30 )
     , object_   ( object )
 {
+    float threshold;
     xis >> xml::attribute( "enable", enabled_ )
-        >> xml::attribute( "threshold", threshold_ );
+        >> xml::attribute( "threshold", threshold );
+    threshold_ = static_cast< unsigned int >( 100 * threshold );
     CreateDictionary( dico );
 }
 
@@ -97,7 +99,7 @@ void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::start( "infrastructure" )
             << xml::attribute( "role", role_ )
             << xml::attribute( "enabled", enabled_ )
-            << xml::attribute( "threshold", threshold_ )
+            << xml::attribute( "threshold", static_cast< float >( threshold_ ) / 100 )
         << xml::end;
 
 }
