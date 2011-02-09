@@ -300,7 +300,7 @@ namespace
         QTime qTo( CreateTime( to ) );
         QTime qDataFrom( CreateTime( dataFrom ) );
         QTime qDataTo( CreateTime( dataTo ) );
-        return ( qFrom < qDataFrom && qTo < qDataFrom ) || ( qFrom > qDataTo && qTo > qDataTo );
+        return ( qFrom < qDataFrom && qTo <= qDataFrom ) || ( qFrom >= qDataTo && qTo > qDataTo );
     }
 }
 // -----------------------------------------------------------------------------
