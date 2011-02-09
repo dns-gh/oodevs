@@ -117,12 +117,10 @@ void InhabitantExtractCrowdDialog::Show()
         return;
     healthySpinBox_->setValue( 0 );
     healthySpinBox_->setMaxValue( selected_->GetHealthy() );
-    if( selected_->GetHealthy() == 0 )
-        healthySpinBox_->setEnabled( false );
+    healthySpinBox_->setEnabled( selected_->GetHealthy() != 0 );
     woundedSpinBox_->setValue( 0 );
     woundedSpinBox_->setMaxValue( selected_->GetWounded() );
-    if( selected_->GetWounded() == 0 )
-        woundedSpinBox_->setEnabled( false );
+    woundedSpinBox_->setEnabled( selected_->GetWounded() != 0 );
     QToolTip::add( healthySpinBox_, tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %1" ).arg( selected_->GetHealthy() ) ) );
     QToolTip::add( woundedSpinBox_, tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %1" ).arg( selected_->GetWounded() ) ) );
     deadSizeLabel_->setText( QString::number( selected_->GetDead() ) );
