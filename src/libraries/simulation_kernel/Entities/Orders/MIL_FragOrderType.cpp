@@ -14,6 +14,7 @@
 
 MIL_FragOrderType::T_MissionIDMap MIL_FragOrderType::missionIDs_;
 MIL_FragOrderType::T_MissionNameMap MIL_FragOrderType::missionNames_;
+MIL_FragOrderType::T_MissionNameMap MIL_FragOrderType::fragOrderDiaTypes_;
 
 struct MIL_FragOrderType::LoadingWrapper
 {
@@ -54,8 +55,13 @@ void MIL_FragOrderType::ReadFragorder( xml::xistream& xis )
 
     const MIL_FragOrderType*& pMissionName = missionNames_[ pMission->GetName() ];
     if( pMissionName )
-        xis.error( "Automat mission name already defined" );
+        xis.error( "Entity fragOrder name already defined" );
     pMissionName = pMission;
+
+    const MIL_FragOrderType*& pMissionDiaType = fragOrderDiaTypes_[ pMission->GetDIAType() ];
+    if( pMissionDiaType )
+        xis.error( "Entity fragOrder diaType already defined" );
+    pMissionDiaType = pMission;
 }
 
 //-----------------------------------------------------------------------------
@@ -103,6 +109,19 @@ const MIL_FragOrderType* MIL_FragOrderType::Find( const std::string& strName )
         return 0;
     return it->second;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrderType::FindByDiaType
+// Created: MGD 2011-01-20
+// -----------------------------------------------------------------------------
+const MIL_FragOrderType* MIL_FragOrderType::FindByDiaType( const std::string& strName )
+{
+    CIT_MissionNameMap it = fragOrderDiaTypes_.find( strName );
+    if( it == fragOrderDiaTypes_.end() )
+        return 0;
+    return it->second;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_FragOrderType::IsAvailableWithoutMission

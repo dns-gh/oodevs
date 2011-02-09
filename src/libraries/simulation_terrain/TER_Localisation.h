@@ -116,6 +116,7 @@ public:
     bool Intersect2D          ( const MT_Line& line ) const;
 
     bool ComputeNearestPoint            ( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const; // Calcule la position de la localisation la plus proche de vSrc
+    bool ComputeNearestOutsidePoint( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const;
     bool ComputeNearestPoint            ( const TER_Localisation& localisation, MT_Vector2D& vResult, double& rMinDistance ) const;
     void GetPointsClippedByPolygon      ( const TER_Polygon& polygon, T_PointVector& clippedPointVector ) const;
     void GetPointsClippedByLocalisation ( const TER_Localisation& localisation, T_PointVector& clippedPointVector ) const;

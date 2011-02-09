@@ -548,6 +548,16 @@ bool TER_Localisation::ComputeNearestPoint( const MT_Vector2D& vSrc, MT_Vector2D
         vResult = vSrc;
         return true;
     }
+    return ComputeNearestOutsidePoint( vSrc, vResult );
+}
+
+//-----------------------------------------------------------------------------
+// Name: TER_Localisation::ComputeNearestOutsidePoint
+// Calcule la position sur le périmètre de la localisation la plus proche de vSrc
+// Created: MGD 2011-01-20
+//-----------------------------------------------------------------------------
+bool TER_Localisation::ComputeNearestOutsidePoint( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const
+{
     if( pointVector_.size() == 1 )
     {
         vResult = pointVector_[ 0 ];

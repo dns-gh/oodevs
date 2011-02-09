@@ -109,12 +109,12 @@ void MIL_FragOrder::Register( directia::brain::Brain& brain )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_FragOrder::Register
+// Name: MIL_FragOrder::CreateFragOrder
 // Created: DDA 2011-01-17
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_FragOrder > MIL_FragOrder::CreateFragOrder( std::string type )
 {
-    const MIL_FragOrderType* fragOrderType = MIL_FragOrderType::Find( type );
+    const MIL_FragOrderType* fragOrderType = MIL_FragOrderType::FindByDiaType( type );
     if( fragOrderType )
         return boost::shared_ptr< MIL_FragOrder >( new MIL_FragOrder( *fragOrderType ) );
     else
@@ -466,7 +466,7 @@ int MIL_FragOrder::GetSiteFranchissementVariante() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() const
 {
-    static const std::string parameterName( "agentKnowledge_" );
+    static const std::string parameterName( "pointCible_" );
 
     unsigned int parametersNumber = parameters_.size();
     for (unsigned int i = 0; i < parametersNumber; ++i )

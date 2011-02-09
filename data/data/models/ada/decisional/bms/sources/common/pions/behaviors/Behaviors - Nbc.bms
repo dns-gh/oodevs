@@ -17,6 +17,7 @@ include "bit.lua"
     activations =
     {
         { "BEH_Nbc_Recevoir_OrdreInopine", { "done_BEH_Nbc_Recevoir_OrdreInopine" } },
+        { "BEH_ReactToNBC", { "done_BEH_ReactToNBC" } },
     },
 
     create = function( self )
@@ -35,6 +36,7 @@ include "bit.lua"
 ]]        end
 
         Activate( self.activations.BEH_Nbc_Recevoir_OrdreInopine, 1, {} )
+        Activate( self.activations.BEH_ReactToNBC, 1, {} )
     end,
 
 --[[// *****************************************************************************
@@ -85,6 +87,46 @@ elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
 
         end
 
+    end,
+    
+    
+--[[// *****************************************************************************
+]]--[[// BEH_ReactToNBC
+]]--[[//
+]]--[[// Commentaires : Comportement automatique d'évitement des zones NBC
+]]--[[// 
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_ReactToNBC"
+{
+    feedbacks = { { { "done_BEH_ReactToNBC" }, "BEH_ReactToNBC" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ReactToNBC, {value} ) end,
+    activations =
+    {
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } }
+    },
+
+    activate = function( self )
+        local Activate = Activate
+        
+        local pos = DEC_Agent_Position()
+        local lstObjects = DEC_Knowledges_ObjectsInCircle( pos, 2000, {"nbc cloud", "nbc zone"} )
+        local lstObjectsInside = {}
+        for _, object in pairs( lstObjects  ) do
+            if DEC_Geometrie_EstPointDansLocalisation( pos, DEC_ConnaissanceObjet_Localisation( object ) ) then
+                lstObjectsInside[#lstObjectsInside + 1] = object
+            end
+        end
+        
+        local positions = {}
+        for _, objective in pairs( lstObjectsInside ) do
+            positions[ #positions + 1 ] = DEC_Geometrie_GetLeavingAreaPosition( DEC_ConnaissanceObjet_Localisation( objective ) )
+        end
+        
+        for _, position in pairs( positions ) do
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1 / DEC_Geometrie_DistanceBetweenPoints( position, pos ), { position, eProgressionDirect, eTypeItiRepli, } )
+        end
     end,
 
 --[[// *****************************************************************************
@@ -177,6 +219,8 @@ node "ACT_Nbc_MettreTenueProtection"
 
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Nbc, "BEH_Nbc_Recevoir_OrdreInopine", nodes.BEH_Nbc_Recevoir_OrdreInopine }
+connections[ #connections + 1 ] = { nodes.BEH_Nbc, "BEH_ReactToNBC", nodes.BEH_ReactToNBC }
 connections[ #connections + 1 ] = { nodes.BEH_Nbc_GererAlerteNiv4, "ACT_Nbc_MettreTenueProtection", nodes.ACT_Nbc_MettreTenueProtection }
 connections[ #connections + 1 ] = { nodes.BEH_Nbc_GererAlerteNiv4, "ACT_Nbc_PasserEnNiveauNBC", nodes.ACT_Nbc_PasserEnNiveauNBC }
 connections[ #connections + 1 ] = { nodes.BEH_Nbc_Recevoir_OrdreInopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_ReactToNBC, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }

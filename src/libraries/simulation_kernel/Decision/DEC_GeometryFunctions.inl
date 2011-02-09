@@ -181,6 +181,27 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeStartPoint( const
     return pResult;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::GetLeavingAreaPosition
+// Created: MGG 2011-01-20
+// -----------------------------------------------------------------------------
+template< typename T >
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetLeavingAreaPosition( const T& caller, TER_Localisation* pLocalisation )
+{
+    if( !pLocalisation )
+        throw std::runtime_error( "invalid localisation" );
+
+    TER_Localisation scale = *pLocalisation;
+    scale.Scale( 100 );
+
+    boost::shared_ptr< MT_Vector2D > pResult;
+    MT_Vector2D vResult;
+    if( scale.ComputeNearestOutsidePoint( GetPosition( caller ), vResult ) )
+        pResult.reset( new MT_Vector2D( vResult ) );
+
+    return pResult;
+}
+
 namespace
 {
     // =============================================================================

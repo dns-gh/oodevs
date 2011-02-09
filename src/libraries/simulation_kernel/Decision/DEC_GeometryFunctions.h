@@ -98,6 +98,7 @@ public:
     static DEC_Objective* GetNextObjectiveInFuseau( const MIL_Fuseau* pFuseau, const MT_Vector2D* pRefPoint, const std::vector< DEC_Objective* >& objectives );
     static boost::shared_ptr< TER_Localisation > ComputeAreaInZone( const MIL_Fuseau* zone, const MT_Vector2D* center );
     static double ComputeAreaSize( TER_Localisation* pLocalisation );
+    template< typename T > static boost::shared_ptr< MT_Vector2D > GetLeavingAreaPosition( const T& caller, TER_Localisation* pLocalisation );
     static double ComputeAreaDiameter( TER_Localisation* pLocalisation );
     static bool IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point, bool loadedWeight );
     static bool IsPointInCity( const MT_Vector2D& point );

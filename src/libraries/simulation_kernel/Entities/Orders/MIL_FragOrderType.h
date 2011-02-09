@@ -32,6 +32,7 @@ public:
     static void                      Initialize( xml::xistream& xis );
     static const MIL_FragOrderType*  Find      ( unsigned int nID );
     static const MIL_FragOrderType*  Find      ( const std::string& strName );
+    static const MIL_FragOrderType*  FindByDiaType( const std::string& strName );
     //@}
 
     //! @name Accessors
@@ -70,6 +71,7 @@ private:
 private:
     static T_MissionIDMap   missionIDs_;
     static T_MissionNameMap missionNames_;
+    static T_MissionNameMap fragOrderDiaTypes_;
 };
 
 #endif // __MIL_FragOrderType_h_

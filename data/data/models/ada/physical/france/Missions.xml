@@ -4125,14 +4125,6 @@
         <value id="1" name="vitesse"/>
       </parameter>
     </fragorder>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="346" name="Changer Regles Engagement">
-      <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Order conduite changer regles engagement" optional="false" type="Enumeration">
-        <value id="0" name="none"/>
-        <value id="1" name="tir_libre"/>
-        <value id="2" name="tir_sur_riposte"/>
-        <value id="3" name="tir_interdit"/>
-      </parameter>
-    </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ChangerParametresRecompletementALAT" id="347" name="Changer Parametres Recompletement ALAT">
       <parameter dia-name="porteeAction_" name="Portee Action" optional="false" type="Enumeration">
         <value id="0" name="courte_portee"/>
@@ -4277,11 +4269,6 @@
       <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Integer"/>
       <parameter dia-name="pointCible_" name="target" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.ApplyIndirectFire" id="384" name="ApplyGuidedFire">
-      <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="ResourceType"/>
-      <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Integer"/>
-      <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledge"/>
-    </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_InterdireMunition" id="385" name="Pion Interdire Munition">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="ResourceType"/>
     </fragorder>
@@ -4304,12 +4291,12 @@
     <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Appliquer les feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Integer"/>
-      <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
-    </fragorder>
-    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="393" name="Appliquer les feux guidés">
-      <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
-      <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Integer"/>
-      <parameter dia-name="agentKnowledge_" name="Cible" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="pointCible_" name="Cible" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Embarquer" id="394" name="Embarquer"/>
     <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Debarquer" id="395" name="Debarquer"/>
@@ -4319,4 +4306,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0226009885" -->
+<!-- signature="1494113676" -->

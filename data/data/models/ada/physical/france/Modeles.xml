@@ -71,7 +71,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PlatoonABC">
@@ -135,7 +134,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PEI">
@@ -177,7 +175,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PIA">
@@ -245,7 +242,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PC">
@@ -284,7 +280,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
@@ -348,14 +343,12 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.combat.support.artillery.roles.Artillery">
       <missions>
         <mission name="ASS Assurer la Mise En Oeuvre">
           <fragorder name="Appliquer les feux"/>
-          <fragorder name="Appliquer les feux guidés"/>
         </mission>
         <mission name="ASS Coordonner le Tir et l'Ilumination"/>
         <mission name="COMMUNES Decrocher"/>
@@ -389,7 +382,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.combat.support.engineer.roles.Engineer">
@@ -440,7 +432,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
     <unit dia-type="net.masagroup.sword.military.platoon.terrorism.roles.Sniper" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.terrorism.roles.Sniper">
@@ -477,7 +468,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="Patrouille AIR Assaut">
@@ -505,7 +495,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -533,7 +522,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -569,7 +557,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -601,7 +588,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -633,7 +619,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -679,7 +664,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -724,7 +708,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -768,7 +751,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -811,7 +793,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -852,7 +833,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -899,7 +879,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -941,7 +920,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -984,7 +962,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1026,7 +1003,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1063,7 +1039,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1100,7 +1075,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1137,7 +1111,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1192,7 +1165,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1229,7 +1201,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1267,7 +1238,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1305,7 +1275,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1343,7 +1312,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1381,7 +1349,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1419,7 +1386,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1457,7 +1423,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1496,7 +1461,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1535,7 +1499,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1573,7 +1536,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1611,7 +1573,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1649,7 +1610,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1689,7 +1649,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1728,7 +1687,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1766,7 +1724,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1804,7 +1761,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1842,7 +1798,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1915,7 +1870,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1957,7 +1911,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -1999,7 +1952,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2040,7 +1992,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2080,7 +2031,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2123,7 +2073,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2192,7 +2141,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2265,7 +2213,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2310,7 +2257,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2361,7 +2307,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2410,7 +2355,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2448,7 +2392,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2485,7 +2428,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2523,7 +2465,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2561,7 +2502,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2600,7 +2540,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2639,7 +2578,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2677,7 +2615,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2714,7 +2651,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2757,7 +2693,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2804,7 +2739,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2854,7 +2788,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2899,7 +2832,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -2948,7 +2880,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Appliquer les feux"/>
       </fragorders>
@@ -2994,7 +2925,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3039,7 +2969,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3084,7 +3013,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3135,7 +3063,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3172,7 +3099,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3210,7 +3136,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3249,7 +3174,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3288,7 +3212,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3329,7 +3252,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3373,7 +3295,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3411,7 +3332,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3455,7 +3375,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3493,7 +3412,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3536,7 +3454,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3574,7 +3491,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3616,7 +3532,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3654,7 +3569,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3692,7 +3606,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3730,7 +3643,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3768,7 +3680,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3806,7 +3717,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3845,7 +3755,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3885,7 +3794,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3924,7 +3832,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -3964,7 +3871,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4003,7 +3909,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4043,7 +3948,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4081,7 +3985,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4119,7 +4022,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4154,7 +4056,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4185,7 +4086,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4221,7 +4121,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4249,7 +4148,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4284,7 +4182,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4312,7 +4209,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4348,7 +4244,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4386,7 +4281,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4424,7 +4318,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4463,7 +4356,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4501,7 +4393,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4540,7 +4431,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4590,7 +4480,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4625,7 +4514,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4669,7 +4557,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4707,7 +4594,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4745,7 +4631,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4783,7 +4668,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4821,7 +4705,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4859,7 +4742,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4890,7 +4772,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4919,7 +4800,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4948,7 +4828,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -4977,7 +4856,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5007,7 +4885,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5046,7 +4923,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5088,7 +4964,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5124,7 +4999,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5166,7 +5040,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5208,7 +5081,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5248,7 +5120,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5288,7 +5159,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5347,7 +5217,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5414,7 +5283,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5451,7 +5319,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5498,7 +5365,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5540,7 +5406,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5580,7 +5445,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5635,7 +5499,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5672,7 +5535,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5712,7 +5574,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5753,7 +5614,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5794,7 +5654,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5834,7 +5693,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5871,7 +5729,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5914,7 +5771,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5956,7 +5812,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -5994,7 +5849,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6032,7 +5886,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6070,7 +5923,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6112,7 +5964,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6151,7 +6002,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6188,7 +6038,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6226,7 +6075,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6293,7 +6141,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6335,7 +6182,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6375,7 +6221,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6415,7 +6260,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6453,7 +6297,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6491,7 +6334,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6528,7 +6370,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6571,7 +6412,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6616,7 +6456,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6656,7 +6495,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6688,7 +6526,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6742,7 +6579,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6800,7 +6636,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6850,7 +6685,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6882,7 +6716,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6906,7 +6739,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6930,7 +6762,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6954,7 +6785,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -6979,7 +6809,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7009,7 +6838,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7044,7 +6872,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7080,7 +6907,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7116,7 +6942,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7152,7 +6977,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7185,7 +7009,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7221,7 +7044,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7251,7 +7073,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7293,7 +7114,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7336,7 +7156,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7370,7 +7189,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7402,7 +7220,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7436,7 +7253,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7469,7 +7285,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7506,7 +7321,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7547,7 +7361,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7577,7 +7390,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7616,7 +7428,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
@@ -7672,7 +7483,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
       </fragorders>
@@ -7705,7 +7515,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </automat>
     <automat dia-type="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="net.masagroup.sword.military.company.terrorism.roles.SniperCompany">
@@ -7734,7 +7543,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
       </fragorders>
     </automat>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="Groupe Assaut AIR">
@@ -7756,7 +7564,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -7786,7 +7593,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -7823,7 +7629,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -7860,7 +7665,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -7897,7 +7701,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -7943,7 +7746,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -7987,7 +7789,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8024,7 +7825,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8068,7 +7868,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8102,7 +7901,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8166,7 +7964,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8233,7 +8030,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8277,7 +8073,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8320,7 +8115,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8363,7 +8157,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8405,7 +8198,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8438,7 +8230,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8483,7 +8274,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8517,7 +8307,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8552,7 +8341,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8587,7 +8375,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8621,7 +8408,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8685,7 +8471,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8741,7 +8526,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8790,7 +8574,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8833,7 +8616,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8872,7 +8654,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8904,7 +8685,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8938,7 +8718,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -8983,7 +8762,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9017,7 +8795,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9051,7 +8828,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9085,7 +8861,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9119,7 +8894,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9153,7 +8927,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9187,7 +8960,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9221,7 +8993,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9255,7 +9026,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9289,7 +9059,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9323,7 +9092,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9357,7 +9125,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9392,7 +9159,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9425,7 +9191,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9459,7 +9224,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9492,7 +9256,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9528,7 +9291,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9563,7 +9325,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9597,7 +9358,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9632,7 +9392,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9666,7 +9425,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9700,7 +9458,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9734,7 +9491,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9768,7 +9524,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9799,7 +9554,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9830,7 +9584,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9855,7 +9608,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9880,7 +9632,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9905,7 +9656,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9930,7 +9680,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9959,7 +9708,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -9994,7 +9742,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10027,7 +9774,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10063,7 +9809,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10096,7 +9841,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10122,7 +9866,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10186,7 +9929,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10250,7 +9992,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10295,7 +10036,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10339,7 +10079,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10372,7 +10111,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10405,7 +10143,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10438,7 +10175,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10481,7 +10217,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10518,7 +10253,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10555,7 +10289,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10588,7 +10321,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10625,7 +10357,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10660,7 +10391,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10707,7 +10437,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10743,7 +10472,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10777,7 +10505,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10818,7 +10545,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10867,7 +10593,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10900,7 +10625,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10933,7 +10657,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -10969,7 +10692,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11012,7 +10734,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11057,7 +10778,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11101,7 +10821,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11147,7 +10866,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11169,7 +10887,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11191,7 +10908,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11213,7 +10929,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11251,7 +10966,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11286,7 +11000,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11316,7 +11029,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11348,7 +11060,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11382,7 +11093,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11416,7 +11126,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11450,7 +11159,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11484,7 +11192,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11519,7 +11226,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11562,7 +11268,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11599,7 +11304,6 @@
         <fragorder name="Changer les règles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement"/>
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
@@ -11635,4 +11339,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2939750983" -->
+<!-- signature="4215858132" -->
