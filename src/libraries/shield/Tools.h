@@ -41,7 +41,7 @@ namespace shield
 #define CONVERT( field ) \
     CONVERT_TO( field, field )
 
-#define CONVERT_ENUM_EXT( from_field, to_field, mapping ) \
+#define CONVERT_ENUM_EXT( from_field, to_field, mapping, injective ) \
     { \
         const ::google::protobuf::FieldDescriptor* fromField = from.descriptor()->FindFieldByName( BOOST_PP_STRINGIZE( from_field ) ); \
         const ::google::protobuf::FieldDescriptor* toField = to->descriptor()->FindFieldByName( BOOST_PP_STRINGIZE( to_field ) ); \
@@ -49,18 +49,22 @@ namespace shield
             throw std::runtime_error( "enumeration field '" BOOST_PP_STRINGIZE( from_field ) "' not found in '" + from.descriptor()->full_name() + "'" ); \
         if( ! toField || ! toField->enum_type() ) \
             throw std::runtime_error( "enumeration field '" BOOST_PP_STRINGIZE( to_field ) "' not found in '" + to->descriptor()->full_name() + "'" ); \
-        if( fromField->enum_type()->value_count() > \
-            toField->enum_type()->value_count() ) \
+        bool dummy = injective; \
+        if( dummy && fromField->enum_type()->value_count() > toField->enum_type()->value_count() ) \
                throw std::runtime_error( "source values cannot all be mapped to destination values of field '" BOOST_PP_STRINGIZE( to_field ) "'" ); \
-        if( fromField->enum_type()->value_count() != \
-            int( boost::assign::map_list_of mapping .size() ) ) \
+        if( fromField->enum_type()->value_count() != int( boost::assign::map_list_of mapping .size() ) ) \
                 throw std::runtime_error( "missing values pair in mapping for field '" BOOST_PP_STRINGIZE( from_field ) "'" ); \
-        if( from.has_##from_field() ) to->set_##to_field( ConvertEnum( from.from_field(), boost::assign::map_list_of mapping ) ); \
+        if( from.has_##from_field() ) \
+            to->set_##to_field( ConvertEnum( from.from_field(), boost::assign::map_list_of mapping ) ); \
     }
-#define CONVERT_ENUM( field, mapping ) \
-    CONVERT_ENUM_EXT( field, field, mapping )
 #define CONVERT_ENUM_TO( from_field, to_field, mapping ) \
-    CONVERT_ENUM_EXT( from_field, to_field, mapping )
+    CONVERT_ENUM_EXT( from_field, to_field, mapping, true )
+#define CONVERT_ENUM( field, mapping ) \
+    CONVERT_ENUM_TO( field, field, mapping )
+#define CONVERT_NON_INJECTIVE_ENUM_TO( from_field, to_field, mapping ) \
+    CONVERT_ENUM_EXT( from_field, to_field, mapping, false )
+#define CONVERT_NON_INJECTIVE_ENUM( from_field, to_field, mapping ) \
+    CONVERT_NON_INJECTIVE_ENUM_TO( from_field, to_field, mapping )
 
 #define CONVERT_ID_TO( from_field, to_field ) \
     if( from.has_##from_field() ) \
