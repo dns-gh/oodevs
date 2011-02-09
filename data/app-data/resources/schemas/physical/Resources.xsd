@@ -174,13 +174,13 @@
 											<xs:documentation xml:lang="fr">Type d'objet créé par le tir indirect</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
-									<xs:attribute name="x-dispersion" type="xs:nonNegativeInteger" use="required">
+									<xs:attribute name="x-dispersion" type="T_NonNegativeDouble" use="required">
 										<xs:annotation>
 											<xs:documentation xml:lang="en">TODO</xs:documentation>
 											<xs:documentation xml:lang="fr">Rayon r1 de l’ellipse d’effet du tir</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
-									<xs:attribute name="y-dispersion" type="xs:nonNegativeInteger" use="required">
+									<xs:attribute name="y-dispersion" type="T_NonNegativeDouble" use="required">
 										<xs:annotation>
 											<xs:documentation xml:lang="en">TODO</xs:documentation>
 											<xs:documentation xml:lang="fr">Rayon r2 de l’ellipse d’effet du tir</xs:documentation>

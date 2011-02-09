@@ -191,17 +191,17 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     // Mine parameters
     pMineParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Mine ammo parameters" ), pIndirectGroup );
     pMineParametersGroup_->hide();
-    builder.AddField< ADN_EditLine_Int >( pMineParametersGroup_, tr( "Mines quantity" ), vConnectors[ eMineNumber ] );
+    builder.AddField< ADN_EditLine_Int >( pMineParametersGroup_, tr( "Mines quantity" ), vConnectors[ eMineNumber ], 0, eGreaterEqualZero );
     // Illumination
     ADN_GroupBox* pIlluminationGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Illumination capacity" ), pGroupBox );
     vConnectors[ eIlluminating ] = &pIlluminationGroup->GetConnector();
-    builder.AddField< ADN_EditLine_Double >( pIlluminationGroup, tr( "Range" ), vConnectors[ eRange ] );
+    builder.AddField< ADN_EditLine_Double >( pIlluminationGroup, tr( "Range" ), vConnectors[ eRange ], 0, eGreaterEqualZero );
     builder.AddField< ADN_CheckBox >( pIlluminationGroup, tr( "Must Maintain illumination" ), vConnectors[ eMaintainIllumination ] );
     // Guidance
     ADN_GroupBox* pGuidanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Guidance" ), pGroupBox );
     vConnectors[ eGuided ] = &pGuidanceGroup->GetConnector();
     builder.AddField< ADN_CheckBox >( pGuidanceGroup, tr( "Must Maintain guidance" ), vConnectors[ eMaintainGuidance ] );
-    builder.AddField< ADN_EditLine_Double >( pGuidanceGroup, tr( "Illumination range needed" ), vConnectors[ eGuidanceRange ] );
+    builder.AddField< ADN_EditLine_Double >( pGuidanceGroup, tr( "Illumination range needed" ), vConnectors[ eGuidanceRange ], 0, eGreaterEqualZero );
     //Connect
     pAmmoListView_->SetItemConnectors( vConnectors );
     // Layout
