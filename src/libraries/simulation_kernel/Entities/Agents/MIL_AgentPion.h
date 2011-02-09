@@ -16,6 +16,7 @@
 #include "MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
 #include "tools/Resolver.h"
+#include <map>
 
 namespace sword
 {
@@ -162,6 +163,11 @@ private:
     void OnReceiveCreateWound( const sword::MissionParameters& asn );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::string > T_Extensions;
+    //@}
+
     //! @name Serialization
     //@{
     template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int version );
@@ -177,7 +183,7 @@ private:
     const AlgorithmsFactories& algorithmFactories_;
     DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;
     MIL_PionOrderManager& orderManager_;
-    std::map< std::string, std::string > extensions_;
+    T_Extensions extensions_;
     //@}
 };
 

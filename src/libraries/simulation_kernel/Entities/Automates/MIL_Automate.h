@@ -17,6 +17,7 @@
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include <tools/Resolver.h>
+#include <map>
 
 namespace sword
 {
@@ -78,6 +79,8 @@ public:
     typedef std::map< const MIL_AutomateLOG*, PHY_SupplyDotationState* > T_SupplyDotationStateMap;
     typedef T_SupplyDotationStateMap::iterator                           IT_SupplyDotationStateMap;
     typedef T_SupplyDotationStateMap::const_iterator                     CIT_SupplyDotationStateMap;
+
+    typedef std::map< std::string, std::string > T_Extensions;
     //@}
 
 public:
@@ -224,7 +227,7 @@ public:
 
     //! @name Tools
     //@{
-    void Engage   ();
+    void Engage();
     void Disengage();
     //@}
 
@@ -236,8 +239,8 @@ protected:
 
     //! @name Tools
     //@{
-            void             Surrender        ( const MIL_Army_ABC& amrySurrenderedTo );
-            void             CancelSurrender  ();
+    void Surrender( const MIL_Army_ABC& amrySurrenderedTo );
+    void CancelSurrender();
     //@}
 
 private:
@@ -249,7 +252,7 @@ private:
     //! @name Helpers
     //@{
     void ReadAutomatSubordinate( xml::xistream& xis );
-    void ReadUnitSubordinate   ( xml::xistream& xis );
+    void ReadUnitSubordinate( xml::xistream& xis );
     void ReadExtension( xml::xistream& xis );
     //@}
 
@@ -257,32 +260,31 @@ private:
     //! @name Member data
     //@{
     const MIL_AutomateType* pType_;
-    const unsigned int      nID_;
-          MIL_Formation*    pParentFormation_;
-          MIL_Automate*     pParentAutomate_;
-          bool              bEngaged_;
-    MIL_KnowledgeGroup*       pKnowledgeGroup_;
+    const unsigned int nID_;
+    MIL_Formation* pParentFormation_;
+    MIL_Automate* pParentAutomate_;
+    bool bEngaged_;
+    MIL_KnowledgeGroup* pKnowledgeGroup_;
     MIL_AutomateOrderManager* pOrderManager_;
-    MIL_AgentPion*            pPionPC_;
-    T_PionVector              pions_; // Including pion PC
-    T_PionVector              recycledPions_; // Dynamic pions
-    T_AutomateVector          automates_;
-    bool                     bAutomateModeChanged_;
-    std::map< std::string, std::string > extensions_;
-    unsigned int                     nTickRcDotationSupplyQuerySent_;
-
+    MIL_AgentPion* pPionPC_;
+    T_PionVector pions_; // Including pion PC
+    T_PionVector recycledPions_; // Dynamic pions
+    T_AutomateVector automates_;
+    bool bAutomateModeChanged_;
+    T_Extensions extensions_;
+    unsigned int nTickRcDotationSupplyQuerySent_;
     // Knowledge
     DEC_KnowledgeBlackBoard_Automate* pKnowledgeBlackBoard_;
     // Surrendered / prisoner
-    const MIL_Army_ABC*             pArmySurrenderedTo_;
-
+    const MIL_Army_ABC* pArmySurrenderedTo_;
     // Logistic
-    MIL_AutomateLOG*        pTC2_;
-    MIL_AutomateLOG*        pNominalTC2_;
-    std::auto_ptr<MIL_AutomateLOG>  pBrainLogistic_;
+    MIL_AutomateLOG* pTC2_;
+    MIL_AutomateLOG* pNominalTC2_;
+    std::auto_ptr< MIL_AutomateLOG > pBrainLogistic_;
     boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
-    std::auto_ptr<MIL_DotationSupplyManager>     pDotationSupplyManager_;
-    std::auto_ptr<MIL_StockSupplyManager>        pStockSupplyManager_;
+    std::auto_ptr< MIL_DotationSupplyManager > pDotationSupplyManager_;
+    std::auto_ptr< MIL_StockSupplyManager > pStockSupplyManager_;
+    //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Automate* role, const unsigned int /*version*/ );

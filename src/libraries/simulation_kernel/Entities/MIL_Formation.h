@@ -14,6 +14,8 @@
 #include "MIL_Entity_ABC.h"
 #include "tools/Resolver.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
+#include <map>
+
 namespace xml
 {
     class xostream;
@@ -106,6 +108,10 @@ private:
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Formation* role, const unsigned int /*version*/ );
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::string > T_Extensions;
+    //@}
 
 private:
     //! @name Attributes
@@ -116,7 +122,7 @@ private:
     const PHY_NatureLevel* pLevel_;
     std::auto_ptr<MIL_AutomateLOG> pBrainLogistic_;
     boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
-    std::map< std::string, std::string > extensions_;
+    T_Extensions extensions_;
     //@}
 };
 

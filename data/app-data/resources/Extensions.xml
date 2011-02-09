@@ -5069,51 +5069,71 @@
 	<orbat-attributes>
 		<attribute extends="unit;formation" name="TypeSIOC" type="dictionary" dictionary="T_SIC_TypeSIOC" dictionary-kind="short">
 			<labels>
-			   <label text="Type SIOC" language="fr"/>
+				<label text="Type SIOC" language="fr"/>
 			</labels>
 		</attribute>
 		<attribute extends="unit;formation" name="PC" type="boolean">
 					<labels>
-			   <label text="PC" language="fr"/>
+				<label text="PC" language="fr"/>
 			</labels>
 		</attribute>
 		<attribute extends="unit;formation" name="TypePC" type="dictionary" dictionary="T_SIC_TypePC" dictionary-kind="short">
 			<labels>
-			   <label text="Type PC" language="fr"/>
+				<label text="Type PC" language="fr"/>
 			</labels>
 		</attribute>
 		<attribute extends="unit;automat;formation" name="IndRadio" type="numeric" min-length="3" max-length="3">
 			<labels>
-			   <label text="Indicatif radio" language="fr"/>
+				<label text="Indicatif radio" language="fr"/>
 			</labels>
-		</attribute>	
+		</attribute>
 		<attribute extends="unit;formation" name="IdCDB" type="loosy-dictionary" dictionary="T_SIC_IdCDB" dictionary-kind="short" min-length="3" max-length="3">
 			<labels>
-			   <label text="Identifiant Champ de Bataille" language="fr"/>
+				<label text="Identifiant Champ de Bataille" language="fr"/>
 			</labels>
-		</attribute>		
+		</attribute>
 		<attribute extends="unit;formation" name="IndOpe" type="alphanumeric" min-length="4" max-length="4">
 			<labels>
-			   <label text="Indicatif opérationnel" language="fr"/>
+				<label text="Indicatif opérationnel" language="fr"/>
 			</labels>
-		</attribute>		
+		</attribute>
 		<attribute extends="unit;automat;formation" name="NomLong" type="alphanumeric" max-length="17">
 			<labels>
-			   <label text="Nom long unité" language="fr"/>
+				<label text="Nom long unité" language="fr"/>
 			</labels>
-		</attribute>		
+		</attribute>
 		<attribute extends="unit;automat;formation" name="Nationalite"  type="dictionary" dictionary="T_Nationalite">
 			<labels>
-			   <label text="Nationalité" language="fr"/>
+				<label text="Nationalité" language="fr"/>
 			</labels>
-		</attribute>		
+		</attribute>
+		<attribute extends="population" name="PopNationalite" type="string">
+			<labels>
+				<label text="Nationalite" language="fr"/>
+			</labels>
+  	</attribute>
+	 <attribute extends="population" name="Ethnicite" type="string">
+			<labels>
+				<label text="Ethnicite" language="fr"/>
+			</labels>
+		</attribute>
+		<attribute extends="population" name="Religion" type="string">
+			<labels>
+				<label text="Religion" language="fr"/>
+			</labels>
+		</attribute>
+		<attribute extends="unit;formation;automat;crowd;population" name="Id64" type="string">
+			<labels>
+				<label text="Id 64 bits" language="fr"/>
+			</labels>
+		</attribute>
 	</orbat-attributes>
 	<profile-attributes>
 		<attribute name="UserRole" type="dictionary" dictionary="T_User_Role">
 			<labels>
-			   <label text="Rôle" language="fr"/>
+				<label text="Rôle" language="fr"/>
 			</labels>
-		</attribute>		
+		</attribute>
 	</profile-attributes>
 </extensions>
 <!-- signature="2362206217" -->

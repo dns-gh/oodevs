@@ -24,6 +24,7 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/map.hpp>
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 
 class MIL_Intelligence;
 namespace
@@ -107,10 +108,10 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( const std::string& name )
     : MIL_Entity_ABC( name )
-    , nID_       ( 0 )
-    , pArmy_     ( 0 )
-    , pParent_   ( 0 )
-    , pLevel_    ( 0 )
+    , nID_    ( 0 )
+    , pArmy_  ( 0 )
+    , pParent_( 0 )
+    , pLevel_ ( 0 )
 {
     // NOTHING
 }
@@ -260,6 +261,18 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "name", GetName() );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref( xos ) ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteODB, _1, boost::ref( xos ) ) );
+    if( !extensions_.empty() )
+    {
+        xos << xml::start( "extensions" );
+        BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
+        {
+            xos << xml::start( "entry" )
+                    << xml::attribute( "key", extension.first )
+                    << xml::attribute( "value", extension.second )
+                << xml::end;
+        }
+        xos << xml::end;
+    }
     xos << xml::end; // formation
 }
 
@@ -313,7 +326,6 @@ void MIL_Formation::SendCreation() const
 void MIL_Formation::SendFullState() const
 {
     SendLogisticLinks();
-
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendFullState, _1 ) );
 }
@@ -381,7 +393,6 @@ MIL_AutomateLOG* MIL_Formation::GetBrainLogistic() const
     return pBrainLogistic_.get();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation::FindLogisticManager
 // Created: AHC 2010-09-27
@@ -432,4 +443,3 @@ void MIL_Formation::SendLogisticLinks() const
     if( pBrainLogistic_.get() )
         pBrainLogistic_->SendFullState();
 }
-

@@ -13,7 +13,6 @@
 #include "PopulationConcentration.h"
 #include "PopulationPartPositionsProxy.h"
 #include "Tools.h"
-
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Displayer_ABC.h"

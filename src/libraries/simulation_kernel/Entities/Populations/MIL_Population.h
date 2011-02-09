@@ -14,6 +14,7 @@
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
+#include <map>
 
 namespace sword
 {
@@ -211,9 +212,13 @@ private:
     typedef std::vector< MIL_PopulationFlow* > T_FlowVector;
     typedef T_FlowVector::iterator            IT_FlowVector;
     typedef T_FlowVector::const_iterator     CIT_FlowVector;
+
+    typedef std::map< std::string, std::string > T_Extensions;
     //@}
 
 private:
+    //! @name Member Data
+    //@{
     const MIL_PopulationType* pType_;
     const unsigned int nID_;
     MIL_Army_ABC* pArmy_;
@@ -226,15 +231,14 @@ private:
     DEC_PopulationKnowledge* pKnowledge_;
     MIL_PopulationOrderManager orderManager_;
     boost::shared_ptr< MT_Vector2D > vBarycenter_;
-
     // Pion effects
     bool bPionMaxSpeedOverloaded_;
     double rOverloadedPionMaxSpeed_;
     bool bBlinded_;
-
     // Misc
     bool bHasDoneMagicMove_;
-    std::map< std::string, std::string > extensions_;
+    T_Extensions extensions_;
+    //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Population* population, const unsigned int /*version*/ );

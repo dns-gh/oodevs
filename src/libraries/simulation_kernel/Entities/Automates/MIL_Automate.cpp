@@ -47,6 +47,7 @@
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
+#include <boost/foreach.hpp>
 
 using namespace sword;
 
@@ -88,28 +89,28 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult )
-    : MIL_Entity_ABC                     ( xis )
-    , pType_                             ( &type )
-    , nID_                               ( nID )
-    , pParentFormation_                  ( dynamic_cast< MIL_Formation* >( &parent ) )
-    , pParentAutomate_                   ( dynamic_cast< MIL_Automate* >( &parent ) )
-    , bEngaged_                          ( true )
-    , pKnowledgeGroup_                   ( 0 )
-    , pOrderManager_                     ( new MIL_AutomateOrderManager( *this ) )
-    , pPionPC_                           ( 0 )
-    , pions_                             ()
-    , recycledPions_                     ()
-    , automates_                         ()
-    , bAutomateModeChanged_              ( true )
-    , nTickRcDotationSupplyQuerySent_    ( 0 )
-    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
-    , pArmySurrenderedTo_                ( 0 )
-    , pTC2_                              ( 0 )
-    , pNominalTC2_                       ( 0 )
-    , pBrainLogistic_                    ( 0 )
-    //, pLogisticAction_                   ( 0 )
-    , pDotationSupplyManager_            ( new MIL_DotationSupplyManager( *this ) )
-    , pStockSupplyManager_               ( new MIL_StockSupplyManager( *this ) )
+    : MIL_Entity_ABC( xis )
+    , pType_                         ( &type )
+    , nID_                           ( nID )
+    , pParentFormation_              ( dynamic_cast< MIL_Formation* >( &parent ) )
+    , pParentAutomate_               ( dynamic_cast< MIL_Automate* >( &parent ) )
+    , bEngaged_                      ( true )
+    , pKnowledgeGroup_               ( 0 )
+    , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
+    , pPionPC_                       ( 0 )
+    , pions_                         ()
+    , recycledPions_                 ()
+    , automates_                     ()
+    , bAutomateModeChanged_          ( true )
+    , nTickRcDotationSupplyQuerySent_( 0 )
+    , pKnowledgeBlackBoard_          ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
+    , pArmySurrenderedTo_            ( 0 )
+    , pTC2_                          ( 0 )
+    , pNominalTC2_                   ( 0 )
+    , pBrainLogistic_                ( 0 )
+    //, pLogisticAction_               ( 0 )
+    , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
+    , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
 {
     Initialize( xis, gcPause, gcMult );
     if( pParentFormation_ )
@@ -123,56 +124,56 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
-    : MIL_Entity_ABC                     ( "" )
-    , pType_                             ( &type )
-    , nID_                               ( nID )
-    , pParentFormation_                  ( 0 )
-    , pParentAutomate_                   ( 0 )
-    , bEngaged_                          ( true )
-    , pKnowledgeGroup_                   ( 0 )
-    , pOrderManager_                     ( new MIL_AutomateOrderManager( *this ) )
-    , pPionPC_                           ( 0 )
-    , bAutomateModeChanged_              ( true )
-    , nTickRcDotationSupplyQuerySent_    ( 0 )
-    , pKnowledgeBlackBoard_              ( 0 )
-    , pArmySurrenderedTo_                ( 0 )
-    , pTC2_                              ( 0 )
-    , pNominalTC2_                       ( 0 )
-    , pBrainLogistic_                    ( 0 )
-    //, pLogisticAction_                   ( 0 )
-    , pDotationSupplyManager_            ( new MIL_DotationSupplyManager( *this ) )
-    , pStockSupplyManager_               ( new MIL_StockSupplyManager( *this ) )
+    : MIL_Entity_ABC( "" )
+    , pType_                         ( &type )
+    , nID_                           ( nID )
+    , pParentFormation_              ( 0 )
+    , pParentAutomate_               ( 0 )
+    , bEngaged_                      ( true )
+    , pKnowledgeGroup_               ( 0 )
+    , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
+    , pPionPC_                       ( 0 )
+    , bAutomateModeChanged_          ( true )
+    , nTickRcDotationSupplyQuerySent_( 0 )
+    , pKnowledgeBlackBoard_          ( 0 )
+    , pArmySurrenderedTo_            ( 0 )
+    , pTC2_                          ( 0 )
+    , pNominalTC2_                   ( 0 )
+    , pBrainLogistic_                ( 0 )
+    //, pLogisticAction_               ( 0 )
+    , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
+    , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate constructor
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context )
-    : MIL_Entity_ABC                     ( name )
-    , pType_                             ( &type )
-    , nID_                               ( nID )
-    , pParentFormation_                  ( dynamic_cast< MIL_Formation* >( &parent ) )
-    , pParentAutomate_                   ( dynamic_cast< MIL_Automate* >( &parent ) )
-    , bEngaged_                          ( true )
-    , pKnowledgeGroup_                   ( 0 )
-    , pOrderManager_                     ( new MIL_AutomateOrderManager( *this ) )
-    , pPionPC_                           ( 0 )
-    , pions_                             ()
-    , recycledPions_                     ()
-    , automates_                         ()
-    , bAutomateModeChanged_              ( true )
-    , pTC2_                              ( 0 )
-    , pNominalTC2_                       ( 0 )
-    , pBrainLogistic_                    ( 0 )
-    //, pLogisticAction_                   ( 0 )
-    , nTickRcDotationSupplyQuerySent_    ( 0 )
-    , pKnowledgeBlackBoard_              ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
-    , pArmySurrenderedTo_                ( 0 )
-    , pDotationSupplyManager_            ( new MIL_DotationSupplyManager( *this ) )
-    , pStockSupplyManager_               ( new MIL_StockSupplyManager( *this ) )
+    : MIL_Entity_ABC( name )
+    , pType_                         ( &type )
+    , nID_                           ( nID )
+    , pParentFormation_              ( dynamic_cast< MIL_Formation* >( &parent ) )
+    , pParentAutomate_               ( dynamic_cast< MIL_Automate* >( &parent ) )
+    , bEngaged_                      ( true )
+    , pKnowledgeGroup_               ( 0 )
+    , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
+    , pPionPC_                       ( 0 )
+    , pions_                         ()
+    , recycledPions_                 ()
+    , automates_                     ()
+    , bAutomateModeChanged_          ( true )
+    , pTC2_                          ( 0 )
+    , pNominalTC2_                   ( 0 )
+    , pBrainLogistic_                ( 0 )
+    //, pLogisticAction_               ( 0 )
+    , nTickRcDotationSupplyQuerySent_( 0 )
+    , pKnowledgeBlackBoard_          ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
+    , pArmySurrenderedTo_            ( 0 )
+    , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
+    , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
 {
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( knowledgeGroup );
     if( !pKnowledgeGroup_ )
@@ -191,7 +192,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     SendFullState();
     SendKnowledge();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate destructor
 // Created: NLD 2004-08-11
@@ -204,8 +205,7 @@ MIL_Automate::~MIL_Automate()
         pParentAutomate_->UnregisterAutomate( *this );
     if( pParentFormation_ )
         pParentFormation_->UnregisterAutomate( *this );
-
-    pBrainLogistic_.reset(0);
+    pBrainLogistic_.reset( 0 );
     delete pOrderManager_;
 }
 
@@ -266,6 +266,7 @@ namespace boost
         }
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::load
 // Created: JVT 2005-03-24
@@ -442,6 +443,18 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
         ( **it ).WriteODB( xos );
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         ( **it ).WriteODB( xos );
+    if( !extensions_.empty() )
+    {
+        xos << xml::start( "extensions" );
+        BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
+        {
+            xos << xml::start( "entry" )
+                    << xml::attribute( "key", extension.first )
+                    << xml::attribute( "value", extension.second )
+                << xml::end;
+        }
+        xos << xml::end;
+    }
     xos << xml::end; // automat
 }
 
@@ -699,8 +712,7 @@ MIL_Army_ABC& MIL_Automate::GetArmy() const
     assert( pParentFormation_ || pParentAutomate_ );
     if( pParentFormation_ )
         return pParentFormation_->GetArmy();
-    else
-        return pParentAutomate_->GetArmy();
+    return pParentAutomate_->GetArmy();
 }
 
 // -----------------------------------------------------------------------------
@@ -746,7 +758,7 @@ void MIL_Automate::Surrender( const MIL_Army_ABC& armySurrenderedTo )
         return;
     pOrderManager_->CancelMission();
     pArmySurrenderedTo_ = &armySurrenderedTo;
-    pTC2_  = 0;
+    pTC2_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -1220,7 +1232,6 @@ MIL_AutomateLOG* MIL_Automate::FindLogisticManager() const
         return pBrainLogistic_.get();
     return pParentFormation_->FindLogisticManager();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::Apply

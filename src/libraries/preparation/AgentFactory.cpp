@@ -276,6 +276,12 @@ kernel::Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, kernel::T
     result->Attach< Positions >( *new InhabitantPositions( xis, static_.coordinateConverter_, model_.urban_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
     result->Attach( *new InhabitantAffinities( xis, controllers_, model_, *result, dico ) );
+    if( xis.has_child( "extensions" ) )
+    {
+        xis.start( "extensions" );
+        result->Attach( *new DictionaryExtensions( "orbat-attributes", xis, static_.extensions_ ) );
+        xis.end();
+    }
     if( Inhabitants* popus = parent.Retrieve< Inhabitants >() )
         popus->AddInhabitant( *result );
     result->Polish();

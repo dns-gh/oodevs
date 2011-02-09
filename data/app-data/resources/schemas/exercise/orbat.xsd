@@ -454,6 +454,9 @@
     <xs:complexType>
       <xs:complexContent>
         <xs:extension base="entityType">
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="extensions" type="T_ExtensionsType"/>
+          </xs:choice>
           <xs:attribute name="attitude" type="populationAttitudeType" use="required">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the initial crowd attitude.</xs:documentation>

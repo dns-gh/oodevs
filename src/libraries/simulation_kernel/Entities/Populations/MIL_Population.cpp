@@ -17,7 +17,6 @@
 #include "DEC_PopulationKnowledge.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
-#include "Entities/MIL_Formation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"
@@ -28,6 +27,7 @@
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
+#include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
 
@@ -64,7 +64,7 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult )
-    : MIL_Entity_ABC          ( xis )
+    : MIL_Entity_ABC( xis )
     , pType_                  ( &type )
     , nID_                    ( xis.attribute< unsigned int >( "id" ) )
     , pArmy_                  ( &army )
@@ -89,11 +89,11 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
     nPeopleCount_ = pConcentration->GetNbrAliveHumans();
-    pArmy_->RegisterPopulation( *this );    
+    pArmy_->RegisterPopulation( *this );
     vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
     xis >> xml::optional >> xml::start( "extensions" )
-        >> xml::list( "entry", *this, &MIL_Population::ReadExtension )
+            >> xml::list( "entry", *this, &MIL_Population::ReadExtension )
         >> xml::end;
 }
 
@@ -102,7 +102,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population(const MIL_PopulationType& type )
-    : MIL_Entity_ABC          ( type.GetName() )
+    : MIL_Entity_ABC( type.GetName() )
     , pType_                  ( &type )
     , nID_                    ( 0 )
     , pArmy_                  ( 0 )
@@ -125,7 +125,7 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult )
-    : MIL_Entity_ABC          ( name )
+    : MIL_Entity_ABC( name )
     , pType_                  ( &type )
     , nID_                    ( idManager_.GetFreeId() )
     , pArmy_                  ( &army )
@@ -146,7 +146,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, point, number );
     concentrations_.push_back( pConcentration );
     nPeopleCount_ = pConcentration->GetNbrAliveHumans();
-    pArmy_->RegisterPopulation( *this );    
+    pArmy_->RegisterPopulation( *this );
     vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
 }
@@ -258,6 +258,18 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
     else
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition() ) );
+    if( !extensions_.empty() )
+    {
+        xos << xml::start( "extensions" );
+        BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
+        {
+            xos << xml::start( "entry" )
+                    << xml::attribute( "key", extension.first )
+                    << xml::attribute( "value", extension.second )
+                << xml::end;
+        }
+        xos << xml::end;
+    }
     xos << xml::end; // population
 }
 

@@ -30,6 +30,7 @@ namespace kernel
     class Displayer_ABC;
     class GlTools_ABC;
     class InhabitantType;
+    class StaticModel;
 }
 
 class UrbanModel;
@@ -47,9 +48,8 @@ class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
 public:
     //! @name Constructor/Destructor
     //@{
-             Inhabitant( const sword::PopulationCreation& message, kernel::Controllers& controllers, const UrbanModel& model, 
-                         const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver,
-                         const tools::Resolver_ABC< kernel::DotationType >& dotationResolver );
+             Inhabitant( const sword::PopulationCreation& message, kernel::Controllers& controllers, const UrbanModel& model, const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver,
+                         const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::StaticModel& staticModel );
     virtual ~Inhabitant();
     //@}
 

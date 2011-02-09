@@ -64,14 +64,14 @@ void load_construct_data( Archive& archive, MIL_Inhabitant* population, const un
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& type, MIL_Army_ABC& army )
     : MIL_Entity_ABC( xis )
-    , type_                  ( type )
-    , nID_                   ( xis.attribute< unsigned int >( "id" ) )
-    , pArmy_                 ( &army )
-    , pPopulationMovingObject_    ( 0 )
-    , nNbrHealthyHumans_     ( 0 )
-    , nNbrDeadHumans_        ( 0 )
-    , nNbrWoundedHumans_     ( 0 )
-    , healthStateChanged_    ( false )
+    , type_                   ( type )
+    , nID_                    ( xis.attribute< unsigned int >( "id" ) )
+    , pArmy_                  ( &army )
+    , pPopulationMovingObject_( 0 )
+    , nNbrHealthyHumans_      ( 0 )
+    , nNbrDeadHumans_         ( 0 )
+    , nNbrWoundedHumans_      ( 0 )
+    , healthStateChanged_     ( false )
 {
     float totalArea = 0.f;
     idManager_.Lock( nID_ );
@@ -104,16 +104,16 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
 // -----------------------------------------------------------------------------
 MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     : MIL_Entity_ABC( type.GetName() )
-    , type_                  ( type )
-    , nID_                   ( 0 )
-    , pArmy_                 ( 0 )
-    , pPopulationMovingObject_    ( 0 )
-    , pLivingArea_           ( 0 )
-    , pSchedule_             ( 0 )
-    , nNbrHealthyHumans_     ( 0 )
-    , nNbrDeadHumans_        ( 0 )
-    , nNbrWoundedHumans_     ( 0 )
-    , healthStateChanged_    ( false )
+    , type_                   ( type )
+    , nID_                    ( 0 )
+    , pArmy_                  ( 0 )
+    , pPopulationMovingObject_( 0 )
+    , pLivingArea_            ( 0 )
+    , pSchedule_              ( 0 )
+    , nNbrHealthyHumans_      ( 0 )
+    , nNbrDeadHumans_         ( 0 )
+    , nNbrWoundedHumans_      ( 0 )
+    , healthStateChanged_     ( false )
 {
     // NOTHING
 }
@@ -211,7 +211,19 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "dead", nNbrDeadHumans_ )
         << xml::end
         << xml::content( "information", text_ );
-            pLivingArea_->WriteODB( xos );
+    if( !extensions_.empty() )
+    {
+        xos << xml::start( "extensions" );
+        BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
+        {
+            xos << xml::start( "entry" )
+                    << xml::attribute( "key", extension.first )
+                    << xml::attribute( "value", extension.second )
+                << xml::end;
+        }
+        xos << xml::end;
+    }
+    pLivingArea_->WriteODB( xos );
     pSatisfactions_->WriteODB( xos );
     pAffinities_->WriteODB( xos );
 }

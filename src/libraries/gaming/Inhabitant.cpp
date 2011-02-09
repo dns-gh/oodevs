@@ -17,6 +17,8 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/DictionaryExtensions.h"
+#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Styles.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include <boost/foreach.hpp>
@@ -29,7 +31,8 @@ using namespace kernel;
 // Name: Inhabitant constructor
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
-Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const UrbanModel& model, const tools::Resolver_ABC< InhabitantType >& typeResolver, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver )
+Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const UrbanModel& model, const tools::Resolver_ABC< InhabitantType >& typeResolver,
+                        const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::StaticModel& staticModel )
     : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
     , controllers_     ( controllers )
     , type_            ( typeResolver.Get( message.type().id() ) )
@@ -38,8 +41,15 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& c
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
     if( message.has_extension() )
+    {
+        DictionaryExtensions* extensions = new DictionaryExtensions( "orbat-attributes", staticModel.extensionTypes_ );
         for( int i = 0; i < message.extension().entries_size(); ++i )
+        {
+            extensions->SetValue( message.extension().entries( i ).name(), message.extension().entries( i ).value() );
             extensions_[ message.extension().entries( i ).name() ] = message.extension().entries( i ).value();
+        }
+        Attach( *extensions );
+    }
     for( int i = 0; i < message.objects_size(); ++i )
     {
         int id = message.objects( i ).id(); 

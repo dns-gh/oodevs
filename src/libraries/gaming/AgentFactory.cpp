@@ -220,7 +220,7 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
 // -----------------------------------------------------------------------------
 kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& message )
 {
-    Inhabitant* result = new Inhabitant( message, controllers_, model_.urbanObjects_, static_.types_, static_.objectTypes_ );
+    Inhabitant* result = new Inhabitant( message, controllers_, model_.urbanObjects_, static_.types_, static_.objectTypes_, static_ );
     result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new InhabitantAffinities( model_.teams_ ) );

@@ -57,14 +57,6 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    void ReadExtension( xml::xistream& xis );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< std::string, QString > T_Extensions;
-    typedef T_Extensions::iterator          IT_Extensions;
-    typedef T_Extensions::const_iterator   CIT_Extensions;
     //@}
 
 private:
@@ -73,7 +65,6 @@ private:
     const kernel::InhabitantType& type_;
     float healthNeed_;
     QString text_;
-    T_Extensions extensions_;
     //@}
 };
 

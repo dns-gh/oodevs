@@ -11,6 +11,7 @@
 #include "Inhabitant.h"
 #include "IdManager.h"
 #include "clients_kernel/InhabitantType.h"
+#include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -23,15 +24,12 @@ Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QS
     : kernel::EntityImplementation< kernel::Inhabitant_ABC >( controller, idManager.GetNextId(), "" )
     , type_      ( type )
     , healthNeed_( 0 )
+    , text_      ( "" )
 {
     healthy_ = number;
     unsigned int healthPeopleNumber = type_.GetHealthPeopleNumber();
     if( healthPeopleNumber )
         healthNeed_ = static_cast< float >( number ) / healthPeopleNumber;
-    extensions_[ "nationality" ] = "";
-    extensions_[ "ethnicity" ] = "";
-    extensions_[ "religion" ] = "";
-    text_ = "";
     RegisterSelf( *this );
     name_ = name.isEmpty() ? tools::translate( "Population", "%1 [%2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
     CreateDictionary( controller );
@@ -55,14 +53,10 @@ Inhabitant::Inhabitant( xml::xistream& xis, kernel::Controller& controller, IdMa
             >> xml::attribute( "quantity", healthNeed_ )
         >> xml::end;
 
-    xis >> xml::optional >> xml::start( "extensions" )
-            >> xml::list( "entry", *this, &Inhabitant::ReadExtension )
-        >> xml::end;
-
     std::string text;
     xis >> xml::start( "information" ) >> xml::optional >> text
         >> xml::end;
-   
+
     text_ = text.c_str();
     RegisterSelf( *this );
     idManager.Lock( id_ );
@@ -96,12 +90,6 @@ void Inhabitant::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( constEntity, tools::translate( "Population", "Human/Wounded" ), wounded_ );
     dictionary.Register( constEntity, tools::translate( "Population", "Human/Dead" ), dead_ );
     dictionary.Register( constEntity, tools::translate( "Population", "Health/Infrastructures needed" ), healthNeed_ );
-
-    for( IT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
-    {
-        std::string info = "Details/" + it->first;
-        dictionary.Register( constEntity, tools::translate( "Population", info.c_str() ), it->second );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -120,25 +108,6 @@ void Inhabitant::SerializeAttributes( xml::xostream& xos ) const
         << xml::end
         << xml::start( "health-need" )
             << xml::attribute( "quantity", healthNeed_ )
-        << xml::end;
-    if( !extensions_.empty() )
-    {
-        xos << xml::start( "extensions" );
-        for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
-            xos << xml::start( "entry" )
-                    << xml::attribute( "key", it->first )
-                    << xml::attribute( "value", it->second )
-                << xml::end;
-        xos << xml::end;
-    }
-    xos << xml::content( "information", text_.ascii() ); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::ReadExtension
-// Created: SLG 2010-11-26
-// -----------------------------------------------------------------------------
-void Inhabitant::ReadExtension( xml::xistream& xis )
-{
-    extensions_[ xis.attribute< std::string >( "key" ) ] = QString( xis.attribute< std::string >( "value" ).c_str() );
+        << xml::end
+        << xml::content( "information", text_ ); 
 }

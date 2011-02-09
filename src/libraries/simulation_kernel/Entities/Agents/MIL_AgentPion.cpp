@@ -71,6 +71,7 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <boost/serialization/vector.hpp>
+#include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 
@@ -79,7 +80,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_Agent_ABC        ( xis )
+    : MIL_Agent_ABC( xis )
     , pType_               ( &type )
     , bIsPC_               ( xis.attribute< bool >( "command-post", false ) )
     , pAutomate_           ( &automate )
@@ -98,7 +99,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
-    : MIL_Agent_ABC        ( type.GetName() )
+    : MIL_Agent_ABC( type.GetName() )
     , pType_               ( &type )
     , bIsPC_               ( false )
     , pAutomate_           ( &automate )
@@ -114,7 +115,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 // Created: LDC 2010-02-22
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
-    : MIL_Agent_ABC        ( type.GetName() )
+    : MIL_Agent_ABC( type.GetName() )
     , pType_               ( &type )
     , bIsPC_               ( false )
     , pAutomate_           ( 0 )
@@ -275,6 +276,18 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
     const PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();//@TODO verify
     if( role )
         role->WriteODB( xos ); // Stocks
+    if( !extensions_.empty() )
+    {
+        xos << xml::start( "extensions" );
+        BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
+        {
+            xos << xml::start( "entry" )
+                << xml::attribute( "key", extension.first )
+                << xml::attribute( "value", extension.second )
+                << xml::end;
+        }
+        xos << xml::end;
+    }
     xos << xml::end;// unit
 }
 

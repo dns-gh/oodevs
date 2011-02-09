@@ -22,6 +22,7 @@
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
 #include "preparation/Tools.h"
 #include <boost/lexical_cast.hpp>
 #include <qtextcodec.h>
@@ -99,6 +100,8 @@ void OrbatAttributesPanel::NotifySelected( const Entity_ABC* element )
                 type->GetAttributeTypes( "formation", attributes );
             else if( typeName == Population_ABC::typeName_ )
                 type->GetAttributeTypes( "crowd", attributes );
+            else if( typeName == Inhabitant_ABC::typeName_ )
+                type->GetAttributeTypes( "population", attributes );
             if( attributes.size() )
             {
                 pGroupBox_ = new QGroupBox( 1, Qt::Horizontal, "Enabled", pMainLayout_ );
