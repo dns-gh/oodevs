@@ -370,5 +370,6 @@
       <modifier fire-class="Class D" ignition-threshold="2000" max-combustion-energy="1000"/>
     </fire-propagation-modifier>
   </object>
+  <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="0260419467" -->
+<!-- signature="1794842753" -->
