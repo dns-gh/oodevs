@@ -17,6 +17,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/LocationProxy.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include <svgl/svgl.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -26,13 +27,15 @@ using namespace gui;
 // Name: DrawerShape constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerShape::DrawerShape( kernel::Controller& controller, unsigned long id, const DrawingTemplate& style, const QColor& color, kernel::LocationProxy& location )
+DrawerShape::DrawerShape( kernel::Controller& controller, unsigned long id, const DrawingTemplate& style,
+                          const QColor& color, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter )
     : kernel::EntityImplementation< Drawing_ABC >( controller, id, style.GetName() )
-    , controller_( controller )
-    , style_     ( style )
-    , location_  ( location )
-    , color_     ( color )
-    , drawer_    ( new SvgLocationDrawer( style ) )
+    , controller_         ( controller )
+    , coordinateConverter_( coordinateConverter )
+    , style_              ( style )
+    , location_           ( location )
+    , color_              ( color )
+    , drawer_             ( new SvgLocationDrawer( style ) )
 {
     RegisterSelf( *this );
 }
@@ -58,13 +61,15 @@ namespace
 // Name: DrawerShape constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerShape::DrawerShape( kernel::Controller& controller, unsigned long id, xml::xistream& xis, const DrawingTypes& types, kernel::LocationProxy& proxy )
+DrawerShape::DrawerShape( kernel::Controller& controller, unsigned long id, xml::xistream& xis,
+                          const DrawingTypes& types, kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& coordinateConverter )
     : kernel::EntityImplementation< Drawing_ABC >( controller, id, ReadStyle( xis, types ).GetName() )
-    , controller_( controller )
-    , style_     ( ReadStyle( xis, types ) )
-    , location_  ( proxy )
-    , color_     ( ReadColor( xis ) )
-    , drawer_    ( new SvgLocationDrawer( style_ ) )
+    , controller_         ( controller )
+    , coordinateConverter_( coordinateConverter )
+    , style_              ( ReadStyle( xis, types ) )
+    , location_           ( proxy )
+    , color_              ( ReadColor( xis ) )
+    , drawer_             ( new SvgLocationDrawer( style_ ) )
 {
     std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
@@ -116,10 +121,21 @@ void DrawerShape::Update()
 // -----------------------------------------------------------------------------
 void DrawerShape::ReadPoint( xml::xistream& xis )
 {
-    float x, y;
-    xis >> xml::attribute( "x", x )
-        >> xml::attribute( "y", y );
-    geometry::Point2f point( x, y );
+    geometry::Point2f point;
+    if( xis.has_attribute( "x" ) && xis.has_attribute( "y" ) )
+    {
+        float x, y;
+        xis >> xml::attribute( "x", x )
+            >> xml::attribute( "y", y );
+        point = geometry::Point2f( x, y );
+    }
+    else
+    {
+        double latitude, longitude;
+        xis >> xml::attribute( "latitude", latitude )
+            >> xml::attribute( "longitude", longitude );
+        point = coordinateConverter_.ConvertFromGeo( geometry::Point2d( longitude, latitude ) );
+    }
     location_.AddPoint( point );
 }
 
@@ -165,7 +181,10 @@ namespace
 {
     struct XmlSerializer : public kernel::LocationVisitor_ABC
     {
-        explicit XmlSerializer( xml::xostream& xos ) : xos_( &xos ) {}
+        XmlSerializer( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter )
+            : xos_      ( &xos )
+            , converter_( converter )
+        {}
         virtual void VisitLines( const T_PointVector& points )
         {
             for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
@@ -192,13 +211,14 @@ namespace
         }
         virtual void VisitPoint( const geometry::Point2f& point )
         {
+            const geometry::Point2d wgs = converter_.ConvertToGeo( point );
             *xos_ << xml::start( "point" )
-                    << xml::attribute( "x", point.X() )
-                    << xml::attribute( "y", point.Y() )
+                    << xml::attribute( "longitude", wgs.X() )
+                    << xml::attribute( "latitude", wgs.Y() )
                   << xml::end;
         }
-
         xml::xostream* xos_;
+        const kernel::CoordinateConverter_ABC& converter_;
     };
 }
 
@@ -213,7 +233,7 @@ void DrawerShape::Serialize( xml::xostream& xos ) const
         xos << xml::start( "shape" )
                 << xml::attribute( "color", color_.name() );
         style_.Serialize( xos );
-        XmlSerializer serializer( xos );
+        XmlSerializer serializer( xos, coordinateConverter_ );
         location_.Accept( serializer );
         xos << xml::end;
     }

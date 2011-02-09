@@ -77,8 +77,16 @@ Drawing::~Drawing()
 void Drawing::ReadPoint( xml::xistream& xis )
 {
     sword::CoordLatLong asn;
-    geometry::Point2f point( xis.attribute< float >( "x" ), xis.attribute< float >( "y" ) );
-    converter_.ConvertToGeo( point, asn );
+    if( xis.has_attribute( "x" ) && xis.has_attribute( "y" ) )
+    {
+        geometry::Point2f point( xis.attribute< float >( "x" ), xis.attribute< float >( "y" ) );
+        converter_.ConvertToGeo( point, asn );
+    }
+    else
+    {
+        asn.set_longitude( xis.attribute< double >( "longitude" ) );
+        asn.set_latitude( xis.attribute< double >( "latitude" ) );
+    }
     points_.push_back( asn );
 }
 

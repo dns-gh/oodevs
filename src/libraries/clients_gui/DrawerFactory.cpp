@@ -23,9 +23,10 @@ unsigned long DrawerFactory::idManager_ = 0; // $$$$ SBO 2008-06-10: bof
 // Name: DrawerFactory constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerFactory::DrawerFactory( kernel::Controller& controller, const DrawingTypes& types )
-    : controller_( controller )
-    , types_     ( types )
+DrawerFactory::DrawerFactory( kernel::Controller& controller, const DrawingTypes& types, const kernel::CoordinateConverter_ABC& coordinateConverter )
+    : controller_         ( controller )
+    , types_              ( types )
+    , coordinateConverter_( coordinateConverter )
 {
     // NOTHING
 }
@@ -46,7 +47,7 @@ DrawerFactory::~DrawerFactory()
 Drawing_ABC* DrawerFactory::CreateShape( const DrawingTemplate& style, const QColor& color ) const
 {
     DrawingPositions* positions = new DrawingPositions();
-    std::auto_ptr< Drawing_ABC > shape( new DrawerShape( controller_, ++idManager_, style, color, *positions ) );
+    std::auto_ptr< Drawing_ABC > shape( new DrawerShape( controller_, ++idManager_, style, color, *positions, coordinateConverter_ ) );
     shape->Attach< kernel::Positions >( *positions );
     return shape.release();
 }
@@ -58,7 +59,7 @@ Drawing_ABC* DrawerFactory::CreateShape( const DrawingTemplate& style, const QCo
 Drawing_ABC* DrawerFactory::CreateShape( xml::xistream& xis ) const
 {
     DrawingPositions* positions = new DrawingPositions();
-    std::auto_ptr< Drawing_ABC > shape( new DrawerShape( controller_, ++idManager_, xis, types_, *positions ) );
+    std::auto_ptr< Drawing_ABC > shape( new DrawerShape( controller_, ++idManager_, xis, types_, *positions, coordinateConverter_ ) );
     shape->Attach< kernel::Positions >( *positions );
     return shape.release();
 }

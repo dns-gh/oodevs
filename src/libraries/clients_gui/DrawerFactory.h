@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controller;
+    class CoordinateConverter_ABC;
 }
 
 namespace gui
@@ -23,7 +24,7 @@ namespace gui
 
 // =============================================================================
 /** @class  DrawerFactory
-    @brief  DrawerFactory
+    @brief  Drawer factory
 */
 // Created: SBO 2007-03-22
 // =============================================================================
@@ -32,7 +33,7 @@ class DrawerFactory : public DrawingFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerFactory( kernel::Controller& controller, const DrawingTypes& types );
+             DrawerFactory( kernel::Controller& controller, const DrawingTypes& types, const kernel::CoordinateConverter_ABC& coordinateConverter );
     virtual ~DrawerFactory();
     //@}
 
@@ -54,6 +55,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const DrawingTypes& types_;
+    const kernel::CoordinateConverter_ABC& coordinateConverter_;
     //@}
 
 private:

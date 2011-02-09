@@ -28,6 +28,7 @@ namespace kernel
 {
     class Controller;
     class LocationProxy;
+    class CoordinateConverter_ABC;
 }
 
 namespace gui
@@ -48,8 +49,10 @@ class DrawerShape : public kernel::EntityImplementation< Drawing_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerShape( kernel::Controller& controller, unsigned long id, const DrawingTemplate& style, const QColor& color, kernel::LocationProxy& location );
-             DrawerShape( kernel::Controller& controller, unsigned long id, xml::xistream& xis, const DrawingTypes& types, kernel::LocationProxy& location );
+             DrawerShape( kernel::Controller& controller, unsigned long id, const DrawingTemplate& style,
+                          const QColor& color, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
+             DrawerShape( kernel::Controller& controller, unsigned long id, xml::xistream& xis,
+                          const DrawingTypes& types, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
     virtual ~DrawerShape();
     //@}
 
@@ -110,6 +113,7 @@ private:
     //! @name Static Member
     //@{
     static unsigned long idManager_;
+    const kernel::CoordinateConverter_ABC& coordinateConverter_;
     //@}
 };
 

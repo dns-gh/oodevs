@@ -10,6 +10,7 @@
 #ifndef __LocationFunctor_ABC_h_
 #define __LocationFunctor_ABC_h_
 
+#include <boost/noncopyable.hpp>
 #include "Types.h"
 
 namespace kernel
@@ -21,7 +22,7 @@ namespace kernel
 */
 // Created: AGE 2006-08-09
 // =============================================================================
-class LocationVisitor_ABC
+class LocationVisitor_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
