@@ -413,6 +413,7 @@
 			<xs:enumeration value="piece"/>
 			<xs:enumeration value="ration"/>
 			<xs:enumeration value="agent extincteur"/>
+            <xs:enumeration value="energie"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_ResourceType">

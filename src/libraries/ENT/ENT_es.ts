@@ -846,5 +846,9 @@
         <source>looking for triage area</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>energy</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

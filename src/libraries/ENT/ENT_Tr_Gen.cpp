@@ -47,6 +47,7 @@ ENT_Tr::T_ConverterDotationFamily ENT_Tr::DotationFamilyConverter_[] =
     T_ConverterDotationFamily( "piece", QT_TRANSLATE_NOOP( "ENT_Tr", "parts" ), eDotationFamily_Piece ),
     T_ConverterDotationFamily( "ration", QT_TRANSLATE_NOOP( "ENT_Tr", "food/water" ), eDotationFamily_Ration ),
     T_ConverterDotationFamily( "agent extincteur", QT_TRANSLATE_NOOP( "ENT_Tr", "extinguisher agent" ), eDotationFamily_AgentExtincteur ),
+    T_ConverterDotationFamily( "energie", QT_TRANSLATE_NOOP( "ENT_Tr", "energy" ), eDotationFamily_Energy ),
     T_ConverterDotationFamily( "", "", (E_DotationFamily)-1 )
 };
 

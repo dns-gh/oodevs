@@ -27,6 +27,7 @@ PHY_DotationType* PHY_DotationType::barbele_ = 0;
 PHY_DotationType* PHY_DotationType::piece_ = 0;
 PHY_DotationType* PHY_DotationType::ration_ = 0;
 PHY_DotationType* PHY_DotationType::agentExtincteur_ = 0;
+PHY_DotationType* PHY_DotationType::energie_ = 0;
 
 PHY_DotationType::T_DotationTypeMap       PHY_DotationType::dotationTypes_;
 PHY_DotationType::T_DotationCategoryIDMap PHY_DotationType::dotationCategorieIDs_;
@@ -54,6 +55,7 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
     PHY_DotationType::piece_           = new PHY_DotationType( "piece"            , ePiece          , PHY_DotationLogisticType::pieces_         );
     PHY_DotationType::ration_          = new PHY_DotationType( "ration"           , eRation         , PHY_DotationLogisticType::uniteVivre_     );
     PHY_DotationType::agentExtincteur_ = new PHY_DotationType( "agent extincteur" , eAgentExtincteur, PHY_DotationLogisticType::uniteVivre_     );
+    PHY_DotationType::energie_ = new PHY_DotationType( "energie" , eEnergie, PHY_DotationLogisticType::uniteVivre_ );
 
     dotationTypes_[ munition_       ->GetName() ] = munition_;
     dotationTypes_[ carburant_      ->GetName() ] = carburant_;
@@ -63,6 +65,7 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
     dotationTypes_[ piece_          ->GetName() ] = piece_;
     dotationTypes_[ ration_         ->GetName() ] = ration_;
     dotationTypes_[ agentExtincteur_->GetName() ] = agentExtincteur_;
+    dotationTypes_[ energie_->GetName() ] = energie_;
     LoadingWrapper loader;
     xis >> xml::start( "resources" )
             >> xml::list( "resource", loader, &LoadingWrapper::ReadDotation )

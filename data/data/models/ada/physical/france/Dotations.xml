@@ -2392,5 +2392,8 @@
   <resource category="ration" codeEMAT6="Vivre" codeEMAT8="Vivre" codeLFRIL="Vivre" codeNNO="Vivre" id="140" id-nature="3" name="Vivre" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
   <resource category="ration" codeEMAT6="Eau" codeEMAT8="Eau" codeLFRIL="Eau" codeNNO="Eau" id="141" id-nature="3" name="Eau" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="142" id-nature="1" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="143" id-nature="6" name="électricité" nature="Electric" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="144" id-nature="5" name="eau courante" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="145" id-nature="4" name="gaz de ville" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="1032313561" -->
+<!-- signature="1873614369" -->

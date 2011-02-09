@@ -49,6 +49,7 @@ enum E_DotationFamily
     eDotationFamily_Piece,
     eDotationFamily_Ration,
     eDotationFamily_AgentExtincteur,
+    eDotationFamily_Energy,
     eNbrDotationFamily
 };
 
