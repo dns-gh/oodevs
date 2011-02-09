@@ -75,6 +75,10 @@ public:
         eProtectionSupport,
         eEngineeringRecon,
         eUrbanAreaEfficiency,
+        ePowerDirectFire,
+        ePowerIndirectFire,
+        ePowerCloseCombat,
+        ePowerEngineering,
         eNbrGuiElements
     };
     //@}

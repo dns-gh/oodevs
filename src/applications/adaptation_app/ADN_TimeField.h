@@ -23,9 +23,9 @@
 #include "ADN_Gfx_ABC.h"
 #include <qwidget.h>
 
-class QComboBox;
-class ADN_IntValidator;
 class ADN_TimeField_EditLine;
+class QComboBox;
+class QIntValidator;
 
 // =============================================================================
 // Created: SBO 2005-09-09
@@ -49,7 +49,7 @@ public:
     void    setText( const QString& strText );
     //@}
 
-    ADN_IntValidator& GetValidator();
+    QIntValidator& GetValidator();
 
 signals:
     //! @name Signals
@@ -72,7 +72,7 @@ private:
     QComboBox*              pComboBox_;
     uint                    nSecondsValue_;
     bool                    bFreezeSlot_;
-    ADN_IntValidator*       pValidator_;
+    QIntValidator*          pValidator_;
     //@}
 };
 

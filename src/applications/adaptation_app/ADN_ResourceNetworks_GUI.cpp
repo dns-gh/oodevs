@@ -64,7 +64,7 @@ void ADN_ResourceNetworks_GUI::Build()
         connect( dotationsCombo_, SIGNAL( activated( int ) ),this, SLOT( OnDotationChanged() ) );
         categoriesCombo_ = builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::CategoryInfo > >( pHolder, tr( "Category" ), vInfosConnectors[ eCategory ] );
         builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Default production" ), vInfosConnectors[ eProduction ] );
-        builder.SetValidator( new ADN_IntValidator( 0, INT_MAX, this ) );
+        builder.SetValidator( new QIntValidator( 0, INT_MAX, this ) );
         builder.AddField< ADN_ColorSelector >( pHolder, tr( "Color" ), vInfosConnectors[ eColor ] );
     }
     pResourceNetworks_->SetItemConnectors( vInfosConnectors );

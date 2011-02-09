@@ -87,31 +87,23 @@ void ADN_Units_GUI::Build()
 
     // Unit parameters
     QWidget* pParamGroup = builder.AddFieldHolder( pGroup );
-
     // Name
     builder.AddField<ADN_EditLine_String>( pParamGroup, tr( "Name" ), vInfosConnectors[eName] );
-
     // Unit type
     pTypeCombo_ = builder.AddEnumField<E_AgentTypePion>( pParamGroup, tr( "Type" ), vInfosConnectors[eTypeId], &ADN_Tr::ConvertFromAgentTypePion );
     builder.SetToolTip( "Le type de l'unité dans la simulation. Ce type doit correspondre au type du modèle comportemental associé." );
     connect( pTypeCombo_, SIGNAL( activated( const QString& ) ), this, SLOT( OnTypeChanged() ) );
-
     // Model
     builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pParamGroup, tr( "Doctrine model" ), vInfosConnectors[eModel] );
     builder.SetToolTip( "Le modèle comportemental associé à l'unité." );
-
     // Decontamination delay
     builder.AddField<ADN_TimeField>( pParamGroup, tr( "Decontamination delay" ), vInfosConnectors[eDecontaminationDelay], 0, eGreaterZero );
-
     // Feedback time
     builder.AddOptionnalField<ADN_TimeField>( pParamGroup, tr( "Force ratio feedback time" ), vInfosConnectors[eHasStrengthRatioFeedbackTime], vInfosConnectors[eStrengthRatioFeedbackTime] );
-
     // Can fly
     builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Can fly" ), vInfosConnectors[eCanFly] );
-
     // Crossing height
     builder.AddEnumField< E_CrossingHeight >( pParamGroup, tr( "Crossing height" ), vInfosConnectors[ eCrossingHeight ], &ADN_Tr::ConvertFromCrossingHeight );
-
     // Is autonomous
     builder.AddField<ADN_CheckBox>( pParamGroup, tr( "Is autonomous (UAV)" ), vInfosConnectors[eIsAutonomous] );
 
@@ -205,17 +197,27 @@ void ADN_Units_GUI::Build()
 
     // Efficiencies
     QGroupBox* pEfficienciesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Efficiencies" ), pGroup );
-    pEfficienciesGroup->setInsideMargin(20);
-    pEfficienciesGroup->setInsideSpacing(10);
+    pEfficienciesGroup->setInsideMargin( 20 );
+    pEfficienciesGroup->setInsideSpacing( 10 );
 
-    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Recon" ), vInfosConnectors[ eRecon ], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Combat support" ), vInfosConnectors[ eCombatSupport ], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Combat" ), vInfosConnectors[ eCombat ], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Mobility support" ), vInfosConnectors[ eMobilitySupport ], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Counter mobility support" ), vInfosConnectors[ eCounterMobilitySupport ], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Protection support" ), vInfosConnectors[ eProtectionSupport ], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Engineering recon" ), vInfosConnectors[ eEngineeringRecon ], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Int>( pEfficienciesGroup, tr( "Urban area efficiency" ), vInfosConnectors[ eUrbanAreaEfficiency ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Recon" ), vInfosConnectors[ eRecon ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Combat support" ), vInfosConnectors[ eCombatSupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Combat" ), vInfosConnectors[ eCombat ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Mobility support" ), vInfosConnectors[ eMobilitySupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Counter mobility support" ), vInfosConnectors[ eCounterMobilitySupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Protection support" ), vInfosConnectors[ eProtectionSupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Engineering recon" ), vInfosConnectors[ eEngineeringRecon ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Urban area efficiency" ), vInfosConnectors[ eUrbanAreaEfficiency ], tr( "%" ), ePercentage );
+
+    // Power indicators
+    QGroupBox* pPowerIndicatorsGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pGroup );
+    pPowerIndicatorsGroup->setInsideMargin( 20 );
+    pPowerIndicatorsGroup->setInsideSpacing( 10 );
+
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Direct fire" ),   vInfosConnectors[ ePowerDirectFire ],   0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Indirect fire" ), vInfosConnectors[ ePowerIndirectFire ], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Close combat" ),  vInfosConnectors[ ePowerCloseCombat ],  0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Engineering" ),   vInfosConnectors[ ePowerEngineering ],  0, eGreaterEqualZero );
 
     // set list units auto connectors
     pListUnits_->SetItemConnectors( vInfosConnectors );
@@ -225,18 +227,19 @@ void ADN_Units_GUI::Build()
     pMainLayout->addWidget( pListUnits_, 1 );
     pMainLayout->addWidget( pGroup, 6 );
 
-    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 4, 6, 5 );
+    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 5, 6, 5 );
     pGroupLayout->setAlignment( Qt::AlignTop );
     pGroupLayout->addMultiCellWidget( pParamGroup, 0, 0, 0, 2 );
     pGroupLayout->addMultiCellWidget( pNatureGroup, 0, 0, 3, 5 );
-    pGroupLayout->addMultiCellWidget( pReconGroup, 1, 1, 0, 2 );
-    pGroupLayout->addMultiCellWidget( pCommandGroup, 1, 1, 3, 5 );
-    pGroupLayout->addMultiCellWidget( pDistancesGroup, 2, 2, 0, 1 );
-    pGroupLayout->addMultiCellWidget( postureInstallationBox, 2, 2, 2, 3 );
-    pGroupLayout->addMultiCellWidget( pComposantesGroup, 2, 2, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pDistancesGroup, 1, 2, 0, 1 );
+    pGroupLayout->addMultiCellWidget( postureInstallationBox, 1, 2, 2, 3 );
+    pGroupLayout->addMultiCellWidget( pReconGroup, 1, 1, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pCommandGroup, 2, 2, 4, 5 );
     pGroupLayout->addMultiCellWidget( pDotationsGroup, 3, 3, 0, 1 );
     pGroupLayout->addMultiCellWidget( pStockGroup_, 3, 3, 2, 3 );
     pGroupLayout->addMultiCellWidget( pEfficienciesGroup, 3, 3, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pComposantesGroup, 4, 4, 0, 3 );
+    pGroupLayout->addMultiCellWidget( pPowerIndicatorsGroup, 4, 4, 4, 5 );
 }
 
 // -----------------------------------------------------------------------------

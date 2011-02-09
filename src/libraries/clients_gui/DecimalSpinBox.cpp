@@ -13,7 +13,8 @@
 
 namespace
 {
-    float Round( float value ) {
+    float Round( float value ) 
+    {
         return ( value > 0.0f ) ? floor( value + 0.5f ) : ceil( value - 0.5f );
     }
 }

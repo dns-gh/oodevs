@@ -87,6 +87,10 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Units_GUI::eProtectionSupport ]->Connect( &pInfos->nProtectionSupportEfficiency_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eEngineeringRecon ]->Connect( &pInfos->nEngineeringReconEfficiency_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eUrbanAreaEfficiency ]->Connect( &pInfos->nUrbanAreaEfficiency_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::ePowerDirectFire ]->Connect( &pInfos->nPowerDirectFire_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::ePowerIndirectFire ]->Connect( &pInfos->nPowerIndirectFire_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::ePowerCloseCombat ]->Connect( &pInfos->nPowerCloseCombat_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::ePowerEngineering ]->Connect( &pInfos->nPowerEngineering_, bConnect );
 }
 
 //-----------------------------------------------------------------------------

@@ -450,6 +450,10 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     , nProtectionSupportEfficiency_( 50 )
     , nEngineeringReconEfficiency_( 50 )
     , nUrbanAreaEfficiency_( 50 )
+    , nPowerDirectFire_( 0 )
+    , nPowerIndirectFire_( 0 )
+    , nPowerCloseCombat_( 0 )
+    , nPowerEngineering_( 0 )
 {
     BindExistenceTo(&ptrModel_);
 
@@ -578,6 +582,11 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->nProtectionSupportEfficiency_ = nProtectionSupportEfficiency_.GetData();
     pCopy->nEngineeringReconEfficiency_ = nEngineeringReconEfficiency_.GetData();
     pCopy->nUrbanAreaEfficiency_ = nUrbanAreaEfficiency_.GetData();
+
+    pCopy->nPowerDirectFire_   = nPowerDirectFire_.GetData();
+    pCopy->nPowerIndirectFire_ = nPowerIndirectFire_.GetData();
+    pCopy->nPowerCloseCombat_  = nPowerCloseCombat_.GetData();
+    pCopy->nPowerEngineering_  = nPowerEngineering_.GetData();
 
     return pCopy;
 }
@@ -721,6 +730,14 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
             >> xml::end;
 
+    input >> xml::optional
+            >> xml::start( "power-indicators" )
+              >> xml::attribute( "direct-fire", nPowerDirectFire_ )
+              >> xml::attribute( "indirect-fire", nPowerIndirectFire_ )
+              >> xml::attribute( "close-combat", nPowerCloseCombat_ )
+              >> xml::attribute( "engineering", nPowerEngineering_ )
+            >> xml::end;
+
     std::string crossingHeight( ADN_Tr::ConvertFromCrossingHeight( eCrossingHeight_Never ) ) ;
     input >> xml::optional
             >> xml::start( "crossing-height" )
@@ -815,14 +832,21 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
                << xml::end;
 
     output << xml::start( "efficiencies" )
-            << xml::attribute( "recon", nReconEfficiency_ )
-            << xml::attribute( "combat-support", nCombatSupportEfficiency_ )
-            << xml::attribute( "combat", nCombatEfficiency_ )
-            << xml::attribute( "mobility-support", nMobilitySupportEfficiency_ )
-            << xml::attribute( "counter-mobility-support", nCounterMobilitySupportEfficiency_ )
-            << xml::attribute( "protection-support", nProtectionSupportEfficiency_ )
-            << xml::attribute( "engineering-support", nEngineeringReconEfficiency_ )
-            << xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
+             << xml::attribute( "recon", nReconEfficiency_ )
+             << xml::attribute( "combat-support", nCombatSupportEfficiency_ )
+             << xml::attribute( "combat", nCombatEfficiency_ )
+             << xml::attribute( "mobility-support", nMobilitySupportEfficiency_ )
+             << xml::attribute( "counter-mobility-support", nCounterMobilitySupportEfficiency_ )
+             << xml::attribute( "protection-support", nProtectionSupportEfficiency_ )
+             << xml::attribute( "engineering-support", nEngineeringReconEfficiency_ )
+             << xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
+           << xml::end;
+
+    output << xml::start( "power-indicators" )
+             << xml::attribute( "direct-fire", nPowerDirectFire_ )
+             << xml::attribute( "indirect-fire", nPowerIndirectFire_ )
+             << xml::attribute( "close-combat", nPowerCloseCombat_ )
+             << xml::attribute( "engineering", nPowerEngineering_ )
            << xml::end;
 
     output << xml::start( "crossing-height" )

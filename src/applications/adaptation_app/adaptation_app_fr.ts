@@ -5091,6 +5091,26 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Crossing height</source>
         <translation>Hauteur de franchissement</translation>
     </message>
+    <message>
+        <source>Power indicators</source>
+        <translation>Indicateurs de puissance</translation>
+    </message>
+    <message>
+        <source>Direct fire</source>
+        <translation>Tir direct</translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
+        <translation>Tir indirect</translation>
+    </message>
+    <message>
+        <source>Close combat</source>
+        <translation>Combat rapproché</translation>
+    </message>
+    <message>
+        <source>Engineering</source>
+        <translation>Génie</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

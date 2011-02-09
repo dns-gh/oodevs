@@ -348,7 +348,7 @@ void ADN_GuiBuilder::SetValidator( T& validator, E_Validator nValidator )
 // -----------------------------------------------------------------------------
 template<>
 inline
-void ADN_GuiBuilder::SetValidator( ADN_IntValidator& validator, E_Validator nValidator )
+void ADN_GuiBuilder::SetValidator( QIntValidator& validator, E_Validator nValidator )
 {
     if( nValidator == eNone )
         return;
@@ -376,7 +376,7 @@ void ADN_GuiBuilder::SetValidator( ADN_IntValidator& validator, E_Validator nVal
 // -----------------------------------------------------------------------------
 template<>
 inline
-void ADN_GuiBuilder::SetValidator( ADN_DoubleValidator& validator, E_Validator nValidator )
+void ADN_GuiBuilder::SetValidator( QDoubleValidator& validator, E_Validator nValidator )
 {
     if( nValidator == eNone )
         return;

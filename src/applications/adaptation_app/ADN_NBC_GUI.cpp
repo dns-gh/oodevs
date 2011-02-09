@@ -98,7 +98,7 @@ void ADN_NBC_GUI::Build()
     pHolder = builder.AddFieldHolder( gazGroup );
     builder.AddField<ADN_TimeField>( pHolder, tr( "Span" ), vInfosConnectors[eGazLifetime] );
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Spread angle" ), vInfosConnectors[eGazSpreadAngle], tr( "°" ) );
-    builder.SetValidator( new ADN_DoubleValidator( 0.01, 360, 2, this ) );
+    builder.SetValidator( new QDoubleValidator( 0.01, 360, 2, this ) );
 
     pNBCAgentListView->SetItemConnectors( vInfosConnectors );
 

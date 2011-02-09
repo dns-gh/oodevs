@@ -25,7 +25,6 @@
 
 typedef ADN_Units_Data::ComposanteInfos ComposanteInfos;
 
-
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with
 //-----------------------------------------------------------------------------
@@ -58,45 +57,39 @@ public:
         tab_.setItem( nRow, 5, pItemNbrHuman );
 
         // connect items & datas
-        pItemName->GetConnector().Connect(&static_cast<ComposanteInfos*>(pObj)->ptrComposante_.GetData()->strName_);
-        pItemNbr->GetConnector().Connect(&static_cast<ComposanteInfos*>(pObj)->nNb_);
-        pItemMajor->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bMajor_ );
-        pItemLoadable->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bLoadable_ );
-        pItemConveyor->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->bConveyor_ );
-        pItemNbrHuman->GetConnector().Connect( &static_cast<ComposanteInfos*>(pObj)->nNbrHumanInCrew_ );
+        pItemName->GetConnector().Connect(     &static_cast< ComposanteInfos* >( pObj )->ptrComposante_.GetData()->strName_ );
+        pItemNbr->GetConnector().Connect(      &static_cast< ComposanteInfos* >( pObj )->nNb_ );
+        pItemMajor->GetConnector().Connect(    &static_cast< ComposanteInfos* >( pObj )->bMajor_ );
+        pItemLoadable->GetConnector().Connect( &static_cast< ComposanteInfos* >( pObj )->bLoadable_ );
+        pItemConveyor->GetConnector().Connect( &static_cast< ComposanteInfos* >( pObj )->bConveyor_ );
+        pItemNbrHuman->GetConnector().Connect( &static_cast< ComposanteInfos* >( pObj )->nNbrHumanInCrew_ );
     }
 
 private:
     ADN_Units_Composantes_GUI_Connector& operator=( const ADN_Units_Composantes_GUI_Connector& );
 };
 
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Composantes_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI(QWidget * parent )
-: ADN_Table2             ( parent, "ADN_Units_Composantes_GUI"  )
-, bMenuListItemSelected_( false )
+ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI( QWidget * parent )
+    : ADN_Table2            ( parent, "ADN_Units_Composantes_GUI" )
+    , bMenuListItemSelected_( false )
 {
     // peut etre selectionne & trie
-    setSorting(true);
-    setSelectionMode(QTable::NoSelection);
-    setShowGrid(false);
-    setLeftMargin(0);
+    setSorting( true );
+    setSelectionMode( QTable::NoSelection );
+    setShowGrid( false );
+    setLeftMargin( 0 );
 
     // hide vertical header
     verticalHeader()->hide();
 
     // tab with 4 columns
-    setNumCols(6);
-    setNumRows(0);
-    setColumnStretchable(1,true);
-    setColumnStretchable(2,true);
-    setColumnStretchable(3,true);
-    setColumnStretchable(4,true);
-    setColumnStretchable(5,true);
+    setNumCols( 6 );
+    setNumRows( 0 );
+    setColumnStretchable( 0, true );
 
     horizontalHeader()->setLabel( 0, tr( "Equipments" ) );
     horizontalHeader()->setLabel( 1, tr( "Qty" ) );
@@ -106,9 +99,8 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI(QWidget * parent )
     horizontalHeader()->setLabel( 5, tr( "Crew size" ) );
 
     // connector creation
-    pConnector_=new ADN_Units_Composantes_GUI_Connector(*this);
+    pConnector_ = new ADN_Units_Composantes_GUI_Connector( *this );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Composantes_GUI destructor
@@ -118,7 +110,6 @@ ADN_Units_Composantes_GUI::~ADN_Units_Composantes_GUI()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Composantes_GUI::OnContextMenu
@@ -171,7 +162,6 @@ void ADN_Units_Composantes_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoi
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Composantes_GUI::AddNewElement
 // Created: AGN 2003-12-08
@@ -202,7 +192,6 @@ void ADN_Units_Composantes_GUI::RemoveCurrentElement()
         static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Composantes_GUI::MenuListItemSelected

@@ -19,7 +19,7 @@
 //*****************************************************************************
 // Created: JDY 03-07-01
 //*****************************************************************************
-template <class Connector, class Validator>
+template < class Connector, class Validator >
 class ADN_EditLine : public ADN_EditLine_ABC
 {
 public:
@@ -29,7 +29,7 @@ public:
     Validator& GetValidator();
 
 protected:
-    virtual void TextChanged(const QString& string);
+    virtual void TextChanged( const QString& string );
     virtual void UpdateEnableState();
 
 private:
@@ -38,8 +38,8 @@ private:
 
 #include "ADN_EditLine.inl"
 
-typedef ADN_EditLine< ADN_Connector_String<ADN_EditLine_ABC>, QRegExpValidator > ADN_EditLine_String;
-typedef ADN_EditLine< ADN_Connector_Int<ADN_EditLine_ABC>, ADN_IntValidator >       ADN_EditLine_Int;
-typedef ADN_EditLine< ADN_Connector_Double<ADN_EditLine_ABC>, ADN_DoubleValidator > ADN_EditLine_Double;
+typedef ADN_EditLine< ADN_Connector_String< ADN_EditLine_ABC >, QRegExpValidator > ADN_EditLine_String;
+typedef ADN_EditLine< ADN_Connector_Int< ADN_EditLine_ABC >,    QIntValidator >    ADN_EditLine_Int;
+typedef ADN_EditLine< ADN_Connector_Double< ADN_EditLine_ABC >, QDoubleValidator > ADN_EditLine_Double;
 
 #endif // __ADN_EditLine_h_

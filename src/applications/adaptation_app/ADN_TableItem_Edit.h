@@ -63,8 +63,8 @@ private:
 
 #include "ADN_TableItem_Edit.inl"
 
-typedef ADN_TableItem_Edit< ADN_Connector_String<ADN_TableItem_ABC> , QRegExpValidator      > ADN_TableItem_String;
-typedef ADN_TableItem_Edit< ADN_Connector_Int<ADN_TableItem_ABC>    , ADN_IntValidator      > ADN_TableItem_Int;
-typedef ADN_TableItem_Edit< ADN_Connector_Double<ADN_TableItem_ABC> , ADN_DoubleValidator   > ADN_TableItem_Double;
+typedef ADN_TableItem_Edit< ADN_Connector_String< ADN_TableItem_ABC > , QRegExpValidator > ADN_TableItem_String;
+typedef ADN_TableItem_Edit< ADN_Connector_Int< ADN_TableItem_ABC >    , QIntValidator    > ADN_TableItem_Int;
+typedef ADN_TableItem_Edit< ADN_Connector_Double< ADN_TableItem_ABC > , QDoubleValidator > ADN_TableItem_Double;
 
 #endif // __ADN_TableItem_Edit_h_

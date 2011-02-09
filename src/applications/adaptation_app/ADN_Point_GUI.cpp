@@ -82,8 +82,6 @@ ADN_Point_GUI::ADN_Point_GUI(QWidget* pParent )
     // Setup 2 columns.
     setNumCols( 2 );
     setNumRows( 0 );
-    setColumnStretchable( 0, true );
-    setColumnStretchable( 1, true );
 
     horizontalHeader()->setLabel(0, tr( "Ground Type"));
     horizontalHeader()->setLabel(1, tr( "Distance (m)"));
