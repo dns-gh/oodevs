@@ -137,18 +137,18 @@ void ADN_Urban_GUI::Build()
 
     ///////////////////
     // Accommodations
-    QGroupBox* pGroupAccommodations = new QVGroupBox( tr( "Accommodations" ), pBox );
+    QGroupBox* pGroupAccommodations = new QVGroupBox( tr( "Activities" ), pBox );
     QHBox* pGroupAccommodation = new QHBox( pGroupAccommodations );
 
     ADN_GuiBuilder builder;
 
     // accommodations list
     T_ConnectorVector    vAccommodationInfosConnectors(eNbrUrbanAccommodationGuiElements,(ADN_Connector_ABC*)0 );
-    pListAccommodation_= new ADN_ListView_UrbanAccommodation_Type( pGroupAccommodation, "Accommodation" );
+    pListAccommodation_= new ADN_ListView_UrbanAccommodation_Type( pGroupAccommodation, "Activity" );
     static_cast<ADN_Connector_Vector_ABC*>( &pListAccommodation_->GetConnector() )->Connect( &data_.GetAccommodationsInfos() );
 
     // accommodation
-    pGroupAccommodations = new QHGroupBox( tr( "Accommodation" ),pGroupAccommodations);
+    pGroupAccommodations = new QHGroupBox( tr( "Activity" ),pGroupAccommodations);
     pGroupAccommodations->setInsideMargin(20);
     pGroupAccommodations->setInsideSpacing(20);
     QWidget* pHolder = builder.AddFieldHolder( pGroupAccommodations );

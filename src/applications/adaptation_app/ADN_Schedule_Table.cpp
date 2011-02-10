@@ -30,7 +30,7 @@ ADN_Schedule_Table::ADN_Schedule_Table( QWidget* pParent )
     horizontalHeader()->setLabel( 0, qApp->translate( "ADN_Schedule_Table", "Day" ) );
     horizontalHeader()->setLabel( 1, qApp->translate( "ADN_Schedule_Table", "From" ) );
     horizontalHeader()->setLabel( 2, qApp->translate( "ADN_Schedule_Table", "To" ) );
-    horizontalHeader()->setLabel( 3, qApp->translate( "ADN_Schedule_Table", "Motivation" ) );
+    horizontalHeader()->setLabel( 3, qApp->translate( "ADN_Schedule_Table", "Activity" ) );
     setEnabled( false );
     connect( this, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), this, SLOT( OnContextMenu( int, int, const QPoint& ) ) );
     connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnValueChanged( int, int ) ) );

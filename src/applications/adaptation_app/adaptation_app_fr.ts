@@ -3581,10 +3581,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>A</translation>
     </message>
     <message>
-        <source>Motivation</source>
-        <translation>Motivation</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Ajouter</translation>
     </message>
@@ -3619,6 +3615,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>sunday</source>
         <translation>dimanche</translation>
+    </message>
+    <message>
+        <source>Activity</source>
+        <translation>Activité</translation>
     </message>
 </context>
 <context>
@@ -5202,14 +5202,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Forme de toit</translation>
     </message>
     <message>
-        <source>Accommodations</source>
-        <translation>Accommodations</translation>
-    </message>
-    <message>
-        <source>Accommodation</source>
-        <translation>Accommodation</translation>
-    </message>
-    <message>
         <source>Type</source>
         <translation>Type</translation>
     </message>
@@ -5244,6 +5236,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Emergency bed rate</source>
         <translation>Fréquence de rotation des lits en phase d&apos;alerte</translation>
+    </message>
+    <message>
+        <source>Activities</source>
+        <translation>Activités</translation>
+    </message>
+    <message>
+        <source>Activity</source>
+        <translation>Activité</translation>
     </message>
 </context>
 <context>
