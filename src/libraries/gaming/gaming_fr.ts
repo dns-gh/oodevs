@@ -550,7 +550,7 @@
     </message>
     <message>
         <source>Living Area/</source>
-        <translation>Zone de vie</translation>
+        <translation>Zone de vie/</translation>
     </message>
     <message>
         <source>Affinity %1:</source>
@@ -561,12 +561,12 @@
         <translation>Satisfaction/Ressource/</translation>
     </message>
     <message>
-        <source>/Number</source>
-        <translation type="unfinished"></translation>
+        <source>Resident</source>
+        <translation>Habitant</translation>
     </message>
     <message>
-        <source>/Alerted</source>
-        <translation type="unfinished"></translation>
+        <source>Alerted</source>
+        <translation>Alerté</translation>
     </message>
 </context>
 <context>

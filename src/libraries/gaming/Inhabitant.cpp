@@ -160,11 +160,11 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             mutableHuman.alerted_ = occupation.alerted();
             const T_Human& human = mutableHuman;
             PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-            const QString keyHuman = tools::translate( "Inhabitant", "Living Area/" ) + it->second->GetName().ascii() + " [" + boost::lexical_cast< std::string >( id ).c_str() + "]";
-            const QString keyNumber = keyHuman + tools::translate( "Inhabitant", "/Number" );
+            const QString keyHuman = tools::translate( "Inhabitant", "Living Area/" ) + it->second->GetName().ascii() + " [" + boost::lexical_cast< std::string >( id ).c_str() + "]/";
+            const QString keyNumber = keyHuman + tools::translate( "Inhabitant", "Resident" );
             if( !dictionary.HasKey( keyNumber ) )
                 dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, human.number_ );
-            const QString keyAlerted = keyHuman + tools::translate( "Inhabitant", "/Alerted" );
+            const QString keyAlerted = keyHuman + tools::translate( "Inhabitant", "Alerted" );
             if( !dictionary.HasKey( keyAlerted ) )
                 dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.alerted_ );
         }

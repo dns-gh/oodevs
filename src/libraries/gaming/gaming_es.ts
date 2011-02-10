@@ -561,11 +561,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>/Number</source>
+        <source>Resident</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>/Alerted</source>
+        <source>Alerted</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
