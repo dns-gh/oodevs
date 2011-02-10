@@ -204,8 +204,7 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
 // -----------------------------------------------------------------------------
 void StructuralCapacity::SendState( sword::UrbanAttributes& message ) const
 {
-    int diff = structuralState_ - lastStructuralState_;
-    if( std::abs( diff ) > 5 )
+    if( structuralState_ != lastStructuralState_ )
     {
         SendFullState( message );
         lastStructuralState_ = structuralState_;
