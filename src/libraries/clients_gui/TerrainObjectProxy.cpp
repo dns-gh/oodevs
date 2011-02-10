@@ -98,7 +98,6 @@ TerrainObjectProxy::~TerrainObjectProxy()
     Destroy();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::Restore
 // Created: LGY 2011-01-11
@@ -209,10 +208,10 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
     }
     BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
     {
-        const QString keyBase = tools::translate( "Block", "Populations/" ) + human.first.c_str();
-        const QString keyNumber = keyBase + tools::translate( "Block", "/Number" );
+        const QString keyBase = tools::translate( "Block", "Populations/" ) + human.first.c_str() + "/";
+        const QString keyNumber = keyBase + tools::translate( "Block", "Resident" );
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, human.second.number_ );
-        const QString keyAlerted = keyBase + tools::translate( "Block", "/Alerted" );
+        const QString keyAlerted = keyBase + tools::translate( "Block", "Alerted" );
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.second.alerted_ );
     }
 }
@@ -245,12 +244,12 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned i
     mutableHuman.number_ = number;
     mutableHuman.alerted_ = alerted;
     const T_Human& human = mutableHuman;
-    const QString keyBase = tools::translate( "Block", "Populations/" ) + inhabitant.c_str();
+    const QString keyBase = tools::translate( "Block", "Populations/" ) + inhabitant.c_str() + "/";
     kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
-    const QString keyNumber = keyBase + tools::translate( "Block", "/Number" );
+    const QString keyNumber = keyBase + tools::translate( "Block", "Resident" );
     if( !dictionary.HasKey( keyNumber ) )
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, human.number_ );
-    const QString keyAlerted = keyBase + tools::translate( "Block", "/Alerted" );
+    const QString keyAlerted = keyBase + tools::translate( "Block", "Alerted" );
     if( !dictionary.HasKey( keyAlerted ) )
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.alerted_ );
     if( human.number_ == 0u )

@@ -65,12 +65,12 @@
         <translation>PhysicalFeatures/Motivations/</translation>
     </message>
     <message>
-        <source>/Number</source>
-        <translation type="unfinished"></translation>
+        <source>Resident</source>
+        <translation>Habitant</translation>
     </message>
     <message>
-        <source>/Alerted</source>
-        <translation type="unfinished"></translation>
+        <source>Alerted</source>
+        <translation>Alerté</translation>
     </message>
 </context>
 <context>

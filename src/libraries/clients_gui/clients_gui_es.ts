@@ -65,7 +65,7 @@
         <translation>PhysicalFeatures/Motivations/</translation>
     </message>
     <message>
-        <source>/Number</source>
+        <source>Resident</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
