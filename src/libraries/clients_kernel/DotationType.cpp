@@ -24,9 +24,9 @@ DotationType::DotationType( xml::xistream& xis )
     xis >> xml::attribute( "id", id_ )
         >> xml::attribute( "name", name_ )
         >> xml::attribute( "category", category_ )
+        >> xml::optional >> xml::attribute( "type", type_ )
         >> xml::optional >> xml::attribute( "d-type", dType_ );
     categoryId_ = tools::DotationFamilyFromString( category_ );
-
     gaz_        = ( category_ == "carburant" );
     ammunition_ = ( category_ == "munition" );
 }
@@ -53,7 +53,7 @@ unsigned long DotationType::GetId() const
 // Name: DotationType::GetName
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-std::string DotationType::GetName() const
+const std::string& DotationType::GetName() const
 {
     return name_;
 }
@@ -62,9 +62,18 @@ std::string DotationType::GetName() const
 // Name: DotationType::GetCategory
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-std::string DotationType::GetCategory() const
+const std::string& DotationType::GetCategory() const
 {
     return category_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DotationType::GetType
+// Created: JSR 2011-02-10
+// -----------------------------------------------------------------------------
+const std::string& DotationType::GetType() const
+{
+    return type_;
 }
 
 // -----------------------------------------------------------------------------

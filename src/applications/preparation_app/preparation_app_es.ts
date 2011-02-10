@@ -987,6 +987,10 @@ Do you want to save anyway?</source>
         <source>Delete</source>
         <translation>Borrar</translation>
     </message>
+    <message>
+        <source>Generate default indicators</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScorePrimitivesLibrary</name>

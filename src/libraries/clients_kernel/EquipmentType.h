@@ -35,7 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    std::string GetName() const;
+    const std::string& GetName() const;
+    const std::string& GetProtection() const;
     unsigned long GetId() const;
     //@}
 
@@ -55,6 +56,7 @@ private:
     //! @name Member data
     //@{
     std::string name_;
+    std::string protection_;
     unsigned long id_;
     //@}
 };

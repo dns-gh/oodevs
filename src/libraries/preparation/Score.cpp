@@ -43,12 +43,12 @@ namespace
 Score::Score( xml::xistream& xis, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory )
     : controller_( &controller )
     , indicators_( indicators )
-    , name_( xis.attribute< std::string >( "name" ).c_str() )
-    , formula_( ReadFormula( xis ) )
-    , gauge_( ReadGauge( xis, gaugeFactory ) )
-    , variables_( new indicators::Variables( xis ) )
+    , name_      ( xis.attribute< std::string >( "name" ).c_str() )
+    , formula_   ( ReadFormula( xis ) )
+    , gauge_     ( ReadGauge( xis, gaugeFactory ) )
+    , variables_ ( new indicators::Variables( xis ) )
 {
-    controller_->Create( *(Score_ABC*)this );
+    controller_->Create( *static_cast< Score_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,12 +58,12 @@ Score::Score( xml::xistream& xis, kernel::Controller& controller, const indicato
 Score::Score( const QString& name, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory )
     : controller_( &controller )
     , indicators_( indicators )
-    , name_( name )
-    , formula_()
-    , gauge_( gaugeFactory.Create() )
-    , variables_( new indicators::Variables() )
+    , name_      ( name )
+    , formula_   ()
+    , gauge_     ( gaugeFactory.Create() )
+    , variables_ ( new indicators::Variables() )
 {
-    controller_->Create( *(Score_ABC*)this );
+    controller_->Create( *static_cast< Score_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,10 +73,10 @@ Score::Score( const QString& name, kernel::Controller& controller, const indicat
 Score::Score( const Score& score )
     : controller_( 0 )
     , indicators_( score.indicators_ )
-    , name_( score.name_ )
-    , formula_( score.formula_ )
-    , gauge_( new indicators::Gauge( *score.gauge_ ) )
-    , variables_( new indicators::Variables( *score.variables_ ) )
+    , name_      ( score.name_ )
+    , formula_   ( score.formula_ )
+    , gauge_     ( new indicators::Gauge( *score.gauge_ ) )
+    , variables_ ( new indicators::Variables( *score.variables_ ) )
 {
     // NOTHING
 }
@@ -88,7 +88,7 @@ Score::Score( const Score& score )
 Score::~Score()
 {
     if( controller_ )
-        controller_->Delete( *(Score_ABC*)this );
+        controller_->Delete( *static_cast< Score_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,7 +194,7 @@ void Score::SetName( const QString& name )
     {
         name_ = name;
         if( controller_ )
-            controller_->Update( *(Score_ABC*)this );
+            controller_->Update( *static_cast< Score_ABC* >( this ) );
     }
 }
 
@@ -208,7 +208,7 @@ void Score::SetFormula( const QString& formula )
     {
         formula_ = formula;
         if( controller_ )
-            controller_->Update( *(Score_ABC*)this );
+            controller_->Update( *static_cast< Score_ABC* >( this ) );
     }
 }
 
@@ -220,7 +220,7 @@ void Score::SetGauge( const indicators::Gauge& gauge )
 {
     gauge_.reset( new indicators::Gauge( gauge ) );
     if( controller_ )
-        controller_->Update( *(Score_ABC*)this );
+        controller_->Update( *static_cast< Score_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -231,5 +231,5 @@ void Score::SetVariables( const indicators::Variables& variables )
 {
     *variables_ = variables;
     if( controller_ )
-        controller_->Update( *(Score_ABC*)this );
+        controller_->Update( *static_cast< Score_ABC* >( this ) );
 }

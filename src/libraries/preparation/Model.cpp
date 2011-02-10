@@ -33,6 +33,7 @@
 #include "UrbanModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ResourceNetworkSelectionObserver.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerModel.h"
@@ -80,7 +81,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
     , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
     , profiles_( *new ProfilesModel( profileFactory_ ) )
-    , scores_( *new ScoresModel( scoreFactory_ ) )
+    , scores_( *new ScoresModel( scoreFactory_, teams_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , successFactors_( *new SuccessFactorsModel( successFactorFactory_ ) )
     , intelligences_( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
     , urban_( *new UrbanModel( controllers, staticModel ) )

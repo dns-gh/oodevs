@@ -22,6 +22,7 @@ EquipmentType::EquipmentType( xml::xistream& xis, const tools::Resolver_ABC< Wea
 {
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "id", id_ )
+        >> xml::attribute( "protection", protection_ )
         >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &EquipmentType::ReadWeaponSystem, weapons )
         >> xml::end;
@@ -40,9 +41,18 @@ EquipmentType::~EquipmentType()
 // Name: EquipmentType::GetName
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-std::string EquipmentType::GetName() const
+const std::string& EquipmentType::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EquipmentType::GetProtection
+// Created: JSR 2011-02-10
+// -----------------------------------------------------------------------------
+const std::string& EquipmentType::GetProtection() const
+{
+    return protection_;
 }
 
 // -----------------------------------------------------------------------------

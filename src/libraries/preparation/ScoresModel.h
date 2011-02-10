@@ -12,6 +12,12 @@
 
 #include "tools/Resolver.h"
 
+namespace kernel
+{
+    class DotationType;
+    class EquipmentType;
+}
+
 namespace xml
 {
     class xistream;
@@ -21,6 +27,7 @@ namespace xml
 class ModelChecker_ABC;
 class Score_ABC;
 class ScoreFactory_ABC;
+class TeamsModel;
 
 // =============================================================================
 /** @class  ScoresModel
@@ -33,7 +40,7 @@ class ScoresModel : public tools::Resolver< Score_ABC, QString >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ScoresModel( const ScoreFactory_ABC& factory );
+             ScoresModel( const ScoreFactory_ABC& factory, const TeamsModel& teams, const tools::Resolver_ABC< kernel::DotationType >& dotations, const tools::Resolver_ABC< kernel::EquipmentType >& equipments );
     virtual ~ScoresModel();
     //@}
 
@@ -45,6 +52,7 @@ public:
     void Load( const std::string& file );
     bool CheckValidity( ModelChecker_ABC& checker ) const;
     void Serialize( const std::string& file ) const;
+    void GenerateScoresFromTemplate( const std::string &templateFile );
     //@}
 
 private:
@@ -58,12 +66,20 @@ private:
     //@{
     void Serialize( xml::xostream& xos ) const;
     void ReadScore( xml::xistream& xis );
+    void ReadForeach( xml::xistream& xis );
+    void IterateAmmunitions( const std::string& content, const std::string& toReplace, const std::string& name, const std::string& toReplaceParties );
+    void IterateEquipments( const std::string& content, const std::string& toReplace, const std::string& name, const std::string& toReplaceParties );
+    void IterateParties( const std::string& content, const std::string& toReplace, const std::string& name );
+    void CreateScoreFromString( const std::string& buffer );
     //@}
 
 private:
     //! @name Member data
     //@{
     const ScoreFactory_ABC& factory_;
+    const TeamsModel& teams_;
+    const tools::Resolver_ABC< kernel::DotationType >& dotations_;
+    const tools::Resolver_ABC< kernel::EquipmentType >& equipments_;
     //@}
 };
 

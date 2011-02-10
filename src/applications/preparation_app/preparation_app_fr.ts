@@ -987,6 +987,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
+    <message>
+        <source>Generate default indicators</source>
+        <translation>Générer les indicateurs par défaut</translation>
+    </message>
 </context>
 <context>
     <name>ScorePrimitivesLibrary</name>

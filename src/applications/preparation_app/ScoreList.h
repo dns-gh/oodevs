@@ -49,7 +49,7 @@ class ScoreList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, const ScoresModel& model, const StaticModel& staticModel );
+             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer, ScoresModel& model, const StaticModel& staticModel );
     virtual ~ScoreList();
     //@}
 
@@ -66,6 +66,7 @@ private slots:
     //@{
     void OnEdit();
     void OnDelete();
+    void OnGenerate();
     //@}
 
 private:
@@ -89,10 +90,9 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::ItemFactory_ABC& factory_;
+    ScoresModel& model_;
     gui::ListDisplayer< ScoreList >* scores_;
     ScoreEditor* editor_;
-    QButton* editButton_;
-    QButton* deleteButton_;
     //@}
 };
 

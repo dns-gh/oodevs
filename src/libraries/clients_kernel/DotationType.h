@@ -10,7 +10,10 @@
 #ifndef __DotationType_h_
 #define __DotationType_h_
 
-namespace xml { class xistream; };
+namespace xml
+{
+    class xistream;
+}
 
 namespace kernel
 {
@@ -35,8 +38,9 @@ public:
     unsigned long GetId() const;
     unsigned long GetFamily() const;
 
-    std::string GetName() const; // $$$$ AGE 2006-04-28: category and name are kind of mixed up
-    std::string GetCategory() const;
+    const std::string& GetName() const; // $$$$ AGE 2006-04-28: category and name are kind of mixed up
+    const std::string& GetCategory() const;
+    const std::string& GetType() const;
 
     bool IsGas() const;
     bool IsAmmunition() const;
@@ -53,11 +57,14 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string   name_;
+    std::string name_;
     unsigned long id_;
     unsigned long categoryId_;
-    std::string   category_;
-    bool          gaz_, ammunition_, dType_;
+    std::string category_;
+    std::string type_;
+    bool gaz_;
+    bool ammunition_;
+    bool dType_;
     //@}
 };
 
