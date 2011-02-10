@@ -127,7 +127,9 @@ void DrawingsModel::Save( const std::string& directory ) const
     std::string filename = ( bfs::path( directory, bfs::native ) / bfs::path( "drawings.xml", bfs::native ) ).native_file_string();
     {
         xml::xofstream xos( filename );
-        xos << xml::start( "shapes" );
+        xos << xml::start( "shapes" )
+            << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+            << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/drawings.xsd" );
         std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing::Serialize
                      , boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
     }

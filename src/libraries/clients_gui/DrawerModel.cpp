@@ -12,6 +12,7 @@
 #include "DrawingFactory_ABC.h"
 #include "DrawerShape.h"
 #include "clients_kernel/Controllers.h"
+#include "tools/GeneralConfig.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -45,9 +46,25 @@ DrawerModel::~DrawerModel()
 void DrawerModel::Load( const std::string& filename )
 {
     xml::xifstream xis( filename );
-    xis >> xml::start( "shapes" )
-            >> xml::list( "shape", *this, &DrawerModel::ReadShape )
-        >> xml::end;
+    xis >> xml::start( "shapes" );
+    const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
+    if( schema.empty() )
+        ReadShapes( xis );
+    else
+    {
+        xml::xifstream xif( filename, xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ) ) );
+        ReadShapes( xif );
+    }
+    xis >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerModel::ReadShapes
+// Created: LGY 2011-02-10
+// -----------------------------------------------------------------------------
+void DrawerModel::ReadShapes( xml::xistream& xis )
+{
+    xis  >> xml::list( "shape", *this, &DrawerModel::ReadShape );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +90,9 @@ void DrawerModel::ReadShape( xml::xistream& xis )
 void DrawerModel::Save( const std::string& filename ) const
 {
     xml::xofstream xos( filename );
-    xos << xml::start( "shapes" );
+    xos << xml::start( "shapes" )
+        << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+        << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/drawings.xsd" );
     std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing_ABC::Serialize, boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
     xos << xml::end;
 }

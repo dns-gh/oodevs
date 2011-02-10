@@ -65,6 +65,7 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadShapes( xml::xistream& xis );
     void ReadShape( xml::xistream& xis );
     virtual void NotifyCreated( const Drawing_ABC& );
     virtual void NotifyDeleted( const Drawing_ABC& );
