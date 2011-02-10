@@ -91,10 +91,28 @@ void SessionList::ReadComments( const QString& session )
         std::string date, name, comment;
         xml::xifstream xis( ( bfs::path( config_.BuildSessionDir( exercise_.ascii(), session.ascii() ) ) / "session.xml" ).native_file_string() );
         xis >> xml::start( "session" )
-                >> xml::start( "meta" )
-                    >> xml::content( "name", name )
-                    >> xml::content( "comment", comment )
-                    >> xml::content( "date", date );
+                >> xml::start( "meta" );
+        if( xis.has_child( "name" ) )
+        {
+            xis >> xml::start( "name" );
+            if( xis.has_content() )
+                xis >> name;
+            xis >> xml::end;
+        }
+        if( xis.has_child( "comment" ) )
+        {
+            xis >> xml::start( "comment" );
+            if( xis.has_content() )
+                xis >> comment;
+            xis >> xml::end;
+        }
+        if( xis.has_child( "date" ) )
+        {
+            xis >> xml::start( "date" );
+            if( xis.has_content() )
+                xis >> date;
+            xis >> xml::end;
+        }
         comments_->setShown( !name.empty() || !comment.empty() );
         comments_->setText( QString( "<b>%1</b><br><i>%2</i><br>%3" ).arg( name.c_str() ).arg( date.c_str() ).arg( comment.c_str() ) );
     }
