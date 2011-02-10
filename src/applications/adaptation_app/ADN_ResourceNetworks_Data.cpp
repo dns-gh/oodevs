@@ -19,15 +19,13 @@
 ADN_ResourceNetworks_Data::ResourceNetworkInfos::ResourceNetworkInfos()
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
-    , strName_( "" )
-    , strColor_( "0xffffff" )
+    , strName_    ( "" )
+    , strColor_   ( "0xffffff" )
     , nProduction_( 0 )
-    , ptrDotation_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations(), 0, "" )
-    , ptrCategory_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Ration ).categories_, 0, "" )
+    , ptrCategory_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Energy ).categories_, 0, "" )
 {
     strColor_.SetParentNode( *this );
     nProduction_.SetParentNode( *this );
-    ptrDotation_.SetParentNode( *this );
     ptrCategory_.SetParentNode( *this );
 }
 
@@ -69,7 +67,6 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos* ADN_ResourceNetworks_Data::Reso
     pCopy->strName_ = strName_.GetData();
     pCopy->strColor_ = strColor_.GetData();
     pCopy->nProduction_ = nProduction_.GetData();
-    pCopy->ptrDotation_ = ptrDotation_.GetData();
     pCopy->ptrCategory_ = ptrCategory_.GetData();
     return pCopy;
 }
@@ -91,20 +88,13 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream
           >> xml::start( "defaults" )
               >> xml::attribute( "production", nProduction_ )
           >> xml::end;
-    ADN_Equipement_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
-    for( ADN_Equipement_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
-    {
-        ADN_Equipement_Data::T_CategoryInfos_Vector& categories = ( *itDotation )->GetCategories();
-        for( ADN_Equipement_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
+    ADN_Equipement_Data::T_CategoryInfos_Vector& categories = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Energy ).GetCategories();
+    for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
+        if( ( *it )->nMosId_ == id )
         {
-            if( ( *itCat )->nMosId_ == id )
-            {
-                ptrDotation_ = *itDotation;
-                ptrCategory_ = *itCat;
-                break;
-            }
+            ptrCategory_ = *it;
+            break;
         }
-    }
 }
 
 // -----------------------------------------------------------------------------

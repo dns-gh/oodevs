@@ -51,7 +51,6 @@ void ADN_ListView_ResourceNetworks::ConnectItem( bool bConnect )
     ResourceNetworkInfos* pInfos = static_cast< ResourceNetworkInfos* >( pCurData_ );
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_ResourceNetworks_GUI::eNbrGuiElements );
     vItemConnectors_[ ADN_ResourceNetworks_GUI::eName ]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ ADN_ResourceNetworks_GUI::eDotation ]->Connect( &pInfos->ptrDotation_, bConnect );
     vItemConnectors_[ ADN_ResourceNetworks_GUI::eCategory ]->Connect( &pInfos->ptrCategory_, bConnect );
     vItemConnectors_[ ADN_ResourceNetworks_GUI::eProduction ]->Connect( &pInfos->nProduction_, bConnect );
     vItemConnectors_[ ADN_ResourceNetworks_GUI::eColor ]->Connect( &pInfos->strColor_, bConnect );
