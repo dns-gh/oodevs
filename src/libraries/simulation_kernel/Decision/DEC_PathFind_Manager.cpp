@@ -14,10 +14,10 @@
 #include "DEC_Path_ABC.h"
 #include "DEC_PathType.h"
 #include "DEC_PathFactory.h"
-#include "clients_kernel/PhysicalFileLoader.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"
+#include "tools/PhysicalFileLoader.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -35,7 +35,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
 {
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    kernel::PhysicalFileLoader fileLoader( config, invalidSignatureFiles, missingSignatureFiles );
+    tools::PhysicalFileLoader fileLoader( config, invalidSignatureFiles, missingSignatureFiles );
     if( !invalidSignatureFiles.empty() )
         MT_LOG_WARNING_MSG( "Invalid signature for the file(s) " << invalidSignatureFiles )
     if( !missingSignatureFiles.empty() )

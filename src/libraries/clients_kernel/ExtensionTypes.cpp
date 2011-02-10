@@ -11,6 +11,7 @@
 #include "ExtensionTypes.h"
 #include "DictionaryType.h"
 #include "ExtensionType.h"
+#include "tools/FileLoader.h"
 #include "tools/GeneralConfig.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
@@ -44,10 +45,11 @@ ExtensionTypes::~ExtensionTypes()
 // Name: ExtensionTypes::Load
 // Created: JSR 2010-10-01
 // -----------------------------------------------------------------------------
-void ExtensionTypes::Load( const std::string& file )
+void ExtensionTypes::Load( const tools::ExerciseConfig& config, const std::string& file )
 {
     if( ! bfs::exists( bfs::path( file, bfs::native ) ) )
         return;
+    tools::FileLoader( config, file );
     xml::xifstream xis( file );
     xis >> xml::start( "extensions" );
     const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );

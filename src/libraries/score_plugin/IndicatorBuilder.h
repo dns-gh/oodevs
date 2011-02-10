@@ -20,6 +20,11 @@ namespace indicators
     class Variables;
 }
 
+namespace tools
+{
+    class SessionConfig;
+}
+
 namespace xml
 {
     class xostream;
@@ -41,7 +46,7 @@ class IndicatorBuilder
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorBuilder();
+    explicit IndicatorBuilder( const tools::SessionConfig& config );
     virtual ~IndicatorBuilder();
     //@}
 

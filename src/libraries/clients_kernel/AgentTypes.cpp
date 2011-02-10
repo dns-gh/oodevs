@@ -16,7 +16,6 @@
 #include "ComponentType.h"
 #include "DecisionalModel.h"
 #include "DotationType.h"
-#include "PhysicalFileLoader.h"
 #include "FragOrderType.h"
 #include "KnowledgeGroupType.h"
 #include "MagicActionType.h"
@@ -26,6 +25,7 @@
 #include "InhabitantType.h"
 #include "SensorType.h"
 #include "SymbolFactory.h"
+#include "tools/PhysicalFileLoader.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -68,7 +68,7 @@ void AgentTypes::Load( const tools::ExerciseConfig& config, std::string& invalid
 {
     Purge();
     symbolFactory_ = new SymbolFactory();
-    PhysicalFileLoader( config, invalidSingatureFiles, missingSignatureFiles )
+    tools::PhysicalFileLoader( config, invalidSingatureFiles, missingSignatureFiles )
         .Load( "components", boost::bind( &AgentTypes::ReadComponents, this, _1 ) )
         .Load( "missions", boost::bind( &AgentTypes::ReadOrderTypes, this, _1 ) )
         //.Load( "magic-orders", boost::bind( &AgentTypes::ReadMagicOrderTypes, this, _1 ) )

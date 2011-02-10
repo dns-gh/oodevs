@@ -17,7 +17,7 @@
 #include "indicators/Serializer.h"
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
-#include "tools/GeneralConfig.h"
+#include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -28,7 +28,8 @@ namespace
         SerializerFixture()
             : factory_( primitives_, variables_ )
         {
-            primitives_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
+            tools::ExerciseConfig config;
+            primitives_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
         }
 
         void ParseAndCheck( const std::string& text, const std::string& expected )

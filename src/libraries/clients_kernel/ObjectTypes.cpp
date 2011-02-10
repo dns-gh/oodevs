@@ -12,7 +12,6 @@
 #include "BreakdownType.h"
 #include "DotationType.h"
 #include "EquipmentType.h"
-#include "PhysicalFileLoader.h"
 #include "FireClass.h"
 #include "FacadeType.h"
 #include "InfrastructureType.h"
@@ -24,6 +23,7 @@
 #include "RoofShapeType.h"
 #include "VolumeType.h"
 #include "WeaponSystemType.h"
+#include "tools/PhysicalFileLoader.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -67,7 +67,7 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
 void ObjectTypes::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
 {
     Purge();
-    PhysicalFileLoader( config, invalidSignatureFiles, missingSignatureFiles )
+    tools::PhysicalFileLoader( config, invalidSignatureFiles, missingSignatureFiles )
         .Load( "objects", boost::bind( &ObjectTypes::ReadObjectTypes, this, _1 ) )
         .Load( "resources", boost::bind( &ObjectTypes::ReadDotations, this, _1 ) )
         .Load( "volumes", boost::bind( &ObjectTypes::ReadVolumes, this, _1 ) )

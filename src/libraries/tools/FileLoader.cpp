@@ -7,15 +7,15 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "tools_pch.h"
 #include "FileLoader.h"
-#include "tools/ExerciseConfig.h"
+#include "ExerciseConfig.h"
 #include <boost/filesystem.hpp>
 #include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
 
-using namespace kernel;
+using namespace tools;
 namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
@@ -26,6 +26,7 @@ FileLoader::FileLoader( const tools::ExerciseConfig& config )
     : config_               ( config )
     , invalidSignatureFiles_( 0 )
     , missingSignatureFiles_( 0 )
+    , malformedFiles_       ( 0 )
     , addToCRC_             ( false )
 {
     // NOTHING
@@ -39,10 +40,46 @@ FileLoader::FileLoader( const tools::ExerciseConfig& config, std::string& invali
     : config_               ( config )
     , invalidSignatureFiles_( &invalidSignatureFiles )
     , missingSignatureFiles_( &missingSignatureFiles )
+    , malformedFiles_       ( 0 )
     , addToCRC_             ( false )
 {
     std::string filename = config.GetPhysicalFile();
     CheckSignatures( filename, invalidSignatureFiles, missingSignatureFiles );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileLoader constructor
+// Created: LDC 2011-02-10
+// -----------------------------------------------------------------------------
+FileLoader::FileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles, std::string& malformedFiles )
+    : config_               ( config )
+    , invalidSignatureFiles_( &invalidSignatureFiles )
+    , missingSignatureFiles_( &missingSignatureFiles )
+    , malformedFiles_       ( &malformedFiles )
+    , addToCRC_             ( false )
+{
+    std::string filename = config.GetPhysicalFile();
+    CheckSignatures( filename, invalidSignatureFiles, missingSignatureFiles );
+}
+
+namespace
+{
+    void loadDummy( xml::xistream& ) {}
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileLoader constructor
+// Created: LDC 2011-02-09
+// -----------------------------------------------------------------------------
+FileLoader::FileLoader( const tools::ExerciseConfig& config, const std::string& file )
+    : config_               ( config )
+    , invalidSignatureFiles_( 0 )
+    , missingSignatureFiles_( 0 )
+    , malformedFiles_       ( 0 )
+    , addToCRC_             ( false )
+{
+    std::string xslTransform;
+    Check( file, &loadDummy, xslTransform );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +134,7 @@ namespace
     {
         typedef boost::function< void ( xml::xisubstream ) > T_Loader;
 
-        CheckedLoader( const std::string& path, const tools::ExerciseConfig& config, T_Loader loader, const std::string& xslTransform, std::string* invalidSignatureFiles, std::string* missingSignatureFiles )
+        CheckedLoader( const std::string& path, const tools::ExerciseConfig& config, T_Loader loader, const std::string& xslTransform, std::string* invalidSignatureFiles, std::string* missingSignatureFiles, std::string* malformedFiles )
             : path_( path )
             , config_( config )
             , loader_( loader )
@@ -111,11 +148,11 @@ namespace
                     missingSignatureFiles->append( "\n" + bfs::path( path_, bfs::native ).leaf() );
             }
             xml::xifstream xis( path_ );
-            LoadFile( xis, xslTransform );
+            LoadFile( xis, xslTransform, malformedFiles );
         }
 
     private:
-        void LoadFile( xml::xistream& xis, const std::string& xslTransform )
+        void LoadFile( xml::xistream& xis, const std::string& xslTransform, std::string* malformedFiles )
         {
             SchemaReader reader;
             xis >> xml::list( reader, &SchemaReader::ReadSchema );
@@ -140,7 +177,20 @@ namespace
                 else
                 {
                     CheckedLoader::GetModelVersion( schema );
-                    loader_( xml::xifstream( path_, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) ) );
+                    try
+                    {
+                        loader_( xml::xifstream( path_, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) ) );
+                    }
+                    catch( xml::exception& e )
+                    {
+                        if( malformedFiles )
+                        {
+                            malformedFiles->append( "\n" + bfs::path( path_, bfs::native ).leaf() );
+                            loader_( xml::xifstream( path_ ) );
+                        }
+                        else
+                            throw e;
+                    }
                 }
             }
         }
@@ -210,7 +260,16 @@ void FileLoader::GetFile( const std::string& rootTag, xml::xistream& xis, std::s
 // -----------------------------------------------------------------------------
 void FileLoader::Check( const std::string& file, T_Loader loader, const std::string& xslTransform )
 {
-    CheckedLoader( file, config_, loader, xslTransform, invalidSignatureFiles_, missingSignatureFiles_ );
+    CheckedLoader( file, config_, loader, xslTransform, invalidSignatureFiles_, missingSignatureFiles_, malformedFiles_ );
     if( addToCRC_ )
         (const_cast< tools::ExerciseConfig& >( config_ ) ).AddFileToCRC( file ); // $$$$ LDC FIXME
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileLoader::LoadAndUpdate
+// Created: LDC 2011-02-10
+// -----------------------------------------------------------------------------
+FileLoader& FileLoader::LoadAndUpdate( const std::string&, T_Loader, const std::string& )
+{
+    throw std::exception( "Unexpected load and update on base file loader class" );
 }

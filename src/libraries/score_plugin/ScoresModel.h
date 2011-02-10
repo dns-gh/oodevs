@@ -32,6 +32,11 @@ namespace dispatcher
     class ClientPublisher_ABC;
 }
 
+namespace tools
+{
+    class SessionConfig;
+}
+
 namespace xml
 {
     class xistream;
@@ -71,7 +76,7 @@ class ScoresModel : public dispatcher::Registrable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ScoresModel( dispatcher::ClientPublisher_ABC& clients );
+    explicit ScoresModel( const tools::SessionConfig& config, dispatcher::ClientPublisher_ABC& clients );
     virtual ~ScoresModel();
     //@}
 

@@ -12,6 +12,11 @@
 
 #include "tools/Resolver.h"
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace xml
 {
     class xistream;
@@ -41,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& file );
+    void Load( const tools::ExerciseConfig& config, const std::string& file );
     void Purge();
     //@}
 

@@ -35,7 +35,7 @@ using namespace plugins::score;
 ScorePlugin::ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::SessionConfig& config, dispatcher::CompositeRegistrable& registrables )
     : resolver_( resolver )
     , config_  ( config )
-    , scores_  ( new ScoresModel( clients ) )
+    , scores_  ( new ScoresModel( config, clients ) )
 {
     registrables.Add( new dispatcher::RegistrableProxy( *scores_ ) );
     scores_->Load( config_.GetScoresFile() );

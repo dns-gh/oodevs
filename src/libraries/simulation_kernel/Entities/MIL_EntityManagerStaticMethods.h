@@ -71,7 +71,7 @@ void MIL_EntityManagerStaticMethods::InitializeType( MIL_Config& config, const s
 {
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    kernel::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    tools::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
     loader.Load( strSection, &T::Initialize );//verifier tous les initialize
     loader.AddToCRC();
 }

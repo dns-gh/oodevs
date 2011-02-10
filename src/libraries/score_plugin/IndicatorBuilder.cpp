@@ -16,7 +16,7 @@
 #include "indicators/Serializer.h"
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
-#include "tools/GeneralConfig.h"
+#include "tools/SessionConfig.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::score;
@@ -25,13 +25,13 @@ using namespace plugins::score;
 // Name: IndicatorBuilder constructor
 // Created: SBO 2009-08-21
 // -----------------------------------------------------------------------------
-IndicatorBuilder::IndicatorBuilder()
+IndicatorBuilder::IndicatorBuilder( const tools::SessionConfig& config )
     : primitives_ ( new indicators::Primitives() )
     , typeFactory_( new indicators::DataTypeFactory() )
     , variables_  ( 0 )
     , factory_    ( 0 )
 {
-    primitives_->Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
+    primitives_->Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
 }
 
 // -----------------------------------------------------------------------------

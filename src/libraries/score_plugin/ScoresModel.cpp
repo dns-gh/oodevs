@@ -41,9 +41,9 @@ namespace
 // Name: ScoresModel constructor
 // Created: SBO 2009-08-20
 // -----------------------------------------------------------------------------
-ScoresModel::ScoresModel( dispatcher::ClientPublisher_ABC& clients )
+ScoresModel::ScoresModel( const tools::SessionConfig& config, dispatcher::ClientPublisher_ABC& clients )
     : clients_            ( clients )
-    , builder_            ( new IndicatorBuilder() )
+    , builder_            ( new IndicatorBuilder( config ) )
     , dateTimeInitialized_( false )
     , tickDuration_       ( 0 )
 {

@@ -101,11 +101,11 @@ void StaticModel::Load( const tools::ExerciseConfig& config, std::string& invali
     objectTypes_.Load( config, invalidSignatureFiles, missingSignatureFiles );
     static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( config );
     detection_.Load( config );
-    drawings_.Load( XmlSignatureHelper( config.BuildPhysicalChildFile( "DrawingTemplates.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
-    indicators_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
-    gaugeTypes_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
-    successFactorActionTypes_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactorActions.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
-    extensions_.Load( XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
+    drawings_.Load( config, XmlSignatureHelper( config.BuildPhysicalChildFile( "DrawingTemplates.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
+    indicators_.Load( config, XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
+    gaugeTypes_.Load( config, XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
+    successFactorActionTypes_.Load( config, XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactorActions.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
+    extensions_.Load( config, XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
 

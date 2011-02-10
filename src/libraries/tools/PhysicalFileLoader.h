@@ -7,28 +7,28 @@
 //
 // *****************************************************************************
 
-#ifndef __ExerciseFileLoader_h_
-#define __ExerciseFileLoader_h_
+#ifndef __PhysicalFileLoader_h_
+#define __PhysicalFileLoader_h_
 
 #include "FileLoader.h"
 
-namespace kernel
+namespace tools
 {
 // =============================================================================
-/** @class  ExerciseFileLoader
-    @brief  ExerciseFileLoader
+/** @class  PhysicalFileLoader
+    @brief  PhysicalFileLoader
 */
 // Created: LDC 2010-11-29
 // =============================================================================
-class ExerciseFileLoader : public FileLoader
+class PhysicalFileLoader : public FileLoader
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseFileLoader( const tools::ExerciseConfig& config );
-             ExerciseFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles );
-    virtual ~ExerciseFileLoader();
+    explicit PhysicalFileLoader( const tools::ExerciseConfig& config );
+             PhysicalFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles );
+    virtual ~PhysicalFileLoader();
     //@}
 
     //! @name Operations
@@ -39,10 +39,10 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    ExerciseFileLoader( const ExerciseFileLoader& );            //!< Copy constructor
-    ExerciseFileLoader& operator=( const ExerciseFileLoader& ); //!< Assignment operator
+    PhysicalFileLoader( const PhysicalFileLoader& );            //!< Copy constructor
+    PhysicalFileLoader& operator=( const PhysicalFileLoader& ); //!< Assignment operator
     //@}
 };
 }
 
-#endif // __ExerciseFileLoader_h_
+#endif // __PhysicalFileLoader_h_

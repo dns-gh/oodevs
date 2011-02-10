@@ -60,7 +60,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     Purge();
     types_.Load( config );
     objectTypes_.Load( config );
-    extensionTypes_.Load( tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ) );
+    extensionTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ) );
     static_cast< kernel::CoordinateConverter& >( coordinateConverter_ ).Load( config );
 }
 

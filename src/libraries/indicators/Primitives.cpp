@@ -11,6 +11,7 @@
 #include "Primitives.h"
 #include "DataTypeFactory.h"
 #include "Primitive.h"
+#include "tools/FileLoader.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
@@ -38,8 +39,9 @@ Primitives::~Primitives()
 // Name: Primitives::Load
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-void Primitives::Load( const std::string& file )
+void Primitives::Load( const tools::ExerciseConfig& config, const std::string& file )
 {
+    tools::FileLoader( config, file );
     xml::xifstream xis( file );
     xis >> xml::start( "primitives" )
             >> xml::list( "primitive", *this, &Primitives::ReadPrimitive )

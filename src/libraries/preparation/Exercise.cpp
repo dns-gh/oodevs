@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "Exercise.h"
 #include "clients_kernel/Controller.h"
+#include "tools/Version.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -52,7 +53,7 @@ void Exercise::Load( xml::xistream& xis )
             >> xml::end;
     xis >> xml::end;
     name_ = name.c_str();
-    generatorVersion_ = version.c_str();
+    generatorVersion_ = version.c_str(); // $$$$ RC LDC FIXME Should be removed or used to manage conversions but is useless right now.
     controller_.Create( *this );
 }
 
@@ -117,7 +118,7 @@ void Exercise::Serialize( const std::string& file ) const
     xos << xml::start( "exercise" )
         << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
         << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/exercise.xsd" )
-        << xml::attribute( "model-version", generatorVersion_.ascii() )
+        << xml::attribute( "model-version", SWORD_EXERCISE_VERSION )
             << xml::start( "meta" );
     if( ! name_.isEmpty() )
         xos << xml::start( "name" ) << xml::cdata( name_.ascii() ) << xml::end;

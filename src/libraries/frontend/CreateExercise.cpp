@@ -10,6 +10,7 @@
 #include "frontend_pch.h"
 #include "CreateExercise.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Version.h"
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4244 4245 )
@@ -27,7 +28,7 @@ namespace
     {
         xml::xofstream xos( file );
         xos << xml::start( "exercise" )
-                << xml::attribute( "model-version", "4.2.7" );
+                << xml::attribute( "model-version", SWORD_EXERCISE_VERSION );
         if( keepMeta && boost::filesystem::exists( file ) )
         {
             xml::xifstream xis( file );

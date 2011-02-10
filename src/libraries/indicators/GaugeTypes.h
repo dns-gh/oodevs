@@ -18,6 +18,11 @@
 #pragma warning( pop )
 #pragma warning( pop )
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace xml
 {
     class xistream;
@@ -46,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& filename );
+    void Load( const tools::ExerciseConfig& config, const std::string& filename );
     void Purge();
     virtual Gauge* Create() const;
     virtual Gauge* Create( xml::xistream& xis ) const;

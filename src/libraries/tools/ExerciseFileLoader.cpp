@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "tools_pch.h"
 #include "ExerciseFileLoader.h"
-#include "tools/ExerciseConfig.h"
+#include "ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
+using namespace tools;
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseFileLoader constructor
@@ -29,6 +29,16 @@ ExerciseFileLoader::ExerciseFileLoader( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 ExerciseFileLoader::ExerciseFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
     : FileLoader( config, invalidSignatureFiles, missingSignatureFiles )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseFileLoader constructor
+// Created: LDC 2011-02-10
+// -----------------------------------------------------------------------------
+ExerciseFileLoader::ExerciseFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles, std::string& malformedFiles )
+    : FileLoader( config, invalidSignatureFiles, missingSignatureFiles, malformedFiles )
 {
     // NOTHING
 }

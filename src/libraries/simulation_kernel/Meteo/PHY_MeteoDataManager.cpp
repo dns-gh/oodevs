@@ -9,12 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MeteoDataManager.h"
-#include "clients_kernel/ExerciseFileLoader.h"
 #include "meteo/PHY_GlobalMeteo.h"
 #include "meteo/PHY_LocalMeteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
+#include "tools/ExerciseFileLoader.h"
 #include "tools/WorldParameters.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
@@ -36,7 +36,7 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
 
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    kernel::ExerciseFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
+    tools::ExerciseFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
     loader.Load( "weather", boost::bind( &PHY_MeteoDataManager::Initialize, this, _1, boost::ref( config ) ) );
     loader.AddToCRC();
 }

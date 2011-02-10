@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "clients_kernel_pch.h"
+#include "tools_pch.h"
 #include "PhysicalFileLoader.h"
-#include "tools/ExerciseConfig.h"
+#include "ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
+using namespace tools;
 
 // -----------------------------------------------------------------------------
 // Name: PhysicalFileLoader constructor

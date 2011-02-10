@@ -484,7 +484,7 @@ void MainWindow::LoadExercise()
     {
         loading_ = true;
         std::string loadingErrors;
-        model_.Load( config_, loadingErrors, invalidSignedFiles_, missingSignedFiles_ );
+        model_.Load( config_, loadingErrors, invalidSignedFiles_, missingSignedFiles_, malformedFiles_ );
         loading_ = false;
         bool errors = !loadingErrors.empty();
         SetWindowTitle( errors );
@@ -501,6 +501,12 @@ void MainWindow::LoadExercise()
                     , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + invalidSignedFiles_.c_str() + "\n" + missingSignedFiles_.c_str() );
                 SetWindowTitle( true );
             }
+        }
+        if( !malformedFiles_.empty() )
+        {
+            QMessageBox::warning( this, tools::translate( "Application", "SWORD" )
+                    , tr( "The following files do not match their xsd : " ) + "\n" + malformedFiles_.c_str() );
+            SetWindowTitle( true );
         }
     }
     catch( std::exception& e )

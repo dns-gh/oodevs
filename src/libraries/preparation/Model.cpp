@@ -38,6 +38,7 @@
 #include "clients_gui/DrawerModel.h"
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/ExerciseFileLoader.h"
 #include <tools/XmlCrc32Signature.h>
 #include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
@@ -159,13 +160,21 @@ namespace
 
 namespace
 {
-    void CheckFileSignature( const std::string& file, std::string& invalidSignedFiles, std::string& missingSignedFiles )
+    void CheckFileSignature( const tools::ExerciseConfig& config, const std::string& file, std::string& invalidSignedFiles, std::string& missingSignedFiles, std::string& malformedFiles )
     {
         tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( file );
         if( error == tools::eXmlCrc32SignatureError_Invalid )
             invalidSignedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
         else if( error == tools::eXmlCrc32SignatureError_NotSigned )
             missingSignedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
+        try
+        {
+            tools::FileLoader( config, file );
+        }
+        catch( xml::exception& )
+        {
+            malformedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
+        }
     }
 }
 
@@ -173,27 +182,21 @@ namespace
 // Name: Model::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors, std::string& invalidSignedFiles, std::string& missingSignedFiles )
+void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors, std::string& invalidSignedFiles, std::string& missingSignedFiles, std::string& malformedFiles )
 {
-    const std::string exerciseFile = config.GetExerciseFile();
-    CheckFileSignature( exerciseFile, invalidSignedFiles, missingSignedFiles );
-    {
-        xml::xifstream xis( exerciseFile );
-        exercise_.Load( xis );
-    }
-    
+    tools::ExerciseFileLoader loader( config, invalidSignedFiles, missingSignedFiles, malformedFiles );    
     {
         std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
         try
         {
             urban::WorldParameters world( directoryPath );
             const bfs::path urbanFile = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
-            CheckFileSignature( urbanFile.string(), invalidSignedFiles, missingSignedFiles );
+            CheckFileSignature( config, urbanFile.string(), invalidSignedFiles, missingSignedFiles, malformedFiles );
             urban_.Load( directoryPath, world, loadingErrors );
             const std::string urbanStateFile = config.GetUrbanStateFile() ;
             if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
             {
-                CheckFileSignature( urbanStateFile, invalidSignedFiles, missingSignedFiles );
+                CheckFileSignature( config, urbanStateFile, invalidSignedFiles, missingSignedFiles, malformedFiles );
                 xml::xifstream xis( urbanStateFile );
                 urban_.LoadUrbanState( xis );
             }
@@ -206,7 +209,7 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
         const std::string orbatFile = config.GetOrbatFile() ;
         if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
         {
-            CheckFileSignature( orbatFile, invalidSignedFiles, missingSignedFiles );
+            CheckFileSignature( config, orbatFile, invalidSignedFiles, missingSignedFiles, malformedFiles );
             UpdateName( orbatFile );
             xml::xifstream xis( orbatFile );
             teams_.Load( xis, *this, loadingErrors );

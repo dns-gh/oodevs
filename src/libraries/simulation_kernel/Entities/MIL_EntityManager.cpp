@@ -67,7 +67,6 @@
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
-#include "clients_kernel/ExerciseFileLoader.h"
 #include "Decision/DEC_Workspace.h"
 #include "Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
@@ -100,6 +99,7 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"
 #include "resource_network/ResourceNetworkModel.h"
+#include "tools/ExerciseFileLoader.h"
 #include <urban/Model.h>
 #include <urban/PhysicalAttribute.h>
 #include <urban/ObjectVisitor_ABC.h>
@@ -261,7 +261,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MIL_Tools::CheckXmlCrc32Signature( strOrbat );
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
 
-    kernel::ExerciseFileLoader loader ( config );
+    tools::ExerciseFileLoader loader ( config );
     loader.LoadAndUpdate( "orbat", boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ), "resources/orbat0-4.2.xsl" );
 
     MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();

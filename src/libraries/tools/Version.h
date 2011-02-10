@@ -15,4 +15,6 @@ namespace tools
     const char* AppVersion();
 }
 
+#define SWORD_EXERCISE_VERSION "4.2.7"
+
 #endif // __Version_h_

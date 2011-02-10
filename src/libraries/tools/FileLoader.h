@@ -12,18 +12,14 @@
 
 #include <boost/function.hpp>
 
-namespace tools
-{
-    class ExerciseConfig;
-}
-
 namespace xml
 {
     class xistream;
 }
 
-namespace kernel
+namespace tools
 {
+    class ExerciseConfig;
 
 // =============================================================================
 /** @class  FileLoader
@@ -43,7 +39,9 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit FileLoader( const tools::ExerciseConfig& config );
+             FileLoader( const tools::ExerciseConfig& config, const std::string& file );
              FileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles );
+             FileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles, std::string& malformedFiles );
     virtual ~FileLoader();
     //@}
 
@@ -51,7 +49,7 @@ public:
     //@{
     FileLoader& Load( const std::string& rootTag, T_Loader loader );
     void AddToCRC();
-    virtual FileLoader& LoadAndUpdate( const std::string& rootTag, T_Loader loader, const std::string& xslTransform ) = 0;
+    virtual FileLoader& LoadAndUpdate( const std::string& rootTag, T_Loader loader, const std::string& xslTransform );
     //@}
 
 protected:
@@ -75,6 +73,7 @@ protected:
     const tools::ExerciseConfig& config_;
     std::string* invalidSignatureFiles_;
     std::string* missingSignatureFiles_;
+    std::string* malformedFiles_;
     bool addToCRC_;
     //@}
 };

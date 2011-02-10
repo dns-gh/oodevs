@@ -145,6 +145,7 @@ private:
     bool needsSaving_;
     std::string invalidSignedFiles_;
     std::string missingSignedFiles_;
+    std::string malformedFiles_;
     //@}
 };
 
