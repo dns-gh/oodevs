@@ -27,6 +27,7 @@ InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy&
     : type_     ( infrastructureType )
     , enabled_  ( true )
     , threshold_( 30 )
+    , role_     ( infrastructureType.GetName() )
     , object_   ( object )
 {
     CreateDictionary( dico );
@@ -40,6 +41,7 @@ InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy&
     : type_     ( infrastructureType )
     , enabled_  ( true )
     , threshold_( 30 )
+    , role_     ( infrastructureType.GetName() )
     , object_   ( object )
 {
     float threshold;
@@ -97,7 +99,7 @@ void InfrastructureAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::start( "infrastructure" )
-            << xml::attribute( "role", role_ )
+            << xml::attribute( "role", type_.GetName() )
             << xml::attribute( "enabled", enabled_ )
             << xml::attribute( "threshold", static_cast< float >( threshold_ ) / 100 )
         << xml::end;
