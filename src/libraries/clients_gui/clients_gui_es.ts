@@ -831,7 +831,15 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Danger level:</source>
-        <translation>Niveau de danger: </translation>
+        <translation>Peligro: </translation>
+    </message>
+    <message>
+        <source>Liquid</source>
+        <translation>Liquido</translation>
+    </message>
+    <message>
+        <source>Gaseous</source>
+        <translation>Gaseoso</translation>
     </message>
 </context>
 <context>

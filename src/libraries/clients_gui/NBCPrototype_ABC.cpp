@@ -43,8 +43,8 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
 
     new QLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent state:" ), this );
     nbcStates_ = new ValuedComboBox< std::string >( this );
-    nbcStates_->AddItem( std::string( "Liquid" ), std::string( "liquid" ) );
-    nbcStates_->AddItem( std::string( "Gaseous" ), std::string( "gaseous" ) );
+    nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Liquid" ), std::string( "liquid" ) );
+    nbcStates_->AddItem( tools::translate( "gui::NBCPrototype_ABC", "Gaseous" ), std::string( "gaseous" ) );
 
     FillTypes();
 }

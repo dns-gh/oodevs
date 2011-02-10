@@ -833,6 +833,14 @@ Voulez-vous le supprimer?</translation>
         <source>Danger level:</source>
         <translation>Niveau de danger: </translation>
     </message>
+    <message>
+        <source>Liquid</source>
+        <translation>Liquide</translation>
+    </message>
+    <message>
+        <source>Gaseous</source>
+        <translation>Gazeux</translation>
+    </message>
 </context>
 <context>
     <name>gui::ObjectListView</name>
