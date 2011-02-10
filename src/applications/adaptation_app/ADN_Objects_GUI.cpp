@@ -16,6 +16,7 @@
 #include "ADN_Workspace.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_CommonGfx.h"
+#include "ADN_HtmlBuilder.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_ListView_Objects.h"
 #include "ADN_Table_Objects_LocationScore.h"
@@ -424,4 +425,48 @@ void ADN_Objects_GUI::OnSpeedImpactComboChanged()
 void ADN_Objects_GUI::Enable( bool enable )
 {
     pGroup_->setEnabled( enable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_GUI::ExportHtml
+// Created: MGD 2010-02-10
+// -----------------------------------------------------------------------------
+void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
+{
+    QString strLocalPath = strPath + tr( "Objects/" );
+    ADN_Tools::CreatePathToFile( strLocalPath.ascii() );
+    ADN_HtmlBuilder indexBuilder;
+    indexBuilder.BeginHtml( tr( "Objects" ) );
+
+    ADN_Objects_Data::T_ObjectsInfos_Vector& objects = data_.GetObjectInfos();
+    indexBuilder.BeginTable( objects.size()+1 , 4 );
+    indexBuilder.TableItem( 0, 0, tr( "Name" ), true );
+    indexBuilder.TableItem( 0, 1, tr( "Type" ), true );
+    indexBuilder.TableItem( 0, 2, tr( "Geometry" ), true );
+    indexBuilder.TableItem( 0, 3, tr( "Capacities" ), true );
+    int n = 1;
+    for( ADN_Objects_Data::IT_ObjectsInfos_Vector it = objects.begin(); it != objects.end(); ++it, ++n )
+    {
+        ADN_Objects_Data::ObjectInfos& object = **it;
+        indexBuilder.TableItem( n, 0, object.strName_.GetData().c_str() );
+        indexBuilder.TableItem( n, 1, object.strType_.GetData().c_str() );
+        indexBuilder.TableItem( n, 2, object.geometries_.GetData().c_str() );
+
+        ADN_HtmlBuilder listBuilder;
+        listBuilder.BeginList();
+        for( ADN_Objects_Data::ObjectInfos::CIT_CapacityMap itCapacity = object.capacities_.begin(); itCapacity != object.capacities_.end(); ++itCapacity )
+        {
+            if( itCapacity->second->bPresent_.GetData() )
+                listBuilder.ListItem( itCapacity->first.c_str() );
+        }
+        listBuilder.EndList();
+
+        indexBuilder.TableItem( n, 3,  listBuilder.Stream().str().c_str() );
+
+    }
+    indexBuilder.EndTable();
+    indexBuilder.WriteToFile( strLocalPath + "index.htm" );
+
+    QString strText = "<a href=\"" + tr( "Objects/" ) + "index.htm\">" + tr( "Objects" ) + "</a>";
+    mainIndexBuilder.ListItem( strText );
 }

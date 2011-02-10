@@ -93,6 +93,7 @@ public:
     //! @name Operations
     //@{
     void Build();
+    void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath );
     //@}
 
 private slots:

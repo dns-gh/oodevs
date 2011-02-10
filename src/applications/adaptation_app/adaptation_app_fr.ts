@@ -5111,6 +5111,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Engineering</source>
         <translation>Génie</translation>
     </message>
+    <message>
+        <source>Units</source>
+        <translation>Pions</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

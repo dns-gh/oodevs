@@ -12,23 +12,24 @@
 #include "ADN_Units_GUI.h"
 #include "moc_ADN_Units_GUI.cpp"
 #include "ADN_App.h"
-#include "ADN_Workspace.h"
-#include "ADN_Units_Data.h"
-#include "ADN_CommonGfx.h"
-#include "ADN_ListView_Units.h"
 #include "ADN_ComboBox_Vector.h"
+#include "ADN_CommonGfx.h"
+#include "ADN_Composantes_Dotations_GUI.h"
+#include "ADN_GroupBox.h"
+#include "ADN_GuiBuilder.h"
+#include "ADN_HtmlBuilder.h"
+#include "ADN_ListView_Units.h"
+#include "ADN_Nature_GUI.h"
+#include "ADN_Point_GUI.h"
+#include "ADN_SymbolWidget.h"
+#include "ADN_TimeField.h"
+#include "ADN_Tr.h"
 #include "ADN_Units_Composantes_GUI.h"
+#include "ADN_Units_Data.h"
 #include "ADN_Units_Postures_GUI.h"
 #include "ADN_Units_LogThreshold_GUI.h"
-#include "ADN_Point_GUI.h"
-#include "ADN_GroupBox.h"
-#include "ADN_Composantes_Dotations_GUI.h"
-#include "ADN_Tr.h"
+#include "ADN_Workspace.h"
 #include "ENT/ENT_Tr.h"
-#include "ADN_GuiBuilder.h"
-#include "ADN_TimeField.h"
-#include "ADN_Nature_GUI.h"
-#include "ADN_SymbolWidget.h"
 #include <qcombo.h>
 #include <qframe.h>
 #include <qlabel.h>
@@ -333,4 +334,34 @@ void ADN_Units_GUI::UpdateValidators()
         return;
     pNCOfficersEditLine_->GetValidator().setTop( GetCapacity( *pInfos ) - pInfos->nNbOfficer_.GetData() );
     pOfficersEditLine_->GetValidator().setTop( GetCapacity( *pInfos ) - pInfos->nNbNCOfficer_.GetData() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_GUI::ExportHtml
+// Created: MGD 2010-02-10
+// -----------------------------------------------------------------------------
+void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath )
+{
+    QString strLocalPath = strPath + tr( "Units/" );
+    ADN_Tools::CreatePathToFile( strLocalPath.ascii() );
+    ADN_HtmlBuilder indexBuilder;
+    indexBuilder.BeginHtml( tr( "Units" ) );
+
+    ADN_Units_Data::T_UnitInfos_Vector& units = data_.GetUnitsInfos();
+    indexBuilder.BeginTable( units.size()+1 , 2 );
+    indexBuilder.TableItem( 0, 0, tr( "Name" ), true );
+    indexBuilder.TableItem( 0, 1, tr( "Type" ), true );
+    int n = 1;
+    for( ADN_Units_Data::IT_UnitInfos_Vector it = units.begin(); it != units.end(); ++it, ++n )
+    {
+        ADN_Units_Data::UnitInfos& unit = **it;
+        indexBuilder.TableItem( n, 0, unit.strName_.GetData().c_str() );
+        indexBuilder.TableItem( n, 1, ADN_Tr::ConvertFromAgentTypePion( unit.eTypeId_.GetData() ).c_str() );
+
+    }
+    indexBuilder.EndTable();
+    indexBuilder.WriteToFile( strLocalPath + "index.htm" );
+
+    QString strText = "<a href=\"" + tr( "Units/" ) + "index.htm\">" + tr( "Units" ) + "</a>";
+    mainIndexBuilder.ListItem( strText );
 }
