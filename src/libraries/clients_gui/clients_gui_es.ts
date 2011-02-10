@@ -203,6 +203,13 @@
     </message>
 </context>
 <context>
+    <name>gui::DensityWidget</name>
+    <message>
+        <source>Reset</source>
+        <translation>Réinitialiser</translation>
+    </message>
+</context>
+<context>
     <name>gui::DiplomacyDialog_ABC</name>
     <message>
         <source>Diplomacy</source>

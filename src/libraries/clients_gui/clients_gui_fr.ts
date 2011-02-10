@@ -203,6 +203,13 @@
     </message>
 </context>
 <context>
+    <name>gui::DensityWidget</name>
+    <message>
+        <source>Reset</source>
+        <translation>Réinitialiser</translation>
+    </message>
+</context>
+<context>
     <name>gui::DiplomacyDialog_ABC</name>
     <message>
         <source>Diplomacy</source>
@@ -471,7 +478,7 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Change urban blocks color based on population density</source>
-        <translation></translation>
+        <translation>Changez la couleur des blocs urbains en fonction de la densité de population</translation>
     </message>
     <message>
         <source>Gradient map</source>

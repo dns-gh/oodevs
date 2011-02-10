@@ -9,6 +9,7 @@ ConstructionPrototype_ABC.cpp \
 CoordinateSystemsPanel.cpp \
 CrossingSitePrototype_ABC.cpp \
 DelayPrototype_ABC.cpp \
+DensityWidget.cpp \
 DiplomacyDialog_ABC.cpp \
 DisplayToolbar.cpp \
 DrawerLayer.cpp \

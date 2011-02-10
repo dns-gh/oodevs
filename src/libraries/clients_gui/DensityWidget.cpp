@@ -51,7 +51,7 @@ namespace
 // Created: LGY 2011-06-01
 // -----------------------------------------------------------------------------
 DensityWidget::DensityWidget( QWidget* parent, kernel::Controllers& controllers )
-    : QVBox( parent )
+    : QVBox( parent, "DensityWidget" )
     , pPainter_   ( new Painter() )
     , controllers_( controllers )
     , options_    ( controllers.options_ )
