@@ -129,7 +129,7 @@ void LayersPanel::Commit()
 void LayersPanel::Reset()
 {
     fogOfWar_->Revert();
-    infra_->Revert();
+    //infra_->Revert();
     new_       = current_;
     newLayers_ = currentLayers_;
     for( unsigned i = 0; i < layers_.size(); ++i )
