@@ -1100,7 +1100,6 @@
         <update name="svgl"/>
         <update name="zlib"/>
         <update name="bugtrap"/>
-        <update name="shapelib"/>
         <update name="gdal"/>
         <update name="turtle"/>
         <update name="protobuf"/>
