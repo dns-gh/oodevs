@@ -207,7 +207,7 @@ QColor Gradient::Compute( float density, float alpha, float min, float max )
     }
     Color result( alpha );
     result = MakeColor( from.second, end.second, result, ratio, 1.f );
-    return QColor( static_cast< int >( result.r ), static_cast< int >( result.g ), static_cast< int >( result.a ) );
+    return QColor( static_cast< int >( result.r ), static_cast< int >( result.g ), static_cast< int >( result.b ) );
 }
 
 // -----------------------------------------------------------------------------
