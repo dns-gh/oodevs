@@ -45,8 +45,8 @@ MIL_LivingArea::MIL_LivingArea()
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
 MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population )
-    : population_      ( population )
-    , hasChanged_      ( false )
+    : population_( population )
+    , hasChanged_( false )
     , area_      ( 0.f )
 {
     xis >> xml::start( "living-area" )
@@ -183,7 +183,6 @@ void MIL_LivingArea::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
         file << id
              << block.person_
              << block.alerted_;
-                
     }
 }
 
@@ -316,8 +315,8 @@ float MIL_LivingArea::HealthCount() const
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::StartMotivation( const std::string& motivation )
 {
-    identifiers_.erase( identifiers_.begin(), identifiers_.end() ) ;
-    peopleMovingBlock_.erase( peopleMovingBlock_.begin(), peopleMovingBlock_.end() ) ;
+    identifiers_.clear();
+    peopleMovingBlock_.clear();
     T_Blocks blocks = GetBlockUsage( motivation );
     if( !blocks.empty() )
     {
@@ -329,7 +328,8 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
             unsigned long tmp = population_;
             BOOST_FOREACH( const T_Block& block, blocks )
             {
-                unsigned int part = static_cast< unsigned int >( population_ * GetOccupation( block, motivation ) / occupation );
+                float ratio = static_cast< float >( GetOccupation( block, motivation ) ) / occupation;
+                unsigned int part = population_ * ratio;
                 identifiers_[ block.pUrbanObject_->GetID() ] = part;
                 tmp -= part;
             }
@@ -388,8 +388,8 @@ void MIL_LivingArea::FinishMoving()
             block.person_ = ( it == identifiers_.end() ) ? 0u : it->second;
             block.pUrbanObject_->UpdateInhabitants( *this, block.person_ );
         }
-        identifiers_.erase( identifiers_.begin(), identifiers_.end() ) ;
-        peopleMovingBlock_.erase( peopleMovingBlock_.begin(), peopleMovingBlock_.end() ) ;
+        identifiers_.clear();
+        peopleMovingBlock_.clear();
         hasChanged_ = true;
     }
 }
@@ -459,13 +459,11 @@ float MIL_LivingArea::GetProportion( const T_Block& block, const std::string& mo
 void MIL_LivingArea::Alert( const TER_Localisation& localisation )
 {
     BOOST_FOREACH( T_Block& block, blocks_ )
-    {
         if( block.pUrbanObject_->Intersect2DWithLocalisation( localisation ) )
         {
             block.alerted_ = true;
             hasChanged_ = true;
         }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -478,7 +476,6 @@ void MIL_LivingArea::SetAlerted( bool alerted )
         block.alerted_ = alerted;
     hasChanged_ = true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingArea::ComputeLivingArea
