@@ -215,7 +215,7 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
 double MIL_PopulationElement_ABC::GetPionMaxSpeed( const PHY_Volume& pionVolume ) const
 {
     assert( pAttitude_ );
-    return pPopulation_->GetPionMaxSpeed( *pAttitude_, rDensity_, pionVolume );
+    return pPopulation_->GetPionMaxSpeed( *pAttitude_, static_cast< double >( nNbrAliveHumans_ ) / ( nNbrAliveHumans_ + nNbrDeadHumans_ ) * GetDefaultDensity( pPopulation_->GetType() ), pionVolume );
 }
 
 // -----------------------------------------------------------------------------

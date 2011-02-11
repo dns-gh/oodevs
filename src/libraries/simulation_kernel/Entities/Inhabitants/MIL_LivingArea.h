@@ -54,7 +54,6 @@ public:
     virtual void MovePeople( int occurence );
     virtual void FinishMoving();
     virtual geometry::Polygon2f ComputeMovingArea() const;
-    virtual geometry::Polygon2f ComputeLivingArea() const;
 
     void DistributeHumans( unsigned long population );
     void Register( MIL_StructuralStateNotifier_ABC& structural );

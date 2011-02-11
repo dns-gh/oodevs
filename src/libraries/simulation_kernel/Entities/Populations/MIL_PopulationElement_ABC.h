@@ -15,6 +15,7 @@
 #include "MIL_Random.h"
 
 class MIL_Population;
+class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 class MIL_Agent_ABC;
@@ -91,6 +92,7 @@ public:
     virtual const TER_Localisation& GetLocation() const = 0;
     virtual MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
     virtual MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const = 0;
+    virtual double GetDefaultDensity( const MIL_PopulationType& type ) const = 0;
     //@}
 
     //! @name Pion effects

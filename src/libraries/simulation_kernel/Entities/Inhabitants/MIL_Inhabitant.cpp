@@ -380,6 +380,8 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     nNbrDeadHumans_    = dead.value().Get( 0 ).quantity();
     healthStateChanged_ = true;
     pLivingArea_->DistributeHumans( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ );
+    if( pPopulationMovingObject_ )
+        pPopulationMovingObject_->Get< CrowdCapacity >().SetDensityFactor( static_cast< double >( nNbrHealthyHumans_ ) /( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -445,7 +447,7 @@ void MIL_Inhabitant::CreateInhabitantMovingObject()
     TER_Localisation( TER_Localisation::ePolygon, finalPoints );
 
     pPopulationMovingObject_ = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "populationMoving", *pArmy_, TER_Localisation( TER_Localisation( TER_Localisation::ePolygon, finalPoints ) ) );
-    CrowdCapacity* capacity = new CrowdCapacity( type_.GetAssociatedCrowdType(), ( nNbrDeadHumans_ + nNbrHealthyHumans_ + nNbrWoundedHumans_) / pLivingArea_->ComputeLivingArea().ComputeArea() );
+    CrowdCapacity* capacity = new CrowdCapacity( type_.GetAssociatedCrowdType(), static_cast< double >( nNbrHealthyHumans_ ) /( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ ) );
     capacity->Register( *pPopulationMovingObject_ );
 }
 

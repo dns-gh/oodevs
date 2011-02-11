@@ -460,3 +460,12 @@ bool MIL_PopulationConcentration::CanBePerceived() const
 {
     return IsValid();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::GetDefaultDensity
+// Created: SLG 2011-02-11
+// -----------------------------------------------------------------------------
+double MIL_PopulationConcentration::GetDefaultDensity( const MIL_PopulationType& type ) const
+{
+    return type.GetConcentrationDensity();
+}

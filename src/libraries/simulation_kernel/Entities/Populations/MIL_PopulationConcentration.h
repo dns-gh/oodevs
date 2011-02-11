@@ -74,6 +74,7 @@ public:
     virtual const TER_Localisation& GetLocation      () const;
     virtual       MT_Vector2D       GetSecuringPoint ( const MIL_Agent_ABC& securingAgent ) const;
     virtual       MT_Vector2D       GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const;
+    virtual       double            GetDefaultDensity( const MIL_PopulationType& type ) const;
     //@}
 
     //! @name Network

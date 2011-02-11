@@ -11,6 +11,7 @@
 #include "MIL_PopulationFlow.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
+#include "MIL_PopulationType.h"
 #include "DEC_PopulationKnowledge.h"
 #include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -884,4 +885,13 @@ bool MIL_PopulationFlow::IsValid() const
 bool MIL_PopulationFlow::CanBePerceived() const
 {
     return IsValid();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::GetDefaultDensity
+// Created: SLG 2011-02-11
+// -----------------------------------------------------------------------------
+double MIL_PopulationFlow::GetDefaultDensity( const MIL_PopulationType& type ) const
+{
+    return type.GetDefaultFlowDensity();
 }

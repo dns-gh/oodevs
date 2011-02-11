@@ -498,20 +498,3 @@ geometry::Polygon2f MIL_LivingArea::ComputeMovingArea() const
     MIL_Geometry::ComputeHull( hull, vertices );
     return hull;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::ComputeLivingArea
-// Created: SLG 2011-01-26
-// -----------------------------------------------------------------------------
-geometry::Polygon2f MIL_LivingArea::ComputeLivingArea() const
-{
-    std::vector< geometry::Point2f > vertices;
-    BOOST_FOREACH( const T_Block& block, blocks_ )
-    {
-        const geometry::Polygon2f::T_Vertices& objectVertices = block.pUrbanObject_->GetObject().GetFootprint()->Vertices();
-        vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
-    }
-    geometry::Polygon2f hull;
-    MIL_Geometry::ComputeHull( hull, vertices );
-    return hull;
-}

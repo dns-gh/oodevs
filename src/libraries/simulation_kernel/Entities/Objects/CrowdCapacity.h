@@ -46,6 +46,7 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     double ApplySpeedPolicy( const MIL_Agent_ABC& pion ) const;
     double GetDensity() const;
+    void SetDensityFactor( double densityFactor );
     //@}
 
 private:
@@ -58,7 +59,7 @@ private:
     //! @name Member data
     //@{
     const MIL_PopulationType* type_;
-    double density_;
+    double densityFactor_;
     //@}
 };
 

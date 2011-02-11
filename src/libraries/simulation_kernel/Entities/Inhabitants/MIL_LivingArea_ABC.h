@@ -36,7 +36,6 @@ public:
     virtual void StartMotivation( const std::string& motivation ) = 0;
     virtual void MovePeople( int occurence ) = 0;
     virtual void FinishMoving() = 0;
-    virtual geometry::Polygon2f ComputeLivingArea() const = 0;
     virtual geometry::Polygon2f ComputeMovingArea() const = 0;
     //@}
 

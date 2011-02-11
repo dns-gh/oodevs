@@ -25,7 +25,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( CrowdCapacity )
 // -----------------------------------------------------------------------------
 CrowdCapacity::CrowdCapacity()
     : type_( 0 )
-    , density_( 0.f )
+    , densityFactor_( 1.f )
 {
     // NOTHING
 }
@@ -34,9 +34,9 @@ CrowdCapacity::CrowdCapacity()
 // Name: CrowdCapacity constructor
 // Created: SLG 2011-01-27
 // -----------------------------------------------------------------------------
-CrowdCapacity::CrowdCapacity( const MIL_PopulationType& type, double density )
+CrowdCapacity::CrowdCapacity( const MIL_PopulationType& type, double densityFactor )
     : type_( &type )
-    , density_( density )
+    , densityFactor_( densityFactor )
 {
     // NOTHING
 }
@@ -47,7 +47,7 @@ CrowdCapacity::CrowdCapacity( const MIL_PopulationType& type, double density )
 // -----------------------------------------------------------------------------
 CrowdCapacity::CrowdCapacity( const CrowdCapacity& from )
     : type_   ( from.type_ )
-    , density_( from.density_ )                 
+    , densityFactor_( from.densityFactor_ )                 
 {
     // NOTHING
 }
@@ -70,7 +70,7 @@ void CrowdCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
     std::string popuName;
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
        >> popuName
-       >> density_;
+       >> densityFactor_;
     type_ = MIL_PopulationType::Find( popuName );
     if( !type_ )
         throw std::runtime_error( "Unknown dotation category - " + popuName + " - " );
@@ -84,7 +84,7 @@ void CrowdCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 {
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
        << type_->GetName()
-       << density_;
+       << densityFactor_;
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ double CrowdCapacity::ApplySpeedPolicy( const MIL_Agent_ABC& pion ) const
         std::set< const PHY_Volume* > volumes_;
         pion.GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes( volumes_ );
         for( std::set< const PHY_Volume* >::const_iterator itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
-            rMaxSpeed = std::min( rMaxSpeed, type_->GetPionMaxSpeed( *MIL_PopulationAttitude::Find( 0 ), density_, **itVolume ) );
+            rMaxSpeed = std::min( rMaxSpeed, type_->GetPionMaxSpeed( *MIL_PopulationAttitude::Find( 0 ), densityFactor_ * type_->GetDefaultFlowDensity(), **itVolume ) );
     }
     return rMaxSpeed;
 }
@@ -128,5 +128,15 @@ double CrowdCapacity::ApplySpeedPolicy( const MIL_Agent_ABC& pion ) const
 // -----------------------------------------------------------------------------
 double CrowdCapacity::GetDensity() const
 {
-    return density_;
+    return densityFactor_ * type_->GetDefaultFlowDensity();
 }
+
+// -----------------------------------------------------------------------------
+// Name: CrowdCapacity::SetDensityFactor
+// Created: SLG 2011-02-11
+// -----------------------------------------------------------------------------
+void CrowdCapacity::SetDensityFactor( double densityFactor )
+{
+    densityFactor_ = densityFactor;
+}
+

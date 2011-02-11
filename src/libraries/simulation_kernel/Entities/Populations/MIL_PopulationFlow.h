@@ -62,6 +62,7 @@ public:
     virtual const TER_Localisation& GetLocation() const;
     double GetSpeed() const;
     virtual MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const;
+    virtual double GetDefaultDensity( const MIL_PopulationType& type ) const;
     //@}
 
     //! @name Concentration management
