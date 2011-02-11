@@ -12,21 +12,19 @@
 #include "moc_InhabitantCreationPanel.cpp"
 #include "clients_kernel/Controllers.h"
 #include "tools/GeneralConfig.h"
-
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/SimpleLocationDrawer.h"
-
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/RichLabel.h"
-
 #include "preparation/AgentsModel.h"
 
 #pragma warning( disable : 4355 )
 
 using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: InhabitantCreationPanel constructor
 // Created: SLG 2010-11-25
@@ -34,10 +32,10 @@ using namespace kernel;
 InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const AgentTypes& types, AgentsModel& agentsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
     : InfoPanel_ABC( parent, panel, tr( "Inhabitants" ), "InhabitantCreationPanel" )
     , controllers_( controllers )
-    , tools_( tools )
-    , resolver_( types )
+    , tools_      ( tools )
+    , resolver_   ( types )
     , agentsModel_( agentsModel )
-    , location_  ( 0 )
+    , location_   ( 0 )
 {
     QGroupBox* groupBox = new QGroupBox( 2, Qt::Horizontal, tr( "Information" ), this );
 
@@ -73,7 +71,6 @@ InhabitantCreationPanel::~InhabitantCreationPanel()
     controllers_.Unregister( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: InhabitantCreationPanel::Draw
 // Created: SLG 2010-11-25
@@ -91,7 +88,7 @@ void InhabitantCreationPanel::Draw( kernel::Viewport_ABC& /*viewport*/ )
 // -----------------------------------------------------------------------------
 void InhabitantCreationPanel::Handle( Location_ABC& location )
 {
-    delete location_; 
+    delete location_;
     location_ = 0;
     location_ = &location;
 }
@@ -157,14 +154,10 @@ bool InhabitantCreationPanel::CheckValidity() const
         return false;
     if( !inhabitantTypes_->count() || !inhabitantTypes_->GetValue() )
         return false;
-
     if( ! location_ )
-    {
         return false;
-    }
     return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantCreationPanel::NotifyUpdated

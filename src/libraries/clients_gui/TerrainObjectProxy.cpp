@@ -309,27 +309,19 @@ void TerrainObjectProxy::OptionChanged( const std::string& name, const kernel::O
     {
         bool density = value.To< bool >();
         if( densityColor_ != density )
-        {
             densityColor_ = density;
-            UpdateColor();
-        }
     }
     else if( name == "Density/urbanBlock" )
     {
         pGradient_.reset( new Gradient() );
         pGradient_->LoadValues( value.To< QString >() );
-        UpdateColor();
     }
     else if( name == "Density/min" )
-    {
         minDensity_ = value.To< float >();
-        UpdateColor();
-    }
     else if( name == "Density/max" )
-    {
         maxDensity_ = value.To< float >();
-        UpdateColor();
-    }
+    else return;
+    UpdateColor();
 }
 
 // -----------------------------------------------------------------------------

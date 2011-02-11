@@ -65,22 +65,21 @@ public:
 
     //! @name Operations
     //@{
-   // virtual bool CheckValidity() const;
     virtual void Draw( kernel::Viewport_ABC& viewport );
     virtual void Handle( kernel::Location_ABC& location );
     //@}
 
-    public slots:
-        //! @name Slots
-        //@{
-        virtual void Commit();
-        //@}
+public slots:
+    //! @name Slots
+    //@{
+    virtual void Commit();
+    //@}
 
-    private slots:
-        //! @name Slots
-        //@{
-        void OnTypeChanged();
-        //@}
+private slots:
+    //! @name Slots
+    //@{
+    void OnTypeChanged();
+    //@}
 
 private:
     //! @name Copy/Assignment
@@ -102,7 +101,6 @@ private:
     void ResetLocation();
     bool CheckValidity() const;
     //@}
-    //@}
 
 private:
     //! @name Member data
@@ -112,13 +110,11 @@ private:
     const tools::Resolver_ABC< kernel::InhabitantType >& resolver_;
     AgentsModel& agentsModel_;
     kernel::Location_ABC* location_;
-
     gui::ValuedComboBox< const kernel::Team_ABC* >* teams_;
     gui::ValuedComboBox< const kernel::InhabitantType* >* inhabitantTypes_;
     QLineEdit* name_;
     QLineEdit* number_;
     gui::LocationCreator* locationCreator_;
-
     //@}
 };
 
