@@ -295,6 +295,7 @@ void MIL_Inhabitant::UpdateState()
     std::map< std::string, unsigned int > occupations;
     pLivingArea_->GetUsagesOccupation( occupations );
     pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
+    pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
 }
 
 // -----------------------------------------------------------------------------
@@ -378,7 +379,6 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     nNbrWoundedHumans_ = wounded.value().Get( 0 ).quantity();
     nNbrDeadHumans_    = dead.value().Get( 0 ).quantity();
     healthStateChanged_ = true;
-    pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
     pLivingArea_->DistributeHumans( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ );
 }
 
@@ -412,16 +412,6 @@ MIL_Army_ABC& MIL_Inhabitant::GetArmy() const
 {
     assert( pArmy_ );
     return *pArmy_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Inhabitant::NotifyStructuralStateChanged
-// Created: JSR 2011-01-14
-// -----------------------------------------------------------------------------
-void MIL_Inhabitant::NotifyStructuralStateChanged( unsigned int /*structuralState*/, const MIL_Object_ABC& object )
-{
-    if( object.Retrieve< MedicalCapacity >() )
-        pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
 }
 
 // -----------------------------------------------------------------------------

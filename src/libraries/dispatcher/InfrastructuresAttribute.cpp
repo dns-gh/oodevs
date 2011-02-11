@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 InfrastructuresAttribute::InfrastructuresAttribute( const sword::UrbanAttributes& message )
     : enabled_  ( true )
-    , threshold_( 30 )
+    , threshold_( 0.3f )
 {
     Update( message );
 }
@@ -39,13 +39,11 @@ InfrastructuresAttribute::~InfrastructuresAttribute()
 // -----------------------------------------------------------------------------
 void InfrastructuresAttribute::Update( const sword::UrbanAttributes& message )
 {
-    if( !message.has_infrastructures() )
+    if( !message.has_infrastructures() || !message.infrastructures().has_infrastructure() )
         return;
     enabled_ = message.infrastructures().infrastructure().active();
     threshold_ = message.infrastructures().infrastructure().threshold();
     role_ = message.infrastructures().infrastructure().type();
-    // Infrastructures
-    // TODO
 }
 
 // -----------------------------------------------------------------------------

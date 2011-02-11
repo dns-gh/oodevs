@@ -19,16 +19,17 @@
 
 using namespace kernel;
 
+#define DEFAULT_THRESHOLD 30
 // -----------------------------------------------------------------------------
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
 InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy& object, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
-    : type_     ( infrastructureType )
-    , enabled_  ( true )
-    , threshold_( 30 )
-    , role_     ( infrastructureType.GetName() )
-    , object_   ( object )
+    : type_        ( infrastructureType )
+    , enabled_     ( true )
+    , threshold_   ( DEFAULT_THRESHOLD )
+    , role_        ( infrastructureType.GetName() )
+    , object_      ( object )
 {
     CreateDictionary( dico );
 }
@@ -40,7 +41,7 @@ InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy&
 InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy& object, xml::xistream& xis, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
     : type_     ( infrastructureType )
     , enabled_  ( true )
-    , threshold_( 30 )
+    , threshold_( DEFAULT_THRESHOLD )
     , role_     ( infrastructureType.GetName() )
     , object_   ( object )
 {
@@ -66,9 +67,11 @@ InfrastructureAttribute::~InfrastructureAttribute()
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::Update( xml::xistream& xis )
 {
+    float threshold;
     xis >> xml::attribute( "role", role_ )
         >> xml::attribute( "enabled", enabled_ )
-        >> xml::attribute( "threshold", threshold_ );
+        >> xml::attribute( "threshold", threshold );
+    threshold_ = static_cast< unsigned int >( 100 * threshold + 0.5f );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,12 +101,33 @@ void InfrastructureAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "infrastructure" )
-            << xml::attribute( "role", type_.GetName() )
-            << xml::attribute( "enabled", enabled_ )
-            << xml::attribute( "threshold", static_cast< float >( threshold_ ) / 100 )
-        << xml::end;
+    if( enabled_ != true || threshold_ != DEFAULT_THRESHOLD )
+        xos << xml::start( "infrastructure" )
+                << xml::attribute( "role", type_.GetName() )
+                << xml::attribute( "enabled", enabled_ )
+                << xml::attribute( "threshold", static_cast< float >( threshold_ ) / 100.f )
+            << xml::end;
+}
 
+// -----------------------------------------------------------------------------
+// Name: InfrastructureAttribute::SetOverriden
+// Created: JSR 2011-02-11
+// -----------------------------------------------------------------------------
+void InfrastructureAttribute::SetOverriden( bool& overriden ) const
+{
+    if( enabled_ != true || threshold_ != DEFAULT_THRESHOLD )
+        overriden = true;
+}
+
+namespace
+{
+    struct ThresholdSetter
+    {
+        void operator()( unsigned int* pValue, unsigned int value )
+        {
+            *pValue = std::min( 100u, std::max( 0u, value ) );
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +138,7 @@ void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico )
 {
     dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Type" ), type_.GetName() );
     dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Enable" ), enabled_ );
-    dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_ );
+    dico.Register( *this, tools::translate( "Infrastructure", "Info/Infrastructure/Threshold" ), threshold_, ThresholdSetter() );
 }
 
 // -----------------------------------------------------------------------------

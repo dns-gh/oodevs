@@ -32,13 +32,24 @@ StructuralStateAttribute::~StructuralStateAttribute()
     // NOTHING
 }
 
+namespace
+{
+    struct StructuralSetter
+    {
+        void operator()( unsigned int* pValue, unsigned int value )
+        {
+            *pValue = std::min( 100u, std::max( 0u, value ) );
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: StructuralStateAttribute::CreateDictionary
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
 void StructuralStateAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    dico.Register( *this, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_ );
+    dico.Register( *this, tools::translate( "StructuralStateAttribute", "Info/StructuralState" ), structuralState_, StructuralSetter() );
 }
 
 // -----------------------------------------------------------------------------

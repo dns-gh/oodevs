@@ -123,8 +123,8 @@ void UrbanModel::Serialize( const std::string& filename ) const
             << xml::start( "urban-objects" );
     for( Resolver< gui::TerrainObjectProxy >::CIT_Elements it = Resolver< gui::TerrainObjectProxy >::elements_.begin(); it != Resolver< gui::TerrainObjectProxy >::elements_.end(); ++it )
     {
-        bool needsUpdate = true;
-        //it->second->Interface().Apply( & Overridable_ABC::SetOverriden, needsUpdate );// Temp pour serializer l'attribut
+        bool needsUpdate = false;
+        it->second->Interface().Apply( & Overridable_ABC::SetOverriden, needsUpdate );// Temp pour serializer l'attribut
         if( needsUpdate )
         {
             xos << xml::start( "urban-object" )

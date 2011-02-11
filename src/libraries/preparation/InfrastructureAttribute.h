@@ -10,6 +10,7 @@
 #ifndef __InfrastructureAttribute_h_
 #define __InfrastructureAttribute_h_
 
+#include "Overridable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include <map>
@@ -39,6 +40,7 @@ namespace xml
 // =============================================================================
 class InfrastructureAttribute : public kernel::Infrastructure_ABC
                               , public kernel::Serializable_ABC
+                              , public Overridable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -53,6 +55,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    virtual void SetOverriden( bool& overriden ) const;
     void Update( xml::xistream& xis );
     void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     bool IsEnabled() const;

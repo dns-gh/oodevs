@@ -43,7 +43,6 @@ private:
     float threshold_;
     std::string role_;
     //@}
-
 };
 
 }
