@@ -6,19 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-09-09 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
-
-#ifdef __GNUG__
-#   pragma implementation
-#endif
 
 #include "adaptation_app_pch.h"
 #include "ADN_TimeField.h"
@@ -35,7 +22,6 @@
 #include <qlineedit.h>
 #include <qcombobox.h>
 #include <qvalidator.h>
-
 
 class ADN_TimeField_EditLine : public QLineEdit
 {
@@ -89,10 +75,11 @@ private:
 // Created: SBO 2005-09-09
 // -----------------------------------------------------------------------------
 ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /*= 0*/ )
-    : QWidget        ( pParent, szName )
-    , ADN_Gfx_ABC    ()
-    , nSecondsValue_ ( 0 )
-    , bFreezeSlot_   ( false )
+    : QWidget              ( pParent, szName )
+    , ADN_Gfx_ABC          ()
+    , nSecondsValue_       ( 0 )
+    , nMinimumSecondsValue_( 0 )
+    , bFreezeSlot_         ( false )
 {
     pConnector_ = new ADN_Connector_String<ADN_TimeField>(this);
 
@@ -135,6 +122,7 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
 {
     if( bFreezeSlot_ )
         return;
+
     if( pComboBox_->currentText() == "s" )
         nSecondsValue_ = strValue.toUInt();
     else if( pComboBox_->currentText() == "m" )
@@ -142,14 +130,16 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
     else if( pComboBox_->currentText() == "h" )
         nSecondsValue_ = strValue.toUInt() * 3600;
 
-    // $$$$ SBO 2005-10-12: to avoid line field beeing empty
-    if( strValue.isEmpty() )
+    if( strValue.isEmpty() || nSecondsValue_ < nMinimumSecondsValue_ )
     {
-        pLineEdit_->setText( "0" );
-        static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( "0" + pComboBox_->currentText() );
+        QString currentEmptyValue = QString::number( ( pComboBox_->currentText() == "s" ) ? nMinimumSecondsValue_ : 0 );
+        nSecondsValue_ = nMinimumSecondsValue_;
+        pLineEdit_->setText( currentEmptyValue );
+        static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( currentEmptyValue + pComboBox_->currentText() );
     }
     else
         static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( strValue + pComboBox_->currentText() );
+
     emit ValueChanged();
 }
 
@@ -191,13 +181,10 @@ void ADN_TimeField::setText( const QString& strText )
         return;
 
     const std::string strValue = std::string( strText );
-
-    const char cUnit = *strValue.rbegin();
-
+    const char        cUnit = *strValue.rbegin();
     std::string       strTimeValue = strValue.substr( 0, strValue.size() - 1 );
     std::stringstream strTmp( strTimeValue );
     strTmp >> nSecondsValue_;
-
     switch( cUnit )
     {
         case 's': break;
@@ -232,4 +219,13 @@ QIntValidator& ADN_TimeField::GetValidator()
 {
     assert( pValidator_ );
     return *pValidator_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TimeField::SetMinimumValueInSecond
+// Created: ABR 2011-02-11
+// -----------------------------------------------------------------------------
+void ADN_TimeField::SetMinimumValueInSecond( unsigned int value )
+{
+    nMinimumSecondsValue_ = value;
 }

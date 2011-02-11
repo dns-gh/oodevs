@@ -16,10 +16,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "adaptation_app_pch.h"
 #include "GQ_PlotData.h"
 #include "moc_GQ_PlotData.cpp"

@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "adaptation_app_pch.h"
 #include "ADN_Objects_Wizard.h"
 

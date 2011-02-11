@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: SBO 2005-09-09 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __ADN_TimeField_h_
 #define __ADN_TimeField_h_
@@ -45,11 +36,11 @@ public:
 
     //! @name Operations
     //@{
-    QString text   () const;
-    void    setText( const QString& strText );
-    //@}
-
+    QString text() const;
     QIntValidator& GetValidator();
+    void setText( const QString& strText );
+    void SetMinimumValueInSecond( unsigned int value );
+    //@}
 
 signals:
     //! @name Signals
@@ -70,7 +61,8 @@ private:
     //@{
     ADN_TimeField_EditLine* pLineEdit_;
     QComboBox*              pComboBox_;
-    uint                    nSecondsValue_;
+    unsigned int            nSecondsValue_;
+    unsigned int            nMinimumSecondsValue_;
     bool                    bFreezeSlot_;
     QIntValidator*          pValidator_;
     //@}
