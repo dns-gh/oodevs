@@ -119,7 +119,8 @@ void MIL_LivingArea::DistributeHumans( unsigned long population )
     unsigned long tmp = population_;
     for( IT_Blocks it = blocks_.begin(); it != blocks_.end() && tmp > 0; ++it )
     {
-        unsigned long person = static_cast< unsigned long >( it->pUrbanObject_->GetLivingSpace() * GetStructuralState( *it->pUrbanObject_ ) * population_ / area_ );
+        float ratio = static_cast< float >( it->pUrbanObject_->GetLivingSpace() ) * GetStructuralState( *it->pUrbanObject_ ) / area_;
+        unsigned long person = ratio * population_;
         if( tmp - person < 0 )
             person = tmp;
         it->person_ = person;
