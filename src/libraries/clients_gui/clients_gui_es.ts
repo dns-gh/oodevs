@@ -69,7 +69,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>/Alerted</source>
+        <source>Alerted</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

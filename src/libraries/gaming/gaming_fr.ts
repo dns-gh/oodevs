@@ -526,7 +526,7 @@
     </message>
     <message>
         <source>Wounded:</source>
-        <translation>Blessés</translation>
+        <translation>Blessés:</translation>
     </message>
     <message>
         <source>Dead:</source>
