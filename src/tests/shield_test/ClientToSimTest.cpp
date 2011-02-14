@@ -264,15 +264,3 @@ BOOST_FIXTURE_TEST_CASE( change_population_magic_action_from_client_is_converted
     MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { change_population_magic_action { tasker { id: 7 } adhesions { party { id: 20 } value: 21 } adhesions { party { id: 20 } value: 21 } healthy: 20 wounded: 21 dead: 22 motivation: \"office\" } }" ) );
     converter.ReceiveClientToSim( "client endpoint", msg );
 }
-
-BOOST_FIXTURE_TEST_CASE( urban_magic_action_from_client_is_converted, ContextFixture< MsgsClientToSim::MsgClientToSim > )
-{
-    content.mutable_urban_magic_action()->mutable_id()->set_id( 7 );
-    FillUrbanUsage( content.mutable_urban_magic_action()->add_usages() );
-    FillUrbanUsage( content.mutable_urban_magic_action()->add_usages() );
-    content.mutable_urban_magic_action()->mutable_infrastructure()->set_active( true );
-    content.mutable_urban_magic_action()->mutable_infrastructure()->set_threshold( 9.1f );
-    content.mutable_urban_magic_action()->set_structural_state( 12u );
-    MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { urban_magic_action { id { id: 7 } usages { role: \"office\" percentage: 11 } usages { role: \"office\" percentage: 11 } infrastructure { active: true threshold: 9.1 } structural_state: 12 } }" ) );
-    converter.ReceiveClientToSim( "client endpoint", msg );
-}

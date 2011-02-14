@@ -326,9 +326,9 @@ void NodeElement::Push( int quantity )
 // Name: NodeElement::SetModifier
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void NodeElement::SetModifier( unsigned int modifier )
+void NodeElement::SetModifier( float modifier )
 {
-    modifier_ = 0.01 * modifier;
+    modifier_ = modifier;
 }
 
 // -----------------------------------------------------------------------------

@@ -61,7 +61,7 @@ public:
     void Consume( float& functionalState );
     void DistributeResource( float functionalState );
     void Push( int quantity );
-    void SetModifier( unsigned int modifier );
+    void SetModifier( float modifier );
     bool NeedUpdate() const;
     float GetFunctionalState() const;
     float GetConsumptionState() const;
@@ -119,7 +119,7 @@ private:
     unsigned int consumptionAmount_;
     unsigned int externalConsumption_;
     bool consumptionCritical_;
-    double modifier_;
+    float modifier_;
     mutable bool needUpdate_;
     float functionalState_;
     float consumptionState_;

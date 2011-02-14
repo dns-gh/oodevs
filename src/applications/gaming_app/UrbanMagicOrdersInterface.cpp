@@ -12,7 +12,9 @@
 #include "moc_UrbanMagicOrdersInterface.cpp"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
-#include "actions/UrbanMagicAction.h"
+#include "actions/ObjectMagicAction.h"
+#include "actions/ParameterList.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Object_ABC.h"
@@ -21,8 +23,12 @@
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "protocol/SimulationSenders.h"
-#include <google/protobuf/Message.h>
-#include <google/protobuf/Descriptor.h>
+
+using namespace actions;
+using namespace kernel;
+using namespace parameters;
+
+// $$$$ _RC_ JSR 2011-02-11: TODO A unifier avec ObjectMagicOrdersInterface
 
 namespace
 {
@@ -61,14 +67,15 @@ namespace
 // Name: UrbanMagicOrdersInterface constructor
 // Created: SLG 2010-12-21
 // -----------------------------------------------------------------------------
-UrbanMagicOrdersInterface::UrbanMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
+UrbanMagicOrdersInterface::UrbanMagicOrdersInterface( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel, const ::StaticModel& staticModel, const Time_ABC& simulation )
     : QObject( parent )
-    , controllers_( controllers )
-    , actionsModel_( actionsModel )
-    , static_( staticModel )
-    , simulation_( simulation )
+    , controllers_   ( controllers )
+    , actionsModel_  ( actionsModel )
+    , static_        ( staticModel )
+    , simulation_    ( simulation )
     , selectedEntity_( controllers )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -77,19 +84,19 @@ UrbanMagicOrdersInterface::UrbanMagicOrdersInterface( QWidget* parent, kernel::C
 // -----------------------------------------------------------------------------
 UrbanMagicOrdersInterface::~UrbanMagicOrdersInterface()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanMagicOrdersInterface::NotifyContextMenu
 // Created: SLG 2010-12-21
 // -----------------------------------------------------------------------------
-void UrbanMagicOrdersInterface::NotifyContextMenu( const kernel::Object_ABC& object, kernel::ContextMenu& menu )
+void UrbanMagicOrdersInterface::NotifyContextMenu( const Object_ABC& object, ContextMenu& menu )
 {
     selectedEntity_ = &object;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     AddValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ) );
-    const kernel::Infrastructure_ABC* infra = object.Retrieve< kernel::Infrastructure_ABC >();
-    if( infra )
+    if( object.Retrieve< Infrastructure_ABC >() )
     {
         AddValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ) );
         AddMagic( tr( "Disable" ), SLOT( Disable() ), magicMenu );
@@ -120,7 +127,7 @@ int UrbanMagicOrdersInterface::AddMagic( const QString& label, const char* slot,
 // Name: UrbanMagicOrdersInterface::AddValuedMagic
 // Created: SLG 2010-12-21
 // -----------------------------------------------------------------------------
-void UrbanMagicOrdersInterface::AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot )
+void UrbanMagicOrdersInterface::AddValuedMagic( QPopupMenu* parent, ContextMenu& menu, const QString& label, const char* slot )
 {
     QPopupMenu* valueMenu = new QPopupMenu( parent );
     QLineEdit* valueEditor = new InitializedLineEdit( valueMenu, tr( "Enter value" ) );
@@ -138,14 +145,13 @@ void UrbanMagicOrdersInterface::AddValuedMagic( QPopupMenu* parent, kernel::Cont
 void UrbanMagicOrdersInterface::ChangeStructuralState()
 {
     if( selectedEntity_ )
-    {
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
-            actions::UrbanMagicAction* action = new actions::UrbanMagicAction( *selectedEntity_, controllers_.controller_, true );
-            action->SetStructuralState( editor->text().toInt() );
-            SendUrbanUpdateMagic( *action );
+            ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+            list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_structural_state );
+            list.AddNumeric( "Value", 0.01f * editor->text().toInt() );
+            SendUrbanUpdateMagic( list );
         }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -155,11 +161,13 @@ void UrbanMagicOrdersInterface::ChangeStructuralState()
 void UrbanMagicOrdersInterface::Disable()
 {
     if( selectedEntity_ )
-    {
-        actions::UrbanMagicAction* action = new actions::UrbanMagicAction( *selectedEntity_, controllers_.controller_, true );
-        action->SetEnabled( false );
-        SendUrbanUpdateMagic( *action );
-    }
+        if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
+        {
+            ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+            list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_infrastructure );
+            list.AddBool( "Enabled", false );
+            SendUrbanUpdateMagic( list );
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -169,11 +177,13 @@ void UrbanMagicOrdersInterface::Disable()
 void UrbanMagicOrdersInterface::Enable()
 {
     if( selectedEntity_ )
-    {
-        actions::UrbanMagicAction* action = new actions::UrbanMagicAction( *selectedEntity_, controllers_.controller_, true );
-        action->SetEnabled( true );
-        SendUrbanUpdateMagic( *action );
-    }
+        if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
+        {
+            ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+            list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_infrastructure );
+            list.AddBool( "Enabled", true );
+            SendUrbanUpdateMagic( list );
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -183,23 +193,29 @@ void UrbanMagicOrdersInterface::Enable()
 void UrbanMagicOrdersInterface::ChangeThreshold()
 {
     if( selectedEntity_ )
-    {
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
-        {
-            actions::UrbanMagicAction* action = new actions::UrbanMagicAction( *selectedEntity_, controllers_.controller_, true );
-            action->SetThreshold( 0.01f * editor->text().toFloat() );
-            SendUrbanUpdateMagic( *action );
-        }
-    }
+            if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
+            {
+                ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+                list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_infrastructure );
+                list.AddNumeric( "Threshold", 0.01f * editor->text().toFloat() );
+                SendUrbanUpdateMagic( list );
+            }
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanMagicOrdersInterface::SendUrbanUpdateMagic
 // Created: SLG 2011-01-18
 // -----------------------------------------------------------------------------
-void UrbanMagicOrdersInterface::SendUrbanUpdateMagic( actions::UrbanMagicAction& action )
+void UrbanMagicOrdersInterface::SendUrbanUpdateMagic( ParameterList& attribute )
 {
-    action.Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action.Attach( *new actions::ActionTasker( selectedEntity_, false ) );
-    action.RegisterAndPublish( actionsModel_ );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "update_object" );
+    ObjectMagicAction* action = new ObjectMagicAction( selectedEntity_, actionType, controllers_.controller_, true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    ParameterList* attributesList = new ParameterList( it.NextElement() );
+    action->AddParameter( *attributesList );
+    attributesList->AddParameter( attribute );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+    //action.Attach( *new ActionTasker( selectedEntity_, false ) );
+    action->RegisterAndPublish( actionsModel_ );
 }

@@ -174,23 +174,19 @@ void InfrastructureCapacity::SendFullState( sword::UrbanAttributes& message ) co
 }
 
 // -----------------------------------------------------------------------------
-// Name: InfrastructureCapacity::SetEnabled
-// Created: SLG 2011-01-18
+// Name: InfrastructureCapacity::OnUpdate
+// Created: JSR 2011-02-14
 // -----------------------------------------------------------------------------
-void InfrastructureCapacity::SetEnabled( bool enabled )
+void InfrastructureCapacity::OnUpdate( const sword::MissionParameter_Value& attribute )
 {
-    enabled_ = enabled;
-    needUpdate_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfrastructureCapacity::SetThreshold
-// Created: SLG 2011-01-18
-// -----------------------------------------------------------------------------
-void InfrastructureCapacity::SetThreshold( float threshold )
-{
-    threshold_ = threshold;
-    needUpdate_ = true;
+    if( attribute.list_size() > 1 )
+    {
+        needUpdate_ = true;
+        if( attribute.list( 1 ).has_booleanvalue() )
+            enabled_ = attribute.list( 1 ).booleanvalue();
+        else if( attribute.list( 1 ).has_areal() )
+            threshold_ = attribute.list( 1 ).areal();
+    }
 }
 
 // -----------------------------------------------------------------------------

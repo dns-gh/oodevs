@@ -60,11 +60,6 @@ public:
     void WriteUrbanIdAttribute( xml::xostream& xos ) const;
     //@}
 
-    //! @name Interaction
-    //@{
-    virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
-    //@}
-
     //! @name Knowledge
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team );
@@ -73,12 +68,7 @@ public:
 
     //! @name Network
     //@{
-    sword::UrbanMagicActionAck_ErrorCode OnUpdateStructuralState( int state );
-    sword::UrbanMagicActionAck_ErrorCode OnUpdateInfrastructure( const sword::UrbanMagicAction_Infrastructure& msg );
-
-    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
     virtual sword::ObjectMagicActionAck_ErrorCode OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
-
     virtual void SendCreation() const;
     virtual void SendDestruction() const;
     virtual void SendFullState() const;

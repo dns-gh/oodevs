@@ -262,27 +262,3 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgChangePopulationMagi
     CONVERT( dead );
     CONVERT( motivation );
 }
-
-namespace
-{
-    template< typename From, typename To >
-    void ConvertInfrastructure( const From& from, To* to )
-    {
-        CONVERT( active );
-        CONVERT( threshold );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientToSimulation::Convert
-// Created: MCO 2010-11-25
-// -----------------------------------------------------------------------------
-void ClientToSimulation::Convert( const MsgsClientToSim::MsgUrbanMagicAction& from, sword::UrbanMagicAction* to )
-{
-    CONVERT_ID( id );
-    for( int i = 0; i < from.usages().size(); ++i )
-        ConvertUrbanUsage( from.usages( i ), to->add_usages() );
-    if( from.has_infrastructure() )
-        ConvertInfrastructure( from.infrastructure(), to->mutable_infrastructure() );
-    CONVERT( structural_state );
-}

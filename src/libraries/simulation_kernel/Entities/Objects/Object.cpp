@@ -9,20 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "Object.h"
-#include "ObjectPrototype.h"
-#include "ObjectCapacity_ABC.h"
-#include "ObjectAttribute_ABC.h"
-#include "MIL_ObjectBuilder_ABC.h"
-#include "MIL_InteractiveContainer_ABC.h"
-#include "MIL_ObjectManipulator.h"
-#include "ConstructionAttribute.h"
-#include "MineAttribute.h"
 #include "BurnSurfaceAttribute.h"
-#include "BypassAttribute.h"
+#include "ConstructionAttribute.h"
 #include "ObstacleAttribute.h"
-#include "CrossingSiteAttribute.h"
-#include "SupplyRouteAttribute.h"
-#include "MedicalTreatmentAttribute.h"
+#include "MIL_ObjectBuilder_ABC.h"
+#include "MIL_ObjectType_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Network/NET_ASN_Tools.h"
@@ -30,8 +21,6 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
-#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 
@@ -41,14 +30,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 // -----------------------------------------------------------------------------
 Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, bool reserved )
     : MIL_Object( &army, builder.GetType(), xis.attribute< unsigned long >( "id" ) )
-    , name_       ( xis.attribute< std::string >( "name", "" ) )
+    , name_( xis.attribute< std::string >( "name", "" ) )
 {
     MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
     builder.Build( *this );
-    ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
-    if( pObstacle )
+    if( ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >() )
         pObstacle->SetType( reserved ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary );
 }
 
@@ -58,14 +46,13 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
 // -----------------------------------------------------------------------------
 Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const TER_Localisation* pLocation, const std::string& name /*= std::string()*/, bool reserved /*= true*/ )
     : MIL_Object( &army, builder.GetType() )
-    , name_       ( name )
+    , name_( name )
 {
     MIL_Object_ABC::Register();
     if( pLocation )
         Initialize( *pLocation );
     builder.Build( *this );
-    ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
-    if( pObstacle )
+    if( ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >() )
         pObstacle->SetType( reserved? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary );
 }
 
@@ -85,6 +72,7 @@ Object::Object()
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -139,9 +127,9 @@ void Object::Update( unsigned int time )
 {
     // TODO can be updated
     MIL_Object::Update( time );
-    const ConstructionAttribute* attribute = RetrieveAttribute< ConstructionAttribute >();
-    if( attribute && attribute->NeedDestruction() )
-        MarkForDestruction();
+    if( const ConstructionAttribute* attribute = RetrieveAttribute< ConstructionAttribute >() )
+        if( attribute->NeedDestruction() )
+            MarkForDestruction();
 }
 
 // -----------------------------------------------------------------------------
@@ -171,49 +159,6 @@ void Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 {
     agent.GetRole< PHY_RoleInterface_Location >().NotifyTerrainObjectCollision( *this );
     MIL_Object::ProcessAgentInside( agent );
-
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::OnUpdate
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode Object::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
-{
-    for( int i = 0; i < attributes.size(); ++i )
-    {
-        const sword::MissionParameter_Value& attribute = attributes.Get( i );
-        if( attribute.list_size() == 0 ) // it should be a list of lists
-            return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
-        const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
-        switch( actionId )
-        {
-        case sword::ObjectMagicAction_Attribute_mine:
-            GetAttribute< MineAttribute >().OnUpdate( attribute );
-            break;
-        case sword::ObjectMagicAction_Attribute_bypass:
-            GetAttribute< BypassAttribute >().OnUpdate( attribute );
-            break;
-        case sword::ObjectMagicAction_Attribute_construction:
-            GetAttribute< ConstructionAttribute >().OnUpdate( attribute );
-            break;
-        case sword::ObjectMagicAction_Attribute_obstacle:
-            GetAttribute< ObstacleAttribute >().OnUpdate( attribute );
-            break;
-        case sword::ObjectMagicAction_Attribute_crossing_site:
-            GetAttribute< CrossingSiteAttribute >().OnUpdate( attribute );
-            break;
-        case sword::ObjectMagicAction_Attribute_supply_route:
-            GetAttribute< SupplyRouteAttribute >().OnUpdate( attribute );
-            break;
-        case sword::ObjectMagicAction_Attribute_medical_treatment:
-            GetAttribute< MedicalTreatmentAttribute >().OnUpdate( attribute );
-            break;
-        default:
-            break;
-        }
-    }
-    return sword::ObjectMagicActionAck::no_error;
 }
 
 // -----------------------------------------------------------------------------

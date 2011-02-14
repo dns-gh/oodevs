@@ -19,9 +19,9 @@
 class MIL_Object : public MIL_Object_ABC
 {
 public:
-    MIL_Object();
-    MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type );
-    MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int id );
+             MIL_Object();
+             MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type );
+             MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsigned int id );
     virtual ~MIL_Object();
 
     //! @name CheckPoints
@@ -58,7 +58,7 @@ public:
     //! @name StructuralStateNotifier
     //@{
     virtual void Register( MIL_StructuralStateNotifier_ABC& notifier );
-    virtual void ApplyStructuralState( unsigned int structuralState ) const;
+    virtual void ApplyStructuralState( float structuralState ) const;
     //@}
 
     //! @name Fires
@@ -87,10 +87,8 @@ public:
 
     //! @name Network
     //@{
-    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes ) = 0;
-    
+    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
     virtual void UpdateState();
-
     virtual void SendCreation() const = 0;
     virtual void SendDestruction() const = 0;
     virtual void SendFullState() const = 0;

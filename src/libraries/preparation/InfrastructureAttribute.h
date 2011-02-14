@@ -56,9 +56,9 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void SetOverriden( bool& overriden ) const;
+    virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual bool IsEnabled() const;
     void Update( xml::xistream& xis );
-    void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    bool IsEnabled() const;
     //@}
 
 private:

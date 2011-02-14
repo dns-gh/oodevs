@@ -26,6 +26,7 @@ namespace xml
 namespace sword
 {
     class UrbanAttributes;
+    class MissionParameter_Value;
 }
 
 namespace urban
@@ -59,11 +60,11 @@ public:
     void ApplyIndirectFire( MIL_Object_ABC& object, const TER_Localisation& attritionSurface, const PHY_DotationCategory& dotation );
     void ApplyDirectFire( const MIL_Object_ABC& object, const PHY_DotationCategory& dotation );
     const PHY_ComposanteState& ComputeComposanteState( const MIL_Object_ABC& object, const PHY_Protection& targetProtection );
-    unsigned int GetStructuralState() const;
-    void SetStructuralState( int state );
+    float GetStructuralState() const;
 
     void SendState( sword::UrbanAttributes& message ) const;
     void SendFullState( sword::UrbanAttributes& message ) const;
+    void OnUpdate( const sword::MissionParameter_Value& attribute );
 
     //! @name From MIL_InteractiveContainer_ABC
     //@{    
@@ -96,8 +97,8 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int structuralState_;
-    mutable unsigned int lastStructuralState_;
+    float structuralState_;
+    mutable float lastStructuralState_;
     T_Agents agents_;
     urban::MaterialCompositionType* materialType_;
     //@}

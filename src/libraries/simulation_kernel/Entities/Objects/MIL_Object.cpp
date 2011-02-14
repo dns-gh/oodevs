@@ -9,22 +9,23 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Object.h"
-#include "ObjectPrototype.h"
 #include "ObjectCapacity_ABC.h"
 #include "ObjectAttribute_ABC.h"
-#include "MIL_ObjectBuilder_ABC.h"
-#include "MIL_InteractiveContainer_ABC.h"
+#include "ConstructionAttribute.h"
+#include "MineAttribute.h"
+#include "BypassAttribute.h"
+#include "ObstacleAttribute.h"
+#include "CrossingSiteAttribute.h"
+#include "InfrastructureCapacity.h"
+#include "MedicalTreatmentAttribute.h"
+#include "SupplyRouteAttribute.h"
+#include "StructuralCapacity.h"
 #include "MIL_ObjectManipulator.h"
 #include "MIL_StructuralStateNotifier_ABC.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
-#include "Entities/MIL_Army.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
-#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Object )
 
@@ -55,7 +56,7 @@ MIL_Object::MIL_Object( MIL_Army_ABC* army, const MIL_ObjectType_ABC& type, unsi
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 MIL_Object::MIL_Object()
-: manipulator_( *new MIL_ObjectManipulator( *this ) )
+    : manipulator_( *new MIL_ObjectManipulator( *this ) )
 {
     // NOTHING
 }
@@ -246,7 +247,7 @@ void MIL_Object::ProcessPopulationInside( MIL_PopulationElement_ABC& population 
 // Name: MIL_Object::ApplyStructuralState
 // Created: JSR 2011-01-14
 // -----------------------------------------------------------------------------
-void MIL_Object::ApplyStructuralState( unsigned int structuralState ) const
+void MIL_Object::ApplyStructuralState( float structuralState ) const
 {
     std::for_each( structuralStateNotifiers_.begin(), structuralStateNotifiers_.end(),
                    boost::bind( &MIL_StructuralStateNotifier_ABC::NotifyStructuralStateChanged, _1, structuralState, boost::cref( *this ) ) );
@@ -281,10 +282,58 @@ void MIL_Object::SendFullState() const
     client::ObjectUpdate asn;
     asn().mutable_object()->set_id( GetID() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
-
     std::for_each( attributes_.begin(), attributes_.end(),
         boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( *asn().mutable_attributes() ) ) );        
     asn.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object::OnUpdate
+// Created: JSR 2011-02-11
+// -----------------------------------------------------------------------------
+sword::ObjectMagicActionAck_ErrorCode MIL_Object::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
+{
+    for( int i = 0; i < attributes.size(); ++i )
+    {
+        const sword::MissionParameter_Value& attribute = attributes.Get( i );
+        if( attribute.list_size() == 0 ) // it should be a list of lists
+            return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
+        const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
+        switch( actionId )
+        {
+        case sword::ObjectMagicAction_Attribute_mine:
+            GetAttribute< MineAttribute >().OnUpdate( attribute );
+            break;
+        case sword::ObjectMagicAction_Attribute_bypass:
+            GetAttribute< BypassAttribute >().OnUpdate( attribute );
+            break;
+        case sword::ObjectMagicAction_Attribute_construction:
+            GetAttribute< ConstructionAttribute >().OnUpdate( attribute );
+            break;
+        case sword::ObjectMagicAction_Attribute_obstacle:
+            GetAttribute< ObstacleAttribute >().OnUpdate( attribute );
+            break;
+        case sword::ObjectMagicAction_Attribute_crossing_site:
+            GetAttribute< CrossingSiteAttribute >().OnUpdate( attribute );
+            break;
+        case sword::ObjectMagicAction_Attribute_supply_route:
+            GetAttribute< SupplyRouteAttribute >().OnUpdate( attribute );
+            break;
+        case sword::ObjectMagicAction_Attribute_medical_treatment:
+            GetAttribute< MedicalTreatmentAttribute >().OnUpdate( attribute );
+            break;
+        case sword::ObjectMagicAction_Attribute_structural_state:
+            Get< StructuralCapacity >().OnUpdate( attribute );
+            ApplyStructuralState( Get< StructuralCapacity >().GetStructuralState() );
+            break;
+        case sword::ObjectMagicAction_Attribute_infrastructure:
+            Get< InfrastructureCapacity >().OnUpdate( attribute );
+            break;
+        default:
+            break;
+        }
+    }
+    return sword::ObjectMagicActionAck::no_error;
 }
 
 // -----------------------------------------------------------------------------

@@ -115,6 +115,11 @@ message MsgObjectMagicAction {
         stock              = 13;
         nbc_agent          = 14;
         effect_delay       = 15;
+        flood              = 16;
+        burn_surface       = 17;
+        structural_state   = 18;
+        infrastructure     = 19;
+        usages             = 20;
    }
    
    required Common.ObjectId             object     = 1;
@@ -159,17 +164,6 @@ message MsgChangePopulationMagicAction {
   optional string                motivation = 6;
 }
 
-message MsgUrbanMagicAction {
-    message Infrastructure {
-        optional bool  active    = 1;
-        optional float threshold = 2;
-    }
-  required Common.ObjectId   id               = 1;
-  repeated Common.UrbanUsage usages           = 2;
-  optional Infrastructure    infrastructure   = 3;
-  optional uint32            structural_state = 4;
-}
-
 message MsgClientToSim {
     message Content {
        optional Common.MsgControlStop                  control_stop                         = 1;
@@ -193,7 +187,6 @@ message MsgClientToSim {
        optional MsgControlCheckPointListRequest        control_checkpoint_list_request      = 19;
        optional MsgControlCheckPointDeleteRequest      control_checkpoint_delete_request    = 20;
        optional MsgChangePopulationMagicAction         change_population_magic_action       = 21;
-       optional MsgUrbanMagicAction                    urban_magic_action                   = 22;
     }
     optional int32   context = 1;
     required Content message = 2;

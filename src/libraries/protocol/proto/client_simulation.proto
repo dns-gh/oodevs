@@ -175,6 +175,9 @@ message ObjectMagicAction {
         effect_delay       = 15;
         flood              = 16;
         burn_surface       = 17;
+        structural_state   = 18;
+        infrastructure     = 19;
+        usages             = 20;
     }
     required ObjectId          object     = 1; //!< The object identifier
     required Type              type       = 2; //!< The type of magic action
@@ -258,28 +261,6 @@ message ChangePopulationMagicAction {
     optional bool           alerted    = 7; //!< Whether the population have received an alert
 }
 
-/** @struct UrbanMagicAction
-    @brief A urban magic action.
-
-    This message is sent by a client to alter a urban object with a magic action.
-
-    @see UrbanMagicActionAck
-*/
-message UrbanMagicAction {
-    /** @struct Infrastructure
-        @brief An infrastructure.
-        @todo Is this inner message really usefull ?
-    */
-    message Infrastructure {
-        optional bool  active    = 1; //!< Whether the infrastructure is currently working or not
-        optional float threshold = 2; //!< The threshold below which the infrastructure stops working
-    }
-    required ObjectId       id               = 1; //!< The object identifier
-    repeated UrbanUsage     usages           = 2; //!< The usages
-    optional Infrastructure infrastructure   = 3; //!< The infrastructure
-    optional uint32         structural_state = 4; //!< The structural state in percent
-}
-
 /** @struct ClientToSim
     @brief Wraps messages from clients to the simulation
 */
@@ -310,7 +291,6 @@ message ClientToSim {
         optional ControlCheckPointListRequest   control_checkpoint_list_request   = 19; //!< @copybrief ControlCheckPointListRequest
         optional ControlCheckPointDeleteRequest control_checkpoint_delete_request = 20; //!< @copybrief ControlCheckPointDeleteRequest
         optional ChangePopulationMagicAction    change_population_magic_action    = 21; //!< @copybrief ChangePopulationMagicAction
-        optional UrbanMagicAction               urban_magic_action                = 22; //!< @copybrief UrbanMagicAction
     }
     /** @property context
         @brief Identifies the request matching the response

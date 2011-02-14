@@ -84,7 +84,7 @@ namespace
     float GetStructuralState( const UrbanObjectWrapper& object )
     {
         const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();
-        return structural ? 0.01f * structural->GetStructuralState() : 1.f;
+        return structural ? structural->GetStructuralState() : 1.f;
     }
 
     template< typename T >

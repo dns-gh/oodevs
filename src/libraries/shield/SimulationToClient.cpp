@@ -2374,15 +2374,3 @@ void SimulationToClient::Convert( const sword::ChangePopulationMagicActionAck& f
                               ( sword::ChangePopulationMagicActionAck::error_invalid_number, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_number ) 
                               ( sword::ChangePopulationMagicActionAck::error_invalid_parameter, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_parameter ) );
 }
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-24
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::UrbanMagicActionAck& from, MsgsSimToClient::MsgUrbanMagicActionAck* to )
-{
-    CONVERT_ENUM( error_code, ( sword::UrbanMagicActionAck::no_error, MsgsSimToClient::MsgUrbanMagicActionAck::no_error )
-                              ( sword::UrbanMagicActionAck::error_invalid_urban_block, MsgsSimToClient::MsgUrbanMagicActionAck::error_invalid_urbanblock )
-                              ( sword::UrbanMagicActionAck::error_invalid_role, MsgsSimToClient::MsgUrbanMagicActionAck::error_invalid_role )
-                              ( sword::UrbanMagicActionAck::error_invalid_threshold, MsgsSimToClient::MsgUrbanMagicActionAck::error_invalid_threshold ) );
-}

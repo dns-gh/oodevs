@@ -591,15 +591,6 @@ void AgentServerMsgMgr::OnReceiveUnitMagicActionAck( const sword::UnitMagicActio
 }
 
 //-----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveUrbanMagicActionAck
-// Created: SLG 2010-12-21
-//-----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveUrbanMagicActionAck( const sword::UrbanMagicActionAck& message, unsigned long /*nCtx*/ )
-{
-    CheckAcknowledge( logger_, message, "UrbanMagicActionAck" );
-}
-
-//-----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveObjectMagicActionAck
 // Created: NLD 2003-03-05
 //-----------------------------------------------------------------------------
@@ -1741,8 +1732,6 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         OnReceiveFragOrderAck( wrapper.message().frag_order_ack() , wrapper.context() );
     else if( wrapper.message().has_unit_magic_action_ack() )
         OnReceiveUnitMagicActionAck( wrapper.message().unit_magic_action_ack() , wrapper.context() );
-    else if( wrapper.message().has_urban_magic_action_ack() )
-        OnReceiveUrbanMagicActionAck( wrapper.message().urban_magic_action_ack() , wrapper.context() );
     else if( wrapper.message().has_unit_creation_request_ack() )
         OnReceiveUnitCreationRequestAck(  wrapper.message().unit_creation_request_ack() );
     else if( wrapper.message().has_set_automat_mode_ack() )

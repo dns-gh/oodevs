@@ -78,7 +78,7 @@ public:
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
 
-    virtual void NotifyStructuralStateChanged( unsigned int structuralState, const MIL_Object_ABC& object );
+    virtual void NotifyStructuralStateChanged( float structuralState, const MIL_Object_ABC& object );
     virtual void NotifyFired() {}
 
     void AddConsumption( unsigned long resourceId, unsigned int consumption );

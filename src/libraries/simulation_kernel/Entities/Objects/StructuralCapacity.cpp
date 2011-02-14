@@ -35,8 +35,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )
 // Created: SLG 2010-06-17
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity()
-    : structuralState_    ( 100 )
-    , lastStructuralState_( std::numeric_limits< unsigned int >::max() )
+    : structuralState_    ( 1.f )
+    , lastStructuralState_( -1.f )
     , materialType_       ( 0 )
 {
     // NOTHING
@@ -47,8 +47,8 @@ StructuralCapacity::StructuralCapacity()
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( xml::xistream& xis )
-    : structuralState_    ( xis.attribute< unsigned int >( "value" ) )
-    , lastStructuralState_( std::numeric_limits< unsigned int >::max() )
+    : structuralState_    ( 0.01f * xis.attribute< unsigned int >( "value" ) )
+    , lastStructuralState_( -1.f )
 {
     // NOTHING
 }
@@ -59,7 +59,7 @@ StructuralCapacity::StructuralCapacity( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 StructuralCapacity::StructuralCapacity( const StructuralCapacity& from )
     : structuralState_    ( from.structuralState_ )
-    , lastStructuralState_( std::numeric_limits< unsigned int >::max() )
+    , lastStructuralState_( -1.f )
 {
     // NOTHING
 }
@@ -79,7 +79,7 @@ StructuralCapacity::~StructuralCapacity()
 // -----------------------------------------------------------------------------
 void StructuralCapacity::Update( xml::xistream& xis, const MIL_Object_ABC& object )
 {
-    structuralState_ = xis.attribute< unsigned int >( "value" );
+    structuralState_ = xis.attribute< unsigned int >( "value" ) * 0.01f;
     object.ApplyStructuralState( structuralState_ );
 }
 
@@ -135,15 +135,9 @@ void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const TER_Lo
     if( const MaterialAttribute* materialAttribute = object.RetrieveAttribute< MaterialAttribute >() )
     {
         const double ratio = MIL_Geometry::IntersectionArea( attritionSurface, object.GetLocalisation() ) / objectArea;
-        const unsigned int oldStructuralState = structuralState_;
-        double attrition = dotation.GetAttrition(  materialAttribute->GetMaterial().GetId() );
-        unsigned int damage = static_cast< unsigned int >( 100. * ratio * attrition );
-        if( damage <= structuralState_ )
-            structuralState_ -= damage;
-        else
-            structuralState_ = 0;
-        const float delta = 0.01f * ( oldStructuralState - structuralState_ );
-        if ( ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) ) <= delta )
+        const float oldStructuralState = structuralState_;
+        structuralState_ = std::max( 0., structuralState_ - ratio * dotation.GetAttrition(  materialAttribute->GetMaterial().GetId() ) );
+        if ( ( 1 - MIL_Random::rand_io( MIL_Random::eFire ) ) <= oldStructuralState - structuralState_ )
             for ( IT_Agents it = agents_.begin(); it != agents_.end(); ++it )
                 ( *it )->GetRole< PHY_RoleInterface_Composantes >().ApplyUrbanObjectCrumbling( object );
         object.ApplyStructuralState( structuralState_ );
@@ -189,12 +183,7 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
     // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
     if( area == 0 || materialAttribute == 0 )
         return;
-    const double modifier = dotation.GetAttrition( materialAttribute->GetMaterial().GetId() );
-    unsigned int damage = static_cast< unsigned int >( 100. * modifier / area );
-    if( damage <= structuralState_ )
-        structuralState_ -= damage;
-    else
-        structuralState_ = 0;
+    structuralState_ = std::max( 0., structuralState_ - dotation.GetAttrition( materialAttribute->GetMaterial().GetId() ) / area );
     object.ApplyStructuralState( structuralState_ );
 }
 
@@ -204,7 +193,7 @@ void StructuralCapacity::ApplyDirectFire( const MIL_Object_ABC& object, const PH
 // -----------------------------------------------------------------------------
 void StructuralCapacity::SendState( sword::UrbanAttributes& message ) const
 {
-    if( structuralState_ != lastStructuralState_ )
+    if( std::abs( structuralState_ - lastStructuralState_ ) >= 0.01f )
     {
         SendFullState( message );
         lastStructuralState_ = structuralState_;
@@ -217,26 +206,26 @@ void StructuralCapacity::SendState( sword::UrbanAttributes& message ) const
 // -----------------------------------------------------------------------------
 void StructuralCapacity::SendFullState( sword::UrbanAttributes& message ) const
 {
-    message.mutable_structure()->set_state( structuralState_ );
+    message.mutable_structure()->set_state( static_cast< unsigned int>( 100.f * structuralState_ + 0.5f ) );
+}
 
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::OnUpdate
+// Created: JSR 2011-02-14
+// -----------------------------------------------------------------------------
+void StructuralCapacity::OnUpdate( const sword::MissionParameter_Value& attribute )
+{
+    if( attribute.list_size() > 1 )
+        structuralState_ = attribute.list( 1 ).areal();
 }
 
 // -----------------------------------------------------------------------------
 // Name: StructuralCapacity::GetStructuralState
 // Created: SLG 2010-06-25
 // -----------------------------------------------------------------------------
-unsigned int StructuralCapacity::GetStructuralState() const
+float StructuralCapacity::GetStructuralState() const
 {
     return structuralState_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: StructuralCapacity::SetStructuralState
-// Created: SLG 2010-12-22
-// -----------------------------------------------------------------------------
-void StructuralCapacity::SetStructuralState( int state )
-{
-    structuralState_ = state;
 }
 
 // -----------------------------------------------------------------------------

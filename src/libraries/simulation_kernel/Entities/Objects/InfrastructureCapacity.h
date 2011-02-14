@@ -14,6 +14,7 @@
 
 namespace sword
 {
+    class MissionParameter_Value;
     class UrbanAttributes;
 }
 
@@ -52,8 +53,7 @@ public:
     void Update( xml::xistream& xis, const MIL_Object_ABC& /*object*/ );
     void SendState( sword::UrbanAttributes& message ) const;
     void SendFullState( sword::UrbanAttributes& message ) const;
-    void SetEnabled( bool enabled );
-    void SetThreshold( float threshold );
+    void OnUpdate( const sword::MissionParameter_Value& attribute );
     bool IsActive() const;
     //@}
 

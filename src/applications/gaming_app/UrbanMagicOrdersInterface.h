@@ -22,7 +22,11 @@ namespace kernel
 namespace actions
 {
     class ActionsModel;
-    class UrbanMagicAction;
+    class ObjectMagicAction;
+    namespace parameters
+    {
+        class ParameterList;
+    }
 }
 
 class StaticModel;
@@ -36,7 +40,7 @@ class StaticModel;
 class UrbanMagicOrdersInterface : public QObject
                                 , public MagicOrdersInterface_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -71,7 +75,7 @@ private:
     void AddMagic( const QString& label, int id,           QPopupMenu* menu );
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
     void AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
-    void SendUrbanUpdateMagic( actions::UrbanMagicAction& action );
+    void SendUrbanUpdateMagic( actions::parameters::ParameterList& attribute );
     //@}
 
 private:

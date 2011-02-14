@@ -124,7 +124,6 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, DebugPoints                            , debug_points                              )
     GENERATE_MESSAGE( sword::SimToClient, sword, MagicActionAck                         , magic_action_ack                          )
     GENERATE_MESSAGE( sword::SimToClient, sword, ObjectMagicActionAck                   , object_magic_action_ack                   )
-    GENERATE_MESSAGE( sword::SimToClient, sword, UrbanMagicActionAck                    , urban_magic_action_ack                    )
     GENERATE_MESSAGE( sword::SimToClient, sword, LogSupplyChangeQuotasAck               , log_supply_change_quotas_ack              )
     GENERATE_MESSAGE( sword::SimToClient, sword, LogSupplyPushFlowAck                   , log_supply_push_flow_ack                  )
     GENERATE_MESSAGE( sword::SimToClient, sword, LogSupplyPullFlowAck                   , log_supply_pull_flow_ack                  )

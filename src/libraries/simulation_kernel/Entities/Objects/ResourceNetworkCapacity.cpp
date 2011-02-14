@@ -183,7 +183,7 @@ void ResourceNetworkCapacity::SendFullState( sword::UrbanAttributes& message ) c
 // Name: ResourceNetworkCapacity::NotifyStructuralStateChanged
 // Created: JSR 2011-01-14
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::NotifyStructuralStateChanged( unsigned int structuralState, const MIL_Object_ABC& /*object*/ )
+void ResourceNetworkCapacity::NotifyStructuralStateChanged( float structuralState, const MIL_Object_ABC& /*object*/ )
 {
     nodeProperties_->SetModifier( structuralState );
 }

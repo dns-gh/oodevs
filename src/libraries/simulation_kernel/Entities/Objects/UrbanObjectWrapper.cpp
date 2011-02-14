@@ -92,9 +92,7 @@ void UrbanObjectWrapper::InitializeAttributes()
     }
     const urban::InfrastructureAttribute* infra = object_->Retrieve< urban::InfrastructureAttribute >();
     if( infra )
-    {
-        urban::InfrastructureType* infraType = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::InfrastructureType >( infra->GetType() );
-        if( infraType )
+        if( urban::InfrastructureType* infraType = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::InfrastructureType >( infra->GetType() ) )
         {
             InfrastructureCapacity* capacity = new InfrastructureCapacity( *infraType );
             capacity->Register( *this );
@@ -104,7 +102,6 @@ void UrbanObjectWrapper::InitializeAttributes()
                 capacity->Register( *this );
             }
         }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -149,15 +146,6 @@ void UrbanObjectWrapper::WriteUrbanIdAttribute( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::CanInteractWith
-// Created: SLG 2010-01-05
-// -----------------------------------------------------------------------------
-bool UrbanObjectWrapper::CanInteractWith( const MIL_Agent_ABC& agent ) const
-{
-    return MIL_Object_ABC::CanInteractWith( agent );
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::CreateKnowledge
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
@@ -173,24 +161,6 @@ boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( c
 boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( const MIL_KnowledgeGroup& /*group*/ )
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::OnUpdate
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
-{
-    for( int i = 0; i < attributes.size(); ++i )
-    {
-        const sword::MissionParameter_Value& attribute = attributes.Get( i );
-        if( attribute.list_size() == 0 ) // it should be a list of lists
-            return sword::ObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
-        const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
-        if ( actionId == sword::ObjectMagicAction_Attribute_medical_treatment )
-            GetAttribute< MedicalTreatmentAttribute >().OnUpdate( attribute );
-    }
-    return sword::ObjectMagicActionAck_ErrorCode_no_error;
 }
 
 // -----------------------------------------------------------------------------
@@ -256,18 +226,14 @@ void UrbanObjectWrapper::SendCreation() const
     message().mutable_object()->set_id( GetID() );
     message().set_name( object_->GetName() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
-
-    const urban::ColorAttribute* color = object_->Retrieve< urban::ColorAttribute >();
-    if( color != 0 )
+    if( const urban::ColorAttribute* color = object_->Retrieve< urban::ColorAttribute >() )
     {
         message().mutable_attributes()->mutable_color()->set_red( color->Red() );
         message().mutable_attributes()->mutable_color()->set_green( color->Green() );
         message().mutable_attributes()->mutable_color()->set_blue( color->Blue() );
         message().mutable_attributes()->mutable_color()->set_alpha( color->Alpha() );
     }
-
-    const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >();
-    if( pPhysical )
+    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
     {
         if( pPhysical->GetArchitecture() )
         {
@@ -392,36 +358,6 @@ const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject()
 const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject() const
 {
     return *object_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::OnUpdateStructuralState
-// Created: SLG 2010-12-22
-// -----------------------------------------------------------------------------
-sword::UrbanMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateStructuralState( int state )
-{
-    StructuralCapacity* capacity = Retrieve< StructuralCapacity >();
-    if( !capacity )
-        return sword::UrbanMagicActionAck::error_invalid_urban_block;
-    capacity->SetStructuralState( state );
-    ApplyStructuralState( state );
-    return sword::UrbanMagicActionAck::no_error;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::UrbanObjectWrapper::OnUpdateStructuralState
-// Created: SLG 2011-01-18
-// -----------------------------------------------------------------------------
-sword::UrbanMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdateInfrastructure( const sword::UrbanMagicAction_Infrastructure& msg )
-{
-    InfrastructureCapacity* capacity = Retrieve< InfrastructureCapacity >();
-    if( !capacity )
-        return sword::UrbanMagicActionAck::error_invalid_urban_block;
-    if( msg.has_active() )
-        capacity->SetEnabled( msg.active() );
-    if( msg.has_threshold() )
-        capacity->SetThreshold( msg.threshold() );
-    return sword::UrbanMagicActionAck::no_error;
 }
 
 // -----------------------------------------------------------------------------

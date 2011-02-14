@@ -208,7 +208,6 @@ void MIL_Object_ABC::NotifyPopulationMovingInside( MIL_PopulationElement_ABC& po
     interaction_.NotifyAgentMovingInside( population );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::NotifyPopulationMovingOutside
 // Created: JCR 2008-06-06

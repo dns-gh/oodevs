@@ -167,7 +167,7 @@ void NodeProperties::Push( int quantity, unsigned long resourceId )
 // Name: NodeProperties::SetModifier
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-void NodeProperties::SetModifier( unsigned int modifier )
+void NodeProperties::SetModifier( float modifier )
 {
     Apply( boost::bind( &NodeElement::SetModifier, _1, modifier ) );
 }

@@ -319,7 +319,6 @@ void Converter::ReceiveSimToClient( const std::string& /*from*/, const sword::Si
     FORWARD( SimulationToClient, population_creation )
     FORWARD( SimulationToClient, population_update )
     FORWARD( SimulationToClient, change_population_magic_action_ack )
-    FORWARD( SimulationToClient, urban_magic_action_ack )
     client_.Send( out );
 }
 
@@ -476,7 +475,6 @@ void Converter::ReceiveClientToSim( const std::string& from, const MsgsClientToS
         FORWARD( ClientToSimulation, control_checkpoint_list_request )
         FORWARD( ClientToSimulation, control_checkpoint_delete_request )
         FORWARD( ClientToSimulation, change_population_magic_action )
-        FORWARD( ClientToSimulation, urban_magic_action )
         server_.Send( out );
     }
 }

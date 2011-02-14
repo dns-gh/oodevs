@@ -1822,10 +1822,3 @@ BOOST_FIXTURE_TEST_CASE( change_population_magic_action_ack_to_client_is_convert
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { change_population_magic_action_ack { error_code: error_invalid_number } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
-
-BOOST_FIXTURE_TEST_CASE( urban_magic_action_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_urban_magic_action_ack()->set_error_code( sword::UrbanMagicActionAck::error_invalid_role );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { urban_magic_action_ack { error_code: error_invalid_role } }" ) );
-    converter.ReceiveSimToClient( "unused endpoint", msg );
-}

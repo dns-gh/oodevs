@@ -11,9 +11,6 @@
 #define __Object_h_
 
 #include "MIL_Object.h"
-#include "CapacityContainer_ABC.h"
-#include <tools/Extendable.h>
-#include <vector>
 
 namespace sword
 {
@@ -21,11 +18,8 @@ namespace sword
     enum ObjectMagicActionAck_ErrorCode;
 }
 
-class ObjectAttribute_ABC;
-class MIL_ObjectType_ABC;
 class MIL_Army_ABC;
 class MIL_ObjectBuilder_ABC;
-class DetectionCapacity;
 
 // =============================================================================
 /** @class  Object
@@ -67,16 +61,12 @@ public:
     virtual bool CanInteractWith( const MIL_Agent_ABC& agent ) const;
     virtual void ProcessAgentMovingInside( MIL_Agent_ABC& agent );
     virtual void ProcessAgentInside( MIL_Agent_ABC& agent );
-
     //@}
 
     //! @name Network
     //@{
     virtual void UpdateState();
-
-    sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
     sword::ObjectMagicActionAck_ErrorCode OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& params );
-
     virtual void SendCreation() const;
     virtual void SendDestruction() const;
     virtual void SendFullState() const;
@@ -85,35 +75,12 @@ public:
     //! @name
     //@{
     const std::string& GetName() const;
-    virtual unsigned int  GetMaterial() const{ return std::numeric_limits< unsigned int >::max(); };   // $$$$ _TODO_ SLG 2010-06-24: mettre en place un système de material pour les objets
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Object( const Object& );            //!< Copy constructor
-    Object& operator=( const Object& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    enum E_AttributeUpdate
-    {
-        eAttrUpdate_Localisation              = 0x10,
-        eAttrUpdate_All                       = 0xFF
-    };
     //@}
 
 private:
     //! @name Member data
     //@{
     std::string name_;
-    std::auto_ptr< Object > pChildObject_;
-    //@}
-
-    //! @name Network
-    //@{
-    mutable unsigned char xAttrToUpdate_;
     //@}
 };
 

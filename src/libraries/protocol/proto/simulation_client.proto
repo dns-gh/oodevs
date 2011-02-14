@@ -357,23 +357,6 @@ message ChangePopulationMagicActionAck {
     required ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
 }
 
-/** @struct UrbanMagicActionAck
-    @brief Acknowledges a urban magic action request
-    @see UrbanMagicAction
-*/
-message UrbanMagicActionAck {
-    /** @enum ErrorCode
-        @brief Reason for the failure of the urban magic action
-    */
-    enum ErrorCode {
-       no_error                  = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
-       error_invalid_urban_block = 1; //!< Operation failed because no existing urban block with the provided identifier could be found
-       error_invalid_role        = 2; //!< Operation failed because no existing motivation type with the provided identifier could be found
-       error_invalid_threshold   = 3; //!< Operation failed because of an invalid threshold
-    }
-    required ErrorCode error_code = 1; //!< Reason for the failure of the request
-}
-
 /** @struct ControlInformation
     @brief Provides various global informations
     @todo Find when and why this is sent (probably when a client connects ?)
@@ -2427,8 +2410,7 @@ message SimToClient {
         optional PopulationCreation                     population_creation                       = 134; //!< @copybrief PopulationCreation
         optional PopulationUpdate                       population_update                         = 135; //!< @copybrief PopulationUpdate
         optional ChangePopulationMagicActionAck         change_population_magic_action_ack        = 136; //!< @copybrief ChangePopulationMagicActionAck
-        optional UrbanMagicActionAck                    urban_magic_action_ack                    = 137; //!< @copybrief UrbanMagicActionAck
-        optional FragOrder                              frag_order                                = 138; //!< @copybrief FragOrder
+        optional FragOrder                              frag_order                                = 137; //!< @copybrief FragOrder
     }
     /** @property context
         @brief Identifies the request matching the response
