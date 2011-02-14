@@ -3073,6 +3073,14 @@ du tireur</translation>
         <source>Killed</source>
         <translation>Tués</translation>
     </message>
+    <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>
@@ -3516,10 +3524,6 @@ SI &apos;Durées relatives aux PC&apos; n&apos;est pas renseigné, la durée de 
     <message>
         <source>Name</source>
         <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Dotation</source>
-        <translation>Dotation</translation>
     </message>
     <message>
         <source>Category</source>
@@ -5114,6 +5118,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Units</source>
         <translation>Pions</translation>
+    </message>
+    <message>
+        <source>Units/</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -848,7 +848,7 @@
     </message>
     <message>
         <source>energy</source>
-        <translation type="unfinished"></translation>
+        <translation>énergie</translation>
     </message>
 </context>
 </TS>
