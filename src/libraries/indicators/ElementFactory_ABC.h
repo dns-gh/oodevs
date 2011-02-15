@@ -11,6 +11,7 @@
 #define __ElementFactory_ABC_h_
 
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace indicators
 {
@@ -22,7 +23,7 @@ namespace indicators
 */
 // Created: SBO 2009-03-17
 // =============================================================================
-class ElementFactory_ABC
+class ElementFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

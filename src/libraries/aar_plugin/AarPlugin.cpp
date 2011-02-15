@@ -10,6 +10,8 @@
 #include "AarPlugin.h"
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
+#include "3a/StaticModel.h"
+#include "dispatcher/Config.h"
 #include "dispatcher/MessageLoader.h"
 #include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"
@@ -34,6 +36,7 @@ namespace sword
 AarPlugin::AarPlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, const dispatcher::Config& config )
     : resolver_( resolver )
     , messages_( new dispatcher::MessageLoader( config, true ) )
+    , model_   ( new ::aar::StaticModel( config ) )
 {
     dispatcher.RegisterMessage( *this, &AarPlugin::OnReceive );
 }
@@ -107,7 +110,7 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const swor
         if( boost::starts_with( request.request(), "indicator://" ) )
             return;
         xml::xistringstream xis( request.request() );
-        AarFacade factory( resolver_.GetPublisher( client ), request.identifier() );
+        AarFacade factory( resolver_.GetPublisher( client ), request.identifier(), *model_ );
         xis >> xml::start( "indicator" );
         boost::shared_ptr< Task > task( factory.CreateTask( xis ) );
         xis >> xml::end;

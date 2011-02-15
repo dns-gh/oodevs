@@ -14,16 +14,17 @@
 #include "ReductionsFactory.h"
 #include "ResultsFactory.h"
 #include "TransformationsFactory.h"
+#include "StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: AarFacade constructor
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-AarFacade::AarFacade( dispatcher::ClientPublisher_ABC& publisher, int context )
+AarFacade::AarFacade( dispatcher::ClientPublisher_ABC& publisher, int context, const aar::StaticModel_ABC& model )
     : factory_( new FunctionFactory() )
 {
     factory_->Add( std::auto_ptr< ElementFactory_ABC >( new ConstantsFactory() ) );
-    factory_->Add( std::auto_ptr< ElementFactory_ABC >( new ExtractorsFactory() ) );
+    factory_->Add( std::auto_ptr< ElementFactory_ABC >( new ExtractorsFactory( model ) ) );
     factory_->Add( std::auto_ptr< ElementFactory_ABC >( new ReductionsFactory() ) );
     factory_->Add( std::auto_ptr< ElementFactory_ABC >( new ResultsFactory( publisher, context ) ) );
     factory_->Add( std::auto_ptr< ElementFactory_ABC >( new TransformationsFactory() ) );

@@ -48,12 +48,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SessionConfig& operator=( const SessionConfig& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const std::string sessionConfigFile_;

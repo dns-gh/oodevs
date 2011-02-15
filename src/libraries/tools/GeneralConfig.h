@@ -72,12 +72,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GeneralConfig& operator=( const GeneralConfig& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::string rootDir_;

@@ -33,12 +33,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TransformationsFactory( const TransformationsFactory& );            //!< Copy constructor
-    TransformationsFactory& operator=( const TransformationsFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     template< typename T >

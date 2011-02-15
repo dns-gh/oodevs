@@ -28,7 +28,7 @@ class ResultsFactory : public ElementFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResultsFactory( dispatcher::ClientPublisher_ABC& publisher, int context = 0 );
+    explicit ResultsFactory( dispatcher::ClientPublisher_ABC& publisher, int context = 0 );
     virtual ~ResultsFactory();
     //@}
 
@@ -38,12 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ResultsFactory( const ResultsFactory& );            //!< Copy constructor
-    ResultsFactory& operator=( const ResultsFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     template< typename T >

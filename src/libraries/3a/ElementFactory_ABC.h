@@ -11,6 +11,7 @@
 #define __ElementFactory_ABC_h_
 
 #include <string>
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -25,7 +26,7 @@ class Task;
 */
 // Created: AGE 2008-08-04
 // =============================================================================
-class ElementFactory_ABC
+class ElementFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

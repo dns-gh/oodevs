@@ -43,12 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ElementFactory( const ElementFactory& );            //!< Copy constructor
-    ElementFactory& operator=( const ElementFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     std::string NextId() const;

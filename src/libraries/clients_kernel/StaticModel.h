@@ -10,6 +10,8 @@
 #ifndef __kernel_StaticModel_h_
 #define __kernel_StaticModel_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace tools
 {
     class ExerciseConfig;
@@ -27,11 +29,11 @@ namespace kernel
 
 // =============================================================================
 /** @class  StaticModel
-    @brief  StaticModel
+    @brief  Kernel Static Model
 */
 // Created: SBO 2010-05-10
 // =============================================================================
-class StaticModel
+class StaticModel : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,13 +46,6 @@ public:
     //@{
     virtual void Load( const tools::ExerciseConfig& config );
     virtual void Purge();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    StaticModel( const StaticModel& );            //!< Copy constructor
-    StaticModel& operator=( const StaticModel& ); //!< Assignment operator
     //@}
 
 public:

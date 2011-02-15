@@ -11,6 +11,9 @@
 #define __Extractors_h_
 
 #include "Position.h"
+#include "PowerIndicator.h"
+#include "PowerIndicators.h"
+#include "StaticModel.h"
 #include "Types.h"
 
 // =============================================================================
@@ -116,6 +119,73 @@ namespace extractors
         }
     };
 
-}
+    // Power
+    struct PowerExtractor_ABC
+    {
+    public:
+        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const = 0;
+    };
+
+    struct PowerExtractor : public Extractor< NumericValue >
+                          , public PowerExtractor_ABC
+    {
+        explicit PowerExtractor( const aar::StaticModel_ABC& model ) : model_( &model ) {}
+        const aar::StaticModel_ABC* model_;
+
+        bool HasFlag( const sword::UnitCreation& message ) const
+        {
+            return message.has_type();
+        }
+        NumericValue Extract( const sword::UnitCreation& message ) const
+        {
+            return NumericValue( model_->ComputePower( message.type().id(), *this ) );
+        }
+    };
+
+    struct DirectFirePower : public PowerExtractor
+    {
+        explicit DirectFirePower( const aar::StaticModel_ABC& model ) : PowerExtractor( model ) {}
+
+    private:
+        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const
+        {
+            return powerIndicator.GetDirectFire();
+        }
+    };
+
+    struct IndirectFirePower : public PowerExtractor
+    {
+        explicit IndirectFirePower( const aar::StaticModel_ABC& model ) : PowerExtractor( model ) {}
+
+    private:
+        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const
+        {
+            return powerIndicator.GetIndirectFire();
+        }
+    };
+
+    struct CloseCombatPower : public PowerExtractor
+    {
+        explicit CloseCombatPower( const aar::StaticModel_ABC& model ) : PowerExtractor( model ) {}
+
+    private:
+        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const
+        {
+            return powerIndicator.GetCloseCombat();
+        }
+    };
+
+    struct EngineeringPower : public PowerExtractor
+    {
+        explicit EngineeringPower( const aar::StaticModel_ABC& model ) : PowerExtractor( model ) {}
+
+    private:
+        virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const
+        {
+            return powerIndicator.GetEngineering();
+        }
+    };
+
+} // namespace extractor
 
 #endif // __Extractors_h_

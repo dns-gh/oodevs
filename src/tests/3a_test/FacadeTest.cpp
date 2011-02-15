@@ -14,6 +14,7 @@
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
 #include "protocol/Protocol.h"
+#include "MockStaticModel.h"
 #include "MockClientPublisher.h"
 #include <xeumeuleu/xml.hpp>
 #include <geocoord/geodetic.h>
@@ -45,12 +46,12 @@ namespace
         *result.mutable_message()->mutable_control_end_tick() = endTick ;
         return result;
     }
-    SimToClient MakeUnitCreation( unsigned long id )
+    SimToClient MakeUnitCreation( unsigned long id, unsigned long type_id )
     {
         SimToClient result;
         UnitCreation& message = *result.mutable_message()->mutable_unit_creation();
         message.mutable_unit()->set_id( id );
-        message.mutable_type()->set_id( 42 );
+        message.mutable_type()->set_id( type_id );
         message.set_name( "test" );
         message.mutable_automat()->set_id( 12 );
         message.set_pc( false );
@@ -59,7 +60,7 @@ namespace
     bool CheckValue( const AarToClient& expected, const AarToClient& actual )
     {
         BOOST_CHECK_EQUAL( expected.DebugString(), actual.DebugString() );
-        return true;
+        return expected.DebugString() == actual.DebugString();
     }
     template< std::size_t N >
     void MakeExpectation( MockClientPublisher& mocker, double (&data)[N] )
@@ -70,18 +71,19 @@ namespace
         plot.set_identifier( 42 );
         plot.set_error( "" );
         for( unsigned i = 0; i < N; ++i )
-            plot.add_values( static_cast< float>( data[i] ) );
-        MOCK_EXPECT( mocker, Send4 ).with( boost::bind( &CheckValue, result, _1 ) );
+            plot.add_values( static_cast< float >( data[i] ) );
+        MOCK_EXPECT( mocker, Send4 ).once().with( boost::bind( &CheckValue, result, _1 ) );
     }
     class Fixture
     {
     public:
         Fixture()
-            : facade( publisher, 42 )
+            : facade( publisher, 42, model )
         {
             // NOTHING
         }
         MockClientPublisher publisher;
+        MockStaticModel model;
         AarFacade facade;
     };
 }
@@ -104,11 +106,11 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalState, Fixture )
     task->Receive( OperationalState( 75, 3 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( MakeUnitCreation( 51 ) ); //testing unit creation in a tick
+    task->Receive( MakeUnitCreation( 51, 42 ) ); //testing unit creation in a tick
     task->Receive( OperationalState( 75, 1 ) );
     task->Receive( OperationalState( 85, 3 ) );
     task->Receive( EndTick() );
-    task->Receive( MakeUnitCreation( 52 ) ); //testing unit creation between two ticks
+    task->Receive( MakeUnitCreation( 52, 42 ) ); //testing unit creation between two ticks
     task->Receive( BeginTick() );
     task->Receive( OperationalState( 75, 2 ) );
     task->Receive( EndTick() );
@@ -983,6 +985,77 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
     double expectedResult[] = { 1, 2, 3, 3, 3 };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+namespace
+{
+    bool IsCloseCombatPower( const extractors::PowerExtractor_ABC& extractor )
+    {
+        return dynamic_cast< const extractors::CloseCombatPower* >( &extractor ) != 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestCloseCombatPower
+// Created: ABR 2011-02-14
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestCloseCombatPower, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "   <extract function='close-combat-power' id='closecombat'/>"
+                             "   <reduce  function='select' id='myselect' input='closecombat' key='42' type='float'/>"
+                             "   <result  function='plot' input='myselect' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    MOCK_EXPECT( model, ComputePower ).once().with( 69u, &IsCloseCombatPower ).returns( 10u );
+    task->Receive( BeginTick() );
+    task->Receive( MakeUnitCreation( 42, 69 ) );
+    task->Receive( EndTick() );
+    MOCK_EXPECT( model, ComputePower ).once().with( 69u, &IsCloseCombatPower ).returns( 11u );
+    task->Receive( BeginTick() );
+    task->Receive( MakeUnitCreation( 42, 69 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 10, 11 };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestProductOnTwoExtractors
+// Created: ABR 2011-02-14
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestProductOnTwoExtractors, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "   <extract function='operational-state' id='opstate'/>"
+                             "   <extract function='close-combat-power' id='closecombat'/>"
+                             "   <reduce  function='product' id='myproduct' input='opstate,closecombat' type='float'/>"
+                             "   <reduce  function='select' id='myselect' input='myproduct' key='42' type='float'/>"
+                             "   <result  function='plot' input='myselect' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    MOCK_EXPECT( model, ComputePower ).once().with( 69u, &IsCloseCombatPower ).returns( 10u );
+    MOCK_EXPECT( model, ComputePower ).once().with( 77u, &IsCloseCombatPower ).returns( 1000u );
+    task->Receive( BeginTick() );
+    task->Receive( MakeUnitCreation( 42, 69 ) );
+    task->Receive( MakeUnitCreation( 123, 77 ) );
+    task->Receive( OperationalState( 50, 42 ) );
+    task->Receive( EndTick() ); // expect 10 * 0.5
+    MOCK_EXPECT( model, ComputePower ).once().with( 69u, &IsCloseCombatPower ).returns( 20u );
+    task->Receive( BeginTick() );
+    task->Receive( MakeUnitCreation( 42, 69 ) );
+    task->Receive( OperationalState( 25, 42 ) );
+    task->Receive( EndTick() ); // expect 20 * 0.25
+    MOCK_EXPECT( model, ComputePower ).once().with( 69u, &IsCloseCombatPower ).returns( 30u );
+    task->Receive( BeginTick() );
+    task->Receive( MakeUnitCreation( 42, 69 ) );
+    task->Receive( OperationalState( 100, 42 ) );
+    task->Receive( EndTick() ); // expect 30 * 1
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() ); // expect same as previous
+    double expectedResult[] = { 5, 5, 30, 30 };
     MakeExpectation( publisher, expectedResult );
     task->Commit();
 }

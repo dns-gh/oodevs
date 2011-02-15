@@ -22,8 +22,7 @@
 // Created: AGE 2007-09-11
 // -----------------------------------------------------------------------------
 Task::Task()
-    : result_    ( 0 )
-    , frameEnded_( true )
+    : frameEnded_( true )
 {
     // NOTHING
 }
@@ -134,7 +133,7 @@ void Task::Connect( const std::string& name, const std::string& input, unsigned 
 // -----------------------------------------------------------------------------
 void Task::SetResult( boost::shared_ptr< Result_ABC > output )
 {
-    result_ = output.get();
+    result_ = output;
     AddFunction( "plot", output );
 }
 

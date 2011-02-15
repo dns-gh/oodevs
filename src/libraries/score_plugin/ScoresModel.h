@@ -12,6 +12,7 @@
 
 #include "dispatcher/Registrable_ABC.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 #include <vector>
 #include <map>
 
@@ -40,6 +41,11 @@ namespace tools
 namespace xml
 {
     class xistream;
+}
+
+namespace aar
+{
+    class StaticModel;
 }
 
 class Task;
@@ -72,11 +78,12 @@ namespace score
 // Created: SBO 2009-08-20
 // =============================================================================
 class ScoresModel : public dispatcher::Registrable_ABC
+                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ScoresModel( const tools::SessionConfig& config, dispatcher::ClientPublisher_ABC& clients );
+             ScoresModel( const tools::SessionConfig& config, dispatcher::ClientPublisher_ABC& clients );
     virtual ~ScoresModel();
     //@}
 
@@ -90,12 +97,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScoresModel( const ScoresModel& );            //!< Copy constructor
-    ScoresModel& operator=( const ScoresModel& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< std::string, Score* > T_Scores;
@@ -116,6 +117,7 @@ private:
     dispatcher::ClientPublisher_ABC& clients_;
     std::vector< boost::shared_ptr< Task > > tasks_;
     std::auto_ptr< IndicatorBuilder > builder_;
+    std::auto_ptr< aar::StaticModel > model_;
     T_Scores scores_;
     QDateTime initialDateTime_;
     bool dateTimeInitialized_;

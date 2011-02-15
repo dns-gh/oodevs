@@ -11,6 +11,7 @@
 #define __CommandLineConfig_ABC_h_
 
 #include <string>
+#include <boost/noncopyable.hpp>
 
 namespace boost
 {
@@ -30,7 +31,7 @@ namespace tools
 */
 // Created: NLD 2007-01-10
 // =============================================================================
-class CommandLineConfig_ABC
+class CommandLineConfig_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -49,13 +50,6 @@ protected:
     //@{
     void AddOptions( boost::program_options::options_description& options );
     bool IsSet( const std::string& option ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    CommandLineConfig_ABC( const CommandLineConfig_ABC& );            //!< Copy constructor
-    CommandLineConfig_ABC& operator=( const CommandLineConfig_ABC& ); //!< Assignment operator
     //@}
 
 private:

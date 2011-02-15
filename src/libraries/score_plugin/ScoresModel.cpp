@@ -13,7 +13,9 @@
 #include "Score.h"
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
+#include "3a/StaticModel.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/SessionConfig.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
@@ -46,6 +48,7 @@ ScoresModel::ScoresModel( const tools::SessionConfig& config, dispatcher::Client
     , builder_            ( new IndicatorBuilder( config ) )
     , dateTimeInitialized_( false )
     , tickDuration_       ( 0 )
+    , model_              ( new aar::StaticModel( config ) )
 {
     // NOTHING
 }
@@ -95,7 +98,7 @@ void ScoresModel::ReadIndicator( xml::xistream& xis )
 {
     try
     {
-        AarFacade facade( clients_, tasks_.size() );
+        AarFacade facade( clients_, tasks_.size(), *model_ );
         tasks_.push_back( facade.CreateTask( xis ) );
     }
     catch( std::exception& e )

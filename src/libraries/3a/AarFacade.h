@@ -11,14 +11,21 @@
 #define __AarFacade_h_
 
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
     class xistream;
 }
+
 namespace dispatcher
 {
     class ClientPublisher_ABC;
+}
+
+namespace aar
+{
+    class StaticModel_ABC;
 }
 
 class Task;
@@ -26,29 +33,22 @@ class FunctionFactory;
 
 // =============================================================================
 /** @class  AarFacade
-    @brief  AarFacade
+    @brief  After action review facade
 */
 // Created: AGE 2008-08-04
 // =============================================================================
-class AarFacade
+class AarFacade : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AarFacade( dispatcher::ClientPublisher_ABC& publisher, int context );
+             AarFacade( dispatcher::ClientPublisher_ABC& publisher, int context, const aar::StaticModel_ABC& model );
     virtual ~AarFacade();
     //@}
 
     //! @name Operations
     //@{
     boost::shared_ptr< Task > CreateTask( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AarFacade( const AarFacade& );            //!< Copy constructor
-    AarFacade& operator=( const AarFacade& ); //!< Assignment operator
     //@}
 
 private:

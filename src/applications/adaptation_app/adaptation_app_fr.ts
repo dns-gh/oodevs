@@ -3081,6 +3081,10 @@ du tireur</translation>
         <source>Type</source>
         <translation>Type</translation>
     </message>
+    <message>
+        <source>Objects/</source>
+        <translation>Objets/</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>
@@ -5121,7 +5125,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Units/</source>
-        <translation type="unfinished"></translation>
+        <translation>Pions/</translation>
     </message>
 </context>
 <context>
@@ -5523,104 +5527,12 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
 <context>
     <name>ADN_Workspace</name>
     <message>
-        <source>Categories</source>
-        <translation>Catégories</translation>
-    </message>
-    <message>
-        <source>Urban</source>
-        <translation>Urbain</translation>
-    </message>
-    <message>
-        <source>NBC</source>
-        <translation>NBC</translation>
-    </message>
-    <message>
-        <source>Launchers</source>
-        <translation>Lanceurs</translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation>Ressources</translation>
-    </message>
-    <message>
-        <source>Active Protections</source>
-        <translation>Protections Actives</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Weapon systems</source>
-        <translation>Systèmes d&apos;armes</translation>
-    </message>
-    <message>
-        <source>Sensors</source>
-        <translation>Capteurs</translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation>Equipements</translation>
-    </message>
-    <message>
-        <source>Op. indicators</source>
-        <translation>Indicateurs Op</translation>
-    </message>
-    <message>
-        <source>Doctrine models</source>
-        <translation>Modèles de doctrine</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation>Pions</translation>
-    </message>
-    <message>
-        <source>Automata</source>
-        <translation>Automates</translation>
-    </message>
-    <message>
-        <source>Breakdowns</source>
-        <translation>Pannes</translation>
-    </message>
-    <message>
-        <source>Jamming</source>
-        <translation>Brouillage</translation>
-    </message>
-    <message>
-        <source>Human factors</source>
-        <translation>Facteurs humains</translation>
-    </message>
-    <message>
-        <source>Maintenance</source>
-        <translation>Maintenance</translation>
-    </message>
-    <message>
-        <source>Missions</source>
-        <translation>Missions</translation>
-    </message>
-    <message>
         <source>Knowledge groups</source>
         <translation>Groupes de connaissance</translation>
     </message>
     <message>
-        <source>Health</source>
-        <translation>Santé</translation>
-    </message>
-    <message>
-        <source>Supply</source>
-        <translation>Ravitaillement</translation>
-    </message>
-    <message>
-        <source>Reports</source>
-        <translation>Comptes-rendus</translation>
-    </message>
-    <message>
         <source>Loading GUI...</source>
         <translation>Chargement de l&apos;interface...</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation>Log</translation>
     </message>
     <message>
         <source>GUI loaded</source>
@@ -5667,8 +5579,92 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Adaptation - Export des données</translation>
     </message>
     <message>
+        <source>Categories</source>
+        <translation>Catégories</translation>
+    </message>
+    <message>
+        <source>Urban</source>
+        <translation>Urbain</translation>
+    </message>
+    <message>
+        <source>NBC</source>
+        <translation>NBC</translation>
+    </message>
+    <message>
+        <source>Launchers</source>
+        <translation>Lanceurs</translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation>Ressources</translation>
+    </message>
+    <message>
+        <source>Active Protections</source>
+        <translation>Protections Actives</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Weapon systems</source>
+        <translation>Systèmes d&apos;armes</translation>
+    </message>
+    <message>
+        <source>Sensors</source>
+        <translation>Capteurs</translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation>Equipements</translation>
+    </message>
+    <message>
         <source>Resource networks</source>
         <translation>Réseaux de ressource</translation>
+    </message>
+    <message>
+        <source>Op. indicators</source>
+        <translation>Indicateurs Op</translation>
+    </message>
+    <message>
+        <source>Doctrine models</source>
+        <translation>Modèles de doctrine</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Pions</translation>
+    </message>
+    <message>
+        <source>Automata</source>
+        <translation>Automates</translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation>Pannes</translation>
+    </message>
+    <message>
+        <source>Jamming</source>
+        <translation>Brouillage</translation>
+    </message>
+    <message>
+        <source>Human factors</source>
+        <translation>Facteurs humains</translation>
+    </message>
+    <message>
+        <source>Maintenance</source>
+        <translation>Maintenance</translation>
+    </message>
+    <message>
+        <source>Missions</source>
+        <translation>Missions</translation>
+    </message>
+    <message>
+        <source>Health</source>
+        <translation>Santé</translation>
+    </message>
+    <message>
+        <source>Supply</source>
+        <translation>Ravitaillement</translation>
     </message>
     <message>
         <source>Crowds</source>
@@ -5679,8 +5675,16 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Populations</translation>
     </message>
     <message>
+        <source>Reports</source>
+        <translation>Comptes-rendus</translation>
+    </message>
+    <message>
         <source>Fires</source>
         <translation>Feux</translation>
+    </message>
+    <message>
+        <source>Log</source>
+        <translation>Log</translation>
     </message>
 </context>
 <context>

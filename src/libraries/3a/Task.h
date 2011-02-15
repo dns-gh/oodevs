@@ -97,7 +97,7 @@ private:
     T_Connectors connectors_;
     T_Slots slots_;
     T_Objects objects_;
-    Result_ABC* result_;
+    boost::shared_ptr< Result_ABC > result_;
     bool frameEnded_;
     //@}
 };

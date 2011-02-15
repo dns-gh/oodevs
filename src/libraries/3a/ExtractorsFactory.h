@@ -12,6 +12,11 @@
 
 #include "ElementFactory_ABC.h"
 
+namespace aar
+{
+    class StaticModel_ABC;
+}
+
 // =============================================================================
 /** @class  ExtractorsFactory
     @brief  Extractors factory
@@ -23,7 +28,7 @@ class ExtractorsFactory : public ElementFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtractorsFactory();
+    explicit ExtractorsFactory( const aar::StaticModel_ABC& model );
     virtual ~ExtractorsFactory();
     //@}
 
@@ -33,16 +38,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Member data
     //@{
-    ExtractorsFactory( const ExtractorsFactory& );            //!< Copy constructor
-    ExtractorsFactory& operator=( const ExtractorsFactory& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    template< typename Value >
-    void Extract( const std::string& name, xml::xistream& xis, Task& result ) const;
+    const aar::StaticModel_ABC& model_;
     //@}
 };
 

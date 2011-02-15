@@ -3,6 +3,18 @@
     <primitive category="extract" name="operational-state" type="list(key,float)">
         <comments><![CDATA[Unit operational state, in the interval [0,1].]]></comments>
     </primitive>
+    <primitive category="extract" name="direct-fire-power" type="list(key,float)">
+        <comments><![CDATA[Unit direct-fire power.]]></comments>
+    </primitive>
+    <primitive category="extract" name="indirect-fire-power" type="list(key,float)">
+        <comments><![CDATA[Unit indirect-fire power.]]></comments>
+    </primitive>
+    <primitive category="extract" name="close-combat-power" type="list(key,float)">
+        <comments><![CDATA[Unit close-combat power.]]></comments>
+    </primitive>
+    <primitive category="extract" name="engineering-power" type="list(key,float)">
+        <comments><![CDATA[Unit engineering power.]]></comments>
+    </primitive>
     <primitive category="extract" name="position" type="list(key,position)">
         <comments><![CDATA[Unit position.]]></comments>
     </primitive>
@@ -178,4 +190,4 @@
         </parameters>
     </primitive>
 </primitives>
-<!-- signature="0739501163" -->
+<!-- signature="2521394804" -->

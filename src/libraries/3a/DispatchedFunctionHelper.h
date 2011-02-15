@@ -13,6 +13,8 @@
 #include "DispatchedFunction.h"
 #include "ModelFunction.h"
 #include "Dispatcher.h"
+#include "Attributes.h"
+#include "Extractors.h"
 #include <boost/bind.hpp>
 #include <boost/bind/protect.hpp>
 #include <boost/function.hpp>
@@ -57,14 +59,20 @@ struct ValueFunctionFactory
 template< typename KeyValue, typename Value >
 struct DispatcherFactory
 {
+    typedef typename KeyValue::Type K;
+    typedef typename Value   ::Type T;
+
+    DispatcherFactory() : value_() {}
     explicit DispatcherFactory( xml::xistream& xis )
         : value_()
     {
         Initialize( value_, xis );
     }
-    DispatcherFactory() : value_() {}
-    typedef typename KeyValue::Type K;
-    typedef typename Value   ::Type T;
+    explicit DispatcherFactory( xml::xistream& xis, const aar::StaticModel_ABC& model )
+        : value_( model )
+    {
+        Initialize( value_, xis );
+    }
 
     boost::shared_ptr< ModelFunction_ABC > operator()( ValueHandler_ABC< K >& keyHandler, ValueHandler_ABC< T >& valueHandler ) const
     {

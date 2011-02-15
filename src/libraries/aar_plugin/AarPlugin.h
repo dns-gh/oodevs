@@ -34,10 +34,16 @@ namespace dispatcher
     class LinkResolver_ABC;
 }
 
+namespace aar
+{
+    class StaticModel;
+}
+
 namespace plugins
 {
 namespace aar
 {
+
 // =============================================================================
 /** @class  AarPlugin
     @brief  AAR plugin
@@ -81,6 +87,7 @@ private:
     //@{
     dispatcher::LinkResolver_ABC& resolver_;
     std::auto_ptr< dispatcher::MessageLoader > messages_;
+    std::auto_ptr< ::aar::StaticModel > model_;
     //@}
 };
 
