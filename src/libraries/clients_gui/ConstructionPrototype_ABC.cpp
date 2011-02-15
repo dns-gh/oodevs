@@ -21,11 +21,12 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 ConstructionPrototype_ABC::ConstructionPrototype_ABC( QWidget* parent )
-: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ConstructionPrototype_ABC", "Construction" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ConstructionPrototype_ABC", "Construction" ) )
 {
     new QLabel( tools::translate( "gui::ConstructionPrototype_ABC", "Construction:" ), this );
-    completion_ = new QSpinBox( 0, 100, 1, this );
+    completion_ = new QSpinBox( 1, 100, 1, this );
     completion_->setSuffix( kernel::Units::percentage.AsString() );
+    completion_->setValue( 100 );
 }
 
 // -----------------------------------------------------------------------------
