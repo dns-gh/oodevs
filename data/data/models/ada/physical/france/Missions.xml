@@ -1969,12 +1969,12 @@
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Point de destination" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Appuyer" id="2062" name="MELEE Appuyer" package="support">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Soutenir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Soutenir" id="2062" name="MELEE Soutenir" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="LocationComposite">
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a soutenir" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Automat"/>
           <parameter type="Agent"/>
@@ -1987,13 +1987,6 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a detruire" optional="false" type="AgentKnowledge"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Soutenir" id="2095" name="MELEE Soutenir" package="support">
-      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a soutenir" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Illuminer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Illuminer" id="2065" name="MELEE Illuminer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2213,7 +2206,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="harassPosition" name="Element a harceler" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="Point"/>
           <parameter type="Polygon"/>
           <parameter type="UrbanKnowledge"/>
         </choice>
@@ -2449,20 +2441,20 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.AppuyerSurPosition" dia-type="net.masagroup.sword.france.military.platoon.tasks.AppuyerSurPosition" id="2125" name="MELEE Appui feu sur position" package="support">
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Appuyer" id="2125" name="MELEE Appuyer" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="LocationComposite">
+      <parameter dia-name="unitsToSupport" max-occurs="unbounded" min-occurs="1" name="Unites amies" optional="false" type="Agent"/>
+      <parameter dia-name="position" name="A partir de" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="unitsToSupport" max-occurs="unbounded" min-occurs="1" name="Unites amies" optional="false" type="Agent"/>
-      <parameter dia-name="objective" name="Objectif" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="objective" name="Face à" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Renforcer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Renforcer" id="2126" name="COMMUNES Renforcer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3951,7 +3943,6 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Element a harceler" optional="false" type="LocationComposite">
         <choice>
-          <parameter type="Point"/>
           <parameter type="Polygon"/>
           <parameter type="UrbanKnowledge"/>
         </choice>
@@ -3967,13 +3958,13 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Appuyer" name="MELEE Appuyer" package="support">
+    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Soutenir" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Soutenir" id="1031" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Soutenir" name="MELEE Soutenir" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="objective" name="Compagnie à appuyer" optional="false" type="Automat"/>
+      <parameter dia-name="objective" name="Compagnie à soutenir" optional="false" type="Automat"/>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Ratisser" dia-type="net.masagroup.sword.france.military.company.tasks.Ratisser" id="1032" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Ratisser" name="MELEE Ratisser">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4264,11 +4255,6 @@
       <parameter dia-name="agentKnowledge_" name="Cible" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="agent_" name="Tireur Allie" optional="false" type="Agent"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.military.platoon.tasks.ApplyIndirectFire" id="383" name="ApplyFire">
-      <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="ResourceType"/>
-      <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Integer"/>
-      <parameter dia-name="pointCible_" name="target" optional="false" type="Point"/>
-    </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_InterdireMunition" id="385" name="Pion Interdire Munition">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="ResourceType"/>
     </fragorder>
@@ -4306,4 +4292,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1494113676" -->
+<!-- signature="1317908712" -->

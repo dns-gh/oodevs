@@ -18,7 +18,6 @@
           <fragorder name="Deboucher"/>
         </mission>
         <mission name="MELEE Appuyer"/>
-        <mission name="MELEE Appui feu sur position"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Couvrir"/>
@@ -87,7 +86,6 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
-        <mission name="MELEE Appui feu sur position"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -190,7 +188,6 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Appui feu sur position"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Attaquer">
@@ -212,6 +209,7 @@
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Relever"/>
         <mission name="MELEE S'emparer De"/>
+        <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE Tenir">
           <fragorder name="Abandonner travaux"/>
@@ -2881,7 +2879,6 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Population"/>
-        <fragorder name="Appliquer les feux"/>
       </fragorders>
     </unit>
     <unit dia-type="UniteSoin" file="Appui\Log\Pions\Model.bms" masalife="false" name="Unite de soin">
@@ -7445,7 +7442,6 @@
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
-        <mission name="MELEE Appuyer"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -7466,6 +7462,7 @@
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Relever"/>
         <mission name="MELEE S'emparer"/>
+        <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
         <mission name="STABILISATION Animer Postes De Controle"/>
       </missions>
@@ -11339,4 +11336,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4215858132" -->
+<!-- signature="2692073897" -->
