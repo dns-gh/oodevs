@@ -735,16 +735,20 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::Logger</name>
     <message>
-        <source>Date</source>
-        <translation>Date</translation>
-    </message>
-    <message>
         <source>Message</source>
         <translation>Message</translation>
     </message>
     <message>
         <source>Clear list</source>
         <translation>Vider la liste</translation>
+    </message>
+    <message>
+        <source>Real time</source>
+        <translation>Heure réelle</translation>
+    </message>
+    <message>
+        <source>Simulation time</source>
+        <translation>Heure simulée</translation>
     </message>
 </context>
 <context>

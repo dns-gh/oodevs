@@ -10,6 +10,8 @@
 #ifndef __ItemFactory_ABC_h_
 #define __ItemFactory_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
     class ValuedListItem;
@@ -21,7 +23,7 @@ namespace gui
 */
 // Created: AGE 2006-05-11
 // =============================================================================
-class ItemFactory_ABC
+class ItemFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

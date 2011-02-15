@@ -14,6 +14,7 @@
 #include "moc_Logger.cpp"
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
+#include "gaming/Simulation.h"
 #include <qdatetime.h>
 
 using namespace gui;
@@ -22,15 +23,17 @@ using namespace gui;
 // Name: Logger constructor
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory )
-    : QListView( pParent )
-    , factory_( factory )
+Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& simulation )
+    : QListView  ( pParent )
+    , factory_   ( factory )
+    , simulation_( simulation )
 {
     setMinimumSize( 1, 1 );
     setShowSortIndicator( true );
     setSorting( -1 );
     setRootIsDecorated( true );
-    addColumn( tr( "Date" ) );
+    addColumn( tr( "Real time" ) );
+    addColumn( tr( "Simulation time" ) );
     addColumn( tr( "Message" ) );
     setResizeMode( QListView::LastColumn );
     setAllColumnsShowFocus ( true );
@@ -84,6 +87,7 @@ Logger::LogElement Logger::StartLog( const QColor& color, bool popup )
 {
     ValuedListItem* pItem = factory_.CreateItem( this );
     pItem->setText( 0, QTime::currentTime().toString() );
+    pItem->setText( 1, simulation_.GetTimeAsString() );
     pItem->SetFontColor( color );
     std::stringstream* output = new std::stringstream();
     items_[ output ] = T_Item( pItem, popup );
@@ -98,7 +102,7 @@ void Logger::End( std::stringstream& output )
 {
     T_Item& item = items_[ &output ];
     if( item.first )
-        item.first->setText( 1, output.str().c_str() );
+        item.first->setText( 2, output.str().c_str() );
     if( item.second )
         emit EmitError();
     items_.erase( &output );

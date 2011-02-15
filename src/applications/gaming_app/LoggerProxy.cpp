@@ -44,7 +44,8 @@ void LoggerProxy::SetLogger( kernel::Logger_ABC& base )
 // -----------------------------------------------------------------------------
 LoggerProxy::LogElement LoggerProxy::Info()
 {
-    if( base_ ) return base_->Info();
+    if( base_ ) 
+        return base_->Info();
     throw std::runtime_error( __FUNCTION__ );
 }
 
@@ -54,7 +55,8 @@ LoggerProxy::LogElement LoggerProxy::Info()
 // -----------------------------------------------------------------------------
 LoggerProxy::LogElement LoggerProxy::Warning()
 {
-    if( base_ ) return base_->Warning();
+    if( base_ ) 
+        return base_->Warning();
     throw std::runtime_error( __FUNCTION__ );
 }
 
@@ -64,7 +66,8 @@ LoggerProxy::LogElement LoggerProxy::Warning()
 // -----------------------------------------------------------------------------
 LoggerProxy::LogElement LoggerProxy::Error()
 {
-if( base_ ) return base_->Error();
+    if( base_ ) 
+        return base_->Error();
     throw std::runtime_error( __FUNCTION__ );
 }
 
@@ -74,5 +77,6 @@ if( base_ ) return base_->Error();
 // -----------------------------------------------------------------------------
 void LoggerProxy::End( std::stringstream& output )
 {
-    if( base_ ) base_->End( output );
+    if( base_ ) 
+        base_->End( output );
 }

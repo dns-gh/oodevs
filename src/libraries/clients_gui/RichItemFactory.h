@@ -58,12 +58,6 @@ protected slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    RichItemFactory( const RichItemFactory& );            //!< Copy constructor
-    RichItemFactory& operator=( const RichItemFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     ValuedListItem* Connect( ValuedListItem* item );

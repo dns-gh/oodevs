@@ -13,6 +13,8 @@
 #include "Types.h"
 #include "clients_kernel/Logger_ABC.h"
 
+class Simulation;
+
 namespace gui
 {
     class ItemFactory_ABC;
@@ -30,7 +32,7 @@ class Logger : public QListView, public kernel::Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Logger( QWidget* pParent, ItemFactory_ABC& factory );
+             Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& simulation );
     virtual ~Logger();
     //@}
 
@@ -61,12 +63,6 @@ signals:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Logger( const Logger &);
-    Logger& operator=( const Logger& );
-    //@}
-
     //! @name Types
     //@{
     typedef std::pair< QListViewItem*, bool >      T_Item;
@@ -82,6 +78,7 @@ private:
     //! @name Member data
     //@{
     ItemFactory_ABC& factory_;
+    const Simulation& simulation_;
     QPopupMenu popupMenu_;
     T_Items items_;
     //@}

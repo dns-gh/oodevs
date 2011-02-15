@@ -40,12 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LoggerProxy( const LoggerProxy& );            //!< Copy constructor
-    LoggerProxy& operator=( const LoggerProxy& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void End( std::stringstream& output );

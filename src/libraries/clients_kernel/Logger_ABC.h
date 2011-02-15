@@ -12,6 +12,7 @@
 
 #include <sstream>
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -22,7 +23,7 @@ namespace kernel
 */
 // Created: AGE 2008-05-16
 // =============================================================================
-class Logger_ABC
+class Logger_ABC : private boost::noncopyable
 {
 public:
     //! @name Types

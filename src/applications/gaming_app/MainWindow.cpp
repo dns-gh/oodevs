@@ -189,7 +189,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     // Logger
     QDockWindow* pLogDockWnd_ = new QDockWindow( this, "log" );
     moveDockWindow( pLogDockWnd_, Qt::DockBottom );
-    gui::Logger* pLogPanel_ = new gui::Logger( pLogDockWnd_, *factory );
+    gui::Logger* pLogPanel_ = new gui::Logger( pLogDockWnd_, *factory, simulation );
     pLogDockWnd_->setWidget( pLogPanel_ );
     pLogDockWnd_->setResizeEnabled( true );
     pLogDockWnd_->setCloseMode( QDockWindow::Always );
