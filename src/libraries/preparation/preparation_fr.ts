@@ -575,6 +575,10 @@
         <source>%1 [%2]</source>
         <translation>%1 [%2]</translation>
     </message>
+    <message>
+        <source>Living Area/%1</source>
+        <translation>Zone de vie/%1</translation>
+    </message>
 </context>
 <context>
     <name>PopulationAffinities</name>

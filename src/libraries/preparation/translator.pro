@@ -17,6 +17,7 @@ Formation.cpp \
 InfrastructureAttribute.cpp \
 Inhabitant.cpp \
 InhabitantAffinities.cpp \
+InhabitantPositions.cpp \
 InputToxicCloudAttribute.cpp \
 Intelligence.cpp \
 KnowledgeGroup.cpp \

@@ -13,7 +13,10 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/TerrainObjectProxy.h"
+#include "urban/TerrainObject_ABC.h"
+#include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -63,25 +66,27 @@ namespace
 // Name: InhabitantPositions constructor
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const UrbanModel& urbanModel )
+InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico )
     : converter_ ( converter )
     , position_( 0, 0 ) 
 {
     IntersectionVisitor visitor( urbanModel, livingUrbanObject_ );
     location.Accept( visitor );
     ComputePosition();
+    UpdateDico( inhabitant, dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantPositions constructor
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
-InhabitantPositions::InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel )
+InhabitantPositions::InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant , kernel::PropertiesDictionary& dico )
     : converter_ ( converter )
     , position_( 0, 0 ) 
 {
     ReadLocation( xis, urbanModel );
     ComputePosition();
+    UpdateDico( inhabitant, dico );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,4 +228,14 @@ void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const kernel
         if( footprint )
             tools.DrawConvexPolygon( footprint->Vertices() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::UpdateDico
+// Created: SLG 2011-02-15
+// -----------------------------------------------------------------------------
+void InhabitantPositions::UpdateDico( kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico )
+{
+    for ( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+        dico.Register( inhabitant, tools::translate( "Population", "Living Area/%1" ).arg( ( *it )->GetId() ), ( *it )->GetObject()->GetName() );
 }

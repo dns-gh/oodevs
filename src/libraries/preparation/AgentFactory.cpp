@@ -151,14 +151,17 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
     else
         top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
 
-    Positions& positions = *new InhabitantPositions( static_.coordinateConverter_, location, model_.urban_ );
+    Inhabitant* result = new Inhabitant( type, number, name, controllers_.controller_, idManager_ );
+    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
+
+    Positions& positions = *new InhabitantPositions( static_.coordinateConverter_, location, model_.urban_, *result, dico );
     if( positions.GetPosition() == geometry::Point2f( 0, 0 ) )
     {
         delete &positions;
+        delete result;
         return 0;
     }
-    Inhabitant* result = new Inhabitant( type, number, name, controllers_.controller_, idManager_ );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
+
     result->Attach< Positions >( positions );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, top ) );
     result->Attach( *new InhabitantAffinities( controllers_, model_, *result, dico ) );
@@ -273,7 +276,7 @@ kernel::Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, kernel::T
     Inhabitant* result = new Inhabitant( xis, controllers_.controller_, idManager_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
-    result->Attach< Positions >( *new InhabitantPositions( xis, static_.coordinateConverter_, model_.urban_ ) );
+    result->Attach< Positions >( *new InhabitantPositions( xis, static_.coordinateConverter_, model_.urban_, *result, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
     result->Attach( *new InhabitantAffinities( xis, controllers_, model_, *result, dico ) );
     if( xis.has_child( "extensions" ) )

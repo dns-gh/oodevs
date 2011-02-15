@@ -20,6 +20,8 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Location_ABC;
     class GlTools_ABC;
+    class Inhabitant_ABC;
+    class PropertiesDictionary;
 }
 
 namespace gui
@@ -55,8 +57,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const UrbanModel& urbanModel );
-             InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel );
+             InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
+             InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico  );
     virtual ~InhabitantPositions();
     //@}
 
@@ -85,6 +87,7 @@ private:
     void ReadLocation( xml::xistream& xis, const UrbanModel& urbanModel );
     void ReadLivingUrbanBlock( xml::xistream& xis, const UrbanModel& urbanModel );
     void ComputePosition();
+    void UpdateDico( kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico );
     //@}
 
 private:
