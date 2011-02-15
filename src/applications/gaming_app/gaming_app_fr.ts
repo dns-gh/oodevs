@@ -1656,15 +1656,15 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>MedicalCapacityUpdateDialog</name>
     <message>
         <source>Update medical capacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Mise à jour capacité médical</translation>
     </message>
     <message>
         <source>MedicalTreatment Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de traitement médical</translation>
     </message>
     <message>
         <source>Hospital ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Id Hopital:</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1684,7 +1684,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Bed Capacities (Patients/Baseline)</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité de lits (patiens/unité)</translation>
     </message>
     <message>
         <source>Ok</source>

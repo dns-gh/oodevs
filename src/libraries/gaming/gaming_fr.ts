@@ -822,15 +822,15 @@
     </message>
     <message>
         <source>Medical Treatment</source>
-        <translation type="unfinished"></translation>
+        <translation>Traitement médical</translation>
     </message>
     <message>
         <source>Hospital ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Id Hopital:</translation>
     </message>
     <message>
         <source>Medical Treatment services (Available(Baseline)):</source>
-        <translation type="unfinished"></translation>
+        <translation>Service de traitement médical (Disponible( Base)):</translation>
     </message>
 </context>
 <context>
@@ -1063,11 +1063,11 @@
     </message>
     <message>
         <source>Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Brule</translation>
     </message>
     <message>
         <source>Heat:</source>
-        <translation type="unfinished"></translation>
+        <translation>Touché:</translation>
     </message>
     <message>
         <source>Combustion energy:</source>

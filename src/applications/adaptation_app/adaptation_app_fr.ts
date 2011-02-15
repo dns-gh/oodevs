@@ -6146,15 +6146,15 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>RoofShape - Duplicated roofShape type name &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de toit - Nom du type de toit dupliqué &apos;%1&apos;</translation>
     </message>
     <message>
         <source>RoofShape - Duplicated roofShape type names</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de toit - Noms de type de toit dupliqués</translation>
     </message>
     <message>
         <source>RoofShape - Invalid roofShape type name</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de toit - Nom de type de toit invalide</translation>
     </message>
 </context>
 <context>
