@@ -129,7 +129,7 @@ void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::DisplayInTooltip
+// Name: MedicalTreatmentAttribute::DisplayInTooltip
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const

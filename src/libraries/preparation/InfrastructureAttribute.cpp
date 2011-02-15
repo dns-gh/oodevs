@@ -87,7 +87,7 @@ void InfrastructureAttribute::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::DisplayInTooltip
+// Name: InfrastructureAttribute::DisplayInTooltip
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
