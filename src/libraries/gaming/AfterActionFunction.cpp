@@ -10,7 +10,10 @@
 #include "gaming_pch.h"
 #include "AfterActionFunction.h"
 #include "AfterActionParameter.h"
+#include "Tools.h"
 #include <xeumeuleu/xml.hpp>
+#include <qsettings.h>
+#include <qtextcodec.h>
 
 using namespace kernel;
 
@@ -26,6 +29,13 @@ namespace
         xos << xml::end;
         return xos.str();
     }
+
+    QString ReadLang()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -33,15 +43,14 @@ namespace
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
 AfterActionFunction::AfterActionFunction( xml::xistream& xis )
-    : name_( xis.attribute< std::string >( "name" ).c_str() )
-    , base_( ReadBase( xis ) )
+    : base_( ReadBase( xis ) )
 {
-    std::string comments;
-    xis >> xml::content( "comments", comments )
+    xis >> xml::start( "descriptions" )
+          >> xml::list( "description", *this, &AfterActionFunction::ReadDescription )
+        >> xml::end
         >> xml::start( "parameters" )
             >> xml::list( "parameter", *this, &AfterActionFunction::ReadParameter )
         >> xml::end;
-    comments_ = comments.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -51,6 +60,21 @@ AfterActionFunction::AfterActionFunction( xml::xistream& xis )
 AfterActionFunction::~AfterActionFunction()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunction::ReadDescription
+// Created: PHC 2011-02-15
+// -----------------------------------------------------------------------------
+void AfterActionFunction::ReadDescription( xml::xistream& xis )
+{
+    std::string comments;
+    if( xis.attribute< std::string >( "lang" ) == ReadLang().ascii() )
+    {
+        xis >> comments;
+        name_ = xis.attribute< std::string >( "name" ).c_str();
+        comments_ = comments.c_str();
+    }
 }
 
 // -----------------------------------------------------------------------------

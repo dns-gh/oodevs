@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <functions>
   <function name="Operational state">
-    <comments><![CDATA[Operational state of the selected unit]]></comments>
+    <descriptions>
+      <description name="Operational state" lang="en">
+        <![CDATA[Operational state of the selected unit]]>
+      </description>
+      <description name="Etat opérationnel" lang="fr">
+        <![CDATA[Etat opérationnel de l'unité sélectionnée]]>
+      </description>
+    </descriptions>
     <parameters>
       <parameter name="Unit" type="unit"/>
     </parameters>
@@ -13,7 +20,14 @@
   </function>
   
   <function name="Mean operational state">
-    <comments><![CDATA[Operational state of the selected units]]></comments>
+    <descriptions>
+      <description name="Mean operational state" lang="en">
+        <![CDATA[Operational state of the selected units]]>
+      </description>
+      <description name="Etat opérationnel moyen" lang="fr">
+        <![CDATA[Etat opérationnel des unités sélectionnées]]>
+      </description>
+    </descriptions>
     <parameters>
       <parameter name='Units' type='unit list'/>
     </parameters>
@@ -26,7 +40,14 @@
   </function>
   
   <function name="Distance between units">
-    <comments><![CDATA[Distance between the selected units]]></comments>
+    <descriptions>
+      <description name="Distance between units" lang="en">
+        <![CDATA[Distance between the selected units]]>
+      </description>
+      <description name="Distance entre les unités" lang="fr">
+        <![CDATA[Distance entre les unités sélectionnées]]>
+      </description>
+    </descriptions>
     <parameters>
       <parameter name="Unit 1" type="unit"/>
       <parameter name="Unit 2" type="unit"/>
@@ -41,7 +62,14 @@
   </function>
   
   <function name="Number of breakdowns">
-    <comments><![CDATA[Number of breakdowns treated in the logistic chain. Requires logistic activation.]]></comments>
+    <descriptions>
+      <description name="Number of breakdowns" lang="en">
+        <![CDATA[Number of breakdowns treated in the logistic chain. Requires logistic activation.]]>
+      </description>
+      <description name="Quantité de pannes" lang="fr">
+        <![CDATA[Quantité de pannes traitées dans la chaîne logistique. Requiert l'activation de la log.]]>
+      </description>
+    </descriptions>
     <parameters>
       <parameter name="Units" type="unit list"/>
     </parameters>
@@ -55,7 +83,14 @@
   </function>
   
   <function name="Number of direct fires">
-    <comments><![CDATA[Number of simultaneous direct fires on the theater.]]></comments>
+    <descriptions>
+      <description name="Number of direct fires" lang="en">
+        <![CDATA[Number of simultaneous direct fires on the theater.]]>
+      </description>
+      <description name="Quantité de tirs directs" lang="fr">
+        <![CDATA[Quantité de tirs directs simultanés sur le théatre des opérations.]]>
+      </description>
+    </descriptions>
     <parameters/>
     <indicator>
       <extract function='direct-fire-unit' id='fires'/>
@@ -65,7 +100,14 @@
   </function>
 
   <function name="Component Damages">
-    <comments><![CDATA[Number of components destroyed by direct fires on the theater.]]></comments>
+    <descriptions>
+      <description name="Component Damages" lang="en">
+        <![CDATA[Number of components destroyed by direct fires on the theater.]]>
+      </description>
+      <description name="Dommages de composants" lang="fr">
+        <![CDATA[Quantité de composants détruits par tir direct sur le théatre des opérations.]]>
+      </description>
+    </descriptions>
     <parameters>
       <parameter name='Components' type='equipment list'/>
     </parameters>
@@ -77,7 +119,14 @@
   </function>
   
   <function name="Inflicted damage from direct fires from zone">
-    <comments><![CDATA[Number of components destroyed by direct fires by units situated within the designated zone.]]></comments>
+    <descriptions>
+      <description name="Inflicted damage from direct fires from zone" lang="en">
+        <![CDATA[Number of components destroyed by direct fires by units situated within the designated zone.]]>
+      </description>
+      <description name="Dommages infligés par tirs indirects dans zone" lang="fr">
+        <![CDATA[Quantité de composants détruits par tir direct dans la zone désignée.]]>
+      </description>
+    </descriptions>
     <parameters>
       <parameter name='Zone' type='zone'/>
       <parameter name='Components' type='equipment list'/>
@@ -96,7 +145,14 @@
   </function>
   
   <function name="Total resources for units">
-    <comments><![CDATA[Total number of resources for the selected units.]]></comments>
+    <descriptions>
+      <description name="Total resources for units" lang="en">
+        <![CDATA[Total number of resources for the selected units.]]>
+      </description>
+      <description name="Ressources totales par unités" lang="fr">
+        <![CDATA[Quantité de composants détruits par tir direct dans la zone désignée.]]>
+      </description>
+    </descriptions>
     <parameters>
       <parameter name='Units' type='unit list'/>
       <parameter name='Dotations' type='dotation list'/>
@@ -110,7 +166,14 @@
     </function>
     
     <function name="Resource consumptions for units">
-    <comments><![CDATA[Resources consumptions for the selected units.]]></comments>
+      <descriptions>
+        <description name="Resource consumptions for units" lang="en">
+            <![CDATA[Resources consumptions for the selected units.]]>
+        </description>
+        <description name="Ressources consommées par les unités" lang="fr">
+          <![CDATA[Consomation de resources pour les unités selectionnées.]]>
+        </description>
+    </descriptions>
     <parameters>
       <parameter name='Units' type='unit list'/>
       <parameter name='Dotations' type='dotation list'/>

@@ -53,12 +53,13 @@ private:
     //! @name Helpers
     //@{
     void ReadParameter( xml::xistream& xis );
+    void ReadDescription( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const QString name_;
+    QString name_;
     const std::string base_;
     QString comments_;
     //@}
