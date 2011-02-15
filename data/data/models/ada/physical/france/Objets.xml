@@ -323,7 +323,9 @@
     <interaction-height height="6000"/>
     <population-filter density="0.5"/>
   </object>
-  <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation"/>
+  <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+  </object>
   <object geometry="polygon" name="Zone de détection de capteurs" symbol="G*GPGAL---****X" type="sensorsDetectionZone">
     <detection>
       <acquisition-times>
@@ -372,4 +374,4 @@
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="1794842753" -->
+<!-- signature="3940313317" -->

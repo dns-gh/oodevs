@@ -315,7 +315,9 @@
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
-  <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation"/>
+  <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+  </object>
   <object geometry="point" name="Distribution point" symbol="G*SPPR----****X" type="distribution point"/>
   <object geometry="polygon" name="Sensors detection zone" symbol="G*GPGAL---****X" type="sensorsDetectionZone">
     <detection>
@@ -381,4 +383,4 @@
   </object>
   <object geometry="polygon" name="Moving Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="2603579480" -->
+<!-- signature="0387553328" -->

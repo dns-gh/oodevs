@@ -9,7 +9,9 @@
               <point>31UEQ1161424285</point>
             </points>
           </shape>
-          <attributes/>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
         </object>
       </objects>
       <tactical>
