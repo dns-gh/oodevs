@@ -16,6 +16,8 @@
     <property name="version.minor" value="${version.major}.${svn.revision}"/>
     <property name="version.version" value="${version.minor}"/><!-- required for version extension -->
 
+    <property name="samples.dir" value="${src.dir}/samples"/>
+    
     <!--
     ============================================================================
       tools
@@ -526,6 +528,18 @@
         </build-lib>
     </target>
 
+    <!--
+    ============================================================================
+    samples
+    ============================================================================
+    -->
+    <target name="sample.client_sample_app" description="build Sample client application" depends="library.protocol">
+        <build-app name="client_sample_app" depends="protobuf" root="${samples.dir}" libs="libprotobuf,lib${ant.project.name}_protocol-${platform}-mt@{suffix}" subsystem="console">
+            <syslibset libs="Ws2_32,Mswsock,Advapi32"/>
+            <includepath path="${out.dir}/release/libraries/protocol"/>
+        </build-app>
+    </target>
+    
     <!--
     ============================================================================
     data
