@@ -14,6 +14,7 @@
 
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
+#include <map>
 #include <boost/noncopyable.hpp>
 
 namespace xml { class xistream; }
@@ -143,10 +144,14 @@ public:
     FileInfos&           GetFileInfos();
     static WorkDirInfos& GetWorkDirInfos();
 
+private:
+    void FilterNode( const std::string& node, xml::xistream& xis, xml::xostream& xos );
+
 public:
-    DataInfos            dataInfos_;
-    FileInfos            szFile_;
-    static WorkDirInfos  workDir_;
+    DataInfos dataInfos_;
+    FileInfos szFile_;
+    std::map< std::string, std::string > addedObjects_;
+    static WorkDirInfos workDir_;
 };
 
 //-----------------------------------------------------------------------------

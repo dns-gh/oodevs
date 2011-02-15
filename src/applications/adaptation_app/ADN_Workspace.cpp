@@ -147,7 +147,7 @@ ADN_Workspace::ADN_Workspace()
     elements_[ePopulation]        = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Crowds" ) );
     elements_[ePeople]            = new ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >( tr( "Populations" ) );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >( tr( "Reports" ) );
-    elements_[eFireClasses]  = new ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >( tr( "Fires" ) );
+    elements_[eFireClasses]       = new ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >( tr( "Fires" ) );
 }
 
 //-----------------------------------------------------------------------------

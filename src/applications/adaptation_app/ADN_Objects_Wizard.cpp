@@ -9,7 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Objects_Wizard.h"
-
+#include "ADN_Project_Data.h"
 #include "ADN_Workspace.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_Wizard_FirstPage_Default.h"
@@ -53,6 +53,8 @@ ADN_Ref_ABC* ADN_Objects_Wizard::CreateObject()
     if( object )
     {
         ADN_Objects_Data::ObjectInfos* info = static_cast<ADN_Objects_Data::ObjectInfos*>( object );
+        if( !info->strType_.GetData().empty() )
+            ADN_Workspace::GetWorkspace().GetProject().addedObjects_[ info->strName_.GetData() ] = info->strType_.GetData();
         info->strType_ = info->strName_.GetData();
     }
     return object;

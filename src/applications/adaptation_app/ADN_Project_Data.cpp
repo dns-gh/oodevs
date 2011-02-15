@@ -10,15 +10,15 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Project_Data.h"
-
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
+#include "ADN_Objects_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_Resources.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
 #include "SchemaReader.h"
-
+#include <boost/bind.hpp>
 #include <tools/XmlCrc32Signature.h>
 #include <windows.h>
 
@@ -346,6 +346,51 @@ void ADN_Project_Data::Load( std::string& invalidSignedFiles )
     CheckSignature( workDir_.GetWorkingDirectory().GetData(), "templates.xml", invalidSignedFiles );
 }
 
+namespace
+{
+    void CopyAttributes( const std::string& attribute, xml::xistream& xis, xml::xostream& xos )
+    {
+        std::string value;
+        xis >> value;
+        xos << xml::attribute( attribute, value );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Project_Data::FilterNode
+// Created: JSR 2011-02-15
+// -----------------------------------------------------------------------------
+void ADN_Project_Data::FilterNode( const std::string& node, xml::xistream& xis, xml::xostream& xos )
+{
+    if( node == "unit-rules" || node == "rule" || node == "object-costs" )
+    {
+        xos << xml::start( node );
+        xis >> xml::attributes( boost::bind( &CopyAttributes, _2, _3, boost::ref( xos ) ) )
+            >> xml::list( boost::bind( &ADN_Project_Data::FilterNode, this, _2, _3, boost::ref( xos ) ) );
+        xos << xml::end;
+    }
+    else if( node == "object-cost" )
+    {
+        std::string type = xis.attribute< std::string >( "type" );
+        double value = xis.attribute< double >( "value" );
+        if( ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( type ) )
+            xos << xml::start( node )
+                    << xml::attribute( "type", type )
+                    << xml::attribute( "value", value )
+                << xml::end;
+        for( std::map< std::string, std::string >::const_iterator it = addedObjects_.begin(); it != addedObjects_.end(); ++it )
+        {
+            if( it->second == type )
+                xos << xml::start( node )
+                        << xml::attribute( "type", it->first )
+                        << xml::attribute( "value", value )
+                    << xml::end;
+        }
+    }
+    else
+        xos << xml::content( node, xis );
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::Save
 // Created: JDY 03-06-20
@@ -361,6 +406,20 @@ void ADN_Project_Data::Save()
         dataInfos_.WriteArchive( output );
     }
     tools::WriteXmlCrc32Signature( szFile );
+    // Update pathfind.xml
+    if( !addedObjects_.empty() )
+    {
+        std::string path = workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData();
+        xml::xifstream xis( path );
+        xml::xofstream xos( path );
+        xis >> xml::start( "pathfind" );
+        xos << xml::start( "pathfind" )
+                << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+                << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/physical/Pathfind.xsd" );
+        xis >> xml::list( boost::bind( &ADN_Project_Data::FilterNode, this, _2, _3, boost::ref( xos ) ) );
+    }
+    addedObjects_.clear();
+
     // Save XML Signature for files not loaded, bypassing "temp" folder
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData() );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData() );
