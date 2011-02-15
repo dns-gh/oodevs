@@ -23,9 +23,7 @@ namespace launcher
 // Created: SBO 2010-11-03
 // =============================================================================
 class Config : public tools::GeneralConfig
-             , private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
