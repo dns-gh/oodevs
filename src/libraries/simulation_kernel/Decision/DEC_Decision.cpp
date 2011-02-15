@@ -706,6 +706,17 @@ bool DotationTypeFunctionBM( directia::brain::Brain& /*brain*/, directia::tools:
     return true;
 }
 
+bool DotationTypeListFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< const PHY_DotationCategory* > value;
+    if( element.ToDotationTypeList( value ) )
+    {
+        refMission[ name ] = value;
+        return true;
+    }
+    return false;
+}
+
 void EquipmentTypeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     const PHY_ComposanteTypePion* value = 0;
@@ -935,6 +946,7 @@ void InitFunctions()
         functorsBM[ "PhaseLine" ] = PhaseLineFunctionBM;
         functorsBM[ "PhaseLineList" ] = PhaseLineListFunctionBM;
         functorsBM[ "ResourceType" ] = DotationTypeFunctionBM;
+        functorsBM[ "ResourceTypeList" ] = DotationTypeListFunctionBM;
     }
 }
 

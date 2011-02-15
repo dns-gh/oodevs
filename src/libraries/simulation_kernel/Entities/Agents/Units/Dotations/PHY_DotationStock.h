@@ -26,7 +26,7 @@ class PHY_DotationStock : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, double rSupplyThresholdRatio, double rCapacity, bool bInfiniteDotations );
+     PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, double rSupplyThresholdRatio, double rCapacity, bool bInfiniteDotations, bool bCreateEmpty = false );
      PHY_DotationStock();
     virtual ~PHY_DotationStock();
     //@}
@@ -44,6 +44,8 @@ public:
     const PHY_DotationCategory& GetCategory() const;
           double              GetValue   () const;
           double              GetCapacity() const;
+          bool                IsFull() const;
+          bool                IsEmpty() const;
     //@}
 
     //! @name Operations
@@ -59,12 +61,17 @@ public:
     bool     NeedSupply               () const;
     double Supply                   ( double rSupply );
     //@}
+    
+    //! @name Used for stock extraction
+    //@{
+    double Consume( double rValue );
+    double SupplyUntilFull( double rSupply );
+    //@}
 
 private:
     //! @name Tools
     //@{
     void     SetValue  ( double rValue );
-    double Consume   ( double rValue );
     //@}
 
 private:

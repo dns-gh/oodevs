@@ -271,6 +271,18 @@ PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCateg
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::AddStock
+// Created: BCI 2011-02-11
+// -----------------------------------------------------------------------------
+PHY_DotationStock* PHY_DotationStockContainer::AddEmptyStock( const PHY_DotationCategory& category, double capacity )
+{
+    PHY_DotationStock*& pStock = stocks_[ &category ];
+    if( !pStock )
+        pStock = new PHY_DotationStock( *this, category, 0., capacity, bInfiniteDotations_, true/*create empty*/ );
+    return pStock;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::Resupply
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
@@ -464,4 +476,26 @@ void PHY_DotationStockContainer::Update()
 {
     if( bCheckStockCapacities_ )
         CheckStockCapacities();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStockContainer::ComputeStockWeightAndVolume
+// Created: BCI 2011-02-14
+// -----------------------------------------------------------------------------
+void PHY_DotationStockContainer::ComputeStockWeightAndVolume( const PHY_DotationNature& nature, double& rWeight, double& rVolume ) const
+{
+    rWeight = 0;
+    rVolume = 0;
+
+    for( CIT_StockMap it = stocks_.begin(); it != stocks_.end(); ++it )
+    {
+        const PHY_DotationStock&    dotationStock    = *it->second;
+        const PHY_DotationCategory& dotationCategory = dotationStock.GetCategory();
+
+        if( &nature == &dotationCategory.GetNature() )
+        {
+            rVolume += dotationStock.GetValue() * dotationCategory.GetVolume();
+            rWeight += dotationStock.GetValue() * dotationCategory.GetWeight();
+        }
+    }
 }

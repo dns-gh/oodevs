@@ -51,6 +51,8 @@ namespace moving
 class OnComponentComputer_ABC;
 class OnComponentLendedFunctorComputer_ABC;
 class MIL_AgentPion_ABC;
+class PHY_DotationStock;
+class PHY_RoleInterface_Supply;
 
 // =============================================================================
 // @class  PHY_RolePion_Composantes
@@ -231,6 +233,11 @@ public:
     virtual void WoundLoadedHumans( const PHY_ComposantePion& composanteChanged, const PHY_ComposanteState& newState, PHY_FireDamages_Agent& fireDamages );
     //@}
 
+    //! @name Stock
+    //@{
+    PHY_DotationStock& GetOrAddStock( PHY_RoleInterface_Supply& supplyRole, const PHY_DotationCategory& dotation );
+    bool CanStockMoreOf( PHY_RoleInterface_Supply& supplyRole, const PHY_DotationCategory& dotation ) const;
+    //@}
 private:
     //! @name Types
     //@{
@@ -288,6 +295,7 @@ private:
     void ReadEquipement ( xml::xistream& xis );
     void ReadPersonnels ( xml::xistream& xis );
     void ReadPersonnel  ( xml::xistream& xis );
+    void GetStockTransporterCapacity( const PHY_DotationNature& nature, double& rWeightMax, double& rVolumeMax ) const;
     //@}
 
 private:

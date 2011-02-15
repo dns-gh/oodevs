@@ -36,6 +36,7 @@
 #include "ObstacleAttribute.h"
 #include "OccupantAttribute.h"
 #include "SupplyRouteAttribute.h"
+#include "StockAttribute.h"
 
 #include "ObjectAttributesContainer.h"
 #include "Inhabitants.h"
@@ -189,6 +190,7 @@ void TeamFactory::Initialize()
     factory->Register( "supply-route"       , BIND_ATTACH_ATTRIBUTE( SupplyRouteAttribute, _1, _2, _3 ) );
     factory->Register( "tc2"                , BIND_ATTACH_ATTRIBUTE_RESOLVER( LogisticAttribute, Automat_ABC, _1, _2, boost::cref( model_.agents_ ), _3, boost::ref( controllers_ ) ) );
     factory->Register( "max-size"           , BIND_ATTACH_ATTRIBUTE( OccupantAttribute, _1, _2, _3 ) );
+    factory->Register( "stock"              , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( StockAttribute, kernel::DotationType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
 
     factory_.reset( factory );
 }

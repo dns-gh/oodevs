@@ -17,7 +17,10 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -1671,4 +1674,62 @@ void PHY_RolePion_Composantes::GetConvoyTransportersUse( T_ComposanteUseMap& com
                 ++data.nNbrLent_;
             }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetStockTransporterCapacity
+// Created: BCI 2011-02-11
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::GetStockTransporterCapacity( const PHY_DotationNature& nature, double& rTotalWeightMax, double& rTotalVolumeMax ) const
+{
+    rTotalWeightMax = 0;
+    rTotalVolumeMax = 0;
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+    {
+        if( &nature == (*it)->GetType().GetStockTransporterNature() )
+        {
+            double rWeightMax = 0;
+            double rVolumeMax = 0;
+            (*it)->GetStockTransporterCapacity( rWeightMax, rVolumeMax );
+            rTotalWeightMax += rWeightMax;
+            rTotalVolumeMax += rVolumeMax;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetOrAddStock
+// Created: BCI 2011-02-11
+// -----------------------------------------------------------------------------
+PHY_DotationStock& PHY_RolePion_Composantes::GetOrAddStock( PHY_RoleInterface_Supply& supplyRole, const PHY_DotationCategory& dotation )
+{
+    PHY_DotationStock* pStock = supplyRole.GetStock( dotation );
+    if( !pStock )
+    {
+        double rWeightCapacity, rVolumeCapacity;
+        GetStockTransporterCapacity( dotation.GetNature(), rWeightCapacity, rVolumeCapacity );
+        double capacity = std::min( rWeightCapacity / dotation.GetWeight(), rVolumeCapacity / dotation.GetVolume() );
+        pStock = supplyRole.AddEmptyStock( dotation, capacity );
+    }
+    return *pStock;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::CanStockMoreOf
+// Created: BCI 2011-02-14
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Composantes::CanStockMoreOf( PHY_RoleInterface_Supply& supplyRole, const PHY_DotationCategory& dotation ) const
+{
+    double rWeight, rVolume;
+    supplyRole.ComputeStockWeightAndVolume( dotation.GetNature(), rWeight, rVolume );
+
+    double rWeightCapacity, rVolumeCapacity;
+    GetStockTransporterCapacity( dotation.GetNature(), rWeightCapacity, rVolumeCapacity );
+
+    rWeightCapacity = std::floor( rWeightCapacity );
+    rVolumeCapacity = std::floor( rVolumeCapacity );
+    rWeight = std::ceil( rWeight );
+    rVolume = std::ceil( rVolume );
+
+    return rWeight < rWeightCapacity && rVolume < rVolumeCapacity;
 }

@@ -18,6 +18,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/ObjectExtensions.h"
+#include "clients_kernel/StockAttribute_ABC.h"
 #include "DisplayBuilder.h"
 #include "Tools.h"
 
@@ -107,6 +108,7 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
             UpdateExtension< SupplyRouteAttribute_ABC >( *selected_ );
             UpdateExtension< ActivityTimeAttribute_ABC >( *selected_ );
             UpdateExtension< SealOffAttribute_ABC >( *selected_ );
+            UpdateExtension< StockAttribute_ABC >( *selected_ );
         }
         else
             Hide();
@@ -274,6 +276,15 @@ void ObjectPanel::NotifyUpdated( const ActivityTimeAttribute_ABC& attributes )
 // Created: MGD 2010-08-26
 // -----------------------------------------------------------------------------
 void ObjectPanel::NotifyUpdated( const SealOffAttribute_ABC& attributes )
+{
+    DisplayIfNeeded( attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::NotifyUpdated
+// Created: BCI 2011-02-07
+// -----------------------------------------------------------------------------
+void ObjectPanel::NotifyUpdated( const kernel::StockAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }

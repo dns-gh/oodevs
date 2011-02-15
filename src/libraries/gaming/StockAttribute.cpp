@@ -43,14 +43,10 @@ StockAttribute::~StockAttribute()
 // -----------------------------------------------------------------------------
 void StockAttribute::Update( const DotationType& type, const sword::StockResource& resource )
 {
-    typedef T_StockDotation::iterator IT_StockDotation;
-    typedef std::pair< T_DotationState, T_DotationState > T_StockResourceValue;
-
-    T_StockResourceValue value = stock_[ &type ];
-    value.first = resource.current();
+    StockDotation& dotation = stockDotations_[ &type ];
+    dotation.stock_ = resource.current();
     if( resource.has_maximum() )
-        value.second = resource.maximum();
-    stock_[ &type ] = value;
+        dotation.maxStock_ = resource.maximum();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,30 +85,4 @@ void StockAttribute::DoUpdate( const sword::ObjectUpdate& message )
     UpdateData( message.attributes() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: StockAttribute::Display
-// Created: AGE 2006-02-23
-// -----------------------------------------------------------------------------
-void StockAttribute::Display( Displayer_ABC& displayer ) const
-{
-    typedef T_StockDotation::const_iterator CIT_StockDotation;
-    Displayer_ABC& local =
-        displayer.Group( tools::translate( "Stock", "Stock resource attribute" ) );
 
-    for ( CIT_StockDotation it = stock_.begin(); it != stock_.end(); ++it )
-    {
-        local.Start( it->first->GetName() )
-                .Add( "Dotation: " ).Add( it->second.first )
-                                    .Add( " / " ).Add( it->second.second )
-             .End();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: StockAttribute::DisplayInSummary
-// Created: SBO 2007-05-14
-// -----------------------------------------------------------------------------
-void StockAttribute::DisplayInSummary( Displayer_ABC& displayer ) const
-{
-    Display( displayer );
-}

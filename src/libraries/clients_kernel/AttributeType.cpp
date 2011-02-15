@@ -14,16 +14,6 @@
 
 using namespace kernel;
 
-namespace
-{
-    template< typename T >
-    void ReaderHelper( OptionalValue< T >& value, const std::string& name, xml::xistream& xis )
-    {
-        if( xis.has_attribute( name ) )
-            value = xis.attribute< T >( name );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AttributeType constructor
 // Created: JSR 2010-10-01

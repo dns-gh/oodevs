@@ -113,6 +113,7 @@ public:
         eFloodCapacity_HurtHumansE,
         eFloodCapacity_DeadHumans,
         eUniversalCapacityPresent,
+        eStockCapacityPresent,
         ePopulationCapacityPresent,
         ePopulationFilter_Density,
         eNbrGuiElements

@@ -15,7 +15,11 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/ConstructionAttribute.h"
@@ -43,6 +47,8 @@
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 #include "Operation.h"
 
+#include <boost/foreach.hpp>
+
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_Objects )
 
 template< typename Archive >
@@ -67,7 +73,7 @@ void load_construct_data( Archive& archive, PHY_RoleAction_Objects* role, const 
 PHY_RoleAction_Objects::PHY_RoleAction_Objects( MIL_AgentPion& pion )
     : pion_( pion )
 {
-    // NOTHING
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -338,34 +344,77 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects::Supply
+// Name: PHY_RoleAction_Objects::SupplyStock
 // Created: JCR 2009-06-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Supply( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge )
+int PHY_RoleAction_Objects::SupplyStock( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity )
 {
     MIL_Object_ABC* pObject = GetObject( objectKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
         return eImpossible;
-
     MIL_Object_ABC& object = *pObject;
     StockAttribute* attribute = object.RetrieveAttribute< StockAttribute >();
     if( !attribute )
         return eImpossible;
+    PHY_RoleInterface_Supply* supplyRole = pion_.RetrieveRole< PHY_RoleInterface_Supply >();
+    if( !supplyRole )
+        return eImpossible;
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
-    if( attribute->IsFull() )
-        return eFinished;
-    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eConstruct, object );
-    typedef std::vector< std::pair< const PHY_DotationCategory*, unsigned int > > T_SelectionVector;
-    typedef T_SelectionVector::iterator IT_SelectionVector;
-    T_SelectionVector selection;
-    attribute->SelectDotations( selection, false );
-    for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
-        if( dataComputer.HasDotations( *it->first, 1 ) )
-            dataComputer.ConsumeDotations( *it->first, attribute->Supply( *it->first, 1 ) );
-    if( attribute->IsFull() )
-        return eFinished;
-    return eRunning;
+
+    BOOST_FOREACH( const PHY_DotationCategory* pDotation, dotationTypes )
+    {
+        PHY_DotationStock& stock = pion_.GetRole< PHY_RolePion_Composantes >().GetOrAddStock( *supplyRole, *pDotation );
+        double consumed = stock.Consume( quantity );
+        double supplied = attribute->Supply( *pDotation, consumed );
+        stock.SupplyUntilFull( std::max( consumed - supplied, 0.0 ) );
+    }
+
+    BOOST_FOREACH( const PHY_DotationCategory* pDotation, dotationTypes )
+    {
+        if( PHY_DotationStock* pStock = supplyRole->GetStock( *pDotation ) )
+            if( !pStock->IsEmpty() && attribute->CanBeSuppliedWith( *pDotation ) )
+                return eRunning;
+    }
+
+    return eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::ExtractFromStock
+// Created: BCI 2011-02-08
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::ExtractFromStock( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity )
+{
+    MIL_Object_ABC* pObject = GetObject( objectKnowledge );
+    if( !pObject || pObject->IsMarkedForDestruction() )
+        return eImpossible;
+    MIL_Object_ABC& object = *pObject;
+    StockAttribute* attribute = object.RetrieveAttribute< StockAttribute >();
+    if( !attribute )
+        return eImpossible;
+    PHY_RoleInterface_Supply* supplyRole = pion_.RetrieveRole< PHY_RoleInterface_Supply >();
+    if( !supplyRole )
+        return eImpossible;
+    PHY_RolePion_Composantes& composantes = pion_.GetRole< PHY_RolePion_Composantes >();
+
+    pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+
+    BOOST_FOREACH( const PHY_DotationCategory* pDotation, dotationTypes )
+    {
+        PHY_DotationStock& stock = composantes.GetOrAddStock( *supplyRole, *pDotation );
+        double distributed = attribute->Distribute( *pDotation, quantity );
+        double stocked = stock.SupplyUntilFull( distributed ) ;
+        attribute->Supply( *pDotation, std::max( distributed - stocked, 0.0 ) );
+    }
+
+    BOOST_FOREACH( const PHY_DotationCategory* pDotation, dotationTypes )
+    {
+        if( attribute->CanDistribute( *pDotation ) && composantes.CanStockMoreOf( *supplyRole, *pDotation ) )
+            return eRunning;
+    }
+
+    return eFinished;
 }
 
 // -----------------------------------------------------------------------------
@@ -384,11 +433,11 @@ int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object 
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
 
-    typedef std::vector< std::pair< const PHY_DotationCategory*, unsigned int > > T_SelectionVector;
+    typedef std::vector< std::pair< const PHY_DotationCategory*, double > > T_SelectionVector;
     typedef T_SelectionVector::iterator IT_SelectionVector;
     T_SelectionVector selection;
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eConstruct, object );
-    attribute->SelectDotations( selection, true );
+    attribute->DeprecatedSelectDotations( selection, true );
     for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
         if( dataComputer.HasDotations( *it->first, 0 ) )
             attribute->Distribute( *it->first, quantity );

@@ -1191,6 +1191,7 @@ INIT_DATA( ADN_CapacityInfos_FirePropagationModifier, "FirePropagationModifier",
 INIT_DATA( ADN_CapacityInfos_Burn            , "Burn",              "burn" );
 INIT_DATA( ADN_CapacityInfos_Flood           , "Flood",             "flood" );
 INIT_DATA( ADN_CapacityInfos_Universal       , "Universal",         "universal" );
+INIT_DATA( ADN_CapacityInfos_Stock       , "Stock",             "stock" );
 
 #pragma warning( pop )
 
@@ -1269,6 +1270,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_Burn::TAG ].reset( new ADN_CapacityInfos_Burn() );
     capacities_[ ADN_CapacityInfos_Flood::TAG ].reset( new ADN_CapacityInfos_Flood() );
     capacities_[ ADN_CapacityInfos_Universal::TAG ].reset( new ADN_CapacityInfos_Universal() );
+    capacities_[ ADN_CapacityInfos_Stock::TAG ].reset( new ADN_CapacityInfos_Stock() );
 }
 
 // -----------------------------------------------------------------------------

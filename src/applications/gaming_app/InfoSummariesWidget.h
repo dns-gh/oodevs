@@ -14,6 +14,7 @@
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ObjectExtensions.h"
+#include "clients_kernel/StockAttribute_ABC.h"
 
 namespace kernel
 {
@@ -50,11 +51,11 @@ class InfoSummariesWidget : public QVBox
                           , public tools::ElementObserver_ABC< kernel::BurnAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::BurnSurfaceAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::MedicalTreatmentAttribute_ABC >
-                          , public tools::ElementObserver_ABC< kernel::StockAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::OccupantAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::DelayAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::SealOffAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::FloodAttribute_ABC >
+                          , public tools::ElementObserver_ABC< kernel::StockAttribute_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -92,11 +93,11 @@ private:
     virtual void NotifyUpdated( const kernel::BurnAttribute_ABC& extension )             { UpdateDisplayIfNeeded< kernel::BurnAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::BurnSurfaceAttribute_ABC& extension )      { UpdateDisplayIfNeeded< kernel::BurnSurfaceAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::MedicalTreatmentAttribute_ABC& extension ) { UpdateDisplayIfNeeded< kernel::MedicalTreatmentAttribute_ABC >( extension ); }
-    virtual void NotifyUpdated( const kernel::StockAttribute_ABC& extension )            { UpdateDisplayIfNeeded< kernel::StockAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::OccupantAttribute_ABC& extension )         { UpdateDisplayIfNeeded< kernel::OccupantAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::DelayAttribute_ABC& extension )            { UpdateDisplayIfNeeded< kernel::DelayAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::SealOffAttribute_ABC& extension )          { UpdateDisplayIfNeeded< kernel::SealOffAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::FloodAttribute_ABC& extension )            { UpdateDisplayIfNeeded< kernel::FloodAttribute_ABC >( extension ); }
+    virtual void NotifyUpdated( const kernel::StockAttribute_ABC& extension )            { UpdateDisplayIfNeeded< kernel::StockAttribute_ABC >( extension ); }
 
     template< class T >
     void UpdateDisplayIfNeeded( const T& extension );

@@ -149,6 +149,8 @@ public:
     { throw; }
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const
     { throw; }
+    virtual bool ToDotationTypeList( std::vector< const PHY_DotationCategory* >& ) const
+    { throw; }
     virtual bool ToEquipmentType( const PHY_ComposanteTypePion*& ) const
     { throw; }
     virtual bool ToGDH( float& ) const

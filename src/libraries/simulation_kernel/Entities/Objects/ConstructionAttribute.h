@@ -108,7 +108,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, std::pair< unsigned int, unsigned int > > T_DotationProgress;
+    typedef std::map< const PHY_DotationCategory*, std::pair< unsigned int, unsigned int > > StockDotations;
     //@}
 
 

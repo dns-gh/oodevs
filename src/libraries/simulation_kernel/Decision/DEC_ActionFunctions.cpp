@@ -16,10 +16,18 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
+#include "Entities/Objects/StockAttribute.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+
 //#include "Entities/Objects/LogisticCapacity.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
+
+#include <boost/foreach.hpp>
 
 namespace
 {
@@ -231,4 +239,49 @@ bool DEC_ActionFunctions::Transport_IsTransporting( const MIL_AgentPion& callerA
 void DEC_ActionFunctions::Orientate( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > dir )
 {
     callerAgent.GetRole< PHY_RoleInterface_Location >().Move( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition(), *dir, 0. );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::Stock_IsExtractPossible
+// Created: BCI 2011-02-08
+// -----------------------------------------------------------------------------
+bool DEC_ActionFunctions::Stock_IsExtractPossible( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes )
+{
+    PHY_RoleInterface_Supply* supplyRole = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    if( !supplyRole )
+        return false;
+
+    PHY_RolePion_Composantes& composantes = callerAgent.GetRole< PHY_RolePion_Composantes >();
+
+    if( StockAttribute* attribute = pKnowledge->GetObjectKnown()->RetrieveAttribute< StockAttribute >() )
+    {
+        BOOST_FOREACH( const PHY_DotationCategory* pDotation, dotationTypes )
+        {
+            if( attribute->CanDistribute( *pDotation ) && composantes.CanStockMoreOf( *supplyRole, *pDotation ) )
+                return true;
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::Stock_IsSupplyPossible
+// Created: BCI 2011-02-08
+// -----------------------------------------------------------------------------
+bool DEC_ActionFunctions::Stock_IsSupplyPossible( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes )
+{
+    PHY_RoleInterface_Supply* supplyRole = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
+    if( !supplyRole )
+        return false;
+
+    if( StockAttribute* attribute = pKnowledge->GetObjectKnown()->RetrieveAttribute< StockAttribute >() )
+    {
+        BOOST_FOREACH( const PHY_DotationCategory* pDotation, dotationTypes )
+        {
+            PHY_DotationStock& stock = callerAgent.GetRole< PHY_RolePion_Composantes >().GetOrAddStock( *supplyRole, *pDotation );
+            if( !stock.IsEmpty() && attribute->CanBeSuppliedWith( *pDotation ) )
+                return true;
+        }
+    }
+    return false;
 }

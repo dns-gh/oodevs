@@ -25,6 +25,7 @@
 #include "FloodAttribute.h"
 #include "BurnSurfaceAttribute.h"
 #include "MedicalTreatmentAttribute.h"
+#include "StockAttribute.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
@@ -112,4 +113,7 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
 
     if( attributes.has_flood() && entity.Retrieve< kernel::FloodAttribute_ABC >() == 0 )
         entity.Attach< kernel::FloodAttribute_ABC >( *new FloodAttribute( controllers_.controller_, static_.detection_, entity.Get< kernel::Positions >() ) );
+    
+    if( attributes.has_stock() && entity.Retrieve< kernel::StockAttribute_ABC >() == 0 )
+        entity.Attach< kernel::StockAttribute_ABC >( *new StockAttribute( controllers_.controller_, static_.objectTypes_ ) );
 }

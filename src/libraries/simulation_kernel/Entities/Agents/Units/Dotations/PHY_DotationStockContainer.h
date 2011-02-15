@@ -29,6 +29,7 @@ class PHY_DotationCategory;
 class PHY_DotationStock;
 class PHY_RoleInterface_Supply;
 class PHY_SupplyStockRequestContainer;
+class PHY_DotationNature;
 
 // =============================================================================
 // @class  PHY_DotationStockContainer
@@ -67,6 +68,7 @@ public:
     void RemoveReservation( const PHY_DotationCategory& category, double rNbr );
     void Resupply();
     void Resupply( const PHY_DotationCategory& category, double rNbr );
+    void ComputeStockWeightAndVolume( const PHY_DotationNature&, double& rWeight, double& rVolume ) const;
     //@}
 
     //! @name Accessors
@@ -74,6 +76,7 @@ public:
     double GetValue( const PHY_DotationCategory& category ) const;
     PHY_DotationStock* GetStock( const PHY_DotationCategory& category ) const;
     PHY_DotationStock* AddStock( const PHY_DotationCategory& category );
+    PHY_DotationStock* AddEmptyStock( const PHY_DotationCategory& category, double capacity );
     //@}
 
     //! @name Network

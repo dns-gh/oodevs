@@ -359,7 +359,11 @@ eRC_ObjectExtinguished = 340
 eRC_ArrivedOnAlertZone = 341
 eRC_ZoneAlerted = 342
 eRC_ArrivedOnGaragePosition = 343
-eNbr = 343
+eRC_ExtractFromStock_Arrived = 344
+eRC_ExtractFromStock_Extracted = 345
+eRC_SupplyStock_Supplied = 346
+eRC_SupplyStock_Arrived = 347
+eNbr = 347
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

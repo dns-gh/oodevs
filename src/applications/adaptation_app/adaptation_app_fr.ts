@@ -3085,6 +3085,10 @@ du tireur</translation>
         <source>Objects/</source>
         <translation>Objets/</translation>
     </message>
+    <message>
+        <source>Stock</source>
+        <translation>Stock</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

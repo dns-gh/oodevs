@@ -54,6 +54,10 @@ private:
     };
     //@}
 
+    //! @name Helpers
+    //@{
+    void DoUpdate( const sword::ObjectAttributes& asnMsg );
+    //@}
 private:
 
     //! @name Member data

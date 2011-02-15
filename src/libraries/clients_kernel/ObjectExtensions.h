@@ -53,7 +53,6 @@ namespace kernel
     class BurnAttribute_ABC : public ObjectExtension {};
 	class BurnSurfaceAttribute_ABC : public ObjectExtension {};
     class MedicalTreatmentAttribute_ABC : public ObjectExtension {};
-    class StockAttribute_ABC : public ObjectExtension {};
     class OccupantAttribute_ABC : public ObjectExtension {};
     class DelayAttribute_ABC : public ObjectExtension {};
     class SealOffAttribute_ABC : public ObjectExtension {};

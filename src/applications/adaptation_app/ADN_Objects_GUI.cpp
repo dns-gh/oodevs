@@ -396,6 +396,11 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eUniversalCapacityPresent ] = & universal->GetConnector();
     }
 
+    ADN_GroupBox* stock = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Stock" ), hBox );
+    {
+        vInfosConnectors[ eStockCapacityPresent ] = & stock->GetConnector();
+    }
+
     // Connect the list to the interface.
     pList->SetItemConnectors( vInfosConnectors );
 

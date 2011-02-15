@@ -65,6 +65,7 @@ public:
 
     virtual bool                CanContainStock              ( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_DotationStock*  AddStock                     ( const PHY_DotationCategory& dotationCategory ) const;
+    virtual PHY_DotationStock*  AddEmptyStock                     ( const PHY_DotationCategory& dotationCategory, double capacity ) const;
     virtual PHY_DotationStock*  GetStock                     ( const PHY_DotationCategory& dotationCategory ) const;
     virtual double            GetStockAvailablity          ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
     virtual double            AddStockReservation          ( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
@@ -75,6 +76,8 @@ public:
     virtual void StopUsingForLogistic ( PHY_ComposantePion& composante );
 
     virtual void NotifyComponentHasChanged();
+
+    virtual void ComputeStockWeightAndVolume( const PHY_DotationNature&, double& rWeight, double& rVolume ) const;
     //@}
 
     //! @name Stock supply

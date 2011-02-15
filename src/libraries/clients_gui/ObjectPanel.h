@@ -31,6 +31,7 @@ namespace kernel
     class CrossingSiteAttribute_ABC;
     class SupplyRouteAttribute_ABC;
     class SealOffAttribute_ABC;
+    class StockAttribute_ABC;
 }
 
 namespace gui
@@ -59,6 +60,7 @@ class ObjectPanel : public InfoPanel_ABC
                   , public tools::ElementObserver_ABC< kernel::FireAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::MedicalTreatmentAttribute_ABC >
                   , public tools::ElementObserver_ABC< kernel::SealOffAttribute_ABC >
+                  , public tools::ElementObserver_ABC< kernel::StockAttribute_ABC >
                   , public tools::SelectionObserver< kernel::Object_ABC >
 
 {
@@ -109,6 +111,7 @@ private:
     virtual void NotifyUpdated( const kernel::MedicalTreatmentAttribute_ABC& attributes );
     virtual void NotifyUpdated( const kernel::ActivityTimeAttribute_ABC& attributes );
     virtual void NotifyUpdated( const kernel::SealOffAttribute_ABC& attributes );
+    virtual void NotifyUpdated( const kernel::StockAttribute_ABC& attributes );
 
     template< typename Extension >
     bool ShouldUpdate( const Extension& extension );

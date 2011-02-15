@@ -249,6 +249,19 @@
           <xs:attribute name="export"/>
         </xs:complexType>
       </xs:element>
+      <xs:element name="stock" minOccurs="0">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resource" maxOccurs="unbounded" >
+                    <xs:complexType>
+                        <xs:attribute name="current" type="xs:nonNegativeInteger" use="required"/>
+                        <xs:attribute name="max" type="xs:nonNegativeInteger" use="required"/>
+                        <xs:attribute name="type" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="medical-treatment" minOccurs="0">
         <xs:annotation>
           <xs:documentation xml:lang="en">Defines attributes related to medical treatment (hospital management).</xs:documentation>

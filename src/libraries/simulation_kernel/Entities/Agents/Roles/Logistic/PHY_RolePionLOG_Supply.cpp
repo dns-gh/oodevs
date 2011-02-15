@@ -380,6 +380,16 @@ PHY_DotationStock* PHY_RolePionLOG_Supply::AddStock( const PHY_DotationCategory&
     return pStocks_->AddStock( category );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::AddStock
+// Created: BCI 2011-02-11
+// -----------------------------------------------------------------------------
+PHY_DotationStock* PHY_RolePionLOG_Supply::AddEmptyStock( const PHY_DotationCategory& dotationCategory, double capacity ) const
+{
+    assert( pStocks_ );
+    return pStocks_->AddEmptyStock( dotationCategory, capacity );
+}
+
 // =============================================================================
 // MAIN
 // =============================================================================
@@ -548,4 +558,13 @@ const MIL_AgentPionLOG_ABC& PHY_RolePionLOG_Supply::GetPion() const
 void PHY_RolePionLOG_Supply::NotifyComponentHasChanged()
 {
     bExternalMustChangeState_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::ComputeStockWeightAndVolume
+// Created: BCI 2011-02-14
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Supply::ComputeStockWeightAndVolume( const PHY_DotationNature& nature, double& rWeight, double& rVolume ) const
+{
+    return pStocks_->ComputeStockWeightAndVolume( nature, rWeight, rVolume );
 }

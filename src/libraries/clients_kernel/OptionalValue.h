@@ -10,6 +10,11 @@
 #ifndef __OptionalValue_h_
 #define __OptionalValue_h_
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace kernel
 {
 
@@ -51,6 +56,13 @@ private:
     bool set_;
     //@}
 };
+
+template< typename T >
+void ReaderHelper( OptionalValue< T >& value, const std::string& name, xml::xistream& xis )
+{
+    if( xis.has_attribute( name ) )
+        value = xis.attribute< T >( name );
+}
 
 }
 

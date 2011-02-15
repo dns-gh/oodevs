@@ -362,3 +362,13 @@ void MIL_BaseParameter::Append( boost::shared_ptr< MIL_MissionParameter_ABC > pa
 {
     throw std::runtime_error( "Trying to append a location. Incompatible types." );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToDotationTypeList
+// Created: BCI 2011-02-08
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToDotationTypeList( std::vector< const PHY_DotationCategory* >& ) const
+{
+    return false;
+}
+

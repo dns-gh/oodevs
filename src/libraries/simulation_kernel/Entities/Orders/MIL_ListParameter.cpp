@@ -236,6 +236,22 @@ bool MIL_ListParameter::ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_ListParameter::ToDotationTypeList
+// Created: BCI 2011-02-08
+// -----------------------------------------------------------------------------
+bool MIL_ListParameter::ToDotationTypeList( std::vector< const PHY_DotationCategory* >& result ) const
+{
+    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    {
+        const PHY_DotationCategory* param = 0;
+        if( !(*it)->ToDotationType( param ) )
+            return false;
+        result.push_back( param );
+    }  
+    return true;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter::Append

@@ -228,15 +228,9 @@ ADN_FireClass_Data::FireClassInfos::FireClassInfos()
 
     isSurface_.SetParentNode( *this );
     surfaceInfos_.SetParentNode( *this );
-    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Unknown ) );
-    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Forest ) );
-    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Plantation ) );
-    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Swamp ) );
-    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Dune ) );
-    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Urban ) );
-    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Water ) );
-    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Ice ) );
-    surfaceInfos_.AddItem( new FireSurfaceInfos( eLocation_Mountain ) );
+    
+     for( int i = 0; i < eNbrLocation; ++i )
+         surfaceInfos_.AddItem( new FireSurfaceInfos( E_Location( i ) ) );
 }
 
 // -----------------------------------------------------------------------------

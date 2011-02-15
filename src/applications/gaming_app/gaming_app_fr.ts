@@ -1540,10 +1540,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Création</translation>
     </message>
     <message>
-        <source>Folk</source>
-        <translation>Foule</translation>
-    </message>
-    <message>
         <source>Intelligence</source>
         <translation>Renseignement</translation>
     </message>

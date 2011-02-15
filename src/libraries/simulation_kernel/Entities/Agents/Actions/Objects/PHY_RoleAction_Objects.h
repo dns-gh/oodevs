@@ -25,6 +25,7 @@ class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
+class PHY_DotationCategory;
 
 // =============================================================================
 // @class  PHY_RoleAction_Objects
@@ -73,7 +74,8 @@ public:
     void StopAnimateObject( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     void StartOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     void StopOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
-    int Supply( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int SupplyStock( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity );
+    int ExtractFromStock( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity );
     int Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, unsigned int quantity );
     void SetCreator( MIL_Object_ABC& object );
 
@@ -123,6 +125,7 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion& pion_;
+    double  rWeightCapacity_, rVolumeCapacity_;
     //@}
 };
 

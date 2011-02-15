@@ -30,7 +30,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-    PHY_ActionSupplyObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    PHY_ActionSupplyObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity );
     virtual ~PHY_ActionSupplyObject();
 
     //! @name Operations
@@ -41,8 +41,10 @@ public:
     //@}
 
 private:
+    const std::vector< const PHY_DotationCategory* > dotationTypes_;
     PHY_RoleAction_Objects& role_;
     boost::shared_ptr< DEC_Knowledge_Object > object_;
+    double quantity_;
 };
 
 #endif // __PHY_ActionSupplyObject_h_

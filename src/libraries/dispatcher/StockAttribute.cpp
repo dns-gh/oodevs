@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 StockAttribute::StockAttribute( const sword::ObjectAttributes& asnMsg )
 {
-    Update( asnMsg );
+    DoUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,6 +36,15 @@ StockAttribute::~StockAttribute()
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
 void StockAttribute::Update( const sword::ObjectAttributes& asnMsg )
+{
+    DoUpdate( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StockAttribute::DoUpdate
+// Created: BCI 2011-02-07
+// -----------------------------------------------------------------------------
+void StockAttribute::DoUpdate( const sword::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_stock()  )
     {

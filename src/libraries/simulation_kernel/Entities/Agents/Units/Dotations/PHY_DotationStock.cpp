@@ -26,7 +26,7 @@ const double PHY_DotationStock::maxCapacity_ = 10000000;
 // Name: PHY_DotationStock constructor
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, double rSupplyThresholdRatio, double rCapacity, bool bInfiniteDotations )
+PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, double rSupplyThresholdRatio, double rCapacity, bool bInfiniteDotations, bool bCreateEmpty )
     : pStockContainer_   ( &stockContainer    )
     , pCategory_         ( &dotationCategory  )
     , rValue_            ( 0. )
@@ -34,7 +34,8 @@ PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer
     , rSupplyThreshold_  ( rCapacity * rSupplyThresholdRatio )
     , bInfiniteDotations_( bInfiniteDotations )
 {
-    SetValue( rCapacity_ );
+    if( !bCreateEmpty )
+        SetValue( rCapacity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,6 +169,24 @@ double PHY_DotationStock::GetCapacity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationStock::IsFull
+// Created: BCI 2011-02-10
+// -----------------------------------------------------------------------------
+bool PHY_DotationStock::IsFull() const
+{
+    return rValue_ >= rCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStock::IsEmpty
+// Created: BCI 2011-02-14
+// -----------------------------------------------------------------------------
+bool PHY_DotationStock::IsEmpty() const
+{
+    return rValue_ <= 0.0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationStock::Consume
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
@@ -204,6 +223,17 @@ double PHY_DotationStock::Supply( double rSupply )
 {
     SetValue( rValue_ + rSupply );
     return rSupply;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationStock::SupplyUntilFull
+// Created: BCI 2011-02-14
+// -----------------------------------------------------------------------------
+double PHY_DotationStock::SupplyUntilFull( double rSupply )
+{
+    double oldValue = rValue_;
+    SetValue( std::min( oldValue + rSupply, rCapacity_ ) );
+    return rValue_ - oldValue;
 }
 
 // -----------------------------------------------------------------------------

@@ -1544,10 +1544,6 @@ Motivo: %3
         <translation>Creación</translation>
     </message>
     <message>
-        <source>Folk</source>
-        <translation>Pueblo</translation>
-    </message>
-    <message>
         <source>Intelligence</source>
         <translation>Inteligencia</translation>
     </message>

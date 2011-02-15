@@ -42,7 +42,6 @@ public:
     //@{
              StockAttribute();
     explicit StockAttribute( xml::xistream& xis );
-             StockAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
     virtual ~StockAttribute();
     //@}
 
@@ -78,9 +77,12 @@ public:
     //! @name Operations
     //@{
     bool IsFull() const;
-    unsigned int Supply( const PHY_DotationCategory& category, unsigned int quantity );
-    unsigned int Distribute( const PHY_DotationCategory& category, unsigned int quantity );
-    void SelectDotations( std::vector< std::pair< const PHY_DotationCategory*, unsigned int > >& selection, bool select_full ) const;
+    bool IsEmpty() const;
+    bool CanDistribute( const PHY_DotationCategory& category ) const;
+    bool CanBeSuppliedWith( const PHY_DotationCategory& category ) const;
+    double Supply( const PHY_DotationCategory& category, double quantity );
+    double Distribute( const PHY_DotationCategory& category, double quantity );
+    void DeprecatedSelectDotations( std::vector< std::pair< const PHY_DotationCategory*, double > >& selection, bool select_full ) const;
     //@}
 
     //! @name Copy
@@ -97,16 +99,23 @@ private:
     //! @name Types
     // <Dotation, <current, max>>
     //@{
-    typedef std::pair< unsigned int, unsigned int >         T_pair;
-    typedef std::map< const PHY_DotationCategory*, T_pair > T_DotationProgress;
-    typedef T_DotationProgress::iterator                   IT_DotationProgress;
-    typedef T_DotationProgress::const_iterator            CIT_DotationProgress;
+    struct StockDotation
+    {
+        StockDotation()
+            : maxStock_( 0  )
+            , stock_( 0 )
+        {}
+
+        double stock_;
+        double maxStock_;
+    };
+    typedef std::map< const PHY_DotationCategory*, StockDotation > StockDotations;
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_DotationProgress stock_;
+    StockDotations stockDotations_;
     //@}
 };
 

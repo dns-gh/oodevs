@@ -94,6 +94,25 @@ PHY_DotationStock* PHY_RoleInterface_Supply::AddStock( const PHY_DotationCategor
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Supply::AddStock
+// Created: BCI 2011-02-11
+// -----------------------------------------------------------------------------
+PHY_DotationStock* PHY_RoleInterface_Supply::AddEmptyStock( const PHY_DotationCategory& /*dotationCategory*/, double /*capacity*/ ) const
+{
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Supply::ComputeStockWeightAndVolume
+// Created: BCI 2011-02-14
+// -----------------------------------------------------------------------------
+void PHY_RoleInterface_Supply::ComputeStockWeightAndVolume( const PHY_DotationNature&, double& rWeight, double& rVolume ) const
+{
+    rWeight = 0;
+    rVolume = 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::GetStock
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------

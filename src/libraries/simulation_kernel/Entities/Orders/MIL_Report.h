@@ -123,6 +123,10 @@ public:
         eReport_MunitionInterdite,
         eReport_MunitionAutorise,
         eRC_ArrivedOnGaragePosition,
+        eRC_ExtractFromStock_Arrived,
+        eRC_ExtractFromStock_Extracted,
+        eRC_SupplyStock_Supplied,
+        eRC_SupplyStock_Arrived,
         eNbrReport
     };
 

@@ -20,10 +20,12 @@
 // Name: PHY_ActionSupplyObject constructor
 // Mined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionSupplyObject::PHY_ActionSupplyObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > object )
+PHY_ActionSupplyObject::PHY_ActionSupplyObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > object, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity )
     : PHY_DecisionCallbackAction_ABC( pion )
+    , dotationTypes_( dotationTypes )
     , role_         ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , object_   ( object_ )
+    , object_( object )
+    , quantity_( quantity )
 {
     Callback( role_.GetInitialReturnCode() );
 }
@@ -56,7 +58,7 @@ void PHY_ActionSupplyObject::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionSupplyObject::Execute()
 {
-    int nReturn = role_.Supply( object_ );
+    int nReturn = role_.SupplyStock( object_, dotationTypes_, quantity_ );
     Callback ( nReturn );
 }
 

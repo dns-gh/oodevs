@@ -30,6 +30,7 @@ class PHY_StockConvoy;
 class MIL_AutomateLOG;
 class MIL_AgentPionLOG_ABC;
 class MIL_AgentPion;
+class PHY_DotationNature;
 
 //@TODO make multiple interface/role with specifics methods for convoy and for stockage
 // =============================================================================
@@ -82,6 +83,7 @@ public:
 
     virtual bool CanContainStock( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_DotationStock* AddStock( const PHY_DotationCategory& dotationCategory ) const;
+    virtual PHY_DotationStock* AddEmptyStock( const PHY_DotationCategory& dotationCategory, double capacity ) const;
     virtual PHY_DotationStock* GetStock( const PHY_DotationCategory& dotationCategory ) const;
     virtual double GetStockAvailablity( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
     virtual double AddStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
@@ -90,6 +92,8 @@ public:
 
     virtual void StartUsingForLogistic( PHY_ComposantePion& composante );
     virtual void StopUsingForLogistic( PHY_ComposantePion& composante );
+
+    virtual void ComputeStockWeightAndVolume( const PHY_DotationNature&, double& rWeight, double& rVolume ) const;
     //@}
 
     //! @name Stock supply

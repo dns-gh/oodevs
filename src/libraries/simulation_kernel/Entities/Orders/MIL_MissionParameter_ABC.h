@@ -133,6 +133,7 @@ public:
     virtual bool ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const = 0;
     virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const = 0;
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const = 0;
+    virtual bool ToDotationTypeList( std::vector< const PHY_DotationCategory* >& ) const = 0;
     virtual bool ToEquipmentType( const PHY_ComposanteTypePion*& ) const = 0;
     virtual bool ToGDH( float& value ) const = 0;
     virtual bool ToGenObject( boost::shared_ptr< DEC_Gen_Object >& ) const = 0;
