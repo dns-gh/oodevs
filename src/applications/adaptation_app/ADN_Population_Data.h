@@ -119,6 +119,7 @@ public:
 
         virtual std::string GetNodeName();
         std::string GetItemName();
+        unsigned int GetRoe();
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );

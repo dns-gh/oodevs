@@ -35,16 +35,13 @@ public:
     {
         assert( obj );
         E_PopulationRoe nRoe = static_cast< FireEffectRoeInfos* >(obj)->nRoe_;
-        unsigned int nNbrHiddenRoe = static_cast< unsigned int >( ePopulationRoe_EmploiForceInterdit ) + 1;
-        if( static_cast< unsigned int >( nRoe ) < nNbrHiddenRoe )
-            return;
         ADN_TableItem_String* pItemString = new ADN_TableItem_String( &tab_, obj );
         ADN_TableItem_Double* pItemSurface = new ADN_TableItem_Double( &tab_, obj );
         ADN_TableItem_Double* pItemPH = new ADN_TableItem_Double( &tab_, obj );
         // add a new row & set new values
-        tab_.setItem( i - nNbrHiddenRoe, 0, pItemString );
-        tab_.setItem( i - nNbrHiddenRoe, 1, pItemSurface );
-        tab_.setItem( i - nNbrHiddenRoe, 2, pItemPH );
+        tab_.setItem( i, 0, pItemString );
+        tab_.setItem( i, 1, pItemSurface );
+        tab_.setItem( i, 2, pItemPH );
         // disable first column
         pItemString->setEnabled( false );
         pItemString->setText( ENT_Tr::ConvertFromPopulationRoe( nRoe, ENT_Tr_ABC::eToTr ).c_str() );
