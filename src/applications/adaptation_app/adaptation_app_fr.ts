@@ -3168,20 +3168,20 @@ Assurez vous que le fichier existe.</translation>
         <translation>Foule associée</translation>
     </message>
     <message>
-        <source>Male</source>
-        <translation>Homme</translation>
+        <source>Males</source>
+        <translation>Hommes</translation>
     </message>
     <message>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <source>Female</source>
-        <translation>Femme</translation>
+        <source>Females</source>
+        <translation>Femmes</translation>
     </message>
     <message>
         <source>Children</source>
-        <translation>Enfant</translation>
+        <translation>Enfants</translation>
     </message>
     <message>
         <source>Security satisfaction level</source>

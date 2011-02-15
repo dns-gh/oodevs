@@ -64,9 +64,9 @@ void ADN_People_GUI::Build()
 
     builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vInfosConnectors[ eName ] );
     builder.AddField< ADN_ComboBox_Vector< ADN_Population_Data::PopulationInfos > >( pPropertiesGroup, tr( "Associated Crowd" ), vInfosConnectors[ eModel ] );
-    pMaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Male" ), vInfosConnectors[ eMale ], tr( "%" ), ePercentage );
+    pMaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Males" ), vInfosConnectors[ eMale ], tr( "%" ), ePercentage );
     connect( pMaleEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-    pFemaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Female" ), vInfosConnectors[ eFemale ], tr( "%" ), ePercentage );
+    pFemaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Females" ), vInfosConnectors[ eFemale ], tr( "%" ), ePercentage );
     connect( pFemaleEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
     pChildrenEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Children" ), vInfosConnectors[ eChildren ], tr( "%" ), ePercentage );
     connect( pChildrenEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
