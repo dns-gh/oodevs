@@ -36,13 +36,13 @@ AutomatCreationMagicAction::AutomatCreationMagicAction( const kernel::Entity_ABC
                                                        const kernel::Time_ABC& simulation, bool registered /*= true*/)
     : UnitMagicAction( entity, magic, controller, name, registered )
     , automatType_ ( type )
-    , point_ ( point )
     , coordinateConverter_ ( staticModel.coordinateConverter_ )
     , agentsModel_ ( agentsModel )
     , messageManager_ ( agentMessenger )
     , actionsModel_ ( actionsModel )
     , agentTypes_ ( staticModel.types_ )
     , simulation_ ( simulation )
+    , point_ ( point )
 {
     // NOTHING
 }

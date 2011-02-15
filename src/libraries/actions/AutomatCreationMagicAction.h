@@ -68,13 +68,13 @@ private:
     //! @name Member data
     //@{
     const kernel::AutomatType& automatType_;
-    const geometry::Point2f& point_;
     kernel::CoordinateConverter_ABC& coordinateConverter_;
     tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel_; 
     CreationListener_ABC& messageManager_;
     ActionsModel& actionsModel_;
     kernel::AgentTypes& agentTypes_;
     const kernel::Time_ABC& simulation_;
+    const geometry::Point2f point_;
     //@}
 };
 }

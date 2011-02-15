@@ -66,16 +66,16 @@ private:
 private:
     //! @name Member data
     //@{
-    const geometry::Point2f point_;
     const kernel::AutomatType& type_;
-    int context_;
     tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
     kernel::Controller& controller_;
     kernel::AgentTypes& agentTypes_;
     kernel::CoordinateConverter_ABC& coordinateConverter_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& time_;
-    //@}
+    const geometry::Point2f point_;
+    int context_;
+     //@}
 };
 
 #endif // __AutomatCreationListener_h_
