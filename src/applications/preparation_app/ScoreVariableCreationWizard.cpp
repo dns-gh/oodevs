@@ -250,30 +250,37 @@ namespace
 boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::CreateParameter( const std::string& type, const QString& name )
 {
     const QString variableName = name.isEmpty() ? tr( "Variable value: " ) : name;
-    const kernel::OrderParameter parameter( variableName.ascii(), type.c_str(), false );
     boost::shared_ptr< actions::gui::Param_ABC > result;
-    if( type == "unit" )
-        result.reset( new actions::gui::ParamAgent( this, parameter, controllers_.controller_ ) );
-    else if( type == "unit list" )
-        result.reset( new actions::gui::ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
-    else if( type == "dotation list" )
-        result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
-    else if( type == "equipment list" )
-        result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
-    else if( type == "zone" )
+    if( type == "unit list" )
     {
-        std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
-        location->SetShapeFilter( false, false, true, true, false );
-        result.reset( location.release() );
+        const kernel::OrderParameter parameter( variableName.ascii(), type.c_str(), false, 1, std::numeric_limits< unsigned int >::max() );
+        result.reset( new actions::gui::ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
     }
-    else if( type == "human states" )
-        result.reset( new ParamStringEnumeration( this, tr( "Human states" ), parameter, HumanStates() ) );
-    else if( type == "human ranks" )
-        result.reset( new ParamStringEnumeration( this, tr( "Human ranks" ), parameter, HumanRanks() ) );
-    else if( type == "equipment states" )
-        result.reset( new ParamStringEnumeration( this, tr( "Equipment states" ), parameter, EquipmentStates() ) );
-    else if( type == "perception levels" )
-        result.reset( new ParamStringEnumeration( this, tr( "Perception levels" ), parameter, PerceptionLevels() ) );
+    else
+    {
+        const kernel::OrderParameter parameter( variableName.ascii(), type.c_str(), false );
+
+        if( type == "unit" )
+            result.reset( new actions::gui::ParamAgent( this, parameter, controllers_.controller_ ) );
+        else if( type == "dotation list" )
+            result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
+        else if( type == "equipment list" )
+            result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
+        else if( type == "zone" )
+        {
+            std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
+            location->SetShapeFilter( false, false, true, true, false );
+            result.reset( location.release() );
+        }
+        else if( type == "human states" )
+            result.reset( new ParamStringEnumeration( this, tr( "Human states" ), parameter, HumanStates() ) );
+        else if( type == "human ranks" )
+            result.reset( new ParamStringEnumeration( this, tr( "Human ranks" ), parameter, HumanRanks() ) );
+        else if( type == "equipment states" )
+            result.reset( new ParamStringEnumeration( this, tr( "Equipment states" ), parameter, EquipmentStates() ) );
+        else if( type == "perception levels" )
+            result.reset( new ParamStringEnumeration( this, tr( "Perception levels" ), parameter, PerceptionLevels() ) );
+    }
     return result;
 }
 

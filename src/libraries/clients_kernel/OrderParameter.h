@@ -12,6 +12,7 @@
 
 #include "OrderParameterValue.h"
 #include <set>
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -45,13 +46,13 @@ public:
 */
 // Created: SBO 2007-04-23
 // =============================================================================
-class OrderParameter
+class OrderParameter : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit OrderParameter( xml::xistream& xis );
-             OrderParameter( const std::string& name, const std::string& type, bool optional );
+             OrderParameter( const std::string& name, const std::string& type, bool optional, unsigned int min = 1, unsigned int max = 1 );
     virtual ~OrderParameter();
     //@}
 

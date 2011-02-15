@@ -46,12 +46,12 @@ OrderParameter::OrderParameter( xml::xistream& xis )
 // Name: OrderParameter constructor
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-OrderParameter::OrderParameter( const std::string& name, const std::string& type, bool optional )
+OrderParameter::OrderParameter( const std::string& name, const std::string& type, bool optional, unsigned int min /*= 1*/, unsigned int max /*= 1*/ )
     : name_    ( name )
     , type_    ( boost::algorithm::to_lower_copy( type ) )
     , optional_( optional )
-    , minOccurs_( 1 )
-    , maxOccurs_( 1 )
+    , minOccurs_( min )
+    , maxOccurs_( max )
 {
     // NOTHING
 }

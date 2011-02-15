@@ -112,6 +112,20 @@ void ParameterList::CommitTo( sword::MissionParameter_Value& message ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParameterList::CommitTo
+// Created: ABR 2011-02-15
+// -----------------------------------------------------------------------------
+void ParameterList::CommitTo( std::string& content ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        if( it != elements_.begin() )
+            content += ',';
+        it->second->CommitTo( content );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParameterList::AddList
 // Created: JSR 2010-04-22
 // -----------------------------------------------------------------------------
