@@ -51,12 +51,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamNumericField( const ParamNumericField& );            //!< Copy constructor
-    ParamNumericField& operator=( const ParamNumericField& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

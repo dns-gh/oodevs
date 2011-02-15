@@ -37,13 +37,6 @@ public:
              Variable( xml::xistream& xis, const DataTypeFactory& types );
     virtual ~Variable();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Variable( const Variable& );            //!< Copy constructor
-    Variable& operator=( const Variable& ); //!< Assignment operator
-    //@}
 };
 
 }

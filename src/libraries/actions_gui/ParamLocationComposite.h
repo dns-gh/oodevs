@@ -57,12 +57,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamLocationComposite( const ParamLocationComposite& );            //!< Copy constructor
-    ParamLocationComposite& operator=( const ParamLocationComposite& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector<Param_ABC*>  T_Params;

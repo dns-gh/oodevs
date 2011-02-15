@@ -65,12 +65,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TacticalListView( const TacticalListView& );            //!< Copy constructor
-    TacticalListView& operator=( const TacticalListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void viewportResizeEvent( QResizeEvent* e );

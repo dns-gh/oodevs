@@ -37,7 +37,7 @@ namespace actions
 */
 // Created: SBO 2006-08-09
 // =============================================================================
-        class ParamDotationDType : public ParamComboBox< int /*sword::DotationType*/ >
+class ParamDotationDType : public ParamComboBox< int /*sword::DotationType*/ >
 {
 public:
     //! @name Constructors/Destructor
@@ -53,12 +53,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamDotationDType( const ParamDotationDType& );
-    ParamDotationDType& operator=( const ParamDotationDType& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

@@ -50,12 +50,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamMissionObjectiveList( const ParamMissionObjectiveList& );            //!< Copy constructor
-    ParamMissionObjectiveList& operator=( const ParamMissionObjectiveList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual Param_ABC* CreateElement();

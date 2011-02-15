@@ -43,7 +43,8 @@ namespace actions
 */
 // Created: APE 2004-03-25
 // =============================================================================
-class ParamPath : public QObject, public Param_ABC
+class ParamPath : public QObject
+                , public Param_ABC
                 , public kernel::ContextMenuObserver_ABC< kernel::Nothing > // $$$$ AGE 2007-07-11: geometry::Point2d
                 , private ::gui::ShapeHandler_ABC
 {
@@ -73,12 +74,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamPath( const ParamPath& );
-    ParamPath& operator=( const ParamPath& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

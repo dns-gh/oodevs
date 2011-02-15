@@ -72,12 +72,6 @@ protected slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ListParameter( const ListParameter& );            //!< Copy constructor
-    ListParameter& operator=( const ListParameter& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

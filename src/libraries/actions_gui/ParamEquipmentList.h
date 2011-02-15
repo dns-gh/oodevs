@@ -30,7 +30,8 @@ namespace actions
 */
 // Created: SBO 2005-09-27
 // =============================================================================
-class ParamEquipmentList : public QObject, public Param_ABC
+class ParamEquipmentList : public QObject
+                         , public Param_ABC
 {
     Q_OBJECT;
 

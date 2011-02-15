@@ -59,12 +59,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamMissionObjective( const ParamMissionObjective& );            //!< Copy constructor
-    ParamMissionObjective& operator=( const ParamMissionObjective& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

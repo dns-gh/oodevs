@@ -58,12 +58,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UnitListView( const UnitListView& );            //!< Copy constructor
-    UnitListView& operator=( const UnitListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );

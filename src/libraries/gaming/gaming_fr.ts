@@ -1195,13 +1195,6 @@
     </message>
 </context>
 <context>
-    <name>Stock</name>
-    <message>
-        <source>Stock resource attribute</source>
-        <translation>Attribut ressources en stock</translation>
-    </message>
-</context>
-<context>
     <name>SupplyStates</name>
     <message>
         <source>Supply system/System enabled</source>

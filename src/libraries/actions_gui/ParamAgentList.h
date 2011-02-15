@@ -60,12 +60,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamAgentList( const ParamAgentList& );            //!< Copy constructor
-    ParamAgentList& operator=( const ParamAgentList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void AddToMenu( kernel::ContextMenu& menu );

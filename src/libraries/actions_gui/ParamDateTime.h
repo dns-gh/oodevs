@@ -24,7 +24,8 @@ namespace actions
 */
 // Created: SBO 2007-05-14
 // =============================================================================
-class ParamDateTime : public QObject, public Param_ABC
+class ParamDateTime : public QObject
+                    , public Param_ABC
 {
     Q_OBJECT;
 
@@ -51,12 +52,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamDateTime( const ParamDateTime& );            //!< Copy constructor
-    ParamDateTime& operator=( const ParamDateTime& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

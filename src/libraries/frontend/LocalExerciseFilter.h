@@ -22,7 +22,7 @@ namespace frontend
 */
 // Created: SBO 2010-10-26
 // =============================================================================
-class LocalExerciseFilter : public boost::noncopyable
+class LocalExerciseFilter : private boost::noncopyable
                           , public ExerciseFilter_ABC
 {
 

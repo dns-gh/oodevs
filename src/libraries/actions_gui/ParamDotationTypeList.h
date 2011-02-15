@@ -31,7 +31,8 @@ namespace actions
 */
 // Created: SBO 2006-08-09
 // =============================================================================
-class ParamDotationTypeList : public QObject, public Param_ABC
+class ParamDotationTypeList : public QObject
+                            , public Param_ABC
 {
     Q_OBJECT;
 
@@ -55,12 +56,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamDotationTypeList( const ParamDotationTypeList& );
-    ParamDotationTypeList& operator=( const ParamDotationTypeList& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

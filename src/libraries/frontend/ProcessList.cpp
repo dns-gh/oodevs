@@ -15,7 +15,7 @@
 
 using namespace frontend;
 
-class ProcessList::ProcInfo : public boost::noncopyable
+class ProcessList::ProcInfo : private boost::noncopyable
 {
 public:
     ProcInfo( const DWORD pid ) : pid_ ( pid ) {}

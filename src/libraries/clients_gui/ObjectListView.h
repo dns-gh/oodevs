@@ -46,13 +46,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectListView( const ObjectListView& );
-    ObjectListView& operator=( const ObjectListView );
-    //@}
-
-private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Object_ABC& object );

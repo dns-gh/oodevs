@@ -42,7 +42,8 @@ namespace actions
 */
 // Created: APE 2004-05-18
 // =============================================================================
-class ParamObstacle : public QObject, public Param_ABC
+class ParamObstacle : public QObject
+                    , public Param_ABC
 {
     Q_OBJECT;
 public:
@@ -76,12 +77,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy
-    //@{
-    ParamObstacle( const ParamObstacle& );
-    ParamObstacle& operator=( const ParamObstacle& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

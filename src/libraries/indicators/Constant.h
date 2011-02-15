@@ -52,13 +52,6 @@ public:
     virtual void SerializeDeclaration( xml::xostream& xos ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    Constant( const Constant& );            //!< Copy constructor
-    Constant& operator=( const Constant& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Member data
     //@{

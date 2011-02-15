@@ -85,12 +85,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamLocation( const ParamLocation& );
-    ParamLocation& operator=( const ParamLocation& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

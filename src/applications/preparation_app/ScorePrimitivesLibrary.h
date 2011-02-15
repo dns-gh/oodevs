@@ -10,6 +10,8 @@
 #ifndef __ScorePrimitivesLibrary_h_
 #define __ScorePrimitivesLibrary_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Controllers;
@@ -35,6 +37,7 @@ class ScorePrimitivesPage;
 // Created: SBO 2009-04-20
 // =============================================================================
 class ScorePrimitivesLibrary : public QTabWidget
+                             , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -53,12 +56,6 @@ signals:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScorePrimitivesLibrary( const ScorePrimitivesLibrary& );            //!< Copy constructor
-    ScorePrimitivesLibrary& operator=( const ScorePrimitivesLibrary& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void AddPage( const QString& name, QWidget* page );

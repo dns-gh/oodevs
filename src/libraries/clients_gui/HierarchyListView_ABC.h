@@ -65,13 +65,6 @@ public:
     virtual void Display( const kernel::Entity_ABC& entity, ValuedListItem* item );
     //@}
 
-private:
-    //! @name Copy / Assignment
-    //@{
-    HierarchyListView_ABC( const HierarchyListView_ABC& );
-    HierarchyListView_ABC& operator=( const HierarchyListView_ABC& );
-    //@}
-
 protected slots:
     //! @name Slots
     //@{

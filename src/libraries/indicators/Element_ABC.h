@@ -11,6 +11,7 @@
 #define __Element_ABC_h_
 
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -29,7 +30,7 @@ namespace indicators
 */
 // Created: SBO 2009-03-17
 // =============================================================================
-class Element_ABC
+class Element_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -50,13 +51,6 @@ public:
     virtual void AddParameter( boost::shared_ptr< Element_ABC > element ) = 0;
     virtual void Serialize( xml::xostream& xos, ElementDeclarator_ABC& declarator ) const = 0;
     virtual void SerializeDeclaration( xml::xostream& ) const {}
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Element_ABC( const Element_ABC& );            //!< Copy constructor
-    Element_ABC& operator=( const Element_ABC& ); //!< Assignment operator
     //@}
 
 private:

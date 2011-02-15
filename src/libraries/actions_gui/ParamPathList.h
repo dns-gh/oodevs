@@ -51,12 +51,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamPathList( const ParamPathList& );            //!< Copy constructor
-    ParamPathList& operator=( const ParamPathList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual Param_ABC* CreateElement();

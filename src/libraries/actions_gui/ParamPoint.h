@@ -34,7 +34,8 @@ namespace actions
 */
 // Created: APE 2004-03-18
 // =============================================================================
-class ParamPoint : public QObject, public Param_ABC
+class ParamPoint : public QObject
+                 , public Param_ABC
                  , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
 {
     Q_OBJECT;
@@ -62,12 +63,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamPoint( const ParamPoint& );
-    ParamPoint& operator=( const ParamPoint& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

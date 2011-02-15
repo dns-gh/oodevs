@@ -13,6 +13,7 @@
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/OrderParameter.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -36,6 +37,7 @@ namespace actions
 // =============================================================================
 class Param_ABC : public tools::Observer_ABC
                 , public kernel::Drawable_ABC
+                , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -72,13 +74,6 @@ protected:
     //! @name Member data
     //@{
     QString name_;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Param_ABC( const Param_ABC& );
-    Param_ABC& operator=( const Param_ABC& );
     //@}
 
 private:

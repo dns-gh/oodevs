@@ -104,13 +104,6 @@ public:
     virtual void MenuItemValidated();
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    EntityParameter( const EntityParameter& );            //!< Copy constructor
-    EntityParameter& operator=( const EntityParameter& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Helpers
     //@{

@@ -41,13 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy / Assignment
-    //@{
-    PopulationListView( const PopulationListView& );
-    PopulationListView& operator=( const PopulationListView& );
-    //@}
-
-private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Population_ABC& population );

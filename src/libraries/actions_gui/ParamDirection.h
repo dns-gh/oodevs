@@ -28,7 +28,8 @@ namespace actions
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class ParamDirection : public QObject, public Param_ABC
+class ParamDirection : public QObject
+                     , public Param_ABC
 {
     Q_OBJECT;
 
@@ -52,12 +53,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamDirection( const ParamDirection& );            //!< Copy constructor
-    ParamDirection& operator=( const ParamDirection& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

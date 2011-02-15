@@ -38,12 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamPolygonList( const ParamPolygonList& );            //!< Copy constructor
-    ParamPolygonList& operator=( const ParamPolygonList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual Param_ABC* CreateElement();

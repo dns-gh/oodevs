@@ -47,13 +47,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FunctionParameter( const FunctionParameter& );            //!< Copy constructor
-    FunctionParameter& operator=( const FunctionParameter& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const QString name_;

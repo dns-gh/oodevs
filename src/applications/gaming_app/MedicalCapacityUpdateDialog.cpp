@@ -127,13 +127,12 @@ void MedicalCapacityUpdateDialog::CreateCanvas()
     }
     {
         QGroupBox* canvas = new QGroupBox( 1, Qt::Horizontal, tr( "Bed Capacities (Patients/Baseline)" ), this );
-        QVBox* vlayout = new QVBox( canvas );
         vbox_ = new QVBox( canvas );
         // new QLabel( tr( "Bed Capacities:" ), vbox_ );
         // FillCapacityTypes( vbox_ );
         layout->add( canvas );
     }
-    
+
     QHBox* box = new QHBox( this );
     layout->addWidget( box );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), box );
@@ -143,7 +142,6 @@ void MedicalCapacityUpdateDialog::CreateCanvas()
     connect( okButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MedicalCapacityUpdateDialog destructor

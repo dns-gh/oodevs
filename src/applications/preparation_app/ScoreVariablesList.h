@@ -11,6 +11,7 @@
 #define __ScoreVariablesList_h_
 
 #include "clients_gui/ListDisplayer.h"
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {
@@ -38,6 +39,7 @@ class StaticModel;
 // Created: SBO 2009-04-20
 // =============================================================================
 class ScoreVariablesList : public QVBox
+                         , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -78,12 +80,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScoreVariablesList( const ScoreVariablesList& );            //!< Copy constructor
-    ScoreVariablesList& operator=( const ScoreVariablesList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Display( const indicators::Element_ABC& variable, gui::ValuedListItem* item );

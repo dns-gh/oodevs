@@ -47,12 +47,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamObjectKnowledgeList( const ParamObjectKnowledgeList& );            //!< Copy constructor
-    ParamObjectKnowledgeList& operator=( const ParamObjectKnowledgeList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void AddToMenu( kernel::ContextMenu& menu );

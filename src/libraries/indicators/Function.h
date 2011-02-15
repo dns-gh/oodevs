@@ -49,12 +49,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Function( const Function& );            //!< Copy constructor
-    Function& operator=( const Function& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void SerializeDeclarations( ElementDeclarator_ABC& declarator ) const;

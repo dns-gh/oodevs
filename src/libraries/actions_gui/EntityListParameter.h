@@ -61,13 +61,6 @@ private slots:
     //@{
     virtual void MenuItemValidated() = 0;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    EntityListParameterBase( const EntityListParameterBase& );            //!< Copy constructor
-    EntityListParameterBase& operator=( const EntityListParameterBase& ); //!< Assignment operator
-    //@}
 };
 
 // =============================================================================
@@ -96,12 +89,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EntityListParameter( const EntityListParameter& );            //!< Copy constructor
-    EntityListParameter& operator=( const EntityListParameter& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual Param_ABC* CreateElement();

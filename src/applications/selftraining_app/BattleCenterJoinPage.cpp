@@ -26,7 +26,7 @@
 
 namespace
 {
-    struct RunningExerciseFilter : public boost::noncopyable
+    struct RunningExerciseFilter : private boost::noncopyable
                                  , public frontend::ExerciseFilter_ABC
     {
         RunningExerciseFilter( const QLineEdit& host, const QSpinBox& port )

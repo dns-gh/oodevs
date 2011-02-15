@@ -61,12 +61,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamLimaList( const ParamLimaList& );            //!< Copy constructor
-    ParamLimaList& operator=( const ParamLimaList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

@@ -51,7 +51,7 @@ bool ListParameter::CheckValidity()
 {
     if( !list_ )
         return Invalid();
-    if ( !optional_ )
+    if( !optional_ )
     {
         unsigned int children = list_->childCount();
         if( min_ > children || max_ < children )
@@ -248,8 +248,7 @@ void ListParameter::CommitChildrenTo( actions::ParameterContainer_ABC& parent ) 
 {
     if( !list_ )
         return;
-    QListViewItemIterator it( list_ );
-    for( unsigned int i = 0; it.current(); ++it, ++i )
+    for( QListViewItemIterator it = QListViewItemIterator( list_ ); it.current(); ++it )
     {
         ::gui::ValuedListItem* item = static_cast< ::gui::ValuedListItem* >( it.current() );
         item->GetValue< Param_ABC >()->CommitTo( parent );

@@ -38,12 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamPointList( const ParamPointList& );            //!< Copy constructor
-    ParamPointList& operator=( const ParamPointList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual Param_ABC* CreateElement();

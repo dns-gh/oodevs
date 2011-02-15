@@ -12,6 +12,7 @@
 
 #include "clients_gui/ValuedComboBox.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace actions
 {
@@ -46,6 +47,7 @@ class QVGroupBox;
 // Created: SBO 2009-04-21
 // =============================================================================
 class ScoreVariableCreationWizard : public QDialog
+                                  , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -77,12 +79,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScoreVariableCreationWizard( const ScoreVariableCreationWizard& );            //!< Copy constructor
-    ScoreVariableCreationWizard& operator=( const ScoreVariableCreationWizard& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     boost::shared_ptr< actions::gui::Param_ABC > CreateParameter( const std::string& type, const QString& name );

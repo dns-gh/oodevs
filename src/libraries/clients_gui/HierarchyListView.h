@@ -45,13 +45,6 @@ protected:
     virtual void NotifyDeleted( const H& hierarchy );
     //@}
 
-private:
-    //! @name Copy / Assignment
-    //@{
-    HierarchyListView( const HierarchyListView& );
-    HierarchyListView& operator=( const HierarchyListView& );
-    //@}
-
 protected:
     //! @name Member data
     //@{

@@ -41,13 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy / Assignment
-    //@{
-    InhabitantListView( const InhabitantListView& );
-    InhabitantListView& operator=( const InhabitantListView& );
-    //@}
-
-private:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Inhabitant_ABC& inhabitant );

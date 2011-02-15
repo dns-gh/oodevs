@@ -62,12 +62,6 @@ public slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LimaParameter( const LimaParameter& );            //!< Copy constructor
-    LimaParameter& operator=( const LimaParameter& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );

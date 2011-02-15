@@ -108,13 +108,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ListDisplayer( const ListDisplayer& );            //!< Copy constructor
-    ListDisplayer& operator=( const ListDisplayer& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     ConcreteDisplayer& displayer_;

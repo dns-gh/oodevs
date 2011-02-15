@@ -13,6 +13,7 @@
 #include "tools/Iterator.h"
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {
@@ -24,6 +25,7 @@ namespace gui
 // =============================================================================
 template< typename ConcreteList >
 class ListView : public QListView
+               , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -104,13 +106,6 @@ public:
         }
         return factory_.CreateItem( parent, previousItem );
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ListView( const ListView& );            //!< Copy constructor
-    ListView& operator=( const ListView& ); //!< Assignment operator
     //@}
 
 private:

@@ -10,6 +10,8 @@
 #ifndef __ScoreEditor_h_
 #define __ScoreEditor_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace indicators
 {
     class GaugeTypes;
@@ -41,6 +43,7 @@ class StaticModel;
 // Created: SBO 2009-04-20
 // =============================================================================
 class ScoreEditor : public QDialog
+                  , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -75,12 +78,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScoreEditor( const ScoreEditor& );            //!< Copy constructor
-    ScoreEditor& operator=( const ScoreEditor& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CommitTo( Score_ABC& score );

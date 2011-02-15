@@ -12,7 +12,6 @@
 
 #include "OrderParameterValue.h"
 #include <set>
-#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -46,7 +45,7 @@ public:
 */
 // Created: SBO 2007-04-23
 // =============================================================================
-class OrderParameter : private boost::noncopyable
+class OrderParameter
 {
 public:
     //! @name Constructors/Destructor

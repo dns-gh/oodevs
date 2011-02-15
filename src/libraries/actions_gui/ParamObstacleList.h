@@ -52,12 +52,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamObstacleList( const ParamObstacleList& );            //!< Copy constructor
-    ParamObstacleList& operator=( const ParamObstacleList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool IsOptional() const;

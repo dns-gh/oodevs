@@ -45,13 +45,6 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    ParamLocationCompositeList( const ParamLocationCompositeList& );            //!< Copy constructor
-    ParamLocationCompositeList& operator=( const ParamLocationCompositeList& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Types
     //@{

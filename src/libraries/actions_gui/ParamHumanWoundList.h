@@ -24,7 +24,8 @@ namespace actions
 */
 // Created: SBO 2005-09-27
 // =============================================================================
-class ParamHumanWoundList : public QObject, public Param_ABC
+class ParamHumanWoundList : public QObject
+                          , public Param_ABC
 {
     Q_OBJECT;
 
