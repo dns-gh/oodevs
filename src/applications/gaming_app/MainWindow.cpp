@@ -24,8 +24,6 @@
 #include "Dialogs.h"
 #include "EventToolbar.h"
 #include "FogLayer.h"
-#include "FolkLayer.h"
-#include "FolkToolbar.h"
 #include "FormationLayer.h"
 #include "icons.h"
 #include "IndicatorExportDialog.h"
@@ -316,7 +314,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
 
     new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *paramLayer, profile );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
-    FolkToolbar* folkToolbar = new FolkToolbar( this, controllers, model.folk_ );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this, config_ );
     IndicatorPlotFactory* plotFactory = new IndicatorPlotFactory( this, controllers_, publisher, *indicatorExportDialog );
     AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, *paramLayer, staticModel_, *plotFactory );
@@ -382,7 +379,6 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
 
     pMissionPanel_->hide();
     replayerToolbar->hide();
-    folkToolbar->hide();
     aar->hide();
 
     new XPSPlayer( this, controllers_ );
@@ -420,7 +416,6 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     gui::Layer_ABC& logoLayer            = *new gui::LogoLayer( *glProxy_, QImage( config_.BuildResourceChildFile( "logo.png" ).c_str() ), 0.7f );
     gui::Layer_ABC& formationLayer       = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_ );
     gui::Layer_ABC& teamLayer            = *new ::TeamLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr() );
-    gui::Layer_ABC& folkLayer            = *new ::FolkLayer( controllers_.controller_, staticModel_.coordinateConverter_, model_.folk_ );
     gui::Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     gui::Layer_ABC& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
     gui::Layer_ABC& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
@@ -434,7 +429,6 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( watershed );                preferences.AddLayer( tr( "Watershed" ), watershed );           watershed           .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main,miniviews" );
-    glProxy_->Register( folkLayer );                preferences.AddLayer( tr( "Folk" ), folkLayer );                folkLayer           .SetPasses( "main,miniviews" );
     glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main,miniviews" );
     glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main,miniviews" );
     glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main,miniviews" );
