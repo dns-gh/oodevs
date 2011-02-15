@@ -39,7 +39,10 @@ namespace
     {
     public:
         InitializedLineEdit( QWidget* parent, const QString& initialValue )
-            : QLineEdit( initialValue, parent ), initialValue_( initialValue ) {}
+            : QLineEdit( initialValue, parent ), initialValue_( initialValue )
+        {
+            setValidator( new QIntValidator( this ) );
+        }
 
         virtual void keyPressEvent( QKeyEvent* e )
         {
@@ -72,13 +75,13 @@ namespace
 // -----------------------------------------------------------------------------
 PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ParametersLayer& layer, const Profile_ABC& profile )
     : QObject( parent )
-    , controllers_( controllers )
-    , actionsModel_( actionsModel )
-    , static_( staticModel )
-    , simulation_( simulation )
-    , profile_( profile )
+    , controllers_   ( controllers )
+    , actionsModel_  ( actionsModel )
+    , static_        ( staticModel )
+    , simulation_    ( simulation )
+    , profile_       ( profile )
     , selectedEntity_( controllers )
-    , magicMove_( false )
+    , magicMove_     ( false )
 {
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
     magicMoveLocation_->Allow( false, false, false, false, false );
@@ -112,7 +115,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
 
     QPopupMenu* choiceMenu = new QPopupMenu( magicMenu );
     for( unsigned int i = 0; i < unsigned int( eNbrPopulationAttitude ); ++i )
-        choiceMenu->insertItem( tools::ToString( (E_PopulationAttitude)i ), this, SLOT( ChangePopulationAttitude( int ) ), 0, i );
+        choiceMenu->insertItem( tools::ToString( static_cast< E_PopulationAttitude >( i ) ), this, SLOT( ChangePopulationAttitude( int ) ), 0, i );
     magicMenu->insertItem( tr( "Change crowd attitude" ), choiceMenu );
 }
 

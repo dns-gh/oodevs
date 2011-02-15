@@ -13,7 +13,6 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ShapeHandler_ABC.h"
-#include "clients_kernel/LocationVisitor_ABC.h"
 
 namespace kernel
 {
@@ -48,7 +47,7 @@ class PopulationMagicOrdersInterface : public QObject
                                      , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                                      , public gui::ShapeHandler_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -82,7 +81,7 @@ private:
 
     //! @name Helpers
     //@{
-    int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
+    int AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
     void AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
     //@}
 

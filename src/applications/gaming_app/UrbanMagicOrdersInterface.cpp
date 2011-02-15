@@ -36,7 +36,10 @@ namespace
     {
     public:
         InitializedLineEdit( QWidget* parent, const QString& initialValue )
-            : QLineEdit( initialValue, parent ), initialValue_( initialValue ) {}
+            : QLineEdit( initialValue, parent ), initialValue_( initialValue )
+        {
+            setValidator( new QIntValidator( 0, 100, this ) );
+        }
 
         virtual void keyPressEvent( QKeyEvent* e )
         {
