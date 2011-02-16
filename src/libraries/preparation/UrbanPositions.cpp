@@ -82,7 +82,7 @@ geometry::Rectangle2f UrbanPositions::GetBoundingBox() const
         return footprint->BoundingBox();
     return geometry::Rectangle2f();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions::Accept
 // Created: JSR 2010-09-06

@@ -14,7 +14,7 @@
 #include "tools/Resolver_ABC.h"
 #include "ValuedComboBox.h"
 
-#include <qvgroupbox.h> 
+#include <qvgroupbox.h>
 
 namespace kernel
 {

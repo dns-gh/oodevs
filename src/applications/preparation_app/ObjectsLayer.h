@@ -23,7 +23,7 @@ class ObjectsLayer : public gui::ObjectsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-	ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker );
+    ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker );
     virtual ~ObjectsLayer();
     //@}
 

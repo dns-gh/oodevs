@@ -45,7 +45,7 @@ void KnowledgeGroupHierarchies::DoUpdate( const sword::KnowledgeGroupUpdate& mes
     if( message.has_parent() )
     {
         if( message.parent().id() != 0 )
-            ChangeSuperior( &resolver_.Get( message.parent().id() ) );    
+            ChangeSuperior( &resolver_.Get( message.parent().id() ) );
         else
         {
             const kernel::Entity_ABC* top = &resolver_.Get( message.knowledge_group().id() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop();

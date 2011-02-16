@@ -198,19 +198,19 @@ namespace
                 break;
             case sword::UnitMagicAction_Type_recover_equipments:
                 strType = "recover_equipments";
-                name = tools::translate( "MagicAction", "Recover - Equipments" ); 
+                name = tools::translate( "MagicAction", "Recover - Equipments" );
                 break;
             case sword::UnitMagicAction_Type_recover_resources:
                 strType = "recover_resources";
-                name = tools::translate( "MagicAction", "Recover - Resources" ); 
+                name = tools::translate( "MagicAction", "Recover - Resources" );
                 break;
             case sword::UnitMagicAction_Type_destroy_all:
                 strType = "destroy_all";
-                name = tools::translate( "MagicAction", "Destroy - All" ); 
+                name = tools::translate( "MagicAction", "Destroy - All" );
                 break;
             case sword::UnitMagicAction_Type_cancel_surrender:
                 strType = "cancel_surrender";
-                name = tools::translate( "MagicAction", "Cancel - Surrender" ); 
+                name = tools::translate( "MagicAction", "Cancel - Surrender" );
                 break;
             default:
                 return;

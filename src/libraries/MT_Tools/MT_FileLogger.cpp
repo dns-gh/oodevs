@@ -16,7 +16,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MT_FileLogger constructor
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 MT_FileLogger::MT_FileLogger( const char* strFileName, int nLogLevels, bool bClearPreviousLog )
     : MT_Logger_ABC( nLogLevels )
@@ -29,7 +29,7 @@ MT_FileLogger::MT_FileLogger( const char* strFileName, int nLogLevels, bool bCle
 
 //-----------------------------------------------------------------------------
 // Name: MT_FileLogger constructor
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 MT_FileLogger::~MT_FileLogger()
 {
@@ -38,7 +38,7 @@ MT_FileLogger::~MT_FileLogger()
 
 //-----------------------------------------------------------------------------
 // Name: MT_FileLogger::LogString
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 void MT_FileLogger::LogString( E_LogLevel nLogLevel, const char* strMessage, const char* strContext, int nCode )
 {

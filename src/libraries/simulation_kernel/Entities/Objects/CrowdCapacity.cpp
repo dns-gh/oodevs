@@ -47,7 +47,7 @@ CrowdCapacity::CrowdCapacity( const MIL_PopulationType& type, double densityFact
 // -----------------------------------------------------------------------------
 CrowdCapacity::CrowdCapacity( const CrowdCapacity& from )
     : type_   ( from.type_ )
-    , densityFactor_( from.densityFactor_ )                 
+    , densityFactor_( from.densityFactor_ )
 {
     // NOTHING
 }

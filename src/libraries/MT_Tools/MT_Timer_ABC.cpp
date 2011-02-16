@@ -36,7 +36,7 @@ MT_Timer_ABC::MT_Timer_ABC()
 
 //-----------------------------------------------------------------------------
 // Name: MT_Timer_ABC destructor
-// Created:  NLD 2002-03-12 
+// Created:  NLD 2002-03-12
 //-----------------------------------------------------------------------------
 MT_Timer_ABC::~MT_Timer_ABC()
 {
@@ -47,11 +47,11 @@ MT_Timer_ABC::~MT_Timer_ABC()
 // Name: MT_Timer_ABC::Process
 /**
     @param  currentTime EXPLANATION
-    @return False if the time must be removed from the timer 
+    @return False if the time must be removed from the timer
 
   PUT YOUR COMMENTS HERE
 */
-// Created:  NLD 00-09-29 
+// Created:  NLD 00-09-29
 //-----------------------------------------------------------------------------
 void MT_Timer_ABC::Process( long long int currentTime )
 {
@@ -69,7 +69,7 @@ void MT_Timer_ABC::Process( long long int currentTime )
 
   Start the timer
 */
-// Created:  NLD 00-09-29 
+// Created:  NLD 00-09-29
 //-----------------------------------------------------------------------------
 void MT_Timer_ABC::Start( long long int tPeriod )
 {
@@ -79,10 +79,10 @@ void MT_Timer_ABC::Start( long long int tPeriod )
 
 //-----------------------------------------------------------------------------
 // Name: MT_Timer_ABC::Stop
-/** 
-  Stop the timer (OnTimerStop will be called) 
+/**
+  Stop the timer (OnTimerStop will be called)
 */
-// Created:  NLD 00-09-29 
+// Created:  NLD 00-09-29
 //-----------------------------------------------------------------------------
 void MT_Timer_ABC::Stop()
 {

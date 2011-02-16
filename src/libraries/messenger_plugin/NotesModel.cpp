@@ -109,7 +109,7 @@ void NotesModel::HandleRequest( const sword::MarkerUpdateRequest& message )
         }
         note->Update( message, currentTime_ );
         note->SendUpdate( clients_, false );
-        SaveNotes(); 
+        SaveNotes();
     }
 }
 
@@ -131,7 +131,7 @@ void NotesModel::HandleRequestDestructSingle(Note* note)
 {
     Note *parent = Find( note->GetParent() );
     const T_List& noteChildren = note->GetChildren();
-    
+
     if( parent )
         parent->RemoveChild( note->GetId() );
 

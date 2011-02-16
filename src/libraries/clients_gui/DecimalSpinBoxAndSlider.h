@@ -15,7 +15,7 @@ class QSlider;
 
 namespace gui
 {
-    
+
 class DecimalSpinBox;
 
 // =============================================================================

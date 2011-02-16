@@ -64,7 +64,7 @@ MIL_AutomateInjuredHuman::MIL_AutomateInjuredHuman( const MIL_AutomateType& type
     : MIL_Automate( type, nID, parent, knowledgeGroup, name, gcPause, gcMult, context )
 {
     // NOTHING
-}    
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateInjuredHuman constructor

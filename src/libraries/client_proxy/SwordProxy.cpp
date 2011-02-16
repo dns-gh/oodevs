@@ -46,7 +46,7 @@ SwordProxy::~SwordProxy()
 {
     delete pimpl_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: SwordProxy::Connect
 // Created: SEB 2010-10-12

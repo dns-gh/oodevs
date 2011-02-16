@@ -14,7 +14,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MT_TimerManager constructor
-// Created:  NLD 00-09-29 
+// Created:  NLD 00-09-29
 //-----------------------------------------------------------------------------
 MT_TimerManager::MT_TimerManager()
 {
@@ -23,7 +23,7 @@ MT_TimerManager::MT_TimerManager()
 
 //-----------------------------------------------------------------------------
 // Name: MT_TimerManager constructor
-// Created:  NLD 00-09-29 
+// Created:  NLD 00-09-29
 //-----------------------------------------------------------------------------
 MT_TimerManager::~MT_TimerManager()
 {
@@ -32,7 +32,7 @@ MT_TimerManager::~MT_TimerManager()
 
 //-----------------------------------------------------------------------------
 // Name: MT_TimerManager::Register
-// Created:  NLD 00-09-29 
+// Created:  NLD 00-09-29
 //-----------------------------------------------------------------------------
 void MT_TimerManager::Register( MT_Timer_ABC& timer )
 {
@@ -41,7 +41,7 @@ void MT_TimerManager::Register( MT_Timer_ABC& timer )
 
 //-----------------------------------------------------------------------------
 // Name: MT_TimerManager::Unregister
-// Created:  MBN 00-05-04 
+// Created:  MBN 00-05-04
 //-----------------------------------------------------------------------------
 void MT_TimerManager::Unregister( MT_Timer_ABC& timer )
 {
@@ -60,7 +60,7 @@ namespace
 
 //-----------------------------------------------------------------------------
 // Name: MT_TimerManager::Update
-// Created:  NLD 00-09-29 
+// Created:  NLD 00-09-29
 //-----------------------------------------------------------------------------
 void MT_TimerManager::Update() const
 {

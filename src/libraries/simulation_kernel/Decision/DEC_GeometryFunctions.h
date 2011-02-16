@@ -75,13 +75,13 @@ public:
     static float ComputeDistanceFromMiddleLine( const std::vector< DEC_Decision_ABC*>& selPions, DEC_Decision_ABC* pReferencePion );
     static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenter( TER_Localisation* pLocalisation );
 
-    
+
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeUrbanBlockLocalisations( boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge );
     static void ComputeLocalisationsInsideBlock( const urban::TerrainObject_ABC& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result );
 
     static boost::shared_ptr< MT_Vector2D > ComputeTrafficableLocalisationBarycenter( MIL_AgentPion& pion, TER_Localisation* pLocalisation );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeTrafficableLocalisation( const MT_Vector2D& point );
-    
+
     static bool IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight );
     static boost::shared_ptr< MT_Vector2D > ComputeCoverPosition( const std::vector< DEC_Decision_ABC* >& pions, MT_Vector2D* pDirection, float distance );
     static boost::shared_ptr< MT_Vector2D > ComputeRandomPointOnCircle( MT_Vector2D* pCenter, float radius );
@@ -154,9 +154,9 @@ public:
     static bool GetInterceptionPoint( const MT_Vector2D& vToInterceptPosition, const MT_Vector2D& vToInterceptSpeed, const MT_Vector2D& vInterceptingPosition, double rInterceptingSpeed, MT_Vector2D& result );
 
     // Terrain keypoint
-    static void GetCrossroads( directia::brain::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table ); 
+    static void GetCrossroads( directia::brain::Brain& brain, MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table );
     static std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( MIL_AgentPion& pion, float radius, float safetyDistance );
-   
+
     // BMArea
     static boost::shared_ptr< MT_Vector2D > ComputeBarycenter( const TER_Localisation* localisation );
 

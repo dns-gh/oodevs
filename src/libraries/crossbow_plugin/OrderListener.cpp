@@ -22,14 +22,14 @@
 
 using namespace plugins::crossbow;
 
-namespace 
+namespace
 {
     Database_ABC& GetDatabase( Workspace_ABC& workspace )
     {
         return workspace.GetDatabase( "flat" );
     }
 
-    
+
     class CrossbowPublisher : public Publisher_ABC
                             , private boost::noncopyable
     {
@@ -44,7 +44,7 @@ namespace
         virtual void Send( const sword::ClientToReplay& ){}
         virtual void Send( const sword::ClientToAar& ) {}
         virtual void Send( const sword::ClientToMessenger& ) {}
-    
+
     private:
         dispatcher::SimulationPublisher_ABC& sim_;
     };
@@ -84,8 +84,8 @@ void OrderListener::Clean()
         /* TODO : CASCADING Delete for every parameters
         {
             std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "OrderParameters" ) );
-            table->DeleteRows( 
-                "EXISTS ( SELECT 1 FROM sword.orders WHERE" 
+            table->DeleteRows(
+                "EXISTS ( SELECT 1 FROM sword.orders WHERE"
                           "order_id=sword.orders.id AND sword.orders.session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) + ")" );
         }
         {

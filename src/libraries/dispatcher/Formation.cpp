@@ -147,7 +147,7 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Formation::SendFullUpdate( ClientPublisher_ABC& publisher) const
 {
-    if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_) 
+    if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_)
     {
         client::ChangeLogisticLinks asn;
         asn().mutable_requester()->mutable_formation()->set_id( GetId() );

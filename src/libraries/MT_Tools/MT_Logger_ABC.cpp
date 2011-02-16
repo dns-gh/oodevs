@@ -13,7 +13,7 @@
 
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC constructor
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 MT_Logger_ABC::MT_Logger_ABC( int nLogLevels )
     : bPaused_     ( false )
@@ -25,7 +25,7 @@ MT_Logger_ABC::MT_Logger_ABC( int nLogLevels )
 
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC destructor
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 MT_Logger_ABC::~MT_Logger_ABC()
 {
@@ -44,7 +44,7 @@ void MT_Logger_ABC::Log( E_LogLevel nLevel, const char* strMessage, const char* 
 
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC::GetTimestampAsString
-/** 
+/**
     @return Return a formated timestamp
 */
 // Created:  NLD 00-06-05
@@ -59,7 +59,7 @@ const char* MT_Logger_ABC::GetTimestampAsString()
 
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC::GetLogLevelAsString
-/** 
+/**
     @return The log level name as a string
 */
 // Created:  NLD 00-06-05
@@ -95,7 +95,7 @@ const char* MT_Logger_ABC::GetLogLevelAsString( E_LogLevel nLevel )
 
   Set the timestamp format. See strftime() man for formats details.
 */
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 void MT_Logger_ABC::SetTimestampFormat( const char* strFormat )
 {
@@ -104,7 +104,7 @@ void MT_Logger_ABC::SetTimestampFormat( const char* strFormat )
 
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC::GetTimestampFormat
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 const char* MT_Logger_ABC::GetTimestampFormat() const
 {
@@ -113,7 +113,7 @@ const char* MT_Logger_ABC::GetTimestampFormat() const
 
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC::IsLogLevelSet
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 bool MT_Logger_ABC::IsLogLevelSet( E_LogLevel nLevel ) const
 {
@@ -122,7 +122,7 @@ bool MT_Logger_ABC::IsLogLevelSet( E_LogLevel nLevel ) const
 
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC::Pause
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 void MT_Logger_ABC::Pause()
 {
@@ -131,7 +131,7 @@ void MT_Logger_ABC::Pause()
 
 //-----------------------------------------------------------------------------
 // Name: MT_Logger_ABC::Resume
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 void MT_Logger_ABC::Resume()
 {

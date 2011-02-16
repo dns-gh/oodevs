@@ -56,9 +56,9 @@ public:
     {
     public:
         CmpRef( ADN_Urban_Data::UrbanMaterialInfos* val ) : val_( val ) {}
-        
+
         bool operator()( ADN_UrbanAttritionInfos* tgtnfos ) const
-        {   
+        {
             return tgtnfos->ptrMaterial_.GetData() == val_;
         }
     private:
@@ -72,7 +72,7 @@ public:
         ~Cmp() {}
 
         bool operator()( ADN_UrbanAttritionInfos* tgtnfos ) const
-        { 
+        {
             return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->strName_ == val_;
         }
     private:

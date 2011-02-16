@@ -45,7 +45,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 ObjectAttributeContainer::ObjectAttributeContainer( const Model_ABC& model )
     : model_( model )
-{    
+{
 }
 
 // -----------------------------------------------------------------------------

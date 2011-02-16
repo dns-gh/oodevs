@@ -23,8 +23,8 @@ class MIL_BurningCells;
 // =============================================================================
 /** @class  BurnSurfaceCapacity
     @brief  Allows to burn a surface defined with a polygon.
-			This polygon is roughly subdivised in fixed size cells.
-	@see "Feu sauvage" in 4311340-Modèles de feu.doc
+            This polygon is roughly subdivised in fixed size cells.
+    @see "Feu sauvage" in 4311340-Modèles de feu.doc
 */
 // Created: BCI 2010-12-17
 // =============================================================================
@@ -79,7 +79,7 @@ private:
 
     //! @name Private member
     //@{
-	MIL_BurningCells& burningCells_;
+    MIL_BurningCells& burningCells_;
     //@}
 };
 

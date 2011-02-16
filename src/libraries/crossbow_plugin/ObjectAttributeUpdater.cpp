@@ -74,7 +74,7 @@ Table_ABC* ObjectAttributeUpdater::OpenTable( const std::string& name )
     return workspace_.GetDatabase( "flat" ).OpenTable( name );
 }
 
-namespace 
+namespace
 {
     class RowManipulator : boost::noncopyable
     {
@@ -94,7 +94,7 @@ namespace
                 updating_ = false;
             }
         }
-        
+
         ~RowManipulator()
         {
             if( updating_ )
@@ -107,7 +107,7 @@ namespace
         {
             row_->SetField( field, value );
         }
-        
+
     private:
         Table_ABC&  table_;
         Row_ABC*    row_;
@@ -224,7 +224,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeNBC& nbc )
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeCrossingSite& crossing_site )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Crossing_Site" ) );
-    
+
     RowManipulator row( *table, session_, objectId_ );
     row.SetField( "banks_require_fitting", FieldVariant( crossing_site.banks_require_fitting() ) ); // int
     // nbc.nbc_agents // list object: TODO
@@ -256,7 +256,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeSupplyRoute& su
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeToxicCloud& /*toxic_cloud*/ )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Toxic_Cloud" ) );
-    
+
     RowManipulator row( *table, session_, objectId_ );
     //toxic_cloud.quantities // list: todo
 }
@@ -269,14 +269,14 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeFire& fire )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Fire" ) );
     RowManipulator row( *table, session_, objectId_ );
-    
+
     row.SetField( "class_name", FieldVariant( fire.class_name() ) ); // string
     row.SetField( "max_combustion_energy", FieldVariant( fire.max_combustion_energy() ) ); // int
 }
 
 namespace
 {
-        
+
     // TODO all bed Capacities
     void UpdateBedCapacities( RowManipulator& row,  const sword::ObjectAttributeMedicalTreatment& medical_treatment )
     {
@@ -284,11 +284,11 @@ namespace
         bool availableUpdated = false;
         int baseline = 0;
         bool baselineUpdated = false;
-        
-        for ( int i = 0; i < medical_treatment.bed_capacities_size(); ++i ) 
+
+        for ( int i = 0; i < medical_treatment.bed_capacities_size(); ++i )
         {
             const sword::MedicalTreatmentBedCapacity& capacity = medical_treatment.bed_capacities( i );
-            // $$$$ JCR - HACK : Do not take into account NegativeFlowIsolation which is a subset of MedicalSurgical and the last registered element!! 
+            // $$$$ JCR - HACK : Do not take into account NegativeFlowIsolation which is a subset of MedicalSurgical and the last registered element!!
             // $$$$ TODO: ADD this information in the MedicalTreatment definition and the ASN message.
             if ( capacity.type_id() == 7 ) // SKIP
                 continue;
@@ -319,7 +319,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeMedicalTreatmen
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Medical_Treatment" ) );
 
     RowManipulator row( *table, session_, objectId_ );
-    
+
     if( medical_treatment.has_doctors() )
         row.SetField( "doctors", FieldVariant( static_cast< int >( medical_treatment.doctors() ) ) ); // int
     if( medical_treatment.has_available_doctors() )
@@ -336,7 +336,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeInteractionHeig
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Interaction_Height" ) );
 
     RowManipulator row( *table, session_, objectId_ );
-    row.SetField( "height", FieldVariant( interaction_height.height() ) ); // 
+    row.SetField( "height", FieldVariant( interaction_height.height() ) ); //
 }
 
 // -----------------------------------------------------------------------------
@@ -346,7 +346,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeInteractionHeig
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeNBCType& nbc_agent )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_NBC_Type" ) );
-    
+
     RowManipulator row( *table, session_, objectId_ );
     row.SetField( "agent_id", FieldVariant( static_cast< long >( nbc_agent.agent().id() ) ) ); // int
     row.SetField( "concentration", FieldVariant( nbc_agent.concentration() ) ); // int
@@ -360,7 +360,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeNBCType& nbc_ag
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeStock& /*stock*/ )
 {
     std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Stock" ) );
-    
+
     RowManipulator row( *table, session_, objectId_ );
     //todo: list : stock.resources
 }

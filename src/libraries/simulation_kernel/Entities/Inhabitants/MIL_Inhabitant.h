@@ -105,7 +105,7 @@ private:
     //! @name Helpers
     //@{
     void DestroyInhabitantMovingObject();
-    void CreateInhabitantMovingObject(); 
+    void CreateInhabitantMovingObject();
     //@}
 
 private:

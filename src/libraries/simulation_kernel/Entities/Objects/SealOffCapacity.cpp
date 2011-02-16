@@ -93,8 +93,8 @@ void SealOffCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
     const AnimatorAttribute::T_AgentSet& agents = animators.GetAnimators();
     for( AnimatorAttribute::CIT_AgentSet it = agents.begin(); it != agents.end(); it++ )
     {
-        currentLevel += 0.2f;//get capacity 
+        currentLevel += 0.2f;//get capacity
     }
     sealOffLevel.SetSealOffLevel( currentLevel );
-    
+
 }

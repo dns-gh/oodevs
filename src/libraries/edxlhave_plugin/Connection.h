@@ -34,7 +34,7 @@ public:
              Connection( const std::string& host, bool useSsl);
     virtual ~Connection();
     //@}
-    
+
     //! @name I/O Operators
     //@{
     size_t Write( boost::asio::streambuf& request );

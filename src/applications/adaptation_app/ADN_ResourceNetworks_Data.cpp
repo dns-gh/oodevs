@@ -47,7 +47,7 @@ std::string ADN_ResourceNetworks_Data::ResourceNetworkInfos::GetNodeName()
     std::string strResult( "de la ressource " );
     return strResult + strName_.GetData();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkInfos::GetItemName
 // Created: JSR 2010-09-13
@@ -143,7 +143,7 @@ void ADN_ResourceNetworks_Data::FilesNeeded( T_StringList& files ) const
 {
     files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szResourceNetworks_.GetData());
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_ResourceNetworks_Data::Reset
 // Created: JSR 2010-09-13

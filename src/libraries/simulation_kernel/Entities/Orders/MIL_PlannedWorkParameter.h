@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
-    explicit MIL_PlannedWorkParameter( boost::shared_ptr< DEC_Gen_Object > param );   
+    explicit MIL_PlannedWorkParameter( boost::shared_ptr< DEC_Gen_Object > param );
     virtual ~MIL_PlannedWorkParameter();
     //@}
 

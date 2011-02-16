@@ -179,7 +179,7 @@ bool FireCreationPanel::IsStrikeOnLocation() const
 // -----------------------------------------------------------------------------
 bool FireCreationPanel::CheckValidity() const
 {
-    return ( ( ( selectedTarget_ && selectedReporter_ ) || ( location_ && location_->IsValid() ) ) 
+    return ( ( ( selectedTarget_ && selectedReporter_ ) || ( location_ && location_->IsValid() ) )
             && interventionType_->text().toFloat() > 0 );
 }
 
@@ -331,7 +331,7 @@ void FireCreationPanel::Reset()
     selectedReporter_ = 0;
     if ( location_ )
     {
-        delete location_; 
+        delete location_;
         location_ = 0;
     }
     targetLabel_->setText( tools::translate( "FireCreationPanel", "---" ) );

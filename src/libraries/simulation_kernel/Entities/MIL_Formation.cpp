@@ -37,7 +37,7 @@ namespace
 // Created: NLD 2006-10-11
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
-    : MIL_Entity_ABC( xis ) 
+    : MIL_Entity_ABC( xis )
     , nID_    ( xis.attribute< unsigned int >( "id" ) )
     , pArmy_  ( &army )
     , pParent_( pParent )
@@ -75,7 +75,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
 // Created: LDC 2010-10-21
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( int level, const std::string& name, std::string logLevelStr, MIL_Army_ABC& army, MIL_Formation* parent )
-    : MIL_Entity_ABC( name ) 
+    : MIL_Entity_ABC( name )
     , nID_    ( idManager_.GetFreeId() )
     , pArmy_  ( &army )
     , pParent_( parent )

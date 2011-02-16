@@ -154,7 +154,7 @@ void DatabaseUpdater::Clean()
         database_->GetGeometry().ClearTable( "TacticalObject_Area", clause );
         database_->GetGeometry().ClearTable( "TacticalObject_Line", clause );
         database_->GetGeometry().ClearTable( "TacticalObject_Point", clause );
-        
+
         database_->GetFlat().ClearTable( "KnowledgeObjects", clause );
         database_->GetFlat().ClearTable( "Reports", clause );
         database_->GetFlat().ClearTable( "Formations", clause );
@@ -333,15 +333,15 @@ namespace
          bool result = false;
         switch ( location.type() )
         {
-        case sword::Location::point:    
-            row.SetGeometry( Point( location.coordinates().elem( 0 ) ) ); 
+        case sword::Location::point:
+            row.SetGeometry( Point( location.coordinates().elem( 0 ) ) );
             result = true;
             break;
-        case sword::Location::line:     
-            row.SetGeometry( Line( location.coordinates() ) ); 
+        case sword::Location::line:
+            row.SetGeometry( Line( location.coordinates() ) );
             result = true;
             break;
-        case sword::Location::polygon:  
+        case sword::Location::polygon:
             result = true;
             row.SetGeometry( Area( location.coordinates() ) );
             break;

@@ -155,7 +155,7 @@ UrbanObjectWrapper& MIL_ObjectManager::GetUrbanObjectWrapper( const urban::Terra
         throw std::exception( "Unable to get UrbanObjectWrapper from TerrainObject" );
     return *( it->second );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::ConvertUrbanIdToSimId
 // Created: JSR 2011-01-18

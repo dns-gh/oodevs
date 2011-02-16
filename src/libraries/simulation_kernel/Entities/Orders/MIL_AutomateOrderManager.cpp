@@ -337,7 +337,7 @@ void MIL_AutomateOrderManager::GiveAutomateMission( boost::shared_ptr< MIL_Missi
 // -----------------------------------------------------------------------------
 void MIL_AutomateOrderManager::GiveMissionToNewAutomat( MIL_Automate& automate, boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    boost::shared_ptr< MIL_Mission_ABC > newMission = static_cast< MIL_AutomateMission* >( mission.get() )->CreateCopy( automate );    
+    boost::shared_ptr< MIL_Mission_ABC > newMission = static_cast< MIL_AutomateMission* >( mission.get() )->CreateCopy( automate );
     mission->GetAutomate().GetOrderManager().CancelMission();
     automate.GetOrderManager().ReplaceMission( newMission );
 }

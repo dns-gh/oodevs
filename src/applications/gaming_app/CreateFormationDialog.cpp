@@ -55,7 +55,7 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Team_ABC& entity, k
     const kernel::HierarchyLevel_ABC* level = levels_.GetRoot();
     NotifyContextMenu( entity, level, menu );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: CreateFormationDialog::NotifyContextMenu
 // Created: LDC 2010-10-12

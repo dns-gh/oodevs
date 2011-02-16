@@ -93,7 +93,7 @@ void InhabitantAffinities::UpdateDictionary()
 void InhabitantAffinities::SerializeAttributes( xml::xostream& xos ) const
 {
     if ( !VerifyAffinitiesContent() )
-        throw std::runtime_error( __FUNCTION__ ": affinities list differs from team list" ); 
+        throw std::runtime_error( __FUNCTION__ ": affinities list differs from team list" );
     xos << xml::start( "adhesions" );
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
     {

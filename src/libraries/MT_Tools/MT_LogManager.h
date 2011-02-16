@@ -23,7 +23,7 @@
       PUT YOUR EXAMPLE CODE HERE
     @endcode
 */
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //=============================================================================
 class MT_LogManager : private boost::noncopyable
 {

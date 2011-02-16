@@ -108,10 +108,10 @@ namespace
     class ReferenceValidator : public dispatcher::NullClientPublisher, private boost::noncopyable
     {
     public:
-        explicit ReferenceValidator( const std::string& id, const dispatcher::Object_ABC& checked ) 
+        explicit ReferenceValidator( const std::string& id, const dispatcher::Object_ABC& checked )
             : id_ ( id ), checked_( checked ), match_ ( false ) {}
 
-        virtual void Send( const sword::SimToClient& asn ) 
+        virtual void Send( const sword::SimToClient& asn )
         {
             if ( asn.has_message() && asn.message().has_object_update() )
             {
@@ -140,7 +140,7 @@ namespace
             if( object.GetType().HasMedicalCapacity() )
             {
                 ReferenceValidator validator( id, object );
-                
+
                 object.SendFullUpdate( validator );
                 if( validator.IsOK() )
                     return &object;

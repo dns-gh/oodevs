@@ -65,7 +65,7 @@ void StockAttribute::Send( sword::ObjectAttributes& asnMsg ) const
         sword::StockResource* tmp = asnMsg.mutable_stock()->add_resources();
         tmp->mutable_resource()->set_id( it->resource );
         tmp->set_current( it->current );
-        tmp->set_maximum( it->maximum );        
+        tmp->set_maximum( it->maximum );
     }
 }
 
@@ -79,7 +79,7 @@ StockAttribute::StockResource::StockResource()
     , maximum ( 0 )
 {
 }
-        
+
 // -----------------------------------------------------------------------------
 // Name: StockAttribute::StockResource::StockResource
 // Created: NLD 2006-09-27

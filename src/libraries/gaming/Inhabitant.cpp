@@ -52,7 +52,7 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& c
     }
     for( int i = 0; i < message.objects_size(); ++i )
     {
-        int id = message.objects( i ).id(); 
+        int id = message.objects( i ).id();
         livingUrbanObject_[ id ] = &model.GetObject( id );
     }
     CreateDictionary( controllers.controller_ );

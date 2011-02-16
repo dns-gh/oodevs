@@ -191,8 +191,8 @@ namespace frontend
 
         bool IsValidPropagation( const bfs::path& child )
         {
-            return bfs::is_directory( child ) 
-                   && bfs::exists( child / "propagation" ) && bfs::is_directory( child / "propagation" )        
+            return bfs::is_directory( child )
+                   && bfs::exists( child / "propagation" ) && bfs::is_directory( child / "propagation" )
                    && bfs::exists( child / "propagation.xml" );
         }
 

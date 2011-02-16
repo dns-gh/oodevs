@@ -119,8 +119,8 @@ void Automat::MoveAgents( dispatcher::Automat_ABC& superior )
 void Automat::DoUpdate( const sword::AutomatCreation& msg )
 {
     ChangeKnowledgeGroup( msg.knowledge_group().id() );
-    if( parentFormation_ && 
-        ( msg.parent().has_automat()  || 
+    if( parentFormation_ &&
+        ( msg.parent().has_automat()  ||
         ( msg.parent().has_formation() && msg.parent().formation().id() != parentFormation_->GetId() ) ) )
         ChangeSuperior( msg.parent() );
     if( parentAutomat_ && ( msg.parent().has_formation() || ( msg.parent().has_automat()  && msg.parent().automat().id()  != parentAutomat_->GetId() ) ) )

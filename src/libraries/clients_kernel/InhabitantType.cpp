@@ -96,7 +96,7 @@ float InhabitantType::GetFemalePercentage() const
 // Created: SLG 2010-12-07
 // -----------------------------------------------------------------------------
 float InhabitantType::GetChildrenPercentage() const
-{   
+{
     return children_;
 }
 

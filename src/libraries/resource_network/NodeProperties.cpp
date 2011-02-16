@@ -255,7 +255,7 @@ void NodeProperties::ReadNode( xml::xistream& xis )
 // Name: NodeProperties::GetFunctionalState
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-float NodeProperties::GetFunctionalState() const 
+float NodeProperties::GetFunctionalState() const
 {
     return functionalState_;
 }

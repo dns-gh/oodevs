@@ -39,7 +39,7 @@ BurnSurfaceAttribute::~BurnSurfaceAttribute()
 void BurnSurfaceAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
     //burningCellsByCoordinates_.clear();
-	DoUpdate( asnMsg );
+    DoUpdate( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,13 +48,13 @@ void BurnSurfaceAttribute::Update( const sword::ObjectAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
-	asnMsg.mutable_burn_surface()->set_cell_size( cellSize_ );
-	for( BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.begin(); it != burningCellsByCoordinates_.end(); ++it )
-	{
-		const BurningCell& cell = it->second;
-		sword::ObjectAttributeBurnSurface::BurningCell& asnCell = *asnMsg.mutable_burn_surface()->add_burning_cells();
-		asnCell.set_origin_x( it->first.X() );
-		asnCell.set_origin_y( it->first.Y() );
+    asnMsg.mutable_burn_surface()->set_cell_size( cellSize_ );
+    for( BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.begin(); it != burningCellsByCoordinates_.end(); ++it )
+    {
+        const BurningCell& cell = it->second;
+        sword::ObjectAttributeBurnSurface::BurningCell& asnCell = *asnMsg.mutable_burn_surface()->add_burning_cells();
+        asnCell.set_origin_x( it->first.X() );
+        asnCell.set_origin_y( it->first.Y() );
         asnCell.set_phase( it->second.phase_ );
         if( cell.bSendFullState_ )
         {
@@ -74,7 +74,7 @@ void BurnSurfaceAttribute::Send( sword::ObjectAttributes& asnMsg ) const
                 break;
             }
         }
-	}
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -85,30 +85,30 @@ void BurnSurfaceAttribute::DoUpdate( const sword::ObjectAttributes& asnMsg )
 {
     if( asnMsg.has_burn_surface() )
     {
-		cellSize_ = asnMsg.burn_surface().cell_size();
-		for( int i=0, nbCells = asnMsg.burn_surface().burning_cells_size(); i<nbCells; ++i )
-		{
-			const sword::ObjectAttributeBurnSurface::BurningCell& asnCell = asnMsg.burn_surface().burning_cells( i );
-			BurningCell& cell = burningCellsByCoordinates_[ BurningCellOrigin( asnCell.origin_x(), asnCell.origin_y() ) ];
-			cell.phase_ = asnCell.phase();
-			if( asnCell.has_pre_ignition() )
-			{
-                cell.bSendFullState_ = true;
-				cell.ignitionEnergy_ = asnCell.pre_ignition().ignition_energy();
-				cell.ignitionThreshold_ = asnCell.pre_ignition().ignition_threshold();
-			}
-			if( asnCell.has_combustion() )
-			{
-                cell.bSendFullState_ = true;
-				cell.combustionEnergy_ = asnCell.combustion().combustion_energy();
-				cell.currentHeat_ = asnCell.combustion().current_heat();
-				cell.maxCombustionEnergy_ = asnCell.combustion().max_combustion_energy();
-			}
-			if( asnCell.has_decline() )
+        cellSize_ = asnMsg.burn_surface().cell_size();
+        for( int i=0, nbCells = asnMsg.burn_surface().burning_cells_size(); i<nbCells; ++i )
+        {
+            const sword::ObjectAttributeBurnSurface::BurningCell& asnCell = asnMsg.burn_surface().burning_cells( i );
+            BurningCell& cell = burningCellsByCoordinates_[ BurningCellOrigin( asnCell.origin_x(), asnCell.origin_y() ) ];
+            cell.phase_ = asnCell.phase();
+            if( asnCell.has_pre_ignition() )
             {
                 cell.bSendFullState_ = true;
-				cell.currentHeat_ = asnCell.decline().current_heat();
+                cell.ignitionEnergy_ = asnCell.pre_ignition().ignition_energy();
+                cell.ignitionThreshold_ = asnCell.pre_ignition().ignition_threshold();
             }
-		}
+            if( asnCell.has_combustion() )
+            {
+                cell.bSendFullState_ = true;
+                cell.combustionEnergy_ = asnCell.combustion().combustion_energy();
+                cell.currentHeat_ = asnCell.combustion().current_heat();
+                cell.maxCombustionEnergy_ = asnCell.combustion().max_combustion_energy();
+            }
+            if( asnCell.has_decline() )
+            {
+                cell.bSendFullState_ = true;
+                cell.currentHeat_ = asnCell.decline().current_heat();
+            }
+        }
     }
 }

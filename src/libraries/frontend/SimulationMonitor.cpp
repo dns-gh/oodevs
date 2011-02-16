@@ -111,7 +111,7 @@ bool SimulationMonitor::TimedOut() const
 // -----------------------------------------------------------------------------
 void SimulationMonitor::HandleAarToClient( const std::string& /*endpoint*/, const sword::AarToClient& /*message*/ )
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------

@@ -29,7 +29,7 @@ Connection::Connection( const std::string& host, bool useSsl)
     ResolveHandler( query, error );
     if( error )
       throw boost::system::system_error( error );
-    
+
     if( useSsl_ )
     {
         ctx_.set_verify_mode( boost::asio::ssl::context::verify_none );

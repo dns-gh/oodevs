@@ -57,14 +57,14 @@ MaterialCompositionType::~MaterialCompositionType()
 void MaterialCompositionType::ReadAttrition( xml::xistream& xis )
 {
     AttritionData* attrition = new AttritionData( xis );
-    attritions_.insert( std::pair< std::string, AttritionData* >( attrition->protection_, attrition ) );    
+    attritions_.insert( std::pair< std::string, AttritionData* >( attrition->protection_, attrition ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MaterialCompositionType::GetName
 // Created: SLG 2010-11-17
 // -----------------------------------------------------------------------------
-const std::string& MaterialCompositionType::GetName() const 
+const std::string& MaterialCompositionType::GetName() const
 {
     return name_;
 }

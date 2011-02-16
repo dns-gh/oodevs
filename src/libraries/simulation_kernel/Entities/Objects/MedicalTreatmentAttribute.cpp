@@ -258,17 +258,17 @@ void MedicalTreatmentAttribute::OnUpdate( const sword::MissionParameter_Value& p
 {
     // JCR TODO : Check if value is available ?
     if( parameters.list( eDoctors ).has_quantity() )
-        doctors_ = parameters.list( eDoctors ).quantity(); // 
-    
+        doctors_ = parameters.list( eDoctors ).quantity(); //
+
     // JCR TODO : Check if value is available ?
     if( parameters.list( eStatus ).has_enumeration() )
-        status_ = parameters.list( eStatus ).enumeration(); 
+        status_ = parameters.list( eStatus ).enumeration();
 
     const sword::MissionParameter_Value& capacities = parameters.list( eBedCapacities );
     for( int i = 0; i < capacities.list_size(); ++i )
     {
         const sword::MissionParameter_Value& value = capacities.list( i );
-        if( value.list( eTypeId ).has_identifier() ) 
+        if( value.list( eTypeId ).has_identifier() )
         {
             const unsigned int typeId = value.list( eTypeId ).identifier();
             capacities_[ typeId ].Update( value );
@@ -307,7 +307,7 @@ void MedicalTreatmentAttribute::Update( const sword::ObjectAttributeMedicalTreat
 // Created: RFT 2008-06-18
 // -----------------------------------------------------------------------------
 void MedicalTreatmentAttribute::SendFullState( sword::ObjectAttributes& message ) const
-{ 
+{
     message.mutable_medical_treatment()->set_doctors( doctors_ );
     message.mutable_medical_treatment()->set_available_doctors( availableDoctors_ );
     message.mutable_medical_treatment()->set_external_reference_id( referenceID_ );
@@ -336,7 +336,7 @@ void MedicalTreatmentAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 void MedicalTreatmentAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "medical-treatement" );
-    
+
     for ( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )
     {
         xos << xml::start( "bed-capacity" )
@@ -464,6 +464,6 @@ bool MedicalTreatmentAttribute::Update( const MedicalTreatmentAttribute& rhs )
     {
         NotifyAttributeUpdated( eOnUpdate );
         status_ = rhs.status_;
-    }    
+    }
     return NeedUpdate( eOnUpdate );
 }

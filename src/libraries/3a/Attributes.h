@@ -65,7 +65,7 @@ struct UnitCreation : public ContinuousValue< typename Extractor::Type >
         : extractor_() {}
 
     explicit UnitCreation( const aar::StaticModel_ABC& model )
-        : extractor_( model ) 
+        : extractor_( model )
     {
     }
 

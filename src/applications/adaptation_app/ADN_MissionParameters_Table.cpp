@@ -29,7 +29,7 @@ namespace
         void AddSubItems( int i, void* obj )
         {
             assert( obj );
-            
+
             static_cast< ADN_MissionParameters_Table& >( tab_ ).ResetCurrent();
 
             ADN_Missions_Data::MissionParameter* param = static_cast< ADN_Missions_Data::MissionParameter* >( obj );
@@ -54,7 +54,7 @@ namespace
             itemOptional->GetConnector().Connect( &param->isOptional_ );
             itemMin->GetConnector().Connect( &param->min_ );
             itemMax->GetConnector().Connect( &param->max_ );
-            
+
             static_cast< ADN_MissionParameters_Table& >( tab_ ).ResetCurrent();
         }
 

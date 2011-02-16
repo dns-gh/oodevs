@@ -88,7 +88,7 @@ private:
     const std::string host_;
     const unsigned short port_;
     const std::string profile_;
-	const std::string password_;
+    const std::string password_;
     std::auto_ptr< MessageSender > publisher_;
     bool loggedIn_;
     std::auto_ptr< ConnectionHandlerProxy > connectionHandler_;

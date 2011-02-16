@@ -16,7 +16,7 @@ namespace hla
 {
 // =============================================================================
 /** @class  MockRtiAmbassador
-    @brief  Mock Rti ambassador 
+    @brief  Mock Rti ambassador
 */
 // Created: SLI 2011-01-11
 // =============================================================================

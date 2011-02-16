@@ -68,7 +68,7 @@ std::string ReportFactory::CreateMessage( const sword::Report& message ) const
         return "Unknown report";
     if( message.has_parameters() )
         return it->second->RenderMessage( message.parameters() );
-    else 
+    else
         return it->second->GetMessage();
 }
 

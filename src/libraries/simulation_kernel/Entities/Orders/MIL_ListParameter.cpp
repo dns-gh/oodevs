@@ -57,7 +57,7 @@ bool MIL_ListParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) const
             return false;
     return true;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter::ToList
 // Created: MGD 2010-11-05
@@ -91,7 +91,7 @@ bool MIL_ListParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParame
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ListParameter::ToPathList 
+// Name: MIL_ListParameter::ToPathList
 // Created: MGD 2010-11-15
 // -----------------------------------------------------------------------------
 bool MIL_ListParameter::ToPathList( std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& result ) const
@@ -103,7 +103,7 @@ bool MIL_ListParameter::ToPathList( std::vector< std::vector< boost::shared_ptr<
         if( !(*it)->ToPath( param ) )
             return false;
         result.push_back( param );
-    }  
+    }
     return true;
 }
 
@@ -120,7 +120,7 @@ bool MIL_ListParameter::ToPointList( std::vector< boost::shared_ptr< MT_Vector2D
         if( !(*it)->ToPoint( param ) )
             return false;
         result.push_back( param );
-    }  
+    }
     return true;
 }
 
@@ -136,7 +136,7 @@ bool MIL_ListParameter::ToPolygonList( std::vector< boost::shared_ptr< TER_Local
         if( !(*it)->ToPolygon( param ) )
             return false;
         result.push_back( param );
-    }  
+    }
     return true;
 }
 
@@ -152,7 +152,7 @@ bool MIL_ListParameter::ToLocationList( std::vector< boost::shared_ptr< TER_Loca
         if( !(*it)->ToLocation( param ) )
             return false;
         result.push_back( param );
-    }  
+    }
     return true;
 }
 
@@ -168,7 +168,7 @@ bool MIL_ListParameter::ToAutomatList( std::vector< DEC_Decision_ABC* >& result 
         if( !(*it)->ToAutomat( param ) )
             return false;
         result.push_back( param );
-    }  
+    }
     return true;
 }
 
@@ -184,7 +184,7 @@ bool MIL_ListParameter::ToAgentList( std::vector< DEC_Decision_ABC* >& result ) 
         if( !(*it)->ToAgent( param ) )
             return false;
         result.push_back( param );
-    }  
+    }
     return true;
 }
 
@@ -200,7 +200,7 @@ bool MIL_ListParameter::ToAgentKnowledgeList( std::vector< boost::shared_ptr< DE
         if( !(*it)->ToAgentKnowledge( param ) )
             return false;
         result.push_back( param );
-    }  
+    }
     return true;
 }
 
@@ -216,7 +216,7 @@ bool MIL_ListParameter::ToObjectKnowledgeList( std::vector< boost::shared_ptr< D
         if( !(*it)->ToObjectKnowledge( param ) )
             return false;
         result.push_back( param );
-    }  
+    }
     return true;
 }
 
@@ -232,7 +232,7 @@ bool MIL_ListParameter::ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen
         if( !(*it)->ToGenObject( param ) )
             return false;
         result.push_back( param );
-    }  
+    }
     return true;
 }
 
@@ -248,7 +248,7 @@ bool MIL_ListParameter::ToDotationTypeList( std::vector< const PHY_DotationCateg
         if( !(*it)->ToDotationType( param ) )
             return false;
         result.push_back( param );
-    }  
+    }
     return true;
 }
 

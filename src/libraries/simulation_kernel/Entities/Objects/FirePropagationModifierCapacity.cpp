@@ -98,7 +98,7 @@ void FirePropagationModifierCapacity::Instanciate( MIL_Object_ABC& object ) cons
 void FirePropagationModifierCapacity::Finalize( MIL_Object_ABC& object )
 {
     pObject_ = &object;
-	burningCells_.StartModifyBurn( object );
+    burningCells_.StartModifyBurn( object );
 }
 
 // -----------------------------------------------------------------------------

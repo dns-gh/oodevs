@@ -84,7 +84,7 @@ void FloodCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
             injuries_.insert( std::make_pair( pType, percentage ) );
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FloodCapacity::save
 // Created: JSR 2011-01-11
@@ -101,7 +101,7 @@ void FloodCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
         file << it->second;
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FloodCapacity::Instanciate
 // Created: JSR 2010-12-15

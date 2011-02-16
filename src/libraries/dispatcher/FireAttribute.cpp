@@ -20,7 +20,7 @@ using namespace dispatcher;
 FireAttribute::FireAttribute( const sword::ObjectAttributes& asnMsg )
     : fireClass_( asnMsg.fire().class_name() )
     , maxCombustionEnergy_( asnMsg.fire().max_combustion_energy() )
-        
+
 {
     // NOTHING
 }

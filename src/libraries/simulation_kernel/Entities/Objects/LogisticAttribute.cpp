@@ -153,7 +153,7 @@ LogisticAttribute& LogisticAttribute::operator=( const LogisticAttribute& rhs )
 bool LogisticAttribute::Update( const LogisticAttribute& rhs )
 {
     if( pTC2_ != rhs.pTC2_ )
-    {        
+    {
         pTC2_ = rhs.pTC2_;
         NotifyAttributeUpdated( eOnUpdate );
         return true;

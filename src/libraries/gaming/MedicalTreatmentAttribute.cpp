@@ -65,7 +65,7 @@ int MedicalTreatmentAttribute::GetDoctors() const
 {
     return doctors_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::GetAvailableDoctors
 // Created: JCR 2010-07-09
@@ -75,7 +75,7 @@ int MedicalTreatmentAttribute::GetAvailableDoctors() const
     return availableDoctors_;
 }
 
-namespace 
+namespace
 {
     void UpdateCapacity( const kernel::MedicalTreatmentType& type, const sword::MedicalTreatmentBedCapacity& message, MedicalTreatmentCapacity& capacity )
     {

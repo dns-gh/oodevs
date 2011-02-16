@@ -277,7 +277,7 @@ void DEC_Knowledge_PopulationConcentration::SendMsgDestruction() const
     client::CrowdConcentrationKnowledgeDestruction asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_crowd()->set_id( pPopulationKnowledge_->GetID() );
-    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() ); 
+    asnMsg().mutable_knowledge_group()->set_id( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 

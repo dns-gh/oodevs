@@ -18,7 +18,7 @@
 /**
     @class  MT_TimerManager
     @brief  Timer manager
-  
+
   // $$$$ __RC__ NLD 2002-09-26: gérer le bool bThreaded
 
     @par    Using example
@@ -31,7 +31,7 @@
         MT_TimerManager timerManager;
         MyTimer myTimer;
         timerManager.Register( myTimer );
-        
+
         while( 1 )
             timerManager.Update();
 

@@ -55,7 +55,7 @@ bool FormationLayer::HandleEnterDragEvent( QDragEnterEvent* event, const geometr
     return selected_ && ( gui::ValuedDragObject::Provides< const kernel::AutomatType >( event )
                          || gui::ValuedDragObject::Provides< const kernel::PopulationPrototype >( event ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FormationLayer::HandleDropEvent
 // Created: LDC 2010-10-06

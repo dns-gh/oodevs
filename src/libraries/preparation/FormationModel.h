@@ -46,7 +46,7 @@ class FormationModel : public tools::Resolver< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    FormationModel( kernel::Controllers& controllers, FormationFactory_ABC& formationFactory, 
+    FormationModel( kernel::Controllers& controllers, FormationFactory_ABC& formationFactory,
                     const tools::Resolver< kernel::Automat_ABC>& automatResolver, const StaticModel& staticModel );
     virtual ~FormationModel();
     //@}
@@ -57,7 +57,7 @@ public:
     void Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model, std::string& loadingErrors );
     void Purge();
     //@}
-    
+
     //! @name Delayed initialization
     //@{
     void ReadLogistic( xml::xistream& xis );

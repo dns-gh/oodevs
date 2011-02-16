@@ -503,7 +503,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 
     // Path
     if( !currentPath_.IsEmpty() )
-    { 
+    {
         client::UnitPathFind msg;
         msg().mutable_unit()->set_id( GetId() );
         currentPath_.Send( *msg().mutable_path()->mutable_location() );

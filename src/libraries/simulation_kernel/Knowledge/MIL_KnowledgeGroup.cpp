@@ -541,7 +541,7 @@ void MIL_KnowledgeGroup::UnregisterKnowledgeGroup( const MIL_KnowledgeGroup& kno
 {
     knowledgeGroups_.erase( std::remove( knowledgeGroups_.begin(), knowledgeGroups_.end(), &knowledgeGroup ), knowledgeGroups_.end() );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::RegisterAutomate
 // Created: NLD 2004-09-01

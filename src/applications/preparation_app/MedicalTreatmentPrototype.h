@@ -40,11 +40,11 @@ public:
     //! @name Operations
     //@{
     virtual void Commit();
-/*  JCR: TODO $$$$: to be activated 
+/*  JCR: TODO $$$$: to be activated
     virtual bool CanLoad();
     virtual void CommitShapeObject( const kernel::ShapeObject& importObject );
     virtual kernel::ShapeObjectLoader_ABC* LoadObjects( const std::string& filename, const kernel::CoordinateConverter_ABC& coordinatesConverter );
-*/  
+*/
     //@}
 
 private:

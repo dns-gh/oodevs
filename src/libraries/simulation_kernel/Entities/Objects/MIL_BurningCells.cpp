@@ -373,7 +373,7 @@ void MIL_BurningCells::UpdateDecline( MIL_BurningCell& cell )
         cell.phase_ = sword::extinguished;
         cell.bUpdated_ = true;
         cell.pObject_->GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
-    }    
+    }
 }
 
 // -----------------------------------------------------------------------------

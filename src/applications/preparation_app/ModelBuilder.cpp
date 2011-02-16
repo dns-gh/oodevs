@@ -236,7 +236,7 @@ void ModelBuilder::DeleteEntity( const Entity_ABC& entity )
     if( const kernel::CommunicationHierarchies* hierarchies = entity.Retrieve< kernel::CommunicationHierarchies >() )
     {
         tools::Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
-        std::vector< const Entity_ABC* > subordinate; 
+        std::vector< const Entity_ABC* > subordinate;
         while( it.HasMoreElements() )
             subordinate.push_back( &it.NextElement() );
         EntityToDelete( subordinate );   // $$$$ _RC_ SLG 2010-11-12: supprime les automates d'automates afin d'éviter un crash de la sim

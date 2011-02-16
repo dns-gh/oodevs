@@ -94,7 +94,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     }
     {
         properties_ = new ExerciseProperties( box, config, showBrief, showParams, enableParams );
-    }    
+    }
     controllers_.Register( *this );
 }
 

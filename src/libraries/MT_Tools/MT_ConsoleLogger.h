@@ -25,10 +25,10 @@
 
         MT_LogManager::Instance().RegisterLogger( logConsole );
         MT_LogManager::Instance().UnregisterLogger( logConsole );
-    
+
     @endcode
 */
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //=============================================================================
 class MT_ConsoleLogger : public MT_Logger_ABC
 {

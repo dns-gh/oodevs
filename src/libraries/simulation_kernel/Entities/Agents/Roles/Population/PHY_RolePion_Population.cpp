@@ -114,7 +114,7 @@ double PHY_RolePion_Population::GetCollidingPopulationDensity() const
 {
     T_KnowledgePopulationCollisionVector populationsColliding;
     pion_.GetKnowledge().GetPopulationsColliding( populationsColliding );
-    
+
     double rPopulationDensity = 0.;
     for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
         rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );

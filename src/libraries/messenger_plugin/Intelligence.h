@@ -52,8 +52,8 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int GetID() const  { return id_ ; } 
-    const sword::FormationId& GetFormation() const { return formation_ ; } 
+    unsigned int GetID() const  { return id_ ; }
+    const sword::FormationId& GetFormation() const { return formation_ ; }
     //@}
 
     //! @name Network

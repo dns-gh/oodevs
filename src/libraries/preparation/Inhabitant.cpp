@@ -109,5 +109,5 @@ void Inhabitant::SerializeAttributes( xml::xostream& xos ) const
         << xml::start( "health-need" )
             << xml::attribute( "quantity", healthNeed_ )
         << xml::end
-        << xml::content( "information", text_ ); 
+        << xml::content( "information", text_ );
 }

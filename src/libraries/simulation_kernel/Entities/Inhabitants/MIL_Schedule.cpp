@@ -117,7 +117,7 @@ void MIL_Schedule::Check( const Event& event, unsigned int date, unsigned int du
         livingArea_.MovePeople( 1 + static_cast< unsigned int >( transferTime_ / 900 ) );
         occurence_++;
     }
-    if( pdate.date().day_of_week() == event.day_ && pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, transferTime_ ) && pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, transferTime_ ) + bpt::time_duration( 0, 0, duration ) ) ) 
+    if( pdate.date().day_of_week() == event.day_ && pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, transferTime_ ) && pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, transferTime_ ) + bpt::time_duration( 0, 0, duration ) ) )
     {
         livingArea_.FinishMoving();
         occurence_ = 0;

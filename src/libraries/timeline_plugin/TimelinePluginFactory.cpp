@@ -36,10 +36,10 @@ TimelinePluginFactory::~TimelinePluginFactory()
 // Name: TimelinePluginFactory::Create
 // Created: SLG 2009-06-12
 // -----------------------------------------------------------------------------
-std::auto_ptr< dispatcher::Plugin_ABC > TimelinePluginFactory::Create( const std::string& name, xml::xistream& xis, 
-                                                                    const dispatcher::Config& config, 
-                                                                    dispatcher::Model_ABC& model, 
-                                                                    const kernel::StaticModel& staticModel, 
+std::auto_ptr< dispatcher::Plugin_ABC > TimelinePluginFactory::Create( const std::string& name, xml::xistream& xis,
+                                                                    const dispatcher::Config& config,
+                                                                    dispatcher::Model_ABC& model,
+                                                                    const kernel::StaticModel& staticModel,
                                                                     dispatcher::SimulationPublisher_ABC& simulationPublisher,
                                                                     dispatcher::ClientPublisher_ABC& /*clients*/,
                                                                     tools::MessageDispatcher_ABC& /*client*/,

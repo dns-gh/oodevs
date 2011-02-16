@@ -28,7 +28,7 @@ using namespace gui;
 TerrainPicker::TerrainPicker( QObject* parent )
     : QObject( parent )
     , terrain_( 0 )
-	, objects_( 0 )
+    , objects_( 0 )
     , weather_( 0 )
     , timer_  ( new QTimer( parent ) )
 {
@@ -59,7 +59,7 @@ void TerrainPicker::RegisterLayer( TerrainLayer& terrain )
 // -----------------------------------------------------------------------------
 void TerrainPicker::RegisterLayer( ObjectsLayer& objects )
 {
-	objects_ = &objects;
+    objects_ = &objects;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,9 +89,9 @@ void TerrainPicker::OnTimeOut()
         if( const weather::PHY_Meteo* weather = weather_->Pick( terrainCoordinates_ ) )
             emit WeatherPicked( tools::ToDisplayedString( weather->GetLighting().GetID() ), tools::ToDisplayedString( weather->GetPrecipitation().GetID() ) );
 
-	if( objects_ )
+    if( objects_ )
     {
-		QStringList infos = objects_->TerrainPick( terrainCoordinates_ );
+        QStringList infos = objects_->TerrainPick( terrainCoordinates_ );
         emit ObjectPicked( infos );
         timer_->start( 250, true );
     }

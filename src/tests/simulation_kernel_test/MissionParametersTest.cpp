@@ -71,14 +71,14 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent() ); // $$$$ LDC: id == 0... :(
     MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
-    
+
     xml::xistringstream xisParam("<parameter dia-name='pointAReconnaitre_' name='Point a reconnaitre' optional='false' type='AgentKnowledge'/>");
     xisParam >> xml::start( "parameter" );
     MIL_ParameterType_ABC::Initialize();
     MIL_OrderTypeParameter orderType( xisParam );
     xisParam >> xml::end;
-    boost::shared_ptr<MIL_MissionParameter_ABC> param = MIL_MissionParameterFactory::Create( orderType, asnIn, resolver ); 
-    
+    boost::shared_ptr<MIL_MissionParameter_ABC> param = MIL_MissionParameterFactory::Create( orderType, asnIn, resolver );
+
     MissionParameter asnOut;
     BOOST_CHECK_EQUAL( true, param->ToList( *asnOut.mutable_value() ) );
     BOOST_CHECK_EQUAL( 1, asnOut.value_size() );

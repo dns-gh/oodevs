@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE( Team_CanBeCreated )
         message.set_name( "test" );
         message.set_type( sword::friendly );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
-        
+
         // creation
         std::auto_ptr< dispatcher::Team_ABC > result( new dispatcher::Side( model, message ) );
 

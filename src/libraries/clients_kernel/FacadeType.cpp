@@ -39,7 +39,7 @@ FacadeType::~FacadeType()
 // Name: FacadeType::GetName
 // Created: SLG 2010-11-17
 // -----------------------------------------------------------------------------
-const std::string& FacadeType::GetName() const 
+const std::string& FacadeType::GetName() const
 {
     return name_;
 }

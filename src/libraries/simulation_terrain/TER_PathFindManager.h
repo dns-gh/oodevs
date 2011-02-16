@@ -63,7 +63,7 @@ public:
 
     std::vector< boost::shared_ptr< MT_Vector2D > > FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius );     //TODO: clean this when we have true Terrain Request Manager...
     std::vector< boost::shared_ptr< MT_Vector2D > > FindSafetyPositionsWithinCircle( const MT_Vector2D& center, float radius, float safetyDistance );
-	TerrainData FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius );
+    TerrainData FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius );
     //@}
 
 private:

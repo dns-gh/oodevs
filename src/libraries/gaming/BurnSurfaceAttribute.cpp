@@ -26,7 +26,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 BurnSurfaceAttribute::BurnSurfaceAttribute( Controller& controller, actions::ActionsModel& actionsModel, kernel::Entity_ABC& entity )
     : controller_( controller )
-	, cellSize_( 0 )
+    , cellSize_( 0 )
     , actionsModel_( actionsModel )
     , entity_( entity )
 {
@@ -39,7 +39,7 @@ BurnSurfaceAttribute::BurnSurfaceAttribute( Controller& controller, actions::Act
 // -----------------------------------------------------------------------------
 BurnSurfaceAttribute::~BurnSurfaceAttribute()
 {
-	//NOTHING
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -51,9 +51,9 @@ void BurnSurfaceAttribute::UpdateData( const T& message )
 {
     if( message.has_burn_surface()  )
     {
-		cellSize_ = message.burn_surface().cell_size();
-		for( int i=0, nbCells = message.burn_surface().burning_cells_size(); i<nbCells; ++i )
-			UpdateBurningCellData( message.burn_surface().burning_cells( i ) );
+        cellSize_ = message.burn_surface().cell_size();
+        for( int i=0, nbCells = message.burn_surface().burning_cells_size(); i<nbCells; ++i )
+            UpdateBurningCellData( message.burn_surface().burning_cells( i ) );
         controller_.Update( *(BurnSurfaceAttribute_ABC*)this );
     }
 }
@@ -65,21 +65,21 @@ void BurnSurfaceAttribute::UpdateData( const T& message )
 template< typename T >
 void BurnSurfaceAttribute::UpdateBurningCellData( const T& asnCell )
 {
-	BurningCell& cell = burningCellsByCoordinates_[ BurningCellOrigin( asnCell.origin_x(), asnCell.origin_y() ) ];
-	cell.phase_ = asnCell.phase();
-	if( asnCell.has_pre_ignition() )
-	{
-		cell.ignitionEnergy_ = asnCell.pre_ignition().ignition_energy();
-		cell.ignitionThreshold_ = asnCell.pre_ignition().ignition_threshold();
-	}
-	if( asnCell.has_combustion() )
-	{
+    BurningCell& cell = burningCellsByCoordinates_[ BurningCellOrigin( asnCell.origin_x(), asnCell.origin_y() ) ];
+    cell.phase_ = asnCell.phase();
+    if( asnCell.has_pre_ignition() )
+    {
+        cell.ignitionEnergy_ = asnCell.pre_ignition().ignition_energy();
+        cell.ignitionThreshold_ = asnCell.pre_ignition().ignition_threshold();
+    }
+    if( asnCell.has_combustion() )
+    {
         cell.combustionEnergy_ =  asnCell.combustion().combustion_energy();
-		cell.currentHeat_ = asnCell.combustion().current_heat();
-		cell.maxCombustionEnergy_ = asnCell.combustion().max_combustion_energy();
-	}
-	if( asnCell.has_decline() )
-		cell.currentHeat_ = asnCell.decline().current_heat();
+        cell.currentHeat_ = asnCell.combustion().current_heat();
+        cell.maxCombustionEnergy_ = asnCell.combustion().max_combustion_energy();
+    }
+    if( asnCell.has_decline() )
+        cell.currentHeat_ = asnCell.decline().current_heat();
 }
 
 // -----------------------------------------------------------------------------
@@ -107,32 +107,32 @@ void BurnSurfaceAttribute::DoUpdate( const sword::ObjectUpdate& message )
 void BurnSurfaceAttribute::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& /*viewport*/, const GlTools_ABC& /*tools*/ ) const
 {
     // $$$$ BCI 2011-01-07: todo ne dessiner que ce qui est visible
-	for( BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.begin(); it != burningCellsByCoordinates_.end(); ++it )
-	{
-		const BurningCell& cell = it->second;
-		switch( cell.phase_ )
-		{
-		case sword::pre_ignition:
-			glColor4ub( 255, 255, 128, 128 );
-			break;
-		case sword::combustion:
-			glColor4ub( 255, 0, 0, 128 );
-			break;
-		case sword::decline:
-			glColor4ub( 255, 128, 0, 128 );
-			break;
-		case sword::extinguished:
-			glColor4ub( 128, 64, 64, 128 );
-			break;
-		}
-		const BurningCellOrigin& origin = it->first;
+    for( BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.begin(); it != burningCellsByCoordinates_.end(); ++it )
+    {
+        const BurningCell& cell = it->second;
+        switch( cell.phase_ )
+        {
+        case sword::pre_ignition:
+            glColor4ub( 255, 255, 128, 128 );
+            break;
+        case sword::combustion:
+            glColor4ub( 255, 0, 0, 128 );
+            break;
+        case sword::decline:
+            glColor4ub( 255, 128, 0, 128 );
+            break;
+        case sword::extinguished:
+            glColor4ub( 128, 64, 64, 128 );
+            break;
+        }
+        const BurningCellOrigin& origin = it->first;
         glBegin( GL_QUADS );
-		glVertex2i( origin.X(), origin.Y() );
-		glVertex2i( origin.X(), origin.Y() + cellSize_ );
-		glVertex2i( origin.X() + cellSize_, origin.Y() + cellSize_ );
-		glVertex2i( origin.X() + cellSize_, origin.Y() );
+        glVertex2i( origin.X(), origin.Y() );
+        glVertex2i( origin.X(), origin.Y() + cellSize_ );
+        glVertex2i( origin.X() + cellSize_, origin.Y() + cellSize_ );
+        glVertex2i( origin.X() + cellSize_, origin.Y() );
         glEnd();
-	}
+    }
 
 }
 
@@ -186,8 +186,8 @@ void BurnSurfaceAttribute::TerrainPicked( const geometry::Point2f& terrainCoordi
 void BurnSurfaceAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Clear();
-	Displayer_ABC& burnSurfaceGroup = displayer.Group( tools::translate( "Object", "Burn surface" ) );
-	burnSurfaceGroup.Display( tools::translate( "Object", "Nb burning cells:" ), burningCellsByCoordinates_.size() );
+    Displayer_ABC& burnSurfaceGroup = displayer.Group( tools::translate( "Object", "Burn surface" ) );
+    burnSurfaceGroup.Display( tools::translate( "Object", "Nb burning cells:" ), burningCellsByCoordinates_.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,10 +205,10 @@ void BurnSurfaceAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer ) 
 // -----------------------------------------------------------------------------
 BurnSurfaceAttribute::BurningCellOrigin BurnSurfaceAttribute::ComputeCellOriginFromPoint( const geometry::Point2f& terrainCoordinates ) const
 {
-	//Compute cell aligned coordinates
-	int alignedX = (int) terrainCoordinates.X();
-	int alignedY = (int) terrainCoordinates.Y();
-	alignedX = alignedX - alignedX % cellSize_;
+    //Compute cell aligned coordinates
+    int alignedX = (int) terrainCoordinates.X();
+    int alignedY = (int) terrainCoordinates.Y();
+    alignedX = alignedX - alignedX % cellSize_;
     alignedY = alignedY - alignedY % cellSize_;
-	return BurningCellOrigin( alignedX, alignedY );
+    return BurningCellOrigin( alignedX, alignedY );
 }

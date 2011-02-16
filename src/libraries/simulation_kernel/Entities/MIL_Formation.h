@@ -101,7 +101,7 @@ private:
     void InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
     void ReadExtension( xml::xistream& xis );
     //@}
-    
+
     //! @name Serialization
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Formation* role, const unsigned int /*version*/ );

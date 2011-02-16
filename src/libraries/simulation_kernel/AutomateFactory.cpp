@@ -75,7 +75,7 @@ MIL_Automate& AutomateFactory::Create( const MIL_AutomateType& type, unsigned in
     tools::Resolver< MIL_Automate >::Register( automate.GetID(), automate );
 
     return automate;
-}    
+}
 
 // -----------------------------------------------------------------------------
 // Name: AutomateFactory::load

@@ -111,7 +111,7 @@ void ActionSerializer::SerializeMission( const dispatcher::Agent_ABC& agent, con
     unsigned long missionId = static_cast< unsigned long >( GetField< int >( orderRow, "type_id" ) );
     const tools::Resolver_ABC< kernel::Mission >& resolver = agent.GetType().GetDecisionalModel();
     const kernel::Mission* mission = resolver.Find( missionId );
-    
+
     if( mission )
     {
         try
@@ -125,9 +125,9 @@ void ActionSerializer::SerializeMission( const dispatcher::Agent_ABC& agent, con
         }
     }
     else
-        throw std::runtime_error( "Unknown mission id '" + boost::lexical_cast< std::string >( missionId ) + "' for agent '" + agent.GetType().GetName() + "'" ); 
+        throw std::runtime_error( "Unknown mission id '" + boost::lexical_cast< std::string >( missionId ) + "' for agent '" + agent.GetType().GetName() + "'" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ActionSerializer::SerializeMission
 // Created: JCR 2010-12-07
@@ -137,10 +137,10 @@ void ActionSerializer::SerializeMission( const dispatcher::Automat_ABC& automat,
     unsigned long missionId = static_cast< unsigned long >( GetField< int >( orderRow, "type_id" ) );
     const tools::Resolver_ABC< kernel::Mission >& resolver = automat.GetType().GetDecisionalModel();
     const kernel::Mission* mission = resolver.Find( missionId );
-    
+
     if( mission )
     {
-        try 
+        try
         {
             action.reset( factory_->CreateAction( automat, mission->GetType() ) );
             SetParameters( orderRow.GetID(), &automat, *action );
@@ -151,9 +151,9 @@ void ActionSerializer::SerializeMission( const dispatcher::Automat_ABC& automat,
         }
     }
     else
-        throw std::runtime_error( "Unknown mission id '" + boost::lexical_cast< std::string >( missionId ) + "' for automat '" + automat.GetType().GetName() + "'" ); 
+        throw std::runtime_error( "Unknown mission id '" + boost::lexical_cast< std::string >( missionId ) + "' for automat '" + automat.GetType().GetName() + "'" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ActionSerializer::SerializeFragOrder
 // Created: JCR 2010-12-07
@@ -175,7 +175,7 @@ void ActionSerializer::SerializeFragOrder( const kernel::Entity_ABC& /*target*/,
 // -----------------------------------------------------------------------------
 void ActionSerializer::SerializeObjectMagicCreation( const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action )
 {
-    try 
+    try
     {
         action.reset( factory_->CreateObjectMagicAction( "create_object" ) );
         SetParameters( row.GetID(), static_cast< const kernel::Entity_ABC *>( 0 ), *action );
@@ -194,14 +194,14 @@ namespace
         ErrorLogger() : empty_ ( true ) {}
 
         template< typename T >
-        ErrorLogger& operator<< ( const T& error ) 
+        ErrorLogger& operator<< ( const T& error )
         {
             ss_ << error << std::endl;
             empty_ = false;
             return *this;
         }
 
-        bool empty() const 
+        bool empty() const
         {
             return empty_;
         }
@@ -269,7 +269,7 @@ void ActionSerializer::SetParameters( unsigned long actionId, const kernel::Enti
 actions::Parameter_ABC* ActionSerializer::CreateParameter( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& type, const std::string& value, const kernel::Entity_ABC* entity ) const
 {
     const std::string lowType( parameter.CompatibleType( type ) );
-    
+
     if( lowType == "" )
         throw std::runtime_error( "Mismatch parameter type [" + type + "] waiting '" + parameter.GetType() + "'" );
     std::auto_ptr< actions::Parameter_ABC > param;

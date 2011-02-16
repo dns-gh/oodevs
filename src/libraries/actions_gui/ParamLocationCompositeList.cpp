@@ -39,7 +39,7 @@ ParamLocationCompositeList::~ParamLocationCompositeList()
 {
     // NOTHING
 }
-   
+
 // -----------------------------------------------------------------------------
 // Name: ParamLocationCompositeList::CommitTo
 // Created: LDC 2010-09-20

@@ -65,7 +65,7 @@ private:
     MedicalTreatmentAttribute& operator=( const MedicalTreatmentAttribute& ); //!< Assignment operator
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void UpdateData( const sword::ObjectAttributeMedicalTreatment& message );
     //@}

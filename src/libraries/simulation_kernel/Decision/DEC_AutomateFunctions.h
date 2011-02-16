@@ -28,7 +28,7 @@ public:
     //@{
     // Accessors
     static bool IsEngaged( DEC_Decision_ABC* pAutomate );
-    
+
     static boost::shared_ptr< MT_Vector2D > GetBarycenter( const DEC_Decision_ABC * automat );
     static std::vector< DEC_Decision_ABC* > GetPionsWithoutPC( const MIL_Automate& callerAutomate );
     static std::vector< DEC_Decision_ABC* > GetAutomatPionsWithPC( DEC_Decision_ABC* pAutomate );

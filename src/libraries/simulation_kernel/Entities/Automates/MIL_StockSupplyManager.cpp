@@ -37,7 +37,7 @@ MIL_StockSupplyManager::MIL_StockSupplyManager( MIL_Automate& automate )
     , pExplicitStockSupplyState_  ( 0 )
     , manualSupplyStates_         ()
     , nTickRcStockSupplyQuerySent_( 0 )
-{   
+{
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ void MIL_StockSupplyManager::serialize( Archive& file, const unsigned int )
          & manualSupplyStates_
          & nTickRcStockSupplyQuerySent_;
 }
-  
+
 // =============================================================================
 // OPERATIONS
 // =============================================================================
@@ -126,7 +126,7 @@ bool MIL_StockSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dot
 {
     if( pExplicitStockSupplyState_ && pExplicitStockSupplyState_->IsSupplying( dotationCategory ) )
         return true;
-    
+
     for( CIT_SupplyStockStateSet it = manualSupplyStates_.begin(); it != manualSupplyStates_.end(); ++it )
     {
         if( (**it).IsSupplying( dotationCategory ) )

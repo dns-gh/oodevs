@@ -117,11 +117,11 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
     {
         const MT_Ellipse attritionSurface     ( vTargetPosition, vTargetPosition + ( vFireDirection                        ),  vTargetPosition + ( vRotatedFireDirection                        ) );
         const MT_Ellipse neutralizationSurface( vTargetPosition, vTargetPosition + ( vFireDirection * rNeutralizationCoef_ ),  vTargetPosition + ( vRotatedFireDirection * rNeutralizationCoef_ ) );
-        
+
         // Area effect messages
         MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( attritionSurface, category_, 20 , false ) );
         MIL_EffectManager::GetEffectManager().Register( *new MIL_Effect_Explosion( neutralizationSurface, category_, 20, true ) );
-        
+
         bool bRCSent = false;
 
         TER_Agent_ABC::T_AgentPtrVector targets;
@@ -129,7 +129,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
 
         TER_Agent_ABC::T_AgentPtrVector allTargets;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle(vTargetPosition, 500., allTargets );
-        
+
         if( !allTargets.empty() )
         {
             std::set< const urban::TerrainObject_ABC* > urbanList;
@@ -160,7 +160,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
 
         std::vector< TER_Object_ABC* > objects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vTargetPosition, rInterventionTypeFired * rDispersionX_ , objects );
-        
+
         for( std::vector< TER_Object_ABC* >::iterator it = objects.begin(); it != objects.end(); ++it )
             static_cast< MIL_Object_ABC* >( *it )->ApplyIndirectFire( EllipseToPolygon( attritionSurface ), dotationCategory_ );
 

@@ -276,7 +276,7 @@ private:
     std::auto_ptr< FormationFactory_ABC >       formationFactory_;
     std::auto_ptr< KnowledgeGroupFactory_ABC >  knowledgeGroupFactory_;
     std::auto_ptr< ArmyFactory_ABC >            armyFactory_;
-    
+
     unsigned int  gcPause_;
     unsigned int  gcMult_;
     bool          infiniteDotations_;

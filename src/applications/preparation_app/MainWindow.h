@@ -42,7 +42,7 @@ namespace gui
     class TerrainLayer;
     class Layer_ABC;
     class Painter_ABC;
-	class TerrainPicker;
+    class TerrainPicker;
 }
 
 class AgentsLayer;

@@ -45,7 +45,7 @@ class AgentHierarchies : public kernel::EntityHierarchies< I  >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder,   
+             AgentHierarchies( kernel::Controller& controller, kernel::Agent_ABC& holder,
                                const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver );
     virtual ~AgentHierarchies();
     //@}

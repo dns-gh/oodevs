@@ -189,6 +189,6 @@ void AgentManipulator::Wound( int injury, int type )
     sword::MissionParameter& paramType = *message().mutable_parameters()->add_elem();
     paramType.set_null_value( false );
     paramType.mutable_value()->Add()->set_identifier( type );
-    
+
     message.Send( publisher_ );
 }

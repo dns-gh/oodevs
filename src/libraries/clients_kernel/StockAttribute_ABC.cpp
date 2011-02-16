@@ -23,7 +23,7 @@ void StockAttribute_ABC::SetDotation( const kernel::DotationType& dotationType, 
 {
     StockDotation& stockDotation = stockDotations_[ &dotationType ];
     stockDotation.stock_ = stock;
-    stockDotation.maxStock_ = maxStock;        
+    stockDotation.maxStock_ = maxStock;
 }
 
 // -----------------------------------------------------------------------------

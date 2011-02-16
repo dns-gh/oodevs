@@ -77,7 +77,7 @@ void Application::Initialize()
         QMessageBox::critical( mainWindow_, tools::translate( "Application", "Error" ), tools::translate( "Application", "Launcher service cannot be started: %1."  ).arg( launcher_->GetLastError().c_str() ) );
         closeAllWindows();
     }
-    
+
     mainWindow_ = new MainWindow( *config_, *controllers_, *launcherClient_ );
     setMainWidget( mainWindow_ );
     mainWindow_->show();

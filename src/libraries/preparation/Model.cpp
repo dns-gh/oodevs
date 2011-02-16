@@ -185,7 +185,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors, std::string& invalidSignedFiles, std::string& missingSignedFiles, std::string& malformedFiles )
 {
-    tools::ExerciseFileLoader loader( config, invalidSignedFiles, missingSignedFiles, malformedFiles );    
+    tools::ExerciseFileLoader loader( config, invalidSignedFiles, missingSignedFiles, malformedFiles );
     {
         std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
         try

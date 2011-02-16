@@ -16,7 +16,7 @@
 /** @class  MT_Timer_ABC
     @brief  Timer base class
 */
-// Created:  MBN 00-05-03 
+// Created:  MBN 00-05-03
 //=============================================================================
 class MT_Timer_ABC : private boost::noncopyable
 {

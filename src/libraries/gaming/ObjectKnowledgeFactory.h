@@ -59,7 +59,7 @@ private:
 
 private:
     //! @name Member data
-    //@{    
+    //@{
     const ObjectAttributesFactory attributesFactory_;
     kernel::Controllers& controllers_;
     Model& model_;

@@ -22,7 +22,7 @@ ExtensionType::ExtensionType( xml::xistream& xis )
 {
     xis >> xml::list( "attribute", *this, &ExtensionType::ReadAttribute );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ExtensionType destructor
 // Created: JSR 2010-10-01

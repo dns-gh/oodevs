@@ -75,7 +75,7 @@ public:
 
 
 //*****************************************************************************
-//    typedef helpers::AttritionInfos AttritionInfos; 
+//    typedef helpers::AttritionInfos AttritionInfos;
 //    typedef ADN_Type_VectorFixed_ABC<AttritionInfos> T_AttritionInfosVector;
 //    typedef T_AttritionInfosVector::iterator        IT_AttritionInfosVector;
 
@@ -587,7 +587,7 @@ public:
                 void WriteArchive( xml::xostream& xos );
 
                 CmpRef( ADN_FireClass_Data::FireClassInfos* val ) : val_( val ){}
-                bool operator()( ModifierByFireClass* other ) const 
+                bool operator()( ModifierByFireClass* other ) const
                 {
                     return other->ptrFireClass_.GetData() == val_;
                 }
@@ -600,7 +600,7 @@ public:
             {
             public:
                 Cmp( const std::string& name ) : name_( name ) {}
-                bool operator()( ModifierByFireClass* other ) const 
+                bool operator()( ModifierByFireClass* other ) const
                 {
                     return other->ptrFireClass_.GetData()->strName_ == name_;
                 }
@@ -706,7 +706,7 @@ namespace
 
         template < typename T >
         bool operator()( T* tgtnfos ) const
-        { 
+        {
             return ADN_Tools::CaselessCompare( tgtnfos->strType_.GetData(), strType_ );
         }
 

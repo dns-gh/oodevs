@@ -68,7 +68,7 @@ namespace
 // -----------------------------------------------------------------------------
 InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location, const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico )
     : converter_ ( converter )
-    , position_( 0, 0 ) 
+    , position_( 0, 0 )
 {
     IntersectionVisitor visitor( urbanModel, livingUrbanObject_ );
     location.Accept( visitor );
@@ -82,7 +82,7 @@ InhabitantPositions::InhabitantPositions( const kernel::CoordinateConverter_ABC&
 // -----------------------------------------------------------------------------
 InhabitantPositions::InhabitantPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const UrbanModel& urbanModel, kernel::Inhabitant_ABC& inhabitant , kernel::PropertiesDictionary& dico )
     : converter_ ( converter )
-    , position_( 0, 0 ) 
+    , position_( 0, 0 )
 {
     ReadLocation( xis, urbanModel );
     ComputePosition();

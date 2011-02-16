@@ -37,7 +37,7 @@ public:
                                                             xml::xistream& xis,
                                                             const dispatcher::Config& config,
                                                             dispatcher::Model_ABC& model,
-                                                            const kernel::StaticModel& staticModel, 
+                                                            const kernel::StaticModel& staticModel,
                                                             dispatcher::SimulationPublisher_ABC& simulationPublisher,
                                                             dispatcher::ClientPublisher_ABC& clients,
                                                             tools::MessageDispatcher_ABC& client,

@@ -100,7 +100,7 @@ void StockAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
     while ( size-- )
     {
         std::string type;
-        
+
         ar >> type;
         const PHY_DotationCategory* dotation = PHY_DotationType::FindDotationCategory( type );
         if( !dotation )
@@ -254,7 +254,7 @@ double StockAttribute::Distribute( const PHY_DotationCategory& category, double 
         return diff;
     }
     else
-        return 0;  
+        return 0;
 }
 
 // -----------------------------------------------------------------------------

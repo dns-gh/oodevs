@@ -106,7 +106,7 @@ void BurnSurfaceCapacity::Instanciate( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void BurnSurfaceCapacity::Finalize( MIL_Object_ABC& object )
 {
-	burningCells_.StartBurn( object );
+    burningCells_.StartBurn( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ void BurnSurfaceCapacity::Finalize( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void BurnSurfaceCapacity::Update( MIL_Object_ABC& object, unsigned int time )
 {
-	burningCells_.Update( object, time );
+    burningCells_.Update( object, time );
 }
 
 // -----------------------------------------------------------------------------

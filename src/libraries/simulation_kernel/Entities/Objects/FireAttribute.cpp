@@ -190,9 +190,9 @@ MIL_BurnEffectManipulator FireAttribute::GetBurnEffect()
 // -----------------------------------------------------------------------------
 void FireAttribute::GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const
 {
-	pClass_->GetSurfaceFirePotentials( terrainData, ignitionThreshold, maxCombustionEnergy );
-	if( maxCombustionEnergy > maxCombustionEnergy_ )
-		maxCombustionEnergy = maxCombustionEnergy_;
+    pClass_->GetSurfaceFirePotentials( terrainData, ignitionThreshold, maxCombustionEnergy );
+    if( maxCombustionEnergy > maxCombustionEnergy_ )
+        maxCombustionEnergy = maxCombustionEnergy_;
 }
 
 // -----------------------------------------------------------------------------

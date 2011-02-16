@@ -551,7 +551,7 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 
     client::ObjectKnowledgeCreation asn;
     asn().mutable_knowledge()->set_id( nID_ );
-    asn().mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );    
+    asn().mutable_object()->set_id( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
     asn().mutable_party()->set_id( pArmyKnowing_->GetID() );
     if( pGroupKnowing_ )
         asn().mutable_knowledge_group()->set_id( pGroupKnowing_->GetId() );
@@ -784,7 +784,7 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
                             if( ( *polygonIt )->BoundingBox().IsInside( point ) && ( *polygonIt )->IsInside( point ) )
                                 return true;
                 }
-            return false;    
+            return false;
         }
     for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
         if( localisation_.IsInside( *it ) )

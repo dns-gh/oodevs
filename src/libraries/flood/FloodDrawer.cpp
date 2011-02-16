@@ -104,10 +104,10 @@ void FloodDrawer::RenderTexture()
     glGetIntegerv( GL_VIEWPORT, coords );
     // draw scene
     glViewport( 0, 0, 512, 512 );
-    glOrtho( 0.0f, 512, 0.0f, 512, 0, 1); 
+    glOrtho( 0.0f, 512, 0.0f, 512, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    glEnable(GL_TEXTURE_2D); 
-    glDisable(GL_LIGHTING);     
+    glEnable(GL_TEXTURE_2D);
+    glDisable(GL_LIGHTING);
     glEnable( GL_STENCIL_TEST );
     glColor4f( 0, 0, 1.f, 0.7f );
     DrawPolygons( model_.GetDeepAreas() );

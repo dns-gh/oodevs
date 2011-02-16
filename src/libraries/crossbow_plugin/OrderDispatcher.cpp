@@ -124,7 +124,7 @@ void OrderDispatcher::Dispatch( Publisher_ABC& publisher, const Row_ABC& row )
     std::auto_ptr< actions::Action_ABC > mission;
     if( const dispatcher::Agent_ABC* agent = model_.Agents().Find( id ) )
     {
-        if( agent->GetSuperior().IsEngaged() ) 
+        if( agent->GetSuperior().IsEngaged() )
             serializer_.SerializeMission( agent->GetSuperior(), row, mission );
         else
             serializer_.SerializeMission( *agent, row, mission );

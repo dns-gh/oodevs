@@ -33,7 +33,7 @@ class ADN_HtmlBuilder;
 // Created: APE 2004-12-06
 // =============================================================================
 class ADN_GUI_ABC : public QObject
-                  , private boost::noncopyable        
+                  , private boost::noncopyable
 {
 
 public:

@@ -76,7 +76,7 @@ InhabitantCreationPanel::~InhabitantCreationPanel()
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
 void InhabitantCreationPanel::Draw( kernel::Viewport_ABC& /*viewport*/ )
-{   
+{
     SimpleLocationDrawer visitor( tools_ );
     if( location_ )
         location_->Accept( visitor );

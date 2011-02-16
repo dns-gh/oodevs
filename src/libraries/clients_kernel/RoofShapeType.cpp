@@ -39,7 +39,7 @@ RoofShapeType::~RoofShapeType()
 // Name: RoofShapeType::GetName
 // Created: SLG 2010-11-17
 // -----------------------------------------------------------------------------
-const std::string& RoofShapeType::GetName() const 
+const std::string& RoofShapeType::GetName() const
 {
     return name_;
 }

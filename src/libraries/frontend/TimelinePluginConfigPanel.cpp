@@ -120,7 +120,7 @@ void TimelinePluginConfigPanel::OnOrderClicked()
         std::string msg( orderFile_, size, size );
         if ( orderFile_.size() > max_size + 2 )
             order_->setText( std::string( ".." + msg ).c_str() );
-        else 
+        else
             order_->setText( msg.c_str() );
     }
 }

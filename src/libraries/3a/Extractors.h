@@ -76,8 +76,8 @@ namespace extractors
             return wrapper.message().has_log_maintenance_handling_creation();
         }
         NumericValue Extract( const sword::SimToClient& wrapper ) const
-        { 
-            return NumericValue( wrapper.message().log_maintenance_handling_creation().unit().id() ); 
+        {
+            return NumericValue( wrapper.message().log_maintenance_handling_creation().unit().id() );
         }
         bool IsDestruction( const sword::SimToClient& wrapper ) const
         {
@@ -93,7 +93,7 @@ namespace extractors
                 wrapper.message().start_unit_fire().type() == sword::StartUnitFire::direct;
         }
         NumericValue Extract( const sword::SimToClient& wrapper ) const
-        { 
+        {
             return NumericValue( wrapper.message().start_unit_fire().firing_unit().id() );
         }
         bool IsDestruction( const sword::SimToClient& wrapper ) const
@@ -110,7 +110,7 @@ namespace extractors
                    wrapper.message().start_unit_fire().type() == sword::StartUnitFire::indirect;
         }
         NumericValue Extract( const sword::SimToClient& wrapper ) const
-        { 
+        {
             return NumericValue( wrapper.message().start_unit_fire().firing_unit().id() );
         }
         bool IsDestruction( const sword::SimToClient& wrapper ) const

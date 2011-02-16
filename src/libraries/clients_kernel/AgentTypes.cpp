@@ -428,6 +428,6 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "change_resource_links", sword::MagicAction::change_resource_network_properties ) );
     RegisterActionType( *new MagicActionType( "fire_order_on_location", sword::MagicAction::create_fire_order_on_location ) );
 
-    RegisterActionType( *new MagicActionType( "change_mode" ) ); 
-    
+    RegisterActionType( *new MagicActionType( "change_mode" ) );
+
 }

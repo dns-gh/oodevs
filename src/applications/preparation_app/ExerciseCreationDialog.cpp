@@ -88,7 +88,7 @@ ExerciseCreationDialog::ExerciseCreationDialog( QWidget* parent, const tools::Ge
 // -----------------------------------------------------------------------------
 ExerciseCreationDialog::~ExerciseCreationDialog()
 {
-    // NOTHING        
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

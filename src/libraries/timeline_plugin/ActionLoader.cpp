@@ -26,7 +26,7 @@ ActionLoader::ActionLoader( long scenarioId, long actorId, Publisher_ABC& publis
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ActionLoader destructor
 // Created: JCR 2010-09-08
@@ -52,12 +52,12 @@ void ActionLoader::Load( const std::string& filename )
     MT_LOG_INFO_MSG( "TimelinePlugin : load recorded orders from " + filename )
 }
 
-namespace 
+namespace
 {
     std::string BuildMessage( xml::xistream& xis )
     {
         std::stringstream ss;
-        ss << "Unit [" << xis.attribute< std::string >( "target" ) << "] is requested to execute " 
+        ss << "Unit [" << xis.attribute< std::string >( "target" ) << "] is requested to execute "
             << xis.attribute< std::string >( "type" ) << ": " << "'"
             << xis.attribute< std::string >( "name" ) << "'";
         return ss.str();
@@ -73,11 +73,11 @@ void ActionLoader::ReadAction( xml::xistream& xis, std::string& error )
     try
     {
         xml::xostringstream xos;
-        xos << xml::start( "CommitScenario" ) << xml::attribute( "xmlns", "urn:masa:taranis:scenario:1.0" ) 
+        xos << xml::start( "CommitScenario" ) << xml::attribute( "xmlns", "urn:masa:taranis:scenario:1.0" )
                 << xml::attribute( "xmlns:noNamespaceSchemaLocation", "CommitScenario.xsd" )
                 << xml::attribute( "id", scenarioId_ )
                 << xml::start( "CommitTask" ) << xml::attribute( "timestamp", 0 )
-                    << xml::start( "task" ) << xml::attribute( "id", -1 ) << xml::attribute( "name", BuildMessage( xis ) ) 
+                    << xml::start( "task" ) << xml::attribute( "id", -1 ) << xml::attribute( "name", BuildMessage( xis ) )
                     << xml::attribute( "actor", actorId_ ) << xml::attribute( "type", "action" )
                         << xml::start( "action" )
                             << xml::xisubstream( xis )
@@ -85,9 +85,9 @@ void ActionLoader::ReadAction( xml::xistream& xis, std::string& error )
                     << xml::end
                 << xml::end
                 << xml::start( "CommitScheduler" ) << xml::attribute( "timestamp", 0 )
-                    << xml::start( "schedule" ) 
-                        << xml::attribute( "id", -1 ) << xml::attribute( "task", -1 ) 
-                        << xml::attribute( "time", xis.attribute< std::string >( "time" ) ) << xml::attribute( "status", "pending" ) 
+                    << xml::start( "schedule" )
+                        << xml::attribute( "id", -1 ) << xml::attribute( "task", -1 )
+                        << xml::attribute( "time", xis.attribute< std::string >( "time" ) ) << xml::attribute( "status", "pending" )
                     << xml::end
                 << xml::end
             << xml::end;

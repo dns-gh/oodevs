@@ -139,7 +139,7 @@ const Karma& Karma::ResolveId( const std::string& id )
 const Karma& Karma::ResolveName( const QString& name )
 {
     if( name == friend_.GetName() )
-        return friend_; 
+        return friend_;
     if( name == enemy_.GetName() )
         return enemy_;
     if( name == neutral_.GetName() )

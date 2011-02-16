@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::vector< std::string > values_; 
+    std::vector< std::string > values_;
     //@}
 };
 

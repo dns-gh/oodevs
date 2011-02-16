@@ -50,7 +50,7 @@ void ScenarioManager::Update( timeline::Publisher_ABC& publisher )
 // -----------------------------------------------------------------------------
 // Name: UpdateListener::Handle
 /*
-     <CommitScenario xmlns="urn:masa:taranis:scenario:1.0" 
+     <CommitScenario xmlns="urn:masa:taranis:scenario:1.0"
                      xmlns:noNamespaceSchemaLocation="CommitScenario.xsd">
 */
 // Created: JCR 2010-06-05

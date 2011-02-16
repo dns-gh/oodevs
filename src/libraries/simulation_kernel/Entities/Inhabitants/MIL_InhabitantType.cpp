@@ -143,7 +143,7 @@ float MIL_InhabitantType::GetSafetyGainPerHour() const
 {
     return safetyGainPerHour_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MIL_InhabitantType::GetSafetyLossOnFire
 // Created: JSR 2011-01-25

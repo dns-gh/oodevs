@@ -27,10 +27,10 @@ namespace
     {
         const std::string projDriverPath( bfs::current_path().string() + "/" );
         const std::string projPath( ( bfs::current_path() / "projection_data" ).string() );
-        
+
         CPLSetConfigOption( "GDAL_DRIVER_PATH", projDriverPath.c_str() );
         CPLSetConfigOption( "GDAL_DATA", projPath.c_str() );
-        CPLSetConfigOption( "OGR_SDE_GETLAYERTYPE", "TRUE" );   
+        CPLSetConfigOption( "OGR_SDE_GETLAYERTYPE", "TRUE" );
         CPLSetConfigOption( "OGR_SDE_SEARCHORDER", "ATTRIBUTE_FIRST" );
         MT_LOG_INFO_MSG( "OGR/GDAL path: " << bfs::current_path().string() )
         OGRRegisterAll();

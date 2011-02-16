@@ -13,7 +13,7 @@
 #include <qlistview.h>
 #include <qfont.h>
 #include <qcolor.h>
-#include <qvaluevector.h> 
+#include <qvaluevector.h>
 #include <boost/noncopyable.hpp>
 
 // =============================================================================

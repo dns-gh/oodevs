@@ -283,7 +283,7 @@ void MIL_Object::SendFullState() const
     asn().mutable_object()->set_id( GetID() );
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
     std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( *asn().mutable_attributes() ) ) );        
+        boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( *asn().mutable_attributes() ) ) );
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 

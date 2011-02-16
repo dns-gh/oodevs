@@ -50,7 +50,7 @@ protected:
     template< typename Source > bool UpdateAttributeFromSource( const Source& source );
     //@}
 
-private:    
+private:
     T* pAttribute_;
 };
 
@@ -62,7 +62,7 @@ private:
 // Name: DEC_Knowledge_ObjectAttributeProxy_ABC constructor
 // Created: NLD 2010-10-27
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 DEC_Knowledge_ObjectAttributeProxy_ABC< T >::DEC_Knowledge_ObjectAttributeProxy_ABC()
     : pAttribute_( 0 )
 {
@@ -72,7 +72,7 @@ DEC_Knowledge_ObjectAttributeProxy_ABC< T >::DEC_Knowledge_ObjectAttributeProxy_
 // Name: DEC_Knowledge_ObjectAttributeProxy_ABC destructor
 // Created: NLD 2010-10-27
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 DEC_Knowledge_ObjectAttributeProxy_ABC< T >::~DEC_Knowledge_ObjectAttributeProxy_ABC()
 {
     delete pAttribute_;
@@ -82,8 +82,8 @@ DEC_Knowledge_ObjectAttributeProxy_ABC< T >::~DEC_Knowledge_ObjectAttributeProxy
 // Name: DEC_Knowledge_ObjectAttributeProxy_ABC::UpdateAttributeFromSource
 // Created: NLD 2010-10-27
 // -----------------------------------------------------------------------------
-template< typename T > 
-template< typename Source > 
+template< typename T >
+template< typename Source >
 bool DEC_Knowledge_ObjectAttributeProxy_ABC< T >::UpdateAttributeFromSource( const Source& source )
 {
     const T* pNewData = source.GetAttribute< T >();
@@ -99,7 +99,7 @@ bool DEC_Knowledge_ObjectAttributeProxy_ABC< T >::UpdateAttributeFromSource( con
 // Name: DEC_Knowledge_ObjectAttributeProxy_ABC::SendChangedState
 // Created: NLD 2010-10-27
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendChangedState( sword::ObjectAttributes& asn ) const
 {
     const T* pData = GetAttribute();
@@ -111,7 +111,7 @@ void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendChangedState( sword::Objec
 // Name: DEC_Knowledge_ObjectAttributeProxy_ABC::SendFullState
 // Created: NLD 2010-10-27
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendFullState( sword::ObjectAttributes& asn ) const
 {
     const T* pData = GetAttribute();
@@ -123,7 +123,7 @@ void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::SendFullState( sword::ObjectAt
 // Name: DEC_Knowledge_ObjectAttributeProxy_ABC::Register
 // Created: NLD 2010-11-03
 // -----------------------------------------------------------------------------
-template< typename T > 
+template< typename T >
 void DEC_Knowledge_ObjectAttributeProxy_ABC< T >::Register( DEC_Knowledge_Object& knowledge )
 {
     knowledge.Attach( *this );

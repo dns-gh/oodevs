@@ -95,7 +95,7 @@ private:
     //! @name Reference member data
     //@{
     Workspace_ABC& workspace_;
-    
+
     //@}
 
     //! @name Member data

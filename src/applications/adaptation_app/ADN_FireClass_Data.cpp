@@ -228,7 +228,7 @@ ADN_FireClass_Data::FireClassInfos::FireClassInfos()
 
     isSurface_.SetParentNode( *this );
     surfaceInfos_.SetParentNode( *this );
-    
+
      for( int i = 0; i < eNbrLocation; ++i )
          surfaceInfos_.AddItem( new FireSurfaceInfos( E_Location( i ) ) );
 }

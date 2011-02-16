@@ -100,6 +100,6 @@ void MedicalTreatmentPrototype::CommitShapeObject( const kernel::ShapeObject& im
 // -----------------------------------------------------------------------------
 kernel::ShapeObjectLoader_ABC* MedicalTreatmentPrototype::LoadObjects( const std::string& filename, const kernel::CoordinateConverter_ABC& coordinatesConverter )
 {
-    return new MedicalShapeLoader( filename, coordinatesConverter ); 
+    return new MedicalShapeLoader( filename, coordinatesConverter );
 }
 */

@@ -42,7 +42,7 @@ LogisticAttribute::~LogisticAttribute()
 void LogisticAttribute::Update( const sword::ObjectAttributes& asnMsg )
 {
     if ( asnMsg.has_logistic()  )
-        pTC2_ = &automats_.Get( asnMsg.logistic().combat_train().id() );    
+        pTC2_ = &automats_.Get( asnMsg.logistic().combat_train().id() );
 }
 
 // -----------------------------------------------------------------------------

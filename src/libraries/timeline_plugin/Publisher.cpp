@@ -27,10 +27,10 @@ Publisher::Publisher( xml::xistream& xis )
     , useSsl_( false )
 {
     std::string type;
-    xis >> xml::attribute( "host", host_ ) 
-        >> xml::optional >> xml::attribute( "log", log_ ) 
+    xis >> xml::attribute( "host", host_ )
+        >> xml::optional >> xml::attribute( "log", log_ )
         >> xml::optional >> xml::attribute( "type", type )
-        >> xml::start( "scenario" ) 
+        >> xml::start( "scenario" )
             >> xml::attribute( "id", scenario_ )
         >> xml::end;
     getURI_ = "/scenario/" + boost::lexical_cast<std::string>( scenario_ );
@@ -75,7 +75,7 @@ void Publisher::PullSituation( const std::string& message, const std::string& ti
         std::string result;
 
         RestClient client( host_, GetUri( timestamp ), useSsl_ );
-            
+
         client.DoGet( message, result );
         if( client.GetStatus() != 200 || result.size() == 0 )
             throw std::exception( "Content of url reports from webService is empty" );
@@ -108,7 +108,7 @@ void Publisher::PushReport( const std::string& message )
         if( !message.empty() )
         {
             std::string result;
-            
+
             RestClient client( host_, postURI_, useSsl_ );
 
             boost::recursive_mutex::scoped_lock locker( mutex_ );

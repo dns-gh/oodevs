@@ -64,7 +64,7 @@ public:
     virtual void Update( const sword::LimitCreation& msg ) = 0;
     virtual void Update( const sword::PhaseLineCreation& msg ) = 0;
     //@}
-    
+
 
     //! @name sword
     //@{

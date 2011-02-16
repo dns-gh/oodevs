@@ -67,7 +67,7 @@ public:
     void OnUpdate( const sword::MissionParameter_Value& attribute );
 
     //! @name From MIL_InteractiveContainer_ABC
-    //@{    
+    //@{
     virtual void CanInteractWith( const MIL_Object_ABC& /*object*/, const MIL_Agent_ABC& /*agent*/, bool& /*canInteract*/ ){};
     virtual void ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ );
     virtual void ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& /*agent*/ );

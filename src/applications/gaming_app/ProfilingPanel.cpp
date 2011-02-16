@@ -38,12 +38,12 @@ ProfilingPanel::ProfilingPanel( QWidget* parent, kernel::Controllers& controller
         QVBox* vBox = new QVBox( this );
         QHBox* box = new QHBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Incoming bytes: " ), box );
-        networkTotalBytesReceived_ = new QLabel( box );        
+        networkTotalBytesReceived_ = new QLabel( box );
         networkBytesReceived_ = new StatisticsWidget( vBox );
 
         box = new QHBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Incoming messages: " ), box );
-        networkTotalMsgsReceived_ = new QLabel( box );        
+        networkTotalMsgsReceived_ = new QLabel( box );
         networkMsgsReceived_ = new StatisticsWidget( vBox );
         networkMsgsReceived_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Nb messages" ) );
 
@@ -54,7 +54,7 @@ ProfilingPanel::ProfilingPanel( QWidget* parent, kernel::Controllers& controller
 
         box = new QHBox( vBox );
         new QLabel( tools::translate( "ProfilingPanel", "Outgoing messages: " ), box );
-        networkTotalMsgsSent_ = new QLabel( box );        
+        networkTotalMsgsSent_ = new QLabel( box );
         networkMsgsSent_ = new StatisticsWidget( vBox );
         networkMsgsSent_->SetYAxisCaption( tools::translate( "ProfilingPanel", "Nb messages" ) );
 

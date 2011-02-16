@@ -208,7 +208,7 @@ const std::vector< Polygon2f* >& FloodAttribute::GetDeepAreas() const
 {
     return floodModel_->GetDeepAreas();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: FloodAttribute::GetLowAreas
 // Created: JSR 2010-12-21

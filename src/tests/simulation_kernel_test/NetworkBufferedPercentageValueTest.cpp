@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_CASE( NetworkBufferedPercentageValueTestDouble )
     BOOST_CHECK_EQUAL( 0.55, test1.Get() );
     BOOST_CHECK_EQUAL( 0.55, test1.Send() );
     BOOST_CHECK_EQUAL( false, test1.NeedToBeSent() );
-       
+
     BOOST_CHECK_EQUAL( true, test1.Set( 0.75 ) );
     BOOST_CHECK_EQUAL( true, test1.NeedToBeSent() );
     BOOST_CHECK_EQUAL( 0.75, test1.Get() );
@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE( NetworkBufferedPercentageValueTestInt )
     BOOST_CHECK_EQUAL( 55, test1.Get() );
     BOOST_CHECK_EQUAL( 55, test1.Send() );
     BOOST_CHECK_EQUAL( false, test1.NeedToBeSent() );
-       
+
     BOOST_CHECK_EQUAL( true, test1.Set( 75 ) );
     BOOST_CHECK_EQUAL( true, test1.NeedToBeSent() );
     BOOST_CHECK_EQUAL( 75, test1.Get() );

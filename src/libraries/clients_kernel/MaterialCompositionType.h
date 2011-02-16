@@ -63,7 +63,7 @@ public:
     //@{
     unsigned int GetId() const;
     const std::string& GetName() const;
-    MaterialCompositionType::AttritionData* FindAttrition( const std::string& protection ) const; 
+    MaterialCompositionType::AttritionData* FindAttrition( const std::string& protection ) const;
     //@}
 
     //! @name Copy/Assignment

@@ -2021,7 +2021,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 
     randomBreakdowns_.ReadArchive( input );
     attritionBreakdowns_.ReadArchive( input );
-    
+
     input >> xml::optional >> xml::content( "equipment-category", equipmentCategory_ );
 
     input >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ );

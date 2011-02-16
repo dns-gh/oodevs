@@ -51,7 +51,7 @@ template< typename T > const T* DEC_Knowledge_ObjectMagicPerception::GetAttribut
 {
     const MIL_Object_ABC* pObject = knowledge_.GetObjectKnown();
     if( !pObject || perceptionLevel_ <= PHY_PerceptionLevel::notSeen_ )
-        return 0; 
+        return 0;
     return pObject->RetrieveAttribute< T >();
 }
 

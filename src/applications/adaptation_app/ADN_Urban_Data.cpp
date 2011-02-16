@@ -400,7 +400,7 @@ void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
         for( CIT_AccommodationInfos_Vector it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
             ( *it )->WriteAccommodation( output );
         output << xml::end;
-    }  
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -499,7 +499,7 @@ void ADN_Urban_Data::WriteInfrastructures( xml::xostream& output ) const
         for( CIT_InfrastructureInfos_Vector it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
             ( *it )->WriteInfrastructure( output );
         output << xml::end;
-    }  
+    }
 }
 
 // -----------------------------------------------------------------------------

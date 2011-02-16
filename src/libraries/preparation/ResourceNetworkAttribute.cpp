@@ -92,14 +92,14 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
     // TODO
     /*else
         entity = &objectResolver_.Get( link.id_ );*/
-    else 
+    else
         return QString::number( link.id_ );
     QString ret = entity->GetName();
     if( ret.isEmpty() )
         ret = QString::number( link.id_ );
     return ret;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::Draw
 // Created: JSR 2010-09-07

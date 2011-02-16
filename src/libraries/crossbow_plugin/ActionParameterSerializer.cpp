@@ -72,8 +72,8 @@
 using namespace plugins;
 using namespace plugins::crossbow;
 
-namespace 
-{   
+namespace
+{
     Database_ABC& GetDatabase( Workspace_ABC& workspace )
     {
         return workspace.GetDatabase( "geometry" );
@@ -86,7 +86,7 @@ namespace
     };
 }
 
-class ActionParameterSerializer::ParameterSerializerFactory 
+class ActionParameterSerializer::ParameterSerializerFactory
     : public boost::noncopyable
 {
     typedef boost::function< void( const kernel::OrderParameter&, unsigned long, const std::string&, std::auto_ptr< actions::Parameter_ABC >& ) > t_functor;
@@ -112,12 +112,12 @@ public:
     Callable operator[]( const std::string& name )
     {
         if ( callbacks_.find( name ) == callbacks_.end() )
-            throw NotFoundException( "Unregistered '" + name + "' type to be serialized." ); 
+            throw NotFoundException( "Unregistered '" + name + "' type to be serialized." );
         return Callable( callbacks_[ name ] );
     }
 
 private:
-    
+
     std::map< std::string, t_functor > callbacks_;
 };
 
@@ -130,7 +130,7 @@ ActionParameterSerializer::ActionParameterSerializer( Workspace_ABC& workspace, 
     , converter_ ( converter )
     , agentConverter_ ( agentConverter )
     , objectConverter_ ( objectConverter )
-    , entities_ ( entities ) 
+    , entities_ ( entities )
     , controller_ ( controller )
     , factory_ ( new ParameterSerializerFactory() )
 {
@@ -179,7 +179,7 @@ void ActionParameterSerializer::DoRegistration()
     factory_->Register( "automate",       boost::bind( &ActionParameterSerializer::SerializeId< actions::parameters::Automat >, this, _1, _3, _4 ) );
 
     factory_->Register( "list",           boost::bind( &ActionParameterSerializer::SerializeList, this, _1, _2, _4 ) );
-    
+
     /* JCR: TODO
     case T_MissionParameter_value_atlasNature:
     case T_MissionParameter_value_populationKnowledge:
@@ -219,7 +219,7 @@ bool ActionParameterSerializer::DoSerialize( const std::string& type, const kern
 {
     try
     {
-        (*factory_)[ type ].Call( parameter, parameterId, value, param ); 
+        (*factory_)[ type ].Call( parameter, parameterId, value, param );
     }
     catch( NotFoundException& /*ex*/ )
     {
@@ -292,7 +292,7 @@ void ActionParameterSerializer::SerializeRaw( const kernel::OrderParameter& para
 void ActionParameterSerializer::SerializeIntelligence( const kernel::OrderParameter& parameter, const std::string& /*value*/, std::auto_ptr< actions::Parameter_ABC >& param ) const
 {
     // $$$$ TODO : value
-    param.reset( new actions::parameters::Intelligence( parameter, converter_, controller_ ) ); 
+    param.reset( new actions::parameters::Intelligence( parameter, converter_, controller_ ) );
 }
 
 namespace
@@ -302,7 +302,7 @@ namespace
     // Created: JCR 2009-06-05
     // -----------------------------------------------------------------------------
     template < typename GeometryType >
-    bool SerializeLocation( const Row_ABC* row, const kernel::CoordinateConverter_ABC& converter, std::auto_ptr< kernel::Location_ABC >& location ) 
+    bool SerializeLocation( const Row_ABC* row, const kernel::CoordinateConverter_ABC& converter, std::auto_ptr< kernel::Location_ABC >& location )
     {
         if( row == 0 )
             throw std::exception( "Cannot instanciate location parameter" );
@@ -320,7 +320,7 @@ void ActionParameterSerializer::SerializeLocation( const kernel::OrderParameter&
 {
     std::auto_ptr< kernel::Location_ABC > location;
     std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( tablename ) );
-    
+
     const std::string query( "parameter_id=" + boost::lexical_cast< std::string >( parameterId ) );
     std::string geometry( tablename, tablename.find_last_of( "_" ) + 1 );
     if( geometry == "point" )
@@ -382,7 +382,7 @@ void ActionParameterSerializer::SerializePhaseLines( const kernel::OrderParamete
 {
     boost::shared_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( tablename ) );
     const std::string query( "parameter_id=" + boost::lexical_cast< std::string >( parameterId ) );
-    
+
     param.reset( new actions::parameters::LimaList( parameter ) );
     const Row_ABC* row = table->Find( query );
     int i = 0;
@@ -415,7 +415,7 @@ void ActionParameterSerializer::SerializeList( const kernel::OrderParameter& par
 {
     boost::shared_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "actionparameters" ) );
     const std::string query( "reference_id=" + boost::lexical_cast< std::string >( parameterId ) );
-    
+
     list.reset( new actions::parameters::ParameterList( parameter ) );
     int i = 1;
     const Row_ABC* result = table->Find( query );
@@ -425,7 +425,7 @@ void ActionParameterSerializer::SerializeList( const kernel::OrderParameter& par
         const std::string value( GetField< std::string >( *result, "value" ) );
         const std::string type( GetField< std::string >( *result, "type" ) );
         kernel::OrderParameter child( tools::translate( "Parameter", "%1 (item %2)" ).arg( parameter.GetName().c_str() ).arg( i ).ascii(), type, false );
-        
+
         Serialize( child, result->GetID(), value, param );
         if ( param.get() != 0 )
             list->AddParameter( *param.release() );

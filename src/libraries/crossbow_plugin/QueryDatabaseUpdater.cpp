@@ -385,7 +385,7 @@ void QueryDatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tab
     ObjectAttributeUpdater::UpdateObjectAttribute( database_, objectId, msg.attributes );
 }*/
 
-namespace 
+namespace
 {
     long ExtractTasker( const sword::Tasker& source )
     {

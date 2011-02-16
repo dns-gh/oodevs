@@ -45,7 +45,7 @@ bool EntryLabelType::Matches( const std::string& language, const std::string& ki
     bool matchKind = kind.empty() || !kind_.IsSet() || static_cast< const std::string& >( kind_ ) ==  kind;
     return matchKind && matchLanguage;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: EntryLabelType::GetText
 // Created: JSR 2010-10-04

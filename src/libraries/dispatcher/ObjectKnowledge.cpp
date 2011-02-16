@@ -45,7 +45,7 @@ ObjectKnowledge::ObjectKnowledge( const Model_ABC& model, const sword::ObjectKno
     optionals_.locationPresent = 0;
     optionals_.perceivedPresent = 0;
     optionals_.specific_attributesPresent = 0;
-    optionals_.automat_perceptionPresent = 0;    
+    optionals_.automat_perceptionPresent = 0;
     RegisterSelf( *this );
 }
 
@@ -125,7 +125,7 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
     if( optionals_.realObjectPresent )
         asn().mutable_object()->set_id( pObject_ ? pObject_->GetId() : 0 );
     asn().mutable_type()->set_id( nType_ );  // $$$$ _RC_ PHC 2010-07-07: ???
-    asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation 
+    asn().mutable_attributes(); //$$$$ NLD 2010-10-26 - A VIRER quand viré dans le protocole ... le message de creation
     asn.Send( publisher );
 }
 

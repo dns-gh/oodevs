@@ -25,7 +25,7 @@ namespace kernel {
 // Created: NLD 2010-11-25
 // =============================================================================
 class LogisticLevelEditor : public gui::ValuedComboBox< const kernel::LogisticLevel* >
-                          , public kernel::ValueEditor< kernel::LogisticLevel* > 
+                          , public kernel::ValueEditor< kernel::LogisticLevel* >
 {
 public:
     LogisticLevelEditor( QWidget* parent, const kernel::Entity_ABC& selected );

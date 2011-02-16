@@ -50,7 +50,7 @@ void MedicalEquipmentAvailability::Send( sword::LogMedicalEquipmentAvailability&
     asn.set_working( nNbrWorking_ );
     asn.set_lent( nNbrLent_ );
     if( nNbrResting_ != std::numeric_limits< unsigned int >::max() )
-    {        
+    {
         asn.set_resting( nNbrResting_ );
-    }   
+    }
 }

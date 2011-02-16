@@ -24,9 +24,9 @@ MIL_MedicalTreatmentType::T_MedicalTreatmentTypeMap MIL_MedicalTreatmentType::ty
 // Modified: none
 // -----------------------------------------------------------------------------
 void MIL_MedicalTreatmentType::ReadMedicalTreatment( xml::xistream& xis, const MIL_Time_ABC& time, std::set< unsigned int >& ids )
-{    
+{
     const std::string name = xml::attribute< std::string >( xis, "name" );
-    
+
     const MIL_MedicalTreatmentType*& pType = types_[ name ];
     if( pType )
         throw std::runtime_error( "Medical Treatment of Type " + name + " already exists" );
@@ -44,7 +44,7 @@ void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis, const MIL_Time_AB
 {
     std::set< unsigned int > ids;
     MT_LOG_INFO_MSG( "Initializing Medical Treatment Types" );
-    
+
     xis >> xml::start( "medical-treatments" )
             >> xml::list( "medical-treatment", boost::bind( &MIL_MedicalTreatmentType::ReadMedicalTreatment, _1, boost::cref( time ), boost::ref( ids ) ) )
         >> xml::end();
@@ -63,13 +63,13 @@ MIL_MedicalTreatmentType::MIL_MedicalTreatmentType( const std::string& name, xml
 {
     xis >> xml::attribute( "id", nID_ )
         >> xml::optional >> xml::attribute( "death-threshold", deathThreshold_ )
-        >> xml::optional 
+        >> xml::optional
             >> xml::start( "injuries" )
                 >> xml::list( "injury", *this, &MIL_MedicalTreatmentType::ReadMedicalTreatmentEffect )
             >> xml::end;
 }
 
-namespace 
+namespace
 {
     MIL_MedicalTreatmentType::E_InjuryCategories RetrieveInjuryCategory( const std::string& category )
     {
@@ -104,7 +104,7 @@ void MIL_MedicalTreatmentType::ReadMedicalTreatmentEffect( xml::xistream& xis )
 {
     std::string category = xml::attribute< std::string >( xis, "category" );
     E_InjuryCategories patient = RetrieveInjuryCategory( category );
-    
+
     ReadInjury( xis, treatments_[ static_cast< unsigned >( patient ) ] );
 }
 
@@ -217,7 +217,7 @@ unsigned int MIL_MedicalTreatmentType::GetDeathThreshold() const
 // -----------------------------------------------------------------------------
 float MIL_MedicalTreatmentType::GetTreatmentTime( int injuryCategory ) const
 {
-    if ( treatments_.size() > ( unsigned int )injuryCategory )    
+    if ( treatments_.size() > ( unsigned int )injuryCategory )
         return treatments_[ injuryCategory ].treatmentTime_;
     else
         throw std::runtime_error( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
@@ -230,7 +230,7 @@ float MIL_MedicalTreatmentType::GetTreatmentTime( int injuryCategory ) const
 // -----------------------------------------------------------------------------
 float MIL_MedicalTreatmentType::GetHospitalisationTime( int injuryCategory ) const
 {
-    if ( treatments_.size() > ( unsigned int )injuryCategory )    
+    if ( treatments_.size() > ( unsigned int )injuryCategory )
         return treatments_[ injuryCategory ].hospitalisationTime_;
     else
         throw std::runtime_error( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
@@ -243,7 +243,7 @@ float MIL_MedicalTreatmentType::GetHospitalisationTime( int injuryCategory ) con
 // -----------------------------------------------------------------------------
 float MIL_MedicalTreatmentType::GetLifeExpectancy( E_InjuryCategories injuryCategory ) const
 {
-    if ( treatments_.size() > ( unsigned int )injuryCategory )    
+    if ( treatments_.size() > ( unsigned int )injuryCategory )
         return treatments_[ injuryCategory ].lifeExpectancy_;
     else
         throw std::runtime_error( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR
@@ -256,7 +256,7 @@ float MIL_MedicalTreatmentType::GetLifeExpectancy( E_InjuryCategories injuryCate
 // -----------------------------------------------------------------------------
 unsigned int MIL_MedicalTreatmentType::GetInjuryThreshold( E_InjuryCategories injuryCategory ) const
 {
-    if ( treatments_.size() > ( unsigned int )injuryCategory )    
+    if ( treatments_.size() > ( unsigned int )injuryCategory )
         return treatments_[ injuryCategory ].injuryThreshold_;
     else
         throw std::runtime_error( __FUNCTION__ + std::string( "Unknown injury category" ) );//IF THERE IS AN ERROR

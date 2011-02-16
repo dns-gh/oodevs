@@ -63,7 +63,7 @@ xml::xistream* InfrastructureType::FindCapacity( const std::string& capacity ) c
 // Name: InfrastructureType::GetName
 // Created: SLG 2010-12-29
 // -----------------------------------------------------------------------------
-const std::string& InfrastructureType::GetName() const 
+const std::string& InfrastructureType::GetName() const
 {
     return name_;
 }

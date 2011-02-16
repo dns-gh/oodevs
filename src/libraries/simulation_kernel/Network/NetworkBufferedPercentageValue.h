@@ -113,7 +113,7 @@ template< typename T >
 bool NetworkBufferedPercentageValue< T >::NeedToBeSent() const
 {
     if( currentValue_ == lastSentValue_ )
-        return false;            
+        return false;
     if( currentValue_ == minValue_ || currentValue_ == maxValue_ )
         return true;
     return std::abs( lastSentValue_ - currentValue_ ) >= threshold_;
@@ -126,7 +126,7 @@ bool NetworkBufferedPercentageValue< T >::NeedToBeSent() const
 template< typename T >
 const T& NetworkBufferedPercentageValue< T >::Send()
 {
-    lastSentValue_ = currentValue_;        
+    lastSentValue_ = currentValue_;
     return currentValue_;
 }
 

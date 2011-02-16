@@ -1185,7 +1185,7 @@ namespace
             ConvertCombustion( from.combustion(), to->mutable_combustion() );
         if( from.has_decline() )
             ConvertDecline( from.decline(), to->mutable_decline() );
-    }    
+    }
     template< typename From, typename To >
     void ConvertStockResource( const From& from, To* to )
     {
@@ -2371,6 +2371,6 @@ void SimulationToClient::Convert( const sword::ChangePopulationMagicActionAck& f
     CONVERT_ENUM( error_code, ( sword::ChangePopulationMagicActionAck::no_error, MsgsSimToClient::MsgChangePopulationMagicActionAck::no_error )
                               ( sword::ChangePopulationMagicActionAck::error_invalid_population, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_population )
                               ( sword::ChangePopulationMagicActionAck::error_invalid_adhesion, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_adhesion )
-                              ( sword::ChangePopulationMagicActionAck::error_invalid_number, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_number ) 
+                              ( sword::ChangePopulationMagicActionAck::error_invalid_number, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_number )
                               ( sword::ChangePopulationMagicActionAck::error_invalid_parameter, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_parameter ) );
 }

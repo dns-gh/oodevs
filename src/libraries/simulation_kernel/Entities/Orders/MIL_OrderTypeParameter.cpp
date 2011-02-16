@@ -75,7 +75,7 @@ bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, sword::
 {
     if( !from.IsOfType( pParameter_->GetType() ) )
         return false;
-    
+
     if( bIsList_ )
         to.set_null_value( !from.ToList( *to.mutable_value() ) );
     else

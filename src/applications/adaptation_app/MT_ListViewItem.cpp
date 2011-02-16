@@ -65,7 +65,7 @@ MT_ListViewItem::MT_ListViewItem( QListView * parent, QListViewItem * after, QSt
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem constructor
-/** @param  parent 
+/** @param  parent
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
@@ -131,8 +131,8 @@ MT_ListViewItem::~MT_ListViewItem()
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetFont
-/** @param  nColumn 
-    @param  font 
+/** @param  nColumn
+    @param  font
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
@@ -149,8 +149,8 @@ void MT_ListViewItem::SetFont( uint nColumn, const QFont &font )
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetFontColor
-/** @param  nColumn 
-    @param  color 
+/** @param  nColumn
+    @param  color
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
@@ -167,8 +167,8 @@ void MT_ListViewItem::SetFontColor( uint nColumn, const QColor &color )
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetBackground
-/** @param  nColumn 
-    @param  color 
+/** @param  nColumn
+    @param  color
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ void MT_ListViewItem::SetBackground( uint nColumn, const QColor &color )
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetFont
-/** @param  font 
+/** @param  font
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
@@ -200,7 +200,7 @@ void MT_ListViewItem::SetFont( const QFont &font )
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetFontColor
-/** @param  color 
+/** @param  color
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
@@ -215,7 +215,7 @@ void MT_ListViewItem::SetFontColor( const QColor &color )
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetBackground
-/** @param  color 
+/** @param  color
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
@@ -229,11 +229,11 @@ void MT_ListViewItem::SetBackground( const QColor &color )
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::paintCell
-/** @param  painter 
-    @param  cg 
-    @param  column 
-    @param  width 
-    @param  align 
+/** @param  painter
+    @param  cg
+    @param  column
+    @param  width
+    @param  align
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------
@@ -272,10 +272,10 @@ void MT_ListViewItem::paintCell( QPainter *painter, const QColorGroup &cg, int c
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::width
-/** @param  fm 
-    @param  lv 
-    @param  column 
-    @return 
+/** @param  fm
+    @param  lv
+    @param  column
+    @return
 */
 // Created: APE 2004-03-16
 // -----------------------------------------------------------------------------

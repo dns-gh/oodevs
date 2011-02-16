@@ -417,7 +417,7 @@ QListViewItem* CreatePackagePanel::BuildExerciseData( const std::string& exercis
 
     QStringList propagations( frontend::commands::ListPropagations( config_ ) );
     BuildCategory( dataItem, propagations, "data", "propagations" );
-    
+
     if( ! population.empty() )
     {
         QListViewItem* populationItem = InsertValidatedEntry( dataItem, "data/population/" + population, config_.GetRootDir() );

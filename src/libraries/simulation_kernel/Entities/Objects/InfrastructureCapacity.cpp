@@ -131,11 +131,11 @@ void InfrastructureCapacity::Update( MIL_Object_ABC& object, unsigned int /*time
 {
     // $$$$ _RC_ SLG 2011-01-19: trouver un moyen pour mettre les valeurs des capacités StructuralCapacity et ResourceNetworkCapacity dans des attributs
     float previousFunctionalState = functionalState_;
-    StructuralCapacity* capacity = object.Retrieve< StructuralCapacity >(); 
+    StructuralCapacity* capacity = object.Retrieve< StructuralCapacity >();
     functionalState_ = 1.f;
     if( capacity )
         functionalState_ *= capacity->GetStructuralState();
-    ResourceNetworkCapacity* resourceCapacity = object.Retrieve< ResourceNetworkCapacity >(); 
+    ResourceNetworkCapacity* resourceCapacity = object.Retrieve< ResourceNetworkCapacity >();
     if( resourceCapacity )
         functionalState_ *= resourceCapacity->GetFunctionalState();
     if( previousFunctionalState != functionalState_ )

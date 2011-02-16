@@ -55,10 +55,10 @@ public:
     public:
         //! @name Member Data
         //@{
-        ADN_Type_String strName_; 
+        ADN_Type_String strName_;
         ADN_Type_Double value_;
         //@}
-    };   
+    };
 
     typedef ADN_Type_Vector_ABC< AccommodationInfos >     T_AccommodationInfos_Vector;
     typedef T_AccommodationInfos_Vector::iterator        IT_AccommodationInfos_Vector;
@@ -90,11 +90,11 @@ public:
     public:
         //! @name Member Data
         //@{
-        ADN_Type_String strName_; 
+        ADN_Type_String strName_;
         ADN_Type_String symbol_;
         T_CapacityMap capacities_;
         //@}
-    };   
+    };
 
     typedef ADN_Type_Vector_ABC< InfrastructureInfos >     T_InfrastructureInfos_Vector;
     typedef T_InfrastructureInfos_Vector::iterator        IT_InfrastructureInfos_Vector;
@@ -116,7 +116,7 @@ public:
         void WriteMaterial( xml::xostream& output );
 
     private:
-        //! @name Helpers 
+        //! @name Helpers
         //@{
         void ReadAttrition( xml::xistream& input );
         void CreateDefaultAttritionInfos();
@@ -125,7 +125,7 @@ public:
     public:
         //! @name Member Data
         //@{
-        ADN_Type_String strName_; 
+        ADN_Type_String strName_;
         helpers::T_AttritionInfos_Vector vAttritionInfos_;
         //@}
     };
@@ -140,7 +140,7 @@ public:
     typedef ADN_Type_String UrbanInfos;
     typedef ADN_Type_Vector_ABC< UrbanInfos > T_UrbanInfos_Vector;
     typedef T_UrbanInfos_Vector::iterator    IT_UrbanInfos_Vector;
-   
+
 public:
              ADN_Urban_Data();
     virtual ~ADN_Urban_Data();
@@ -150,15 +150,15 @@ public:
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output );
 
-    T_UrbanMaterialInfos_Vector& GetMaterialsInfos();  
+    T_UrbanMaterialInfos_Vector& GetMaterialsInfos();
     UrbanMaterialInfos* FindMaterial( const std::string& strName );
-    T_UrbanInfos_Vector& GetFacadesInfos();  
+    T_UrbanInfos_Vector& GetFacadesInfos();
     UrbanInfos* FindFacade( const std::string& strName );
-    T_UrbanInfos_Vector& GetRoofShapesInfos();  
+    T_UrbanInfos_Vector& GetRoofShapesInfos();
     UrbanInfos* FindRoofShape( const std::string& strName );
-    T_AccommodationInfos_Vector& GetAccommodationsInfos();  
+    T_AccommodationInfos_Vector& GetAccommodationsInfos();
     AccommodationInfos* FindAccommodation( const std::string& strName );
-    T_InfrastructureInfos_Vector& GetInfrastructuresInfos();  
+    T_InfrastructureInfos_Vector& GetInfrastructuresInfos();
     InfrastructureInfos* FindInfrastructure( const std::string& strName );
 
 private:
@@ -179,7 +179,7 @@ private:
     void ReadAccommodation  ( xml::xistream& input );
     void ReadAccommodations ( xml::xistream& input );
     void WriteAccommodations( xml::xostream& output ) const;
-    
+
     void ReadInfrastructure  ( xml::xistream& input );
     void ReadInfrastructures ( xml::xistream& input );
     void WriteInfrastructures( xml::xostream& output ) const;

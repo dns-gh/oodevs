@@ -225,7 +225,7 @@ void MagicActionType::Initialize()
     else if( name_ == "request_object" )
     {
         CreateOrderParameter( "Attributes", "list" );
-    } 
+    }
     else if( name_ == "global_weather" || name_ == "local_weather" )
     {
         CreateOrderParameter( "Temperature", "numeric" );

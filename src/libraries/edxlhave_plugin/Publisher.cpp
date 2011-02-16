@@ -30,7 +30,7 @@ Publisher::Publisher( xml::xistream& xis )
     , useSsl_ ( false )
 {
     std::string type;
-    xis >> xml::start( "services" ) >> xml::attribute( "host", host_ ) 
+    xis >> xml::start( "services" ) >> xml::attribute( "host", host_ )
                                     >> xml::optional >> xml::attribute( "log", log_ )
                                     >> xml::optional >> xml::attribute( "type", type )
             >> xml::start( "initialization" ) >> xml::attribute( "serviceURI", getURI_ ) >> xml::end
@@ -40,7 +40,7 @@ Publisher::Publisher( xml::xistream& xis )
             >> xml::end
         >> xml::end;
     if ( log_ )
-        MT_LOG_INFO_MSG( "Edxl-Have service loaded on : " << host_ << std::endl 
+        MT_LOG_INFO_MSG( "Edxl-Have service loaded on : " << host_ << std::endl
                           << " - initialize : " << getURI_ << std::endl
                           << " - update : " << postURI_ )
     if ( type == "https" )
@@ -70,7 +70,7 @@ void Publisher::PullSituation( const std::string& message, ResponseHandler_ABC& 
         std::string result;
 
         RestClient client( host_, getURI_, useSsl_ );
-            
+
         client.DoGet( message, result );
         if( client.GetStatus() != 200 || result.size() == 0 )
             throw std::exception( "Content of url reports from webService is empty" );
@@ -97,7 +97,7 @@ void Publisher::PushReport( const std::string& message )
         if( !message.empty() )
         {
             std::string result;
-            
+
             RestClient client( host_, postURI_, useSsl_ );
 
             boost::recursive_mutex::scoped_lock locker( mutex_ );

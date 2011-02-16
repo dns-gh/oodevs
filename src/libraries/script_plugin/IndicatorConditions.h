@@ -67,7 +67,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const dispatcher::Config& config_; 
+    const dispatcher::Config& config_;
     //@}
 };
 

@@ -57,7 +57,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
-    virtual void DoUpdate( const sword::ObjectUpdate& message );    
+    virtual void DoUpdate( const sword::ObjectUpdate& message );
 
     template< typename T >
     void UpdateData( const T& message );

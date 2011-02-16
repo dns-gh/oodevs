@@ -50,7 +50,7 @@ public:
 
 private:
     typedef std::map< long, boost::shared_ptr< Task > > T_TaskMap;
-    
+
 private:
     //! @name Copy/Assignment
     //@{

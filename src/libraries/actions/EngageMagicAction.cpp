@@ -27,7 +27,7 @@ EngageMagicAction::EngageMagicAction( const kernel::Entity_ABC& entity, const ke
     , registered_( registered )
     , engaged_ ( engaged )
 {
-    Rename ( name ); 
+    Rename ( name );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ EngageMagicAction::EngageMagicAction( xml::xistream& xis, kernel::Controller& co
     , registered_( true )
     , engaged_ ( engaged )
 {
-    Rename ( name ); 
+    Rename ( name );
 }
 
 // -----------------------------------------------------------------------------

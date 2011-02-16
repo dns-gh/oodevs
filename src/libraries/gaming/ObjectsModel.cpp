@@ -60,7 +60,7 @@ void ObjectsModel::CreateObject( const sword::ObjectCreation& message )
 // Created: NLD 2010-11-02
 // -----------------------------------------------------------------------------
 void ObjectsModel::UpdateObject( const sword::ObjectUpdate& message )
-{    
+{
     Object_ABC& object = GetObject( message.object().id() );
     objectFactory_.RegisterAttributes( object, message.attributes() );
     object.Update( message );

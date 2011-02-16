@@ -171,7 +171,7 @@ void ScoresModel::ReadForeach( xml::xistream& xis )
             ammunitionReplacementString = variable;
         if( source == "equipment" )
             equipmentReplacementString = variable;
-    } 
+    }
     if( xis.has_child( "score" ) )
     {
         std::string name;

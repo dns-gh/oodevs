@@ -118,7 +118,7 @@ void DEC_PopulationDecision::RegisterUserArchetypeFunctions ( directia::brain::B
 {
     // Knowledge objects
     brain[ "DEC_IsValidKnowledgeObject" ] = &DEC_PopulationFunctions::IsKnowledgeObjectValid;
-    brain[ "DEC_ObjectKnowledgesInZone" ] = 
+    brain[ "DEC_ObjectKnowledgesInZone" ] =
         boost::function<  std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_PopulationFunctions::GetObjectsInZone, boost::cref( GetPopulation() ), _1, _2 ) );
 
     // Former szName_, mission_, automate_:
@@ -147,7 +147,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< unsigned int( float, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, unsigned int >, boost::ref( GetPopulation() ), _1, _2 ) );
 
     // Self
-    brain[ "DEC_GetPosition" ] = 
+    brain[ "DEC_GetPosition" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >() >( boost::bind( &DEC_PopulationFunctions::GetBarycenter, boost::cref( GetPopulation() ) ) );
 
     // Knowledge agents

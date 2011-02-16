@@ -31,7 +31,7 @@ public:
              ADN_FragOrder_Wizard( ADN_Missions_Data::T_FragOrder_Vector& fragOrders, QWidget* pParent = 0, const char* szName = 0 );
     virtual ~ADN_FragOrder_Wizard();
     //@}
-    
+
 private:
     //! @name Operations
     //@{

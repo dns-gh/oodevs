@@ -82,13 +82,13 @@ public:
             return baseline_ == rhs.baseline_ &&
                    occupied_ == rhs.occupied_ &&
                    emergency_ ==  rhs.emergency_ &&
-                   time_ == rhs.time_ && 
+                   time_ == rhs.time_ &&
                    type_ == rhs.type_;
         }
         //@}
 
         //! @name CheckPoints
-        //@{ 
+        //@{
         BOOST_SERIALIZATION_SPLIT_MEMBER()
         void load( MIL_CheckPointInArchive&, const unsigned int );
         void save( MIL_CheckPointOutArchive&, const unsigned int ) const;

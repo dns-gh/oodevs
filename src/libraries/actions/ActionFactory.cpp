@@ -516,7 +516,7 @@ actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis,
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateObjectMagicAction( const std::string& magicAction, unsigned long targetId  ) const
 {
-    std::auto_ptr< actions::ObjectMagicAction > action;   
+    std::auto_ptr< actions::ObjectMagicAction > action;
     kernel::Entity_ABC* target = 0;
 
     if( magicAction != "create_object" )
@@ -655,12 +655,12 @@ namespace
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatType& type, const Entity_ABC& selected, const geometry::Point2f& point,
-                                                                tools::Resolver_ABC< Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, 
+                                                                tools::Resolver_ABC< Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger,
                                                                 ActionsModel& actionsModel, const Time_ABC& simulation ) const
 {
     kernel::MagicActionType& actionType = magicActions_.Get( "automat_creation" );
 
-    AutomatCreationMagicAction* action = new AutomatCreationMagicAction( selected, actionType, controller_, tools::translate( "ActionFactory", "Automat Creation" ),  
+    AutomatCreationMagicAction* action = new AutomatCreationMagicAction( selected, actionType, controller_, tools::translate( "ActionFactory", "Automat Creation" ),
           staticModel_, type, point, agentsModel, agentMessenger, actionsModel, simulation, true );
 
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();

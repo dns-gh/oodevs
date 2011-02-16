@@ -18,7 +18,7 @@
 
 #undef max
 
-namespace gui 
+namespace gui
 {
     class SvglRenderer;
     class GLSymbols;

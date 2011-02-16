@@ -23,7 +23,7 @@ DictionaryType::DictionaryType( xml::xistream& xis )
 {
     xis >> xml::list( "entry", *this, &DictionaryType::ReadEntry );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DictionaryType destructor
 // Created: JSR 2010-10-01

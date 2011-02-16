@@ -44,7 +44,7 @@ PHY_ComposanteTypeObjectData::PHY_ComposanteTypeObjectData( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "extinguishing-time"          , rTimeExtinguishing_        );
     tools::ReadTimeAttribute( xis, "construction-time-factor" , rTimeConstructionCoef_);
     tools::ReadTimeAttribute( xis, "destruction-time-factor"  , rTimeDestructionCoef_ );
-    
+
     xis >> xml::optional >> xml::attribute( "bypass-gain-factor", rCoefTimeBypass_             );
     xis >> xml::optional >> xml::attribute( "non-bypassed-speed", rSpeedWithinWhenNotBypassed_ );
     xis >> xml::optional >> xml::attribute( "bypassed-speed",     rSpeedWithinWhenBypassed_    );

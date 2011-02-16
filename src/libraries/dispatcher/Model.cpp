@@ -131,9 +131,9 @@ void Model::Update( const sword::SimToClient& wrapper )
         { // NOTHING
         }
     else if( wrapper.message().has_change_diplomacy_ack() )
-        sides_.Get( wrapper.message().change_diplomacy_ack().party1().id() ).Update( wrapper.message().change_diplomacy_ack() ); 
+        sides_.Get( wrapper.message().change_diplomacy_ack().party1().id() ).Update( wrapper.message().change_diplomacy_ack() );
     else if( wrapper.message().has_change_diplomacy() )
-        sides_.Get( wrapper.message().change_diplomacy().party1().id() ).Update( wrapper.message().change_diplomacy() ); 
+        sides_.Get( wrapper.message().change_diplomacy().party1().id() ).Update( wrapper.message().change_diplomacy() );
     else if( wrapper.message().has_automat_change_logistic_links() )
     {
         if( wrapper.message().automat_change_logistic_links().requester().has_automat() )
@@ -142,9 +142,9 @@ void Model::Update( const sword::SimToClient& wrapper )
             formations_.Get( wrapper.message().automat_change_logistic_links().requester().formation().id() ).Update( wrapper.message().automat_change_logistic_links() );
     }
     else if( wrapper.message().has_automat_change_knowledge_group() )
-        automats_.Get( wrapper.message().automat_change_knowledge_group().automat().id() ).Update( wrapper.message().automat_change_knowledge_group() ); 
+        automats_.Get( wrapper.message().automat_change_knowledge_group().automat().id() ).Update( wrapper.message().automat_change_knowledge_group() );
     else if( wrapper.message().has_automat_change_superior() )
-        automats_.Get( wrapper.message().automat_change_superior().automat().id() ).Update( wrapper.message().automat_change_superior() ); 
+        automats_.Get( wrapper.message().automat_change_superior().automat().id() ).Update( wrapper.message().automat_change_superior() );
     else if( wrapper.message().has_automat_change_logistic_links_ack() ||
         wrapper.message().has_automat_change_knowledge_group_ack() ||
         wrapper.message().has_automat_change_superior_ack() ||
@@ -152,7 +152,7 @@ void Model::Update( const sword::SimToClient& wrapper )
         { // NOTHING
         }
     else if( wrapper.message().has_unit_change_superior() )
-        agents_.Get( wrapper.message().unit_change_superior().unit().id() ).Update( wrapper.message().unit_change_superior() ); 
+        agents_.Get( wrapper.message().unit_change_superior().unit().id() ).Update( wrapper.message().unit_change_superior() );
     else if( wrapper.message().has_log_supply_push_flow_ack() ||
         wrapper.message().has_log_supply_pull_flow_ack() ||
         wrapper.message().has_log_supply_change_quotas_ack() )
@@ -187,9 +187,9 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( wrapper.message().has_unit_knowledge_creation() )
         CreateUpdate< AgentKnowledge >( agentKnowledges_, wrapper.message().unit_knowledge_creation().knowledge().id(), wrapper.message().unit_knowledge_creation() );
     else if( wrapper.message().has_unit_knowledge_update() )
-        agentKnowledges_.Get( wrapper.message().unit_knowledge_update().knowledge().id() ).Update( wrapper.message().unit_knowledge_update() ); 
+        agentKnowledges_.Get( wrapper.message().unit_knowledge_update().knowledge().id() ).Update( wrapper.message().unit_knowledge_update() );
     else if( wrapper.message().has_unit_knowledge_destruction() )
-        Destroy( agentKnowledges_, wrapper.message().unit_knowledge_destruction().knowledge().id(), wrapper.message().unit_knowledge_destruction() ); 
+        Destroy( agentKnowledges_, wrapper.message().unit_knowledge_destruction().knowledge().id(), wrapper.message().unit_knowledge_destruction() );
     else if( wrapper.message().has_party_creation() )
         CreateUpdate< Side >( sides_, wrapper.message().party_creation().party().id(), wrapper.message().party_creation() );
     else if( wrapper.message().has_knowledge_group_creation() )
@@ -199,11 +199,11 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( wrapper.message().has_knowledge_group_update() )
         knowledgeGroups_.Get( wrapper.message().knowledge_group_update().knowledge_group().id() ).Update( wrapper.message().knowledge_group_update() );
     else if( wrapper.message().has_formation_creation() )
-        CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().formation().id(), wrapper.message().formation_creation(), staticModel_.levels_ ); 
+        CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().formation().id(), wrapper.message().formation_creation(), staticModel_.levels_ );
     else if( wrapper.message().has_formation_destruction() )
-        Destroy( formations_, wrapper.message().formation_destruction().formation().id(), wrapper.message().formation_destruction() ); 
+        Destroy( formations_, wrapper.message().formation_destruction().formation().id(), wrapper.message().formation_destruction() );
     else if( wrapper.message().has_unit_creation() )
-        CreateUpdate< Agent >( agents_, wrapper.message().unit_creation().unit().id(), wrapper.message().unit_creation(), staticModel_.types_ ); 
+        CreateUpdate< Agent >( agents_, wrapper.message().unit_creation().unit().id(), wrapper.message().unit_creation(), staticModel_.types_ );
     else if( wrapper.message().has_unit_environment_type() )
         agents_.Get( wrapper.message().unit_environment_type().unit().id() ).Update( wrapper.message().unit_environment_type() );
     else if( wrapper.message().has_unit_destruction() )
@@ -234,32 +234,32 @@ void Model::Update( const sword::SimToClient& wrapper )
 
 
     else if( wrapper.message().has_report() )
-        CreateUpdate< Report >( reports_, wrapper.message().report().report().id(), wrapper.message().report() ); 
+        CreateUpdate< Report >( reports_, wrapper.message().report().report().id(), wrapper.message().report() );
     else if( wrapper.message().has_invalidate_report() )
-        Destroy( reports_, wrapper.message().invalidate_report().report().id(), wrapper.message().invalidate_report() ); 
+        Destroy( reports_, wrapper.message().invalidate_report().report().id(), wrapper.message().invalidate_report() );
     else if( wrapper.message().has_trace() )
     {
         // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
     }
     else if( wrapper.message().has_unit_detection() )
-        agents_.Get( wrapper.message().unit_detection().observer().id() ).Update( wrapper.message().unit_detection() ); 
+        agents_.Get( wrapper.message().unit_detection().observer().id() ).Update( wrapper.message().unit_detection() );
     else if( wrapper.message().has_object_detection() )
-        agents_.Get( wrapper.message().object_detection().observer().id() ).Update( wrapper.message().object_detection() ); 
+        agents_.Get( wrapper.message().object_detection().observer().id() ).Update( wrapper.message().object_detection() );
     else if( wrapper.message().has_decisional_state() )
-        UpdateAnyAgent( TaskerToId( wrapper.message().decisional_state().source() ), wrapper.message().decisional_state() ); 
+        UpdateAnyAgent( TaskerToId( wrapper.message().decisional_state().source() ), wrapper.message().decisional_state() );
     else if( wrapper.message().has_start_fire_effect() )
-        CreateUpdate< FireEffect >( fireEffects_, wrapper.message().start_fire_effect().fire_effect().id(), wrapper.message().start_fire_effect() ); 
+        CreateUpdate< FireEffect >( fireEffects_, wrapper.message().start_fire_effect().fire_effect().id(), wrapper.message().start_fire_effect() );
     else if( wrapper.message().has_stop_fire_effect() )
-        Destroy( fireEffects_, wrapper.message().stop_fire_effect().fire_effect().id(), wrapper.message().stop_fire_effect() ); 
+        Destroy( fireEffects_, wrapper.message().stop_fire_effect().fire_effect().id(), wrapper.message().stop_fire_effect() );
     else if( wrapper.message().has_unit_order() )
-        agents_.Get( wrapper.message().unit_order().tasker().id() ).Update( wrapper.message().unit_order() ); 
+        agents_.Get( wrapper.message().unit_order().tasker().id() ).Update( wrapper.message().unit_order() );
     else if( wrapper.message().has_automat_order() )
-        automats_.Get( wrapper.message().automat_order().tasker().id() ).Update( wrapper.message().automat_order() ); 
+        automats_.Get( wrapper.message().automat_order().tasker().id() ).Update( wrapper.message().automat_order() );
     else if( wrapper.message().has_crowd_order() )
-        populations_.Get( wrapper.message().crowd_order().tasker().id() ).Update( wrapper.message().crowd_order() ); 
+        populations_.Get( wrapper.message().crowd_order().tasker().id() ).Update( wrapper.message().crowd_order() );
 
     else if( wrapper.message().has_object_creation() )
-        CreateUpdate< Object >( objects_, wrapper.message().object_creation().object().id(), wrapper.message().object_creation(), staticModel_.objectTypes_ ); 
+        CreateUpdate< Object >( objects_, wrapper.message().object_creation().object().id(), wrapper.message().object_creation(), staticModel_.objectTypes_ );
     else if( wrapper.message().has_object_update() )
     {
         if( objects_.Find( wrapper.message().object_update().object().id() ) )
@@ -268,31 +268,31 @@ void Model::Update( const sword::SimToClient& wrapper )
             urbanBlocks_.Get( wrapper.message().object_update().object().id() ).Update( wrapper.message().object_update() );
     }
     else if( wrapper.message().has_object_destruction() )
-        Destroy( objects_, wrapper.message().object_destruction().object().id(), wrapper.message().object_destruction() ); 
+        Destroy( objects_, wrapper.message().object_destruction().object().id(), wrapper.message().object_destruction() );
     else if( wrapper.message().has_object_knowledge_creation() )
-        CreateUpdate< ObjectKnowledge >( objectKnowledges_, wrapper.message().object_knowledge_creation().knowledge().id(), wrapper.message().object_knowledge_creation() ); 
+        CreateUpdate< ObjectKnowledge >( objectKnowledges_, wrapper.message().object_knowledge_creation().knowledge().id(), wrapper.message().object_knowledge_creation() );
     else if( wrapper.message().has_object_knowledge_update() )
-        objectKnowledges_.Get( wrapper.message().object_knowledge_update().knowledge().id() ).Update( wrapper.message().object_knowledge_update() ); 
+        objectKnowledges_.Get( wrapper.message().object_knowledge_update().knowledge().id() ).Update( wrapper.message().object_knowledge_update() );
     else if( wrapper.message().has_object_knowledge_destruction() )
-        Destroy( objectKnowledges_, wrapper.message().object_knowledge_destruction().knowledge().id(), wrapper.message().object_knowledge_destruction() ); 
+        Destroy( objectKnowledges_, wrapper.message().object_knowledge_destruction().knowledge().id(), wrapper.message().object_knowledge_destruction() );
 
     else if( wrapper.message().has_log_maintenance_handling_creation() )
-        CreateUpdate< LogConsignMaintenance >( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_creation().request().id(), wrapper.message().log_maintenance_handling_creation() ); 
+        CreateUpdate< LogConsignMaintenance >( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_creation().request().id(), wrapper.message().log_maintenance_handling_creation() );
     else if( wrapper.message().has_log_maintenance_handling_destruction() )
-        Destroy( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_destruction().request().id(), wrapper.message().log_maintenance_handling_destruction() ); 
+        Destroy( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_destruction().request().id(), wrapper.message().log_maintenance_handling_destruction() );
     else if( wrapper.message().has_log_maintenance_handling_update() )
-        logConsignsMaintenance_.Get( wrapper.message().log_maintenance_handling_update().request().id() ).Update( wrapper.message().log_maintenance_handling_update() ); 
+        logConsignsMaintenance_.Get( wrapper.message().log_maintenance_handling_update().request().id() ).Update( wrapper.message().log_maintenance_handling_update() );
     else if( wrapper.message().has_log_maintenance_state() )
-        agents_.Get( wrapper.message().log_maintenance_state().unit().id() ).Update( wrapper.message().log_maintenance_state() ); 
+        agents_.Get( wrapper.message().log_maintenance_state().unit().id() ).Update( wrapper.message().log_maintenance_state() );
 
     else if( wrapper.message().has_log_supply_handling_creation() )
-        CreateUpdate< LogConsignSupply >( logConsignsSupply_, wrapper.message().log_supply_handling_creation().request().id(), wrapper.message().log_supply_handling_creation() ); 
+        CreateUpdate< LogConsignSupply >( logConsignsSupply_, wrapper.message().log_supply_handling_creation().request().id(), wrapper.message().log_supply_handling_creation() );
     else if( wrapper.message().has_log_supply_handling_destruction() )
         Destroy( logConsignsSupply_, wrapper.message().log_supply_handling_destruction().request().id(), wrapper.message().log_supply_handling_destruction() );
     else if( wrapper.message().has_log_supply_handling_update() )
-        logConsignsSupply_.Get( wrapper.message().log_supply_handling_update().request().id() ).Update( wrapper.message().log_supply_handling_update() ); 
+        logConsignsSupply_.Get( wrapper.message().log_supply_handling_update().request().id() ).Update( wrapper.message().log_supply_handling_update() );
     else if( wrapper.message().has_log_supply_state() )
-        agents_.Get( wrapper.message().log_supply_state().unit().id() ).Update( wrapper.message().log_supply_state() ); 
+        agents_.Get( wrapper.message().log_supply_state().unit().id() ).Update( wrapper.message().log_supply_state() );
     else if( wrapper.message().has_log_supply_quotas() )
     {
         if( wrapper.message().log_supply_quotas().supplied().has_automat() )
@@ -301,57 +301,57 @@ void Model::Update( const sword::SimToClient& wrapper )
             formations_.Get( wrapper.message().log_supply_quotas().supplied().formation().id() ).Update( wrapper.message().log_supply_quotas() );
     }
     else if( wrapper.message().has_log_medical_handling_creation() )
-        CreateUpdate< LogConsignMedical >( logConsignsMedical_, wrapper.message().log_medical_handling_creation().request().id(),  wrapper.message().log_medical_handling_creation() ); 
+        CreateUpdate< LogConsignMedical >( logConsignsMedical_, wrapper.message().log_medical_handling_creation().request().id(),  wrapper.message().log_medical_handling_creation() );
     else if( wrapper.message().has_log_medical_handling_destruction() )
         Destroy( logConsignsMedical_, wrapper.message().log_medical_handling_destruction().request().id(), wrapper.message().log_medical_handling_destruction() );
     else if( wrapper.message().has_log_medical_handling_update() )
-        logConsignsMedical_.Get( wrapper.message().log_medical_handling_update().request().id() ).Update( wrapper.message().log_medical_handling_update() ); 
+        logConsignsMedical_.Get( wrapper.message().log_medical_handling_update().request().id() ).Update( wrapper.message().log_medical_handling_update() );
     else if( wrapper.message().has_log_medical_state() )
-        agents_.Get( wrapper.message().log_medical_state().unit().id() ).Update( wrapper.message().log_medical_state() ); 
+        agents_.Get( wrapper.message().log_medical_state().unit().id() ).Update( wrapper.message().log_medical_state() );
 
 
     else if( wrapper.message().has_population_creation() )
         CreateUpdate< Inhabitant >( inhabitants_, wrapper.message().population_creation().id().id(), wrapper.message().population_creation() );
     else if( wrapper.message().has_population_update() )
-        inhabitants_.Get( wrapper.message().population_update().id().id() ).Update( wrapper.message().population_update() ); 
+        inhabitants_.Get( wrapper.message().population_update().id().id() ).Update( wrapper.message().population_update() );
 
     else if( wrapper.message().has_crowd_creation() )
         CreateUpdate< Population >( populations_, wrapper.message().crowd_creation().crowd().id(), wrapper.message().crowd_creation() );
     else if( wrapper.message().has_crowd_destruction() )
         Destroy( populations_, wrapper.message().crowd_destruction().crowd().id(), wrapper.message().crowd_destruction() );
     else if( wrapper.message().has_crowd_update() )
-        populations_.Get( wrapper.message().crowd_update().crowd().id() ).Update( wrapper.message().crowd_update() ); 
+        populations_.Get( wrapper.message().crowd_update().crowd().id() ).Update( wrapper.message().crowd_update() );
     else if( wrapper.message().has_crowd_concentration_creation() )
-        populations_.Get( wrapper.message().crowd_concentration_creation().crowd().id() ).Update( wrapper.message().crowd_concentration_creation() ); 
+        populations_.Get( wrapper.message().crowd_concentration_creation().crowd().id() ).Update( wrapper.message().crowd_concentration_creation() );
     else if( wrapper.message().has_crowd_concentration_destruction() )
-        populations_.Get( wrapper.message().crowd_concentration_destruction().crowd().id() ).Update( wrapper.message().crowd_concentration_destruction() ); 
+        populations_.Get( wrapper.message().crowd_concentration_destruction().crowd().id() ).Update( wrapper.message().crowd_concentration_destruction() );
     else if( wrapper.message().has_crowd_concentration_update() )
-        populations_.Get( wrapper.message().crowd_concentration_update().crowd().id() ).Update( wrapper.message().crowd_concentration_update() ); 
+        populations_.Get( wrapper.message().crowd_concentration_update().crowd().id() ).Update( wrapper.message().crowd_concentration_update() );
     else if( wrapper.message().has_crowd_flow_creation() )
-        populations_.Get( wrapper.message().crowd_flow_creation().crowd().id() ).Update( wrapper.message().crowd_flow_creation() ); 
+        populations_.Get( wrapper.message().crowd_flow_creation().crowd().id() ).Update( wrapper.message().crowd_flow_creation() );
     else if( wrapper.message().has_crowd_flow_destruction() )
-        populations_.Get( wrapper.message().crowd_flow_destruction().crowd().id() ).Update( wrapper.message().crowd_flow_destruction() ); 
+        populations_.Get( wrapper.message().crowd_flow_destruction().crowd().id() ).Update( wrapper.message().crowd_flow_destruction() );
     else if( wrapper.message().has_crowd_flow_update() )
-        populations_.Get( wrapper.message().crowd_flow_update().crowd().id() ).Update( wrapper.message().crowd_flow_update() ); 
+        populations_.Get( wrapper.message().crowd_flow_update().crowd().id() ).Update( wrapper.message().crowd_flow_update() );
 
     else if( wrapper.message().has_crowd_knowledge_creation() )
         CreateUpdate< PopulationKnowledge >( populationKnowledges_, wrapper.message().crowd_knowledge_creation().knowledge().id(), wrapper.message().crowd_knowledge_creation() );
     else if( wrapper.message().has_crowd_knowledge_update() )
         populationKnowledges_.Get( wrapper.message().crowd_knowledge_update().knowledge().id() ).Update( wrapper.message().crowd_knowledge_update() );
     else if( wrapper.message().has_crowd_knowledge_destruction() )
-        Destroy( populationKnowledges_, wrapper.message().crowd_knowledge_destruction().knowledge().id(), wrapper.message().crowd_knowledge_destruction() ); 
+        Destroy( populationKnowledges_, wrapper.message().crowd_knowledge_destruction().knowledge().id(), wrapper.message().crowd_knowledge_destruction() );
     else if( wrapper.message().has_crowd_concentration_knowledge_creation() )
-        populationKnowledges_.Get( wrapper.message().crowd_concentration_knowledge_creation().crowd().id() ).Update( wrapper.message().crowd_concentration_knowledge_creation() ); 
+        populationKnowledges_.Get( wrapper.message().crowd_concentration_knowledge_creation().crowd().id() ).Update( wrapper.message().crowd_concentration_knowledge_creation() );
     else if( wrapper.message().has_crowd_concentration_knowledge_update() )
-        populationKnowledges_.Get( wrapper.message().crowd_concentration_knowledge_update().crowd().id() ).Update( wrapper.message().crowd_concentration_knowledge_update() ); 
+        populationKnowledges_.Get( wrapper.message().crowd_concentration_knowledge_update().crowd().id() ).Update( wrapper.message().crowd_concentration_knowledge_update() );
     else if( wrapper.message().has_crowd_concentration_knowledge_destruction() )
-        populationKnowledges_.Get( wrapper.message().crowd_concentration_knowledge_destruction().crowd().id() ).Update( wrapper.message().crowd_concentration_knowledge_destruction() ); 
+        populationKnowledges_.Get( wrapper.message().crowd_concentration_knowledge_destruction().crowd().id() ).Update( wrapper.message().crowd_concentration_knowledge_destruction() );
     else if( wrapper.message().has_crowd_flow_knowledge_creation() )
-        populationKnowledges_.Get( wrapper.message().crowd_flow_knowledge_creation().crowd().id() ).Update( wrapper.message().crowd_flow_knowledge_creation() ); 
+        populationKnowledges_.Get( wrapper.message().crowd_flow_knowledge_creation().crowd().id() ).Update( wrapper.message().crowd_flow_knowledge_creation() );
     else if( wrapper.message().has_crowd_flow_knowledge_update() )
-        populationKnowledges_.Get( wrapper.message().crowd_flow_knowledge_update().crowd().id() ).Update( wrapper.message().crowd_flow_knowledge_update() ); 
+        populationKnowledges_.Get( wrapper.message().crowd_flow_knowledge_update().crowd().id() ).Update( wrapper.message().crowd_flow_knowledge_update() );
     else if( wrapper.message().has_crowd_flow_knowledge_destruction() )
-        populationKnowledges_.Get( wrapper.message().crowd_flow_knowledge_destruction().crowd().id() ).Update( wrapper.message().crowd_flow_knowledge_destruction() ); 
+        populationKnowledges_.Get( wrapper.message().crowd_flow_knowledge_destruction().crowd().id() ).Update( wrapper.message().crowd_flow_knowledge_destruction() );
     else if( wrapper.message().has_folk_creation() )
         folk_->Update( wrapper.message().folk_creation() );
 
@@ -363,7 +363,7 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( wrapper.message().has_urban_knowledge_creation() )
         CreateUpdate< UrbanKnowledge >( urbanKnowledges_, wrapper.message().urban_knowledge_creation().knowledge().id(), wrapper.message().urban_knowledge_creation() );
     else if( wrapper.message().has_urban_knowledge_update() )
-        urbanKnowledges_.Get( wrapper.message().urban_knowledge_update().knowledge().id() ).Update( wrapper.message().urban_knowledge_update() ); 
+        urbanKnowledges_.Get( wrapper.message().urban_knowledge_update().knowledge().id() ).Update( wrapper.message().urban_knowledge_update() );
     else if( wrapper.message().has_urban_knowledge_destruction() )
         Destroy( urbanKnowledges_, wrapper.message().urban_knowledge_destruction().knowledge().id(), wrapper.message().urban_knowledge_destruction() );
     else if( wrapper.message().has_control_global_weather() )
@@ -579,7 +579,7 @@ unsigned int Model::TaskerToId( const sword::Tasker& tasker ) const
         return tasker.formation().id();
     throw std::runtime_error( __FUNCTION__ " Misformed tasker in protocol message" );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: Model::GetExtensionTypes
 // Created: RPD 2010-12-28

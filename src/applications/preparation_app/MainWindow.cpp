@@ -339,7 +339,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationP
     glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main" );
     glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main" );
     glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main" );
-    glProxy_->Register( inhabitantLayer );          preferences.AddLayer( tr( "Populations" ), inhabitantLayer );   inhabitantLayer     .SetPasses( "main" ); 
+    glProxy_->Register( inhabitantLayer );          preferences.AddLayer( tr( "Populations" ), inhabitantLayer );   inhabitantLayer     .SetPasses( "main" );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main" );
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowd" ), populations );             populations         .SetPasses( "main" );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main" );
@@ -418,7 +418,7 @@ void MainWindow::Open()
 {
     if( model_.IsLoaded() && !CheckSaving())
         return;
-    // Open exercise file dialog 
+    // Open exercise file dialog
     QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (exercise.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
     // Load exercise
     DoLoad( filename );

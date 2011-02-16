@@ -121,7 +121,7 @@ sword::ControlStopExerciseAck::ErrorCode ProcessService::StopExercise( const swo
         process->Stop();
         return sword::ControlStopExerciseAck::success;
     }
-    return frontend::commands::ExerciseExists( config_, name ) ? sword::ControlStopExerciseAck::exercise_not_running 
+    return frontend::commands::ExerciseExists( config_, name ) ? sword::ControlStopExerciseAck::exercise_not_running
                                                                : sword::ControlStopExerciseAck::bad_exercise_name;
 }
 

@@ -53,7 +53,7 @@ public:
     //@}
 
 private:
-    //! @name 
+    //! @name
     //@{
     void Update( const sword::ObjectAttributeMedicalTreatment& message );
     //@}

@@ -193,7 +193,7 @@ void LoggerApplication::LogMessage( const sword::SimToClient& wrapper )
     {
         DumpTime();
         file_ << "Received " << wrapper.message().DebugString() << std::endl;
-        
+
         /*typedef std::vector< const google::protobuf::FieldDescriptor* > T_Fields;
         T_Fields fields;
         const google::protobuf::Reflection* reflect = wrapper.message().GetReflection();

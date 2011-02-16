@@ -63,7 +63,7 @@ private:
     CreateFormationDialog( const CreateFormationDialog& );            //!< Copy constructor
     CreateFormationDialog& operator=( const CreateFormationDialog& ); //!< Assignment operator
     //@}
-    
+
     //! @name Helpers
     //@{
     void NotifyContextMenu( const kernel::Entity_ABC&, const kernel::HierarchyLevel_ABC* level, kernel::ContextMenu& menu);

@@ -83,7 +83,7 @@ void ClientObjectsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
     ack().set_error_code( error );
     ack.Send( publisher );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ClientObjectsModel::HandleRequest
 // Created: JSR 2010-10-15

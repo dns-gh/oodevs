@@ -63,7 +63,7 @@ unsigned int DEC_PopulationFunctions::GetAttitude( const MIL_Population& callerP
     return callerPopulation.GetAttitude().GetID() ;
 }
 
-namespace 
+namespace
 {
     class PopulationVisitor : public MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >
     {

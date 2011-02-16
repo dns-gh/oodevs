@@ -37,7 +37,7 @@ namespace crossbow
     class Workspace_ABC;
     class Table_ABC;
     class Row_ABC;
-    
+
 // =============================================================================
 /** @class  ActionParameterSerializer
     @brief  ActionParameterSerializer
@@ -54,7 +54,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     bool Serialize( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     bool Serialize( const kernel::OrderParameter& parameter, const std::string& value, const kernel::Entity_ABC& entity, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     //@}
@@ -66,7 +66,7 @@ private:
     ActionParameterSerializer& operator=( const ActionParameterSerializer& ); //!< Assignment operator
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void DoRegistration();
     bool DoSerialize( const std::string& type, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value, std::auto_ptr< actions::Parameter_ABC >& param ) const;
@@ -82,7 +82,7 @@ private:
     void SerializeId( const kernel::OrderParameter& parameter, const std::string& value, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     template< typename ParameterType, typename ConverterType >
     void SerializeId( const kernel::OrderParameter& parameter, const std::string& value, const ConverterType& converter, const kernel::Entity_ABC& entity, std::auto_ptr< actions::Parameter_ABC >& param ) const;
-    
+
     void SerializeList( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value, std::auto_ptr< actions::Parameter_ABC >& list ) const;
     void SerializeList( const kernel::OrderParameter& parameter, const std::string& value, const kernel::Entity_ABC& entity, std::auto_ptr< actions::Parameter_ABC >& list ) const;
 
@@ -93,13 +93,13 @@ private:
     void SerializeLocationList( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& tablename, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void SerializeIntelligence( const kernel::OrderParameter& parameter, const std::string& value, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     void SerializePhaseLines( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& tablename, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     void SerializeList( const kernel::OrderParameter& parameter, unsigned long parameterId, std::auto_ptr< actions::Parameter_ABC >& list ) const;
     //@}

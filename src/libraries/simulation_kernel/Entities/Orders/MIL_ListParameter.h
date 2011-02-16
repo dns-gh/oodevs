@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
-    
+
     virtual bool ToElement( sword::MissionParameter_Value& ) const;
     virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& message ) const;
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& result ) const;
@@ -60,7 +60,7 @@ private:
     MIL_ListParameter( const MIL_ListParameter& );            //!< Copy constructor
     MIL_ListParameter& operator=( const MIL_ListParameter& ); //!< Assignment operator
     //@}
-    
+
     typedef std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > T_ParameterList;
     typedef T_ParameterList::const_iterator                          CIT_ParameterList;
 

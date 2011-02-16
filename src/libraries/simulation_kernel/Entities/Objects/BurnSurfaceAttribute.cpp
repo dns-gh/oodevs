@@ -31,7 +31,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPassThrough< Bur
 // -----------------------------------------------------------------------------
 BurnSurfaceAttribute::BurnSurfaceAttribute( MIL_Object_ABC* pObject )
     : burningCells_( MIL_AgentServer::GetWorkspace().GetBurningCells() )
-	, pObject_( pObject )
+    , pObject_( pObject )
 {
     //NOTHING
 }
@@ -62,7 +62,7 @@ BurnSurfaceAttribute::~BurnSurfaceAttribute()
 // -----------------------------------------------------------------------------
 BurnSurfaceAttribute& BurnSurfaceAttribute::operator=( const BurnSurfaceAttribute& other )
 {
-	pObject_ = other.pObject_;
+    pObject_ = other.pObject_;
     NotifyAttributeUpdated( eOnUpdate);
     return *this;
 }
@@ -91,7 +91,7 @@ void BurnSurfaceAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned in
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     unsigned int objectId = pObject_->GetID();
     ar << objectId;
-	burningCells_.save( ar, *pObject_, version );
+    burningCells_.save( ar, *pObject_, version );
 }
 
 
@@ -110,8 +110,8 @@ void BurnSurfaceAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::Register( MIL_Object_ABC& object ) const
 {
-	BurnSurfaceAttribute attribute( *this );
-	attribute.pObject_ = &object;
+    BurnSurfaceAttribute attribute( *this );
+    attribute.pObject_ = &object;
     object.SetAttribute< BurnSurfaceAttribute, BurnSurfaceAttribute >( attribute );
 }
 
@@ -121,8 +121,8 @@ void BurnSurfaceAttribute::Register( MIL_Object_ABC& object ) const
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-	if( pObject_ )
-		burningCells_.SendFullState( asn, *pObject_ );
+    if( pObject_ )
+        burningCells_.SendFullState( asn, *pObject_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ void BurnSurfaceAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void BurnSurfaceAttribute::NotifyCellsUpdated()
 {
-	NotifyAttributeUpdated( eOnUpdate );
+    NotifyAttributeUpdated( eOnUpdate );
 }
 
 // -----------------------------------------------------------------------------

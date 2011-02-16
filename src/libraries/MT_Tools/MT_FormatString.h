@@ -27,7 +27,7 @@
     @note MT_FormatString is reentrant, that is the following scheme is allowed:
 
     @code
-    cout << MT_FormatString( "%s %g", ( const char* )MT_FormatString( "%s = ", "PI" ), 3.14159f ) << endl;    
+    cout << MT_FormatString( "%s %g", ( const char* )MT_FormatString( "%s = ", "PI" ), 3.14159f ) << endl;
     @encode
 
     As for sprintf, take care about casting the optionnal parameters to the type expected by the format

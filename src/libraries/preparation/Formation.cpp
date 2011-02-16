@@ -59,7 +59,7 @@ Formation::Formation( xml::xistream& xis, Controller& controller, const Formatio
     logisticLevel_ = const_cast< kernel::LogisticLevel* >( &kernel::LogisticLevel::Resolve( logLevelName ) );
 
     xis >> xml::optional >> xml::attribute( "color", color_ );
-    
+
     idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );

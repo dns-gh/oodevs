@@ -43,7 +43,7 @@ namespace actions
 
 class StaticModel;
 
-enum E_StrikeType 
+enum E_StrikeType
 {
     eStrikeOnUnit,
     eStrikeOnPosition

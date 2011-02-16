@@ -115,7 +115,7 @@ QString ParamStringEnumeration::GetValue() const
     std::vector< std::string > result;
     BOOST_FOREACH( const T_Items::value_type& val, selected_ )
     {
-        CIT_Values it = values_.find( val.first ); 
+        CIT_Values it = values_.find( val.first );
         if( it != values_.end() && val.second )
             result.push_back( it->second );
     }

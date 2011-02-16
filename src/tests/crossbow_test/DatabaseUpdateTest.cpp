@@ -80,7 +80,7 @@ namespace
     void CreateFeature( Workspace_ABC& workspace, int public_id, int parent_id, const Point& point )
     {
         std::auto_ptr< Table_ABC > table( workspace.GetDatabase( "feature" ).OpenTable( "UnitForces" ) );
-        
+
         table->BeginTransaction();
         Row_ABC& row = table->CreateRow();
         row.SetField( "public_oid", FieldVariant( public_id ) );
@@ -99,7 +99,7 @@ namespace
     void UpdateFeature( Workspace_ABC& workspace, int public_id, const Point& point )
     {
         std::auto_ptr< Table_ABC > table( workspace.GetDatabase( "feature" ).OpenTable( "UnitForces" ) );
-        
+
         table->BeginTransaction();
         Row_ABC* row = table->Find( "public_oid=" + boost::lexical_cast<std::string>( public_id ) + " AND session_id=2000" );
 

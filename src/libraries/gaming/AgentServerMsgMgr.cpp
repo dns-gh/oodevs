@@ -894,7 +894,7 @@ namespace
         else if( id.has_crowd() )
             model.GetPopulation( id.crowd().id() ).Update( message );
         else
-            throw std::exception( std::string( std::string( typeid( Message ).name() ) + ": unknown message source entity" ).c_str() ); 
+            throw std::exception( std::string( std::string( typeid( Message ).name() ) + ": unknown message source entity" ).c_str() );
     }
 }
 

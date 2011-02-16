@@ -341,7 +341,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnDetectionChanged( const QString&
     {
         detection_ = 0;
 
-    }        
+    }
     Update();
 }
 
@@ -358,8 +358,8 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QStrin
     }
     catch( boost::bad_lexical_cast& /*e*/ )
     {
-        recognition_ = 0; 
-    } 
+        recognition_ = 0;
+    }
     Update();
 }
 
@@ -376,8 +376,8 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnIdentificationChanged( const QSt
         }
         catch( boost::bad_lexical_cast& /*e*/ )
         {
-            identification_ = 0; 
-        } 
+            identification_ = 0;
+        }
     Update();
 }
 
@@ -438,7 +438,7 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnUrbanHeightRatioChanged( const Q
 {
     UpdatePreview( urbanHeightRatio_, urbanHeightRatioValue_, 1., "1", value );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_DetectionAlgorithmPrevision::OnUrbanOccupationChanged
 // Created: LDC 2010-08-16

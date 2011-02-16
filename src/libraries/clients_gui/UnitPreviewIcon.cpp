@@ -161,7 +161,7 @@ void UnitPreviewIcon::UpdateSymbol()
         SymbolIcon icon( symbol_, level_ );
         if( selectedParent_ )
             icon.SetColor( colorStrategy_.FindColor( *selectedParent_ ) );
-                
+
         icon.SetSize( 128 );
         img = icons_.GetSymbol( icon );
         if( !img.isNull() )

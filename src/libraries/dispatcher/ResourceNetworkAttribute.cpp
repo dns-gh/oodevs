@@ -113,7 +113,7 @@ void ResourceNetworkAttribute::Update( const sword::ResourceNetwork& from )
         it->flow_ = linkFrom.flow();
     }
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::Send
 // Created: JSR 2010-08-31

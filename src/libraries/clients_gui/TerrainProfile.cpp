@@ -115,7 +115,7 @@ void TerrainProfile::UpdateVision( const geometry::Point2f& from, const geometry
                 const geometry::Line2f linemax    ( viewer, maxpt );
                 const geometry::Line2f linecurrent( previous, current );
                 if( linemax.Intersect( linecurrent, intersectpoint )
-                    && ( intersectpoint.X() > previous.X() && intersectpoint.X() < x ) ) 
+                    && ( intersectpoint.X() > previous.X() && intersectpoint.X() < x ) )
                     vision_->AddPoint( intersectpoint.X() /1000.f, intersectpoint.Y() );
 
                 vision_->AddPoint( x / 1000.f, value );

@@ -64,7 +64,7 @@ bool MT_LogManager::UnregisterLogger( MT_Logger_ABC& logger )
     @param  strContext   Context
     @param  nCode        Code
 */
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 void MT_LogManager::Log( MT_Logger_ABC::E_LogLevel nLevel, const char* strMessage, const char* strContext, int nCode )
 {

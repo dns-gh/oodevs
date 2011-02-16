@@ -19,7 +19,7 @@ namespace
     {
     public:
         BrainFixture()
-        : brain_( BRAIN_INIT() ) 
+        : brain_( BRAIN_INIT() )
         {
             brain_[ "include" ]( std::string("integration/ToolsFunctions.lua") );
         }

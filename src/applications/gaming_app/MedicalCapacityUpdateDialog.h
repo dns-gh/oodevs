@@ -98,7 +98,7 @@ private:
         explicit Capacity( QWidget* parent, const MedicalTreatmentCapacity& capacity );
         Capacity( const Capacity& rhs );
         void Update( const MedicalTreatmentCapacity& capacity );
-                
+
         int id_;
         std::string name_;
         QSpinBox*   baseline_;
@@ -115,11 +115,11 @@ private:
     actions::ActionsModel& actionsModel_;
     const kernel::StaticModel& static_;
     const kernel::Profile_ABC& profile_;
-    const kernel::Time_ABC& simulation_; 
+    const kernel::Time_ABC& simulation_;
     kernel::SafePointer< kernel::Object_ABC > selected_;
     //@}
 
-    //! @name 
+    //! @name
     //@{
     QLineEdit* referenceID_;
     QVBox* vbox_;

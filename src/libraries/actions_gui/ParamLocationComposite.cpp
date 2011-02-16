@@ -119,7 +119,7 @@ bool ParamLocationComposite::CheckValidity()
         return true;
     return false;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ParamLocationComposite::CommitTo
 // Created: LDC 2010-08-18

@@ -40,13 +40,13 @@ MedicalCapacityUpdateDialog::Capacity::Capacity( QWidget* parent, const MedicalT
     QHBox* rhs = new QHBox( box );
     patients_ = new QSpinBox( 0, capacity.baseline_, 1, rhs );
     patients_->setValue( capacity.baseline_ - capacity.available_ );
-    
+
     new QLabel( QString( " / " ), rhs );
     baseline_ = new QSpinBox( 0, std::max( (int)capacity.baseline_, 500 ), 1, rhs );
     baseline_->setValue( capacity.baseline_ );
     baseline_->setDisabled( true );
 }
-        
+
 // -----------------------------------------------------------------------------
 // Name: MedicalCapacityUpdateDialog::Capacity
 // Created: JCR 2010-06-28
@@ -88,7 +88,7 @@ MedicalCapacityUpdateDialog::MedicalCapacityUpdateDialog( QWidget* parent, kerne
     controllers_.Register( *this );
     hide();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalCapacityUpdateDialog::CreateCanvas
 // Created: JCR 2010-06-28
@@ -99,7 +99,7 @@ void MedicalCapacityUpdateDialog::CreateCanvas()
     QVBoxLayout* layout = new QVBoxLayout( this );
     layout->setSpacing( 5 );
     layout->setMargin( 5 );
-//    
+//
     // Equipment and personal
 
     // QVBox* vbox = new QVBox( this, tr( "MedicalTreatment Type:" ) );
@@ -177,7 +177,7 @@ void MedicalCapacityUpdateDialog::Show()
     InitializeCapacities();
     show();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalCapacityUpdateDialog::InitializeCapacities
 // Created: JCR 2010-06-28
@@ -205,7 +205,7 @@ void MedicalCapacityUpdateDialog::InitializeCapacities()
         for ( std::map< int, MedicalTreatmentCapacity >::const_iterator it = capacities.begin(); it != capacities.end() && itCapa != capacities_.end(); ++it, ++itCapa )
             itCapa->Update( it->second );
     }
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -216,7 +216,7 @@ void MedicalCapacityUpdateDialog::Validate()
 {
     if( ! selected_ )
         return;
-    
+
     accept();
 
     actions::parameters::ParameterList& list = *new actions::parameters::ParameterList( kernel::OrderParameter( "Medical Treatment", "list", false ) );
@@ -224,7 +224,7 @@ void MedicalCapacityUpdateDialog::Validate()
     Send( list );
     selected_ = 0;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: MedicalCapacityUpdateDialog::Reject
 // Created: JCR 2010-06-28
@@ -261,10 +261,10 @@ void MedicalCapacityUpdateDialog::FillAttributes( actions::parameters::Parameter
 {
     attribute.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_medical_treatment );
     attribute.AddString( "ExternalReferenceId", referenceID_->text().ascii() );
-    attribute.AddQuantity( "Doctors", doctors_->value() ); 
+    attribute.AddQuantity( "Doctors", doctors_->value() );
     attribute.AddIdentifier( "Status", 0 ); // JCR TODO : Check status available ?
-    
-    actions::parameters::ParameterList& capacities = attribute.AddList( "BedCapacities" ); 
+
+    actions::parameters::ParameterList& capacities = attribute.AddList( "BedCapacities" );
     int i = 0;
     for( CIT_Capacities it = capacities_.begin(); it != capacities_.end(); ++it, ++i )
     {

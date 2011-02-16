@@ -34,23 +34,23 @@ MOCK_BASE_CLASS( MockPublisher, plugins::timeline::Publisher_ABC )
     MOCK_METHOD( PushReport, 1 )
 };
 
-namespace 
+namespace
 {
     std::string Expect( const std::string& data )
     {
         xml::xostringstream xos;
-        xos << xml::start( "CommitScenario" ) << xml::attribute( "xmlns", "urn:masa:taranis:scenario:1.0" ) 
+        xos << xml::start( "CommitScenario" ) << xml::attribute( "xmlns", "urn:masa:taranis:scenario:1.0" )
                 << xml::attribute( "xmlns:noNamespaceSchemaLocation", "CommitScenario.xsd" )
                 << xml::attribute( "id", 1 )
                 << xml::start( "CommitTask" ) << xml::attribute( "timestamp", 0 )
-                    << xml::start( "task" ) << xml::attribute( "id", -1 ) << xml::attribute( "name", "Unit [356] is requested to execute mission: 'move'" ) 
+                    << xml::start( "task" ) << xml::attribute( "id", -1 ) << xml::attribute( "name", "Unit [356] is requested to execute mission: 'move'" )
                                             << xml::attribute( "actor", 1 ) << xml::attribute( "type", "action" )
                         << xml::xistringstream( data )
                     << xml::end
                 << xml::end
                 << xml::start( "CommitScheduler" ) << xml::attribute( "timestamp", 0 )
-                    << xml::start( "schedule" ) 
-                        << xml::attribute( "id", -1 ) << xml::attribute( "task", -1 ) 
+                    << xml::start( "schedule" )
+                        << xml::attribute( "id", -1 ) << xml::attribute( "task", -1 )
                         << xml::attribute( "time", "2008-08-11T08:12:20" ) << xml::attribute( "status", "pending" );
         return xos.str();
     }

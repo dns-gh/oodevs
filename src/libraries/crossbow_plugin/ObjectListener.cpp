@@ -81,8 +81,8 @@ void ObjectListener::Clean()
         /*
         {
             std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "create_tacticalobject" ) );
-            table->DeleteRows( 
-                "EXISTS ( SELECT 1 FROM sword.create_tacticalobject WHERE" 
+            table->DeleteRows(
+                "EXISTS ( SELECT 1 FROM sword.create_tacticalobject WHERE"
                           "order_id=sword.create_tacticalobject.id AND sword.create_tacticalobject.session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) + ")" );
         }
         {
@@ -144,7 +144,7 @@ namespace
 // Created: SBO 2007-09-23
 // -----------------------------------------------------------------------------
 void ObjectListener::SendCreation( const Row_ABC& row )
-{   
+{
     std::auto_ptr< actions::Action_ABC > magic;
 
     serializer_.SerializeObjectMagicCreation( row, magic );

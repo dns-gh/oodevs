@@ -13,9 +13,9 @@
 #include <string>
 #include <boost/noncopyable.hpp>
 
-namespace xml 
-{ 
-    class xistream; 
+namespace xml
+{
+    class xistream;
 }
 
 namespace aar

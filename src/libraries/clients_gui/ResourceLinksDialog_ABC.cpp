@@ -205,7 +205,7 @@ void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 {
     resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].consumption_ = value;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC::OnCriticalChanged
 // Created: JSR 2010-09-02

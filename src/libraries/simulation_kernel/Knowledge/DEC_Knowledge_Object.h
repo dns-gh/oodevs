@@ -112,7 +112,7 @@ public:
     E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const;
     E_Tristate IsAFriend( const MIL_Army_ABC& army ) const;
 
-    template< typename T > 
+    template< typename T >
     const T* RetrieveAttribute() const;
     //@}
 
@@ -211,15 +211,15 @@ BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_Object )
 // =============================================================================
 // Implementation
 // =============================================================================
-template< typename Functor> 
+template< typename Functor>
 void DEC_Knowledge_Object::UpdateAttributes( Functor functor )
-{    
+{
     for( std::vector< DEC_Knowledge_IObjectAttributeProxy* >::const_iterator it = extensions_.Container().begin(); it != extensions_.Container().end(); ++it )
         if( *it && functor( *it ) )
             NotifyAttributeUpdated( eAttr_Attributes );
 }
 
-template< typename T > 
+template< typename T >
 const T* DEC_Knowledge_Object::RetrieveAttribute() const
 {
     const DEC_Knowledge_ObjectAttributeProxy_ABC< T >* pAttr = Retrieve< DEC_Knowledge_ObjectAttributeProxy_ABC< T > >();

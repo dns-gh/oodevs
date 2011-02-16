@@ -50,7 +50,7 @@ MIL_DotationSupplyManager::MIL_DotationSupplyManager()
 {
     // NOTHING
 }
- 
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager destructor
@@ -86,17 +86,17 @@ namespace boost
                 file << it->second;
             }
         }
-        
+
         template< typename Archive >
         void load( Archive& file, MIL_DotationSupplyManager::T_SupplyDotationStateMap& map, const unsigned int )
         {
             unsigned int nNbr;
-            
+
             file >> nNbr;
             while ( nNbr-- )
             {
                 MIL_AutomateLOG* pBrainLogistic;
-                
+
                 file >> pBrainLogistic;
                 file >> map[ pBrainLogistic ];
             }

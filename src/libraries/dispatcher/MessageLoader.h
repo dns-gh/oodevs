@@ -87,7 +87,7 @@ private:
     static const std::string updateFileName_;
     static boost::mutex filesAccessMutex_;
     //@}
-    
+
 private:
     //! @name Member data
     //@{

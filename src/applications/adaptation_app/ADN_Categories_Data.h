@@ -49,7 +49,7 @@ public:
     helpers::ArmorInfos*                   FindArmor( const std::string& strName );
     SizeInfos*                             FindSize( const std::string& strName );
     helpers::ResourceNatureInfos*          FindDotationNature( const std::string& strName );
-    static unsigned long                   GetNewIdentifier();             
+    static unsigned long                   GetNewIdentifier();
 
 private:
     void ReadVolume( xml::xistream& input );

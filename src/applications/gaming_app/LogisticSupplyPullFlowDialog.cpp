@@ -183,7 +183,7 @@ void LogisticSupplyPullFlowDialog::Validate()
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     if( dynamic_cast<const Automat_ABC*>(target) )
         action->AddParameter( *new parameters::Automat( it.NextElement(), *dynamic_cast<const Automat_ABC*>(target), controllers_.controller_ ) );
-    else        
+    else
         action->AddParameter( *new parameters::Formation( it.NextElement(), *dynamic_cast<const Formation_ABC*>(target), controllers_.controller_ ) );
 
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );

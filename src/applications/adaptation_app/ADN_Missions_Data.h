@@ -167,7 +167,6 @@ public:
         ADN_Type_String           doctrineDescription_;
         ADN_Type_String           usageDescription_;
 
-        
     };
 
     typedef ADN_Type_Vector_ABC<FragOrder>  T_FragOrder_Vector;

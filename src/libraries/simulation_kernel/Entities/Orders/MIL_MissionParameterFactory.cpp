@@ -81,7 +81,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Created: LDC 2010-09-22
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const sword::MissionParameter_Value& message, const DEC_KnowledgeResolver_ABC& resolver )
-{  
+{
     MIL_MissionParameter_ABC* ptr = 0;
     MIL_EntityManager_ABC& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
     if( message.has_booleanvalue() )
@@ -143,7 +143,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         // $$$$ LDC : These types are exclusively managed by the OrderContext.
     else
         ptr = new MIL_ListParameter( resolver, message.list() );
-    
+
     boost::shared_ptr<MIL_MissionParameter_ABC> result( ptr );
     return result;
 }

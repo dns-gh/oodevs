@@ -31,8 +31,8 @@ using namespace kernel;
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
 Population::Population( const sword::CrowdCreation& message,
-                        Controllers& controllers, 
-                        const CoordinateConverter_ABC& converter, 
+                        Controllers& controllers,
+                        const CoordinateConverter_ABC& converter,
                         const tools::Resolver_ABC< kernel::PopulationType >& typeResolver,
                         const kernel::StaticModel& staticModel )
     : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ) )

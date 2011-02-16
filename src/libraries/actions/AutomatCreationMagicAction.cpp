@@ -30,9 +30,9 @@ using namespace actions;
 // Name: AutomatCreationMagicAction constructor
 // Created: HBD 2010-12-07
 // -----------------------------------------------------------------------------
-AutomatCreationMagicAction::AutomatCreationMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, 
+AutomatCreationMagicAction::AutomatCreationMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller,
                                                        const QString& name, const kernel::StaticModel& staticModel, const kernel::AutomatType& type, const geometry::Point2f& point,
-                                                       tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, actions::CreationListener_ABC& agentMessenger, ActionsModel& actionsModel, 
+                                                       tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, actions::CreationListener_ABC& agentMessenger, ActionsModel& actionsModel,
                                                        const kernel::Time_ABC& simulation, bool registered /*= true*/)
     : UnitMagicAction( entity, magic, controller, name, registered )
     , automatType_ ( type )

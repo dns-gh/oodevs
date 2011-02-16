@@ -65,7 +65,7 @@ private:
     //@{
     const kernel::AutomatType& automatType_;
     kernel::CoordinateConverter_ABC& coordinateConverter_;
-    tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel_; 
+    tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel_;
     CreationListener_ABC& messageManager_;
     ActionsModel& actionsModel_;
     kernel::AgentTypes& agentTypes_;

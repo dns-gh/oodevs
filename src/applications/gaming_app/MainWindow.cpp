@@ -457,8 +457,8 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( parameters );
     forward_->Register( agents );
     forward_->Register( automats );
-    forward_->Register( formationLayer ); 
-    forward_->Register( teamLayer ); 
+    forward_->Register( formationLayer );
+    forward_->Register( teamLayer );
     forward_->Register( populations );
     forward_->Register( inhabitants );
     forward_->Register( objectsLayer );
@@ -672,7 +672,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
             if ( onPlanif_ )
               setCaption( planifName_ + modePlanif );
             else
-             setCaption( planifName_ );   
+             setCaption( planifName_ );
             // $$$$ SBO 2009-12-18: Use exercise META data
         }
     }
@@ -736,7 +736,7 @@ std::string MainWindow::BuildRemotePath( std::string server, std::string path )
 void MainWindow::OnNameChanged()
 {
     onPlanif_ = !onPlanif_;
-    if ( onPlanif_ )  
+    if ( onPlanif_ )
         setCaption( planifName_ + tools::translate( "Application", " - Planning mode on" ) );
     else
         setCaption( planifName_ );

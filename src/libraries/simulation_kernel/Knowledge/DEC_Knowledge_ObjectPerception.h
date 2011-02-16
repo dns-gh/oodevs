@@ -94,7 +94,7 @@ template< typename T > const T* DEC_Knowledge_ObjectPerception::GetAttribute() c
     assert( pCurrentPerceptionLevel_ );
     if( !pObjectPerceived_ || *pCurrentPerceptionLevel_ <= PHY_PerceptionLevel::notSeen_ )
         return 0;
- 
+
     return pObjectPerceived_->RetrieveAttribute< T >();
 }
 

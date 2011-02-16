@@ -11,7 +11,7 @@
 #define __ResourceNetworkType_h_
 
 namespace xml
-{ 
+{
     class xistream;
 }
 

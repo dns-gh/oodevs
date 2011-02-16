@@ -12,13 +12,13 @@
 
 //-----------------------------------------------------------------------------
 // Name: MT_ConsoleLogger constructor
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 MT_ConsoleLogger::MT_ConsoleLogger( int nLogLevels )
     : MT_Logger_ABC( nLogLevels )
     , bDumpTimeStamps_( true )
 {
-    // NOTHING 
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -32,10 +32,10 @@ MT_ConsoleLogger::~MT_ConsoleLogger()
 
 //-----------------------------------------------------------------------------
 // Name: MT_ConsoleLogger::GetColorFromLogLevel
-/** 
+/**
     @return The ANSI color associated to the given log level
 */
-// Created:  NLD 00-10-23 
+// Created:  NLD 00-10-23
 //-----------------------------------------------------------------------------
 const char* MT_ConsoleLogger::GetColorFromLogLevel( unsigned int nLogLevel )
 {
@@ -52,7 +52,7 @@ const char* MT_ConsoleLogger::GetColorFromLogLevel( unsigned int nLogLevel )
 
 //-----------------------------------------------------------------------------
 // Name: MT_ConsoleLogger::EnableTimeStamps
-/** 
+/**
 */
 // Created: CBX 2003-02-13
 //-----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ void MT_ConsoleLogger::EnableTimeStamps( bool bEnabled )
 
 //-----------------------------------------------------------------------------
 // Name: MT_ConsoleLogger::LogString
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //-----------------------------------------------------------------------------
 void MT_ConsoleLogger::LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode )
 {
@@ -84,7 +84,7 @@ void MT_ConsoleLogger::LogString( E_LogLevel level, const char* strMessage, cons
     // Message
     if( strMessage )
         printf( " %s", strMessage );
-    else 
+    else
         printf( " " );
 
     // Code

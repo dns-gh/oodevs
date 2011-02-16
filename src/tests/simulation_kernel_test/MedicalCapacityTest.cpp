@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
         sword::ObjectAttributes asn;
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
         BOOST_CHECK_EQUAL( 1, asn.medical_treatment().bed_capacities().size() );
-        
+
         int woundNumber = 1;
         BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 ).has_type_id() );
         BOOST_CHECK_EQUAL( woundNumber, asn.medical_treatment().bed_capacities( 0 ).type_id() );
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE( VerifyMedicalCapacity )
             BOOST_CHECK_EQUAL( woundNumber, asnAfter.medical_treatment().bed_capacities( 0 ).type_id() );
             BOOST_CHECK_EQUAL( 0u, asnAfter.medical_treatment().bed_capacities( 0 ).available_count() );
         }
-    }    
+    }
     MIL_MedicalTreatmentType::Terminate();
 }
 
@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE( VerifyInitialization )
             "</medical-treatment>"
         "</medical-treatments>" );
         MIL_MedicalTreatmentType::Initialize( xisMedical, time );
-        
+
         MockMIL_Object_ABC object;
         MOCK_EXPECT( object, RegisterAttribute ).once();
 
@@ -160,7 +160,7 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
             "</medical-treatment>"
         "</medical-treatments>" );
         MIL_MedicalTreatmentType::Initialize( xisMedical, time );
-        
+
         MockMIL_Object_ABC object;
         MOCK_EXPECT( object, RegisterAttribute ).once();
 
@@ -173,7 +173,7 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
         xis >> xml::start( "medical-treatment" );
         MedicalTreatmentAttribute attribute( xis );
         object.GetAttribute< MedicalTreatmentAttribute >() = attribute;
-        
+
         // Update
         sword::MissionParameter_Value parameters;
         parameters.add_list(); // attributeId
@@ -204,13 +204,13 @@ BOOST_AUTO_TEST_CASE( VerifyMessageOnUpdate )
         sword::ObjectAttributes asn;
         object.GetAttribute< MedicalTreatmentAttribute >().SendFullState( asn );
         BOOST_CHECK_EQUAL( 5u, asn.medical_treatment().doctors() );
-        
+
         BOOST_CHECK_EQUAL( 0, asn.medical_treatment().bed_capacities( 0 /*id Wound1*/ ).type_id() );
         BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 /*id Wound1*/ ).has_baseline_count() );
         BOOST_CHECK_EQUAL( 3u, asn.medical_treatment().bed_capacities( 0 /*id Wound1*/ ).baseline_count() );
         BOOST_CHECK( asn.medical_treatment().bed_capacities( 0 /*id Wound1*/ ).has_available_count() );
         BOOST_CHECK_EQUAL( 2u, asn.medical_treatment().bed_capacities( 0 /*id Wound1*/ ).available_count() );
-        
+
         BOOST_CHECK_EQUAL( 1, asn.medical_treatment().bed_capacities( 1 /*id Wound1*/ ).type_id() );
         BOOST_CHECK( asn.medical_treatment().bed_capacities( 1 /*id Wound1*/ ).has_baseline_count() );
         BOOST_CHECK_EQUAL( 5u, asn.medical_treatment().bed_capacities( 1 /*id Wound1*/ ).baseline_count() );
@@ -243,7 +243,7 @@ BOOST_AUTO_TEST_CASE( VerifyAsnUpdate )
             "</medical-treatment>"
         "</medical-treatments>" );
         MIL_MedicalTreatmentType::Initialize( xisMedical );
-        
+
         MockMIL_Object_ABC object;
         MOCK_EXPECT( object, RegisterAttribute ).once();
 
@@ -256,7 +256,7 @@ BOOST_AUTO_TEST_CASE( VerifyAsnUpdate )
         xis >> xml::start( "medical-treatment" );
         MedicalTreatmentAttribute attribute( xis );
         object.GetAttribute< MedicalTreatmentAttribute >() = attribute;
-        
+
         // Update
         sword::ObjectAttributes asnUpdate;
         asnUpdate.mutable_medical_treatment()->set_doctors( 5 );

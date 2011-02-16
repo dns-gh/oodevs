@@ -18,9 +18,9 @@ namespace tools
     class ExerciseConfig;
 }
 
-namespace xml 
-{ 
-    class xistream; 
+namespace xml
+{
+    class xistream;
 }
 
 namespace aar

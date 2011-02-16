@@ -70,7 +70,7 @@ private:
     //@{
     std::auto_ptr< Publisher_ABC > publisher_;
     Workspace_ABC& workspace_;
-    ActionSerializer_ABC& serializer_; 
+    ActionSerializer_ABC& serializer_;
     const WorkingSession_ABC& session_;
     //@}
 };

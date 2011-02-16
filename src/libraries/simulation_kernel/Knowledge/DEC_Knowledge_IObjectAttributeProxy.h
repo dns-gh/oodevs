@@ -39,10 +39,10 @@ public:
     virtual void SendChangedState( sword::ObjectAttributes& asn ) const = 0;
     virtual void SendFullState   ( sword::ObjectAttributes& asn ) const = 0;
     //@}
-    
+
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int ) {} 
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     virtual void Register( DEC_Knowledge_Object& knowledge ) = 0;
     //@}
 };

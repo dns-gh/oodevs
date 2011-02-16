@@ -59,7 +59,7 @@ private:
     const Simulation& simulation_;
     StatisticsWidget* networkBytesReceived_;
     StatisticsWidget* networkBytesSent_;
-    StatisticsWidget* networkMsgsReceived_;    
+    StatisticsWidget* networkMsgsReceived_;
     StatisticsWidget* networkMsgsSent_;
     StatisticsWidget* memory_;
     StatisticsWidget* virtualMemory_;

@@ -66,8 +66,8 @@
 
 // Misc
 #define MT_LOG_STARTUP_MESSAGE( msg )          MT_LogManager::Instance().Log( MT_Logger_ABC::eLogLevel_None, msg );
-#define MT_LOG_REGISTER_LOGGER( logger )       MT_LogManager::Instance().RegisterLogger( logger ); 
-#define MT_LOG_UNREGISTER_LOGGER( logger )     MT_LogManager::Instance().UnregisterLogger( logger ); 
+#define MT_LOG_REGISTER_LOGGER( logger )       MT_LogManager::Instance().RegisterLogger( logger );
+#define MT_LOG_UNREGISTER_LOGGER( logger )     MT_LogManager::Instance().UnregisterLogger( logger );
 
 
 #endif // __MT_LogDefines_h_

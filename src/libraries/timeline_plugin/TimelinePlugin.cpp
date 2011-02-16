@@ -61,7 +61,7 @@ void TimelinePlugin::Load( const tools::ExerciseConfig& config, xml::xistream& x
                 >> xml::attribute( "id", actorId )
             >> xml::end
         >> xml::end;
-    
+
     ActionLoader loader( scenarioId, actorId, *publisher_ );
     loader.Load( config.BuildExerciseChildFile( file ) );
 }

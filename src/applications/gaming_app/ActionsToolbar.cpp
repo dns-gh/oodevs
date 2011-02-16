@@ -264,10 +264,10 @@ void ActionsToolbar::NotifyUpdated( const Services& services )
 void ActionsToolbar::NotifyUpdated( const Simulation::sCheckPoint& checkPoint )
 {
     if( !checkPoint.name_.empty() )
-        try 
+        try
         {
             actions_.Save( config_.BuildOnLocalCheckpointChildFile( checkPoint.name_, "timeline.ord" ) );
-        } 
+        }
         catch( ... )
         {
             // NOTHING

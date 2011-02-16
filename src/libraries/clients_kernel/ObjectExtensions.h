@@ -22,17 +22,17 @@ namespace sword
 
 namespace kernel
 {
-    class ObjectExtension : public kernel::Extension_ABC                           
-                    , public kernel::Displayable_ABC                               
-                    , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate > 
-                    , public kernel::Updatable_ABC< sword::ObjectUpdate >          
-    {                                                                              
-    public:                                                                        
-                 ObjectExtension() {}                                                    
-        virtual ~ObjectExtension() {}                                                    
+    class ObjectExtension : public kernel::Extension_ABC
+                    , public kernel::Displayable_ABC
+                    , public kernel::Updatable_ABC< sword::ObjectKnowledgeUpdate >
+                    , public kernel::Updatable_ABC< sword::ObjectUpdate >
+    {
+    public:
+                 ObjectExtension() {}
+        virtual ~ObjectExtension() {}
 
-        virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& ) {}            
-        virtual void DoUpdate( const sword::ObjectUpdate& ) {}                     
+        virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& ) {}
+        virtual void DoUpdate( const sword::ObjectUpdate& ) {}
     };
     class ConstructionAttribute_ABC : public ObjectExtension {};
     class MineAttribute_ABC : public ObjectExtension {};
@@ -51,7 +51,7 @@ namespace kernel
     class ToxicCloudAttribute_ABC : public ObjectExtension {};
     class FireAttribute_ABC : public ObjectExtension {};
     class BurnAttribute_ABC : public ObjectExtension {};
-	class BurnSurfaceAttribute_ABC : public ObjectExtension {};
+    class BurnSurfaceAttribute_ABC : public ObjectExtension {};
     class MedicalTreatmentAttribute_ABC : public ObjectExtension {};
     class OccupantAttribute_ABC : public ObjectExtension {};
     class DelayAttribute_ABC : public ObjectExtension {};

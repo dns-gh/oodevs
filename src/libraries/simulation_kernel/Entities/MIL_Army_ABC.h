@@ -74,7 +74,7 @@ public:
 
     virtual void RegisterObject( MIL_Object_ABC& object ) = 0;
     virtual void UnregisterObject( MIL_Object_ABC& object ) = 0;
-    
+
     virtual void RegisterPopulation( MIL_Population& population ) = 0;
     virtual void UnregisterPopulation( MIL_Population& population ) = 0;
 

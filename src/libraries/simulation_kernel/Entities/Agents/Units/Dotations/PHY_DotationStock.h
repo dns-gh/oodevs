@@ -61,7 +61,7 @@ public:
     bool     NeedSupply               () const;
     double Supply                   ( double rSupply );
     //@}
-    
+
     //! @name Used for stock extraction
     //@{
     double Consume( double rValue );

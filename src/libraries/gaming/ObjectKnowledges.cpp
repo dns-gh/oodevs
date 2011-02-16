@@ -56,7 +56,7 @@ void ObjectKnowledges::DoUpdate( const sword::ObjectKnowledgeCreation& message )
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 void ObjectKnowledges::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
-{    
+{
     ObjectKnowledge_ABC& knowledge = Get( message.knowledge().id() );
     factory_.RegisterAttributes( Get( message.knowledge().id() ), message.attributes() );
     knowledge.Update( message );

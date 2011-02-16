@@ -55,7 +55,7 @@ public:
     const MIL_Agent_ABC& GetAgentColliding() const;
     const MT_Vector2D& GetPosition() const;
     bool IsValid() const;
-    
+
     template< typename T > const T* GetAttribute() const;
     //@}
 

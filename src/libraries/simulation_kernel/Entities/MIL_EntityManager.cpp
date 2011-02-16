@@ -161,7 +161,7 @@ void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const u
 {
     ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_EffectManager::GetEffectManager(),
                                     MIL_Singletons::GetProfiler(),
-                                    MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(), 
+                                    MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(),
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setStepMul() );
 }
 
@@ -302,7 +302,7 @@ void MIL_EntityManager::ReadOrbat( xml::xistream& xis )
     InitializeDiplomacy( xis );
 }
 
-namespace 
+namespace
 {
     class UrbanWrapperVisitor : public urban::ObjectVisitor_ABC
     {
@@ -989,8 +989,8 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const sword::UnitMagicActio
     client::MagicActionAck ack;
     ack().set_error_code( sword::MagicActionAck::no_error );
     if( !message.has_parameters() || message.parameters().elem_size() != 4
-        || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get(0).has_acharstr() 
-        || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get(0).has_point() 
+        || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get(0).has_acharstr()
+        || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get(0).has_point()
         || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get(0).has_areal() )
     {
         ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
@@ -1239,7 +1239,7 @@ void MIL_EntityManager::ProcessAutomateChangeLogisticLinks( const sword::UnitMag
     client::ChangeLogisticLinksAck ack;
     ack().set_error_code( sword::HierarchyModificationAck::no_error_hierarchy );
     try
-    {        
+    {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
         MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
         if( pAutomate )
@@ -1419,7 +1419,7 @@ void MIL_EntityManager::ProcessMagicActionMoveTo( const sword::UnitMagicAction& 
             return pPion->OnReceiveMagicActionMoveTo( message );
     }
     else if( message.tasker().has_crowd() && message.tasker().crowd().has_id() )
-    { 
+    {
         if( MIL_Population* pPopulation = populationFactory_->Find( message.tasker().crowd().id() ) )
             return pPopulation->OnReceiveCrowdMagicActionMoveTo( message );
     }

@@ -56,7 +56,7 @@ private:
     float precision_;
     float value_;
     //@}
-};    
+};
 
 } // namespace gui
 

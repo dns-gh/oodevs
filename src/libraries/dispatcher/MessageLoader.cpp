@@ -248,7 +248,7 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
         }
         for( CIT_FragmentsInfos it = fragmentsInfos_.begin(); it != fragmentsInfos_.end(); ++it )
             if( frameNumber >= it->second.first && frameNumber <= it->second.second )
-            {                
+            {
                 currentOpenFolder_ = it->first;
                 boost::mutex::scoped_lock lock( filesAccessMutex_ );
                 OpenFile( index_, currentOpenFolder_, indexFileName_ );

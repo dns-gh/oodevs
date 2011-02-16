@@ -165,7 +165,7 @@ void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Bra
     brain.Register( "DEC_Automate_PionEstNeutralise", &DEC_AutomateDecision::IsPionNeutralized );
     brain[ "DEC_Automate_CalculerPointProcheLocalisationDansFuseauPourPion" ] = &DEC_AutomateFunctions::ComputePionNearestLocalisationPointInFuseau;
     brain[ "DEC_Automate_GetEfficacite" ] = &DEC_AutomateFunctions::GetPionEfficiency;
-    brain[ "DEC_Tir_PorteeMaxPourTirer" ] = &DEC_FireFunctions::GetMaxRangeToFireDecision; 
+    brain[ "DEC_Tir_PorteeMaxPourTirer" ] = &DEC_FireFunctions::GetMaxRangeToFireDecision;
 
     // Objects
     brain[ "DEC_DetruireObjetSansDelais" ] = &DEC_ObjectFunctions::MagicDestroyObject;
@@ -254,7 +254,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     brain[ "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion" ] =
         boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion< MIL_Automate >, boost::cref( GetAutomate() ), _1 ) );
     brain[ "DEC_Connaissances_Populations" ] = boost::bind( &DEC_KnowledgeFunctions::GetPopulations< MIL_Automate >, boost::cref( GetAutomate() ) );
-    
+
 
     // Intelligence
     brain[ "DEC_Rens_PourcentageEnnemisDebarquesDansZone" ] =
@@ -265,7 +265,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< float( const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeFuseauUnloadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) );
     brain[ "DEC_Rens_PourcentageEnnemisEmbarquesDansFuseau" ] =
         boost::function< float( const MIL_Fuseau* ) >( boost::bind( &DEC_IntelligenceFunctions::ComputeFuseauLoadedEnemiesRatio, boost::cref( GetAutomate() ), _1 ) );
-    
+
 
     brain[ "DEC_Rens_TrierZonesSelonPresenceEnnemisDebarques" ] =
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >( const std::vector< boost::shared_ptr< TER_Localisation > >& ) >( boost::bind( &DEC_IntelligenceFunctions::SortZonesAccordingToUnloadedEnemies, boost::cref( GetAutomate() ), _1 ) );
@@ -305,7 +305,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) );
     brain[ "DEC_RC_String" ] =
         boost::function< void ( int, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) );
-    
+
     // Geometry
     brain[ "DEC_Geometrie_CalculerBarycentreLocalisationDansFuseau" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeLocalisationBarycenterInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) );
@@ -395,7 +395,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     // Pion management
     brain[ "DEC_Pion_ChangeAutomate" ] =
         boost::function< bool( DEC_Decision_ABC*, const DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::PionChangeAutomate, _1, _2 ) );
-    
+
 
     // Accesseurs sur les pions
     brain[ "DEC_Automate_PionEstContamine" ] =

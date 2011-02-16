@@ -49,7 +49,7 @@ public:
     virtual bool CheckValidity();
     virtual void CommitTo( actions::ParameterContainer_ABC& container ) const;
     //@}
-    
+
 protected:
     //! @name Helpers
     //@{

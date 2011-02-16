@@ -54,7 +54,7 @@ public:
     {
     public:
         CmpRef( ADN_Equipement_Data::CategoryInfo* val ) : val_( val ){}
-        bool operator()( ADN_ExtinguisherAgentInfos* other ) const 
+        bool operator()( ADN_ExtinguisherAgentInfos* other ) const
         { return other->ptrAgent_.GetData() == val_; }
 
     private:
@@ -65,7 +65,7 @@ public:
     {
     public:
         Cmp( const std::string& name ) : name_( name ) {}
-        bool operator()( ADN_ExtinguisherAgentInfos* other ) const 
+        bool operator()( ADN_ExtinguisherAgentInfos* other ) const
         { return other->ptrAgent_.GetData()->strName_ == name_; }
 
     private:

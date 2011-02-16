@@ -99,7 +99,7 @@ class MedicalThirdPartyEvacuationVisitor : public MIL_EntityVisitor_ABC< MIL_Age
     public:
         MIL_AgentPion&         pion_;
         Human_ABC&             human_;
-        PHY_MedicalHumanState* pState_; 
+        PHY_MedicalHumanState* pState_;
 };
 
 class MedicalEvacuationVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
@@ -316,7 +316,7 @@ class SupplyConvoyAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentP
 
             if( pSelected_ )
                 return;
-            
+
             const PHY_RoleInterface_Supply* candidate = tmp.RetrieveRole< PHY_RoleInterface_Supply >();
             PHY_ComposantePion* pTmpConvoySelected = candidate!=0 ? candidate->GetAvailableConvoyTransporter( dotationCategory_ ) : 0;
             if( pTmpConvoySelected )

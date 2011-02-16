@@ -204,7 +204,7 @@ void ConstructionAttribute::SendFullState( sword::ObjectAttributes& asn ) const
     if( dotation_ )
     {
         asn.mutable_construction()->mutable_resource()->set_id( dotation_->GetMosID() );
-        asn.mutable_construction()->set_dotation( nCurrentNbrDotation_ );        
+        asn.mutable_construction()->set_dotation( nCurrentNbrDotation_ );
     }
     asn.mutable_construction()->set_percentage( unsigned int( constructionPercentage_.Send() * 100. ) );
 }

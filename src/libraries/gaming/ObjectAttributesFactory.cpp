@@ -98,8 +98,8 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
 
     if( attributes.has_burn() && entity.Retrieve< kernel::BurnAttribute_ABC >() == 0 )
         entity.Attach< kernel::BurnAttribute_ABC >( *new BurnAttribute( controllers_.controller_ ) );
-    
-	if( attributes.has_burn_surface() && entity.Retrieve< kernel::BurnSurfaceAttribute_ABC >() == 0 )
+
+    if( attributes.has_burn_surface() && entity.Retrieve< kernel::BurnSurfaceAttribute_ABC >() == 0 )
         entity.Attach< kernel::BurnSurfaceAttribute_ABC >( *new BurnSurfaceAttribute( controllers_.controller_, model_.actions_, entity ) );
 
     if( attributes.has_medical_treatment() && entity.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
@@ -113,7 +113,7 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
 
     if( attributes.has_flood() && entity.Retrieve< kernel::FloodAttribute_ABC >() == 0 )
         entity.Attach< kernel::FloodAttribute_ABC >( *new FloodAttribute( controllers_.controller_, static_.detection_, entity.Get< kernel::Positions >() ) );
-    
+
     if( attributes.has_stock() && entity.Retrieve< kernel::StockAttribute_ABC >() == 0 )
         entity.Attach< kernel::StockAttribute_ABC >( *new StockAttribute( controllers_.controller_, static_.objectTypes_ ) );
 }

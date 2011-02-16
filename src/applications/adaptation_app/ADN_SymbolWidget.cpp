@@ -87,7 +87,7 @@ void ADN_SymbolWidget::paintGL()
     glBindTexture( GL_TEXTURE_2D, 0 );
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
-    
+
     /* Test line
     glColor3f( 0.1f, 0.1f, 0.1f );
     glEnable( GL_LINE_SMOOTH );
@@ -100,7 +100,7 @@ void ADN_SymbolWidget::paintGL()
         glEnable( GL_LINE_SMOOTH );
         glMatrixMode( GL_MODELVIEW );
         glPushMatrix();
-            DisplaySymbol();        
+            DisplaySymbol();
         glPopMatrix();
     glPopAttrib();
 }
@@ -110,7 +110,7 @@ void ADN_SymbolWidget::paintGL()
 // Created: NLD 2010-12-01
 // -----------------------------------------------------------------------------
 void ADN_SymbolWidget::DisplaySymbol() const
-{    
+{
     if( currentSymbol_.empty() )
         return;
 

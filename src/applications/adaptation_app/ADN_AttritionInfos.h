@@ -51,7 +51,7 @@ public:
     {
     public:
         CmpRef( ArmorInfos* val ) : val_(val){}
-        bool operator()( AttritionInfos* tgtnfos ) const 
+        bool operator()( AttritionInfos* tgtnfos ) const
         {   return tgtnfos->ptrArmor_.GetData() == val_;}
 
     private:
@@ -62,7 +62,7 @@ public:
     {
     public:
         Cmp( const std::string& name ) : name_(name) {}
-        bool operator()( AttritionInfos* tgtnfos ) const 
+        bool operator()( AttritionInfos* tgtnfos ) const
         {   return tgtnfos->ptrArmor_.GetData()->strName_ == name_;}
 
     private:

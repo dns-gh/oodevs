@@ -83,7 +83,7 @@ private:
     virtual void AfterSelection();
     virtual void Select( const kernel::Formation_ABC& element );
     virtual void Select( const kernel::Automat_ABC& element );
-    virtual void Select( const kernel::Team_ABC& element );    
+    virtual void Select( const kernel::Team_ABC& element );
     virtual void Select( const kernel::Agent_ABC& element );
 
     virtual void mouseMoveEvent( QMouseEvent* event );

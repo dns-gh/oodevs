@@ -11,7 +11,7 @@
 #include "Task.h"
 #include "ActionPublisher.h"
 #include <xeumeuleu/xml.hpp>
-   
+
 using namespace plugins::timeline;
 
 // -----------------------------------------------------------------------------

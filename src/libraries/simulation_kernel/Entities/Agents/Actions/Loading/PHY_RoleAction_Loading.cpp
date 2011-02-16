@@ -205,7 +205,7 @@ int PHY_RoleAction_Loading::Unload()
         nState_       = eUnloading;
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_DisembarkmentStarted );
     }
-    
+
     if( nState_ == eUnloading )
     {
         if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() >= nEndTimeStep_ )

@@ -123,7 +123,7 @@ Action_ABC* ActionsModel::CreateFormationCreationAction( int level, const kernel
     Register( action->GetId(), *action );
     return action;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ActionsModel::CreateCrowdCreationAction
 // Created: LDC 2010-10-22

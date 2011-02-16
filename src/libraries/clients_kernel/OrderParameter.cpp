@@ -100,7 +100,7 @@ unsigned int OrderParameter::MinOccurs() const
 {
     return minOccurs_;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OrderParameter::MaxOccurs
 // Created: LDC 2010-09-17
@@ -131,7 +131,7 @@ void OrderParameter::ReadValue( xml::xistream& xis )
     OrderParameterValue value( xis );
     values_.insert( std::make_pair( value.GetId(), value ) );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: OrderParameter::ReadChoice
 // Created: LDC 2010-08-18

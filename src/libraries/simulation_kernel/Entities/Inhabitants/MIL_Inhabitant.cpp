@@ -370,8 +370,8 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
         dead.value_size() != 1    || !dead.value().Get( 0 ).has_quantity() )
         throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
 
-    if( healthy.value().Get( 0 ).quantity() < 0 || 
-        wounded.value().Get( 0 ).quantity() < 0 || 
+    if( healthy.value().Get( 0 ).quantity() < 0 ||
+        wounded.value().Get( 0 ).quantity() < 0 ||
         dead.value().Get( 0 ).quantity() < 0 )
         throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_number );
 

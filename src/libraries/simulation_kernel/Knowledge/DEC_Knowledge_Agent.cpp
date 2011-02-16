@@ -510,7 +510,7 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
     client::UnitKnowledgeCreation asnMsg;
     asnMsg().mutable_knowledge()->set_id( nID_ );
     asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_->GetId() );
-    asnMsg().mutable_unit()->set_id( pAgentKnown_->GetID() );    
+    asnMsg().mutable_unit()->set_id( pAgentKnown_->GetID() );
     asnMsg().mutable_type()->set_id( pAgentKnown_->GetType().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }

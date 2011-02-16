@@ -274,8 +274,8 @@ namespace
     public:
         typedef InputToxicCloudAttribute::T_Quantity   T_Quantity;
         typedef InputToxicCloudAttribute::T_Quantities T_Quantities;
-    
-    public:    
+
+    public:
         Handler( const std::string& field, T_Quantities& quantities, std::vector< T_Quantity >& e )
             : field_ ( field ), quantities_ ( quantities ), export_ ( e ) {}
 
@@ -298,10 +298,10 @@ namespace
             }
             delete feature; // must be deleted
         }
-    
+
     private:
         const Handler& operator=( const Handler& ); // Assignement
-    
+
     private:
         const std::string& field_;
         T_Quantities& quantities_;

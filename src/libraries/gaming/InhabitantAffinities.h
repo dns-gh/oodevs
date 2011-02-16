@@ -46,7 +46,7 @@ class TeamsModel;
 // Created: ABR 2011-01-28
 // =============================================================================
 class InhabitantAffinities : public kernel::Extension_ABC
-                           , public kernel::Updatable_ABC< sword::PopulationUpdate > 
+                           , public kernel::Updatable_ABC< sword::PopulationUpdate >
 {
 public:
     //! @name Constructors/Destructor

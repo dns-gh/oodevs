@@ -20,7 +20,7 @@ using namespace kernel;
 // Name: LogisticBaseStates constructor
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-LogisticBaseStates::LogisticBaseStates( Controller& controller, Entity_ABC& entity, 
+LogisticBaseStates::LogisticBaseStates( Controller& controller, Entity_ABC& entity,
                                        const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, PropertiesDictionary& dico )
     : ::LogisticHierarchies< LogisticBaseSuperior, kernel::LogisticBaseHierarchies >( controller, entity )
     , controller_( controller )

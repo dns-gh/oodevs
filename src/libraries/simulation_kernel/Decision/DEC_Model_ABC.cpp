@@ -157,7 +157,7 @@ bool DEC_Model_ABC::IsFragOrderAvailableForMission( const MIL_MissionType_ABC& m
     if( it == availableFragOrdersPerMission_.end() )
         return false;
     return it->second.find( &fragOrderType ) != it->second.end();
-}   
+}
 
 
 // -----------------------------------------------------------------------------

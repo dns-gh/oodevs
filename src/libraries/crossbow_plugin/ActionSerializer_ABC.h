@@ -11,7 +11,7 @@
 #define __crossbow_ActionSerializer_ABC_h_
 
 
-namespace kernel 
+namespace kernel
 {
     class Entity_ABC;
 }
@@ -27,9 +27,9 @@ namespace dispatcher
     class Automat_ABC;
 }
 
-namespace plugins 
+namespace plugins
 {
-namespace crossbow 
+namespace crossbow
 {
 
     class Row_ABC;
@@ -59,7 +59,7 @@ public:
     //@}
 };
 
-} 
+}
 }
 
 #endif // __crossbow_ActionSerializer_ABC_h_

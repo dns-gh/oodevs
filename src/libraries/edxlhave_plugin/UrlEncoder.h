@@ -31,21 +31,21 @@ public:
     explicit UrlEncoder( const std::string& message );
     virtual ~UrlEncoder();
     //@}
-        
+
     //! @name Operations
     //@{
     void Write( std::ostream& os ) const;
     //@}
-    
-    //! @name 
+
+    //! @name
     //@{
-    friend std::ostream& operator << ( std::ostream& os, const UrlEncoder& encoder ) 
+    friend std::ostream& operator << ( std::ostream& os, const UrlEncoder& encoder )
     {
         encoder.Write( os );
         return os;
     }
     //@}
-    
+
 private:
     //! @name Copy/Assignment
     //@{

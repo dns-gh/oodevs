@@ -66,7 +66,7 @@ namespace DEC_DecisionImpl
 // Created: LMT 2010-12-02
 // -----------------------------------------------------------------------------
 void RegisterUnitFunctions( directia::brain::Brain& brain)
-{    
+{
     brain.Register( "DEC_Agent_EtatOpsMajeur", &DEC_Decision_ABC::GetMajorOperationalState );
 }
 
@@ -430,7 +430,7 @@ bool PointFunctionBM( directia::brain::Brain& brain, directia::tools::binders::S
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToPoint( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.point" ] , name, value, false );     
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.point" ] , name, value, false );
         return true;
     }
     return false;
@@ -507,7 +507,7 @@ bool PathFunctionBM( directia::brain::Brain& brain, directia::tools::binders::Sc
     std::vector< boost::shared_ptr< MT_Vector2D > > value;
     if( element.ToPath( value ) && !value.empty() )
     {
-        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.point" ], name, value, true );       
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.point" ], name, value, true );
         return true;
     }
     return false;
@@ -521,7 +521,7 @@ bool DirectionFunctionBM( directia::brain::Brain& brain, directia::tools::binder
     boost::shared_ptr< MT_Vector2D > value;
     if( element.ToDirection( value ) && value.get() )
     {
-        knowledgeCreateFunction( refMission,  brain[ "integration.ontology.types.direction" ] , name, value, false );     
+        knowledgeCreateFunction( refMission,  brain[ "integration.ontology.types.direction" ] , name, value, false );
         return true;
     }
     return false;
@@ -687,7 +687,7 @@ bool UrbanBlockFunctionBM( directia::brain::Brain& brain, directia::tools::binde
     boost::shared_ptr< DEC_Knowledge_Urban > value;
     if( element.ToUrbanBlock( value ) && value )
     {
-        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.urbanBlock" ], name, value, false );  
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.urbanBlock" ], name, value, false );
         return true;
     }
     return false;
@@ -954,7 +954,7 @@ void InitFunctions()
 class RegisterMissionParameterVisitor : public MIL_MissionParameterVisitor_ABC
 {
 public:
-    RegisterMissionParameterVisitor( directia::brain::Brain& brain, const directia::tools::binders::ScriptRef& refMission, directia::tools::binders::ScriptRef& knowledgeCreateFunction ) 
+    RegisterMissionParameterVisitor( directia::brain::Brain& brain, const directia::tools::binders::ScriptRef& refMission, directia::tools::binders::ScriptRef& knowledgeCreateFunction )
         : brain_( brain )
         , refMission_( refMission )
         , knowledgeCreateFunction_( knowledgeCreateFunction )
@@ -980,7 +980,7 @@ private:
 class RegisterMissionParameterBMVisitor : public MIL_MissionParameterVisitor_ABC
 {
 public:
-    RegisterMissionParameterBMVisitor( directia::brain::Brain& brain, const directia::tools::binders::ScriptRef& refMission, directia::tools::binders::ScriptRef& knowledgeCreateFunction ) 
+    RegisterMissionParameterBMVisitor( directia::brain::Brain& brain, const directia::tools::binders::ScriptRef& refMission, directia::tools::binders::ScriptRef& knowledgeCreateFunction )
         : brain_( brain )
         , refMission_( refMission )
         , knowledgeCreateFunction_( knowledgeCreateFunction )

@@ -55,7 +55,6 @@ private:
     bool engaged_;
     //@}
 
-    
 };
 
 }

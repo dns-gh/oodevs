@@ -28,7 +28,7 @@
         MT_LogManager::Instance().UnregisterLogger( logFile );
     @endcode
 */
-// Created:  NLD 00-06-05 
+// Created:  NLD 00-06-05
 //=============================================================================
 class MT_FileLogger : public MT_Logger_ABC
 {

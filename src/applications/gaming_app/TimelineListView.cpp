@@ -156,7 +156,7 @@ void TimelineListView::OnSelectionChange( QListViewItem* item )
 {
     if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item ) )
         valuedItem->Select( controllers_.actions_ );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: TimelineListView::SetFilter

@@ -117,7 +117,7 @@ private:
 // Created: ABR 2011-01-21
 // -----------------------------------------------------------------------------
 template< class T >
-void InfoSummariesWidget::UpdateDisplayIfNeeded( const T& extension ) 
+void InfoSummariesWidget::UpdateDisplayIfNeeded( const T& extension )
 {
     if( !selected_ || ( selected_->Retrieve< T >() != &extension ) )
         return;

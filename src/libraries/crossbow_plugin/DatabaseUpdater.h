@@ -57,7 +57,7 @@ public:
     void Update( const sword::LimitCreation& msg );
     void Update( const sword::PhaseLineCreation& msg );
     //@}
-    
+
 
     //! @name sword
     //@{
@@ -99,7 +99,7 @@ private:
     //@{
     void UpdateObjectKnowledgeGeometry( const std::string& tablename, const sword::ObjectKnowledgeUpdate& msg );
     void UpdateObjectAttributes( unsigned long oid, const sword::ObjectAttributes& msg );
-    
+
     // void Update( const sword::ObjectAttributes& msg );
 
     //@}

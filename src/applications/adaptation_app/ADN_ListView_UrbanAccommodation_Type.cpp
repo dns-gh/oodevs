@@ -115,7 +115,7 @@ void  ADN_ListView_UrbanAccommodation_Type::OnContextMenu( const QPoint& pt)
 
             // Put the  new item at the top of the list (to be coherent with the application)
             int pos= FindNdx( pNewInfo );
-            while( pos != 0 )   
+            while( pos != 0 )
             {
                 static_cast<ADN_Connector_Vector_ABC*>(&GetConnector())->SwapItem( pos - 1, pos );
                 --pos;

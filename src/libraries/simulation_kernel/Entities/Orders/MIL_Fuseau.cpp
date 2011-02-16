@@ -996,7 +996,7 @@ double MIL_Fuseau::ComputeAdvance( const MT_Vector2D& position ) const
     if( pLeftLimit_ && pRightLimit_ )
     {
         const T_PointVector& points = pLeftLimit_->GetPoints().size() > pRightLimit_->GetPoints().size() ? pRightLimit_->GetPoints() : pLeftLimit_->GetPoints();
-        
+
         double currentAdvance  = 0.;
         double totalDistances = 0.;
         MT_Vector2D startPoint = points.front();
@@ -1192,7 +1192,7 @@ double MIL_Fuseau::GetWidth() const
 {
      const T_PointVector& leftLimitTmp  = pLeftLimit_ ->GetPoints();
      const T_PointVector& rightLimitTmp = pRightLimit_->GetPoints();
-     return MT_Line( leftLimitTmp[0], rightLimitTmp[0] ).Magnitude(); 
+     return MT_Line( leftLimitTmp[0], rightLimitTmp[0] ).Magnitude();
 }
 
 //-----------------------------------------------------------------------------

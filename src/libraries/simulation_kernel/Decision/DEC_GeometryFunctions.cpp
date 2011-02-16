@@ -984,7 +984,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
         throw std::runtime_error( "Compute barycenter of null position" );
     boost::shared_ptr< MT_Vector2D > pBarycenter( new MT_Vector2D( MT_ComputeBarycenter( pLocalisation->GetPoints() ) ) );
     if( pBarycenter.get() )
-    {        
+    {
         const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( *pBarycenter ) );
         if( terrainObject )
         {
@@ -1708,7 +1708,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::FindSafet
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
     pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().FindSafetyPositionsWithinCircle( points, radius, safetyDistance );
     return points;
-}    
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeBarycenter

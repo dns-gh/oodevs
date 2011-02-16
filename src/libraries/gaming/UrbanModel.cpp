@@ -181,7 +181,7 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
 // Created: SLG 2010-01-03
 // -----------------------------------------------------------------------------
 void UrbanModel::Update( const sword::ObjectUpdate& message )
-{   
+{
     if( message.has_attributes() )
     {
         gui::TerrainObjectProxy* pTerrainObject = Find( message.object().id() );

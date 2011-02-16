@@ -20,7 +20,7 @@
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;    
+    class CoordinateConverter_ABC;
     class Displayer_ABC;
     class PopulationKnowledge_ABC;
 }
