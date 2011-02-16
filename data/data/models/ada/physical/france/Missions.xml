@@ -2276,7 +2276,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="Point"/>
-      <parameter dia-name="safeguardPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
+      <parameter dia-name="retreatPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="ASS Deploy">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2284,7 +2284,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Zones de tir" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="safeguardPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
+      <parameter dia-name="retreatPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" id="2047" name="GENIE OuvrirItineraire">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4292,4 +4292,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1317908712" -->
+<!-- signature="1531302644" -->
