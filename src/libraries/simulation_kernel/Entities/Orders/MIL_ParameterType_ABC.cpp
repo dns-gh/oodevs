@@ -64,7 +64,7 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType( std::string("GenObject"), ePlannedWork );
     RegisterParameterType( std::string("PlannedWork"), ePlannedWork );
     RegisterParameterType( std::string("MaintenancePriorities"), eMaintenancePriorities );
-    RegisterParameterType( std::string("MedicalPriorities"), eMaintenancePriorities );
+    RegisterParameterType( std::string("MedicalPriorities"), eMedicalPriorities );
     RegisterParameterType( std::string("IndirectFire"), eIndirectFire );
     RegisterParameterType( std::string("string"), eString );;
     RegisterParameterType( std::string("UrbanBlock"), eUrbanKnowledge );
