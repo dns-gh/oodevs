@@ -1354,6 +1354,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Crowds</source>
         <translation>Foules</translation>
     </message>
+    <message>
+        <source>User role</source>
+        <translation>Rôle de l&apos;utilisateur</translation>
+    </message>
 </context>
 <context>
     <name>WeatherPanel</name>

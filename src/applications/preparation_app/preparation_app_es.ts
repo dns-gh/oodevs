@@ -1354,6 +1354,10 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
         <source>Crowds</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>User role</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherPanel</name>

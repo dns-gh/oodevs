@@ -43,7 +43,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         login_ = new QLineEdit( group );
         new QLabel( tr( "Password:" ), group );
         password_ = new QLineEdit( group );
-        userRoleGroup_ = new QGroupBox( 1, Qt::Horizontal, "User role", box );
+        userRoleGroup_ = new QGroupBox( 1, Qt::Horizontal,  tr( "User role" ), box );
         userRoleGroup_->setCheckable( true );
         userRoleGroup_->setMargin( 5 );
         QHBox* roleBox = new QHBox( userRoleGroup_ );
