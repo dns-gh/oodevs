@@ -95,16 +95,12 @@ namespace
 // Name: UrbanModel::Load
 // Created: SBO 2010-06-10
 // -----------------------------------------------------------------------------
-bool UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters& world, std::string& loadingErrors )
+void UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters& world, std::string& loadingErrors )
 {
     Purge();
-    bool ret = urban::Model::Load( directoryPath, world );
-    if( ret )
-    {
-        UrbanSendingCreationVisitor visitor( *this, static_, loadingErrors );
-        Accept( visitor );
-    }
-    return ret;
+    urban::Model::Load( directoryPath, world );
+    UrbanSendingCreationVisitor visitor( *this, static_, loadingErrors );
+    Accept( visitor );
 }
 
 // -----------------------------------------------------------------------------
