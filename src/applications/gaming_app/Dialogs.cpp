@@ -46,12 +46,12 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new MedicalCapacityUpdateDialog( parent, controllers, actionsModel, staticModel, simulation, publisher, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );
-    new CreateFormationDialog( parent, controllers, model.formations_, profile, actionsModel, staticModel.types_, simulation );
+    new CreateFormationDialog( parent, controllers, model.formations_, profile, actionsModel, simulation );
     new OrbatAttributesDialog( parent, controllers );
     new InhabitantChangeAffinitiesDialog( parent, controllers, model.teams_, staticModel, actionsModel, simulation, profile );
-    new InhabitantChangeHealthStateDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
-    new InhabitantChangeAlertedStateDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
-    new InhabitantExtractCrowdDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new InhabitantChangeHealthStateDialog( parent, controllers, actionsModel, simulation, profile );
+    new InhabitantChangeAlertedStateDialog( parent, controllers, actionsModel, simulation, profile );
+    new InhabitantExtractCrowdDialog( parent, controllers, actionsModel, simulation, profile );
 }
 
 // -----------------------------------------------------------------------------

@@ -27,8 +27,6 @@ namespace actions
     class ActionsModel;
 }
 
-class StaticModel;
-
 // =============================================================================
 /** @class  InhabitantExtractCrowdDialog
     @brief  InhabitantExtractCrowdDialog
@@ -44,7 +42,7 @@ class InhabitantExtractCrowdDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantExtractCrowdDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
+             InhabitantExtractCrowdDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
     virtual ~InhabitantExtractCrowdDialog();
     //@}
 
@@ -78,7 +76,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;

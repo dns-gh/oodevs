@@ -65,15 +65,15 @@ public:
     virtual actions::Action_ABC* CreateAction( const sword::CrowdOrder& message ) const;
     virtual actions::Action_ABC* CreateAction( const sword::FragOrder& message ) const;
     
-    virtual actions::Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, kernel::Controller& controller, const kernel::StaticModel& staticModel, const geometry::Point2f& point, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel,  CreationListener_ABC& agentMessenger, ActionsModel& actionsModel, const kernel::Time_ABC& simulation ) const;
-    virtual actions::Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const;
-    virtual actions::Action_ABC* CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const;
-    virtual actions::Action_ABC* CreateCrowdCreationAction( const kernel::PopulationType& type, int number, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const;
+    virtual actions::Action_ABC* CreateAutomatCreationAction( const kernel::AutomatType& type, const kernel::Entity_ABC& selected, const geometry::Point2f& point, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, ActionsModel& actionsModel, const kernel::Time_ABC& simulation ) const;
+    virtual actions::Action_ABC* CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected_ ) const;
+    virtual actions::Action_ABC* CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected ) const;
+    virtual actions::Action_ABC* CreateCrowdCreationAction( const kernel::PopulationType& type, int number, const geometry::Point2f& point, const kernel::Entity_ABC& selected ) const;
 
     virtual actions::Action_ABC* CreateObjectMagicAction( const std::string& magicAction, unsigned long targetId = 0 ) const;
 
-    virtual actions::Action_ABC* CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const;
-    virtual actions::Action_ABC* CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const;
+    virtual actions::Action_ABC* CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected ) const;
+    virtual actions::Action_ABC* CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected ) const;
     //@}
 
 private:
@@ -113,9 +113,11 @@ private:
     kernel::Controller& controller_;
     const actions::ParameterFactory_ABC& factory_;
     const kernel::EntityResolver_ABC& entities_;
+    const kernel::StaticModel& staticModel_;
     const tools::Resolver_ABC< kernel::MissionType >& missions_;
     const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders_;
     const tools::Resolver_ABC< kernel::MagicActionType, std::string >& magicActions_;
+    const kernel::CoordinateConverter_ABC& coordinateConverter_;
     const kernel::Time_ABC& simulation_;
     //@}
 };

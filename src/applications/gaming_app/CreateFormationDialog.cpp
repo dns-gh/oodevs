@@ -25,14 +25,13 @@
 // Name: CreateFormationDialog constructor
 // Created: LDC 2010-10-12
 // -----------------------------------------------------------------------------
-CreateFormationDialog::CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, kernel::AgentTypes& agentTypes, const kernel::Time_ABC& time )
+CreateFormationDialog::CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time )
     : QDialog       ( parent )
     , controllers_  ( controllers )
     , profile_      ( profile )
     , levels_       ( levels )
     , actionsModel_ ( actionsModel )
     , currentEntity_( 0 )
-    , agentTypes_   ( agentTypes )
     , time_         ( time )
 {
     controllers_.Register( *this );
@@ -88,7 +87,7 @@ void CreateFormationDialog::NotifyContextMenu( const kernel::Entity_ABC& entity,
 // -----------------------------------------------------------------------------
 void CreateFormationDialog::OnCreateFormation( int level )
 {
-    actions::Action_ABC* action = actionsModel_.CreateFormationCreationAction( level, *currentEntity_, controllers_.controller_, agentTypes_ );
+    actions::Action_ABC* action = actionsModel_.CreateFormationCreationAction( level, *currentEntity_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, time_ ) );
     action->Attach( *new actions::ActionTasker( currentEntity_, false ) );
     actionsModel_.Publish( *action );

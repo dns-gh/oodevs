@@ -64,7 +64,7 @@ void AutomatCreationMagicAction::Publish( Publisher_ABC& publisher, int context 
 {
     context = ( int ) clock();
     boost::shared_ptr< sword::Listener > listener( new AutomatCreationListener( point_, automatType_, context,
-            agentsModel_, controller_, agentTypes_, coordinateConverter_, actionsModel_, simulation_ ) );
+            agentsModel_, controller_, actionsModel_, simulation_ ) );
     messageManager_.RegisterListener( listener );
     UnitMagicAction::Publish( publisher, context );
 }

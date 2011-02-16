@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "InhabitantChangeAlertedStateDialog.h"
 #include "moc_InhabitantChangeAlertedStateDialog.cpp"
-
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -23,17 +22,15 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/tools.h"
 #include "gaming/InhabitantAffinities.h"
-#include "gaming/StaticModel.h"
 #include "gaming/TeamsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantChangeAlertedStateDialog constructor
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-InhabitantChangeAlertedStateDialog::InhabitantChangeAlertedStateDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
+InhabitantChangeAlertedStateDialog::InhabitantChangeAlertedStateDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : QDialog( pParent, tools::translate( "InhabitantChangeAlertedStateDialog", "Change affinities" ) )
     , controllers_  ( controllers )
-    , static_       ( staticModel )
     , actionsModel_ ( actionsModel )
     , simulation_   ( simulation )
     , profile_      ( profile )
@@ -90,7 +87,7 @@ void InhabitantChangeAlertedStateDialog::Validate()
         return;
     accept();
 
-    actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeAlertedStateAction( pAlertedCheckBox_->isChecked(), *selected_, controllers_.controller_, static_.types_ );
+    actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeAlertedStateAction( pAlertedCheckBox_->isChecked(), *selected_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();

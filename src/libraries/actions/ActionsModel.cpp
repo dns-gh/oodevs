@@ -95,11 +95,9 @@ Action_ABC* ActionsModel::CreateAction( const Entity_ABC& target, const FragOrde
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
 Action_ABC* ActionsModel::CreateAutomatCreationAction( const geometry::Point2f& point, const kernel::AutomatType& type, const kernel::Entity_ABC& selected,
-                                                      kernel::Controller& controller, const kernel::StaticModel& staticModel,
                                                       tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, const Time_ABC& simulation  )
 {
-   Action_ABC* action = factory_.CreateAutomatCreationAction( type, selected, controller, staticModel, point, 
-        agentsModel, agentMessenger, *this, simulation );
+   Action_ABC* action = factory_.CreateAutomatCreationAction( type, selected, point, agentsModel, agentMessenger, *this, simulation );
    Register( action->GetId(), *action );
    return action;
 }
@@ -108,9 +106,9 @@ Action_ABC* ActionsModel::CreateAutomatCreationAction( const geometry::Point2f& 
 // Name: ActionsModel::CreateAgentCreationAction
 // Created: LDC 2010-10-11
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter )
+Action_ABC* ActionsModel::CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateAgentCreationAction( type, point, selected, controller, agentTypes, coordinateConverter );
+    Action_ABC* action = factory_.CreateAgentCreationAction( type, point, selected );
     Register( action->GetId(), *action );
     return action;
 }
@@ -119,9 +117,9 @@ Action_ABC* ActionsModel::CreateAgentCreationAction( const kernel::AgentType& ty
 // Name: ActionsModel::CreateFormationCreationAction
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes )
+Action_ABC* ActionsModel::CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateFormationCreationAction( level, selected, controller, agentTypes );
+    Action_ABC* action = factory_.CreateFormationCreationAction( level, selected );
     Register( action->GetId(), *action );
     return action;
 }
@@ -130,9 +128,9 @@ Action_ABC* ActionsModel::CreateFormationCreationAction( int level, const kernel
 // Name: ActionsModel::CreateCrowdCreationAction
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateCrowdCreationAction( const kernel::PopulationType& type, int number, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter )
+Action_ABC* ActionsModel::CreateCrowdCreationAction( const kernel::PopulationType& type, int number, const geometry::Point2f& point, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateCrowdCreationAction( type, number, point, selected, controller, agentTypes, coordinateConverter );
+    Action_ABC* action = factory_.CreateCrowdCreationAction( type, number, point, selected );
     Register( action->GetId(), *action );
     return action;
 }
@@ -141,9 +139,9 @@ Action_ABC* ActionsModel::CreateCrowdCreationAction( const kernel::PopulationTyp
 // Name: ActionsModel::CreateInhabitantChangeHealthStateAction
 // Created: ABR 2011-01-26
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes )
+Action_ABC* ActionsModel::CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateInhabitantChangeHealthStateAction( healthy, wounded, dead, selected, controller, agentTypes );
+    Action_ABC* action = factory_.CreateInhabitantChangeHealthStateAction( healthy, wounded, dead, selected );
     Register( action->GetId(), *action );
     return action;
 }
@@ -152,9 +150,9 @@ Action_ABC* ActionsModel::CreateInhabitantChangeHealthStateAction( int healthy, 
 // Name: ActionsModel::CreateInhabitantChangeAlertedStateAction
 // Created: BCI 2011-02-03
 // -----------------------------------------------------------------------------
-Action_ABC* ActionsModel::CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes )
+Action_ABC* ActionsModel::CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected )
 {
-    Action_ABC* action = factory_.CreateInhabitantChangeAlertedStateAction( alerted, selected, controller, agentTypes );
+    Action_ABC* action = factory_.CreateInhabitantChangeAlertedStateAction( alerted, selected );
     Register( action->GetId(), *action );
     return action;
 }

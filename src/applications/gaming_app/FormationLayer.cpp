@@ -102,14 +102,13 @@ void FormationLayer::NotifySelected( const kernel::Formation_ABC* formation )
 // -----------------------------------------------------------------------------
 void FormationLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
 {
-    actions::Action_ABC* action = actionsModel_.CreateAutomatCreationAction( point, type, *selected_, controllers_.controller_, 
-        static_, agentsModel_, messageManager_, simulation_ );
+    actions::Action_ABC* action = actionsModel_.CreateAutomatCreationAction( point, type, *selected_, agentsModel_, messageManager_, simulation_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();
     int context = (int)clock();
     boost::shared_ptr< sword::Listener > listener( new AutomatCreationListener( point, type, context,
-        agentsModel_, controllers_.controller_, static_.types_, static_.coordinateConverter_, actionsModel_, simulation_ ) );
+        agentsModel_, controllers_.controller_, actionsModel_, simulation_ ) );
     messageManager_.RegisterListener( listener );
     actionsModel_.Publish( *action, context );
 }
@@ -120,7 +119,7 @@ void FormationLayer::RequestCreation( const geometry::Point2f& point, const kern
 // -----------------------------------------------------------------------------
 void FormationLayer::RequestCreation( const geometry::Point2f& point, const kernel::PopulationPrototype& type )
 {
-    actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( *(type.type_), type.number_, point, *selected_, controllers_.controller_, static_.types_, static_.coordinateConverter_ );
+    actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( *(type.type_), type.number_, point, *selected_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();

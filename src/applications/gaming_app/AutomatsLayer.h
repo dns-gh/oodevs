@@ -27,7 +27,6 @@ namespace actions
 }
 
 class AgentServerMsgMgr;
-class StaticModel;
 
 // =============================================================================
 /** @class  AutomatsLayer
@@ -42,8 +41,7 @@ public:
     //@{
              AutomatsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                  gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::AgentsLayer& agents, actions::ActionsModel& actionsModel,
-                 const StaticModel& staticModel, const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager,
-                 tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel );
+                 const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel );
     virtual ~AutomatsLayer();
     //@}
 
@@ -73,7 +71,6 @@ private:
     //@{
     const kernel::GlTools_ABC& tools_;
     actions::ActionsModel& actionsModel_;
-    const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
     kernel::SafePointer< kernel::Automat_ABC > selected_;
     AgentServerMsgMgr& messageManager_;

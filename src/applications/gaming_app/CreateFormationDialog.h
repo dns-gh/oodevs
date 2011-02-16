@@ -20,7 +20,6 @@ namespace actions
 
 namespace kernel
 {
-    class AgentTypes;
     class Controllers;
     class Entity_ABC;
     class Formation_ABC;
@@ -48,7 +47,7 @@ class CreateFormationDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, kernel::AgentTypes& agentTypes, const kernel::Time_ABC& time );
+             CreateFormationDialog( QWidget* parent, kernel::Controllers& controllers, const kernel::FormationLevels& levels, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time );
     virtual ~CreateFormationDialog();
     //@}
 
@@ -84,7 +83,6 @@ private:
     const kernel::FormationLevels& levels_;
     actions::ActionsModel& actionsModel_;
     const kernel::Entity_ABC* currentEntity_;
-    kernel::AgentTypes& agentTypes_;
     const kernel::Time_ABC& time_;
     //@}
 };

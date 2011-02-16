@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "InhabitantChangeHealthStateDialog.h"
 #include "moc_InhabitantChangeHealthStateDialog.cpp"
-
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -19,16 +18,14 @@
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/tools.h"
-#include "gaming/StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantChangeHealthStateDialog constructor
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-InhabitantChangeHealthStateDialog::InhabitantChangeHealthStateDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
+InhabitantChangeHealthStateDialog::InhabitantChangeHealthStateDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : QDialog( pParent, tools::translate( "InhabitantChangeHealthStateDialog", "Change health state" ) )
     , controllers_  ( controllers )
-    , static_       ( staticModel )
     , actionsModel_ ( actionsModel )
     , simulation_   ( simulation )
     , profile_      ( profile )
@@ -126,7 +123,7 @@ void InhabitantChangeHealthStateDialog::Validate()
     if( ! selected_ )
         return;
     accept();
-    actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeHealthStateAction( healthySpinBox_->value(), woundedSpinBox_->value(), deadSpinBox_->value(), *selected_, controllers_.controller_, static_.types_ );
+    actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeHealthStateAction( healthySpinBox_->value(), woundedSpinBox_->value(), deadSpinBox_->value(), *selected_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();

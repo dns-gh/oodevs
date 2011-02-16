@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "InhabitantExtractCrowdDialog.h"
 #include "moc_InhabitantExtractCrowdDialog.cpp"
-
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -23,16 +22,14 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/tools.h"
 #include "gaming/Inhabitant.h"
-#include "gaming/StaticModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantExtractCrowdDialog constructor
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-InhabitantExtractCrowdDialog::InhabitantExtractCrowdDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
+InhabitantExtractCrowdDialog::InhabitantExtractCrowdDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : QDialog( pParent, tools::translate( "InhabitantExtractCrowdDialog", "Extract crowd" ) )
     , controllers_            ( controllers )
-    , static_                 ( staticModel )
     , actionsModel_           ( actionsModel )
     , simulation_             ( simulation )
     , profile_                ( profile )
@@ -141,8 +138,7 @@ void InhabitantExtractCrowdDialog::Validate()
     accept();
     // Throw Inhabitant_Change_Health_State Magic Action
     {
-        actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeHealthStateAction( selected_->GetHealthy() - healthySpinBox_->value(), selected_->GetWounded() - woundedSpinBox_->value(), selected_->GetDead(), 
-                                                                                             *selected_, controllers_.controller_, static_.types_ );
+        actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeHealthStateAction( selected_->GetHealthy() - healthySpinBox_->value(), selected_->GetWounded() - woundedSpinBox_->value(), selected_->GetDead(), *selected_ );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( selected_, false ) );
         action->Polish();
@@ -152,8 +148,7 @@ void InhabitantExtractCrowdDialog::Validate()
     {
         const Inhabitant& entity = static_cast< const Inhabitant& > ( *( selected_.ConstCast() ) );
         const kernel::Entity_ABC& top = entity.Get< kernel::TacticalHierarchies >().GetTop();
-        actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( entity.GetType().GetCrowdType(), healthySpinBox_->value() + woundedSpinBox_->value(), entity.GetPosition(), top, 
-                                                                               controllers_.controller_, static_.types_, static_.coordinateConverter_ );
+        actions::Action_ABC* action = actionsModel_.CreateCrowdCreationAction( entity.GetType().GetCrowdType(), healthySpinBox_->value() + woundedSpinBox_->value(), entity.GetPosition(), top );
         action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new actions::ActionTasker( &top, false ) );
         action->Polish();

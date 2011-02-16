@@ -23,7 +23,6 @@
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
@@ -47,7 +46,6 @@
 #include "DEC_GeometryFunctions.h"
 #include "DotationComputer_ABC.h"
 #include "protocol/ClientSenders.h"
-
 
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsNeutralized
@@ -136,7 +134,7 @@ bool DEC_AgentFunctions::IsTransported( const MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::SetFlyingHeight( MIL_Agent_ABC& callerAgent, double height )
 {
-    assert( height >= 0. && "T'as deja essaye de voler à cette hauteur ?");
+    assert( height >= 0. && "T'as deja essaye de voler à cette hauteur ?" );
     callerAgent.GetRole< PHY_RoleAction_InterfaceFlying >().SetFlyingHeight( height );
 }
 
@@ -291,7 +289,7 @@ bool DEC_AgentFunctions::HasDotationForBuilding( MIL_Agent_ABC& callerAgent, con
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanBypassObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() !=0 && callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -347,8 +345,8 @@ void DEC_AgentFunctions::DecisionalState( const MIL_Agent_ABC& callerAgent, cons
 {
     client::DecisionalState msg;
     msg().mutable_source()->mutable_unit()->set_id( callerAgent.GetID() );
-    msg().set_key   ( key.c_str() );
-    msg().set_value ( value.c_str() );
+    msg().set_key( key.c_str() );
+    msg().set_value( value.c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -395,10 +393,7 @@ namespace
             if( component.IsLoadable() )
                 bHasLoadable_ = true;
         }
-        //@}
 
-        //! @name Operations
-        //@{
         bool HasLoadable()
         {
             return bHasLoadable_;
@@ -474,7 +469,7 @@ bool DEC_AgentFunctions::AreHumanTransportersReady( const MIL_Agent_ABC& callerA
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::NotifyForceRatioStateChanged( MIL_Agent_ABC& callerAgent, int state )
 {
-    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyForceRatioStateChanged( (E_ForceRatioState)state );
+    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyForceRatioStateChanged( static_cast< E_ForceRatioState >( state ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -483,7 +478,7 @@ void DEC_AgentFunctions::NotifyForceRatioStateChanged( MIL_Agent_ABC& callerAgen
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged( MIL_Agent_ABC& callerAgent, int state )
 {
-    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyIndirectFireAvailabilityChanged( (E_FireAvailability)state );
+    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyIndirectFireAvailabilityChanged( static_cast< E_FireAvailability >( state ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -492,7 +487,7 @@ void DEC_AgentFunctions::NotifyIndirectFireAvailabilityChanged( MIL_Agent_ABC& c
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::NotifyRulesOfEngagementStateChanged( MIL_Agent_ABC& callerAgent, int state )
 {
-    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyRulesOfEngagementStateChanged( (E_RulesOfEngagementState )state );
+    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyRulesOfEngagementStateChanged( static_cast< E_RulesOfEngagementState >( state ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -521,7 +516,7 @@ void DEC_AgentFunctions::NotifyRulesOfEngagementPopulationStateChanged( MIL_Agen
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::NotifyOperationalStateChanged( MIL_Agent_ABC& callerAgent, int state )
 {
-    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyOperationalStateChanged( (E_OperationalState)state );
+    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyOperationalStateChanged( static_cast< E_OperationalState >( state ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -530,7 +525,7 @@ void DEC_AgentFunctions::NotifyOperationalStateChanged( MIL_Agent_ABC& callerAge
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::NotifyCloseCombatStateChanged( MIL_Agent_ABC& callerAgent, int state )
 {
-    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyCloseCombatStateChanged( (E_CloseCombatState)state );
+    dynamic_cast< DEC_RolePion_Decision& >( callerAgent.GetDecision() ).NotifyCloseCombatStateChanged( static_cast< E_CloseCombatState >( state ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -642,7 +637,7 @@ bool DEC_AgentFunctions::ChangeAutomate( MIL_Agent_ABC& callerAgent, DEC_Decisio
 int DEC_AgentFunctions::GetPosture( const MIL_Agent_ABC& callerAgent )
 {
     const PHY_RoleInterface_Posture& rolePosture = callerAgent.GetRole< PHY_RoleInterface_Posture >();
-    return (int)( rolePosture.GetPostureCompletionPercentage() >= 1. ? rolePosture.GetCurrentPosture().GetID() : rolePosture.GetLastPosture().GetID() );
+    return static_cast< int >( rolePosture.GetPostureCompletionPercentage() >= 1. ? rolePosture.GetCurrentPosture().GetID() : rolePosture.GetLastPosture().GetID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -804,7 +799,7 @@ namespace
     public:
         //! @name Constructors/Destructor
         //@{
-        CanUseDotationComputer( const PHY_DotationCategory* category ) : category_( category ), result_( true ) {}
+        CanUseDotationComputer( const PHY_DotationCategory* category, bool& result ) : category_( category ), result_( result ) {}
         virtual ~CanUseDotationComputer() {}
         //@}
 
@@ -818,18 +813,15 @@ namespace
         {
             if( container )
                 for( std::vector< const PHY_DotationCategory* >::const_iterator it = container->begin(); it != container->end(); ++it )
-                {
                     if( category_ == *it )
                     {
                         result_ = false;
                         return;
                     }
-                }
         }
-
         //@}
-        bool result_;
     private:
+        bool& result_;
         const PHY_DotationCategory* category_;
     };
 }
@@ -840,12 +832,11 @@ namespace
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanUseDotation( MIL_Agent_ABC& callerAgent, const PHY_DotationCategory* category )
 {
-    CanUseDotationComputer dotationComputer( category );
-
-    callerAgent.Execute<dotation::DotationComputer_ABC>( dotationComputer );
-    return dotationComputer.result_;
+    bool result = true;
+    CanUseDotationComputer dotationComputer( category, result );
+    callerAgent.Execute< dotation::DotationComputer_ABC >( dotationComputer );
+    return result;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::Suicide

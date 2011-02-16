@@ -21,11 +21,9 @@ namespace actions
 
 namespace kernel
 {
-    class AgentTypes;
     class Automat_ABC;
     class AutomatType;
     class Controller;
-    class CoordinateConverter_ABC;
     class Time_ABC;
 }
 
@@ -42,8 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatCreationListener( const geometry::Point2f& point, const kernel::AutomatType& type, int context,
-                 tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::Controller& controller, kernel::AgentTypes& agentTypes,
-                 kernel::CoordinateConverter_ABC& coordinateConverter, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time );
+                 tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::Controller& controller, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time );
     virtual ~AutomatCreationListener();
     //@}
 
@@ -69,8 +66,6 @@ private:
     const kernel::AutomatType& type_;
     tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
     kernel::Controller& controller_;
-    kernel::AgentTypes& agentTypes_;
-    kernel::CoordinateConverter_ABC& coordinateConverter_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& time_;
     const geometry::Point2f point_;

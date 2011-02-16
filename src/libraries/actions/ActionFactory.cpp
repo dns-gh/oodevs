@@ -63,14 +63,16 @@ using namespace kernel;
 // Created: SBO 2010-05-07
 // -----------------------------------------------------------------------------
 ActionFactory::ActionFactory( kernel::Controller& controller, const actions::ParameterFactory_ABC& factory, const kernel::EntityResolver_ABC& entities
-                             , const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation )
-    : controller_  ( controller )
-    , factory_     ( factory )
-    , entities_    ( entities )
-    , missions_    ( staticModel.types_ )
-    , fragOrders_  ( staticModel.types_ )
-    , magicActions_( staticModel.types_ )
-    , simulation_  ( simulation )
+                            , const kernel::StaticModel& staticModel, const kernel::Time_ABC& simulation )
+    : controller_         ( controller )
+    , factory_            ( factory )
+    , entities_           ( entities )
+    , staticModel_        ( staticModel )
+    , missions_           ( staticModel.types_ )
+    , fragOrders_         ( staticModel.types_ )
+    , magicActions_       ( staticModel.types_ )
+    , coordinateConverter_( staticModel.coordinateConverter_ )
+    , simulation_         ( simulation )
 {
     // NOTHING
 }
@@ -648,20 +650,18 @@ namespace
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateAutomatCreationAction
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatType& type, const Entity_ABC& selected, Controller& controller, const StaticModel& staticModel, const geometry::Point2f& point,
+actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatType& type, const Entity_ABC& selected, const geometry::Point2f& point,
                                                                 tools::Resolver_ABC< Automat_ABC >& agentsModel, CreationListener_ABC& agentMessenger, 
                                                                 ActionsModel& actionsModel, const Time_ABC& simulation ) const
-
 {
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel.types_ ).Get( "automat_creation" );
+    kernel::MagicActionType& actionType = magicActions_.Get( "automat_creation" );
 
-    AutomatCreationMagicAction* action = new AutomatCreationMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Automat Creation" ),  
-          staticModel, type, point, agentsModel, agentMessenger, actionsModel, simulation, true );
+    AutomatCreationMagicAction* action = new AutomatCreationMagicAction( selected, actionType, controller_, tools::translate( "ActionFactory", "Automat Creation" ),  
+          staticModel_, type, point, agentsModel, agentMessenger, actionsModel, simulation, true );
 
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
@@ -695,15 +695,15 @@ actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatTy
 // Name: ActionFactory::CreateAgentCreationAction
 // Created: LDC 2010-10-11
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const
+actions::Action_ABC* ActionFactory::CreateAgentCreationAction( const kernel::AgentType& type, const geometry::Point2f& point, const kernel::Entity_ABC& selected ) const
 {
     kernel::Point location;
     location.AddPoint( point );
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "unit_creation" );
-    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Unit Creation" ), true );
+    kernel::MagicActionType& actionType = magicActions_.Get( "unit_creation" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller_, tools::translate( "ActionFactory", "Unit Creation" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Identifier( it.NextElement(), type.GetId() ) );
-    action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter, location ) );
+    action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter_, location ) );
     return action;
 }
 
@@ -711,10 +711,10 @@ actions::Action_ABC* ActionFactory::CreateAgentCreationAction( const kernel::Age
 // Name: ActionFactory::CreateFormationCreationAction
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const
+actions::Action_ABC* ActionFactory::CreateFormationCreationAction( int level, const kernel::Entity_ABC& selected ) const
 {
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "formation_creation" );
-    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Formation Creation" ), true );
+    kernel::MagicActionType& actionType = magicActions_.Get( "formation_creation" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller_, tools::translate( "ActionFactory", "Formation Creation" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Numeric( it.NextElement(), static_cast<float>( level ) ) );
     action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
@@ -726,15 +726,15 @@ actions::Action_ABC* ActionFactory::CreateFormationCreationAction( int level, co
 // Name: ActionFactory::CreateCrowdCreationAction
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::PopulationType& type, int number, const geometry::Point2f& point, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes, kernel::CoordinateConverter_ABC& coordinateConverter ) const
+actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::PopulationType& type, int number, const geometry::Point2f& point, const kernel::Entity_ABC& selected ) const
 {
     kernel::Point location;
     location.AddPoint( point );
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "crowd_creation" );
-    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Crowd Creation" ), true );
+    kernel::MagicActionType& actionType = magicActions_.Get( "crowd_creation" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller_, tools::translate( "ActionFactory", "Crowd Creation" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::String( it.NextElement(), type.GetName() ) );
-    action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter, location ) );
+    action->AddParameter( *new parameters::Point( it.NextElement(), coordinateConverter_, location ) );
     action->AddParameter( *new parameters::Numeric( it.NextElement(), number ) );
     action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
     return action;
@@ -744,10 +744,10 @@ actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::Pop
 // Name: ActionFactory::CreateInhabitantChangeHealthStateAction
 // Created: ABR 2011-01-26
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const
+actions::Action_ABC* ActionFactory::CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected ) const
 {
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "inhabitant_change_health_state" );
-    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Population Change Health State" ), true );
+    kernel::MagicActionType& actionType = magicActions_.Get( "inhabitant_change_health_state" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller_, tools::translate( "ActionFactory", "Population Change Health State" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Quantity( it.NextElement(), healthy ) );
     action->AddParameter( *new parameters::Quantity( it.NextElement(), wounded ) );
@@ -759,10 +759,10 @@ actions::Action_ABC* ActionFactory::CreateInhabitantChangeHealthStateAction( int
 // Name: ActionFactory::CreateInhabitantChangeAlertedStateAction
 // Created: BCI 2011-02-03
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected, kernel::Controller& controller, kernel::AgentTypes& agentTypes ) const
+actions::Action_ABC* ActionFactory::CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected ) const
 {
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( agentTypes ).Get( "inhabitant_change_alerted_state" );
-    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller, tools::translate( "ActionFactory", "Population Change Alerted State" ), true );
+    kernel::MagicActionType& actionType = magicActions_.Get( "inhabitant_change_alerted_state" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller_, tools::translate( "ActionFactory", "Population Change Alerted State" ), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Bool( it.NextElement(), alerted ) );
     return action;

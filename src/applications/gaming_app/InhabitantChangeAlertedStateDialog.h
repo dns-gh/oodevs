@@ -32,7 +32,6 @@ namespace actions
     class ActionsModel;
 }
 
-class StaticModel;
 class TeamsModel;
 
 // =============================================================================
@@ -42,15 +41,15 @@ class TeamsModel;
 // Created: ABR 2011-01-25
 // =============================================================================
 class InhabitantChangeAlertedStateDialog : public QDialog
-                                       , public tools::Observer_ABC
-                                       , public kernel::ContextMenuObserver_ABC< kernel::Inhabitant_ABC >
+                                         , public tools::Observer_ABC
+                                         , public kernel::ContextMenuObserver_ABC< kernel::Inhabitant_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantChangeAlertedStateDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
+             InhabitantChangeAlertedStateDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
     virtual ~InhabitantChangeAlertedStateDialog();
     //@}
 
@@ -79,7 +78,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;

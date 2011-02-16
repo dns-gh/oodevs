@@ -27,8 +27,6 @@ namespace actions
     class ActionsModel;
 }
 
-class StaticModel;
-
 // =============================================================================
 /** @class  InhabitantChangeHealthStateDialog
     @brief  InhabitantChangeHealthStateDialog
@@ -44,7 +42,7 @@ class InhabitantChangeHealthStateDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantChangeHealthStateDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
+             InhabitantChangeHealthStateDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
     virtual ~InhabitantChangeHealthStateDialog();
     //@}
 
@@ -78,7 +76,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;

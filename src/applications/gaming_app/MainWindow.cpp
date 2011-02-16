@@ -138,7 +138,7 @@ using namespace kernel;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, tools::SessionConfig& config, LoggerProxy& logger, const QString& license )
+MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const Profile_ABC& p, tools::SessionConfig& config, LoggerProxy& logger, const QString& license )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )
@@ -182,7 +182,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     selector_->AddIcon( xpm_construction   ,  200, 150 );
     selector_->AddIcon( xpm_observe        ,  200, 150 );
 
-     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
+    gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     LinkInterpreter* interpreter = new LinkInterpreter( this, controllers, profile );
     connect( factory, SIGNAL( LinkClicked( const QString& ) ), interpreter, SLOT( Interprete( const QString& ) ) );
 
@@ -210,7 +210,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
     gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
-    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model.agents_ );
+    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, model_.actions_, simulation, network_.GetMessageMgr(), model.agents_ );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this, "orbat" );
@@ -224,12 +224,12 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );
 
-    pListsTabWidget->addTab( new TacticalList    ( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
-    pListsTabWidget->addTab( new AgentList       ( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
-    pListsTabWidget->addTab( new gui::ObjectList      ( controllers, *factory, profile ),                    tr( "Objects" ) );
-    pListsTabWidget->addTab( new gui::PopulationList  ( controllers, *factory, profile ),                    tr( "Crowds" ) );
-    pListsTabWidget->addTab( new gui::InhabitantList  ( controllers, *factory, profile ),                    tr( "Populations" ) );
-    pListsTabWidget->addTab( new gui::IntelligenceList( controllers, *factory, *icons, profile ),            tr( "Intelligences" ) );
+    pListsTabWidget->addTab( new TacticalList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
+    pListsTabWidget->addTab( new AgentList( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
+    pListsTabWidget->addTab( new gui::ObjectList( controllers, *factory, profile ), tr( "Objects" ) );
+    pListsTabWidget->addTab( new gui::PopulationList( controllers, *factory, profile ), tr( "Crowds" ) );
+    pListsTabWidget->addTab( new gui::InhabitantList( controllers, *factory, profile ), tr( "Populations" ) );
+    pListsTabWidget->addTab( new gui::IntelligenceList( controllers, *factory, *icons, profile ), tr( "Intelligences" ) );
     pListDockWnd_->setWidget( box );
     pListDockWnd_->setResizeEnabled( true );
     pListDockWnd_->setCloseMode( QDockWindow::Always );
@@ -389,11 +389,9 @@ MainWindow::MainWindow( kernel::Controllers& controllers, ::StaticModel& staticM
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locationsLayer,
-       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
-        gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker )
+                               gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
+                               gui::PreferencesDialog& preferences, const Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker )
 {
-
-
     gui::TooltipsLayer_ABC& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
     gui::Layer_ABC& missionsLayer        = *new gui::MiscLayer< MissionPanel >( missions );
     gui::Layer_ABC& creationsLayer       = *new gui::MiscLayer< CreationPanels >( creationPanels );

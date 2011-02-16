@@ -24,17 +24,14 @@
 // Created: LDC 2010-10-11
 // -----------------------------------------------------------------------------
 AutomatCreationListener::AutomatCreationListener( const geometry::Point2f& point, const kernel::AutomatType& type, int context,
-                                                  tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::Controller& controller, kernel::AgentTypes& agentTypes,
-                                                  kernel::CoordinateConverter_ABC& coordinateConverter, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time )
-    : type_               ( type )
-    , automatResolver_    ( automatResolver )
-    , controller_         ( controller )
-    , agentTypes_         ( agentTypes )
-    , coordinateConverter_( coordinateConverter )
-    , actionsModel_       ( actionsModel )
-    , time_               ( time )
-    , context_            ( context )
-    , point_              ( point )
+                 tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::Controller& controller, actions::ActionsModel& actionsModel, const kernel::Time_ABC& time )
+    : point_          ( point)
+    , type_           ( type )
+    , context_        ( context )
+    , automatResolver_( automatResolver )
+    , controller_     ( controller )
+    , actionsModel_   ( actionsModel )
+    , time_           ( time )
 {
     // NOTHING
 }
@@ -68,7 +65,7 @@ bool AutomatCreationListener::OnMessageReceived( const sword::SimToClient& messa
         unsigned int number = composition.GetSensibleNumber();
         for( unsigned int i = 0; i < number; ++i )
         {
-            actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( agentType, point_, *automat, controller_, agentTypes_, coordinateConverter_ );
+            actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( agentType, point_, *automat );
             action->Attach( *new actions::ActionTiming( controller_, time_ ) );
             action->Attach( *new actions::ActionTasker( automat, false ) );
             actionsModel_.PublishForce( *action );

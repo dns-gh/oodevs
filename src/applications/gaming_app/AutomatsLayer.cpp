@@ -19,9 +19,7 @@
 #include "actions/UnitMagicAction.h"
 #include "gaming/ConvexHulls.h"
 #include "gaming/MissionParameters.h"
-#include "gaming/StaticModel.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -42,16 +40,15 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
                              const Profile_ABC& profile, gui::AgentsLayer& agents, actions::ActionsModel& actionsModel,
-                             const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager,
+                             const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager,
                              tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel )
     : gui::AutomatsLayer( controllers, tools, strategy, view, profile, agents )
-    , tools_( tools )
-    , actionsModel_( actionsModel )
-    , static_( staticModel )
-    , simulation_( simulation )
-    , selected_( controllers )
+    , tools_         ( tools )
+    , actionsModel_  ( actionsModel )
+    , simulation_    ( simulation )
+    , selected_      ( controllers )
     , messageManager_( messageManager )
-    , agentsModel_( agentsModel )
+    , agentsModel_   ( agentsModel )
 {
     // NOTHING
 }
@@ -131,7 +128,7 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type )
 {
-    actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( type, point, *selected_, controllers_.controller_, static_.types_, static_.coordinateConverter_ );
+    actions::Action_ABC* action = actionsModel_.CreateAgentCreationAction( type, point, *selected_ );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
     action->Polish();
@@ -144,14 +141,13 @@ void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kerne
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AutomatType& type )
 {
-    Action_ABC* action = actionsModel_.CreateAutomatCreationAction( point, type, *selected_, controllers_.controller_, 
-        static_, agentsModel_, messageManager_, simulation_ );
+    Action_ABC* action = actionsModel_.CreateAutomatCreationAction( point, type, *selected_, agentsModel_, messageManager_, simulation_ );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( selected_, false ) );
     action->Polish();
     int context = (int)clock();
     boost::shared_ptr< sword::Listener > listener( new AutomatCreationListener( point, type, context,
-        agentsModel_, controllers_.controller_, static_.types_, static_.coordinateConverter_, actionsModel_, simulation_ ) );
+        agentsModel_, controllers_.controller_, actionsModel_, simulation_ ) );
     messageManager_.RegisterListener( listener );
     actionsModel_.Publish( *action, context );
 }
