@@ -44,12 +44,22 @@ namespace
 // -----------------------------------------------------------------------------
 AfterActionFunction::AfterActionFunction( xml::xistream& xis )
     : base_( ReadBase( xis ) )
+    , name_( "" )
 {
     xis >> xml::start( "descriptions" )
           >> xml::list( "description", *this, &AfterActionFunction::ReadDescription )
-        >> xml::end
-        >> xml::start( "parameters" )
-            >> xml::list( "parameter", *this, &AfterActionFunction::ReadParameter )
+        >> xml::end;
+    if( name_ == "" )
+    {
+        xis >> xml::start( "parameters" )
+              >> xml::start( "parameter" );
+        name_ = xis.attribute< std::string >( "name" ).c_str();
+        std::string comments;
+        xis >> comments;
+        comments_ = comments.c_str();
+    }
+    xis >> xml::start( "parameters" )
+          >> xml::list( "parameter", *this, &AfterActionFunction::ReadParameter )
         >> xml::end;
 }
 
