@@ -60,10 +60,6 @@ private:
     AutomatCreationMagicAction& operator=( const AutomatCreationMagicAction& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{

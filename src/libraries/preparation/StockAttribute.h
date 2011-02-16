@@ -60,11 +60,6 @@ private:
     void CreateDictionary( kernel::PropertiesDictionary& dico );
     void ReadResource( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver );
     //@}
-
-public:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 #endif // __StockAttribute_h_

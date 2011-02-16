@@ -48,15 +48,6 @@ private:
     FirePropagationModifierPrototype_ABC( const FirePropagationModifierPrototype_ABC& );            //!< Copy constructor
     FirePropagationModifierPrototype_ABC& operator=( const FirePropagationModifierPrototype_ABC& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 }

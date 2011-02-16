@@ -44,15 +44,6 @@ private:
     CreationListener_ABC( const CreationListener_ABC& );            //!< Copy constructor
     CreationListener_ABC& operator=( const CreationListener_ABC& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 }
 

@@ -69,10 +69,6 @@ private:
     //@{
     explicit BurnCapacity( const BurnCapacity& );
     //@}
-
-    //! @name Private member
-    //@{
-    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( BurnCapacity )
