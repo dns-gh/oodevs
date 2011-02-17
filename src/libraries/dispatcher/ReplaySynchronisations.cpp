@@ -100,30 +100,30 @@ void ReplaySynchronisations::DoUpdate()
         DoUpdate();\
     }
 
-DO_UPDATE( sword::UnitCreation );
 DO_UPDATE( sword::AutomatCreation );
-DO_UPDATE( sword::FormationCreation );
-DO_UPDATE( sword::KnowledgeGroupCreation );
-DO_UPDATE( sword::Report );
-DO_UPDATE( sword::PartyCreation );
-DO_UPDATE( sword::ObjectCreation );
-DO_UPDATE( sword::PhaseLineCreation );
-DO_UPDATE( sword::LimitCreation );
-DO_UPDATE( sword::CrowdCreation );
 DO_UPDATE( sword::CrowdConcentrationCreation );
-DO_UPDATE( sword::CrowdFlowCreation );
-DO_UPDATE( sword::IntelligenceCreation );
-DO_UPDATE( sword::UnitKnowledgeCreation );
-DO_UPDATE( sword::ObjectKnowledgeCreation );
-DO_UPDATE( sword::CrowdKnowledgeCreation );
 DO_UPDATE( sword::CrowdConcentrationKnowledgeCreation );
+DO_UPDATE( sword::CrowdCreation );
+DO_UPDATE( sword::CrowdFlowCreation );
 DO_UPDATE( sword::CrowdFlowKnowledgeCreation );
+DO_UPDATE( sword::CrowdKnowledgeCreation );
+DO_UPDATE( sword::FormationCreation );
+DO_UPDATE( sword::IntelligenceCreation );
+DO_UPDATE( sword::KnowledgeGroupCreation );
+DO_UPDATE( sword::LimitCreation );
 DO_UPDATE( sword::LogMaintenanceHandlingCreation );
 DO_UPDATE( sword::LogMedicalHandlingCreation );
 DO_UPDATE( sword::LogSupplyHandlingCreation );
-DO_UPDATE( sword::StartUnitFire );
-DO_UPDATE( sword::StartFireEffect );
+DO_UPDATE( sword::ObjectCreation );
+DO_UPDATE( sword::ObjectKnowledgeCreation );
+DO_UPDATE( sword::PartyCreation );
+DO_UPDATE( sword::PhaseLineCreation );
+DO_UPDATE( sword::Report );
 DO_UPDATE( sword::StartCrowdFire );
+DO_UPDATE( sword::StartFireEffect );
+DO_UPDATE( sword::StartUnitFire );
+DO_UPDATE( sword::UnitCreation );
+DO_UPDATE( sword::UnitKnowledgeCreation );
 DO_UPDATE( sword::UrbanCreation );
 DO_UPDATE( sword::UrbanKnowledgeCreation );
 

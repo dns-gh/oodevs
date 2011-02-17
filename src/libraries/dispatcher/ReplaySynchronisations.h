@@ -15,40 +15,37 @@
 
 namespace sword
 {
-    class PhaseLineCreation;
-    class LimitCreation;
-    class FormationCreation;
-    class UnitCreation;
     class AutomatCreation;
-    class KnowledgeGroupCreation;
-    class CrowdCreation;
-    class CrowdFlowKnowledgeCreation;
-    class LogMaintenanceHandlingCreation;
-    class LogMedicalHandlingCreation;
-    class LogSupplyHandlingCreation;
-    class UnitKnowledgeCreation;
-    class ObjectKnowledgeCreation;
-    class CrowdKnowledgeCreation;
-    class CrowdConcentrationKnowledgeCreation;
-    class CrowdFlowKnowledgeCreation;
-    class LogMaintenanceHandlingCreation;
-    class LogMedicalHandlingCreation;
-    class LogSupplyHandlingCreation;
-    class Report;
-    class PartyCreation;
-    class ObjectCreation;
-    class PhaseLineCreation;
-    class CrowdCreation;
-    class CrowdConcentrationCreation;
-    class CrowdFlowCreation;
-    class StartUnitFire;
-    class StartFireEffect;
-    class StartCrowdFire;
+    class ChangeDiplomacy;
     class ChangeDiplomacyAck;
+    class CrowdConcentrationCreation;
+    class CrowdConcentrationKnowledgeCreation;
+    class CrowdCreation;
+    class CrowdFlowCreation;
+    class CrowdFlowKnowledgeCreation;
+    class CrowdKnowledgeCreation;
+    class FormationCreation;
+    class IntelligenceCreation;
+    class KnowledgeGroupCreation;
+    class LimitCreation;
+    class LogMaintenanceHandlingCreation;
+    class LogMedicalHandlingCreation;
+    class LogSupplyHandlingCreation;
+    class LogMaintenanceHandlingCreation;
+    class LogMedicalHandlingCreation;
+    class LogSupplyHandlingCreation;
+    class ObjectCreation;
+    class ObjectKnowledgeCreation;
+    class PartyCreation;
+    class PhaseLineCreation;
+    class Report;
+    class StartCrowdFire;
+    class StartFireEffect;
+    class StartUnitFire;
+    class UnitCreation;
+    class UnitKnowledgeCreation;
     class UrbanCreation;
     class UrbanKnowledgeCreation;
-    class IntelligenceCreation;
-    class ChangeDiplomacy;
 }
 
 namespace kernel
@@ -68,32 +65,32 @@ namespace dispatcher
 // Created: SBO 2008-02-14
 // =============================================================================
 class ReplaySynchronisations : public kernel::Extension_ABC
-                             , public kernel::Updatable_ABC< sword::UnitCreation >
                              , public kernel::Updatable_ABC< sword::AutomatCreation >
-                             , public kernel::Updatable_ABC< sword::FormationCreation >
-                             , public kernel::Updatable_ABC< sword::KnowledgeGroupCreation >
-                             , public kernel::Updatable_ABC< sword::Report >
-                             , public kernel::Updatable_ABC< sword::PartyCreation >
-                             , public kernel::Updatable_ABC< sword::ObjectCreation >
-                             , public kernel::Updatable_ABC< sword::PhaseLineCreation >
-                             , public kernel::Updatable_ABC< sword::LimitCreation >
-                             , public kernel::Updatable_ABC< sword::CrowdCreation >
+                             , public kernel::Updatable_ABC< sword::ChangeDiplomacy >
+                             , public kernel::Updatable_ABC< sword::ChangeDiplomacyAck >
                              , public kernel::Updatable_ABC< sword::CrowdConcentrationCreation >
-                             , public kernel::Updatable_ABC< sword::CrowdFlowCreation >
-                             , public kernel::Updatable_ABC< sword::IntelligenceCreation >
-                             , public kernel::Updatable_ABC< sword::UnitKnowledgeCreation >
-                             , public kernel::Updatable_ABC< sword::ObjectKnowledgeCreation >
-                             , public kernel::Updatable_ABC< sword::CrowdKnowledgeCreation >
                              , public kernel::Updatable_ABC< sword::CrowdConcentrationKnowledgeCreation >
+                             , public kernel::Updatable_ABC< sword::CrowdCreation >
+                             , public kernel::Updatable_ABC< sword::CrowdFlowCreation >
                              , public kernel::Updatable_ABC< sword::CrowdFlowKnowledgeCreation >
+                             , public kernel::Updatable_ABC< sword::CrowdKnowledgeCreation >
+                             , public kernel::Updatable_ABC< sword::FormationCreation >
+                             , public kernel::Updatable_ABC< sword::IntelligenceCreation >
+                             , public kernel::Updatable_ABC< sword::KnowledgeGroupCreation >
+                             , public kernel::Updatable_ABC< sword::LimitCreation >
                              , public kernel::Updatable_ABC< sword::LogMaintenanceHandlingCreation >
                              , public kernel::Updatable_ABC< sword::LogMedicalHandlingCreation >
                              , public kernel::Updatable_ABC< sword::LogSupplyHandlingCreation >
-                             , public kernel::Updatable_ABC< sword::StartUnitFire >
-                             , public kernel::Updatable_ABC< sword::StartFireEffect >
+                             , public kernel::Updatable_ABC< sword::ObjectCreation >
+                             , public kernel::Updatable_ABC< sword::ObjectKnowledgeCreation >
+                             , public kernel::Updatable_ABC< sword::PartyCreation >
+                             , public kernel::Updatable_ABC< sword::PhaseLineCreation >
+                             , public kernel::Updatable_ABC< sword::Report >
                              , public kernel::Updatable_ABC< sword::StartCrowdFire >
-                             , public kernel::Updatable_ABC< sword::ChangeDiplomacy >
-                             , public kernel::Updatable_ABC< sword::ChangeDiplomacyAck >
+                             , public kernel::Updatable_ABC< sword::StartFireEffect >
+                             , public kernel::Updatable_ABC< sword::StartUnitFire >
+                             , public kernel::Updatable_ABC< sword::UnitCreation >
+                             , public kernel::Updatable_ABC< sword::UnitKnowledgeCreation >
                              , public kernel::Updatable_ABC< sword::UrbanCreation >
                              , public kernel::Updatable_ABC< sword::UrbanKnowledgeCreation >
 {
@@ -110,33 +107,32 @@ public:
     void EndSynchronisation  ( Synchroniser& synch ) const;
     void StartSynchronisation( kernel::Entity_ABC& next, bool create );
 
-    virtual void DoUpdate( const sword::UnitCreation& msg );
     virtual void DoUpdate( const sword::AutomatCreation& msg );
-    virtual void DoUpdate( const sword::FormationCreation& msg );
-    virtual void DoUpdate( const sword::KnowledgeGroupCreation& msg );
-    virtual void DoUpdate( const sword::Report& msg );
-    virtual void DoUpdate( const sword::PartyCreation& msg );
-    virtual void DoUpdate( const sword::ObjectCreation& msg );
-    virtual void DoUpdate( const sword::PhaseLineCreation& msg );
-    virtual void DoUpdate( const sword::LimitCreation& msg );
+    virtual void DoUpdate( const sword::ChangeDiplomacy& msg );
+    virtual void DoUpdate( const sword::ChangeDiplomacyAck& msg );
     virtual void DoUpdate( const sword::CrowdCreation& msg );
     virtual void DoUpdate( const sword::CrowdConcentrationCreation& msg );
-    virtual void DoUpdate( const sword::CrowdFlowCreation& msg );
-    virtual void DoUpdate( const sword::IntelligenceCreation& msg );
-    virtual void DoUpdate( const sword::UnitKnowledgeCreation& msg );
-    virtual void DoUpdate( const sword::ObjectKnowledgeCreation& msg );
-    virtual void DoUpdate( const sword::CrowdKnowledgeCreation& msg );
     virtual void DoUpdate( const sword::CrowdConcentrationKnowledgeCreation& msg );
+    virtual void DoUpdate( const sword::CrowdKnowledgeCreation& msg );
+    virtual void DoUpdate( const sword::CrowdFlowCreation& msg );
     virtual void DoUpdate( const sword::CrowdFlowKnowledgeCreation& msg );
+    virtual void DoUpdate( const sword::FormationCreation& msg );
+    virtual void DoUpdate( const sword::IntelligenceCreation& msg );
+    virtual void DoUpdate( const sword::KnowledgeGroupCreation& msg );
+    virtual void DoUpdate( const sword::LimitCreation& msg );
     virtual void DoUpdate( const sword::LogMaintenanceHandlingCreation& msg );
     virtual void DoUpdate( const sword::LogMedicalHandlingCreation& msg );
     virtual void DoUpdate( const sword::LogSupplyHandlingCreation& msg );
-    virtual void DoUpdate( const sword::StartUnitFire& msg );
-    virtual void DoUpdate( const sword::StartFireEffect& msg );
+    virtual void DoUpdate( const sword::ObjectCreation& msg );
+    virtual void DoUpdate( const sword::ObjectKnowledgeCreation& msg );
+    virtual void DoUpdate( const sword::PartyCreation& msg );
+    virtual void DoUpdate( const sword::PhaseLineCreation& msg );
+    virtual void DoUpdate( const sword::Report& msg );
     virtual void DoUpdate( const sword::StartCrowdFire& msg );
-
-    virtual void DoUpdate( const sword::ChangeDiplomacy& msg );
-    virtual void DoUpdate( const sword::ChangeDiplomacyAck& msg );
+    virtual void DoUpdate( const sword::StartFireEffect& msg );
+    virtual void DoUpdate( const sword::StartUnitFire& msg );
+    virtual void DoUpdate( const sword::UnitCreation& msg );
+    virtual void DoUpdate( const sword::UnitKnowledgeCreation& msg );
     virtual void DoUpdate( const sword::UrbanCreation& msg );
     virtual void DoUpdate( const sword::UrbanKnowledgeCreation& msg );
     //@}
