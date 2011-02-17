@@ -88,7 +88,7 @@ void ADN_ListView_UrbanInfrastructure_Type::ConnectItem( bool bConnect )
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Urban_GUI::eNbrUrbanInfrastructureGuiElements );
 
     vItemConnectors_[ADN_Urban_GUI::eUrbanInfrastructureName]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ADN_Urban_GUI::eUrbanInfrastructureSymbol]->Connect( &pInfos->symbol_, bConnect );
+    vItemConnectors_[ADN_Urban_GUI::eUrbanInfrastructureSymbol]->Connect( &pInfos->pSymbol_, bConnect );
 
     ADN_Urban_Data::InfrastructureInfos::CIT_CapacityMap cit = pInfos->capacities_.find( "medical" );
     if( cit == pInfos->capacities_.end() )

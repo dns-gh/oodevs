@@ -792,5 +792,30 @@
         </choice>
     </levels>
     <automats base="headquarter"/>
+    <infrastructures base="infrastructures/">
+      <choice name ="administration"/>
+      <choice name ="barrack"/>
+      <choice name ="education"/>
+      <choice name ="fire-station"/>
+      <choice name ="hospital"/>
+      <choice name ="housing"/>
+      <choice name ="industry"/>
+      <choice name ="landmark"/>
+      <choice name ="media"/>
+      <choice name ="military-barrack"/>
+      <choice name ="office"/>
+      <choice name ="police-station"/>
+      <choice name ="religious"/>
+      <choice name ="resource-electricity"/>
+      <choice name ="resource-food"/>
+      <choice name ="resource-gas"/>
+      <choice name ="resource-water"/>
+      <choice name ="shops"/>
+      <choice name ="sports"/>
+      <choice name ="transportation-air"/>
+      <choice name ="transportation-naval"/>
+      <choice name ="transportation"/>
+      <choice name ="warehouse"/>
+    </infrastructures>
 </app6>
-<!-- signature="1214480937" -->
+<!-- signature="2504437272" -->

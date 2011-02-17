@@ -25,6 +25,7 @@
 #include "ADN_GroupBox.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
+#include "ADN_ComboBox_Vector.h"
 #include "ADN_Equipement_Data.h"
 
 #include <qframe.h>
@@ -174,7 +175,7 @@ void ADN_Urban_GUI::Build()
     pHolder = builder.AddFieldHolder( pGroupInfrastructures );
 
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vInfrastructureInfosConnectors[ eUrbanInfrastructureName ] );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Urban_Data::SymbolsInfraInfos > >( pHolder, tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
 
     ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ), pGroupInfrastructures );
     {

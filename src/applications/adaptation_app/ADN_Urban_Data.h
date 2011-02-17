@@ -38,6 +38,32 @@ class ADN_TypeCapacity_Infos;
 //*****************************************************************************
 class ADN_Urban_Data : public ADN_Data_ABC
 {
+
+//*****************************************************************************
+public:
+    class SymbolsInfraInfos : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+    public:
+        SymbolsInfraInfos();
+        explicit SymbolsInfraInfos( xml::xistream& input );
+        virtual ~SymbolsInfraInfos();
+
+        virtual std::string GetNodeName();
+        virtual std::string GetItemName();
+        bool operator==( const std::string& str );
+
+    public:
+        //! @name Member Data
+        //@{
+        ADN_Type_String strName_; 
+        //@}
+    };
+
+    typedef ADN_Type_Vector_ABC< SymbolsInfraInfos >     T_SymbolsInfraInfos_Vector;
+    typedef T_SymbolsInfraInfos_Vector::iterator        IT_SymbolsInfraInfos_Vector;
+    typedef T_SymbolsInfraInfos_Vector::const_iterator CIT_SymbolsInfraInfos_Vector;
+
 //*****************************************************************************
 public:
     class AccommodationInfos : public ADN_Ref_ABC
@@ -91,7 +117,7 @@ public:
         //! @name Member Data
         //@{
         ADN_Type_String strName_;
-        ADN_Type_String symbol_;
+        ADN_TypePtr_InVector_ABC< ADN_Urban_Data::SymbolsInfraInfos > pSymbol_;
         T_CapacityMap capacities_;
         //@}
     };
@@ -160,6 +186,8 @@ public:
     AccommodationInfos* FindAccommodation( const std::string& strName );
     T_InfrastructureInfos_Vector& GetInfrastructuresInfos();
     InfrastructureInfos* FindInfrastructure( const std::string& strName );
+    T_SymbolsInfraInfos_Vector& GetInfraSymbolsInfos();  
+    SymbolsInfraInfos* FindInfraSymbol( const std::string& strName );
 
 private:
     //! @name Helpers
@@ -183,6 +211,10 @@ private:
     void ReadInfrastructure  ( xml::xistream& input );
     void ReadInfrastructures ( xml::xistream& input );
     void WriteInfrastructures( xml::xostream& output ) const;
+
+    void ReadInfrastructureSymbols();
+    void ReadInfrastructureSymbol( xml::xistream& input );
+
     //@}
 
 private:
@@ -193,6 +225,7 @@ private:
     T_UrbanInfos_Vector vFacades_;
     T_AccommodationInfos_Vector vAccommodations_;
     T_InfrastructureInfos_Vector vInfrastructures_;
+    T_SymbolsInfraInfos_Vector vInfrasSymbols_;
     //@}
 };
 
@@ -336,6 +369,39 @@ inline
 ADN_Urban_Data::InfrastructureInfos* ADN_Urban_Data::FindInfrastructure( const std::string& strName )
 {
     for( IT_InfrastructureInfos_Vector it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
+        if( **it == strName )
+            return *it;
+    return 0;
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::GetInfraSymbolsInfos
+// Created: SLG 2010-12-20
+//-----------------------------------------------------------------------------
+inline
+ADN_Urban_Data::T_SymbolsInfraInfos_Vector& ADN_Urban_Data::GetInfraSymbolsInfos()
+{
+    return vInfrasSymbols_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::InfrastructureInfos::operator==
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+inline
+bool ADN_Urban_Data::SymbolsInfraInfos::operator==( const std::string& str )
+{
+    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Urban_Data::FindInfraSymbol
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+inline
+ADN_Urban_Data::SymbolsInfraInfos* ADN_Urban_Data::FindInfraSymbol( const std::string& strName )
+{
+    for( IT_SymbolsInfraInfos_Vector it = vInfrasSymbols_.begin(); it != vInfrasSymbols_.end(); ++it )
         if( **it == strName )
             return *it;
     return 0;
