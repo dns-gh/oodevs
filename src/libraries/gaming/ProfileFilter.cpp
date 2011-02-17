@@ -170,7 +170,7 @@ bool ProfileFilter::IsInHierarchy( const Entity_ABC& entity ) const
     const TacticalHierarchies* t = entity.Retrieve< TacticalHierarchies >();
     const CommunicationHierarchies* c = entity.Retrieve< CommunicationHierarchies >();
     const IntelligenceHierarchies* i = entity.Retrieve< IntelligenceHierarchies >();
-    if( ( t && t->IsSubordinateOf( *entity_ ) && !( c && c->IsJammed() )  )
+    if( ( t && t->IsSubordinateOf( *entity_ ) && !( c && c->IsJammed() ) )
      || ( c && c->IsSubordinateOf( *entity_ ) )
      || ( i && i->IsSubordinateOf( *entity_ ) ) )
         return true;

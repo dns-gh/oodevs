@@ -49,8 +49,9 @@ void FiresModel::Purge()
 // -----------------------------------------------------------------------------
 void FiresModel::AddFire( const sword::StartUnitFire& message )
 {
-    if( ! Find( message.fire().id() ) )
+    if( !Find( message.fire().id() ) )
         Register( message.fire().id(), agents_.Get( message.firing_unit().id() ) );
+    AddTarget( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,42 +60,21 @@ void FiresModel::AddFire( const sword::StartUnitFire& message )
 // -----------------------------------------------------------------------------
 void FiresModel::AddFire( const sword::StartCrowdFire& message )
 {
-    if( ! Find( message.fire().id() ) )
+    if( !Find( message.fire().id() ) )
         Register( message.fire().id(), populations_.Get( message.firing_crowd().id() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FiresModel::FindFirer
-// Created: AGE 2006-03-13
+// Name: FiresModel::AddTarget
+// Created: ABR 2011-02-16
 // -----------------------------------------------------------------------------
-Entity_ABC* FiresModel::FindFirer( const sword::StopUnitFire& message )
+void FiresModel::AddTarget( const sword::StartUnitFire& message )
 {
-    return Find( message.fire().id() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FiresModel::FindFirer
-// Created: AGE 2006-03-13
-// -----------------------------------------------------------------------------
-Entity_ABC* FiresModel::FindFirer( const sword::StopCrowdFire& message )
-{
-    return Find( message.fire().id() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FiresModel::RemoveFire
-// Created: AGE 2006-03-13
-// -----------------------------------------------------------------------------
-void FiresModel::RemoveFire( const sword::StopUnitFire& message )
-{
-    Remove( message.fire().id() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: FiresModel::RemoveFire
-// Created: AGE 2006-03-13
-// -----------------------------------------------------------------------------
-void FiresModel::RemoveFire( const sword::StopCrowdFire& message )
-{
-    Remove( message.fire().id() );
+    if( !targets_.Find( message.fire().id() ) && !message.target().has_position() )
+    {
+        if( message.target().has_unit() )
+            targets_.Register( message.fire().id(), agents_.Get( message.target().unit().id() ) );
+        else if( message.target().has_crowd() )
+            targets_.Register( message.fire().id(), populations_.Get( message.target().crowd().id() ) );
+    }
 }

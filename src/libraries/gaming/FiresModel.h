@@ -38,13 +38,14 @@ public:
     //! @name Operations
     //@{
     void Purge();
-
-    void AddFire        ( const sword::StartUnitFire& message );
-    void AddFire        ( const sword::StartCrowdFire& message );
-    kernel::Entity_ABC* FindFirer( const sword::StopUnitFire& message );
-    kernel::Entity_ABC* FindFirer( const sword::StopCrowdFire& message );
-    void RemoveFire     ( const sword::StopUnitFire& message );
-    void RemoveFire     ( const sword::StopCrowdFire& message );
+    void AddFire( const sword::StartUnitFire& message );
+    void AddFire( const sword::StartCrowdFire& message );
+    template< typename T >
+    void RemoveFire( const T& message );
+    template< typename T >
+    kernel::Entity_ABC* FindFirer( const T& message );
+    template< typename T >
+    kernel::Entity_ABC* FindTarget( const T& message );
     //@}
 
 private:
@@ -54,12 +55,49 @@ private:
     FiresModel& operator=( const FiresModel& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void AddTarget( const sword::StartUnitFire& message );
+    //@}
+
 private:
     //! @name Member data
     //@{
+    tools::Resolver< kernel::Entity_ABC > targets_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& agents_;
     const tools::Resolver_ABC< kernel::Population_ABC >& populations_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: FiresModel::FindFirer
+// Created: ABR 2011-02-17
+// -----------------------------------------------------------------------------
+template< typename T >
+kernel::Entity_ABC* FiresModel::FindFirer( const T& message )
+{
+    return Find( message.fire().id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FiresModel::FindTarget
+// Created: ABR 2011-02-17
+// -----------------------------------------------------------------------------
+template< typename T >
+kernel::Entity_ABC* FiresModel::FindTarget( const T& message )
+{
+    return targets_.Find( message.fire().id() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FiresModel::RemoveFire
+// Created: ABR 2011-02-17
+// -----------------------------------------------------------------------------
+template< typename T >
+void FiresModel::RemoveFire( const T& message )
+{
+    Remove( message.fire().id() );
+    targets_.Remove( message.fire().id() );
+}
 
 #endif // __FiresModel_h_

@@ -40,10 +40,10 @@ FireFactory::~FireFactory()
 // Name: FireFactory::CreateFire
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-Fire_ABC* FireFactory::CreateFire( const sword::StartUnitFire& message )
+Fire_ABC* FireFactory::CreateFire( const sword::StartUnitFire& message, unsigned long id )
 {
     if( message.target().has_unit() || message.target().has_crowd() )
-        return new DirectFire( message, model_.agents_, model_.agents_ );
+        return new DirectFire( message, model_.agents_, model_.agents_, id );
     if( message.target().has_position() )
         return new IndirectFire( message, model_.agents_, model_.static_.coordinateConverter_ );
     throw std::runtime_error( "Invalid target type" );
@@ -53,7 +53,7 @@ Fire_ABC* FireFactory::CreateFire( const sword::StartUnitFire& message )
 // Name: FireFactory::CreateFire
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-Fire_ABC* FireFactory::CreateFire( const sword::StartCrowdFire& message )
+Fire_ABC* FireFactory::CreateFire( const sword::StartCrowdFire& message, unsigned long /*id*/ ) // FIXME
 {
     return new PopulationFire( message, model_.agents_ );
 }

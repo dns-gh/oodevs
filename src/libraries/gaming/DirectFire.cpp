@@ -21,20 +21,25 @@ using namespace kernel;
 // Name: DirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-DirectFire::DirectFire( const sword::StartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< Population_ABC >& populationResolver )
+DirectFire::DirectFire( const sword::StartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< Population_ABC >& populationResolver, unsigned long entityId )
     : Fire_ABC( agentResolver.Get( message.firing_unit().id() ) )
     , id_( message.fire().id() )
+    , isTarget_( false )
 {
+    const kernel::Entity_ABC* target;
+
     if( message.target().has_unit() )
-        target_ = & agentResolver.Get( message.target().unit().id() );
+        target = & agentResolver.Get( message.target().unit().id() );
     else if( message.target().has_crowd() )
-        target_ = & populationResolver.Get( message.target().crowd().id() );
+        target = & populationResolver.Get( message.target().crowd().id() );
     else
         throw std::runtime_error( "DirectFire on position..." );
 
-//    if( message.has_ammunition()  )
-//        ; // $$$$ AGE 2006-03-10:
-    targetPosition_ = target_->Retrieve< Positions >();
+    isTarget_ = target->GetId() == entityId;
+    if( isTarget_ )
+        position_ = agentResolver.Get( message.firing_unit().id() ).Retrieve< Positions >();
+    else
+        position_ = target->Retrieve< Positions >();
 }
 
 // -----------------------------------------------------------------------------
@@ -52,10 +57,15 @@ DirectFire::~DirectFire()
 // -----------------------------------------------------------------------------
 void DirectFire::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( targetPosition_ )
+    if( position_ )
     {
-        const geometry::Point2f pos = targetPosition_->GetPosition();
+        const geometry::Point2f pos = position_->GetPosition();
         if( viewport.IsVisible( geometry::Rectangle2f( where, pos ) ) )
-            tools.DrawArrow( where, pos );
+        {
+            if( isTarget_ )
+                tools.DrawArrow( pos, where );
+            else
+                tools.DrawArrow( where, pos );
+        }
     }
 }

@@ -241,6 +241,6 @@ void AgentFactory::AttachExtensions( kernel::Entity_ABC& agent )
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );
     agent.Attach( *new PopulationDetections( controllers_.controller_, static_.coordinateConverter_, model_.agents_, agent ) );
     agent.Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
-    agent.Attach( *new Fires( controllers_.controller_, model_.fireFactory_ ) );
+    agent.Attach( *new Fires( controllers_.controller_, model_.fireFactory_, agent.GetId() ) );
     agent.Attach( *new UrbanPerceptions( controllers_.controller_, model_.agents_ ) );
 }

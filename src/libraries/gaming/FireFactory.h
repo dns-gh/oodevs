@@ -32,8 +32,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual Fire_ABC* CreateFire( const sword::StartUnitFire& message );
-    virtual Fire_ABC* CreateFire( const sword::StartCrowdFire& message );
+    virtual Fire_ABC* CreateFire( const sword::StartUnitFire& message, unsigned long id );
+    virtual Fire_ABC* CreateFire( const sword::StartCrowdFire& message, unsigned long id );
     //@}
 
 private:

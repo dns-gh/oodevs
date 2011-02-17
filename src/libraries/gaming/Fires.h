@@ -43,7 +43,7 @@ class Fires : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Fires( kernel::Controller& controller, FireFactory& factory );
+             Fires( kernel::Controller& controller, FireFactory& factory, unsigned long agentId );
     virtual ~Fires();
     //@}
 
@@ -76,6 +76,7 @@ private:
     //@{
     kernel::Controller& controller_;
     FireFactory& factory_;
+    unsigned long agentId_;
     //@}
 };
 

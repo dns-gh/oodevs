@@ -72,8 +72,7 @@ bool KnowledgeLayer< KnowledgeType >::ShouldDisplay( const kernel::Entity_ABC& e
 {
     const kernel::Knowledge_ABC& k = static_cast< const kernel::Knowledge_ABC& >( entity );
     const kernel::Entity_ABC* e = k.GetEntity();
-    return (!e || ! profile_.IsVisible( *e ))
-             &&   profile_.IsKnowledgeVisible( k );
+    return ( !e || ! profile_.IsVisible( *e ) ) && profile_.IsKnowledgeVisible( k );
 }
 
 #endif // __KnowledgeLayer_h_

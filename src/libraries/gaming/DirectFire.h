@@ -34,8 +34,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              DirectFire( const sword::StartUnitFire& message,
-                 const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver,
-                 const tools::Resolver_ABC< kernel::Population_ABC >& populationResolver );
+                         const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver,
+                         const tools::Resolver_ABC< kernel::Population_ABC >& populationResolver,
+                         unsigned long entityId );
     virtual ~DirectFire();
     //@}
 
@@ -48,8 +49,8 @@ public:
     //! @name Member data
     //@{
     unsigned int id_;
-    const kernel::Entity_ABC* target_;
-    const kernel::Positions* targetPosition_;
+    const kernel::Positions* position_;
+    bool isTarget_;
     //@}
 };
 

@@ -22,9 +22,10 @@ using namespace kernel;
 // Name: Fires constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-Fires::Fires( Controller& controller, FireFactory& factory )
+Fires::Fires( Controller& controller, FireFactory& factory, unsigned long agentId )
     : controller_( controller )
-    , factory_( factory )
+    , factory_   ( factory )
+    , agentId_   ( agentId )
 {
     // NOTHING
 }
@@ -47,7 +48,7 @@ void Fires::CreateFire( const T& message )
 {
     if( ! Find( message.fire().id() ) )
     {
-        Fire_ABC* fire = factory_.CreateFire( message );
+        Fire_ABC* fire = factory_.CreateFire( message, agentId_ );
         Register( message.fire().id(), *fire );
         controller_.Update( *this );
     }

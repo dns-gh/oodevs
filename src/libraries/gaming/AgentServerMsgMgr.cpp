@@ -1208,6 +1208,9 @@ void AgentServerMsgMgr::OnReceiveStartUnitFire( const sword::StartUnitFire& mess
     Agent_ABC& src = GetModel().agents_.GetAgent( message.firing_unit().id() );
     src.Update( message );
     GetModel().fires_.AddFire( message );
+    Entity_ABC* target = GetModel().fires_.FindTarget( message );
+    if( target ) 
+        target->Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -1219,6 +1222,9 @@ void AgentServerMsgMgr::OnReceiveStopUnitFire( const sword::StopUnitFire& messag
     Entity_ABC* src = GetModel().fires_.FindFirer( message );
     if( src )
         src->Update( message );
+    Entity_ABC* target = GetModel().fires_.FindTarget( message );
+    if( target )
+        target->Update( message );
     GetModel().fires_.RemoveFire( message );
 }
 
