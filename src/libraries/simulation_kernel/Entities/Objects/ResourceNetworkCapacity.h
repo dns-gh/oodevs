@@ -81,7 +81,7 @@ public:
     virtual void NotifyStructuralStateChanged( float structuralState, const MIL_Object_ABC& object );
     virtual void NotifyFired() {}
 
-    void AddConsumption( unsigned long resourceId, unsigned int consumption );
+    void AddConsumption( unsigned long resourceId, double consumption );
     float GetConsumptionState( unsigned long resourceId ) const;
     float GetFunctionalState() const;
 

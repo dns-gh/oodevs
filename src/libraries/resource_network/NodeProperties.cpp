@@ -176,7 +176,7 @@ void NodeProperties::SetModifier( float modifier )
 // Name: NodeProperties::AddConsumption
 // Created: JSR 2011-02-01
 // -----------------------------------------------------------------------------
-void NodeProperties::AddConsumption( unsigned long resourceId, unsigned int consumption )
+void NodeProperties::AddConsumption( unsigned long resourceId, double consumption )
 {
     NodeElement* element = Find( resourceId );
     if( element )

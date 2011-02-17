@@ -192,7 +192,7 @@ void ResourceNetworkCapacity::NotifyStructuralStateChanged( float structuralStat
 // Name: ResourceNetworkCapacity::AddConsumption
 // Created: JSR 2011-02-01
 // -----------------------------------------------------------------------------
-void ResourceNetworkCapacity::AddConsumption( unsigned long resourceId, unsigned int consumption )
+void ResourceNetworkCapacity::AddConsumption( unsigned long resourceId, double consumption )
 {
     nodeProperties_->AddConsumption( resourceId, consumption );
 }

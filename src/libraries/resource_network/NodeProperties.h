@@ -71,7 +71,7 @@ public:
     void Finalize();
     void Push( int quantity, unsigned long resourceId );
     void SetModifier( float modifier );
-    void AddConsumption( unsigned long resourceId, unsigned int consumption );
+    void AddConsumption( unsigned long resourceId, double consumption );
     bool NeedUpdate() const;
     float GetFunctionalState() const;
     float GetConsumptionState( unsigned long resourceId ) const;

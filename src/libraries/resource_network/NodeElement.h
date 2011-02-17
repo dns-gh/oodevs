@@ -57,7 +57,7 @@ public:
     void Update( xml::xistream& xis );
     void Finalize( const ResourceTools_ABC& tools );
     void UpdateImmediateStock( float functionalState );
-    void AddConsumption( unsigned int consumption );
+    void AddConsumption( double consumption );
     void Consume( float& functionalState );
     void DistributeResource( float functionalState );
     void Push( int quantity );
@@ -117,7 +117,7 @@ private:
     unsigned int immediateStock_;
     unsigned int receivedQuantity_;
     unsigned int consumptionAmount_;
-    unsigned int externalConsumption_;
+    double externalConsumption_;
     bool consumptionCritical_;
     float modifier_;
     mutable bool needUpdate_;

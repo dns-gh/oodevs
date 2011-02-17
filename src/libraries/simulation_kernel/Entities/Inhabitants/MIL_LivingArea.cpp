@@ -275,14 +275,13 @@ float MIL_LivingArea::Consume( const PHY_ResourceNetworkType& resource, unsigned
 {
     if( population_ == 0 )
         return 1.f;
-    double personalConsumption = static_cast< double >( consumption ) / population_;
     float satisfaction = 0;
     BOOST_FOREACH( const T_Block& block, blocks_ )
         if( block.person_ > 0 )
             if( ResourceNetworkCapacity* capacity = block.pUrbanObject_->Retrieve< ResourceNetworkCapacity >() )
             {
                 satisfaction += block.person_ * capacity->GetConsumptionState( resource.GetId() );
-                capacity->AddConsumption( resource.GetId(), static_cast< unsigned int >( block.person_ * personalConsumption + 0.5 ) );
+                capacity->AddConsumption( resource.GetId(), block.person_ * consumption );
             }
     return satisfaction / population_;
 }

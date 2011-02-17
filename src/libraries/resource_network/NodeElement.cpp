@@ -182,7 +182,7 @@ void NodeElement::UpdateImmediateStock( float functionalState )
 // Name: NodeElement::AddConsumption
 // Created: JSR 2011-02-01
 // -----------------------------------------------------------------------------
-void NodeElement::AddConsumption( unsigned int consumption )
+void NodeElement::AddConsumption( double consumption )
 {
     externalConsumption_ += consumption;
 }
@@ -210,14 +210,15 @@ void NodeElement::Consume( float& functionalState )
     }
     if( externalConsumption_ > 0 )
     {
-        if( immediateStock_ > externalConsumption_ )
+        unsigned int externalConsumption = static_cast< unsigned int >( externalConsumption_ + 0.5 );
+        if( externalConsumption == 0 || immediateStock_ > externalConsumption )
         {
             consumptionState_ = 1.f;
-            immediateStock_ -= externalConsumption_;
+            immediateStock_ -= externalConsumption;
         }
         else
         {
-            consumptionState_ = static_cast< float >( immediateStock_ ) / externalConsumption_;
+            consumptionState_ = static_cast< float >( immediateStock_ ) / externalConsumption;
             immediateStock_ = 0;
         }
         externalConsumption_ = 0;

@@ -34,8 +34,8 @@ class MIL_InhabitantType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_ResourceNetworkType*, unsigned int > T_ConsumptionsMap;
-    typedef T_ConsumptionsMap::const_iterator                      CIT_ConsumptionsMap;
+    typedef std::map< const PHY_ResourceNetworkType*, double > T_ConsumptionsMap;
+    typedef T_ConsumptionsMap::const_iterator                CIT_ConsumptionsMap;
     //@}
 
 public:
