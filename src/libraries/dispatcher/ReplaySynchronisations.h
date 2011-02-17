@@ -38,6 +38,7 @@ namespace sword
     class ObjectKnowledgeCreation;
     class PartyCreation;
     class PhaseLineCreation;
+    class PopulationCreation;
     class Report;
     class StartCrowdFire;
     class StartFireEffect;
@@ -85,6 +86,7 @@ class ReplaySynchronisations : public kernel::Extension_ABC
                              , public kernel::Updatable_ABC< sword::ObjectKnowledgeCreation >
                              , public kernel::Updatable_ABC< sword::PartyCreation >
                              , public kernel::Updatable_ABC< sword::PhaseLineCreation >
+                             , public kernel::Updatable_ABC< sword::PopulationCreation >
                              , public kernel::Updatable_ABC< sword::Report >
                              , public kernel::Updatable_ABC< sword::StartCrowdFire >
                              , public kernel::Updatable_ABC< sword::StartFireEffect >
@@ -127,6 +129,7 @@ public:
     virtual void DoUpdate( const sword::ObjectKnowledgeCreation& msg );
     virtual void DoUpdate( const sword::PartyCreation& msg );
     virtual void DoUpdate( const sword::PhaseLineCreation& msg );
+    virtual void DoUpdate( const sword::PopulationCreation& msg );
     virtual void DoUpdate( const sword::Report& msg );
     virtual void DoUpdate( const sword::StartCrowdFire& msg );
     virtual void DoUpdate( const sword::StartFireEffect& msg );
