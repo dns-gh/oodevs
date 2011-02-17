@@ -127,6 +127,7 @@ public:
         eRC_ExtractFromStock_Extracted,
         eRC_SupplyStock_Supplied,
         eRC_SupplyStock_Arrived,
+        eRC_SupplyStock_Distributed,
         eNbrReport
     };
 

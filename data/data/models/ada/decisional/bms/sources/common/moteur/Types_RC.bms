@@ -363,7 +363,8 @@ eRC_ExtractFromStock_Arrived = 344
 eRC_ExtractFromStock_Extracted = 345
 eRC_SupplyStock_Supplied = 346
 eRC_SupplyStock_Arrived = 347
-eNbr = 347
+eRC_SupplyStock_Distributed = 348
+eNbr = 348
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion
