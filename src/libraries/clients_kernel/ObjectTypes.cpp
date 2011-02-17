@@ -397,7 +397,7 @@ void ObjectTypes::ReadRoofShapeType( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ObjectTypes::ReadInfrastructureTypes( xml::xistream& xis )
 {
-    xis >> xml::start( "infrastructures" )
+    xis >> xml::optional >> xml::start( "infrastructures" )
         >> xml::list ( "infrastructure", *this, &ObjectTypes::ReadInfrastructureType )
         >> xml::end;
 }
