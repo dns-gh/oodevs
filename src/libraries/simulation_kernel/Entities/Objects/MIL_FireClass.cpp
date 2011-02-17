@@ -9,8 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_FireClass.h"
-#include "UrbanType.h"
-#include <urban/StaticModel.h>
+#include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
@@ -161,7 +160,7 @@ void MIL_FireClass::ReadUrbanModifier( xml::xistream& xis )
     xis >> xml::attribute( "material-type", materialType )
         >> xml::attribute( "value", urbanModifier.factor_ );
 
-    urban::MaterialCompositionType* pMaterial = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( materialType );
+    const PHY_MaterialCompositionType* pMaterial = PHY_MaterialCompositionType::Find( materialType );
     if( !pMaterial )
         xis.error( "Unknow material type : " + materialType );
 

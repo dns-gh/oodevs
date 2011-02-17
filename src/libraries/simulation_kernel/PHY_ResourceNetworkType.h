@@ -54,7 +54,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_ResourceNetworkType( const std::string& strName, const PHY_DotationCategory& dotationCategory );
+             PHY_ResourceNetworkType( const std::string& strName, const PHY_DotationCategory& dotationCategory );
     virtual ~PHY_ResourceNetworkType();
     //@}
 

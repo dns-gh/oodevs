@@ -12,7 +12,6 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/lexical_cast.hpp>
-#include <xeumeuleu/xml.hpp>
 
 PHY_ResourceNetworkType::T_ResourceNetworkMap PHY_ResourceNetworkType::resourceNetworks_;
 unsigned int PHY_ResourceNetworkType::nNextId_ = 0;
@@ -78,10 +77,8 @@ const PHY_ResourceNetworkType* PHY_ResourceNetworkType::Find( const std::string&
 const PHY_ResourceNetworkType* PHY_ResourceNetworkType::Find( unsigned int id )
 {
     for( CIT_ResourceNetworkMap it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
-    {
         if( it->second->GetId() == id )
             return it->second;
-    }
     return 0;
 }
 
@@ -139,8 +136,7 @@ PHY_ResourceNetworkType::~PHY_ResourceNetworkType()
 // -----------------------------------------------------------------------------
 void PHY_ResourceNetworkType::ReadResourceNetwork( xml::xistream& xis )
 {
-    std::string strResourceNetwork;
-    xis >> xml::attribute( "name", strResourceNetwork );
+    std::string strResourceNetwork = xis.attribute< std::string >( "name" );
     const PHY_ResourceNetworkType*& pResourceNetwork = resourceNetworks_[ strResourceNetwork ];
     if( pResourceNetwork )
         xis.error( "Resource network " + strResourceNetwork + " already defined" );

@@ -18,10 +18,7 @@ namespace sword
     class UrbanAttributes;
 }
 
-namespace urban
-{
-    class InfrastructureType;
-}
+class PHY_InfrastructureType;
 
 // =============================================================================
 /** @class  InfrastructureCapacity
@@ -35,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              InfrastructureCapacity::InfrastructureCapacity();
-    explicit InfrastructureCapacity( const urban::InfrastructureType& type );
+    explicit InfrastructureCapacity( const PHY_InfrastructureType& type );
     explicit InfrastructureCapacity( xml::xistream& xis );
     virtual ~InfrastructureCapacity();
     //@}

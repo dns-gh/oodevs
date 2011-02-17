@@ -21,15 +21,11 @@ class PHY_Weapon;
 class PHY_DotationCategory;
 class PHY_HumanWound;
 class TerrainData;
+class PHY_MaterialCompositionType;
 
 namespace weather
 {
     class PHY_Precipitation;
-}
-
-namespace urban
-{
-    class MaterialCompositionType;
 }
 
 // =============================================================================
@@ -103,7 +99,7 @@ private:
     {
         double factor_;
     };
-    typedef std::map< const urban::MaterialCompositionType*, UrbanModifier > T_UrbanModifierMap;
+    typedef std::map< const PHY_MaterialCompositionType*, UrbanModifier > T_UrbanModifierMap;
 
     struct Surface
     {

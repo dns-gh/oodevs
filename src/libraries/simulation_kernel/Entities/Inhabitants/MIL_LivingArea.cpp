@@ -12,7 +12,7 @@
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Geometry.h"
 #include "PHY_ResourceNetworkType.h"
-#include "UrbanType.h"
+#include "PHY_AccomodationType.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MedicalCapacity.h"
 #include "Entities/Objects/InfrastructureCapacity.h"
@@ -21,8 +21,6 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <urban/StaticModel.h>
-#include <urban/MotivationType.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/MotivationsVisitor_ABC.h>
 #include <boost/foreach.hpp>
@@ -71,12 +69,8 @@ MIL_LivingArea::~MIL_LivingArea()
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::LoadAccommodations()
 {
-    tools::Iterator< const urban::MotivationType& > it = UrbanType::GetUrbanType().GetStaticModel().CreateIterator< urban::MotivationType >();
-    while( it.HasMoreElements() )
-    {
-        const urban::MotivationType& type = it.NextElement();
-        accommodations_[ type.GetName() ] = type.GetCapacity();
-    }
+    for( PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().begin(); it != PHY_AccomodationType::GetAccomodations().end(); ++it )
+        accommodations_[ it->first ] = it->second->GetCapacity();
 }
 
 namespace

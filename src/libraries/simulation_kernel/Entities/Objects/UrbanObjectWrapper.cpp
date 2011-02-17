@@ -11,11 +11,13 @@
 #include "UrbanObjectWrapper.h"
 #include "MIL_AgentServer.h"
 #include "ResourceNetworkCapacity.h"
+#include "MaterialAttribute.h"
 #include "MedicalCapacity.h"
 #include "MedicalTreatmentAttribute.h"
 #include "InfrastructureCapacity.h"
 #include "StructuralCapacity.h"
-#include "UrbanType.h"
+#include "PHY_InfrastructureType.h"
+#include "PHY_MaterialCompositionType.h"
 #include "Entities/Objects/MIL_ObjectBuilder_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -28,8 +30,6 @@
 #include <urban/ResourceNetworkAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/MotivationsVisitor_ABC.h>
-#include <urban/StaticModel.h>
-#include <urban/InfrastructureType.h>
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
 
@@ -84,24 +84,26 @@ void UrbanObjectWrapper::InitializeAttributes()
     }
     Initialize( TER_Localisation( TER_Localisation::ePolygon , vector ) );
     // resource network
-    const urban::ResourceNetworkAttribute* resource = object_->Retrieve< urban::ResourceNetworkAttribute >();
-    if( resource )
+    if( const urban::ResourceNetworkAttribute* resource = object_->Retrieve< urban::ResourceNetworkAttribute >() )
     {
         ResourceNetworkCapacity* capacity = new ResourceNetworkCapacity( *resource );
         capacity->Register( *this );
     }
-    const urban::InfrastructureAttribute* infra = object_->Retrieve< urban::InfrastructureAttribute >();
-    if( infra )
-        if( urban::InfrastructureType* infraType = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::InfrastructureType >( infra->GetType() ) )
+    if( const urban::InfrastructureAttribute* infra = object_->Retrieve< urban::InfrastructureAttribute >() )
+        if( const PHY_InfrastructureType* infraType = PHY_InfrastructureType::Find( infra->GetType() ) )
         {
             InfrastructureCapacity* capacity = new InfrastructureCapacity( *infraType );
             capacity->Register( *this );
-            if( infraType->medical_.hasMedicalCapacity )
+            if( const PHY_InfrastructureType::MedicalProperties* medical = infraType->GetMedicalProperties() )
             {
-                MedicalCapacity* capacity = new MedicalCapacity( infraType->medical_.emergencyBedsRate_, infraType->medical_.emergencyDoctorsRate_, infraType->medical_.nightDoctorsRate_ );
+                MedicalCapacity* capacity = new MedicalCapacity( medical->emergencyBedsRate_, medical->emergencyDoctorsRate_, medical->nightDoctorsRate_ );
                 capacity->Register( *this );
             }
         }
+    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
+        if( pPhysical->GetArchitecture() )
+            if( const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() ) )
+                GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
 }
 
 // -----------------------------------------------------------------------------

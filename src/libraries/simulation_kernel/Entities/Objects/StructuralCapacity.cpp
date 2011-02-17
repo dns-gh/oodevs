@@ -11,20 +11,18 @@
 #include "StructuralCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "MaterialAttribute.h"
+#include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
-#include "UrbanType.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "Tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
 #include <geometry/Types.h>
 #include <urban/PhysicalAttribute.h>
-#include <urban/StaticModel.h>
-#include <urban/MaterialCompositionType.h>
 #include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -115,11 +113,6 @@ void StructuralCapacity::Instanciate( MIL_Object_ABC& object ) const
     StructuralCapacity* capacity = new StructuralCapacity( *this );
     object.AddCapacity( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC* >( capacity ) );
-    if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
-        if( const urban::PhysicalAttribute* pPhysical = wrapper->GetObject().Retrieve< urban::PhysicalAttribute >() )
-            if( pPhysical->GetArchitecture() )
-                if( urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() ) )
-                    object.GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
     object.ApplyStructuralState( structuralState_ );
 }
 
@@ -143,8 +136,10 @@ void StructuralCapacity::ApplyIndirectFire( MIL_Object_ABC& object, const TER_Lo
         object.ApplyStructuralState( structuralState_ );
     }
     else
+        // $$$$ JSR 2011-02-17: temporary hack -> Do not destroy districts or cities (UrbanObject without material attribute)
+        if( !dynamic_cast< UrbanObjectWrapper* >( &object ) )
         // $$$$ JSR 2010-07-23: if material attribute is not present, just destroy object?
-        object().Destroy();
+            object().Destroy();
 }
 
 // -----------------------------------------------------------------------------
@@ -157,8 +152,8 @@ const PHY_ComposanteState& StructuralCapacity::ComputeComposanteState( const MIL
     // $$$$  SLG 2010-07-22: TODO Dans le cas où ce n'est pas un bloc urbain (objet, ou quartier/ville), voir comment appliquer des dégats.
     if( !materialAttribute )
         return PHY_ComposanteState::undamaged_;
-    const urban::MaterialCompositionType& material = materialAttribute->GetMaterial();
-    const urban::MaterialCompositionType::AttritionData* attrition = material.FindAttrition( targetProtection.GetName() );
+    const PHY_MaterialCompositionType& material = materialAttribute->GetMaterial();
+    const PHY_MaterialCompositionType::AttritionData* attrition = material.FindAttrition( targetProtection.GetName() );
     if( !attrition )
         throw std::exception( "Error in searching protection" );
     // Tirage de l'état opérationnel

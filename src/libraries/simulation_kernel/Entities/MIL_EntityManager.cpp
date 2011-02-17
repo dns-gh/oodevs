@@ -20,8 +20,11 @@
 #include "MIL_Singletons.h"
 #include "PopulationFactory.h"
 #include "InhabitantFactory.h"
+#include "PHY_InfrastructureType.h"
+#include "PHY_MaterialCompositionType.h"
+#include "PHY_AccomodationType.h"
 #include "PHY_ResourceNetworkType.h"
-#include "UrbanType.h"
+#include "PHY_RoofShapeType.h"
 #include "Agents/MIL_AgentTypePion.h"
 #include "Agents/MIL_AgentPion.h"
 #include "Actions/PHY_FireResults_Default.h"
@@ -103,7 +106,6 @@
 #include <urban/Model.h>
 #include <urban/PhysicalAttribute.h>
 #include <urban/ObjectVisitor_ABC.h>
-#include <urban/StaticModel.h>
 #include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
@@ -243,7 +245,10 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_MaintenanceResourcesAlarms::Terminate();
     PHY_MedicalResourcesAlarms    ::Terminate();
     MIL_LimaFunction              ::Terminate();
-    UrbanType                     ::Terminate();
+    PHY_MaterialCompositionType   ::Terminate();
+    PHY_AccomodationType            ::Terminate();
+    PHY_InfrastructureType        ::Terminate();
+    PHY_RoofShapeType             ::Terminate();
     PHY_ResourceNetworkType       ::Terminate();
 }
 
@@ -313,7 +318,7 @@ public:
     virtual void Visit( const urban::TerrainObject_ABC& object )
     {
         const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
-        if( pPhysical && pPhysical->GetArchitecture() && ( !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() ) || !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::RoofShapeType >( pPhysical->GetArchitecture()->GetRoofShape() ) ) )
+        if( pPhysical && pPhysical->GetArchitecture() && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture()->GetRoofShape() ) ) )
         {
             MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
             return;

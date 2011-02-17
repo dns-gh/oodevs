@@ -9,11 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "InfrastructureCapacity.h"
+#include "PHY_InfrastructureType.h"
 #include "StructuralCapacity.h"
 #include "ResourceNetworkCapacity.h"
 #include "MIL_Object_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <urban/InfrastructureType.h>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InfrastructureCapacity )
@@ -48,7 +48,7 @@ InfrastructureCapacity::InfrastructureCapacity( xml::xistream& xis )
 // Name: InfrastructureCapacity::InfrastructureCapacity
 // Created: SLG 2010-01-13
 // -----------------------------------------------------------------------------
-InfrastructureCapacity::InfrastructureCapacity( const urban::InfrastructureType& type )
+InfrastructureCapacity::InfrastructureCapacity( const PHY_InfrastructureType& type )
     : functionalState_( 1.f )
     , role_           ( type.GetName() )
     , enabled_        ( true )

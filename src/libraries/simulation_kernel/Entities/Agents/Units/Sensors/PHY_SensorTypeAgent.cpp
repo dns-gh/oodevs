@@ -14,7 +14,7 @@
 #include "AlgorithmsFactories.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "PerceptionDistanceComputer_ABC.h"
-#include "UrbanType.h"
+#include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -39,8 +39,6 @@
 #include <urban/PhysicalAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Model.h>
-#include <urban/StaticModel.h>
-#include <urban/MaterialCompositionType.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -140,7 +138,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     , lightingFactors_     ( weather::PHY_Lighting     ::GetLightings     ().size(), 0. )
     , postureSourceFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , postureTargetFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
-    , urbanBlockFactors_   ( UrbanType::GetUrbanType().GetStaticModel().CountMaterialCompositionType(), 1. )
+    , urbanBlockFactors_   ( PHY_MaterialCompositionType::Count(), 1. )
     , rPopulationDensity_  ( 1. )
     , rPopulationFactor_   ( 1. )
     , isLimitedToSensors_  ( false ) // LTO
@@ -331,7 +329,7 @@ void PHY_SensorTypeAgent::ReadUrbanBlockModifier( xml::xistream& xis, unsigned i
         >> xml::attribute( "value", rFactor );
     if( rFactor < 0 || rFactor > 1 )
         xis.error( "urbanBlock-modifier: value not in [0..1]" );
-    if( !UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( materialType ) )
+    if( !PHY_MaterialCompositionType::Find( materialType ) )
         xis.error( "material type doesn't exist" );
     ++visionUrbanBlockMaterial;
 }
@@ -538,7 +536,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
                     else
                         intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
-                    double rDistanceModificator = urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() )->GetId() ];
+                    double rDistanceModificator = urbanBlockFactors_[ PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() )->GetId() ];
                     double occupationFactor = std::sqrt( pPhysical->GetArchitecture()->GetOccupation() );
                     if( occupationFactor == 1. && rDistanceModificator <= epsilon )
                         rVisionNRJ = -1 ;
@@ -865,7 +863,7 @@ double PHY_SensorTypeAgent::GetUrbanBlockFactor( const urban::TerrainObject_ABC&
 {
     const urban::PhysicalAttribute* pPhysical = block.Retrieve< urban::PhysicalAttribute >();
     if( pPhysical && pPhysical->GetArchitecture() )
-        return urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() )->GetId() ];
+        return urbanBlockFactors_[ PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() )->GetId() ];
     return 1.f;
 }
 

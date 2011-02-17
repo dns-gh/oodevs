@@ -32,27 +32,27 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_Protection*, sCaseInsensitiveLess > T_ProtectionMap;
-    typedef T_ProtectionMap::const_iterator                                      CIT_ProtectionMap;
+    typedef T_ProtectionMap::const_iterator                                    CIT_ProtectionMap;
     //@}
 
 public:
     //! @name Manager
     //@{
     static void Initialize( xml::xistream& xis );
-    static void Terminate ();
+    static void Terminate();
 
     static const T_ProtectionMap& GetProtections();
-    static const PHY_Protection*  Find          ( const std::string& strName );
+    static const PHY_Protection* Find( const std::string& strName );
     //@}
 
     //! @name Accessors
     //@{
-    const std::string& GetName              () const;
-          unsigned int         GetID                () const;
-          unsigned int         GetNeutralizationTime() const;
-          double     GetHumanDeadRatio    ( const PHY_ComposanteState& composanteState ) const;
-          double     GetHumanWoundedRatio ( const PHY_ComposanteState& composanteState ) const;
-          bool         IsHuman              () const;
+    const std::string& GetName() const;
+    unsigned int GetID() const;
+    unsigned int GetNeutralizationTime() const;
+    double GetHumanDeadRatio( const PHY_ComposanteState& composanteState ) const;
+    double GetHumanWoundedRatio( const PHY_ComposanteState& composanteState ) const;
+    bool IsHuman() const;
     //@}
 
     //! @name Operations
@@ -64,7 +64,7 @@ public:
 private:
     //! @name Constructor/Destructor
     //@{
-     PHY_Protection( const std::string& strName, xml::xistream& xis );
+             PHY_Protection( const std::string& strName, xml::xistream& xis );
     virtual ~PHY_Protection();
     //@}
 
@@ -91,26 +91,23 @@ private:
         double rDeadRatio_;
         double rWoundedRatio_;
     };
-    typedef std::vector< T_HumanEffect >   T_HumanEffects;
+    typedef std::vector< T_HumanEffect >    T_HumanEffects;
     typedef T_HumanEffects::const_iterator IT_HumanEffects;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string    strName_;
-          unsigned int           nID_;
-          E_Type         nType_;
-          T_HumanEffects attritionEffectsOnHumans_;
-          double       rBreakdownProbabilityEva_;
-          double       rBreakdownProbabilityNeva_;
-
+    const std::string strName_;
+    unsigned int nID_;
+    E_Type nType_;
+    T_HumanEffects attritionEffectsOnHumans_;
+    double rBreakdownProbabilityEva_;
+    double rBreakdownProbabilityNeva_;
     mutable MT_GaussianRandom neutralizationTime_;
-    //@}
-
-private:
     static T_ProtectionMap protections_;
-    static unsigned int            nNextID_;
+    static unsigned int nNextID_;
+    //@}
 };
 
 #endif // __PHY_Protection_h_

@@ -11,13 +11,11 @@
 #define __MaterialAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include "MIL.h"
 #include <boost/serialization/export.hpp>
 
-namespace urban
-{
-    class MaterialCompositionType;
-}
 class MIL_Agent_ABC;
+class PHY_MaterialCompositionType;
 
 // =============================================================================
 /** @class  MaterialAttribute
@@ -32,13 +30,15 @@ public:
     //! @name Constructors/Destructor
     //@{
              MaterialAttribute();
-    explicit MaterialAttribute( urban::MaterialCompositionType& material );
+    explicit MaterialAttribute( const PHY_MaterialCompositionType& material );
     virtual ~MaterialAttribute();
     //@}
 
     //! @name CheckPoint
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name From ObjectAttribute_ABC
@@ -48,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    urban::MaterialCompositionType& GetMaterial() const;
+    const PHY_MaterialCompositionType& GetMaterial() const;
     //@}
 
     //! @name Operations
@@ -59,7 +59,8 @@ public:
 private:
     //! @name Member data
     //@{
-    urban::MaterialCompositionType* material_;
+    // $$$$ _RC_ JSR 2011-02-16: Passer en référence -> load/save_construct_data
+    const PHY_MaterialCompositionType* material_;
     //@}
 };
 

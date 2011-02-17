@@ -29,7 +29,6 @@
 #include "StubTER_World.h"
 #include "DotationComputer_ABC.h"
 #include "WeaponAvailabilityComputer_ABC.h"
-#include "UrbanType.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

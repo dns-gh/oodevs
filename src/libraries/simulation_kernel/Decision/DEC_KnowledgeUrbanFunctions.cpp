@@ -27,7 +27,6 @@
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_LinearInterpolation.h"
-#include <urban/MaterialCompositionType.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Architecture.h>
 #include <geometry/Types.h>

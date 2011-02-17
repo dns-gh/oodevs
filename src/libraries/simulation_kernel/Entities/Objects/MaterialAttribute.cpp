@@ -10,8 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MaterialAttribute.h"
 #include "MIL_Object_ABC.h"
-#include "MIL.h"
-#include <urban/MaterialCompositionType.h>
+#include "PHY_MaterialCompositionType.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MaterialAttribute )
@@ -21,18 +20,17 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MaterialAttribute )
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
 MaterialAttribute::MaterialAttribute()
-: material_ ( 0 )
+    : material_( 0 )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MaterialAttribute constructor
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
-MaterialAttribute::MaterialAttribute( urban::MaterialCompositionType& material )
-    : material_ ( &material )
+MaterialAttribute::MaterialAttribute( const PHY_MaterialCompositionType& material )
+    : material_( &material )
 {
     // NOTHING
 }
@@ -57,14 +55,25 @@ MaterialAttribute& MaterialAttribute::operator=( const MaterialAttribute& rhs )
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void MaterialAttribute::serialize
-// Created: JCR 2008-07-03
+// Name: MaterialAttribute::load
+// Created: JSR 2011-02-16
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MaterialAttribute::serialize( Archive& file, const unsigned int )
+void MaterialAttribute::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    //file & material_; // TODO
+    std::string name;
+    file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         >> name;
+    material_ = PHY_MaterialCompositionType::Find( name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaterialAttribute::save
+// Created: JSR 2011-02-16
+// -----------------------------------------------------------------------------
+void MaterialAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         << material_->GetName();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,10 +86,10 @@ void MaterialAttribute::Register( MIL_Object_ABC& object ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MaterialAttribute::urban::MaterialCompositionType::GetMaterial
+// Name: MaterialAttribute::GetMaterial
 // Created: SLG 2010-07-06
 // -----------------------------------------------------------------------------
-urban::MaterialCompositionType& MaterialAttribute::GetMaterial() const
+const PHY_MaterialCompositionType& MaterialAttribute::GetMaterial() const
 {
     return *material_;
 }

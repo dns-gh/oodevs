@@ -17,10 +17,8 @@
 #include "PHY_AmmoDotationClass.h"
 #include "PHY_DotationLogisticType.h"
 #include "PHY_DotationNature.h"
+#include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
-#include "UrbanType.h"
-#include <urban/StaticModel.h>
-#include <urban/MaterialCompositionType.h>
 #include <xeumeuleu/xml.hpp>
 
 PHY_DotationCategory::T_UrbanMaterialAttritionMap PHY_DotationCategory::urbanBestValue_;
@@ -38,7 +36,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , nMosID_               ( 0 )
     , pIndirectFireData_    ( 0 )
     , attritions_           ()
-    , urbanAttritionFactors_( UrbanType::GetUrbanType().GetStaticModel().CountMaterialCompositionType(), 0.9 )
+    , urbanAttritionFactors_( PHY_MaterialCompositionType::Count(), 0.9 )
     , rWeight_              ( 0. )
     , rVolume_              ( 0. )
     , bIlluminating_        ( false )
@@ -174,7 +172,7 @@ void PHY_DotationCategory::ReadUrbanAttritionModifier( xml::xistream& xis )
     std::string materialType;
     xis >> xml::attribute( "material-type", materialType )
         >> xml::attribute( "value", rFactor );
-    urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( materialType );
+    const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find( materialType );
     if( rFactor < 0 || rFactor > 1 )
         xis.error( "urbanBlock-modifier: value not in [0..1]" );
     if( !material || static_cast< int >( urbanAttritionFactors_.size() ) < material->GetId() )

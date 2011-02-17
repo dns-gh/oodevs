@@ -14,14 +14,12 @@
 #include "AlgorithmsFactories.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanLocationComputerFactory_ABC.h"
+#include "PHY_MaterialCompositionType.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
-#include "UrbanType.h"
 #include "Tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include <urban/TerrainObject_ABC.h>
 #include <urban/PhysicalAttribute.h>
-#include <urban/MaterialCompositionType.h>
-#include <urban/StaticModel.h>
 #pragma warning( push, 0 )
 #include <boost/geometry/geometry.hpp>
 #pragma warning( pop )
@@ -152,7 +150,7 @@ double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCateg
     const urban::PhysicalAttribute* pPhysical = urbanObject_.GetObject().Retrieve< urban::PhysicalAttribute >();
     if( pPhysical && pPhysical->GetArchitecture() )
     {
-        unsigned int materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( pPhysical->GetArchitecture()->GetMaterial() )->GetId();
+        unsigned int materialID = PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() )->GetId();
         return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialID ) ) * pPhysical->GetArchitecture()->GetOccupation();
     }
     return 0.;

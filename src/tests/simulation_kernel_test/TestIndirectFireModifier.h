@@ -21,7 +21,6 @@
 #include "Entities/Agents/Units/Weapons/PHY_LauncherType.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
-#include "UrbanType.h"
 #include "StubPHY_RoleInterface_Dotation.h"
 #include "WeaponAvailabilityComputer_ABC.h"
 #include <xeumeuleu/xml.hpp>
@@ -38,9 +37,6 @@ public:
         , effectManager_( effectManager )
         , pion_         ( pion )
     {
-        xml::xistringstream xisUrbanType( "<urban><urban-block-types><material-composition-types/>"
-            "<facade-types/><roof-shape-types/></urban-block-types></urban>" );
-        UrbanType::Initialize( xisUrbanType );
         xml::xistringstream xisProtection( "<protections><protection name='protection1' type='humain'><neutralization average-time='10s' variance='1s'/></protection></protections>" );
         PHY_Protection::Initialize( xisProtection );
         xml::xistringstream xisDotationNature( "<natures><nature type='Solide' id='1'/></natures>" );
@@ -66,7 +62,6 @@ public:
         PHY_Volume::Terminate();
         PHY_DotationNature::Terminate();
         PHY_DotationType::Terminate();
-        UrbanType::Terminate();
     }
     virtual void Execute( firing::WeaponAvailabilityComputer_ABC& algo ) const
     {

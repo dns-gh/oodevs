@@ -18,7 +18,7 @@
 #include <xeumeuleu/xml.hpp>
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
-unsigned int                    PHY_Protection::nNextID_ = 0;
+unsigned int PHY_Protection::nNextID_ = 0;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Protection::T_HumanEffect constructor
@@ -58,8 +58,7 @@ void PHY_Protection::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_Protection::ReadProtection( xml::xistream& xis )
 {
-    std::string strProtection;
-    xis >> xml::attribute( "name", strProtection );
+    std::string strProtection = xis.attribute< std::string >( "name" );
     const PHY_Protection*& pProtection = protections_[ strProtection ];
     if( pProtection )
         xis.error( "Protection " + strProtection + " already defined" );
@@ -90,9 +89,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
     , rBreakdownProbabilityNeva_( 0. )
     , attritionEffectsOnHumans_ ( PHY_ComposanteState::GetNbrStates(), T_HumanEffect() )
 {
-    std::string type;
-    xis >> xml::attribute( "type", type );
-    nType_ = sCaseInsensitiveEqual()( type, "humain" ) ? eHuman : eMaterial;
+    nType_ = sCaseInsensitiveEqual()( xis.attribute< std::string >( "type" ), "humain" ) ? eHuman : eMaterial;
 
     std::string timeString, varianceString;
     xis >> xml::start( "neutralization" )
@@ -145,8 +142,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_Protection::ReadAttrition( xml::xistream& xis )
 {
-    std::string state;
-    xis >> xml::attribute( "equipment-state", state );
+    std::string state = xis.attribute< std::string >( "equipment-state" );
     const PHY_ComposanteState* pComposanteState = PHY_ComposanteState::Find( state );
     if( !pComposanteState )
         xis.error( "Unknown composante state" );
@@ -155,13 +151,12 @@ void PHY_Protection::ReadAttrition( xml::xistream& xis )
 
     T_HumanEffect& data = attritionEffectsOnHumans_[ pComposanteState->GetID() ];
 
-    double rTmp;
-    xis >> xml::attribute( "injured-percentage", rTmp );
+    double rTmp = xis.attribute< double >( "injured-percentage" );
     if( rTmp < 0 || rTmp > 100 )
         xis.error( "injured-percentage not in [0..100]" );
     data.rWoundedRatio_ = rTmp / 100.;
 
-    xis >> xml::attribute( "dead-percentage", rTmp );
+    rTmp = xis.attribute< double >( "dead-percentage" );
     if( rTmp < 0 || rTmp > 100 )
         xis.error( "dead-percentage not in [0..100]" );
     data.rDeadRatio_ = rTmp / 100.;
@@ -250,7 +245,7 @@ unsigned int PHY_Protection::GetID() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_Protection::GetNeutralizationTime() const
 {
-    return (unsigned int)( neutralizationTime_.rand() );
+    return static_cast< unsigned int >( neutralizationTime_.rand() );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,12 +10,12 @@
 #ifndef __TestPK_h_
 #define __TestPK_h_
 
+#include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationNature.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
-#include "UrbanType.h"
 #include <xeumeuleu/xml.hpp>
 
 class TestPK : private boost::noncopyable
@@ -39,7 +39,7 @@ public:
             "<material-composition-type name='Vegetation'>"
             "<attritions><attrition destruction=\"0\" protection=\"CharLourd\" repairable-with-evacuation=\"0\" repairable-without-evacuation=\"0.05\"/></attritions></material-composition-type>"
             "</material-composition-types><facade-types/><roof-shape-types/></urban-block-types></urban>" );
-        UrbanType::Initialize( xisUrbanType );
+        PHY_MaterialCompositionType::Initialize( xisUrbanType );
         xml::xistringstream xisProtection( "<protections><protection name='protection1' type='humain'><neutralization average-time='10s' variance='1s'/></protection></protections>" );
         PHY_Protection::Initialize( xisProtection );
         xml::xistringstream xisDotationNature( "<natures><nature type='Solide' id='1'/></natures>" );
@@ -56,7 +56,7 @@ public:
 
     virtual ~TestPK()
     {
-        UrbanType::Terminate();
+        PHY_MaterialCompositionType::Terminate();
         PHY_Protection::Terminate();
         PHY_Volume::Terminate();
         PHY_DotationNature::Terminate();
