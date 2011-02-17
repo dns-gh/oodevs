@@ -1951,7 +1951,13 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="position" name="Point de regroupement" optional="false" type="Point"/>
+      <parameter dia-name="objective" name="Point de regroupement" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" id="2063" name="COMMUNES Prendre En Compte Prisonniers">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3751,7 +3757,13 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="objective" name="Point de regroupement" optional="false" type="Point"/>
+      <parameter dia-name="objective" name="Point de regroupement" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" dia-type="net.masagroup.sword.france.military.company.tasks.Suivre" id="1012" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" name="COMMUNES Suivre">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4292,4 +4304,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1531302644" -->
+<!-- signature="1624809789" -->

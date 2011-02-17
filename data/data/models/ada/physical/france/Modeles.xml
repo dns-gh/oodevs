@@ -204,6 +204,7 @@
         <mission name="MELEE Jalonner"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Interdire"/>
+        <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Barrer"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
@@ -11336,4 +11337,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2692073897" -->
+<!-- signature="3502160483" -->
