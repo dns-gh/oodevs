@@ -30,13 +30,11 @@ using namespace kernel;
 AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model,
                           ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory )
     : window_      ( window )
-    , controllers_ ( controllers )
-    , model_       ( model )
     , functionsTab_( 0 )
     , aar_         ( false )
 {
-    CreateAfterActionDock( window, controllers, factory, layer, staticModel, plotFactory );
-    controllers_.Register( *this );
+    CreateAfterActionDock( window, controllers, factory, model, layer, staticModel, plotFactory );
+    controllers.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,14 +50,14 @@ AfterAction::~AfterAction()
 // Name: AfterAction::CreateAfterActionDock
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory )
+void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory )
 {
     aarDock_ = new QDockWindow( window, "aar" );
     QVBox* box = new QVBox( aarDock_ );
     box->setMinimumSize( 250, 200 );
     functionsTab_ = new QTabWidget( box );
 
-    AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory, model_, layer, staticModel );
+    AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory, model, layer, staticModel );
     functionsTab_->addTab( list, tools::translate( "AfterAction", "Functions" ) );
 
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, controllers, factory, plotFactory );

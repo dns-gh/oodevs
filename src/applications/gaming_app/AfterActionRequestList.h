@@ -47,6 +47,8 @@ private slots:
     //! @name Slots
     //@{
     void OnDoubleClicked( QListViewItem* );
+    void OnRequestPopup( QListViewItem* pItem, const QPoint& pos );
+    void OnRemoveItem();
     //@}
 
 private:
@@ -74,6 +76,7 @@ private:
     QPixmap pendingPixmap_;
     QPixmap donePixmap_;
     QPixmap failedPixmap_;
+    QPopupMenu popupMenu_;
     //@}
 };
 

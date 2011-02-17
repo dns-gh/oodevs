@@ -122,6 +122,14 @@
         <source>Status</source>
         <translation>Statut</translation>
     </message>
+    <message>
+        <source>Delete request</source>
+        <translation>Supprimer la requête</translation>
+    </message>
+    <message>
+        <source>Clear list</source>
+        <translation>Vider la liste</translation>
+    </message>
 </context>
 <context>
     <name>AgentKnowledgePanel</name>

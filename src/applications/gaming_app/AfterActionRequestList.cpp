@@ -60,6 +60,7 @@ AfterActionRequestList::AfterActionRequestList( QWidget* parent, Controllers& co
     requests_->AddColumn( tr( "Status" ) );
     new ListItemToolTip( requests_->viewport(), *requests_ );
 
+    connect( requests_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
     connect( requests_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnDoubleClicked( QListViewItem* ) ) );
 
     controllers_.Register( *this );
@@ -86,6 +87,31 @@ void AfterActionRequestList::OnDoubleClicked( QListViewItem * i )
         if( request && request->IsDone() )
             plotFactory_.CreatePlot( *request );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequestList::OnRequestPopup
+// Created: ABR 2011-02-17
+// -----------------------------------------------------------------------------
+void AfterActionRequestList::OnRequestPopup( QListViewItem* pItem, const QPoint& pos )
+{
+    popupMenu_.clear();
+    if( pItem != 0 )
+    {
+        popupMenu_.insertItem( tr( "Delete request" ), this, SLOT( OnRemoveItem() ) );
+        popupMenu_.insertSeparator();
+    }
+    popupMenu_.insertItem( tr( "Clear list" ), requests_, SLOT( clear() ) );
+    popupMenu_.popup( pos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionRequestList::OnRemoveItem
+// Created: ABR 2011-02-17
+// -----------------------------------------------------------------------------
+void AfterActionRequestList::OnRemoveItem()
+{
+    requests_->takeItem( requests_->selectedItem() );
 }
 
 // -----------------------------------------------------------------------------

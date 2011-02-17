@@ -62,7 +62,7 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,
+    void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model, 
                                 gui::ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory );
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyCreated( const AfterActionRequest& );
@@ -72,8 +72,6 @@ private:
     //! @name Member data
     //@{
     QMainWindow* window_;
-    kernel::Controllers& controllers_;
-    AfterActionModel& model_;
     QDockWindow* aarDock_;
     QTabWidget* functionsTab_;
     bool aar_;

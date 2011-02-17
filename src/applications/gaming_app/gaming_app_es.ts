@@ -122,6 +122,14 @@
         <source>Status</source>
         <translation>Estado</translation>
     </message>
+    <message>
+        <source>Clear list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete request</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentKnowledgePanel</name>
