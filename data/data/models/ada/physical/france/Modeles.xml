@@ -96,7 +96,6 @@
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Couvrir"/>
-        <mission name="MELEE Defendre"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Fixer"/>
@@ -111,6 +110,7 @@
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE S'emparer De"/>
+        <mission name="MELEE Tenir"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -11337,4 +11337,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3502160483" -->
+<!-- signature="1949091765" -->
