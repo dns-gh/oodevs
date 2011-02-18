@@ -345,6 +345,15 @@ const std::string& UrbanObjectWrapper::GetName() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::HasChild
+// Created: LGY 2011-02-18
+// -----------------------------------------------------------------------------
+bool UrbanObjectWrapper::HasChild() const
+{
+    return object_->HasChild();
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::GetObject
 // Created: SLG 2010-06-21
 // -----------------------------------------------------------------------------

@@ -101,7 +101,7 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
         if( urbanObject && urbanObject->GetLocalisation().GetArea() && urbanObject->IsInside( vPosition ) )
         {
             isInCity_ = true;
-            if( !urbanObject->GetObject().HasChild() )
+            if( !urbanObject->HasChild() )
             {
                 urbanObject_ = urbanObject;
                 delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
@@ -120,7 +120,7 @@ void PHY_RolePion_UrbanLocation::NotifyMovingInsideObject( MIL_Object_ABC& objec
 {
     if( const UrbanObjectWrapper* urbanObject = dynamic_cast< UrbanObjectWrapper* >( &object ) )
     {
-        if( !urbanObject->GetObject().HasChild() )
+        if( !urbanObject->HasChild() )
         {
             urbanObject_ = urbanObject;
             delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
@@ -139,7 +139,7 @@ void PHY_RolePion_UrbanLocation::NotifyMovingOutsideObject( MIL_Object_ABC& obje
     {
         if( !urbanObject->GetObject().GetParent() )
             isInCity_ = false;
-        if( !urbanObject->GetObject().HasChild() )
+        if( !urbanObject->HasChild() )
         {
             urbanObject_ = 0;
             delegate_.reset( new OutsideUrbanBlockPosition() );

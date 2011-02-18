@@ -36,7 +36,7 @@ class MIL_LivingArea;
 */
 // Created: SLG 2010-06-18
 // =============================================================================
-class UrbanObjectWrapper : public MIL_Object
+class UrbanObjectWrapper : public MIL_Object // $$$$ _RC_ LGY 2011-02-18: urban::TerrainObject_ABC (proxy)
 {
 public:
     //! @name Constructors/Destructor
@@ -79,8 +79,9 @@ public:
     //@{
     unsigned int GetUrbanId() const;
     const std::string& GetName() const;
-    const urban::TerrainObject_ABC& GetObject();
-    const urban::TerrainObject_ABC& GetObject() const;
+    bool HasChild() const;
+    const urban::TerrainObject_ABC& GetObject();  // $$$$ _RC_ LGY 2011-02-18: à supprimer
+    const urban::TerrainObject_ABC& GetObject() const;  // $$$$ _RC_ LGY 2011-02-18: à supprimer
     void Accept( urban::MotivationsVisitor_ABC& visitor ) const;
     float GetLivingSpace() const;
     //@}
