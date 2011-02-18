@@ -98,7 +98,6 @@ private:
 
     //! @name Network
     //@{
-    void SendDestruction() const;
     void ReadExtension( xml::xistream& xis );
     //@}
 
