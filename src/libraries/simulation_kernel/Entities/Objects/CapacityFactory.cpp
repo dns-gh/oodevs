@@ -86,9 +86,8 @@ namespace
     {
     public:
         FinalizableBuilders()
-            : bHasBurn_( false )
-            , bHasFirePropagation_( false )
         {
+            Reset();
         }
 
         void AddBurn()
@@ -112,9 +111,16 @@ namespace
         {
             if( bHasBurn_ && !bHasFirePropagation_ )
                 prototype.AddCapacity( new BurnCapacity() );
+            Reset();
         }
 
     private:
+        void Reset()
+        {
+            bHasBurn_ = false;
+            bHasFirePropagation_ = false;
+
+        }
         bool bHasBurn_;
         bool bHasFirePropagation_;
     };
