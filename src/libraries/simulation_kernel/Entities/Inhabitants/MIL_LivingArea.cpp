@@ -21,7 +21,6 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <urban/TerrainObject_ABC.h>
 #include <urban/MotivationsVisitor_ABC.h>
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -483,7 +482,7 @@ geometry::Polygon2f MIL_LivingArea::ComputeMovingArea() const
         CIT_Identifiers it = identifiers_.find( block.pUrbanObject_->GetID() );
         if( it != identifiers_.end() || block.person_ != 0 )
         {
-            const geometry::Polygon2f::T_Vertices& objectVertices = block.pUrbanObject_->GetObject().GetFootprint()->Vertices();
+            const geometry::Polygon2f::T_Vertices& objectVertices = block.pUrbanObject_->GetFootprint()->Vertices();
             vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
         }
     }

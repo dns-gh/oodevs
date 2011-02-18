@@ -12,6 +12,7 @@
 
 #include "MIL_Object.h"
 #include <map>
+#include <geometry/Types.h>
 
 class MIL_ObjectBuilder_ABC;
 
@@ -80,6 +81,7 @@ public:
     unsigned int GetUrbanId() const;
     const std::string& GetName() const;
     bool HasChild() const;
+    const geometry::Polygon2f* GetFootprint() const;
     const urban::TerrainObject_ABC& GetObject();  // $$$$ _RC_ LGY 2011-02-18: à supprimer
     const urban::TerrainObject_ABC& GetObject() const;  // $$$$ _RC_ LGY 2011-02-18: à supprimer
     void Accept( urban::MotivationsVisitor_ABC& visitor ) const;
