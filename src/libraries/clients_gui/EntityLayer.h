@@ -90,13 +90,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EntityLayerBase( const EntityLayerBase& );            //!< Copy constructor
-    EntityLayerBase& operator=( const EntityLayerBase& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Types
     //@{
     typedef std::vector< const kernel::Entity_ABC* >  T_Entities;
@@ -138,13 +131,6 @@ public:
     //@{
              EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~EntityLayer();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    EntityLayer( const EntityLayer& );            //!< Copy constructor
-    EntityLayer& operator=( const EntityLayer& ); //!< Assignment operator
     //@}
 
 protected:

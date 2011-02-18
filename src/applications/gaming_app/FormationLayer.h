@@ -55,12 +55,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FormationLayer( const FormationLayer& );            //!< Copy constructor
-    FormationLayer& operator=( const FormationLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Formation_ABC* formation );

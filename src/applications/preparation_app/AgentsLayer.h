@@ -48,12 +48,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentsLayer( const AgentsLayer& );            //!< Copy constructor
-    AgentsLayer& operator=( const AgentsLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void BeforeSelection();

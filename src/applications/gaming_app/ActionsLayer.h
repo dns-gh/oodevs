@@ -45,12 +45,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActionsLayer( const ActionsLayer& );            //!< Copy constructor
-    ActionsLayer& operator=( const ActionsLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const actions::Action_ABC* element );

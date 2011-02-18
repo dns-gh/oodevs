@@ -54,12 +54,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    WeatherLayer( const WeatherLayer& );            //!< Copy constructor
-    WeatherLayer& operator=( const WeatherLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );

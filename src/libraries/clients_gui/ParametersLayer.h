@@ -52,7 +52,6 @@ public:
     void SelectRaster   ( ShapeHandler_ABC& handler );
     void Reset          ();
 
-
     void AddPoint( const geometry::Point2f& point );
 
     virtual void Initialize( const geometry::Rectangle2f& extent );
@@ -61,12 +60,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParametersLayer( const ParametersLayer& );            //!< Copy constructor
-    ParametersLayer& operator=( const ParametersLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool HandleKeyPress        ( QKeyEvent* key );

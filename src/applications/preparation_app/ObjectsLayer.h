@@ -33,12 +33,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectsLayer( const ObjectsLayer& );            //!< Copy constructor
-    ObjectsLayer& operator=( const ObjectsLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Object_ABC* object );

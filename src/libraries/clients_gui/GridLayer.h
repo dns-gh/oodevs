@@ -48,12 +48,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    GridLayer( const GridLayer& );            //!< Copy constructor
-    GridLayer& operator=( const GridLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     float Displace( float value );

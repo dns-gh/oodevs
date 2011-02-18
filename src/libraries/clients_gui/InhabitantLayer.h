@@ -41,13 +41,6 @@ public:
                               ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~InhabitantLayer();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    InhabitantLayer( const InhabitantLayer& );            //!< Copy constructor
-    InhabitantLayer& operator=( const InhabitantLayer& ); //!< Assignment operator
-    //@}
 };
 
 }

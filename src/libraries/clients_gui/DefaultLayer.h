@@ -41,12 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DefaultLayer( const DefaultLayer& );            //!< Copy constructor
-    DefaultLayer& operator=( const DefaultLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool HandleMousePress( QMouseEvent* mouse, const geometry::Point2f& point );

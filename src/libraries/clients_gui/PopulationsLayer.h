@@ -36,13 +36,6 @@ private:
     //@{
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationsLayer( const PopulationsLayer& );            //!< Copy constructor
-    PopulationsLayer& operator=( const PopulationsLayer& ); //!< Assignment operator
-    //@}
 };
 
 }

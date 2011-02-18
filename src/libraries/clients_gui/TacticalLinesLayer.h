@@ -93,13 +93,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TacticalLinesLayer( const TacticalLinesLayer& );            //!< Copy constructor
-    TacticalLinesLayer& operator=( const TacticalLinesLayer& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;

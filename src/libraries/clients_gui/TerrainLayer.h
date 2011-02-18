@@ -61,12 +61,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TerrainLayer( const TerrainLayer& );            //!< Copy constructor
-    TerrainLayer& operator=( const TerrainLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );

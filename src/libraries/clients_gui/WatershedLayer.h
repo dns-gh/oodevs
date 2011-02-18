@@ -60,12 +60,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    WatershedLayer( const WatershedLayer& );            //!< Copy constructor
-    WatershedLayer& operator=( const WatershedLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateShader();

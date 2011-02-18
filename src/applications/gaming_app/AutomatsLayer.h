@@ -52,12 +52,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AutomatsLayer( const AutomatsLayer& );            //!< Copy constructor
-    AutomatsLayer& operator=( const AutomatsLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );

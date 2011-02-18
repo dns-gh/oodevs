@@ -43,13 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LogoLayer( const LogoLayer& );            //!< Copy constructor
-    LogoLayer& operator=( const LogoLayer& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const kernel::GlTools_ABC& tools_;

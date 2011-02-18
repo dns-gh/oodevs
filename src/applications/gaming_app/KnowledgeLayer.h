@@ -30,12 +30,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    KnowledgeLayer( const KnowledgeLayer& );            //!< Copy constructor
-    KnowledgeLayer& operator=( const KnowledgeLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );

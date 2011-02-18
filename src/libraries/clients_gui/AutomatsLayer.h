@@ -58,12 +58,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AutomatsLayer( const AutomatsLayer& );            //!< Copy constructor
-    AutomatsLayer& operator=( const AutomatsLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );

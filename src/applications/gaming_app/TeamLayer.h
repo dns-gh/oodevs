@@ -59,12 +59,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TeamLayer( const TeamLayer& );            //!< Copy constructor
-    TeamLayer& operator=( const TeamLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Team_ABC* team );

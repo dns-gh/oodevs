@@ -42,12 +42,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TooltipsLayer( const TooltipsLayer& );            //!< Copy constructor
-    TooltipsLayer& operator=( const TooltipsLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< std::pair< geometry::Point2f, QImage > > T_Tooltips;

@@ -43,13 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TerrainProfilerLayer( const TerrainProfilerLayer& );            //!< Copy constructor
-    TerrainProfilerLayer& operator=( const TerrainProfilerLayer& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const kernel::GlTools_ABC& tools_;

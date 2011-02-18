@@ -51,12 +51,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DrawerLayer( const DrawerLayer& );            //!< Copy constructor
-    DrawerLayer& operator=( const DrawerLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Paint( const geometry::Rectangle2f& viewport );

@@ -63,12 +63,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Elevation3dLayer( const Elevation3dLayer& );            //!< Copy constructor
-    Elevation3dLayer& operator=( const Elevation3dLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateShaders();

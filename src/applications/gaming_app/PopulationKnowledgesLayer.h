@@ -27,13 +27,6 @@ public:
              PopulationKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~PopulationKnowledgesLayer();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationKnowledgesLayer( const PopulationKnowledgesLayer& );            //!< Copy constructor
-    PopulationKnowledgesLayer& operator=( const PopulationKnowledgesLayer& ); //!< Assignment operator
-    //@}
 };
 
 #endif // __PopulationKnowledgesLayer_h_

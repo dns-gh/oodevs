@@ -44,13 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MapLayerProxy( const MapLayerProxy& );            //!< Copy constructor
-    MapLayerProxy& operator=( const MapLayerProxy& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     Layer_ABC& layer_;

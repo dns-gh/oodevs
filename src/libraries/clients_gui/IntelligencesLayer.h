@@ -37,12 +37,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    IntelligencesLayer( const IntelligencesLayer& );            //!< Copy constructor
-    IntelligencesLayer& operator=( const IntelligencesLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Delete( const kernel::Intelligence_ABC& element ) = 0;

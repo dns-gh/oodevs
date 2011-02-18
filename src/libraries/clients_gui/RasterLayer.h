@@ -51,13 +51,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    RasterLayer( const RasterLayer& );            //!< Copy constructor
-    RasterLayer& operator=( const RasterLayer& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;

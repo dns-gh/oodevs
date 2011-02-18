@@ -27,13 +27,6 @@ public:
              ObjectKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~ObjectKnowledgesLayer();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectKnowledgesLayer( const ObjectKnowledgesLayer& );            //!< Copy constructor
-    ObjectKnowledgesLayer& operator=( const ObjectKnowledgesLayer& ); //!< Assignment operator
-    //@}
 };
 
 #endif // __ObjectKnowledgesLayer_h_

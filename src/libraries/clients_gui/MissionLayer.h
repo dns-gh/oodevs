@@ -45,13 +45,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MiscLayer( const MiscLayer& );            //!< Copy constructor
-    MiscLayer& operator=( const MiscLayer& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     Panel& panel_;

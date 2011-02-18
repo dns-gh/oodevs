@@ -12,6 +12,7 @@
 
 #include <graphics/MapLayer_ABC.h>
 #include <string>
+#include <boost/noncopyable.hpp>
 
 class ViewFrustum;
 
@@ -32,6 +33,7 @@ namespace gui
 // Created: AGE 2006-03-29
 // =============================================================================
 class Layer_ABC : public MapLayer_ABC
+                , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

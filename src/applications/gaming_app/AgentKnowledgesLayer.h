@@ -27,13 +27,6 @@ public:
              AgentKnowledgesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile );
     virtual ~AgentKnowledgesLayer();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AgentKnowledgesLayer( const AgentKnowledgesLayer& );            //!< Copy constructor
-    AgentKnowledgesLayer& operator=( const AgentKnowledgesLayer& ); //!< Assignment operator
-    //@}
 };
 
 #endif // __AgentKnowledgesLayer_h_

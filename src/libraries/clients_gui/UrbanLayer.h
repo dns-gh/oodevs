@@ -80,13 +80,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    UrbanLayer( const UrbanLayer& );            //!< Copy constructor
-    UrbanLayer& operator=( const UrbanLayer& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;

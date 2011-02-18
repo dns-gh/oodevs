@@ -37,12 +37,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FogLayer( const FogLayer& );            //!< Copy constructor
-    FogLayer& operator=( const FogLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Agent_ABC& entity );

@@ -40,13 +40,6 @@ public:
     virtual ~FormationLayer();
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    FormationLayer( const FormationLayer& );            //!< Copy constructor
-    FormationLayer& operator=( const FormationLayer& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Operations
     //@{

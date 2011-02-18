@@ -37,12 +37,6 @@ public:
     //@{
     virtual QStringList TerrainPick( const geometry::Point2f& terrainCoordinates );
     //@}
-private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectsLayer( const ObjectsLayer& );            //!< Copy constructor
-    ObjectsLayer& operator=( const ObjectsLayer& ); //!< Assignment operator
-    //@}
 
 private:
     //! @name Helpers

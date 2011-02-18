@@ -43,12 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LocationsLayer( const LocationsLayer& );            //!< Copy constructor
-    LocationsLayer& operator=( const LocationsLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< geometry::Point2f > T_Locations;
