@@ -200,6 +200,30 @@
         </build-lib>
     </target>
 
+    <target name="library.vrforces_plugin" description="build vrforces_plugin static library" depends="library.protocol">
+        <build-lib name="vrforces_plugin" pattern="lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
+            <includepath path="${include.dir}/vrforces"/>
+            <includepath path="${include.dir}/vrlink"/>
+            <includepath path="${include.dir}/RTI_1.3/HLA"/>
+            <defineset define="DtDISVERS=5"/>
+            <defineset define="DtHLA=1"/>
+            <defineset define="RTI_USES_STD_FSTREAM=1"/>
+            <defineset define="DtRPR=1"/>
+        </build-lib>
+    </target>
+    
+    <target name="library.vrforces_plugin_dll" description="build vrforces_plugin dynamic library" depends="library.vrforces_plugin">
+        <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
+            libs="libprotobuf,libFedtime,
+                  matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilMD,vrfcontrolHLA13RT,
+                  lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+                  lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}">
+            <syslibset libs="shell32,user32,wsock32"/>
+            <defineset define="VRFORCES_PLUGIN_DLL_EXPORTS"/>
+            <linkerarg value="/FIXED:NO"/>
+        </build-lib>
+    </target>
+    
     <target name="library.dis_plugin" description="build dis_plugin static library" depends="library.dispatcher,library.rpr">
         <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
@@ -535,7 +559,7 @@
     -->
     <target name="sample.client_sample_app" description="build Sample client application" depends="library.protocol">
         <build-app name="client_sample_app" depends="protobuf" root="${samples.dir}" libs="libprotobuf,lib${ant.project.name}_protocol-${platform}-mt@{suffix}" subsystem="console">
-            <syslibset libs="Ws2_32,Mswsock,Advapi32"/>
+            <syslibset libs="wsock32"/>
             <includepath path="${out.dir}/release/libraries/protocol"/>
         </build-app>
     </target>
@@ -1120,6 +1144,8 @@
         <update name="vcredist" package="vcredist"/>
         <update name="system"/>
         <update name="openssl"/>
+        <update name="vrforces"/>
+        <update name="vrlink"/>
         <update name="wise"/>
         <update-database database="directia.core.bml" dir="${data.dir}/data/models/ada/decisional/directia5/models/directia.core"/>
         <antcall target="deploy-application-data"/>
