@@ -79,4 +79,80 @@
       </score>
     </foreach>
   </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <score name="Direct fire power">
+        <formula><![CDATA[sum( domain( product( operational-state(), direct-fire-power() ), $party ) )]]></formula>
+        <gauge type="Default"/>
+      <constants>
+        <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+      </constants>
+      <indicators>
+        <indicator>
+          <extract function="operational-state" id="1"/>
+          <extract function="direct-fire-power" id="2"/>
+          <reduce function="product" id="3" input="1,2" type="float"/>
+          <transform function="domain" id="4" input="3" select="$$UNIT_LIST$$" type="float"/>
+          <reduce function="sum" id="5" input="4" type="float"/>
+          <result function="indicator" input="5" name="Direct fire power" type="float"/>
+        </indicator>
+      </indicators>
+    </score>
+  </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <score name="Indirect fire power">
+        <formula><![CDATA[sum( domain( product( operational-state(), indirect-fire-power() ), $party ) )]]></formula>
+        <gauge type="Default"/>
+      <constants>
+        <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+      </constants>
+      <indicators>
+        <indicator>
+          <extract function="operational-state" id="1"/>
+          <extract function="indirect-fire-power" id="2"/>
+          <reduce function="product" id="3" input="1,2" type="float"/>
+          <transform function="domain" id="4" input="3" select="$$UNIT_LIST$$" type="float"/>
+          <reduce function="sum" id="5" input="4" type="float"/>
+          <result function="indicator" input="5" name="Indirect fire power" type="float"/>
+        </indicator>
+      </indicators>
+    </score>
+  </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <score name="Close combat power">
+        <formula><![CDATA[sum( domain( product( operational-state(), close-combat-power() ), $party ) )]]></formula>
+        <gauge type="Default"/>
+      <constants>
+        <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+      </constants>
+      <indicators>
+        <indicator>
+          <extract function="operational-state" id="1"/>
+          <extract function="close-combat-power" id="2"/>
+          <reduce function="product" id="3" input="1,2" type="float"/>
+          <transform function="domain" id="4" input="3" select="$$UNIT_LIST$$" type="float"/>
+          <reduce function="sum" id="5" input="4" type="float"/>
+          <result function="indicator" input="5" name="Close combat power" type="float"/>
+        </indicator>
+      </indicators>
+    </score>
+  </foreach>
+  <foreach source="party" variable="$$UNIT_LIST$$">
+    <score name="Engineering power">
+        <formula><![CDATA[sum( domain( product( operational-state(), engineering-power() ), $party ) )]]></formula>
+        <gauge type="Default"/>
+      <constants>
+        <constant id="$party" type="unit list" value="$$UNIT_LIST$$"/>
+      </constants>
+      <indicators>
+        <indicator>
+          <extract function="operational-state" id="1"/>
+          <extract function="engineering-power" id="2"/>
+          <reduce function="product" id="3" input="1,2" type="float"/>
+          <transform function="domain" id="4" input="3" select="$$UNIT_LIST$$" type="float"/>
+          <reduce function="sum" id="5" input="4" type="float"/>
+          <result function="indicator" input="5" name="Engineering power" type="float"/>
+        </indicator>
+      </indicators>
+    </score>
+  </foreach>
 </scores>
