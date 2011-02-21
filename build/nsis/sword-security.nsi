@@ -128,7 +128,6 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\libpq.dll"
     File "${RUNDIR}\geos.dll"
     File "${RUNDIR}\proj.dll"
-    File "${RUNDIR}\iconv.dll"
 
     ; evaluation licence
     !ifdef EVALUATION
