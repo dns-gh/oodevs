@@ -28,54 +28,15 @@
 #include "shield/proto/AdminToLauncher.pb.h"
 #include <google/protobuf/descriptor.h>
 
-namespace mock
+namespace google
 {
-    // $$$$ MCO : fix turtle to be able to customize log for base class google::protobuf::Message
-    // $$$$ MCO : or use operator<< to an std::ostream
-    //std::string format( const google::protobuf::Message& msg )
-    //{
-    //    return msg.ShortDebugString();
-    //}
-    inline std::string format( const MsgsAarToClient::MsgAarToClient& msg )
+namespace protobuf
+{
+    inline void format( std::ostream& s, const google::protobuf::Message& msg )
     {
-        return msg.ShortDebugString();
+        s << msg.ShortDebugString();
     }
-    inline std::string format( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg )
-    {
-        return msg.ShortDebugString();
-    }
-    inline std::string format( const MsgsDispatcherToClient::MsgDispatcherToClient& msg )
-    {
-        return msg.ShortDebugString();
-    }
-    inline std::string format( const MsgsReplayToClient::MsgReplayToClient& msg )
-    {
-        return msg.ShortDebugString();
-    }
-    inline std::string format( const MsgsLauncherToAdmin::MsgLauncherToAdmin& msg )
-    {
-        return msg.ShortDebugString();
-    }
-    inline std::string format( const MsgsMessengerToClient::MsgMessengerToClient& msg )
-    {
-        return msg.ShortDebugString();
-    }
-    inline std::string format( const MsgsSimToClient::MsgSimToClient& msg )
-    {
-        return msg.ShortDebugString();
-    }
-    inline std::string format( const sword::ClientToReplay& msg )
-    {
-        return msg.ShortDebugString();
-    }
-    inline std::string format( const sword::ClientToSim& msg )
-    {
-        return msg.ShortDebugString();
-    }
-    inline std::string format( const sword::AdminToLauncher& msg )
-    {
-        return msg.ShortDebugString();
-    }
+}
 }
 
 namespace shield
