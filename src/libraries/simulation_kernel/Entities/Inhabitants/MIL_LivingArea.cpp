@@ -452,11 +452,30 @@ float MIL_LivingArea::GetProportion( const T_Block& block, const std::string& mo
 void MIL_LivingArea::Alert( const TER_Localisation& localisation )
 {
     BOOST_FOREACH( T_Block& block, blocks_ )
+    {
         if( block.pUrbanObject_->Intersect2DWithLocalisation( localisation ) )
         {
             block.alerted_ = true;
             hasChanged_ = true;
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::IsAlerted
+// Created: BCI 2011-02-18
+// -----------------------------------------------------------------------------
+bool MIL_LivingArea::IsAlerted( const TER_Localisation& localisation ) const
+{
+    int count = 0;
+    int total = 0;
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+    {
+        if( block.alerted_ && block.pUrbanObject_->Intersect2DWithLocalisation( localisation ) )
+            ++count;
+        ++total;
+    }
+    return count > 0 && total > 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -468,6 +487,15 @@ void MIL_LivingArea::SetAlerted( bool alerted )
     BOOST_FOREACH( T_Block& block, blocks_ )
         block.alerted_ = alerted;
     hasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::Confine
+// Created: BCI 2011-02-18
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::Confine( const TER_Localisation& /*localisation*/ )
+{
+    // $$$$ BCI 2011-02-18: bcitodo
 }
 
 // -----------------------------------------------------------------------------

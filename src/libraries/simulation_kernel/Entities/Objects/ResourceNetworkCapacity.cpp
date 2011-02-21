@@ -15,6 +15,7 @@
 #include "protocol/Protocol.h"
 #include "resource_network/NodeProperties.h"
 #include "resource_network/ResourceNetworkModel.h"
+#include "PHY_ResourceNetworkType.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace resource;
@@ -213,4 +214,16 @@ float ResourceNetworkCapacity::GetConsumptionState( unsigned long resourceId ) c
 float ResourceNetworkCapacity::GetFunctionalState() const
 {
     return nodeProperties_->GetFunctionalState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::AddToStock
+// Created: BCI 2011-02-21
+// -----------------------------------------------------------------------------
+double ResourceNetworkCapacity::AddToStock( const PHY_DotationCategory& dotation, double quantity )
+{
+    if( const PHY_ResourceNetworkType* pType = PHY_ResourceNetworkType::FindByDotation( dotation ) )
+        return nodeProperties_->AddToStock( pType->GetId(), quantity );
+    else
+        return 0.;
 }

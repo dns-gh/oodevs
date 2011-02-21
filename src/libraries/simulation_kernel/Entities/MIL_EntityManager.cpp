@@ -1593,6 +1593,44 @@ void MIL_EntityManager::AlertInhabitants( const TER_Localisation& localisation )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ConfineInhabitants
+// Created: BCI 2011-02-18
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ConfineInhabitants( const TER_Localisation& localisation )
+{
+    inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::NotifyConfined, _1, localisation ) );
+}
+
+struct IsInhabitantsAlertedFunctor : boost::noncopyable
+{
+    IsInhabitantsAlertedFunctor( const TER_Localisation& localisation )
+        : nbAlerted_( 0 )
+        , total_( 0 )
+        , localisation_( localisation )
+    {}
+    void operator()( const MIL_Inhabitant& inhabitant ) const
+    {
+        if( inhabitant.IsAlerted( localisation_ ) )
+            ++nbAlerted_;
+        ++total_;
+    }
+    mutable int nbAlerted_;
+    mutable int total_;
+    const TER_Localisation& localisation_;
+};
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::IsInhabitantsAlerted
+// Created: BCI 2011-02-18
+// -----------------------------------------------------------------------------
+bool MIL_EntityManager::IsInhabitantsAlerted( const TER_Localisation& localisation )
+{
+    IsInhabitantsAlertedFunctor functor( localisation );
+    inhabitantFactory_->Apply( functor );
+    return functor.nbAlerted_ > 0 && functor.total_ > 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------

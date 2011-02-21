@@ -370,7 +370,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC__StartAnimerObjet" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionAnimateObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartDistributionObjet" ] =
-        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object >, boost::shared_ptr< DEC_Knowledge_Population >, int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionDistributeObject, boost::shared_ptr< DEC_Knowledge_Object >, boost::shared_ptr< DEC_Knowledge_Population >, int >, boost::ref( GetPion() ), _1, _2, _3 ) );
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object >, double ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionDistributeObject, boost::shared_ptr< DEC_Knowledge_Object >, double >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_StartSupplyObject" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object >, const std::vector< const PHY_DotationCategory* >&, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionSupplyObject, boost::shared_ptr< DEC_Knowledge_Object >, const std::vector< const PHY_DotationCategory* >&, double >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_StartExtractFromStockObject" ] =
@@ -596,8 +596,12 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::ChannelPopulations, _1 ) );
 
     // Inhabitants => je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
-    brain[ "DEC_Agent_Alerter" ] =
+    brain[ "DEC_Agent_Alert" ] =
         boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::AlertInhabitants, _1 ) );
+    brain[ "DEC_Agent_IsAlerted" ] =
+        boost::function< bool( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::IsInhabitantsAlerted, _1 ) );
+    brain[ "DEC_Agent_Confine" ] =
+        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::ConfineInhabitants, _1 ) );
 
     // Agent knowledges accessors
     brain[ "DEC_ConnaissanceAgent_EtatOps" ] =

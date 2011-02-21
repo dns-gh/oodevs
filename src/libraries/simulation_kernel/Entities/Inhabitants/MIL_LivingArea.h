@@ -65,7 +65,9 @@ public:
     float ComputeOccupationFactor() const;
     void GetUsagesOccupation( std::map< std::string, unsigned int >& occupations ) const;
     void Alert( const TER_Localisation& localisation );
+    bool IsAlerted( const TER_Localisation& localisation ) const;
     void SetAlerted( bool );
+    void Confine( const TER_Localisation& localisation );
     float Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption );
     //@}
 

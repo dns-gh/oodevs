@@ -65,6 +65,7 @@ public:
     bool NeedUpdate() const;
     float GetFunctionalState() const;
     float GetConsumptionState() const;
+    double AddToStock( double quantity );
     //@}
 
     //! @name Network

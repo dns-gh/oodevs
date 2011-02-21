@@ -434,3 +434,14 @@ float NodeElement::GetConsumptionState() const
 {
     return consumptionState_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement::AddToStock
+// Created: BCI 2011-02-21
+// -----------------------------------------------------------------------------
+double NodeElement::AddToStock( double quantity )
+{
+    unsigned int old = stockCapacity_;
+    stockCapacity_ = std::min( stockMaxCapacity_, stockCapacity_ + static_cast< unsigned int >( quantity ) );
+    return stockCapacity_ - old;
+}

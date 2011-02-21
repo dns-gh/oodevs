@@ -18,12 +18,10 @@
 // Name: PHY_ActionDistributeObject constructor
 // Mined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDistributeObject::PHY_ActionDistributeObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pObject,
-                                                        boost::shared_ptr< DEC_Knowledge_Population > pPeople, int quantity )
+PHY_ActionDistributeObject::PHY_ActionDistributeObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pObject, int quantity )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_    ( pion.GetRole< PHY_RoleAction_Objects >() )
     , pObject_ ( pObject )
-    , pPeople_ ( pPeople )
     , quantity_( quantity )
 {
     Callback( role_.GetInitialReturnCode() );
@@ -53,7 +51,7 @@ void PHY_ActionDistributeObject::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionDistributeObject::Execute()
 {
-    int nReturn = role_.Distribute( pObject_, pPeople_, 1 );
+    int nReturn = role_.Distribute( pObject_, 1 );
     if( --quantity_ <= 0 )
         nReturn = role_.GetFinalReturnCode();
     Callback( nReturn );

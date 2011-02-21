@@ -15,6 +15,8 @@
 #include "MIL_StructuralStateNotifier_ABC.h"
 #include <boost/serialization/export.hpp>
 
+class PHY_DotationCategory;
+
 namespace google
 {
 namespace protobuf
@@ -84,6 +86,8 @@ public:
     void AddConsumption( unsigned long resourceId, double consumption );
     float GetConsumptionState( unsigned long resourceId ) const;
     float GetFunctionalState() const;
+
+    double AddToStock( const PHY_DotationCategory& dotation, double quantity );
 
     void RegisterNode( unsigned int id );
     void SendState( sword::UrbanAttributes& message ) const;

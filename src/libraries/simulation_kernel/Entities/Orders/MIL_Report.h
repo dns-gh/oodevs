@@ -476,6 +476,8 @@ public:
         eRC_ObjectExtinguished,
         eRC_ArrivedOnAlertZone,
         eRC_ZoneAlerted,
+        eRC_ZoneConfined,
+        eRC_ArrivedOnConfinedZone,
         eLast
     };
     //@}

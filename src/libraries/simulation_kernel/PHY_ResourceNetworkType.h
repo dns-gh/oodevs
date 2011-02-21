@@ -42,6 +42,7 @@ public:
     static const T_ResourceNetworkMap& GetResourceNetworks();
     static const PHY_ResourceNetworkType* Find( const std::string& strName );
     static const PHY_ResourceNetworkType* Find( unsigned int id );
+    static const PHY_ResourceNetworkType* FindByDotation( const PHY_DotationCategory& dotation );
     //@}
 
     //! @name Accessors

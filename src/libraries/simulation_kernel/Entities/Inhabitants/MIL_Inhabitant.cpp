@@ -435,6 +435,24 @@ void MIL_Inhabitant::NotifyAlerted( const TER_Localisation& localisation )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::NotifyConfined
+// Created: BCI 2011-02-18
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::NotifyConfined( const TER_Localisation& localisation )
+{
+    pLivingArea_->Confine( localisation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::IsAlerted
+// Created: BCI 2011-02-18
+// -----------------------------------------------------------------------------
+bool MIL_Inhabitant::IsAlerted( const TER_Localisation& localisation ) const
+{
+    return pLivingArea_->IsAlerted( localisation );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant::ComputeSpeed
 // Created: SLG 2011-01-27
 // -----------------------------------------------------------------------------

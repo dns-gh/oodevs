@@ -20,7 +20,6 @@ namespace client
 }
 
 class DEC_Knowledge_Object;
-class DEC_Knowledge_Population;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 class MIL_AgentPion;
@@ -76,7 +75,7 @@ public:
     void StopOccupyingObject( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int SupplyStock( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity );
     int ExtractFromStock( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes, double quantity );
-    int Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& populationKnowledge, unsigned int quantity );
+    int Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, unsigned int quantity );
     void SetCreator( MIL_Object_ABC& object );
 
     void ResumeWorkSuspended();

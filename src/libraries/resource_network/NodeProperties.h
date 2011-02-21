@@ -75,6 +75,7 @@ public:
     bool NeedUpdate() const;
     float GetFunctionalState() const;
     float GetConsumptionState( unsigned long resourceId ) const;
+    double AddToStock( unsigned long resourceId, double quantity );
     //@}
 
     //! @name Network

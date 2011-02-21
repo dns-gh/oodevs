@@ -718,6 +718,26 @@ void DEC_AgentFunctions::AlertInhabitants( const TER_Localisation* location )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInhabitantsAlerted
+// Created: BCI 2011-02-18
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsInhabitantsAlerted( const TER_Localisation* location )
+{
+    assert( location );
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().IsInhabitantsAlerted( *location );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::ConfineInhabitants
+// Created: BCI 2011-02-18
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::ConfineInhabitants( const TER_Localisation* location )
+{
+    assert( location );
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().ConfineInhabitants( *location );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsInstalled
 // Created: NLD 2006-08-10
 // -----------------------------------------------------------------------------

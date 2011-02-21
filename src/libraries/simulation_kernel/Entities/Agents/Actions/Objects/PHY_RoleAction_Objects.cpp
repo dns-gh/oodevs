@@ -33,6 +33,7 @@
 #include "Entities/Objects/BurnAttribute.h"
 #include "Entities/Objects/ExtinguishableCapacity.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
@@ -421,14 +422,17 @@ int PHY_RoleAction_Objects::ExtractFromStock( boost::shared_ptr< DEC_Knowledge_O
 // Name: PHY_RoleAction_Objects::Distribute
 // Created: JCR 2009-06-04
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, boost::shared_ptr< DEC_Knowledge_Population >& /*populationKnowledge*/, unsigned int quantity )
+int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge, unsigned int quantity )
 {
     MIL_Object_ABC* pObject = GetObject( objectKnowledge );
     if( !pObject || pObject->IsMarkedForDestruction() )
         return eImpossible;
     MIL_Object_ABC& object = *pObject;
-    StockAttribute* attribute = object.RetrieveAttribute< StockAttribute >();
-    if( !attribute )
+    StockAttribute* stockAttribute = object.RetrieveAttribute< StockAttribute >();
+    if( !stockAttribute )
+        return eImpossible;
+    ResourceNetworkCapacity* resourceNetworkCapacity = object.Retrieve< ResourceNetworkCapacity >();
+    if( !resourceNetworkCapacity )
         return eImpossible;
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
@@ -436,11 +440,13 @@ int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object 
     typedef std::vector< std::pair< const PHY_DotationCategory*, double > > T_SelectionVector;
     typedef T_SelectionVector::iterator IT_SelectionVector;
     T_SelectionVector selection;
-    PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eConstruct, object );
-    attribute->DeprecatedSelectDotations( selection, true );
+    stockAttribute->DeprecatedSelectDotations( selection, true );
     for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
-        if( dataComputer.HasDotations( *it->first, 0 ) )
-            attribute->Distribute( *it->first, quantity );
+    {
+            double toBeDistributed = stockAttribute->Distribute( *it->first, quantity );
+            double distributed = resourceNetworkCapacity->AddToStock( *it->first, toBeDistributed );
+            stockAttribute->Supply( *it->first, std::max( toBeDistributed - distributed, 0.0 ) );
+    }
     return eRunning;
 }
 

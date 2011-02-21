@@ -34,8 +34,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionDistributeObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pObject,
-                                         boost::shared_ptr< DEC_Knowledge_Population > pPeople, int quantity );
+             PHY_ActionDistributeObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pObject, int quantity );
     virtual ~PHY_ActionDistributeObject();
     //@}
 

@@ -83,6 +83,18 @@ const PHY_ResourceNetworkType* PHY_ResourceNetworkType::Find( unsigned int id )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ResourceNetworkType::FindByDotation
+// Created: BCI 2011-02-21
+// -----------------------------------------------------------------------------
+const PHY_ResourceNetworkType* PHY_ResourceNetworkType::FindByDotation( const PHY_DotationCategory& dotation )
+{
+    for( CIT_ResourceNetworkMap it = resourceNetworks_.begin(); it != resourceNetworks_.end(); ++it )
+        if( &it->second->GetDotationCategory() == &dotation )
+            return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ResourceNetworkType::GetName
 // Created: JSR 2010-09-10
 // -----------------------------------------------------------------------------

@@ -271,3 +271,15 @@ float NodeProperties::GetConsumptionState( unsigned long resourceId ) const
         return element->GetConsumptionState();
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::AddToStock
+// Created: BCI 2011-02-21
+// -----------------------------------------------------------------------------
+double NodeProperties::AddToStock( unsigned long resourceId, double quantity )
+{
+    NodeElement* element = Find( resourceId );
+    if( element )
+        return element->AddToStock( quantity );
+    return 0.;
+}
