@@ -11,7 +11,6 @@
     !define BUILDDIR ".."
 !endif
 
-
 !include "AdvUninstLog.nsh"
 !include "lang.nsh"
 !include "tools.nsh"
@@ -21,14 +20,14 @@
 
 Name "${PRODUCT_NAME}"
 !ifdef EVALUATION
-    !define PRODUCT_EVALUATION "_eval"    
+    !define PRODUCT_EVALUATION "_eval"
 !else
-    !define PRODUCT_EVALUATION ""    
+    !define PRODUCT_EVALUATION ""
 !endif
 !ifdef MASADEMO
-    !define PRODUCT_MASA "_InterneMasa"    
+    !define PRODUCT_MASA "_InterneMasa"
 !else
-    !define PRODUCT_MASA ""    
+    !define PRODUCT_MASA ""
 !endif
 
     OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}${PRODUCT_EVALUATION}${PRODUCT_MASA}.exe"
@@ -47,7 +46,7 @@ Section "!${PRODUCT_NAME}"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${RUNDIR}\*.qm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-  
+
     ; resources: documentation
     SetOutPath "$INSTDIR\applications\resources\help\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -123,23 +122,14 @@ Section "!${PRODUCT_NAME}"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File /nonfatal "${RUNDIR}\*.manifest"
     File "resources\*.ico"
-    
+
     ; terrain dependencies
-    File "${RUNDIR}\comerr32.dll" 
-    File "${RUNDIR}\gdal*.dll"
-    File "${RUNDIR}\gdal_SDE.dll"
-    File /nonfatal "${RUNDIR}\geos_c.dll"
-    File "${RUNDIR}\gssapi32.dll"
-    File "${RUNDIR}\k5sprt32.dll"
-    File "${RUNDIR}\krb5_32.dll"
-    File "${RUNDIR}\libeay32.dll"
-    File "${RUNDIR}\libiconv-2.dll"
-    File "${RUNDIR}\libintl-8.dll"
-    File "${RUNDIR}\libexpat.dll"
+    File /x "*_d.dll" "${RUNDIR}\gdal*.dll"
     File "${RUNDIR}\libpq.dll"
-    File "${RUNDIR}\libxslt.dll"
-    File "${RUNDIR}\msvcr71.dll"
-    File "${RUNDIR}\ogr_SDE.dll"
+    File "${RUNDIR}\geos.dll"
+    File "${RUNDIR}\proj.dll"
+    File "${RUNDIR}\iconv.dll"
+    File "${RUNDIR}\log4cxx.dll"
 
     ; evaluation licence
     !ifdef EVALUATION
@@ -147,12 +137,12 @@ Section "!${PRODUCT_NAME}"
     !endif
 
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-      
+
     ;projection settings( used in crossbow)
     SetOutPath "$INSTDIR\applications\projection_data"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File /r "${RUNDIR}\projection_data\*"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL	   
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ; resources: sql deployment
     SetOutPath "$INSTDIR\applications\resources\sql"
@@ -160,8 +150,8 @@ Section "!${PRODUCT_NAME}"
     File "${BUILDDIR}\sql\*.sql"
     File "${BUILDDIR}\sql\*.bat"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
-    
+
+
     SetOutPath "$INSTDIR\applications"
     CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_ADAPTATION).lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
@@ -173,13 +163,13 @@ Section "!${PRODUCT_NAME}"
     !insertmacro OT.AddUninstallEntry
     !insertmacro OT.AddFileAssoc
     !insertmacro OT.AddCommonConfig
-        
+
 SectionEnd
 
 SectionGroup "Additional components"
-    
+
     !insertmacro OT.AddOptionalComponent "Terrain"
-    
+
 SectionGroupEnd
 
 ;--------------------------------
@@ -196,8 +186,8 @@ SectionGroup "Exercises" s_exo
     !insertmacro OT.AddExercise "lehavre" "lehavre" "s_exo2"
     !ifdef MASADEMO
         !insertmacro OT.AddExercise "montereycross" "montereycross" "s_exo3"
-    !endif    
-    
+    !endif
+
 SectionGroupEnd
 
 ;--------------------------------
@@ -207,7 +197,7 @@ SectionGroup "Terrains" s_ter
     !insertmacro OT.AddTerrain "lehavre" "s_ter2"
     !ifdef MASADEMO
         !insertmacro OT.AddTerrain "montereycross" "s_ter3"
-    !endif    
+    !endif
 
 SectionGroupEnd
 
@@ -218,7 +208,7 @@ SectionGroup "Populations" s_pop
     !insertmacro OT.AddPopulation "lehavre" "s_pop2"
     !ifdef MASADEMO
         !insertmacro OT.AddPopulation "montereycross" "s_pop3"
-    !endif    
+    !endif
 
 SectionGroupEnd
 
@@ -236,7 +226,7 @@ SectionGroup "Shortcuts" s_sc
         SetOutPath "$INSTDIR\applications"
         CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
-    
+
     ;--------------------------------
     Section "Quick Launch" s_quick
         SetOutPath "$INSTDIR\applications"
@@ -273,7 +263,7 @@ Function .onInit
     SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
     SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
     SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
-    
+
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 FunctionEnd
@@ -291,13 +281,13 @@ Function .onSelChange
 
     !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
     !insertmacro OT.CheckDependency "s_ter1" "s_pop1"
-    
+
     !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
     !insertmacro OT.CheckDependency "s_ter2" "s_pop2"
-    
+
     !ifdef MASADEMO
         !insertmacro OT.CheckDependency "s_exo3" "s_ter3"
         !insertmacro OT.CheckDependency "s_ter3" "s_pop3"
     !endif
-    
+
 FunctionEnd

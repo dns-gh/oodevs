@@ -36,7 +36,7 @@ Section "!${PRODUCT_NAME}"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${RUNDIR}\*.qm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
- 
+
     ;---- resources: documentation ----
     SetOutPath "$INSTDIR\applications\resources\help\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -57,7 +57,7 @@ Section "!${PRODUCT_NAME}"
     ;---- Application ----
     SetOutPath "$INSTDIR\applications"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    
+
     ;-- Specifique PACK RUNTIME --
     File "${OUTDIR}\release\applications\adaptation_app\*.exe"
     File "${OUTDIR}\release\applications\preparation_app\*.exe"
@@ -89,7 +89,6 @@ Section "!${PRODUCT_NAME}"
     File /x "*D.dll" "${RUNDIR}\Xalan*.dll"
     File "${RUNDIR}\zlib1.dll"
     File "${RUNDIR}\bugtrap.dll"
-    File "${RUNDIR}\shapelib.dll"
     File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_6.dll"
     File "${RUNDIR}\launcher-${PLATFORM}-mt.dll"
@@ -111,27 +110,18 @@ Section "!${PRODUCT_NAME}"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File "resources\*.ico"
 
-    ; terrain dependencies	
-    File "${RUNDIR}\comerr32.dll" 
-    File "${RUNDIR}\gssapi32.dll"
-    File "${RUNDIR}\gdal*.dll"
-    File "${RUNDIR}\gdal_SDE.dll"
-    File /nonfatal "${RUNDIR}\geos_c.dll"
-    File "${RUNDIR}\k5sprt32.dll"
-    File "${RUNDIR}\krb5_32.dll"
-    File "${RUNDIR}\libeay32.dll"
-    File "${RUNDIR}\libiconv-2.dll"
-    File "${RUNDIR}\libintl-8.dll"
-    File "${RUNDIR}\libexpat.dll"
+    ; terrain dependencies
+    File /x "*_d.dll" "${RUNDIR}\gdal*.dll"
     File "${RUNDIR}\libpq.dll"
-    File "${RUNDIR}\libxslt.dll"
-    File "${RUNDIR}\msvcr71.dll"
-    File "${RUNDIR}\ogr_SDE.dll"  
-            
+    File "${RUNDIR}\geos.dll"
+    File "${RUNDIR}\proj.dll"
+    File "${RUNDIR}\iconv.dll"
+    File "${RUNDIR}\log4cxx.dll"
+
     ; evaluation licence
     !ifdef EVALUATION
         File "${RUNDIR}\evaluation.lic"
-    !endif  
+    !endif
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ;projection settings (used in crossbow)
@@ -185,7 +175,7 @@ SectionGroup "Shortcuts" s_sc
         SetOutPath "$INSTDIR\applications"
         CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
-    
+
     ;--------------------------------
     Section "Quick Launch" s_quick
         SetOutPath "$INSTDIR\applications"
@@ -212,15 +202,15 @@ Function .onInit
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
 
-    ; Set section names    
-    SectionSetText ${s_mod} $(OT_SECTION_MODELS)        
-    SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)                
+    ; Set section names
+    SectionSetText ${s_mod} $(OT_SECTION_MODELS)
+    SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)
     ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
     SectionSetText ${s_doc} $(OT_SECTION_DOCUMENTATION)
     SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
     SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
     SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
-    
+
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 FunctionEnd
@@ -235,5 +225,5 @@ Function un.onInit
 FunctionEnd
 
 Function .onSelChange
-     
+
 FunctionEnd
