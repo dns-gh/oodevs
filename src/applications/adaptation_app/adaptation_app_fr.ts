@@ -14,13 +14,15 @@
     <name>ADNDatabaseWarnings</name>
     <message>
         <source>Database Work in progress</source>
-        <translation></translation>
+        <translation>Enregistrement en cours.</translation>
     </message>
     <message>
         <source>Database Work in progress. 
  Convoy unit type not defined. 
  Do you want to save anyway ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrement en cours.
+Type de convoi non défini.
+Voulez vous sauvegarder malgré tout ?</translation>
     </message>
 </context>
 <context>
@@ -3410,7 +3412,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>New crowd creation</source>
-        <translation></translation>
+        <translation>Création d&apos;une nouvelle foule</translation>
     </message>
     <message>
         <source>Crowd</source>
@@ -5060,10 +5062,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Stock</translation>
     </message>
     <message>
-        <source>Efficiencies</source>
-        <translation>Efficacités</translation>
-    </message>
-    <message>
         <source>%</source>
         <translation>%</translation>
     </message>
@@ -5096,10 +5094,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Appui gen reconnaissance</translation>
     </message>
     <message>
-        <source>Urban area efficiency</source>
-        <translation>Efficacité zone urbaine</translation>
-    </message>
-    <message>
         <source>Crossing height</source>
         <translation>Hauteur de franchissement</translation>
     </message>
@@ -5130,6 +5124,18 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Units/</source>
         <translation>Pions/</translation>
+    </message>
+    <message>
+        <source>Skills</source>
+        <translation>Aptitudes</translation>
+    </message>
+    <message>
+        <source>Efficiencies</source>
+        <translation>Efficacités</translation>
+    </message>
+    <message>
+        <source>Urban area efficiency</source>
+        <translation>Efficacité en zone urbaine</translation>
     </message>
 </context>
 <context>
@@ -5989,7 +5995,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Invalid repartition - Male/Female/Children repartition doesn&apos;t fit 100%</source>
-        <translation type="unfinished"></translation>
+        <translation>Répartition invalide - La somme Homme/Femme/Enfant ne fait pas 100%</translation>
     </message>
 </context>
 <context>

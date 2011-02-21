@@ -196,18 +196,23 @@ void ADN_Units_GUI::Build()
     pStockLogThreshold_ = new ADN_Units_LogThreshold_GUI( pStockGroup_ );
     vInfosConnectors[eStock] = &pStockLogThreshold_->GetConnector();
 
+    // Aptitudes
+    QGroupBox* pSkillsGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Skills" ), pGroup );
+    pSkillsGroup->setInsideMargin( 20 );
+    pSkillsGroup->setInsideSpacing( 10 );
+
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Recon" ), vInfosConnectors[ eRecon ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Combat support" ), vInfosConnectors[ eCombatSupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Combat" ), vInfosConnectors[ eCombat ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Mobility support" ), vInfosConnectors[ eMobilitySupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Counter mobility support" ), vInfosConnectors[ eCounterMobilitySupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Protection support" ), vInfosConnectors[ eProtectionSupport ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Engineering recon" ), vInfosConnectors[ eEngineeringRecon ], tr( "%" ), ePercentage );
+   
     // Efficiencies
     QGroupBox* pEfficienciesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Efficiencies" ), pGroup );
     pEfficienciesGroup->setInsideMargin( 20 );
     pEfficienciesGroup->setInsideSpacing( 10 );
-
-    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Recon" ), vInfosConnectors[ eRecon ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Combat support" ), vInfosConnectors[ eCombatSupport ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Combat" ), vInfosConnectors[ eCombat ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Mobility support" ), vInfosConnectors[ eMobilitySupport ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Counter mobility support" ), vInfosConnectors[ eCounterMobilitySupport ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Protection support" ), vInfosConnectors[ eProtectionSupport ], tr( "%" ), ePercentage );
-    builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Engineering recon" ), vInfosConnectors[ eEngineeringRecon ], tr( "%" ), ePercentage );
     builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Urban area efficiency" ), vInfosConnectors[ eUrbanAreaEfficiency ], tr( "%" ), ePercentage );
 
     // Power indicators
@@ -228,7 +233,7 @@ void ADN_Units_GUI::Build()
     pMainLayout->addWidget( pListUnits_, 1 );
     pMainLayout->addWidget( pGroup, 6 );
 
-    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 5, 6, 5 );
+    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 6, 6, 5 );
     pGroupLayout->setAlignment( Qt::AlignTop );
     pGroupLayout->addMultiCellWidget( pParamGroup, 0, 0, 0, 2 );
     pGroupLayout->addMultiCellWidget( pNatureGroup, 0, 0, 3, 5 );
@@ -236,11 +241,12 @@ void ADN_Units_GUI::Build()
     pGroupLayout->addMultiCellWidget( postureInstallationBox, 1, 2, 2, 3 );
     pGroupLayout->addMultiCellWidget( pReconGroup, 1, 1, 4, 5 );
     pGroupLayout->addMultiCellWidget( pCommandGroup, 2, 2, 4, 5 );
-    pGroupLayout->addMultiCellWidget( pDotationsGroup, 3, 3, 0, 1 );
-    pGroupLayout->addMultiCellWidget( pStockGroup_, 3, 3, 2, 3 );
-    pGroupLayout->addMultiCellWidget( pEfficienciesGroup, 3, 3, 4, 5 );
-    pGroupLayout->addMultiCellWidget( pComposantesGroup, 4, 4, 0, 3 );
-    pGroupLayout->addMultiCellWidget( pPowerIndicatorsGroup, 4, 4, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pDotationsGroup, 3, 4, 0, 1 );
+    pGroupLayout->addMultiCellWidget( pStockGroup_, 3, 4, 2, 3 );
+    pGroupLayout->addMultiCellWidget( pSkillsGroup, 3, 3, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pEfficienciesGroup, 4, 4, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pComposantesGroup, 5, 5, 0, 3 );
+    pGroupLayout->addMultiCellWidget( pPowerIndicatorsGroup, 5, 5, 4, 5 );
 }
 
 // -----------------------------------------------------------------------------
