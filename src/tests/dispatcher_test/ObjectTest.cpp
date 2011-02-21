@@ -40,7 +40,7 @@ namespace
             MOCK_EXPECT( model, Sides ).returns( boost::ref( teams ) );
             expected.set_context( 0 );
         }
-        void createObject()
+        void CreateObject()
         {
             sword::ObjectCreation& message = *expected.mutable_message()->mutable_object_creation();
             message.mutable_object()->set_id( 1 );
@@ -79,7 +79,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( Object_IsCreatedUnderATeam, Fixture )
 {
-    createObject();
+    CreateObject();
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsCreatedUnderATeam, Fixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( Object_IsDestroyed, Fixture )
 {
-    createObject();
+    CreateObject();
     sword::ObjectDestruction& message = *expected.mutable_message()->mutable_object_destruction();
     message.mutable_object()->set_id( 1 );
     BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
@@ -105,7 +105,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsDestroyed, Fixture )
 BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
 {
     {
-        createObject();
+        CreateObject();
         sword::ObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
         message.mutable_object()->set_id( 1 );
         message.mutable_location()->set_type( sword::Location::line );
@@ -147,7 +147,7 @@ BOOST_FIXTURE_TEST_CASE( Object_IsUpdated, Fixture )
 BOOST_FIXTURE_TEST_CASE( Object_IsUpdated_With_No_Optional, Fixture )
 {
     {
-        createObject();
+        CreateObject();
         sword::ObjectUpdate& message = *expected.mutable_message()->mutable_object_update();
         message.mutable_object()->set_id( 1 );
         message.mutable_attributes();

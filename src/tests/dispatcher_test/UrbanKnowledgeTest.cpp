@@ -37,7 +37,7 @@ namespace
             MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
             expected.set_context( 0 );
         }
-        void createUrbanKnowledge()
+        void CreateUrbanKnowledge()
         {
             sword::UrbanKnowledgeCreation& message = *expected.mutable_message()->mutable_urban_knowledge_creation();
             message.mutable_knowledge()->set_id( 1 );
@@ -70,7 +70,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeCreatedWithoutAttributes, Fixture )
 {
-    createUrbanKnowledge();
+    CreateUrbanKnowledge();
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeCreatedWithoutAttributes, Fixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeDestroyedWithoutAttributes, Fixture )
 {
-    createUrbanKnowledge();
+    CreateUrbanKnowledge();
     sword::UrbanKnowledgeDestruction& message = *expected.mutable_message()->mutable_urban_knowledge_destruction();
     message.mutable_knowledge()->set_id( 1 );
     message.mutable_party()->set_id( side.GetId() );
@@ -96,7 +96,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeDestroyedWithoutAttributes, Fixture
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( UrbanKnowledge_CanBeUpdatedWithoutAttributes, Fixture )
 {
-    createUrbanKnowledge();
+    CreateUrbanKnowledge();
     {
         sword::UrbanKnowledgeUpdate& message = *expected.mutable_message()->mutable_urban_knowledge_update();
         message.mutable_knowledge()->set_id( 1 );

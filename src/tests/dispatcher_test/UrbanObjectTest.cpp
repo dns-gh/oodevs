@@ -26,7 +26,7 @@ namespace
         {
             expected.set_context( 0 );
         }
-        void createUrbanObject()
+        void CreateUrbanObject()
         {
             sword::UrbanCreation& message = *expected.mutable_message()->mutable_urban_creation();
             message.mutable_object()->set_id( 1 );
@@ -59,7 +59,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( UrbanObject_IsCreatedUnderATeam, Fixture )
 {
-    createUrbanObject();
+    CreateUrbanObject();
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsCreatedUnderATeam, Fixture )
 BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
 {
     {
-        createUrbanObject();
+        CreateUrbanObject();
         sword::UrbanUpdate& message = *expected.mutable_message()->mutable_urban_update();
         message.mutable_object()->set_id( 1 );
         message.mutable_location()->set_type( sword::Location::line );
@@ -107,7 +107,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
 BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
 {
     {
-        createUrbanObject();
+        CreateUrbanObject();
         sword::UrbanUpdate& message = *expected.mutable_message()->mutable_urban_update();
         message.mutable_object()->set_id( 1 );
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );

@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.set_logistic_level( sword::none );
         message.set_app6symbol( "sfgpu----------" );
-        CheckInitialized( message );
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // creation
         MOCK_EXPECT( formation, RegisterAutomat ).once();
@@ -131,7 +131,7 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
         message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
         message.set_logistic_level( sword::none );
         message.set_app6symbol( "sfgpu----------" );
-        CheckInitialized( message );
+        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
         // creation
         MOCK_EXPECT( automat, RegisterAutomat ).once();
@@ -198,7 +198,7 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
             message.set_logistic_level( sword::none );
             message.set_app6symbol( "sfgpu----------" );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -210,7 +210,7 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
             sword::AutomatChangeSuperior message;
             message.mutable_automat()->set_id( 1 );
             message.mutable_superior()->mutable_formation()->set_id( 52 );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RemoveAutomat ).once();
             MOCK_EXPECT( formation, RegisterAutomat ).once();
@@ -276,7 +276,7 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
             message.mutable_knowledge_group()->set_id( knowledgeGroup1.GetId() );
             message.set_logistic_level( sword::none );
             message.set_app6symbol( "sfgpu----------" );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup1, RegisterAutomat ).once();
@@ -289,7 +289,7 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
             message.mutable_automat()->set_id( 1 );
             message.mutable_party()->set_id( side.GetId() );
             message.mutable_knowledge_group()->set_id( knowledgeGroup2.GetId() );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( knowledgeGroup1, RemoveAutomat ).once();
             MOCK_EXPECT( knowledgeGroup2, RegisterAutomat ).once();
@@ -352,7 +352,7 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
             message.set_logistic_level( sword::none );
             message.set_app6symbol( "sfgpu----------" );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -367,7 +367,7 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
             message.mutable_source()->mutable_automat()->set_id( 1 );
             message.set_key( "my variable" );
             message.set_value( "my value" );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
             automats.Get( 1 ).Update( message );
 
             // network serialization
@@ -432,7 +432,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
             message.set_logistic_level( sword::none );
             message.set_app6symbol( "sfgpu----------" );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -450,7 +450,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             message.set_meeting_engagement( sword::avoiding );
             message.set_operational_state( sword::tactically_destroyed );
             message.set_roe( sword::RulesOfEngagement::retaliation_only );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
             automats.Get( 1 ).Update( message );
 
             // network serialization
@@ -516,7 +516,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
             message.set_logistic_level( sword::combat_train );
             message.set_app6symbol( "sfgpu----------" );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -535,7 +535,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
             message.mutable_quotas()->add_elem();
             message.mutable_quotas()->mutable_elem( 1 )->mutable_resource()->set_id( 69 );
             message.mutable_quotas()->mutable_elem( 1 )->set_quantity( 6945 );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
             automats.Get( 1 ).Update( message );
 
             // network serialization
@@ -600,7 +600,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
             message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
             message.set_logistic_level( sword::none );
             message.set_app6symbol( "sfgpu----------" );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
@@ -615,7 +615,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
             message.mutable_requester()->mutable_automat()->set_id( 1 );
             message.mutable_combat_train()->set_id( 1 );
             message.mutable_logistic_base()->mutable_automat()->set_id( 1 );
-            CheckInitialized( message );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
             automats.Get( 1 ).Update( message );
 
             // network serialization

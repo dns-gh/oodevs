@@ -18,17 +18,12 @@
 */
 // Created: SBO 2010-06-09
 // =============================================================================
-namespace
+namespace sword
 {
-    bool operator==( const sword::SimToClient& lhs, const sword::SimToClient& rhs )
+    inline bool operator==( const sword::SimToClient& lhs, const sword::SimToClient& rhs )
     {
         BOOST_CHECK_EQUAL( lhs.DebugString(), rhs.DebugString() );
         return true;
-    }
-
-    void CheckInitialized( const google::protobuf::Message& message )
-    {
-        BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
     }
 }
 

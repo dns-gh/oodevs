@@ -16,7 +16,7 @@
 
 using namespace plugins::messenger;
 
-namespace
+namespace sword
 {
     bool operator==( const sword::MessengerToClient& lhs, const sword::MessengerToClient& rhs )
     {
