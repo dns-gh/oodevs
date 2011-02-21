@@ -32,7 +32,7 @@ using namespace kernel;
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
 ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, PropertiesDictionary& dico )
-    : controllers_( controllers )
+    : controllers_            ( controllers )
     , id_                     ( id )
     , urbanResolver_          ( urbanResolver )
     , objectResolver_         ( objectResolver )
@@ -48,7 +48,7 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, con
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
 ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, PropertiesDictionary& dico )
-    : controllers_( controllers )
+    : controllers_            ( controllers )
     , id_                     ( id )
     , urbanResolver_          ( urbanResolver )
     , objectResolver_         ( objectResolver )

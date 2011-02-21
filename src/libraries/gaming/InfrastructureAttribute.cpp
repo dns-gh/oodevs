@@ -11,7 +11,10 @@
 #include "InfrastructureAttribute.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/InfrastructureType.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
@@ -23,13 +26,13 @@ using namespace kernel;
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-14
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( Controller& controller, const gui::TerrainObjectProxy& object, const tools::StringResolver< InfrastructureType >& resolver, PropertiesDictionary& dictionary )
-    : controller_( controller )
-    , resolver_  ( resolver )
-    , object_    ( object )
-    , enabled_   ( true )
-    , threshold_ ( 30 )
-    , type_      ( 0 )
+InfrastructureAttribute::InfrastructureAttribute( Controllers& controllers, const gui::TerrainObjectProxy& object, const tools::StringResolver< InfrastructureType >& resolver, PropertiesDictionary& dictionary )
+    : controllers_( controllers )
+    , resolver_   ( resolver )
+    , object_     ( object )
+    , enabled_    ( true )
+    , threshold_  ( 30 )
+    , type_       ( 0 )
 {
     CreateDictionary( dictionary );
 }
@@ -85,7 +88,7 @@ void InfrastructureAttribute::UpdateData( const T& message )
         threshold_ = static_cast< unsigned int >( message.infrastructures().infrastructure().threshold() * 100 + 0.5 );
         role_ = message.infrastructures().infrastructure().type();
         type_ = resolver_.Find( role_ );
-        controller_.Update( *static_cast< Infrastructure_ABC* >( this ) );
+        controllers_.controller_.Update( *static_cast< Infrastructure_ABC* >( this ) );
     }
 }
 
@@ -95,10 +98,13 @@ void InfrastructureAttribute::UpdateData( const T& message )
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::Draw( const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
-    if( type_ )
-        tools.DrawApp6Symbol( type_->GetSymbol(), object_.Barycenter() , 0.1f, 0.1f );
-    if( !enabled_ )
-        tools.DrawSvg( "infra.svg", object_.Barycenter(), 0.1f );
+    if( controllers_.options_.GetOption( "Infra", false ).To< bool >() )
+    {
+        if( type_ )
+            tools.DrawApp6Symbol( type_->GetSymbol(), object_.Barycenter() , 0.1f, 0.1f );
+        if( !enabled_ )
+            tools.DrawSvg( "infra.svg", object_.Barycenter(), 0.1f );
+    }
 }
 
 // -----------------------------------------------------------------------------

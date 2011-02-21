@@ -26,6 +26,8 @@
 
 using namespace gui;
 
+const QString TerrainObjectProxy::typeName_ = "terrainObjectProxy";
+
 #pragma warning( disable : 4355 )
 
 // -----------------------------------------------------------------------------
@@ -138,6 +140,15 @@ void TerrainObjectProxy::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
 QString TerrainObjectProxy::GetName() const
 {
     return object_.GetName().c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::GetTypeName
+// Created: ABR 2011-02-18
+// -----------------------------------------------------------------------------
+QString TerrainObjectProxy::GetTypeName() const
+{
+    return typeName_;
 }
 
 // -----------------------------------------------------------------------------

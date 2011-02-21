@@ -9,10 +9,13 @@
 
 #include "preparation_pch.h"
 #include "InfrastructureAttribute.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/InfrastructureType.h"
-#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/InfrastructureType.h"
+#include "clients_kernel/Options.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -24,31 +27,14 @@ using namespace kernel;
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy& object, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
-    : type_        ( infrastructureType )
-    , enabled_     ( true )
-    , threshold_   ( DEFAULT_THRESHOLD )
-    , role_        ( infrastructureType.GetName() )
-    , object_      ( object )
+InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controllers, const gui::TerrainObjectProxy& object, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
+    : controllers_( controllers )
+    , type_       ( infrastructureType )
+    , enabled_    ( true )
+    , threshold_  ( DEFAULT_THRESHOLD )
+    , role_       ( infrastructureType.GetName() )
+    , object_     ( object )
 {
-    CreateDictionary( dico );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InfrastructureAttribute constructor
-// Created: SLG 2011-01-11
-// -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( const gui::TerrainObjectProxy& object, xml::xistream& xis, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
-    : type_     ( infrastructureType )
-    , enabled_  ( true )
-    , threshold_( DEFAULT_THRESHOLD )
-    , role_     ( infrastructureType.GetName() )
-    , object_   ( object )
-{
-    float threshold;
-    xis >> xml::attribute( "enable", enabled_ )
-        >> xml::attribute( "threshold", threshold );
-    threshold_ = static_cast< unsigned int >( 100 * threshold );
     CreateDictionary( dico );
 }
 
@@ -147,7 +133,8 @@ void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico )
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::Draw( const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
-    tools.DrawApp6Symbol( type_.GetSymbol(), object_.Barycenter(), 0.1f, 0.1f );
+    if( controllers_.options_.GetOption( "Infra", false ).To< bool >() )
+        tools.DrawApp6Symbol( type_.GetSymbol(), object_.Barycenter(), 0.1f, 0.1f );
 }
 
 // -----------------------------------------------------------------------------

@@ -473,6 +473,9 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( elevation3d );
     forward_->Register( weather );
     forward_->SetDefault( defaultLayer );
+
+    // Exclusion
+    static_cast< gui::EntityLayerBase& >( objectsLayer ).Exclude( "terrainObjectProxy" );
 }
 
 // -----------------------------------------------------------------------------

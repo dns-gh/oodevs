@@ -23,27 +23,6 @@ namespace kernel
     class Viewport_ABC;
 }
 
-namespace
-{
-    class InfrastructureHandler : public kernel::OptionsObserver_ABC, public tools::Observer_ABC
-    {
-    public:
-        InfrastructureHandler( kernel::Controllers& controllers ) : infraDisplayed_( false )
-        {
-            controllers.Register( *this );
-        }
-        ~InfrastructureHandler() {}
-        virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-        {
-            if( name == "Infra" )
-                infraDisplayed_ = value.To< bool >();
-        }
-        bool ShouldBeDisplayed() { return infraDisplayed_; }
-    private:
-        bool infraDisplayed_;
-    };
-}
-
 namespace gui
 {
     class View_ABC;
@@ -72,19 +51,15 @@ public:
 protected:
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const TerrainObjectProxy& object );
     virtual void NotifyDeleted( const TerrainObjectProxy& object );
     virtual void NotifySelected( const TerrainObjectProxy* object );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
     const TerrainObjectProxy*   selectedObject_;
-    InfrastructureHandler& infraHandler_;
     //@}
 };
 

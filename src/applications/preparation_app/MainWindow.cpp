@@ -364,11 +364,14 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationP
     forward_->Register( weather );
     forward_->Register( inhabitantLayer );
     forward_->Register( limits );
-    //forward_->Register( urbanLayer );
+    forward_->Register( urbanLayer );
     forward_->Register( drawerLayer );
     forward_->Register( metrics );
     forward_->Register( elevation3d );
     forward_->SetDefault( defaultLayer );
+
+    // Exclusion
+    static_cast< gui::EntityLayerBase& >( objectsLayer ).Exclude( "terrainObjectProxy" );
 }
 
 // -----------------------------------------------------------------------------

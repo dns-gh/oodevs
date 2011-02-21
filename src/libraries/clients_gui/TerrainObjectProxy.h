@@ -57,6 +57,12 @@ class TerrainObjectProxy : public kernel::Extension_ABC
                          , public kernel::OptionsObserver_ABC
 {
 public:
+    //! @name Static
+    //@{
+    static const QString typeName_;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const kernel::ObjectType& type );
@@ -85,6 +91,7 @@ public:
     const urban::TerrainObject_ABC* GetObject() const;
     virtual void Display( kernel::Displayer_ABC& ) const{};
     virtual const kernel::ObjectType& GetType() const{ return type_; }
+    virtual QString GetTypeName() const;
     //@}
 
     //! @name Operations

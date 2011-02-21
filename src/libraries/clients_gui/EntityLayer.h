@@ -53,6 +53,7 @@ public:
     //! @name Operations
     //@{
     virtual void Paint( kernel::Viewport_ABC& viewport );
+    EntityLayerBase& Exclude( const QString& typeName );
     //@}
 
 protected:
@@ -111,6 +112,7 @@ private:
 protected: // $$$$ AGE 2006-05-17:
     const kernel::Profile_ABC& profile_;
     const kernel::GlTools_ABC& tools_;
+    std::vector< const QString > exclusions_;
     //@}
 };
 

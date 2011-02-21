@@ -15,7 +15,7 @@
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
     class PropertiesDictionary;
     class InfrastructureType;
 }
@@ -36,7 +36,7 @@ class InfrastructureAttribute : public kernel::Infrastructure_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InfrastructureAttribute( kernel::Controller& controller, const gui::TerrainObjectProxy& object, const tools::StringResolver< kernel::InfrastructureType >& resolver, kernel::PropertiesDictionary& dictionary );
+             InfrastructureAttribute( kernel::Controllers& controllers, const gui::TerrainObjectProxy& object, const tools::StringResolver< kernel::InfrastructureType >& resolver, kernel::PropertiesDictionary& dictionary );
     virtual ~InfrastructureAttribute();
     //@}
 
@@ -67,7 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     const tools::StringResolver< kernel::InfrastructureType >& resolver_;
     const gui::TerrainObjectProxy& object_;
     bool enabled_;

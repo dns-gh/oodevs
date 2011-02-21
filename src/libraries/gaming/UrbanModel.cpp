@@ -169,7 +169,7 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
                 if( message.attributes().infrastructures().resource_network_size() > 0 && pTerrainObject->Retrieve< kernel::ResourceNetwork_ABC >() == 0 )
                     model_.resourceNetwork_.Create( *pTerrainObject, message.attributes().infrastructures() );
                 if( message.attributes().infrastructures().has_infrastructure() && pTerrainObject->Retrieve< kernel::Infrastructure_ABC >() == 0 )
-                    pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_.controller_, *pTerrainObject, static_.objectTypes_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
+                    pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, static_.objectTypes_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
             }
         }
     }

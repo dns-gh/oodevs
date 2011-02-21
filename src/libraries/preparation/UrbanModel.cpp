@@ -221,7 +221,7 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
         const kernel::InfrastructureType* infraType = static_.objectTypes_.tools::StringResolver< kernel::InfrastructureType >::Find( infra->GetType() );
         if ( infraType )
         {
-            pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( *pTerrainObject, *infraType, dico ) );
+            pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, *infraType, dico ) );
             if( infraType->FindCapacity( "medical" ) )
                 pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( static_.objectTypes_, dico ) );
         }

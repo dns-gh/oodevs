@@ -48,7 +48,8 @@ EntityLayer< ConcreteEntity >::~EntityLayer()
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::NotifyCreated( const ConcreteEntity& entity )
 {
-    AddEntity( entity );
+    if( exclusions_.empty() || std::find( exclusions_.begin(), exclusions_.end(), entity.GetTypeName() ) == exclusions_.end() )
+        AddEntity( entity );
 }
  
 // -----------------------------------------------------------------------------
@@ -68,7 +69,8 @@ void EntityLayer< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& entity 
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::NotifyActivated( const ConcreteEntity& entity )
 {
-    ActivateEntity( entity );
+    if( exclusions_.empty() || std::find( exclusions_.begin(), exclusions_.end(), entity.GetTypeName() ) == exclusions_.end() )
+        ActivateEntity( entity );
 }
 
 // -----------------------------------------------------------------------------

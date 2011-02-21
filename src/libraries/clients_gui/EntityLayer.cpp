@@ -78,6 +78,16 @@ void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityLayerBase::Exclude
+// Created: ABR 2011-02-18
+// -----------------------------------------------------------------------------
+EntityLayerBase& EntityLayerBase::Exclude( const QString& typeName )
+{
+    exclusions_.push_back( typeName );
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityLayerBase::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
