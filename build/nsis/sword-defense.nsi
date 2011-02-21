@@ -116,7 +116,6 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\geos.dll"
     File "${RUNDIR}\proj.dll"
     File "${RUNDIR}\iconv.dll"
-    File "${RUNDIR}\log4cxx.dll"
 
     ; evaluation licence
     !ifdef EVALUATION
