@@ -33,11 +33,7 @@ class MIL_Effect_IndirectFire;
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
 class TER_Localisation;
-
-namespace urban
-{
-    class Block;
-}
+class UrbanObjectWrapper;
 
 // =============================================================================
 // @class  PHY_RoleInterface_Perceiver
@@ -86,7 +82,7 @@ public:
     virtual void NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level ) = 0;
     virtual void NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape ) = 0;
     virtual void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const = 0;
-    virtual void NotifyPerception( const urban::TerrainObject_ABC& block, const PHY_PerceptionLevel& level ) const = 0;
+    virtual void NotifyPerception( const UrbanObjectWrapper& block, const PHY_PerceptionLevel& level ) const = 0;
     //@}
 
     //! @name Operations
@@ -98,7 +94,6 @@ public:
     virtual const PHY_PerceptionLevel& ComputePerception( const MT_Vector2D& vPoint ) const = 0;
     virtual const PHY_PerceptionLevel& ComputePerception( const DEC_Knowledge_Object& knowledge ) const = 0;
     virtual const PHY_PerceptionLevel& ComputePerception( const DEC_Knowledge_Agent & knowledge ) const = 0;
-    virtual const PHY_PerceptionLevel& ComputePerception( const urban::Block& block ) const = 0;
 
     virtual void SetVisionModeNormal() = 0;;
     virtual void SetVisionModeDirection( const MT_Vector2D& vDirection ) = 0;
@@ -166,7 +161,7 @@ public:
     virtual bool IsKnown( const MIL_Object_ABC& object ) const = 0;
     virtual bool IsIdentified( const MIL_Object_ABC& object ) const = 0;
     virtual bool IsIdentified( const MIL_PopulationConcentration& concentration ) const = 0;
-    virtual bool IsIdentified( const urban::TerrainObject_ABC& object ) const = 0;
+    virtual bool IsIdentified( const UrbanObjectWrapper& object ) const = 0;
     //@}
 
     //! @name Network

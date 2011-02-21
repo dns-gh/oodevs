@@ -11,7 +11,6 @@
 
 #include "simulation_kernel/UrbanLocationComputerFactory.h"
 #include "simulation_kernel/DefaultUrbanLocationComputer.h"
-#include <urban/TerrainObject_ABC.h>
 
 using namespace urbanLocation;
 

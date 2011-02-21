@@ -23,6 +23,7 @@ class MIL_LimaOrder;
 class MT_Vector2D;
 class TER_Localisation;
 class DEC_Knowledge_Urban;
+class UrbanObjectWrapper;
 
 namespace directia
 {
@@ -37,10 +38,6 @@ namespace binders
     class ScriptRef;
 }
 }
-}
-namespace urban
-{
-    class TerrainObject_ABC;
 }
 
 // =============================================================================
@@ -77,7 +74,7 @@ public:
 
 
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeUrbanBlockLocalisations( boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge );
-    static void ComputeLocalisationsInsideBlock( const urban::TerrainObject_ABC& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result );
+    static void ComputeLocalisationsInsideBlock( const UrbanObjectWrapper& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result );
 
     static boost::shared_ptr< MT_Vector2D > ComputeTrafficableLocalisationBarycenter( MIL_AgentPion& pion, TER_Localisation* pLocalisation );
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeTrafficableLocalisation( const MT_Vector2D& point );

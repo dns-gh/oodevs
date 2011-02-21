@@ -110,16 +110,6 @@ const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const MIL_Object_ABC& /*
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Perception_ABC::Compute
-// Created: MGD 2009-11-25
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_Perception_ABC::Compute( const urban::Block& /*block*/ ) const
-{
-    return PHY_PerceptionLevel::notSeen_;
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: PHY_Perception_ABC::Execute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------

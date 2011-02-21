@@ -100,10 +100,9 @@ void UrbanObjectWrapper::InitializeAttributes()
                 capacity->Register( *this );
             }
         }
-    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
-        if( pPhysical->GetArchitecture() )
-            if( const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() ) )
-                GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
+    if( const urban::Architecture* architecture = GetArchitecture() )
+        if( const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find( architecture->GetMaterial() ) )
+            GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
 }
 
 // -----------------------------------------------------------------------------
@@ -360,6 +359,26 @@ bool UrbanObjectWrapper::HasChild() const
 const geometry::Polygon2f* UrbanObjectWrapper::GetFootprint() const
 {
     return object_->GetFootprint();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::ComputeComplexity
+// Created: JSR 2011-02-18
+// -----------------------------------------------------------------------------
+float UrbanObjectWrapper::ComputeComplexity() const
+{
+    return object_->ComputeComplexity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetArchitecture
+// Created: JSR 2011-02-18
+// -----------------------------------------------------------------------------
+const urban::Architecture* UrbanObjectWrapper::GetArchitecture() const
+{
+    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
+        return pPhysical->GetArchitecture();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -7,7 +7,6 @@
 #include "Tools.h"
 #include "Agent_ABC.h"
 #include <urban/PhysicalAttribute.h>
-#include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.hpp>
 

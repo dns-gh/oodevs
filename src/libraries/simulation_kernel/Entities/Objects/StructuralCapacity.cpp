@@ -22,8 +22,6 @@
 #include "Tools/MIL_Geometry.h"
 #include "protocol/ClientSenders.h"
 #include <geometry/Types.h>
-#include <urban/PhysicalAttribute.h>
-#include <urban/TerrainObject_ABC.h>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( StructuralCapacity )

@@ -21,9 +21,9 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <urban/PhysicalAttribute.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
+#include <urban/Architecture.h>
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_UrbanLocation )
@@ -263,9 +263,6 @@ void PHY_RolePion_UrbanLocation::Execute( posture::PostureComputer_ABC& /*algori
 void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
     if( urbanObject_ )
-    {
-        const urban::PhysicalAttribute* pPhysical = urbanObject_->GetObject().Retrieve< urban::PhysicalAttribute >();
-        if( pPhysical && pPhysical->GetArchitecture() )
-            algorithm.AddModifier( 1. - pPhysical->GetArchitecture()->GetOccupation(), true );
-    }
+        if( const urban::Architecture* architecture = urbanObject_->GetArchitecture() )
+            algorithm.AddModifier( 1. - architecture->GetOccupation(), true );
 }

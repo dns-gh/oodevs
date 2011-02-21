@@ -13,12 +13,12 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <urban/PhysicalAttribute.h>
-#include <urban/Model.h>
+#include <urban/Architecture.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Urban )
 
@@ -28,10 +28,10 @@ MIL_IDManager DEC_Knowledge_Urban::idManager_;
 // Name: DEC_Knowledge_Urban constructor
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, UrbanObjectWrapper& wrapper )
-    : DEC_Knowledge_Object    ( army, wrapper )
+DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const UrbanObjectWrapper& wrapper )
+    : DEC_Knowledge_Object    ( army, const_cast< UrbanObjectWrapper& >( wrapper ) )
     , army_                   ( &army )
-    , object_                 ( &wrapper.GetObject() )
+    , object_                 ( &wrapper )
     , rProgressPercent_       ( 0. )
     , rMaxProgressPercent_    ( 0. )
     , nTimeLastUpdate_        ( 0 )
@@ -85,7 +85,7 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned in
     file >> boost::serialization::base_object< DEC_Knowledge_Object >( *this )
          >> nTimeLastUpdate_
          >> urbanId;
-    object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
+    object_ = static_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( urbanId ) );
     file >> const_cast< MIL_Army_ABC*& >( army_ )
          >> rProgressPercent_
          >> rMaxProgressPercent_
@@ -100,7 +100,7 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned in
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned long urbanId = object_->GetId();
+    unsigned long urbanId = object_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_Object >( *this )
          << nTimeLastUpdate_
          << urbanId
@@ -145,7 +145,7 @@ void DEC_Knowledge_Urban::ComputeProgress( const MIL_Agent_ABC& agent )
     if( complexity != 0.f )
         progress = 10 / complexity;// $$$$ @TODO MGD Add true physical configuration in ADN
     const UrbanObjectWrapper* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-    float maxRecce = ( urbanBlock && object_ == &urbanBlock->GetObject() ) ? 1.0f : 0.25f;
+    float maxRecce = ( urbanBlock && object_ == urbanBlock ) ? 1.0f : 0.25f;
     maxRecce = std::max( maxRecce, rProgressPercent_ );
     SetProgress( std::min( std::max( rProgressPercent_ + progress, rProgressPercent_ + 0.001f ), maxRecce ) );
 }
@@ -351,16 +351,16 @@ bool DEC_Knowledge_Urban::IsPerceivedBy( const MIL_Agent_ABC& pion ) const
 // Name: DEC_Knowledge_Urban::GetProgress
 // Created: MGD 2010-02-01
 // -----------------------------------------------------------------------------
-const geometry::Point2f DEC_Knowledge_Urban::GetBarycenter() const
+const MT_Vector2D DEC_Knowledge_Urban::GetBarycenter() const
 {
-    return object_->GetFootprint()->Barycenter();
+    return object_->GetLocalisation().ComputeBarycenter();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::GetTerrainObjectKnown
 // Created: MGD 2010-02-01
 // -----------------------------------------------------------------------------
-const urban::TerrainObject_ABC& DEC_Knowledge_Urban::GetTerrainObjectKnown() const
+const UrbanObjectWrapper& DEC_Knowledge_Urban::GetTerrainObjectKnown() const
 {
     return *object_;
 }
@@ -380,8 +380,7 @@ bool DEC_Knowledge_Urban::IsValid() const
 // -----------------------------------------------------------------------------
 const float DEC_Knowledge_Urban::GetPathfindCost( float weight ) const
 {
-    const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >();
-    if( pPhysical && pPhysical->GetArchitecture() )
-        return pPhysical->GetArchitecture()->GetPathfindCost( weight );
+    if( const urban::Architecture* architecture = object_->GetArchitecture() )
+        return architecture->GetPathfindCost( weight );
     return 0;
 }

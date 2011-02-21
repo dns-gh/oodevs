@@ -27,7 +27,6 @@
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_LinearInterpolation.h"
-#include <urban/TerrainObject_ABC.h>
 #include <urban/Architecture.h>
 #include <geometry/Types.h>
 
@@ -64,10 +63,7 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgeUrbanFunctions::GetCurrentBarycent
 {
     boost::shared_ptr< MT_Vector2D > pos;
     if( pKnowledge.get() && pKnowledge->IsValid() )
-    {
-        geometry::Point2f temp = pKnowledge->GetBarycenter();
-        pos.reset( new MT_Vector2D( temp.X(), temp.Y() ) );
-    }
+        pos.reset( new MT_Vector2D( pKnowledge->GetBarycenter() ) );
     return pos;
 }
 

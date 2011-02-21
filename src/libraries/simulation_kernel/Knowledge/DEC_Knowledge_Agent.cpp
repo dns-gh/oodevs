@@ -25,6 +25,7 @@
 #include "Entities/Effects/MIL_Effect_KillOfficers.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
@@ -33,8 +34,7 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_IDManager.h"
-#include <urban/PhysicalAttribute.h>
-#include <urban/TerrainObject_ABC.h>
+#include <urban/Architecture.h>
 #include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
@@ -649,11 +649,10 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
 // -----------------------------------------------------------------------------
 double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const
 {
-    const urban::PhysicalAttribute* pPhysical = urbanKnowledge->GetTerrainObjectKnown().Retrieve< urban::PhysicalAttribute >();
-    if( pPhysical && pPhysical->GetArchitecture() )
+    if( const urban::Architecture* architecture = urbanKnowledge->GetTerrainObjectKnown().GetArchitecture() )
     {
         const PHY_RolePion_Composantes& role = GetAgentKnown().GetRole< PHY_RolePion_Composantes >();
-        unsigned materialID = PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() )->GetId();
+        unsigned materialID = PHY_MaterialCompositionType::Find( architecture->GetMaterial() )->GetId();
 
         if( GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
             return role.GetAttritionIndexComposante( materialID );

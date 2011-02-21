@@ -38,11 +38,7 @@ class MIL_Object_ABC;
 class MIL_PopulationConcentration;
 class MIL_Population;
 class TER_Localisation;
-
-namespace urban
-{
-    class TerrainObject_ABC;
-}
+class UrbanObjectWrapper;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_AgentPion
@@ -127,7 +123,7 @@ public:
     void GetPopulationsAttacking( T_KnowledgePopulationDiaIDVector& container ) const;
 
     //Urban
-    bool IsIdentified( const urban::TerrainObject_ABC& object ) const;
+    bool IsIdentified( const UrbanObjectWrapper& object ) const;
     //@}
 
 private:

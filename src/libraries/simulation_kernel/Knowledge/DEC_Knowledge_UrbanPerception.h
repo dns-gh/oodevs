@@ -14,15 +14,10 @@
 #include "DEC_Knowledge_ABC.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
-#include <urban/model.h>
-#include <urban/TerrainObject_ABC.h>
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
+class UrbanObjectWrapper;
+class PHY_PerceptionLevel;
 
 // =============================================================================
 /** @class  DEC_Knowledge_UrbanPerception
@@ -35,7 +30,7 @@ class DEC_Knowledge_UrbanPerception : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& object );
+             DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const UrbanObjectWrapper& object );
     virtual ~DEC_Knowledge_UrbanPerception();
     //@}
 
@@ -58,7 +53,7 @@ public:
     //! @name Accessor
     unsigned GetId() const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
-    const urban::TerrainObject_ABC& GetUrbanPerceived() const;
+    const UrbanObjectWrapper& GetUrbanPerceived() const;
     const MIL_Agent_ABC& GetPerceiver() const;
     bool IsPerceived() const;
     //@}
@@ -80,7 +75,7 @@ private:
     //@{
     const unsigned nID_;
     const MIL_Agent_ABC& perceiver_;
-    const urban::TerrainObject_ABC& object_;
+    const UrbanObjectWrapper& object_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
     static MIL_IDManager idManager_;
@@ -88,35 +83,5 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_UrbanPerception )
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_UrbanPerception::save_construct_data
-// Created: MGD 2009-12-07
-// -----------------------------------------------------------------------------
-template< typename Archive >
-inline void save_construct_data( Archive& archive, const DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
-{
-    const MIL_Agent_ABC* const perceiver = &perception->perceiver_;
-    unsigned long id = perception->object_.GetId();
-    archive << perceiver
-            << id;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_UrbanPerception::load_construct_data
-// Created: MGD 2009-12-07
-// -----------------------------------------------------------------------------
-template< typename Archive >
-inline void load_construct_data( Archive& archive, DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
-{
-    MIL_Agent_ABC* perceiver;
-    unsigned long id;
-    archive >> perceiver
-            >> id;
-    const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( id );
-    if( object )
-        ::new( perception )DEC_Knowledge_UrbanPerception( *perceiver, *object );
-}
-
 
 #endif // __DEC_Knowledge_UrbanPerception_h_

@@ -12,11 +12,6 @@
 
 #include "simulation_kernel/UrbanLocationComputer_ABC.h"
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 namespace urbanLocation
 {
 // =============================================================================

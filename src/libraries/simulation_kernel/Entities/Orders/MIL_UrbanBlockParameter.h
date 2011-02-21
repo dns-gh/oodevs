@@ -20,11 +20,6 @@ namespace sword
     class UrbanObjectKnowledgeId;
 }
 
-namespace urban
-{
-    class Block;
-}
-
 // =============================================================================
 /** @class  MIL_UrbanBlockParameter
     @brief  MIL_UrbanBlockParameter

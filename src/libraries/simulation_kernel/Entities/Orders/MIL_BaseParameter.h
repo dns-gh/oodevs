@@ -12,11 +12,6 @@
 
 #include "MIL_MissionParameter_ABC.h"
 
-namespace urban
-{
-    class Block;
-}
-
 // =============================================================================
 /** @class  MIL_BaseParameter
     @brief  MIL_BaseParameter

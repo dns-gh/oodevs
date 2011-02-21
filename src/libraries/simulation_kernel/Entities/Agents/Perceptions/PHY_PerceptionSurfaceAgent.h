@@ -22,11 +22,6 @@ class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class DEC_Knowledge_Agent;
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 //*****************************************************************************
 // Created: DFT 02-02-26
 // Last modified: JVT 03-09-01

@@ -17,13 +17,7 @@
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_ProfilerMgr.h"
 
-namespace urban
-{
-    class Block;
-}
-
 class DEC_Decision_ABC;
-
 class DEC_FrontAndBackLinesComputer;
 class DEC_Gen_Object;
 class DEC_Knowledge_Agent;
@@ -89,8 +83,6 @@ namespace directia
     void ReleasedByDIA( TER_Localisation* );
     void UsedByDIA( PHY_Action_ABC* );
     void ReleasedByDIA( PHY_Action_ABC* );
-    void UsedByDIA( urban::Block* );
-    void ReleasedByDIA( urban::Block* );
 }
 
 #endif // __DEC_Tools_h_

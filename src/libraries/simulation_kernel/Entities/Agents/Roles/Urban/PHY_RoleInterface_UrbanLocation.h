@@ -18,10 +18,6 @@ namespace posture
 {
     class PostureComputer_ABC;
 }
-namespace urban
-{
-    class TerrainObject_ABC;
-}
 
 class UrbanObjectWrapper;
 class PHY_DotationCategory;

@@ -33,11 +33,6 @@ namespace posture
     class PostureComputer_ABC;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 namespace moving
 {
 

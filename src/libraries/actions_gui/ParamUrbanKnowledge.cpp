@@ -10,24 +10,24 @@
 #include "actions_gui_pch.h"
 #include "ParamUrbanKnowledge.h"
 #include "actions/UrbanBlock.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/UrbanKnowledge_ABC.h"
 #include "clients_kernel/UrbanKnowledgeConverter_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_gui/TerrainObjectProxy.h"
-#include <urban/TerrainObject_ABC.h>
 
 using namespace actions::gui;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ParamUrbanKnowledge constructor
 // Created: MGD 2010-11-16
 // -----------------------------------------------------------------------------
-ParamUrbanKnowledge::ParamUrbanKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::Controller& controller )
-: EntityParameter< kernel::UrbanKnowledge_ABC >( parent, parameter, controller )
-, parameter_( parameter )
-, converter_( converter )
-, agent_( agent )
+ParamUrbanKnowledge::ParamUrbanKnowledge( QObject* parent, const OrderParameter& parameter, UrbanKnowledgeConverter_ABC& converter, const Entity_ABC& agent, Controller& controller )
+    : EntityParameter< UrbanKnowledge_ABC >( parent, parameter, controller )
+    , parameter_( parameter )
+    , converter_( converter )
+    , agent_    ( agent )
 {
     // NOTHING
 }
@@ -36,11 +36,11 @@ ParamUrbanKnowledge::ParamUrbanKnowledge( QObject* parent, const kernel::OrderPa
 // Name: ParamUrbanKnowledge constructor
 // Created: MGD 2010-11-16
 // -----------------------------------------------------------------------------
-ParamUrbanKnowledge::ParamUrbanKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const kernel::UrbanKnowledge_ABC& potential, kernel::Controller& controller )
-: EntityParameter< kernel::UrbanKnowledge_ABC >( parent, parameter, potential, controller )
-, parameter_( parameter )
-, converter_( converter )
-, agent_( agent )
+ParamUrbanKnowledge::ParamUrbanKnowledge( QObject* parent, const OrderParameter& parameter, UrbanKnowledgeConverter_ABC& converter, const Entity_ABC& agent, const UrbanKnowledge_ABC& potential, Controller& controller )
+    : EntityParameter< UrbanKnowledge_ABC >( parent, parameter, potential, controller )
+    , parameter_( parameter )
+    , converter_( converter )
+    , agent_    ( agent )
 {
     // NOTHING
 }
@@ -58,12 +58,12 @@ ParamUrbanKnowledge::~ParamUrbanKnowledge()
 // Name: ParamUrbanKnowledge::NotifyContextMenu
 // Created: MGD 2010-11-16
 // -----------------------------------------------------------------------------
-void ParamUrbanKnowledge::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+void ParamUrbanKnowledge::NotifyContextMenu( const Object_ABC& entity, ContextMenu& menu )
 {
-    const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( agent_.Get< kernel::CommunicationHierarchies >().GetTop() );
-    const kernel::UrbanKnowledge_ABC* knowledge = converter_.Find( entity, team );
+    const Team_ABC& team = static_cast< const Team_ABC& >( agent_.Get< CommunicationHierarchies >().GetTop() );
+    const UrbanKnowledge_ABC* knowledge = converter_.Find( entity, team );
     if( knowledge )
-        EntityParameter< kernel::UrbanKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
+        EntityParameter< UrbanKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,8 +72,8 @@ void ParamUrbanKnowledge::NotifyContextMenu( const kernel::Object_ABC& entity, k
 // -----------------------------------------------------------------------------
 void ParamUrbanKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
-    std::auto_ptr< actions::parameters::Entity< kernel::UrbanKnowledge_ABC > > param( new actions::parameters::UrbanBlock( parameter_, controller_ ) );
-    EntityParameter< kernel::UrbanKnowledge_ABC >::CommitTo( *param );
+    std::auto_ptr< actions::parameters::Entity< UrbanKnowledge_ABC > > param( new actions::parameters::UrbanBlock( parameter_, controller_ ) );
+    EntityParameter< UrbanKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
 

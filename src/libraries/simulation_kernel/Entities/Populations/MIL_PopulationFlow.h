@@ -17,10 +17,6 @@
 #include "Tools/MIL_IDManager.h"
 #include <boost/shared_ptr.hpp>
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
 class MIL_PopulationConcentration;
 class MIL_PopulationAttitude;
 class DEC_Population_Path;

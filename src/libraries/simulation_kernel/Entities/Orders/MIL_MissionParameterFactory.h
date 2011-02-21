@@ -37,11 +37,6 @@ class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
 class TER_Localisation;
 
-namespace urban
-{
-    class Block;
-}
-
 // =============================================================================
 /** @class  MIL_MissionParameterFactory
     @brief  MIL_MissionParameterFactory

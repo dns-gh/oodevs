@@ -13,7 +13,6 @@
 #include "knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "knowledge/DEC_Knowledge_Urban.h"
 #include "protocol/Protocol.h"
-#include "urban/TerrainObject_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter constructor

@@ -19,7 +19,6 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include <urban/TerrainObject_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_UrbanKnowledgeSynthetizer )
 
@@ -69,7 +68,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::Prepare()
 // Created: MGD 2009-12-05
 // -----------------------------------------------------------------------------
 inline
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KS_UrbanKnowledgeSynthetizer::GetKnowledgeToUpdate( const urban::TerrainObject_ABC& objectKnown ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KS_UrbanKnowledgeSynthetizer::GetKnowledgeToUpdate( const UrbanObjectWrapper& objectKnown ) const
 {
     assert( pBlackBoard_ );
     boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = pBlackBoard_->GetKnowledgeUrbanContainer().GetKnowledgeUrban( objectKnown );

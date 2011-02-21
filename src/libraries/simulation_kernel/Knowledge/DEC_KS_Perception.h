@@ -19,17 +19,12 @@ class DEC_KnowledgeBlackBoard_AgentPion;
 class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_ObjectPerception;
 class DEC_Knowledge_PopulationPerception;
-class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class PHY_PerceptionLevel;
-
-namespace urban
-{
-    class TerrainObject_ABC;
-}
+class UrbanObjectWrapper;
 
 // =============================================================================
 /** @class  DEC_KS_Perception
@@ -62,22 +57,22 @@ public:
     //! @name Events
     //@{
     // Called by ::Talk()
-    void NotifyPerception( MIL_Agent_ABC&               agentPerceived        , const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
-    void NotifyPerception( MIL_Object_ABC&          objectPerceived       , const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
+    void NotifyPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
+    void NotifyPerception( MIL_Object_ABC& objectPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
     void NotifyPerception( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
-    void NotifyPerception( MIL_PopulationFlow&          flowPerceived         , const PHY_PerceptionLevel& level, const T_PointVector& shape, bool bRecordModeEnabled );
-    void NotifyPerception( const urban::TerrainObject_ABC& object, const PHY_PerceptionLevel& level );
+    void NotifyPerception( MIL_PopulationFlow& flowPerceived, const PHY_PerceptionLevel& level, const T_PointVector& shape, bool bRecordModeEnabled );
+    void NotifyPerception( const UrbanObjectWrapper& object, const PHY_PerceptionLevel& level );
     // Not called by ::Talk()
     void NotifyExternalPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level );
     //@}
 
     //! @name Operations
     //@{
-    virtual void Prepare                      ();
-    virtual void Talk                         ( int currentTimeStep );
-    virtual void Clean                        ();
-            void MakePerceptionsAvailable     ();
-            void MakePerceptionsAvailableTimed();
+    virtual void Prepare();
+    virtual void Talk( int currentTimeStep );
+    virtual void Clean();
+    void MakePerceptionsAvailable();
+    void MakePerceptionsAvailableTimed();
     //@}
 
 private:
@@ -92,14 +87,14 @@ public:
     //! @name
     //@{
     typedef std::map< MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_AgentPerceptionMap;
-    typedef T_AgentPerceptionMap::const_iterator                   CIT_AgentPerceptionMap;
+    typedef T_AgentPerceptionMap::const_iterator                 CIT_AgentPerceptionMap;
     //@}
 
 private:
     DEC_KnowledgeBlackBoard_AgentPion* pBlackBoard_;
-    T_AgentPerceptionMap               externalPerceptions_;
-    bool                               bMakePerceptionsAvailable_;
-    bool                               bMakePerceptionsAvailableTimed_;
+    T_AgentPerceptionMap externalPerceptions_;
+    bool bMakePerceptionsAvailable_;
+    bool bMakePerceptionsAvailableTimed_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_KS_Perception )

@@ -13,6 +13,7 @@
 #include "DEC_GeometryFunctions.h"
 #include "DEC_FrontAndBackLinesComputer.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
@@ -34,7 +35,7 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Random.h"
-#include <urban/PhysicalAttribute.h>
+#include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 
@@ -937,15 +938,9 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUr
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( pKnowledge->IsValid() )
     {
-        const MIL_Object_ABC* object = pKnowledge->GetObjectKnown();
-        if( object )
-        {
-            boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( object->GetLocalisation().ComputeBarycenter() ) );
-            result.push_back( position );
-            // $$$$ _RC_ JSR 2011-01-28: TODO temp : cleaner ComputeLocalisationsInsideBlock
-            if( const UrbanObjectWrapper* wrapper = dynamic_cast< const UrbanObjectWrapper* >( object ) )
-                DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( wrapper->GetObject(), false, result );
-        }
+        boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( pKnowledge->GetTerrainObjectKnown().GetLocalisation().ComputeBarycenter() ) );
+        result.push_back( position );
+        DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( pKnowledge->GetTerrainObjectKnown(), false, result );
     }
     return result;
 }
@@ -954,22 +949,16 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUr
 // Name: DEC_GeometryFunctions::ComputeLocalisationsInsideBlock
 // Created: LMT 2010-10-13
 // -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( const urban::TerrainObject_ABC& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result )
+void DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( const UrbanObjectWrapper& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result )
 {
-    const geometry::Polygon2f* pVertices = terrainObject.GetFootprint();
-    if( pVertices )
+    const T_PointVector& points = terrainObject.GetLocalisation().GetPoints();
+    const MT_Vector2D barycenter = terrainObject.GetLocalisation().ComputeBarycenter();
+    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
     {
-        const geometry::Polygon2f::T_Vertices& points = pVertices->Vertices();
-        const geometry::Point2f barycenter = pVertices->Barycenter();
-        for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
-        {
-            const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
-            geometry::Vector2f vector( barycenter, *it );
-            geometry::Point2f point = *it + vector.Normalize() * distance;
-            boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( point.X(), point.Y() ) );
-            if( !onlyInsideBlock || terrainObject.IsInside( point ) )
-                result.push_back( position );
-        }
+        const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
+        MT_Vector2D point = *it + MT_Vector2D( *it - barycenter ).Normalize() * distance;
+        if( !onlyInsideBlock || terrainObject.IsInside( point ) )
+            result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point ) ) );
     }
 }
 
@@ -985,29 +974,27 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
     boost::shared_ptr< MT_Vector2D > pBarycenter( new MT_Vector2D( MT_ComputeBarycenter( pLocalisation->GetPoints() ) ) );
     if( pBarycenter.get() )
     {
-        const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( *pBarycenter ) );
-        if( terrainObject )
+        const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( *pBarycenter ) );
+        if( object )
         {
-            const urban::PhysicalAttribute* pPhysical = terrainObject->Retrieve< urban::PhysicalAttribute >();
+            const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
+            const urban::Architecture* architecture = terrainObject.GetArchitecture();
             const double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
-            if( pPhysical && pPhysical->GetArchitecture() && pPhysical->GetArchitecture()->GetTrafficability() <= myWeight )
-                if( const geometry::Polygon2f* pVertices = terrainObject->GetFootprint() )
+            if( architecture && architecture->GetTrafficability() <= myWeight )
+            {
+                const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
+                const T_PointVector& points = terrainObject.GetLocalisation().GetPoints();
+                const MT_Vector2D barycenter = terrainObject.GetLocalisation().ComputeBarycenter();
+                for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
                 {
-                    const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
-                    const geometry::Polygon2f::T_Vertices& points = pVertices->Vertices();
-                    const geometry::Point2f barycenter = pVertices->Barycenter();
-                    for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
+                    const MT_Vector2D point( *it + MT_Vector2D( *it - barycenter ).Normalize() * distance );
+                    if( DEC_GeometryFunctions::IsUrbanBlockTrafficable( point, myWeight ) && pLocalisation->IsInside( point ) )
                     {
-                        const geometry::Point2f point( *it + geometry::Vector2f( barycenter, *it ).Normalize() * distance );
-                        MT_Vector2D position( point.X(), point.Y() );
-                        if(   DEC_GeometryFunctions::IsUrbanBlockTrafficable( position, myWeight )
-                           && pLocalisation->IsInside( position ) )
-                        {
-                            *pBarycenter = position;
-                            return pBarycenter;
-                        }
+                        *pBarycenter = point;
+                        return pBarycenter;
                     }
                 }
+            }
         }
     }
     return pBarycenter;
@@ -1022,7 +1009,10 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
-        DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( *terrainObject, false, result );
+    {
+        const UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *terrainObject );
+        DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( wrapper, false, result );
+    }
     else
         result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point ) ));
     return result;
@@ -1034,11 +1024,11 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight )
 {
-    if( const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
+    if( const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
     {
-        const urban::PhysicalAttribute* pPhysical = terrainObject->Retrieve< urban::PhysicalAttribute >();
-        if( pPhysical && pPhysical->GetArchitecture() )
-            return pPhysical->GetArchitecture()->GetTrafficability() > weight;
+        const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
+        if( const urban::Architecture* architecture = terrainObject.GetArchitecture() )
+            return architecture->GetTrafficability() > weight;
     }
     return true;
 }
@@ -1049,11 +1039,11 @@ bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, d
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point, bool loadedWeight )
 {
-    if( const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
+    if( const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
     {
-        const urban::PhysicalAttribute* pPhysical = terrainObject->Retrieve< urban::PhysicalAttribute >();
-        if( pPhysical && pPhysical->GetArchitecture() )
-           return pPhysical->GetArchitecture()->GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( loadedWeight );
+        const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
+        if( const urban::Architecture* architecture = terrainObject.GetArchitecture() )
+            return architecture->GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( loadedWeight );
     }
     return true;
 }

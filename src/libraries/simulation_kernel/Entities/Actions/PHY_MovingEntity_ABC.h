@@ -19,11 +19,6 @@ namespace sword
     class UnitEnvironmentType;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 class MIL_Object_ABC;
 class MIL_Object_ABC;
 class DEC_PathResult;

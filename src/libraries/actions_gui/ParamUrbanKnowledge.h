@@ -13,7 +13,6 @@
 #include "EntityParameter.h"
 #include "clients_kernel/UrbanKnowledge_ABC.h"
 
-
 namespace kernel
 {
     class Entity_ABC;
@@ -33,13 +32,13 @@ namespace gui
 // Created: MGD 2010-11-16
 // =============================================================================
 class ParamUrbanKnowledge : public EntityParameter< kernel::UrbanKnowledge_ABC >
-    , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+                          , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamUrbanKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::Controller& controller );
-    ParamUrbanKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const kernel::UrbanKnowledge_ABC& potential, kernel::Controller& controller );
+             ParamUrbanKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::Controller& controller );
+             ParamUrbanKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const kernel::UrbanKnowledge_ABC& potential, kernel::Controller& controller );
     virtual ~ParamUrbanKnowledge();
     //@}
 

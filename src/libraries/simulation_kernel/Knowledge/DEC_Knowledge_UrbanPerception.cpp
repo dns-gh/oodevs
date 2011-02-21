@@ -12,10 +12,40 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_UrbanPerception )
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_UrbanPerception::save_construct_data
+// Created: MGD 2009-12-07
+// -----------------------------------------------------------------------------
+template< typename Archive >
+inline void save_construct_data( Archive& archive, const DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
+{
+    const MIL_Agent_ABC* const perceiver = &perception->perceiver_;
+    unsigned long id = perception->object_.GetID();
+    archive << perceiver
+            << id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_UrbanPerception::load_construct_data
+// Created: MGD 2009-12-07
+// -----------------------------------------------------------------------------
+template< typename Archive >
+inline void load_construct_data( Archive& archive, DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
+{
+    MIL_Agent_ABC* perceiver;
+    unsigned long id;
+    archive >> perceiver
+            >> id;
+    const UrbanObjectWrapper* object = dynamic_cast< const UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( id ) );
+    if( object )
+        ::new( perception )DEC_Knowledge_UrbanPerception( *perceiver, *object );
+}
 
 MIL_IDManager DEC_Knowledge_UrbanPerception::idManager_;
 
@@ -23,7 +53,7 @@ MIL_IDManager DEC_Knowledge_UrbanPerception::idManager_;
 // Name: DEC_Knowledge_UrbanPerception constructor
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& object )
+DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const UrbanObjectWrapper& object )
     : perceiver_               ( agentPerceiving )
     , object_                  ( object )
     , nID_                     ( idManager_.GetFreeId() )
@@ -118,7 +148,7 @@ void DEC_Knowledge_UrbanPerception::SendStateToNewClient()
 {
     client::UrbanDetection message;
     message().mutable_observer()->set_id( perceiver_.GetID() );
-    message().mutable_object()->set_id( MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( object_ ).GetID() );
+    message().mutable_object()->set_id( object_.GetID() );
     message().set_visibility( sword::UnitVisibility::Level( pCurrentPerceptionLevel_->GetID() ) );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -154,7 +184,7 @@ const PHY_PerceptionLevel& DEC_Knowledge_UrbanPerception::GetCurrentPerceptionLe
 // Name: DEC_Knowledge_UrbanPerception::GetUrbanPerceived
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-const urban::TerrainObject_ABC& DEC_Knowledge_UrbanPerception::GetUrbanPerceived() const
+const UrbanObjectWrapper& DEC_Knowledge_UrbanPerception::GetUrbanPerceived() const
 {
     return object_;
 }

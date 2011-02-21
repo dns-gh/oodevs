@@ -15,11 +15,7 @@
 
 class DEC_Knowledge_UrbanPerception;
 class MIL_Agent_ABC;
-
-namespace urban
-{
-    class TerrainObject_ABC;
-}
+class UrbanObjectWrapper;
 
 // =============================================================================
 // @class  DEC_BlackBoard_CanContainKnowledgeUrban
@@ -27,13 +23,12 @@ namespace urban
 // =============================================================================
 class DEC_BlackBoard_CanContainKnowledgeUrbanPerception : private boost::noncopyable
 {
-
 private:
     //! @name Types
     //@{
     typedef std::map< unsigned, boost::shared_ptr< DEC_Knowledge_UrbanPerception > > T_KnowledgeUrbanPerceptionMap;
-    typedef T_KnowledgeUrbanPerceptionMap::iterator             IT_KnowledgeUrbanPerceptionMap;
-    typedef T_KnowledgeUrbanPerceptionMap::const_iterator       CIT_KnowledgeUrbanPerceptionMap;
+    typedef T_KnowledgeUrbanPerceptionMap::iterator                                 IT_KnowledgeUrbanPerceptionMap;
+    typedef T_KnowledgeUrbanPerceptionMap::const_iterator                          CIT_KnowledgeUrbanPerceptionMap;
     //@}
 
 public:
@@ -53,13 +48,13 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< DEC_Knowledge_UrbanPerception > CreateKnowledgeUrbanPerception ( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& objectPerceived );
-    void                           DestroyKnowledgeUrbanPerception( DEC_Knowledge_UrbanPerception& knowledge );
+    boost::shared_ptr< DEC_Knowledge_UrbanPerception > CreateKnowledgeUrbanPerception ( const MIL_Agent_ABC& agentPerceiving, const UrbanObjectWrapper& objectPerceived );
+    void DestroyKnowledgeUrbanPerception( DEC_Knowledge_UrbanPerception& knowledge );
     //@}
 
     //! @name Queries
     //@{
-    boost::shared_ptr< DEC_Knowledge_UrbanPerception > GetKnowledgeUrbanPerception( const urban::TerrainObject_ABC& associatedUrban ) const;
+    boost::shared_ptr< DEC_Knowledge_UrbanPerception > GetKnowledgeUrbanPerception( const UrbanObjectWrapper& associatedUrban ) const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesUrbanPerception( UnaryFunction& fct ) const
@@ -76,7 +71,7 @@ public:
 private:
     //! @name Member data
     //@{
-    T_KnowledgeUrbanPerceptionMap   knowledgeUrbanPerceptionMap_;
+    T_KnowledgeUrbanPerceptionMap knowledgeUrbanPerceptionMap_;
     //@}
 };
 

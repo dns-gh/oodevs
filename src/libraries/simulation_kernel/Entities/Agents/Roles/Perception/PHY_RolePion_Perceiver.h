@@ -54,19 +54,19 @@ class PHY_RolePion_Perceiver : public PHY_RoleInterface_Perceiver
 public:
     //! @name Types
     //@{
-    typedef std::pair< const PHY_SensorTypeAgent* , double /*height*/ >    T_SurfaceAgentKeyPair;
-    typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent >    T_SurfaceAgentMap;
-    typedef T_SurfaceAgentMap::const_iterator                              CIT_SurfaceAgentMap;
+    typedef std::pair< const PHY_SensorTypeAgent* , double /*height*/ >   T_SurfaceAgentKeyPair;
+    typedef std::map< T_SurfaceAgentKeyPair, PHY_PerceptionSurfaceAgent > T_SurfaceAgentMap;
+    typedef T_SurfaceAgentMap::const_iterator                           CIT_SurfaceAgentMap;
 
-    typedef std::pair< const PHY_SensorTypeObject* , double /*height*/ >     T_SurfaceObjectKeyPair;
-    typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject >    T_SurfaceObjectMap;
-    typedef T_SurfaceObjectMap::const_iterator                               CIT_SurfaceObjectMap;
+    typedef std::pair< const PHY_SensorTypeObject* , double /*height*/ >    T_SurfaceObjectKeyPair;
+    typedef std::map< T_SurfaceObjectKeyPair, PHY_PerceptionSurfaceObject > T_SurfaceObjectMap;
+    typedef T_SurfaceObjectMap::const_iterator                            CIT_SurfaceObjectMap;
 
-    typedef std::set< const PHY_RadarType* >   T_RadarSet;
-    typedef T_RadarSet::const_iterator       CIT_RadarSet;
+    typedef std::set< const PHY_RadarType* > T_RadarSet;
+    typedef T_RadarSet::const_iterator     CIT_RadarSet;
 
-    typedef std::map< const PHY_RadarClass*, T_RadarSet >   T_RadarsPerClassMap;
-    typedef T_RadarsPerClassMap::const_iterator           CIT_RadarsPerClassMap;
+    typedef std::map< const PHY_RadarClass*, T_RadarSet > T_RadarsPerClassMap;
+    typedef T_RadarsPerClassMap::const_iterator         CIT_RadarsPerClassMap;
     //@}
 
 public:
@@ -84,13 +84,13 @@ public:
 
     //@{
     virtual void NotifyExternalPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level );
-    void NotifyPerception( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level, bool bPerceptionRecorded );
-    void NotifyPerception( MIL_Agent_ABC&               agent        , const PHY_PerceptionLevel& level );
-    void NotifyPerception( MIL_Object_ABC&              object       , const PHY_PerceptionLevel& level );
+    void NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded );
+    void NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level );
+    void NotifyPerception( MIL_Object_ABC& object, const PHY_PerceptionLevel& level );
     void NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
-    void NotifyPerception( MIL_PopulationFlow&          flow         , const PHY_PerceptionLevel& level, const T_PointVector& shape );
+    void NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape );
     void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;
-    void NotifyPerception( const urban::TerrainObject_ABC& block, const PHY_PerceptionLevel& level ) const;
+    void NotifyPerception( const UrbanObjectWrapper& block, const PHY_PerceptionLevel& level ) const;
     //@}
 
     //! @name Operations
@@ -101,7 +101,6 @@ public:
     const PHY_PerceptionLevel& ComputePerception ( const MT_Vector2D& vPoint             ) const;
     const PHY_PerceptionLevel& ComputePerception ( const DEC_Knowledge_Object& knowledge ) const;
     const PHY_PerceptionLevel& ComputePerception ( const DEC_Knowledge_Agent & knowledge ) const;
-    const PHY_PerceptionLevel& ComputePerception ( const urban::Block& block ) const;
 
     void SetVisionModeNormal   ();
     void SetVisionModeDirection( const MT_Vector2D& vDirection );
@@ -168,18 +167,18 @@ public:
 
     //! @name Tools
     //@{
-    const MIL_KnowledgeGroup& GetKnowledgeGroup            () const;
-          MIL_Agent_ABC&      GetPion                      () const;
-          double            GetMaxAgentPerceptionDistance() const;
-          void                GetMainPerceptionDirection   ( MT_Vector2D& vDirection ) const;
+    const MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    MIL_Agent_ABC& GetPion() const;
+    double GetMaxAgentPerceptionDistance() const;
+    void GetMainPerceptionDirection( MT_Vector2D& vDirection ) const;
 
     bool IsPeriphericalVisionEnabled() const;
-    bool IsKnown                    ( const MIL_Agent_ABC&               agent         ) const;
-    bool IsIdentified               ( const MIL_Agent_ABC&               agent         ) const;
-    bool IsKnown                    ( const MIL_Object_ABC&              object        ) const;
-    bool IsIdentified               ( const MIL_Object_ABC&              object        ) const;
-    bool IsIdentified               ( const MIL_PopulationConcentration& concentration ) const;
-    bool IsIdentified               ( const urban::TerrainObject_ABC&    object        ) const;
+    bool IsKnown( const MIL_Agent_ABC& agent ) const;
+    bool IsIdentified( const MIL_Agent_ABC& agent ) const;
+    bool IsKnown( const MIL_Object_ABC& object ) const;
+    bool IsIdentified( const MIL_Object_ABC& object ) const;
+    bool IsIdentified( const MIL_PopulationConcentration& concentration ) const;
+    bool IsIdentified( const UrbanObjectWrapper& object ) const;
     //@}
 
     //! @name Network

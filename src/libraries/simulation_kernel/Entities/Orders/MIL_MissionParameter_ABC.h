@@ -56,11 +56,6 @@ namespace sword
     class UrbanObjectId;
 }
 
-namespace urban
-{
-    class Block;
-}
-
 class DEC_Decision_ABC;
 class DEC_Gen_Object;
 class DEC_Knowledge_Agent;

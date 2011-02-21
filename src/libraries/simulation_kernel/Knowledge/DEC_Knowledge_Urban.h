@@ -21,11 +21,6 @@ class MIL_Agent_ABC;
 class MIL_Automate;
 class UrbanObjectWrapper;
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 namespace sword
 {
     class UrbanKnowledgeUpdate;
@@ -42,7 +37,7 @@ class DEC_Knowledge_Urban : public DEC_Knowledge_Object
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_Urban( const MIL_Army_ABC& army, UrbanObjectWrapper& wrapper );
+             DEC_Knowledge_Urban( const MIL_Army_ABC& army, const UrbanObjectWrapper& wrapper );
              DEC_Knowledge_Urban();
     virtual ~DEC_Knowledge_Urban();
     //@}
@@ -66,8 +61,8 @@ public:
     float GetCurrentRecceProgress() const;
     bool IsPerceivedBy( const MIL_Agent_ABC& pion ) const;
     const float GetPathfindCost( float weight ) const;
-    const geometry::Point2f GetBarycenter() const;
-    const urban::TerrainObject_ABC& GetTerrainObjectKnown() const;
+    const MT_Vector2D GetBarycenter() const;
+    const UrbanObjectWrapper& GetTerrainObjectKnown() const;
     //@}
 
     //! @name Relevance management
@@ -113,7 +108,8 @@ private:
     //! @name Member data
     //@{
     const MIL_Army_ABC* army_;
-    const urban::TerrainObject_ABC* object_;
+    // $$$$ _RC_ JSR 2011-02-18: à passer en référence
+    const UrbanObjectWrapper* object_;
     // Internal attribute
     float rProgressPercent_;
     float rMaxProgressPercent_;

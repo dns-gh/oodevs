@@ -24,7 +24,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD_EXT( NotifyPerception, 2, void( MIL_PopulationConcentration&, const PHY_PerceptionLevel& ), NotifyPopulationConcentrationPerception );
     MOCK_METHOD_EXT( NotifyPerception, 3, void( MIL_PopulationFlow&, const PHY_PerceptionLevel&, const T_PointVector& ), NotifyPopulationFlowPerception );
     MOCK_METHOD_EXT( NotifyPerception, 1, void( const MIL_Effect_IndirectFire& ), NotifyIndirectFirePerception );
-    MOCK_METHOD_EXT( NotifyPerception, 2, void( const urban::TerrainObject_ABC&, const PHY_PerceptionLevel& ), NotifyUrbanBlockPerception );
+    MOCK_METHOD_EXT( NotifyPerception, 2, void( const UrbanObjectWrapper&, const PHY_PerceptionLevel& ), NotifyUrbanBlockPerception );
 
     MOCK_METHOD( HasChanged, 0 );
     MOCK_METHOD( Update, 1 );
@@ -33,7 +33,6 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const MT_Vector2D& ), ComputePointPerception );
     MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const DEC_Knowledge_Object& ), ComputeObjectKnowledgePerception );
     MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const DEC_Knowledge_Agent& ), ComputeAgentKnowledgePerception );
-    MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const urban::Block& ), ComputeUrbanBlockPerception );
 
     MOCK_METHOD( SetVisionModeNormal, 0 );
     MOCK_METHOD( SetVisionModeDirection, 1 );
@@ -84,7 +83,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
     MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_Agent_ABC& ), IsAgentIdentified );
     MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_Object_ABC& ), IsObjectIdentified );
     MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_PopulationConcentration& ), IsPopulationConcentrationIdentified );
-    MOCK_METHOD_EXT( IsIdentified, 1, bool( const urban::TerrainObject_ABC& ), IsUrbanBlockIdentified );
+    MOCK_METHOD_EXT( IsIdentified, 1, bool( const UrbanObjectWrapper& ), IsUrbanBlockIdentified );
 
     MOCK_METHOD( SendDebugState, 0 );
     MOCK_METHOD( SendChangedState, 1 );

@@ -16,11 +16,7 @@ class DEC_KnowledgeBlackBoard_Army;
 class DEC_Knowledge_UrbanPerception;
 class DEC_Knowledge_Urban;
 class MIL_Army;
-
-namespace urban
-{
-    class TerrainObject_ABC;
-}
+class UrbanObjectWrapper;
 
 // =============================================================================
 /** @class  DEC_Knowledge_Urban
@@ -53,10 +49,10 @@ public:
 private:
     //! @name Update
     //@{
-    void                  UpdateKnowledgesFromUrbanPerception( const DEC_Knowledge_UrbanPerception& perception );
-    boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeToUpdate( const urban::TerrainObject_ABC& objectKnown ) const;
-    void                  UpdateKnowledgeRelevance            ( boost::shared_ptr< DEC_Knowledge_Urban >& knowledge );
-    void                  CleanKnowledgeUrban                ( boost::shared_ptr< DEC_Knowledge_Urban >& knowledge );
+    void UpdateKnowledgesFromUrbanPerception( const DEC_Knowledge_UrbanPerception& perception );
+    boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeToUpdate( const UrbanObjectWrapper& objectKnown ) const;
+    void UpdateKnowledgeRelevance( boost::shared_ptr< DEC_Knowledge_Urban >& knowledge );
+    void CleanKnowledgeUrban( boost::shared_ptr< DEC_Knowledge_Urban >& knowledge );
     //@}
 
     //! @name Operations
@@ -69,7 +65,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >  T_UrbanKnowledgeVector;
-    typedef T_UrbanKnowledgeVector::const_iterator  CIT_UrbanKnowledgeVector;
+    typedef T_UrbanKnowledgeVector::const_iterator                 CIT_UrbanKnowledgeVector;
     //@}
 
 private:

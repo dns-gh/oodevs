@@ -11,8 +11,8 @@
 #include "DEC_BlackBoard_CanContainKnowledgeUrbanPerception.h"
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_UrbanPerception.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include <urban/TerrainObject_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeUrbanPerception )
 
@@ -47,7 +47,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load( MIL_CheckPointInAr
     {
         DEC_Knowledge_UrbanPerception* knowledge;
         file >> knowledge;
-        knowledgeUrbanPerceptionMap_[ knowledge->GetUrbanPerceived().GetId() ].reset( knowledge );
+        knowledgeUrbanPerceptionMap_[ knowledge->GetUrbanPerceived().GetID() ].reset( knowledge );
     }
 }
 
@@ -70,10 +70,10 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save( MIL_CheckPointOutA
 // Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& objectPerceived )
+boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception( const MIL_Agent_ABC& agentPerceiving, const UrbanObjectWrapper& objectPerceived )
 {
     boost::shared_ptr< DEC_Knowledge_UrbanPerception > knowledge ( new DEC_Knowledge_UrbanPerception( agentPerceiving, objectPerceived ) );
-    if( ! knowledgeUrbanPerceptionMap_.insert( std::make_pair( objectPerceived.GetId(), knowledge ) ).second )
+    if( ! knowledgeUrbanPerceptionMap_.insert( std::make_pair( objectPerceived.GetID(), knowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return knowledge;
 }
@@ -84,7 +84,7 @@ boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnow
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::DestroyKnowledgeUrbanPerception( DEC_Knowledge_UrbanPerception& knowledge )
 {
-    if( knowledgeUrbanPerceptionMap_.erase( knowledge.GetUrbanPerceived().GetId() ) != 1 )
+    if( knowledgeUrbanPerceptionMap_.erase( knowledge.GetUrbanPerceived().GetID() ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     delete &knowledge;
 }
@@ -93,9 +93,9 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::DestroyKnowledgeUrbanPer
 // Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::GetKnowledgesUrbanPerception
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::GetKnowledgeUrbanPerception( const urban::TerrainObject_ABC& associatedUrban ) const
+boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::GetKnowledgeUrbanPerception( const UrbanObjectWrapper& associatedUrban ) const
 {
-    CIT_KnowledgeUrbanPerceptionMap itKnowledge = knowledgeUrbanPerceptionMap_.find( associatedUrban.GetId() );
+    CIT_KnowledgeUrbanPerceptionMap itKnowledge = knowledgeUrbanPerceptionMap_.find( associatedUrban.GetID() );
     if( itKnowledge != knowledgeUrbanPerceptionMap_.end() )
         return itKnowledge->second;
     else
