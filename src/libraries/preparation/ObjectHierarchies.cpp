@@ -3,32 +3,32 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "InhabitantHierarchies.h"
-#include "Inhabitants.h"
+#include "ObjectHierarchies.h"
+#include "Objects.h"
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantHierarchies constructor
-// Created: SLG 2010-11-24
+// Name: ObjectHierarchies constructor
+// Created: JSR 2011-02-22
 // -----------------------------------------------------------------------------
-InhabitantHierarchies::InhabitantHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
-    : kernel::SimpleHierarchies< kernel::TacticalHierarchies >( holder, superior )
+ObjectHierarchies::ObjectHierarchies( kernel::Entity_ABC& holder, const kernel::Entity_ABC* superior )
+    : kernel::ObjectHierarchies( holder, superior )
     , superior_( superior )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantHierarchies destructor
-// Created: SLG 2010-11-24
+// Name: ObjectHierarchies destructor
+// Created: JSR 2011-02-22
 // -----------------------------------------------------------------------------
-InhabitantHierarchies::~InhabitantHierarchies()
+ObjectHierarchies::~ObjectHierarchies()
 {
     if( superior_ )
-        if( Inhabitants* popus = superior_->Retrieve< Inhabitants >() )
-            popus->Remove( GetEntity().GetId() );
+        if( Objects* objects = const_cast< Objects* >( superior_->Retrieve< Objects >() ) )
+            objects->Remove( GetEntity().GetId() );
 }

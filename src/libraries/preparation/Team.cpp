@@ -9,10 +9,7 @@
 
 #include "preparation_pch.h"
 #include "Team.h"
-#include "KnowledgeGroup.h"
 #include "IdManager.h"
-#include "Object.h"
-#include "ObjectFactory_ABC.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -24,9 +21,8 @@ using namespace kernel;
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( Controller& controller, ObjectFactory_ABC& objectFactory, IdManager& idManager )
+Team::Team( Controller& controller, IdManager& idManager )
     : EntityImplementation< Team_ABC >( controller, idManager.GetNextId(), "" )
-    , objectFactory_( objectFactory )
 {
     name_ = tools::translate( "Preparation", "Army %1" ).arg( id_ );
     RegisterSelf( *this );
@@ -37,9 +33,7 @@ namespace
 {
     QString ReadName( xml::xistream& xis )
     {
-        std::string name;
-        xis >> xml::attribute( "name", name );
-        return name.c_str();
+        return xis.attribute< std::string >( "name"  ).c_str();
     }
 }
 
@@ -47,9 +41,8 @@ namespace
 // Name: Team constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Team::Team( xml::xistream& xis, kernel::Controller& controller, ObjectFactory_ABC& objectFactory, IdManager& idManager )
+Team::Team( xml::xistream& xis, Controller& controller, IdManager& idManager )
     : EntityImplementation< Team_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
-    , objectFactory_( objectFactory )
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );
@@ -62,36 +55,7 @@ Team::Team( xml::xistream& xis, kernel::Controller& controller, ObjectFactory_AB
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
-    tools::Resolver< Object_ABC >::DeleteAll();
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateObject
-// Created: SBO 2006-10-19
-// -----------------------------------------------------------------------------
-Object_ABC* Team::CreateObject( const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location )
-{
-    Object_ABC* object = objectFactory_.CreateObject( type, *this, name, location );
-    tools::Resolver< Object_ABC >::Register( object->GetId(), *object );
-    return object;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::CreateObject
-// Created: SBO 2006-10-19
-// -----------------------------------------------------------------------------
-void Team::CreateObject( xml::xistream& xis, std::string& loadingErrors )
-{
-    try
-    {
-        Object_ABC* object = objectFactory_.CreateObject( xis, *this );
-        tools::Resolver< Object_ABC >::Register( object->GetId(), *object );
-    }
-    catch( std::exception& e )
-    {
-        loadingErrors += std::string( e.what() ) + "\n";
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -112,25 +76,16 @@ void Team::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", id_ )
         << xml::attribute( "name", name_.ascii() );
-
-    xos << xml::start( "objects" );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        xos << xml::start( "object" );
-        it->second->Interface().Apply( & Serializable_ABC::SerializeAttributes, xos );
-        xos << xml::end;
-    }
-    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Team::CreateDictionary
 // Created: SBO 2006-10-27
 // -----------------------------------------------------------------------------
-void Team::CreateDictionary( kernel::Controller& controller )
+void Team::CreateDictionary( Controller& controller )
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), (const unsigned long)id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), name_, *this, &Team::Rename );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Team", "Info/Identifier" ), static_cast< const unsigned long >( id_ ) );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Team", "Info/Name" ), name_, *this, &Team::Rename );
 }

@@ -20,11 +20,11 @@
 // Name: ObjectCreationPanel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config )
+ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config )
     : InfoPanel_ABC( parent, panel, tr( "Objects" ), "ObjectCreationPanel" )
     , controllers_( controllers )
-    , tools_( tools )
-    , created_( new ObjectPrototype( this, controllers, model, teamsModel, layer, config ) )
+    , tools_      ( tools )
+    , created_    ( new ObjectPrototype( this, controllers, model, objectsModel, layer, config ) )
 {
     QButton* ok = new QPushButton( tr( "Create" ), this );
     connect( ok, SIGNAL( clicked() ), created_, SLOT( Commit() ) );
@@ -48,6 +48,7 @@ void ObjectCreationPanel::NotifyUpdated( const kernel::ModelLoaded& )
 {
     Show();
 }
+
 // -----------------------------------------------------------------------------
 // Name: ObjectCreationPanel::Draw
 // Created: SBO 2009-05-29

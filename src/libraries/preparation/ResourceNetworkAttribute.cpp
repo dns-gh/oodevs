@@ -15,7 +15,6 @@
 #include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include <boost/bind.hpp>
 #include <urban/ResourceNetworkAttribute.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -26,11 +25,11 @@ using namespace geometry;
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
 ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver )
-    : controllers_( controllers )
-    , id_( id )
-    , urbanResolver_( urbanResolver )
+    : controllers_            ( controllers )
+    , id_                     ( id )
+    , urbanResolver_          ( urbanResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
-    , needSaving_( false )
+    , needSaving_             ( false )
 {
     xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
 }
@@ -40,11 +39,11 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
 // Created: JSR 2010-09-20
 // -----------------------------------------------------------------------------
 ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute& network, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver )
-    : controllers_( controllers )
-    , id_( id )
-    , urbanResolver_( urbanResolver )
+    : controllers_            ( controllers )
+    , id_                     ( id )
+    , urbanResolver_          ( urbanResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
-    , needSaving_( false )
+    , needSaving_             ( false )
 {
     const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = network.GetResourceNodes();
     for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
@@ -59,8 +58,8 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
         for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator itLink = it->second.links_.begin(); itLink != it->second.links_.end(); ++itLink )
         {
             ResourceLink link;
-            link.id_ = ( *itLink ).id_;
-            link.capacity_ = ( *itLink ).capacity_;
+            link.id_ = itLink->id_;
+            link.capacity_ = itLink->capacity_;
             link.urban_ = true;
             node.links_.push_back( link );
         }
@@ -126,7 +125,6 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
     {
         SetColor( node->second.resource_ );
         if( node->second.links_.size() > 0 )
-        {
             for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
                 // TODO
@@ -147,7 +145,6 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawArrow( from, to );
             }
-        }
         else
             if( filter == 0 || IsSelected() )
                 tools.DrawCircle( from, 20.0 );
@@ -234,7 +231,7 @@ void ResourceNetworkAttribute::ReadNode( xml::xistream& xis )
         >> xml::optional >> xml::attribute( "initial-stock", node.stock_ )
         >> xml::optional >> xml::attribute( "consumption", node.consumption_ )
         >> xml::optional >> xml::attribute( "critical-consumption", node.critical_ )
-        >> xml::list( "link", *this, &ResourceNetworkAttribute::ReadLink, boost::ref( node ) );
+        >> xml::list( "link", *this, &ResourceNetworkAttribute::ReadLink, node );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,13 +247,11 @@ void ResourceNetworkAttribute::ReadLink( xml::xistream& xis, ResourceNode& node 
     if( xis.has_attribute( "kind" ) )
         link.urban_ = ( xis.attribute< std::string >( "kind" ) == "urban-object" );
     for( unsigned int i = 0; i < node.links_.size(); ++i )
-    {
         if( node.links_[ i ].id_ == link.id_ && node.links_[ i ].urban_ == link.urban_ )
         {
             node.links_[ i ].capacity_ = link.capacity_;
             return;
         }
-    }
     node.links_.push_back( link );
 }
 

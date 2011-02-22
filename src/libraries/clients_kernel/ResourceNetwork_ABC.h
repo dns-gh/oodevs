@@ -11,6 +11,7 @@
 #define __ResourceNetwork_ABC_h_
 
 #include "Extension_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -29,6 +30,7 @@ class Viewport_ABC;
 // Created: JSR 2010-08-19
 // =============================================================================
 class ResourceNetwork_ABC : public Extension_ABC
+                          , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -98,13 +100,6 @@ public:
             return 0;
         return &it->second;
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ResourceNetwork_ABC( const ResourceNetwork_ABC& );            //!< Copy constructor
-    ResourceNetwork_ABC& operator=( const ResourceNetwork_ABC& ); //!< Assignment operator
     //@}
 
 protected:

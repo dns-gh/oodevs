@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/InfoPanel_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -34,7 +35,7 @@ namespace gui
 }
 
 class StaticModel;
-class TeamsModel;
+class ObjectsModel;
 
 // =============================================================================
 /** @class  ObjectCreationPanel
@@ -45,13 +46,14 @@ class TeamsModel;
 class ObjectCreationPanel : public gui::InfoPanel_ABC
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                          , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config );
+             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config );
     virtual ~ObjectCreationPanel();
     //@}
 
@@ -61,12 +63,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectCreationPanel( const ObjectCreationPanel& );            //!< Copy constructor
-    ObjectCreationPanel& operator=( const ObjectCreationPanel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );

@@ -12,6 +12,7 @@
 
 #include "tools/Resolver.h"
 #include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -22,18 +23,13 @@ namespace xml
 namespace kernel
 {
     class Team_ABC;
-    class KnowledgeGroup_ABC;
     class Controllers;
     class Entity_ABC;
-    class ObjectType;
-    class Location_ABC;
-    class Object_ABC;
 }
 
-class TeamFactory_ABC;
 class Model;
 class ModelChecker_ABC;
-struct Enum_ObstacleType;
+class TeamFactory_ABC;
 
 // =============================================================================
 /** @class  TeamsModel
@@ -44,6 +40,7 @@ struct Enum_ObstacleType;
 class TeamsModel : public tools::Resolver< kernel::Team_ABC >
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< kernel::Team_ABC >
+                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -57,24 +54,14 @@ public:
     void Load( xml::xistream& xis, Model& model, std::string& loadingErrors );
     void Purge();
     void CreateTeam();
-    kernel::Object_ABC* CreateObject( const kernel::Team_ABC& team, const kernel::ObjectType& type, const QString& name, const kernel::Location_ABC& location );
-
     kernel::Team_ABC* FindTeam( const QString& name ) const;
-
     void Serialize( xml::xostream& xos ) const;
-
     tools::Iterator< const kernel::Entity_ABC& > CreateEntityIterator() const;
     bool CheckValidity( ModelChecker_ABC& checker ) const;
     bool& InfiniteDotations();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TeamsModel( const TeamsModel& );            //!< Copy constructor
-    TeamsModel& operator=( const TeamsModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::Team_ABC& team );

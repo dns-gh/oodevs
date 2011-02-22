@@ -61,12 +61,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ResourceNetwork( const ResourceNetwork& );            //!< Copy constructor
-    ResourceNetwork& operator=( const ResourceNetwork& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::ObjectUpdate& message );

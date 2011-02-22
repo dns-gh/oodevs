@@ -3,26 +3,23 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __ObjectHierarchies_h_
-#define __ObjectHierarchies_h_
+#ifndef __PrepaObjectHierarchies_h_
+#define __PrepaObjectHierarchies_h_
 
-#include "SimpleHierarchies.h"
-#include "TacticalHierarchies.h"
-
-namespace kernel
-{
+#include "clients_kernel/ObjectHierarchies.h"
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  ObjectHierarchies
     @brief  ObjectHierarchies
 */
-// Created: SBO 2006-10-19
+// Created: JSR 2011-02-22
 // =============================================================================
-class ObjectHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
+class ObjectHierarchies : public kernel::ObjectHierarchies
 {
 public:
     //! @name Constructors/Destructor
@@ -32,13 +29,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Member data
     //@{
-    ObjectHierarchies( const ObjectHierarchies& );            //!< Copy constructor
-    ObjectHierarchies& operator=( const ObjectHierarchies& ); //!< Assignment operator
+    const kernel::Entity_ABC* superior_;
     //@}
 };
 
-}
-
-#endif // __ObjectHierarchies_h_
+#endif // __PrepaObjectHierarchies_h_

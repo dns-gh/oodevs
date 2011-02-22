@@ -3,52 +3,48 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#ifndef __Inhabitants_h_
-#define __Inhabitants_h_
+#ifndef __Objects_h_
+#define __Objects_h_
 
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
-class Inhabitant;
+class Object;
 
 // =============================================================================
-/** @class  Inhabitants
-    @brief  Inhabitants
+/** @class  Objects
+    @brief  Objects
 */
-// Created: SLG 2010-11-23
+// Created: JSR 2011-02-22
 // =============================================================================
-class Inhabitants : public kernel::Extension_ABC
-                  , public kernel::Serializable_ABC
-                  , public tools::Resolver< Inhabitant >
+class Objects : public kernel::Extension_ABC
+              , public kernel::Serializable_ABC
+              , public tools::Resolver< const Object >
+              , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Inhabitants();
-    virtual ~Inhabitants();
+             Objects();
+    virtual ~Objects();
     //@}
 
     //! @name Operations
     //@{
-    void AddInhabitant( Inhabitant& inhabitant );
+    void AddObject( const Object& object );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Inhabitants( const Inhabitants& );            //!< Copy constructor
-    Inhabitants& operator=( const Inhabitants& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void SerializeAttributes( xml::xostream& ) const;
     //@}
 };
 
-#endif // __Inhabitants_h_
+#endif // __Objects_h_

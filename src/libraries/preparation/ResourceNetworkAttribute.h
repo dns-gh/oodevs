@@ -23,9 +23,7 @@ namespace gui
 namespace kernel
 {
     class Controllers;
-    class Displayer_ABC;
     class ResourceNetworkType;
-    class PropertiesDictionary;
 }
 
 namespace urban
@@ -67,12 +65,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ResourceNetworkAttribute( const ResourceNetworkAttribute& );            //!< Copy constructor
-    ResourceNetworkAttribute& operator=( const ResourceNetworkAttribute& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadNode( xml::xistream& xis );

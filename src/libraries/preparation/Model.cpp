@@ -22,6 +22,8 @@
 #include "KnowledgeGroupFactory.h" // LTO
 #include "LimitsModel.h"
 #include "WeatherModel.h"
+#include "ObjectFactory.h"
+#include "ObjectsModel.h"
 #include "ProfilesModel.h"
 #include "ProfileFactory.h"
 #include "ScoresModel.h"
@@ -62,30 +64,32 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Model::Model( Controllers& controllers, const StaticModel& staticModel )
     : controllers_( controllers )
-    , idManager_( *new IdManager() )
-    , teamFactory_( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
+    , idManager_            ( *new IdManager() )
+    , teamFactory_          ( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
     , knowledgeGroupFactory_( *new KnowledgeGroupFactory( controllers, staticModel, idManager_ ) ) // LTO
-    , formationFactory_( *new FormationFactory( controllers, staticModel, idManager_ ) )
-    , agentFactory_( *new AgentFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_ ) )
-    , profileFactory_( *new ProfileFactory( controllers.controller_, *this ) )
-    , scoreFactory_( *new ScoreFactory( controllers_.controller_, staticModel.indicators_, staticModel.gaugeTypes_ ) )
-    , successFactorFactory_( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
-    , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_, staticModel.coordinateConverter_ ) )
-    , resourceObserver_( *new ResourceNetworkSelectionObserver( controllers ) )
-    , loaded_ ( false )
-    , exercise_( *new Exercise( controllers.controller_ ) )
-    , teams_( *new TeamsModel( controllers, teamFactory_ ) )
-    , knowledgeGroups_( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
-    , agents_( *new AgentsModel( controllers, agentFactory_ ) ) // needs to be there : used in FormationModel
-    , formations_( *new FormationModel( controllers, formationFactory_, agents_, staticModel ) )
-    , limits_( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
-    , weather_( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
-    , profiles_( *new ProfilesModel( profileFactory_ ) )
-    , scores_( *new ScoresModel( scoreFactory_, teams_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
-    , successFactors_( *new SuccessFactorsModel( successFactorFactory_ ) )
-    , intelligences_( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
-    , urban_( *new UrbanModel( controllers, staticModel ) )
-    , drawings_( *new gui::DrawerModel( controllers, drawingFactory_ ) )
+    , formationFactory_     ( *new FormationFactory( controllers, staticModel, idManager_ ) )
+    , agentFactory_         ( *new AgentFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_ ) )
+    , objectFactory_        ( *new ObjectFactory( controllers, *this, staticModel, idManager_ ) )
+    , profileFactory_       ( *new ProfileFactory( controllers.controller_, *this ) )
+    , scoreFactory_         ( *new ScoreFactory( controllers_.controller_, staticModel.indicators_, staticModel.gaugeTypes_ ) )
+    , successFactorFactory_ ( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
+    , drawingFactory_       ( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_, staticModel.coordinateConverter_ ) )
+    , resourceObserver_     ( *new ResourceNetworkSelectionObserver( controllers ) )
+    , loaded_               ( false )
+    , exercise_             ( *new Exercise( controllers.controller_ ) )
+    , teams_                ( *new TeamsModel( controllers, teamFactory_ ) )
+    , objects_              ( *new ObjectsModel( controllers, objectFactory_ ) )
+    , knowledgeGroups_      ( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
+    , agents_               ( *new AgentsModel( controllers, agentFactory_ ) ) // needs to be there : used in FormationModel
+    , formations_           ( *new FormationModel( controllers, formationFactory_, agents_, staticModel ) )
+    , limits_               ( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
+    , weather_              ( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
+    , profiles_             ( *new ProfilesModel( profileFactory_ ) )
+    , scores_               ( *new ScoresModel( scoreFactory_, teams_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
+    , successFactors_       ( *new SuccessFactorsModel( successFactorFactory_ ) )
+    , intelligences_        ( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
+    , urban_                ( *new UrbanModel( controllers, staticModel ) )
+    , drawings_             ( *new gui::DrawerModel( controllers, drawingFactory_ ) )
 {
     // NOTHING
 }
@@ -106,6 +110,8 @@ Model::~Model()
     delete &resourceObserver_;
     delete &weather_;
     delete &limits_;
+    delete &objects_;
+    delete &objectFactory_;
     delete &agents_;
     delete &agentFactory_;
     delete &formations_;
@@ -135,6 +141,7 @@ void Model::Purge()
     formations_.Purge();
     knowledgeGroups_.Purge();
     teams_.Purge();
+    objects_.Purge();
     exercise_.Purge();
     idManager_.Reset();
     SetLoaded( false );

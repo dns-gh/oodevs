@@ -11,12 +11,11 @@
 #define __Model_h_
 
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/KnowledgeGroupFactory_ABC.h" // LTO
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controllers;
-    class ActionController;
     class KnowledgeGroupFactory_ABC; // LTO
     class ResourceNetworkSelectionObserver;
 }
@@ -24,11 +23,6 @@ namespace kernel
 namespace tools
 {
     class ExerciseConfig;
-}
-
-namespace xml
-{
-    class xostream;
 }
 
 namespace gui
@@ -53,6 +47,8 @@ class ProfilesModel;
 class ProfileFactory_ABC;
 class IntelligencesModel;
 class ModelChecker_ABC;
+class ObjectsModel;
+class ObjectFactory_ABC;
 class OrbatImportFilter;
 class ScoresModel;
 class ScoreFactory_ABC;
@@ -66,7 +62,7 @@ class UrbanModel;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class Model
+class Model : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -101,6 +97,7 @@ private:
     kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
     FormationFactory_ABC& formationFactory_;
     AgentFactory_ABC& agentFactory_;
+    ObjectFactory_ABC& objectFactory_;
     ProfileFactory_ABC& profileFactory_;
     ScoreFactory_ABC& scoreFactory_;
     SuccessFactorFactory_ABC& successFactorFactory_;
@@ -115,6 +112,7 @@ public:
     //@{
     Exercise& exercise_;
     TeamsModel& teams_;
+    ObjectsModel& objects_;
     KnowledgeGroupsModel& knowledgeGroups_;
     AgentsModel& agents_;
     FormationModel& formations_;
@@ -126,13 +124,6 @@ public:
     IntelligencesModel& intelligences_;
     UrbanModel& urban_;
     gui::DrawerModel& drawings_;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Model( const Model& );            //!< Copy constructor
-    Model& operator=( const Model& ); //!< Assignment operator
     //@}
 };
 

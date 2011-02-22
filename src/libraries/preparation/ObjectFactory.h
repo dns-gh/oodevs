@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __TeamFactory_h_
-#define __TeamFactory_h_
+#ifndef __ObjectFactory_h_
+#define __ObjectFactory_h_
 
-#include "TeamFactory_ABC.h"
+#include "ObjectFactory_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -25,25 +25,32 @@ class IdManager;
 class ObjectAttributeFactory_ABC;
 
 // =============================================================================
-/** @class  TeamFactory
-    @brief  TeamFactory
+/** @class  ObjectFactory
+    @brief  ObjectFactory
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class TeamFactory : public TeamFactory_ABC
-                  , private boost::noncopyable
+class ObjectFactory : public ObjectFactory_ABC
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TeamFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager );
-    virtual ~TeamFactory();
+             ObjectFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager );
+    virtual ~ObjectFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC* CreateTeam();
-    virtual kernel::Team_ABC* CreateTeam( xml::xistream& xis );
+    virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, const kernel::Team_ABC& team, const QString& name, const kernel::Location_ABC& location );
+    virtual kernel::Object_ABC* CreateObject( xml::xistream& xis, const kernel::Team_ABC& team );
+    //@}
+
+private:
+    //! @name Helper
+    //@{
+    void Initialize();
+    void ReadAttributes( const std::string& attr, xml::xistream& xis, kernel::Object_ABC& object, kernel::PropertiesDictionary& dico );
     //@}
 
 private:
@@ -53,7 +60,8 @@ private:
     Model& model_;
     const StaticModel& staticModel_;
     IdManager& idManager_;
+    std::auto_ptr< ObjectAttributeFactory_ABC > factory_;
     //@}
 };
 
-#endif // __TeamFactory_h_
+#endif // __ObjectFactory_h_

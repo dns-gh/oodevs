@@ -10,14 +10,12 @@
 #include "preparation_app_pch.h"
 #include "ObjectPrototype.h"
 #include "preparation/StaticModel.h"
-#include "preparation/TeamsModel.h"
+#include "preparation/ObjectsModel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
-
 #include "ConstructionPrototype.h"
-//#include "BypassPrototype.h"
 #include "ObstaclePrototype.h"
 #include "NBCPrototype.h"
 #include "FirePrototype.h"
@@ -32,7 +30,6 @@
 #include "ActivityTimePrototype.h"
 #include "DelayPrototype.h"
 #include "FirePropagationModifierPrototype.h"
-
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -61,7 +58,7 @@ namespace
         container.push_back( new LogisticPrototype( parent, controllers, object ) );
     }
 
-    void FloodAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, const kernel::DetectionMap& detection, Object_ABC*& object )
+    void FloodAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, const DetectionMap& detection, Object_ABC*& object )
     {
         container.push_back( new FloodPrototype( parent, object, controllers, detection ) );
     }
@@ -114,7 +111,7 @@ namespace
     /*
     * Register capacity tag
     */
-    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, const kernel::DetectionMap& detection, const tools::GeneralConfig& config, Object_ABC*& object )
+    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, const DetectionMap& detection, const tools::GeneralConfig& config, Object_ABC*& object )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"               , boost::bind( &::ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
@@ -144,9 +141,9 @@ namespace
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, ParametersLayer& layer, const tools::GeneralConfig& config )
+ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, ParametersLayer& layer, const tools::GeneralConfig& config )
     : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, model.detection_, config, creation_ ) )
-    , model_( teamsModel )
+    , model_   ( objectsModel )
     , creation_( 0 )
 {
     // NOTHING

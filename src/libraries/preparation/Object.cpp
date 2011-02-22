@@ -16,12 +16,12 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_kernel/ObjectHierarchies.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Units.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -63,8 +63,6 @@ Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
-    if( Entity_ABC* superior = const_cast< Entity_ABC* >( Get< kernel::TacticalHierarchies >().GetSuperior() ) )
-        static_cast< Team* >( superior )->Resolver< kernel::Object_ABC >::Remove( id_ ); // $$$$ SBO 2006-10-20:
     Destroy();
 }
 

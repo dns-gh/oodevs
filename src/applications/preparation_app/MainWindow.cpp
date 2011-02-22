@@ -242,7 +242,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile() );
 
     // object creation window
-    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.teams_, *paramLayer, *glProxy_, config_ );
+    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.objects_, *paramLayer, *glProxy_, config_ );
     pCreationPanel->AddPanel( objectCreationPanel );
 
     InhabitantCreationPanel* inhabitantCreationPanel = new InhabitantCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, /*( tools::Resolver< InhabitantType >&)(*/ staticModel.types_ /*)*/, model.agents_, *paramLayer, *glProxy_ );

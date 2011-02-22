@@ -24,7 +24,7 @@ namespace tools
 
 class ObjectAttributesContainer;
 class StaticModel;
-class TeamsModel;
+class ObjectsModel;
 
 // =============================================================================
 /** @class  ObjectPrototype
@@ -37,7 +37,7 @@ class ObjectPrototype : public gui::ObjectPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, TeamsModel& teamsModel, gui::ParametersLayer& layer, const tools::GeneralConfig& config );
+             ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, gui::ParametersLayer& layer, const tools::GeneralConfig& config );
     virtual ~ObjectPrototype();
     //@}
 
@@ -56,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    TeamsModel& model_;
+    ObjectsModel& model_;
     kernel::Object_ABC* creation_;
     ObjectAttributesContainer* container_;
     //@}
