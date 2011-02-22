@@ -29,8 +29,9 @@ using namespace kernel;
 Agent::Agent( const sword::UnitCreation& message, Controller& controller,  const tools::Resolver_ABC< AgentType >& resolver )
     : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ) )
     , type_( resolver.Get( message.type().id() ) )
-    , isPc_( message.pc() != 0 )
+    , isPc_ ( false )
 {
+    isPc_ = ( message.pc() != 0 );
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.unit().id() );
     RegisterSelf( *this );

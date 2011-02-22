@@ -174,7 +174,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach< kernel::CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_.controller_, *result, model_.agents_, model_.knowledgeGroups_ ) );
     result->Attach< kernel::TacticalHierarchies >     ( *new AgentHierarchies< kernel::TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
-    if( message.pc() )
+    if( result->IsCommandPost() )
         result->Attach( *new PcAttributes( *result ) );
 
     result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );

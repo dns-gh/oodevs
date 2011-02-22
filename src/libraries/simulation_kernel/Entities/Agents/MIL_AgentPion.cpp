@@ -357,6 +357,16 @@ void MIL_AgentPion::CleanKnowledges()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::SetPionAsPostCommand
+// Created: HBD 2011-02-21
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::SetPionAsPostCommand()
+{
+    bIsPC_ = true;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::UpdateDecision
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
@@ -580,7 +590,7 @@ void MIL_AgentPion::SendCreation() const
     asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().set_name( GetName() );
     asnMsg().mutable_automat()->set_id( GetAutomate().GetID() );
-    asnMsg().set_pc( IsPC() );
+    asnMsg().set_pc( bIsPC_ );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
     // TODO à mettre dans UnitCreation quand l'erreur dans le protocole pourra être corrigée (extensions dans creation et pas attributes)
     if( extensions_.size() )

@@ -1393,7 +1393,10 @@ void MIL_Automate::RegisterPion( MIL_AgentPion& pion, bool registerPC )
     assert( std::find( pions_.begin(), pions_.end(), &pion ) == pions_.end() );
     pions_.push_back( &pion );
     if( registerPC && !pPionPC_ )
+    {
         pPionPC_ = &pion;
+        pion.SetPionAsPostCommand();
+    }
 }
 
 // -----------------------------------------------------------------------------

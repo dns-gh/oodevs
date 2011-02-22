@@ -87,7 +87,7 @@ public:
     virtual bool IsDead() const;
     virtual bool IsNeutralized() const;
     virtual bool IsPC() const;
-
+    virtual void SetPionAsPostCommand();
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
     virtual double Distance( const MIL_Agent_ABC& pion ) const;
 
