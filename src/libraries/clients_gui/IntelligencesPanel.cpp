@@ -18,13 +18,14 @@
 #include "ValuedDragObject.h"
 #include "clients_kernel/IntelligencePrototype.h"
 #include "tools/Iterator.h"
-#include "clients_kernel/HierarchyLevel_ABC.h"
-#include "clients_kernel/FormationLevels.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/SymbolFactory.h"
-#include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/FormationLevels.h"
+#include "clients_kernel/HierarchyLevel_ABC.h"
+#include "clients_kernel/Karma.h"
+#include "clients_kernel/SymbolFactory.h"
+#include "clients_kernel/Tools.h"
 #include "tools/GeneralConfig.h"
 
 using namespace gui;
@@ -54,7 +55,7 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
         while( it.HasMoreElements() )
         {
             const HierarchyLevel_ABC& level = it.NextElement();
-            levelCombo_->AddItem( level.GetName(), &level );
+            levelCombo_->AddItem( tools::translate( "models::app6", level.GetName() ), &level );
         }
         connect( levelCombo_, SIGNAL( activated( int ) ), SLOT( UpdateSymbol() ) );
     }

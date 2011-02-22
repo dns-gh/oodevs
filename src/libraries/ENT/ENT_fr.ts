@@ -96,43 +96,51 @@
     </message>
     <message>
         <source>o</source>
-        <translation>o</translation>
+        <translation>o Equipe</translation>
+    </message>
+    <message>
+        <source>b</source>
+        <translation>b Binôme</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <translation>c Détachement</translation>
     </message>
     <message>
         <source>oo</source>
-        <translation>oo</translation>
+        <translation>oo Groupe</translation>
     </message>
     <message>
         <source>ooo</source>
-        <translation>ooo</translation>
+        <translation>ooo Section</translation>
     </message>
     <message>
         <source>i</source>
-        <translation>i</translation>
+        <translation>i Compagnie</translation>
     </message>
     <message>
         <source>ii</source>
-        <translation>ii</translation>
+        <translation>ii Bataillon</translation>
     </message>
     <message>
         <source>iii</source>
-        <translation>iii</translation>
+        <translation>iii Régiment</translation>
     </message>
     <message>
         <source>x</source>
-        <translation>x</translation>
+        <translation>x Brigade</translation>
     </message>
     <message>
         <source>xx</source>
-        <translation>xx</translation>
+        <translation>xx Division</translation>
     </message>
     <message>
         <source>xxx</source>
-        <translation>xxx</translation>
+        <translation>xxx Corps d&apos;armée</translation>
     </message>
     <message>
         <source>xxxx</source>
-        <translation>xxxx</translation>
+        <translation>xxxx Armée</translation>
     </message>
     <message>
         <source>xxxxx</source>
@@ -831,24 +839,12 @@
         <translation>Eclairant</translation>
     </message>
     <message>
-        <source>b</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>extinguisher agent</source>
         <translation>Agent extincteur</translation>
     </message>
     <message>
         <source>looking for triage area</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>energy</source>
-        <translation>énergie</translation>
     </message>
 </context>
 </TS>

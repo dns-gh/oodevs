@@ -1358,11 +1358,4 @@ Voulez-vous le supprimer?</translation>
         <translation>Par défaut</translation>
     </message>
 </context>
-<context>
-    <name>models::app6</name>
-    <message>
-        <source>undefined</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
 </TS>

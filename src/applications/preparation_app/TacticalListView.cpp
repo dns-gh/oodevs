@@ -174,7 +174,7 @@ void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
     QPopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
     const HierarchyLevel_ABC* level = levels_.GetRoot();
     while( level && ( level = level->GetNext() ) )
-        subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+        subMenu->insertItem( tools::translate( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +190,7 @@ void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, Contex
     {
         QPopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
         while( level && ( level = level->GetNext() ) )
-            subMenu->insertItem( level->GetName(), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+            subMenu->insertItem( tools::translate( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
     }
 }
 

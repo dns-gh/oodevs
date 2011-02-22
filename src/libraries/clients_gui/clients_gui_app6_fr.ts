@@ -782,5 +782,53 @@
         <source>teams</source>
         <translation>équipes</translation>
     </message>
+    <message>
+        <source>o</source>
+        <translation>o Equipe</translation>
+    </message>
+    <message>
+        <source>b</source>
+        <translation>b Binôme</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <translation>c Détachement</translation>
+    </message>
+    <message>
+        <source>oo</source>
+        <translation>oo Groupe</translation>
+    </message>
+    <message>
+        <source>ooo</source>
+        <translation>ooo Section</translation>
+    </message>
+    <message>
+        <source>i</source>
+        <translation>i Compagnie</translation>
+    </message>
+    <message>
+        <source>ii</source>
+        <translation>ii Bataillon</translation>
+    </message>
+    <message>
+        <source>iii</source>
+        <translation>iii Régiment</translation>
+    </message>
+    <message>
+        <source>x</source>
+        <translation>x Brigade</translation>
+    </message>
+    <message>
+        <source>xx</source>
+        <translation>xx Division</translation>
+    </message>
+    <message>
+        <source>xxx</source>
+        <translation>xxx Corps d'armée</translation>
+    </message>
+    <message>
+        <source>xxxx</source>
+        <translation>xxxx Armée</translation>
+    </message>
 </context>
 </TS>

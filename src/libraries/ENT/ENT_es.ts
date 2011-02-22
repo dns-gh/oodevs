@@ -99,6 +99,14 @@
         <translation>o</translation>
     </message>
     <message>
+        <source>b</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>oo</source>
         <translation>oo</translation>
     </message>
@@ -832,14 +840,6 @@
     </message>
     <message>
         <source>extinguisher agent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>b</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

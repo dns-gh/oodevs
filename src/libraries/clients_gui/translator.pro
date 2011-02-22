@@ -42,7 +42,6 @@ MetricsLayer.cpp \
 MinePrototype_ABC.cpp \
 MiniViews.cpp \
 NBCPrototype_ABC.cpp \
-NatureEditionCategory.cpp \
 ObjectListView.cpp \
 ObjectPanel.cpp \
 ObjectPreviewIcon.cpp \
