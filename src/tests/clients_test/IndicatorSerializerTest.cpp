@@ -184,7 +184,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestNestedFunctions )
 {
     const std::string expected =
         "<indicator>"
-            "<extract dotations='res,our,ces' function='resources' id='1'/>"
+            "<extract function='resources' id='1' resources='res,our,ces'/>"
             "<transform function='domain' id='2' input='1' select='un,its' type='int'/>"
             "<reduce function='sum' id='3' input='2' type='int'/>"
         "</indicator>";
@@ -375,7 +375,7 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestTotalResourcesForUnits )
 {
     const std::string expected =
         "<indicator>"
-            "<extract dotations='dot,ati,ons' function='resources' id='1'/>"
+            "<extract function='resources' id='1' resources='dot,ati,ons'/>"
             "<transform function='domain' id='2' input='1' select='un,its' type='int'/>"
             "<reduce function='sum' id='3' input='2' type='int'/>"
         "</indicator>";
@@ -393,10 +393,10 @@ BOOST_AUTO_TEST_CASE( IndicatorSerializer_TestResourceConsumptionsForUnits )
     const std::string expected =
         "<indicator>"
             "<constant id='4' type='float' value='0'/>"
-            "<extract dotations='res,our,ces' function='resources' id='1'/>"
+            "<extract function='resources' id='1' resources='res,our,ces'/>"
             "<transform function='derivate' id='3' input='1' period='1' type='int'/>"
             "<transform function='compare' id='5' input='3,4' operator='less' type='bool'/>"
-            "<extract dotations='res,our,ces' function='resources' id='6'/>"
+            "<extract function='resources' id='6' resources='res,our,ces'/>"
             "<transform function='derivate' id='8' input='6' period='1' type='int'/>"
             "<transform function='filter' id='9' input='5,8' type='int'/>"
             "<transform function='domain' id='10' input='9' select='un,its' type='int'/>"
