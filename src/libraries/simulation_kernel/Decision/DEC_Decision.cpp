@@ -882,6 +882,7 @@ void InitFunctions()
         functors[ "string" ] = StringFunction;
         functors[ "enumeration" ] = EnumerationFunction;
         functors[ "DateTime" ] = GDHFunction;
+        functors[ "datetime" ] = GDHFunction;
         functors[ "GDH" ] = GDHFunction;
         functors[ "Point" ] = PointFunction;
         functors[ "PointList" ] = PointListFunction;
@@ -918,6 +919,7 @@ void InitFunctions()
         functorsBM[ "string" ] = StringFunctionBM;
         functorsBM[ "enumeration" ] = EnumerationFunctionBM;
         functorsBM[ "DateTime" ] = GDHFunctionBM;
+        functorsBM[ "datetime" ] = GDHFunctionBM;
         functorsBM[ "GDH" ] = GDHFunctionBM;
         functorsBM[ "NatureAtlas" ] = NatureAtlasFunctionBM;
         functorsBM[ "Numeric" ] = NumericFunctionBM;
