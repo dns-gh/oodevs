@@ -118,15 +118,13 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\plugin_default_engine_${PLATFORM}-mt.plugin"
     File "${RUNDIR}\plugin_eventmanager_${PLATFORM}-mt-4_6.plugin"
     File "${RUNDIR}\plugin_motivation_${PLATFORM}-mt-4_6.plugin"
-    File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
-    File /nonfatal "${RUNDIR}\*.manifest"
-    File "resources\*.ico"
-
-    ; terrain dependencies
     File /x "*_d.dll" "${RUNDIR}\gdal*.dll"
     File "${RUNDIR}\libpq.dll"
     File "${RUNDIR}\geos.dll"
     File "${RUNDIR}\proj.dll"
+    File /nonfatal "${RUNDIR}\*.manifest"
+    File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
+    File "resources\*.ico"
 
     ; evaluation licence
     !ifdef EVALUATION
