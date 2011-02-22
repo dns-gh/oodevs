@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<populations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Crowds.xsd">
+<populations time-between-nbc-applications="0h" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Crowds.xsd">
   <reloading-time-effect modifier="1" population-density="1"/>
-  <population concentration-density="0.05" decisional-model="Population" id="0" moving-base-density="0.5" moving-speed="6" name="Population standard">
+  <population armed-individuals="0" concentration-density="0.05" decisional-model="Population" id="0" moving-base-density="0.5" moving-speed="6" name="Population standard">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="30" population-density="0.5" unit-size="Heavy"/>
@@ -62,8 +62,9 @@
       <unit attrition-surface="10" ph="0.0005" rule-of-engagment="dispersion par moyens de defense actifs"/>
       <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
     </unit-fire-effects>
+    <repartition children="0" female="0" male="1"/>
   </population>
-  <population concentration-density="1.5" decisional-model="Population" id="1" moving-base-density="0.1" moving-speed="6" name="Fan Population">
+  <population armed-individuals="0" concentration-density="1.5" decisional-model="Population" id="1" moving-base-density="0.1" moving-speed="6" name="Fan Population">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="30" population-density="0.1" unit-size="Heavy"/>
@@ -124,6 +125,7 @@
       <unit attrition-surface="10" ph="0.0005" rule-of-engagment="dispersion par moyens de defense actifs"/>
       <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
     </unit-fire-effects>
+    <repartition children="0" female="0" male="1"/>
   </population>
 </populations>
-<!-- signature="2469996679" -->
+<!-- signature="3152551206" -->

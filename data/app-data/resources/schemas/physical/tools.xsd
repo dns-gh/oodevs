@@ -549,4 +549,9 @@
 			<xs:enumeration value="long"/>
 		</xs:restriction>
 	</xs:simpleType>
+    <xs:complexType name="T_Repartition">
+        <xs:attribute name="male" type="T_ZeroToOneDouble" use="required"/>
+        <xs:attribute name="female" type="T_ZeroToOneDouble" use="required"/>
+        <xs:attribute name="children" type="T_ZeroToOneDouble" use="required"/>
+    </xs:complexType>
 </xs:schema>

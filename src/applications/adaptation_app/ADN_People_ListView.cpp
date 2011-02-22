@@ -53,9 +53,9 @@ void ADN_People_ListView::ConnectItem( bool bConnect )
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_People_GUI::eNbrGuiElements );
     vItemConnectors_[ ADN_People_GUI::eName ]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ ADN_People_GUI::eModel ]->Connect( &pInfos->ptrModel_, bConnect );
-    vItemConnectors_[ ADN_People_GUI::eMale ]->Connect( &pInfos->male_, bConnect );
-    vItemConnectors_[ ADN_People_GUI::eFemale ]->Connect( &pInfos->female_, bConnect );
-    vItemConnectors_[ ADN_People_GUI::eChildren ]->Connect( &pInfos->children_, bConnect );
+    vItemConnectors_[ ADN_People_GUI::eMale ]->Connect( &pInfos->repartition_.male_, bConnect );
+    vItemConnectors_[ ADN_People_GUI::eFemale ]->Connect( &pInfos->repartition_.female_, bConnect );
+    vItemConnectors_[ ADN_People_GUI::eChildren ]->Connect( &pInfos->repartition_.children_, bConnect );
     vItemConnectors_[ ADN_People_GUI::eLossOnFire ]->Connect( &pInfos->securityLossOnFire_, bConnect );
     vItemConnectors_[ ADN_People_GUI::eHealthNeed ]->Connect( &pInfos->healthNeed_, bConnect );
     vItemConnectors_[ ADN_People_GUI::eGainPerHour ]->Connect( &pInfos->securityGainPerHour_, bConnect );

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <populations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Inhabitants.xsd">
   <population associated-crowd="Fan Population" id="0" name="popType1">
-    <repartition children="30" female="30" male="40"/>
+    <repartition children="0.3" female="0.3" male="0.4"/>
     <schedule transfer-time="1h"/>
     <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
     <health-need people-per-facility="1000"/>
     <consumption/>
   </population>
   <population associated-crowd="Population standard" id="1" name="popType2">
-    <repartition children="40" female="30" male="30"/>
+    <repartition children="0.4" female="0.3" male="0.3"/>
     <schedule transfer-time="1h"/>
     <safety-level gain-per-hour="0.2" loss-on-fire="0.1"/>
     <health-need people-per-facility="1000"/>
     <consumption/>
   </population>
 </populations>
-<!-- signature="0876529894" -->
+<!-- signature="1869273644" -->

@@ -420,6 +420,8 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
 , rConcentrationDensity_( 0. )
 , rMoveDensity_         ( 0. )
 , rMoveSpeed_           ( 0. )
+, repartition_          ()
+, armedIndividuals_    ( 0 )
 , vSpeedEffectInfos_    ()
 , vFireEffectInfos_     ()
 , vFireEffectRoeInfos_  ()
@@ -485,6 +487,8 @@ ADN_Population_Data::PopulationInfos* ADN_Population_Data::PopulationInfos::Crea
     pCopy->rConcentrationDensity_ = rConcentrationDensity_.GetData();
     pCopy->rMoveDensity_          = rMoveDensity_.GetData();
     pCopy->rMoveSpeed_            = rMoveSpeed_.GetData();
+    pCopy->repartition_           = repartition_;
+    pCopy->armedIndividuals_     = armedIndividuals_.GetData();
 
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
@@ -504,11 +508,13 @@ ADN_Population_Data::PopulationInfos* ADN_Population_Data::PopulationInfos::Crea
 void ADN_Population_Data::PopulationInfos::ReadArchive( xml::xistream& input )
 {
     std::string strModel;
+    double rArmedIndividuals = 0.;
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "concentration-density", rConcentrationDensity_ )
           >> xml::attribute( "moving-base-density", rMoveDensity_ )
           >> xml::attribute( "moving-speed", rMoveSpeed_ )
-          >> xml::attribute( "decisional-model", strModel );
+          >> xml::attribute( "decisional-model", strModel )
+          >> xml::optional >> xml::attribute( "armed-individuals", rArmedIndividuals );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindPopulationModel( strModel );
     if( !pModel )
         throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Crowd types - Invalid behavior model '%1'" ).arg( strModel.c_str() ).ascii() );
@@ -523,6 +529,15 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( xml::xistream& input )
           >> xml::start( "unit-fire-effects" )
             >> xml::list( "unit", *this, &ADN_Population_Data::PopulationInfos::ReadFireEffect )
           >> xml::end;
+
+    if( input.has_child("repartition") )
+    {
+        input >> xml::start( "repartition" );
+        repartition_.ReadArchive( input );
+        input >> xml::end;
+    }
+
+    armedIndividuals_ = static_cast< int >( rArmedIndividuals * 100 );
 }
 
 // -----------------------------------------------------------------------------
@@ -570,18 +585,33 @@ void ADN_Population_Data::PopulationInfos::ReadFireEffect( xml::xistream& input 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_People_Data::CheckErrors
+// Created: LGY 2011-01-31
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::PopulationInfos::CheckErrors()
+{
+    if ( !repartition_.CheckNoError() )
+        return tools::translate( "Population_Data", "Invalid repartition - Male/Female/Children repartition doesn't fit 100%" ).ascii();
+    return "";
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output, int nMosId )
 {
+    const std::string error = CheckErrors();
+    if( error != "" )
+        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), error );
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", nMosId )
             << xml::attribute( "decisional-model", ptrModel_.GetData()->strName_ )
             << xml::attribute( "concentration-density", rConcentrationDensity_ )
             << xml::attribute( "moving-base-density", rMoveDensity_ )
-            << xml::attribute( "moving-speed", rMoveSpeed_ );
+            << xml::attribute( "moving-speed", rMoveSpeed_ )
+            << xml::attribute( "armed-individuals", armedIndividuals_.GetData() / 100. );
 
     output << xml::start( "slowing-effects" );
     for( IT_SpeedEffectInfosVector it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )
@@ -597,6 +627,10 @@ void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output, 
     for( IT_FireEffectRoeInfosVector it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
+
+    output << xml::start( "repartition" );
+    repartition_.WriteArchive( output );
+    output  << xml::end;
 
     output << xml::end;
 }
@@ -653,6 +687,7 @@ ADN_Population_Data::ADN_Population_Data()
     : ADN_Data_ABC()
     , vPopulation_              ()
     , reloadingSpeedEffectInfos_()
+    , timeBetweenNbcApplication_ ( "0h" )
 {
     // NOTHING
 }
@@ -691,7 +726,8 @@ void ADN_Population_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::ReadArchive( xml::xistream& input )
 {
-    input >> xml::start( "populations" );
+    input >> xml::start( "populations" )
+            >> xml::optional >> xml::attribute( "time-between-nbc-applications", timeBetweenNbcApplication_ );
     reloadingSpeedEffectInfos_.ReadArchive( input );
     input >> xml::list( "population", *this, &ADN_Population_Data::ReadPopulation )
           >> xml::end;
@@ -716,6 +752,7 @@ void ADN_Population_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "populations" );
     ADN_Tools::AddSchema( output, "Crowds" );
+    output << xml::attribute( "time-between-nbc-applications", timeBetweenNbcApplication_ );
     reloadingSpeedEffectInfos_.WriteArchive( output );
     int n = 0;
     for( IT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(    ); ++it, ++n )

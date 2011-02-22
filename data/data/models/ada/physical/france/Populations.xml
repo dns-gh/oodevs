@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<populations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Crowds.xsd">
+<populations time-between-nbc-applications="1h" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Crowds.xsd">
   <reloading-time-effect modifier="1" population-density="0.05"/>
-  <population concentration-density="0.05" decisional-model="Population" id="0" moving-base-density="0.5" moving-speed="6" name="Population standard">
+  <population armed-individuals="0.02" concentration-density="0.05" decisional-model="Population" id="0" moving-base-density="0.5" moving-speed="6" name="Population standard">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="30" population-density="0.5" unit-size="Gros"/>
@@ -62,6 +62,7 @@
       <unit attrition-surface="10" ph="0.0005" rule-of-engagment="dispersion par moyens de defense actifs"/>
       <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
     </unit-fire-effects>
+    <repartition children="0" female="0.5" male="0.5"/>
   </population>
 </populations>
-<!-- signature="3757777166" -->
+<!-- signature="2761099646" -->

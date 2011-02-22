@@ -12,6 +12,7 @@
 
 #include "ADN_Data_ABC.h"
 #include "ADN_Types.h"
+#include "ADN_Type_Repartition.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Population_Data.h"
 #include "ADN_ResourceNetworks_Data.h"
@@ -105,9 +106,7 @@ public:
     public:
         ADN_Type_String strName_;
         ADN_TypePtr_InVector_ABC<ADN_Population_Data::PopulationInfos> ptrModel_;
-        ADN_Type_Int male_;
-        ADN_Type_Int female_;
-        ADN_Type_Int children_;
+        ADN_Type_Repartition repartition_;
         ADN_Type_Time transferTime_;
         ADN_Type_Double securityLossOnFire_;
         ADN_Type_Double securityGainPerHour_;

@@ -16,6 +16,7 @@
 							<xs:element name="slowing-effects" type="T_SlowingEffects"/>
 							<xs:element name="attrition-effects" type="T_AttritionEffects"/>
 							<xs:element name="unit-fire-effects" type="T_UnitFireEffects"/>
+                            <xs:element name="repartition" type="T_Repartition" minOccurs="0"/>
 						</xs:sequence>
 						<xs:attribute name="name" type="xs:string" use="required"/>
 						<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
@@ -24,9 +25,11 @@
 						<xs:attribute name="moving-base-density" type="T_NonNegativeDouble" use="required"/>
 						<xs:attribute name="moving-speed" type="xs:nonNegativeInteger" use="required"/>
 						<xs:attribute name="moving-mode" type="T_MovingType"/>
+                        <xs:attribute name="armed-individuals" type="T_ZeroToOneDouble"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
+            <xs:attribute name="time-between-nbc-applications" type="T_Time"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="T_SlowingEffects">

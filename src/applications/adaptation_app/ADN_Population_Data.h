@@ -14,6 +14,7 @@
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
+#include "ADN_Type_Repartition.h"
 #include "ADN_Models_Data.h"
 #include "ADN_Categories_Data.h"
 
@@ -216,6 +217,7 @@ public:
         void ReadAttritionEffect( xml::xistream& input );
         void ReadFireEffect( xml::xistream& input );
         void WriteArchive( xml::xostream& output, int nMosId );
+        std::string CheckErrors();
 
     public:
         ADN_Type_String                                       strName_;
@@ -223,6 +225,8 @@ public:
         ADN_Type_Double                                       rConcentrationDensity_;
         ADN_Type_Double                                       rMoveDensity_;
         ADN_Type_Double                                       rMoveSpeed_;
+        ADN_Type_Repartition                                  repartition_;
+        ADN_Type_Int                                          armedIndividuals_;
 
         T_SpeedEffectInfosVector                              vSpeedEffectInfos_;
         T_FireEffectInfosVector                               vFireEffectInfos_;
@@ -267,6 +271,7 @@ private:
 public:
     T_PopulationInfosVector   vPopulation_;
     ReloadingSpeedEffectInfos reloadingSpeedEffectInfos_;
+    ADN_Type_Time timeBetweenNbcApplication_;
 };
 
 // -----------------------------------------------------------------------------

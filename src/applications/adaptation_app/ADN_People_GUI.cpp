@@ -104,7 +104,7 @@ void ADN_People_GUI::PercentageChanged()
     ADN_People_Data::PeopleInfos* pInfos = static_cast< ADN_People_Data::PeopleInfos* >( pPeopleList_->GetCurrentData() );
     if( pInfos == 0 )
         return;
-    pMaleEditLine_->GetValidator().setTop( 100 - pInfos->children_.GetData() - pInfos->female_.GetData() );
-    pFemaleEditLine_->GetValidator().setTop( 100 - pInfos->children_.GetData() - pInfos->male_.GetData() );
-    pChildrenEditLine_->GetValidator().setTop( 100 - pInfos->female_.GetData() - pInfos->male_.GetData() );
+    pMaleEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.children_.GetData() - pInfos->repartition_.female_.GetData() );
+    pFemaleEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.children_.GetData() - pInfos->repartition_.male_.GetData() );
+    pChildrenEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.female_.GetData() - pInfos->repartition_.male_.GetData() );
 }

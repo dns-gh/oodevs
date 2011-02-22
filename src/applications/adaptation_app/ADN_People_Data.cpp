@@ -166,9 +166,7 @@ ADN_People_Data::PeopleInfos::PeopleInfos()
     : ADN_Ref_ABC()
     , ADN_DataTreeNode_ABC()
     , ptrModel_           ( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulation(), 0 )
-    , male_               ( 0 )
-    , female_             ( 0 )
-    , children_           ( 0 )
+    , repartition_        ()
     , securityLossOnFire_ ( 0 )
     , securityGainPerHour_( 0 )
     , healthNeed_         ( 0 )
@@ -214,9 +212,7 @@ ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
 {
     PeopleInfos* pCopy = new PeopleInfos();
     pCopy->ptrModel_ = ptrModel_.GetData();
-    pCopy->male_ = male_.GetData();
-    pCopy->female_ = female_.GetData();
-    pCopy->children_ = children_.GetData();
+    pCopy->repartition_ = repartition_;
     pCopy->transferTime_ = transferTime_.GetData();
     pCopy->securityLossOnFire_ = securityLossOnFire_.GetData();
     pCopy->securityGainPerHour_ = securityGainPerHour_.GetData();
@@ -253,11 +249,9 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
         throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Population types - Invalid Population type '%1'" ).arg( strModel.c_str() ).ascii() );
     ptrModel_ = pModel;
 
-    input >> xml::start( "repartition" )
-            >> xml::attribute( "male", male_ )
-            >> xml::attribute( "female", female_ )
-            >> xml::attribute( "children", children_ )
-          >> xml::end
+    input >> xml::start( "repartition" );
+    repartition_.ReadArchive( input );
+    input >> xml::end
           >> xml::start( "schedule" )
             >> xml::attribute( "transfer-time", transferTime_ )
             >> xml::list( "event", *this, &ADN_People_Data::PeopleInfos::ReadEvent, index )
@@ -315,7 +309,7 @@ std::string ADN_People_Data::PeopleInfos::CheckErrors()
                 !CheckTime( it1->second->from_.GetData(), it1->second->to_.GetData(), it2->second->from_.GetData(), it2->second->to_.GetData() ) )
                     return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).ascii() + std::string( "\n" ) + "- " + it1->second->day_.GetData() + " : " + it1->second->from_.GetData() + " / " + it1->second->to_.GetData() + "\n" +
                            "- " + it2->second->day_.GetData() + " : " + it2->second->from_.GetData() + " / " + it2->second->to_.GetData() + "\n";
-    if ( male_.GetData() + female_.GetData() + children_.GetData() != 100 )
+    if ( !repartition_.CheckNoError() )
         return tools::translate( "People_Data", "Invalid repartition - Male/Female/Children repartition doesn't fit 100%" ).ascii();
     return "";
 }
@@ -333,11 +327,9 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", mosId )
             << xml::attribute( "associated-crowd", ptrModel_.GetData()->strName_ )
-            << xml::start( "repartition" )
-                << xml::attribute( "male", male_ )
-                << xml::attribute( "female", female_ )
-                << xml::attribute( "children", children_ )
-            << xml::end
+            << xml::start( "repartition" );
+    repartition_.WriteArchive( output );
+    output  << xml::end
             << xml::start( "schedule" )
                 << xml::attribute( "transfer-time", transferTime_ );
     for( IT_Events it = schedule_.begin(); it != schedule_.end(); ++it )

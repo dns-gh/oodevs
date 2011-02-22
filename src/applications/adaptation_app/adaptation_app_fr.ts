@@ -3382,6 +3382,30 @@ Assurez vous que le fichier existe.</translation>
         <source>Units -&gt; Crowd</source>
         <translation>Unités - Foules</translation>
     </message>
+    <message>
+        <source>Time between two NBC applications</source>
+        <translation>Délai avant nouvelle application d'un effet NBC</translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation>Hommes</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation type="unfinished">%</translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation>Femmes</translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation>Enfants</translation>
+    </message>
+    <message>
+        <source>Armed individuals</source>
+        <translation>Individus armés</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Population_ListView</name>
@@ -6015,6 +6039,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Population types - Invalid Population type &apos;%1&apos;</source>
         <translation>Types Population - Type de population invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Invalid repartition - Male/Female/Children repartition doesn&apos;t fit 100%</source>
+        <translation>Répartition invalide - La somme Homme/Femme/Enfant ne fait pas 100%</translation>
     </message>
 </context>
 <context>

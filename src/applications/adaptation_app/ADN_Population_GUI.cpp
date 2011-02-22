@@ -67,8 +67,8 @@ void ADN_Population_GUI::Build()
     pMainWidget_ = new QWidget( 0, "Crowd main widget" );
 
     // Create the population listview.
-    ADN_Population_ListView* pPopulationList = new ADN_Population_ListView( pMainWidget_ );
-    pPopulationList->GetConnector().Connect( &data_.GetPopulation() );
+    pPopulationList_ = new ADN_Population_ListView( pMainWidget_ );
+    pPopulationList_->GetConnector().Connect( &data_.GetPopulation() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     QVBox* pMainBox = new QVBox( pMainWidget_ );
@@ -76,6 +76,10 @@ void ADN_Population_GUI::Build()
     // Global parameters
     QGroupBox* pGlobalGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Global parameters" ), pMainBox );
     QGroupBox* pReloadingEffectGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Crowd effects on units firing capability" ), pGlobalGroup );
+
+    //Time between NBC application
+    builder.AddField< ADN_TimeField >( pGlobalGroup, tr( "Time between two NBC applications" ), vInfosConnectors[ eTimeBetweenNBCApplication ] );
+    vInfosConnectors[eTimeBetweenNBCApplication]->Connect( &data_.timeBetweenNbcApplication_ );
 
     // Density
     builder.AddField<ADN_EditLine_Double>( pReloadingEffectGroup, tr( "Density" ), vInfosConnectors[eReloadingEffectDensity], tr( "people/m²" ), eGreaterZero );
@@ -104,6 +108,18 @@ void ADN_Population_GUI::Build()
 
     // Move speed
     builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Average movement speed" ), vInfosConnectors[eMoveSpeed], tr( "km/h" ), eGreaterZero );
+
+    //Repartition
+    pMaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Males" ), vInfosConnectors[ eMale ], tr( "%" ), ePercentage );
+    connect( pMaleEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
+    pFemaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Females" ), vInfosConnectors[ eFemale ], tr( "%" ), ePercentage );
+    connect( pFemaleEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
+    pChildrenEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Children" ), vInfosConnectors[ eChildren ], tr( "%" ), ePercentage );
+    connect( pChildrenEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
+
+    //Armed Individuals
+    pArmedIndividualsEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Armed individuals" ), vInfosConnectors[ eArmedIndividuals ], tr( "%" ), ePercentage );
+
 
     // Speed effects
     //@{
@@ -157,7 +173,7 @@ void ADN_Population_GUI::Build()
 
     builder.AddStretcher( pGroup, Qt::Vertical );
 
-    pPopulationList->SetItemConnectors( vInfosConnectors );
+    pPopulationList_->SetItemConnectors( vInfosConnectors );
     pSpeedEffectAttitudeList->SetItemConnectors( vInfosConnectors );
     pVolumeList->SetItemConnectors( vInfosConnectors );
     pFireEffectAttitudeList->SetItemConnectors( vInfosConnectors );
@@ -165,7 +181,7 @@ void ADN_Population_GUI::Build()
 
     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pPopulationList, 1 );
+    pMainLayout->addWidget( pPopulationList_, 1 );
     pMainLayout->addWidget( pMainBox, 3 );
 
     QGridLayout* pFireEffectLayout = new QGridLayout( pFireEffectGlobalGroup->layout(), 1, 4, 5 );
@@ -177,4 +193,18 @@ void ADN_Population_GUI::Build()
     //QVBoxLayout* pGroupLayout = new QVBoxLayout( pGroup->layout(), 6 );
     //pGroupLayout->addWidget( pPropertiesGroup, 0, 0 );
     //builder.AddStretcher( pGroupLayout, Qt::Vertical );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_People_GUI::PercentageChanged
+// Created: LGY 2010-12-28
+// -----------------------------------------------------------------------------
+void ADN_Population_GUI::PercentageChanged()
+{
+    ADN_Population_Data::PopulationInfos* pInfos = static_cast< ADN_Population_Data::PopulationInfos* >( pPopulationList_->GetCurrentData() );
+    if( pInfos == 0 )
+        return;
+    pMaleEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.children_.GetData() - pInfos->repartition_.female_.GetData() );
+    pFemaleEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.children_.GetData() - pInfos->repartition_.male_.GetData() );
+    pChildrenEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.female_.GetData() - pInfos->repartition_.male_.GetData() );
 }
