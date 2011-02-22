@@ -25,7 +25,7 @@ Resources::Resources()
 // Created: AGE 2007-10-23
 // -----------------------------------------------------------------------------
 Resources::Resources( xml::xistream& xis )
-    : filter_( xis, "resources" )
+    : filter_( xis, "dotations" )
 {
     // NOTHING
 }
