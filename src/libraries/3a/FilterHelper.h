@@ -38,12 +38,14 @@ public:
     FilterHelper( xml::xistream& xis, const std::string& attribute )
     {
         const std::string values = xis.attribute< std::string >( attribute, std::string() );
-        if( ! values.empty() )
-        {
-            std::vector< std::string > split;
-            boost::algorithm::split( split, values, boost::algorithm::is_any_of( "," ) );
-            std::transform( split.begin(), split.end(), std::inserter( allowed_, allowed_.begin() ), &boost::lexical_cast< T, std::string > );
-        }
+        FillAllowedValues( values );
+    }
+    FilterHelper( xml::xistream& xis, const std::string& attribute, const std::string& variant )
+    {
+        std::string values = xis.attribute< std::string >( attribute, std::string() );
+        if( values.empty() )
+            values = xis.attribute< std::string >( variant, std::string() );
+        FillAllowedValues( values );
     }
     virtual ~FilterHelper() {};
     //@}
@@ -55,6 +57,17 @@ public:
         return allowed_.empty() || allowed_.find( value ) != allowed_.end();
     }
     //@}
+
+private:
+    void FillAllowedValues( const std::string& values )
+    {
+        if( ! values.empty() )
+        {
+            std::vector< std::string > split;
+            boost::algorithm::split( split, values, boost::algorithm::is_any_of( "," ) );
+            std::transform( split.begin(), split.end(), std::inserter( allowed_, allowed_.begin() ), &boost::lexical_cast< T, std::string > );
+        }
+    }
 
 private:
     //! @name Member data

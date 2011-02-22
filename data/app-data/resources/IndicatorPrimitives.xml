@@ -21,7 +21,7 @@
     <primitive category="extract" name="resources" type="list(key,resources)">
         <comments><![CDATA[Amount of specified resources.]]></comments>
         <parameters>
-            <parameter name="resources" type="list(resource-type)" attribute="dotations"/>
+            <parameter name="resources" type="list(resource-type)" attribute="resources"/>
         </parameters>
     </primitive>
     <primitive category="extract" name="equipments" type="list(key,equipments)">
