@@ -719,17 +719,6 @@ Motivo: %3
     </message>
 </context>
 <context>
-    <name>FolkToolbar</name>
-    <message>
-        <source>Folk control</source>
-        <translation>Control de masas</translation>
-    </message>
-    <message>
-        <source>any</source>
-        <translation>todos</translation>
-    </message>
-</context>
-<context>
     <name>HumansListView</name>
     <message>
         <source>Rank</source>

@@ -110,7 +110,7 @@ void ADN_Units_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 // Name: ComposanteInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool bIsAutonomous )
+void ADN_Units_Data::ComposanteInfos::WriteArchive( xml::xostream& output, bool bIsAutonomous ) const
 {
     if( !bIsAutonomous && nNbrHumanInCrew_.GetData() == 0 )
         throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).ascii(), tools::translate( "Units_Data", "Unit has no crew in equipment '%1'" ).arg( ptrComposante_.GetData()->strName_.GetData().c_str() ).ascii() );
@@ -185,7 +185,7 @@ void ADN_Units_Data::StockLogThresholdInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Units_Data::StockLogThresholdInfos::WriteArchive
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output )
+void ADN_Units_Data::StockLogThresholdInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "stock" )
             << xml::attribute( "category", ADN_Tr::ConvertFromStockCategory( eCategory_.GetData() ) )
@@ -263,10 +263,10 @@ void ADN_Units_Data::StockInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Units_Data::StockInfos::WriteArchive
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::StockInfos::WriteArchive( const std::string& strName, xml::xostream& output )
+void ADN_Units_Data::StockInfos::WriteArchive( const std::string& strName, xml::xostream& output ) const
 {
     output << xml::start( strName );
-    for( IT_StockLogThresholdInfos_Vector it = vLogThresholds_.begin(); it != vLogThresholds_.end(); ++it )
+    for( CIT_StockLogThresholdInfos_Vector it = vLogThresholds_.begin(); it != vLogThresholds_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -344,7 +344,7 @@ void ADN_Units_Data::PointInfos::ReadArchive( xml::xistream& input )
 // Name: PointInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::PointInfos::WriteArchive( xml::xostream& output )
+void ADN_Units_Data::PointInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "distance-before-point" )
             << xml::attribute( "type", ADN_Tr::ConvertFromKeyPoint( nTypeTerrain_ ) )
@@ -400,7 +400,7 @@ void ADN_Units_Data::PostureInfos::ReadArchive( xml::xistream& input )
 // Name: PostureInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::PostureInfos::WriteArchive( xml::xostream& output )
+void ADN_Units_Data::PostureInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "posture" )
             << xml::attribute( "name", ADN_Tools::ComputePostureScriptName( nPosture_ ) )
@@ -418,42 +418,44 @@ void ADN_Units_Data::PostureInfos::WriteArchive( xml::xostream& output )
 //-----------------------------------------------------------------------------
 ADN_Units_Data::UnitInfos::UnitInfos()
     : ADN_Ref_ABC()
-    , eTypeId_( static_cast< E_AgentTypePion >( 0 ) )
-    , strName_()
-    , nMosId_( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetNextId() )
-    , ptrModel_( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
-    , eNatureLevel_( static_cast< E_NatureLevel >( 0 ) )
-    , nNbOfficer_( 0 )
-    , nNbNCOfficer_( 0 )
-    , decontaminationDelay_( "0s" )
-    , vComposantes_()
-    , vPostures_( false )
-    , vPointInfos_( false )
-    , bProbe_( false )
-    , bStock_( false )
-    , stocks_()
-    , bStrengthRatioFeedbackTime_( false )
-    , strengthRatioFeedbackTime_( "0s" )
-    , rProbeWidth_( 0 )
-    , rProbeLength_( 0 )
-    , bCanFly_( false )
-    , eCrossingHeight_( static_cast< E_CrossingHeight >( 0 ) )
-    , bIsAutonomous_( false )
-    , bInstallationDelay_( false )
-    , installationDelay_( "0s" )
-    , uninstallationDelay_( "0s" )
-    , nReconEfficiency_( 50 )
-    , nCombatSupportEfficiency_( 50 )
-    , nCombatEfficiency_( 50 )
-    , nMobilitySupportEfficiency_( 50 )
+    , eTypeId_                          ( static_cast< E_AgentTypePion >( 0 ) )
+    , strName_                          ()
+    , nMosId_                           ( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetNextId() )
+    , ptrModel_                         ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos(), 0 )
+    , eNatureLevel_                     ( static_cast< E_NatureLevel >( 0 ) )
+    , nNbOfficer_                       ( 0 )
+    , nNbNCOfficer_                     ( 0 )
+    , decontaminationDelay_             ( "0s" )
+    , vComposantes_                     ()
+    , vPostures_                        ( false )
+    , vPointInfos_                      ( false )
+    , bProbe_                           ( false )
+    , bStock_                           ( false )
+    , stocks_                           ()
+    , bStrengthRatioFeedbackTime_       ( false )
+    , strengthRatioFeedbackTime_        ( "0s" )
+    , rProbeWidth_                      ( 0 )
+    , rProbeLength_                     ( 0 )
+    , bCanFly_                          ( false )
+    , eCrossingHeight_                  ( static_cast< E_CrossingHeight >( 0 ) )
+    , bIsAutonomous_                    ( false )
+    , bInstallationDelay_               ( false )
+    , installationDelay_                ( "0s" )
+    , uninstallationDelay_              ( "0s" )
+    , nReconEfficiency_                 ( 50 )
+    , nCombatSupportEfficiency_         ( 50 )
+    , nCombatEfficiency_                ( 50 )
+    , nMobilitySupportEfficiency_       ( 50 )
     , nCounterMobilitySupportEfficiency_( 50 )
-    , nProtectionSupportEfficiency_( 50 )
-    , nEngineeringReconEfficiency_( 50 )
-    , nUrbanAreaEfficiency_( 50 )
-    , nPowerDirectFire_( 0 )
-    , nPowerIndirectFire_( 0 )
-    , nPowerCloseCombat_( 0 )
-    , nPowerEngineering_( 0 )
+    , nProtectionSupportEfficiency_     ( 50 )
+    , nEngineeringReconEfficiency_      ( 50 )
+    , nUrbanAreaEfficiency_             ( 50 )
+    , nPowerDirectFire_                 ( 0 )
+    , nPowerIndirectFire_               ( 0 )
+    , nPowerCloseCombat_                ( 0 )
+    , nPowerEngineering_                ( 0 )
+    , bIsCivilian_                      ( false )
+    , repartition_                      ()
 {
     BindExistenceTo(&ptrModel_);
 
@@ -587,6 +589,9 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->nPowerIndirectFire_ = nPowerIndirectFire_.GetData();
     pCopy->nPowerCloseCombat_  = nPowerCloseCombat_.GetData();
     pCopy->nPowerEngineering_  = nPowerEngineering_.GetData();
+
+    pCopy->bIsCivilian_        = bIsCivilian_.GetData();
+    pCopy->repartition_        = repartition_;
 
     return pCopy;
 }
@@ -738,6 +743,14 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
               >> xml::attribute( "engineering", nPowerEngineering_ )
             >> xml::end;
 
+    if( input.has_child("repartition") )
+    {
+        input >> xml::start( "repartition" );
+        repartition_.ReadArchive( input );
+        input >> xml::end;
+        bIsCivilian_ = repartition_.male_ != 0 || repartition_.female_ != 0 || repartition_.children_ != 0;
+    }
+
     std::string crossingHeight( ADN_Tr::ConvertFromCrossingHeight( eCrossingHeight_Never ) ) ;
     input >> xml::optional
             >> xml::start( "crossing-height" )
@@ -757,7 +770,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 // Name: UnitInfos::WriteArchive
 // Created: APE 2004-11-30
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
+void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "unit" )
             << xml::attribute( "name", strName_ )
@@ -772,7 +785,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
           << xml::end;
 
     output << xml::start( "equipments" );
-    for( IT_ComposanteInfos_Vector itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
+    for( CIT_ComposanteInfos_Vector itComposante = vComposantes_.begin(); itComposante != vComposantes_.end(); ++itComposante )
         (*itComposante)->WriteArchive( output, bIsAutonomous_.GetData() );
     output << xml::end;
 
@@ -798,7 +811,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
         stocks_.WriteArchive( "stocks", output );
 
     output << xml::start( "postures" );
-    for( IT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
+    for( CIT_PostureInfos_Vector itPosture = vPostures_.begin(); itPosture != vPostures_.end(); ++itPosture )
         (*itPosture)->WriteArchive( output );
     output << xml::end;
 
@@ -815,7 +828,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
     if( ! vPointInfos_.empty() )
     {
         output << xml::start( "distance-before-points" );
-        for( IT_PointInfos_Vector itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
+        for( CIT_PointInfos_Vector itPoint = vPointInfos_.begin(); itPoint != vPointInfos_.end(); ++itPoint )
             (*itPoint)->WriteArchive( output );
         output << xml::end;
     }
@@ -848,6 +861,14 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output )
              << xml::attribute( "close-combat", nPowerCloseCombat_ )
              << xml::attribute( "engineering", nPowerEngineering_ )
            << xml::end;
+
+    if( bIsCivilian_.GetData() )
+    {
+        repartition_.CheckNoError( "ADN_Units_Data" );
+        output << xml::start( "repartition" );
+        repartition_.WriteArchive( output );
+        output  << xml::end;
+    }
 
     output << xml::start( "crossing-height" )
             << xml::attribute( "height", ADN_Tr::ConvertFromCrossingHeight( eCrossingHeight_.GetData() ) )
@@ -944,7 +965,7 @@ void ADN_Units_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "units" );
     ADN_Tools::AddSchema( output, "Units" );
-    for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
+    for( CIT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }

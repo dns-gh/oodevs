@@ -15,13 +15,14 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_EditLine.h"
 
-class ADN_Units_Data;
-class QWidget;
 class ADN_GroupBox;
-class QComboBox;
 class ADN_ListView_Units;
-class ADN_Units_LogThreshold_GUI;
 class ADN_SymbolWidget;
+class ADN_Units_Data;
+class ADN_Units_LogThreshold_GUI;
+class QComboBox;
+class QLabel;
+class QWidget;
 
 // =============================================================================
 /** @class  ADN_Units_GUI
@@ -79,6 +80,10 @@ public:
         ePowerIndirectFire,
         ePowerCloseCombat,
         ePowerEngineering,
+        eIsCivilian,
+        eMalesPercent,
+        eFemalesPercent,
+        eChildrenPercent,
         eNbrGuiElements
     };
     //@}
@@ -103,6 +108,7 @@ private slots:
     void OnNbrOfOfficersChanged();
     void OnNbrOfNCOfficersChanged();
     void OnComponentChanged();
+    void PercentageChanged();
     //@}
 
 private:
@@ -123,6 +129,10 @@ private:
     ADN_Units_LogThreshold_GUI* pStockLogThreshold_;
     ADN_GroupBox* pInstallationGroup_;
     ADN_SymbolWidget* pSymbolWidget_;
+    ADN_EditLine_Int* pMaleLine_;
+    ADN_EditLine_Int* pFemaleLine_;
+    ADN_EditLine_Int* pChildrenLine_;
+    QLabel* pWarningLabel_;
     //@}
 };
 

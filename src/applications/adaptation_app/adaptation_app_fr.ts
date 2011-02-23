@@ -3093,7 +3093,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Resource network element</source>
-        <translation>Element d'un réseau de ressource</translation>
+        <translation>Element d&apos;un réseau de ressource</translation>
     </message>
 </context>
 <context>
@@ -3388,7 +3388,7 @@ Assurez vous que le fichier existe.</translation>
     </message>
     <message>
         <source>Time between two NBC applications</source>
-        <translation>Délai avant nouvelle application d'un effet NBC</translation>
+        <translation>Délai avant nouvelle application d&apos;un effet NBC</translation>
     </message>
     <message>
         <source>Males</source>
@@ -4928,6 +4928,29 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>&gt;1m</source>
         <translation>&gt;1m</translation>
     </message>
+    <message>
+        <source>Organization</source>
+        <translation>Organisation</translation>
+    </message>
+    <message>
+        <source>Notable</source>
+        <translation>Notable</translation>
+    </message>
+    <message>
+        <source>Journalist</source>
+        <translation>Journaliste</translation>
+    </message>
+    <message>
+        <source>Civilian</source>
+        <translation>Civil</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Type_Repartition</name>
+    <message>
+        <source>Invalid repartition - Males/Females/Children repartition doesn&apos;t fit 100%.</source>
+        <translation>Répartition invalide - la répartition Hommes/Femmes/Enfants ne fait pas 100%.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Unit_Wizard</name>
@@ -4981,6 +5004,13 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Remove equipment</source>
         <translation>Supprimer équipement</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Units_Data::UnitInfos</name>
+    <message>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5164,6 +5194,26 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Urban area efficiency</source>
         <translation>Efficacité en zone urbaine</translation>
+    </message>
+    <message>
+        <source>Civilian</source>
+        <translation>Civil</translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation>Hommes</translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation>Femmes</translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation>Enfants</translation>
+    </message>
+    <message>
+        <source>Warning: only %1% set, need 100% or you won&apos;t be able to save.</source>
+        <translation>Attention: seulement %1% de définis, il faut 100% pour pouvoir sauvegarder.</translation>
     </message>
 </context>
 <context>
@@ -6021,10 +6071,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Population - Invalid resource &apos;%1/%2&apos;</source>
         <translation>Population - Resource &apos;%1/%2&apos; invalide</translation>
     </message>
-    <message>
-        <source>Invalid repartition - Male/Female/Children repartition doesn&apos;t fit 100%</source>
-        <translation>Répartition invalide - La somme Homme/Femme/Enfant ne fait pas 100%</translation>
-    </message>
 </context>
 <context>
     <name>Population_Data</name>
@@ -6043,10 +6089,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Population types - Invalid Population type &apos;%1&apos;</source>
         <translation>Types Population - Type de population invalide &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Invalid repartition - Male/Female/Children repartition doesn&apos;t fit 100%</source>
-        <translation>Répartition invalide - La somme Homme/Femme/Enfant ne fait pas 100%</translation>
     </message>
 </context>
 <context>

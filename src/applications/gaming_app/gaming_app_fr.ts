@@ -719,17 +719,6 @@ Reason: %3
     </message>
 </context>
 <context>
-    <name>FolkToolbar</name>
-    <message>
-        <source>Folk control</source>
-        <translation>Contrôle de foule</translation>
-    </message>
-    <message>
-        <source>any</source>
-        <translation>tous</translation>
-    </message>
-</context>
-<context>
     <name>HumansListView</name>
     <message>
         <source>Rank</source>

@@ -44,6 +44,8 @@
 #include <numeric>
 #include <boost/bind.hpp>
 
+#pragma warning( disable : 4129 )
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_GUI constructor
 // Created: JDY 03-06-26
@@ -225,6 +227,21 @@ void ADN_Units_GUI::Build()
     builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Close combat" ),  vInfosConnectors[ ePowerCloseCombat ],  0, eGreaterEqualZero );
     builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Engineering" ),   vInfosConnectors[ ePowerEngineering ],  0, eGreaterEqualZero );
 
+    // Civilian
+    ADN_GroupBox* pCivilianGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Civilian" ), pGroup );
+    vInfosConnectors[ eIsCivilian ] = &pCivilianGroup->GetConnector();
+
+    pMaleLine_ = builder.AddField< ADN_EditLine_Int >( pCivilianGroup, tr( "Males" ), vInfosConnectors[ eMalesPercent ], tr( "%" ), ePercentage );
+    pFemaleLine_ = builder.AddField< ADN_EditLine_Int >( pCivilianGroup, tr( "Females" ), vInfosConnectors[ eFemalesPercent ], tr( "%" ), ePercentage );
+    pChildrenLine_ = builder.AddField< ADN_EditLine_Int >( pCivilianGroup, tr( "Children" ), vInfosConnectors[ eChildrenPercent ], tr( "%" ), ePercentage );
+    pCivilianGroup->addSpace( 0 );
+    pWarningLabel_ = new QLabel( pCivilianGroup );
+    pCivilianGroup->addSpace( 0 );
+    connect( pMaleLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
+    connect( pFemaleLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
+    connect( pChildrenLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
+    connect( pCivilianGroup, SIGNAL( toggled( bool ) ), this, SLOT( PercentageChanged() ) );
+
     // set list units auto connectors
     pListUnits_->SetItemConnectors( vInfosConnectors );
 
@@ -233,7 +250,7 @@ void ADN_Units_GUI::Build()
     pMainLayout->addWidget( pListUnits_, 1 );
     pMainLayout->addWidget( pGroup, 6 );
 
-    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 6, 6, 5 );
+    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 7, 6, 5 );
     pGroupLayout->setAlignment( Qt::AlignTop );
     pGroupLayout->addMultiCellWidget( pParamGroup, 0, 0, 0, 2 );
     pGroupLayout->addMultiCellWidget( pNatureGroup, 0, 0, 3, 5 );
@@ -245,8 +262,9 @@ void ADN_Units_GUI::Build()
     pGroupLayout->addMultiCellWidget( pStockGroup_, 3, 4, 2, 3 );
     pGroupLayout->addMultiCellWidget( pSkillsGroup, 3, 3, 4, 5 );
     pGroupLayout->addMultiCellWidget( pEfficienciesGroup, 4, 4, 4, 5 );
-    pGroupLayout->addMultiCellWidget( pComposantesGroup, 5, 5, 0, 3 );
+    pGroupLayout->addMultiCellWidget( pComposantesGroup, 5, 6, 0, 3 );
     pGroupLayout->addMultiCellWidget( pPowerIndicatorsGroup, 5, 5, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pCivilianGroup, 6, 6, 4, 5 );
 }
 
 // -----------------------------------------------------------------------------
@@ -370,4 +388,24 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString
 
     QString strText = "<a href=\"" + tr( "Units/" ) + "index.htm\">" + tr( "Units" ) + "</a>";
     mainIndexBuilder.ListItem( strText );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_GUI::PercentageChanged
+// Created: ABR 2011-02-22
+// -----------------------------------------------------------------------------
+void ADN_Units_GUI::PercentageChanged()
+{
+    ADN_Units_Data::UnitInfos* pInfos = ( ADN_Units_Data::UnitInfos* )pListUnits_->GetCurrentData();
+    if( pInfos == 0 || !pInfos->bIsCivilian_.GetData() )
+    {
+        pWarningLabel_->clear();
+        return;
+    }
+    pMaleLine_->GetValidator().setTop( 100 - pInfos->repartition_.female_.GetData() - pInfos->repartition_.children_.GetData() );
+    pFemaleLine_->GetValidator().setTop( 100 - pInfos->repartition_.male_.GetData() - pInfos->repartition_.children_.GetData() );
+    pChildrenLine_->GetValidator().setTop( 100 - pInfos->repartition_.male_.GetData() - pInfos->repartition_.female_.GetData() );
+
+    double sum = pInfos->repartition_.male_.GetData() + pInfos->repartition_.female_.GetData() + pInfos->repartition_.children_.GetData();
+    pWarningLabel_->setText( ( sum < 100 ) ? "<font color=\"#FF0000\">" + tr( "Warning: only %1\% set, need 100\% or you won't be able to save." ).arg( sum ) + "</font>" : "" );
 }

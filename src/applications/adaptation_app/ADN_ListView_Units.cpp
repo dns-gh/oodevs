@@ -76,9 +76,9 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Units_GUI::eCanFly ]->Connect( &pInfos->bCanFly_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eCrossingHeight ]->Connect( &pInfos->eCrossingHeight_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eIsAutonomous ]->Connect( &pInfos->bIsAutonomous_, bConnect );
-    vItemConnectors_[ ADN_Units_GUI::eHasInstallation ]->Connect( &pInfos->bInstallationDelay_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eInstallationDelay ]->Connect( &pInfos->installationDelay_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eUninstallationDelay ]->Connect( &pInfos->uninstallationDelay_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eHasInstallation ]->Connect( &pInfos->bInstallationDelay_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eRecon ]->Connect( &pInfos->nReconEfficiency_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eCombatSupport ]->Connect( &pInfos->nCombatSupportEfficiency_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eCombat ]->Connect( &pInfos->nCombatEfficiency_, bConnect );
@@ -91,6 +91,10 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Units_GUI::ePowerIndirectFire ]->Connect( &pInfos->nPowerIndirectFire_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::ePowerCloseCombat ]->Connect( &pInfos->nPowerCloseCombat_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::ePowerEngineering ]->Connect( &pInfos->nPowerEngineering_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eMalesPercent ]->Connect( &pInfos->repartition_.male_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eFemalesPercent ]->Connect( &pInfos->repartition_.female_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eChildrenPercent ]->Connect( &pInfos->repartition_.children_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eIsCivilian ]->Connect( &pInfos->bIsCivilian_, bConnect );
 }
 
 //-----------------------------------------------------------------------------

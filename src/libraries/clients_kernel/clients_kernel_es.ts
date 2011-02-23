@@ -367,6 +367,13 @@
     </message>
 </context>
 <context>
+    <name>Stock</name>
+    <message>
+        <source>Stock resource attribute</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Tristate</name>
     <message>
         <source>Off</source>

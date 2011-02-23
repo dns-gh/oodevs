@@ -127,6 +127,10 @@ enum E_AgentTypePion
     eAgentTypePionJOINT,
     eAgentTypePionASY,
     eAgentTypePionEmergency,
+    eAgentTypePionOrganization,
+    eAgentTypePionNotable,
+    eAgentTypePionJournalist,
+    eAgentTypePionCivilian,
 
     eNbrAgentTypePion
 };

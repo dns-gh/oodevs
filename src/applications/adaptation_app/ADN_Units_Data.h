@@ -12,12 +12,13 @@
 #ifndef __ADN_Units_Data_h_
 #define __ADN_Units_Data_h_
 
+#include "ADN_Composantes_Data.h"
 #include "ADN_Data_ABC.h"
+#include "ADN_Enums.h"
+#include "ADN_Models_Data.h"
 #include "ADN_Types.h"
 #include "ADN_Tools.h"
-#include "ADN_Enums.h"
-#include "ADN_Composantes_Data.h"
-#include "ADN_Models_Data.h"
+#include "ADN_Type_Repartition.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-24
@@ -39,7 +40,7 @@ public:
         ComposanteInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, bool bIsAutonomous );
+        void WriteArchive( xml::xostream& output, bool bIsAutonomous ) const;
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Composantes_Data::ComposanteInfos> ptrComposante_;
@@ -63,10 +64,7 @@ public:
             std::string val_;
         };
     };
-
-    typedef ADN_Type_Vector_ABC<ComposanteInfos>    T_ComposanteInfos_Vector;
-    typedef T_ComposanteInfos_Vector::iterator      IT_ComposanteInfos_Vector;
-
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<ComposanteInfos>, ComposanteInfos_Vector )
 
     //*****************************************************************************
     typedef ADN_Composantes_Data::ResourceInfos ResourceInfos;
@@ -86,15 +84,13 @@ public:
         StockLogThresholdInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Enum< E_StockCategory, eNbrStockCategory > eCategory_;
         ADN_Type_Double                                     rLogThreshold_;
     };
-
-    typedef ADN_Type_Vector_ABC< StockLogThresholdInfos > T_StockLogThresholdInfos_Vector;
-    typedef T_StockLogThresholdInfos_Vector::iterator     IT_StockLogThresholdInfos_Vector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< StockLogThresholdInfos >, StockLogThresholdInfos_Vector )
 
     //*****************************************************************************
     class StockInfos : public ADN_Ref_ABC
@@ -110,7 +106,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadStock( xml::xistream& input );
-        void WriteArchive( const std::string& strName, xml::xostream& output );
+        void WriteArchive( const std::string& strName, xml::xostream& output ) const;
 
     public:
         T_StockLogThresholdInfos_Vector vLogThresholds_;
@@ -126,7 +122,7 @@ public:
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_UnitPosture  nPosture_;
@@ -149,9 +145,7 @@ public:
             std::string str_;
         };
     };
-
-    typedef ADN_Type_Vector_ABC<PostureInfos>    T_PostureInfos_Vector;
-    typedef T_PostureInfos_Vector::iterator      IT_PostureInfos_Vector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<PostureInfos>, PostureInfos_Vector )
 
     //*****************************************************************************
     class PointInfos : public ADN_DataTreeNode_ABC
@@ -165,16 +159,13 @@ public:
         PointInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_KeyPoint   nTypeTerrain_;  //$$$$
         ADN_Type_Int nDistance_;
     };
-
-    typedef ADN_Type_Vector_ABC< PointInfos >    T_PointInfos_Vector;
-    typedef T_PointInfos_Vector::iterator        IT_PointInfos_Vector;
-
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< PointInfos >, PointInfos_Vector )
 
     //*****************************************************************************
     class UnitInfos : public ADN_Ref_ABC
@@ -194,7 +185,7 @@ public:
         void ReadCrew( xml::xistream& input );
         void ReadPosture( xml::xistream& input );
         void ReadPointDistance( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Enum<E_AgentTypePion,eNbrAgentTypePion>            eTypeId_;
@@ -244,11 +235,11 @@ public:
         ADN_Type_Int                                                nPowerIndirectFire_;
         ADN_Type_Int                                                nPowerCloseCombat_;
         ADN_Type_Int                                                nPowerEngineering_;
+
+        ADN_Type_Bool                                               bIsCivilian_;
+        ADN_Type_Repartition                                        repartition_;
     };
-
-    typedef ADN_Type_Vector_ABC<UnitInfos>    T_UnitInfos_Vector;
-    typedef T_UnitInfos_Vector::iterator      IT_UnitInfos_Vector;
-
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<UnitInfos>, UnitInfos_Vector )
 
     //*****************************************************************************
 public:

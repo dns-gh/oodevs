@@ -36,6 +36,10 @@
 			<xs:enumeration value="Pion LOG BLT Ravitaillement"/>
 			<xs:enumeration value="Pion LOG BLT Sante"/>
             <xs:enumeration value="Pion Emergency"/>
+            <xs:enumeration value="Pion Organization"/>
+            <xs:enumeration value="Pion Notable"/>
+            <xs:enumeration value="Pion Journalist"/>
+            <xs:enumeration value="Pion Civilian"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_AutomatType">
