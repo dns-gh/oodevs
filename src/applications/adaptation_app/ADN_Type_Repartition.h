@@ -35,7 +35,6 @@ public:
     void ReadArchive( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
     bool CheckNoError();
-    void ConnectItem( T_ConnectorVector& vItemConnectors_, bool bConnect );
     //@}
 
     //! @name Members
