@@ -81,6 +81,5 @@ void ADN_Type_Repartition::WriteArchive( xml::xostream& output ) const
 void ADN_Type_Repartition::CheckNoError( const std::string& filename ) const
 {
     if( male_.GetData() + female_.GetData() + children_.GetData() != 100 )
-        throw ADN_DataException( filename, tools::translate( "ADN_Type_Repartition", "Invalid repartition - Male/Female/Children repartition doesn't fit 100%" ).ascii() );
+        throw ADN_DataException( filename, tools::translate( "ADN_Type_Repartition", "Invalid repartition - Males/Females/Children repartition doesn't fit 100%." ).ascii() );
 }
-

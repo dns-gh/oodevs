@@ -171,6 +171,7 @@ ADN_TableDialog.cpp \
 ADN_Table_Objects_LocationScore.cpp \
 ADN_Table_Objects_FirePropagationModifier.cpp \
 ADN_Tr.cpp \
+ADN_Type_Repartition.cpp \
 ADN_Unit_Wizard.cpp \
 ADN_Units_Composantes_GUI.cpp \
 ADN_Units_Data.cpp \
