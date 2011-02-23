@@ -107,6 +107,15 @@ void UrbanLayer::NotifyDeleted( const TerrainObjectProxy& object )
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanLayer::ContextMenu
+// Created: JSR 2011-02-23
+// -----------------------------------------------------------------------------
+void UrbanLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
+{
+    controllers_.actions_.ContextMenu( static_cast< const kernel::Object_ABC& >( entity ), geoPoint, point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanLayer::ShouldDisplay
 // Created: LDC 2010-09-10
 // -----------------------------------------------------------------------------
