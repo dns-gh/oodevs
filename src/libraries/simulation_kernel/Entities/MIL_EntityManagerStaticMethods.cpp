@@ -84,7 +84,7 @@
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/PhysicalFileLoader.h"
+#include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -182,9 +182,7 @@ void MIL_EntityManagerStaticMethods::InitializeSensors( MIL_Config& config, cons
     MT_LOG_INFO_MSG( "Initializing sensor types" );
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
-    loader.Load( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ) ) );
-    loader.AddToCRC();
+    config.GetLoader().LoadPhysicalFileAndCRC( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ) ), invalidSignatureFiles, missingSignatureFiles );
     MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }
 
@@ -211,9 +209,7 @@ void MIL_EntityManagerStaticMethods::InitializeMedical( MIL_Config& config )
     MT_LOG_INFO_MSG( "Initializing medical data" );
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
-    loader.Load( "health", &MIL_EntityManagerStaticMethods::LoadMedical );
-    loader.AddToCRC();
+    config.GetLoader().LoadPhysicalFileAndCRC( "health", &MIL_EntityManagerStaticMethods::LoadMedical, invalidSignatureFiles, missingSignatureFiles );
     MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }
 
@@ -236,9 +232,7 @@ void MIL_EntityManagerStaticMethods::InitializeComposantes( MIL_Config& config, 
 {
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
-    loader.Load( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1 ) );
-    loader.AddToCRC();
+    config.GetLoader().LoadPhysicalFileAndCRC( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1 ), invalidSignatureFiles, missingSignatureFiles );
     MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }
 
@@ -250,9 +244,8 @@ void MIL_EntityManagerStaticMethods::InitializeWeapons( MIL_Config& config, cons
 {
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
-    loader.Load( "weapon-systems", boost::bind( &PHY_WeaponType::Initialize, boost::cref( time ), _1 ) );
-    loader.AddToCRC();
+    config.GetLoader().LoadPhysicalFileAndCRC( "weapon-systems", boost::bind( &PHY_WeaponType::Initialize, boost::cref( time ), _1 ), invalidSignatureFiles, missingSignatureFiles );
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,7 +256,6 @@ void MIL_EntityManagerStaticMethods::InitializeMedicalTreatment( MIL_Config& con
 {
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
-    loader.Load( "medical-treatment", boost::bind( &MIL_MedicalTreatmentType::Initialize, _1, boost::cref( time ) ) );//verfifier tous les initialize
-    loader.AddToCRC();
+    config.GetLoader().LoadPhysicalFileAndCRC( "medical-treatment", boost::bind( &MIL_MedicalTreatmentType::Initialize, _1, boost::cref( time ) ), invalidSignatureFiles, missingSignatureFiles );
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }

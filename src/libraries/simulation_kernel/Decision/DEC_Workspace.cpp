@@ -30,9 +30,8 @@
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
-
 #include "tools/InputBinaryStream.h"
-#include "tools/PhysicalFileLoader.h"
+#include "tools/Loader_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
@@ -84,12 +83,9 @@ DEC_Workspace::~DEC_Workspace()
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
-    // $$$$ NLD 2007-01-11: A DEPLACER
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
-    loader.Load( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1 ) );
-    loader.AddToCRC();
+    config.GetLoader().LoadPhysicalFileAndCRC( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
     MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }
 
@@ -193,9 +189,7 @@ void DEC_Workspace::InitializeMissions( MIL_Config& config )
 {
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
-    loader.Load( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ) );
-    loader.AddToCRC();
+    config.GetLoader().LoadPhysicalFileAndCRC( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
     MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }
 
@@ -219,9 +213,7 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::s
 {
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
-    loader.Load( "models", boost::bind( &DEC_Workspace::LoadModels, this, _1, boost::cref( strSourcePaths ) ) );
-    loader.AddToCRC();
+    config.GetLoader().LoadPhysicalFileAndCRC( "models", boost::bind( &DEC_Workspace::LoadModels, this, _1, boost::cref( strSourcePaths ) ), invalidSignatureFiles, missingSignatureFiles );
     MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }
 
@@ -297,10 +289,8 @@ float DEC_Workspace::GetTime() const
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
 {
-
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::PhysicalFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
-    loader.Load( "object-names", &DEC_ObjectFunctions::RegisterObjectNames );
+    config.GetLoader().LoadPhysicalFileAndCRC( "object-names", &DEC_ObjectFunctions::RegisterObjectNames, invalidSignatureFiles, missingSignatureFiles );
     MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }

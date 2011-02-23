@@ -102,7 +102,7 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"
 #include "resource_network/ResourceNetworkModel.h"
-#include "tools/ExerciseFileLoader.h"
+#include "tools/Loader_ABC.h"
 #include <urban/Model.h>
 #include <urban/PhysicalAttribute.h>
 #include <urban/ObjectVisitor_ABC.h>
@@ -265,9 +265,7 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     const std::string strOrbat = config.GetOrbatFile();
     MIL_Tools::CheckXmlCrc32Signature( strOrbat );
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
-
-    tools::ExerciseFileLoader loader ( config );
-    loader.LoadAndUpdate( "orbat", boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ), "resources/orbat0-4.2.xsl" );
+    config.GetLoader().LoadAndUpdateExerciseFile( "orbat", boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ), "resources/orbat0-4.2.xsl" );
 
     MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
 

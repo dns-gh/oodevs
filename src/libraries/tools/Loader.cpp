@@ -11,6 +11,7 @@
 
 #include "Loader.h"
 #include "PhysicalFileLoader.h"
+#include "ExerciseFileLoader.h"
 
 using namespace tools;
 
@@ -34,7 +35,7 @@ Loader::~Loader()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Loader destructor
+// Name: Loader::LoadPhysicalFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
 void Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const
@@ -44,10 +45,42 @@ void Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, std:
 }
 
 // -----------------------------------------------------------------------------
-// Name: Loader destructor
+// Name: Loader::LoadPhysicalFileAndCRC
+// Created: NLD 2010-02-23
+// -----------------------------------------------------------------------------
+void Loader::LoadPhysicalFileAndCRC( const std::string& rootTag, T_Loader loader, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const
+{
+    PhysicalFileLoader fileLoader( config_, invalidSignatureFiles, missingSignatureFiles );
+    fileLoader.AddToCRC();
+    fileLoader.Load( rootTag, loader );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Loader::CheckFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
 void Loader::CheckFile( const std::string& file ) const
 {
     FileLoader( config_, file );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Loader::CheckFile
+// Created: NLD 2010-02-23
+// -----------------------------------------------------------------------------
+void Loader::LoadAndUpdateExerciseFile( const std::string& rootTag, T_Loader loader, const std::string& xslFile ) const
+{
+    ExerciseFileLoader fileLoader( config_ );
+    fileLoader.LoadAndUpdate( rootTag, loader, xslFile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Loader::LoadExerciseFileAndCRC
+// Created: NLD 2010-02-23
+// -----------------------------------------------------------------------------
+void Loader::LoadExerciseFileAndCRC( const std::string& rootTag, T_Loader loader, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const
+{
+    ExerciseFileLoader fileLoader( config_, invalidSignatureFiles, missingSignatureFiles );
+    fileLoader.AddToCRC();
+    fileLoader.Load( rootTag, loader );
 }

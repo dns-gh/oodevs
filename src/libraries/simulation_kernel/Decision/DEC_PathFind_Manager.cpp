@@ -14,10 +14,11 @@
 #include "DEC_Path_ABC.h"
 #include "DEC_PathType.h"
 #include "DEC_PathFactory.h"
+#include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Config.h"
-#include "tools/PhysicalFileLoader.h"
+#include "tools/Loader_ABC.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -35,14 +36,8 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
 {
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::PhysicalFileLoader fileLoader( config, invalidSignatureFiles, missingSignatureFiles );
-    if( !invalidSignatureFiles.empty() )
-        MT_LOG_WARNING_MSG( "Invalid signature for the file(s) " << invalidSignatureFiles )
-    if( !missingSignatureFiles.empty() )
-        MT_LOG_WARNING_MSG( "Unsigned file(s) " << missingSignatureFiles )
-    fileLoader.AddToCRC();
-    fileLoader.Load( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1 ) );
-
+    config.GetLoader().LoadPhysicalFileAndCRC( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
     if( bUseInSameThread_ ) // juste one "thread" that will never start

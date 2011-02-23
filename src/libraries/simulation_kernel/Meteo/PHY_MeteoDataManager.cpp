@@ -14,7 +14,7 @@
 #include "meteo/PHY_Lighting.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/ExerciseFileLoader.h"
+#include "tools/Loader_ABC.h"
 #include "tools/WorldParameters.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
@@ -36,9 +36,8 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
 
     std::string invalidSignatureFiles;
     std::string missingSignatureFiles;
-    tools::ExerciseFileLoader loader( config, invalidSignatureFiles, missingSignatureFiles );
-    loader.Load( "weather", boost::bind( &PHY_MeteoDataManager::Initialize, this, _1, boost::ref( config ) ) );
-    loader.AddToCRC();
+    config.GetLoader().LoadExerciseFileAndCRC( "weather", boost::bind( &PHY_MeteoDataManager::Initialize, this, _1, boost::ref( config ) ), invalidSignatureFiles, missingSignatureFiles );
+    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
 }
 
 // -----------------------------------------------------------------------------
