@@ -10,14 +10,14 @@
 
   <xsl:template match="populations">
     <xsl:copy>
+      <xsl:apply-templates select="node()|@*"/>
       <xsl:choose>
         <xsl:when test="not(/time-between-nbc-applications)">
-          <xsl:attribute name="time-between-nbc-applications">1h</xsl:attribute>
+          <xsl:element name="time-between-nbc-applications">1h</xsl:element>
         </xsl:when>
         <xsl:otherwise>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="node()|@*"/>
     </xsl:copy> 
   </xsl:template>
 

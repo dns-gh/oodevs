@@ -10,6 +10,7 @@
 						<xs:attribute name="modifier" type="xs:nonNegativeInteger" use="required"/>
 					</xs:complexType>
 				</xs:element>
+                <xs:element name="time-between-nbc-applications" type="T_Time"  minOccurs="0"/>
 				<xs:element name="population" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>
@@ -29,7 +30,6 @@
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-            <xs:attribute name="time-between-nbc-applications" type="T_Time"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="T_SlowingEffects">
