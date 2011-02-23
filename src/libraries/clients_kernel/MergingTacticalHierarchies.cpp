@@ -103,3 +103,62 @@ void MergingTacticalHierarchies::MergeSymbol( const kernel::Entity_ABC& entity )
     if( const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >() )
         App6Symbol::Merge( hierarchies->GetSymbol(), symbol_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MergingTacticalHierarchies::MaxLevel
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+std::string MergingTacticalHierarchies::MaxLevel( const std::string& lhs, const std::string& rhs )
+{
+    const char ll = Level( lhs );
+    const char rl = Level( rhs );
+    if( ll == 'o' && rl != 'o' )
+        return rhs;
+    if( ll == 'i' && rl == 'x' )
+        return rhs;
+    if( rl == 'o' && ll != 'o' )
+        return lhs;
+    if( rl == 'i' && ll == 'x' )
+        return lhs;
+    const unsigned lc = Count( lhs );
+    const unsigned rc = Count( rhs );
+    if( lc < rc )
+        return rhs;
+    return lhs;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MergingTacticalHierarchies::IncreaseLevel
+// Created: LDC 2011-02-23
+// -----------------------------------------------------------------------------
+std::string MergingTacticalHierarchies::IncreaseLevel( const std::string& value )
+{
+    const unsigned count = Count( value );
+    const char level = Level( value );
+    if( count < 3 || level == 'x' )
+        return value + level;
+    const char newChar = level == 'o' ? 'i' : 'x';
+    return value.substr( 0, value.length() - count ) + newChar;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MergingTacticalHierarchies::Level
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+char MergingTacticalHierarchies::Level( const std::string& value )
+{
+    return *value.rbegin();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MergingTacticalHierarchies::Count
+// Created: AGE 2006-11-23
+// -----------------------------------------------------------------------------
+unsigned MergingTacticalHierarchies::Count( const std::string& value )
+{
+    char level = Level( value );
+    unsigned count = 0;
+    while( value[ value.size() - count - 1 ] == level )
+        ++count;
+    return count;
+}

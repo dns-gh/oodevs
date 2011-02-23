@@ -104,6 +104,7 @@ void Automat::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& 
     {
         InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where, 2 );
+        tools.DrawApp6Symbol( level_, where, 2 );
     }
 }
 
@@ -115,9 +116,11 @@ void Automat::InitializeSymbol() const
 {
     const kernel::TacticalHierarchies& hierarchies = Get< kernel::TacticalHierarchies >();
     const std::string symbol = hierarchies.GetSymbol();
-    if( symbol_ == symbol )
+    const std::string level = hierarchies.GetLevel();
+    if( symbol_ == symbol && level_ == level )
         return;
     symbol_ = symbol;
+    level_ = level;
     kernel::App6Symbol::SetKarma( symbol_, hierarchies.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
 }
 

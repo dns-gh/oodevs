@@ -76,7 +76,8 @@ private:
     //! @name Member data
     //@{
     kernel::AutomatType& type_;
-    mutable std::string symbol_;
+    mutable std::string symbol_; // $$$$ RC LDC: code duplication with preparation
+    mutable std::string level_;
     const kernel::LogisticLevel* logisticLevel_;
     //@}
 };

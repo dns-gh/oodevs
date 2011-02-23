@@ -21,10 +21,11 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
-#include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/MergingTacticalHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "tools/App6Symbol.h"
 
 using namespace kernel;
@@ -78,7 +79,7 @@ void UnitPreviewIcon::NotifySelected( const AgentType& type )
 void UnitPreviewIcon::NotifySelected( const AutomatType& type )
 {
     symbol_ = type.GetSymbol();
-    level_ = type.GetTypePC()->GetLevelSymbol(); // $$$$ SBO 2007-10-16:
+    level_ = MergingTacticalHierarchies::IncreaseLevel( type.GetTypePC()->GetLevelSymbol() ); // $$$$ SBO 2007-10-16:
     UpdateSymbol();
 }
 

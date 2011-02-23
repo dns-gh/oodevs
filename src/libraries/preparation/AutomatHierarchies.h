@@ -49,10 +49,6 @@ private:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void DoUpdate( const kernel::InstanciationComplete& );
     virtual void MergeSymbol( const kernel::Entity_ABC& entity );
-    static std::string Max( const std::string& lhs, const std::string& rhs );
-    static std::string Increase( const std::string& value );
-    static char Level( const std::string& value );
-    static unsigned Count( const std::string& value );
     //@}
 
 private:
