@@ -495,6 +495,7 @@
       <value id="9" name="ligne_identification_accueil"/>
     </parameter>
   </report>
+  <report category="operational" id="351" message="Pas de drone disponible"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -506,4 +507,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="3258851853" -->
+<!-- signature="3536886692" -->

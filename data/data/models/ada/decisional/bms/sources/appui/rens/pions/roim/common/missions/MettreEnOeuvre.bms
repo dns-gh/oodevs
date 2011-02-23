@@ -13,7 +13,7 @@ includedFiles["sources/appui/rens/pions/roim/common/missions/MettreEnOeuvre.bms"
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Mission_Pion_RENS_MettreEnOeuvre, {value} ) end,
     activations =
     {
-        { "ACT_Info_Trace", { "done_ACT_Info_Trace" } },
+        { "ACT_Warning", { "done_ACT_Warning" } },
         { "ACT_RC", { "done_ACT_RC" } },
         { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
         { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
@@ -39,9 +39,11 @@ includedFiles["sources/appui/rens/pions/roim/common/missions/MettreEnOeuvre.bms"
             self.pionDrone = DIA_GetAt( S_Misc_Pion_Rens_ObtenirDronesDisponibles(), 0 )
         else
 do
-                Activate( self.activations.ACT_Info_Trace, 1, { "No more drone available", } )
                 if( ModuleBegins() ) then
-                    Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
+                    do
+                        Activate( self.activations.ACT_Warning, 1, { eRC_PasDeDroneDisponible, } )
+                        Activate( self.activations.ACT_RC, 1, { eRC_MissionImpossible, } )
+                    end
                 end
 
                                 do return end
@@ -280,7 +282,7 @@ connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, "ACT_Transport_Pion_Rens_DebarquerDrone", nodes.ACT_Transport_Pion_Rens_DebarquerDrone }
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Pion_Rens_MettreEnOeuvreDrone, "ACT_Misc_ProgrammerDrone", nodes.ACT_Misc_ProgrammerDrone }
-connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "ACT_Warning", nodes.ACT_Warning }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_RENS_MettreEnOeuvre, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

@@ -478,6 +478,7 @@ public:
         eRC_ZoneAlerted,
         eRC_ZoneConfined,
         eRC_ArrivedOnConfinedZone,
+        eRC_PasDeDroneDisponible,
         eLast
     };
     //@}
