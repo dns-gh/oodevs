@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Population_GUI.h"
+#include "moc_ADN_Population_GUI.cpp"
 #include "ADN_MainWindow.h"
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
@@ -196,7 +197,7 @@ void ADN_Population_GUI::Build()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_GUI::PercentageChanged
+// Name: ADN_Population_GUI::PercentageChanged
 // Created: LGY 2010-12-28
 // -----------------------------------------------------------------------------
 void ADN_Population_GUI::PercentageChanged()

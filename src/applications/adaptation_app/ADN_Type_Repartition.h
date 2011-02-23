@@ -33,8 +33,8 @@ public:
     //@{
     ADN_Type_Repartition& operator =( ADN_Type_Repartition& copy );
     void ReadArchive( xml::xistream& input );
-    void WriteArchive( xml::xostream& output );
-    bool CheckNoError();
+    void WriteArchive( xml::xostream& output ) const;
+    void CheckNoError( const std::string& filename ) const;
     //@}
 
     //! @name Members

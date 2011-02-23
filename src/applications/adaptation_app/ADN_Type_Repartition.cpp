@@ -9,6 +9,8 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Type_Repartition.h"
+#include "ADN_DataException.h"
+#include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Repartition::ADN_Type_Repartition
@@ -65,7 +67,7 @@ void ADN_Type_Repartition::ReadArchive( xml::xistream& input )
 // Name: ADN_Type_Repartition::WriteArchive
 // Created: MGD 2011-02-22
 //-----------------------------------------------------------------------------
-void ADN_Type_Repartition::WriteArchive( xml::xostream& output )
+void ADN_Type_Repartition::WriteArchive( xml::xostream& output ) const
 {
     output << xml::attribute( "male", male_.GetData() / 100. )
            << xml::attribute( "female", female_.GetData() / 100. )
@@ -76,8 +78,9 @@ void ADN_Type_Repartition::WriteArchive( xml::xostream& output )
 // Name: ADN_Type_Repartition::WriteArchive
 // Created: MGD 2011-02-22
 //-----------------------------------------------------------------------------
-bool ADN_Type_Repartition::CheckNoError()
+void ADN_Type_Repartition::CheckNoError( const std::string& filename ) const
 {
-    return male_.GetData() + female_.GetData() + children_.GetData() == 100;
+    if( male_.GetData() + female_.GetData() + children_.GetData() != 100 )
+        throw ADN_DataException( filename, tools::translate( "ADN_Type_Repartition", "Invalid repartition - Male/Female/Children repartition doesn't fit 100%" ).ascii() );
 }
 

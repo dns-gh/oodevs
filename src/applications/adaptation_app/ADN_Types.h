@@ -67,12 +67,23 @@ public:
     };
 };
 
-typedef std::vector<QWidget*>                   T_PtrWidgetVector;
-typedef T_PtrWidgetVector::iterator             IT_PtrWidgetVector;
-typedef T_PtrWidgetVector::const_iterator       CIT_PtrWidgetVector;
+#define TYPEDEF_DECLARATION( BaseType, NewName )                        \
+    typedef BaseType T_ ## NewName;
 
-typedef std::list<std::string>                  T_StringList;
-typedef T_StringList::iterator                  IT_StringList;
-typedef T_StringList::const_iterator            CIT_StringList;
+#define TYPEDEF_WITH_ITERATOR_DECLARATION( BaseType, NewName )          \
+    TYPEDEF_DECLARATION( BaseType, NewName )                            \
+    typedef BaseType::iterator IT_ ## NewName;
+
+#define TYPEDEF_WITH_CONST_ITERATOR_DECLARATION( BaseType, NewName )    \
+    TYPEDEF_DECLARATION( BaseType, NewName )                            \
+    typedef BaseType::const_iterator CIT_ ## NewName;
+
+#define TYPEDEF_FULL_DECLARATION( BaseType, NewName )                   \
+    TYPEDEF_DECLARATION( BaseType, NewName )                            \
+    typedef BaseType::iterator IT_ ## NewName;                          \
+    typedef BaseType::const_iterator CIT_ ## NewName;
+
+TYPEDEF_FULL_DECLARATION( std::vector<QWidget*>, PtrWidgetVector )
+TYPEDEF_FULL_DECLARATION( std::list<std::string>, StringList )
 
 #endif // __ADN_Types_h_

@@ -57,7 +57,7 @@ void ADN_Population_Data::FireEffectProtectionInfos::ReadArchive( xml::xistream&
 // Name: ADN_Population_Data::FireEffectProtectionInfos::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_Population_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream& output )
+void ADN_Population_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream& output ) const
 {
     // do not save unspecified protection hit factor
     if( rDestruction_.GetData()                 == 0.
@@ -145,7 +145,7 @@ void ADN_Population_Data::FireEffectInfos::ReadProtection( xml::xistream& input 
 // Name: ADN_Population_Data::FireEffectInfos::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_Population_Data::FireEffectInfos::WriteArchive( xml::xostream& output )
+void ADN_Population_Data::FireEffectInfos::WriteArchive( xml::xostream& output ) const
 {
     if( rIntensityDensity_.GetData() == 0. && rIntensityFactor_.GetData() == 0. )
         return;
@@ -153,7 +153,7 @@ void ADN_Population_Data::FireEffectInfos::WriteArchive( xml::xostream& output )
              << xml::attribute( "population-density", rIntensityDensity_ )
              << xml::attribute( "intensity", rIntensityFactor_ )
              << xml::attribute( "population-attitude", ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
-    for( IT_FireEffectProtectionInfosVector it = vProtectionInfos_.begin(); it != vProtectionInfos_.end(); ++it )
+    for( CIT_FireEffectProtectionInfosVector it = vProtectionInfos_.begin(); it != vProtectionInfos_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -250,7 +250,7 @@ void ADN_Population_Data::FireEffectRoeInfos::ReadArchive( xml::xistream& input 
 // Name: ADN_Population_Data::FireEffectRoeInfos::WriteArchive
 // Created: SBO 2005-11-21
 // -----------------------------------------------------------------------------
-void ADN_Population_Data::FireEffectRoeInfos::WriteArchive( xml::xostream& output )
+void ADN_Population_Data::FireEffectRoeInfos::WriteArchive( xml::xostream& output ) const
 {
     if( rAttritionSurface_.GetData() == 0. && rPH_.GetData() == 0. )
         return;
@@ -290,7 +290,7 @@ void ADN_Population_Data::SpeedEffectVolumeInfos::ReadArchive( xml::xistream& in
 // Name: ADN_Population_Data::SpeedEffectVolumeInfos::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_Population_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& output )
+void ADN_Population_Data::SpeedEffectVolumeInfos::WriteArchive( xml::xostream& output ) const
 {
     if( rDensity_ == 0. && rMaxSpeed_ == 0. )
         return;
@@ -373,11 +373,11 @@ void ADN_Population_Data::SpeedEffectInfos::ReadSpeedEffect( xml::xistream& inpu
 // Name: ADN_Population_Data::SpeedEffectInfos::WriteArchive
 // Created: SBO 2005-10-24
 // -----------------------------------------------------------------------------
-void ADN_Population_Data::SpeedEffectInfos::WriteArchive( xml::xostream& output )
+void ADN_Population_Data::SpeedEffectInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "slowing-effect" )
              << xml::attribute( "population-attitude" ,ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) );
-    for( IT_SpeedEffectVolumeInfosVector it = vVolumeInfos_.begin(); it != vVolumeInfos_.end(); ++it )
+    for( CIT_SpeedEffectVolumeInfosVector it = vVolumeInfos_.begin(); it != vVolumeInfos_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }
@@ -414,17 +414,17 @@ std::string ADN_Population_Data::SpeedEffectInfos::GetItemName()
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
 ADN_Population_Data::PopulationInfos::PopulationInfos()
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, ptrModel_             ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
-, rConcentrationDensity_( 0. )
-, rMoveDensity_         ( 0. )
-, rMoveSpeed_           ( 0. )
-, repartition_          ()
-, armedIndividuals_    ( 0 )
-, vSpeedEffectInfos_    ()
-, vFireEffectInfos_     ()
-, vFireEffectRoeInfos_  ()
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , ptrModel_             ( ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos(), 0 )
+    , rConcentrationDensity_( 0. )
+    , rMoveDensity_         ( 0. )
+    , rMoveSpeed_           ( 0. )
+    , repartition_          ()
+    , armedIndividuals_     ( 0 )
+    , vSpeedEffectInfos_    ()
+    , vFireEffectInfos_     ()
+    , vFireEffectRoeInfos_  ()
 {
     for( int i = 0; i < eNbrPopulationAttitude; ++i )
     {
@@ -585,25 +585,13 @@ void ADN_Population_Data::PopulationInfos::ReadFireEffect( xml::xistream& input 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_People_Data::CheckErrors
-// Created: LGY 2011-01-31
-// -----------------------------------------------------------------------------
-std::string ADN_Population_Data::PopulationInfos::CheckErrors()
-{
-    if ( !repartition_.CheckNoError() )
-        return tools::translate( "Population_Data", "Invalid repartition - Male/Female/Children repartition doesn't fit 100%" ).ascii();
-    return "";
-}
-
-// -----------------------------------------------------------------------------
 // Name: PopulationInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output, int nMosId )
+void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output, int nMosId ) const
 {
-    const std::string error = CheckErrors();
-    if( error != "" )
-        throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), error );
+    repartition_.CheckNoError( "ADN_Population_Data" );
+
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", nMosId )
@@ -614,17 +602,17 @@ void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output, 
             << xml::attribute( "armed-individuals", armedIndividuals_.GetData() / 100. );
 
     output << xml::start( "slowing-effects" );
-    for( IT_SpeedEffectInfosVector it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )
+    for( CIT_SpeedEffectInfosVector it = vSpeedEffectInfos_.begin(); it != vSpeedEffectInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 
     output << xml::start( "attrition-effects" );
-    for( IT_FireEffectInfosVector it = vFireEffectInfos_.begin(); it != vFireEffectInfos_.end(); ++it )
+    for( CIT_FireEffectInfosVector it = vFireEffectInfos_.begin(); it != vFireEffectInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 
     output << xml::start( "unit-fire-effects" );
-    for( IT_FireEffectRoeInfosVector it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
+    for( CIT_FireEffectRoeInfosVector it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 
@@ -672,7 +660,7 @@ void ADN_Population_Data::ReloadingSpeedEffectInfos::ReadArchive( xml::xistream&
 // Name: ADN_Population_Data::ReloadingSpeedEffectInfos::WriteArchive
 // Created: SBO 2005-11-14
 // -----------------------------------------------------------------------------
-void ADN_Population_Data::ReloadingSpeedEffectInfos::WriteArchive( xml::xostream& output )
+void ADN_Population_Data::ReloadingSpeedEffectInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "reloading-time-effect" )
             << xml::attribute( "population-density", rDensity_ )
@@ -757,7 +745,7 @@ void ADN_Population_Data::WriteArchive( xml::xostream& output )
     reloadingSpeedEffectInfos_.WriteArchive( output );
     output << xml::content( "time-between-nbc-applications", timeBetweenNbcApplication_.GetData() );
     int n = 0;
-    for( IT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(    ); ++it, ++n )
+    for( CIT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(    ); ++it, ++n )
         (*it)->WriteArchive( output, n );
     output << xml::end;
 }

@@ -41,7 +41,7 @@ public:
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_String                                           strName_;
@@ -66,9 +66,7 @@ public:
             helpers::ArmorInfos* val_;
         };
     };
-
-    typedef ADN_Type_VectorFixed_ABC<FireEffectProtectionInfos>  T_FireEffectProtectionInfosVector;
-    typedef T_FireEffectProtectionInfosVector::iterator          IT_FireEffectProtectionInfosVector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC<FireEffectProtectionInfos>, FireEffectProtectionInfosVector )
 
 // *****************************************************************************
     class FireEffectInfos : public ADN_Ref_ABC
@@ -83,7 +81,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadProtection( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_String                   strName_;
@@ -106,9 +104,7 @@ public:
             E_PopulationAttitude val_;
         };
     };
-
-    typedef ADN_Type_Vector_ABC<FireEffectInfos>  T_FireEffectInfosVector;
-    typedef T_FireEffectInfosVector::iterator     IT_FireEffectInfosVector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<FireEffectInfos>, FireEffectInfosVector )
 
 // *****************************************************************************
     class FireEffectRoeInfos : public ADN_Ref_ABC
@@ -123,7 +119,7 @@ public:
         unsigned int GetRoe();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_String strName_;
@@ -131,9 +127,7 @@ public:
         ADN_Type_Double rAttritionSurface_;
         ADN_Type_Double rPH_;
     };
-
-    typedef ADN_Type_Vector_ABC<FireEffectRoeInfos>  T_FireEffectRoeInfosVector;
-    typedef T_FireEffectRoeInfosVector::iterator     IT_FireEffectRoeInfosVector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<FireEffectRoeInfos>, FireEffectRoeInfosVector )
 
 // *****************************************************************************
     class SpeedEffectVolumeInfos : public ADN_Ref_ABC
@@ -147,7 +141,7 @@ public:
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_String                                          strName_;
@@ -171,9 +165,7 @@ public:
             ADN_Categories_Data::SizeInfos* val_;
         };
     };
-
-    typedef ADN_Type_VectorFixed_ABC<SpeedEffectVolumeInfos>  T_SpeedEffectVolumeInfosVector;
-    typedef T_SpeedEffectVolumeInfosVector::iterator          IT_SpeedEffectVolumeInfosVector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC<SpeedEffectVolumeInfos>, SpeedEffectVolumeInfosVector )
 
 // *****************************************************************************
     class SpeedEffectInfos : public ADN_Ref_ABC
@@ -188,16 +180,14 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadSpeedEffect( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_PopulationAttitude           nAttitude_;
         ADN_Type_String                strName_;
         T_SpeedEffectVolumeInfosVector vVolumeInfos_;
     };
-
-    typedef ADN_Type_Vector_ABC<SpeedEffectInfos>  T_SpeedEffectInfosVector;
-    typedef T_SpeedEffectInfosVector::iterator     IT_SpeedEffectInfosVector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<SpeedEffectInfos>, SpeedEffectInfosVector )
 
 // *****************************************************************************
     class PopulationInfos : public ADN_Ref_ABC
@@ -216,8 +206,7 @@ public:
         void ReadSlowingEffect( xml::xistream& input );
         void ReadAttritionEffect( xml::xistream& input );
         void ReadFireEffect( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, int nMosId );
-        std::string CheckErrors();
+        void WriteArchive( xml::xostream& output, int nMosId ) const;
 
     public:
         ADN_Type_String                                       strName_;
@@ -232,9 +221,7 @@ public:
         T_FireEffectInfosVector                               vFireEffectInfos_;
         T_FireEffectRoeInfosVector                            vFireEffectRoeInfos_;
     };
-
-    typedef ADN_Type_Vector_ABC<PopulationInfos>  T_PopulationInfosVector;
-    typedef T_PopulationInfosVector::iterator      IT_PopulationInfosVector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<PopulationInfos>, PopulationInfosVector )
 
 // *****************************************************************************
     class ReloadingSpeedEffectInfos : public ADN_Ref_ABC
@@ -244,7 +231,7 @@ public:
         virtual ~ReloadingSpeedEffectInfos();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Double rDensity_;

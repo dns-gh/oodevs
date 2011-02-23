@@ -82,7 +82,7 @@ void ADN_People_Data::EventInfos::ReadArchive( xml::xistream& input )
 // Name: EventInfos::WriteArchive
 // Created: LGY 2011-01-18
 // -----------------------------------------------------------------------------
-void ADN_People_Data::EventInfos::WriteArchive( xml::xostream& output )
+void ADN_People_Data::EventInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "event" )
            << xml::attribute( "day", day_ )
@@ -146,7 +146,7 @@ void ADN_People_Data::PeopleInfosConsumption::ReadArchive( xml::xistream& xis )
 // Name: PeopleInfosConsumption::WriteArchive
 // Created: JSR 2011-01-31
 // -----------------------------------------------------------------------------
-void ADN_People_Data::PeopleInfosConsumption::WriteArchive( xml::xostream& xos )
+void ADN_People_Data::PeopleInfosConsumption::WriteArchive( xml::xostream& xos ) const
 {
     xos << xml::start( "resource" )
             << xml::attribute( "type", ptrResource_.GetData()->strName_ )
@@ -301,16 +301,15 @@ namespace
 // Name: ADN_People_Data::CheckErrors
 // Created: LGY 2011-01-31
 // -----------------------------------------------------------------------------
-std::string ADN_People_Data::PeopleInfos::CheckErrors()
+const std::string ADN_People_Data::PeopleInfos::CheckErrors() const
 {
-    for( IT_Events it1 = schedule_.begin(); it1 != schedule_.end(); ++it1 )
-        for( IT_Events it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
+    for( CIT_Events it1 = schedule_.begin(); it1 != schedule_.end(); ++it1 )
+        for( CIT_Events it2 = schedule_.begin(); it2 != schedule_.end(); ++it2 )
             if( it1->first != it2->first && it1->second->day_.GetData() == it2->second->day_.GetData() &&
                 !CheckTime( it1->second->from_.GetData(), it1->second->to_.GetData(), it2->second->from_.GetData(), it2->second->to_.GetData() ) )
                     return tools::translate( "People_Data", "Invalid schedule - You have already an appointment on the same moment :" ).ascii() + std::string( "\n" ) + "- " + it1->second->day_.GetData() + " : " + it1->second->from_.GetData() + " / " + it1->second->to_.GetData() + "\n" +
                            "- " + it2->second->day_.GetData() + " : " + it2->second->from_.GetData() + " / " + it2->second->to_.GetData() + "\n";
-    if ( !repartition_.CheckNoError() )
-        return tools::translate( "People_Data", "Invalid repartition - Male/Female/Children repartition doesn't fit 100%" ).ascii();
+    repartition_.CheckNoError( "ADN_People_Data" );
     return "";
 }
 
@@ -318,7 +317,7 @@ std::string ADN_People_Data::PeopleInfos::CheckErrors()
 // Name: PeopleInfos::WriteArchive
 // Created: SLG 2010-11-22
 // -----------------------------------------------------------------------------
-void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosId )
+void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosId ) const
 {
     const std::string error = CheckErrors();
     if( error != "" )
@@ -332,7 +331,7 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
     output  << xml::end
             << xml::start( "schedule" )
                 << xml::attribute( "transfer-time", transferTime_ );
-    for( IT_Events it = schedule_.begin(); it != schedule_.end(); ++it )
+    for( CIT_Events it = schedule_.begin(); it != schedule_.end(); ++it )
         it->second->WriteArchive( output );
     output  << xml::end
             << xml::start( "safety-level" )
@@ -343,7 +342,7 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
                 << xml::attribute( "people-per-facility", healthNeed_ )
             << xml::end
             << xml::start( "consumption" );
-    for( IT_PeopleInfosConsumptionVector it = consumptions_.begin(); it != consumptions_.end(); ++it )
+    for( CIT_PeopleInfosConsumptionVector it = consumptions_.begin(); it != consumptions_.end(); ++it )
         ( *it )->WriteArchive( output );
     output  << xml::end
         << xml::end;
@@ -443,7 +442,7 @@ void ADN_People_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "populations" );
     ADN_Tools::AddSchema( output, "Inhabitants" );
     int n = 0;
-    for( IT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it, ++n )
+    for( CIT_PeopleInfosVector it = vPeople_.begin(); it != vPeople_.end(); ++it, ++n )
         ( *it )->WriteArchive( output, n );
     output << xml::end;
 }

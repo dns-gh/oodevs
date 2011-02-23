@@ -25,6 +25,7 @@ class ADN_Table;
 // =============================================================================
 class ADN_Population_GUI : public ADN_GUI_ABC
 {
+    Q_OBJECT
 
 public:
     enum E_GuiElements
@@ -66,6 +67,11 @@ public:
     //! @name Operations
     //@{
     void Build();
+    //@}
+
+private slots:
+    //! @name slots
+    //@{
     void PercentageChanged();
     //@}
 

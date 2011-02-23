@@ -46,7 +46,7 @@ public:
         EventInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_String day_;
@@ -68,15 +68,13 @@ public:
         PeopleInfosConsumption* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& xos );
+        void WriteArchive( xml::xostream& xos ) const;
 
     public:
         ADN_TypePtr_InVector_ABC< ADN_ResourceNetworks_Data::ResourceNetworkInfos > ptrResource_;
         ADN_Type_Int consumption_;
     };
-
-    typedef ADN_Type_Vector_ABC< PeopleInfosConsumption > T_PeopleInfosConsumptionVector;
-    typedef T_PeopleInfosConsumptionVector::iterator     IT_PeopleInfosConsumptionVector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< PeopleInfosConsumption >, PeopleInfosConsumptionVector )
 
 // *****************************************************************************
     class PeopleInfos
@@ -93,15 +91,16 @@ public:
         PeopleInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output, int mosId );
+        void WriteArchive( xml::xostream& output, int mosId ) const;
 
         typedef std::map< int, boost::shared_ptr< EventInfos > > T_Events;
         typedef T_Events::iterator                              IT_Events;
+        typedef T_Events::const_iterator                       CIT_Events;
 
     private:
         void ReadEvent( xml::xistream& input, int& index );
         void ReadConsumption( xml::xistream& input );
-        std::string CheckErrors();
+        const std::string CheckErrors() const;
 
     public:
         ADN_Type_String strName_;
@@ -114,9 +113,7 @@ public:
         T_Events schedule_;
         T_PeopleInfosConsumptionVector consumptions_;
     };
-
-    typedef ADN_Type_Vector_ABC< PeopleInfos > T_PeopleInfosVector;
-    typedef T_PeopleInfosVector::iterator     IT_PeopleInfosVector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< PeopleInfos >, PeopleInfosVector )
 
 // *****************************************************************************
 public:
