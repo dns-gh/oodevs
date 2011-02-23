@@ -21,6 +21,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Tools.h"
 #include <boost/bind.hpp>
 
 using namespace gui;
@@ -230,7 +231,7 @@ void GradientWidget::Reset()
     while( it.HasMoreElements() )
     {
         const Gradient& item = it.NextElement();
-        presetCombo_->insertItem( item.GetName() );
+        presetCombo_->insertItem( tools::translate( "gradients",item.GetName() ) );
         presets_.push_back( new Gradient( item ) );
     }
     Select( options_.GetOption( "Gradient", QString( "default" ) ).To< QString >() );

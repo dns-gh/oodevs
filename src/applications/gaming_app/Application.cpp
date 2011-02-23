@@ -63,6 +63,7 @@ Application::Application( int argc, char** argv, const QString& expiration )
     AddTranslator( locale, "indicators" );
     AddTranslator( locale, "clients_gui_app6" );
     AddTranslator( locale, "clients_gui_sword" );
+    AddTranslator( locale, "resources_gradients" );
     ENT_Tr::InitTranslations();
 }
 
