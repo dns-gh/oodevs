@@ -87,6 +87,22 @@
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
+namespace
+{
+    // -----------------------------------------------------------------------------
+    // Name: MIL_EntityManagerStaticMethods::InitializeType
+    // Created: RPD 2010-02-07
+    // -----------------------------------------------------------------------------
+    template < typename T >
+    void InitializeType( MIL_Config& config, const std::string& strSection )
+    {
+        std::string invalidSignatureFiles;
+        std::string missingSignatureFiles;
+        config.GetLoader().LoadPhysicalFileAndCRC( strSection, &T::Initialize, invalidSignatureFiles, missingSignatureFiles );
+        MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManagerStaticMethods constructor
 // Created: RPD 2010-02-07

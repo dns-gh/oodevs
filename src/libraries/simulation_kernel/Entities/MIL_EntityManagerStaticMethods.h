@@ -52,8 +52,7 @@ private:
 protected:
     //! @name static Type Initializations
     //@{
-    template < typename T >
-    static void InitializeType       ( MIL_Config& config, const std::string& strSection );
+
     static void InitializeMedical    ( MIL_Config& config );
     static void InitializeMedicalTreatment( MIL_Config& config, const MIL_Time_ABC& time );
     static void InitializeComposantes( MIL_Config& config, const MIL_Time_ABC& time );
@@ -61,18 +60,5 @@ protected:
     static void InitializeSensors    ( MIL_Config& config, const MIL_Time_ABC& time );
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManagerStaticMethods::InitializeType
-// Created: RPD 2010-02-07
-// -----------------------------------------------------------------------------
-template < typename T >
-void MIL_EntityManagerStaticMethods::InitializeType( MIL_Config& config, const std::string& strSection )
-{
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( strSection, &T::Initialize, invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
-}
 
 #endif // __MIL_EntityManagerStaticMethods_h_
