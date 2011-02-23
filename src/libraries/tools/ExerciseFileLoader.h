@@ -28,7 +28,6 @@ public:
     //@{
              ExerciseFileLoader( const tools::ExerciseConfig& config );
              ExerciseFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles );
-             ExerciseFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles, std::string& malformedFiles );
     virtual ~ExerciseFileLoader();
     //@}
 

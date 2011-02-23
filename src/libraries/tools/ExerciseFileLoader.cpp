@@ -34,16 +34,6 @@ ExerciseFileLoader::ExerciseFileLoader( const tools::ExerciseConfig& config, std
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseFileLoader constructor
-// Created: LDC 2011-02-10
-// -----------------------------------------------------------------------------
-ExerciseFileLoader::ExerciseFileLoader( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles, std::string& malformedFiles )
-    : FileLoader( config, invalidSignatureFiles, missingSignatureFiles, malformedFiles )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ExerciseFileLoader destructor
 // Created: LDC 2010-11-29
 // -----------------------------------------------------------------------------
