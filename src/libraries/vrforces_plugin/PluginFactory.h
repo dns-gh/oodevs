@@ -44,15 +44,6 @@ private:
     PluginFactory( const PluginFactory& );            //!< Copy constructor
     PluginFactory& operator=( const PluginFactory& ); //!< Assignment operator
     //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 }
