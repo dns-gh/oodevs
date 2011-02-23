@@ -112,7 +112,7 @@ void ADN_Type_ABC<T>::SetData(const T& data, bool bCanBeUndone )
 //-----------------------------------------------------------------------------
 template <class T>
 inline
-T ADN_Type_ABC<T>::GetData()
+const T ADN_Type_ABC<T>::GetData() const
 {
     return val_;
 }

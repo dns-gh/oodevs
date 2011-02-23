@@ -82,7 +82,7 @@ ADN_Type_Enum<T,nb>::~ADN_Type_Enum()
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template <class T,int nb>
-T ADN_Type_Enum<T,nb>::GetData()
+const T ADN_Type_Enum<T,nb>::GetData() const
 {
     return data_;
 }

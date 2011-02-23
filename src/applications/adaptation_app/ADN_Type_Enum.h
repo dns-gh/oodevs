@@ -32,7 +32,7 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    T           GetData();
+    const T GetData() const;
     virtual void Initialize( ADN_Connector_Vector_ABC& dest ) const;
     virtual std::string GetNodeName();
     //@}

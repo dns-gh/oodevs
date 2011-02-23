@@ -97,7 +97,7 @@ void ADN_Composantes_Data::AmbulanceInfos::ReadArchive( xml::xistream& input )
 // Name: AmbulanceInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::AmbulanceInfos::WriteArchive( const std::string& section, xml::xostream& output )
+void ADN_Composantes_Data::AmbulanceInfos::WriteArchive( const std::string& section, xml::xostream& output ) const
 {
     std::string woundedTransports;
     for( int n = 0; n < eNbrDoctorSkills; ++n )
@@ -220,7 +220,7 @@ void ADN_Composantes_Data::LogHealthInfos::ReadArchive( xml::xistream& input )
 // Name: LogHealthInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogHealthInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::LogHealthInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "health-functions" );
     if( bIsAmbulance_.GetData() )
@@ -322,7 +322,7 @@ void ADN_Composantes_Data::NTIInfos::ReadArchive( xml::xistream& input )
 // Name: NTIInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::NTIInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::NTIInfos::WriteArchive( xml::xostream& output ) const
 {
     if( ! bIsPresent_.GetData() )
         return;
@@ -430,7 +430,7 @@ void ADN_Composantes_Data::LogMaintenanceInfos::ReadArchive( xml::xistream& inpu
 // Name: LogMaintenanceInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::LogMaintenanceInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "maintenance-functions" );
     if( bIsTower_.GetData() )
@@ -518,7 +518,7 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
 // Name: LogSupplyInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "supply-functions" );
     if( bIsCarrier_.GetData() )
@@ -609,7 +609,7 @@ void ADN_Composantes_Data::LogInfos::ReadArchive( xml::xistream& input )
 // Name: LogInfos::WriteArchive
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::LogInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::LogInfos::WriteArchive( xml::xostream& output ) const
 {
     if( ! bHasHealthInfos_.GetData() && ! bHasMaintenanceInfos_.GetData() && ! bHasSupplyInfos_.GetData() )
         return;
@@ -687,7 +687,7 @@ void ADN_Composantes_Data::BreakdownInfos::ReadArchive( xml::xistream& input )
 // Name: BreakdownInfos::WriteArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::BreakdownInfos::WriteArchive( const std::string& origin, xml::xostream& output )
+void ADN_Composantes_Data::BreakdownInfos::WriteArchive( const std::string& origin, xml::xostream& output ) const
 {
     output << xml::start( "breakdown" )
             << xml::attribute( "origin", origin )
@@ -774,15 +774,15 @@ void ADN_Composantes_Data::BreakdownGroupInfos::ReadArchive( xml::xistream& inpu
 // Name: BreakdownGroupInfos::WriteArchive
 // Created: APE 2005-04-27
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& output ) const
 {
     double rSum = 0.0;
-    for( IT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
+    for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         rSum += (*it)->rPercentage_.GetData();
     if( rSum != 100.0 )
         throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).ascii(), tools::translate( "Composante_Data",  "Equipment - Invalid breakdown data : sum != 100" ).ascii() );
 
-    for( IT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
+    for( CIT_BreakdownInfos_Vector it = vBreakdowns_.begin(); it != vBreakdowns_.end() ; ++it )
         (*it)->WriteArchive( strName_, output );
 }
 
@@ -830,7 +830,7 @@ void ADN_Composantes_Data::SpeedInfos::ReadArchive( xml::xistream& input )
 // Name: SpeedInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::SpeedInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::SpeedInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "speed" )
             << xml::attribute( "terrain", ADN_Tr::ConvertFromLocation( nTypeTerrain_ ) )
@@ -900,7 +900,7 @@ void ADN_Composantes_Data::SensorInfos::ReadArchive( xml::xistream& input )
 // Name: SensorInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::SensorInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::SensorInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "sensor" )
             << xml::attribute( "height", rHeight_ )
@@ -969,7 +969,7 @@ void ADN_Composantes_Data::RadarInfos::ReadArchive( xml::xistream& input )
 // Name: RadarInfos::WriteArchive
 // Created: APE 2005-05-03
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::RadarInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::RadarInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "radar" )
             << xml::attribute( "type", ptrRadar_.GetData()->strName_ )
@@ -1050,7 +1050,7 @@ void ADN_Composantes_Data::WeaponInfos::ReadArchive( xml::xistream& input )
 // Name: WeaponInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::WeaponInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::WeaponInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "weapon-system" )
             << xml::attribute( "launcher", ptrWeapon_.GetData()->ptrLauncher_.GetData()->strName_ )
@@ -1107,7 +1107,7 @@ void ADN_Composantes_Data::HumanProtectionInfos::ReadArchive( xml::xistream& inp
 // Name: ADN_Composantes_Data::WriteArchive
 // Created: JCR 2009-05-17
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::HumanProtectionInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::HumanProtectionInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "human-protections" ) << xml::end;
 }
@@ -1186,7 +1186,7 @@ void ADN_Composantes_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& i
 // Name: ADN_Composantes_Data::WriteArchive
 // Created: LDC 2010-01-12
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "protection" )
             << xml::attribute( "name", ptrActiveProtections_.GetData()->strName_ )
@@ -1263,7 +1263,7 @@ void ADN_Composantes_Data::CategoryInfos::ReadArchive( xml::xistream& input )
 // Name: CategoryInfos::WriteArchive
 // Created: APE 2004-12-29
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::CategoryInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::CategoryInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource" )
             << xml::attribute( "name", ptrCategory_.GetData()->strName_ )
@@ -1348,12 +1348,12 @@ void ADN_Composantes_Data::ResourceInfos::ReadArchive( xml::xistream& input )
 // Name: ResourceInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ResourceInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::ResourceInfos::WriteArchive( xml::xostream& output ) const
 {
     for( uint n = 0; n < eNbrDotationFamily; ++n )
     {
         bool entered = false;
-        for( IT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
+        for( CIT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
             if( (*it)->ptrDotation_.GetData()->nType_ == E_DotationFamily( n ) )
             {
                 if( !entered )
@@ -1515,7 +1515,7 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( xml::xistream& input )
 // Name: ObjectInfos::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ObjectInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::ObjectInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "object" )
             << xml::attribute( "type", ptrObject_.GetData()->strType_ );
@@ -1596,7 +1596,7 @@ void ADN_Composantes_Data::ConsumptionItem::ReadArchive( xml::xistream& input )
 // Name: ConsumptionItem::WriteArchive
 // Created: APE 2004-11-26
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ConsumptionItem::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::ConsumptionItem::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource" )
             << xml::attribute( "category", ptrCategory_.GetData()->parentResource_.strName_ )
@@ -1687,13 +1687,13 @@ void ADN_Composantes_Data::ConsumptionsInfos::ReadArchive( xml::xistream& input 
 // Name: ConsumptionsInfos::WriteArchive
 // Created: APE 2005-01-25
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "consumptions" );
     for( int nType = 0; nType < eNbrConsumptionType; ++nType )
     {
         bool entered = false;
-        for( IT_ConsumptionItem_Vector it = vConsumptions_.begin(); it != vConsumptions_.end(); ++it )
+        for( CIT_ConsumptionItem_Vector it = vConsumptions_.begin(); it != vConsumptions_.end(); ++it )
             if( (*it)->nConsumptionType_ == nType )
             {
                 if( ! entered )
@@ -2036,7 +2036,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
 // Name: ADN_Composantes_Data::IsValidDatabase
 // Created: PHC 2011-01-20
 // -----------------------------------------------------------------------------
-bool ADN_Composantes_Data::ComposanteInfos::IsValidDatabase()
+bool ADN_Composantes_Data::ComposanteInfos::IsValidDatabase() const
 {
     if( attritionBreakdowns_.vBreakdowns_.empty() || randomBreakdowns_.vBreakdowns_.empty() )
         if( ptrArmor_.GetData()->nType_.GetData() != eProtectionType_Human )
@@ -2048,9 +2048,9 @@ bool ADN_Composantes_Data::ComposanteInfos::IsValidDatabase()
 // Name: ADN_Composantes_Data::IsValidDatabase
 // Created: PHC 2011-01-20
 // -----------------------------------------------------------------------------
-bool ADN_Composantes_Data::IsValidDatabase()
+bool ADN_Composantes_Data::IsValidDatabase() const
 {
-    for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    for( CIT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
         if( !(*it)->IsValidDatabase() )
             return false;
     return true;
@@ -2060,7 +2060,7 @@ bool ADN_Composantes_Data::IsValidDatabase()
 // Name: ComposanteInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "equipment" )
                << xml::attribute( "comment", strAdditionalComments_ )
@@ -2076,7 +2076,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
 
     output << xml::start( "speeds" )
             << xml::attribute( "max", rMaxSpeed_ );
-    for( IT_SpeedInfos_Vector itSpeed = vSpeeds_.begin(); itSpeed != vSpeeds_.end(); ++itSpeed )
+    for( CIT_SpeedInfos_Vector itSpeed = vSpeeds_.begin(); itSpeed != vSpeeds_.end(); ++itSpeed )
         (*itSpeed)->WriteArchive( output );
     output << xml::end;
 
@@ -2085,12 +2085,12 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     output << xml::end;
 
     output << xml::start( "sensors" );
-    for( IT_SensorInfos_Vector itSensor = vSensors_.begin(); itSensor != vSensors_.end(); ++itSensor )
+    for( CIT_SensorInfos_Vector itSensor = vSensors_.begin(); itSensor != vSensors_.end(); ++itSensor )
         (*itSensor)->WriteArchive( output );
     output << xml::end;
 
     output << xml::start( "radars" );
-    for( IT_RadarInfos_Vector itRadar = vRadars_.begin(); itRadar != vRadars_.end(); ++itRadar )
+    for( CIT_RadarInfos_Vector itRadar = vRadars_.begin(); itRadar != vRadars_.end(); ++itRadar )
         (*itRadar)->WriteArchive( output );
     output << xml::end;
 
@@ -2111,14 +2111,14 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     consumptions_.WriteArchive( output );
 
     output << xml::start( "weapon-systems" );
-    for( IT_WeaponInfos_Vector itWeapon = vWeapons_.begin(); itWeapon != vWeapons_.end(); ++itWeapon )
+    for( CIT_WeaponInfos_Vector itWeapon = vWeapons_.begin(); itWeapon != vWeapons_.end(); ++itWeapon )
         (*itWeapon)->WriteArchive( output );
     output << xml::end;
 
     if( ! vActiveProtections_.empty() )
     {
         output << xml::start( "active-protections" );
-        for( IT_ActiveProtectionsInfos_Vector itActiveProtections = vActiveProtections_.begin(); itActiveProtections != vActiveProtections_.end(); ++itActiveProtections )
+        for( CIT_ActiveProtectionsInfos_Vector itActiveProtections = vActiveProtections_.begin(); itActiveProtections != vActiveProtections_.end(); ++itActiveProtections )
             (*itActiveProtections)->WriteArchive( output );
         output << xml::end;
     }
@@ -2126,7 +2126,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     humanProtections_.WriteArchive( output );
 
     output << xml::start( "objects" );
-    for( IT_ObjectInfos_Vector itObject = vObjects_.begin(); itObject != vObjects_.end(); ++itObject )
+    for( CIT_ObjectInfos_Vector itObject = vObjects_.begin(); itObject != vObjects_.end(); ++itObject )
         (*itObject)->WriteArchive( output );
     output << xml::end;
 
@@ -2224,7 +2224,7 @@ void ADN_Composantes_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "equipments" );
     ADN_Tools::AddSchema( output, "Equipments" );
-    for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    for( CIT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
         (*it)->WriteArchive( output );
     output << xml::end;
 }

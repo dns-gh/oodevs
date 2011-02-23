@@ -13,6 +13,7 @@
 #include "ADN_Connector_ABC.h"
 #include "ADN_DataTreeNode_ABC.h"
 #include <iostream>
+#include <xeumeuleu/xml.h>
 
 //*****************************************************************************
 // Created: JDY 03-07-02
@@ -38,7 +39,7 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    T    GetData();
+    const T GetData() const;
     //@}
 
     //-------------------------------------------------------------------------
@@ -88,7 +89,13 @@ private:
 };
 
 template< typename T >
-std::ostream& operator<<( std::ostream& os, ADN_Type_ABC<T>& value )
+std::ostream& operator<<( std::ostream& os, ADN_Type_ABC< T >& value )
+{
+    os << value.GetData();
+    return os;
+}
+template< typename T >
+xml::xostream& operator<<( xml::xostream& os, const ADN_Type_ABC< T >& value )
 {
     os << value.GetData();
     return os;

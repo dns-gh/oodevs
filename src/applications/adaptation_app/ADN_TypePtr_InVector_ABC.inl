@@ -137,7 +137,7 @@ void ADN_TypePtr_InVector_ABC<T>::SetData(const T_TypePtr& value, bool bCanBeUnd
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template <class T>
-typename ADN_TypePtr_InVector_ABC<T>::T_TypePtr ADN_TypePtr_InVector_ABC<T>::GetData()
+typename const ADN_TypePtr_InVector_ABC<T>::T_TypePtr ADN_TypePtr_InVector_ABC<T>::GetData() const
 {
     return pData_;
 }

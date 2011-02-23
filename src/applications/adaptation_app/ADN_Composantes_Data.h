@@ -49,7 +49,7 @@ public:
         void CopyFrom( AmbulanceInfos& src );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( const std::string& section, xml::xostream& output );
+        void WriteArchive( const std::string& section, xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool   transportSkills_[eNbrDoctorSkills];
@@ -75,7 +75,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadInfo( const std::string& type, xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool bIsAmbulance_;
@@ -105,7 +105,7 @@ public:
         void CopyFrom( NTIInfos& src );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         std::string strName_;
@@ -131,7 +131,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadInfo( const std::string& type, xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool bIsTower_;
@@ -159,7 +159,7 @@ public:
         void CopyFrom( LogSupplyInfos& src );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool bIsCarrier_;
@@ -182,7 +182,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadLogisticFunction( const std::string& type, xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_Type_Bool       bHasHealthInfos_;
@@ -208,15 +208,16 @@ public:
 
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( const std::string& origin, xml::xostream& output );
+        void WriteArchive( const std::string& origin, xml::xostream& output ) const;
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Breakdowns_Data::BreakdownInfo> ptrBreakdown_;
         ADN_Type_Double          rPercentage_;
     };
 
-    typedef ADN_Type_Vector_ABC<BreakdownInfos>     T_BreakdownInfos_Vector;
-    typedef T_BreakdownInfos_Vector::iterator       IT_BreakdownInfos_Vector;
+    typedef ADN_Type_Vector_ABC<BreakdownInfos>       T_BreakdownInfos_Vector;
+    typedef T_BreakdownInfos_Vector::iterator        IT_BreakdownInfos_Vector;
+    typedef T_BreakdownInfos_Vector::const_iterator CIT_BreakdownInfos_Vector;
 
     //*****************************************************************************
     class BreakdownGroupInfos : public ADN_DataTreeNode_ABC
@@ -232,7 +233,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadBreakdown( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         std::string strName_;
@@ -250,7 +251,7 @@ public:
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_Location          nTypeTerrain_;
@@ -272,9 +273,9 @@ public:
         };
     };
 
-    typedef ADN_Type_Vector_ABC<SpeedInfos>    T_SpeedInfos_Vector;
-    typedef T_SpeedInfos_Vector::iterator      IT_SpeedInfos_Vector;
-
+    typedef ADN_Type_Vector_ABC<SpeedInfos>       T_SpeedInfos_Vector;
+    typedef T_SpeedInfos_Vector::iterator        IT_SpeedInfos_Vector;
+    typedef T_SpeedInfos_Vector::const_iterator CIT_SpeedInfos_Vector;
 
     //*****************************************************************************
     class SensorInfos : public ADN_Ref_ABC
@@ -290,7 +291,7 @@ public:
         SensorInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Sensors_Data::SensorInfos> ptrSensor_;
@@ -312,9 +313,9 @@ public:
         };
     };
 
-    typedef ADN_Type_Vector_ABC<SensorInfos>    T_SensorInfos_Vector;
-    typedef T_SensorInfos_Vector::iterator      IT_SensorInfos_Vector;
-
+    typedef ADN_Type_Vector_ABC<SensorInfos>       T_SensorInfos_Vector;
+    typedef T_SensorInfos_Vector::iterator        IT_SensorInfos_Vector;
+    typedef T_SensorInfos_Vector::const_iterator CIT_SensorInfos_Vector;
 
     //*****************************************************************************
     class RadarInfos : public ADN_Ref_ABC
@@ -330,16 +331,16 @@ public:
         RadarInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Radars_Data::RadarInfos> ptrRadar_;
         ADN_Type_String                                       strName_; //!< Not for editing.
     };
 
-    typedef ADN_Type_Vector_ABC<RadarInfos>     T_RadarInfos_Vector;
-    typedef T_RadarInfos_Vector::iterator      IT_RadarInfos_Vector;
-
+    typedef ADN_Type_Vector_ABC<RadarInfos>       T_RadarInfos_Vector;
+    typedef T_RadarInfos_Vector::iterator        IT_RadarInfos_Vector;
+    typedef T_RadarInfos_Vector::const_iterator CIT_RadarInfos_Vector;
 
     //*****************************************************************************
     class WeaponInfos : public ADN_Ref_ABC
@@ -356,7 +357,7 @@ public:
         WeaponInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Weapons_Data::WeaponInfos> ptrWeapon_;
@@ -379,8 +380,9 @@ public:
         };*/
     };
 
-    typedef ADN_Type_Vector_ABC<WeaponInfos>    T_WeaponInfos_Vector;
-    typedef T_WeaponInfos_Vector::iterator      IT_WeaponInfos_Vector;
+    typedef ADN_Type_Vector_ABC<WeaponInfos>       T_WeaponInfos_Vector;
+    typedef T_WeaponInfos_Vector::iterator        IT_WeaponInfos_Vector;
+    typedef T_WeaponInfos_Vector::const_iterator CIT_WeaponInfos_Vector;
 
     //*****************************************************************************
     class ActiveProtectionsInfos : public ADN_Ref_ABC
@@ -397,7 +399,7 @@ public:
         ActiveProtectionsInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
         void ReadProtection( xml::xistream& input );
 
     public:
@@ -405,8 +407,9 @@ public:
         ADN_Type_String                                                              strName_; //!< Not for editing.
     };
 
-    typedef ADN_Type_Vector_ABC<ActiveProtectionsInfos>    T_ActiveProtectionsInfos_Vector;
-    typedef T_ActiveProtectionsInfos_Vector::iterator      IT_ActiveProtectionsInfos_Vector;
+    typedef ADN_Type_Vector_ABC<ActiveProtectionsInfos>       T_ActiveProtectionsInfos_Vector;
+    typedef T_ActiveProtectionsInfos_Vector::iterator        IT_ActiveProtectionsInfos_Vector;
+    typedef T_ActiveProtectionsInfos_Vector::const_iterator CIT_ActiveProtectionsInfos_Vector;
 
     //*****************************************************************************
     class HumanProtectionInfos : public ADN_Ref_ABC
@@ -422,7 +425,7 @@ public:
         void CopyFrom( HumanProtectionInfos& src );
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     };
 
@@ -437,7 +440,7 @@ public:
         virtual std::string GetNodeName();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     private:
         void ReadProtection( xml::xistream& input );
@@ -459,7 +462,7 @@ public:
         CategoryInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::ResourceInfos> ptrDotation_;
@@ -469,9 +472,9 @@ public:
         ADN_Type_Double                                              rNormalizedConsumption_;
     };
 
-    typedef ADN_Type_Vector_ABC<CategoryInfos>    T_CategoryInfos_Vector;
-    typedef T_CategoryInfos_Vector::iterator      IT_CategoryInfos_Vector;
-
+    typedef ADN_Type_Vector_ABC<CategoryInfos>       T_CategoryInfos_Vector;
+    typedef T_CategoryInfos_Vector::iterator        IT_CategoryInfos_Vector;
+    typedef T_CategoryInfos_Vector::const_iterator CIT_CategoryInfos_Vector;
 
     //*****************************************************************************
     class ResourceInfos : public ADN_Ref_ABC
@@ -490,7 +493,7 @@ public:
 
         void ReadArchive( xml::xistream& input );
         void ReadDotation( xml::xistream& input, ADN_Equipement_Data::ResourceInfos& dotation );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         T_CategoryInfos_Vector categories_;
@@ -511,7 +514,7 @@ public:
         ObjectInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         ADN_TypePtr_InVector_ABC<ADN_Objects_Data::ObjectInfos>     ptrObject_;
@@ -554,9 +557,9 @@ public:
 //        };
     };
 
-    typedef ADN_Type_Vector_ABC<ObjectInfos>    T_ObjectInfos_Vector;
-    typedef T_ObjectInfos_Vector::iterator      IT_ObjectInfos_Vector;
-
+    typedef ADN_Type_Vector_ABC<ObjectInfos>       T_ObjectInfos_Vector;
+    typedef T_ObjectInfos_Vector::iterator        IT_ObjectInfos_Vector;
+    typedef T_ObjectInfos_Vector::const_iterator CIT_ObjectInfos_Vector;
 
     //*****************************************************************************
     class ConsumptionItem : public ADN_Ref_ABC
@@ -572,7 +575,7 @@ public:
         ConsumptionItem* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_ConsumptionType                                           nConsumptionType_;
@@ -580,9 +583,9 @@ public:
         ADN_Type_Double                                             nQuantityUsedPerHour_;
     };
 
-    typedef ADN_Type_Vector_ABC<ConsumptionItem>    T_ConsumptionItem_Vector;
-    typedef T_ConsumptionItem_Vector::iterator      IT_ConsumptionItem_Vector;
-
+    typedef ADN_Type_Vector_ABC<ConsumptionItem>       T_ConsumptionItem_Vector;
+    typedef T_ConsumptionItem_Vector::iterator        IT_ConsumptionItem_Vector;
+    typedef T_ConsumptionItem_Vector::const_iterator CIT_ConsumptionItem_Vector;
 
     //*****************************************************************************
     class ConsumptionsInfos : public ADN_Ref_ABC
@@ -600,7 +603,7 @@ public:
         void ReadArchive( xml::xistream& input );
         void ReadConsumption( xml::xistream& input );
         void ReadDotation( xml::xistream& input, const E_ConsumptionType& type );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         T_ConsumptionItem_Vector vConsumptions_;
@@ -628,8 +631,8 @@ public:
         void ReadWeapon( xml::xistream& input );
         void ReadActiveProtection( xml::xistream& input );
         void ReadObject( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
-        bool IsValidDatabase();
+        void WriteArchive( xml::xostream& output ) const;
+        bool IsValidDatabase() const;
 
     public:
         ADN_Type_String strName_;
@@ -681,8 +684,9 @@ public:
         };
     };
 
-    typedef ADN_Type_Vector_ABC<ComposanteInfos> T_ComposanteInfos_Vector;
-    typedef T_ComposanteInfos_Vector::iterator  IT_ComposanteInfos_Vector;
+    typedef ADN_Type_Vector_ABC<ComposanteInfos>       T_ComposanteInfos_Vector;
+    typedef T_ComposanteInfos_Vector::iterator        IT_ComposanteInfos_Vector;
+    typedef T_ComposanteInfos_Vector::const_iterator CIT_ComposanteInfos_Vector;
 
     //*****************************************************************************
 public:
@@ -691,7 +695,7 @@ public:
 
     void FilesNeeded(T_StringList& l) const;
     void Reset();
-    virtual bool IsValidDatabase();
+    virtual bool IsValidDatabase() const;
     T_ComposanteInfos_Vector& GetComposantes();
     ComposanteInfos* FindComposante( const std::string& strName );
 

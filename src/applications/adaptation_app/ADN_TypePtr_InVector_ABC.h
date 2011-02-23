@@ -39,8 +39,8 @@ public:
     virtual void Initialize( ADN_Connector_Vector_ABC& dest ) const;
     virtual void Initialize( ADN_Connector_ABC& dest ) const;
 
-    void          SetData(const T_TypePtr& value, bool bCanBeUndone );
-    T_TypePtr     GetData();
+    void SetData(const T_TypePtr& value, bool bCanBeUndone );
+    const T_TypePtr GetData() const;
 
     void          SetVector(const T_TypeVector& v);
     T_TypeVector& GetVector();
