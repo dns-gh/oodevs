@@ -33,8 +33,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void CheckFile       ( const std::string& file ) const;
     virtual void LoadPhysicalFile( const std::string& rootTag, T_Loader loader, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const;
-    //virtual void LoadExerciseFile( 
     //@}
 
 private:

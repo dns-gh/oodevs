@@ -12,7 +12,8 @@
 #include "Gauge.h"
 #include "GaugeType.h"
 #include "GaugeTypeFactory.h"
-#include "tools/FileLoader.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace indicators;
@@ -42,7 +43,7 @@ GaugeTypes::~GaugeTypes()
 // -----------------------------------------------------------------------------
 void GaugeTypes::Load( const tools::ExerciseConfig& config, const std::string& filename )
 {
-    tools::FileLoader( config, filename );
+    config.GetLoader().CheckFile( filename );
     xml::xifstream xis( filename );
     xis >> xml::start( "templates" )
             >> xml::list( "template", *this, &GaugeTypes::ReadTemplate )

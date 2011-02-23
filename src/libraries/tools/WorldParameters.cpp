@@ -10,7 +10,7 @@
 #include "tools_pch.h"
 #include "WorldParameters.h"
 #include "ExerciseConfig.h"
-#include "FileLoader.h"
+#include "Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable : 4702 )
@@ -59,7 +59,7 @@ WorldParameters::~WorldParameters()
 void WorldParameters::Load( const tools::ExerciseConfig& config )
 {
     terrainFile_ = config.GetTerrainFile();
-    tools::FileLoader( config, terrainFile_ );
+    config.GetLoader().CheckFile( terrainFile_ );
     xml::xifstream xis( terrainFile_ );
     std::string world, pathfind, graphics, detection, urban;
     if( xis.has_child( "terrain" ) )

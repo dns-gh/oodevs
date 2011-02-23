@@ -10,7 +10,8 @@
 #include "preparation_pch.h"
 #include "SuccessFactorActionTypes.h"
 #include "SuccessFactorActionType.h"
-#include "tools/FileLoader.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -37,7 +38,7 @@ SuccessFactorActionTypes::~SuccessFactorActionTypes()
 // -----------------------------------------------------------------------------
 void SuccessFactorActionTypes::Load( const tools::ExerciseConfig& config, const std::string& file )
 {
-    tools::FileLoader( config, file );
+    config.GetLoader().CheckFile( file );
     xml::xifstream xis( file );
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &SuccessFactorActionTypes::ReadAction )

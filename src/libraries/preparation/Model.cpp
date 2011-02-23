@@ -41,7 +41,7 @@
 #include "clients_gui/DrawerModel.h"
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
-#include "tools/ExerciseFileLoader.h"
+#include "tools/Loader_ABC.h"
 #include <tools/XmlCrc32Signature.h>
 #include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
@@ -177,7 +177,7 @@ namespace
             missingSignedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
         try
         {
-            tools::FileLoader( config, file );
+            config.GetLoader().CheckFile( file );
         }
         catch( xml::exception& )
         {
@@ -192,7 +192,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors, std::string& invalidSignedFiles, std::string& missingSignedFiles, std::string& malformedFiles )
 {
-    tools::ExerciseFileLoader loader( config, invalidSignedFiles, missingSignedFiles, malformedFiles );
+    config.GetLoader().CheckFile( config.GetPhysicalFile() );
     {
         std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
         try

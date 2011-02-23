@@ -10,7 +10,8 @@
 #include "clients_gui_pch.h"
 #include "DrawingTypes.h"
 #include "DrawingCategory.h"
-#include "tools/FileLoader.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
 #include <svgl/TextRenderer.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -42,7 +43,7 @@ DrawingTypes::~DrawingTypes()
 // -----------------------------------------------------------------------------
 void DrawingTypes::Load( const tools::ExerciseConfig& config, const std::string& filename )
 {
-    tools::FileLoader( config, filename );
+    config.GetLoader().CheckFile( filename );
     xml::xifstream input( filename );
     input >> xml::start( "templates" )
             >> xml::list( "category", *this, &DrawingTypes::ReadCategory )

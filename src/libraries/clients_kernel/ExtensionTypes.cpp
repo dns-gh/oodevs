@@ -11,8 +11,8 @@
 #include "ExtensionTypes.h"
 #include "DictionaryType.h"
 #include "ExtensionType.h"
-#include "tools/FileLoader.h"
-#include "tools/GeneralConfig.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/filesystem/path.hpp>
@@ -49,7 +49,7 @@ void ExtensionTypes::Load( const tools::ExerciseConfig& config, const std::strin
 {
     if( ! bfs::exists( bfs::path( file, bfs::native ) ) )
         return;
-    tools::FileLoader( config, file );
+    config.GetLoader().CheckFile( file );
     xml::xifstream xis( file );
     xis >> xml::start( "extensions" );
     const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );

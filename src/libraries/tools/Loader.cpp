@@ -21,6 +21,7 @@ using namespace tools;
 Loader::Loader( const ExerciseConfig& config )
     : config_( config )
 {   
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +29,8 @@ Loader::Loader( const ExerciseConfig& config )
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
 Loader::~Loader()
-{   
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,4 +41,13 @@ void Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, std:
 {
     PhysicalFileLoader( config_, invalidSignatureFiles, missingSignatureFiles )
         .Load( rootTag, loader );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Loader destructor
+// Created: NLD 2010-02-23
+// -----------------------------------------------------------------------------
+void Loader::CheckFile( const std::string& file ) const
+{
+    FileLoader( config_, file );
 }
