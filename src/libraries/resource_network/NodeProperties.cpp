@@ -25,7 +25,7 @@ NodeProperties::NodeProperties()
     : functionalState_   ( 1.f )
     , oldFunctionalState_( 1.f )
     , tools_             ( 0 )
-    , needUpdate_        ( true )
+    , needUpdate_        ( false )
 {
     // NOTHING
 }
@@ -38,7 +38,7 @@ NodeProperties::NodeProperties( const ResourceTools_ABC& tools )
     : functionalState_   ( 1.f )
     , oldFunctionalState_( 1.f )
     , tools_             ( &tools )
-    , needUpdate_        ( true )
+    , needUpdate_        ( false )
 {
     // NOTHING
 }
@@ -51,27 +51,9 @@ NodeProperties::NodeProperties( xml::xistream& xis, const ResourceTools_ABC& too
     : functionalState_   ( 1.f )
     , oldFunctionalState_( 1.f )
     , tools_             ( &tools )
-    , needUpdate_        ( true )
+    , needUpdate_        ( false )
 {
     Update( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NodeProperties constructor
-// Created: JSR 2010-09-17
-// -----------------------------------------------------------------------------
-NodeProperties::NodeProperties( const urban::ResourceNetworkAttribute& urbanAttribute, const ResourceTools_ABC& tools )
-    : functionalState_   ( 1.f)
-    , oldFunctionalState_( 1.f)
-    , tools_             ( &tools )
-    , needUpdate_        ( true )
-{
-    const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = urbanAttribute.GetResourceNodes();
-    for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
-    {
-        unsigned long resourceId = tools_->GetResourceId( it->second.resource_ );
-        Register( resourceId, *new NodeElement( it->second, resourceId ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +64,7 @@ NodeProperties::NodeProperties( const NodeProperties& from )
     : functionalState_   ( 1.f )
     , oldFunctionalState_( 1.f )
     , tools_             ( from.tools_ )
-    , needUpdate_        ( true )
+    , needUpdate_        ( false )
 {
     for( CIT_Elements it = from.elements_.begin(); it != from.elements_.end(); ++it )
         Register( it->first, *new NodeElement( *it->second ) );
@@ -98,12 +80,17 @@ NodeProperties::~NodeProperties()
 }
 
 // -----------------------------------------------------------------------------
-// Name: NodeProperties::SetModel
-// Created: JSR 2010-08-16
+// Name: NodeProperties::Initialize
+// Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
-void NodeProperties::SetModel( const ResourceNetworkModel& model )
+void NodeProperties::Initialize( const urban::ResourceNetworkAttribute& urbanAttribute )
 {
-    Apply( boost::bind( &NodeElement::SetModel, _1, boost::cref( model ) ) );
+    const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = urbanAttribute.GetResourceNodes();
+    for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
+    {
+        unsigned long resourceId = tools_->GetResourceId( it->second.resource_ );
+        Register( resourceId, *new NodeElement( it->second, resourceId ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -125,17 +112,19 @@ void NodeProperties::Update( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NodeProperties::Update
+// Name: NodeProperties::UpdateState
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void NodeProperties::Update()
+void NodeProperties::UpdateState( const ResourceNetworkModel& model )
 {
+    if( Count() == 0 )
+        return;
     // update intermediate stocks
     Apply( boost::bind( &NodeElement::UpdateImmediateStock, _1, functionalState_ ) );
     // apply consumptions
     functionalState_ = 1.f;
     Apply( boost::bind( &NodeElement::Consume, _1, boost::ref( functionalState_ ) ) );
-    Apply( boost::bind( &NodeElement::DistributeResource, _1, functionalState_ ) );
+    Apply( boost::bind( &NodeElement::DistributeResource, _1, functionalState_, boost::cref( model ) ) );
     if( std::abs( oldFunctionalState_ - functionalState_ ) >= 0.01 )
     {
         oldFunctionalState_ = functionalState_;
@@ -149,6 +138,8 @@ void NodeProperties::Update()
 // -----------------------------------------------------------------------------
 void NodeProperties::Finalize()
 {
+    if( Count() == 0 )
+        return;
     Apply( boost::bind( &NodeElement::Finalize, _1, boost::cref( *tools_ ) ) );
 }
 
@@ -169,6 +160,8 @@ void NodeProperties::Push( int quantity, unsigned long resourceId )
 // -----------------------------------------------------------------------------
 void NodeProperties::SetModifier( float modifier )
 {
+    if( Count() == 0 )
+        return;
     Apply( boost::bind( &NodeElement::SetModifier, _1, modifier ) );
 }
 
@@ -189,6 +182,8 @@ void NodeProperties::AddConsumption( unsigned long resourceId, double consumptio
 // -----------------------------------------------------------------------------
 bool NodeProperties::NeedUpdate() const
 {
+    if( Count() == 0 )
+        return false;
     if( needUpdate_ )
         return true;
     tools::Iterator< const NodeElement& > it = CreateIterator();

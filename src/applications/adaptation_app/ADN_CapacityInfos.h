@@ -74,6 +74,7 @@ enum E_Capacities
     eFloodCapacity,
     eBurnCapacity,
     eUniversalCapacity,
+    eResourceNetworkCapacity,
     eStockCapacity
 };
 
@@ -100,4 +101,4 @@ public:
 
 }
 
-#endif // __ADN_ArmorInfos_h_
+#endif // __ADN_CapacityInfos_h_

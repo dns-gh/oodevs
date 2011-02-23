@@ -219,6 +219,8 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Stock >( ADN_Objects_GUI::eStockCapacityPresent );
 
+    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_ResourceNetwork >( ADN_Objects_GUI::eResourceNetworkCapacityPresent );
+
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }
 

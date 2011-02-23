@@ -20,8 +20,7 @@ using namespace resource;
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement()
-    : model_              ( 0 )
-    , resourceId_         ( 0 )
+    : resourceId_         ( 0 )
     , resourceName_       ()
     , isActivated_        ( true )
     , productionCapacity_ ( 0 )
@@ -45,8 +44,7 @@ NodeElement::NodeElement()
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const std::string& resourceName )
-    : model_              ( 0 )
-    , resourceId_         ( resourceId )
+    : resourceId_         ( resourceId )
     , resourceName_       ( resourceName )
     , isActivated_        ( true )
     , productionCapacity_ ( 0 )
@@ -70,8 +68,7 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
 // Created: JSR 2010-09-17
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& node, unsigned long resourceId )
-    : model_              ( 0 )
-    , resourceId_         ( resourceId )
+    : resourceId_         ( resourceId )
     , resourceName_       ( node.resource_ )
     , isActivated_        ( node.isEnabled_ )
     , productionCapacity_ ( node.production_ )
@@ -97,8 +94,7 @@ NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& n
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement( const NodeElement& from )
-    : model_              ( 0 )
-    , resourceId_         ( from.resourceId_ )
+    : resourceId_         ( from.resourceId_ )
     , resourceName_       ( from.resourceName_ )
     , isActivated_        ( from.isActivated_ )
     , productionCapacity_ ( from.productionCapacity_ )
@@ -126,17 +122,6 @@ NodeElement::~NodeElement()
 {
     for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         delete *it;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NodeElement::SetModel
-// Created: JSR 2010-08-16
-// -----------------------------------------------------------------------------
-void NodeElement::SetModel( const ResourceNetworkModel& model )
-{
-    if( model_ )
-        throw std::exception( "Node element Model already defined" );
-    model_ = &model;
 }
 
 // -----------------------------------------------------------------------------
@@ -229,7 +214,7 @@ void NodeElement::Consume( float& functionalState )
 // Name: NodeElement::DistributeResource
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void NodeElement::DistributeResource( float functionalState )
+void NodeElement::DistributeResource( float functionalState, const ResourceNetworkModel& model )
 {
     if( immediateStock_ == 0 || !isActivated_ || std::abs( functionalState ) < 0.01f )
     {
@@ -242,7 +227,7 @@ void NodeElement::DistributeResource( float functionalState )
     if( links_.size() > 0 )
     {
         T_ResourceLinks links = links_;
-        DoDistributeResource( links );
+        DoDistributeResource( links, model );
     }
     // finally update stock
     int oldStockCapacity = stockCapacity_;
@@ -255,7 +240,7 @@ void NodeElement::DistributeResource( float functionalState )
 // Name: NodeElement::DoDistributeResource
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------
-void NodeElement::DoDistributeResource( T_ResourceLinks& links )
+void NodeElement::DoDistributeResource( T_ResourceLinks& links, const ResourceNetworkModel& model )
 {
     int distributionMean = static_cast< int >( static_cast< float >( immediateStock_ ) / links.size() );
     T_ResourceLinks updatedLinks;
@@ -266,7 +251,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
         if( linkCapacity != -1 && linkCapacity <= distributionMean )
         {
             ( *it )->SetFlow( linkCapacity );
-            model_->Push( ( *it )->GetTarget(), linkCapacity, resourceId_ );
+            model.Push( ( *it )->GetTarget(), linkCapacity, resourceId_ );
             immediateStock_ -= linkCapacity;
             updatedLinks.push_back( *it );
         }
@@ -295,7 +280,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
                 }
             }
             ( *it )->SetFlow( distributed );
-            model_->Push( ( *it )->GetTarget(), distributed, resourceId_ );
+            model.Push( ( *it )->GetTarget(), distributed, resourceId_ );
         }
     }
     else
@@ -310,7 +295,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links )
             links = newLinks;
         }
         if( links.size() > 0 )
-            DoDistributeResource( links );
+            DoDistributeResource( links, model );
     }
 }
 

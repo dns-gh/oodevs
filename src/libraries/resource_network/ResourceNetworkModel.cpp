@@ -45,7 +45,7 @@ void ResourceNetworkModel::Finalize()
 // -----------------------------------------------------------------------------
 void ResourceNetworkModel::Update()
 {
-    Apply( boost::bind( &NodeProperties::Update, _1 ) );
+    Apply( boost::bind( &NodeProperties::UpdateState, _1, boost::cref( *this ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,6 @@ void ResourceNetworkModel::Update()
 void ResourceNetworkModel::RegisterNode( NodeProperties& nodeProperties, unsigned int id )
 {
     Register( id, nodeProperties );
-    nodeProperties.SetModel( *this );
 }
 
 // -----------------------------------------------------------------------------

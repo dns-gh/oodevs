@@ -61,7 +61,6 @@ public:
     //@{
              ResourceNetworkCapacity();
     explicit ResourceNetworkCapacity( xml::xistream& xis );
-    explicit ResourceNetworkCapacity( const urban::ResourceNetworkAttribute& urbanAttribute );
     virtual ~ResourceNetworkCapacity();
     //@}
 
@@ -75,6 +74,7 @@ public:
     //! @name Operations
     //@{
     void Update( xml::xistream& xis, const MIL_Object_ABC& object );
+    void Initialize( const urban::ResourceNetworkAttribute& urbanAttribute );
     void Update( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list );
 
     virtual void Register( MIL_Object_ABC& object );

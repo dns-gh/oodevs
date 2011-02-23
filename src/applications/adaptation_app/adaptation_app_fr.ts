@@ -3091,6 +3091,10 @@ du tireur</translation>
         <source>Stock</source>
         <translation>Stock</translation>
     </message>
+    <message>
+        <source>Resource network element</source>
+        <translation>Element d'un réseau de ressource</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

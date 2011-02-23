@@ -43,8 +43,8 @@ UrbanObjectWrapper::UrbanObjectWrapper( const MIL_ObjectBuilder_ABC& builder, co
     : MIL_Object( 0, builder.GetType() )
     , object_( &object )
 {
-    InitializeAttributes();
     builder.Build( *this );
+    InitializeAttributes();
 }
 
 // -----------------------------------------------------------------------------
@@ -85,10 +85,7 @@ void UrbanObjectWrapper::InitializeAttributes()
     Initialize( TER_Localisation( TER_Localisation::ePolygon , vector ) );
     // resource network
     if( const urban::ResourceNetworkAttribute* resource = object_->Retrieve< urban::ResourceNetworkAttribute >() )
-    {
-        ResourceNetworkCapacity* capacity = new ResourceNetworkCapacity( *resource );
-        capacity->Register( *this );
-    }
+        Get< ResourceNetworkCapacity >().Initialize( *resource );
     if( const urban::InfrastructureAttribute* infra = object_->Retrieve< urban::InfrastructureAttribute >() )
         if( const PHY_InfrastructureType* infraType = PHY_InfrastructureType::Find( infra->GetType() ) )
         {

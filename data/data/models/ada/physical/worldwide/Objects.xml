@@ -337,6 +337,7 @@
   </object>
   <object geometry="polygon" name="Urban Block" symbol="" type="urban block">
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseBlocUrbain"/>
+    <resources/>
     <structural value="100"/>
   </object>
   <object geometry="point" name="Dirty bomb" symbol="O*VPA-----*****" type="dirty bomb">
@@ -383,4 +384,4 @@
   </object>
   <object geometry="polygon" name="Moving Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="0387553328" -->
+<!-- signature="3857526928" -->

@@ -57,17 +57,16 @@ public:
              NodeProperties();
     explicit NodeProperties( const ResourceTools_ABC& tools );
              NodeProperties( xml::xistream& xis, const ResourceTools_ABC& tools );
-             NodeProperties( const urban::ResourceNetworkAttribute& urbanAttribute, const ResourceTools_ABC& tools );
              NodeProperties( const NodeProperties& from );
     virtual ~NodeProperties();
     //@}
 
     //! @name Operations
     //@{
-    void SetModel( const ResourceNetworkModel& model );
     void SetTools( const ResourceTools_ABC& tools );
+    void Initialize( const urban::ResourceNetworkAttribute& urbanAttribute );
     void Update( xml::xistream& xis );
-    void Update();
+    void UpdateState( const ResourceNetworkModel& model );
     void Finalize();
     void Push( int quantity, unsigned long resourceId );
     void SetModifier( float modifier );

@@ -53,13 +53,12 @@ public:
 public:
     //! @name Operations
     //@{
-    void SetModel( const ResourceNetworkModel& model );
     void Update( xml::xistream& xis );
     void Finalize( const ResourceTools_ABC& tools );
     void UpdateImmediateStock( float functionalState );
     void AddConsumption( double consumption );
     void Consume( float& functionalState );
-    void DistributeResource( float functionalState );
+    void DistributeResource( float functionalState, const ResourceNetworkModel& model );
     void Push( int quantity );
     void SetModifier( float modifier );
     bool NeedUpdate() const;
@@ -100,14 +99,13 @@ private:
 private:
     //! @name Helpers
     //@{
-    void DoDistributeResource( T_ResourceLinks& links );
+    void DoDistributeResource( T_ResourceLinks& links, const ResourceNetworkModel& model );
     void ReadLink( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const ResourceNetworkModel* model_;
     unsigned long resourceId_;
     std::string resourceName_;
     T_ResourceLinks links_;

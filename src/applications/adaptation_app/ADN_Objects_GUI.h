@@ -116,6 +116,7 @@ public:
         eStockCapacityPresent,
         ePopulationCapacityPresent,
         ePopulationFilter_Density,
+        eResourceNetworkCapacityPresent,
         eNbrGuiElements
     };
 
