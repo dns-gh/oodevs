@@ -23,7 +23,8 @@
 #include "RoofShapeType.h"
 #include "VolumeType.h"
 #include "WeaponSystemType.h"
-#include "tools/PhysicalFileLoader.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -67,18 +68,18 @@ void ObjectTypes::Load( const tools::ExerciseConfig& config )
 void ObjectTypes::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
 {
     Purge();
-    tools::PhysicalFileLoader( config, invalidSignatureFiles, missingSignatureFiles )
-        .Load( "objects", boost::bind( &ObjectTypes::ReadObjectTypes, this, _1 ) )
-        .Load( "resources", boost::bind( &ObjectTypes::ReadDotations, this, _1 ) )
-        .Load( "volumes", boost::bind( &ObjectTypes::ReadVolumes, this, _1 ) )
-        .Load( "weapon-systems", boost::bind( &ObjectTypes::ReadWeaponSystems, this, _1 ) )
-        .Load( "components", boost::bind( &ObjectTypes::ReadEquipments, this, _1 ) )
-        .Load( "nbc", boost::bind( &ObjectTypes::ReadNBC, this, _1 ) )
-        .Load( "fires", boost::bind( &ObjectTypes::ReadFires, this, _1 ) )
-        .Load( "medical-treatment", boost::bind( &ObjectTypes::ReadMedicalTreatment, this, _1 ) )
-        .Load( "breakdowns", boost::bind( &ObjectTypes::ReadBreakdowns, this, _1 ) )
-        .Load( "resource-networks", boost::bind( &ObjectTypes::ReadResourceNetworks, this, _1 ) )
-        .Load( "urban", boost::bind( &ObjectTypes::ReadUrbanTypes, this, _1 ) );
+    const tools::Loader_ABC& loader = config.GetLoader();
+    loader.LoadPhysicalFile( "objects", boost::bind( &ObjectTypes::ReadObjectTypes, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "resources", boost::bind( &ObjectTypes::ReadDotations, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "volumes", boost::bind( &ObjectTypes::ReadVolumes, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "weapon-systems", boost::bind( &ObjectTypes::ReadWeaponSystems, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "components", boost::bind( &ObjectTypes::ReadEquipments, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "nbc", boost::bind( &ObjectTypes::ReadNBC, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "fires", boost::bind( &ObjectTypes::ReadFires, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "medical-treatment", boost::bind( &ObjectTypes::ReadMedicalTreatment, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "breakdowns", boost::bind( &ObjectTypes::ReadBreakdowns, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "resource-networks", boost::bind( &ObjectTypes::ReadResourceNetworks, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "urban", boost::bind( &ObjectTypes::ReadUrbanTypes, this, _1 ), invalidSignatureFiles, missingSignatureFiles );;
 }
 
 // -----------------------------------------------------------------------------

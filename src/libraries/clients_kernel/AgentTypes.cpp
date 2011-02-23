@@ -25,7 +25,8 @@
 #include "InhabitantType.h"
 #include "SensorType.h"
 #include "SymbolFactory.h"
-#include "tools/PhysicalFileLoader.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -64,22 +65,21 @@ void AgentTypes::Load( const tools::ExerciseConfig& config )
 // Name: AgentTypes::Load
 // Created: LDC 2010-12-01
 // -----------------------------------------------------------------------------
-void AgentTypes::Load( const tools::ExerciseConfig& config, std::string& invalidSingatureFiles, std::string& missingSignatureFiles )
+void AgentTypes::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
 {
     Purge();
-    symbolFactory_ = new SymbolFactory();
-    tools::PhysicalFileLoader( config, invalidSingatureFiles, missingSignatureFiles )
-        .Load( "components", boost::bind( &AgentTypes::ReadComponents, this, _1 ) )
-        .Load( "missions", boost::bind( &AgentTypes::ReadOrderTypes, this, _1 ) )
-        //.Load( "magic-orders", boost::bind( &AgentTypes::ReadMagicOrderTypes, this, _1 ) )
-        .Load( "models", boost::bind( &AgentTypes::ReadModels, this, _1 ) )
-        .Load( "sensors", boost::bind( &AgentTypes::ReadSensors, this, _1 ) )
-        .Load( "units", boost::bind( &AgentTypes::ReadAgents, this, _1 ) )
-        .Load( "automats", boost::bind( &AgentTypes::ReadAutomats, this, _1 ) )
-        .Load( "populations", boost::bind( &AgentTypes::ReadPopulations, this, _1 ) )
-        .Load( "inhabitants", boost::bind( &AgentTypes::ReadInhabitants, this, _1 ) )
-        .Load( "knowledge-groups", boost::bind( &AgentTypes::ReadKnowledgeGroups, this, _1 ) );
-
+    symbolFactory_ = new SymbolFactory();    
+    const tools::Loader_ABC& loader = config.GetLoader();
+    loader.LoadPhysicalFile( "components", boost::bind( &AgentTypes::ReadComponents, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "missions", boost::bind( &AgentTypes::ReadOrderTypes, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    //loader.LoadPhysicalFile( "magic-orders", boost::bind( &AgentTypes::ReadMagicOrderTypes, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "models", boost::bind( &AgentTypes::ReadModels, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "sensors", boost::bind( &AgentTypes::ReadSensors, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "units", boost::bind( &AgentTypes::ReadAgents, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "automats", boost::bind( &AgentTypes::ReadAutomats, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "populations", boost::bind( &AgentTypes::ReadPopulations, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "inhabitants", boost::bind( &AgentTypes::ReadInhabitants, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    loader.LoadPhysicalFile( "knowledge-groups", boost::bind( &AgentTypes::ReadKnowledgeGroups, this, _1 ), invalidSignatureFiles, missingSignatureFiles );;
     CreateMagicActionTypes();
 }
 

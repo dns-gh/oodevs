@@ -9,6 +9,7 @@
 
 #include "tools_pch.h"
 #include "ExerciseConfig.h"
+#include "Loader.h"
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( push )
@@ -27,6 +28,7 @@ using namespace tools;
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
 ExerciseConfig::ExerciseConfig()
+    : loader_( new Loader( *this ) )
 {
     po::options_description desc( "Exercise options" );
     desc.add_options()
@@ -315,4 +317,13 @@ std::string ExerciseConfig::GetPopulationFile() const
 void ExerciseConfig::AddFileToCRC( const std::string& /*fileName*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::AddFileToCRC
+// Created: LDC 2010-11-30
+// -----------------------------------------------------------------------------
+const Loader_ABC& ExerciseConfig::GetLoader() const
+{
+    return *loader_;
 }

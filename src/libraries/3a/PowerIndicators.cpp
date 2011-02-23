@@ -9,7 +9,8 @@
 
 #include "PowerIndicators.h"
 #include "PowerIndicator.h"
-#include "tools/PhysicalFileLoader.h"
+#include "tools/Loader_ABC.h"
+#include "tools/ExerciseConfig.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -60,8 +61,7 @@ void PowerIndicators::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void PowerIndicators::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
 {
-    tools::PhysicalFileLoader( config, invalidSignatureFiles, missingSignatureFiles )
-        .Load( "units", boost::bind( &PowerIndicators::ReadUnit, this, _1 ) );
+    config.GetLoader().LoadPhysicalFile( "units", boost::bind( &PowerIndicators::ReadUnit, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
 }
 
 // -----------------------------------------------------------------------------

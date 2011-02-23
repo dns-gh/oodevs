@@ -11,9 +11,11 @@
 #define __ExerciseConfig_h_
 
 #include "GeneralConfig.h"
+#include <memory>
 
 namespace tools
 {
+    class Loader_ABC;
 
 // =============================================================================
 /** @class  ExerciseConfig
@@ -65,6 +67,11 @@ public:
     virtual void AddFileToCRC( const std::string& fileName );
     //@}
 
+    //! @name Operations
+    //@{
+    const Loader_ABC& GetLoader() const;
+    //@}
+
 private:
     //! @name Helpers
     //@{
@@ -89,6 +96,8 @@ private:
     std::string population_;
     std::string propagations_;
     //@}
+
+    std::auto_ptr< Loader_ABC > loader_;
 };
 
 }
