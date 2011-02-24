@@ -767,3 +767,16 @@ actions::Action_ABC* ActionFactory::CreateInhabitantChangeAlertedStateAction( bo
     action->AddParameter( *new parameters::Bool( it.NextElement(), alerted ) );
     return action;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateInhabitantChangeConfinedStateAction
+// Created: BCI 2011-02-03
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "inhabitant_change_confined_state" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller_, tools::translate( "ActionFactory", "Population Change Confined State" ), true );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Bool( it.NextElement(), confined ) );
+    return action;
+}

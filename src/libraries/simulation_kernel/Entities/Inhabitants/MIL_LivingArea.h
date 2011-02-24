@@ -68,6 +68,7 @@ public:
     bool IsAlerted( const TER_Localisation& localisation ) const;
     void SetAlerted( bool );
     void Confine( const TER_Localisation& localisation );
+    void SetConfined( bool );
     float Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption );
     //@}
 
@@ -83,15 +84,17 @@ private:
     //@{
     struct T_Block
     {
-        T_Block( UrbanObjectWrapper* pUrbanObject, unsigned int person = 0, bool alerted = false )
+        T_Block( UrbanObjectWrapper* pUrbanObject, unsigned int person = 0, bool alerted = false, bool confined = false )
             : pUrbanObject_( pUrbanObject )
             , person_      ( person )
             , alerted_     ( alerted )
+            , confined_( confined )
         {}
 
         UrbanObjectWrapper* pUrbanObject_;
         unsigned int person_;
         bool alerted_;
+        bool confined_;
     };
     typedef std::vector< T_Block >     T_Blocks;
     typedef T_Blocks::iterator        IT_Blocks;
@@ -112,6 +115,8 @@ private:
     float GetProportion( const T_Block& block, const std::string& motivation ) const;
     T_Blocks GetBlockUsage( const std::string& motivation ) const;
     unsigned int GetOccupation( const T_Block& block, const std::string& motivation ) const;
+    T_Blocks GetNonConfinedBlocks() const;
+    unsigned long ComputeNonConfinedPopulation() const;
     //@}
 
 private:

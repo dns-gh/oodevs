@@ -58,7 +58,11 @@
     </message>
     <message>
         <source>Population Change Alerted State</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer l'état d'alerte de la population</translation>
+    </message>
+    <message>
+        <source>Population Change Confined State</source>
+        <translation>Changer l'état de confinement de la population</translation>
     </message>
 </context>
 <context>

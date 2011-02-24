@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "InhabitantChangeAlertedStateDialog.h"
-#include "moc_InhabitantChangeAlertedStateDialog.cpp"
+#include "InhabitantChangeConfinedStateDialog.h"
+#include "moc_InhabitantChangeConfinedStateDialog.cpp"
 #include "actions/ActionsModel.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
@@ -23,11 +23,11 @@
 #include "clients_kernel/tools.h"
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantChangeAlertedStateDialog constructor
-// Created: ABR 2011-01-25
+// Name: InhabitantChangeConfinedStateDialog constructor
+// Created: BCI 2011-02-22
 // -----------------------------------------------------------------------------
-InhabitantChangeAlertedStateDialog::InhabitantChangeAlertedStateDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
-    : QDialog( pParent, tools::translate( "InhabitantChangeAlertedStateDialog", "Change alert state" ) )
+InhabitantChangeConfinedStateDialog::InhabitantChangeConfinedStateDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
+    : QDialog( pParent, tools::translate( "InhabitantChangeConfinedStateDialog", "Change confine state" ) )
     , controllers_  ( controllers )
     , actionsModel_ ( actionsModel )
     , simulation_   ( simulation )
@@ -35,12 +35,12 @@ InhabitantChangeAlertedStateDialog::InhabitantChangeAlertedStateDialog( QWidget*
     , selected_     ( controllers )
 {
     // Init dialog
-    setCaption( tools::translate( "InhabitantChangeAlertedStateDialog", "Change alert state" ) );
+    setCaption( tools::translate( "InhabitantChangeConfinedStateDialog", "Change confine state" ) );
     resize( 320, 150 );
     // Main layout
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
-    pAlertedCheckBox_ = new QCheckBox( tools::translate( "InhabitantChangeAlertedStateDialog", "Alerted" ), this );
-    mainLayout->addWidget( pAlertedCheckBox_ );
+    pConfinedCheckBox_ = new QCheckBox( tools::translate( "InhabitantChangeConfinedStateDialog", "Confined" ), this );
+    mainLayout->addWidget( pConfinedCheckBox_ );
     // ok / cancel butons
     QHBox* buttonLayout = new QHBox( this );
     QPushButton* okButton     = new QPushButton( tr( "Ok" )    , buttonLayout );
@@ -56,19 +56,19 @@ InhabitantChangeAlertedStateDialog::InhabitantChangeAlertedStateDialog( QWidget*
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantChangeAlertedStateDialog destructor
+// Name: InhabitantChangeConfinedStateDialog destructor
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-InhabitantChangeAlertedStateDialog::~InhabitantChangeAlertedStateDialog()
+InhabitantChangeConfinedStateDialog::~InhabitantChangeConfinedStateDialog()
 {
     controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantChangeAlertedStateDialog::Show
+// Name: InhabitantChangeConfinedStateDialog::Show
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-void InhabitantChangeAlertedStateDialog::Show()
+void InhabitantChangeConfinedStateDialog::Show()
 {
     if( !selected_ )
         return;
@@ -76,16 +76,16 @@ void InhabitantChangeAlertedStateDialog::Show()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantChangeAlertedStateDialog::Validate
+// Name: InhabitantChangeConfinedStateDialog::Validate
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-void InhabitantChangeAlertedStateDialog::Validate()
+void InhabitantChangeConfinedStateDialog::Validate()
 {
     if( ! selected_ )
         return;
     accept();
 
-    actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeAlertedStateAction( pAlertedCheckBox_->isChecked(), *selected_ );
+    actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeConfinedStateAction( pConfinedCheckBox_->isChecked(), *selected_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->Polish();
@@ -94,34 +94,34 @@ void InhabitantChangeAlertedStateDialog::Validate()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantChangeAlertedStateDialog::Reject
+// Name: InhabitantChangeConfinedStateDialog::Reject
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-void InhabitantChangeAlertedStateDialog::Reject()
+void InhabitantChangeConfinedStateDialog::Reject()
 {
     reject();
     selected_ = 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantChangeAlertedStateDialog::closeEvent
+// Name: InhabitantChangeConfinedStateDialog::closeEvent
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-void InhabitantChangeAlertedStateDialog::closeEvent( QCloseEvent * /* e */ )
+void InhabitantChangeConfinedStateDialog::closeEvent( QCloseEvent * /* e */ )
 {
     Reject();
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantChangeAlertedStateDialog::NotifyContextMenu
+// Name: InhabitantChangeConfinedStateDialog::NotifyContextMenu
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-void InhabitantChangeAlertedStateDialog::NotifyContextMenu( const kernel::Inhabitant_ABC& entity, kernel::ContextMenu& menu )
+void InhabitantChangeConfinedStateDialog::NotifyContextMenu( const kernel::Inhabitant_ABC& entity, kernel::ContextMenu& menu )
 {
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
         QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
-        subMenu->insertItem( tools::translate( "InhabitantChangeAlertedStateDialog", "Change alert state" ), this, SLOT( Show() ) );
+        subMenu->insertItem( tools::translate( "InhabitantChangeConfinedStateDialog", "Change confine state" ), this, SLOT( Show() ) );
     }
 }

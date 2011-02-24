@@ -85,6 +85,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         T_Block& block = urbanBlocks_[ occupation.object().id() ];
         block.number_ = occupation.number();
         block.alerted_ = occupation.alerted();
+        block.confined_ = occupation.confined();
     }
     for( int i = 0; i < msg.adhesions_size(); ++i )
     {
@@ -150,6 +151,7 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         block.mutable_object()->set_id( urbanBlock.first );
         block.set_number( urbanBlock.second.number_ );
         block.set_alerted( urbanBlock.second.alerted_ );
+        block.set_confined( urbanBlock.second.confined_ );
     }
     BOOST_FOREACH( const T_Affinities::value_type& affinity, affinities_ )
     {

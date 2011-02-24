@@ -224,6 +224,8 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, human.second.number_ );
         const QString keyAlerted = keyBase + tools::translate( "Block", "Alerted" );
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.second.alerted_ );
+        const QString keyConfined = keyBase + tools::translate( "Block", "Confined" );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyConfined, human.second.confined_ );
     }
 }
 
@@ -249,11 +251,12 @@ void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) co
 // Name: TerrainObjectProxy::UpdateHumans
 // Created: LGY 2010-12-30
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted )
+void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted, bool confined )
 {
     T_Human& mutableHuman = humans_[ inhabitant ];
     mutableHuman.number_ = number;
     mutableHuman.alerted_ = alerted;
+    mutableHuman.confined_ = confined;
     const T_Human& human = mutableHuman;
     const QString keyBase = tools::translate( "Block", "Populations/" ) + inhabitant.c_str() + "/";
     kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
@@ -263,10 +266,14 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned i
     const QString keyAlerted = keyBase + tools::translate( "Block", "Alerted" );
     if( !dictionary.HasKey( keyAlerted ) )
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.alerted_ );
+    const QString keyConfined = keyBase + tools::translate( "Block", "Confined" );
+    if( !dictionary.HasKey( keyConfined ) )
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyConfined, human.confined_ );
     if( human.number_ == 0u )
     {
         dictionary.Remove( keyNumber );
         dictionary.Remove( keyAlerted );
+        dictionary.Remove( keyConfined );
         humans_.erase( inhabitant );
     }
     UpdateColor();

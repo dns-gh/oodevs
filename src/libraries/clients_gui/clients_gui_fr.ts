@@ -72,6 +72,10 @@
         <source>Alerted</source>
         <translation>Alerté</translation>
     </message>
+    <message>
+        <source>Confined</source>
+        <translation>Confiné</translation>
+    </message>
 </context>
 <context>
     <name>R&#xe8;gle GL</name>

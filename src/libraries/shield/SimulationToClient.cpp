@@ -2337,6 +2337,7 @@ namespace
         CONVERT( number );
 #ifdef SHIELD_CLIENT
         CONVERT( alerted )
+        CONVERT( confined )
 #endif
     }
 }

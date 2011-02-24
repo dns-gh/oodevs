@@ -72,6 +72,10 @@
         <source>Alerted</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Confined</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>R&#xe8;gle GL</name>

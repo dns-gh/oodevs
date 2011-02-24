@@ -341,6 +341,9 @@ void MIL_Inhabitant::OnReceiveInhabitantMagicAction( const sword::UnitMagicActio
         case sword::UnitMagicAction::inhabitant_change_alerted_state:
             OnReceiveMsgChangeAlertedState( msg );
             break;
+        case sword::UnitMagicAction::inhabitant_change_confined_state:
+            OnReceiveMsgChangeConfinedState( msg );
+            break;
         default:
             assert( false );
         }
@@ -395,6 +398,19 @@ void MIL_Inhabitant::OnReceiveMsgChangeAlertedState( const sword::UnitMagicActio
 
     bool alerted = msg.parameters().elem( 0 ).value( 0 ).booleanvalue();
     pLivingArea_->SetAlerted( alerted );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::OnReceiveMsgChangeConfinedState
+// Created: BCI 2011-02-03
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::OnReceiveMsgChangeConfinedState( const sword::UnitMagicAction& msg )
+{
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
+
+    bool confined = msg.parameters().elem( 0 ).value( 0 ).booleanvalue();
+    pLivingArea_->SetConfined( confined );
 }
 
 // -----------------------------------------------------------------------------

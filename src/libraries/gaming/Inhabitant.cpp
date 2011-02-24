@@ -154,10 +154,11 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         CIT_UrbanObjectVector it = livingUrbanObject_.find( id );
         if( it != livingUrbanObject_.end() )
         {
-            it->second->UpdateHumans( name_.ascii(), occupation.number(), occupation.alerted() );
+            it->second->UpdateHumans( name_.ascii(), occupation.number(), occupation.alerted(), occupation.confined() );
             T_Human& mutableHuman = humans_[ id ];
             mutableHuman.number_ = occupation.number();
             mutableHuman.alerted_ = occupation.alerted();
+            mutableHuman.confined_ = occupation.confined();
             const T_Human& human = mutableHuman;
             PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
             const QString keyHuman = tools::translate( "Inhabitant", "Living Area/" ) + it->second->GetName().ascii() + " [" + boost::lexical_cast< std::string >( id ).c_str() + "]/";
@@ -167,6 +168,9 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             const QString keyAlerted = keyHuman + tools::translate( "Inhabitant", "Alerted" );
             if( !dictionary.HasKey( keyAlerted ) )
                 dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.alerted_ );
+            const QString keyConfined = keyHuman + tools::translate( "Inhabitant", "Confined" );
+            if( !dictionary.HasKey( keyConfined ) )
+                dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyConfined, human.confined_ );
         }
     }
     controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );

@@ -96,6 +96,7 @@ private:
     //@{
     void OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg );
     void OnReceiveMsgChangeAlertedState( const sword::UnitMagicAction& msg );
+    void OnReceiveMsgChangeConfinedState( const sword::UnitMagicAction& msg );
     //@}
 
     //! @name Network

@@ -89,6 +89,15 @@ bool TER_Object_ABC::Intersect2DWithLocalisation( const TER_Localisation& locali
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_Object_ABC::IsContainedByLocalisation
+// Created: BCI 2011-02-24
+// -----------------------------------------------------------------------------
+bool TER_Object_ABC::IsContainedByLocalisation( const TER_Localisation& localisation ) const
+{
+    return localisation.Contains( location_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_Object_ABC::GetLocalisation
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
@@ -139,3 +148,4 @@ void TER_Object_ABC::InsertInWorld()
 {
     hint_ = TER_World::GetWorld().GetObjectManager().UpdatePosition( *this, hint_ );
 }
+

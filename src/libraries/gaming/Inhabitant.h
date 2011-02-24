@@ -101,6 +101,7 @@ private:
     {
         unsigned int number_;
         bool alerted_;
+        bool confined_;
     };
     typedef std::map< unsigned int/*occupation object id*/, T_Human > T_Humans;
     //@}

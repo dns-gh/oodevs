@@ -189,6 +189,15 @@ bool MT_Rect::IsInside( const MT_Vector2D& point, double rPrecision ) const
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MT_Rect::Contains
+// Created: BCI 2011-02-24
+// -----------------------------------------------------------------------------
+inline
+bool MT_Rect::Contains( const MT_Rect& rect ) const
+{
+    return IsInside( GetPointUpLeft() ) && IsInside( GetPointDownRight() );
+}
 
 //-----------------------------------------------------------------------------
 // Name: MT_Rect::GetLineLeft

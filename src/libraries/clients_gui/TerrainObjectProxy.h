@@ -103,7 +103,7 @@ public:
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
-    void UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted );
+    void UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted, bool confined );
     unsigned int GetHumans() const;
     //@}
 
@@ -125,6 +125,7 @@ private:
     {
         unsigned int number_;
         bool alerted_;
+        bool confined_;
     };
     typedef std::map< std::string, T_Human > T_Humans;
     typedef T_Humans::const_iterator       CIT_Humans;

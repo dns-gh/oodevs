@@ -158,6 +158,17 @@ Action_ABC* ActionsModel::CreateInhabitantChangeAlertedStateAction( bool alerted
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateInhabitantChangeConfinedStateAction
+// Created: BCI 2011-02-03
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected )
+{
+    Action_ABC* action = factory_.CreateInhabitantChangeConfinedStateAction( confined, selected );
+    Register( action->GetId(), *action );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::CreateObjectMagicAction
 // Created: BCI 2011-01-10
 // -----------------------------------------------------------------------------

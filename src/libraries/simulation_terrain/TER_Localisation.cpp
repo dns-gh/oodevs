@@ -945,6 +945,20 @@ bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation ) co
     return IsInside( localisation.GetPoints().front() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: TER_Localisation::Contains
+// Created: BCI 2011-02-24
+// -----------------------------------------------------------------------------
+bool TER_Localisation::Contains( const TER_Localisation& other ) const
+{
+    for ( CIT_PointVector it = other.pointVector_.begin(); it != other.pointVector_.end(); ++it )
+    {
+        if( !IsInside( *it ) )
+            return false;
+    }
+    return true;
+}
+
 namespace
 {
     double CirclesIntersectionArea( const TER_Localisation& lhs, const MT_Circle& rhs )

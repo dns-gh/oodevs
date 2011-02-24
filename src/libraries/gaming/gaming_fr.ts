@@ -568,6 +568,10 @@
         <source>Alerted</source>
         <translation>Alerté</translation>
     </message>
+    <message>
+        <source>Confined</source>
+        <translation>Confiné</translation>
+    </message>
 </context>
 <context>
     <name>Intelligence</name>

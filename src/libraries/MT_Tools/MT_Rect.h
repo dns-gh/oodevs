@@ -59,6 +59,7 @@ public:
     //@{
     bool IsInside   ( const MT_Vector2D& point ) const;
     bool IsInside   ( const MT_Vector2D& point, double rPrecision ) const;
+    bool Contains   ( const MT_Rect& rect ) const;
     bool Intersect2D( const MT_Line& line ) const;
     bool Intersect2D( const MT_Rect& rect ) const;
     bool Intersect2D( const MT_Triangle& triangle ) const;
