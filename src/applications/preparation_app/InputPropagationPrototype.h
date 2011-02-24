@@ -38,13 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    InputPropagationPrototype( const InputPropagationPrototype& );            //!< Copy constructor
-    InputPropagationPrototype& operator=( const InputPropagationPrototype& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Object_ABC*& creation_;

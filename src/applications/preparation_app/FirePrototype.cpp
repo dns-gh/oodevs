@@ -13,7 +13,6 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/FireAttribute.h"
-#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 
@@ -34,6 +33,7 @@ FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireCl
 // -----------------------------------------------------------------------------
 FirePrototype::~FirePrototype()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +48,6 @@ void FirePrototype::Commit()
         FireAttribute* attribute = new FireAttribute( dico );
         attribute->SetClass( *fireClass_->GetValue() );
         attribute->SetMaxCombustionEnergy( maxCombustionEnergy_->value() );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }
-

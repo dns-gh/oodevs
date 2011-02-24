@@ -28,20 +28,13 @@ class FirePropagationModifierPrototype : public gui::FirePropagationModifierProt
 public:
     //! @name Constructors/Destructor
     //@{
-    FirePropagationModifierPrototype( QWidget* parent, kernel::Object_ABC*& creation );
+             FirePropagationModifierPrototype( QWidget* parent, kernel::Object_ABC*& creation );
     virtual ~FirePropagationModifierPrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    FirePropagationModifierPrototype( const FirePropagationModifierPrototype& );            //!< Copy constructor
-    FirePropagationModifierPrototype& operator=( const FirePropagationModifierPrototype& ); //!< Assignment operator
     //@}
 
 private:

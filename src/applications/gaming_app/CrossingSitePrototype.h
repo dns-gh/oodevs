@@ -31,20 +31,13 @@ class CrossingSitePrototype : public gui::CrossingSitePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    CrossingSitePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
+             CrossingSitePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
     virtual ~CrossingSitePrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    CrossingSitePrototype( const CrossingSitePrototype& );            //!< Copy constructor
-    CrossingSitePrototype& operator=( const CrossingSitePrototype& ); //!< Assignment operator
     //@}
 
 private:

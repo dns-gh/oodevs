@@ -11,7 +11,6 @@
 #include "ActivityTimePrototype.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "preparation/ObjectAttributesContainer.h"
 #include "preparation/ActivityTimeAttribute.h"
 
 using namespace kernel;
@@ -45,10 +44,10 @@ void ActivityTimePrototype::Commit()
     if( creation_ )
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
-        ActivityTimeAttribute*    attribute = new ActivityTimeAttribute( dico );
-                                  attribute->SetActivityTime( 3600 * activityTime_->time().hour() +
-                                                              60 * activityTime_->time().minute() +
-                                                              activityTime_->time().second() );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        ActivityTimeAttribute* attribute = new ActivityTimeAttribute( dico );
+        attribute->SetActivityTime( 3600 * activityTime_->time().hour() +
+                                      60 * activityTime_->time().minute() +
+                                           activityTime_->time().second() );
+        creation_->Attach( *attribute );
     }
 }

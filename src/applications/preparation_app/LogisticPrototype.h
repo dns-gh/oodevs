@@ -40,13 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy constructor/Assignment
-    //@{
-    LogisticPrototype( const LogisticPrototype& );
-    LogisticPrototype& operator=( const LogisticPrototype& );
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Object_ABC*& creation_;

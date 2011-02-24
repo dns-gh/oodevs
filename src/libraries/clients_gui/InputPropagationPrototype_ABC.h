@@ -30,7 +30,7 @@ namespace gui
 // =============================================================================
 class InputPropagationPrototype_ABC : public ObjectAttributePrototype_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT;  // $$$$ _RC_ JSR 2011-02-24: semble inutile?
 
 public:
     //! @name Constructors/Destructor
@@ -45,12 +45,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
-    //@{
-    InputPropagationPrototype_ABC( const InputPropagationPrototype_ABC& );            //!< Copy constructor
-    InputPropagationPrototype_ABC& operator=( const InputPropagationPrototype_ABC& ); //!< Assignement operator
-    //@}
-
     //! @name
     //@{
     void FillInPaths();

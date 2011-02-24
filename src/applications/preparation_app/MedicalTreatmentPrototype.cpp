@@ -17,7 +17,6 @@
 #include "preparation/TeamsModel.h"
 #include "clients_gui/ValuedListItem.h"
 #include "preparation/MedicalTreatmentAttribute.h"
-#include "preparation/ObjectAttributesContainer.h"
 // #include "MedicalShapeLoader.h"
 
 using namespace kernel;
@@ -59,7 +58,7 @@ void MedicalTreatmentPrototype::Commit()
             int value = it->baseline_->value();
             attribute->UpdateTreatmentCapacity( std::string( it->name_ ), value );
         }
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }
 
@@ -90,7 +89,7 @@ void MedicalTreatmentPrototype::CommitShapeObject( const kernel::ShapeObject& im
           attribute->UpdateTreatmentCapacity( std::string( itcap->name_ ), 0 );
 
         attribute->CreateDictionary( dico );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }
 

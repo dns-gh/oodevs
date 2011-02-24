@@ -33,23 +33,15 @@ public:
     //! @name Operations
     //@{
     void SetMineField( bool minefield ); // $$$$ SBO 2009-04-03: never called
-
     virtual bool CheckValidity() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    MinePrototype_ABC( const MinePrototype_ABC& );            //!< Copy constructor
-    MinePrototype_ABC& operator=( const MinePrototype_ABC& ); //!< Assignment operator
     //@}
 
 protected:
     //! @name Member data
     //@{
     QLineEdit* density_;
-    QLabel*    densityLabel_;
-    QHBox*     densityBox_;
+    QLabel* densityLabel_;
+    QHBox* densityBox_;
     //@}
 };
 

@@ -13,7 +13,6 @@
 #include "ObjectAttributePrototype_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "ValuedComboBox.h"
-
 #include <qvgroupbox.h>
 
 namespace kernel
@@ -23,7 +22,6 @@ namespace kernel
 
 namespace gui
 {
-
     class RichLabel;
 
 // =============================================================================
@@ -52,12 +50,6 @@ private slots:
     void dotationCountChanged( int );
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    StockPrototype_ABC( const StockPrototype_ABC& );            //!< Copy constructor
-    StockPrototype_ABC& operator=( const StockPrototype_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void FillTypes();

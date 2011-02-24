@@ -11,7 +11,6 @@
 #include "ConstructionPrototype.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "preparation/ObjectAttributesContainer.h"
 #include "preparation/ConstructionAttribute.h"
 
 // -----------------------------------------------------------------------------
@@ -45,6 +44,6 @@ void ConstructionPrototype::Commit()
         kernel::PropertiesDictionary& dico = creation_->Get< kernel::PropertiesDictionary >();
         ConstructionAttribute* attribute = new ConstructionAttribute( dico );
         attribute->SetCompletion( completion_->value() );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }

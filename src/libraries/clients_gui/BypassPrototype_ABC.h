@@ -34,13 +34,6 @@ public:
     //@{
     virtual bool CheckValidity() const;
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    BypassPrototype_ABC( const BypassPrototype_ABC& );            //!< Copy constructor
-    BypassPrototype_ABC& operator=( const BypassPrototype_ABC& ); //!< Assignment operator
-    //@}
 };
 
 }

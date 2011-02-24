@@ -88,7 +88,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , scores_               ( *new ScoresModel( scoreFactory_, teams_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , successFactors_       ( *new SuccessFactorsModel( successFactorFactory_ ) )
     , intelligences_        ( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
-    , urban_                ( *new UrbanModel( controllers, staticModel ) )
+    , urban_                ( *new UrbanModel( controllers, staticModel, objects_ ) )
     , drawings_             ( *new gui::DrawerModel( controllers, drawingFactory_ ) )
 {
     // NOTHING

@@ -22,7 +22,7 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass, std::string >& resolver )
-: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FirePrototype_ABC", "Fire parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FirePrototype_ABC", "Fire parameters" ) )
     , resolver_( resolver )
 {
     new QLabel( tools::translate( "gui::FirePrototype_ABC", "Fire Class:" ), this );

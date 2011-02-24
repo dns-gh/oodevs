@@ -34,7 +34,6 @@ namespace xml
 // Created: AGE 2006-03-22
 // =============================================================================
 class ObjectPositions : public kernel::Positions
-                      , public kernel::Serializable_ABC
                       , public kernel::Drawable_ABC
                       , public kernel::LocationVisitor_ABC
 {
@@ -55,9 +54,10 @@ public:
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
 
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool CanAggregate() const;
+
+    void Serialize( xml::xostream& xos ) const;
     //@}
 
 private:

@@ -12,8 +12,9 @@
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/Options.h"
+#include "clients_kernel/Positions.h"
+#include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <urban/ResourceNetworkAttribute.h>
 #include <xeumeuleu/xml.hpp>
@@ -24,12 +25,14 @@ using namespace geometry;
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver )
-    : controllers_            ( controllers )
-    , id_                     ( id )
-    , urbanResolver_          ( urbanResolver )
-    , resourceNetworkResolver_( resourceNetworkResolver )
-    , needSaving_             ( false )
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const kernel::Positions& position
+                                                  , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
+    : controllers_( controllers )
+    , position_   ( position )
+    , urbans_     ( urbans )
+    , objects_    ( objects )
+    , resources_  ( resources )
+    , needSaving_ ( false )
 {
     xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
 }
@@ -38,12 +41,14 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-20
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute& network, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver )
-    : controllers_            ( controllers )
-    , id_                     ( id )
-    , urbanResolver_          ( urbanResolver )
-    , resourceNetworkResolver_( resourceNetworkResolver )
-    , needSaving_             ( false )
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute& network, const kernel::Positions& position
+                                                  , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
+    : controllers_( controllers )
+    , position_   ( position )
+    , urbans_     ( urbans )
+    , objects_    ( objects )
+    , resources_  ( resources )
+    , needSaving_ ( false )
 {
     const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = network.GetResourceNodes();
     for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
@@ -67,6 +72,21 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute constructor
+// Created: JSR 2011-02-23
+// -----------------------------------------------------------------------------
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const kernel::Positions& position, const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
+    : controllers_( controllers )
+    , position_   ( position )
+    , urbans_     ( urbans )
+    , objects_    ( objects )
+    , resources_  ( resources )
+    , needSaving_ ( true )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute destructor
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
@@ -87,12 +107,9 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
     const ResourceLink& link = node->links_[ i ];
     kernel::Entity_ABC* entity = 0;
     if( link.urban_ )
-        entity = &urbanResolver_.Get( link.id_ );
-    // TODO
-    /*else
-        entity = &objectResolver_.Get( link.id_ );*/
+        entity = &urbans_.Get( link.id_ );
     else
-        return QString::number( link.id_ );
+        entity = &objects_.Get( link.id_ );
     QString ret = entity->GetName();
     if( ret.isEmpty() )
         ret = QString::number( link.id_ );
@@ -105,18 +122,13 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    // TODO les objets ne sont pas gérés : il y a différents objectResolver, un par Team. Refactoriser ça pour n'avoir qu'un seul résolver comme dans Gaming (faire une extension Objets, s'inspirer de Populations).
-
     // TODO utiliser un enum pour les options
     char filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< char >();
     if( filter == 1 )// off
         return;
     if( filter == 3 && !IsSelected() ) // selected outgoing
         return;
-    // TODO
-    /*Point2f from = isUrban_ ? urbanResolver_.Get( id_ ).Barycenter()
-        : objectResolver_.Get( id_ ).Get< kernel::Positions >().GetPosition();*/
-    Point2f from = urbanResolver_.Get( id_ ).Barycenter();
+    Point2f from = position_.GetPosition();
 
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 1.f );
@@ -127,9 +139,7 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
         if( node->second.links_.size() > 0 )
             for( std::vector< ResourceLink >::const_iterator link = node->second.links_.begin(); link != node->second.links_.end(); ++link )
             {
-                // TODO
-                //kernel::Entity_ABC* target = link->urban_ ? static_cast< kernel::Entity_ABC* >( urbanResolver_.Find( link->id_ ) ) : objectResolver_.Find( link->id_ );
-                kernel::Entity_ABC* target = link->urban_ ? static_cast< kernel::Entity_ABC* >( urbanResolver_.Find( link->id_ ) ) : 0;
+                kernel::Entity_ABC* target = link->urban_ ? static_cast< kernel::Entity_ABC* >( urbans_.Find( link->id_ ) ) : objects_.Find( link->id_ );
                 if( !target )
                     continue;
                 if( filter == 2 )  // selected all
@@ -138,10 +148,8 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
                     if( !resourceTarget || ( !IsSelected() && !resourceTarget->IsSelected() ) )
                         continue;
                 }
-                // TODO
-                /*Point2f to = link->urban_ ? urbanResolver_.Get( link->id_ ).Barycenter()
-                                          : objectResolver_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();*/
-                Point2f to = urbanResolver_.Get( link->id_ ).Barycenter();
+                Point2f to = link->urban_ ? urbans_.Get( link->id_ ).Barycenter()
+                                          : objects_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawArrow( from, to );
             }
@@ -262,6 +270,6 @@ void ResourceNetworkAttribute::ReadLink( xml::xistream& xis, ResourceNode& node 
 void ResourceNetworkAttribute::SetColor( const std::string& resource ) const
 {
     float red, green, blue;
-    resourceNetworkResolver_.Get( resource ).GetColor( red, green, blue );
+    resources_.Get( resource ).GetColor( red, green, blue );
     glColor4f( red, green, blue, 0.5f );
 }

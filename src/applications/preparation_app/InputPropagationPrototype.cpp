@@ -12,7 +12,6 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/InputToxicCloudAttribute.h"
-#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 
@@ -46,8 +45,8 @@ void InputPropagationPrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         InputToxicCloudAttribute* attribute = new InputToxicCloudAttribute( dico );
-                                  attribute->SetSource( propagationFiles_->currentText().ascii(), dataField_->GetValue() );
-                                  attribute->SetExportData( exportData_->isChecked() );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        attribute->SetSource( propagationFiles_->currentText().ascii(), dataField_->GetValue() );
+        attribute->SetExportData( exportData_->isChecked() );
+        creation_->Attach( *attribute );
     }
 }

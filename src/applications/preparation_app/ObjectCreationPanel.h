@@ -36,6 +36,7 @@ namespace gui
 
 class StaticModel;
 class ObjectsModel;
+class UrbanModel;
 
 // =============================================================================
 /** @class  ObjectCreationPanel
@@ -53,7 +54,7 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config );
+             ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const tools::GeneralConfig& config );
     virtual ~ObjectCreationPanel();
     //@}
 

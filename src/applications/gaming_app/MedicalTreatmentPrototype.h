@@ -44,13 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MedicalTreatmentPrototype( const MedicalTreatmentPrototype& );            //!< Copy constructor
-    MedicalTreatmentPrototype& operator=( const MedicalTreatmentPrototype& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     actions::parameters::ParameterList*& attributesList_;

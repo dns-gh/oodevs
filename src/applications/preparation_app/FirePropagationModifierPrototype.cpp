@@ -13,7 +13,6 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/FireAttribute.h"
-#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 
@@ -34,6 +33,7 @@ FirePropagationModifierPrototype::FirePropagationModifierPrototype( QWidget* par
 // -----------------------------------------------------------------------------
 FirePropagationModifierPrototype::~FirePropagationModifierPrototype()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -44,4 +44,3 @@ void FirePropagationModifierPrototype::Commit()
 {
     //NOTHING
 }
-

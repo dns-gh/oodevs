@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "Objects.h"
 #include "Object.h"
+#include "ObjectPositions.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -49,8 +50,12 @@ void Objects::SerializeAttributes( xml::xostream& xos ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "object" );
-        it->second->Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
-        xos << xml::end;
+        it->second->SerializeAttributes( xos );
+        it->second->SerializePositions( xos );
+        xos     << xml::start( "attributes" );
+            it->second->Interface().Apply( &Serializable_ABC::SerializeAttributes, xos );
+        xos     << xml::end
+            << xml::end;
     }
     xos << xml::end;
 }

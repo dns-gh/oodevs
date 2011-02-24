@@ -41,13 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FirePropagationModifierPrototype( const FirePropagationModifierPrototype& );            //!< Copy constructor
-    FirePropagationModifierPrototype& operator=( const FirePropagationModifierPrototype& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     actions::parameters::ParameterList*& attributesList_;

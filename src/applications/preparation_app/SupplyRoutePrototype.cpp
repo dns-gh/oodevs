@@ -12,7 +12,6 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/SupplyRouteAttribute.h"
-#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 using namespace gui;
@@ -54,6 +53,6 @@ void SupplyRoutePrototype::Commit()
             attribute->SetMaxWeight( maxWeight_->value() );
             attribute->SetEquipped( equipped_->isOn() );
         }
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }

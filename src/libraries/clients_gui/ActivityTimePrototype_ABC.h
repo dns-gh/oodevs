@@ -35,13 +35,6 @@ public:
     virtual bool CheckValidity() const;
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    ActivityTimePrototype_ABC( const ActivityTimePrototype_ABC& );            //!< Copy constructor
-    ActivityTimePrototype_ABC& operator=( const ActivityTimePrototype_ABC& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Member data
     //@{

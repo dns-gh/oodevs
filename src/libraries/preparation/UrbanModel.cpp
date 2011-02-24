@@ -48,9 +48,10 @@ namespace
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( kernel::Controllers& controllers, const StaticModel& staticModel )
-    : controllers_( controllers )
-    , static_( staticModel )
+UrbanModel::UrbanModel( kernel::Controllers& controllers, const StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects )
+    : controllers_      ( controllers )
+    , static_           ( staticModel )
+    , objects_          ( objects )
     , urbanStateVersion_( ::defaultUrbanStateVersion )
 {
     // NOTHING
@@ -214,18 +215,14 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( urbanObject ) );
     const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
     if( resource )
-        pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, *resource, pTerrainObject->GetId(), *this, static_.objectTypes_ ) );
-    const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >();
-    if( infra )
-    {
-        const kernel::InfrastructureType* infraType = static_.objectTypes_.tools::StringResolver< kernel::InfrastructureType >::Find( infra->GetType() );
-        if ( infraType )
+        pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, *resource, pTerrainObject->Get< kernel::Positions >(), *this, objects_, static_.objectTypes_ ) );
+    if( const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >() )
+        if( const kernel::InfrastructureType* infraType = static_.objectTypes_.tools::StringResolver< kernel::InfrastructureType >::Find( infra->GetType() ) )
         {
             pTerrainObject->Attach< kernel::Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, *infraType, dico ) );
             if( infraType->FindCapacity( "medical" ) )
                 pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( static_.objectTypes_, dico ) );
         }
-    }
     pTerrainObject->Polish();
     if( !Resolver< gui::TerrainObjectProxy >::Find( urbanObject.GetId() ) )
         Resolver< gui::TerrainObjectProxy >::Register( urbanObject.GetId(), *pTerrainObject );

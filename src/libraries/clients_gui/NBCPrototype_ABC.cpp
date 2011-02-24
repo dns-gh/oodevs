@@ -25,7 +25,7 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< NBCAgent >& resolver, int maxToxic )
-: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::NBCPrototype_ABC", "NBC parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::NBCPrototype_ABC", "NBC parameters" ) )
     , resolver_( resolver )
     , maxToxic_( maxToxic )
 {

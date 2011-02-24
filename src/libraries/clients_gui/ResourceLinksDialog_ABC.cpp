@@ -109,6 +109,7 @@ ResourceLinksDialog_ABC::~ResourceLinksDialog_ABC()
 void ResourceLinksDialog_ABC::BeforeSelection()
 {
     selected_ = 0;
+    selectedItem_ = 0;
     pMainLayout_->hide();
 }
 

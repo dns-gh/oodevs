@@ -17,8 +17,6 @@
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ValuedListItem.h"
 
-#include "preparation/ObjectAttributesContainer.h"
-
 using namespace kernel;
 using namespace gui;
 
@@ -59,6 +57,6 @@ void NBCPrototype::Commit()
                     attribute->AddAgent( *static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >() );
             attribute->SetDanger( danger_->text().toUInt() );
         }
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }

@@ -25,11 +25,13 @@
 #include "MinePrototype.h"
 #include "LogisticPrototype.h"
 #include "CrossingSitePrototype.h"
+#include "ResourceNetworkPrototype.h"
 #include "SupplyRoutePrototype.h"
 #include "InputPropagationPrototype.h"
 #include "ActivityTimePrototype.h"
 #include "DelayPrototype.h"
 #include "FirePropagationModifierPrototype.h"
+#include "preparation/UrbanModel.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -99,6 +101,11 @@ namespace
     {
     }
 
+    void ResourceNetworkAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, const UrbanModel& urbanModel, const ObjectsModel& objectsModel, const tools::StringResolver< ResourceNetworkType >& resources, Object_ABC*& object )
+    {
+        container.push_back( new ResourceNetworkPrototype( parent, object, controllers, urbanModel, objectsModel, resources ) );
+    }
+
     template< typename T >
     struct Capacity
     {
@@ -111,7 +118,7 @@ namespace
     /*
     * Register capacity tag
     */
-    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, const DetectionMap& detection, const tools::GeneralConfig& config, Object_ABC*& object )
+    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, const DetectionMap& detection, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const tools::GeneralConfig& config, Object_ABC*& object )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"               , boost::bind( &::ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
@@ -132,6 +139,7 @@ namespace
         factory->Register( "burn"                      , boost::bind( &::BurnAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
         factory->Register( "stock"                     , boost::bind( &::StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );
         factory->Register( "contamination"             , boost::bind( &::ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
+        factory->Register( "resources"                 , boost::bind( &::ResourceNetworkAttribute, _2, _3, boost::ref( controllers ), boost::cref( urbanModel ), boost::cref( objectsModel ), boost::cref( resolver ), boost::ref( object ) ) );
 
         return *factory;
     }
@@ -141,8 +149,8 @@ namespace
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, ParametersLayer& layer, const tools::GeneralConfig& config )
-    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, model.detection_, config, creation_ ) )
+ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, ParametersLayer& layer, const tools::GeneralConfig& config )
+    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, model.detection_, objectsModel, urbanModel, config, creation_ ) )
     , model_   ( objectsModel )
     , creation_( 0 )
 {

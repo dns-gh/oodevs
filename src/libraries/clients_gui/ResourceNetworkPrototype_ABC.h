@@ -3,48 +3,38 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __SupplyRoutePrototype_ABC_h_
-#define __SupplyRoutePrototype_ABC_h_
+#ifndef __ResourceNetworkPrototype_ABC_h_
+#define __ResourceNetworkPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
 
-namespace gui
-{
+namespace gui {
 
 // =============================================================================
-/** @class  SupplyRoutePrototype_ABC
-    @brief  Logistic route prototype definition
+/** @class  ResourceNetworkPrototype_ABC
+    @brief  ResourceNetworkPrototype_ABC
 */
-// Created: SBO 2006-04-20
+// Created: JSR 2011-02-23
 // =============================================================================
-class SupplyRoutePrototype_ABC : public ObjectAttributePrototype_ABC
+class ResourceNetworkPrototype_ABC : public ObjectAttributePrototype_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SupplyRoutePrototype_ABC( QWidget* parent );
-    virtual ~SupplyRoutePrototype_ABC();
+    explicit ResourceNetworkPrototype_ABC( QWidget* parent );
+    virtual ~ResourceNetworkPrototype_ABC();
     //@}
 
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
     //@}
-protected:
-    //! @name Member data
-    //@{
-    QSpinBox* flow_;
-    QSpinBox* width_;
-    QSpinBox* length_;
-    QSpinBox* maxWeight_;
-    QCheckBox* equipped_;
-    //@}
 };
 
-}
+} // end namespace gui
 
-#endif // __SupplyRoutePrototype_ABC_h_
+#endif // __ResourceNetworkPrototype_ABC_h_

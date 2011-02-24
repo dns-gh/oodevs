@@ -40,13 +40,6 @@ public:
     //@}
 
 private:
-    //! @name Copy constructor/Assignment
-    //@{
-    ObstaclePrototype( const ObstaclePrototype& );
-    ObstaclePrototype& operator=( const ObstaclePrototype& );
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Object_ABC*& creation_;

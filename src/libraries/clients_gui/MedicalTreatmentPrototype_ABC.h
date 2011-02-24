@@ -41,7 +41,7 @@ class MedicalTreatmentPrototype_ABC : public ObjectAttributePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            MedicalTreatmentPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver );
+             MedicalTreatmentPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver );
     virtual ~MedicalTreatmentPrototype_ABC();
     //@}
 
@@ -52,12 +52,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MedicalTreatmentPrototype_ABC( const MedicalTreatmentPrototype_ABC& );            //!< Copy constructor
-    MedicalTreatmentPrototype_ABC& operator=( const MedicalTreatmentPrototype_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void FillCapacityTypes( QWidget* parent );

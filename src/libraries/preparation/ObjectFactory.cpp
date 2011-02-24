@@ -36,7 +36,6 @@
 #include "OccupantAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "StockAttribute.h"
-#include "ObjectAttributesContainer.h"
 #include "Inhabitants.h"
 #include "Objects.h"
 #include "Populations.h"
@@ -100,19 +99,19 @@ namespace
         template< typename T >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, xml::xistream& xis )
         {
-            result.Get< ObjectAttributesContainer >().Register( *new T( xis, dico ) );
+            result.Attach( *new T( xis, dico ) );
         }
 
         template< typename T, typename Helper >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis )
         {
-            result.Get< ObjectAttributesContainer >().Register( *new T( xis, helper, dico ) );
+            result.Attach( *new T( xis, helper, dico ) );
         }
 
         template< typename T, typename Helper >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis, Controllers& controllers )
         {
-            result.Get< ObjectAttributesContainer >().Register( *new T( xis, helper, dico, controllers ) );
+            result.Attach( *new T( xis, helper, dico, controllers ) );
         }
     };
 
@@ -122,7 +121,7 @@ namespace
         template< typename T, typename Helper >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis, Controllers& controllers )
         {
-            result.Get< ObjectAttributesContainer >().Register( *new FloodAttribute( xis, helper, result.Get< Positions >(), dico, controllers ) );
+            result.Attach( *new FloodAttribute( xis, helper, result.Get< Positions >(), dico, controllers ) );
         }
     };
 }
@@ -200,8 +199,6 @@ Object_ABC* ObjectFactory::CreateObject( const ObjectType& type, const Team_ABC&
     Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, idManager_ );
     result->Attach< Positions >( *new ObjectPositions( staticModel_.coordinateConverter_, result->GetType(), location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
-    ObjectAttributesContainer& attributes = *new ObjectAttributesContainer();
-    result->Attach< ObjectAttributesContainer >( attributes );
     const_cast< Team_ABC* >( &team )->Get< Objects >().AddObject( *result );
     // Attributes are commited by ObjectPrototype
     result->Polish();
@@ -218,7 +215,6 @@ Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& tea
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( xis, staticModel_.coordinateConverter_, result->GetType() ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
-    result->Attach< ObjectAttributesContainer >( *new ObjectAttributesContainer() );
     xis >> xml::start( "attributes" )
             >> xml::list( *this, &ObjectFactory::ReadAttributes, *result, dico )
         >> xml::end;

@@ -34,20 +34,13 @@ class SupplyRoutePrototype : public gui::SupplyRoutePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    SupplyRoutePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
+             SupplyRoutePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
     virtual ~SupplyRoutePrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    SupplyRoutePrototype( const SupplyRoutePrototype& );            //!< Copy constructor
-    SupplyRoutePrototype& operator=( const SupplyRoutePrototype& ); //!< Assignment operator
     //@}
 
 private:

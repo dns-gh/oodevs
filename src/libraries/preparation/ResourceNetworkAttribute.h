@@ -23,6 +23,8 @@ namespace gui
 namespace kernel
 {
     class Controllers;
+    class Object_ABC;
+    class Positions;
     class ResourceNetworkType;
 }
 
@@ -46,11 +48,23 @@ class ResourceNetworkAttribute : public kernel::ResourceNetwork_ABC
                                , public kernel::Serializable_ABC
                                , public Overridable_ABC
 {
+private:
+    //! @name Types
+    //@{
+    typedef tools::Resolver_ABC< gui::TerrainObjectProxy > T_Urbans;
+    typedef tools::Resolver_ABC< kernel::Object_ABC > T_Objects;
+    typedef tools::StringResolver< kernel::ResourceNetworkType > T_Resources;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver );
-             ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute& network, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver );
+             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const kernel::Positions& position
+                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
+             ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute& network, const kernel::Positions& position
+                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
+             ResourceNetworkAttribute( kernel::Controllers& controllers, const kernel::Positions& position
+                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
     virtual ~ResourceNetworkAttribute();
     //@}
 
@@ -76,9 +90,11 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    unsigned int id_;
-    const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver_;
-    const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver_;
+    const kernel::Positions& position_;
+    bool isUrban_;
+    const T_Urbans& urbans_;
+    const T_Objects& objects_;
+    const T_Resources& resources_;
     bool needSaving_;
     //@}
 };

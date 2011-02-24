@@ -21,7 +21,7 @@ using namespace gui;
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
 SupplyRoutePrototype_ABC::SupplyRoutePrototype_ABC( QWidget* parent )
-: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::SupplyRoutePrototype_ABC", "Logistic route" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::SupplyRoutePrototype_ABC", "Logistic route" ) )
 {
     new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Flow:" ), this );
     flow_ = new QSpinBox( 1, 10000, 1, this );

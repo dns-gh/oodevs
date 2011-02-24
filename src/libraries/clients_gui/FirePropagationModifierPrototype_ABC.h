@@ -11,13 +11,6 @@
 #define __FirePropagationModifierPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "tools/Resolver_ABC.h"
-#include "ValuedComboBox.h"
-
-namespace kernel
-{
-    class FireClass;
-}
 
 namespace gui
 {
@@ -40,13 +33,6 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    FirePropagationModifierPrototype_ABC( const FirePropagationModifierPrototype_ABC& );            //!< Copy constructor
-    FirePropagationModifierPrototype_ABC& operator=( const FirePropagationModifierPrototype_ABC& ); //!< Assignment operator
     //@}
 };
 

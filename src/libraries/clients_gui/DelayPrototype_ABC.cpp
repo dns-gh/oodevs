@@ -20,7 +20,7 @@ using namespace gui;
 // Created: JSR 2010-07-06
 // -----------------------------------------------------------------------------
 DelayPrototype_ABC::DelayPrototype_ABC( QWidget* parent )
-: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::DelayPrototype_ABC", "Delay time" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::DelayPrototype_ABC", "Delay time" ) )
 {
     new QLabel( tools::translate( "gui::DelayPrototype_ABC", "Delay time:" ), this );
     delayTime_ = new QTimeEdit( this );

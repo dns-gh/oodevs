@@ -34,13 +34,6 @@ public:
     virtual bool CheckValidity() const;
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    DelayPrototype_ABC( const DelayPrototype_ABC& );            //!< Copy constructor
-    DelayPrototype_ABC& operator=( const DelayPrototype_ABC& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Member data
     //@{

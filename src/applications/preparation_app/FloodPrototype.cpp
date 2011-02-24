@@ -13,7 +13,6 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/FloodAttribute.h"
-#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 
@@ -50,6 +49,6 @@ void FloodPrototype::Commit()
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         FloodAttribute* attribute = new FloodAttribute( dico, detection_, creation_->Get< Positions>(), controllers_ );
         attribute->SetValues( depth_->text().toInt(), refDist_->text().toInt() );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }

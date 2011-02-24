@@ -13,7 +13,6 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/StockAttribute.h"
-#include "preparation/ObjectAttributesContainer.h"
 #include <boost/foreach.hpp>
 
 using namespace kernel;
@@ -49,7 +48,7 @@ void StockPrototype::Commit()
         StockAttribute* attribute = new StockAttribute( dico );
         BOOST_FOREACH( DotationWidget* dotationWidget, dotationWidgets_ )
             attribute->SetDotation( *dotationWidget->dotationType_->GetValue(), dotationWidget->stock_->value(), dotationWidget->maxStock_->value() );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }
 

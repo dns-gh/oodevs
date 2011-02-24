@@ -41,13 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FloodPrototype( const FloodPrototype& );            //!< Copy constructor
-    FloodPrototype& operator=( const FloodPrototype& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     actions::parameters::ParameterList*& attributesList_;

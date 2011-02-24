@@ -13,7 +13,6 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/CrossingSiteAttribute.h"
-#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 using namespace gui;
@@ -48,10 +47,10 @@ void CrossingSitePrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         CrossingSiteAttribute* attribute = new CrossingSiteAttribute( dico );
-            attribute->SetWidth( width_->value() );
-            attribute->SetDepth( depth_->value() );
-            attribute->SetFlowSpeed( speed_->value() );
-            attribute->SetConstruction( needsConstruction_->isOn() );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        attribute->SetWidth( width_->value() );
+        attribute->SetDepth( depth_->value() );
+        attribute->SetFlowSpeed( speed_->value() );
+        attribute->SetConstruction( needsConstruction_->isOn() );
+        creation_->Attach( *attribute );
     }
 }

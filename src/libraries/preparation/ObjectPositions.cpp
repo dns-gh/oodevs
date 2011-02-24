@@ -165,10 +165,10 @@ void ObjectPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPositions::SerializeAttributes
+// Name: ObjectPositions::Serialize
 // Created: SBO 2006-09-12
 // -----------------------------------------------------------------------------
-void ObjectPositions::SerializeAttributes( xml::xostream& xos ) const
+void ObjectPositions::Serialize( xml::xostream& xos ) const
 {
     LocationSerializer serializer( converter_ );
     xos << xml::start( "shape" );

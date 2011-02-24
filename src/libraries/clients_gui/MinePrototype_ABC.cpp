@@ -23,7 +23,7 @@ using namespace gui;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
-: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MinePrototype_ABC", "Mine parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MinePrototype_ABC", "Mine parameters" ) )
 {
     densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Density:" ), this );
     densityBox_ = new QHBox( this );

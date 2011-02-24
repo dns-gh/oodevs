@@ -44,12 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    NBCPrototype_ABC( const NBCPrototype_ABC& );            //!< Copy constructor
-    NBCPrototype_ABC& operator=( const NBCPrototype_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void FillTypes();

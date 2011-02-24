@@ -34,13 +34,6 @@ public:
     virtual bool CheckValidity() const;
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    FloodPrototype_ABC( const FloodPrototype_ABC& );            //!< Copy constructor
-    FloodPrototype_ABC& operator=( const FloodPrototype_ABC& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Member data
     //@{

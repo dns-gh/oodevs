@@ -25,7 +25,7 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 StockPrototype_ABC::StockPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver )
-: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::StockPrototype_ABC", "Stock parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::StockPrototype_ABC", "Stock parameters" ) )
     , resolver_( resolver )
 {
     QSpinBox* dotationCount = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, this );

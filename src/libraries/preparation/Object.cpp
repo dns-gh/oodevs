@@ -10,19 +10,13 @@
 #include "preparation_pch.h"
 #include "Object.h"
 #include "IdManager.h"
-#include "Team.h"
+#include "ObjectPositions.h"
 #include "Tools.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Styles.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/Units.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -31,10 +25,10 @@ using namespace kernel;
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const QString& name, IdManager& idManager )
+Object::Object( Controller& controller, const CoordinateConverter_ABC& converter, const ObjectType& type, const QString& name, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, idManager.GetNextId(), "" )
     , converter_( converter )
-    , type_( type )
+    , type_     ( type )
 {
     if( type.HasSpawn() )
         idManager.GetNextId(); // we need to skip one ID for dynamic created object.
@@ -47,10 +41,10 @@ Object::Object( kernel::Controller& controller, const kernel::CoordinateConverte
 // Name: Object constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-Object::Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, IdManager& idManager )
+Object::Object( xml::xistream& xis, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , converter_( converter )
-    , type_( types.Get( xis.attribute< std::string >( "type" ) ) )
+    , type_     ( types.Get( xis.attribute< std::string >( "type" ) ) )
 {
     idManager.Lock( id_ );
     RegisterSelf( *this );
@@ -94,7 +88,7 @@ void Object::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Item( "" ).Start( Styles::bold ).Add( *(Object_ABC*)this ).End();
+    displayer.Item( "" ).Start( Styles::bold ).Add( *static_cast< Object_ABC* >( const_cast< Object* >( this ) ) ).End();
     displayer.Display( tools::translate( "Object", "Object type:" ), type_ );
 }
 
@@ -104,21 +98,32 @@ void Object::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Object::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", long( id_ ) )
+    xos << xml::attribute( "id", static_cast< long >( id_ ) )
         << xml::attribute( "type", type_.GetType() )
         << xml::attribute( "name", name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::SerializePositions
+// Created: JSR 2011-02-24
+// -----------------------------------------------------------------------------
+void Object::SerializePositions( xml::xostream& xos ) const
+{
+    if( const ObjectPositions* positions = static_cast< const ObjectPositions* >( Retrieve< Positions >() ) )
+        positions->Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Object::CreateDictionary
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-void Object::CreateDictionary( kernel::Controller& controller )
+void Object::CreateDictionary( Controller& controller )
 {
     PropertiesDictionary& dico = *new PropertiesDictionary( controller );
     Attach( dico );
     const Object& constSelf = *this;
-    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Identifier" ), constSelf.id_ );
-    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Name" ), name_ );
-    dico.Register( *(const Entity_ABC*)this, tools::translate( "Object", "Info/Type" ), type_.GetName() );
+    const Entity_ABC* constEntity = static_cast< const Entity_ABC* >( this );
+    dico.Register( *constEntity, tools::translate( "Object", "Info/Identifier" ), constSelf.id_ );
+    dico.Register( *constEntity, tools::translate( "Object", "Info/Name" ), name_ );
+    dico.Register( *constEntity, tools::translate( "Object", "Info/Type" ), type_.GetName() );
 }

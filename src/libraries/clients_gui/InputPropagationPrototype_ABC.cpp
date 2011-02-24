@@ -29,7 +29,7 @@ using namespace gui;
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
 InputPropagationPrototype_ABC::InputPropagationPrototype_ABC( QWidget* parent, const tools::GeneralConfig& config )
-: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation" ) )
     , root_ ( config.GetRootDir() )
 {
     new QLabel( tools::translate( "gui::InputPropagationPrototype_ABC", "Propagation Model:" ), this );

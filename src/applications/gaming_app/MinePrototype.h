@@ -41,13 +41,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MinePrototype( const MinePrototype& );            //!< Copy constructor
-    MinePrototype& operator=( const MinePrototype& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     actions::parameters::ParameterList*& attributesList_;

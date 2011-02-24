@@ -42,13 +42,6 @@ public:
     virtual bool CheckValidity() const;
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    FirePrototype_ABC( const FirePrototype_ABC& );            //!< Copy constructor
-    FirePrototype_ABC& operator=( const FirePrototype_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void FillTypes();

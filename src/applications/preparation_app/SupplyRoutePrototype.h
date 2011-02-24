@@ -38,13 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SupplyRoutePrototype( const SupplyRoutePrototype& );            //!< Copy constructor
-    SupplyRoutePrototype& operator=( const SupplyRoutePrototype& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Object_ABC*& creation_;

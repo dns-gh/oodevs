@@ -38,13 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CrossingSitePrototype( const CrossingSitePrototype& );            //!< Copy constructor
-    CrossingSitePrototype& operator=( const CrossingSitePrototype& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Object_ABC*& creation_;

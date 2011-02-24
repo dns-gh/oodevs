@@ -13,7 +13,6 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/LogisticAttribute.h"
-#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 using namespace gui;
@@ -49,6 +48,6 @@ void LogisticPrototype::Commit()
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         LogisticAttribute* attribute = new LogisticAttribute( dico, controllers_ );
         attribute->SetTC2( *selected_ );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }

@@ -40,7 +40,6 @@ class IdManager;
 // =============================================================================
 class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
-             , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -61,7 +60,8 @@ public:
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
+    void SerializeAttributes( xml::xostream& xos ) const;
+    void SerializePositions( xml::xostream& xos ) const;
     //@}
 
 private:

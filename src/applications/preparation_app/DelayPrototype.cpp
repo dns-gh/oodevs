@@ -11,7 +11,6 @@
 #include "DelayPrototype.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "preparation/ObjectAttributesContainer.h"
 #include "preparation/DelayAttribute.h"
 
 using namespace kernel;
@@ -47,8 +46,8 @@ void DelayPrototype::Commit()
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         DelayAttribute* attribute = new DelayAttribute( dico );
         attribute->SetDelay( 3600 * delayTime_->time().hour() +
-                                    60 * delayTime_->time().minute() +
+                               60 * delayTime_->time().minute() +
                                     delayTime_->time().second() );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }

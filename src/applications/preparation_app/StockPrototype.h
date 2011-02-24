@@ -38,13 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    StockPrototype( const StockPrototype& );            //!< Copy constructor
-    StockPrototype& operator=( const StockPrototype& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Object_ABC*& creation_;

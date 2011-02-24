@@ -21,7 +21,7 @@ using namespace gui;
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------
 FloodPrototype_ABC::FloodPrototype_ABC( QWidget* parent )
-: ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FloodPrototype_ABC", "Flood" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FloodPrototype_ABC", "Flood" ) )
 {
     new QLabel( tools::translate( "gui::FloodPrototype_ABC", "Depth:" ), this );
     QHBox* box1 = new QHBox( this );

@@ -11,7 +11,6 @@
 #define __LogisticPrototype_ABC_h_
 
 #include "ObjectAttributePrototype_ABC.h"
-#include "tools/Resolver.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
@@ -50,13 +49,6 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
-    //@}
-
-private:
-    //! @name Copy constructor/Assignment
-    //@{
-    LogisticPrototype_ABC( const LogisticPrototype_ABC& );
-    LogisticPrototype_ABC& operator=( const LogisticPrototype_ABC& );
     //@}
 
 private slots:

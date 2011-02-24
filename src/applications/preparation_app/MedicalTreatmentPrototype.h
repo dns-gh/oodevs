@@ -48,13 +48,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MedicalTreatmentPrototype( const MedicalTreatmentPrototype& );            //!< Copy constructor
-    MedicalTreatmentPrototype& operator=( const MedicalTreatmentPrototype& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Object_ABC*& creation_;

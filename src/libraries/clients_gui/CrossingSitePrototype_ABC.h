@@ -38,13 +38,6 @@ public:
     virtual bool CheckValidity() const;
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    CrossingSitePrototype_ABC( const CrossingSitePrototype_ABC& );            //!< Copy constructor
-    CrossingSitePrototype_ABC& operator=( const CrossingSitePrototype_ABC& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Member data
     //@{

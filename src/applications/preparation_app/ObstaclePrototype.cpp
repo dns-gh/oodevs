@@ -9,11 +9,9 @@
 
 #include "preparation_app_pch.h"
 #include "ObstaclePrototype.h"
-#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "preparation/ObstacleAttribute.h"
-#include "preparation/ObjectAttributesContainer.h"
 
 using namespace kernel;
 using namespace gui;
@@ -24,7 +22,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ObstaclePrototype::ObstaclePrototype( QWidget* parent, Object_ABC*& creation )
     : ObstaclePrototype_ABC( parent )
-    , creation_ ( creation )
+    , creation_( creation )
 {
     // NOTHING
 }
@@ -50,7 +48,7 @@ void ObstaclePrototype::Commit()
         ObstacleAttribute* attribute = new ObstacleAttribute( dico, types_->GetValue() );
         attribute->Activate( activation_->isChecked() );
         attribute->SetActivationTime( GetActivationTime() );
-        creation_->Get< ObjectAttributesContainer >().Register( *attribute );
+        creation_->Attach( *attribute );
     }
 }
 

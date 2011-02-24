@@ -38,13 +38,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ActivityTimePrototype( const ActivityTimePrototype& );            //!< Copy constructor
-    ActivityTimePrototype& operator=( const ActivityTimePrototype& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Object_ABC*& creation_;

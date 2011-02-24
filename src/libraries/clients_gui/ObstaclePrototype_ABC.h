@@ -54,12 +54,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObstaclePrototype_ABC( const ObstaclePrototype_ABC& );            //!< Copy constructor
-    ObstaclePrototype_ABC& operator=( const ObstaclePrototype_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void showEvent( QShowEvent* );

@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controllers;
+    class Object_ABC;
 }
 
 namespace gui
@@ -42,7 +43,7 @@ class UrbanModel : public urban::Model
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanModel( kernel::Controllers& controllers, const StaticModel& staticModel );
+    explicit UrbanModel( kernel::Controllers& controllers, const StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects );
     virtual ~UrbanModel();
     //@}
 
@@ -75,6 +76,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const StaticModel& static_;
+    const tools::Resolver< kernel::Object_ABC >& objects_;
     std::string urbanStateVersion_;
     //@}
 };
