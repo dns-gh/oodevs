@@ -101,5 +101,6 @@ void EdxlHavePluginConfigPanel::Commit( const std::string& exercise, const std::
         action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/initialization/@serviceURI", initializeServiceURI_->text() );
         action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/update/@serviceURI", updateServiceURI_->text() );
         action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/update/@frequency", QString( "%1s" ).arg( QTime().secsTo( frequency_->time() ) ).ascii() );
+        action.Commit();
     }
 }
