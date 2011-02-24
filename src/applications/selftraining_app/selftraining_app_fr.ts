@@ -418,60 +418,64 @@
     <name>Page_ABC</name>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Retour</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished">Options</translation>
+        <translation>Options</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitter</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">Démarrer</translation>
+        <translation>Démarrer</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished">Rejoindre</translation>
+        <translation>Rejoindre</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer</translation>
     </message>
 </context>
 <context>
     <name>ProcessDialogs</name>
     <message>
         <source>Running training sessions</source>
-        <translation type="unfinished"></translation>
+        <translation>Sessions d&apos;entraînement en cours</translation>
     </message>
     <message>
         <source>Running training session detected. Close ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
+    </message>
+    <message>
+        <source>Failed to start launcher service</source>
+        <translation>Echec du démarrage du service de lancement</translation>
     </message>
 </context>
 <context>
     <name>ProgressPage</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Erreur</translation>
+        <translation>Erreur</translation>
     </message>
 </context>
 <context>
     <name>QuitPage</name>
     <message>
         <source>Please confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Etes vous sûr ?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Oui</translation>
+        <translation>Oui</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">Non</translation>
+        <translation>Non</translation>
     </message>
 </context>
 <context>
@@ -485,120 +489,120 @@
     <name>RemoteControlPage</name>
     <message>
         <source>Remote control</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôle distant</translation>
     </message>
     <message>
         <source>Host:</source>
-        <translation type="unfinished">Hôte: </translation>
+        <translation>Hôte: </translation>
     </message>
     <message>
         <source>127.0.0.1</source>
-        <translation type="unfinished">127.0.0.1</translation>
+        <translation>127.0.0.1</translation>
     </message>
     <message>
         <source>Port:</source>
-        <translation type="unfinished">Port: </translation>
+        <translation>Port: </translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Mise à jour</translation>
+        <translation>Mise à jour</translation>
     </message>
     <message>
         <source>Start game</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer le jeu</translation>
     </message>
     <message>
         <source>Start replay</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer le rejeu</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">Démarrer</translation>
+        <translation>Démarrer</translation>
     </message>
     <message>
         <source>Stop running session</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter une session en cours</translation>
     </message>
     <message>
         <source>Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôler</translation>
     </message>
 </context>
 <context>
     <name>ReplayPage</name>
     <message>
         <source>Replay</source>
-        <translation type="unfinished">Rejeu</translation>
+        <translation>Rejeu</translation>
     </message>
     <message>
         <source>Starting replay session</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrage session rejeu</translation>
     </message>
 </context>
 <context>
     <name>ScenarioEditPage</name>
     <message>
         <source>Scenario</source>
-        <translation type="unfinished">Scénario</translation>
+        <translation>Scénario</translation>
     </message>
     <message>
         <source>Editing exercise</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter</translation>
     </message>
 </context>
 <context>
     <name>ScenarioLauncherPage</name>
     <message>
         <source>Scenario</source>
-        <translation type="unfinished">Scénario</translation>
+        <translation>Scénario</translation>
     </message>
     <message>
         <source>Starting %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrage de %1</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration</translation>
     </message>
     <message>
         <source>Checkpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegardes</translation>
     </message>
     <message>
         <source>Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Session</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Aléatoire</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avancé</translation>
     </message>
     <message>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins</translation>
     </message>
     <message>
         <source>DIS</source>
@@ -625,59 +629,59 @@
     <name>ScenarioPage</name>
     <message>
         <source>Start multiplayer training session</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer une session d&apos;entraînement multijoueur</translation>
     </message>
     <message>
         <source>Join multiplayer training session</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejoindre une session d&apos;entraînement multijoueur</translation>
     </message>
     <message>
         <source>Control remote training sessions</source>
-        <translation type="unfinished"></translation>
+        <translation>Contrôler les sessions d&apos;entraînement distantes</translation>
     </message>
 </context>
 <context>
     <name>SelfTrainingPage</name>
     <message>
         <source>Single</source>
-        <translation type="unfinished"></translation>
+        <translation>Solo</translation>
     </message>
     <message>
         <source>Start a single training session</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer une session d&apos;entraînement solo</translation>
     </message>
     <message>
         <source>Multiplayer</source>
-        <translation type="unfinished"></translation>
+        <translation>Multijoueur</translation>
     </message>
     <message>
         <source>Start or join a multiplayer training session</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrer ou rejoindre une session d&apos;entraînement multi-joueur</translation>
     </message>
 </context>
 <context>
     <name>SessionList</name>
     <message>
         <source>Session:</source>
-        <translation type="unfinished"></translation>
+        <translation>Session : </translation>
     </message>
 </context>
 <context>
     <name>SessionTray</name>
     <message>
         <source>Show window</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher la fenêtre</translation>
     </message>
 </context>
 <context>
     <name>TrayMenu</name>
     <message>
         <source>Show Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Restaurer</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermer</translation>
     </message>
 </context>
 </TS>
