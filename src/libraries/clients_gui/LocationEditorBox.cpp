@@ -126,6 +126,7 @@ void LocationEditorBox::UpdateParamZone( int index )
     latitude_->clear();
     longitude_->clear();
     singleField_->clear();
+    SetAspect( false, false );
     if( parsers_->GetParser( index ).GetNumberOfParameters() == 1 )
     {
         coordBox_->hide();

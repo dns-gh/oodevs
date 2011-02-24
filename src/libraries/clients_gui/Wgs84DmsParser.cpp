@@ -74,11 +74,11 @@ bool Wgs84DmsParser::FormatDmsCoordinate( const QString content, bool longitude,
     coordValue.replace('°',' ');
     coordValue.replace('\'',' ');
     if( coordValue.find( "S" ) >= 0 || coordValue.find( "W" ) >= 0 )
-      coordValue += "-";
+      coordValue = "-" + coordValue;
     coordValue.replace( 'N', ' ' );
     coordValue.replace( 'S', ' ' );
     coordValue.replace( 'E', ' ' );
-    coordValue.replace( 'W', ' ' );
+    coordValue.replace( 'W', ' ' ); 
 
     QStringList listParameters = QStringList::split( " ", coordValue );
     if( listParameters.count() != 3 )
