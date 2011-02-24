@@ -3107,7 +3107,7 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Poursuivre" id="353" name="Resume maneuver"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Interrompre" id="354" name="Cancel maneuver"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ChangerAmbiance" id="355" name="Switch posture">
-      <parameter dia-name="orderConduiteChangerAmbiance_" name="Order conduite changer ambiance" optional="false" type="Enumeration">
+      <parameter dia-name="orderConduiteChangerAmbiance_" name="Ordre conduite changer ambiance" optional="false" type="Enumeration">
         <value id="0" name="safety"/>
         <value id="1" name="standard"/>
       </parameter>
@@ -3134,7 +3134,7 @@ overwhelming force.]]></doctrine>
       </parameter>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" id="358" name="Change population ROE">
-      <parameter dia-name="orderConduiteChangerReglesEngagementPopulation_" name="Order conduite changer regles engagement population" optional="false" type="Enumeration">
+      <parameter dia-name="orderConduiteChangerReglesEngagementPopulation_" name="Ordre conduite changer regles engagement population" optional="false" type="Enumeration">
         <value id="0" name="none"/>
         <value id="1" name="emploi_force_interdit"/>
         <value id="2" name="holding civilians in position by usage of non lethal means"/>
@@ -3264,4 +3264,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3461024055" -->
+<!-- signature="0884327539" -->
