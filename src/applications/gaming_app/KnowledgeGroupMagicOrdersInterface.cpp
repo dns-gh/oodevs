@@ -98,6 +98,7 @@ void KnowledgeGroupMagicOrdersInterface::OnToggleKnowledgeGroupActivation()
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_enable" );
         KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        action->Rename( tools::translate( "gamig_app::Action", "Knowledge Group Activation Change" ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Bool( it.NextElement(), ! selectedEntity_->IsActivated() ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );

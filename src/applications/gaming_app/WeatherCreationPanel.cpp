@@ -165,7 +165,7 @@ void WeatherCreationPanel::Commit()
     if( CheckValidity() )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( model_.types_ ).Get( isGlobal_? "global_weather" : "local_weather" );
-        MagicAction* action = new MagicAction( actionType, controllers_.controller_, tr( isGlobal_? "Change Global Meteo" : "Change Local Meteo" ).ascii(), true );
+        MagicAction* action = new MagicAction( actionType, controllers_.controller_, isGlobal_? tr( "Change Global Weather" ) : tr( "Change Local Weather" ), true );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
         weather_->CreateParameters( *action, it );
         if( !isGlobal_ )

@@ -78,6 +78,7 @@ ObjectCreationPanel.cpp \
 ObjectKnowledgePanel.cpp \
 ObjectMagicOrdersInterface.cpp \
 ObjectPanel.cpp \
+ObjectPrototype.cpp \
 OrbatAttributesDialog.cpp \
 OrbatToolbar.cpp \
 PopulationKnowledgePanel.cpp \

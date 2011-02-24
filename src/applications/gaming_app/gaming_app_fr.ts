@@ -3355,6 +3355,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Change Global Weather</source>
+        <translation>Changement de météo globale</translation>
+    </message>
+    <message>
+        <source>Change Local Weather</source>
+        <translation>Changement de météo locale</translation>
+    </message>
 </context>
 <context>
     <name>WeatherWidget</name>
@@ -3369,6 +3377,28 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Wind speed/direction:</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gamig_app::Action</name>
+    <message>
+        <source>Knowledge Group Activation Change</source>
+        <translation type="unfinished">Changement d&apos;activation de groupe de connaissance</translation>
+    </message>
+</context>
+<context>
+    <name>gaming_app::Action</name>
+    <message>
+        <source>Object Update</source>
+        <translation>Modification d&apos;objet</translation>
+    </message>
+    <message>
+        <source>Object Creation</source>
+        <translation>Création d&apos;objet</translation>
+    </message>
+    <message>
+        <source>Object Destruction</source>
+        <translation>Destruction d&apos;objet</translation>
     </message>
 </context>
 <context>

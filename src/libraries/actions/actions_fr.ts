@@ -68,126 +68,138 @@
 <context>
     <name>ActionParameter</name>
     <message>
-        <source>Obstacle tc2</source>
-        <translation type="unfinished"></translation>
+        <source>Density</source>
+        <translation>Densité</translation>
     </message>
     <message>
-        <source>Density</source>
-        <translation type="unfinished"></translation>
+        <source>Obstacle tc2</source>
+        <translation>TC2 de l&apos;obstacle</translation>
     </message>
 </context>
 <context>
     <name>ActionParameterFactory</name>
     <message>
         <source>not set</source>
-        <translation type="unfinished"></translation>
+        <translation>non défini</translation>
     </message>
     <message>
         <source>Expecting &apos;%1&apos; found &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%2&apos; trouvé, &apos;%1&apos; attendu</translation>
     </message>
 </context>
 <context>
     <name>ActionTiming</name>
     <message>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Heure</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Activé</translation>
     </message>
 </context>
 <context>
     <name>FragOrder</name>
     <message>
         <source>Entity &apos;%1&apos; (id: %2) cannot execute fragmentary order &apos;%3&apos; (id: %4)</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;entité &apos;%1&apos; (id: %2) ne peut pas exécuter l&apos;ordre de conduite &apos;%3&apos; (id: %4)</translation>
     </message>
 </context>
 <context>
     <name>Mission</name>
     <message>
         <source>Entity &apos;%1&apos; (id: %2) cannot execute mission &apos;%3&apos; (id: %4)</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;entité &apos;%1&apos; (id: %2) ne peut pas exécuter la mission &apos;%3&apos; (id: %4)</translation>
     </message>
     <message>
         <source>Entity &apos;%1&apos; (id: %2) received unknown mission</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;entité &apos;%1&apos; (id: %2) a une mission inconnue</translation>
     </message>
 </context>
 <context>
     <name>Parameter</name>
     <message>
+        <source>Invalid agent knowledge.</source>
+        <translation>Connaissance d&apos;unité invalide.</translation>
+    </message>
+    <message>
         <source>Parameter</source>
-        <translation type="unfinished">Paramètre</translation>
+        <translation>Paramètre</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Valeur</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Obstacle location</source>
-        <translation type="unfinished"></translation>
+        <translation>Position d&apos;obstacle</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Nature</source>
-        <translation type="unfinished"></translation>
+        <translation>Nature</translation>
     </message>
     <message>
         <source>Karma</source>
-        <translation type="unfinished"></translation>
+        <translation>Karma</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveau</translation>
     </message>
     <message>
         <source>Mounted</source>
-        <translation type="unfinished"></translation>
+        <translation>Embarqué</translation>
     </message>
     <message>
         <source>Formation</source>
-        <translation type="unfinished"></translation>
+        <translation>Formation</translation>
     </message>
     <message>
         <source>Intelligence location</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Position de renseignement</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Position</translation>
     </message>
     <message>
         <source>Schedule</source>
-        <translation type="unfinished"></translation>
+        <translation>Horaire</translation>
     </message>
     <message>
         <source>%1 (item %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (élément %2)</translation>
+    </message>
+    <message>
+        <source>Invalid object knowledge.</source>
+        <translation>Connaissance d&apos;objet invalide.</translation>
     </message>
     <message>
         <source>Objective location</source>
-        <translation type="unfinished"></translation>
+        <translation>Position de l&apos;objectif</translation>
     </message>
     <message>
         <source>Destination</source>
-        <translation type="unfinished"></translation>
+        <translation>Destination</translation>
     </message>
     <message>
         <source>Way point %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Point de passage %1</translation>
+    </message>
+    <message>
+        <source>Invalid population knowledge.</source>
+        <translation>Connaissance de population invalide.</translation>
     </message>
 </context>
 <context>
     <name>ParameterList</name>
     <message>
         <source>Parameter</source>
-        <translation type="unfinished">Paramètre</translation>
+        <translation>Paramètre</translation>
     </message>
 </context>
 </TS>

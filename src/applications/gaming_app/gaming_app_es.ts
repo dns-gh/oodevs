@@ -3355,6 +3355,14 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
+    <message>
+        <source>Change Global Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Local Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherWidget</name>
@@ -3368,6 +3376,28 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     </message>
     <message>
         <source>Wind speed/direction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gamig_app::Action</name>
+    <message>
+        <source>Knowledge Group Activation Change</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gaming_app::Action</name>
+    <message>
+        <source>Object Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object Destruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object Creation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

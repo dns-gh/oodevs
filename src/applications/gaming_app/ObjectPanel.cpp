@@ -136,6 +136,7 @@ void ObjectPanel::OnApply()
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "update_object" );
         ObjectMagicAction* action = new ObjectMagicAction( object, actionType, controllers_.controller_, true );
+        action->Rename( tools::translate( "gaming_app::Action", "Object Update" ) );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
 
         ParameterList* attributesList = new ParameterList( it.NextElement() );

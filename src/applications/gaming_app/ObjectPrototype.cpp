@@ -176,6 +176,7 @@ void ObjectPrototype::Commit( actions::ActionsModel& actionsModel, const kernel:
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "create_object" );
         ObjectMagicAction* action = new ObjectMagicAction( 0, actionType, controllers_.controller_, true );
+        action->Rename( tools::translate( "gaming_app::Action", "Object Creation" ) );
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
         action->AddParameter( *new String( it.NextElement(), objectTypes_->GetValue()->GetType() ) );
