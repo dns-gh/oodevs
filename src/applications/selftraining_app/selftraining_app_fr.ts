@@ -451,10 +451,6 @@
         <source>Running training session detected. Close ?</source>
         <translation>Des sessions d&apos;entraînement sont en cours. Voulez-vous les arrêter ?</translation>
     </message>
-    <message>
-        <source>Failed to start launcher service</source>
-        <translation>Echec du démarrage du service de lancement</translation>
-    </message>
 </context>
 <context>
     <name>ProgressPage</name>

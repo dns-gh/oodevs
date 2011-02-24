@@ -16,7 +16,8 @@
 
 DECLARE_ICON( radars_on );
 DECLARE_ICON( skull );
-DECLARE_ICON( talkie_interdit );
+DECLARE_ICON( silence_radio_incoming );
+DECLARE_ICON( silence_radio_outgoing );
 DECLARE_ICON( brouillage );
 DECLARE_ICON( gas );
 DECLARE_ICON( cadenas );

@@ -14,7 +14,8 @@
 
 #include "res/radars_on.xpm"
 #include "res/skull.xpm"
-#include "res/talkie_interdit.xpm"
+#include "res/silence_radio_incoming.xpm"
+#include "res/silence_radio_outgoing.xpm"
 #include "res/brouillage.xpm"
 #include "res/gas.xpm"
 #include "res/cadenas.xpm"

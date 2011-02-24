@@ -280,7 +280,7 @@ void Attributes::Draw( const Point2f& where, const kernel::Viewport_ABC& viewpor
     if( bDead_ )
         tools.DrawIcon( xpm_skull, where, 150.f );
     if( bRadioEmitterSilence_ )
-        tools.DrawIcon( xpm_talkie_interdit, where, 150.f );
+        tools.DrawIcon( xpm_silence_radio_outgoing, where, 150.f );
     if( bRadarEnabled_ )
         tools.DrawIcon( xpm_radars_on, where, 150.f );
     if( bCommJammed_ )
