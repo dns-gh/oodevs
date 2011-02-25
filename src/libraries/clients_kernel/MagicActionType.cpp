@@ -230,7 +230,7 @@ void MagicActionType::Initialize()
     {
         CreateOrderParameter( "Temperature", "numeric" );
         CreateOrderParameter( "WindSpeed", "numeric" );
-        CreateOrderParameter( "WindDirection", "direction" );
+        CreateOrderParameter( "WindDirection", "heading" );
         CreateOrderParameter( "CloudFloor", "numeric" );
         CreateOrderParameter( "CloudCeiling", "numeric" );
         CreateOrderParameter( "CloudDensity", "numeric" );

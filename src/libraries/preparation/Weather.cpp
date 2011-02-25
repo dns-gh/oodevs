@@ -50,7 +50,7 @@ Weather::Weather( xml::xistream& xis )
     std::string precipitation;
     xis >> xml::start( "wind" )
             >> xml::attribute( "speed", windSpeed_ )
-            >> xml::attribute( "direction", windDirection_ )
+            >> xml::attribute( "heading", windDirection_ )
         >> xml::end
         >> xml::start( "cloud-cover" )
             >> xml::attribute( "floor", cloudFloor_ )
@@ -80,7 +80,7 @@ void Weather::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "wind" )
             << xml::attribute( "speed", windSpeed_ )
-            << xml::attribute( "direction", windDirection_ )
+            << xml::attribute( "heading", windDirection_ )
         << xml::end
         << xml::start( "cloud-cover" )
             << xml::attribute( "floor", cloudFloor_ )
