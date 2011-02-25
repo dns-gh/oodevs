@@ -19,7 +19,15 @@
   </xs:element>
   <xs:complexType name="UrbanObjects">
     <xs:sequence>
-      <xs:element name="urban-object" minOccurs="0" maxOccurs="unbounded" type="T_ObjectAttributes"/>
+      <xs:element name="urban-object" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="T_ObjectAttributes">
+              <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
