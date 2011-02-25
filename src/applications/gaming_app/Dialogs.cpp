@@ -17,6 +17,7 @@
 #include "InhabitantChangeHealthStateDialog.h"
 #include "InhabitantChangeAffinitiesDialog.h"
 #include "InhabitantChangeAlertedStateDialog.h"
+#include "InhabitantChangeConfinedStateDialog.h"
 #include "InhabitantExtractCrowdDialog.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "LogisticSupplyPullFlowDialog.h"
@@ -51,6 +52,7 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new InhabitantChangeAffinitiesDialog( parent, controllers, model.teams_, staticModel, actionsModel, simulation, profile );
     new InhabitantChangeHealthStateDialog( parent, controllers, actionsModel, simulation, profile );
     new InhabitantChangeAlertedStateDialog( parent, controllers, actionsModel, simulation, profile );
+    new InhabitantChangeConfinedStateDialog( parent, controllers, actionsModel, simulation, profile );
     new InhabitantExtractCrowdDialog( parent, controllers, actionsModel, simulation, profile );
 }
 

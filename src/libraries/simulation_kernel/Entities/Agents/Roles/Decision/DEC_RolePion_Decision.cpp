@@ -590,6 +590,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_PeutReleverPion" ] =
         boost::function< bool( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::CanRelievePion, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Suicide" ] = boost::bind( &DEC_AgentFunctions::Suicide, boost::ref( GetPion() ) );
+    brain[ "DEC_GetTimeInSeconds" ] = &DEC_MiscFunctions::GetTimeInSeconds;
 
     // Population
     brain[ "DEC_Agent_CanaliserPopulation" ] =

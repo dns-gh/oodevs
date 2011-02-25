@@ -78,6 +78,7 @@ public:
     // Misc
     static void SetCurrentSpeedModificator( MIL_AgentPion& callerAgent, double rFactor );
     static void SetMaxSpeedModificator    ( MIL_AgentPion& callerAgent, double rFactor );
+    static unsigned int GetTimeInSeconds();
 
     // Representations
     static std::vector< boost::shared_ptr< MIL_FragOrder > > GetOrdersCategory ( MIL_Entity_ABC& callerAgent );

@@ -367,7 +367,9 @@ eRC_SupplyStock_Distributed = 348
 eRC_ZoneConfined = 349
 eRC_ArrivedOnConfinedZone = 350
 eRC_PasDeDroneDisponible = 351
-eNbr = 351
+eRC_FirstTourOfZoneConfinementDone = 352
+eRC_ZoneConfinementInProgress = 353
+eNbr = 353
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

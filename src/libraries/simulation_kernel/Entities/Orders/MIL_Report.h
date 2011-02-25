@@ -128,6 +128,8 @@ public:
         eRC_SupplyStock_Supplied,
         eRC_SupplyStock_Arrived,
         eRC_SupplyStock_Distributed,
+        eRC_FirstTourOfZoneConfinementDone,
+        eRC_ZoneConfinementInProgress,
         eNbrReport
     };
 

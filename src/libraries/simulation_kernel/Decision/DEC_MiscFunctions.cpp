@@ -202,3 +202,12 @@ std::string DEC_MiscFunctions::GetPointXY( boost::shared_ptr< MT_Vector2D > poin
     stream << "x = " << point->rX_ << ", y = " << point->rY_;
     return stream.str();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::GetTimeInSeconds
+// Created: BCI 2011-02-24
+// -----------------------------------------------------------------------------
+unsigned int DEC_MiscFunctions::GetTimeInSeconds()
+{
+    return MIL_AgentServer::GetWorkspace().GetRealTime();
+}
