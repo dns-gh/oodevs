@@ -78,6 +78,7 @@ public:
     static const std::string& ConvertFromAutomatOrderFormation( E_AutomatOrderFormation, E_Conversion = eToSim );
     static const std::string& ConvertFromPopulationErrorCode( E_PopulationErrorCode, E_Conversion = eToSim );
     static const std::string& ConvertFromPopulationAttitude( E_PopulationAttitude, E_Conversion = eToSim );
+    static const std::string& ConvertFromLocation( E_Location, E_Conversion = eToSim );
 
     // ConvertTo functions
     static E_ChangeHierarchyErrorCode ConvertToChangeHierarchyErrorCode( const std::string& );
@@ -122,6 +123,7 @@ public:
     static E_AutomatOrderFormation ConvertToAutomatOrderFormation( const std::string& );
     static E_PopulationErrorCode ConvertToPopulationErrorCode( const std::string& );
     static E_PopulationAttitude ConvertToPopulationAttitude( const std::string& );
+    static E_Location ConvertToLocation( const std::string& );
 
 private:
     // Typedefs
@@ -168,6 +170,7 @@ private:
     typedef ENT_Tr::converter<E_AutomatOrderFormation> T_ConverterAutomatOrderFormation;
     typedef ENT_Tr::converter<E_PopulationErrorCode> T_ConverterPopulationErrorCode;
     typedef ENT_Tr::converter<E_PopulationAttitude> T_ConverterPopulationAttitude;
+    typedef ENT_Tr::converter<E_Location> T_ConverterLocation;
 
     // Converters
     static T_ConverterChangeHierarchyErrorCode ChangeHierarchyErrorCodeConverter_ [];
@@ -213,6 +216,7 @@ private:
     static T_ConverterAutomatOrderFormation AutomatOrderFormationConverter_ [];
     static T_ConverterPopulationErrorCode PopulationErrorCodeConverter_ [];
     static T_ConverterPopulationAttitude PopulationAttitudeConverter_ [];
+    static T_ConverterLocation LocationConverter_ [];
 };
 
 #endif // __ENT_Tr_Gen_h_

@@ -103,7 +103,6 @@ public:
 
     //! @name Convertors
     //@{
-    static T_ConverterLocation          locationConverter_[];
     static T_ConverterConsumptionType   consumptionTypeConverter_[];
     static T_ConverterTimeCategory      timeCategoryConverter_[];
     static T_ConverterVisionObject      visionObjectConverter_[];

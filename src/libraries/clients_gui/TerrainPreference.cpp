@@ -16,6 +16,7 @@
 #include "Tools.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Controllers.h"
+#include "ENT/Ent_Tr.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
@@ -26,10 +27,10 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& controllers )
     : controllers_( controllers )
-    , options_( controllers_.options_ )
-    , type_( xis.attribute< std::string >( "type" ) )
-    , name_( xis.attribute< std::string >( "name" ) )
-    , shown_( true )
+    , options_    ( controllers_.options_ )
+    , type_       ( xis.attribute< std::string >( "type" ) )
+    , name_       ( xis.attribute< std::string >( "name" ) )
+    , shown_      ( true )
 {
     std::string color;
     xis >> xml::content( "color", color )
@@ -54,7 +55,7 @@ TerrainPreference::~TerrainPreference()
 void TerrainPreference::Display( QWidget* parent )
 {
     QHBox* pBox = new QHBox( parent );
-    showCheckbox_ = new QCheckBox( name_.c_str(), pBox );
+    showCheckbox_ = new QCheckBox( ENT_Tr::ConvertFromLocation( ENT_Tr::ConvertToLocation( name_ ), ENT_Tr::eToTr ).c_str(), pBox );
     showCheckbox_->setChecked( shown_ );
     pBox->setStretchFactor( showCheckbox_, 2 );
     sizeButton_  = new SizeButton ( pBox, tools::translate( "gui::TerrainPreference", "Line thickness: " ), lineWidth_ );

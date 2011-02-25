@@ -471,4 +471,37 @@ enum E_PopulationAttitude
     eNbrPopulationAttitude
 };
 
+enum E_Location
+{
+    eLocation_Unknown,
+    eLocation_Forest,
+    eLocation_Plantation,
+    eLocation_Swamp,
+    eLocation_Dune,
+    eLocation_Urban,
+    eLocation_Water,
+    eLocation_Ice,
+    eLocation_ForestBorder,
+    eLocation_UrbanBorder,
+    eLocation_WaterBorder,
+    eLocation_PlantationBorder,
+    eLocation_SwampBorder,
+    eLocation_DuneBorder,
+    eLocation_IceBorder,
+    eLocation_SmallRoad,
+    eLocation_Motorway,
+    eLocation_LargeRoad,
+    eLocation_MediumRoad,
+    eLocation_SmallRiver,
+    eLocation_MediumRiver,
+    eLocation_LargeRiver,
+    eLocation_Bridge,
+    eLocation_Cliff,
+    eLocation_Railroad,
+    eLocation_Crossroad,
+    eLocation_Mountain,
+    eLocation_MountainBorder,
+    eNbrLocation
+};
+
 #endif // __ENT_Enums_Gen_h_

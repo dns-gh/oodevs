@@ -469,6 +469,39 @@ ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
     T_ConverterPopulationAttitude( "", "", (E_PopulationAttitude)-1 )
 };
 
+ENT_Tr::T_ConverterLocation ENT_Tr::LocationConverter_[] =
+{
+    T_ConverterLocation( "inconnu",            QT_TRANSLATE_NOOP( "ENT_Tr", "unknown" ),        eLocation_Unknown            ),
+    T_ConverterLocation( "foret",              QT_TRANSLATE_NOOP( "ENT_Tr", "forest" ),         eLocation_Forest             ),
+    T_ConverterLocation( "plantation",         QT_TRANSLATE_NOOP( "ENT_Tr", "orchard" ),        eLocation_Plantation         ),
+    T_ConverterLocation( "marais",             QT_TRANSLATE_NOOP( "ENT_Tr", "swamp" ),          eLocation_Swamp              ),
+    T_ConverterLocation( "dune",               QT_TRANSLATE_NOOP( "ENT_Tr", "dune" ),           eLocation_Dune               ),
+    T_ConverterLocation( "urbain",             QT_TRANSLATE_NOOP( "ENT_Tr", "urban area" ),     eLocation_Urban              ),
+    T_ConverterLocation( "etendue eau",        QT_TRANSLATE_NOOP( "ENT_Tr", "lake" ),           eLocation_Water              ),
+    T_ConverterLocation( "glace",              QT_TRANSLATE_NOOP( "ENT_Tr", "glacier" ),        eLocation_Ice                ),
+    T_ConverterLocation( "lisiere",            QT_TRANSLATE_NOOP( "ENT_Tr", "forest edge" ),    eLocation_ForestBorder       ),
+    T_ConverterLocation( "banlieue",           QT_TRANSLATE_NOOP( "ENT_Tr", "suburb" ),         eLocation_UrbanBorder        ),
+    T_ConverterLocation( "cote",               QT_TRANSLATE_NOOP( "ENT_Tr", "waterfront" ),     eLocation_WaterBorder        ),
+    T_ConverterLocation( "bord de plantation", QT_TRANSLATE_NOOP( "ENT_Tr", "orchard edge" ),   eLocation_PlantationBorder   ),
+    T_ConverterLocation( "bord de marais",     QT_TRANSLATE_NOOP( "ENT_Tr", "swamp edge" ),     eLocation_SwampBorder        ),
+    T_ConverterLocation( "bord de dune",       QT_TRANSLATE_NOOP( "ENT_Tr", "dune edge" ),      eLocation_DuneBorder         ),
+    T_ConverterLocation( "bord de glace",      QT_TRANSLATE_NOOP( "ENT_Tr", "glacier edge" ),   eLocation_IceBorder          ),
+    T_ConverterLocation( "chemin",             QT_TRANSLATE_NOOP( "ENT_Tr", "country road" ),   eLocation_SmallRoad          ),
+    T_ConverterLocation( "autoroute",          QT_TRANSLATE_NOOP( "ENT_Tr", "highway" ),        eLocation_Motorway           ),
+    T_ConverterLocation( "nationale",          QT_TRANSLATE_NOOP( "ENT_Tr", "main road" ),      eLocation_LargeRoad          ),
+    T_ConverterLocation( "departementale",     QT_TRANSLATE_NOOP( "ENT_Tr", "secondary road" ), eLocation_MediumRoad         ),
+    T_ConverterLocation( "ruisseau",           QT_TRANSLATE_NOOP( "ENT_Tr", "stream" ),         eLocation_SmallRiver         ),
+    T_ConverterLocation( "riviere",            QT_TRANSLATE_NOOP( "ENT_Tr", "river" ),          eLocation_MediumRiver        ),
+    T_ConverterLocation( "riviere importante", QT_TRANSLATE_NOOP( "ENT_Tr", "main river" ),     eLocation_LargeRiver         ),
+    T_ConverterLocation( "pont",               QT_TRANSLATE_NOOP( "ENT_Tr", "bridge" ),         eLocation_Bridge             ),
+    T_ConverterLocation( "falaise",            QT_TRANSLATE_NOOP( "ENT_Tr", "cliff" ),          eLocation_Cliff              ),
+    T_ConverterLocation( "voie ferree",        QT_TRANSLATE_NOOP( "ENT_Tr", "railroad" ),       eLocation_Railroad           ),
+    T_ConverterLocation( "carrefour",          QT_TRANSLATE_NOOP( "ENT_Tr", "crossroad" ),      eLocation_Crossroad          ),
+    T_ConverterLocation( "montagne",           QT_TRANSLATE_NOOP( "ENT_Tr", "mountain" )  ,     eLocation_Mountain           ),
+    T_ConverterLocation( "bord de montagne",   QT_TRANSLATE_NOOP( "ENT_Tr", "mountain edge" ),  eLocation_MountainBorder     ),
+    T_ConverterLocation( "", "", (E_Location)-1 )
+};
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -518,6 +551,7 @@ void ENT_Tr::InitTranslations()
     InitTr( AutomatOrderFormationConverter_, "ENT_Tr" );
     InitTr( PopulationErrorCodeConverter_, "ENT_Tr" );
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
+    InitTr( LocationConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -908,6 +942,15 @@ const std::string& ENT_Tr::ConvertFromPopulationAttitude( E_PopulationAttitude n
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromLocation
+// Created: PHC
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromLocation( E_Location nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( LocationConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToChangeHierarchyErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1283,4 +1326,13 @@ E_PopulationErrorCode ENT_Tr::ConvertToPopulationErrorCode( const std::string& s
 E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( PopulationAttitudeConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToLocation
+// Created: PHC
+//-----------------------------------------------------------------------------
+E_Location ENT_Tr::ConvertToLocation( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( LocationConverter_, strName );
 }

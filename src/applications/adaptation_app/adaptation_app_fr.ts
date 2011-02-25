@@ -4241,116 +4241,20 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>effet</translation>
     </message>
     <message>
-        <source>unknown</source>
-        <translation>inconnu</translation>
-    </message>
-    <message>
         <source>forest</source>
         <translation>forêt</translation>
-    </message>
-    <message>
-        <source>orchard</source>
-        <translation>verger</translation>
-    </message>
-    <message>
-        <source>swamp</source>
-        <translation>marais</translation>
-    </message>
-    <message>
-        <source>dune</source>
-        <translation>dune</translation>
     </message>
     <message>
         <source>urban area</source>
         <translation>zone urbaine</translation>
     </message>
     <message>
-        <source>lake</source>
-        <translation>lac</translation>
-    </message>
-    <message>
-        <source>glacier</source>
-        <translation>glacier</translation>
-    </message>
-    <message>
-        <source>forest edge</source>
-        <translation>lisière</translation>
-    </message>
-    <message>
-        <source>suburb</source>
-        <translation>banlieue</translation>
-    </message>
-    <message>
-        <source>waterfront</source>
-        <translation>côte</translation>
-    </message>
-    <message>
-        <source>orchard edge</source>
-        <translation>lisière de verger</translation>
-    </message>
-    <message>
-        <source>swamp edge</source>
-        <translation>bord de marais</translation>
-    </message>
-    <message>
-        <source>dune edge</source>
-        <translation>bord de dune</translation>
-    </message>
-    <message>
-        <source>glacier edge</source>
-        <translation>bord de glacier</translation>
-    </message>
-    <message>
-        <source>country road</source>
-        <translation>route de campagne</translation>
-    </message>
-    <message>
-        <source>highway</source>
-        <translation>autoroute</translation>
-    </message>
-    <message>
-        <source>main road</source>
-        <translation>route principale</translation>
-    </message>
-    <message>
-        <source>secondary road</source>
-        <translation>route secondaire</translation>
-    </message>
-    <message>
-        <source>stream</source>
-        <translation>ruisseau</translation>
-    </message>
-    <message>
-        <source>river</source>
-        <translation>rivière</translation>
-    </message>
-    <message>
-        <source>main river</source>
-        <translation>fleuve</translation>
-    </message>
-    <message>
         <source>bridge</source>
         <translation>pont</translation>
     </message>
     <message>
-        <source>cliff</source>
-        <translation>falaise</translation>
-    </message>
-    <message>
-        <source>railroad</source>
-        <translation>chemin de fer</translation>
-    </message>
-    <message>
         <source>crossroad</source>
         <translation>carrefour</translation>
-    </message>
-    <message>
-        <source>mountain</source>
-        <translation>montagne</translation>
-    </message>
-    <message>
-        <source>mountain edge</source>
-        <translation>bord de montagne</translation>
     </message>
     <message>
         <source>Parked, engine stopped</source>

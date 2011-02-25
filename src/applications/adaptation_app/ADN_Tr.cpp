@@ -18,6 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Tr.h"
+#include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
@@ -33,43 +34,6 @@ ADN_Tr::T_ConverterTypeMunitionTirIndirect ADN_Tr::munitionTirIndirectConverter_
     T_ConverterTypeMunitionTirIndirect( "mine",      QT_TRANSLATE_NOOP( "ADN_Tr", "mine" ),               eTypeMunitionTirIndirect_Mine ),
     T_ConverterTypeMunitionTirIndirect( "effect",    QT_TRANSLATE_NOOP( "ADN_Tr", "effect" ),             eTypeMunitionTirIndirect_Effect ),
     T_ConverterTypeMunitionTirIndirect( "", "", (E_TypeMunitionTirIndirect)-1 )
-};
-
-ADN_Tr::T_ConverterLocation ADN_Tr::locationConverter_[] =
-{
-    T_ConverterLocation( "inconnu",            QT_TRANSLATE_NOOP( "ADN_Tr", "unknown" ),        eLocation_Unknown            ),
-
-    T_ConverterLocation( "foret",              QT_TRANSLATE_NOOP( "ADN_Tr", "forest" ),         eLocation_Forest             ),
-    T_ConverterLocation( "plantation",         QT_TRANSLATE_NOOP( "ADN_Tr", "orchard" ),        eLocation_Plantation         ),
-    T_ConverterLocation( "marais",             QT_TRANSLATE_NOOP( "ADN_Tr", "swamp" ),          eLocation_Swamp              ),
-    T_ConverterLocation( "dune",               QT_TRANSLATE_NOOP( "ADN_Tr", "dune" ),           eLocation_Dune               ),
-    T_ConverterLocation( "urbain",             QT_TRANSLATE_NOOP( "ADN_Tr", "urban area" ),     eLocation_Urban              ),
-    T_ConverterLocation( "etendue eau",        QT_TRANSLATE_NOOP( "ADN_Tr", "lake" ),           eLocation_Water              ),
-    T_ConverterLocation( "glace",              QT_TRANSLATE_NOOP( "ADN_Tr", "glacier" ),        eLocation_Ice                ),
-
-    T_ConverterLocation( "lisiere",            QT_TRANSLATE_NOOP( "ADN_Tr", "forest edge" ),    eLocation_ForestBorder       ),
-    T_ConverterLocation( "banlieue",           QT_TRANSLATE_NOOP( "ADN_Tr", "suburb" ),         eLocation_UrbanBorder        ),
-    T_ConverterLocation( "cote",               QT_TRANSLATE_NOOP( "ADN_Tr", "waterfront" ),     eLocation_WaterBorder        ),
-    T_ConverterLocation( "bord de plantation", QT_TRANSLATE_NOOP( "ADN_Tr", "orchard edge" ),   eLocation_PlantationBorder   ),
-    T_ConverterLocation( "bord de marais",     QT_TRANSLATE_NOOP( "ADN_Tr", "swamp edge" ),     eLocation_SwampBorder        ),
-    T_ConverterLocation( "bord de dune",       QT_TRANSLATE_NOOP( "ADN_Tr", "dune edge" ),      eLocation_DuneBorder         ),
-    T_ConverterLocation( "bord de glace",      QT_TRANSLATE_NOOP( "ADN_Tr", "glacier edge" ),   eLocation_IceBorder          ),
-
-    T_ConverterLocation( "chemin",             QT_TRANSLATE_NOOP( "ADN_Tr", "country road" ),   eLocation_SmallRoad          ),
-    T_ConverterLocation( "autoroute",          QT_TRANSLATE_NOOP( "ADN_Tr", "highway" ),        eLocation_Motorway           ),
-    T_ConverterLocation( "nationale",          QT_TRANSLATE_NOOP( "ADN_Tr", "main road" ),      eLocation_LargeRoad          ),
-    T_ConverterLocation( "departementale",     QT_TRANSLATE_NOOP( "ADN_Tr", "secondary road" ), eLocation_MediumRoad         ),
-    T_ConverterLocation( "ruisseau",           QT_TRANSLATE_NOOP( "ADN_Tr", "stream" ),         eLocation_SmallRiver         ),
-    T_ConverterLocation( "riviere",            QT_TRANSLATE_NOOP( "ADN_Tr", "river" ),          eLocation_MediumRiver        ),
-    T_ConverterLocation( "riviere importante", QT_TRANSLATE_NOOP( "ADN_Tr", "main river" ),     eLocation_LargeRiver         ),
-    T_ConverterLocation( "pont",               QT_TRANSLATE_NOOP( "ADN_Tr", "bridge" ),         eLocation_Bridge             ),
-    T_ConverterLocation( "falaise",            QT_TRANSLATE_NOOP( "ADN_Tr", "cliff" ),          eLocation_Cliff              ),
-    T_ConverterLocation( "voie ferree",        QT_TRANSLATE_NOOP( "ADN_Tr", "railroad" ),       eLocation_Railroad           ),
-    T_ConverterLocation( "carrefour",          QT_TRANSLATE_NOOP( "ADN_Tr", "crossroad" ),      eLocation_Crossroad          ),
-
-    T_ConverterLocation( "montagne",           QT_TRANSLATE_NOOP( "ADN_Tr", "mountain" )  ,     eLocation_Mountain           ),
-    T_ConverterLocation( "bord de montagne",   QT_TRANSLATE_NOOP( "ADN_Tr", "mountain edge" ),  eLocation_MountainBorder     ),
-    T_ConverterLocation( "", "", (E_Location)-1 )
 };
 
 ADN_Tr::T_ConverterConsumptionType ADN_Tr::consumptionTypeConverter_[] =
@@ -329,7 +293,7 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
 // -----------------------------------------------------------------------------
 const std::string& ADN_Tr::ConvertFromLocation( E_Location  nValue, E_Conversion nConversion )
 {
-    return ADN_Tr::InverseFindInConverter( locationConverter_, nValue, nConversion );
+    return ENT_Tr::ConvertFromLocation( nValue, nConversion );
 }
 
 
@@ -529,7 +493,7 @@ const std::string& ADN_Tr::ConvertFromMissionParameterType( E_MissionParameterTy
 // -----------------------------------------------------------------------------
 E_Location ADN_Tr::ConvertToLocation( const std::string& strName )
 {
-    return ADN_Tr::FindInConverter( locationConverter_, strName );
+    return ENT_Tr::ConvertToLocation( strName );
 }
 
 // -----------------------------------------------------------------------------
@@ -726,7 +690,6 @@ E_MissionParameterType ADN_Tr::ConvertToMissionParameterType( const std::string&
 // -----------------------------------------------------------------------------
 void ADN_Tr::InitTranslations()
 {
-    InitTr( locationConverter_, "ADN_Tr" );
     InitTr( consumptionTypeConverter_, "ADN_Tr" );
     InitTr( timeCategoryConverter_, "ADN_Tr" );
     InitTr( visionObjectConverter_, "ADN_Tr" );

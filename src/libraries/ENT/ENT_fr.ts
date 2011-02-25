@@ -850,5 +850,113 @@
         <source>energy</source>
         <translation>énergie</translation>
     </message>
+    <message>
+        <source>forest</source>
+        <translation>forêt</translation>
+    </message>
+    <message>
+        <source>orchard</source>
+        <translation>plantation</translation>
+    </message>
+    <message>
+        <source>swamp</source>
+        <translation>marais</translation>
+    </message>
+    <message>
+        <source>dune</source>
+        <translation>dune</translation>
+    </message>
+    <message>
+        <source>urban area</source>
+        <translation>urbain</translation>
+    </message>
+    <message>
+        <source>lake</source>
+        <translation>étendue d&apos;eau</translation>
+    </message>
+    <message>
+        <source>glacier</source>
+        <translation>glace</translation>
+    </message>
+    <message>
+        <source>forest edge</source>
+        <translation>lisière</translation>
+    </message>
+    <message>
+        <source>suburb</source>
+        <translation>banlieue</translation>
+    </message>
+    <message>
+        <source>waterfront</source>
+        <translation>côte</translation>
+    </message>
+    <message>
+        <source>orchard edge</source>
+        <translation>bord de plantation</translation>
+    </message>
+    <message>
+        <source>swamp edge</source>
+        <translation>bord de marais</translation>
+    </message>
+    <message>
+        <source>dune edge</source>
+        <translation>bord de dune</translation>
+    </message>
+    <message>
+        <source>glacier edge</source>
+        <translation>bord de glace</translation>
+    </message>
+    <message>
+        <source>country road</source>
+        <translation>chemin</translation>
+    </message>
+    <message>
+        <source>highway</source>
+        <translation>autoroute</translation>
+    </message>
+    <message>
+        <source>main road</source>
+        <translation>nationale</translation>
+    </message>
+    <message>
+        <source>secondary road</source>
+        <translation>departementale</translation>
+    </message>
+    <message>
+        <source>stream</source>
+        <translation>ruisseau</translation>
+    </message>
+    <message>
+        <source>river</source>
+        <translation>rivière</translation>
+    </message>
+    <message>
+        <source>main river</source>
+        <translation>rivière importante</translation>
+    </message>
+    <message>
+        <source>bridge</source>
+        <translation>pont</translation>
+    </message>
+    <message>
+        <source>cliff</source>
+        <translation>falaise</translation>
+    </message>
+    <message>
+        <source>railroad</source>
+        <translation>voie ferrée</translation>
+    </message>
+    <message>
+        <source>crossroad</source>
+        <translation>carrefour</translation>
+    </message>
+    <message>
+        <source>mountain</source>
+        <translation>montagne</translation>
+    </message>
+    <message>
+        <source>mountain edge</source>
+        <translation>bord de montagne</translation>
+    </message>
 </context>
 </TS>
