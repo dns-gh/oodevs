@@ -344,7 +344,6 @@
   </object>
   <object geometry="polygon" name="Bloc urbain" symbol="" type="urban block">
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseBlocUrbain"/>
-    <resources/>
     <structural value="100"/>
   </object>
   <object geometry="polygon" name="Zone bouclee" symbol="G*MPOGZ---****X" type="seal off area">
@@ -375,4 +374,4 @@
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="2676500924" -->
+<!-- signature="3940313317" -->
