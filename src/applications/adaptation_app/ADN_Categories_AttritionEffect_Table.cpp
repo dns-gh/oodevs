@@ -15,6 +15,7 @@
 #include "ADN_Equipement_GUI.h"
 #include "ADN_TableItem_Edit.h"
 #include "ADN_Tr.h"
+#include "ENT/ENT_Tr.h"
 
 typedef helpers::AttritionEffectOnHuman AttritionEffectOnHuman;
 
@@ -41,7 +42,7 @@ public:
         tab_.setItem( i, 1, pItemWounded );
         tab_.setItem( i, 2, pItemDead );
         // Connect the items.
-        pItemState->setText( ADN_Tr::ConvertFromEquipmentState( static_cast<AttritionEffectOnHuman*>(pObj)->nEquipmentState_.GetData() ).c_str() );
+        pItemState->setText( ADN_Tr::ConvertFromEquipmentState( static_cast<AttritionEffectOnHuman*>(pObj)->nEquipmentState_.GetData(), ENT_Tr_ABC::eToTr ).c_str() );
         pItemWounded->GetConnector().Connect( &static_cast<AttritionEffectOnHuman*>(pObj)->nInjuredPercentage_ );
         pItemDead->GetConnector().Connect( &static_cast<AttritionEffectOnHuman*>(pObj)->nDeadPercentage_ );
         pItemWounded->GetValidator().setTop( 100 - pItemDead->text().toInt() );
