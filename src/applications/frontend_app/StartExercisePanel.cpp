@@ -128,15 +128,16 @@ void StartExercisePanel::StartExercise()
 {
     if( list_->selectedItem() )
     {
+        const std::string session = session_;
         const QString exercise = list_->selectedItem()->text();
-        configPanel_->Commit( exercise.ascii(), session_,
+        configPanel_->Commit( exercise.ascii(), session,
                               sessionName_->text().ascii(), sessionComment_->text().ascii(),
                               exerciseNumber_->value() );
         BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )
-            plugin->Commit( exercise.ascii(), session_ );
-        Start( new ::StartExercise( config_, list_->selectedItem()->text(), session_.c_str(), false ) ) ;
+            plugin->Commit( exercise.ascii(), session );
+        Start( new ::StartExercise( config_, list_->selectedItem()->text(), session.c_str(), false ) ) ;
         context_.Save( "exercise", list_ );
-        context_.Save( "session", session_.c_str() );
+        context_.Save( "session", session.c_str() );
         Update();
         ShowNext();
     }
