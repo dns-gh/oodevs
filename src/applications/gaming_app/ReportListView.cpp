@@ -39,6 +39,7 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     setMargin( 2 );
     AddColumn( tr( "Received" ) );
     AddColumn( tr( "Report" ) );
+    setResizeMode( QListView::NoColumn );
 
     // Set a descending sorting order, then disable user sorting.
     setSorting( 0, false );
