@@ -78,7 +78,6 @@ ConstructionAttribute::~ConstructionAttribute()
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::Load( xml::xistream& xis )
 {
-    assert( dotation_ );
     const double completion = std::max( 0.1, xis.attribute< double >( "completion", 1.f ) );
     constructionPercentage_.Set( completion );
     nCurrentNbrDotation_ = static_cast< unsigned int >( constructionPercentage_.Get() * nFullNbrDotation_ );

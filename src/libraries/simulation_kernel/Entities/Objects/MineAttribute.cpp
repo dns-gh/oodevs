@@ -72,7 +72,6 @@ MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
 // -----------------------------------------------------------------------------
 void MineAttribute::Load( xml::xistream& xis )
 {
-    assert( dotation_ != 0 );
     const double completion = xis.attribute< double >( "completion", 1.f );
     if( completion > 0. && completion <= 1. )
         miningPercentage_.Set( completion );
