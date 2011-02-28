@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Models.xsd">
   <units>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PlatoonINF">
+    <unit dia-type="net.masagroup.sword.france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.france.military.platoon.roles.PlatoonINF">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -72,7 +72,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PlatoonABC">
+    <unit dia-type="net.masagroup.sword.france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.france.military.platoon.roles.PlatoonABC">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -134,7 +134,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PEI">
+    <unit dia-type="net.masagroup.sword.france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.france.military.platoon.roles.PEI">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -175,7 +175,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PIA">
+    <unit dia-type="net.masagroup.sword.france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.france.military.platoon.roles.PIA">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -243,7 +243,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PC">
+    <unit dia-type="net.masagroup.sword.france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.france.military.platoon.roles.PC">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -281,7 +281,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
+    <unit dia-type="net.masagroup.sword.france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.roles.PlatoonTest">
       <missions>
         <mission name="TEST Advance"/>
         <mission name="TEST AnimateObjects"/>
@@ -7431,7 +7431,7 @@
     </unit>
   </units>
   <automats>
-    <automat dia-type="net.masagroup.sword.military.company.roles.Company" file="BMAutomat.bms" masalife="true" name="net.masagroup.sword.military.company.roles.Company">
+    <automat dia-type="net.masagroup.sword.france.military.company.roles.SGTIA" file="BMAutomat.bms" masalife="true" name="net.masagroup.sword.france.military.company.roles.SGTIA">
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
