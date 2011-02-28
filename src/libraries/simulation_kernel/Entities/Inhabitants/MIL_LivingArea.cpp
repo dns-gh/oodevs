@@ -497,22 +497,32 @@ bool MIL_LivingArea::IsAlerted( const TER_Localisation& localisation ) const
 // Name: MIL_LivingArea::SetAlerted
 // Created: BCI 2011-02-03
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::SetAlerted( bool alerted )
+void MIL_LivingArea::SetAlerted( bool alerted, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
 {
     BOOST_FOREACH( T_Block& block, blocks_ )
-        block.alerted_ = alerted;
-    hasChanged_ = true;
+    {
+        if( pUrbanObject == 0 || pUrbanObject == block.pUrbanObject_ )
+        {
+            block.alerted_ = alerted;
+            hasChanged_ = true;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingArea::SetConfined
 // Created: BCI 2011-02-22
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::SetConfined( bool confined )
+void MIL_LivingArea::SetConfined( bool confined, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
 {
     BOOST_FOREACH( T_Block& block, blocks_ )
-        block.confined_ = confined;
-    hasChanged_ = true;
+    {
+        if( pUrbanObject == 0 || pUrbanObject == block.pUrbanObject_ )
+        {
+            block.confined_ = confined;
+            hasChanged_ = true;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

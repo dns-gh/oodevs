@@ -3226,6 +3226,22 @@ Motivo: %3
         <source>Enable</source>
         <translation type="unfinished">Habilitar</translation>
     </message>
+    <message>
+        <source>Alert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop alert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop confine</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UserProfileDialog</name>

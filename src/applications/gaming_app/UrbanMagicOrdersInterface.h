@@ -61,6 +61,10 @@ private slots:
     void ChangeThreshold();
     void Disable();
     void Enable();
+    void Alert();
+    void StopAlert();
+    void Confine();
+    void StopConfine();
     //@}
 
 private:

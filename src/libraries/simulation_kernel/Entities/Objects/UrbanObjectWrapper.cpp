@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "UrbanObjectWrapper.h"
 #include "MIL_AgentServer.h"
+#include "Entities/Inhabitants/MIL_LivingArea.h"
 #include "ResourceNetworkCapacity.h"
 #include "MaterialAttribute.h"
 #include "MedicalCapacity.h"
@@ -400,7 +401,7 @@ const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject() const
 // Name: UrbanObjectWrapper::UpdateInhabitants
 // Created: JSR 2011-02-02
 // -----------------------------------------------------------------------------
-void UrbanObjectWrapper::UpdateInhabitants( const MIL_LivingArea& livingArea, unsigned int number )
+void UrbanObjectWrapper::UpdateInhabitants( MIL_LivingArea& livingArea, unsigned int number )
 {
     inhabitants_[ &livingArea ] = number;
     if( number == 0 )
@@ -417,4 +418,59 @@ unsigned int UrbanObjectWrapper::GetTotalInhabitants() const
     for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
         ret += it->second;
     return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::OnUpdate
+// Created: BCI 2011-02-28
+// -----------------------------------------------------------------------------
+sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
+{
+    for( int i = 0; i < attributes.size(); ++i )
+    {
+        const sword::MissionParameter_Value& attribute = attributes.Get( i );
+        if( attribute.list_size() == 0 ) // it should be a list of lists
+            return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
+        const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
+        switch( actionId )
+        {
+        case sword::ObjectMagicAction_Attribute_alerted:
+            OnReceiveSetAlerted( attribute );
+            break;
+        case sword::ObjectMagicAction_Attribute_confined:
+            OnReceiveSetConfined( attribute );
+            break;
+        default:
+            break;
+        }
+    }
+    return MIL_Object::OnUpdate( attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::OnReceiveSetAlerted
+// Created: BCI 2011-02-28
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::OnReceiveSetAlerted( const sword::MissionParameter_Value& attribute )
+{
+    if( attribute.list_size() > 1 )
+    {
+        bool alerted = attribute.list( 1 ).booleanvalue();
+        for( T_Inhabitants::const_iterator it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+            it->first->SetAlerted( alerted, this );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::OnReceiveSetConfined
+// Created: BCI 2011-02-28
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::OnReceiveSetConfined( const sword::MissionParameter_Value& attribute )
+{
+    if( attribute.list_size() > 1 )
+    {
+        bool confined = attribute.list( 1 ).booleanvalue();
+        for( T_Inhabitants::const_iterator it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+            it->first->SetConfined( confined, this );
+    }
 }

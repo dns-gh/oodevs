@@ -407,6 +407,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "inhabitant_change_health_state", sword::UnitMagicAction::inhabitant_change_health_state ) );
     RegisterActionType( *new MagicActionType( "inhabitant_change_affinities", sword::UnitMagicAction::inhabitant_change_affinities ) );
     RegisterActionType( *new MagicActionType( "inhabitant_change_alerted_state", sword::UnitMagicAction::inhabitant_change_alerted_state ) );
+    RegisterActionType( *new MagicActionType( "inhabitant_change_confined_state", sword::UnitMagicAction::inhabitant_change_confined_state ) );
 
     // Knowledge Magic Actions
     RegisterActionType( *new MagicActionType( "knowledge_group_enable", sword::KnowledgeMagicAction::enable ) );

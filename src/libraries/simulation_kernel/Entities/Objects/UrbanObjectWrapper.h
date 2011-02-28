@@ -70,6 +70,7 @@ public:
 
     //! @name Network
     //@{
+    virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
     virtual sword::ObjectMagicActionAck_ErrorCode OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
     virtual void SendCreation() const;
     virtual void SendDestruction() const;
@@ -93,7 +94,7 @@ public:
 
     //! @name Inhabitants
     //@{
-    void UpdateInhabitants( const MIL_LivingArea& livingArea, unsigned int number );
+    void UpdateInhabitants( MIL_LivingArea& livingArea, unsigned int number );
     unsigned int GetTotalInhabitants() const;
     //@}
 
@@ -105,13 +106,15 @@ private:
     void SendCapacity( sword::UrbanAttributes& msg ) const;
     template < typename T >
     void SendFullStateCapacity( sword::UrbanAttributes& msg ) const;
+    void OnReceiveSetAlerted( const sword::MissionParameter_Value& attribute );
+    void OnReceiveSetConfined( const sword::MissionParameter_Value& attribute );
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< std::string, float > T_Motivations;
-    typedef std::map< const MIL_LivingArea*, unsigned int > T_Inhabitants;
+    typedef std::map< MIL_LivingArea*, unsigned int > T_Inhabitants;
     typedef T_Inhabitants::const_iterator                 CIT_Inhabitants;
     //@}
 

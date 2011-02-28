@@ -3226,6 +3226,22 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Enable</source>
         <translation>Activer</translation>
     </message>
+    <message>
+        <source>Alert</source>
+        <translation>Alerter</translation>
+    </message>
+    <message>
+        <source>Stop alert</source>
+        <translation>Fin de l'alerte</translation>
+    </message>
+    <message>
+        <source>Confine</source>
+        <translation>Confiner</translation>
+    </message>
+    <message>
+        <source>Stop confine</source>
+        <translation>Fin du confinement</translation>
+    </message>
 </context>
 <context>
     <name>UserProfileDialog</name>

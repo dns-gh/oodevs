@@ -99,6 +99,10 @@ void UrbanMagicOrdersInterface::NotifyContextMenu( const Object_ABC& object, Con
     selectedEntity_ = &object;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     AddValuedMagic( magicMenu, menu, tr( "Change Urban state" ), SLOT( ChangeStructuralState() ) );
+    AddMagic( tr( "Alert" ), SLOT( Alert() ), magicMenu );
+    AddMagic( tr( "Stop alert" ), SLOT( StopAlert() ), magicMenu );
+    AddMagic( tr( "Confine" ), SLOT( Confine() ), magicMenu );
+    AddMagic( tr( "Stop confine" ), SLOT( StopConfine() ), magicMenu );
     if( object.Retrieve< Infrastructure_ABC >() )
     {
         AddValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ) );
@@ -171,6 +175,64 @@ void UrbanMagicOrdersInterface::Disable()
             list.AddBool( "Enabled", false );
             SendUrbanUpdateMagic( list );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicOrdersInterface::Alert
+// Created: BCI 2011-02-28
+// -----------------------------------------------------------------------------
+void UrbanMagicOrdersInterface::Alert()
+{
+    if( selectedEntity_ )
+    {
+        ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_alerted );
+        list.AddBool( "Alerted", true );
+        SendUrbanUpdateMagic( list );
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicOrdersInterface::StopAlert
+// Created: BCI 2011-02-28
+// -----------------------------------------------------------------------------
+void UrbanMagicOrdersInterface::StopAlert()
+{
+    if( selectedEntity_ )
+    {
+        ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_alerted );
+        list.AddBool( "Alerted", false );
+        SendUrbanUpdateMagic( list );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicOrdersInterface::Confine
+// Created: BCI 2011-02-28
+// -----------------------------------------------------------------------------
+void UrbanMagicOrdersInterface::Confine()
+{
+    if( selectedEntity_ )
+    {
+        ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_confined );
+        list.AddBool( "Confined", true );
+        SendUrbanUpdateMagic( list );
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: UrbanMagicOrdersInterface::StopConfine
+// Created: BCI 2011-02-28
+// -----------------------------------------------------------------------------
+void UrbanMagicOrdersInterface::StopConfine()
+{
+    if( selectedEntity_ )
+    {
+        ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_confined );
+        list.AddBool( "Confined", false );
+        SendUrbanUpdateMagic( list );
+    }
 }
 
 // -----------------------------------------------------------------------------

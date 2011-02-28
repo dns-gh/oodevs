@@ -66,9 +66,9 @@ public:
     void GetUsagesOccupation( std::map< std::string, unsigned int >& occupations ) const;
     void Alert( const TER_Localisation& localisation );
     bool IsAlerted( const TER_Localisation& localisation ) const;
-    void SetAlerted( bool );
+    void SetAlerted( bool, UrbanObjectWrapper* pUrbanObject = 0 );
     void Confine( const TER_Localisation& localisation );
-    void SetConfined( bool );
+    void SetConfined( bool, UrbanObjectWrapper* pUrbanObject = 0 );
     float Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption );
     //@}
 
