@@ -158,9 +158,11 @@ void NotesModel::HandleRequestDestructCascade( Note* note )
         parent->RemoveChild( note->GetId() );
 
     const T_List& noteChildren = note->GetChildren();
-    for( CIT_List it = noteChildren.begin(); it != noteChildren.end(); ++it )
+    CIT_List it = noteChildren.begin();
+    while( it != noteChildren.end() )
     {
         Note* child = Find( *it );
+        ++it;
         HandleRequestDestructCascade( child );
     }
     note->SendDestruction( clients_ );
