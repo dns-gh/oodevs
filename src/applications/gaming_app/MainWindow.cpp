@@ -123,6 +123,7 @@
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfilerLayer.h"
 #include "clients_gui/ElevationPainter.h"
+#include "clients_gui/UrbanFilter.h"
 #include "tools/SessionConfig.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
@@ -393,6 +394,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
                                gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
                                gui::PreferencesDialog& preferences, const Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker )
 {
+    gui::LayerFilter_ABC* urbanFilter    = new gui::UrbanFilter();
     gui::TooltipsLayer_ABC& tooltipLayer = *new gui::TooltipsLayer( *glProxy_ );
     gui::Layer_ABC& missionsLayer        = *new gui::MiscLayer< MissionPanel >( missions );
     gui::Layer_ABC& creationsLayer       = *new gui::MiscLayer< CreationPanels >( creationPanels );
@@ -405,7 +407,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     gui::Layer_ABC& metrics              = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
     gui::Layer_ABC& intelligences        = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligenceFactory_ );
     gui::Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
-    gui::Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, picker );
+    gui::Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, picker, urbanFilter );
     gui::Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     gui::Layer_ABC& inhabitants          = *new gui::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     gui::Layer_ABC& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
@@ -474,9 +476,6 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( elevation3d );
     forward_->Register( weather );
     forward_->SetDefault( defaultLayer );
-
-    // Exclusion
-    static_cast< gui::EntityLayerBase& >( objectsLayer ).Exclude( "terrainObjectProxy" );
 }
 
 // -----------------------------------------------------------------------------

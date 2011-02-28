@@ -83,6 +83,7 @@
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfilerLayer.h"
 #include "clients_gui/TooltipsLayer.h"
+#include "clients_gui/UrbanFilter.h"
 #include "clients_gui/UrbanLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/WatershedLayer.h"
@@ -308,24 +309,25 @@ MainWindow::~MainWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationPanel& inhabitants,  ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker )
 {
-    TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
-    Layer_ABC& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, agents );
-    Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
+    const LayerFilter_ABC* urbanFilter  = new UrbanFilter();
+    TooltipsLayer_ABC& tooltipLayer     = *new TooltipsLayer( *glProxy_ );
+    Layer_ABC& automats                 = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, agents );
+    Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( objects );
     Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( inhabitants );
-    Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
-    Layer_ABC& watershed            = *new WatershedLayer( controllers_, staticModel_.detection_ );
-    Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    Layer_ABC& urbanLayer           = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
-    Layer_ABC& metrics              = *new MetricsLayer( staticModel_.detection_, *glProxy_ );
-    Layer_ABC& intelligences        = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligences_ );
-    Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
-    Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker );
-    Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
-    Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
-    Layer_ABC& drawerLayer          = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
-    Layer_ABC& inhabitantLayer      = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    Elevation2dLayer& elevation2d       = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    Layer_ABC& raster                   = *new RasterLayer( controllers_.controller_ );
+    Layer_ABC& watershed                = *new WatershedLayer( controllers_, staticModel_.detection_ );
+    Layer_ABC& elevation3d              = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    Layer_ABC& urbanLayer               = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
+    Layer_ABC& grid                     = *new GridLayer( controllers_, *glProxy_ );
+    Layer_ABC& metrics                  = *new MetricsLayer( staticModel_.detection_, *glProxy_ );
+    Layer_ABC& intelligences            = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligences_ );
+    Layer_ABC& limits                   = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile );
+    Layer_ABC& objectsLayer             = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker, urbanFilter );
+    Layer_ABC& populations              = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile );
+    Layer_ABC& defaultLayer             = *new DefaultLayer( controllers_ );
+    Layer_ABC& drawerLayer              = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
+    Layer_ABC& inhabitantLayer          = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
@@ -369,9 +371,6 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationP
     forward_->Register( metrics );
     forward_->Register( elevation3d );
     forward_->SetDefault( defaultLayer );
-
-    // Exclusion
-    static_cast< gui::EntityLayerBase& >( objectsLayer ).Exclude( "terrainObjectProxy" );
 }
 
 // -----------------------------------------------------------------------------

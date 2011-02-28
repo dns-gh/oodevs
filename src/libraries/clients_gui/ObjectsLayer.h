@@ -15,7 +15,7 @@
 
 namespace gui
 {
-
+    class LayerFilter_ABC;
     class TerrainPicker;
 
 // =============================================================================
@@ -29,7 +29,7 @@ class ObjectsLayer : public EntityLayer< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, TerrainPicker& picker );
+             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, TerrainPicker& picker, const gui::LayerFilter_ABC* filter = 0 );
     virtual ~ObjectsLayer();
     //@}
 

@@ -28,7 +28,7 @@ using namespace gui;
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile )
+EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, const LayerFilter_ABC* filter /*= 0*/ )
     : controllers_( controllers )
     , tools_      ( tools )
     , strategy_   ( strategy )
@@ -37,6 +37,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
     , tooltip_    ( 0 )
     , selected_   ( 0 )
     , profile_    ( profile )
+    , filter_     ( filter )
 {
     // NOTHING
 }
@@ -47,7 +48,8 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
 // -----------------------------------------------------------------------------
 EntityLayerBase::~EntityLayerBase()
 {
-    // NOTHING
+    if( filter_ )
+        delete filter_;
 }
 
 // -----------------------------------------------------------------------------
@@ -75,16 +77,6 @@ void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
         }
         tooltip_->Draw( position );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityLayerBase::Exclude
-// Created: ABR 2011-02-18
-// -----------------------------------------------------------------------------
-EntityLayerBase& EntityLayerBase::Exclude( const QString& typeName )
-{
-    exclusions_.push_back( typeName );
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
