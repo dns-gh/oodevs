@@ -48,7 +48,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
     sword::Heading heading;
     xis >> xml::start( "wind" )
             >> xml::attribute( "speed", wind_.rWindSpeed_ )
-            >> xml::attribute( "speed", nAngle )
+            >> xml::attribute( "direction", nAngle )
         >> xml::end;
     if( wind_.rWindSpeed_ < 0 )
         xis.error( "meteo: VitesseVent < 0" );
