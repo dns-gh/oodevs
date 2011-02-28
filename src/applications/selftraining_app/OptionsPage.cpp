@@ -66,7 +66,7 @@ OptionsPage::OptionsPage( QWidgetStack* pages, Page_ABC& previous, Config& confi
         QHBox* hbox = new QHBox( box );
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         dataDirectory_ = new QLineEdit( hbox );
-        dataDirectory_->setText( config.GetRootDir().c_str() );
+        dataDirectory_->setText( QDir::convertSeparators( config.GetRootDir().c_str() ) );
         QButton* browse = new QPushButton( tools::translate( "OptionsPage", "..." ), hbox );
         connect( browse, SIGNAL( clicked() ), SLOT( OnChangeDataDirectory() ) );
     }
@@ -123,7 +123,7 @@ void OptionsPage::Commit()
 // -----------------------------------------------------------------------------
 void OptionsPage::OnChangeDataDirectory()
 {
-    const QString directory = QFileDialog::getExistingDirectory( dataDirectory_->text(), this );
+    const QString directory = QDir::convertSeparators( QFileDialog::getExistingDirectory( dataDirectory_->text(), this ) );
     if( directory.isEmpty() )
         return;
     dataDirectory_->setText( directory );
