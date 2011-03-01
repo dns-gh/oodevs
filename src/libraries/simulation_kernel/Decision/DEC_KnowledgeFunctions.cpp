@@ -190,6 +190,23 @@ T_KnowledgeUrbanVector DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCircle( c
     return result;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInZone
+// Created: BCI 2011-03-01
+// -----------------------------------------------------------------------------
+T_KnowledgeUrbanVector DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInZone( const MIL_AgentPion& pion, TER_Localisation* pLocalisation )
+{
+    T_KnowledgeUrbanVector result;
+    if( pLocalisation )
+    {
+        T_KnowledgeUrbanVector urbansKn;
+        pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
+        for( T_KnowledgeUrbanVector::iterator it = urbansKn.begin(); it != urbansKn.end(); it++ )
+            if( ( *it )->GetObjectKnown() && pLocalisation->Contains( ( *it )->GetObjectKnown()->GetLocalisation() ) )
+                result.push_back( (*it) );
+    }
+    return result;
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDestroyableKnowledge
