@@ -16,9 +16,7 @@
 #include "TerrainObjectProxy.h"
 #include "tools.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/DotationType.h"
 #include "clients_kernel/Object_ABC.h"
-#include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 
 using namespace gui;
@@ -28,11 +26,9 @@ using namespace kernel;
 // Name: ResourceLinksDialog_ABC constructor
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
-ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile )
+ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers )
     : QDockWindow      ( parent, "resource" )
     , controllers_     ( controllers )
-    , dotationResolver_( dotationResolver )
-    , profile_         ( profile )
     , selected_        ( 0 )
     , selectedItem_    ( 0 )
 {
@@ -129,7 +125,7 @@ void ResourceLinksDialog_ABC::AfterSelection()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Select( const TerrainObjectProxy& proxy )
 {
-    selected_ = proxy.Retrieve< ResourceNetwork_ABC >();
+    selected_ = const_cast< TerrainObjectProxy& >( proxy ).Retrieve< ResourceNetwork_ABC >();
     id_ = proxy.GetId();
     urban_ = true;
 }
@@ -138,9 +134,9 @@ void ResourceLinksDialog_ABC::Select( const TerrainObjectProxy& proxy )
 // Name: ResourceLinksDialog_ABC::Select
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::Select( const kernel::Object_ABC& object )
+void ResourceLinksDialog_ABC::Select( const Object_ABC& object )
 {
-    selected_ = object.Retrieve< ResourceNetwork_ABC >();
+    selected_ = const_cast< Object_ABC& >( object ).Retrieve< ResourceNetwork_ABC >();
     id_ = object.GetId();
     urban_ = false;
 }
@@ -273,7 +269,7 @@ void ResourceLinksDialog_ABC::Validate()
 // Name: ResourceLinksDialog_ABC::NotifyDeleted
 // Created: JSR 2010-09-09
 // -----------------------------------------------------------------------------
-void ResourceLinksDialog_ABC::NotifyDeleted( const kernel::Entity_ABC& element )
+void ResourceLinksDialog_ABC::NotifyDeleted( const Entity_ABC& element )
 {
     if( selected_ == element.Retrieve< ResourceNetwork_ABC >() )
     {

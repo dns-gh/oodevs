@@ -11,17 +11,16 @@
 #define __ResourceLinksDialog_ABC_h_
 
 #include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "tools/Resolver.h"
 #include "tools/SelectionObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controllers;
-    class DotationType;
     class Entity_ABC;
     class Object_ABC;
-    class Profile_ABC;
 }
 
 namespace gui
@@ -41,13 +40,15 @@ class ResourceLinksDialog_ABC : public QDockWindow
                               , public tools::SelectionObserver_Base< TerrainObjectProxy >
                               , public tools::SelectionObserver_Base< kernel::Object_ABC >
                               , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                              , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+                              , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceLinksDialog_ABC( QMainWindow* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile );
+             ResourceLinksDialog_ABC( QMainWindow* parent, kernel::Controllers& controllers );
     virtual ~ResourceLinksDialog_ABC();
     //@}
 
@@ -66,12 +67,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ResourceLinksDialog_ABC( const ResourceLinksDialog_ABC& );            //!< Copy constructor
-    ResourceLinksDialog_ABC& operator=( const ResourceLinksDialog_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoValidate() = 0;
@@ -87,9 +82,7 @@ protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
-    const kernel::Profile_ABC& profile_;
-    const kernel::ResourceNetwork_ABC* selected_;
+    kernel::ResourceNetwork_ABC* selected_;
     QListBoxItem* selectedItem_;
     bool urban_;
     unsigned int id_;

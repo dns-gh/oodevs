@@ -223,7 +223,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // ResourceNetwork panel
     {
-        QDockWindow* pResourceWnd = new ResourceNetworkDialog( this, controllers, staticModel_.objectTypes_, PreparationProfile::GetProfile() );
+        QDockWindow* pResourceWnd = new ResourceNetworkDialog( this, controllers, staticModel_.objectTypes_ );
         moveDockWindow( pResourceWnd, Qt::DockLeft );
         setDockEnabled( pResourceWnd, Qt::DockTop, false );
         pResourceWnd->hide();
@@ -399,6 +399,7 @@ void MainWindow::DoLoad( QString filename )
         filename.replace( "/", "\\" );
     invalidSignedFiles_.clear();
     missingSignedFiles_.clear();
+    malformedFiles_.clear();
     config_.LoadExercise( filename.ascii() );
     tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename.ascii() );
     if( error == tools::eXmlCrc32SignatureError_Invalid )

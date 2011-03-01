@@ -9,17 +9,17 @@
 
 #include "preparation_pch.h"
 #include "ObjectFactory.h"
-#include "Model.h"
-#include "StaticModel.h"
-#include "TeamsModel.h"
 #include "AgentsModel.h"
-#include "Team.h"
-#include "Diplomacies.h"
-#include "ObjectHierarchies.h"
-#include "TeamHierarchies.h"
-#include "TeamCommunications.h"
+#include "Model.h"
 #include "Object.h"
+#include "Objects.h"
+#include "ObjectAttributeFactory_ABC.h"
+#include "ObjectHierarchies.h"
+#include "ObjectsModel.h"
 #include "ObjectPositions.h"
+#include "StaticModel.h"
+#include "Team.h"
+#include "UrbanModel.h"
 #include "ActivityTimeAttribute.h"
 #include "BypassAttribute.h"
 #include "ConstructionAttribute.h"
@@ -34,15 +34,12 @@
 #include "NBCAttribute.h"
 #include "ObstacleAttribute.h"
 #include "OccupantAttribute.h"
+#include "ResourceNetworkAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "StockAttribute.h"
-#include "Inhabitants.h"
-#include "Objects.h"
-#include "Populations.h"
-#include "EntityIntelligences.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "ObjectAttributeFactory_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -56,10 +53,12 @@ namespace
     // -----------------------------------------------------------------------------
     class AttributeFactory : public ObjectAttributeFactory_ABC
     {
-    public:
+    private:
         //! @name Types
         //@{
         typedef boost::function3< void, Object_ABC&, PropertiesDictionary&, xml::xistream& > T_CallBack;
+        typedef std::map< std::string, T_CallBack > T_CallBacks;
+        typedef T_CallBacks::const_iterator       CIT_Callbacks;
         //@}
 
     public:
@@ -78,14 +77,6 @@ namespace
             if( it != callbacks_.end() )
                 it->second( object, dico, xis );
         }
-
-    private:
-        //! @name Type
-        //@{
-        typedef std::map< std::string, T_CallBack > T_CallBacks;
-        typedef T_CallBacks::const_iterator       CIT_Callbacks;
-        //@}
-
     private:
         //! @name Member data
         //@{
@@ -121,7 +112,20 @@ namespace
         template< typename T, typename Helper >
         static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper& helper, xml::xistream& xis, Controllers& controllers )
         {
-            result.Attach( *new FloodAttribute( xis, helper, result.Get< Positions >(), dico, controllers ) );
+            result.Attach( *new T( xis, helper, result.Get< Positions >(), dico, controllers ) );
+        }
+    };
+
+    template<>
+    struct AttributeBuilder< ResourceNetwork_ABC >
+    {
+        template< typename T  >
+        static void Attach( Object_ABC& result, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbans
+                                              , const tools::Resolver_ABC< Object_ABC >& objects
+                                              , const tools::StringResolver< ResourceNetworkType >& resources
+                                              , xml::xistream& xis, Controllers& controllers )
+        {
+            result.Attach< ResourceNetwork_ABC >( *new T( controllers, xis, result.Get< Positions >(), urbans, objects, resources ) );
         }
     };
 }
@@ -186,6 +190,8 @@ void ObjectFactory::Initialize()
     factory->Register( "tc2"                , BIND_ATTACH_ATTRIBUTE_RESOLVER( LogisticAttribute, Automat_ABC, _1, _2, boost::cref( model_.agents_ ), _3, boost::ref( controllers_ ) ) );
     factory->Register( "max-size"           , BIND_ATTACH_ATTRIBUTE( OccupantAttribute, _1, _2, _3 ) );
     factory->Register( "stock"              , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( StockAttribute, DotationType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
+    factory->Register( "resources"          ,
+                       boost::bind( &AttributeBuilder< ResourceNetwork_ABC >::Attach< ResourceNetworkAttribute >, _1, boost::cref( model_.urban_), boost::cref( model_.objects_ ), boost::cref( staticModel_.objectTypes_ ), _3, boost::ref( controllers_ ) ) );
 
     factory_.reset( factory );
 }

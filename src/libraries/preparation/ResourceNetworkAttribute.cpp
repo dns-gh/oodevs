@@ -117,6 +117,16 @@ QString ResourceNetworkAttribute::GetLinkName( const std::string& resource, unsi
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::FindOrCreateResourceNode
+// Created: JSR 2011-02-25
+// -----------------------------------------------------------------------------
+kernel::ResourceNetwork_ABC::ResourceNode& ResourceNetworkAttribute::FindOrCreateResourceNode( std::string resource )
+{
+    needSaving_ = true;
+    return kernel::ResourceNetwork_ABC::FindOrCreateResourceNode( resource );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute::Draw
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------

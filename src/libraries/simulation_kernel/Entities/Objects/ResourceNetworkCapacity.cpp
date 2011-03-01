@@ -180,6 +180,15 @@ void ResourceNetworkCapacity::SendFullState( sword::UrbanAttributes& message ) c
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::SendFullState
+// Created: JSR 2011-03-01
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::SendFullState( sword::ObjectAttributes& asn ) const
+{
+    nodeProperties_->Serialize( *asn.mutable_resource_networks() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::NotifyStructuralStateChanged
 // Created: JSR 2011-01-14
 // -----------------------------------------------------------------------------

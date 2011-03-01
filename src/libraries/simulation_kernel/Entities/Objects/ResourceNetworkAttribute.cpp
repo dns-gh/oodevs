@@ -60,7 +60,8 @@ ResourceNetworkAttribute& ResourceNetworkAttribute::operator=( const ResourceNet
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
-    SendUpdate( asn );
+    if( capacity_ )
+        capacity_->SendFullState( asn );
 }
 
 // -----------------------------------------------------------------------------

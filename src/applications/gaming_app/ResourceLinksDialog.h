@@ -35,7 +35,7 @@ class ResourceLinksDialog : public gui::ResourceLinksDialog_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceLinksDialog( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
+             ResourceLinksDialog( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~ResourceLinksDialog();
     //@}
 
@@ -49,6 +49,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoValidate();
+    virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu );
     //@}
 
 private:

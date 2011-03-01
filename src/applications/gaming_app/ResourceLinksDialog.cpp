@@ -29,8 +29,8 @@ using namespace parameters;
 // Name: ResourceLinksDialog constructor
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
-ResourceLinksDialog::ResourceLinksDialog( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
-    : ResourceLinksDialog_ABC( parent, controllers, staticModel.objectTypes_, profile )
+ResourceLinksDialog::ResourceLinksDialog( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
+    : ResourceLinksDialog_ABC( parent, controllers )
     , actionsModel_( actionsModel )
     , static_      ( staticModel )
     , simulation_  ( simulation )
@@ -53,6 +53,7 @@ ResourceLinksDialog::~ResourceLinksDialog()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog::DoValidate()
 {
+    // $$$$ _RC_ JSR 2011-02-24: TODO passer dans la factory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_resource_links" );
     MagicAction* action = new MagicAction( actionType, controllers_.controller_, tr( "Change resource links"), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
@@ -80,4 +81,13 @@ void ResourceLinksDialog::DoValidate()
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->RegisterAndPublish( actionsModel_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog::NotifyContextMenu
+// Created: JSR 2011-02-24
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog::NotifyContextMenu( const kernel::Object_ABC&, ContextMenu& )
+{
+    // TODO
 }

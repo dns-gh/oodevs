@@ -76,7 +76,7 @@ const Entity_ABC* ResourceNetwork::FindEntity( unsigned int id ) const
 {
     const Entity_ABC* object = urbanResolver_.Find( id );
     if( !object )
-        object = objectResolver_.Find( id_ );
+        object = objectResolver_.Find( id );
     return object;
 }
 

@@ -356,7 +356,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // ResourceNetwork panel
     {
-        QDockWindow* pResourceWnd = new ResourceLinksDialog( this, controllers, model_.actions_, staticModel, simulation, profile );
+        QDockWindow* pResourceWnd = new ResourceLinksDialog( this, controllers, model_.actions_, staticModel, simulation );
         moveDockWindow( pResourceWnd, Qt::DockLeft );
         setDockEnabled( pResourceWnd, Qt::DockTop, false );
         pResourceWnd->hide();

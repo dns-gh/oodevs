@@ -11,6 +11,12 @@
 #define __ResourceNetworkDialog_h_
 
 #include "clients_gui/ResourceLinksDialog_ABC.h"
+#include <tools/Resolver.h>
+
+namespace kernel
+{
+    class ResourceNetworkType;
+}
 
 // =============================================================================
 /** @class  ResourceNetworkDialog
@@ -20,23 +26,33 @@
 // =============================================================================
 class ResourceNetworkDialog : public gui::ResourceLinksDialog_ABC
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkDialog( QMainWindow* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::Profile_ABC& profile );
+             ResourceNetworkDialog( QMainWindow* parent, kernel::Controllers& controllers, tools::StringResolver< kernel::ResourceNetworkType >& resources );
     virtual ~ResourceNetworkDialog();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ResourceNetworkDialog( const ResourceNetworkDialog& );            //!< Copy constructor
-    ResourceNetworkDialog& operator=( const ResourceNetworkDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoValidate();
+    virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnChangeLink( int resourceId );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    tools::StringResolver< kernel::ResourceNetworkType >& resources_;
+    const kernel::Object_ABC* linkToChange_;
     //@}
 };
 

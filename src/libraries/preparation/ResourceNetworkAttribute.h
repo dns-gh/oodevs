@@ -71,6 +71,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetLinkName( const std::string& resource, unsigned int i ) const;
+    virtual kernel::ResourceNetwork_ABC::ResourceNode& FindOrCreateResourceNode( std::string resource );
     virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& ) const;
     virtual void SetOverriden( bool& overriden ) const;
