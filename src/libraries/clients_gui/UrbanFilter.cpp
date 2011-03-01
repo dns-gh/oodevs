@@ -3,32 +3,40 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
-#include "AgentKnowledgesLayer.h"
+#include "clients_gui_pch.h"
+#include "UrbanFilter.h"
+#include "TerrainObjectProxy.h"
 
-using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgesLayer constructor
-// Created: AGE 2006-05-17
+// Name: UrbanFilter constructor
+// Created: ABR 2011-03-01
 // -----------------------------------------------------------------------------
-AgentKnowledgesLayer::AgentKnowledgesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                                            View_ABC& view, const Profile_ABC& profile, const gui::LayerFilter_ABC& filter  )
-    : KnowledgeLayer< AgentKnowledge_ABC >( controllers, tools, strategy, view, profile, filter )
+UrbanFilter::UrbanFilter()
+    : LayerFilter_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentKnowledgesLayer destructor
-// Created: AGE 2006-05-17
+// Name: UrbanFilter destructor
+// Created: ABR 2011-03-01
 // -----------------------------------------------------------------------------
-AgentKnowledgesLayer::~AgentKnowledgesLayer()
+UrbanFilter::~UrbanFilter()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanFilter::IsAllowed
+// Created: ABR 2011-03-01
+// -----------------------------------------------------------------------------
+bool UrbanFilter::IsAllowed( const QString& typeName ) const
+{
+    return typeName != TerrainObjectProxy::typeName_;
 }

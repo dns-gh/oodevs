@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __UrbanFilter_h_
-#define __UrbanFilter_h_
+#ifndef __SimpleFilter_h_
+#define __SimpleFilter_h_
 
 #include "LayerFilter_ABC.h"
 
@@ -16,19 +16,19 @@ namespace gui
 {
 
 // =============================================================================
-/** @class  UrbanFilter
-    @brief  UrbanFilter
+/** @class  SimpleFilter
+@brief  SimpleFilter
 */
 // Created: ABR 2011-02-28
 // =============================================================================
-class UrbanFilter : public LayerFilter_ABC
+class SimpleFilter : public LayerFilter_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanFilter();
-    virtual ~UrbanFilter();
+    SimpleFilter();
+    virtual ~SimpleFilter();
     //@}
 
     //! @name Operations

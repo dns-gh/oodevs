@@ -130,7 +130,7 @@ void ObjectTypes::ReadObjectTypes( xml::xistream& xis )
 void ObjectTypes::ReadObjectType( xml::xistream& xis )
 {
     ObjectType* type = new ObjectType( xis );
-     tools::StringResolver< ObjectType >::Register( type->GetType(), *type );
+    tools::StringResolver< ObjectType >::Register( type->GetType(), *type );
 }
 
 // -----------------------------------------------------------------------------

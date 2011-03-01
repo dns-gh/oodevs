@@ -19,8 +19,9 @@ using namespace gui;
 // Name: IntelligencesLayer constructor
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-IntelligencesLayer::IntelligencesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, IntelligenceFactory_ABC& factory )
-    : EntityLayer< Intelligence_ABC >( controllers, tools, strategy, view, profile )
+IntelligencesLayer::IntelligencesLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                                        View_ABC& view, const Profile_ABC& profile, IntelligenceFactory_ABC& factory, const gui::LayerFilter_ABC& filter )
+    : EntityLayer< Intelligence_ABC >( controllers, tools, strategy, view, profile, filter )
     , factory_( factory )
     , selectedIntelligence_( controllers )
 {

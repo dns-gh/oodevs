@@ -45,6 +45,7 @@ namespace gui
     class Picker;
     class TerrainPicker;
     class Painter_ABC;
+    class LayerFilter_ABC;
 }
 
 class Services;
@@ -136,6 +137,8 @@ private:
     std::auto_ptr< gui::CircularEventStrategy >  forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::auto_ptr< gui::Painter_ABC > pPainter_;
+    std::auto_ptr< gui::LayerFilter_ABC > simpleFilter_;
+    std::auto_ptr< gui::LayerFilter_ABC > urbanFilter_;
     gui::GlProxy* glProxy_;
     gui::ColorStrategy* strategy_;
     gui::LightingProxy* lighting_;

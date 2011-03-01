@@ -28,7 +28,7 @@ using namespace gui;
 // Name: EntityLayerBase::EntityLayerBase
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, const LayerFilter_ABC* filter /*= 0*/ )
+EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const Profile_ABC& profile, const LayerFilter_ABC& filter )
     : controllers_( controllers )
     , tools_      ( tools )
     , strategy_   ( strategy )
@@ -48,8 +48,7 @@ EntityLayerBase::EntityLayerBase( Controllers& controllers, const GlTools_ABC& t
 // -----------------------------------------------------------------------------
 EntityLayerBase::~EntityLayerBase()
 {
-    if( filter_ )
-        delete filter_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

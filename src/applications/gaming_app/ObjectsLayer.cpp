@@ -26,12 +26,15 @@ using namespace actions;
 // Name: ObjectsLayer constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::TerrainPicker& picker, const gui::LayerFilter_ABC* filter /*= 0*/ )
+ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+                            gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
+                            const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::TerrainPicker& picker,
+                            const gui::LayerFilter_ABC& filter )
     : gui::ObjectsLayer( controllers, tools, strategy, view, profile, picker, filter )
     , actionsModel_( actionsModel )
-    , static_( staticModel )
-    , simulation_( simulation )
-    , selected_( controllers )
+    , static_      ( staticModel )
+    , simulation_  ( simulation )
+    , selected_    ( controllers )
 {
     // NOTHING
 }

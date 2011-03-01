@@ -42,8 +42,9 @@ public:
     //! @name Constructors/Destructor
     //@{
     FormationLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
-        gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel,
-        const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel );
+                    gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel,
+                    const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager, tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel,
+                    const gui::LayerFilter_ABC& filter );
     virtual ~FormationLayer();
     //@}
 

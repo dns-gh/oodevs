@@ -32,7 +32,8 @@ class IntelligencesLayer : public EntityLayer< kernel::Intelligence_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             IntelligencesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, kernel::IntelligenceFactory_ABC& factory );
+             IntelligencesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                                 View_ABC& view, const kernel::Profile_ABC& profile, kernel::IntelligenceFactory_ABC& factory, const gui::LayerFilter_ABC& filter );
     virtual ~IntelligencesLayer();
     //@}
 

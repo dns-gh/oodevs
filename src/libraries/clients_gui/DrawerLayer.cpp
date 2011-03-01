@@ -20,8 +20,9 @@ using namespace gui;
 // Name: DrawerLayer constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerLayer::DrawerLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< Drawing_ABC >( controllers, tools, strategy, view, profile )
+DrawerLayer::DrawerLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                          ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
+    : EntityLayer< Drawing_ABC >( controllers, tools, strategy, view, profile, filter )
     , parameters_( parameters )
     , tools_     ( tools )
     , selected_  ( 0 )

@@ -47,7 +47,8 @@ class TacticalLinesLayer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLinesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile );
+             TacticalLinesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                                 ParametersLayer& parameters, View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter );
     virtual ~TacticalLinesLayer();
     //@}
 

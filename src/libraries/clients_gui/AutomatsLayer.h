@@ -33,7 +33,9 @@ class AutomatsLayer : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, gui::AgentsLayer& agents );
+             AutomatsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                            View_ABC& view, const kernel::Profile_ABC& profile, gui::AgentsLayer& agents,
+                            const gui::LayerFilter_ABC& filter );
     virtual ~AutomatsLayer();
     //@}
 

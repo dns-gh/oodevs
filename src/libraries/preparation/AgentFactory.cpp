@@ -55,7 +55,7 @@ using namespace kernel;
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
@@ -100,7 +100,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
 // Name: AgentFactory::Create
 // Created: SBO 2006-09-01
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, const QString& name )
+Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, const QString& name )
 {
     Automat* result = new Automat( type, controllers_.controller_, idManager_ );
     if( !name.isEmpty() )
@@ -123,13 +123,13 @@ kernel::Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType
 // Name: AgentFactory::Create
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const kernel::PopulationType& type, int number, const geometry::Point2f& position )
+Population_ABC* AgentFactory::Create( Entity_ABC& parent, const PopulationType& type, int number, const geometry::Point2f& position )
 {
     Entity_ABC* top = 0;
     if( const kernel::TacticalHierarchies* hierarchies = parent.Retrieve< kernel::TacticalHierarchies >() )
-        top = const_cast< kernel::Entity_ABC* >( &hierarchies->GetTop() );
+        top = const_cast< Entity_ABC* >( &hierarchies->GetTop() );
     else
-        top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
+        top = const_cast< Entity_ABC* >( &parent.Get< CommunicationHierarchies >().GetTop() );
     Population* result = new Population( type, number, controllers_.controller_, idManager_ );
     result->Attach< Positions >( *new PopulationPositions( *result, static_.coordinateConverter_, position ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
@@ -143,13 +143,13 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
 // Name: AgentFactory::Create
 // Created: SBO 2010-11-23
 // -----------------------------------------------------------------------------
-kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const kernel::InhabitantType& type, int number, const QString& name, const kernel::Location_ABC& location )
+Inhabitant_ABC* AgentFactory::Create( Entity_ABC& parent, const InhabitantType& type, int number, const QString& name, const Location_ABC& location )
 {
     Entity_ABC* top = 0;
     if( const kernel::TacticalHierarchies* hierarchies = parent.Retrieve< kernel::TacticalHierarchies >() )
-        top = const_cast< kernel::Entity_ABC* >( &hierarchies->GetTop() );
+        top = const_cast< Entity_ABC* >( &hierarchies->GetTop() );
     else
-        top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
+        top = const_cast< Entity_ABC* >( &parent.Get< CommunicationHierarchies >().GetTop() );
 
     Inhabitant* result = new Inhabitant( type, number, name, controllers_.controller_, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
@@ -175,7 +175,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
 // Name: AgentFactory::FindKnowledgeGroup
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
-Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const kernel::Entity_ABC& parent )
+Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const Entity_ABC& parent )
 {
     const Entity_ABC& team = parent.Get< kernel::TacticalHierarchies >().GetTop();
     const CommunicationHierarchies& teamHierarchy = team.Get< CommunicationHierarchies >();
@@ -198,7 +198,7 @@ Entity_ABC* AgentFactory::FindorCreateKnowledgeGroup( const kernel::Entity_ABC& 
 // Name: AgentFactory::Create
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC& parent )
+Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
 {
     Agent* result = new Agent( xis, controllers_.controller_, idManager_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
@@ -224,7 +224,7 @@ kernel::Agent_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Automat_ABC
 // Name: AgentFactory::Create
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_ABC& parent )
+Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
 {
     Automat* result = new Automat( xis, controllers_.controller_, idManager_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
@@ -250,7 +250,7 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
 // Name: AgentFactory::Create
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-kernel::Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, kernel::Team_ABC& parent )
+Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, Team_ABC& parent )
 {
     Population* result = new Population( xis, controllers_.controller_, idManager_, static_.types_ );
     result->Attach< Positions >( *new PopulationPositions( xis, *result, static_.coordinateConverter_ ) );
@@ -271,7 +271,7 @@ kernel::Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, kernel::Tea
 // Name: AgentFactory::Create
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-kernel::Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, kernel::Team_ABC& parent )
+Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, Team_ABC& parent )
 {
     Inhabitant* result = new Inhabitant( xis, controllers_.controller_, idManager_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();

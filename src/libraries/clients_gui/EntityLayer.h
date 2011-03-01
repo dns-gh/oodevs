@@ -47,7 +47,7 @@ class EntityLayerBase : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayerBase( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const LayerFilter_ABC* filter = 0 );
+             EntityLayerBase( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const LayerFilter_ABC& filter );
     virtual ~EntityLayerBase();
     //@}
 
@@ -112,7 +112,7 @@ private:
 protected: // $$$$ AGE 2006-05-17:
     const kernel::Profile_ABC& profile_;
     const kernel::GlTools_ABC& tools_;
-    const LayerFilter_ABC* filter_;
+    const LayerFilter_ABC& filter_;
     //@}
 };
 
@@ -131,7 +131,7 @@ class EntityLayer : public EntityLayerBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const LayerFilter_ABC* filter = 0 );
+             EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const LayerFilter_ABC& filter );
     virtual ~EntityLayer();
     //@}
 

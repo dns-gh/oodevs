@@ -24,7 +24,7 @@ namespace gui
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const LayerFilter_ABC* filter = 0 )
+EntityLayer< ConcreteEntity >::EntityLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const LayerFilter_ABC& filter )
     : EntityLayerBase( controllers, tools, strategy, view, profile, filter )
     , controllers_( controllers )
     , strategy_( strategy )
@@ -49,7 +49,7 @@ EntityLayer< ConcreteEntity >::~EntityLayer()
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::NotifyCreated( const ConcreteEntity& entity )
 {
-    if( !filter_ || filter_->IsAllowed( entity.GetTypeName() ) )
+    if( filter_.IsAllowed( entity.GetTypeName() ) )
         AddEntity( entity );
 }
  
@@ -70,7 +70,7 @@ void EntityLayer< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& entity 
 template< typename ConcreteEntity >
 void EntityLayer< ConcreteEntity >::NotifyActivated( const ConcreteEntity& entity )
 {
-    if( !filter_ || filter_->IsAllowed( entity.GetTypeName() ) )
+    if( filter_.IsAllowed( entity.GetTypeName() ) )
         ActivateEntity( entity );
 }
 

@@ -23,8 +23,9 @@ using namespace gui;
 // Name: LimitsLayer constructor
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters, TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile )
-    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile )
+LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters,
+                          TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
+    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile, filter )
     , tools_            ( tools )
     , factory_          ( factory )
     , selectedEntity_   ( controllers )

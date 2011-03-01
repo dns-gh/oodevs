@@ -20,8 +20,9 @@ using namespace gui;
 // Name: UrbanLayer::UrbanLayer
 // Created: SLG 2009-03-23
 // -----------------------------------------------------------------------------
-UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile )
-    : EntityLayer< TerrainObjectProxy >( controllers, tools, strategy, view, profile )
+UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
+                        View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
+    : EntityLayer< TerrainObjectProxy >( controllers, tools, strategy, view, profile, filter )
     , selectedObject_( 0 )
 {
     // NOTHING
@@ -33,6 +34,7 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_
 // -----------------------------------------------------------------------------
 UrbanLayer::~UrbanLayer()
 {
+    // NOTHING
 }
 
 namespace

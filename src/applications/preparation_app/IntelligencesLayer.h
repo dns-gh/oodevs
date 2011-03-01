@@ -23,7 +23,8 @@ class IntelligencesLayer : public gui::IntelligencesLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             IntelligencesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, kernel::IntelligenceFactory_ABC& factory );
+             IntelligencesLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
+                                 gui::View_ABC& view, const kernel::Profile_ABC& profile, kernel::IntelligenceFactory_ABC& factory, const gui::LayerFilter_ABC& filter );
     virtual ~IntelligencesLayer();
     //@}
 
