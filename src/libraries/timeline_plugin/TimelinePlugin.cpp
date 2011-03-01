@@ -32,7 +32,15 @@ TimelinePlugin::TimelinePlugin( dispatcher::Model_ABC& model, const kernel::Stat
     , scenario_  ( new ScenarioManager( *actions_ ) )
     , publisher_ ( new PublisherActor( std::auto_ptr< Publisher_ABC >( new Publisher( xis ) ) ) )
 {
-    Load( config, xis );
+    try
+    {
+        Load( config, xis );
+    } 
+    catch ( const std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "TimelinePlugin : error occured while loading plugin." )
+        MT_LOG_ERROR_MSG( "TimelinePlugin : " << e.what() )
+    }
     MT_LOG_INFO_MSG( "TimelinePlugin : registered." )
 }
 
