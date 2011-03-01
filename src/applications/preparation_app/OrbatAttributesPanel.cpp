@@ -375,7 +375,12 @@ void OrbatAttributesPanel::Commit()
                     QString text = edit->text();
                     int pos = 0;
                     if( !edit->validator() || edit->validator()->validate( text, pos ) == QValidator::Acceptable )
+                    {
                         ext->SetValue( ( *it )->name(), text.ascii() );
+                        edit->setPaletteBackgroundColor( Qt::white );  
+                    }
+                     else
+                         edit->setPaletteBackgroundColor( Qt::yellow );  
                 }
                 break;
             case AttributeType::ETypeDictionary:
@@ -392,7 +397,12 @@ void OrbatAttributesPanel::Commit()
                     QString text = combo->currentText();
                     int pos = 0;
                     if( !combo->validator() || combo->validator()->validate( text, pos ) == QValidator::Acceptable )
+                    {
                         ext->SetValue( ( *it )->name(), text.ascii() );
+                        combo->setPaletteBackgroundColor( Qt::white );  
+                    }
+                    else
+                        combo->setPaletteBackgroundColor( Qt::yellow );  
                 }
                 break;
             default:
