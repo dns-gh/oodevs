@@ -12,7 +12,9 @@
 #include "AgentsModel.h"
 #include "KnowledgeGroupsModel.h"
 #include "Model.h"
+#include "clients_gui/TerrainObjectProxy.h"
 #include "ObjectsModel.h"
+#include "UrbanModel.h"
 #include "TeamsModel.h"
 
 // -----------------------------------------------------------------------------
@@ -104,6 +106,25 @@ kernel::Object_ABC* EntityResolverFacade::FindObject( unsigned int id ) const
 kernel::Object_ABC& EntityResolverFacade::GetObject( unsigned int id ) const
 {
     return model_.objects_.GetObject( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityResolverFacade::FindUrbanObject
+// Created: LGY 2011-03-01
+// -----------------------------------------------------------------------------
+kernel::Object_ABC* EntityResolverFacade::FindUrbanObject( unsigned int id ) const
+{
+    return model_.urbanObjects_.FindObject( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityResolverFacade::GetUrbanObject
+// Created: LGY 2011-03-01
+// -----------------------------------------------------------------------------
+kernel::Object_ABC& EntityResolverFacade::GetUrbanObject( unsigned int id ) const
+{
+
+    return model_.urbanObjects_.GetObject( id );
 }
 
 // -----------------------------------------------------------------------------

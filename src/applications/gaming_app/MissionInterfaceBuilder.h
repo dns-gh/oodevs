@@ -20,7 +20,6 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Entity_ABC;
     class ObjectKnowledgeConverter_ABC;
-    class UrbanKnowledgeConverter_ABC;
     class OrderParameter;
     class OrderType;
     class Time_ABC;
@@ -61,7 +60,6 @@ public:
     //@{
              MissionInterfaceBuilder( kernel::Controllers& controllers, gui::ParametersLayer& layer
                                     , kernel::AgentKnowledgeConverter_ABC& knowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                                    , kernel::UrbanKnowledgeConverter_ABC& urbanKnowledgeConverter
                                     , const StaticModel& staticModel, const kernel::Time_ABC& simulation );
     virtual ~MissionInterfaceBuilder();
     //@}
@@ -144,7 +142,6 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::AgentKnowledgeConverter_ABC&   knowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC&  objectKnowledgeConverter_;
-    kernel::UrbanKnowledgeConverter_ABC&   urbanKnowledgeConverter_;
     const StaticModel&                     staticModel_;
     const kernel::Time_ABC&                simulation_;
     actions::gui::MissionInterface_ABC*    missionInterface_;

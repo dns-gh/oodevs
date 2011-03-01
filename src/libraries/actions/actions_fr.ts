@@ -119,10 +119,6 @@
 <context>
     <name>Parameter</name>
     <message>
-        <source>Invalid agent knowledge.</source>
-        <translation>Connaissance d&apos;unité invalide.</translation>
-    </message>
-    <message>
         <source>Parameter</source>
         <translation>Paramètre</translation>
     </message>
@@ -175,10 +171,6 @@
         <translation>%1 (élément %2)</translation>
     </message>
     <message>
-        <source>Invalid object knowledge.</source>
-        <translation>Connaissance d&apos;objet invalide.</translation>
-    </message>
-    <message>
         <source>Objective location</source>
         <translation>Position de l&apos;objectif</translation>
     </message>
@@ -189,10 +181,6 @@
     <message>
         <source>Way point %1</source>
         <translation>Point de passage %1</translation>
-    </message>
-    <message>
-        <source>Invalid population knowledge.</source>
-        <translation>Connaissance de population invalide.</translation>
     </message>
 </context>
 <context>

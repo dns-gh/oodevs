@@ -15,7 +15,6 @@
 #include "dispatcher/ModelAdapter.h"
 #include "dispatcher/AgentKnowledgeConverter.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
-#include "dispatcher/UrbanKnowledgeConverter.h"
 #include "actions/Action_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include "actions/ActionParameterFactory.h"
@@ -66,10 +65,9 @@ ActionPublisher::ActionPublisher( kernel::Controller& controller, const tools::E
     , entities_         ( new dispatcher::ModelAdapter( model ) )
     , agentsKnowledges_ ( new dispatcher::AgentKnowledgeConverter( model ) )
     , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
-    , urbansKnowledges_ ( new dispatcher::UrbanKnowledgeConverter( model ) )
     , converter_        ( new kernel::CoordinateConverter( config ) )
     , time_             ( new SimulationTime() )
-    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, *urbansKnowledges_, controller ) )
+    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, controller ) )
     , factory_          ( new actions::ActionFactory( controller, *parameters_, *entities_, staticModel, *time_ ) )
 {
     // NOTHING

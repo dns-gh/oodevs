@@ -56,12 +56,8 @@ public:
     virtual void Prepare();
     void Update( const DEC_Knowledge_UrbanPerception& perception );
     void ComputeProgress( const MIL_Agent_ABC& agent );
-    void SetProgress( float progress );
     bool Clean() const;
     float GetCurrentRecceProgress() const;
-    bool IsPerceivedBy( const MIL_Agent_ABC& pion ) const;
-    const float GetPathfindCost( float weight ) const;
-    const MT_Vector2D GetBarycenter() const;
     const UrbanObjectWrapper& GetTerrainObjectKnown() const;
     //@}
 
@@ -76,7 +72,13 @@ public:
     virtual void SendStateToNewClient();
     //@}
 
-public:
+private:
+    //! @name Helpers
+    //@{
+    void SetProgress( float progress );
+    //@}
+
+private:
     //! @name Types
     //@{
     typedef std::vector< const MIL_Automate* >   T_PerceptionSource;

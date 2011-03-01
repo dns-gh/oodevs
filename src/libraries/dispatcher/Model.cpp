@@ -372,8 +372,6 @@ void Model::Update( const sword::SimToClient& wrapper )
         meteoModel_->OnReceiveMsgLocalMeteoCreation( wrapper.message().control_local_weather_creation() );
     else if( wrapper.message().has_control_local_weather_destruction() )
         meteoModel_->OnReceiveMsgLocalMeteoDestruction( wrapper.message().control_local_weather_destruction() );
-    else if( wrapper.message().has_urban_creation() )
-        CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation().object().id(), wrapper.message().urban_creation() );
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked
 //    }

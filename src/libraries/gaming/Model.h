@@ -18,7 +18,6 @@ namespace kernel
     class Controllers;
     class FormationLevels;
     class ObjectKnowledgeConverter_ABC;
-    class UrbanKnowledgeConverter_ABC;
     class Workers;
 }
 
@@ -93,14 +92,11 @@ public:
     //@{
     kernel::Controllers& controllers_;
     const StaticModel& static_;
-
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
     ObjectKnowledgeFactory& objectKnowledgeFactory_; // $$$$ AGE 2006-02-15: ABC
     UrbanKnowledgeFactory& urbanKnowledgeFactory_;
     kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
-    kernel::UrbanKnowledgeConverter_ABC& urbanKnowledgeConverter_;
-
     TeamFactory_ABC&                teamFactory_;
     KnowledgeGroupFactory_ABC&      knowledgeGroupFactory_;
     AgentFactory_ABC&               agentFactory_;
@@ -114,7 +110,6 @@ public:
     actions::ActionFactory_ABC&     actionFactory_;
     IntelligenceFactory&            intelligenceFactory_;
     DrawingFactory&                 drawingFactory_;
-
     AgentsModel&          agents_;
     ObjectsModel&         objects_;
     TeamsModel&           teams_;

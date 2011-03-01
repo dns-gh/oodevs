@@ -24,7 +24,7 @@
 #include "Decision/DEC_TelepathyFunctions.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_PathPoint.h"
-#include "Decision/DEC_KnowledgeUrbanFunctions.h"
+#include "Decision/DEC_UrbanObjectFunctions.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_FragOrder.h"
@@ -32,7 +32,6 @@
 #include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-#include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "protocol/Protocol.h"
 #include <geometry/Point2.h>
@@ -125,9 +124,9 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
 void RegisterUrbanBlockFunctions( directia::brain::Brain& brain )
 {
    brain[ "DEC_ConnaissanceUrbanBlock_Barycentre" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentBarycenter, _1 ) );
-   brain[ "DEC_ConnaissanceUrbanBlock_Lisiere" ] = boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( boost::shared_ptr< DEC_Knowledge_Urban > ) >
-       ( boost::bind( &DEC_KnowledgeUrbanFunctions::GetBoundingBox, _1 ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< UrbanObjectWrapper > ) >( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentBarycenter, _1 ) );
+   brain[ "DEC_ConnaissanceUrbanBlock_Lisiere" ] = boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( boost::shared_ptr< UrbanObjectWrapper > ) >
+       ( boost::bind( &DEC_UrbanObjectFunctions::GetBoundingBox, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -684,7 +683,7 @@ bool PopulationKnowledgeFunctionBM( directia::brain::Brain& brain, directia::too
 
 bool UrbanBlockFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    boost::shared_ptr< DEC_Knowledge_Urban > value;
+    boost::shared_ptr< UrbanObjectWrapper > value;
     if( element.ToUrbanBlock( value ) && value )
     {
         knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.urbanBlock" ], name, value, false );

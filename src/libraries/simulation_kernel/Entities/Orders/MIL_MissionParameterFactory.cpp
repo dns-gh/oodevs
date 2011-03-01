@@ -124,8 +124,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         msg.set_id( message.indirectfire().id() );
         ptr = new MIL_TirIndirectParameter( msg );
     }
-    else if( message.has_urbanknowledge() )
-        ptr = new MIL_UrbanBlockParameter( message.urbanknowledge(), resolver );
+    else if( message.has_urbanknowledge() ) // $$$$ _RC_ LGY 2011-02-24: urban block identifier
+        ptr = new MIL_UrbanBlockParameter( message.urbanknowledge(), entityManager );
     else if( message.has_datetime() )
         ptr = new MIL_DateTimeParameter( message.datetime() );
     else if( message.has_logmaintenancepriorities() )
@@ -293,9 +293,9 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( boost::shared_ptr< DEC_Knowledge_Urban > urbanblock )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( boost::shared_ptr< UrbanObjectWrapper > pUrbanblock )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_UrbanBlockParameter( urbanblock ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_UrbanBlockParameter( pUrbanblock ) );
     return result;
 }
 
@@ -591,19 +591,19 @@ void MIL_MissionParameterFactory::SetPolygonListParameter( boost::shared_ptr< MI
 // Name: MIL_MissionParameterFactory::SetUrbanBlockParameter
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Urban > urbanblock )
+void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< UrbanObjectWrapper > pUrbanblock )
 {
-    pMission->SetParameter( parameter, Create( urbanblock ) );
+    pMission->SetParameter( parameter, Create( pUrbanblock ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::SetUrbanBlockListParameter
 // Created: MGD 2010-10-19
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetUrbanBlockListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >& urbanBlockList )
+void MIL_MissionParameterFactory::SetUrbanBlockListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< UrbanObjectWrapper > >& pUrbanBlockList )
 {
     std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
-    for( std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >::const_iterator it = urbanBlockList.begin(); it != urbanBlockList.end(); ++it )
+    for( std::vector< boost::shared_ptr< UrbanObjectWrapper > >::const_iterator it = pUrbanBlockList.begin(); it != pUrbanBlockList.end(); ++it )
         paramList.push_back( Create( *it ) );
     boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );

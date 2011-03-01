@@ -41,6 +41,8 @@ public:
     virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup( unsigned int id ) const;
     virtual kernel::Object_ABC* FindObject( unsigned int id ) const;
     virtual kernel::Object_ABC& GetObject( unsigned int id ) const;
+    virtual kernel::Object_ABC* FindUrbanObject( unsigned int id ) const;
+    virtual kernel::Object_ABC& GetUrbanObject( unsigned int id ) const;
     virtual kernel::Population_ABC* FindPopulation( unsigned int id ) const;
     virtual kernel::Population_ABC& GetPopulation( unsigned int id ) const;
     virtual kernel::Formation_ABC* FindFormation( unsigned int id ) const;

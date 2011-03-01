@@ -21,7 +21,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "DEC_KnowledgeUrbanFunctions.h"
+#include "DEC_PerceptionFunctions.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::GetBarycenter
@@ -293,7 +293,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::GetPionPosition( const D
 double DEC_AutomateFunctions::GetPerceptionForPion( const DEC_Decision_ABC* pPion, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget)
 {
     assert( pPion );
-    return DEC_KnowledgeUrbanFunctions::GetPerception( pPion->GetPion(), pPoint, pTarget );
+    return DEC_PerceptionFunctions::GetPerception( pPion->GetPion(), pPoint, pTarget );
 }
 
 // -----------------------------------------------------------------------------

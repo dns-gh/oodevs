@@ -13,10 +13,11 @@
 #define __DEC_PerceptionFunctions_h_
 
 class DEC_Decision_ABC;
-class DEC_Knowledge_Urban;
+class UrbanObjectWrapper;
 class MIL_Agent_ABC;
 class TER_Localisation;
 class MT_Vector2D;
+class MIL_AgentPion;
 
 // =============================================================================
 // Created: JVT 04-05-18
@@ -42,7 +43,7 @@ public:
     static void DisableObjectRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id );
     static int EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation );
     static int EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation, float rGrowthSpeed );
-    static int EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
+    static int EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock );
     static void DisableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id );
     static void DisableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, int id );
     static int EnableRecognitionPoint( DEC_Decision_ABC& callerAgent, MT_Vector2D* pCenter, double rSize, double rGrowthSpeed );
@@ -60,6 +61,7 @@ public:
     static void DisableFlyingShellDetection( MIL_Agent_ABC& callerAgent, int id );
     static void DisableSensors( MIL_Agent_ABC& callerAgent );
     static void EnableSensors( MIL_Agent_ABC& callerAgent );
+    static double GetPerception( const MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget );
     //@}
 };
 

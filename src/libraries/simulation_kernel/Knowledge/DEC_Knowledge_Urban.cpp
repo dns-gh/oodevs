@@ -18,7 +18,6 @@
 #include "Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "protocol/ClientSenders.h"
-#include <urban/Architecture.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Urban )
 
@@ -29,7 +28,7 @@ MIL_IDManager DEC_Knowledge_Urban::idManager_;
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const UrbanObjectWrapper& wrapper )
-    : DEC_Knowledge_Object    ( army, const_cast< UrbanObjectWrapper& >( wrapper ) )
+    : DEC_Knowledge_Object( army, const_cast< UrbanObjectWrapper& >( wrapper ) )
     , army_                   ( &army )
     , object_                 ( &wrapper )
     , rProgressPercent_       ( 0. )
@@ -337,26 +336,6 @@ float DEC_Knowledge_Urban::GetCurrentRecceProgress() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Urban::GetLevel
-// Created: MGD 2009-12-01
-// -----------------------------------------------------------------------------
-bool DEC_Knowledge_Urban::IsPerceivedBy( const MIL_Agent_ABC& pion ) const
-{
-    if( std::find( perceivedByAgent_.begin(), perceivedByAgent_.end(), &pion ) != perceivedByAgent_.end() )
-        return true;
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Urban::GetProgress
-// Created: MGD 2010-02-01
-// -----------------------------------------------------------------------------
-const MT_Vector2D DEC_Knowledge_Urban::GetBarycenter() const
-{
-    return object_->GetLocalisation().ComputeBarycenter();
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::GetTerrainObjectKnown
 // Created: MGD 2010-02-01
 // -----------------------------------------------------------------------------
@@ -372,15 +351,4 @@ const UrbanObjectWrapper& DEC_Knowledge_Urban::GetTerrainObjectKnown() const
 bool DEC_Knowledge_Urban::IsValid() const
 {
     return true; //@TODO MGD
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Urban::GetTrafficability
-// Created: MGD 2010-03-18
-// -----------------------------------------------------------------------------
-const float DEC_Knowledge_Urban::GetPathfindCost( float weight ) const
-{
-    if( const urban::Architecture* architecture = object_->GetArchitecture() )
-        return architecture->GetPathfindCost( weight );
-    return 0;
 }

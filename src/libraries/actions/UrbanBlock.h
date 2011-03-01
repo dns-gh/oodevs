@@ -10,9 +10,10 @@
 #ifndef __ActionParameterUrbanKnowledge_h_
 #define __ActionParameterUrbanKnowledge_h_
 
-#include "Knowledge_ABC.h"
-#include "clients_kernel/UrbanKnowledge_ABC.h"
-#include "tools/Resolver_ABC.h"
+#include "Entity.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/EntityResolver_ABC.h"
+
 
 namespace sword
 {
@@ -22,7 +23,6 @@ namespace sword
 namespace kernel
 {
     class EntityResolver_ABC;
-    class UrbanKnowledgeConverter_ABC;
 }
 
 namespace actions {
@@ -35,15 +35,15 @@ namespace parameters {
 */
 // Created: SBO 2007-05-24
 // =============================================================================
-class UrbanBlock : public Knowledge_ABC< kernel::UrbanKnowledge_ABC >
+class UrbanBlock : public Entity< kernel::Object_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              UrbanBlock( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             UrbanBlock( xml::xistream& xis, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
-             UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis, kernel::UrbanKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             UrbanBlock( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+             UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
     virtual ~UrbanBlock();
     //@}
 
@@ -55,7 +55,6 @@ public:
     virtual void CommitTo( sword::MissionParameter& message ) const;
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual geometry::Point2f GetPosition() const;
-    void CommitTo( sword::UrbanObjectKnowledgeId& message ) const;
     //@}
 };
 

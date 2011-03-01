@@ -12,11 +12,11 @@
 #ifndef __DEC_KnowledgeAgentFunctions_h_
 #define __DEC_KnowledgeAgentFunctions_h_
 
-#include "Knowledge/DEC_Knowledge_Urban.h"
-
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class MIL_AgentPion;
+class MT_Vector2D;
+class UrbanObjectWrapper;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -43,7 +43,7 @@ public:
     static float GetDangerosityOnKnowledge              ( boost::shared_ptr< DEC_Knowledge_Agent > pSource, boost::shared_ptr< DEC_Knowledge_Agent > pTarget );
     static boost::shared_ptr< MT_Vector2D > GetPositionPtr( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static float GetOperationalState                    ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-    static float GetROE                                    ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static float GetROE                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  GetMajorOperationalState               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsFlying                               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsKnowledgeValid                       ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
@@ -52,7 +52,7 @@ public:
     static int   Lock                                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void  Unlock                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
-    static double   GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget,  boost::shared_ptr< DEC_Knowledge_Urban > pUrbanBlock );
+    static double   GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget,  boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock );
 
     static bool  IsIlluminated                          ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsDefinitivelyIlluminated              ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

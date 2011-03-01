@@ -139,6 +139,9 @@ void TerrainObjectProxy::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
 // -----------------------------------------------------------------------------
 QString TerrainObjectProxy::GetName() const
 {
+    std::string name = object_.GetName();
+    if ( name.empty() )
+        return QString( tools::translate( "Urban", "Urban block[%1]" ).arg( object_.GetId() ) );
     return object_.GetName().c_str();
 }
 

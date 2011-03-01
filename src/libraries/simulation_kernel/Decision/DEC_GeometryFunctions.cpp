@@ -28,7 +28,6 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
-#include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
@@ -933,14 +932,14 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
 // Name: DEC_GeometryFunctions::ComputeUrbanBlockLocalisations
 // Created: LMT 2010-10-13
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUrbanBlockLocalisations( boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUrbanBlockLocalisations( boost::shared_ptr< UrbanObjectWrapper > pUrbanObject )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
-    if( pKnowledge->IsValid() )
+    if( pUrbanObject )
     {
-        boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( pKnowledge->GetTerrainObjectKnown().GetLocalisation().ComputeBarycenter() ) );
+        boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( pUrbanObject->GetLocalisation().ComputeBarycenter() ) );
         result.push_back( position );
-        DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( pKnowledge->GetTerrainObjectKnown(), false, result );
+        DEC_GeometryFunctions::ComputeLocalisationsInsideBlock( *pUrbanObject, false, result );
     }
     return result;
 }

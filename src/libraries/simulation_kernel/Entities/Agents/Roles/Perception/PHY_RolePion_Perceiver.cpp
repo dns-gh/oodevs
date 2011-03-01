@@ -429,14 +429,14 @@ int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& loca
 // Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
+int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
 {
     if( !pPerceptionRecoUrbanBlock_ )
     {
         pPerceptionRecoUrbanBlock_ = new PHY_PerceptionRecoUrbanBlock( *this );
         activePerceptions_.push_back( pPerceptionRecoUrbanBlock_ );
     }
-    return pPerceptionRecoUrbanBlock_->AddUrbanBlock( urbanBlock );
+    return pPerceptionRecoUrbanBlock_->AddUrbanBlock( pUrbanBlock );
 }
 
 // -----------------------------------------------------------------------------

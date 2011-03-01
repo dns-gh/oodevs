@@ -3232,7 +3232,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Stop alert</source>
-        <translation>Fin de l'alerte</translation>
+        <translation>Fin de l&apos;alerte</translation>
     </message>
     <message>
         <source>Confine</source>

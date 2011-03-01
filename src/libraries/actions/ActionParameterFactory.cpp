@@ -61,13 +61,12 @@ using namespace actions;
 // -----------------------------------------------------------------------------
 ActionParameterFactory::ActionParameterFactory( const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel
                                               , kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                                              , kernel::UrbanKnowledgeConverter_ABC& urbanKnowledgeConverter, kernel::Controller& controller )
+                                              , kernel::Controller& controller )
     : converter_               ( converter )
     , entities_                ( entities )
     , staticModel_             ( staticModel )
     , agentKnowledgeConverter_ ( agentKnowledgeConverter )
     , objectKnowledgeConverter_( objectKnowledgeConverter )
-    , urbanKnowledgeConverter_ ( urbanKnowledgeConverter )
     , controller_              ( controller )
 {
     // NOTHING
@@ -153,8 +152,8 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return new parameters::LimaList( parameter, converter_, message.phaselines() );
     if( message.has_datetime() )
         return new parameters::DateTime( parameter, message.datetime() );
-    if( message.has_urbanknowledge() )
-        return new parameters::UrbanBlock( parameter, message.urbanknowledge().id(), urbanKnowledgeConverter_, entity, controller_  );
+    if( message.has_urbanknowledge() )  // $$$$ _RC_ LGY 2011-02-24: urban block id
+        return new parameters::UrbanBlock( parameter, message.urbanknowledge().id(), entities_, controller_ );
     if( message.has_party() )
         return new parameters::Army( parameter, message.party().id(), entities_, controller_ );
     if( message.has_formation() )
@@ -329,8 +328,8 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new parameters::PopulationKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "objectknowledge" )
         param.reset( new parameters::ObjectKnowledge( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "urbanknowledge" )
-        param.reset( new parameters::UrbanBlock( parameter, xis, urbanKnowledgeConverter_, entity, controller_ ) );
+    else if( type == "urbanknowledge" ) // $$$$ _RC_ LGY 2011-02-24: urban block id
+        param.reset( new parameters::UrbanBlock( parameter, xis, entities_, controller_ ) );
     else
         return false;
     return true;

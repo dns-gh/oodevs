@@ -35,6 +35,7 @@ class PHY_Posture;
 class PHY_SensorTypeAgent;
 class DEC_Knowledge_AgentPerception;
 class PHY_NatureAtlas;
+class UrbanObjectWrapper;
 
 // =============================================================================
 /** @class  DEC_Knowledge_Agent
@@ -132,7 +133,7 @@ public:
     double GetDangerosity( const DEC_Knowledge_Agent& target ) const;
     double GetDangerosity( const MIL_Agent_ABC& target ) const;
     double GetMaxRangeToFireOn( const MIL_Agent_ABC& target, double rWantedPH ) const;
-    double GetMaterialComposantesAttritionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const;
+    double GetMaterialComposantesAttritionLevel( boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock ) const;
     void Lock();
     void Unlock();
     void KillOfficers();

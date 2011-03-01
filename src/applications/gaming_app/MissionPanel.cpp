@@ -52,7 +52,7 @@ using namespace kernel;
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
 MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
-                          , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, UrbanKnowledgeConverter_ABC& urbanKnowledgeConverter, const kernel::Time_ABC& simulation )
+                          , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::Time_ABC& simulation )
     : QDockWindow              ( QDockWindow::OutsideDock, pParent, "mission" )
     , controllers_             ( controllers )
     , static_                  ( model )
@@ -63,7 +63,7 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
     , profile_                 ( profile )
     , commandPublisher_        ( new CommandPublisher( controllers_, publisher, profile_ ) )
     , pMissionInterface_       ( 0 )
-    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_, layer_, knowledgeConverter, objectKnowledgeConverter, urbanKnowledgeConverter, static_, simulation ) )
+    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_, layer_, knowledgeConverter, objectKnowledgeConverter, static_, simulation ) )
     , selectedEntity_          ( controllers )
     , isPlanifMode_            ( false )
     , simulation_              (simulation)

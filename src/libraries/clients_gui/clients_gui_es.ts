@@ -96,6 +96,13 @@
     </message>
 </context>
 <context>
+    <name>Urban</name>
+    <message>
+        <source>Urban block[%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Yes/No</name>
     <message>
         <source>Yes</source>

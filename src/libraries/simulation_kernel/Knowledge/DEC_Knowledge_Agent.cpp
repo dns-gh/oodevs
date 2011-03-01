@@ -28,7 +28,6 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -647,9 +646,9 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
 // Name: DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel
 // Created: DDA 2010-04-23
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const
+double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock ) const
 {
-    if( const urban::Architecture* architecture = urbanKnowledge->GetTerrainObjectKnown().GetArchitecture() )
+    if( const urban::Architecture* architecture = pUrbanBlock->GetArchitecture() )
     {
         const PHY_RolePion_Composantes& role = GetAgentKnown().GetRole< PHY_RolePion_Composantes >();
         unsigned materialID = PHY_MaterialCompositionType::Find( architecture->GetMaterial() )->GetId();

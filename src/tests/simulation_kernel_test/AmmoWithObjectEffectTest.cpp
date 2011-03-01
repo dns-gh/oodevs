@@ -1,5 +1,4 @@
 #include "simulation_kernel_test_pch.h"
-
 #include "MockAgent.h"
 #include "MockArmy.h"
 #include "MockMIL_EntityManager_ABC.h"
@@ -10,7 +9,6 @@
 #include "MockRoleLocation.h"
 #include "StubDEC_Decision.h"
 #include "TestIndirectFireModifier.h"
-
 #include "AlgorithmsFactories.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Position.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"

@@ -61,7 +61,7 @@ class DEC_Gen_Object;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
-class DEC_Knowledge_Urban;
+class UrbanObjectWrapper;
 class DEC_Objective;
 class MIL_ParameterType_ABC;
 class MT_Vector2D;
@@ -136,7 +136,7 @@ public:
     virtual bool ToMaintenancePriorities( T_MaintenancePriorityVector& ) const = 0;
     virtual bool ToMedicalPriorities( T_MedicalPriorityVector& ) const = 0;
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const = 0;
-    virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const = 0;
+    virtual bool ToUrbanBlock( boost::shared_ptr< UrbanObjectWrapper >& ) const = 0;
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const = 0;
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const = 0;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const = 0;

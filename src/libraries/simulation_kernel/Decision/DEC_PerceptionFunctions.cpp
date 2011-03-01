@@ -12,11 +12,20 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PerceptionFunctions.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "AlgorithmsFactories.h"
+#include "OnComponentComputer_ABC.h"
+#include "OnComponentFunctor_ABC.h"
+#include "OnComponentFunctorComputerFactory_ABC.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
 
@@ -173,9 +182,9 @@ int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& calle
 // Name: DEC_PerceptionFunctions::EnableRecognitionLocalisation
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
+int DEC_PerceptionFunctions::EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
 {
-    return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoUrbanBlock( urbanBlock );
+    return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoUrbanBlock( pUrbanBlock );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,4 +361,79 @@ void DEC_PerceptionFunctions::DisableSensors( MIL_Agent_ABC& callerAgent )
 void DEC_PerceptionFunctions::EnableSensors( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableSensors();
+}
+
+namespace
+{
+    class SensorFunctor : private boost::noncopyable
+    {
+    public:
+        SensorFunctor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
+            : perceiver_( perceiver )
+            , point_    ( point )
+            , target_   ( target )
+            , energy_   ( 0 )
+        {}
+        ~SensorFunctor()
+        {}
+        void operator()( const PHY_Sensor& sensor )
+        {
+            const PHY_SensorTypeAgent* sensorTypeAgent = sensor.GetType().GetTypeAgent();
+            if( sensorTypeAgent )
+                energy_ = std::max( energy_, sensorTypeAgent->RayTrace( point_, target_, sensor.GetHeight() ) );
+        }
+        double GetEnergy() const
+        {
+            return energy_;
+        }
+    private:
+        const MIL_Agent_ABC& perceiver_;
+        const MT_Vector2D& point_;
+        const MT_Vector2D& target_;
+        double energy_;
+    };
+
+    class Functor : public OnComponentFunctor_ABC
+    {
+    public:
+        Functor( const MIL_Agent_ABC& perceiver, const MT_Vector2D& point, const MT_Vector2D& target )
+            : perceiver_( perceiver )
+            , point_    ( point )
+            , target_   ( target )
+            , energy_   ( 0 )
+        {}
+        ~Functor()
+        {}
+        void operator()( PHY_ComposantePion& composante )
+        {
+            if( !composante.CanPerceive() )
+                return;
+            SensorFunctor dataFunctor( perceiver_, point_, target_ );
+            composante.ApplyOnSensors( dataFunctor );
+            energy_ = std::max( energy_, dataFunctor.GetEnergy() );
+        }
+        double GetEnergy() const
+        {
+            return energy_;
+        }
+    private:
+        const MIL_Agent_ABC& perceiver_;
+        const MT_Vector2D& point_;
+        const MT_Vector2D& target_;
+        double energy_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PerceptionFunctions::GetPerception
+// Created: LMT 2010-07-02
+// -----------------------------------------------------------------------------
+double DEC_PerceptionFunctions::GetPerception( const MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > pPoint, boost::shared_ptr< MT_Vector2D > pTarget )
+{
+    if( !pTarget.get() || !pPoint.get() )
+        return 0.;
+    Functor dataFunctor( callerAgent, *pPoint, *pTarget );
+    std::auto_ptr< OnComponentComputer_ABC > dataComputer( callerAgent.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
+    const_cast< MIL_AgentPion& >( callerAgent ).Execute( *dataComputer );
+    return dataFunctor.GetEnergy();
 }

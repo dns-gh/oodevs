@@ -183,7 +183,7 @@ T_KnowledgeUrbanVector DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCircle( c
     //Urban
     T_KnowledgeUrbanVector urbansKn;
     T_KnowledgeUrbanVector result;
-    pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
+    pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );  // $$$$ _RC_ LGY 2011-02-25: remanier
     for( T_KnowledgeUrbanVector::iterator it = urbansKn.begin(); it != urbansKn.end(); it++ )
         if( ( *it )->GetObjectKnown() && ( *it )->GetObjectKnown()->GetLocalisation().Intersect2DWithCircle( *center, radius ) )
             result.push_back( (*it) );

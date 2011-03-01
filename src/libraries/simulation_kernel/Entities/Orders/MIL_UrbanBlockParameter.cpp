@@ -9,26 +9,30 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanBlockParameter.h"
+#include "Entities/MIL_EntityManager_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
-#include "simulation_kernel/knowledge/DEC_KnowledgeResolver_ABC.h"
-#include "simulation_kernel/knowledge/DEC_Knowledge_Urban.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
-    : pKnowledgeUrbanBlock_( resolver.ResolveKnowledgeUrban( asn.id() ) )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, MIL_EntityManager_ABC& entityManager )
 {
-    // NOTHING
+    MIL_Object_ABC* pObject = entityManager.FindObject( asn.id() );
+    if( pObject )
+        pUrbanBlock_.reset( dynamic_cast< UrbanObjectWrapper* >( pObject ) );
+    if( !pUrbanBlock_ )
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
-    : pKnowledgeUrbanBlock_( urbanBlock )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
+    : pUrbanBlock_( pUrbanBlock )
 {
     // NOTHING
 }
@@ -56,9 +60,9 @@ bool MIL_UrbanBlockParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) con
 // Name: MIL_UrbanBlockParameter::ToUrbanBlock
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-bool MIL_UrbanBlockParameter::ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& value ) const
+bool MIL_UrbanBlockParameter::ToUrbanBlock( boost::shared_ptr< UrbanObjectWrapper >& value ) const
 {
-    value = pKnowledgeUrbanBlock_;
+    value = pUrbanBlock_;
     return true;
 }
 
@@ -68,6 +72,6 @@ bool MIL_UrbanBlockParameter::ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urb
 // -----------------------------------------------------------------------------
 bool MIL_UrbanBlockParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    elem.mutable_urbanknowledge()->set_id( pKnowledgeUrbanBlock_->GetID() );
+    elem.mutable_urbanknowledge()->set_id( pUrbanBlock_->GetID() );
     return true;
 }

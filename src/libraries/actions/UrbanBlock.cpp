@@ -9,13 +9,14 @@
 
 #include "actions_pch.h"
 #include "UrbanBlock.h"
-#include "clients_kernel/UrbanKnowledgeConverter_ABC.h"
+#include "ParameterVisitor_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "protocol/Protocol.h"
 #include <windows.h>
 #include <gl/gl.h>
+#undef GetObject
 
 using namespace kernel;
 using namespace actions;
@@ -42,8 +43,8 @@ namespace
 // Name: UrbanBlock constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const OrderParameter& parameter, Controller& controller )
-    : Knowledge_ABC< UrbanKnowledge_ABC >( parameter, controller )
+UrbanBlock::UrbanBlock( const OrderParameter& parameter, kernel::Controller& controller )
+    : Entity< Object_ABC >( parameter, controller )
 {
     // NOTHING
 }
@@ -52,8 +53,8 @@ UrbanBlock::UrbanBlock( const OrderParameter& parameter, Controller& controller 
 // Name: UrbanBlock constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const OrderParameter& parameter, unsigned long id, UrbanKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
-    : Knowledge_ABC< UrbanKnowledge_ABC >( parameter, converter.Find( id, owner ), controller )
+UrbanBlock::UrbanBlock( const OrderParameter& parameter, unsigned long id, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Object_ABC >( parameter, &resolver.GetUrbanObject( id ), controller )
 {
     // NOTHING
 }
@@ -62,8 +63,8 @@ UrbanBlock::UrbanBlock( const OrderParameter& parameter, unsigned long id, Urban
 // Name: UrbanBlock constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( xml::xistream& xis, UrbanKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
-    : Knowledge_ABC< UrbanKnowledge_ABC >( OrderParameter( ReadName( xis ), "UrbanBlock", false ), converter.Find( ReadId( xis ), owner ), controller )
+UrbanBlock::UrbanBlock( xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Object_ABC >( OrderParameter( ReadName( xis ), "UrbanBlock", false ), &resolver.GetUrbanObject( ReadId( xis ) ), controller )
 {
     // NOTHING
 }
@@ -72,8 +73,8 @@ UrbanBlock::UrbanBlock( xml::xistream& xis, UrbanKnowledgeConverter_ABC& convert
 // Name: UrbanBlock constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const OrderParameter& parameter, xml::xistream& xis, UrbanKnowledgeConverter_ABC& converter, const Entity_ABC& owner, Controller& controller )
-    : Knowledge_ABC< UrbanKnowledge_ABC >( parameter, converter.Find( ReadId( xis ), owner ), controller )
+UrbanBlock::UrbanBlock( const OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+    : Entity< Object_ABC >( parameter, &resolver.GetUrbanObject( ReadId( xis ) ), controller )
 {
     // NOTHING
 }
@@ -127,7 +128,7 @@ void UrbanBlock::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->Add()->mutable_urbanknowledge() );
+        Entity< Object_ABC >::CommitTo( *message.mutable_value()->Add()->mutable_urbanknowledge() );
 }
 // -----------------------------------------------------------------------------
 // Name: UrbanBlock::CommitTo
@@ -136,16 +137,7 @@ void UrbanBlock::CommitTo( sword::MissionParameter& message ) const
 void UrbanBlock::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        CommitTo( *message.mutable_urbanknowledge() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanBlock::CommitTo
-// Created: SBO 2007-05-24
-// -----------------------------------------------------------------------------
-void UrbanBlock::CommitTo( sword::UrbanObjectKnowledgeId& message ) const
-{
-    Entity< UrbanKnowledge_ABC >::CommitTo< sword::UrbanObjectKnowledgeId >( message );
+        Entity< Object_ABC >::CommitTo( *message.mutable_urbanknowledge() );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,9 +146,9 @@ void UrbanBlock::CommitTo( sword::UrbanObjectKnowledgeId& message ) const
 // -----------------------------------------------------------------------------
 geometry::Point2f UrbanBlock::GetPosition() const
 {
-    if( const kernel::Positions* positions = GetValue()->GetEntity()->Retrieve< kernel::Positions >() )
+    if( const kernel::Positions* positions = GetValue()->Retrieve< kernel::Positions >() )
         return positions->GetPosition();
-    return Knowledge_ABC< UrbanKnowledge_ABC >::GetPosition();
+    return Entity< Object_ABC >::GetPosition();
 }
 
 // -----------------------------------------------------------------------------

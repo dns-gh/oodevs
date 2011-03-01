@@ -112,6 +112,24 @@ kernel::Object_ABC& ModelAdapter::GetObject( unsigned int id ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ModelAdapter::FindUrbanObject
+// Created: LGY 2011-03-01
+// -----------------------------------------------------------------------------
+kernel::Object_ABC* ModelAdapter::FindUrbanObject( unsigned int id ) const
+{
+    return model_.UrbanBlocks().Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelAdapter::GetUrbanObject
+// Created: LGY 2011-03-01
+// -----------------------------------------------------------------------------
+kernel::Object_ABC& ModelAdapter::GetUrbanObject( unsigned int id ) const
+{
+    return model_.UrbanBlocks().Get( id );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ModelAdapter::FindPopulation
 // Created: SBO 2010-05-10
 // -----------------------------------------------------------------------------

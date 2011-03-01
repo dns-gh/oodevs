@@ -15,6 +15,10 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
+#include "Entities/MIL_Army_ABC.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeUrban.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "DetectionComputer_ABC.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "MIL_Random.h"
@@ -26,12 +30,12 @@
 // Name: PHY_PerceptionRecoUrbanBlockReco constructor
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
-    : urbanBlock_( urbanBlock )
+PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
+    : pUrbanBlock_( pUrbanBlock )
 {
-    if( urbanBlock->GetObjectKnown() == 0 )
-        throw std::runtime_error( "urban knowledge invalid" );
-    localisation_.Reset( urbanBlock->GetObjectKnown()->GetLocalisation() );
+    if( pUrbanBlock == 0 )
+        throw std::runtime_error( "urban block invalid" );
+    localisation_.Reset( pUrbanBlock->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +63,10 @@ void PHY_PerceptionRecoUrbanBlockReco::GetAgentsInside( const PHY_RoleInterface_
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRecoUrbanBlockReco::CanSeeIt() const
 {
-    return urbanBlock_->GetCurrentRecceProgress() >= ( 1. - MIL_Random::rand_ii( MIL_Random::ePerception ) );
+    boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = pUrbanBlock_->GetArmy()->GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanBlock_ );
+    if( pKnowledge )
+        return pKnowledge->GetCurrentRecceProgress() >= ( 1. - MIL_Random::rand_ii( MIL_Random::ePerception ) );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -87,9 +94,9 @@ PHY_PerceptionRecoUrbanBlock::~PHY_PerceptionRecoUrbanBlock()
 // Name: PHY_PerceptionRecoUrbanBlock::AddUrbanBlock
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int PHY_PerceptionRecoUrbanBlock::AddUrbanBlock( const boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
+int PHY_PerceptionRecoUrbanBlock::AddUrbanBlock( const boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
 {
-    PHY_PerceptionRecoUrbanBlockReco* pNewReco = new PHY_PerceptionRecoUrbanBlockReco( urbanBlock );
+    PHY_PerceptionRecoUrbanBlockReco* pNewReco = new PHY_PerceptionRecoUrbanBlockReco( pUrbanBlock );
     assert( pNewReco );
     return Add( pNewReco );
 }

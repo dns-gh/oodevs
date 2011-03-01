@@ -12,8 +12,8 @@
 
 #include "MIL_BaseParameter.h"
 
-class DEC_KnowledgeResolver_ABC;
-class DEC_Knowledge_Urban;
+class MIL_EntityManager_ABC;
+class UrbanObjectWrapper;
 
 namespace sword
 {
@@ -31,8 +31,8 @@ class MIL_UrbanBlockParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
-    explicit MIL_UrbanBlockParameter( boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock );
+             MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, MIL_EntityManager_ABC& entityManager );
+    explicit MIL_UrbanBlockParameter( boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock );
     virtual ~MIL_UrbanBlockParameter();
     //@}
 
@@ -43,7 +43,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const;
+    virtual bool ToUrbanBlock( boost::shared_ptr< UrbanObjectWrapper >& ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock_;
+    boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock_;
     //@}
 };
 

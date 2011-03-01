@@ -19,7 +19,6 @@
 #include "dispatcher/ModelAdapter.h"
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/ObjectKnowledgeConverter.h"
-#include "dispatcher/UrbanKnowledgeConverter.h"
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "tools/SessionConfig.h"
@@ -58,8 +57,7 @@ ActionsLogger::ActionsLogger( const tools::SessionConfig& config, const dispatch
     , publisher_        ( new NullPublisher() )
     , agentsKnowledges_ ( new dispatcher::AgentKnowledgeConverter( model ) )
     , objectsKnowledges_( new dispatcher::ObjectKnowledgeConverter( model ) )
-    , urbansKnowledges_ ( new dispatcher::UrbanKnowledgeConverter( model ) )
-    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, *urbansKnowledges_, *controller_ ) )
+    , parameters_       ( new actions::ActionParameterFactory( *converter_, *entities_, staticModel, *agentsKnowledges_, *objectsKnowledges_, *controller_ ) )
     , factory_          ( new actions::ActionFactory( *controller_, *parameters_, *entities_, staticModel, simulation ) )
     , actions_          ( new actions::ActionsModel( *factory_, *publisher_, *publisher_ ) )
     , ordersLoaded_     ( !config_.HasCheckpoint() )

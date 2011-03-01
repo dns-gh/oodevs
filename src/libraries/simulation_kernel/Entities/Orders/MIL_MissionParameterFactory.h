@@ -26,7 +26,6 @@ class DEC_KnowledgeResolver_ABC;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
-class DEC_Knowledge_Urban;
 class DEC_RolePion_Decision;
 class MIL_Mission_ABC;
 class MIL_MissionParameter_ABC;
@@ -36,6 +35,7 @@ class MT_Vector2D;
 class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
 class TER_Localisation;
+class UrbanObjectWrapper;
 
 // =============================================================================
 /** @class  MIL_MissionParameterFactory
@@ -65,7 +65,7 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateTir( int id );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MT_Vector2D& point );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< TER_Localisation > pLocation );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Urban > urbanblock );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< UrbanObjectWrapper > pUrbanblock );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( boost::shared_ptr< MT_Vector2D > point );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateDirection( boost::shared_ptr< MT_Vector2D > direction );
@@ -95,8 +95,8 @@ public:
     static void SetLocationListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList );
     static void SetPointListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList );
     static void SetPolygonListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList );
-    static void SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Urban > urbanblock );
-    static void SetUrbanBlockListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Urban > >& urbanBlockList );
+    static void SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< UrbanObjectWrapper > pUrbanblock );
+    static void SetUrbanBlockListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< UrbanObjectWrapper > >& pUrbanBlockList );
     static void SetDirectionParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< MT_Vector2D > direction );
     static void SetDotationTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_DotationCategory* type );
     static void SetNumericTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, float value );
