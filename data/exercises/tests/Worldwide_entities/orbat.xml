@@ -781,8 +781,8 @@
             <unit command-post="false" id="244" name="Logistic decontamination section" position="30TXT9281800974" type="Logistic decontamination section"/>
             <unit command-post="false" id="245" name="Psychological section" position="30TXT9380201508" type="Psychological section"/>
             <unit command-post="false" id="246" name="Medical section" position="30TXT9402701017" type="Medical section"/>
-            <unit command-post="false" id="247" name="Chirurgicale section (modular)" position="30TXT9383700510" type="Chirurgicale section (modular)"/>
-            <unit command-post="false" id="248" name="Chirurgicale section HMC" position="30TXT9334400286" type="Chirurgicale section HMC"/>
+            <unit command-post="false" id="247" name="Surgical section (modular)" position="30TXT9383700510" type="Surgical section (modular)"/>
+            <unit command-post="false" id="248" name="Surgical section HMC" position="30TXT9334400286" type="Surgical section HMC"/>
             <unit command-post="false" id="249" name="Casualty assessment section" position="30TXT9283600475" type="Casualty assessment section"/>
           </automat>         
         </formation>
@@ -801,8 +801,8 @@
             <unit command-post="false" id="254" name="Logistic decontamination section" position="30TXT9685001014" type="Logistic decontamination section"/>
             <unit command-post="false" id="255" name="Psychological section" position="30TXT9783401549" type="Psychological section"/>
             <unit command-post="false" id="256" name="Medical section" position="30TXT9805901057" type="Medical section"/>
-            <unit command-post="false" id="257" name="Chirurgicale section (modular)" position="30TXT9786900551" type="Chirurgicale section (modular)"/>
-            <unit command-post="false" id="258" name="Chirurgicale section HMC" position="30TXT9737600326" type="Chirurgicale section HMC"/>
+            <unit command-post="false" id="257" name="Surgical section (modular)" position="30TXT9786900551" type="Surgical section (modular)"/>
+            <unit command-post="false" id="258" name="Surgical section HMC" position="30TXT9737600326" type="Surgical section HMC"/>
             <unit command-post="false" id="259" name="Casualty assessment section" position="30TXT9686800515" type="Casualty assessment section"/>
           </automat>
           <automat engaged="true" id="328" knowledge-group="6" name="Supply logistic area  (division) [328]" type="Supply logistic area  (division)">

@@ -164,7 +164,7 @@
             <unit command-post="false" id="27" name="Decontamination NBC (Logistic decontamination section)" position="30UXU3781350902" type="Logistic decontamination section"/>
             <unit command-post="false" id="37" name="Groupe Maintenance Evacuation (Maintenance evacuation group)" position="30UXU5151954478" type="Maintenance evacuation group"/>
             <unit command-post="false" id="38" name="Groupe Ramassage (Medical group VAB)" position="30UXU5307653167" type="Medical group VAB"/>
-            <unit command-post="false" id="39" name="Health unit (Chirurgicale section (modular))" position="30UXU5455653857" type="Chirurgicale section (modular)"/>
+            <unit command-post="false" id="39" name="Health unit (Surgical section (modular))" position="30UXU5455653857" type="Surgical section (modular)"/>
             <unit command-post="false" id="66" name="PC Appui Mob (Transportation platoon (transportation squadron))" position="30UXU1760544382" type="Transportation platoon (transportation squadron)"/>
             <unit command-post="false" id="67" name="PC Log (Supply CP (division))" position="30UXU1957944377" type="Supply CP (division)"/>
             <unit command-post="true" id="68" name="PC TC2 (Logistic CT)" position="30UXU2169744605" type="Logistic CT"/>

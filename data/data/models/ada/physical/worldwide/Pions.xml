@@ -14,7 +14,7 @@
         <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -48,16 +48,16 @@
         <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
       <category name="barbele">
-        <resource capacity="40" logistic-threshold="30" name="standard barbed wire" normalized-consumption="0"/>
+        <resource capacity="40" logistic-threshold="30" name="Standard Barbed Wire" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -271,13 +271,13 @@
         <resource capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -316,7 +316,7 @@
         <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
         <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -354,10 +354,10 @@
         <resource capacity="48" logistic-threshold="30" name="Antitank Missile" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -411,7 +411,7 @@
         <resource capacity="3000" logistic-threshold="10" name="9.00-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
         <resource capacity="400" logistic-threshold="40" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -466,7 +466,7 @@
         <resource capacity="800" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -501,7 +501,7 @@
         <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -535,7 +535,7 @@
         <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -613,7 +613,7 @@
         <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -699,10 +699,10 @@
         <resource capacity="1200" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <resource capacity="60" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+        <resource capacity="60" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <resource capacity="30" logistic-threshold="5" name="standard landmine" normalized-consumption="0"/>
+        <resource capacity="30" logistic-threshold="5" name="Standard Landmine" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -780,7 +780,7 @@
         <resource capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
         <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -810,7 +810,7 @@
         <resource capacity="1200" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -838,7 +838,7 @@
         <resource capacity="1200" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -904,7 +904,7 @@
         <resource capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -935,7 +935,7 @@
         <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
         <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -1011,7 +1011,7 @@
         <resource capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1043,7 +1043,7 @@
         <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
         <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -1081,7 +1081,7 @@
         <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1118,7 +1118,7 @@
         <resource capacity="1000" logistic-threshold="30" name="81-mm High Explosive Shell" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1178,7 +1178,7 @@
         <resource capacity="1200" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1206,7 +1206,7 @@
         <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1235,7 +1235,7 @@
         <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1252,17 +1252,19 @@
   </unit>
   <unit decisional-model="Pion stock" id="39" name="Water supply group" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class ii"/>
-    <equipments/>
+    <equipments>
+      <equipment count="1" crew="2" type="Load Carrying Vehicle"/>
+    </equipments>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
-      <crew-rank count="0" type="SousOfficier"/>
+      <crew-rank count="1" type="SousOfficier"/>
     </crew-ranks>
     <logistics>
       <category name="munition">
         <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1291,7 +1293,7 @@
         <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1320,7 +1322,7 @@
         <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1395,7 +1397,7 @@
         <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
         <resource capacity="400" logistic-threshold="40" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -1447,7 +1449,7 @@
         <resource capacity="1200" logistic-threshold="10" name="5.56-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1487,7 +1489,7 @@
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" type="Medical triage team"/>
-      <equipment count="1" crew="1" major="true" type="Champ Operatoire"/>
+      <equipment count="1" crew="1" major="true" type="Operative Field"/>
       <equipment convoyer="true" count="4" crew="2" type="Load Carrying Vehicle"/>
     </equipments>
     <crew-ranks>
@@ -1527,13 +1529,13 @@
     <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Health unit" id="50" name="Chirurgicale section (modular)" type="Pion LOG BLD Sante">
+  <unit decisional-model="Health unit" id="50" name="Surgical section (modular)" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="7" type="TBU15 CLD"/>
       <equipment count="1" crew="3" type="Ambulance"/>
       <equipment convoyer="true" count="7" crew="3" type="Load Carrying Vehicle"/>
-      <equipment count="2" crew="1" type="Champ Operatoire"/>
+      <equipment count="2" crew="1" type="Operative Field"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="8" type="Officier"/>
@@ -1566,7 +1568,7 @@
         <resource capacity="1200" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="3000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="3000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -1588,7 +1590,7 @@
       <equipment count="4" crew="3" type="Ambulance"/>
       <equipment count="1" crew="3" type="MTV CLD"/>
       <equipment convoyer="true" count="5" crew="7" type="Load Carrying Vehicle"/>
-      <equipment count="1" crew="1" type="Champ Operatoire"/>
+      <equipment count="1" crew="1" type="Operative Field"/>
       <equipment count="2" crew="1" type="Medical triage team"/>
     </equipments>
     <crew-ranks>
@@ -1607,10 +1609,10 @@
     <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Health unit" id="53" name="Chirurgicale section HMC" type="Pion LOG BLD Sante">
+  <unit decisional-model="Health unit" id="53" name="Surgical section HMC" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
-      <equipment count="2" crew="1" major="true" type="Champ Operatoire"/>
+      <equipment count="2" crew="1" major="true" type="Operative Field"/>
       <equipment convoyer="true" count="9" crew="6" type="Load Carrying Vehicle"/>
       <equipment count="1" crew="2" type="Ambulance"/>
     </equipments>
@@ -1912,7 +1914,7 @@
   <unit decisional-model="Terroriste" id="66" name="Terrorist" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
-      <equipment count="1" crew="1" major="true" type="Terroriste"/>
+      <equipment count="1" crew="1" major="true" type="Terrorist"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
@@ -1951,13 +1953,13 @@
         <resource capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2051,7 +2053,7 @@
         <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2125,16 +2127,16 @@
         <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
       <category name="barbele">
-        <resource capacity="40" logistic-threshold="30" name="standard barbed wire" normalized-consumption="0"/>
+        <resource capacity="40" logistic-threshold="30" name="Standard Barbed Wire" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2168,16 +2170,16 @@
         <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
       <category name="explosif">
-        <resource capacity="600" logistic-threshold="30" name="standard explosive" normalized-consumption="0"/>
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
       </category>
       <category name="mine">
-        <resource capacity="150" logistic-threshold="30" name="standard landmine" normalized-consumption="0"/>
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
       </category>
       <category name="barbele">
-        <resource capacity="40" logistic-threshold="30" name="standard barbed wire" normalized-consumption="0"/>
+        <resource capacity="40" logistic-threshold="30" name="Standard Barbed Wire" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2211,7 +2213,7 @@
         <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2295,7 +2297,7 @@
     </crew-ranks>
     <logistics>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2327,7 +2329,7 @@
     </crew-ranks>
     <logistics>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2358,7 +2360,7 @@
     </crew-ranks>
     <logistics>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2390,7 +2392,7 @@
     </crew-ranks>
     <logistics>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2421,7 +2423,7 @@
     </crew-ranks>
     <logistics>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2540,7 +2542,7 @@
         <resource capacity="36" logistic-threshold="30" name="155-mm Sub-Munition Shell" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2576,7 +2578,7 @@
         <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
         <resource capacity="200" logistic-threshold="20" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -2614,7 +2616,7 @@
         <resource capacity="96" logistic-threshold="30" name="277-mm Sub-Munition Rocket" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="2500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="2500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
         <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -2649,7 +2651,7 @@
         <resource capacity="800" logistic-threshold="30" name="20-mm Shell" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2685,7 +2687,7 @@
         <resource capacity="100" logistic-threshold="10" name="120-mm Hight Explosive Shell" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -2719,7 +2721,7 @@
         <resource capacity="800" logistic-threshold="30" name="20-mm Shell" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="1500" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -3156,7 +3158,7 @@
         <resource capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
       </category>
       <category name="carburant">
-        <resource capacity="10000" logistic-threshold="30" name="Gasoil" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -3171,5 +3173,1962 @@
     <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="HS - Disturbance" id="109" name="HS - Disturbance" type="Pion Emergency">
+    <nature atlas-nature="PC" level="none" nature-app6="emergency/police/operation/police"/>
+    <equipments>
+      <equipment count="5" crew="5" major="true" type="Riot Leader"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Journalist" id="110" name="Journalist" type="Pion ASY">
+    <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
+    <equipments>
+      <equipment count="1" crew="1" type="Journalist"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="MBT platoon" id="111" name="Tank PLT (M1)" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="4" crew="4" major="true" type="M1A1 Abrams"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="3000s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="200"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+      <distance-before-point type="lima" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Armored squadron CP" id="112" name="Tank CO HQ (M1)" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track"/>
+    <equipments>
+      <equipment count="1" crew="4" type="Armoured Personnel Carrier Command Post"/>
+      <equipment count="2" crew="2" type="Light Armored Vehicle"/>
+      <equipment count="2" crew="4" major="true" type="M1A1 Abrams"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1250s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry platoon" id="113" name="Mech Infantry PLT (BFV)" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
+    <equipments>
+      <equipment count="20" crew="1" loadable="true" type="Infantry Soldiers"/>
+      <equipment count="6" crew="2" loadable="true" type="SRAW soldier"/>
+      <equipment count="4" crew="3" major="true" type="M2A2 Bradley IFV"/>
+      <equipment count="1" crew="1" loadable="true" type="Infantry Soldier CBRN"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry company CP" id="114" name="Mech Infantry CO HQ (BFV)" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
+    <equipments>
+      <equipment count="3" crew="1" loadable="true" type="Infantry Soldiers"/>
+      <equipment count="2" crew="3" major="true" type="M2A2 Bradley IFV"/>
+      <equipment count="1" crew="3" major="true" type="12.7-mm Armoured Personnel Carrier"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Armored squadron CP" id="115" name="Combined Arms BN HQ" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/armor/wheeled"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="Armoured Personnel Carrier Command Post"/>
+      <equipment count="2" crew="2" type="Light Armored Vehicle"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1250s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Firing platoon" id="116" name="FA Firing PLT (Paladin)" type="Pion ASS">
+    <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
+    <equipments>
+      <equipment count="3" crew="4" major="true" type="M109A6 Paladin"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="155-mm Antitank High Explosive Shell" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="155-mm High Explosive Shell Rear Skirt" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="155-mm Illumination Round" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="155-mm Smoke Shell" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="155-mm Sub-Munition Shell" normalized-consumption="0"/>
+        <resource capacity="12" logistic-threshold="30" name="155-mm FASCAM Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Battery CP" id="117" name="FA BTY HQ" type="Pion ASS">
+    <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
+    <equipments>
+      <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
+      <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical Vehicle"/>
+      <equipment count="2" crew="2" major="true" type="12.7-mm Armoured Personnel Carrier"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="3" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2100s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Battery CP" id="118" name="FA BN HQ" type="Pion ASS">
+    <nature atlas-nature="ASS" level="i" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
+    <equipments>
+      <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
+      <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical Vehicle"/>
+      <equipment count="2" crew="2" major="true" type="12.7-mm Armoured Personnel Carrier"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="3" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2100s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Light armored platoon" id="119" name="Cavalry PLT (CFV)" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/reconnaissance/cavalry/armored"/>
+    <equipments>
+      <equipment count="3" crew="5" major="true" type="M3 Bradley CFV"/>
+      <equipment count="5" crew="4" type="M1114 HMMWV"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Armored squadron CP" id="120" name="Cavalry TRP HQ (CFV)" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/reconnaissance/cavalry/armored"/>
+    <equipments>
+      <equipment count="1" crew="5" major="true" type="M3 Bradley CFV"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Armored squadron CP" id="121" name="Cavalry SQDN HQ" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/reconnaissance/cavalry/armored"/>
+    <equipments>
+      <equipment count="2" crew="5" major="true" type="M3 Bradley CFV"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1250s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry company CP" id="122" name="Mech Infantry BN HQ" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/mechanized"/>
+    <equipments>
+      <equipment count="3" crew="1" loadable="true" type="Infantry Soldiers"/>
+      <equipment count="2" crew="3" type="M2A2 Bradley IFV"/>
+      <equipment count="1" crew="3" type="12.7-mm Armoured Personnel Carrier"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Armored squadron CP" id="123" name="Tank SQDN HQ" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/armor/track"/>
+    <equipments>
+      <equipment count="1" crew="4" type="Armoured Personnel Carrier Command Post"/>
+      <equipment count="2" crew="2" type="Light Armored Vehicle"/>
+      <equipment count="2" crew="4" major="true" type="M1A1 Abrams"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1250s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="MLRS firing platoon" id="124" name="FA Firing PLT (MLRS)" type="Pion ASS">
+    <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/rocket/multi rocket launcher/self-propelled"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="M270 MLRS"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="9" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="24" logistic-threshold="10" name="227-mm Sub-Munition Rocket" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="2500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="300s"/>
+    </postures>
+    <nbc decontamination-delay="2400s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Battery CP" id="125" name="FA BTY HQ (MLRS)" type="Pion ASS">
+    <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/rocket/multi rocket launcher/self-propelled"/>
+    <equipments>
+      <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
+      <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical Vehicle"/>
+      <equipment count="2" crew="2" major="true" type="12.7-mm Armoured Personnel Carrier"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="3" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2100s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Attack Helicopter Patrol" id="126" name="Attack Helicopter PLT (AH-64)" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
+    <equipments>
+      <equipment count="4" crew="2" major="true" type="AH-64D Apache"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="7" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="127" name="General Support Helicopter PLT (UH-60)" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/utility/medium"/>
+    <equipments>
+      <equipment count="4" crew="3" major="true" type="UH-60M Blackhawk"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="8" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="AAC CP" id="128" name="AHC CP" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="Transport helicopter"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="AAC CP" id="129" name="GSHC CP" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/utility/medium"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="UH-60M Blackhawk"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="AAC CP" id="130" name="GSHB CP" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/aviation/rotary wing/utility/undefined"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="UH-60M Blackhawk"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="131" name="General Support Helicopter PLT (CH-47)" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/utility/heavy"/>
+    <equipments>
+      <equipment count="8" crew="5" major="true" type="CH-47D Chinook"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="8" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="AAC CP" id="132" name="GSHC CP (HVY)" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/utility/heavy"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="UH-60M Blackhawk"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Very Short Range Surface To Air Defense Troop" id="133" name="Avengert PLT (HVY DIV)" type="Pion ASA">
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
+    <equipments>
+      <equipment convoyer="true" count="2" crew="4" type="Light Medium Tactical Vehicle"/>
+      <equipment count="4" crew="3" major="true" type="AN/TWQ-1 Avenger"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="9" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="600s"/>
+      <posture name="PostePrepareGenie" setup-time="600s"/>
+    </postures>
+    <setup installation-time="600s" uninstallation-time="600s"/>
+    <nbc decontamination-delay="1800s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Very Short Range Surface To Air Battery CP" id="134" name="Avenger BTY CP (HVY DIV)" type="Pion ASA">
+    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
+    <equipments>
+      <equipment convoyer="true" count="1" crew="3" major="true" type="Light Medium Tactical Vehicle"/>
+      <equipment count="1" crew="1" type="Motocycle"/>
+      <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="3" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup installation-time="1800s" uninstallation-time="1800s"/>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="MBT platoon" id="135" name="OPFOR Tank PLT" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="Main Battle Tank (T-72BM)"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="3000s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="200"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+      <distance-before-point type="lima" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Armored squadron CP" id="136" name="OPFOR Tank CO CP" type="Pion ABC">
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="Main Battle Tank (T-72BM)"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="3000s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="200"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+      <distance-before-point type="lima" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="350"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry platoon" id="137" name="OPFOR Mech Infantry PLT" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
+    <equipments>
+      <equipment count="3" crew="3" major="true" type="Infantry Finghting Vehicle (BMP-2)"/>
+      <equipment count="18" crew="1" loadable="true" type="OPFOR Infantry Soldiers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="5000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="30" name="30-mm Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry company CP" id="138" name="OPFOR Mech Infantry CO CP" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="Infantry Finghting Vehicle (BMP-2)"/>
+      <equipment count="6" crew="3" type="OPFOR Infantry Soldiers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="5000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="30" name="30-mm Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Firing platoon" id="139" name="OPFOR FA Firing PLT (2S3)" type="Pion ASS">
+    <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
+    <equipments>
+      <equipment count="3" crew="6" major="true" type="152-mm Artillery Tank (SO-152)"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="30" logistic-threshold="0" name="152-mm Antitank Shell" normalized-consumption="0"/>
+        <resource capacity="216" logistic-threshold="0" name="152-mm High Explosive Shell" normalized-consumption="0"/>
+        <resource capacity="30" logistic-threshold="0" name="152-mm High Explosive MPA Shell" normalized-consumption="0"/>
+        <resource capacity="60" logistic-threshold="0" name="152-mm Smoke Shell" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="0" name="152-mm Chemical Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Theater High Altitude Defense Troop" id="140" name="Patriot Launcher PLT" type="Pion ASA">
+    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/h_mad/hawk"/>
+    <equipments>
+      <equipment count="8" crew="3" major="true" type="MIM-104 Patriot"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="9" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="600s"/>
+      <posture name="PostePrepareGenie" setup-time="600s"/>
+    </postures>
+    <setup installation-time="600s" uninstallation-time="600s"/>
+    <nbc decontamination-delay="750s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Theater High Altitude Aera Defense CP" id="141" name="Patriot BTY CP" type="Pion ASA">
+    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense"/>
+    <equipments>
+      <equipment convoyer="true" count="4" crew="1" type="Light Medium Tactical Vehicle"/>
+      <equipment count="1" crew="9" major="true" type="AN/MPQ-53 Radar Set (Patriot)"/>
+      <equipment count="2" crew="2" loadable="true" type="Very Short Range Surface To Air System"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="7" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup installation-time="1800s" uninstallation-time="1800s"/>
+    <nbc decontamination-delay="450s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="MLRS firing platoon" id="142" name="OPFOR MRL PLT" type="Pion ASS">
+    <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/rocket/multi rocket launcher/truck"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="122-mm Multiple rocket Launcher System (BM-21)"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="8" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="12" logistic-threshold="10" name="122-mm Rocket" normalized-consumption="0"/>
+        <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="2500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="300s"/>
+    </postures>
+    <nbc decontamination-delay="2400s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Battery CP" id="143" name="OPFOR MRL BTY CP" type="Pion ASS">
+    <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/rocket/multi rocket launcher/truck"/>
+    <equipments>
+      <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
+      <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical Vehicle"/>
+      <equipment count="2" crew="2" major="true" type="12.7-mm Armoured Personnel Carrier"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="3" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2100s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="144" name="A-10 Sortie" type="Pion JOINT">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/fixed wing/attack"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="A-10C Thunderbolt II"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="2000"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="145" name="F-16 Sortie" type="Pion JOINT">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/fixed wing/attack"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="F-16D Fighting Falcon"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="3000"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Attack Helicopter Patrol" id="146" name="OPFOR Attack Helicopter PLT (Mi-24 Hind)" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
+    <equipments>
+      <equipment count="5" crew="2" major="true" type="Attack Helicopter (MI-24)"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="9" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="147" name="Geberal Support Helicopter PLT (HH-60)" type="Pion ALAT">
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/medevac"/>
+    <equipments>
+      <equipment count="4" crew="3" major="true" type="HH-60M"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="8" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Firing platoon" id="148" name="FA Firing PLT (M777)" type="Pion ASS">
+    <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/howiltzer gun/medium"/>
+    <equipments>
+      <equipment count="3" crew="4" major="true" type="M777 155mm Towed Howitzer"/>
+      <equipment convoyer="true" count="3" crew="2" type="Medium tactical Vehicle"/>
+      <equipment count="1" crew="1" type="M1114 HMMWV"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="32" logistic-threshold="30" name="155-mm Antitank High Explosive Shell" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="155-mm High Explosive Shell Rear Skirt" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="155-mm Illumination Round" normalized-consumption="0"/>
+        <resource capacity="32" logistic-threshold="30" name="155-mm Smoke Shell" normalized-consumption="0"/>
+        <resource capacity="36" logistic-threshold="30" name="155-mm Sub-Munition Shell" normalized-consumption="0"/>
+        <resource capacity="12" logistic-threshold="30" name="155-mm FASCAM Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Battery CP" id="149" name="FA BTY HQ (Towed)" type="Pion ASS">
+    <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/howiltzer gun/medium"/>
+    <equipments>
+      <equipment convoyer="true" count="2" crew="2" major="true" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
+      <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical Vehicle"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="3" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="2100s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry platoon" id="150" name="Light Infantry PLT" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/light"/>
+    <equipments>
+      <equipment count="17" crew="1" loadable="true" type="Infantry Soldiers"/>
+      <equipment count="2" crew="1" loadable="true" type="LMG Infantry Soldier"/>
+      <equipment count="4" crew="1" loadable="true" type="LMG AG Infantry Soldier"/>
+      <equipment count="1" crew="5" major="true" type="M1114 HMMWV"/>
+      <equipment count="1" crew="1" loadable="true" type="Infantry Soldier CBRN"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="30" name="68-mm Rocket" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry company CP" id="151" name="Light Infantry CO HQ" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/light"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="M1114 HMMWV"/>
+      <equipment count="5" crew="1" loadable="true" type="Infantry Soldiers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="1500" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry company CP" id="152" name="Light Infantry BN HQ" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/light"/>
+    <equipments>
+      <equipment count="4" crew="2" major="true" type="M1114 HMMWV"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1250s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry platoon" id="153" name="OPFOR Light Infantry PLT" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/light"/>
+    <equipments>
+      <equipment count="21" crew="1" loadable="true" type="OPFOR Infantry Soldiers"/>
+      <equipment count="2" crew="3" major="true" type="Light Medium Tactical Vehicle"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="2000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry company CP" id="154" name="OPFOR Light Infantry CO CP" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/light"/>
+    <equipments>
+      <equipment count="6" crew="3" loadable="true" type="OPFOR Infantry Soldiers"/>
+      <equipment count="1" crew="3" major="true" type="Light Medium Tactical Vehicle"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="5000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="1000" logistic-threshold="30" name="30-mm Shell" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="10" name="Gas" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Very Short Range Surface To Air Defense Troop" id="155" name="OPFOR SA 7 Team" type="Pion ASA">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/air defense/missile/light/motorized"/>
+    <equipments>
+      <equipment count="2" crew="2" major="true" type="MANPAD Team"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="600s"/>
+      <posture name="PostePrepareGenie" setup-time="600s"/>
+    </postures>
+    <setup installation-time="600s" uninstallation-time="600s"/>
+    <nbc decontamination-delay="1800s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="PC TC2" id="156" name="Brigade Support Battalion CT" type="Pion LOG TC2">
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
+    <equipments>
+      <equipment count="2" crew="4" major="true" type="Armoured Recovery Vehicule"/>
+      <equipment count="2" crew="2" major="true" type="Light Recovery Vehicle"/>
+      <equipment count="7" crew="3" major="true" type="MTV CLD"/>
+      <equipment count="1" crew="2" type="Medical Cell"/>
+      <equipment convoyer="true" count="20" crew="2" type="Light Medium Tactical Vehicle"/>
+      <equipment convoyer="true" count="3" crew="3" type="MTV 3Pers"/>
+      <equipment convoyer="true" count="1" crew="3" type="MTV Plt Depos"/>
+      <equipment convoyer="true" count="1" crew="1" type="Medium tactical Vehicle"/>
+      <equipment convoyer="true" count="6" crew="2" major="true" type="5m3 Gasoil Tank Trunk"/>
+      <equipment count="3" crew="2" type="Light Armored Vehicle 12.7-mm"/>
+      <equipment count="4" crew="2" type="VAB SAN"/>
+      <equipment convoyer="true" count="50" crew="1" type="Load Carrying Vehicle"/>
+      <equipment count="15" crew="2" major="true" type="CP mobility repairs team"/>
+      <equipment count="3" crew="2" major="true" type="CP failure reapairs team"/>
+      <equipment count="6" crew="2" type="CP repairs team"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="10" type="Officier"/>
+      <crew-rank count="81" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="10000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="10000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="10000" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="2700s"/>
+      <posture name="PostePrepareGenie" setup-time="2700s"/>
+    </postures>
+    <setup installation-time="60s" uninstallation-time="60s"/>
+    <nbc decontamination-delay="21600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="UAV" id="157" is-autonomous="true" name="UAV - Predator" type="Pion RENS">
+    <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
+    <equipments>
+      <equipment count="1" crew="0" major="true" type="MQ-1 Predator"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="5000"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="UAV" id="158" is-autonomous="true" name="UAV - Hunter" type="Pion RENS">
+    <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
+    <equipments>
+      <equipment count="1" crew="0" major="true" type="RQ-5 Hunter"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="5000"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="UAV" id="159" is-autonomous="true" name="UAV - Shadow" type="Pion RENS">
+    <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
+    <equipments>
+      <equipment count="1" crew="0" major="true" type="RQ-7 Shadow"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="180s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="5000" width="5000"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Theater High Altitude Defense Troop" id="160" name="OPFOR SA 8 PLT" type="Pion ASS">
+    <nature atlas-nature="ASS" level="ooo" nature-app6="combat/air defense/missile"/>
+    <equipments>
+      <equipment count="2" crew="5" major="true" type="SA-8 Gecko TELAR"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="3" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="12" logistic-threshold="30" name="SA-8 Missile" normalized-consumption="0"/>
+        <resource capacity="800" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="2500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="300s"/>
+    </postures>
+    <nbc decontamination-delay="2400s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="161" name="OPFOR Su-25 Sortie" type="Pion ALAT">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/fixed wing/attack"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="Su-25 Frogfoot"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="500" width="100"/>
+    <force-ratio feedback-time="60s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Terrorist Engineer" id="162" name="Terrorist Bombmaker" type="Pion GEN">
+    <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="Terrorist Bombmaker"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Motorized Inf platoon" id="163" name="Motorized Infantry PLT" type="Pion ABC">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="17" crew="1" loadable="true" type="Infantry Soldiers"/>
+      <equipment count="2" crew="1" loadable="true" type="LMG Infantry Soldier"/>
+      <equipment count="4" crew="1" loadable="true" type="LMG AG Infantry Soldier"/>
+      <equipment count="8" crew="1" major="true" type="M1114 HMMWV"/>
+      <equipment count="1" crew="1" loadable="true" type="Infantry Soldier CBRN"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="30" name="68-mm Rocket" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry company CP" id="164" name="Motorized Infantry CO HQ" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="M1114 HMMWV"/>
+      <equipment count="5" crew="1" loadable="true" type="Infantry Soldiers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="5" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="1500" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry company CP" id="165" name="Motorized Infantry BN HQ" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="4" crew="2" major="true" type="M1114 HMMWV"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="1250s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Infantry platoon" id="166" name="Light Infantry Eyes" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/light"/>
+    <equipments>
+      <equipment count="2" crew="1" loadable="true" type="LMG Infantry Soldier"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="6" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="8000" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="2000" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="30" name="68-mm Rocket" normalized-consumption="0"/>
+        <resource capacity="100" logistic-threshold="30" name="7.62-mm Bullet" normalized-consumption="0"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="30" name="Diesel" normalized-consumption="0"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="600" logistic-threshold="30" name="Standard Explosive" normalized-consumption="0"/>
+      </category>
+      <category name="mine">
+        <resource capacity="150" logistic-threshold="30" name="Standard Landmine" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1350s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="0533973166" -->
+<!-- signature="0961978134" -->

@@ -2,13 +2,13 @@
 <objects xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Objects.xsd">
   <object geometry="point" name="Mine Cluster" symbol="G*MPOMC---****X" type="mines">
     <activable/>
-    <attrition category="standard landmine"/>
+    <attrition category="Standard Landmine"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <resource count="10" name="standard landmine"/>
+          <resource count="10" name="Standard Landmine"/>
         </resources>
       </buildable>
     </constructor>
@@ -22,6 +22,7 @@
       <terrain type="banlieue" value="7"/>
     </heuristic>
     <interact-with-enemy/>
+    <interaction-height height="1"/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
     <time-limited/>
@@ -91,17 +92,17 @@
   </object>
   <object geometry="polygon" name="Abatis" symbol="G*MPOS----****X" type="abattis">
     <activable/>
-    <attrition category="standard landmine"/>
+    <attrition category="Standard Landmine"/>
     <avoidable distance="1000"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <resource count="50" name="standard explosive"/>
+          <resource count="50" name="Standard Explosive"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <resource count="10" name="standard landmine"/>
+          <resource count="10" name="Standard Landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -115,7 +116,7 @@
       <buildable/>
       <improvable>
         <resources>
-          <resource count="1" name="standard landmine"/>
+          <resource count="1" name="Standard Landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -128,12 +129,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <resource count="10" name="standard barbed wire"/>
+          <resource count="10" name="Standard Barbed Wire"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <resource count="10" name="standard landmine"/>
+          <resource count="10" name="Standard Landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -142,36 +143,38 @@
   </object>
   <object geometry="polygon" name="Mined Area (linear)" symbol="G*MPOFA---****X" type="mined area (linear)">
     <activable/>
-    <attrition category="standard landmine"/>
+    <attrition category="Standard Landmine"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <resource count="10" name="standard landmine"/>
+          <resource count="10" name="Standard Landmine"/>
         </resources>
       </buildable>
       <improvable/>
     </constructor>
     <interact-with-enemy/>
+    <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
     <time-limited/>
   </object>
   <object geometry="polygon" name="Mined Area (scattered)" symbol="G*MPOFA---****X" type="mined area (scattered)">
     <activable/>
-    <attrition category="standard landmine"/>
+    <attrition category="Standard Landmine"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable>
         <resources>
-          <resource count="10" name="standard landmine"/>
+          <resource count="10" name="Standard Landmine"/>
         </resources>
       </buildable>
       <improvable/>
     </constructor>
     <interact-with-enemy/>
+    <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
     <time-limited/>
@@ -182,12 +185,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <resource count="200" name="standard explosive"/>
+          <resource count="200" name="Standard Explosive"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <resource count="17" name="standard landmine"/>
+          <resource count="17" name="Standard Landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -207,12 +210,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <resource count="300" name="standard explosive"/>
+          <resource count="300" name="Standard Explosive"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <resource count="7" name="standard landmine"/>
+          <resource count="7" name="Standard Landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -231,12 +234,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <resource count="300" name="standard explosive"/>
+          <resource count="300" name="Standard Explosive"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <resource count="7" name="standard landmine"/>
+          <resource count="7" name="Standard Landmine"/>
         </resources>
       </improvable>
     </constructor>
@@ -286,7 +289,7 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <resource count="10" name="standard barbed wire"/>
+          <resource count="10" name="Standard Barbed Wire"/>
         </resources>
       </buildable>
     </constructor>
@@ -342,7 +345,7 @@
   </object>
   <object geometry="point" name="Dirty bomb" symbol="O*VPA-----*****" type="dirty bomb">
     <activable/>
-    <attrition category="standard landmine"/>
+    <attrition category="Standard Landmine"/>
     <contamination max-toxic="1"/>
     <interaction-height height="100"/>
     <intoxication max-toxic="1"/>
@@ -359,12 +362,12 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
-          <resource count="1" name="standard explosive"/>
+          <resource count="1" name="Standard Explosive"/>
         </resources>
       </buildable>
       <improvable>
         <resources>
-          <resource count="1" name="standard explosive"/>
+          <resource count="1" name="Standard Explosive"/>
         </resources>
       </improvable>
     </constructor>
@@ -384,4 +387,4 @@
   </object>
   <object geometry="polygon" name="Moving Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="3857526928" -->
+<!-- signature="0743355857" -->

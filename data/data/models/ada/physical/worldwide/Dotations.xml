@@ -661,28 +661,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="35" id-nature="4" name="agent extincteur Eau en masse" nature="Eau en masse" package-mass="1" package-size="1" package-volume="1" type="Obus">
-    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
-  </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="36" id-nature="5" name="agent extincteur Eau en pulverisation" nature="Eau en pulverisation" package-mass="1" package-size="1" package-volume="1" type="Obus">
-    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
-  </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="37" id-nature="6" name="agent extincteur Mousse" nature="Mousse" package-mass="1" package-size="1" package-volume="1" type="Obus">
-    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
-  </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="38" id-nature="7" name="agent extincteur Poudre" nature="Poudre" package-mass="1" package-size="1" package-volume="1" type="Obus">
-    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
-  </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="39" id-nature="8" name="agent extincteur CO2" nature="CO2" package-mass="1" package-size="1" package-volume="1" type="Obus">
-    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
-  </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="40" id-nature="9" name="agent extincteur Sable" nature="Sable" package-mass="1" package-size="1" package-volume="1" type="Obus">
-    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
-  </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="41" id-nature="10" name="agent extincteur Hydrocarbures Halogenes" nature="Hydocarbures Halogenes" package-mass="1" package-size="1" package-volume="1" type="Obus">
-    <indirect-fire intervention-type="3" life-time="120000s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
-  </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="42" id-nature="3" name="12,7-mm Bullet Illumination" nature="Solid" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="35" id-nature="3" name="12,7-mm Bullet Illumination" nature="Solid" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
     <illuminating maintain="true" range="1000"/>
     <attritions>
       <attrition destruction="0.01" protection="HeavyTank" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
@@ -703,7 +682,7 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="43" id-nature="3" name="120-mm Hight Explosive Shell Guided" nature="Solid" package-mass="0.06" package-size="2" package-volume="0.088" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="36" id-nature="3" name="120-mm Hight Explosive Shell Guided" nature="Solid" package-mass="0.06" package-size="2" package-volume="0.088" type="Obus">
     <guided maintain="true" range="1000"/>
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
@@ -733,10 +712,293 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="44" id-nature="2" name="Gasoil" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="45" id-nature="2" name="Gas" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="46" id-nature="1" name="Kerosene" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="47" id-nature="3" name="standard explosive" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="37" id-nature="3" name="25-mm Shell" nature="Solid" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.4"/>
+      <attrition destruction="0.1" protection="LightTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.5"/>
+      <attrition destruction="0.1" protection="ArmouredCarrier" repairable-with-evacuation="0.4" repairable-without-evacuation="0.5"/>
+      <attrition destruction="0.25" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.25" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.8" protection="Combatant" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="38" id-nature="3" name="227-mm Sub-Munition Rocket" nature="Solid" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+    <attritions>
+      <attrition destruction="0.6" protection="HeavyTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.7" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.8" protection="LightTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.3" repairable-without-evacuation="0.25"/>
+      <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.1" protection="Combatant" repairable-with-evacuation="0.5" repairable-without-evacuation="0.3"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+    <indirect-fire intervention-type="1" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="39" id-nature="3" name="122-mm Rocket" nature="Solid" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
+    <attritions>
+      <attrition destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
+      <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>
+      <attrition destruction="0.15" protection="LightTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.45"/>
+      <attrition destruction="0.15" protection="ArmouredCarrier" repairable-with-evacuation="0.4" repairable-without-evacuation="0.45"/>
+      <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+    <indirect-fire intervention-type="1" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="40" id-nature="3" name="152-mm Antitank Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+    <attritions>
+      <attrition destruction="0.2" protection="HeavyTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0.3"/>
+      <attrition destruction="0.35" protection="MediumTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.25"/>
+      <attrition destruction="0.5" protection="LightTank" repairable-with-evacuation="0.35" repairable-without-evacuation="0.15"/>
+      <attrition destruction="0.7" protection="ArmouredCarrier" repairable-with-evacuation="0.2" repairable-without-evacuation="0.1"/>
+      <attrition destruction="1" protection="Aircraft" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="1" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+    <indirect-fire intervention-type="4" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="0.5"/>
+      <ph target-posture="MouvementDiscret" value="0.5"/>
+      <ph target-posture="Arret" value="0.8"/>
+      <ph target-posture="PosteReflexe" value="0.8"/>
+      <ph target-posture="Poste" value="0.7"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="41" id-nature="3" name="152-mm High Explosive MPA Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+    <attritions>
+      <attrition destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
+      <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>
+      <attrition destruction="0.15" protection="LightTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.45"/>
+      <attrition destruction="0.15" protection="ArmouredCarrier" repairable-with-evacuation="0.4" repairable-without-evacuation="0.45"/>
+      <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+    <indirect-fire intervention-type="24" neutralization-ratio="2" type="explosif" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="0.3"/>
+      <ph target-posture="MouvementDiscret" value="0.3"/>
+      <ph target-posture="Arret" value="0.6"/>
+      <ph target-posture="PosteReflexe" value="0.6"/>
+      <ph target-posture="Poste" value="0.5"/>
+      <ph target-posture="PosteAmenage" value="0.3"/>
+      <ph target-posture="PostePrepareGenie" value="0.1"/>
+    </indirect-fire>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="42" id-nature="3" name="125-mm Antitank Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.6" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.7" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.2" protection="LightTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0"/>
+      <attrition destruction="0.2" protection="ArmouredCarrier" repairable-with-evacuation="0.8" repairable-without-evacuation="0"/>
+      <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.7" repairable-without-evacuation="0"/>
+      <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.7" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="43" id-nature="3" name="125-mm Armour Piercing Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+    <attritions>
+      <attrition destruction="0.15" protection="HeavyTank" repairable-with-evacuation="0.55" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.2" protection="MediumTank" repairable-with-evacuation="0.8" repairable-without-evacuation="0"/>
+      <attrition destruction="0.5" protection="LightTank" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
+      <attrition destruction="0.5" protection="ArmouredCarrier" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
+      <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.5" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.5" repairable-without-evacuation="0.2"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="44" id-nature="3" name="MANPAD Missile" nature="Solid" package-mass="0.02" package-size="2" package-volume="0.001" type="MissileAir">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.6" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
+      <ph target-posture="Mouvement" value="1"/>
+      <ph target-posture="MouvementDiscret" value="1"/>
+      <ph target-posture="Arret" value="1"/>
+      <ph target-posture="PosteReflexe" value="1"/>
+      <ph target-posture="Poste" value="1"/>
+      <ph target-posture="PosteAmenage" value="0.5"/>
+      <ph target-posture="PostePrepareGenie" value="0.2"/>
+    </indirect-fire>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="45" id-nature="3" name="125-mm High Explosive Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.07" type="Obus">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.4"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.5"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0.6" repairable-without-evacuation="0.4"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0.6" repairable-without-evacuation="0.4"/>
+      <attrition destruction="0.2" protection="Aircraft" repairable-with-evacuation="0.7" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.2" protection="UnarmouredVehicle" repairable-with-evacuation="0.7" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="46" id-nature="3" name="152-mm Smoke Shell" nature="Solid" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
+    <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="47" id-nature="3" name="155-mm FASCAM Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+    <indirect-fire intervention-type="6" life-time="2h" object-type="Mined Area (linear)" type="effect" x-dispersion="200" y-dispersion="200"/>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="48" id-nature="3" name="152-mm Chemical Shell" nature="Solid" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
+    <indirect-fire intervention-type="4" life-time="30m" object-type="NBC Area" type="effect" x-dispersion="500" y-dispersion="500"/>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="49" id-nature="3" name="SA-8 Missile" nature="Solid" package-mass="0.17" package-size="1" package-volume="0.13" type="MissileAir">
+    <attritions>
+      <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="LightTank" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="ArmouredCarrier" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0.8" protection="Aircraft" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="UnarmouredVehicle" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0.2"/>
+      <urban-modifier material-type="Concrete" value="0.3"/>
+      <urban-modifier material-type="Brick" value="0.4"/>
+      <urban-modifier material-type="Metal" value="0.5"/>
+      <urban-modifier material-type="Cob" value="0.6"/>
+      <urban-modifier material-type="Prefab" value="0.7"/>
+      <urban-modifier material-type="Vegetation" value="0.8"/>
+    </urban-modifiers>
+  </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="50" id-nature="3" name="152-mm High Explosive Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+    <attritions>
+      <attrition destruction="0.05" protection="HeavyTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
+      <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>
+      <attrition destruction="0.15" protection="LightTank" repairable-with-evacuation="0.4" repairable-without-evacuation="0.45"/>
+      <attrition destruction="0.15" protection="ArmouredCarrier" repairable-with-evacuation="0.4" repairable-without-evacuation="0.45"/>
+      <attrition destruction="0.3" protection="Aircraft" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.3" protection="UnarmouredVehicle" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Combatant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+    </attritions>
+    <urban-modifiers>
+      <urban-modifier material-type="Wood" value="0"/>
+      <urban-modifier material-type="Concrete" value="0"/>
+      <urban-modifier material-type="Brick" value="0"/>
+      <urban-modifier material-type="Metal" value="0"/>
+      <urban-modifier material-type="Cob" value="0"/>
+      <urban-modifier material-type="Prefab" value="0"/>
+      <urban-modifier material-type="Vegetation" value="0"/>
+    </urban-modifiers>
+    <indirect-fire intervention-type="24" neutralization-ratio="2.5" type="explosif" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="0.3"/>
+      <ph target-posture="MouvementDiscret" value="0.3"/>
+      <ph target-posture="Arret" value="0.6"/>
+      <ph target-posture="PosteReflexe" value="0.6"/>
+      <ph target-posture="Poste" value="0.5"/>
+      <ph target-posture="PosteAmenage" value="0.3"/>
+      <ph target-posture="PostePrepareGenie" value="0.1"/>
+    </indirect-fire>
+  </resource>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="51" id-nature="2" name="Diesel" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="52" id-nature="2" name="Gas" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="53" id-nature="1" name="Kerosene" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="54" id-nature="3" name="Standard Explosive" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -756,7 +1018,7 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="48" id-nature="3" name="standard landmine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="55" id-nature="3" name="Standard Landmine" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.3"/>
       <attrition destruction="0.1" protection="MediumTank" repairable-with-evacuation="0.2" repairable-without-evacuation="0.3"/>
@@ -776,19 +1038,22 @@
       <urban-modifier material-type="Vegetation" value="0.8"/>
     </urban-modifiers>
   </resource>
-  <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="49" id-nature="3" name="standard barbed wire" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="50" id-nature="3" name="UR NTI1 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="51" id-nature="3" name="UR NTI2 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="52" id-nature="3" name="UR NTI3" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="53" id-nature="3" name="UR NTI1 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="54" id-nature="3" name="UR NTI2 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="55" id-nature="3" name="UR NTI2 TRS" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="56" id-nature="3" name="UR NTI2 COTAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="57" id-nature="3" name="UR NTI2 DEM" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="58" id-nature="3" name="UR AAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="59" id-nature="3" name="UR NTI1 EA" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="60" id-nature="3" name="Food" nature="Solid" package-mass="0.015" package-size="10" package-volume="0.01"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="61" id-nature="3" name="Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="62" id-nature="1" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
+  <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="56" id-nature="3" name="Standard Barbed Wire" nature="Solid" package-mass="0.005" package-size="1" package-volume="0.005"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="57" id-nature="3" name="UR NTI1 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="58" id-nature="3" name="UR NTI2 MOB" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="59" id-nature="3" name="UR NTI3" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="60" id-nature="3" name="UR NTI1 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="61" id-nature="3" name="UR NTI2 TCT" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="62" id-nature="3" name="UR NTI2 TRS" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="63" id-nature="3" name="UR NTI2 COTAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="64" id-nature="3" name="UR NTI2 DEM" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="65" id-nature="3" name="UR AAC" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="66" id-nature="3" name="UR NTI1 EA" nature="Solid" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="67" id-nature="3" name="Food" nature="Solid" package-mass="0.015" package-size="10" package-volume="0.01"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="68" id-nature="3" name="Water" nature="Solid" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="69" id-nature="12" name="H2O" nature="Liquid" package-mass="1" package-size="0.001" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="70" id-nature="11" name="Electricity" nature="Electricity" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="71" id-nature="12" name="Running Water" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="72" id-nature="13" name="Natural Gas" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="3179840048" -->
+<!-- signature="3965187641" -->
