@@ -100,6 +100,7 @@ void IndicatorPlot::Add( const IndicatorRequest& request )
     if( it != plots_.end() )
         return;
     gui::GQ_PlotData* data = new gui::GQ_PlotData( datas_.size() + 1, *this );
+    data->SetName( request.GetName() );
     data->SetLinePen( GetPlotColor( datas_.size() ) );
     UpdatePlot( data, request, 0 );
     RegisterPlotData( *data );

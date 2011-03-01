@@ -39,6 +39,7 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot )
 , linePen_        ( Qt::blue  )
 , barPen_         ( Qt::black )
 , barBrush_       ( Qt::green )
+, captionFont_    ( "helvetica", 8, QFont::DemiBold )
 , nPointShapeType_( eDot )
 , pointShape_     ()
 , bPolylineShape_ ( true )
@@ -71,6 +72,7 @@ GQ_PlotData::GQ_PlotData( unsigned int nUserID, GQ_Plot& plot, T_Data& data, uns
 , linePen_        ( Qt::blue  )
 , barPen_         ( Qt::black )
 , barBrush_       ( Qt::green )
+, captionFont_    ( "helvetica", 8, QFont::DemiBold )
 , nPointShapeType_( eDot )
 , pointShape_     ()
 , bPolylineShape_ ( true )
@@ -475,6 +477,29 @@ void GQ_PlotData::Draw( QPainter& painter )
     DrawPoints  ( painter, points );
     DrawPolyline( painter, points );
     DrawBars    ( painter, points );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: GQ_PlotData::DrawCaption
+// Created: LDC 2011-03-01
+// -----------------------------------------------------------------------------
+void GQ_PlotData::DrawCaption( QPainter& painter, const QRect& rect )
+{
+    painter.setPen( linePen_ );
+    painter.setFont( captionFont_ );
+    painter.drawText( rect, Qt::AlignCenter, name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GQ_PlotData::CaptionSize
+// Created: LDC 2011-03-01
+// -----------------------------------------------------------------------------
+int GQ_PlotData::CaptionSize() const
+{
+    QFontMetrics metrics( captionFont_ );
+    QSize captionSize = metrics.boundingRect( name_ ).size();
+    return captionSize.width();
 }
 
 // -----------------------------------------------------------------------------

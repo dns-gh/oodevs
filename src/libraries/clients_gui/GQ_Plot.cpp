@@ -550,6 +550,21 @@ void GQ_Plot::UpdateBackground( const QColorGroup& colors )
     CenterOnPlotRect( painter );
     x_.DrawGrid( painter, colors, plotRect_ );
     y_.DrawGrid( painter, colors, plotRect_ );
+    
+    for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
+    {
+        int nDepth = it->first;
+        T_PlotLayer& layer = it->second;
+        unsigned int nNbrPlots = layer.size();
+        for( unsigned int i = 0; i < nNbrPlots; ++i )
+        {
+            GQ_PlotData* pData = layer[i];
+            assert( pData );
+            int titleSize = pData->CaptionSize();
+            QRect rect( plotRect_.x() + plotRect_.width() - nLeftMargin - titleSize , - (1 + i) * nXCaptionSize, titleSize, nXCaptionSize );
+            pData->DrawCaption( painter, rect );
+        }
+    }
 
     bBgUpdateNeeded_ = false;
 }

@@ -140,6 +140,8 @@ public:
     //@{
     virtual void Draw       ( QPainter& );
     virtual void DrawCaption( QPixmap&, int nSize = 16 );
+    void DrawCaption( QPainter&, const QRect& );
+    int CaptionSize() const;
     //@}
 
 public slots:
@@ -195,6 +197,7 @@ protected:
     QPen   linePen_;
     QPen   barPen_;
     QBrush barBrush_;
+    QFont captionFont_;
 
     E_PointShapeType nPointShapeType_;
     QPointArray      pointShape_;
