@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, MIL_EntityManager_ABC& entityManager );
-    explicit MIL_UrbanBlockParameter( boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock );
+    explicit MIL_UrbanBlockParameter( UrbanObjectWrapper* pUrbanBlock );
     virtual ~MIL_UrbanBlockParameter();
     //@}
 
@@ -43,7 +43,7 @@ public:
 
     //! @name Conversions
     //@{
-    virtual bool ToUrbanBlock( boost::shared_ptr< UrbanObjectWrapper >& ) const;
+    virtual bool ToUrbanBlock( UrbanObjectWrapper*& ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
@@ -57,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock_;
+    UrbanObjectWrapper* pUrbanBlock_;
     //@}
 };
 

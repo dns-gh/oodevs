@@ -27,12 +27,12 @@ class DEC_UrbanObjectFunctions
 public:
     //! @name Functions
     //@{
-    static float GetCurrentRecceProgress( boost::shared_ptr< UrbanObjectWrapper > pUrbanObject );
-    static boost::shared_ptr< MT_Vector2D > GetCurrentBarycenter( boost::shared_ptr< UrbanObjectWrapper > pUrbanObject );
-    static std::vector< boost::shared_ptr< MT_Vector2D > > GetBoundingBox( boost::shared_ptr< UrbanObjectWrapper > pUrbanObject );
-    static float GetPathfindCost( const MIL_AgentPion& callerAgent, boost::shared_ptr< UrbanObjectWrapper > pUrbanObject );
-    static float GetRapForLocal( const MIL_AgentPion& callerAgent, boost::shared_ptr< UrbanObjectWrapper > pUrbanObject );
-    static T_ConstKnowledgeAgentVector GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, boost::shared_ptr< UrbanObjectWrapper > pUrbanObject );
+    static float GetCurrentRecceProgress( UrbanObjectWrapper* pUrbanObject );
+    static boost::shared_ptr< MT_Vector2D > GetCurrentBarycenter( UrbanObjectWrapper* pUrbanObject );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > GetBoundingBox( UrbanObjectWrapper* pUrbanObject );
+    static float GetPathfindCost( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
+    static float GetRapForLocal( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
+    static T_ConstKnowledgeAgentVector GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
     //@}
 };
 

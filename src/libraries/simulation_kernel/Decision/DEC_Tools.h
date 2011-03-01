@@ -40,6 +40,7 @@ class PHY_Population_ActionFireOnPion;
 class PHY_Population_ActionFireOnPions;
 class PHY_Population_ActionMove;
 class TER_Localisation;
+class UrbanObjectWrapper;
 
 namespace directia
 {
@@ -53,6 +54,8 @@ namespace directia
     void ReleasedByDIA( DEC_Knowledge_Agent* );
     void UsedByDIA( DEC_Knowledge_Object* );
     void ReleasedByDIA( DEC_Knowledge_Object* );
+    void UsedByDIA( UrbanObjectWrapper* );
+    void ReleasedByDIA( UrbanObjectWrapper* );
     void UsedByDIA( DEC_Knowledge_Population* );
     void ReleasedByDIA( DEC_Knowledge_Population* );
     void UsedByDIA( DEC_Objective* );

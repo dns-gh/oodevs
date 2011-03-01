@@ -28,6 +28,8 @@ namespace directia
     void ReleasedByDIA( DEC_Knowledge_Agent* ) {}
     void UsedByDIA( DEC_Knowledge_Object* ) {}
     void ReleasedByDIA( DEC_Knowledge_Object* ) {}
+    void UsedByDIA( UrbanObjectWrapper* ) {}
+    void ReleasedByDIA( UrbanObjectWrapper* ) {}
     void UsedByDIA( DEC_Knowledge_Population* ) {}
     void ReleasedByDIA( DEC_Knowledge_Population* ) {}
     void UsedByDIA( DEC_Objective* ) {}

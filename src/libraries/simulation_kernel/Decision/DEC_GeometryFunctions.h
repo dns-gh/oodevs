@@ -71,7 +71,7 @@ public:
     static float ComputeDistanceFromMiddleLine( const std::vector< DEC_Decision_ABC*>& selPions, DEC_Decision_ABC* pReferencePion );
     static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenter( TER_Localisation* pLocalisation );
 
-    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeUrbanBlockLocalisations( boost::shared_ptr< UrbanObjectWrapper > pUrbanObject );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeUrbanBlockLocalisations( UrbanObjectWrapper* pUrbanObject );
     static void ComputeLocalisationsInsideBlock( const UrbanObjectWrapper& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result );
 
     static boost::shared_ptr< MT_Vector2D > ComputeTrafficableLocalisationBarycenter( MIL_AgentPion& pion, TER_Localisation* pLocalisation );

@@ -18,7 +18,7 @@
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/DEC_Knowledge_Urban.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau
@@ -154,56 +154,55 @@ void DEC_KnowledgeFunctions::GetObservableKnowledge( directia::brain::Brain& bra
     knowledgeCreateFunction( table, brain[ "integration.ontology.types.object" ], objectsKn, true );
 
     //Urban
-    T_KnowledgeUrbanVector urbansKn;
-    pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
+    T_UrbanObjectVector blocks;
+    pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );
 
-    knowledgeCreateFunction( table, brain[ "integration.ontology.types.urbanBlock" ], urbansKn, true );
+    knowledgeCreateFunction( table, brain[ "integration.ontology.types.urbanBlock" ], blocks, true );
 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetUrbanBlockKnowledge
+// Name: DEC_KnowledgeFunctions::GetUrbanBlock
 // Created: DDA 2010-03-15
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeFunctions::GetUrbanBlockKnowledge( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
+void DEC_KnowledgeFunctions::GetUrbanBlock( directia::brain::Brain& brain, const MIL_AgentPion& pion, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& table )
 {
     //Urban
-    T_KnowledgeUrbanVector urbansKn;
-    pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
-
-    knowledgeCreateFunction( table, brain[ "integration.ontology.types.urbanBlock" ], urbansKn, true );
-
+    T_UrbanObjectVector blocks;
+    pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );
+    knowledgeCreateFunction( table, brain[ "integration.ontology.types.urbanBlock" ], blocks, true );
 }
+
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCircle
+// Name: DEC_KnowledgeFunctions::GetUrbanBlockInCircle
 // Created: DDA 2010-03-16
 // -----------------------------------------------------------------------------
-T_KnowledgeUrbanVector DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCircle( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& center, float radius )
+T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInCircle( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& center, float radius )
 {
     //Urban
-    T_KnowledgeUrbanVector urbansKn;
-    T_KnowledgeUrbanVector result;
-    pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );  // $$$$ _RC_ LGY 2011-02-25: remanier
-    for( T_KnowledgeUrbanVector::iterator it = urbansKn.begin(); it != urbansKn.end(); it++ )
-        if( ( *it )->GetObjectKnown() && ( *it )->GetObjectKnown()->GetLocalisation().Intersect2DWithCircle( *center, radius ) )
-            result.push_back( (*it) );
+    T_UrbanObjectVector blocks;
+    T_UrbanObjectVector result;
+    pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );  // $$$$ _RC_ LGY 2011-02-25: remanier
+    for( T_UrbanObjectVector::iterator it = blocks.begin(); it != blocks.end(); it++ )
+        if( ( *it ) && ( *it )->GetLocalisation().Intersect2DWithCircle( *center, radius ) )
+            result.push_back( *it );
     return result;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInZone
+// Name: DEC_KnowledgeFunctions::GetUrbanBlockInZone
 // Created: BCI 2011-03-01
 // -----------------------------------------------------------------------------
-T_KnowledgeUrbanVector DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInZone( const MIL_AgentPion& pion, TER_Localisation* pLocalisation )
+T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInZone( const MIL_AgentPion& pion, TER_Localisation* pLocalisation )
 {
-    T_KnowledgeUrbanVector result;
+    T_UrbanObjectVector result;
     if( pLocalisation )
     {
-        T_KnowledgeUrbanVector urbansKn;
-        pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
-        for( T_KnowledgeUrbanVector::iterator it = urbansKn.begin(); it != urbansKn.end(); it++ )
-            if( ( *it )->GetObjectKnown() && pLocalisation->Contains( ( *it )->GetObjectKnown()->GetLocalisation() ) )
-                result.push_back( (*it) );
+        T_UrbanObjectVector blocks;
+        pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );
+        for( T_UrbanObjectVector::iterator it = blocks.begin(); it != blocks.end(); it++ )
+            if( ( *it ) && pLocalisation->Contains( ( *it )->GetLocalisation() ) )
+                result.push_back( *it );
     }
     return result;
 }

@@ -429,7 +429,7 @@ int PHY_RolePion_Perceiver::EnableRecoLocalisation( const TER_Localisation& loca
 // Name: PHY_RolePion_Perceiver::EnableRecoLocalisation
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
+int PHY_RolePion_Perceiver::EnableRecoUrbanBlock( UrbanObjectWrapper* pUrbanBlock )
 {
     if( !pPerceptionRecoUrbanBlock_ )
     {

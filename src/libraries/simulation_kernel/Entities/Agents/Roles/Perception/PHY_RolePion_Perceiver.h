@@ -133,7 +133,7 @@ public:
     void  DisableRecoPoint               ( int );
     int   EnableRecoLocalisation         ( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent );
     int   EnableRecoLocalisation         ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
-    int   EnableRecoUrbanBlock           ( boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock );
+    int   EnableRecoUrbanBlock           ( UrbanObjectWrapper* pUrbanBlock );
     void  DisableRecoUrbanBlock          ( int );
     int   EnableControlLocalisation      ( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent );
     void  DisableRecoLocalisation        ( int );

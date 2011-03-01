@@ -293,7 +293,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( boost::shared_ptr< UrbanObjectWrapper > pUrbanblock )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( UrbanObjectWrapper* pUrbanblock )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_UrbanBlockParameter( pUrbanblock ) );
     return result;
@@ -591,7 +591,7 @@ void MIL_MissionParameterFactory::SetPolygonListParameter( boost::shared_ptr< MI
 // Name: MIL_MissionParameterFactory::SetUrbanBlockParameter
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< UrbanObjectWrapper > pUrbanblock )
+void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, UrbanObjectWrapper* pUrbanblock )
 {
     pMission->SetParameter( parameter, Create( pUrbanblock ) );
 }
@@ -600,11 +600,12 @@ void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL
 // Name: MIL_MissionParameterFactory::SetUrbanBlockListParameter
 // Created: MGD 2010-10-19
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetUrbanBlockListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< UrbanObjectWrapper > >& pUrbanBlockList )
+void MIL_MissionParameterFactory::SetUrbanBlockListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< UrbanObjectWrapper* >& pUrbanBlockList )
 {
     std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
-    for( std::vector< boost::shared_ptr< UrbanObjectWrapper > >::const_iterator it = pUrbanBlockList.begin(); it != pUrbanBlockList.end(); ++it )
-        paramList.push_back( Create( *it ) );
+    for( std::vector< UrbanObjectWrapper* >::const_iterator it = pUrbanBlockList.begin(); it != pUrbanBlockList.end(); ++it )
+        if( *it )
+            paramList.push_back( Create( *it ) );
     boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
     pMission->SetParameter( parameter, listParam );
 }

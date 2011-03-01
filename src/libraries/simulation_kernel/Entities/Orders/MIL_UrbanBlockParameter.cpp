@@ -22,7 +22,7 @@ MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowle
 {
     MIL_Object_ABC* pObject = entityManager.FindObject( asn.id() );
     if( pObject )
-        pUrbanBlock_.reset( dynamic_cast< UrbanObjectWrapper* >( pObject ) );
+        pUrbanBlock_ = dynamic_cast< UrbanObjectWrapper* >( pObject );
     if( !pUrbanBlock_ )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
 }
@@ -31,7 +31,7 @@ MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowle
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( UrbanObjectWrapper* pUrbanBlock )
     : pUrbanBlock_( pUrbanBlock )
 {
     // NOTHING
@@ -60,7 +60,7 @@ bool MIL_UrbanBlockParameter::IsOfType( MIL_ParameterType_ABC::E_Type type ) con
 // Name: MIL_UrbanBlockParameter::ToUrbanBlock
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-bool MIL_UrbanBlockParameter::ToUrbanBlock( boost::shared_ptr< UrbanObjectWrapper >& value ) const
+bool MIL_UrbanBlockParameter::ToUrbanBlock( UrbanObjectWrapper*& value ) const
 {
     value = pUrbanBlock_;
     return true;

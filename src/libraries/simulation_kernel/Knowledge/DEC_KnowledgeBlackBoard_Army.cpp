@@ -556,30 +556,30 @@ namespace
     class sUrbanKnowledgesInserter
     {
     public:
-        sUrbanKnowledgesInserter( T_KnowledgeUrbanVector& container )
+        sUrbanKnowledgesInserter( T_UrbanObjectVector& container )
         : pContainer_( &container )
         {
         }
 
-        void operator() ( boost::shared_ptr< DEC_Knowledge_Urban >& knowledge )
+        void operator() ( UrbanObjectWrapper* pUrbanObject )
         {
-            pContainer_->push_back( knowledge );
+            pContainer_->push_back( pUrbanObject );
         }
 
     private:
-        T_KnowledgeUrbanVector* pContainer_;
+        T_UrbanObjectVector* pContainer_;
     };
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::GetObjects
 // Created: MGD 2010-02-10
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_Army::GetUrbanObjects( T_KnowledgeUrbanVector& container ) const
+void DEC_KnowledgeBlackBoard_Army::GetUrbanObjects( T_UrbanObjectVector& container ) const
 {
     sUrbanKnowledgesInserter functor( container );
 
     assert( pKnowledgeUrbanContainer_ );
-    pKnowledgeUrbanContainer_->ApplyOnKnowledgesUrban( functor );
+    pKnowledgeUrbanContainer_->ApplyOnUrbanBlocks( functor );
 }
 
 // -----------------------------------------------------------------------------

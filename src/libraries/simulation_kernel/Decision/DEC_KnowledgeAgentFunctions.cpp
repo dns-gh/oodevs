@@ -317,9 +317,9 @@ bool DEC_KnowledgeAgentFunctions::CanIlluminate( const MIL_AgentPion& callerAgen
 // Name: DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel
 // Created: DDA 2010-04-27
 // -----------------------------------------------------------------------------
-double DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget, boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
+double DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget, UrbanObjectWrapper* pUrbanBlock )
 {
-    if( pUrbanBlock.get() )
+    if( pUrbanBlock )
         return 1.f - pTarget->GetMaterialComposantesAttritionLevel( pUrbanBlock );
     throw std::exception( "urbanBlock not valid" );
 }

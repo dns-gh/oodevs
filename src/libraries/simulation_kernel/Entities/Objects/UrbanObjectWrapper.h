@@ -38,7 +38,7 @@ class MIL_LivingArea;
 */
 // Created: SLG 2010-06-18
 // =============================================================================
-class UrbanObjectWrapper : public MIL_Object // $$$$ _RC_ LGY 2011-02-18: urban::TerrainObject_ABC (proxy)
+class UrbanObjectWrapper : public MIL_Object
 {
 public:
     //! @name Constructors/Destructor

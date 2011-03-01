@@ -26,10 +26,13 @@ namespace
     class UrbanBlockKnowledgeCreator : public urban::TerrainObjectVisitor_ABC
     {
     public:
-        UrbanBlockKnowledgeCreator( DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements, std::map< unsigned int, boost::shared_ptr< DEC_Knowledge_Urban > >& knowledgeElements, const MIL_Army_ABC& army )
+        UrbanBlockKnowledgeCreator( DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements,
+            std::map< unsigned int, boost::shared_ptr< DEC_Knowledge_Urban > >& knowledgeElements, const MIL_Army_ABC& army,
+            std::vector< UrbanObjectWrapper* >& urbanBlocks )
             : elements_         ( elements )
-            , army_             ( army )
             , knowledgeElements_( knowledgeElements )
+            , army_             ( army )
+            , urbanBlocks_      ( urbanBlocks )
         {
             // NOTHING
         }
@@ -47,6 +50,7 @@ namespace
                 boost::shared_ptr< DEC_Knowledge_Urban > knowledge( new DEC_Knowledge_Urban( army_, wrapper ) );
                 elements_[ wrapper.GetID() ] = knowledge;
                 knowledgeElements_[ knowledge->GetID() ] = knowledge;
+                urbanBlocks_.push_back( &wrapper );
             }
             catch( ... )
             {
@@ -57,6 +61,7 @@ namespace
     private:
         DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements_;
         std::map< unsigned, boost::shared_ptr< DEC_Knowledge_Urban > >& knowledgeElements_;
+        std::vector< UrbanObjectWrapper* >& urbanBlocks_;
         const MIL_Army_ABC& army_;
     };
 }
@@ -70,7 +75,7 @@ DEC_BlackBoard_CanContainKnowledgeUrban::DEC_BlackBoard_CanContainKnowledgeUrban
 {
     if( !fromCheckpoint && MIL_AgentServer::IsInitialized() )
     {
-        UrbanBlockKnowledgeCreator visitor( urbanMapFromConcrete_, urbanKnowledgeMapFromKnowledgeId_, army );
+        UrbanBlockKnowledgeCreator visitor( urbanMapFromConcrete_, urbanKnowledgeMapFromKnowledgeId_, army, urbanBlocks_ );
         MIL_AgentServer::GetWorkspace().GetUrbanModel().Accept( visitor );
     }
 }

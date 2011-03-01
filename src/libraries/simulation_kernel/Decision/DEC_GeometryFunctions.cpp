@@ -932,7 +932,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
 // Name: DEC_GeometryFunctions::ComputeUrbanBlockLocalisations
 // Created: LMT 2010-10-13
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUrbanBlockLocalisations( boost::shared_ptr< UrbanObjectWrapper > pUrbanObject )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUrbanBlockLocalisations( UrbanObjectWrapper* pUrbanObject )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
     if( pUrbanObject )

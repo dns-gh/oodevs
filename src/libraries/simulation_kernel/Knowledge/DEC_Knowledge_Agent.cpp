@@ -646,20 +646,21 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
 // Name: DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel
 // Created: DDA 2010-04-23
 // -----------------------------------------------------------------------------
-double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock ) const
+double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( UrbanObjectWrapper* pUrbanBlock ) const
 {
-    if( const urban::Architecture* architecture = pUrbanBlock->GetArchitecture() )
-    {
-        const PHY_RolePion_Composantes& role = GetAgentKnown().GetRole< PHY_RolePion_Composantes >();
-        unsigned materialID = PHY_MaterialCompositionType::Find( architecture->GetMaterial() )->GetId();
+    if( pUrbanBlock )
+        if( const urban::Architecture* architecture = pUrbanBlock->GetArchitecture() )
+        {
+            const PHY_RolePion_Composantes& role = GetAgentKnown().GetRole< PHY_RolePion_Composantes >();
+            unsigned materialID = PHY_MaterialCompositionType::Find( architecture->GetMaterial() )->GetId();
 
-        if( GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
-            return role.GetAttritionIndexComposante( materialID );
-        else if( ( GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ ) || ( GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ ) )
-            return PHY_DotationCategory::FindUrbanProtection( materialID );
-        else
-            return -1;
-    }
+            if( GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
+                return role.GetAttritionIndexComposante( materialID );
+            else if( ( GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ ) || ( GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ ) )
+                return PHY_DotationCategory::FindUrbanProtection( materialID );
+            else
+                return -1;
+        }
     return -1;
 }
 

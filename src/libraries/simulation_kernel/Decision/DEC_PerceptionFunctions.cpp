@@ -182,7 +182,7 @@ int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& calle
 // Name: DEC_PerceptionFunctions::EnableRecognitionLocalisation
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
+int DEC_PerceptionFunctions::EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, UrbanObjectWrapper* pUrbanBlock )
 {
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoUrbanBlock( pUrbanBlock );
 }

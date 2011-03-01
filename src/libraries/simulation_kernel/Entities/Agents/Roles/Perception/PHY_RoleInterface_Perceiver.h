@@ -115,7 +115,7 @@ public:
     virtual void DisableRecoPoint( int ) = 0;
     virtual int EnableRecoLocalisation( const TER_Localisation& localisation, float rGrowthSpeed, DEC_Decision_ABC& callerAgent ) = 0;
     virtual int EnableRecoLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent ) = 0;
-    virtual int EnableRecoUrbanBlock( boost::shared_ptr< UrbanObjectWrapper > urbanBlock ) = 0;
+    virtual int EnableRecoUrbanBlock( UrbanObjectWrapper* pUrbanBlock ) = 0;
     virtual void DisableRecoUrbanBlock( int ) = 0;
     virtual int EnableControlLocalisation( const TER_Localisation& localisation, DEC_Decision_ABC& callerAgent ) = 0;
     virtual void DisableRecoLocalisation( int ) = 0;

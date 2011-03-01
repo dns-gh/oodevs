@@ -124,8 +124,8 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
 void RegisterUrbanBlockFunctions( directia::brain::Brain& brain )
 {
    brain[ "DEC_ConnaissanceUrbanBlock_Barycentre" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< UrbanObjectWrapper > ) >( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentBarycenter, _1 ) );
-   brain[ "DEC_ConnaissanceUrbanBlock_Lisiere" ] = boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( boost::shared_ptr< UrbanObjectWrapper > ) >
+        boost::function< boost::shared_ptr< MT_Vector2D >( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentBarycenter, _1 ) );
+   brain[ "DEC_ConnaissanceUrbanBlock_Lisiere" ] = boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( UrbanObjectWrapper* ) >
        ( boost::bind( &DEC_UrbanObjectFunctions::GetBoundingBox, _1 ) );
 }
 
@@ -683,7 +683,7 @@ bool PopulationKnowledgeFunctionBM( directia::brain::Brain& brain, directia::too
 
 bool UrbanBlockFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    boost::shared_ptr< UrbanObjectWrapper > value;
+    UrbanObjectWrapper* value = 0;
     if( element.ToUrbanBlock( value ) && value )
     {
         knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.urbanBlock" ], name, value, false );

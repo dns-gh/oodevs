@@ -312,7 +312,7 @@ bool MIL_BaseParameter::ToObjectiveList( std::vector< boost::shared_ptr< DEC_Obj
 // Name: MIL_BaseParameter::ToUrbanBlock
 // Created: MGD 2009-11-04
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToUrbanBlock( boost::shared_ptr< UrbanObjectWrapper >& ) const
+bool MIL_BaseParameter::ToUrbanBlock( UrbanObjectWrapper*& ) const
 {
     return false;
 }

@@ -97,7 +97,7 @@ public:
     void GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight, const MIL_ObjectFilter& filter ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
-    void GetUrbanObjects( T_KnowledgeUrbanVector& container ) const;
+    void GetUrbanObjects( T_UrbanObjectVector& container ) const;
     //@}
 
 private:

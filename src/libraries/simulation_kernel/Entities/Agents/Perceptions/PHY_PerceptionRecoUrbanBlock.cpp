@@ -30,7 +30,7 @@
 // Name: PHY_PerceptionRecoUrbanBlockReco constructor
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
+PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const UrbanObjectWrapper* pUrbanBlock )
     : pUrbanBlock_( pUrbanBlock )
 {
     if( pUrbanBlock == 0 )
@@ -94,7 +94,7 @@ PHY_PerceptionRecoUrbanBlock::~PHY_PerceptionRecoUrbanBlock()
 // Name: PHY_PerceptionRecoUrbanBlock::AddUrbanBlock
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int PHY_PerceptionRecoUrbanBlock::AddUrbanBlock( const boost::shared_ptr< UrbanObjectWrapper > pUrbanBlock )
+int PHY_PerceptionRecoUrbanBlock::AddUrbanBlock( const UrbanObjectWrapper* pUrbanBlock )
 {
     PHY_PerceptionRecoUrbanBlockReco* pNewReco = new PHY_PerceptionRecoUrbanBlockReco( pUrbanBlock );
     assert( pNewReco );

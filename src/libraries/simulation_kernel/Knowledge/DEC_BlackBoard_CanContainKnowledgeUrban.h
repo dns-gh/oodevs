@@ -77,6 +77,17 @@ public:
             fct( knowledge );
         }
     }
+
+    template < class UnaryFunction >
+    void ApplyOnUrbanBlocks( UnaryFunction& fct ) const
+    {
+        for( std::vector< UrbanObjectWrapper* >::const_iterator it = urbanBlocks_.begin(); it != urbanBlocks_.end(); )
+        {
+            UrbanObjectWrapper* object = *it;
+            ++it;
+            fct( object );
+        }
+    }
     //@}
 
 
@@ -92,6 +103,7 @@ private:
     const MIL_Army_ABC& army_;
     T_KnowledgeUrbanMap urbanMapFromConcrete_;
     std::map< unsigned, boost::shared_ptr< DEC_Knowledge_Urban > > urbanKnowledgeMapFromKnowledgeId_;
+    std::vector< UrbanObjectWrapper* > urbanBlocks_;
     //@}
 };
 
