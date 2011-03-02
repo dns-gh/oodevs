@@ -12,6 +12,11 @@
 
 #include "tools/SessionConfig.h"
 
+namespace tools
+{
+    class RealFileLoaderObserver_ABC;
+}
+
 namespace dispatcher
 {
 // =============================================================================
@@ -25,7 +30,7 @@ class Config : public virtual tools::SessionConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             Config();
+             Config( tools::RealFileLoaderObserver_ABC& observer );
     virtual ~Config();
     //@}
 

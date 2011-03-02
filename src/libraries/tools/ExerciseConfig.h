@@ -13,6 +13,11 @@
 #include "GeneralConfig.h"
 #include <memory>
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace tools
 {
     class Loader_ABC;
@@ -28,7 +33,7 @@ class ExerciseConfig : public GeneralConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseConfig();
+             ExerciseConfig( std::auto_ptr< tools::Loader_ABC > fileLoader );
     virtual ~ExerciseConfig();
     //@}
 
@@ -62,9 +67,7 @@ public:
     virtual std::string BuildPropagationChildFile( const std::string& path, const std::string& file ) const;
 
     virtual void Parse( int argc, char** argv );
-    void LoadExercise( const std::string& file );
-
-    virtual void AddFileToCRC( const std::string& fileName );
+    void LoadExercise( const std::string& file ); //$$$ Rien à foutre la ...
     //@}
 
     //! @name Operations
@@ -75,12 +78,15 @@ public:
 private:
     //! @name Helpers
     //@{
+    void ReadExercise( xml::xistream& xis );
     void SetExerciseName( const std::string& file );
     //@}
 
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< tools::Loader_ABC > fileLoader_;
+
     std::string modelVersion_;
     std::string exerciseName_;
     std::string terrain_;
@@ -96,8 +102,6 @@ private:
     std::string population_;
     std::string propagations_;
     //@}
-
-    std::auto_ptr< Loader_ABC > loader_;
 };
 
 }

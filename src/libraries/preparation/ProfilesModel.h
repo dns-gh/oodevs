@@ -20,6 +20,11 @@ namespace kernel
     class Entity_ABC;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class UserProfile;
 class ProfileFactory_ABC;
 class Model;
@@ -42,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& file );
+    void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
     void Serialize( const std::string& file ) const;
     void Purge();
     bool CheckValidity( const Model& model, ModelChecker_ABC& checker ) const;
@@ -64,6 +69,7 @@ private:
 
     //! @name Helpers
     //@{
+    void Read( xml::xistream& xis );
     void LoadProfile( xml::xistream& xis );
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;

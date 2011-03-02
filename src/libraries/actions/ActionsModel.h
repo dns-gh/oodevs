@@ -38,19 +38,24 @@ namespace xml
     class xistream;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class AgentServerMsgMgr;
 
 namespace actions
 {
+    class Action_ABC;
+    class ActionFactory_ABC;
+    class ActionsFilter_ABC;
+    class CreationListener_ABC;
 
-class Action_ABC;
-class ActionFactory_ABC;
-class ActionsFilter_ABC;
-class CreationListener_ABC;
-namespace parameters
-{
-    class ParameterList;
-}
+    namespace parameters
+    {
+        class ParameterList;
+    }
 
 // =============================================================================
 /** @class  ActionsModel
@@ -84,7 +89,7 @@ public:
     Action_ABC* CreateObjectDestroyMagicAction( const kernel::Object_ABC& object );
     void Destroy( const Action_ABC& action );
     void Purge( const ActionsFilter_ABC* filter = 0 );
-    void Load( const std::string& filename, bool readonly = false );
+    void Load( const std::string& filename, const tools::Loader_ABC& fileLoader, bool readonly = false );
     void Save( const std::string& filename, const ActionsFilter_ABC* filter = 0 ) const;
     void Publish( const Action_ABC& action, int context = 0 );
     void PublishForce( const Action_ABC& action );
@@ -99,7 +104,8 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadAction( xml::xistream& xis, bool readonly, std::string& errors );
+    void ReadActions( xml::xistream& xis, bool readonly );
+    void ReadAction ( xml::xistream& xis, bool readonly, std::string& errors );
     //@}
 
 private:

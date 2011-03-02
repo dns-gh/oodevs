@@ -12,10 +12,8 @@
 #include "ExerciseConfig.h"
 #include "Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push )
-#pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
-#pragma warning( pop )
+#include <boost/bind.hpp>
 
 using namespace tools;
 
@@ -58,9 +56,29 @@ WorldParameters::~WorldParameters()
 // -----------------------------------------------------------------------------
 void WorldParameters::Load( const tools::ExerciseConfig& config )
 {
-    terrainFile_ = config.GetTerrainFile();
-    config.GetLoader().CheckFile( terrainFile_ );
-    xml::xifstream xis( terrainFile_ );
+    config.GetLoader().LoadFile( config.GetTerrainFile(), boost::bind( &WorldParameters::ReadTerrain, this, boost::ref( config ), _1 ) );
+    if( !config.GetPopulationFile().empty() )
+        config.GetLoader().LoadFile( config.GetPopulationFile(), boost::bind( &WorldParameters::ReadPopulation, this, boost::ref( config ), _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldParameters::ReadPopulation
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void WorldParameters::ReadPopulation( const tools::ExerciseConfig& config, xml::xistream& xis )
+{
+    xis >> xml::start( "configuration" )
+                >> xml::start( "graph" )
+                    >> xml::attribute( "file", populationGraph_ );
+    populationGraph_ = config.BuildChildPath( config.GetPopulationFile(), populationGraph_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WorldParameters::ReadTerrain
+// Created: AGE 2006-04-28
+// -----------------------------------------------------------------------------
+void WorldParameters::ReadTerrain( const tools::ExerciseConfig& config, xml::xistream& xis )
+{
     std::string world, pathfind, graphics, detection, urban;
     if( xis.has_child( "terrain" ) )
     {
@@ -99,7 +117,6 @@ void WorldParameters::Load( const tools::ExerciseConfig& config )
     }
     else
     {
-
         xis >> xml::start( "Terrain" )
                 >> xml::content( "World", world )
                 >> xml::content( "Pathfind", pathfind )
@@ -111,7 +128,6 @@ void WorldParameters::Load( const tools::ExerciseConfig& config )
         urban = "urban/urban.xml";
     }
 
-
     InitExtent();
 
     detection_ = config.BuildTerrainChildFile( detection + "/detection.dat" );
@@ -120,16 +136,6 @@ void WorldParameters::Load( const tools::ExerciseConfig& config )
     pathfindLinks_ = config.BuildTerrainChildFile( pathfind + "/links.bin" );
     pathfindNodes_ = config.BuildTerrainChildFile( pathfind + "/nodes.bin" );
     urban_ = config.BuildTerrainChildFile( urban );
-
-
-    if( ! config.GetPopulationFile().empty() )
-    {
-        xml::xifstream popxis( config.GetPopulationFile() );
-        popxis >> xml::start( "configuration" )
-                    >> xml::start( "graph" )
-                        >> xml::attribute( "file", populationGraph_ );
-        populationGraph_ = config.BuildChildPath( config.GetPopulationFile(), populationGraph_ );
-    }
 }
 
 // -----------------------------------------------------------------------------

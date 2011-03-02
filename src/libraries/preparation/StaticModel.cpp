@@ -26,7 +26,6 @@
 #include "indicators/GaugeTypes.h"
 #include "indicators/Primitives.h"
 #include "tools/ExerciseConfig.h"
-#include <tools/XmlCrc32Signature.h>
 #include <boost/filesystem/path.hpp>
 
 namespace bfs = boost::filesystem;
@@ -77,35 +76,22 @@ StaticModel::~StaticModel()
     delete &coordinateSystems_;
 }
 
-namespace
-{
-    const std::string& XmlSignatureHelper( const std::string& path, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
-    {
-        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( path );
-        if( error == tools::eXmlCrc32SignatureError_Invalid )
-            invalidSignatureFiles.append( "\n" + bfs::path( path, bfs::native ).leaf() );
-        if( error == tools::eXmlCrc32SignatureError_NotSigned )
-            missingSignatureFiles.append( "\n" + bfs::path( path, bfs::native ).leaf() );
-        return path;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: StaticModel::Load
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-void StaticModel::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
+void StaticModel::Load( const tools::ExerciseConfig& config )
 {
     Purge();
-    types_.Load( config, invalidSignatureFiles, missingSignatureFiles );
-    objectTypes_.Load( config, invalidSignatureFiles, missingSignatureFiles );
+    types_.Load( config );
+    objectTypes_.Load( config );
     static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( config );
     detection_.Load( config );
-    drawings_.Load( config, XmlSignatureHelper( config.BuildPhysicalChildFile( "DrawingTemplates.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
-    indicators_.Load( config, XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
-    gaugeTypes_.Load( config, XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
-    successFactorActionTypes_.Load( config, XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactorActions.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
-    extensions_.Load( config, XmlSignatureHelper( tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ), invalidSignatureFiles, missingSignatureFiles ) );
+    drawings_.Load( config, config.BuildPhysicalChildFile( "DrawingTemplates.xml" ) );
+    indicators_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
+    gaugeTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
+    successFactorActionTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "SuccessFactorActions.xml" ) );
+    extensions_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ) );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
 

@@ -3,84 +3,76 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "tools_pch.h"
-
 #include "Loader.h"
-#include "PhysicalFileLoader.h"
-#include "ExerciseFileLoader.h"
+#include "RealFileLoader.h"
+#include "SchemaVersionExtractor.h"
+#include "ExerciseConfig.h"
+#include <xeumeuleu/xml.hpp>
 
 using namespace tools;
 
 // -----------------------------------------------------------------------------
 // Name: Loader constructor
-// Created: NLD 2010-02-23
+// Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-Loader::Loader( const ExerciseConfig& config )
-    : config_( config )
-{   
-    // NOTHING
+Loader::Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observer )
+    : config_                ( config )
+    , observer_              ( observer )
+    , schemaVersionExtractor_( new SchemaVersionExtractor() )
+    , fileLoader_            ()
+{
+    xml::xifstream migrationsXis( config_.BuildResourceChildFile( "migrations.xml" ) );
+    fileLoader_.reset( new RealFileLoader( migrationsXis, *schemaVersionExtractor_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Loader destructor
-// Created: NLD 2010-02-23
+// Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
 Loader::~Loader()
 {
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Loader::LoadPhysicalFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
-void Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const
+void Loader::LoadFile( const std::string& fileName, T_Loader loader ) const
 {
-    PhysicalFileLoader( config_, invalidSignatureFiles, missingSignatureFiles )
-        .Load( rootTag, loader );
+    std::auto_ptr< xml::xistream > xis = fileLoader_->LoadFile( fileName, observer_ );
+    loader( *xis );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Loader::LoadPhysicalFileAndCRC
+// Name: Loader::LoadPhysicalFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
-void Loader::LoadPhysicalFileAndCRC( const std::string& rootTag, T_Loader loader, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const
+std::string Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const
 {
-    PhysicalFileLoader fileLoader( config_, invalidSignatureFiles, missingSignatureFiles );
-    fileLoader.AddToCRC();
-    fileLoader.Load( rootTag, loader );
+    if( !physicalFileXis_.get() )
+        physicalFileXis_ = fileLoader_->LoadFile( config_.GetPhysicalFile(), observer_ );
+
+    std::string childFileName;
+    *physicalFileXis_ >> xml::start( "physical" )
+                         >> xml::start( rootTag )
+                             >> xml::attribute( "file", childFileName )
+                         >> xml::end
+                      >>  xml::end;
+    childFileName = config_.BuildPhysicalChildFile( childFileName );
+    LoadFile( childFileName, loader );
+    return childFileName;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Loader::CheckFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------
-void Loader::CheckFile( const std::string& file ) const
+void Loader::CheckFile( const std::string& fileName ) const
 {
-    FileLoader( config_, file );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Loader::CheckFile
-// Created: NLD 2010-02-23
-// -----------------------------------------------------------------------------
-void Loader::LoadAndUpdateExerciseFile( const std::string& rootTag, T_Loader loader, const std::string& xslFile ) const
-{
-    ExerciseFileLoader fileLoader( config_ );
-    fileLoader.LoadAndUpdate( rootTag, loader, xslFile );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Loader::LoadExerciseFileAndCRC
-// Created: NLD 2010-02-23
-// -----------------------------------------------------------------------------
-void Loader::LoadExerciseFileAndCRC( const std::string& rootTag, T_Loader loader, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const
-{
-    ExerciseFileLoader fileLoader( config_, invalidSignatureFiles, missingSignatureFiles );
-    fileLoader.AddToCRC();
-    fileLoader.Load( rootTag, loader );
+    std::auto_ptr< xml::xistream > xis = fileLoader_->LoadFile( fileName, observer_ );
 }

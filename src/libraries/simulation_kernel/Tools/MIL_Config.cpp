@@ -13,6 +13,7 @@
 #include "MIL_Config.h"
 #include "MIL_Tools.h"
 #include "tools/xmlcodecs.h"
+#include "tools/Loader.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
@@ -29,8 +30,9 @@ namespace bfs = boost::filesystem;
 // Name: MIL_Config constructor
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
-MIL_Config::MIL_Config()
-    : endTick_                  ( 0 )
+MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
+    : tools::SessionConfig      ( std::auto_ptr< tools::Loader_ABC >( new tools::Loader( *this, observer ) ) )
+    , endTick_                  ( 0 )
     , diaDebuggerPort_          ( 0 )
     , networkLoggerPort_        ( 0 )
     , bCheckPointOrbat_         ( false )
@@ -92,18 +94,7 @@ void MIL_Config::ReadSessionFile( const std::string& file )
 {
     setpause_ = 100;
     setstepmul_ = 200;
-    MIL_Tools::CheckXmlCrc32Signature( file );
-    xml::xifstream xis( file );
-    xis >> xml::start( "session" );
-    const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-    xis >> xml::end();
-    if( schema.empty() )
-        ReadSessionXml( xis );
-    else
-    {
-        xml::xifstream verifiedXis( file, xml::external_grammar( BuildResourceChildFile( schema ) ) );
-        ReadSessionXml( verifiedXis );
-    }
+    GetLoader().LoadFile( file, boost::bind( &MIL_Config::ReadSessionXml, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

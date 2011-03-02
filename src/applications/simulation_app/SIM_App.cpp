@@ -14,6 +14,7 @@
 #include "SIM_NetworkLogger.h"
 #include "SIM_Dispatcher.h"
 #include "WinArguments.h"
+#include "FileLoaderObserver.h"
 #include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/MIL_Random.h"
@@ -47,7 +48,8 @@ static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1 };
 // Created: RDS 2008-07-08
 // -----------------------------------------------------------------------------
 SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */, int maxConnections )
-    : startupConfig_ ( new MIL_Config() )
+    : observer_      ( std::auto_ptr< tools::RealFileLoaderObserver_ABC >( new FileLoaderObserver() ) )
+    , startupConfig_ ( new MIL_Config( *observer_ ) )
     , winArguments_  ( new WinArguments( lpCmdLine ) )
     , pNetworkLogger_( 0 )
     , logger_        ( 0 )

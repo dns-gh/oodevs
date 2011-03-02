@@ -27,6 +27,11 @@ namespace xml
     class xistream;
 }
 
+namespace tools
+{
+    class RealFileLoaderObserver_ABC;
+}
+
 // =============================================================================
 // Created: NLD 2003-11-21
 // =============================================================================
@@ -35,7 +40,7 @@ class MIL_Config : public virtual tools::SessionConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Config();
+             MIL_Config( tools::RealFileLoaderObserver_ABC& observer );
     virtual ~MIL_Config();
     //@}
 
@@ -92,7 +97,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    virtual void AddFileToCRC( const std::string& fileName );
+    void AddFileToCRC( const std::string& fileName );
     boost::crc_32_type::value_type serialize( const std::string& strFileName ) const;
     //@}
 

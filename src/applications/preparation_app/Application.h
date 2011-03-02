@@ -17,6 +17,7 @@ namespace kernel
     class Controllers;
 }
 
+class FileLoaderObserver;
 class MainWindow;
 class StaticModel;
 class Model;
@@ -59,10 +60,11 @@ private:
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< FileLoaderObserver > observer_;
     std::auto_ptr< Config > config_;
     std::auto_ptr< kernel::Controllers > controllers_;
     std::auto_ptr< StaticModel > staticModel_;
-    std::auto_ptr< Model > model_;
+    std::auto_ptr< Model > model_;    
     MainWindow* mainWindow_;
     const QString license_;
     //@}

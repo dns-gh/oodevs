@@ -14,6 +14,7 @@
 #include "tools/Loader_ABC.h"
 #include <svgl/TextRenderer.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
 
 using namespace gui;
 
@@ -43,9 +44,16 @@ DrawingTypes::~DrawingTypes()
 // -----------------------------------------------------------------------------
 void DrawingTypes::Load( const tools::ExerciseConfig& config, const std::string& filename )
 {
-    config.GetLoader().CheckFile( filename );
-    xml::xifstream input( filename );
-    input >> xml::start( "templates" )
+    config.GetLoader().LoadFile( filename, boost::bind( &DrawingTypes::Read, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingTypes::Read
+// Created: SBO 2008-06-04
+// -----------------------------------------------------------------------------
+void DrawingTypes::Read( xml::xistream& xis )
+{
+    xis >> xml::start( "templates" )
             >> xml::list( "category", *this, &DrawingTypes::ReadCategory )
           >> xml::end;
 }

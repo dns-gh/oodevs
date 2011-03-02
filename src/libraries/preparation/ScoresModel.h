@@ -24,6 +24,11 @@ namespace xml
     class xostream;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class ModelChecker_ABC;
 class Score_ABC;
 class ScoreFactory_ABC;
@@ -49,7 +54,7 @@ public:
     void Create( const QString& name );
     void Delete( const Score_ABC& score );
     void Purge();
-    void Load( const std::string& file );
+    void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
     bool CheckValidity( ModelChecker_ABC& checker ) const;
     void Serialize( const std::string& file ) const;
     void GenerateScoresFromTemplate( const std::string &templateFile );
@@ -64,6 +69,7 @@ private:
 
     //! @name Helpers
     //@{
+    void Read( xml::xistream& xis );
     void Serialize( xml::xostream& xos ) const;
     void ReadScore( xml::xistream& xis );
     void ReadForeach( xml::xistream& xis );

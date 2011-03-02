@@ -26,7 +26,7 @@ class SessionConfig : public ExerciseConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionConfig();
+             SessionConfig( std::auto_ptr< tools::Loader_ABC > fileLoader );
     virtual ~SessionConfig();
     //@}
 

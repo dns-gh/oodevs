@@ -3,47 +3,53 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __Loader_h__
-#define __Loader_h__
+#ifndef tools_FileLoader_h
+#define tools_FileLoader_h
 
 #include "Loader_ABC.h"
+#include <memory>
 
-namespace tools
+namespace tools 
 {
+    class RealFileLoader_ABC;
+    class SchemaVersionExtractor_ABC;
+    class RealFileLoaderObserver_ABC;
     class ExerciseConfig;
 
 // =============================================================================
 /** @class  Loader
-    @brief  Loader definition
+    @brief  Loader
 */
-// Created: NLD 2011-02-23
+// Created: NLD 2011-02-14
 // =============================================================================
 class Loader : public Loader_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Loader( const ExerciseConfig& config );
+    Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observer );
     virtual ~Loader();
     //@}
-
+    
     //! @name Operations
     //@{
-    virtual void CheckFile                ( const std::string& file ) const;
-    virtual void LoadPhysicalFile         ( const std::string& rootTag, T_Loader loader, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const;
-    virtual void LoadPhysicalFileAndCRC   ( const std::string& rootTag, T_Loader loader, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const;
-    virtual void LoadAndUpdateExerciseFile( const std::string& rootTag, T_Loader loader, const std::string& xslFile ) const;
-    virtual void LoadExerciseFileAndCRC   ( const std::string& rootTag, T_Loader loader, std::string& invalidSignatureFiles, std::string& missingSignatureFiles ) const;
+    virtual void        CheckFile       ( const std::string& file ) const;
+    virtual void        LoadFile        ( const std::string& fileName, T_Loader loader ) const;
+    virtual std::string LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
     //@}
 
 private:
     const ExerciseConfig& config_;
+    RealFileLoaderObserver_ABC& observer_;
+    std::auto_ptr< SchemaVersionExtractor_ABC > schemaVersionExtractor_; 
+    std::auto_ptr< RealFileLoader_ABC > fileLoader_;
+    mutable std::auto_ptr< xml::xistream > physicalFileXis_;
 };
 
 }
 
-#endif // __Loader_h__
+#endif // tools_FileLoader_h

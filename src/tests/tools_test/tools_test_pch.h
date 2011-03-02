@@ -20,6 +20,11 @@
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
+#pragma warning( disable : 4505 )
+#include <turtle/mock.hpp>
+
 std::string BOOST_RESOLVE( const std::string& filename );
+
+void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actual );
 
 #endif // __3a_test_pch_h_

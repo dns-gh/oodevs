@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Config.h"
+#include "tools/Loader.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
@@ -21,8 +22,9 @@ using namespace dispatcher;
 // Name: Config constructor
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
-Config::Config()
-    : networkClientsParameters_( 0 )
+Config::Config( tools::RealFileLoaderObserver_ABC& observer )
+    : SessionConfig( std::auto_ptr< tools::Loader_ABC >( new tools::Loader( *this, observer ) ) )
+    , networkClientsParameters_( 0 )
     , networkShieldParameters_ ( 0 )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )

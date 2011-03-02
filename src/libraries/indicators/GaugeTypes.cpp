@@ -15,6 +15,7 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
 
 using namespace indicators;
 
@@ -43,8 +44,15 @@ GaugeTypes::~GaugeTypes()
 // -----------------------------------------------------------------------------
 void GaugeTypes::Load( const tools::ExerciseConfig& config, const std::string& filename )
 {
-    config.GetLoader().CheckFile( filename );
-    xml::xifstream xis( filename );
+    config.GetLoader().LoadFile( filename, boost::bind( &GaugeTypes::Read, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GaugeTypes::Load
+// Created: SBO 2009-05-05
+// -----------------------------------------------------------------------------
+void GaugeTypes::Read( xml::xistream& xis )
+{
     xis >> xml::start( "templates" )
             >> xml::list( "template", *this, &GaugeTypes::ReadTemplate )
         >> xml::end;

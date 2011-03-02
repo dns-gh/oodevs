@@ -34,10 +34,8 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     weather::PHY_Precipitation::Initialize();
     weather::PHY_Lighting::Initialize();
 
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadExerciseFileAndCRC( "weather", boost::bind( &PHY_MeteoDataManager::Initialize, this, _1, boost::ref( config ) ), invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    config.GetLoader().LoadFile( config.GetWeatherFile(), boost::bind( &PHY_MeteoDataManager::Initialize, this, _1, boost::ref( config ) ) );
+    config.AddFileToCRC( config.GetWeatherFile() );
 }
 
 // -----------------------------------------------------------------------------

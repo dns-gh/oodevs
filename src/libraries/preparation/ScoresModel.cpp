@@ -18,6 +18,7 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "tools/Loader_ABC.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -59,9 +60,17 @@ void ScoresModel::Purge()
 // Name: ScoresModel::Load
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-void ScoresModel::Load( const std::string& file )
+void ScoresModel::Load( const tools::Loader_ABC& fileLoader, const std::string& file )
 {
-    xml::xifstream xis( file );
+    fileLoader.LoadFile( file, boost::bind( &ScoresModel::Read, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoresModel::Read
+// Created: SBO 2009-04-16
+// -----------------------------------------------------------------------------
+void ScoresModel::Read( xml::xistream& xis )
+{
     xis >> xml::start( "scores" )
             >> xml::list( "score", *this, &ScoresModel::ReadScore )
         >> xml::end;

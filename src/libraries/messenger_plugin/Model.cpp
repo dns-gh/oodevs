@@ -20,10 +20,12 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/CompositeRegistrable.h"
 #include "MT_Tools/MT_Logger.h"
+#include "tools/Loader_ABC.h"
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
 #include <direct.h>
 
 namespace bfs = boost::filesystem;
@@ -134,30 +136,9 @@ void Model::Save( const std::string& name ) const
 void Model::Load()
 {
     if( config_.HasCheckpoint() )
-    {
-        std::string filename = GetCheckPointFileName( config_.GetCheckpointDirectory() );
-        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename );
-        if( error == tools::eXmlCrc32SignatureError_Invalid )
-            MT_LOG_WARNING_MSG( "The signature for the file " << bfs::path( filename, bfs::native ).leaf() << " is invalid." )
-        else if( error == tools::eXmlCrc32SignatureError_NotSigned )
-            MT_LOG_WARNING_MSG( "The file " << bfs::path( filename, bfs::native ).leaf() << " is not signed." )
-        xml::xifstream xis( filename );
-        xis >> xml::start( "messenger" );
-        const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-        xis >> xml::end();
-        if( !schema.empty() )
-            xml::xifstream xis( filename, xml::external_grammar( config_.BuildResourceChildFile( schema ) ) );
-        ReadMessenger( xis );
-    }
+        config_.GetLoader().LoadFile( GetCheckPointFileName( config_.GetCheckpointDirectory() ), boost::bind( &Model::ReadMessenger, this, _1 ) );
     else
-    {
-        xml::xifstream xis( config_.GetOrbatFile() );
-        xis >> xml::start( "orbat" )
-                >> xml::start( "parties" )
-                    >> xml::list( "party", *this, &Model::ReadSide )
-                >> xml::end
-            >> xml::end;
-    }
+        config_.GetLoader().LoadFile( config_.GetOrbatFile(), boost::bind( &Model::ReadOrbat, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,6 +153,19 @@ void Model::ReadMessenger( xml::xistream& xis )
             >> xml::end
             >> xml::list( "automat"  , *this, &Model::ReadAutomat )
             >> xml::list( "formation", *this, &Model::ReadFormation )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::ReadSide
+// Created: SBO 2008-06-09
+// -----------------------------------------------------------------------------
+void Model::ReadOrbat( xml::xistream& xis )
+{
+    xis >> xml::start( "orbat" )
+            >> xml::start( "parties" )
+                >> xml::list( "party", *this, &Model::ReadSide )
+            >> xml::end
         >> xml::end;
 }
 

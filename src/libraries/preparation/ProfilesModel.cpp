@@ -17,8 +17,10 @@
 #include "AgentsModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "tools/Iterator.h"
+#include "tools/Loader_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -55,9 +57,17 @@ void ProfilesModel::Purge()
 // Name: ProfilesModel::Load
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-void ProfilesModel::Load( const std::string& file )
+void ProfilesModel::Load( const tools::Loader_ABC& fileLoader, const std::string& file )
 {
-    xml::xifstream xis( file );
+    fileLoader.LoadFile( file, boost::bind( &ProfilesModel::Read, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::Read
+// Created: SBO 2007-01-16
+// -----------------------------------------------------------------------------
+void ProfilesModel::Read( xml::xistream& xis )
+{
     xis >> xml::start( "profiles" )
         >> xml::list( "profile", *this, &ProfilesModel::LoadProfile );
 }

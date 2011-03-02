@@ -14,7 +14,9 @@
 #include "SuccessFactorFactory_ABC.h"
 #include "Tools.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
 
@@ -50,9 +52,17 @@ void SuccessFactorsModel::Purge()
 // Name: SuccessFactorsModel::Load
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-void SuccessFactorsModel::Load( const std::string& file )
+void SuccessFactorsModel::Load( const tools::Loader_ABC& fileLoader, const std::string& file )
 {
-    xml::xifstream xis( file );
+    fileLoader.LoadFile( file, boost::bind( &SuccessFactorsModel::Read, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SuccessFactorsModel::Read
+// Created: SBO 2009-06-15
+// -----------------------------------------------------------------------------
+void SuccessFactorsModel::Read( xml::xistream& xis )
+{
     xis >> xml::start( "factors" )
             >> xml::list( "factor", *this, &SuccessFactorsModel::ReadFactor )
         >> xml::end;

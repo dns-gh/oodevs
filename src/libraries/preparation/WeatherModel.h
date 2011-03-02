@@ -25,6 +25,11 @@ namespace xml
     class xistream;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class Weather;
 class LocalWeather;
 
@@ -46,7 +51,7 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Load( const std::string& filename );
+    void Load( const tools::Loader_ABC& fileLoader, const std::string& filename );
     void Serialize( const std::string& filename ) const;
     //@}
 
@@ -59,6 +64,7 @@ private:
 
     //! @name Helpers
     //@{
+    void Read             ( xml::xistream& xis );
     void ReadExerciseDate ( xml::xistream& xis );
     void ReadEphemerides  ( xml::xistream& xis );
     void ReadGlobalWeather( xml::xistream& xis );

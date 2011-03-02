@@ -10,9 +10,15 @@
 #ifndef __WorldParameters_h_
 #define __WorldParameters_h_
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace tools
 {
     class ExerciseConfig;
+
 // =============================================================================
 /** @class  WorldParameters
     @brief  WorldParameters
@@ -39,6 +45,8 @@ public:
 private:
     //! @name Helpers
     //@{
+    void ReadTerrain( const tools::ExerciseConfig& config, xml::xistream& xis );
+    void ReadPopulation( const tools::ExerciseConfig& config, xml::xistream& xis );
     void ReadWorld( const std::string& world );
     void ReadExtent( const std::string& extent );
     void InitExtent();
@@ -49,7 +57,6 @@ public:
     //@{
     float latitude_, longitude_;
     float width_, height_;
-    std::string terrainFile_;
     std::string graphicsDirectory_;
     std::string pathfindGraph_;
     std::string pathfindLinks_;

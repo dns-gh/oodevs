@@ -16,6 +16,7 @@
 #include "edxlhave_plugin/EdxlHavePluginFactory.h"
 #include "timeline_plugin/TimelinePluginFactory.h"
 #include "crossbow_plugin/CrossbowPluginFactory.h"
+#include "tools/NullFileLoaderObserver.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
@@ -27,7 +28,8 @@ using namespace plugins;
 // Created: AGE 2008-05-21
 // -----------------------------------------------------------------------------
 DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
-    : config_( new dispatcher::Config() )
+    : observer_( new tools::NullFileLoaderObserver() )
+    , config_  ( new dispatcher::Config( *observer_ ) )
 {
     MT_LOG_REGISTER_LOGGER( *new MT_ConsoleLogger() );
     config_->Parse( argc, argv );

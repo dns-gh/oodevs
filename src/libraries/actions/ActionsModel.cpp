@@ -15,6 +15,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/StaticModel.h"
 #include "protocol/ServerPublisher_ABC.h"
+#include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -215,13 +216,18 @@ void ActionsModel::Destroy( const Action_ABC& action )
 // Name: ActionsModel::Load
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void ActionsModel::Load( const std::string& filename, bool readonly /*= false*/ )
+void ActionsModel::Load( const std::string& filename, const tools::Loader_ABC& fileLoader, bool readonly /*= false*/ )
+{
+    fileLoader.LoadFile( filename, boost::bind( &ActionsModel::ReadActions, this, _1, readonly ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::ReadActions
+// Created: SBO 2007-04-24
+// -----------------------------------------------------------------------------
+void ActionsModel::ReadActions( xml::xistream& xis, bool readonly )
 {
     std::string errors;
-    xsl::xstringtransform xst( "resources/ordCompatibility.xsl" );
-    xst << xml::xifstream( filename );
-    std::string updatedFile = xst.str();
-    xml::xistringstream xis( updatedFile );
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &ActionsModel::ReadAction, readonly, errors )
         >> xml::end;

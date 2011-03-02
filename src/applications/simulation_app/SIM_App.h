@@ -19,6 +19,11 @@
 #include <boost/thread.hpp>
 #pragma warning( pop )
 
+namespace tools 
+{
+    class RealFileLoaderObserver_ABC;
+}
+
 class MIL_Config;
 class MT_FileLogger;
 class SIM_Dispatcher;
@@ -67,6 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
     std::auto_ptr< MIL_Config > startupConfig_;
     std::auto_ptr< WinArguments > winArguments_;
     std::auto_ptr< SIM_NetworkLogger > pNetworkLogger_;

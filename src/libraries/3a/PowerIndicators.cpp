@@ -50,18 +50,7 @@ PowerIndicators::~PowerIndicators()
 void PowerIndicators::Load( const tools::ExerciseConfig& config )
 {
     Purge();
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    Load( config, invalidSignatureFiles, missingSignatureFiles );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PowerIndicators::Load
-// Created: ABR 2011-02-10
-// -----------------------------------------------------------------------------
-void PowerIndicators::Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles )
-{
-    config.GetLoader().LoadPhysicalFile( "units", boost::bind( &PowerIndicators::ReadUnit, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
+    config.GetLoader().LoadPhysicalFile( "units", boost::bind( &PowerIndicators::ReadUnit, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

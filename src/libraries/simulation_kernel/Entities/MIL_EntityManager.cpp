@@ -263,9 +263,8 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
 
     const std::string strOrbat = config.GetOrbatFile();
-    MIL_Tools::CheckXmlCrc32Signature( strOrbat );
     MT_LOG_INFO_MSG( MT_FormatString( "ODB file name : '%s'", strOrbat.c_str() ) );
-    config.GetLoader().LoadAndUpdateExerciseFile( "orbat", boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ), "resources/orbat0-4.2.xsl" );
+    config.GetLoader().LoadFile( strOrbat, boost::bind( &MIL_EntityManager::ReadOrbat, this, _1 ) );
 
     MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().Finalize();
 

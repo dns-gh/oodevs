@@ -67,6 +67,7 @@ private:
     //! @name Helpers
     //@{
     void ReadCategory( xml::xistream& xis );
+    void Read( xml::xistream& xis );
     //@}
 
 private:

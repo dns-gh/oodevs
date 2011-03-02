@@ -70,7 +70,6 @@ public:
     //! @name Operations
     //@{
     void Load( const tools::ExerciseConfig& config );
-    void Load( const tools::ExerciseConfig& config, std::string& invalidSignatureFiles, std::string& missingSignatureFiles );
     void Purge();
     //@}
 

@@ -107,7 +107,7 @@ void Actions::IssueOrderFromFile( const std::string& name, const std::string& fi
     try
     {
         actions::ActionsModel model( *factory_, *publisher_, *publisher_ );
-        model.Load( config_.BuildExerciseChildFile( "scripts/resources/" + filename + ".ord" ) );
+        model.Load( config_.BuildExerciseChildFile( "scripts/resources/" + filename + ".ord" ), config_.GetLoader() );
         tools::Iterator< const actions::Action_ABC& > it = model.CreateIterator();
         while( it.HasMoreElements() )
         {

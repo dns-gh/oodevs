@@ -107,7 +107,7 @@ void ActionsLogger::LoadOrdersIfCheckpoint()
         std::string actionsPath( config_.BuildSessionChildFile( "actions.ord" ) );
         ordersLoaded_ = true;
         if( bfs::exists( bfs::path( actionsPath ) ) )
-            actions_->Load( actionsPath );
+            actions_->Load( actionsPath, config_.GetLoader() );
     }
 }
 

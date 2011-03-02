@@ -22,9 +22,10 @@
 #include "gaming/Profile.h"
 #include "gaming/CommandHandler.h"
 #include "gaming/Tools.h"
+#include "gaming/AgentServerMsgMgr.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Workers.h"
-#include "gaming/AgentServerMsgMgr.h"
+#include "tools/NullFileLoaderObserver.h"
 #include "ENT/ENT_Tr.h"
 #include <qsettings.h>
 #include <qtextcodec.h>
@@ -92,7 +93,8 @@ void Application::Initialize()
 // -----------------------------------------------------------------------------
 void Application::Initialize( int argc, char** argv )
 {
-    config_.reset( new Config( argc, argv ) );
+    observer_.reset( new tools::NullFileLoaderObserver() );
+    config_.reset( new Config( argc, argv, *observer_ ) );
     controllers_.reset( new Controllers() );
     logger_.reset( new LoggerProxy() );
     services_.reset( new Services( controllers_->controller_, *logger_ ) );

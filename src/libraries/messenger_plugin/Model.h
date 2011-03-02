@@ -70,6 +70,7 @@ private:
     //! @name Helpers
     //@{
     void Load();
+    void ReadOrbat    ( xml::xistream& xis );
     void ReadSide     ( xml::xistream& xis );
     void ReadFormation( xml::xistream& xis );
     void ReadAutomat  ( xml::xistream& xis );

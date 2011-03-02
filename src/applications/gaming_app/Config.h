@@ -11,6 +11,12 @@
 #define __Config_h_
 
 #include "tools/SessionConfig.h"
+
+namespace tools 
+{
+    class RealFileLoaderObserver_ABC;
+}
+
 class Network;
 
 // =============================================================================
@@ -24,7 +30,7 @@ class Config : public tools::SessionConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             Config( int argc, char** argv );
+             Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observer );
     virtual ~Config();
     //@}
 

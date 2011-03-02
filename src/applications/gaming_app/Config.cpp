@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "Config.h"
 #include "gaming/Network.h"
+#include "tools/Loader.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
 #include <boost/program_options.hpp>
@@ -21,7 +22,8 @@ namespace po  = boost::program_options;
 // Name: Config constructor
 // Created: NLD 2007-01-12
 // -----------------------------------------------------------------------------
-Config::Config( int argc, char** argv )
+Config::Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observer )
+    : SessionConfig( std::auto_ptr< tools::Loader_ABC >( new tools::Loader( *this, observer ) ) )
 {
     po::options_description desc( "Gaming options" );
     desc.add_options()

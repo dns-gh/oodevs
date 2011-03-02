@@ -13,6 +13,7 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorActionTypes constructor
@@ -38,8 +39,16 @@ SuccessFactorActionTypes::~SuccessFactorActionTypes()
 // -----------------------------------------------------------------------------
 void SuccessFactorActionTypes::Load( const tools::ExerciseConfig& config, const std::string& file )
 {
-    config.GetLoader().CheckFile( file );
-    xml::xifstream xis( file );
+    config.GetLoader().LoadFile( file, boost::bind( &SuccessFactorActionTypes::Read, this, _1 ) );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: SuccessFactorActionTypes::Read
+// Created: SBO 2009-06-16
+// -----------------------------------------------------------------------------
+void SuccessFactorActionTypes::Read( xml::xistream& xis )
+{
     xis >> xml::start( "actions" )
             >> xml::list( "action", *this, &SuccessFactorActionTypes::ReadAction )
         >> xml::end;

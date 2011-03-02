@@ -18,6 +18,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
+#include <boost/bind.hpp>
 
 namespace bfs = boost::filesystem;
 
@@ -49,23 +50,14 @@ void ExtensionTypes::Load( const tools::ExerciseConfig& config, const std::strin
 {
     if( ! bfs::exists( bfs::path( file, bfs::native ) ) )
         return;
-    config.GetLoader().CheckFile( file );
-    xml::xifstream xis( file );
-    xis >> xml::start( "extensions" );
-    const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-    xis >> xml::end();
-    if( schema.empty() )
-        ReadExtensions( xml::xifstream( file ) );
-    else
-        ReadExtensions( xml::xifstream( file,
-            xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ) ) ) );
+    config.GetLoader().LoadFile( file, boost::bind( &ExtensionTypes::ReadExtensions, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExtensionTypes::ReadExtensions
 // Created: MCO 2010-11-21
 // -----------------------------------------------------------------------------
-void ExtensionTypes::ReadExtensions( xml::xisubstream xis )
+void ExtensionTypes::ReadExtensions( xml::xistream& xis )
 {
     xis >> xml::start( "extensions" )
             >> xml::list( *this, &ExtensionTypes::ReadElement );

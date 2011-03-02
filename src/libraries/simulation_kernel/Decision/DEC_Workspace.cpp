@@ -37,6 +37,7 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/bind.hpp>
 #include <sys/stat.h>
 
 namespace
@@ -83,10 +84,8 @@ DEC_Workspace::~DEC_Workspace()
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeConfig( MIL_Config& config )
 {
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "decisional", boost::bind( &DEC_Workspace::LoadDecisional, this, _1 ) );
+    config.AddFileToCRC( fileLoaded );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,26 +145,31 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional )
 void DEC_Workspace::InitializeDIA( MIL_Config& config )
 {
     //DIA4
-    const std::string strDecFile = config.GetDecisionalFile();
+    config.GetLoader().LoadFile( config.GetDecisionalFile(), boost::bind( &DEC_Workspace::LoadDIA, this, boost::ref( config ), _1 ) );
+    config.AddFileToCRC( config.GetDecisionalFile() );
+}
 
-    xml::xifstream xis( strDecFile );
-    config.AddFileToCRC( strDecFile );
+//-----------------------------------------------------------------------------
+// Name: DEC_Workspace::InitializeDIA
+// Created: JVT 02-07-08
+// Last modified: JVT 03-11-24
+//-----------------------------------------------------------------------------
+void DEC_Workspace::LoadDIA( MIL_Config& config, xml::xistream& xis )
+{
     xis >> xml::start( "decisional" );
     std::map< std::string, std::string > strSourcePaths;
     xis >> xml::start( "RepertoiresSources" )
             >> xml::list( "RepertoireSources" , *this, &DEC_Workspace::RegisterSourcePath, config, strSourcePaths )
         >> xml::end;
 
-    MIL_ParameterType_ABC    ::Initialize   ();
+    MIL_ParameterType_ABC::Initialize();
 
     InitializeMissions( config );
     InitializeModels  ( config, strSourcePaths );
 
     // Debugger
     if( config.UseDiaDebugger() )
-    {
         MT_LOG_INFO_MSG( MT_FormatString( "Starting DirectIA debug server on port %d", config.GetDiaDebuggerPort() ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -187,10 +191,8 @@ void DEC_Workspace::RegisterSourcePath( xml::xistream& xis, MIL_Config& config, 
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeMissions( MIL_Config& config )
 {
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "missions", boost::bind( &DEC_Workspace::LoadMissions, this, _1 ) );
+    config.AddFileToCRC( fileLoaded );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,10 +213,9 @@ void DEC_Workspace::LoadMissions( xml::xistream& xisMission )
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths )
 {
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( "models", boost::bind( &DEC_Workspace::LoadModels, this, _1, boost::cref( strSourcePaths ) ), invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "models", boost::bind( &DEC_Workspace::LoadModels, this, _1, boost::cref( strSourcePaths ) ) );
+    config.AddFileToCRC( fileLoaded );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -289,8 +290,6 @@ float DEC_Workspace::GetTime() const
 // -----------------------------------------------------------------------------
 void DEC_Workspace::InitializeObjectNames( MIL_Config& config )
 {
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( "object-names", &DEC_ObjectFunctions::RegisterObjectNames, invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "object-names", &DEC_ObjectFunctions::RegisterObjectNames );
+    config.AddFileToCRC( fileLoaded );
 }

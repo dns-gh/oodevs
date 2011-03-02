@@ -14,7 +14,9 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
 #include <qregexp.h>
 
 using namespace kernel;
@@ -60,10 +62,18 @@ void WeatherModel::Purge()
 // Name: WeatherModel::Load
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
-void WeatherModel::Load( const std::string& filename )
+void WeatherModel::Load( const tools::Loader_ABC& fileLoader, const std::string& filename )
+{
+    fileLoader.LoadFile( filename, boost::bind( &WeatherModel::Read, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherModel::Read
+// Created: SBO 2006-12-19
+// -----------------------------------------------------------------------------
+void WeatherModel::Read( xml::xistream& xis )
 {
     Purge();
-    xml::xifstream xis( filename );
     xis >> xml::start( "weather" )
         >> xml::start( "exercise-date" );
     ReadExerciseDate( xis );

@@ -61,6 +61,7 @@ private:
     //! @name Helpers
     //@{
     void ReadPrimitive( xml::xistream& xis );
+    void Read( xml::xistream& xis );
     //@}
 
 private:

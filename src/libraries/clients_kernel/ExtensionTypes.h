@@ -61,7 +61,7 @@ private:
     //@{
     void ReadElement( const std::string& name, xml::xistream& xis );
     void ReadDictionary( xml::xistream& xis );
-    void ReadExtensions( xml::xisubstream xis );
+    void ReadExtensions( xml::xistream& xis );
     //@}
 };
 

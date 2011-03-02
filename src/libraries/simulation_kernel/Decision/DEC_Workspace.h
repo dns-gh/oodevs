@@ -54,11 +54,12 @@ private:
     void InitializeConfig      ( MIL_Config& config );
     void InitializeObjectNames ( MIL_Config& config );
     void InitializeMissions    ( MIL_Config& config );
-    void InitializeDIA         ( MIL_Config& config );
+    void InitializeDIA         ( MIL_Config& config );    
     void InitializeModels      ( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths );
-    void LoadDecisional( xml::xistream& xis );
-    void LoadMissions( xml::xistream& xis );
-    void LoadModels( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths );
+    void LoadDIA               ( MIL_Config& config, xml::xistream& xis );
+    void LoadDecisional        ( xml::xistream& xis );
+    void LoadMissions          ( xml::xistream& xis );
+    void LoadModels            ( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths );
     //@}
 
 private:

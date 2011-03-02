@@ -96,10 +96,8 @@ namespace
     template < typename T >
     void InitializeType( MIL_Config& config, const std::string& strSection )
     {
-        std::string invalidSignatureFiles;
-        std::string missingSignatureFiles;
-        config.GetLoader().LoadPhysicalFileAndCRC( strSection, &T::Initialize, invalidSignatureFiles, missingSignatureFiles );
-        MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+        const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( strSection, &T::Initialize );
+        config.AddFileToCRC( fileLoaded );
     }
 }
 
@@ -196,10 +194,8 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
 void MIL_EntityManagerStaticMethods::InitializeSensors( MIL_Config& config, const MIL_Time_ABC& time )
 {
     MT_LOG_INFO_MSG( "Initializing sensor types" );
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ) ), invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "sensors", boost::bind( &MIL_EntityManagerStaticMethods::LoadSensors, _1, boost::cref( time ) ) );
+    config.AddFileToCRC( fileLoaded );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,10 +219,8 @@ void MIL_EntityManagerStaticMethods::LoadSensors( xml::xistream& xis, const MIL_
 void MIL_EntityManagerStaticMethods::InitializeMedical( MIL_Config& config )
 {
     MT_LOG_INFO_MSG( "Initializing medical data" );
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( "health", &MIL_EntityManagerStaticMethods::LoadMedical, invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "health", &MIL_EntityManagerStaticMethods::LoadMedical );
+    config.AddFileToCRC( fileLoaded );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,10 +240,8 @@ void MIL_EntityManagerStaticMethods::LoadMedical( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_EntityManagerStaticMethods::InitializeComposantes( MIL_Config& config, const MIL_Time_ABC& time )
 {
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1 ), invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "components", boost::bind( &PHY_ComposanteTypePion::Initialize, boost::cref( time ), _1 ) );
+    config.AddFileToCRC( fileLoaded );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,10 +250,8 @@ void MIL_EntityManagerStaticMethods::InitializeComposantes( MIL_Config& config, 
 // -----------------------------------------------------------------------------
 void MIL_EntityManagerStaticMethods::InitializeWeapons( MIL_Config& config, const MIL_Time_ABC& time )
 {
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( "weapon-systems", boost::bind( &PHY_WeaponType::Initialize, boost::cref( time ), _1 ), invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "weapon-systems", boost::bind( &PHY_WeaponType::Initialize, boost::cref( time ), _1 ) );
+    config.AddFileToCRC( fileLoaded );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,8 +260,6 @@ void MIL_EntityManagerStaticMethods::InitializeWeapons( MIL_Config& config, cons
 // -----------------------------------------------------------------------------
 void MIL_EntityManagerStaticMethods::InitializeMedicalTreatment( MIL_Config& config, const MIL_Time_ABC& time )
 {
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( "medical-treatment", boost::bind( &MIL_MedicalTreatmentType::Initialize, _1, boost::cref( time ) ), invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "medical-treatment", boost::bind( &MIL_MedicalTreatmentType::Initialize, _1, boost::cref( time ) ) );
+    config.AddFileToCRC( fileLoaded );
 }

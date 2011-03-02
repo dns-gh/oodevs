@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<migrations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="XXXX.xsd">
+  <legacy>
+    <assign root-node="orbat" assign-schema="schemas/0.0/exercise/orbat.xsd"/>
+    <assign root-node="actions" assign-schema="schemas/0.0/exercise/orders.xsd"/>
+  </legacy>
+  
+  <migration from="0.0" to="4.2.0">
+    <upgrade schema="schemas/0.0/exercise/orbat.xsd" apply="orbat0-4.2.xsl"/>
+    <upgrade schema="schemas/0.0/exercise/orders.xsd" apply="ordCompatibility.xsl"/>
+  </migration>
+  <migration from="4.2.0" to="4.2.2">
+    <!--    <upgrade schema="schemas/1.0/orbat.xsd" apply="testFileMigration/test-1.3.xsl"/>-->
+    <!--    <upgrade schema="testFileMigration/1.0/ord.xsd" apply="testFileMigration/test-1.3.xsl"/>-->
+  </migration>
+</migrations>

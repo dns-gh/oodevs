@@ -10,14 +10,12 @@
 #include "tools_pch.h"
 #include "ExerciseConfig.h"
 #include "Loader.h"
+#include "Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
+#include <boost/bind.hpp>
 
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
@@ -27,8 +25,8 @@ using namespace tools;
 // Name: ExerciseConfig constructor
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-ExerciseConfig::ExerciseConfig()
-    : loader_( new Loader( *this ) )
+ExerciseConfig::ExerciseConfig( std::auto_ptr< tools::Loader_ABC > fileLoader )
+    : fileLoader_( fileLoader )
 {
     po::options_description desc( "Exercise options" );
     desc.add_options()
@@ -64,43 +62,7 @@ void ExerciseConfig::LoadExercise( const std::string& file )
 {
     try
     {
-        xml::xifstream xis( file );
-        xis >> xml::start( "exercise" )
-                >> xml::optional >> xml::attribute( "model-version", modelVersion_ )
-                >> xml::start( "terrain" )
-                    >> xml::attribute( "name", terrain_ )
-                >> xml::end
-                >> xml::start( "model" )
-                    >> xml::attribute( "dataset", dataset_ )
-                    >> xml::attribute( "physical", physical_ )
-                >> xml::end
-                >> xml::start( "weather" )
-                    >> xml::attribute( "file", weather_ )
-                >> xml::end
-                >> xml::start( "orbat" )
-                    >> xml::attribute( "file", orbat_ )
-                >> xml::end
-                >> xml::start( "profiles" )
-                    >> xml::attribute( "file", profiles_ )
-                >> xml::end
-                >> xml::optional >> xml::start( "urban" )
-                    >> xml::attribute( "file", urban_ )
-                >> xml::end
-                >> xml::optional >> xml::start( "urbanstate" )
-                    >> xml::attribute( "file", urbanState_ )
-                >> xml::end
-                >> xml::optional >> xml::start( "population" )
-                    >> xml::attribute( "name", population_ )
-                >> xml::end
-                >> xml::optional >> xml::start( "propagations" );
-        propagations_ = xis.attribute< std::string >( "name", "propagations" );
-        xis     >> xml::end
-                >> xml::optional >> xml::start( "scores" );
-        scores_ = xis.attribute< std::string >( "file", "scores.xml" );
-        xis     >> xml::end
-                >> xml::optional >> xml::start( "success-factors" );
-        successFactors_ = xis.attribute< std::string >( "file", "success-factors.xml" );
-        xis     >> xml::end;
+        GetLoader().LoadFile( file, boost::bind( &ExerciseConfig::ReadExercise, this, _1 ) );
         if( GetExerciseFile() != file )
             SetExerciseName( file );
     }
@@ -108,6 +70,50 @@ void ExerciseConfig::LoadExercise( const std::string& file )
     {
         // NOTHING
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::LoadExercise
+// Created: AGE 2008-03-13
+// -----------------------------------------------------------------------------
+void ExerciseConfig::ReadExercise( xml::xistream& xis )
+{
+    xis >> xml::start( "exercise" )
+            >> xml::optional >> xml::attribute( "model-version", modelVersion_ )
+            >> xml::start( "terrain" )
+                >> xml::attribute( "name", terrain_ )
+            >> xml::end
+            >> xml::start( "model" )
+                >> xml::attribute( "dataset", dataset_ )
+                >> xml::attribute( "physical", physical_ )
+            >> xml::end
+            >> xml::start( "weather" )
+                >> xml::attribute( "file", weather_ )
+            >> xml::end
+            >> xml::start( "orbat" )
+                >> xml::attribute( "file", orbat_ )
+            >> xml::end
+            >> xml::start( "profiles" )
+                >> xml::attribute( "file", profiles_ )
+            >> xml::end
+            >> xml::optional >> xml::start( "urban" )
+                >> xml::attribute( "file", urban_ )
+            >> xml::end
+            >> xml::optional >> xml::start( "urbanstate" )
+                >> xml::attribute( "file", urbanState_ )
+            >> xml::end
+            >> xml::optional >> xml::start( "population" )
+                >> xml::attribute( "name", population_ )
+            >> xml::end
+            >> xml::optional >> xml::start( "propagations" );
+    propagations_ = xis.attribute< std::string >( "name", "propagations" );
+    xis     >> xml::end
+            >> xml::optional >> xml::start( "scores" );
+    scores_ = xis.attribute< std::string >( "file", "scores.xml" );
+    xis     >> xml::end
+            >> xml::optional >> xml::start( "success-factors" );
+    successFactors_ = xis.attribute< std::string >( "file", "success-factors.xml" );
+    xis     >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -311,19 +317,10 @@ std::string ExerciseConfig::GetPopulationFile() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::AddFileToCRC
+// Name: ExerciseConfig::GetLoader
 // Created: LDC 2010-11-30
 // -----------------------------------------------------------------------------
-void ExerciseConfig::AddFileToCRC( const std::string& /*fileName*/ )
+const tools::Loader_ABC& ExerciseConfig::GetLoader() const
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseConfig::AddFileToCRC
-// Created: LDC 2010-11-30
-// -----------------------------------------------------------------------------
-const Loader_ABC& ExerciseConfig::GetLoader() const
-{
-    return *loader_;
+    return *fileLoader_;
 }

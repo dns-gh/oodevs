@@ -34,10 +34,8 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
-    std::string invalidSignatureFiles;
-    std::string missingSignatureFiles;
-    config.GetLoader().LoadPhysicalFileAndCRC( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1 ), invalidSignatureFiles, missingSignatureFiles );
-    MIL_Tools::LogXmlCrc32Signature( invalidSignatureFiles, missingSignatureFiles );
+    const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1 ) );
+    config.AddFileToCRC( fileLoaded );
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
     if( bUseInSameThread_ ) // juste one "thread" that will never start

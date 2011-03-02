@@ -45,12 +45,9 @@
 #include <tools/XmlCrc32Signature.h>
 #include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
+#include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 
@@ -150,39 +147,16 @@ void Model::Purge()
 namespace
 {
     template< typename M >
-    bool LoadOptional( const std::string& file, M& model, std::string& invalidSignedFiles )
+    bool LoadOptional( const tools::Loader_ABC& fileLoader, const std::string& fileName, M& model )
     {
-        if( bfs::exists( file ) )
+        if( bfs::exists( fileName ) )
         {
-            tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( file );
-            if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-                invalidSignedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
-            model.Load( file );
+            model.Load( fileLoader, fileName );
             return true;
         }
-        model.Serialize( file );
-        tools::WriteXmlCrc32Signature( file );
+        model.Serialize( fileName );
+        tools::WriteXmlCrc32Signature( fileName );
         return false;
-    }
-}
-
-namespace
-{
-    void CheckFileSignature( const tools::ExerciseConfig& config, const std::string& file, std::string& invalidSignedFiles, std::string& missingSignedFiles, std::string& malformedFiles )
-    {
-        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( file );
-        if( error == tools::eXmlCrc32SignatureError_Invalid )
-            invalidSignedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
-        else if( error == tools::eXmlCrc32SignatureError_NotSigned )
-            missingSignedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
-        try
-        {
-            config.GetLoader().CheckFile( file );
-        }
-        catch( xml::exception& )
-        {
-            malformedFiles.append( "\n" + bfs::path( file, bfs::native ).leaf() );
-        }
     }
 }
 
@@ -190,21 +164,21 @@ namespace
 // Name: Model::Load
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors, std::string& invalidSignedFiles, std::string& missingSignedFiles, std::string& malformedFiles )
+void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors )
 {
-    config.GetLoader().CheckFile( config.GetPhysicalFile() );
     {
         std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
         try
         {
             urban::WorldParameters world( directoryPath );
+            //$$ LOADING DE FICHIERS A UNIFIER
             const bfs::path urbanFile = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
-            CheckFileSignature( config, urbanFile.string(), invalidSignedFiles, missingSignedFiles, malformedFiles );
+            config.GetLoader().CheckFile( urbanFile.string() );
             urban_.Load( directoryPath, world, loadingErrors );
             const std::string urbanStateFile = config.GetUrbanStateFile() ;
             if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
             {
-                CheckFileSignature( config, urbanStateFile, invalidSignedFiles, missingSignedFiles, malformedFiles );
+                config.GetLoader().CheckFile( urbanStateFile );
                 xml::xifstream xis( urbanStateFile );
                 urban_.LoadUrbanState( xis );
             }
@@ -214,21 +188,19 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
         }
     }
     {
-        const std::string orbatFile = config.GetOrbatFile() ;
+        const std::string orbatFile = config.GetOrbatFile();
         if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
         {
-            CheckFileSignature( config, orbatFile, invalidSignedFiles, missingSignedFiles, malformedFiles );
             UpdateName( orbatFile );
-            xml::xifstream xis( orbatFile );
-            teams_.Load( xis, *this, loadingErrors );
+            config.GetLoader().LoadFile( orbatFile, boost::bind( &TeamsModel::Load, &teams_, _1, boost::ref( *this ), boost::ref( loadingErrors ) ) );
         }
     }
 
-    if( ! LoadOptional( config.GetWeatherFile(), weather_, invalidSignedFiles ) )
+    if( ! LoadOptional( config.GetLoader(), config.GetWeatherFile(), weather_ ) )
         controllers_.controller_.Update( weather_);
-    LoadOptional( config.GetProfilesFile(), profiles_, invalidSignedFiles );
-    LoadOptional( config.GetScoresFile(), scores_, invalidSignedFiles );
-    LoadOptional( config.GetSuccessFactorsFile(), successFactors_, invalidSignedFiles );
+    LoadOptional( config.GetLoader(), config.GetProfilesFile(), profiles_ );
+    LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_ );
+    LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_ );
     SetLoaded( true );
 }
 

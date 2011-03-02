@@ -12,6 +12,11 @@
 
 #include "tools/ExerciseConfig.h"
 
+namespace tools
+{
+    class RealFileLoaderObserver_ABC;
+}
+
 // =============================================================================
 /** @class  Config
     @brief  Config
@@ -24,7 +29,7 @@ class Config : public tools::ExerciseConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             Config( int argc, char** argv );
+             Config( int argc, char** argv, tools::RealFileLoaderObserver_ABC& observer );
     virtual ~Config();
     //@}
 };

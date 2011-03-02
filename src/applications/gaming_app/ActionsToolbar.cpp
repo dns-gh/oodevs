@@ -134,7 +134,7 @@ void ActionsToolbar::Load()
         return;
     try
     {
-        actions_.Load( filename.ascii(), hasReplay_ );
+        actions_.Load( filename.ascii(), config_.GetLoader(), hasReplay_ );
     }
     catch( std::exception& e )
     {
@@ -232,7 +232,7 @@ void ActionsToolbar::NotifyUpdated( const Simulation& simulation )
             {
                 try
                 {
-                    actions_.Load( *it, hasReplay_ );
+                    actions_.Load( *it, config_.GetLoader(), hasReplay_ );
                 }
                 catch( std::exception& e )
                 {

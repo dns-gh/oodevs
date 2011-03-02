@@ -12,6 +12,7 @@
 #include "MainWindow.h"
 #include "Config.h"
 #include "ErrorEvent.h"
+#include "FileLoaderObserver.h"
 #include "preparation/StaticModel.h"
 #include "preparation/Model.h"
 #include "clients_kernel/Controllers.h"
@@ -80,7 +81,8 @@ void Application::Initialize()
 // -----------------------------------------------------------------------------
 void Application::Initialize( int argc, char** argv )
 {
-    config_.reset( new Config( argc, argv ) );
+    observer_.reset( new FileLoaderObserver() );
+    config_.reset( new Config( argc, argv, *observer_ ) );
     controllers_.reset( new kernel::Controllers() );
     staticModel_.reset( new StaticModel( *controllers_ ) );
     model_.reset( new Model( *controllers_, *staticModel_ ) );
@@ -89,6 +91,8 @@ void Application::Initialize( int argc, char** argv )
 
     // Make sure the application exits when the main window is closed.
     connect( this, SIGNAL( lastWindowClosed() ), this, SLOT( quit() ) );
+
+    observer_->DisplayErrors();
 }
 
 // -----------------------------------------------------------------------------

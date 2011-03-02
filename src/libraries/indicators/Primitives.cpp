@@ -14,6 +14,7 @@
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/bind.hpp>
 
 using namespace indicators;
 
@@ -42,8 +43,15 @@ Primitives::~Primitives()
 // -----------------------------------------------------------------------------
 void Primitives::Load( const tools::ExerciseConfig& config, const std::string& file )
 {
-    config.GetLoader().CheckFile( file );
-    xml::xifstream xis( file );
+    config.GetLoader().LoadFile( file, boost::bind( &Primitives::Read, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Primitives::Read
+// Created: SBO 2009-04-20
+// -----------------------------------------------------------------------------
+void Primitives::Read( xml::xistream& xis )
+{
     xis >> xml::start( "primitives" )
             >> xml::list( "primitive", *this, &Primitives::ReadPrimitive )
         >> xml::end;

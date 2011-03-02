@@ -110,12 +110,9 @@
 #include <graphics/DragMovementLayer.h>
 #include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#pragma warning( pop )
+
 namespace bfs = boost::filesystem;
 
 using namespace kernel;
@@ -399,15 +396,9 @@ void MainWindow::DoLoad( QString filename )
         return;
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
-    invalidSignedFiles_.clear();
-    missingSignedFiles_.clear();
+
     malformedFiles_.clear();
     config_.LoadExercise( filename.ascii() );
-    tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( filename.ascii() );
-    if( error == tools::eXmlCrc32SignatureError_Invalid )
-        invalidSignedFiles_.append( "\n" + bfs::path( filename.ascii(), bfs::native ).leaf()  );
-    else if( error == tools::eXmlCrc32SignatureError_NotSigned)
-        missingSignedFiles_.append( "\n" + bfs::path( filename.ascii(), bfs::native ).leaf()  );
     if( Load() )
     {
         SetWindowTitle( true );
@@ -442,7 +433,7 @@ bool MainWindow::Load()
         model_.Purge();
         selector_->Close();
         selector_->Load();
-        staticModel_.Load( config_, invalidSignedFiles_, missingSignedFiles_ );
+        staticModel_.Load( config_ );
         if( staticModel_.extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" ) )
             setAppropriate( pOrbatAttributes_, true );
         else
@@ -489,30 +480,13 @@ void MainWindow::LoadExercise()
     {
         loading_ = true;
         std::string loadingErrors;
-        model_.Load( config_, loadingErrors, invalidSignedFiles_, missingSignedFiles_, malformedFiles_ );
+        model_.Load( config_, loadingErrors );
         loading_ = false;
         bool errors = !loadingErrors.empty();
         SetWindowTitle( errors );
         if( errors )
             QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                 , tr( "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() );
-        if( !invalidSignedFiles_.empty() || !missingSignedFiles_.empty() )
-        {
-            QSettings settings;
-            settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
-            if( settings.readNumEntry( "/Common/NoSignatureCheck", 0 ) != 1 )
-            {
-                QMessageBox::warning( this, tools::translate( "Application", "SWORD" )
-                    , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + invalidSignedFiles_.c_str() + "\n" + missingSignedFiles_.c_str() );
-                SetWindowTitle( true );
-            }
-        }
-        if( !malformedFiles_.empty() )
-        {
-            QMessageBox::warning( this, tools::translate( "Application", "SWORD" )
-                    , tr( "The following files do not match their xsd : " ) + "\n" + malformedFiles_.c_str() );
-            SetWindowTitle( true );
-        }
     }
     catch( std::exception& e )
     {

@@ -55,6 +55,7 @@ private:
     //! @name Helpers
     //@{
     void ReadAction( xml::xistream& xis );
+    void Read( xml::xistream& xis );
     //@}
 };
 

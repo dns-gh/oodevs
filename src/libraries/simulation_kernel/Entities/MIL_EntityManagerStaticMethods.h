@@ -10,8 +10,10 @@
 #ifndef __MIL_EntityManagerStaticMethods_h_
 #define __MIL_EntityManagerStaticMethods_h_
 
-#include <xeumeuleu/xml.hpp>
 #include "Tools/MIL_Config.h"
+#include <xeumeuleu/xml.hpp>
+#include <boost/noncopyable.hpp>
+
 
 class MIL_Time_ABC;
 
@@ -21,7 +23,7 @@ class MIL_Time_ABC;
 */
 // Created: RPD 2010-02-08
 // =============================================================================
-class MIL_EntityManagerStaticMethods
+class MIL_EntityManagerStaticMethods : public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
