@@ -114,7 +114,7 @@ void UrbanLayer::NotifyDeleted( const TerrainObjectProxy& object )
 // -----------------------------------------------------------------------------
 void UrbanLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point )
 {
-    controllers_.actions_.ContextMenu( static_cast< const kernel::Object_ABC& >( entity ), geoPoint, point );
+    controllers_.actions_.ContextMenu( static_cast< const kernel::Object_ABC& >( entity ), kernel::Nothing(), geoPoint, point );
 }
 
 // -----------------------------------------------------------------------------
