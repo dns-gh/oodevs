@@ -312,7 +312,7 @@
             depends="applications.simulation,applications.clients,applications.frontends"/>
 
     <target name="applications.simulation" description="build Sword Simulation executables"
-            depends="application.dispatcher_app,application.simulation_app,application.replayer_app,application.AGR"/>
+            depends="application.dispatcher_app,application.simulation_app,application.replayer_app"/>
 
     <target name="applications.clients" description="build Sword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app,application.loadtester_app,application.import_app,application.wise_driver_dll"/>
@@ -524,12 +524,6 @@
 
     <target name="application.package_app" description="build Sword Package deployment executable">
         <build-app name="package_app" depends="boost" subsystem="console">
-            <syslibset libs="user32"/>
-        </build-app>
-    </target>
-
-    <target name="application.AGR" description="build AGR executable">
-        <build-app name="AGR" subsystem="console" excludes="**/*_Skeleton.*" depends="boost,xerces">
             <syslibset libs="user32"/>
         </build-app>
     </target>
