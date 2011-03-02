@@ -41,10 +41,11 @@ MT_Vector2D MT_Line::GetCenter() const
 inline
 bool MT_Line::IsInside( const MT_Vector2D& vPos, double rSize ) const
 {
+    static const double rEpsilon = 1e-8;
     MT_Vector2D vPosNear = ClosestPointOnLine( vPos );
     double rDist = vPos.SquareDistance( vPosNear );
-    double rDist2 = ( rSize * rSize );
-    return( rDist <= rDist2 );
+    double rDist2 = rSize * rSize;
+    return( rDist2 - rDist >= -rEpsilon );
 }
 
 //-----------------------------------------------------------------------------
