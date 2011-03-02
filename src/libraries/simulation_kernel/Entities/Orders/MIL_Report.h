@@ -130,6 +130,9 @@ public:
         eRC_SupplyStock_Distributed,
         eRC_FirstTourOfZoneConfinementDone,
         eRC_ZoneConfinementInProgress,
+        eRC_ZoneEvacuated,
+        eRC_ArrivedOnEvacuateZone,
+        eRC_ZoneEvacuationInProgress,
         eNbrReport
     };
 

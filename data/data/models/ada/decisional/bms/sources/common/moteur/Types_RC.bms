@@ -369,7 +369,10 @@ eRC_ArrivedOnConfinedZone = 350
 eRC_PasDeDroneDisponible = 351
 eRC_FirstTourOfZoneConfinementDone = 352
 eRC_ZoneConfinementInProgress = 353
-eNbr = 353
+eRC_ZoneEvacuated = 354
+eRC_ArrivedOnEvacuateZone = 355
+eRC_ZoneEvacuationInProgress = 356
+eNbr = 356
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion
