@@ -395,8 +395,7 @@ void MainWindow::DoLoad( QString filename )
         return;
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
-
-    malformedFiles_.clear();
+    
     config_.LoadExercise( filename.ascii() );
     if( Load() )
     {
