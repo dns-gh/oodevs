@@ -21,6 +21,7 @@ namespace xml
 namespace tools
 {
     class Loader_ABC;
+    class RealFileLoaderObserver_ABC;
 
 // =============================================================================
 /** @class  ExerciseConfig
@@ -33,7 +34,7 @@ class ExerciseConfig : public GeneralConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseConfig( std::auto_ptr< tools::Loader_ABC > fileLoader );
+             ExerciseConfig( RealFileLoaderObserver_ABC& observer );
     virtual ~ExerciseConfig();
     //@}
 

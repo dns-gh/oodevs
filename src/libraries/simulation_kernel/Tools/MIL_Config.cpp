@@ -31,7 +31,7 @@ namespace bfs = boost::filesystem;
 // Created: NLD 2003-12-04
 // -----------------------------------------------------------------------------
 MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
-    : tools::SessionConfig      ( std::auto_ptr< tools::Loader_ABC >( new tools::Loader( *this, observer ) ) )
+    : tools::SessionConfig      ( observer )
     , endTick_                  ( 0 )
     , diaDebuggerPort_          ( 0 )
     , networkLoggerPort_        ( 0 )

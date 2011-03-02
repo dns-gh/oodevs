@@ -14,7 +14,6 @@
 
 namespace tools
 {
-
 // =============================================================================
 /** @class  SessionConfig
     @brief  Session configuration
@@ -26,7 +25,7 @@ class SessionConfig : public ExerciseConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionConfig( std::auto_ptr< tools::Loader_ABC > fileLoader );
+             SessionConfig( RealFileLoaderObserver_ABC& observer );
     virtual ~SessionConfig();
     //@}
 

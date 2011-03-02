@@ -10,7 +10,6 @@
 #include "tools_pch.h"
 #include "SessionConfig.h"
 
-#include "Loader_ABC.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/program_options.hpp>
@@ -25,8 +24,8 @@ using namespace tools;
 // Name: SessionConfig constructor
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-SessionConfig::SessionConfig( std::auto_ptr< tools::Loader_ABC > fileLoader )
-    : ExerciseConfig    ( fileLoader )
+SessionConfig::SessionConfig( RealFileLoaderObserver_ABC& observer )
+    : ExerciseConfig    ( observer )
     , sessionConfigFile_( "session.xml" )
     , hasCheckPoint_    ( false )
 {

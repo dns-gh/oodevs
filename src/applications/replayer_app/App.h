@@ -16,6 +16,11 @@
 #include <boost/thread.hpp>
 #pragma warning( pop )
 
+namespace tools
+{
+    class RealFileLoaderObserver_ABC;
+}
+
 namespace dispatcher
 {
     class Config;
@@ -62,6 +67,7 @@ private:
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
     std::auto_ptr< dispatcher::Config >   config_;
     std::auto_ptr< dispatcher::Replayer > replayer_;
     //@}

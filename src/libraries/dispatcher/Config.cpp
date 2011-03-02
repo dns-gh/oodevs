@@ -23,7 +23,7 @@ using namespace dispatcher;
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 Config::Config( tools::RealFileLoaderObserver_ABC& observer )
-    : SessionConfig( std::auto_ptr< tools::Loader_ABC >( new tools::Loader( *this, observer ) ) )
+    : SessionConfig( observer )
     , networkClientsParameters_( 0 )
     , networkShieldParameters_ ( 0 )
     , keyFramesFrequency_      ( 100 )

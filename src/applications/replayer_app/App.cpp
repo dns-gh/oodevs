@@ -13,6 +13,7 @@
 #include "tools/WinArguments.h"
 #include "resource.h"
 #include "dispatcher/Config.h"
+#include "tools/NullFileLoaderObserver.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
@@ -27,7 +28,8 @@ static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
 App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/ ,LPSTR lpCmdLine, int /* nCmdShow */ )
-    : config_( new dispatcher::Config() )
+    : observer_( new tools::NullFileLoaderObserver() )
+    , config_  ( new dispatcher::Config( *observer_ ) )
 {
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "Sword(tm) Replayer" );

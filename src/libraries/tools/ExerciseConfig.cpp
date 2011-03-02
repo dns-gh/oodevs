@@ -10,7 +10,6 @@
 #include "tools_pch.h"
 #include "ExerciseConfig.h"
 #include "Loader.h"
-#include "Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
@@ -25,8 +24,8 @@ using namespace tools;
 // Name: ExerciseConfig constructor
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------
-ExerciseConfig::ExerciseConfig( std::auto_ptr< tools::Loader_ABC > fileLoader )
-    : fileLoader_( fileLoader )
+ExerciseConfig::ExerciseConfig( RealFileLoaderObserver_ABC& observer )
+    : fileLoader_( new Loader( *this, observer ) )
 {
     po::options_description desc( "Exercise options" );
     desc.add_options()
