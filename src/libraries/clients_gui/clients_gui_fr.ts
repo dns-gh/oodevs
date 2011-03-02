@@ -992,12 +992,12 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::PopulationsPanel</name>
     <message>
-        <source>Crowds</source>
-        <translation>Foules</translation>
+        <source>Number:</source>
+        <translation>Nombre:</translation>
     </message>
     <message>
-        <source>Healthy number:</source>
-        <translation type="unfinished"></translation>
+        <source>Crowds</source>
+        <translation>Foules</translation>
     </message>
 </context>
 <context>

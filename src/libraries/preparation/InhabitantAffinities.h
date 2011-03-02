@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __EntityAffinities_h_
-#define __EntityAffinities_h_
+#ifndef __InhabitantAffinities_h_
+#define __InhabitantAffinities_h_
 
 #include "Types.h"
 #include "clients_kernel/Extension_ABC.h"
@@ -19,7 +19,7 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class entity_ABC;
+    class Inhabitant_ABC;
     class PropertiesDictionary;
     class Team_ABC;
 }
@@ -32,12 +32,12 @@ namespace xml
 class Model;
 
 // =============================================================================
-/** @class  EntityAffinities
-    @brief  EntityAffinities
+/** @class  InhabitantAffinities
+    @brief  InhabitantAffinities
 */
 // Created: ABR 2011-01-27
 // =============================================================================
-class EntityAffinities : public kernel::Extension_ABC
+class InhabitantAffinities : public kernel::Extension_ABC
                            , public kernel::Serializable_ABC
                            , public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< kernel::Team_ABC >
@@ -46,9 +46,9 @@ class EntityAffinities : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityAffinities( kernel::Controllers& controllers, Model& model, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary );
-             EntityAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
-    virtual ~EntityAffinities();
+             InhabitantAffinities( kernel::Controllers& controllers, Model& model, const kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary );
+             InhabitantAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, const kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico );
+    virtual ~InhabitantAffinities();
     //@}
 
     //! @name Operations
@@ -62,8 +62,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    EntityAffinities( const EntityAffinities& );            //!< Copy constructor
-    EntityAffinities& operator=( const EntityAffinities& ); //!< Assignment operator
+    InhabitantAffinities( const InhabitantAffinities& );            //!< Copy constructor
+    InhabitantAffinities& operator=( const InhabitantAffinities& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -77,7 +77,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< unsigned long, EntityAffinity > T_Affinities;
+    typedef std::map< unsigned long, InhabitantAffinity > T_Affinities;
     typedef T_Affinities::const_iterator                CIT_Affinities;
 
     typedef std::map< unsigned long, std::string > T_TeamMap;
@@ -88,11 +88,11 @@ private:
     //@{
     kernel::Controllers&            controllers_;
     Model&                          model_;
-    const kernel::Entity_ABC&       entity_;
+    const kernel::Inhabitant_ABC&   inhabitant_;
     kernel::PropertiesDictionary&   dictionary_;
     T_Affinities                    affinities_;
     T_TeamMap                       knownTeams_;
     //@}
 };
 
-#endif // __EntityAffinities_h_
+#endif // __InhabitantAffinities_h_

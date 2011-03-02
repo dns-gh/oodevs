@@ -92,40 +92,12 @@
         <translation type="unfinished">Info/Tipo</translation>
     </message>
     <message>
+        <source>Info/Humans</source>
+        <translation type="unfinished">Info/Personas</translation>
+    </message>
+    <message>
         <source>Info/Mood</source>
         <translation type="unfinished">Info/Moral</translation>
-    </message>
-    <message>
-        <source>Humans/Healthy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Humans/Contaminated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Humans/Wounded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Humans/Dead</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info/Armed-Individuals</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>M\F\C ratio/Males</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>M\F\C ratio/Females</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>M\F\C ratio/Children</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -605,6 +577,13 @@
     </message>
     <message>
         <source>Living Area/%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PopulationAffinities</name>
+    <message>
+        <source>Affinities/%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

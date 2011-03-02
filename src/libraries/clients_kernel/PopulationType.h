@@ -39,10 +39,6 @@ public:
     unsigned long GetId() const;
 
     float GetDensity() const;
-    float GetArmedIndividuals() const;
-    float GetMale() const;
-    float GetFemale() const;
-    float GetChildren() const;
 
     const DecisionalModel& GetDecisionalModel() const;
     //@}
@@ -61,10 +57,6 @@ private:
     unsigned long id_;
     const DecisionalModel* model_;
     float density_;
-    float armedIndividuals_;
-    float male_;
-    float female_;
-    float children_;
     //@}
 };
 
