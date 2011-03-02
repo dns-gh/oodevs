@@ -92,9 +92,9 @@
     </roof-shape-types>
   </urban-block-types>
   <accommodations>
-    <accommodation capacity="0.5" role="leisure"/>
-    <accommodation capacity="0.07" role="home"/>
-    <accommodation capacity="0.2" role="office"/>
+    <accommodation capacity="0.5" role="Loisir"/>
+    <accommodation capacity="0.07" role="Logement"/>
+    <accommodation capacity="0.2" role="Travail"/>
   </accommodations>
   <infrastructures>
     <infrastructure name="Ressources eau" symbol="resource-water">
@@ -169,4 +169,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="0568784476" -->
+<!-- signature="3575206533" -->
