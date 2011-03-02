@@ -23,7 +23,13 @@ PopulationType::PopulationType( xml::xistream& xis, const tools::Resolver_ABC< D
     xis >> xml::attribute( "name", name_ )
         >> xml::attribute( "id", id_ )
         >> xml::attribute( "decisional-model", model )
-        >> xml::attribute( "concentration-density", density_ );
+        >> xml::attribute( "concentration-density", density_ )
+        >> xml::attribute( "armed-individuals", armedIndividuals_ )
+        >> xml::start( "repartition" )
+            >> xml::attribute( "male", male_ )
+            >> xml::attribute( "female", female_ )
+            >> xml::attribute( "female", children_ )
+        >> xml::end;
     model_ = & modelResolver.Get( model );
 }
 
@@ -61,6 +67,42 @@ unsigned long PopulationType::GetId() const
 float PopulationType::GetDensity() const
 {
     return density_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationType::GetArmedIndividuals
+// Created: MGD 2011-02-23
+// -----------------------------------------------------------------------------
+float PopulationType::GetArmedIndividuals() const
+{
+    return armedIndividuals_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationType::GetArmedIndividuals
+// Created: MGD 2011-02-23
+// -----------------------------------------------------------------------------
+float PopulationType::GetMale() const
+{
+    return male_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationType::GetArmedIndividuals
+// Created: MGD 2011-02-23
+// -----------------------------------------------------------------------------
+float PopulationType::GetFemale() const
+{
+    return female_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationType::GetArmedIndividuals
+// Created: MGD 2011-02-23
+// -----------------------------------------------------------------------------
+float PopulationType::GetChildren() const
+{
+    return children_;
 }
 
 // -----------------------------------------------------------------------------

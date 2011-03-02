@@ -5102,7 +5102,7 @@
 				<label text="Nom long unité" language="fr"/>
 			</labels>
 		</attribute>
-		<attribute extends="unit;automat;formation" name="Nationalite"  type="dictionary" dictionary="T_Nationalite">
+		<attribute extends="unit;automat;formation;crowd" name="Nationalite"  type="dictionary" dictionary="T_Nationalite">
 			<labels>
 				<label text="Nationalité" language="fr"/>
 			</labels>
@@ -5112,12 +5112,12 @@
 				<label text="Nationalite" language="fr"/>
 			</labels>
   	</attribute>
-	 <attribute extends="population" name="Ethnicite" type="string">
+	 <attribute extends="population;crowd" name="Ethnicite" type="string">
 			<labels>
 				<label text="Ethnicite" language="fr"/>
 			</labels>
 		</attribute>
-		<attribute extends="population" name="Religion" type="string">
+		<attribute extends="population;crowd" name="Religion" type="string">
 			<labels>
 				<label text="Religion" language="fr"/>
 			</labels>
@@ -5125,6 +5125,11 @@
 		<attribute extends="unit;formation;automat;crowd;population" name="Id64" type="string">
 			<labels>
 				<label text="Id 64 bits" language="fr"/>
+			</labels>
+		</attribute>
+		<attribute extends="crowd" name="Information" type="string">
+			<labels>
+				<label text="Information" language="fr"/>
 			</labels>
 		</attribute>
 	</orbat-attributes>

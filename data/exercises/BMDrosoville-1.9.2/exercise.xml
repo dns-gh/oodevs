@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise model-version="4.2.6">
+<exercise model-version="4.2.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/exercise.xsd">
   <meta>
-    <name><![CDATA[Drosoville 1.9.2]]></name>
     <briefing/>
     <resources/>
   </meta>
@@ -12,4 +11,4 @@
   <terrain name="Drosoville"/>
   <model dataset="ada" physical="scipio-1.9.2"/>
 </exercise>
-<!-- signature="0830323973" -->
+<!-- signature="2661421088" -->

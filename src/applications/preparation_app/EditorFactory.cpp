@@ -320,7 +320,7 @@ void EditorFactory::Call( kernel::Moveable_ABC** const& value )
 namespace
 {
     class BoundedFloatEditor : public gui::DecimalSpinBox
-                             , public kernel::ValueEditor< InhabitantAffinity >
+                             , public kernel::ValueEditor< EntityAffinity >
     {
     public:
         explicit BoundedFloatEditor( QWidget* parent, float value = 0.f, unsigned short precision = 2, float min = 0.f, float max = 10.f, float gap = 0.1f )
@@ -331,7 +331,7 @@ namespace
         }
         virtual ~BoundedFloatEditor() {}
 
-        virtual InhabitantAffinity GetValue()
+        virtual EntityAffinity GetValue()
         {
             return value() / factor_;
         }
@@ -343,7 +343,7 @@ namespace
 // Name: EditorFactory::Call
 // Created: SBO 2011-02-02
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( InhabitantAffinity* const& value )
+void EditorFactory::Call( EntityAffinity* const& value )
 {
     result_ = new BoundedFloatEditor( parent_, *value, 2, -1.f, 1.f, 0.01f );
 }

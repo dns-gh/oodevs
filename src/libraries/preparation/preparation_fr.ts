@@ -92,12 +92,40 @@
         <translation>Info/Type</translation>
     </message>
     <message>
-        <source>Info/Humans</source>
-        <translation>Info/Personnes</translation>
-    </message>
-    <message>
         <source>Info/Mood</source>
         <translation>Info/Moral</translation>
+    </message>
+    <message>
+        <source>Humans/Healthy</source>
+        <translation">Humains/Sains</translation>
+    </message>
+    <message>
+        <source>Humans/Contaminated</source>
+        <translation>Humains/Contaminés</translation>
+    </message>
+    <message>
+        <source>Humans/Wounded</source>
+        <translation>Humains/Blessés</translation>
+    </message>
+    <message>
+        <source>Humans/Dead</source>
+        <translation>Humains/Morts</translation>
+    </message>
+    <message>
+        <source>Info/Armed-Individuals</source>
+        <translation>Info/Individus armés</translation>
+    </message>
+    <message>
+        <source>M\F\C ratio/Males</source>
+        <translation>Répartion H\F\E/Hommes</translation>
+    </message>
+    <message>
+        <source>M\F\C ratio/Females</source>
+        <translation>Répartion H\F\E/Femmes</translation>
+    </message>
+    <message>
+        <source>M\F\C ratio/Children</source>
+        <translation>Répartion H\F\E/Enfants</translation>
     </message>
 </context>
 <context>

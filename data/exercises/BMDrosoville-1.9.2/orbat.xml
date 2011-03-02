@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/orbat.xsd">
   <parties>
     <party id="1" name="GoodGuys" type="friend">
       <objects>
-        <object id="43" name="Poste de contrôle [43]" type="checkpoint">
+        <object id="43" name="Poste de contrÃ´le [43]" type="checkpoint">
           <shape type="point">
             <points>
               <point>31TCM1140686277</point>
@@ -29,7 +29,9 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="false" type="reserved"/>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="0"/>
+            </obstacle>
           </attributes>
         </object>
         <object id="53" name="Bouchon de mines [53]" type="mines">
@@ -39,11 +41,13 @@
             </points>
           </shape>
           <attributes>
-            <obstacle activated="true" type="preliminary"/>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
             <activity-time value="36000"/>
           </attributes>
         </object>
-        <object id="54" name="Site de décontamination [54]" type="decontamination site">
+        <object id="54" name="Site de dÃ©contamination [54]" type="decontamination site">
           <shape type="polygone">
             <points>
               <point>31TCM1025989339</point>
@@ -53,7 +57,7 @@
           </shape>
           <attributes/>
         </object>
-        <object id="55" name="Site de décontamination [55]" type="decontamination site">
+        <object id="55" name="Site de dÃ©contamination [55]" type="decontamination site">
           <shape type="polygone">
             <points>
               <point>31TCM0957490359</point>
@@ -100,13 +104,6 @@
             <unit command-post="false" id="49" name="Unit test" position="31TCM1063688220" type="Pion de tests"/>
             <unit command-post="false" id="122" name="Section de Tir AUF1 CDS SOFF[76]" position="31TCM1063688220" type="Section de Tir . AUF1 CDS OFF"/>
           </automat>
-          <automat engaged="false" id="200" knowledge-group="2" name="SGTIA PIA" type="SGTIA">
-            <unit command-post="true" id="201" name="PC SGTIA" position="31TCM1027186842" type="PC SGTIA"/>
-            <unit command-post="false" id="202" name="PIA INF 1" position="31TCM1027186842" type="PIA Dominante INF"/>
-            <unit command-post="false" id="203" name="PIA INF 1" position="31TCM1027186842" type="PIA Dominante INF"/>
-            <unit command-post="false" id="204" name="PIA ABC 1" position="31TCM1027186842" type="PIA Dominante ABC"/>
-            <unit command-post="false" id="205" name="PIA RENS 1" position="31TCM1027186842" type="PIA Dominante Reco"/>
-          </automat>
           <automat engaged="true" id="29" knowledge-group="2" name="SGTIA Engaged" type="SGTIA">
             <unit command-post="true" id="30" name="Section CDT CIE INF VAB" position="31TCM1135691013" type="Section . CDT CIE INF VAB"/>
             <unit command-post="false" id="31" name="Section CBT INF VAB CDS OFF" position="31TCM1138090952" type="Section . CBT INF VAB CDS OFF"/>
@@ -114,8 +111,8 @@
             <unit command-post="false" id="33" name="Peloton LECLERC CDP OFF" position="31TCM1135391009" type="Peloton . LECLERC CDP OFF"/>
             <unit command-post="false" id="34" name="Peloton LECLERC CDP OFF" position="31TCM1132490824" type="Peloton . LECLERC CDP OFF"/>
             <unit command-post="false" id="147" name="GEN EBG" position="31TCM1132490825" type="Groupe GEN . EBG"/>
-          </automat> 
-          <automat engaged="true" id="58" knowledge-group="2" name="TC2 LOG" type="LOG - TC2 LOG" logistic-level="tc2">
+          </automat>
+          <automat engaged="true" id="58" knowledge-group="2" logistic-level="tc2" name="TC2 LOG" type="LOG - TC2 LOG">
             <unit command-post="true" id="59" name="TC2" position="31TCM0973787237" type="LOG - TC2"/>
           </automat>
           <automat engaged="true" id="67" knowledge-group="2" name="Compagnie INF AMX 10 P [67]" type="INF - Compagnie CBT AMX 10 P">
@@ -141,6 +138,13 @@
             <unit command-post="false" id="88" name="Peloton Transport Blindes CL100" position="31TCM1638786365" type="LOG - Peloton Transport Blindes CL100"/>
             <unit command-post="false" id="89" name="Peloton Transport Blindes CL50" position="31TCM1587085882" type="LOG - Peloton Transport Blindes CL50"/>
           </automat>
+          <automat engaged="false" id="200" knowledge-group="2" name="SGTIA PIA" type="SGTIA">
+            <unit command-post="true" id="201" name="PC SGTIA" position="31TCM1027186842" type="PC SGTIA"/>
+            <unit command-post="false" id="202" name="PIA INF 1" position="31TCM1027186842" type="PIA Dominante INF"/>
+            <unit command-post="false" id="203" name="PIA INF 1" position="31TCM1027186842" type="PIA Dominante INF"/>
+            <unit command-post="false" id="204" name="PIA ABC 1" position="31TCM1027186842" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="205" name="PIA RENS 1" position="31TCM1027186842" type="PIA Dominante Reco"/>
+          </automat>
           <limit name="Limite 35">
             <point>31TCM0924991950</point>
             <point>31TCM1368891957</point>
@@ -158,9 +162,8 @@
         <knowledge-group id="2" name="Groupe de connaissance [1]" type="Standard"/>
       </communication>
       <populations/>
-      <logistics>
-        <tc2 id="58"/>
-      </logistics>
+      <inhabitants/>
+      <logistics/>
     </party>
     <party id="3" name="NeutralGuys" type="neutral">
       <objects/>
@@ -176,8 +179,31 @@
         <knowledge-group id="61" name="Groupe de connaissance [61]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="10001" id="66" name="Population standard [66]" position="31TCM0866089404" type="Population standard BM"/>
+        <population armed-individuals="0" attitude="calme" children="0" contaminated="5" dead="1" female="0" healthy="10000" id="66" male="1" name="Population standard [66]" position="31TCM0866089404" type="Population standard BM" wounded="10">
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="13" value="1.4013e-045"/>
+          </adhesions>
+        </population>
       </populations>
+      <inhabitants>
+        <inhabitant id="208" name="46546546" type="popType4">
+          <composition dead="0" healthy="50" wounded="0"/>
+          <health-need quantity="0.05"/>
+          <information></information>
+          <living-area>
+            <urban-block id="44"/>
+            <urban-block id="45"/>
+            <urban-block id="46"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="13" value="-1"/>
+          </adhesions>
+        </inhabitant>
+      </inhabitants>
       <logistics/>
     </party>
     <party id="13" name="BadGuys" type="enemy">
@@ -210,15 +236,22 @@
           <automat engaged="false" id="90" knowledge-group="17" name="Tireurs [90]" type="Tireurs">
             <unit command-post="true" id="91" name="Tireur PC" position="31TCM1290083941" type="Tireur"/>
             <unit command-post="false" id="92" name="Tireur 1" position="31TCM1290083941" type="Tireur"/>
-          </automat> 
+          </automat>
         </formation>
       </tactical>
       <communication>
         <knowledge-group id="17" name="Groupe de connaissance [17]" type="Standard"/>
       </communication>
       <populations>
-        <population attitude="calme" humans="1001" id="77" name="Population bad [77]" position="31TCM0866087404" type="Population standard BM"/>
+        <population armed-individuals="0" attitude="calme" children="0" contaminated="0" dead="4" female="0" healthy="1000" id="77" male="0" name="Population bad [77]" position="31TCM0866087404" type="Population standard BM" wounded="0">
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="13" value="-1"/>
+          </adhesions>
+        </population>
       </populations>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -237,4 +270,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0395256123" -->
+<!-- signature="3694888521" -->

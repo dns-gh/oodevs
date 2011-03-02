@@ -456,29 +456,72 @@
         <xs:extension base="entityType">
           <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element name="extensions" type="T_ExtensionsType"/>
+            <xs:element ref="adhesions"/>
           </xs:choice>
           <xs:attribute name="attitude" type="populationAttitudeType" use="required">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the initial crowd attitude.</xs:documentation>
-              <xs:documentation xml:lang="fr">Définit l'attitude initiale de la population couvrante.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit l'attitude initiale de la foule.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="humans" type="xs:positiveInteger" use="required">
+          <xs:attribute name="healphy" type="xs:positiveInteger" use="required">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Defines the initial number of people composing the crowd.</xs:documentation>
-              <xs:documentation xml:lang="fr">Définit le nombre initial d'individus formant la population couvrante.</xs:documentation>
+              <xs:documentation xml:lang="en">Defines the initial number of healphy people composing the crowd.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le nombre initial d'individus sains formant la foule.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="wounded" type="xs:positiveInteger" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the initial number of wounded people composing the crowd.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le nombre initial d'individus blessés formant la foule.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="dead" type="xs:positiveInteger" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the initial number of dead people composing the crowd.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le nombre initial d'individus morts formant la foule.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="contaminated" type="xs:positiveInteger" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the initial number of contaminated people composing the crowd.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le nombre initial d'individus contaminés formant la foule.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="armed-individuals" type="T_ZeroToOneDouble[" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the initial percentage of armed individuals composing the crowd.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le nombre initial d'individus armés formant la foule.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="male" type="T_ZeroToOneDouble" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the initial percentage of male composing the crowd.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le nombre initial d'hommes formant la foule.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="female" type="T_ZeroToOneDouble" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the initial percentage of female composing the crowd.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le nombre initial de femmes armés formant la foule.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="children" type="T_ZeroToOneDouble" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the initial percentage of children composing the crowd.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le nombre initial d'enfants formant la foule.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="position" type="utmCoordinatesType" use="required">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the initial position of the center of the crowd concentration.</xs:documentation>
-              <xs:documentation xml:lang="fr">Définit la géolocalisation initiale du centre de la population couvrante.</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit la géolocalisation initiale du centre de la foule.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
           <xs:attribute name="type" type="xs:string" use="required">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the type of crowd. References an existing crowd type from "Populations.xml".</xs:documentation>
-              <xs:documentation xml:lang="fr">Définit le type de la population couvrante. Renvoie vers "Populations.xml".</xs:documentation>
+              <xs:documentation xml:lang="fr">Définit le type de la foule. Renvoie vers "Populations.xml".</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:extension>

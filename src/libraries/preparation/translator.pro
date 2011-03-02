@@ -16,7 +16,7 @@ FloodAttribute.cpp \
 Formation.cpp \
 InfrastructureAttribute.cpp \
 Inhabitant.cpp \
-InhabitantAffinities.cpp \
+EntityAffinities.cpp \
 InhabitantPositions.cpp \
 InputToxicCloudAttribute.cpp \
 Intelligence.cpp \
