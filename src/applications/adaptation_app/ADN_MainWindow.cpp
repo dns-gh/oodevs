@@ -506,8 +506,6 @@ void ADN_MainWindow::ConfigureDataTest()
     config_.Configure();
 }
 
-extern const char* szVersionNumber;
-
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::About
 // Created: JDY 03-09-11

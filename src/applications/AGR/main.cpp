@@ -11,6 +11,7 @@
 #include "AGR_Workspace.h"
 #include "AGR_EnumGenerator.h"
 #include "MT_Tools/MT_Version.h"
+#include "tools/Version.h"
 #include <windows.h>
 #undef max
 #include <iostream>
@@ -19,7 +20,7 @@ namespace bfs = boost::filesystem;
 
 int main( int /*argc*/, char** /*argv*/ )
 {
-    SetConsoleTitle( "ASN Based Class Generator - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ );
+    SetConsoleTitle( ( "ASN Based Class Generator - Version " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ ).c_str() );
     AGR_Workspace workspace;
     try
     {

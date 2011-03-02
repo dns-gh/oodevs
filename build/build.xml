@@ -93,11 +93,7 @@
     </target>
 
     <target name="library.MT_Tools" description="build MT_Tools static library">
-        <build-lib name="MT_Tools" pattern="lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" suffix="-gd">
-            <defineset>
-                <define name="VERSION" value="${version.minor}"/>
-            </defineset>
-        </build-lib>
+        <build-lib name="MT_Tools" pattern="lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
     <target name="library.protocol" description="build protocol static library">

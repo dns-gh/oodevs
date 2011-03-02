@@ -11,6 +11,6 @@
 
 #include "adaptation_app_pch.h"
 #include "MT_Tools/MT_Version.h"
+#include "tools/Version.h"
 
-const char* szADN_Version   = "ADN - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
-const char* szVersionNumber = " - " VERSION " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
+const char* szADN_Version   = ( "ADN - " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ ).c_str();

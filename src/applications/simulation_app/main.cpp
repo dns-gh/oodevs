@@ -3,7 +3,7 @@
 #include "SIM_App.h"
 #include "SIM_NetworkLogger.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_Version.h"
+#include "tools/Version.h"
 #include "MT_Tools/MT_CrashHandler.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_FileLogger.h"
@@ -31,33 +31,6 @@ int __cdecl NoMoreMemoryHandler( unsigned int nSize )
         default:
             throw std::bad_alloc();
     }
-}
-
-//-----------------------------------------------------------------------------
-// Name: WriteMiniDump()
-// Created: NLD 2004-02-04
-//-----------------------------------------------------------------------------
-LONG WriteMiniDump( EXCEPTION_POINTERS* pExp )
-{
-    assert( pExp );
-    if( !IsDebuggerPresent() && SIM_App::CrashWithCoreDump() )
-    {
-        _mkdir( "./Debug" );
-        std::stringstream strFileName;
-        strFileName << "./Debug/SIM " << VERSION << ".dmp";
-        MT_LOG_INFO_MSG( MT_FormatString( "The SIM has crashed - Writing core dump to file %s", strFileName.str().c_str() ) );
-        HANDLE hDumpFile = CreateFile( strFileName.str().c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
-        MINIDUMP_EXCEPTION_INFORMATION eInfo;
-        eInfo.ThreadId = GetCurrentThreadId();
-        eInfo.ExceptionPointers = pExp;
-        eInfo.ClientPointers = FALSE;
-        MiniDumpWriteDump( GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpWithFullMemory, &eInfo, NULL, 0 );
-        CloseHandle( hDumpFile );
-        MT_LOG_INFO_MSG( "Core dump written" );
-    }
-    else
-        MT_LOG_INFO_MSG( "The SIM has crashed - no core dump generated" );
-    return EXCEPTION_CONTINUE_SEARCH;
 }
 
 //-----------------------------------------------------------------------------
@@ -92,7 +65,8 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
 
     _mkdir( "./Debug" );
     MT_FileLogger           fileLogger     ( "./Debug/Sim.log" );
-    MT_FileLogger           crashFileLogger( "./Debug/Crash " VERSION ".log", MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError );
+    const std::string filename = "./Debug/Crash Version " + std::string( tools::AppVersion() ) + ".log";
+    MT_FileLogger           crashFileLogger( filename.c_str(), MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError );
     MT_LOG_REGISTER_LOGGER( fileLogger );
     MT_LOG_REGISTER_LOGGER( crashFileLogger );
 

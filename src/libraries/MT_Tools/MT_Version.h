@@ -10,10 +10,6 @@
 #ifndef __MT_Version_h_
 #define __MT_Version_h_
 
-#ifndef VERSION
-#   define VERSION "dev version"
-#endif
-
 #ifdef _DEBUG
 #   define MT_COMPILE_TYPE "Debug"
 #else
