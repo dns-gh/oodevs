@@ -113,12 +113,19 @@ void MIL_Mission_ABC::FillParameters( int firstIndex, const sword::MissionParame
         const MIL_OrderTypeParameter& parameterType = **it;
         if( parameters.elem_size() < i )
             throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
-        boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::Create( parameterType, parameters.elem( i ), knowledgeResolver_ );
-        if( !pParameter->IsOfType( parameterType.GetType().GetType() ) )
+        try
+        {
+            boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::Create( parameterType, parameters.elem( i ), knowledgeResolver_ );
+            if( !pParameter->IsOfType( parameterType.GetType().GetType() ) )
+                throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+            if( !parameterType.IsOptional() && dynamic_cast< const MIL_NullParameter* >( pParameter.get() ) )
+                throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+            parameters_.push_back( pParameter );
+        }
+        catch( std::exception& )
+        {
             throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
-        if( !parameterType.IsOptional() && dynamic_cast< const MIL_NullParameter* >( pParameter.get() ) )
-            throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
-        parameters_.push_back( pParameter );
+        }
     }
 }
 
