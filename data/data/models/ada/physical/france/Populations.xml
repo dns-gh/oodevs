@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <populations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Crowds.xsd">
   <reloading-time-effect modifier="1" population-density="0.05"/>
-  <time-between-nbc-applications>1h</time-between-nbc-applications>
+  <time-between-nbc-applications delay="1h"/>
   <population armed-individuals="0.02" concentration-density="0.05" decisional-model="Population" id="0" moving-base-density="0.5" moving-speed="6" name="Population standard">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
@@ -66,4 +66,4 @@
     <repartition children="0" female="0.5" male="0.5"/>
   </population>
 </populations>
-<!-- signature="4139594843" -->
+<!-- signature="0281236322" -->

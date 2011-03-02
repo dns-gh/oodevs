@@ -10,7 +10,11 @@
 						<xs:attribute name="modifier" type="xs:nonNegativeInteger" use="required"/>
 					</xs:complexType>
 				</xs:element>
-                <xs:element name="time-between-nbc-applications" type="T_Time"  minOccurs="0"/>
+                <xs:element name="time-between-nbc-applications" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute name="delay" type="T_Time" use="required"/>
+					</xs:complexType>
+				</xs:element>
 				<xs:element name="population" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
 						<xs:sequence>

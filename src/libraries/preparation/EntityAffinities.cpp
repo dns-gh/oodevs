@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "InhabitantAffinities.h"
+#include "EntityAffinities.h"
 #include "Model.h"
 #include "TeamsModel.h"
 #include "clients_kernel/Controllers.h"
@@ -20,13 +20,13 @@
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities constructor
+// Name: EntityAffinities constructor
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-InhabitantAffinities::InhabitantAffinities( kernel::Controllers& controllers, Model& model, const kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary )
+EntityAffinities::EntityAffinities( kernel::Controllers& controllers, Model& model, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary )
     : controllers_( controllers )
     , model_      ( model )
-    , inhabitant_ ( inhabitant )
+    , entity_ ( entity )
     , dictionary_ ( dictionary )
 {
     InitializeAffinities();
@@ -35,18 +35,18 @@ InhabitantAffinities::InhabitantAffinities( kernel::Controllers& controllers, Mo
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities constructor
+// Name: EntityAffinities constructor
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-InhabitantAffinities::InhabitantAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, const kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dictionary )
+EntityAffinities::EntityAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary )
     : controllers_( controllers )
     , model_      ( model )
-    , inhabitant_ ( inhabitant )
+    , entity_ ( entity )
     , dictionary_ ( dictionary )
 {
     xis >> xml::optional
         >> xml::start( "adhesions" )
-            >> xml::list( "adhesion", *this, &InhabitantAffinities::ReadAffinity )
+            >> xml::list( "adhesion", *this, &EntityAffinities::ReadAffinity )
         >> xml::end;
     if( affinities_.empty() )
         InitializeAffinities();
@@ -55,42 +55,42 @@ InhabitantAffinities::InhabitantAffinities( xml::xistream& xis, kernel::Controll
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities destructor
+// Name: EntityAffinities destructor
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-InhabitantAffinities::~InhabitantAffinities()
+EntityAffinities::~EntityAffinities()
 {
     controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::ReadAffinity
+// Name: EntityAffinities::ReadAffinity
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::ReadAffinity( xml::xistream& xis )
+void EntityAffinities::ReadAffinity( xml::xistream& xis )
 {
     affinities_[ xis.attribute< unsigned long >( "party" ) ] = xis.attribute< float >( "value" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::UpdateDictionary
+// Name: EntityAffinities::UpdateDictionary
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::UpdateDictionary()
+void EntityAffinities::UpdateDictionary()
 {
     for( T_Affinities::iterator it = affinities_.begin(); it != affinities_.end(); ++it )
         if( const kernel::Team_ABC* team = model_.teams_.Find( it->first ) )
         {
-            dictionary_.Register( inhabitant_, tools::translate( "PopulationAffinities", "Affinities/%1" ).arg( team->GetName() ), it->second );
+            dictionary_.Register( entity_, tools::translate( "PopulationAffinities", "Affinities/%1" ).arg( team->GetName() ), it->second );
             knownTeams_[ it->first ] = team->GetName();
         }
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::SerializeAttributes
+// Name: EntityAffinities::SerializeAttributes
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::SerializeAttributes( xml::xostream& xos ) const
+void EntityAffinities::SerializeAttributes( xml::xostream& xos ) const
 {
     if ( !VerifyAffinitiesContent() )
         throw std::runtime_error( __FUNCTION__ ": affinities list differs from team list" );
@@ -106,34 +106,34 @@ void InhabitantAffinities::SerializeAttributes( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::NotifyCreated
+// Name: EntityAffinities::NotifyCreated
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::NotifyCreated( const kernel::Team_ABC& team )
+void EntityAffinities::NotifyCreated( const kernel::Team_ABC& team )
 {
     if( !dictionary_.HasKey( team.GetName() ) )
     {
-        dictionary_.Register( inhabitant_, tools::translate( "PopulationAffinities", "Affinities/%1" ).arg( team.GetName() ), affinities_[ team.GetId() ] );
+        dictionary_.Register( entity_, tools::translate( "PopulationAffinities", "Affinities/%1" ).arg( team.GetName() ), affinities_[ team.GetId() ] );
         knownTeams_[ team.GetId() ] = team.GetName();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::NotifyUpdated
+// Name: EntityAffinities::NotifyUpdated
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::NotifyUpdated( const kernel::Team_ABC& team )
+void EntityAffinities::NotifyUpdated( const kernel::Team_ABC& team )
 {
     dictionary_.Remove( tools::translate( "PopulationAffinities", "Affinities/%1" ).arg( knownTeams_[ team.GetId() ].c_str() ) );
-    dictionary_.Register( inhabitant_, tools::translate( "PopulationAffinities", "Affinities/%1" ).arg( team.GetName() ), affinities_[ team.GetId() ] );
+    dictionary_.Register( entity_, tools::translate( "PopulationAffinities", "Affinities/%1" ).arg( team.GetName() ), affinities_[ team.GetId() ] );
     knownTeams_[ team.GetId() ] = team.GetName();
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::NotifyDeleted
+// Name: EntityAffinities::NotifyDeleted
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::NotifyDeleted( const kernel::Team_ABC& team )
+void EntityAffinities::NotifyDeleted( const kernel::Team_ABC& team )
 {
     affinities_.erase( team.GetId() );
     knownTeams_.erase( team.GetId() );
@@ -141,10 +141,10 @@ void InhabitantAffinities::NotifyDeleted( const kernel::Team_ABC& team )
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::InitializeAffinities
+// Name: EntityAffinities::InitializeAffinities
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::InitializeAffinities()
+void EntityAffinities::InitializeAffinities()
 {
     tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
     while( it.HasMoreElements() )
@@ -152,10 +152,10 @@ void InhabitantAffinities::InitializeAffinities()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::VerifyAffinitiesContent
+// Name: EntityAffinities::VerifyAffinitiesContent
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-bool InhabitantAffinities::VerifyAffinitiesContent() const
+bool EntityAffinities::VerifyAffinitiesContent() const
 {
     if( affinities_.size() != model_.teams_.Count() || affinities_.size() != knownTeams_.size() )
         return false;

@@ -716,7 +716,8 @@ void ADN_Population_Data::ReadArchive( xml::xistream& input )
 {
     std::string time = "1h";
     input >> xml::start( "populations" )
-            >> xml::optional >> xml::content( "time-between-nbc-applications", time);
+          >> xml::optional >> xml::start( "time-between-nbc-applications")
+          >> xml::attribute( "delay", time ) >> xml::end; 
     reloadingSpeedEffectInfos_.ReadArchive( input );
     timeBetweenNbcApplication_ = time;
     input >> xml::list( "population", *this, &ADN_Population_Data::ReadPopulation )
@@ -743,7 +744,9 @@ void ADN_Population_Data::WriteArchive( xml::xostream& output )
     output << xml::start( "populations" );
     ADN_Tools::AddSchema( output, "Crowds" );
     reloadingSpeedEffectInfos_.WriteArchive( output );
-    output << xml::content( "time-between-nbc-applications", timeBetweenNbcApplication_.GetData() );
+    output << xml::start( "time-between-nbc-applications" )
+            << xml::attribute( "delay", timeBetweenNbcApplication_.GetData() )
+           << xml::end;
     int n = 0;
     for( CIT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(    ); ++it, ++n )
         (*it)->WriteArchive( output, n );
