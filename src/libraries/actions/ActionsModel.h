@@ -25,6 +25,7 @@ namespace kernel
     class Entity_ABC;
     class FragOrderType;
     class MissionType;
+    class Object_ABC;
     class PopulationType;
     class StaticModel;
     class Resolver_ABC;
@@ -46,6 +47,10 @@ class Action_ABC;
 class ActionFactory_ABC;
 class ActionsFilter_ABC;
 class CreationListener_ABC;
+namespace parameters
+{
+    class ParameterList;
+}
 
 // =============================================================================
 /** @class  ActionsModel
@@ -75,6 +80,8 @@ public:
     Action_ABC* CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected );
     Action_ABC* CreateInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected );
     Action_ABC* CreateObjectMagicAction( const std::string& action, unsigned long targetId );
+    Action_ABC* CreateObjectUpdateMagicAction( const kernel::Object_ABC& object, parameters::ParameterList& attribute );
+    Action_ABC* CreateObjectDestroyMagicAction( const kernel::Object_ABC& object );
     void Destroy( const Action_ABC& action );
     void Purge( const ActionsFilter_ABC* filter = 0 );
     void Load( const std::string& filename, bool readonly = false );

@@ -177,6 +177,15 @@ void NodeProperties::AddConsumption( unsigned long resourceId, double consumptio
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::RemoveLink
+// Created: JSR 2011-03-01
+// -----------------------------------------------------------------------------
+void NodeProperties::RemoveLink( unsigned int nodeId )
+{
+    Apply( boost::bind( &NodeElement::RemoveLink, _1, nodeId ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::NeedUpdate
 // Created: JSR 2010-11-30
 // -----------------------------------------------------------------------------
@@ -224,10 +233,15 @@ void NodeProperties::Update( const google::protobuf::RepeatedPtrField< sword::Mi
     for( int i = 0; i< list.size(); ++i )
     {
         sword::MissionParameter_Value node = list.Get( i );
-        unsigned int id = tools_->GetResourceId( node.list( 0 ).acharstr() );
-        NodeElement* element = Find( id );
-        if( element )
-            element->Update( node );
+        std::string resourceName = node.list( 0 ).acharstr();
+        unsigned int resourceId = tools_->GetResourceId( node.list( 0 ).acharstr() );
+        NodeElement* element = Find( resourceId );
+        if( !element )
+        {
+            element = new NodeElement( resourceId, resourceName );
+            Register( resourceId, *element );
+        }
+        element->Update( node );
     }
 }
 

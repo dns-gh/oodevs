@@ -14,6 +14,7 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
+#include "tools/Resolver.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -21,6 +22,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class Object_ABC;
+    class ResourceNetworkType;
 }
 
 namespace gui
@@ -48,7 +50,7 @@ class ResourceLinksDialog_ABC : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceLinksDialog_ABC( QMainWindow* parent, kernel::Controllers& controllers );
+             ResourceLinksDialog_ABC( QMainWindow* parent, kernel::Controllers& controllers, const tools::StringResolver< kernel::ResourceNetworkType >& resources );
     virtual ~ResourceLinksDialog_ABC();
     //@}
 
@@ -64,6 +66,7 @@ private slots:
     void OnStockChanged( int value );
     void OnValueChanged( int i, int j );
     void Validate();
+    void OnChangeLink( int resourceId );
     //@}
 
 private:
@@ -75,6 +78,7 @@ private:
     virtual void Select( const TerrainObjectProxy& proxy );
     virtual void Select( const kernel::Object_ABC& element );
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
+    virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu );
     void Show();
     //@}
 
@@ -84,6 +88,8 @@ protected:
     kernel::Controllers& controllers_;
     kernel::ResourceNetwork_ABC* selected_;
     QListBoxItem* selectedItem_;
+    const tools::StringResolver< kernel::ResourceNetworkType >& resources_;
+    const kernel::Object_ABC* linkToChange_;
     bool urban_;
     unsigned int id_;
     kernel::ResourceNetwork_ABC::T_ResourceNodes resourceNodes_;

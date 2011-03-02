@@ -20,6 +20,7 @@
 #include "ExtinguishableCapacity.h"
 #include "WorkableCapacity.h"
 #include "DetectionCapacity.h"
+#include "ResourceNetworkCapacity.h"
 #include "SpawnCapacity.h"
 #include "StructuralCapacity.h"
 #include "AnimatorAttribute.h"
@@ -34,6 +35,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "resource_network/ResourceNetworkModel.h"
 #include "tools/Iterator.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
@@ -112,6 +114,8 @@ void MIL_ObjectManipulator::Destroy()
         if( childObject )
             ( *childObject )().Destroy();
     }
+    if( ResourceNetworkCapacity* resourceNetwork = object_.Retrieve< ResourceNetworkCapacity >() )
+        MIL_AgentServer::GetWorkspace().GetResourceNetworkModel().UnregisterNode( object_.GetID() );
     object_.MarkForDestruction();
     // All the knowledges associated to this object MUST be destroyed (for all the teams ..)
     const tools::Resolver< MIL_Army_ABC >& armies = MIL_AgentServer::GetWorkspace().GetEntityManager().GetArmies();
@@ -122,7 +126,7 @@ void MIL_ObjectManipulator::Destroy()
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManipulator::Mine
 // Created: JCR 2008-06-02
-// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------    
 void MIL_ObjectManipulator::Mine( double rDeltaPercentage )
 {
     object_.GetAttribute< MineAttribute >().Update( rDeltaPercentage );

@@ -1134,6 +1134,14 @@ Voulez-vous le supprimer?</translation>
         <source>Enabled</source>
         <translation>Activé</translation>
     </message>
+    <message>
+        <source>Resource networks</source>
+        <translation>Réseaux de ressource</translation>
+    </message>
+    <message>
+        <source>Add/Remove link</source>
+        <translation>Ajouter/Supprimer un lien</translation>
+    </message>
 </context>
 <context>
     <name>gui::StatusBar</name>

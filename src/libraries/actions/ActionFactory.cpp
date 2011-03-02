@@ -24,6 +24,7 @@
 #include "ObjectMagicAction.h"
 #include "Parameter_ABC.h"
 #include "ParameterFactory_ABC.h"
+#include "ParameterList.h"
 #include "Point.h"
 #include "PopulationMission.h"
 #include "Quantity.h"
@@ -526,6 +527,40 @@ actions::Action_ABC* ActionFactory::CreateObjectMagicAction( const std::string& 
             throw TargetNotFound( targetId );
     }
     action.reset( new actions::ObjectMagicAction( target, magicActions_.Get( magicAction ), controller_, true ) );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( 0, false ) );
+    action->Polish();
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateObjectUpdateMagicAction
+// Created: JSR 2011-03-01
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateObjectUpdateMagicAction( const kernel::Object_ABC& object, parameters::ParameterList& attribute ) const
+{
+    std::auto_ptr< actions::ObjectMagicAction > action;
+    action.reset( new actions::ObjectMagicAction( &object, magicActions_.Get( "update_object" ), controller_, true ) );
+    action->Rename( tools::translate( "gaming_app::Action", "Object Update" ) );
+    tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
+    parameters::ParameterList* attributesList = new parameters::ParameterList( it.NextElement() );
+    action->AddParameter( *attributesList );
+    attributesList->AddParameter( attribute );
+    action->Attach( *new ActionTiming( controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( 0, false ) );
+    action->Polish();
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateObjectDestroyMagicAction
+// Created: JSR 2011-03-01
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateObjectDestroyMagicAction( const kernel::Object_ABC& object ) const
+{
+    std::auto_ptr< actions::ObjectMagicAction > action;
+    action.reset( new actions::ObjectMagicAction( &object, magicActions_.Get( "destroy_object" ), controller_, true ) );
+    action->Rename( tools::translate( "gaming_app::Action", "Object Destruction" ) );
     action->Attach( *new ActionTiming( controller_, simulation_ ) );
     action->Attach( *new ActionTasker( 0, false ) );
     action->Polish();

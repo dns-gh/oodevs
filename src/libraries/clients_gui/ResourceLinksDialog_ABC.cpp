@@ -17,7 +17,9 @@
 #include "tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_kernel/ResourceNetworkType.h"
 
 using namespace gui;
 using namespace kernel;
@@ -26,11 +28,13 @@ using namespace kernel;
 // Name: ResourceLinksDialog_ABC constructor
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
-ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers )
+ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controllers& controllers, const tools::StringResolver< ResourceNetworkType >& resources )
     : QDockWindow      ( parent, "resource" )
     , controllers_     ( controllers )
     , selected_        ( 0 )
     , selectedItem_    ( 0 )
+    , resources_       ( resources )
+    , linkToChange_    ( 0 )
 {
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
@@ -279,6 +283,30 @@ void ResourceLinksDialog_ABC::NotifyDeleted( const Entity_ABC& element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::NotifyContextMenu
+// Created: JSR 2011-02-24
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::NotifyContextMenu( const Object_ABC& object, ContextMenu& menu )
+{
+    if( resources_.Count() == 0 )
+        return;
+    const ResourceNetwork_ABC* node = object.Retrieve< ResourceNetwork_ABC >();
+    if( !node || !selected_ || selected_ == node )
+        return;
+    linkToChange_ = &object;
+    QPopupMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
+    tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
+    int resourceId = 0;
+    while( it.HasMoreElements() )
+    {
+        const ResourceNetworkType& resource = it.NextElement();
+        QPopupMenu* resourceMenu = new QPopupMenu( subMenu );
+        subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
+        resourceMenu->insertItem( tr( "Add/Remove link" ), this , SLOT( OnChangeLink( int ) ), 0, resourceId++ );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceLinksDialog_ABC::Show
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
@@ -298,4 +326,41 @@ void ResourceLinksDialog_ABC::Show()
     }
     Update();
     pMainLayout_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceLinksDialog_ABC::OnChangeLink
+// Created: JSR 2011-03-01
+// -----------------------------------------------------------------------------
+void ResourceLinksDialog_ABC::OnChangeLink( int resourceId )
+{
+    typedef ResourceNetwork_ABC::ResourceNode ResourceNode;
+    typedef ResourceNetwork_ABC::ResourceLink ResourceLink;
+    typedef ResourceNetwork_ABC::T_ResourceNodes T_ResourceNodes;
+    tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
+    int index = 0;
+    while( it.HasMoreElements() )
+    {
+        const ResourceNetworkType& resource = it.NextElement();
+        if( index++ == resourceId )
+        {
+            bool destUrban = linkToChange_->GetType().IsUrban();
+            unsigned long destId = linkToChange_->GetId();
+            ResourceNode& sourceNode = selected_->FindOrCreateResourceNode( resource.GetName() );
+            const_cast< ResourceNetwork_ABC& >( linkToChange_->Get< ResourceNetwork_ABC >() ).FindOrCreateResourceNode( resource.GetName() ); // necessary to create a node for this ressource
+            std::vector< ResourceLink >::iterator itLink;
+            for( itLink = sourceNode.links_.begin(); itLink != sourceNode.links_.end(); ++itLink )
+                if( itLink->urban_ == destUrban && itLink->id_ == destId )
+                    break;
+            if( itLink == sourceNode.links_.end() )
+                sourceNode.links_.push_back( ResourceLink( destUrban, destId ) );
+            else
+                sourceNode.links_.erase( itLink );
+            controllers_.controller_.Update( *selected_ );
+            break;
+        }
+    }
+    linkToChange_ = 0;
+    Show();
+    DoValidate();
 }

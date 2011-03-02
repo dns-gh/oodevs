@@ -71,6 +71,7 @@ public:
     void Push( int quantity, unsigned long resourceId );
     void SetModifier( float modifier );
     void AddConsumption( unsigned long resourceId, double consumption );
+    void RemoveLink( unsigned int nodeId );
     bool NeedUpdate() const;
     float GetFunctionalState() const;
     float GetConsumptionState( unsigned long resourceId ) const;

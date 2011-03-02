@@ -44,6 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              NodeElement();
+             NodeElement( unsigned long resourceId, const std::string& resourceName );
              NodeElement( xml::xistream& xis, unsigned long resourceId, const std::string& resourceName );
              NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& node, unsigned long resourceId );
              NodeElement( const NodeElement& from );
@@ -61,6 +62,7 @@ public:
     void DistributeResource( float functionalState, const ResourceNetworkModel& model );
     void Push( int quantity );
     void SetModifier( float modifier );
+    void RemoveLink( unsigned int nodeId );
     bool NeedUpdate() const;
     float GetFunctionalState() const;
     float GetConsumptionState() const;

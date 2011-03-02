@@ -41,6 +41,30 @@ NodeElement::NodeElement()
 
 // -----------------------------------------------------------------------------
 // Name: NodeElement constructor
+// Created: JSR 2011-03-02
+// -----------------------------------------------------------------------------
+NodeElement::NodeElement( unsigned long resourceId, const std::string& resourceName )
+    : resourceId_         ( resourceId )
+    , resourceName_       ( resourceName )
+    , isActivated_        ( true )
+    , productionCapacity_ ( 0 )
+    , stockCapacity_      ( 0 )
+    , stockMaxCapacity_   ( 0 )
+    , immediateStock_     ( 0 )
+    , receivedQuantity_   ( 0 )
+    , consumptionAmount_  ( 0 )
+    , externalConsumption_( 0 )
+    , consumptionCritical_( false )
+    , modifier_           ( 1. )
+    , needUpdate_         ( true )
+    , functionalState_    ( 0 )
+    , consumptionState_   ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement constructor
 // Created: JSR 2010-08-13
 // -----------------------------------------------------------------------------
 NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const std::string& resourceName )
@@ -87,7 +111,6 @@ NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& n
     for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator it = node.links_.begin(); it != node.links_.end(); ++it )
         links_.push_back( new ResourceLink( it->id_, ResourceLink::eTargetKindUrban, it->capacity_ ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NodeElement constructor
@@ -318,6 +341,20 @@ void NodeElement::SetModifier( float modifier )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::RemoveLink
+// Created: JSR 2011-03-01
+// -----------------------------------------------------------------------------
+void NodeElement::RemoveLink( unsigned int nodeId )
+{
+    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+        if( ( *it )->GetTarget() == nodeId )
+        {
+            links_.erase( it );
+            return;
+        }
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::NeedUpdate
 // Created: JSR 2010-11-30
 // -----------------------------------------------------------------------------
@@ -369,12 +406,13 @@ void NodeElement::Update( const sword::MissionParameter_Value& msg )
     isActivated_ = msg.list( 3 ).booleanvalue();
     productionCapacity_ = msg.list( 4 ).quantity();
     stockMaxCapacity_ = msg.list( 5 ).quantity();
+    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+        delete *it;
+    links_.clear();
     for( int i = 0; i < msg.list( 6 ).list_size(); ++ i )
     {
         const sword::MissionParameter_Value& link = msg.list( 6 ).list( i );
-        unsigned int index = link.list( 0 ).identifier();
-        if( index < links_.size() )
-            links_[ index ]->SetCapacity( link.list( 1 ).quantity() );
+        links_.push_back( new ResourceLink( link.list( 0 ).identifier(), ResourceLink::eTargetKindUrban, link.list( 1 ).quantity() ) );
     }
     if( oldActivated != isActivated_ || oldProductionCapacity != productionCapacity_ || oldStockMaxCapacity != stockMaxCapacity_
         || oldConsumptionAmount !=  consumptionAmount_ || oldConsumptionCritical != consumptionCritical_ )
@@ -400,7 +438,6 @@ void NodeElement::ReadLink( xml::xistream& xis )
         }
     links_.push_back( new ResourceLink( target, kind, capacity ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NodeElement::GetFunctionalState

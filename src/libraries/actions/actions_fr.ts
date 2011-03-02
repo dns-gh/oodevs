@@ -190,4 +190,15 @@
         <translation>Paramètre</translation>
     </message>
 </context>
+<context>
+    <name>gaming_app::Action</name>
+    <message>
+        <source>Object Update</source>
+        <translation>Mise à jour d&apos;objet</translation>
+    </message>
+    <message>
+        <source>Object Destruction</source>
+        <translation>Destruction d&apos;objet</translation>
+    </message>
+</context>
 </TS>

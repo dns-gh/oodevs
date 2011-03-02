@@ -18,7 +18,10 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
+#include "clients_kernel/ResourceNetworkType.h"
 #include "gaming/StaticModel.h"
 
 using namespace actions;
@@ -30,7 +33,7 @@ using namespace parameters;
 // Created: JSR 2010-08-24
 // -----------------------------------------------------------------------------
 ResourceLinksDialog::ResourceLinksDialog( QMainWindow* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation )
-    : ResourceLinksDialog_ABC( parent, controllers )
+    : ResourceLinksDialog_ABC( parent, controllers, staticModel.objectTypes_ )
     , actionsModel_( actionsModel )
     , static_      ( staticModel )
     , simulation_  ( simulation )
@@ -75,19 +78,10 @@ void ResourceLinksDialog::DoValidate()
         for( unsigned int i = 0; i < resource.links_.size(); ++i )
         {
             ParameterList& link = links.AddList( "Link" );
-            link.AddIdentifier( "Link", i );
+            link.AddIdentifier( "Link", resource.links_[ i ].id_ );
             link.AddQuantity( "Capacity", resource.links_[ i ].capacity_ );
         }
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->RegisterAndPublish( actionsModel_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ResourceLinksDialog::NotifyContextMenu
-// Created: JSR 2011-02-24
-// -----------------------------------------------------------------------------
-void ResourceLinksDialog::NotifyContextMenu( const kernel::Object_ABC&, ContextMenu& )
-{
-    // TODO
 }

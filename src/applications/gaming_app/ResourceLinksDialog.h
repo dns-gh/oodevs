@@ -40,16 +40,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ResourceLinksDialog( const ResourceLinksDialog& );            //!< Copy constructor
-    ResourceLinksDialog& operator=( const ResourceLinksDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void DoValidate();
-    virtual void NotifyContextMenu( const kernel::Object_ABC&, kernel::ContextMenu& menu );
     //@}
 
 private:

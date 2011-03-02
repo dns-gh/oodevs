@@ -1134,6 +1134,14 @@ Voulez-vous le supprimer?</translation>
         <source>Validate</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resource networks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add/Remove link</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::StatusBar</name>

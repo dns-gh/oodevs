@@ -58,6 +58,16 @@ void ResourceNetworkModel::RegisterNode( NodeProperties& nodeProperties, unsigne
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkModel::UnregisterNode
+// Created: JSR 2011-03-01
+// -----------------------------------------------------------------------------
+void ResourceNetworkModel::UnregisterNode( unsigned int id )
+{
+    Apply( boost::bind( &NodeProperties::RemoveLink, _1, id ) );
+    Remove( id );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkModel::Push
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------

@@ -180,6 +180,28 @@ Action_ABC* ActionsModel::CreateObjectMagicAction( const std::string& magicActio
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateObjectUpdateMagicAction
+// Created: JSR 2011-03-01
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateObjectUpdateMagicAction( const kernel::Object_ABC& object, parameters::ParameterList& attribute )
+{
+    Action_ABC* action = factory_.CreateObjectUpdateMagicAction( object, attribute );
+    Register( action->GetId(), *action );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateObjectDestroyMagicAction
+// Created: JSR 2011-03-01
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateObjectDestroyMagicAction( const kernel::Object_ABC& object )
+{
+    Action_ABC* action = factory_.CreateObjectDestroyMagicAction( object );
+    Register( action->GetId(), *action );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::Destroy
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------

@@ -2341,6 +2341,46 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Activate reserved obstacle</source>
         <translation>Activer l&apos;obstacle de manoeuvre</translation>
     </message>
+    <message>
+        <source>Change Urban state</source>
+        <translation>Changer l&apos;état structurel</translation>
+    </message>
+    <message>
+        <source>Alert</source>
+        <translation>Alerter</translation>
+    </message>
+    <message>
+        <source>Stop alert</source>
+        <translation>Fin de l&apos;alerte</translation>
+    </message>
+    <message>
+        <source>Confine</source>
+        <translation>Confiner</translation>
+    </message>
+    <message>
+        <source>Stop confine</source>
+        <translation>Fin du confinement</translation>
+    </message>
+    <message>
+        <source>Change Threshold</source>
+        <translation>Changement seuil</translation>
+    </message>
+    <message>
+        <source>Disable</source>
+        <translation>Désactiver</translation>
+    </message>
+    <message>
+        <source>Enable</source>
+        <translation>Activer</translation>
+    </message>
+    <message>
+        <source>Enter value</source>
+        <translation>Saisir une valeur</translation>
+    </message>
+    <message>
+        <source>Type-in value then press &apos;Enter&apos;</source>
+        <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
+    </message>
 </context>
 <context>
     <name>ObjectPanel</name>
@@ -3197,53 +3237,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>UrbanMagicOrdersInterface</name>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
-    <message>
-        <source>Change Urban state</source>
-        <translation>Changer l&apos;état structurel</translation>
-    </message>
-    <message>
-        <source>Enter value</source>
-        <translation>Saisir une valeur</translation>
-    </message>
-    <message>
-        <source>Type-in value then press &apos;Enter&apos;</source>
-        <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
-    </message>
-    <message>
-        <source>Change Threshold</source>
-        <translation>Changement seuil</translation>
-    </message>
-    <message>
-        <source>Disable</source>
-        <translation>Désactiver</translation>
-    </message>
-    <message>
-        <source>Enable</source>
-        <translation>Activer</translation>
-    </message>
-    <message>
-        <source>Alert</source>
-        <translation>Alerter</translation>
-    </message>
-    <message>
-        <source>Stop alert</source>
-        <translation>Fin de l&apos;alerte</translation>
-    </message>
-    <message>
-        <source>Confine</source>
-        <translation>Confiner</translation>
-    </message>
-    <message>
-        <source>Stop confine</source>
-        <translation>Fin du confinement</translation>
-    </message>
-</context>
-<context>
     <name>UserProfileDialog</name>
     <message>
         <source>User profiles</source>
@@ -3411,10 +3404,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Object Creation</source>
         <translation>Création d&apos;objet</translation>
-    </message>
-    <message>
-        <source>Object Destruction</source>
-        <translation>Destruction d&apos;objet</translation>
     </message>
 </context>
 <context>
