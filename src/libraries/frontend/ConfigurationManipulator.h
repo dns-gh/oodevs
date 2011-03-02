@@ -12,21 +12,13 @@
 
 #include "XmlNode.h"
 
-namespace xml
-{
-    class xistream;
-    class xostream;
-    class cdata;
-}
-
 namespace tools
 {
-    class GeneralConfig ;
+    class GeneralConfig;
 }
 
 namespace frontend
 {
-    class XmlNode;
 
 // =============================================================================
 /** @class  ConfigurationManipulator
@@ -65,13 +57,11 @@ private:
     static std::string GetSessionXml( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
     //@}
 
-
 private:
     //! @name Member data
     //@{
-    std::string outputPath_;
+    const std::string outputPath_;
     std::auto_ptr< XmlNode > document_;
-    std::auto_ptr< xml::xostream > output_;
     //@}
 };
 
@@ -95,7 +85,6 @@ T ConfigurationManipulator::GetValue( const std::string& path ) const
 {
     return document_->GetValue<T>(path);
 }
-
 
 }
 

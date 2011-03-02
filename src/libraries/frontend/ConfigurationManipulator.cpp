@@ -24,8 +24,7 @@ using namespace frontend;
 // -----------------------------------------------------------------------------
 ConfigurationManipulator::ConfigurationManipulator( const std::string& filename )
     : outputPath_( filename )
-    , document_  ( new XmlNode( filename ) )
-    , output_    ( new xml::xofstream( filename ) )
+    , document_  ( new XmlNode( outputPath_ ) )
 {
     // NOTHING
 }
@@ -37,7 +36,6 @@ ConfigurationManipulator::ConfigurationManipulator( const std::string& filename 
 ConfigurationManipulator::ConfigurationManipulator( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
     : outputPath_( GetSessionXml( config, exercise, session ) )
     , document_  ( new XmlNode( outputPath_ ) )
-    , output_    ( new xml::xofstream( outputPath_ ) )
 {
     // NOTHING
 }
@@ -68,7 +66,12 @@ std::string ConfigurationManipulator::GetSessionXml( const tools::GeneralConfig&
 // -----------------------------------------------------------------------------
 void ConfigurationManipulator::Commit()
 {
-    if( document_.get() && output_.get() )
-        document_->Serialize( *output_ );
-    tools::WriteXmlCrc32Signature( outputPath_ );
+    if( document_.get() )
+    {
+        {
+            xml::xofstream xos( outputPath_ );
+            document_->Serialize( xos );
+        }
+        tools::WriteXmlCrc32Signature( outputPath_ );
+    }
 }
