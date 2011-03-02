@@ -103,7 +103,9 @@
         <mission name="MELEE Freiner"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Barrer"/>
-        <mission name="MELEE Jalonner"/>
+        <mission name="MELEE Jalonner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Reduire"/>
         <mission name="MELEE Relever"/>
@@ -150,7 +152,9 @@
         <mission name="MELEE Controler"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
-        <mission name="MELEE Jalonner"/>
+        <mission name="MELEE Jalonner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="MELEE Surveiller"/>
       </missions>
       <fragorders>
@@ -201,7 +205,9 @@
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
-        <mission name="MELEE Jalonner"/>
+        <mission name="MELEE Jalonner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Neutraliser"/>
@@ -11337,4 +11343,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3649496028" -->
+<!-- signature="0237299710" -->
