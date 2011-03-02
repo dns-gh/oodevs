@@ -32,7 +32,6 @@ EquipmentsListView.cpp \
 EventToolbar.cpp \
 FireCreationPanel.cpp \
 FireResultListView.cpp \
-FolkToolbar.cpp \
 HumansListView.cpp \
 IndicatorExportDialog.cpp \
 IndicatorPlot.cpp \
