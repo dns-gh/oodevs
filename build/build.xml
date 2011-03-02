@@ -765,8 +765,11 @@
 
     <target name="test-scripts" description="run all tests" depends="application.simulation_app">
         <!-- REMOVED BUT ? <test-scripts dataset="test" physical=""/> -->
+        <!--
+        TEMPORARY REMOVED - SIM CRASH IN XALAN WHEN EXITING
         <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="worldwide"/>
+        -->
     </target>
 
     <target name="checkpoint_test" description="save and load a checkpoint" depends="application.simulation_app">
