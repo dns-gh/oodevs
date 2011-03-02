@@ -139,7 +139,7 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
 // Name: CategoryInfo::WriteArchive
 // Created: APE 2004-11-15
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Data::CategoryInfo::WriteArchive( xml::xostream& output )
+void ADN_Equipement_Data::CategoryInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource" );
     WriteContent( output );
@@ -150,7 +150,7 @@ void ADN_Equipement_Data::CategoryInfo::WriteArchive( xml::xostream& output )
 // Name: ADN_Equipement_Data:::CategoryInfo::WriteContent
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output )
+void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output ) const
 {
     output << xml::attribute( "category", category_ )
            << xml::attribute( "name", strName_ )
@@ -211,7 +211,7 @@ void ADN_Equipement_Data::ModificatorPostureInfos::ReadArchive( xml::xistream& i
 // Name: ModificatorPostureInfos::WriteArchive
 // Created: APE 2004-11-23
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipement_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "ph" )
             << xml::attribute( "target-posture", ADN_Tools::ComputePostureScriptName( eType_ ) )
@@ -322,7 +322,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( xml::xistream& input )
 // Name: IndirectAmmoInfos::WriteArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "indirect-fire" )
             << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( nIndirectType_.GetData() ) )
@@ -365,7 +365,6 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
 ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDotation )
 : CategoryInfo          ( parentDotation )
 , bDirect_              ( false )
-, bUrbanAttrition_      ( false )
 , bTrancheD_            ( false )
 , bIndirect_            ( false )
 , bIlluminating_        ( false )
@@ -390,7 +389,6 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     pCopy->bTrancheD_ = bTrancheD_.GetData();
     pCopy->nType_ = nType_.GetData();
     pCopy->bDirect_ = bDirect_.GetData();
-    pCopy->bUrbanAttrition_ = bUrbanAttrition_.GetData();
     pCopy->bIndirect_ = bIndirect_.GetData();
 
     pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
@@ -438,7 +436,6 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition( xml::xistream& input 
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer( xml::xistream& input )
 {
-    bUrbanAttrition_ = true;
     std::string material = input.attribute< std::string >( "material-type" );
     helpers::IT_UrbanAttritionInfos_Vector it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), helpers::ADN_UrbanAttritionInfos::Cmp( material ) );
     if( it == modifUrbanBlocks_.end() )
@@ -506,7 +503,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
 // Name: AmmoCategoryInfo::WriteArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output )
+void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "resource" );
     CategoryInfo::WriteContent( output );
@@ -532,14 +529,14 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
     if( bDirect_.GetData() == true )
     {
         output << xml::start( "attritions" );
-        for( helpers::IT_AttritionInfos_Vector itAttrition = attritions_.begin(); itAttrition != attritions_.end(); ++itAttrition )
+        for( helpers::CIT_AttritionInfos_Vector itAttrition = attritions_.begin(); itAttrition != attritions_.end(); ++itAttrition )
             (*itAttrition)->WriteArchive( output );
         output << xml::end;
     }
-    if( bUrbanAttrition_.GetData() == true )
+    if( HasUrbanAttrition() )
     {
         output << xml::start( "urban-modifiers" );
-        for( helpers::IT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
+        for( helpers::CIT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
             (*itUrbanAttrition)->WriteArchive( output );
         output << xml::end;
     }
@@ -549,6 +546,19 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
 
     output << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::AmmoCategoryInfo::HasUrbanAttrition
+// Created: ABR 2011-03-02
+// -----------------------------------------------------------------------------
+bool ADN_Equipement_Data::AmmoCategoryInfo::HasUrbanAttrition() const
+{
+    for( helpers::CIT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
+        if( (*itUrbanAttrition)->rCoeff_.GetData() != 0 )
+            return true;
+    return false;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ResourceInfos::ResourceInfos
@@ -640,9 +650,9 @@ void ADN_Equipement_Data::ResourceInfos::ReadArchive( xml::xistream& input )
 // Name: ResourceInfos::WriteArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Equipement_Data::ResourceInfos::WriteArchive( xml::xostream& output )
+void ADN_Equipement_Data::ResourceInfos::WriteArchive( xml::xostream& output ) const
 {
-    for( IT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
+    for( CIT_CategoryInfos_Vector it = categories_.begin(); it != categories_.end(); ++it )
         (*it)->WriteArchive( output );
 }
 

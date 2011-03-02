@@ -49,8 +49,8 @@ public:
         virtual CategoryInfo* CreateCopy();
 
         virtual void ReadArchive( xml::xistream& );
-        virtual void WriteArchive( xml::xostream& );
-        virtual void WriteContent( xml::xostream& );
+        virtual void WriteArchive( xml::xostream& ) const;
+        virtual void WriteContent( xml::xostream& ) const;
 
     public:
         ResourceInfos&  parentResource_;
@@ -66,9 +66,7 @@ public:
         ADN_Type_Double rPackageVolume_;
         ADN_Type_Double rPackageWeight_;
     };
-
-    typedef ADN_Type_Vector_ABC<CategoryInfo> T_CategoryInfos_Vector;
-    typedef T_CategoryInfos_Vector::iterator  IT_CategoryInfos_Vector;
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<CategoryInfo>, CategoryInfos_Vector );
 
 //*****************************************************************************
     class ModificatorPostureInfos : public ADN_Ref_ABC
@@ -81,7 +79,7 @@ public:
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
+        void WriteArchive( xml::xostream& output ) const;
 
     public:
         E_UnitPosture       eType_;
@@ -101,11 +99,7 @@ public:
              E_UnitPosture val_;
         };
     };
-
-    typedef ADN_Type_Vector_ABC<ModificatorPostureInfos>       T_ModificatorPostureInfos_Vector;
-    typedef T_ModificatorPostureInfos_Vector::iterator        IT_ModificatorPostureInfos_Vector;
-    typedef T_ModificatorPostureInfos_Vector::const_iterator CIT_ModificatorPostureInfos_Vector;
-
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<ModificatorPostureInfos>, ModificatorPostureInfos_Vector );
 
 // *****************************************************************************
     class IndirectAmmoInfos : private boost::noncopyable
@@ -117,7 +111,7 @@ public:
 
         void ReadArchive( xml::xistream& );
         void ReadPh( xml::xistream& );
-        void WriteArchive( xml::xostream& );
+        void WriteArchive( xml::xostream& ) const;
 
     public:
         ADN_Type_Enum<E_TypeMunitionTirIndirect,eNbrTypeMunitionTirIndirect>  nIndirectType_;
@@ -155,7 +149,8 @@ public:
         void ReadAttrition( xml::xistream& );
         void ReadUrbanModifer( xml::xistream& );
         void ReadIndirectFire( xml::xistream& );
-        void WriteArchive( xml::xostream& );
+        void WriteArchive( xml::xostream& ) const;
+        bool HasUrbanAttrition() const;
 
     public:
         ADN_Type_Enum< E_MunitionType, eNbrMunitionType > nType_;
@@ -163,7 +158,6 @@ public:
         ADN_Type_Bool bTrancheD_;
 
         ADN_Type_Bool bDirect_;
-        ADN_Type_Bool bUrbanAttrition_;
         ADN_Type_Bool bIndirect_;
 
         helpers::T_AttritionInfos_Vector attritions_;
@@ -199,17 +193,14 @@ public:
         CategoryInfo* FindCategory( const std::string& strName );
 
         void ReadArchive( xml::xistream& );
-        void WriteArchive( xml::xostream& );
+        void WriteArchive( xml::xostream& ) const;
 
     public:
         E_DotationFamily      nType_;
         ADN_Type_String        strName_;
         T_CategoryInfos_Vector categories_;
     };
-
-    typedef ADN_Type_Vector_ABC<ResourceInfos> T_ResourceInfos_Vector;
-    typedef T_ResourceInfos_Vector::iterator   IT_ResourceInfos_Vector;
-
+    TYPEDEF_WITH_ITERATOR_DECLARATION( ADN_Type_Vector_ABC<ResourceInfos>, ResourceInfos_Vector );
 
 // *****************************************************************************
 public:

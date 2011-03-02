@@ -69,9 +69,7 @@ public:
         std::string name_;
     };
 };
-
-typedef ADN_Type_VectorFixed_ABC< AttritionInfos > T_AttritionInfos_Vector;
-typedef T_AttritionInfos_Vector::iterator         IT_AttritionInfos_Vector;
+TYPEDEF_FULL_DECLARATION( ADN_Type_VectorFixed_ABC< AttritionInfos >, AttritionInfos_Vector );
 
 }
 

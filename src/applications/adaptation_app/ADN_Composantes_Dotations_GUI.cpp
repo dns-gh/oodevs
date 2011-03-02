@@ -22,7 +22,6 @@
 
 typedef ADN_Composantes_Data::CategoryInfos CategoryInfos;
 
-
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with munitions
 //-----------------------------------------------------------------------------
@@ -61,8 +60,6 @@ public:
         pItemNormalizedConsumption->GetConnector().Connect( &pCategory->rNormalizedConsumption_ );
     }
 };
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Dotations_GUI constructor
@@ -103,7 +100,6 @@ ADN_Composantes_Dotations_GUI::ADN_Composantes_Dotations_GUI( bool bIncludeNorma
     pConnector_ = new ADN_CT_Composantes_Dotations( *this );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Dotations_GUI destructor
 // Created: JDY 03-07-03
@@ -112,7 +108,6 @@ ADN_Composantes_Dotations_GUI::~ADN_Composantes_Dotations_GUI()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Dotations_GUI::OnContextMenu
@@ -149,7 +144,6 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, con
         targetMenu.insertItem( (*it)->strName_.GetData().c_str(), pSubMenu );
     }
 
-
     menu.insertItem( tr( "Add dotation"), &targetMenu ,0 );
     if( GetCurrentData() != 0 )
         menu.insertItem( tr( "Remove dotation" ), 1 );
@@ -160,7 +154,6 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, con
     else if( nMenuResult > 1 )
         AddNewDotation( *(ADN_Equipement_Data::CategoryInfo*)nMenuResult );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Dotations_GUI::Contains
@@ -180,7 +173,6 @@ bool ADN_Composantes_Dotations_GUI::Contains( ADN_Equipement_Data::CategoryInfo&
     return false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Dotations_GUI::AddNewDotation
 // Created: AGN 2003-12-04
@@ -195,7 +187,6 @@ void ADN_Composantes_Dotations_GUI::AddNewDotation( ADN_Equipement_Data::Categor
     pCTable->AddItem( pNewInfo );
     pCTable->AddItem( 0 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Dotations_GUI::RemoveCurrentDotation

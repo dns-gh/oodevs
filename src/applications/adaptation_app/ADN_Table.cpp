@@ -145,7 +145,7 @@ void* ADN_Table::GetCurrentData()
     if( nRow == -1 || nCol == -1 )
         return 0;
 
-    ADN_TableItem_ABC* pItem = (ADN_TableItem_ABC*)item( nRow, nCol );
+    ADN_TableItem_ABC* pItem = static_cast< ADN_TableItem_ABC* >( item( nRow, nCol ) );
     if( pItem != 0 )
         return pItem->GetData();
     return 0;
