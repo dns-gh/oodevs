@@ -18,6 +18,7 @@
 #include "indicators/Variable.h"
 #include "indicators/Variables.h"
 #include "tools/ExerciseConfig.h"
+#include "tools/NullFileLoaderObserver.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -28,7 +29,8 @@ namespace
         SerializerFixture()
             : factory_( primitives_, variables_ )
         {
-            tools::ExerciseConfig config;
+            tools::NullFileLoaderObserver observer;
+            tools::ExerciseConfig config( observer );
             primitives_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
         }
 

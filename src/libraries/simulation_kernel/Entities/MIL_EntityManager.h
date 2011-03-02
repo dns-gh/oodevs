@@ -232,7 +232,7 @@ private:
 
     //! @name Urban
     //@{
-    void LoadUrbanStates( const MIL_Config& config );
+    void ReadUrbanStates( xml::xistream& xis );
     void NotifyPionsInsideUrbanObject();
     //@}
 

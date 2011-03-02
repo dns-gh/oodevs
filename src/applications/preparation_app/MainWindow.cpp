@@ -108,7 +108,6 @@
 #include "preparation/Tools.h"
 #include "tools/ExerciseConfig.h"
 #include <graphics/DragMovementLayer.h>
-#include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>

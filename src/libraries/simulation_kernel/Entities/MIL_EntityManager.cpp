@@ -335,7 +335,13 @@ void MIL_EntityManager::CreateUrbanObjects( urban::Model& urbanModel, const MIL_
 {
     UrbanWrapperVisitor visitor( *this );
     urbanModel.Accept( visitor );
-    LoadUrbanStates( config );
+    
+    const std::string strUrbanState = config.GetUrbanStateFile();
+    if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState, bfs::native ) ) )
+    {
+        MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
+        config.GetLoader().LoadFile( strUrbanState, boost::bind( &MIL_EntityManager::ReadUrbanStates, this, _1 ) );
+    }
     NotifyPionsInsideUrbanObject();
 }
 
@@ -349,19 +355,11 @@ void MIL_EntityManager::CreateUrbanObject( const urban::TerrainObject_ABC& objec
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::LoadUrbanStates
+// Name: MIL_EntityManager::ReadUrbanStates
 // Created: JSR 2010-06-28
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::LoadUrbanStates( const MIL_Config& config )
+void MIL_EntityManager::ReadUrbanStates( xml::xistream& xis )
 {
-    const std::string strUrbanState = config.GetUrbanStateFile();
-    if( strUrbanState.empty() || !bfs::exists( bfs::path( strUrbanState, bfs::native ) ) )
-        return;
-
-    MT_LOG_INFO_MSG( MT_FormatString( "UrbanState file name : '%s'", strUrbanState.c_str() ) );
-
-    MIL_Tools::CheckXmlCrc32Signature( strUrbanState );
-    xml::xifstream xis( strUrbanState );
     xis >> xml::start( "urban-state" )
             >> xml::start( "urban-objects" )
                 >> xml::list( "urban-object", boost::bind( &MIL_ObjectManager::ReadUrbanState, boost::ref( *pObjectManager_ ), _1 ) )
