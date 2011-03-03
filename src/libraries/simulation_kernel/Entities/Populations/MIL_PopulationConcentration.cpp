@@ -88,7 +88,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     xis >> xml::attribute( "position", strPosition );
     MIL_Tools::ConvertCoordMosToSim( strPosition, position_ );
     unsigned int nNbrHumans;
-    xis >> xml::attribute( "humans", nNbrHumans );
+    xis >> xml::attribute( "healthy", nNbrHumans );
     if( nNbrHumans <= 0 )
         xis.error( "nNbrHumans is not greater than 0." );
 
