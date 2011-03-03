@@ -85,6 +85,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     table_->horizontalHeader()->setLabel( 1, tools::translate( "gui::ResourceLinksDialog_ABC", "Limited" ) );
     table_->horizontalHeader()->setLabel( 2, tools::translate( "gui::ResourceLinksDialog_ABC", "Capacity" ) );
     table_->setColumnWidth( 1, 50 );
+    groupBox_->setEnabled( false );
     connect( table_, SIGNAL( valueChanged( int, int ) ), SLOT( OnValueChanged( int, int ) ) );
     QPushButton* okBtn = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Validate" ), pMainLayout_ );
     okBtn->setDefault( true );
@@ -324,6 +325,7 @@ void ResourceLinksDialog_ABC::Show()
         else
             dotationList_->setSelected( new QListBoxText( dotationList_, it->second.resource_.c_str() ), false );
     }
+    groupBox_->setEnabled( dotationList_->count() > 0 );
     Update();
     pMainLayout_->show();
 }
