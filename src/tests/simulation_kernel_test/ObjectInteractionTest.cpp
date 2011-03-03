@@ -483,7 +483,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType );
 
-    xml::xistringstream xisConcentration( "<population attitude='calme' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+    xml::xistringstream xisConcentration( "<population attitude='calme' healthy='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
     xisConcentration.start( "population" );
     MIL_PopulationConcentration concentration( population, xisConcentration );
 
@@ -524,7 +524,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType );
 
-    xml::xistringstream xisConcentration( "<population attitude='agressive' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+    xml::xistringstream xisConcentration( "<population attitude='agressive' healthy='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
     xisConcentration.start( "population" );
     MIL_PopulationConcentration concentration( population, xisConcentration );
 
@@ -565,7 +565,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionScattering )
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType );
 
-    xml::xistringstream xisConcentration( "<population attitude='agressive' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+    xml::xistringstream xisConcentration( "<population attitude='agressive' healthy='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
     xisConcentration.start( "population" );
     MIL_PopulationConcentration concentration( population, xisConcentration );
 
