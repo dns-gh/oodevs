@@ -106,6 +106,7 @@
         <mission name="MELEE Jalonner">
           <fragorder name="Decrocher"/>
         </mission>
+        <mission name="MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Reduire"/>
         <mission name="MELEE Relever"/>
@@ -11343,4 +11344,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2226614626" -->
+<!-- signature="3814751642" -->

@@ -2434,6 +2434,19 @@
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OrganiserAccueilColonneRefugies" dia-type="net.masagroup.sword.france.military.platoon.tasks.OrganiserAccueilColonneRefugies" id="2127" name="MELEE Organiser Accueil Colonne Refugies" package="control">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="position" name="Position" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.AllerA" dia-type="net.masagroup.sword.france.military.platoon.tasks.AllerA" id="2124" name="COMMUNES AllerA">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4303,4 +4316,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3694958787" -->
+<!-- signature="3170092199" -->

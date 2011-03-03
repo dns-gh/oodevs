@@ -704,7 +704,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< T_UrbanObjectVector( boost::shared_ptr< MT_Vector2D>, float )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockInCircle, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Connaissances_BlocUrbainDansZone" ] =
         boost::function< T_UrbanObjectVector( TER_Localisation* )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockInZone, boost::ref( GetPion() ), _1 ) );
-	brain[ "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant" ] = &DEC_UrbanObjectFunctions::GetCurrentRecceProgress ;
+	brain[ "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant" ] = boost::function< float( UrbanObjectWrapper* )>( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentRecceProgress, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceBlocUrbain_Traficabilite" ] =
         boost::function< float( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetPathfindCost, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_NiveauDeProtectionMaterielComposantes" ] = &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel;

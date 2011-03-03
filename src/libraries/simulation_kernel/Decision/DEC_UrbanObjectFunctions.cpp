@@ -27,11 +27,11 @@
 // Name: DEC_UrbanObjectFunctions::GetCurrentPerceptionLevel
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-float DEC_UrbanObjectFunctions::GetCurrentRecceProgress( UrbanObjectWrapper* pUrbanObject )
+float DEC_UrbanObjectFunctions::GetCurrentRecceProgress( const MIL_AgentPion& pion, UrbanObjectWrapper* pUrbanObject )
 {
     if( pUrbanObject )
     {
-        boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = pUrbanObject->GetArmy()->GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanObject );
+        boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = pion.GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanObject );
         if( pKnowledge.get() )
             return pKnowledge->GetCurrentRecceProgress();
     }
