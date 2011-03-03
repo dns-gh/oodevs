@@ -14,6 +14,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Tools/MIL_Tools.h"
@@ -149,9 +150,11 @@ float DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck( const MIL_Ag
 {
     if( !pDotationCategory )
         return -1.f;
-    const double rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToIndirectFire( *pDotationCategory, false );
+    float rRange = (float)callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToIndirectFire( *pDotationCategory, false );
     if( rRange < 0. ) // Pas de possibilité de tir
         return -1.f;
+    if( pDotationCategory->IsGuided() )
+        rRange = min( rRange, pDotationCategory->GetGuidanceRange() );
     return MIL_Tools::ConvertSimToMeter( rRange );
 }
 
