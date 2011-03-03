@@ -228,6 +228,10 @@
 																		<xs:enumeration value="fire-component-damage"/>
 																		<xs:enumeration value="detecting-unit"/>
 																		<xs:enumeration value="mounted"/>
+																		<xs:enumeration value="direct-fire-unit"/>
+																		<xs:enumeration value="indirect-fire-power"/>
+																		<xs:enumeration value="close-combat-power"/>
+																		<xs:enumeration value="engineering-power"/>
 																	</xs:restriction>
 																</xs:simpleType>
 															</xs:attribute>
