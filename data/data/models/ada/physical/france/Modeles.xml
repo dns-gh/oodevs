@@ -7466,6 +7466,7 @@
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Interdire"/>
+        <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Relever"/>
@@ -11344,4 +11345,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3814751642" -->
+<!-- signature="0754684863" -->
