@@ -438,7 +438,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="UtmCoordinates">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="\d{2}[A-Z]{3}\d{8}(\d{2})?"/>
+			<xs:pattern value="(\d{2})?[A-Z]{3}\d{8}(\d{2})?"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="MissionIdentifier">

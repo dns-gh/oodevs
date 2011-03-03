@@ -49,7 +49,7 @@ void SuccessFactorActionTypes::Load( const tools::ExerciseConfig& config, const 
 // -----------------------------------------------------------------------------
 void SuccessFactorActionTypes::Read( xml::xistream& xis )
 {
-    xis >> xml::start( "actions" )
+    xis >> xml::start( "success-actions" )
             >> xml::list( "action", *this, &SuccessFactorActionTypes::ReadAction )
         >> xml::end;
 }

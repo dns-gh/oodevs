@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<actions>
+<success-actions>
     <action name="Simulation.Pause" function="sim:Pause">
         <description>Pauses the simulation</description>
     </action>
@@ -9,4 +9,5 @@
             <parameter name="message" default="My Message"/>
         </parameters>
     </action>
-</actions><!-- signature="2658703768" -->
+</success-actions>
+<!-- signature="1483753583" -->
