@@ -13,6 +13,7 @@
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
 #include <qcanvas.h>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -25,6 +26,7 @@ namespace actions
     class ActionsFilter_ABC;
     class ActionsModel;
     class Action_ABC;
+    enum EActionType;
 }
 
 class ActionsScheduler;
@@ -45,6 +47,7 @@ class TimelineView : public QCanvasView
                    , public tools::ElementObserver_ABC< actions::Action_ABC >
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                    , public tools::SelectionObserver< actions::Action_ABC >
+                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -59,10 +62,11 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Types
     //@{
-    TimelineView( const TimelineView& );            //!< Copy constructor
-    TimelineView& operator=( const TimelineView& ); //!< Assignment operator
+    typedef std::map< const actions::Action_ABC*, TimelineActionItem* > T_Actions;
+    typedef std::map< const kernel::Entity_ABC*, T_Actions >            T_EntityActions;
+    typedef std::vector< const kernel::Entity_ABC* >                    T_OrderedEntities;
     //@}
 
     //! @name Events
@@ -83,16 +87,11 @@ private:
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
 
     void Update();
+    void DrawActions( T_Actions& actions, int& row );
     void ClearSelection();
+    T_Actions* FindActions( const actions::Action_ABC& action, actions::EActionType& actionType );
     void SetSelected( TimelineItem_ABC& item );
     void Select( const QPoint& point );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< const actions::Action_ABC*, TimelineActionItem* > T_Actions;
-    typedef std::map< const kernel::Entity_ABC*, T_Actions >            T_EntityActions;
-    typedef std::vector< const kernel::Entity_ABC* >                    T_OrderedEntities;
     //@}
 
 private:
@@ -103,14 +102,20 @@ private:
 
     //! @name Member data
     //@{
-    kernel::Controllers&   controllers_;
+    kernel::Controllers& controllers_;
     actions::ActionsModel& model_;
-    T_EntityActions        actions_;
-    T_OrderedEntities      orderedActions_;
-    TimelineRuler&         ruler_;
-    TimelineMarker*        marker_;
-    TimelineItem_ABC*      selectedItem_;
-    QPoint                 grabPoint_;
+    T_EntityActions entityActions_;
+    T_Actions magicActions_;
+    T_Actions weatherActions_;
+    T_Actions objectsActions_;
+    T_OrderedEntities orderedActions_;
+    bool magicVisible_;
+    bool weatherVisible_;
+    bool objectsVisible_;
+    TimelineRuler& ruler_;
+    TimelineMarker* marker_;
+    TimelineItem_ABC* selectedItem_;
+    QPoint grabPoint_;
     const actions::ActionsFilter_ABC* filter_;
     //@}
 };

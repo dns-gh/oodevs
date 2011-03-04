@@ -25,6 +25,10 @@ using namespace actions;
 
 unsigned long Action_ABC::idManager_ = 0; // $$$$ SBO 2007-03-12: real id manager maybe
 const QString Action_ABC::typeName_ = "action";
+EActionType Action_ABC::actionTypeEntity_ = eTypeEntity;
+EActionType Action_ABC::actionTypeObjects_ = eTypeObjects;
+EActionType Action_ABC::actionTypeWeather_ = eTypeWeather;
+EActionType Action_ABC::actionTypeMagic_ = eTypeMagic;
 
 // -----------------------------------------------------------------------------
 // Name: Action_ABC constructor

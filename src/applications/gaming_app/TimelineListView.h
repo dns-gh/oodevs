@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include <qlistview.h>
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -23,6 +24,12 @@ namespace actions
 {
     class Action_ABC;
     class ActionsFilter_ABC;
+    enum EActionType;
+}
+
+namespace gui
+{
+    class ValuedListItem;
 }
 
 // =============================================================================
@@ -35,8 +42,9 @@ class TimelineListView : public QListView
                        , public tools::Observer_ABC
                        , public tools::ElementObserver_ABC< actions::Action_ABC >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                       , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -57,16 +65,11 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    TimelineListView( const TimelineListView& );            //!< Copy constructor
-    TimelineListView& operator=( const TimelineListView& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Update();
     bool ShouldDisplay( const kernel::Entity_ABC& entity ) const;
+    gui::ValuedListItem* FindListItem( const actions::Action_ABC& action, actions::EActionType& actionType ) const;
     virtual void NotifyCreated( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
@@ -83,7 +86,10 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_EntityActions actions_;
+    T_EntityActions entityActions_;
+    T_Actions weatherActions_;
+    T_Actions objectsActions_;
+    T_Actions magicActions_;
     const actions::ActionsFilter_ABC* filter_;
     //@}
 };

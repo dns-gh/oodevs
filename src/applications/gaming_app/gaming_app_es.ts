@@ -3108,6 +3108,18 @@ Motivo: %3
         <source>Units</source>
         <translation>Unidades</translation>
     </message>
+    <message>
+        <source>Weather</source>
+        <translation type="unfinished">Clima</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objetos</translation>
+    </message>
+    <message>
+        <source>Magic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TimelinePanel</name>

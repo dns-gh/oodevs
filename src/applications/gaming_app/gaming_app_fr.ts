@@ -3108,6 +3108,18 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Units</source>
         <translation>Unités</translation>
     </message>
+    <message>
+        <source>Weather</source>
+        <translation>Météo</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Magic</source>
+        <translation>Magique</translation>
+    </message>
 </context>
 <context>
     <name>TimelinePanel</name>

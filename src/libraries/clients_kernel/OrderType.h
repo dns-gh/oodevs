@@ -40,9 +40,9 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    std::string GetName() const;
-    std::string GetDoctrineInformation() const;
-    std::string GetUsageInformation() const;
+    const std::string& GetName() const;
+    const std::string& GetDoctrineInformation() const;
+    const std::string& GetUsageInformation() const;
     void AddParameter( const OrderParameter& parameter );
     //@}
 

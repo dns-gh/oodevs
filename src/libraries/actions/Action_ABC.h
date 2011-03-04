@@ -45,6 +45,14 @@ namespace actions
 {
     class ActionsModel;
 
+enum EActionType
+{
+    eTypeEntity,
+    eTypeObjects,
+    eTypeWeather,
+    eTypeMagic
+};
+
 // =============================================================================
 /** @class  Action_ABC
     @brief  Action_ABC
@@ -58,6 +66,10 @@ public:
     //! @name Static
     //@{
     static const QString typeName_;
+    static EActionType actionTypeEntity_;
+    static EActionType actionTypeObjects_;
+    static EActionType actionTypeWeather_;
+    static EActionType actionTypeMagic_;
     //@}
 
 public:

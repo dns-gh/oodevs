@@ -56,7 +56,7 @@ unsigned long OrderType::GetId() const
 // Name: OrderType::GetName
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-std::string OrderType::GetName() const
+const std::string& OrderType::GetName() const
 {
     return name_;
 }
@@ -65,7 +65,7 @@ std::string OrderType::GetName() const
 // Name: OrderType::GetDoctrineInformation
 // Created: SBO 2009-06-24
 // -----------------------------------------------------------------------------
-std::string OrderType::GetDoctrineInformation() const
+const std::string& OrderType::GetDoctrineInformation() const
 {
     return doctrine_;
 }
@@ -74,7 +74,7 @@ std::string OrderType::GetDoctrineInformation() const
 // Name: OrderType::GetUsageInformation
 // Created: SBO 2009-06-24
 // -----------------------------------------------------------------------------
-std::string OrderType::GetUsageInformation() const
+const std::string& OrderType::GetUsageInformation() const
 {
     return usage_;
 }

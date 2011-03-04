@@ -24,7 +24,10 @@ namespace
     class TimeLineEntityListItem : public gui::ValuedListItem
     {
     public:
-        TimeLineEntityListItem( QListView* parent, QListViewItem* after ) : gui::ValuedListItem( parent, after ) {}
+        TimeLineEntityListItem( QListView* parent, QListViewItem* after ) : gui::ValuedListItem( parent, after )
+        {
+            setVisible( false );
+        }
 
         virtual void paintCell( QPainter* p, const QColorGroup& cg, int column, int width, int align )
         {
@@ -52,14 +55,19 @@ using namespace actions;
 TimelineListView::TimelineListView( QWidget* parent, kernel::Controllers& controllers )
     : QListView( parent, "TimelineListView" )
     , controllers_( controllers )
-    , filter_( 0 )
+    , filter_     ( 0 )
 {
     setMinimumWidth( 200 );
     addColumn( tr( "Units" ) );
     setResizeMode( LastColumn );
     setHScrollBarMode( QScrollView::AlwaysOn ); //--> to have the same height as canvasview
     setSortColumn( -1 ); // $$$$ SBO 2008-04-25: TODO
-
+    gui::ValuedListItem* item = new TimeLineEntityListItem( this, lastItem() );
+    item->Set( &Action_ABC::actionTypeMagic_, tr( "Magic" ) );
+    item = new TimeLineEntityListItem( this, lastItem() );
+    item->Set( &Action_ABC::actionTypeWeather_, tr( "Weather" ) );
+    item = new TimeLineEntityListItem( this, lastItem() );
+    item->Set( &Action_ABC::actionTypeObjects_, tr( "Objects" ) );
     connect( this, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChange( QListViewItem* ) ) );
     controllers_.Register( *this );
 }
@@ -74,30 +82,75 @@ TimelineListView::~TimelineListView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineListView::FindListItem
+// Created: JSR 2011-03-03
+// -----------------------------------------------------------------------------
+gui::ValuedListItem* TimelineListView::FindListItem( const actions::Action_ABC& action, EActionType& actionType ) const
+{
+    const ActionTasker* tasker = action.Retrieve< ActionTasker >();
+    if( tasker && tasker->GetTasker() )
+    {
+        actionType = eTypeEntity;
+        return gui::FindItem( tasker->GetTasker(), firstChild() );
+    }
+    const std::string& actionTypeName = action.GetType().GetName();
+    if( actionTypeName == "global_weather" || actionTypeName == "local_weather" )
+    {
+        actionType = eTypeWeather;
+        return gui::FindItem( &Action_ABC::actionTypeWeather_, firstChild() );;
+    }
+    if( actionTypeName == "create_object" || actionTypeName == "update_object" ||
+        actionTypeName == "destroy_object" || actionTypeName == "request_object" )
+    {
+        actionType = eTypeObjects;
+        return gui::FindItem( &Action_ABC::actionTypeObjects_, firstChild() );;
+    }
+    actionType = eTypeMagic;
+    return gui::FindItem( &Action_ABC::actionTypeMagic_, firstChild() );;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineListView::NotifyCreated
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
 void TimelineListView::NotifyCreated( const Action_ABC& action )
 {
-    const kernel::Entity_ABC* entity = 0;
-    QString name = "Magic";
-    if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
+    EActionType actionType;
+    gui::ValuedListItem* item = FindListItem( action, actionType );
+    switch( actionType )
     {
-        entity = tasker->GetTasker();
-        if( entity )
-            name = entity->GetName();
+    case eTypeEntity :
+        {
+            const kernel::Entity_ABC* entity = action.Retrieve< ActionTasker >()->GetTasker(); // cannot be null
+            if( !item )
+            {
+                item = new TimeLineEntityListItem( this, lastItem() );
+                item->Set( entity, entity->GetName() );
+            }
+            // $$$$ _RC_ JSR 2011-03-03: on cache toute la ligne si une action n'est pas autorisée?? a vérifier
+            item->setVisible( !filter_ || filter_->Allows( action ) );
+            entityActions_[ entity ].push_back( &action );
+        }
+        break;
+    case eTypeWeather :
+        {
+            item->setVisible( !filter_ || filter_->Allows( action ) );
+            weatherActions_.push_back( &action );
+        }
+        break;
+    case eTypeObjects :
+        {
+            item->setVisible( !filter_ || filter_->Allows( action ) );
+            objectsActions_.push_back( &action );
+        }
+        break;
+    case eTypeMagic:
+    default:
+        {
+            item->setVisible( !filter_ || filter_->Allows( action ) );
+            magicActions_.push_back( &action );
+        }
     }
-    else if ((action.GetType().GetName()=="global_weather") || (action.GetType().GetName()=="local_weather"))
-    {
-        name = "Weather";
-    }
-
-    gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
-    if( !item )
-        item = new TimeLineEntityListItem( this, lastItem() );
-    item->Set( entity, name );
-    item->setVisible( !filter_ || filter_->Allows( action ) );
-    actions_[ entity ].push_back( &action );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,21 +159,36 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineListView::NotifyDeleted( const Action_ABC& action )
 {
-        const kernel::Entity_ABC* entity = 0;
-    if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
-        entity = tasker->GetTasker();
-
-    if( gui::ValuedListItem* item = gui::FindItem( entity, firstChild() ) )
+    EActionType actionType;
+    gui::ValuedListItem* item = FindListItem( action, actionType );
+    if( !item )
+        return;
+    T_Actions* actions = 0;
+    switch( actionType )
     {
-        T_Actions& actions = actions_[ entity ];
-        T_Actions::iterator it = std::find( actions.begin(), actions.end(), &action );
-        if( it != actions.end() )
-            actions.erase( it );
-        if( actions.empty() )
-        {
+    case eTypeEntity :
+        actions = &entityActions_[ action.Retrieve< ActionTasker >()->GetTasker() ]; // cannot be null
+        break;
+    case eTypeWeather :
+        actions = &weatherActions_;
+        break;
+    case eTypeObjects :
+        actions = &objectsActions_;
+        break;
+    case eTypeMagic:
+    default:
+        actions = &magicActions_;
+    }
+    T_Actions::iterator it = std::find( actions->begin(), actions->end(), &action );
+    if( it != actions->end() )
+        actions->erase( it );
+    if( actions->empty() )
+    {
+        if( actionType == eTypeEntity )
             delete item;
-            Update();
-        }
+        else
+            item->setVisible( false );
+        Update();
     }
 }
 
@@ -132,7 +200,7 @@ void TimelineListView::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
     if( gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() ) )
     {
-        actions_.erase( &entity );
+        entityActions_.erase( &entity );
         delete item;
     }
 }
@@ -154,7 +222,8 @@ void TimelineListView::setContentsPos( int x, int y )
 // -----------------------------------------------------------------------------
 void TimelineListView::OnSelectionChange( QListViewItem* item )
 {
-    if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item ) )
+    gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item ) ;
+    if( valuedItem && valuedItem->IsA< const kernel::Entity_ABC >() )
         valuedItem->Select( controllers_.actions_ );
 }
 
@@ -162,7 +231,7 @@ void TimelineListView::OnSelectionChange( QListViewItem* item )
 // Name: TimelineListView::SetFilter
 // Created: SBO 2010-07-19
 // -----------------------------------------------------------------------------
-void TimelineListView::SetFilter( const actions::ActionsFilter_ABC& filter )
+void TimelineListView::SetFilter( const ActionsFilter_ABC& filter )
 {
     if( filter_ != &filter )
     {
@@ -181,7 +250,8 @@ void TimelineListView::Update()
     while( it.current() )
     {
         gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( it.current() );
-        item->setVisible( ShouldDisplay( *item->GetValue< const kernel::Entity_ABC >() ) );
+        if( item->IsA< const kernel::Entity_ABC >() )
+            item->setVisible( ShouldDisplay( *item->GetValue< const kernel::Entity_ABC >() ) );
         ++it;
     }
 }
@@ -194,7 +264,7 @@ bool TimelineListView::ShouldDisplay( const kernel::Entity_ABC& entity ) const
 {
     if( !filter_ )
         return true;
-    T_EntityActions::const_iterator actions = actions_.find( &entity );
+    T_EntityActions::const_iterator actions = entityActions_.find( &entity );
     for( T_Actions::const_iterator it = actions->second.begin(); it != actions->second.end(); ++it )
         if( filter_->Allows( **it ) )
             return true;

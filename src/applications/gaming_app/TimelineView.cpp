@@ -17,6 +17,7 @@
 #include "actions/ActionTasker.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/OrderType.h"
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
 #include "icons.h"
@@ -32,13 +33,16 @@ const unsigned int TimelineView::rowHeight_ = 25;
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
 TimelineView::TimelineView( QWidget* parent, QCanvas* canvas, Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler )
-    : QCanvasView  ( canvas, parent, "TimelineView" )
-    , controllers_ ( controllers )
-    , model_       ( model )
-    , ruler_       ( ruler )
-    , marker_      ( new TimelineMarker( canvas, scheduler, controllers_, ruler_ ) )
-    , selectedItem_( 0 )
-    , filter_      ( 0 )
+    : QCanvasView( canvas, parent, "TimelineView" )
+    , controllers_   ( controllers )
+    , model_         ( model )
+    , magicVisible_  ( false )
+    , weatherVisible_( false )
+    , objectsVisible_( false )
+    , ruler_         ( ruler )
+    , marker_        ( new TimelineMarker( canvas, scheduler, controllers_, ruler_ ) )
+    , selectedItem_  ( 0 )
+    , filter_        ( 0 )
 {
     // initialize some elements needed in action tooltips
     QMimeSourceFactory::defaultFactory()->setPixmap( "mission", MAKE_PIXMAP( mission ) );
@@ -58,18 +62,70 @@ TimelineView::~TimelineView()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelineView::FindActions
+// Created: JSR 2011-03-04
+// -----------------------------------------------------------------------------
+TimelineView::T_Actions* TimelineView::FindActions( const actions::Action_ABC& action, actions::EActionType& actionType )
+{
+    const ActionTasker* tasker = action.Retrieve< ActionTasker >();
+    if( tasker && tasker->GetTasker() )
+    {
+        actionType = eTypeEntity;
+        const kernel::Entity_ABC* entity = tasker->GetTasker();
+        std::map< const kernel::Entity_ABC*, T_Actions >::iterator it = entityActions_.find( entity );
+        if( it == entityActions_.end() )
+            return 0;
+        return &it->second;
+    }
+    else
+    {
+        const std::string& actionTypeName = action.GetType().GetName();
+        if( actionTypeName == "global_weather" || actionTypeName == "local_weather" )
+        {
+            actionType = eTypeWeather;
+            return &weatherActions_;
+        }
+        if( actionTypeName == "create_object" || actionTypeName == "update_object" ||
+                 actionTypeName == "destroy_object" || actionTypeName == "request_object" )
+        {
+            actionType = eTypeObjects;
+            return &objectsActions_;
+        }
+        actionType = eTypeMagic;
+        return &magicActions_;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelineView::NotifyCreated
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
 void TimelineView::NotifyCreated( const Action_ABC& action )
 {
-    const kernel::Entity_ABC* entity = 0;
-    if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
-        entity = tasker->GetTasker();
-    if( actions_.find( entity ) == actions_.end() )
-        orderedActions_.push_back( entity );
-    T_Actions& actions = actions_[ entity ];
-    actions[ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action );
+    actions::EActionType actionType;
+    T_Actions* actions = FindActions( action, actionType );
+    switch( actionType )
+    {
+    case eTypeEntity :
+        if( actions == 0 )
+        {
+            const kernel::Entity_ABC* entity = action.Retrieve< ActionTasker >()->GetTasker();
+            actions = &entityActions_[ entity ];
+            orderedActions_.push_back( entity );
+        }
+        break;
+    case eTypeWeather:
+        weatherVisible_ = true;
+        break;
+    case eTypeObjects:
+        objectsVisible_ = true;
+        break;
+    case eTypeMagic:
+    default:
+        magicVisible_ = true;
+        break;
+    }
+    ( *actions )[ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action );
     Update();
 }
 
@@ -79,22 +135,28 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineView::NotifyDeleted( const Action_ABC& action )
 {
-    const kernel::Entity_ABC* entity = 0;
-    if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
-        entity = tasker->GetTasker();
-
-    T_EntityActions::iterator it = actions_.find( entity );
-    if( it != actions_.end() )
+    actions::EActionType actionType;
+    T_Actions* actions = FindActions( action, actionType );
+    if( actions )
     {
-        T_Actions::iterator itAction = it->second.find( &action );
-        if( itAction != it->second.end() )
+        T_Actions::iterator itAction = actions->find( &action );
+        if( itAction != actions->end() )
         {
             if( itAction->second == selectedItem_ )
                 ClearSelection();
             delete itAction->second;
-            it->second.erase( itAction );
-            if( it->second.empty() )
-                NotifyDeleted( *it->first );
+            actions->erase( itAction );
+            if( actions->empty() )
+            {
+                if( actionType == eTypeEntity )
+                    NotifyDeleted( *action.Retrieve< ActionTasker >()->GetTasker() );
+                else if( actionType == eTypeWeather )
+                    weatherVisible_ = false;
+                else if( actionType == eTypeObjects )
+                    objectsVisible_ = false;
+                else if( actionType == eTypeMagic )
+                    magicVisible_ = false;
+            }
         }
     }
 }
@@ -105,8 +167,8 @@ void TimelineView::NotifyDeleted( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
 {
-    T_EntityActions::iterator it = actions_.find( &entity );
-    if( it != actions_.end() )
+    T_EntityActions::iterator it = entityActions_.find( &entity );
+    if( it != entityActions_.end() )
     {
         for( T_Actions::iterator itAction = it->second.begin(); itAction != it->second.end(); ++itAction )
         {
@@ -114,7 +176,7 @@ void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
                 ClearSelection();
             delete itAction->second;
         }
-        actions_.erase( it );
+        entityActions_.erase( it );
         for( T_OrderedEntities::iterator orderedIt = orderedActions_.begin(); orderedIt != orderedActions_.end(); ++orderedIt )
         {
             if( *orderedIt == &entity )
@@ -134,27 +196,39 @@ void TimelineView::NotifyDeleted( const kernel::Entity_ABC& entity )
 void TimelineView::Update()
 {
     int row = 0;
+    if( magicVisible_ )
+        DrawActions( magicActions_, row );
+    if( weatherVisible_ )
+        DrawActions( weatherActions_, row );
+    if( objectsVisible_ )
+        DrawActions( objectsActions_, row );
     for( T_OrderedEntities::const_iterator it = orderedActions_.begin(); it != orderedActions_.end(); ++it )
-    {
-        T_Actions& actions = actions_[ *it ];
-        bool actionVisible = false;
-        for( T_Actions::iterator itAction = actions.begin(); itAction != actions.end(); ++itAction )
-        {
-            TimelineActionItem& item = *itAction->second;
-            item.setY( row * rowHeight_ );
-            item.setSize( item.width(), rowHeight_ );
-            const bool visible = !filter_ || filter_->Allows( *itAction->first );
-            item.setVisible( visible );
-            item.Update();
-            actionVisible |= visible;
-        }
-        if( actionVisible )
-            ++row;
-    }
+        DrawActions( entityActions_[ *it ], row );
     canvas()->resize( canvas()->width(), rowHeight_ * row );
     marker_->Update();
     canvas()->setAllChanged();
     canvas()->update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineView::DrawActions
+// Created: JSR 2011-03-04
+// -----------------------------------------------------------------------------
+void TimelineView::DrawActions( T_Actions& actions, int& row )
+{
+    bool actionVisible = false;
+    for( T_Actions::iterator itAction = actions.begin(); itAction != actions.end(); ++itAction )
+    {
+        TimelineActionItem& item = *itAction->second;
+        item.setY( row * rowHeight_ );
+        item.setSize( item.width(), rowHeight_ );
+        const bool visible = !filter_ || filter_->Allows( *itAction->first );
+        item.setVisible( visible );
+        item.Update();
+        actionVisible |= visible;
+    }
+    if( actionVisible )
+        ++row;
 }
 
 // -----------------------------------------------------------------------------
@@ -304,20 +378,19 @@ void TimelineView::SetSelected( TimelineItem_ABC& item )
 // -----------------------------------------------------------------------------
 void TimelineView::NotifySelected( const actions::Action_ABC* action )
 {
-    const kernel::Entity_ABC* entity = 0;
     if( action )
-        if( const ActionTasker* tasker = action->Retrieve< ActionTasker >() )
-            entity = tasker->GetTasker();
-
-    T_EntityActions::iterator it = actions_.find( entity );
-    if( it != actions_.end() )
     {
-        T_Actions::iterator itAction = it->second.find( action );
-        if( itAction != it->second.end() )
+        actions::EActionType actionType;
+        T_Actions* actions = FindActions( *action, actionType );
+        if( actions )
         {
-            if( selectedItem_ != itAction->second )
-                SetSelected( *itAction->second );
-            return;
+            T_Actions::iterator itAction = actions->find( action );
+            if( itAction != actions->end() )
+            {
+                if( selectedItem_ != itAction->second )
+                    SetSelected( *itAction->second );
+                return;
+            }
         }
     }
     ClearSelection();
