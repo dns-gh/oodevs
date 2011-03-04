@@ -98,5 +98,5 @@ void FireAttribute::SerializeAttributes( xml::xostream& xos ) const
 void FireAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
     dico.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Fire class" ), fireClass_ );
-    dico.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Max combustion energy_" ), maxCombustionEnergy_ );
+    dico.Register( *this, tools::translate( "FireAttribute", "Info/Fire attributes/Max combustion energy" ), maxCombustionEnergy_ );
 }

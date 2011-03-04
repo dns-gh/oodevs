@@ -211,7 +211,8 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
     pCell->center_ = geometry::Point2d( cellOrigin.X() + radius, cellOrigin.Y() + radius );
     pCell->pObject_ = &object;
     pCell->phase_ = phase;
-    TerrainData terrainData = TER_PathFindManager::GetPathFindManager().FindTerrainDataWithinCircle( MT_Vector2D( pCell->center_.X(), pCell->center_.Y() ), (float)radius );
+    TerrainData terrainData;
+    FindTerrainData( pCell->center_, radius, terrainData );
     const FireAttribute& fireAttribute = object.GetAttribute< FireAttribute >();
     fireAttribute.GetSurfaceFirePotentials( terrainData, pCell->ignitionThreshold_, pCell->maxCombustionEnergy_ );
     for( PropagationModifierObjects::const_iterator it = propagationModifierObjects_.begin(); it != propagationModifierObjects_.end(); ++it )
@@ -228,6 +229,23 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
     pCell->bUpdated_ = true;
     pCell->bRequested_ = false;
     object.GetAttribute< BurnSurfaceAttribute >().NotifyCellsUpdated();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BurningCells::FindTerrainData
+// Created: BCI 2011-03-04
+// -----------------------------------------------------------------------------
+void MIL_BurningCells::FindTerrainData( const geometry::Point2d& center, double radius, TerrainData& data )
+{
+    // $$$$ BCI 2011-03-04: FindTerrainDataWithinCircle c'est de la daube
+     //data = TER_PathFindManager::GetPathFindManager().FindTerrainDataWithinCircle( MT_Vector2D( pCell->center_.X(), pCell->center_.Y() ), (float)radius );
+
+    // $$$$ BCI 2011-03-04: en attendant de pouvoir corriger FindTerrainDataWithinCircle...
+    data = TER_PathFindManager::GetPathFindManager().Pick( MT_Vector2D( center.X(), center.Y() ) );
+    data.Merge( TER_PathFindManager::GetPathFindManager().Pick( MT_Vector2D( center.X() + radius, center.Y() + radius ) ) );
+    data.Merge( TER_PathFindManager::GetPathFindManager().Pick( MT_Vector2D( center.X() - radius, center.Y() + radius ) ) );
+    data.Merge( TER_PathFindManager::GetPathFindManager().Pick( MT_Vector2D( center.X() - radius, center.Y() - radius ) ) );
+    data.Merge( TER_PathFindManager::GetPathFindManager().Pick( MT_Vector2D( center.X() - radius, center.Y() - radius ) ) );
 }
 
 // -----------------------------------------------------------------------------

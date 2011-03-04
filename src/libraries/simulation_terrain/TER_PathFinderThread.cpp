@@ -259,6 +259,15 @@ TerrainData TER_PathFinderThread::FindTerrainDataWithinCircle( const MT_Vector2D
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_PathFinderThread::Pick
+// Created: BCI 2011-03-04
+// -----------------------------------------------------------------------------
+TerrainData TER_PathFinderThread::Pick( const MT_Vector2D& pos )
+{
+    return pPathfinder_->Pick( MakePoint( pos ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_PathFinderThread::ProcessInSimulationThread
 // Created: JSR 2010-06-16
 // -----------------------------------------------------------------------------

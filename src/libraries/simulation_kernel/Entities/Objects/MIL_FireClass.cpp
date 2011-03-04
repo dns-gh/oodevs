@@ -179,11 +179,11 @@ void MIL_FireClass::ReadSurface( xml::xistream& xis )
         >> xml::attribute( "ignition-threshold", surface.ignitionThreshold_ )
         >> xml::attribute( "max-combustion-energy", surface.maxCombustionEnergy_ );
 
-    const TerrainData data = MIL_Tools::ConvertLandType( strTerrainType );
-    if( data.Area() == 0xFF )
+    surface.terrainData_ = MIL_Tools::ConvertLandType( strTerrainType );
+    if( surface.terrainData_.Area() == 0xFF )
         xis.error( "Unknown terrain type '" + strTerrainType + "'" );
 
-    surfaces_.insert( std::make_pair( data.Area(), surface ) );
+    surfaces_.push_back( surface );    
 }
 
 // -----------------------------------------------------------------------------
@@ -327,18 +327,18 @@ const PHY_HumanWound& MIL_FireClass::ChooseRandomWound() const
 // -----------------------------------------------------------------------------
 void MIL_FireClass::GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const
 {
-    ignitionThreshold = 0;
-    maxCombustionEnergy = std::numeric_limits< int >::max();
-    for( T_SurfaceMap::const_iterator it = surfaces_.begin(); it != surfaces_.end(); ++it )
-    {
-        if( it->first & terrainData.Area() )
-        {
-            ignitionThreshold = std::max( ignitionThreshold, it->second.ignitionThreshold_ );
-            maxCombustionEnergy = std::min( maxCombustionEnergy, it->second.maxCombustionEnergy_ );
-        }
-    }
-    if( maxCombustionEnergy == std::numeric_limits< int >::max() )
-        maxCombustionEnergy = 0;
+	ignitionThreshold = 0;
+	maxCombustionEnergy = std::numeric_limits< int >::max();
+	for( T_Surfaces::const_iterator it = surfaces_.begin(); it != surfaces_.end(); ++it )
+	{
+        if( it->terrainData_.ContainsOne( terrainData ) )
+		{
+			ignitionThreshold = std::max( ignitionThreshold, it->ignitionThreshold_ );
+			maxCombustionEnergy = std::min( maxCombustionEnergy, it->maxCombustionEnergy_ );
+		}
+	}
+	if( maxCombustionEnergy == std::numeric_limits< int >::max() )
+		maxCombustionEnergy = 0;
 }
 
 // -----------------------------------------------------------------------------

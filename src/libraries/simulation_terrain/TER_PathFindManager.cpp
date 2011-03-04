@@ -119,3 +119,12 @@ TerrainData TER_PathFindManager::FindTerrainDataWithinCircle( const MT_Vector2D&
 {
     return threads_.back()->FindTerrainDataWithinCircle( center, radius );
 }
+
+// -----------------------------------------------------------------------------
+// Name: TER_PathFindManager::Pick
+// Created: BCI 2011-03-04
+// -----------------------------------------------------------------------------
+TerrainData TER_PathFindManager::Pick( const MT_Vector2D& pos )
+{
+    return threads_.back()->Pick( pos );
+}

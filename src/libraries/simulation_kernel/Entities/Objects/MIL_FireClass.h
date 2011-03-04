@@ -11,6 +11,7 @@
 #define __MIL_FireClass_h_
 
 #include "MT_Tools/MT_Stl.h"
+#include <pathfind/TerrainData.h>
 
 namespace xml
 {
@@ -103,10 +104,11 @@ private:
 
     struct Surface
     {
+        TerrainData terrainData_;
         int ignitionThreshold_;
         int maxCombustionEnergy_;
     };
-    typedef std::map< unsigned char/*terrain area*/, Surface > T_SurfaceMap;
+    typedef std::vector<Surface > T_Surfaces;
 
 private:
     //! @name Helpers
@@ -124,7 +126,7 @@ private:
     T_WeatherEffectMap weatherEffects_;
     T_InjuryMap injuries_;
     T_UrbanModifierMap urbanModifiers_;
-    T_SurfaceMap surfaces_;
+    T_Surfaces surfaces_;
     const std::string name_;
     int decreaseRate_;
     int increaseRate_;
