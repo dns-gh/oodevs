@@ -1680,10 +1680,6 @@ Arrêt moteur allumé</translation>
         <translation>Effets de la météo</translation>
     </message>
     <message>
-        <source>Cell size (global)</source>
-        <translation>Taille d&apos;une cellule (global)</translation>
-    </message>
-    <message>
         <source>m</source>
         <translation>m</translation>
     </message>
@@ -1694,6 +1690,14 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Fire</source>
         <translation>Feu</translation>
+    </message>
+    <message>
+        <source>Global fire parameters</source>
+        <translation>Paramètres communs à tous les feux</translation>
+    </message>
+    <message>
+        <source>Cell size</source>
+        <translation>Taille d&apos;une cellule</translation>
     </message>
 </context>
 <context>

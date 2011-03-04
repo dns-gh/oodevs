@@ -83,7 +83,7 @@ MIL_FireClass::MIL_FireClass( const std::string& name, xml::xistream& xis )
         >> xml::start( "urban-modifiers" )
             >> xml::list( "urban-modifier", *this, &MIL_FireClass::ReadUrbanModifier )
         >> xml::end
-        >> xml::start( "surfaces" )
+        >> xml::optional >> xml::start( "surfaces" )
             >> xml::list( "surface", *this, &MIL_FireClass::ReadSurface )
         >> xml::end;
 
@@ -306,19 +306,19 @@ int MIL_FireClass::GetWeatherDecreateRate( const weather::PHY_Precipitation& pre
 // Name: MIL_FireClass::ChooseRandomWound
 // Created: BCI 2010-12-14
 // -----------------------------------------------------------------------------
-const PHY_HumanWound& MIL_FireClass::ChooseRandomWound() const
+const PHY_HumanWound* MIL_FireClass::ChooseRandomWound() const
 {
     const double rRand = MIL_Random::rand_oi( MIL_Random::eWounds );
 
     double rSumFactors = 0.;
     for( T_InjuryMap::const_iterator it = injuries_.begin(); it != injuries_.end(); ++it )
     {
-        const PHY_HumanWound& wound = *it->first;
+        const PHY_HumanWound* pWound = it->first;
         rSumFactors += it->second.percentage_;
         if( rSumFactors >= rRand )
-            return wound;
+            return pWound;
     }
-    throw std::runtime_error( __FUNCTION__ ": cannot choose random fire wound. Check if the injuries of fire class " + name_ + " are valid" );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

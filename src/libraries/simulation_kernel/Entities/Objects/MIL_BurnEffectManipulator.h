@@ -35,7 +35,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    const PHY_HumanWound& ChooseRandomWound() const;
+    const PHY_HumanWound* ChooseRandomWound() const;
     //@}
 
     //! @name Data Members
@@ -51,7 +51,11 @@ private:
 template< typename WoundFunctor >
 bool MIL_BurnEffectManipulator::ApplyRandomWound( WoundFunctor functor ) const
 {
-    return functor( ChooseRandomWound() );
+    const PHY_HumanWound* pWound = ChooseRandomWound();
+    if( pWound )
+        return functor( *pWound );
+    else
+        return false;
 }
 
 #endif // __MIL_ToxicEffect_ABC_h_

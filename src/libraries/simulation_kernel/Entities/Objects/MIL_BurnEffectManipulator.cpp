@@ -25,7 +25,7 @@ MIL_BurnEffectManipulator::MIL_BurnEffectManipulator( const MIL_FireClass& fireC
 // Name: MIL_BurnEffectManipulator::GetRandomWound
 // Created: BCI 2010-12-14
 // -----------------------------------------------------------------------------
-const PHY_HumanWound& MIL_BurnEffectManipulator::ChooseRandomWound() const
+const PHY_HumanWound* MIL_BurnEffectManipulator::ChooseRandomWound() const
 {
     return pFireClass_->ChooseRandomWound();
 }

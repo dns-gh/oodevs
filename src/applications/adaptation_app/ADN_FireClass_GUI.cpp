@@ -47,6 +47,8 @@ void ADN_FireClass_GUI::Build()
 {
     assert( pMainWidget_ == 0 );
 
+     ADN_GuiBuilder builder;
+
     // Create the main widget.
     pMainWidget_ = new QWidget( 0 );
 
@@ -55,15 +57,14 @@ void ADN_FireClass_GUI::Build()
     pFireClassListView->GetConnector().Connect( &data_.GetFireClassesInfos() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    // Local fire class data
-    QGroupBox* pFireClassDataGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Fire" ), pMainWidget_ );
-
-    ADN_GuiBuilder builder;
-    builder.AddField< ADN_EditLine_Int >( builder.AddFieldHolder( pFireClassDataGroup ), tr( "Cell size (global)" ), vInfosConnectors[ eCellSize ], tr( "m" ), eGreaterZero );
+    //Global fire parameters
+    QGroupBox* pGlobalFireParametersDataGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Global fire parameters" ), pMainWidget_ );
+    builder.AddField< ADN_EditLine_Int >( pGlobalFireParametersDataGroup, tr( "Cell size" ), vInfosConnectors[ eCellSize ], tr( "m" ), eGreaterZero );
     vInfosConnectors[ eCellSize ]->Connect( &data_.GetCellSize() );
 
-    new QWidget( pFireClassDataGroup );
-
+    // Local fire class data
+    QGroupBox* pFireClassDataGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Fire" ), pMainWidget_ );
+    //new QWidget( pFireClassDataGroup );
     QWidget* pHolder = builder.AddFieldHolder( pFireClassDataGroup );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vInfosConnectors[ eName ] );
     builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Initial heat" ), vInfosConnectors[ eInitialHeat ] );
@@ -98,7 +99,15 @@ void ADN_FireClass_GUI::Build()
     pFireClassListView->SetItemConnectors( vInfosConnectors );
 
     // Main vertical layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pFireClassListView, 1 );
-    pMainLayout->addWidget( pFireClassDataGroup, 4 );
+    QVBoxLayout* pMainLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
+
+    QHBoxLayout* pGlobalLayout = new QHBoxLayout();
+    pGlobalLayout->addWidget( pGlobalFireParametersDataGroup );
+
+    QBoxLayout* pListAndDataLayout = new QHBoxLayout( 0, 10, 10 );
+    pListAndDataLayout->addWidget( pFireClassListView, 1 );
+    pListAndDataLayout->addWidget( pFireClassDataGroup, 4 );
+
+    pMainLayout->addLayout( pGlobalLayout );
+    pMainLayout->addLayout( pListAndDataLayout, 2 );
 }

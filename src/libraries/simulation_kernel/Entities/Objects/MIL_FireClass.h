@@ -62,7 +62,7 @@ public:
 
     //! @name Operations
     //@{
-    const PHY_HumanWound& ChooseRandomWound() const;
+    const PHY_HumanWound* ChooseRandomWound() const;
     //@}
 private:
     //!@ Constructor and destructor
