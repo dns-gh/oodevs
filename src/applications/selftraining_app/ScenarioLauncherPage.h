@@ -69,6 +69,7 @@ private:
     ScenarioLauncherPage& operator=( const ScenarioLauncherPage& ); //!< Assignment operator
     //@}
 
+protected:
     //! @name Helpers
     //@{
     virtual void Update();
@@ -84,7 +85,7 @@ private:
     typedef std::vector< frontend::PluginConfig_ABC* > T_Plugins;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     const frontend::Config&       config_;

@@ -11,7 +11,14 @@
 #include "BattleCenterLauncherPage.h"
 #include "moc_BattleCenterLauncherPage.cpp"
 #include "Multiplayer.h"
+#include "ProcessDialogs.h"
+#include "ProgressPage.h"
 #include "clients_gui/Tools.h"
+#include "frontend/CreateSession.h"
+#include "frontend/Config.h"
+#include "frontend/Exercise_ABC.h"
+#include "frontend/JoinExercise.h"
+#include "frontend/ProcessWrapper.h"
 
 // -----------------------------------------------------------------------------
 // Name: BattleCenterLauncherPage constructor
@@ -39,4 +46,26 @@ BattleCenterLauncherPage::~BattleCenterLauncherPage()
 std::string BattleCenterLauncherPage::BuildSessionName() const
 {
     return MULTIPLAYER_SESSION;
+}
+
+// -----------------------------------------------------------------------------
+// Name: BattleCenterLauncherPage::OnStart
+// Created: HBD 2011-03-04
+// -----------------------------------------------------------------------------
+void BattleCenterLauncherPage::OnStart()
+{
+    if( !CanBeStarted() || ! dialogs::KillRunningProcesses( this ) )
+        return;
+    exercise_->Start( MULTIPLAYER_SESSION );
+    {
+        frontend::CreateSession action( config_, exercise_->GetName(), MULTIPLAYER_SESSION );
+        action.SetDefaultValues();
+        action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( "127.0.0.1" ).arg( exercise_->GetPort() ) );
+        action.Commit();
+    }
+    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::JoinExercise( config_, exercise_->GetName().c_str(), MULTIPLAYER_SESSION.c_str(), profile_.GetLogin(), true ) );
+    boost::shared_ptr< frontend::ProcessWrapper > process( new frontend::ProcessWrapper( *progressPage_, command ) );
+    progressPage_->Attach( process );
+    process->Start();
+    progressPage_->show();
 }

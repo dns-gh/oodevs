@@ -36,6 +36,13 @@ private:
     BattleCenterLauncherPage& operator=( const BattleCenterLauncherPage& ); //!< Assignment operator
     //@}
 
+
+ private slots:
+    //! @name Slots
+    //@{
+    virtual void OnStart();
+    //@}
+    
     //! @name Helpers
     //@{
     virtual std::string BuildSessionName() const;
