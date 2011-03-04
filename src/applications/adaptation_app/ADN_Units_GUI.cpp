@@ -218,7 +218,8 @@ void ADN_Units_GUI::Build()
     builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Urban area efficiency" ), vInfosConnectors[ eUrbanAreaEfficiency ], tr( "%" ), ePercentage );
 
     // Power indicators
-    QGroupBox* pPowerIndicatorsGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pGroup );
+    ADN_GroupBox* pPowerIndicatorsGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pGroup );
+    vInfosConnectors[eHasPowerIndicators] = &pPowerIndicatorsGroup->GetConnector();
     pPowerIndicatorsGroup->setInsideMargin( 20 );
     pPowerIndicatorsGroup->setInsideSpacing( 10 );
 

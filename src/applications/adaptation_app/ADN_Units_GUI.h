@@ -76,6 +76,7 @@ public:
         eProtectionSupport,
         eEngineeringRecon,
         eUrbanAreaEfficiency,
+        eHasPowerIndicators,
         ePowerDirectFire,
         ePowerIndirectFire,
         ePowerCloseCombat,
