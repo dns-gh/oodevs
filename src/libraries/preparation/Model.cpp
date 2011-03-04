@@ -167,6 +167,10 @@ namespace
 void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors )
 {
     {
+        const std::string exerciseFile = config.GetExerciseFile();
+        config.GetLoader().CheckFile( exerciseFile );
+        xml::xifstream xis( exerciseFile );
+        exercise_.Load( xis );
         std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
         try
         {
