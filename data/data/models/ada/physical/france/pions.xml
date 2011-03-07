@@ -12104,7 +12104,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="net.masagroup.sword.france.military.platoon.roles.PIA" id="442" name="PIA Dominante ABC" type="Pion ABC">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
       <equipment count="2" crew="2" type="VAB 12,7"/>
@@ -12355,4 +12355,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2698148487" -->
+<!-- signature="0166941011" -->
