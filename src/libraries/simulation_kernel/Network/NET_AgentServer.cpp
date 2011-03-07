@@ -111,24 +111,6 @@ bool NET_AgentServer::MustInitUnitVisionCones() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: NET_AgentServer::GetConcreteMessageMgr
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-NET_AS_MOSServerMsgMgr& NET_AgentServer::GetConcreteMessageMgr() const
-{
-    return *pMsgMgr_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: NET_AgentServer::GetMessageMgr
-// Created: AGE 2007-09-06
-// -----------------------------------------------------------------------------
-NET_Publisher_ABC& NET_AgentServer::GetMessageMgr() const
-{
-    return *pMsgMgr_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: NET_AgentServer::MustSendUnitVisionCones
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------

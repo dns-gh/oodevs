@@ -128,11 +128,11 @@ void MIL_AgentServer::ReadStaticData()
     nTimeFactor_ = config_.GetTimeFactor();
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation tick duration : %d seconds", nTimeStepDuration_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
-    pAgentServer_ = new NET_AgentServer( config_, *this, *this );
     ReadTerData();
     pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
     pWorkspaceDIA_ = new DEC_Workspace( config_ );
     MIL_EntityManager::Initialize( config_, *this );
+    pAgentServer_ = new NET_AgentServer( config_, *this, *this );
     if( !config_.IsDataTestMode() )
         pPathFindManager_ = new DEC_PathFind_Manager( config_ );
 }

@@ -41,9 +41,6 @@ public:
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    NET_AS_MOSServerMsgMgr&        GetConcreteMessageMgr() const;
-    NET_Publisher_ABC&             GetMessageMgr() const;
-
     bool                           MustInitUnitVisionCones   () const;
     bool                           MustSendUnitVisionCones   () const;
     void                           SetMustSendUnitVisionCones( bool bEnable );
