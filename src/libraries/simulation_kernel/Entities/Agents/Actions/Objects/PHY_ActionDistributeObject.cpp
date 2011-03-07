@@ -51,9 +51,7 @@ void PHY_ActionDistributeObject::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionDistributeObject::Execute()
 {
-    int nReturn = role_.Distribute( pObject_, 1 );
-    if( --quantity_ <= 0 )
-        nReturn = role_.GetFinalReturnCode();
+    int nReturn = role_.Distribute( pObject_, quantity_ );
     Callback( nReturn );
 }
 

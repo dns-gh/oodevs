@@ -438,7 +438,7 @@ int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
 
     typedef std::vector< std::pair< const PHY_DotationCategory*, double > > T_SelectionVector;
-    typedef T_SelectionVector::iterator IT_SelectionVector;
+    typedef T_SelectionVector::const_iterator IT_SelectionVector;
     T_SelectionVector selection;
     stockAttribute->DeprecatedSelectDotations( selection, true );
     for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
@@ -447,7 +447,14 @@ int PHY_RoleAction_Objects::Distribute( boost::shared_ptr< DEC_Knowledge_Object 
             double distributed = resourceNetworkCapacity->AddToStock( *it->first, toBeDistributed );
             stockAttribute->Supply( *it->first, std::max( toBeDistributed - distributed, 0.0 ) );
     }
-    return eRunning;
+
+    for ( IT_SelectionVector it = selection.begin(); it != selection.end(); ++it )
+    {
+        if( stockAttribute->CanDistribute( *it->first ) )
+            return eRunning;
+    }
+
+    return eFinished;
 }
 
 // -----------------------------------------------------------------------------
