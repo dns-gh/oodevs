@@ -29,6 +29,7 @@ HierarchyListView_ABC.cpp \
 HighlightColorModifier.cpp \
 InhabitantPanel.cpp \
 InputPropagationPrototype_ABC.cpp \
+InhabitantListView.cpp \
 IntelligencesPanel.cpp \
 LayersPanel.cpp \
 LightingPanel.cpp \

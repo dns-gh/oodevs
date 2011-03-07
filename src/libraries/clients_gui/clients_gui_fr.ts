@@ -482,6 +482,13 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::InhabitantListView</name>
+    <message>
+        <source>Inhabitants</source>
+        <translation>Populations</translation>
+    </message>
+</context>
+<context>
     <name>gui::InhabitantPanel</name>
     <message>
         <source>Colors</source>
