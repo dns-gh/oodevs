@@ -11710,7 +11710,7 @@
     <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="net.masagroup.sword.military.platoon.coercition.support.artillery.roles.Artillery" id="428" name="Section de Tir . AUF1 CDS OFF" type="Pion ASS">
+  <unit decisional-model="net.masagroup.sword.france.military.platoon.combat.support.artillery.roles.Artillery" id="428" name="Section de Tir . AUF1 CDS OFF" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="Char AUF1"/>
@@ -11749,7 +11749,7 @@
     <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="net.masagroup.sword.military.platoon.coercition.support.engineer.roles.Engineer" id="429" name="Groupe GEN . EBG" type="Pion GEN">
+  <unit decisional-model="net.masagroup.sword.france.military.platoon.combat.support.engineer.roles.Engineer" id="429" name="Groupe GEN . EBG" type="Pion GEN">
     <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="EBG"/>
@@ -11769,7 +11769,7 @@
     <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="net.masagroup.sword.military.platoon.coercition.support.engineer.roles.Engineer" id="430" name="Groupe GEN . MPG" type="Pion GEN">
+  <unit decisional-model="net.masagroup.sword.france.military.platoon.combat.support.engineer.roles.Engineer" id="430" name="Groupe GEN . MPG" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MPG"/>
@@ -11958,7 +11958,7 @@
     <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="net.masagroup.sword.military.platoon.coercition.support.artillery.roles.Artillery" id="437" name="PC . Batterie ASS" type="Pion ASS">
+  <unit decisional-model="net.masagroup.sword.france.military.platoon.combat.support.artillery.roles.Artillery" id="437" name="PC . Batterie ASS" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -12355,4 +12355,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1907466128" -->
+<!-- signature="2698148487" -->

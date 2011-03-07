@@ -351,7 +351,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.coercition.support.artillery.roles.Artillery" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.coercition.support.artillery.roles.Artillery">
+    <unit dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.roles.Artillery" file="BMPion.bms" masalife="true" name="net.masagroup.sword.france.military.platoon.combat.support.artillery.roles.Artillery">
       <missions>
         <mission name="ASS Assurer la Mise En Oeuvre">
           <fragorder name="Appliquer les feux"/>
@@ -390,7 +390,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="net.masagroup.sword.military.platoon.coercition.support.engineer.roles.Engineer" file="BMPion.bms" masalife="true" name="net.masagroup.sword.military.platoon.coercition.support.engineer.roles.Engineer">
+    <unit dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.roles.Engineer" file="BMPion.bms" masalife="true" name="net.masagroup.sword.france.military.platoon.combat.support.engineer.roles.Engineer">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -11345,4 +11345,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0754684863" -->
+<!-- signature="2051856615" -->
