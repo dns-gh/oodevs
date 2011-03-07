@@ -26,6 +26,8 @@
 #include "ADN_Project_Data.h"
 #include "ADN_ProgressBar.h"
 #include "ADN_SplashScreen.h"
+#include "ADN_FileLoader.h"
+#include "ADN_FileLoaderObserver.h"
 #include "tools/GeneralConfig.h"
 #include "qtundo.h"
 #include <qimage.h>
@@ -97,18 +99,20 @@ namespace
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
 ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
-    : QMainWindow       ()
-    , generalConfig_    ( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).ascii() ) ) )
-    , workspace_        ( ADN_Workspace::GetWorkspace() )
-    , config_           ( config )
-    , rIdSaveAs_        ( 0 )
-    , rIdClose_         ( 0 )
-    , nIdChangeOpenMode_( 0 )
-    , pProjectMenu_     ( 0 )
+    : QMainWindow        ()
+    , generalConfig_     ( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).ascii() ) ) )
+    , fileLoaderObserver_( new ADN_FileLoaderObserver() )
+    , fileLoader_        ( new ADN_FileLoader( *generalConfig_, *fileLoaderObserver_ ) )
+    , workspace_         ( ADN_Workspace::GetWorkspace() )
+    , config_            ( config )
+    , rIdSaveAs_         ( 0 )
+    , rIdClose_          ( 0 )
+    , nIdChangeOpenMode_ ( 0 )
+    , pProjectMenu_      ( 0 )
     , pCoheranceTablesMenu_( 0 )
-    , pHelpMenu_        ( 0 )
-    , bNeedSave_        ( false )
-    , strAdminPassword_ ( ReadPassword() )
+    , pHelpMenu_         ( 0 )
+    , bNeedSave_         ( false )
+    , strAdminPassword_  ( ReadPassword() )
 {
     generalConfig_->Parse( qApp->argc(), qApp->argv() );
     setMinimumSize( 640, 480 );
@@ -396,7 +400,8 @@ void ADN_MainWindow::OpenProject()
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAdminMode )
 {
-    if (isAdminMode){
+    if( isAdminMode )
+    {
         workspace_.SetOpenMode( eOpenMode_Admin );
         emit OpenModeToggled();
     }
@@ -407,26 +412,25 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
     pTab_->hide();
 
     QApplication::setOverrideCursor( waitCursor ); // this might take time
-    std::string invalidSignedFiles;
     if( QString( szFilename.c_str() ).startsWith( "//" ) )
     {
         std::string res( szFilename );
         std::replace( res.begin(), res.end(), '/', '\\' );
-        workspace_.Load( res, invalidSignedFiles );
+        workspace_.Load( res, *fileLoader_ );
     }
     else
-        workspace_.Load( szFilename, invalidSignedFiles );
+        workspace_.Load( szFilename, *fileLoader_ );
     QApplication::restoreOverrideCursor();    // restore original cursor
     setCaption( tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() ) );
     SetMenuEnabled( true );
     pTab_->show();
-    if( !isAdminMode && !invalidSignedFiles.empty() )
+    if( !isAdminMode && !fileLoaderObserver_->GetInvalidSignedFiles().empty() )
     {
         QSettings settings;
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         if( settings.readNumEntry( "/Common/NoSignatureCheck", 0 ) != 1 )
             QMessageBox::warning( this, qApp->translate( "Application", "SWORD" )
-                    , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + invalidSignedFiles.c_str() );
+                    , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + fileLoaderObserver_->GetInvalidSignedFiles().c_str() );
     }
 }
 

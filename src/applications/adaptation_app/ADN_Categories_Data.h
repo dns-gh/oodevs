@@ -40,7 +40,7 @@ public:
 
     void FilesNeeded(T_StringList& l) const;
     void Reset();
-    void Load( std::string& invalidSignedFiles );
+    void Load( const tools::Loader_ABC& fileLoader );
     void Save();
 
     helpers::T_ArmorInfos_Vector&          GetArmorsInfos();

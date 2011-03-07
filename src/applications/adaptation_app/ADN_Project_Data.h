@@ -17,6 +17,11 @@
 #include <map>
 #include <boost/noncopyable.hpp>
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 namespace xml { class xistream; }
 
 //*****************************************************************************
@@ -136,7 +141,7 @@ public:
 
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Reset();
-    virtual void Load( std::string& invalidSignedFiles );
+    virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Save();
 
     DataInfos&           GetDataInfos();

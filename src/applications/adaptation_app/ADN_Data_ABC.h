@@ -20,6 +20,11 @@ namespace xml
     class xostream;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 typedef std::list<std::string>         T_StringList;
 typedef T_StringList::iterator        IT_StringList;
 typedef T_StringList::const_iterator CIT_StringList;
@@ -46,7 +51,7 @@ public:
     //@{
     virtual void FilesNeeded( T_StringList& vFiles ) const = 0;
     virtual void Reset() = 0;
-    virtual void Load( std::string& invalidSignedFiles );
+    virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Save();
     virtual bool IsValidDatabase();
     //@}

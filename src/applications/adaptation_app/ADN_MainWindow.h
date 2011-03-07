@@ -18,12 +18,14 @@
 namespace tools
 {
     class GeneralConfig;
+    class Loader_ABC;
 }
 
 class ADN_Workspace;
 class ADN_Config;
 class ADN_Table;
 class ADN_ListView;
+class ADN_FileLoaderObserver;
 
 class QWidget;
 class QTabWidget;
@@ -96,6 +98,8 @@ private:
 
 private:
     std::auto_ptr< tools::GeneralConfig > generalConfig_;
+    std::auto_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
+    std::auto_ptr< tools::Loader_ABC > fileLoader_;
     const QString strAdminPassword_;
     ADN_Workspace& workspace_;
     ADN_Config& config_;

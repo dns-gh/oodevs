@@ -72,6 +72,11 @@ class ADN_FireClass_Data;
 class ADN_FireClass_GUI;
 enum E_OpenMode;
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 // =============================================================================
 /** @class  ADN_Workspace
     @brief  ADN_Workspace
@@ -90,7 +95,7 @@ public:
 public:
     void Build( ADN_MainWindow& mainWindow );
     void Reset( const std::string& filename, bool bVisible = true );
-    void Load( const std::string& filename, std::string& invalidSignedFiles );
+    void Load( const std::string& filename, const tools::Loader_ABC& fileLoader );
     bool Save();
     bool SaveAs( const std::string& filename );
     void ExportHtml( const std::string& strPath );

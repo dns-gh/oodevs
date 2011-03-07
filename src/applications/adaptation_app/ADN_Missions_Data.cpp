@@ -17,6 +17,7 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_AiEngine_Data.h"
 #include "ADN_Tr.h"
+#include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include <tools/XmlCrc32Signature.h>
 #include <xeuseuleu/xsl.hpp>
@@ -622,21 +623,14 @@ void ADN_Missions_Data::Reset()
 // Name: ADN_Missions_Data::Load
 // Created: LDC 2010-09-24
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::Load( std::string& invalidSignedFiles )
+void ADN_Missions_Data::Load( const tools::Loader_ABC& fileLoader )
 {
     T_StringList fileList;
     FilesNeeded( fileList );
     if( ! fileList.empty() )
     {
         const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
-        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( strFile );
-        if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-            invalidSignedFiles.append( "\n" + fileList.front() );
-        xsl::xstringtransform xst( "resources/ordCompatibility.xsl" );
-        xst << xml::xifstream( strFile );
-        std::string updatedFile = xst.str();
-        xml::xistringstream input( updatedFile );
-        ReadArchive( input );
+        fileLoader.LoadFile( strFile, boost::bind( &ADN_Missions_Data::ReadArchive, this, _1 ) );
     }
 }
 

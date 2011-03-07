@@ -16,8 +16,9 @@
 #include "ADN_DataException.h"
 #include "ADN_Tools.h"
 #include "ADN_GuiTools.h"
-#include "SchemaReader.h"
+#include "tools/Loader_ABC.h"
 #include <tools/XmlCrc32Signature.h>
+#include <boost/bind.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Data_ABC constructor
@@ -42,30 +43,14 @@ ADN_Data_ABC::~ADN_Data_ABC()
 // Name: ADN_Data_ABC::Load
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_Data_ABC::Load( std::string& invalidSignedFiles )
+void ADN_Data_ABC::Load( const tools::Loader_ABC& fileLoader )
 {
     T_StringList fileList;
     FilesNeeded( fileList );
-    if( ! fileList.empty() )
+    if( !fileList.empty() )
     {
         const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + fileList.front();
-        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( strFile );
-        if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-            invalidSignedFiles.append( "\n" + fileList.front() );
-        xml::xifstream xis( strFile );
-        SchemaReader reader;
-        xis >> xml::list( reader, &SchemaReader::ReadSchema );
-        const std::string& schema = reader.GetSchema();
-        if( schema.empty() )
-        {
-            xml::xifstream input( strFile );
-            ReadArchive( input );
-        }
-        else
-        {
-            xml::xifstream input( strFile, xml::external_grammar( std::string( "resources/" ) + schema ) );
-            ReadArchive( input );
-        }
+        fileLoader.LoadFile( strFile, boost::bind( &ADN_Data_ABC::ReadArchive, this, _1 ) );
     }
 }
 

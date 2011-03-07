@@ -17,7 +17,7 @@
 #include "ADN_Resources.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_DataException.h"
-#include "SchemaReader.h"
+#include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include <tools/XmlCrc32Signature.h>
 #include <windows.h>
@@ -307,43 +307,23 @@ void ADN_Project_Data::Reset()
     dataInfos_.ReadArchive( defaultFile );
 }
 
-namespace
-{
-    void CheckSignature( const std::string& workingDir, const std::string& filename, std::string& invalidSignedFiles )
-    {
-        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( workingDir + filename );
-        if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-            invalidSignedFiles.append( "\n" + filename );
-        SchemaReader reader;
-        xml::xifstream xis( workingDir + filename );
-        xis >> xml::list( reader, &SchemaReader::ReadSchema );
-        const std::string& schema = reader.GetSchema();
-        if( !schema.empty() )
-        {
-            xml::xifstream input( workingDir + filename, xml::external_grammar( std::string( "resources/" ) + schema ) );
-        }
-    }
-}
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::Load
 // Created: JDY 03-06-20
 //-----------------------------------------------------------------------------
-void ADN_Project_Data::Load( std::string& invalidSignedFiles )
+void ADN_Project_Data::Load( const tools::Loader_ABC& fileLoader )
 {
     assert( ! szFile_.GetFileName().GetData().empty() );
 
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), szFile_.GetFileName().GetData(), invalidSignedFiles );
-    // Read main file
-    xml::xifstream input( szFile_.GetFileNameFull() );
-    dataInfos_.ReadArchive( input );
+    fileLoader.LoadFile( szFile_.GetFileNameFull(), boost::bind( &DataInfos::ReadArchive, &dataInfos_, _1 ) );
+
     // Check XML Validity for files not loaded
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szPathfinder_.GetData(), invalidSignedFiles );
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szObjectNames_.GetData(), invalidSignedFiles );
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szHumanProtections_.GetData(), invalidSignedFiles );
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), dataInfos_.szMedicalTreatment_.GetData(), invalidSignedFiles );
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), "DrawingTemplates.xml", invalidSignedFiles );
-    CheckSignature( workDir_.GetWorkingDirectory().GetData(), "templates.xml", invalidSignedFiles );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData() );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData() );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData() );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData() );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "DrawingTemplates.xml" );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "templates.xml" );
 }
 
 namespace

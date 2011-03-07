@@ -18,7 +18,9 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
+#include "tools/Loader_ABC.h"
 #include <tools/XmlCrc32Signature.h>
+#include <boost/bind.hpp>
 
 IdentifierFactory ADN_Categories_Data::idFactory_;
 // =============================================================================
@@ -76,39 +78,23 @@ void ADN_Categories_Data::Reset()
     idFactory_.Reset();
 }
 
-namespace
-{
-    void CheckSignature( const std::string& filename, std::string& invalidSignedFiles )
-    {
-        tools::EXmlCrc32SignatureError error = tools::CheckXmlCrc32Signature( ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + filename );
-        if( error == tools::eXmlCrc32SignatureError_Invalid || error == tools::eXmlCrc32SignatureError_NotSigned )
-            invalidSignedFiles.append( "\n" + filename );
-    }
-}
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::Load
 // Created: JDY 03-08-27
 //-----------------------------------------------------------------------------
-void ADN_Categories_Data::Load( std::string& invalidSignedFiles )
+void ADN_Categories_Data::Load( const tools::Loader_ABC& fileLoader )
 {
-    CheckSignature( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData(), invalidSignedFiles );
-    std::string szArmorsFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
+    const std::string szArmorsFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
                       + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szArmors_.GetData();
-    xml::xifstream armorsInput( szArmorsFile );
-    ReadArmors( armorsInput );
+    fileLoader.LoadFile( szArmorsFile, boost::bind( &ADN_Categories_Data::ReadArmors, this, _1 ) );
 
-    CheckSignature( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData(), invalidSignedFiles );
-    std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
+    const std::string szSizesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSizes_.GetData();
-    xml::xifstream sizesInput( szSizesFile );
-    ReadSizes( sizesInput );
+    fileLoader.LoadFile( szSizesFile, boost::bind( &ADN_Categories_Data::ReadSizes, this, _1 ) );
 
-    CheckSignature( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData(), invalidSignedFiles );
-    std::string szDotationNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
+    const std::string szDotationNaturesFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData()
         + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDotationNatures_.GetData();
-    xml::xifstream dotationNaturesInput( szDotationNaturesFile );
-    ReadDotationNatures( dotationNaturesInput );
+    fileLoader.LoadFile( szDotationNaturesFile, boost::bind( &ADN_Categories_Data::ReadDotationNatures, this, _1 ) );
 }
 
 //-----------------------------------------------------------------------------
