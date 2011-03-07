@@ -61,7 +61,7 @@ public:
     //@{
              ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const kernel::Positions& position
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
-             ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute& network, const kernel::Positions& position
+             ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute* network, const kernel::Positions& position
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
              ResourceNetworkAttribute( kernel::Controllers& controllers, const kernel::Positions& position
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );

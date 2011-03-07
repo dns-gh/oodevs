@@ -326,6 +326,13 @@ void ResourceLinksDialog_ABC::Show()
             dotationList_->setSelected( new QListBoxText( dotationList_, it->second.resource_.c_str() ), false );
     }
     groupBox_->setEnabled( dotationList_->count() > 0 );
+    groupBox_->setChecked( true );
+    production_->setValue( 0 );
+    consumption_->setValue( 0 );
+    critical_->setChecked( false );
+    maxStock_->setValue( 0 );
+    stock_->setValue( 0 );
+    table_->setNumRows( 0 );
     Update();
     pMainLayout_->show();
 }

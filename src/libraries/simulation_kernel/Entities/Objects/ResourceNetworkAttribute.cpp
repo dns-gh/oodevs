@@ -26,6 +26,15 @@ ResourceNetworkAttribute::ResourceNetworkAttribute()
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkAttribute constructor
+// Created: JSR 2011-03-04
+// -----------------------------------------------------------------------------
+ResourceNetworkAttribute::ResourceNetworkAttribute( MIL_Object_ABC& object )
+{
+    capacity_ = object.Retrieve< ResourceNetworkCapacity >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
 ResourceNetworkAttribute::ResourceNetworkAttribute( xml::xistream& xis, MIL_Object_ABC& object )

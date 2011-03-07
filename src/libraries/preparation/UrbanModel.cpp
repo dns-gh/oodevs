@@ -214,8 +214,7 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
     pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dico ) );
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( urbanObject ) );
     const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
-    if( resource )
-        pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, *resource, pTerrainObject->Get< kernel::Positions >(), *this, objects_, static_.objectTypes_ ) );
+    pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, resource, pTerrainObject->Get< kernel::Positions >(), *this, objects_, static_.objectTypes_ ) );
     if( const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >() )
         if( const kernel::InfrastructureType* infraType = static_.objectTypes_.tools::StringResolver< kernel::InfrastructureType >::Find( infra->GetType() ) )
         {

@@ -21,6 +21,7 @@
 #include "ActivityTimePrototype.h"
 #include "DelayPrototype.h"
 #include "FloodPrototype.h"
+#include "ResourceNetworkPrototype.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Location.h"
@@ -117,6 +118,11 @@ namespace
         container.push_back( new MedicalTreatmentPrototype( parent, resolver, attributesList ) );
     }
 
+    void ResourceNetworkAttribute( T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
+    {
+        container.push_back( new ResourceNetworkPrototype( parent, attributesList ) );
+    }
+
     template<typename T>
     struct Capacity
     {
@@ -142,6 +148,7 @@ namespace
         factory->Register( "contamination"             , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "burn"                      , boost::bind( &BurnAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "resources"                 , boost::bind( &ResourceNetworkAttribute, _2, _3, boost::ref( attributesList ) ) );
         return factory;
     }
 }

@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ResourceNetworkModel.h"
 #include "ResourceNetwork.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/ResourceNetworkSelectionObserver.h"
 #include "protocol/Protocol.h"
 
@@ -33,4 +34,15 @@ ResourceNetworkModel::ResourceNetworkModel( kernel::Controllers& controllers, co
 ResourceNetworkModel::~ResourceNetworkModel()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkModel::Create
+// Created: JSR 2011-03-04
+// -----------------------------------------------------------------------------
+void ResourceNetworkModel::Create( kernel::Entity_ABC& entity )
+{
+    kernel::PropertiesDictionary& dico = entity.Get< kernel::PropertiesDictionary >();
+    ResourceNetwork* element = new ResourceNetwork( controllers_, entity.GetId(), model_.urbanObjects_, model_.objects_, staticModel_.objectTypes_, dico );
+    entity.Attach< kernel::ResourceNetwork_ABC >( *element );
 }

@@ -224,6 +224,9 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
             case ObjectMagicAction::flood:
                 object.GetAttribute< FloodAttribute >() = FloodAttribute( attributes, object.GetLocalisation() );
                 break;
+            case ObjectMagicAction::resource_network:
+                object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );
+                break;
             default:
                 break;
             }

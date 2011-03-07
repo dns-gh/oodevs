@@ -80,6 +80,7 @@ void ResourceNetworkAttribute::Update( const sword::ObjectAttributes& message )
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Send( sword::ObjectAttributes& message ) const
 {
+    message.mutable_resource_networks();
     for( std::map< std::string, ResourceNetwork >::const_iterator it = resourceMap_.begin(); it != resourceMap_.end(); ++it )
         Send( *message.mutable_resource_networks()->add_network(), it->second );
 }

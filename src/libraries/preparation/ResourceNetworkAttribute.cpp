@@ -41,7 +41,7 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-20
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute& network, const kernel::Positions& position
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute* network, const kernel::Positions& position
                                                   , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
     : controllers_( controllers )
     , position_   ( position )
@@ -50,23 +50,26 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
     , resources_  ( resources )
     , needSaving_ ( false )
 {
-    const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = network.GetResourceNodes();
-    for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
+    if( network )
     {
-        ResourceNode& node = resourceNodes_[ it->second.resource_ ];
-        node.resource_ = it->second.resource_;
-        node.isEnabled_ = it->second.isEnabled_;
-        node.production_ = it->second.production_;
-        node.consumption_ = it->second.consumption_;
-        node.critical_ = it->second.critical_;
-        node.maxStock_ = it->second.maxStock_;
-        for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator itLink = it->second.links_.begin(); itLink != it->second.links_.end(); ++itLink )
+        const urban::ResourceNetworkAttribute::T_ResourceNodes& nodes = network->GetResourceNodes();
+        for( urban::ResourceNetworkAttribute::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it )
         {
-            ResourceLink link;
-            link.id_ = itLink->id_;
-            link.capacity_ = itLink->capacity_;
-            link.urban_ = true;
-            node.links_.push_back( link );
+            ResourceNode& node = resourceNodes_[ it->second.resource_ ];
+            node.resource_ = it->second.resource_;
+            node.isEnabled_ = it->second.isEnabled_;
+            node.production_ = it->second.production_;
+            node.consumption_ = it->second.consumption_;
+            node.critical_ = it->second.critical_;
+            node.maxStock_ = it->second.maxStock_;
+            for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator itLink = it->second.links_.begin(); itLink != it->second.links_.end(); ++itLink )
+            {
+                ResourceLink link;
+                link.id_ = itLink->id_;
+                link.capacity_ = itLink->capacity_;
+                link.urban_ = true;
+                node.links_.push_back( link );
+            }
         }
     }
 }

@@ -44,6 +44,7 @@ public:
 
     //! @name Operations
     //@{
+    void Create( kernel::Entity_ABC& entity );
     template< typename T >
     void Create( kernel::Entity_ABC& entity, const T& msg );
     //@}

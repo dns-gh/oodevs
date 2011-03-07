@@ -25,7 +25,7 @@ NodeProperties::NodeProperties()
     : functionalState_   ( 1.f )
     , oldFunctionalState_( 1.f )
     , tools_             ( 0 )
-    , needUpdate_        ( false )
+    , needUpdate_        ( true )
 {
     // NOTHING
 }
@@ -38,7 +38,7 @@ NodeProperties::NodeProperties( const ResourceTools_ABC& tools )
     : functionalState_   ( 1.f )
     , oldFunctionalState_( 1.f )
     , tools_             ( &tools )
-    , needUpdate_        ( false )
+    , needUpdate_        ( true )
 {
     // NOTHING
 }
@@ -51,7 +51,7 @@ NodeProperties::NodeProperties( xml::xistream& xis, const ResourceTools_ABC& too
     : functionalState_   ( 1.f )
     , oldFunctionalState_( 1.f )
     , tools_             ( &tools )
-    , needUpdate_        ( false )
+    , needUpdate_        ( true )
 {
     Update( xis );
 }
@@ -64,7 +64,7 @@ NodeProperties::NodeProperties( const NodeProperties& from )
     : functionalState_   ( 1.f )
     , oldFunctionalState_( 1.f )
     , tools_             ( from.tools_ )
-    , needUpdate_        ( false )
+    , needUpdate_        ( true )
 {
     for( CIT_Elements it = from.elements_.begin(); it != from.elements_.end(); ++it )
         Register( it->first, *new NodeElement( *it->second ) );
@@ -191,10 +191,10 @@ void NodeProperties::RemoveLink( unsigned int nodeId )
 // -----------------------------------------------------------------------------
 bool NodeProperties::NeedUpdate() const
 {
-    if( Count() == 0 )
-        return false;
     if( needUpdate_ )
         return true;
+    if( Count() == 0 )
+        return false;
     tools::Iterator< const NodeElement& > it = CreateIterator();
     while( it.HasMoreElements() )
         if( it.NextElement().NeedUpdate() )

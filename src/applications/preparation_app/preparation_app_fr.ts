@@ -1459,13 +1459,5 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>The following entities cannot be loaded: </source>
         <translation>Les entités suivantes n&apos;ont pas pu être chargées: </translation>
     </message>
-    <message>
-        <source>The signatures for the following files do not exist or are invalid : </source>
-        <translation>Les signatures des fichiers suivants n&apos;existent pas ou bien sont invalides:</translation>
-    </message>
-    <message>
-        <source>The following files do not match their xsd : </source>
-        <translation>Les fichiers suivants ne correspondent pas à leur xsd:</translation>
-    </message>
 </context>
 </TS>
