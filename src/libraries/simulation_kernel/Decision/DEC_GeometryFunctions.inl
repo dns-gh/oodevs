@@ -192,7 +192,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::GetLeavingAreaPosition( 
         throw std::runtime_error( "invalid localisation" );
 
     TER_Localisation scale = *pLocalisation;
-    scale.Scale( 100 );
+    scale.Scale( 500 );
 
     boost::shared_ptr< MT_Vector2D > pResult;
     MT_Vector2D vResult;

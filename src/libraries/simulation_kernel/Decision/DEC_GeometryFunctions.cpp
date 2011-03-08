@@ -171,6 +171,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateOrthoDirection( MT
 // -----------------------------------------------------------------------------
 float DEC_GeometryFunctions::ComputeDistance( boost::shared_ptr< MT_Vector2D > pos1, boost::shared_ptr< MT_Vector2D > pos2 )
 {
+	if( !pos1.get() || !pos2.get() )
+		throw std::runtime_error( "Null ptr in compute distance" );
     return (float)pos1->Distance( *pos2 );
 }
 
