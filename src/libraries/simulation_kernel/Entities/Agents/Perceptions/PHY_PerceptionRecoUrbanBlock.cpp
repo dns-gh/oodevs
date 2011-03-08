@@ -30,8 +30,9 @@
 // Name: PHY_PerceptionRecoUrbanBlockReco constructor
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const UrbanObjectWrapper* pUrbanBlock )
+PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const UrbanObjectWrapper* pUrbanBlock, const boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock )
     : pUrbanBlock_( pUrbanBlock )
+    , pKnowledgeUrbanBlock_( pKnowledgeUrbanBlock )
 {
     if( pUrbanBlock == 0 )
         throw std::runtime_error( "urban block invalid" );
@@ -63,9 +64,8 @@ void PHY_PerceptionRecoUrbanBlockReco::GetAgentsInside( const PHY_RoleInterface_
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRecoUrbanBlockReco::CanSeeIt() const
 {
-    boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = pUrbanBlock_->GetArmy()->GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanBlock_ );
-    if( pKnowledge )
-        return pKnowledge->GetCurrentRecceProgress() >= ( 1. - MIL_Random::rand_ii( MIL_Random::ePerception ) );
+    if( pKnowledgeUrbanBlock_ )
+        return pKnowledgeUrbanBlock_->GetCurrentRecceProgress() >= ( 1. - MIL_Random::rand_ii( MIL_Random::ePerception ) );
     return false;
 }
 
@@ -96,7 +96,8 @@ PHY_PerceptionRecoUrbanBlock::~PHY_PerceptionRecoUrbanBlock()
 // -----------------------------------------------------------------------------
 int PHY_PerceptionRecoUrbanBlock::AddUrbanBlock( const UrbanObjectWrapper* pUrbanBlock )
 {
-    PHY_PerceptionRecoUrbanBlockReco* pNewReco = new PHY_PerceptionRecoUrbanBlockReco( pUrbanBlock );
+    boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = perceiver_.GetPion().GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanBlock );
+    PHY_PerceptionRecoUrbanBlockReco* pNewReco = new PHY_PerceptionRecoUrbanBlockReco( pUrbanBlock, pKnowledge );
     assert( pNewReco );
     return Add( pNewReco );
 }

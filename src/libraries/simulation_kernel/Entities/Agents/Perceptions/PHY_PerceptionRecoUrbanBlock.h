@@ -15,11 +15,12 @@
 #include <boost/shared_ptr.hpp>
 
 class UrbanObjectWrapper;
+class DEC_Knowledge_Urban;
 
 class PHY_PerceptionRecoUrbanBlockReco : public PHY_PerceptionLocalisation
 {
 public:
-    PHY_PerceptionRecoUrbanBlockReco( const UrbanObjectWrapper* pUrbanBlock );
+    PHY_PerceptionRecoUrbanBlockReco( const UrbanObjectWrapper* pUrbanBlock, const boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock );
 
     bool IsInside( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& vPoint ) const;
     void GetAgentsInside( const PHY_RoleInterface_Perceiver& perceiver, TER_Agent_ABC::T_AgentPtrVector& ) const;
@@ -30,6 +31,7 @@ private:
 
 private:
     const UrbanObjectWrapper* pUrbanBlock_;
+    const boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock_;
     TER_Localisation localisation_;
 };
 
