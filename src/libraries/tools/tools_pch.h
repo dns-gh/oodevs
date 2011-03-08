@@ -11,6 +11,7 @@
 #define __tools_pch_h_
 
 #pragma warning( disable : 4996 ) // $$$$ SBO 2008-05-13: vc80 deprecation
+#pragma warning( disable : 4355 ) // 'this' : used in base member initializer list
 
 #include <string>
 #include "asio.h"
@@ -21,4 +22,3 @@
 #include <geometry/Types.h>
 
 #endif // __tools_pch_h_
-
