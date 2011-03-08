@@ -95,7 +95,6 @@ message MsgObjectMagicAction {
         create  = 0;
         update  = 1;
         destroy = 2;
-        request = 3;
    }
    
    enum Attribute {

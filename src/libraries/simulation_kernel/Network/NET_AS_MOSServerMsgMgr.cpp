@@ -107,6 +107,8 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
         workspace.GetEntityManager        ().OnReceiveUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx );
     else if( wrapper.message().has_object_magic_action() )
         workspace.GetEntityManager        ().OnReceiveObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx );
+    else if( wrapper.message().has_burning_cell_request() )
+        workspace.GetEntityManager().OnReceiveBurningCellRequest( wrapper.message().burning_cell_request(), nCtx );
     else if( wrapper.message().has_magic_action() )
         if( wrapper.message().magic_action().type() == sword::MagicAction::global_weather
          || wrapper.message().magic_action().type() == sword::MagicAction::local_weather )

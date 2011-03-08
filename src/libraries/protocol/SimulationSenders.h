@@ -35,6 +35,7 @@ namespace simulation
     GENERATE_MESSAGE( sword::ClientToSim, sword, FragOrder                    , frag_order )
     GENERATE_MESSAGE( sword::ClientToSim, sword, SetAutomatMode               , set_automat_mode )
     GENERATE_MESSAGE( sword::ClientToSim, sword, UnitCreationRequest          , unit_creation_request )
+    GENERATE_MESSAGE( sword::ClientToSim, sword, BurningCellRequest           , burning_cell_request )
 }
 
 #endif // __protocol_SimulationSenders_h_

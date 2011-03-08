@@ -163,15 +163,6 @@ boost::shared_ptr< DEC_Knowledge_Object > UrbanObjectWrapper::CreateKnowledge( c
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::OnRequest
-// Created: BCI 2011-01-10
-// -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& /*attributes*/ )
-{
-    return sword::ObjectMagicActionAck_ErrorCode_no_error;
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::SendCapacity
 // Created: JSR 2010-09-17
 // -----------------------------------------------------------------------------

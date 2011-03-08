@@ -74,6 +74,7 @@
 #include "Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Objects/BurnSurfaceAttribute.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Inhabitants/MIL_InhabitantType.h"
 #include "Inhabitants/MIL_Inhabitant.h"
@@ -1563,6 +1564,31 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const sword::MagicAc
         pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
     }
     catch( NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+    }
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveBurningCellRequest
+// Created: BCI 2011-03-01
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveBurningCellRequest( const sword::BurningCellRequest& message, unsigned int nCtx )
+{
+    client::BurningCellRequestAck ack;
+    ack().set_error_code( sword::BurningCellRequestAck::no_error );
+    try
+    {
+        MIL_Object_ABC* object = FindObject( message.object().id() );
+        if( object )
+        {
+            BurnSurfaceAttribute* burnSurfaceAttribute = object->RetrieveAttribute< BurnSurfaceAttribute >();
+            if( burnSurfaceAttribute )
+                burnSurfaceAttribute->OnReceiveBurningCellRequest( message );
+        }
+    }
+    catch( NET_AsnException< sword::BurningCellRequestAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }

@@ -182,14 +182,11 @@ bool BurnSurfaceAttribute::Update( const BurnSurfaceAttribute& rhs )
 }
 
 // -----------------------------------------------------------------------------
-// Name: BurnSurfaceAttribute::OnRequest
-// Created: BCI 2011-01-10
+// Name: BurnSurfaceAttribute::OnReceiveBurningCellRequest
+// Created: BCI 2011-03-01
 // -----------------------------------------------------------------------------
-void BurnSurfaceAttribute::OnRequest( const sword::MissionParameter_Value& parameters )
+void BurnSurfaceAttribute::OnReceiveBurningCellRequest( const sword::BurningCellRequest& message )
 {
-    if( parameters.list_size() > 2 )
-    {
-        burningCells_.OnRequest( parameters.list( 1 ).areal(), parameters.list( 2 ).areal() );
-        NotifyAttributeUpdated( eOnUpdate );
-    }
+    burningCells_.OnRequest( message.x(), message.y() );
 }
+

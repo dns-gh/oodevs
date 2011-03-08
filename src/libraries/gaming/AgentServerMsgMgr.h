@@ -190,6 +190,7 @@ namespace sword
     class AarInformation;
     class PlotResult;
     class Indicator;
+    class BurningCellRequestAck;
 }
 
 namespace tools
@@ -484,6 +485,9 @@ private:
     void OnReceiveUrbanKnowledgeCreation   ( const sword::UrbanKnowledgeCreation&           message );
     void OnReceiveUrbanKnowledgeUpdate     ( const sword::UrbanKnowledgeUpdate&             message );
     void OnReceiveUrbanKnowledgeDestruction( const sword::UrbanKnowledgeDestruction&        message );
+
+    // Burn surface
+    void OnReceiveBurningCellRequestAck( const sword::BurningCellRequestAck& message, unsigned long nCtx );
     //@}
 
     // LTO begin

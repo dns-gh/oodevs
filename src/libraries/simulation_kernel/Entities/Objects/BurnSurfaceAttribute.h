@@ -23,6 +23,7 @@ class MT_Vector2D;
 namespace sword
 {
     enum EnumBurningCellPhase;
+    class BurningCellRequest;
 }
 
 // =============================================================================
@@ -61,7 +62,7 @@ public:
     //! @name Notifications
     //@{
     void NotifyCellsUpdated();
-    void OnRequest( const sword::MissionParameter_Value& parameters );
+    void OnReceiveBurningCellRequest( const sword::BurningCellRequest& message );
     //@}
 
     //! @name Operations

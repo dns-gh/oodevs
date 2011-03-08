@@ -162,30 +162,6 @@ void Object::ProcessAgentInside( MIL_Agent_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Object::OnRequest
-// Created: BCI 2011-01-10
-// -----------------------------------------------------------------------------
-sword::ObjectMagicActionAck_ErrorCode Object::OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes )
-{
-    for( int i = 0; i < attributes.size(); ++i )
-    {
-        const sword::MissionParameter_Value& attribute = attributes.Get( i );
-        if( attribute.list_size() == 0 ) // it should be a list of lists
-            return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
-        const unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
-        switch( actionId )
-        {
-        case sword::ObjectMagicAction_Attribute_burn_surface:
-            GetAttribute< BurnSurfaceAttribute >().OnRequest( attribute );
-            break;
-        default:
-            break;
-        }
-    }
-    return sword::ObjectMagicActionAck::no_error;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Object::SendCreation
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------

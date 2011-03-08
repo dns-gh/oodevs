@@ -238,6 +238,8 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         return bSupervision_;
     if( message.has_object_magic_action() )
         return true;
+    if( message.has_burning_cell_request() )
+        return true;
     return false;
 }
 

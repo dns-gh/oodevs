@@ -132,6 +132,7 @@ public:
     NotesModel&           notes_;
     MeteoModel&           meteo_;
     kernel::FormationLevels& formations_;
+    Publisher_ABC& publisher_;
     //@}
 
 private:

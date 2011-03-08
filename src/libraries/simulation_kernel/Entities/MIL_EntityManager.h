@@ -38,6 +38,7 @@ namespace sword
     class UnitMagicAction;
     class KnowledgeMagicAction;
     class MagicAction;
+    class BurningCellRequest;
 }
 
 namespace urban
@@ -167,6 +168,7 @@ public:
     void OnReceiveChangeDiplomacy             ( const sword::MagicAction&                   message, unsigned int nCtx );
     void OnReceiveChangeResourceLinks         ( const sword::MagicAction&                   message, unsigned int nCtx );
     void OnReceiveCreateFireOrderOnLocation   ( const sword::MagicAction&                   message, unsigned int nCtx );
+    void OnReceiveBurningCellRequest          ( const sword::BurningCellRequest&           message, unsigned int nCtx );
     // LTO begin
     void OnReceiveKnowledgeGroupCreation      ( const sword::MagicAction&                   message, unsigned int nCtx );
     // LTO end

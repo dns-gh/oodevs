@@ -1316,6 +1316,15 @@ void AgentServerMsgMgr::OnReceiveChangePopulationMagicActionAck( const sword::Ch
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveBurningCellRequestAck
+// Created: BCI 2011-03-08
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveBurningCellRequestAck( const sword::BurningCellRequestAck& message, unsigned long nCtx )
+{
+    CheckAcknowledge( logger_, message.error_code(), "BurningCellRequestAck" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnCrowdCreation
 // Created: HME 2005-09-28
 // -----------------------------------------------------------------------------
@@ -2013,6 +2022,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
         OnReceiveControlMeteoLocalDestruction( wrapper.message().control_local_weather_destruction() );
     else if( wrapper.message().has_change_population_magic_action_ack() )
         OnReceiveChangePopulationMagicActionAck( wrapper.message().change_population_magic_action_ack(), wrapper.context() );
+    else if( wrapper.message().has_burning_cell_request_ack() )
+        OnReceiveBurningCellRequestAck( wrapper.message().burning_cell_request_ack(), wrapper.context() );
     else
         UnhandledMessage( &wrapper.message() );
 }

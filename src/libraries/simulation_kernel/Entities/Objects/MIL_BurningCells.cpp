@@ -531,7 +531,7 @@ void MIL_BurningCells::SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& 
                         break;
                     }
                 }
-                cell.bRequested_ = true;
+                cell.bRequested_ = false;
             }
         }
     }

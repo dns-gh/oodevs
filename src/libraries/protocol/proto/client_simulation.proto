@@ -143,10 +143,15 @@ message ObjectMagicAction {
         @todo Explain what parameters are expected for each type
     */
     enum Type {
-        create  = 0; //!< A create object magic action
-        update  = 1; //!< An update object magic action
-        destroy = 2; //!< A destroy object magic action
-        request = 3; //!< A request object magic action in order to retrieve specific data
+        /** @brief A create object magic action.
+        */
+        create  = 0;
+        /** @brief An update object magic action.
+        */
+        update  = 1;
+        /** @brief A destroy object magic action.
+        */
+        destroy = 2;
     }
     /** @enum Attribute
         @brief The type of object.
@@ -175,7 +180,6 @@ message ObjectMagicAction {
         nbc_agent          = 14;
         effect_delay       = 15;
         flood              = 16;
-        burn_surface       = 17;
         structural_state   = 18;
         infrastructure     = 19;
         usages             = 20;
@@ -265,6 +269,30 @@ message ChangePopulationMagicAction {
     optional bool           alerted    = 7; //!< Whether the population have received an alert
 }
 
+/** @struct BurningCellRequest
+    @brief Request details of a burning cell.
+
+    This message is sent by a client to request burning cell details.
+
+    @see BurningCellRequestAck
+*/
+message BurningCellRequest {
+
+    /** @property object
+        @brief Id of the burning object
+    */
+    required ObjectId object = 1;
+
+    /** @property x
+        @brief X coordinates of the burning cell.
+    */
+    required float x = 2;
+    /** @property y
+        @brief Y coordinates of the burning cell.
+    */
+    required float y = 3;
+}
+
 /** @struct ClientToSim
     @brief Wraps messages from clients to the simulation
 */
@@ -295,6 +323,11 @@ message ClientToSim {
         optional ControlCheckPointListRequest   control_checkpoint_list_request   = 19; //!< @copybrief ControlCheckPointListRequest
         optional ControlCheckPointDeleteRequest control_checkpoint_delete_request = 20; //!< @copybrief ControlCheckPointDeleteRequest
         optional ChangePopulationMagicAction    change_population_magic_action    = 21; //!< @copybrief ChangePopulationMagicAction
+        /** @property burning_cell_request
+            @brief @copybrief BurningCellRequest
+            @see BurningCellRequest
+        */
+        optional BurningCellRequest             burning_cell_request              = 23;
     }
     /** @property context
         @brief Identifies the request matching the response

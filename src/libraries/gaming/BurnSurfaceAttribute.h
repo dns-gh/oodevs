@@ -27,10 +27,7 @@ namespace sword
     enum EnumBurningCellPhase;
 }
 
-namespace actions
-{
-    class ActionsModel;
-}
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  BurnSurfaceAttribute
@@ -45,7 +42,7 @@ class BurnSurfaceAttribute : public kernel::BurnSurfaceAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             BurnSurfaceAttribute( kernel::Controller& controller, actions::ActionsModel& actionsModel, kernel::Entity_ABC& entity );
+             BurnSurfaceAttribute( kernel::Controller& controller, Publisher_ABC& publisher, kernel::Entity_ABC& entity );
     virtual ~BurnSurfaceAttribute();
     //@}
 
@@ -107,7 +104,7 @@ private:
     typedef std::map< BurningCellOrigin, BurningCell > BurningCellsByCoordinatesMap;
     BurningCellsByCoordinatesMap burningCellsByCoordinates_;
     kernel::Controller& controller_;
-    actions::ActionsModel& actionsModel_;
+    Publisher_ABC& publisher_;
     kernel::Entity_ABC& entity_;
     int cellSize_;
     //@}

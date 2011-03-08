@@ -71,7 +71,6 @@ public:
     //! @name Network
     //@{
     virtual sword::ObjectMagicActionAck_ErrorCode OnUpdate( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
-    virtual sword::ObjectMagicActionAck_ErrorCode OnRequest( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& attributes );
     virtual void SendCreation() const;
     virtual void SendDestruction() const;
     virtual void SendFullState() const;
