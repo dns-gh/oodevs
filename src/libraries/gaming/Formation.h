@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
+#include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver_ABC.h"
 
 namespace sword
@@ -32,12 +33,14 @@ namespace kernel
 // Created: AGE 2006-10-19
 // =============================================================================
 class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
+                , public kernel::Extension_ABC
+                , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              Formation( const sword::FormationCreation& message, kernel::Controller& controller,
-                 const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver, const kernel::StaticModel& staticModel );
+                        const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver, const kernel::StaticModel& staticModel );
     virtual ~Formation();
     //@}
 
@@ -45,6 +48,11 @@ public:
     //@{
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 
 private:
@@ -57,6 +65,7 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
+    void InitializeSymbol() const;
     //@}
 
 private:
@@ -64,6 +73,8 @@ private:
     //@{
     const kernel::HierarchyLevel_ABC& level_;
     const kernel::LogisticLevel* logisticLevel_;
+    mutable std::string symbolPath_; // $$$$ RC LDC: code duplication with preparation
+    mutable std::string levelPath_;
     //@}
 };
 

@@ -39,10 +39,10 @@ using namespace actions;
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
 AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view,
-                             const Profile_ABC& profile, gui::AgentsLayer& agents, actions::ActionsModel& actionsModel,
+                             const Profile_ABC& profile, actions::ActionsModel& actionsModel,
                              const kernel::Time_ABC& simulation, AgentServerMsgMgr& messageManager,
                              tools::Resolver_ABC< kernel::Automat_ABC >& agentsModel, const gui::LayerFilter_ABC& filter )
-    : gui::AutomatsLayer( controllers, tools, strategy, view, profile, agents, filter )
+    : gui::AutomatsLayer( controllers, tools, strategy, view, profile, filter )
     , tools_         ( tools )
     , actionsModel_  ( actionsModel )
     , simulation_    ( simulation )

@@ -92,3 +92,12 @@ bool InhabitantPositions::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::IsAggregated
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+bool InhabitantPositions::IsAggregated() const
+{
+    return false;
+}

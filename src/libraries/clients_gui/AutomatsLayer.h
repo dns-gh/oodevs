@@ -16,8 +16,6 @@
 
 namespace gui
 {
-    class AgentsLayer;
-
 // =============================================================================
 /** @class  AutomatsLayer
     @brief  AutomatsLayer
@@ -34,21 +32,20 @@ public:
     //! @name Constructors/Destructor
     //@{
              AutomatsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
-                            View_ABC& view, const kernel::Profile_ABC& profile, gui::AgentsLayer& agents,
-                            const gui::LayerFilter_ABC& filter );
+                            View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter );
     virtual ~AutomatsLayer();
     //@}
 
     //! @name Operations
     //@{
-    void Aggregate   ( const kernel::Automat_ABC& automat );
-    void Disaggregate( const kernel::Automat_ABC& automat );
+    void Aggregate( const kernel::Entity_ABC& automat );
+    void Disaggregate( const kernel::Entity_ABC& automat );
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    void Aggregate   ();
+    void Aggregate();
     void Disaggregate();
     //@}
 
@@ -65,20 +62,15 @@ private:
     virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
     virtual void Select( const kernel::Entity_ABC&, bool );
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
-    void Toggle( const kernel::Automat_ABC& automat, bool aggregate );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::set< const kernel::Entity_ABC* > T_Automats;
+    void Toggle( const kernel::Entity_ABC& entity, bool aggregate );
+    bool IsAggregated( const kernel::Entity_ABC& entity ) const;
+    bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity ) const;
     //@}
 
 protected:
     //! @name Member data
     //@{
-    gui::AgentsLayer& agents_;
     kernel::SafePointer< kernel::Automat_ABC > selected_;
-    T_Automats aggregated_;
     //@}
 };
 

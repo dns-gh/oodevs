@@ -44,6 +44,7 @@ public:
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
+    virtual bool IsAggregated() const;
     //@}
 
 private:

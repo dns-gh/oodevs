@@ -14,6 +14,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 
 using namespace kernel;
 using namespace geometry;
@@ -22,8 +23,10 @@ using namespace geometry;
 // Name: AggregatedPositions constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-AggregatedPositions::AggregatedPositions( const Entity_ABC& entity )
-    : entity_( entity )
+AggregatedPositions::AggregatedPositions( const Entity_ABC& entity, float factor )
+    : entity_    ( entity )
+    , factor_    ( factor )
+    , aggregated_( false )
 {
     // NOTHING
 }
@@ -41,42 +44,50 @@ AggregatedPositions::~AggregatedPositions()
 // Name: AggregatedPositions::GetPosition
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Point2f AggregatedPositions::GetPosition( bool ) const
+Point2f AggregatedPositions::GetPosition( bool aggregated ) const
 {
-    Point2f aggregatedPosition;
-    unsigned int count = 0;
-    Point2f fallback;
-    tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( children.HasMoreElements() )
+    if( !aggregated || !aggregated_ )
     {
-        const Positions& childPositions = children.NextElement().Get< Positions >();
-        fallback = childPositions.GetPosition( false );
-        if( childPositions.CanAggregate() )
+        Point2f aggregatedPosition;
+        unsigned int count = 0;
+        Point2f fallback;
+        tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+        while( children.HasMoreElements() )
         {
-            const Point2f childPosition = fallback;
-            aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
-            ++count;
+            const Positions& childPositions = children.NextElement().Get< Positions >();
+            fallback = childPositions.GetPosition( false );
+            if( childPositions.CanAggregate() )
+            {
+                const Point2f childPosition = fallback;
+                aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
+                ++count;
+            }
         }
+        return count ? Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : fallback;
     }
-    return count ? Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : fallback;
+    return entity_.Get< TacticalHierarchies >().GetUp().Get< Positions >().GetPosition( aggregated );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AggregatedPositions::GetHeight
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-float AggregatedPositions::GetHeight( bool ) const
+float AggregatedPositions::GetHeight( bool aggregated ) const
 {
-    float height = 0;
-    unsigned int count = 0;
-    tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( children.HasMoreElements() )
+    if( !aggregated || !aggregated_ )
     {
-        const Positions& childPositions = children.NextElement().Get< Positions >();
-        height += childPositions.GetHeight( false );
-        ++count;
+        float height = 0;
+        unsigned int count = 0;
+        tools::Iterator< const Entity_ABC& > children = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+        {
+            const Positions& childPositions = children.NextElement().Get< Positions >();
+            height += childPositions.GetHeight( false );
+            ++count;
+        }
+        return count ? height / count : height;
     }
-    return count ? height / count : height;
+    return entity_.Get< TacticalHierarchies >().GetUp().Get< Positions >().GetHeight( aggregated );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,8 +97,8 @@ float AggregatedPositions::GetHeight( bool ) const
 bool AggregatedPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ /*= 1.f*/ ) const
 {
     // $$$$ AGE 2006-10-06: CP de AgentPositions...
-    const float halfSizeX = 500.f * 0.5f * 2.f; // $$$$ SBO 2006-03-21: use font size?
-    const float sizeY = 400.f * 2.f;
+    const float halfSizeX = 500.f * 0.5f * ( aggregated_ ? 4.f : factor_ ); // $$$$ SBO 2006-03-21: use font size?
+    const float sizeY     = 400.f * ( aggregated_ ? 4.f : factor_ );
     const Point2f position = GetPosition( true );
     const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
                                  position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
@@ -152,4 +163,22 @@ bool AggregatedPositions::CanAggregate() const
             return true;
     }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregatedPositions::Aggregate
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+void AggregatedPositions::Aggregate( const bool& value )
+{
+    aggregated_ = value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregatedPositions::IsAggregated
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+bool AggregatedPositions::IsAggregated() const
+{
+    return aggregated_;
 }

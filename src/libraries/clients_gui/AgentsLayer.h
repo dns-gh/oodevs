@@ -39,17 +39,17 @@ public:
     virtual ~AgentsLayer();
     //@}
 
+protected:
     //! @name Operations
     //@{
-    void Aggregate   ( const kernel::Automat_ABC& automat );
-    void Disaggregate( const kernel::Automat_ABC& automat );
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void Toggle( const kernel::Automat_ABC& automat, bool aggregate );
-    virtual void Select ( const kernel::Entity_ABC&, bool );
+    virtual void Select( const kernel::Entity_ABC&, bool );
+    bool IsAggregated( const kernel::Entity_ABC& entity ) const;
     //@}
 };
 

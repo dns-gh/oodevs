@@ -14,10 +14,10 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Formation_ABC.h"
+#include <set>
 
 namespace kernel
 {
-    class Automat_ABC;
     class Formation_ABC;
 }
 
@@ -31,8 +31,12 @@ namespace gui
 */
 // Created: AGE 2007-05-31
 // =============================================================================
-class FormationLayer : public EntityLayer< kernel::Formation_ABC >
+class FormationLayer : public QObject
+                     , public EntityLayer< kernel::Formation_ABC >
+                     , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
+    Q_OBJECT;
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -41,11 +45,37 @@ public:
     virtual ~FormationLayer();
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    void Aggregate( const kernel::Entity_ABC& formation );
+    void Disaggregate( const kernel::Entity_ABC& formation );
+    //@}
+
 protected:
     //! @name Operations
     //@{
-    virtual void ActivateEntity( const kernel::Entity_ABC& );
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& entity );
     virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
+    virtual void NotifySelected( const kernel::Formation_ABC* formation );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void Aggregate();
+    void Disaggregate();
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& formation, kernel::ContextMenu& menu );
+    virtual void Select( const kernel::Entity_ABC&, bool );
+    virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
+    void Toggle( const kernel::Entity_ABC& entity, bool aggregate );
+    bool IsAggregated( const kernel::Entity_ABC& entity ) const;
+    bool HasAggregatedSubordinate( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
@@ -53,6 +83,7 @@ private:
     //@{
     const kernel::GlTools_ABC& tools_;
     ColorStrategy_ABC& strategy_;
+    kernel::SafePointer< kernel::Formation_ABC > selected_;
     //@}
 };
 

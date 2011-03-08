@@ -111,3 +111,12 @@ bool UrbanPositions::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::IsAggregated
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+bool UrbanPositions::IsAggregated() const
+{
+    return false;
+}

@@ -215,7 +215,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
     gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
-    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, model_.actions_, simulation, network_.GetMessageMgr(), model.agents_, *simpleFilter_ );
+    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, simulation, network_.GetMessageMgr(), model.agents_, *simpleFilter_ );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this, "orbat" );

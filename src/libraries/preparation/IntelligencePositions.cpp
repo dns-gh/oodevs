@@ -145,3 +145,12 @@ bool IntelligencePositions::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencePositions::IsAggregated
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+bool IntelligencePositions::IsAggregated() const
+{
+    return false;
+}

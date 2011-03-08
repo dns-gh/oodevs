@@ -318,3 +318,12 @@ bool Inhabitant::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Inhabitant::IsAggregated
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+bool Inhabitant::IsAggregated() const
+{
+    return false;
+}

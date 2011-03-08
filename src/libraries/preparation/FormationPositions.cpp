@@ -18,7 +18,8 @@
 // Created: SBO 2009-02-02
 // -----------------------------------------------------------------------------
 FormationPositions::FormationPositions( const kernel::Entity_ABC& formation )
-    : formation_( formation )
+    : formation_ ( formation )
+    , aggregated_( false )
 {
     // NOTHING
 }
@@ -36,35 +37,45 @@ FormationPositions::~FormationPositions()
 // Name: FormationPositions::GetPosition
 // Created: SBO 2009-02-02
 // -----------------------------------------------------------------------------
-geometry::Point2f FormationPositions::GetPosition( bool ) const
+geometry::Point2f FormationPositions::GetPosition( bool aggregated ) const
 {
-    geometry::Point2f aggregatedPosition;
-    unsigned count = 0;
-    tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
-    while( children.HasMoreElements() )
+    if( !aggregated || !aggregated_ )
     {
-        const geometry::Point2f& childPosition = children.NextElement().Get< kernel::Positions >().GetPosition( false );
-        aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
-        ++count;
+        geometry::Point2f aggregatedPosition;
+        unsigned count = 0;
+        tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+        {
+            const geometry::Point2f& childPosition = children.NextElement().Get< kernel::Positions >().GetPosition( false );
+            aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
+            ++count;
+        }
+        return count ? geometry::Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : aggregatedPosition;
     }
-    return count ? geometry::Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : aggregatedPosition;
+    const kernel::Entity_ABC* superior = formation_.Get< kernel::TacticalHierarchies >().GetSuperior();
+    return superior->Get< kernel::Positions >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------
 // Name: FormationPositions::GetHeight
 // Created: SBO 2009-02-02
 // -----------------------------------------------------------------------------
-float FormationPositions::GetHeight( bool ) const
+float FormationPositions::GetHeight( bool aggregated ) const
 {
-    float height = 0;
-    unsigned count = 0;
-    tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
-    while( children.HasMoreElements() )
+    if( !aggregated || !aggregated_ )
     {
-        height += children.NextElement().Get< kernel::Positions >().GetHeight( false );
-        ++count;
+        float height = 0;
+        unsigned count = 0;
+        tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+        {
+            height += children.NextElement().Get< kernel::Positions >().GetHeight( false );
+            ++count;
+        }
+        return count ? height / count : height;
     }
-    return count ? height / count : height;
+    const kernel::Entity_ABC* superior = formation_.Get< kernel::TacticalHierarchies >().GetSuperior();
+    return superior->Get< kernel::Positions >().GetHeight();
 }
 
 // -----------------------------------------------------------------------------
@@ -74,8 +85,8 @@ float FormationPositions::GetHeight( bool ) const
 bool FormationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
 {
     // $$$$ SBO 2009-02-02: Aggregated symbol position
-    const float halfSizeX = 500.f * 0.5f * 2.f; // $$$$ SBO 2006-03-21: use font size?
-    const float sizeY     = 400.f * 2.f;
+    const float halfSizeX = 500.f * 0.5f * 4.f; // $$$$ SBO 2006-03-21: use font size?
+    const float sizeY     = 400.f * 4.f;
     const geometry::Point2f position = GetPosition( true );
     const geometry::Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
                                            position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
@@ -98,7 +109,7 @@ bool FormationPositions::IsIn( const geometry::Rectangle2f& rectangle ) const
 geometry::Rectangle2f FormationPositions::GetBoundingBox() const
 {
     const geometry::Point2f center = GetPosition( true );
-    return geometry::Rectangle2f( center.X() - 500, center.Y(), center.X() + 500, center.Y() + 800 );
+    return geometry::Rectangle2f( center.X() - 1000, center.Y(), center.X() + 1000, center.Y() + 1600 );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,4 +144,22 @@ void FormationPositions::Move( const geometry::Point2f& point )
 bool FormationPositions::CanAggregate() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationPositions::IsAggregated
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+bool FormationPositions::IsAggregated() const
+{
+    return aggregated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationPositions::Aggregate
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+void FormationPositions::Aggregate( const bool& bDummy )
+{
+    aggregated_ = bDummy;
 }

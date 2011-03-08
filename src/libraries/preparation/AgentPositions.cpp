@@ -51,6 +51,7 @@ namespace
         virtual geometry::Rectangle2f GetBoundingBox() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
         virtual void Accept( LocationVisitor_ABC& /*visitor*/ ) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
         virtual bool CanAggregate() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
+        virtual bool IsAggregated() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
 
     private:
         kernel::Moveable_ABC* moveable_;
@@ -115,7 +116,8 @@ Point2f AgentPositions::GetPosition( bool aggregated ) const
 {
     if( !aggregated || !aggregated_ )
         return position_;
-    return agent_.Get< CommunicationHierarchies >().GetUp().Get< Positions >().GetPosition();
+    const kernel::Entity_ABC* superior = agent_.Get< TacticalHierarchies >().GetSuperior();
+    return superior->Get< Positions >().GetPosition();
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +128,8 @@ float AgentPositions::GetHeight( bool aggregated ) const
 {
     if( !aggregated || !aggregated_ )
         return height_;
-    return agent_.Get< CommunicationHierarchies >().GetUp().Get< Positions >().GetHeight();
+    const kernel::Entity_ABC* superior = agent_.Get< TacticalHierarchies >().GetSuperior();
+    return superior->Get< Positions >().GetHeight();
 }
 
 // -----------------------------------------------------------------------------
@@ -225,4 +228,13 @@ void AgentPositions::CreateDictionary( kernel::PropertiesDictionary& dico )
 bool AgentPositions::CanAggregate() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::IsAggregated
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+bool AgentPositions::IsAggregated() const
+{
+    return aggregated_;
 }

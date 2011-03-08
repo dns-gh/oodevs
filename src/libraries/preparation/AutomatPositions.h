@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Moveable_ABC.h"
+#include "clients_kernel/Aggregatable_ABC.h"
 
 namespace kernel
 {
@@ -26,6 +27,7 @@ namespace kernel
 // =============================================================================
 class AutomatPositions : public kernel::Moveable_ABC
                        , public kernel::Drawable_ABC
+                       , public kernel::Aggregatable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -37,14 +39,15 @@ public:
     //! @name Operations
     //@{
     virtual geometry::Point2f GetPosition( bool aggregated ) const;
-    virtual float             GetHeight( bool aggregated ) const;
+    virtual float GetHeight( bool aggregated ) const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void Aggregate( const bool& );
     virtual bool CanAggregate() const;
-
+    virtual bool IsAggregated() const;
     virtual void Move( const geometry::Point2f& point );
     //@}
 
@@ -59,6 +62,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& automat_;
+    bool aggregated_;
     //@}
 };
 

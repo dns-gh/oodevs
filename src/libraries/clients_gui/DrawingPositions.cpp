@@ -210,3 +210,12 @@ bool DrawingPositions::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DrawingPositions::IsAggregated
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+bool DrawingPositions::IsAggregated() const
+{
+    return false;
+}

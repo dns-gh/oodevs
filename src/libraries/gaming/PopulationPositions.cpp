@@ -93,3 +93,12 @@ bool PopulationPositions::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPositions::IsAggregated
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+bool PopulationPositions::IsAggregated() const
+{
+    return false;
+}

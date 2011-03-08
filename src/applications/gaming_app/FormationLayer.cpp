@@ -82,15 +82,6 @@ bool FormationLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f
 }
 
 // -----------------------------------------------------------------------------
-// Name: FormationLayer::HandleMousePress
-// Created: LDC 2010-10-21
-// -----------------------------------------------------------------------------
-bool FormationLayer::HandleMousePress( QMouseEvent* /*event*/, const geometry::Point2f& /*point*/ )
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: FormationLayer::NotifySelected
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------

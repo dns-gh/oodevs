@@ -24,7 +24,8 @@ using namespace geometry;
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
 AutomatPositions::AutomatPositions( const Entity_ABC& automat )
-    : automat_( automat )
+    : automat_   ( automat )
+    , aggregated_( false )
 {
     // NOTHING
 }
@@ -42,38 +43,48 @@ AutomatPositions::~AutomatPositions()
 // Name: AutomatPositions::GetPosition
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Point2f AutomatPositions::GetPosition( bool ) const
+Point2f AutomatPositions::GetPosition( bool aggregated ) const
 {
-    Point2f aggregatedPosition;
-    unsigned count = 0;
-    tools::Iterator< const Entity_ABC& > children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( children.HasMoreElements() )
+    if( !aggregated || !aggregated_ )
     {
-        const Positions& childPositions = children.NextElement().Get< Positions >();
-        const Point2f childPosition = childPositions.GetPosition( false );
-        aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
-        ++count;
+        Point2f aggregatedPosition;
+        unsigned count = 0;
+        tools::Iterator< const Entity_ABC& > children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+        {
+            const Positions& childPositions = children.NextElement().Get< Positions >();
+            const Point2f childPosition = childPositions.GetPosition( false );
+            aggregatedPosition.Set( aggregatedPosition.X() + childPosition.X(), aggregatedPosition.Y() + childPosition.Y() );
+            ++count;
+        }
+        return count ? Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : aggregatedPosition;
     }
-    return count ? Point2f( aggregatedPosition.X() / count, aggregatedPosition.Y() / count ) : aggregatedPosition;
+    const kernel::Entity_ABC* superior = automat_.Get< TacticalHierarchies >().GetSuperior();
+    return superior->Get< Positions >().GetPosition( aggregated );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AutomatPositions::GetHeight
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-float AutomatPositions::GetHeight( bool ) const
+float AutomatPositions::GetHeight( bool aggregated ) const
 {
-    float height = 0;
-    unsigned count = 0;
-    tools::Iterator< const Entity_ABC& > children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
-    while( children.HasMoreElements() )
+    if( !aggregated || !aggregated_ )
     {
-        const Positions& childPositions = children.NextElement().Get< Positions >();
-        const float childHeight = childPositions.GetHeight( false );
-        height+=childHeight;
-        ++count;
+        float height = 0;
+        unsigned count = 0;
+        tools::Iterator< const Entity_ABC& > children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+        while( children.HasMoreElements() )
+        {
+            const Positions& childPositions = children.NextElement().Get< Positions >();
+            const float childHeight = childPositions.GetHeight( false );
+            height+=childHeight;
+            ++count;
+        }
+        return count ? height / count : height;
     }
-    return count ? height / count : height;
+    const kernel::Entity_ABC* superior = automat_.Get< TacticalHierarchies >().GetSuperior();
+    return superior->Get< Positions >().GetHeight( aggregated );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,11 +94,13 @@ float AutomatPositions::GetHeight( bool ) const
 bool AutomatPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
 {
     // $$$$ AGE 2006-10-06: CP de AgentPositions...
-    const float halfSizeX = 500.f * 0.5f * 2.f; // $$$$ SBO 2006-03-21: use font size?
-    const float sizeY     = 400.f * 2.f;
+    const float halfSizeX = 500.f * 0.5f * ( aggregated_ ? 4.f : 2.f ); // $$$$ SBO 2006-03-21: use font size?
+    const float sizeY     = 400.f * ( aggregated_ ? 4.f : 2.f );
     const Point2f position = GetPosition( true );
     const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
                                  position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
+    if( agentBBox.IsInside( pos ) )
+        bool test = true;
     return agentBBox.IsInside( pos );
 }
 
@@ -146,10 +159,28 @@ void AutomatPositions::Move( const geometry::Point2f& point )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatPositions::Aggregate
+// Created: LGY 2011-03-03
+// -----------------------------------------------------------------------------
+void AutomatPositions::Aggregate( const bool& bDummy )
+{
+    aggregated_ = bDummy;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomatPositions::CanAggregate
 // Created: LDC 2010-10-07
 // -----------------------------------------------------------------------------
 bool AutomatPositions::CanAggregate() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatPositions::IsAggregated
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+bool AutomatPositions::IsAggregated() const
+{
+    return aggregated_;
 }

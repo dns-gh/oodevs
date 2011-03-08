@@ -86,6 +86,7 @@
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/UrbanFilter.h"
 #include "clients_gui/UrbanLayer.h"
+#include "clients_gui/FormationLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/resources.h"
@@ -309,7 +310,8 @@ MainWindow::~MainWindow()
 void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationPanel& inhabitants,  ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker )
 {
     TooltipsLayer_ABC& tooltipLayer     = *new TooltipsLayer( *glProxy_ );
-    Layer_ABC& automats                 = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, agents, *simpleFilter_ );
+    AutomatsLayer& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
+    Layer_ABC& formation                = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
     Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( objects );
     Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( inhabitants );
     Elevation2dLayer& elevation2d       = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
@@ -344,6 +346,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationP
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowd" ), populations );             populations         .SetPasses( "main" );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main" );
     glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main" );
+    glProxy_->Register( formation );                 /*preferences.AddLayer( tr( "Automats" ), automats );*/        formation            .SetPasses( "main" );
     glProxy_->Register( objectCreationLayer );                                                                      objectCreationLayer .SetPasses( "main" );
     glProxy_->Register( inhabitantCreationLayer );                                                                  inhabitantCreationLayer .SetPasses( "main" );
     glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );
@@ -358,6 +361,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationP
     forward_->Register( parameters );
     forward_->Register( agents );
     forward_->Register( automats );
+    forward_->Register( formation );
     forward_->Register( populations );
     forward_->Register( objectsLayer );
     forward_->Register( intelligences );

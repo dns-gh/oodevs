@@ -145,6 +145,7 @@ void AgentPositions::Aggregate( const bool& value )
 {
     aggregated_ = value;
 }
+
 // -----------------------------------------------------------------------------
 // Name: AgentPositions::DisplayInSummary
 // Created: AME 2010-03-19
@@ -161,4 +162,13 @@ void AgentPositions::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 bool AgentPositions::CanAggregate() const
 {
     return !dead_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::IsAggregated
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+bool AgentPositions::IsAggregated() const
+{
+    return aggregated_;
 }

@@ -15,8 +15,12 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/App6Symbol.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -90,6 +94,36 @@ QString Formation::GetName() const
 const HierarchyLevel_ABC& Formation::GetLevel() const
 {
     return *level_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::InitializeSymbol
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+void Formation::InitializeSymbol() const
+{
+    const kernel::TacticalHierarchies& hierarchies = Get< kernel::TacticalHierarchies >();
+    const std::string symbol = hierarchies.GetSymbol();
+    const std::string level = hierarchies.GetLevel();
+    if( symbolPath_ == symbol && levelPath_ == level )
+        return;
+    symbolPath_ = symbol;
+    levelPath_ = level;
+    kernel::App6Symbol::SetKarma( symbolPath_, hierarchies.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Draw
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+void Formation::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    if( viewport.IsVisible( where ) )
+    {
+        InitializeSymbol();
+        tools.DrawApp6Symbol( symbolPath_, where, 4 );
+        tools.DrawApp6Symbol( levelPath_, where, 4 );
+    }
 }
 
 // -----------------------------------------------------------------------------

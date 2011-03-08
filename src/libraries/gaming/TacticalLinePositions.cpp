@@ -183,3 +183,12 @@ bool TacticalLinePositions::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinePositions::IsAggregated
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+bool TacticalLinePositions::IsAggregated() const
+{
+    return false;
+}

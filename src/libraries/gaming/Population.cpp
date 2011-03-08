@@ -389,3 +389,12 @@ bool Population::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Population::IsAggregated
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+bool Population::IsAggregated() const
+{
+    return false;
+}

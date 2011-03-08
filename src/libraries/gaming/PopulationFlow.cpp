@@ -256,3 +256,12 @@ bool PopulationFlow::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::IsAggregated
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+bool PopulationFlow::IsAggregated() const
+{
+    return false;
+}

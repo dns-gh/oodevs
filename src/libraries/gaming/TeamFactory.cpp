@@ -100,7 +100,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach< kernel::Dotations_ABC >  ( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new ConvexHulls( *result ) );
-    result->Attach< kernel::Positions >( *new AggregatedPositions( *result ) );
+    result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 4.f ) );
     result->Update( message );
     result->Polish();
     return result;

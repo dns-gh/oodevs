@@ -11,6 +11,7 @@
 #define __FormationPositions_h_
 
 #include "clients_kernel/Moveable_ABC.h"
+#include "clients_kernel/Aggregatable_ABC.h"
 
 namespace kernel
 {
@@ -19,11 +20,12 @@ namespace kernel
 
 // =============================================================================
 /** @class  FormationPositions
-    @brief  FormationPositions
+    @brief  Formation positions
 */
 // Created: SBO 2009-02-02
 // =============================================================================
 class FormationPositions : public kernel::Moveable_ABC
+                         , public kernel::Aggregatable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -35,13 +37,14 @@ public:
     //! @name Operations
     //@{
     virtual geometry::Point2f GetPosition( bool aggregated ) const;
-    virtual float             GetHeight( bool aggregated ) const;
+    virtual float GetHeight( bool aggregated ) const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor  ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
+    virtual void Aggregate( const bool& );
     virtual bool CanAggregate() const;
-
+    virtual bool IsAggregated() const;
     virtual void Move( const geometry::Point2f& point );
     //@}
 
@@ -56,6 +59,7 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& formation_;
+    bool aggregated_;
     //@}
 };
 

@@ -216,6 +216,15 @@ bool InhabitantPositions::CanAggregate() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: InhabitantPositions::IsAggregated
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+bool InhabitantPositions::IsAggregated() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: InhabitantPositions::Draw
 // Created: JSR 2011-01-13
 // -----------------------------------------------------------------------------

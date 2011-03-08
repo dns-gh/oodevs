@@ -130,7 +130,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, result->GetLogisticLevel(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
-    result->Attach< kernel::Positions >( *new AggregatedPositions( *result ) );
+    result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
     result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );

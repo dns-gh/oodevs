@@ -12,6 +12,7 @@
 
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Aggregatable_ABC.h"
 
 namespace kernel
 {
@@ -26,11 +27,12 @@ namespace kernel
 // =============================================================================
 class AggregatedPositions : public kernel::Positions
                           , public kernel::Drawable_ABC
+                          , public kernel::Aggregatable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AggregatedPositions( const kernel::Entity_ABC& automat );
+             AggregatedPositions( const kernel::Entity_ABC& automat, float factor );
     virtual ~AggregatedPositions();
     //@}
 
@@ -44,6 +46,8 @@ public:
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool CanAggregate() const;
+    virtual void Aggregate( const bool& );
+    virtual bool IsAggregated() const;
     //@}
 
 private:
@@ -63,7 +67,9 @@ private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& entity_;
+    float factor_;
     mutable T_PointVector children_;
+    bool aggregated_;
     //@}
 };
 

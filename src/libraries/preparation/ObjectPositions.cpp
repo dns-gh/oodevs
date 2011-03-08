@@ -268,3 +268,12 @@ bool ObjectPositions::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::IsAggregated
+// Created: LGY 2011-03-04
+// -----------------------------------------------------------------------------
+bool ObjectPositions::IsAggregated() const
+{
+    return false;
+}

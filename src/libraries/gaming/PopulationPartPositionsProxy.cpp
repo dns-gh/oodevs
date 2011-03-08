@@ -91,3 +91,12 @@ bool PopulationPartPositionsProxy::CanAggregate() const
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPartPositionsProxy::IsAggregated
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+bool PopulationPartPositionsProxy::IsAggregated() const
+{
+    return false;
+}

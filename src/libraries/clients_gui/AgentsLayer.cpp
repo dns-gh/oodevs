@@ -37,42 +37,6 @@ AgentsLayer::~AgentsLayer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsLayer::Aggregate
-// Created: AGE 2006-04-11
-// -----------------------------------------------------------------------------
-void AgentsLayer::Aggregate( const Automat_ABC& automat )
-{
-    Toggle( automat, true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::Disaggregate
-// Created: AGE 2006-04-11
-// -----------------------------------------------------------------------------
-void AgentsLayer::Disaggregate( const Automat_ABC& automat )
-{
-    Toggle( automat, false );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsLayer::Toggle
-// Created: AGE 2006-06-30
-// -----------------------------------------------------------------------------
-void AgentsLayer::Toggle( const Automat_ABC& automat, bool aggregate )
-{
-    tools::Iterator< const Entity_ABC& > children = automat.Get< CommunicationHierarchies >().CreateSubordinateIterator();
-    while( children.HasMoreElements() )
-    {
-        const Entity_ABC& child = children.NextElement();
-        child.Interface().Apply( & Aggregatable_ABC::Aggregate, aggregate );
-        if( aggregate )
-            RemoveEntity( child );
-        else
-            AddEntity( child );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentsLayer::Select
 // Created: SBO 2006-06-20
 // -----------------------------------------------------------------------------
@@ -86,4 +50,24 @@ void AgentsLayer::Select( const Entity_ABC& entity, bool shift )
     }
     else
         entity.Select( controllers_.actions_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::IsAggregated
+// Created: LGY 2011-03-08
+// -----------------------------------------------------------------------------
+bool AgentsLayer::IsAggregated( const kernel::Entity_ABC& entity ) const
+{
+    if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
+        return positions->IsAggregated();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentsLayer::ShouldDisplay
+// Created: LGY 2011-03-08
+// -----------------------------------------------------------------------------
+bool AgentsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
+{
+    return EntityLayer< Agent_ABC >::ShouldDisplay( entity ) && !IsAggregated( entity );
 }

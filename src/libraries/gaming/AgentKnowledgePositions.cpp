@@ -110,3 +110,12 @@ bool AgentKnowledgePositions::CanAggregate() const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledgePositions::IsAggregated
+// Created: LGY 2011-03-07
+// -----------------------------------------------------------------------------
+bool AgentKnowledgePositions::IsAggregated() const
+{
+    return false;
+}

@@ -12,12 +12,15 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
     class Controller;
     class FormationLevels;
+    class GlTools_ABC;
+    class Viewport_ABC;
 }
 
 namespace xml
@@ -35,6 +38,7 @@ class IdManager;
 // =============================================================================
 class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
                 , public kernel::Extension_ABC
+                , public kernel::Drawable_ABC
                 , public kernel::Serializable_ABC
 {
 public:
@@ -53,6 +57,11 @@ public:
     virtual const kernel::LogisticLevel& GetLogisticLevel() const ;
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const  kernel::GlTools_ABC& tools ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -64,15 +73,18 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    void InitializeSymbol() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::HierarchyLevel_ABC* level_;
-    kernel::LogisticLevel*  logisticLevel_;
+    kernel::LogisticLevel* logisticLevel_;
     std::string color_;
     std::string nature_;
+    mutable std::string symbolPath_;
+    mutable std::string levelPath_;
     //@}
 };
 
