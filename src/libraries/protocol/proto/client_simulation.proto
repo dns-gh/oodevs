@@ -49,7 +49,7 @@ message SetAutomatMode {
     @todo no clue what the fields are exactly...
 */
 message UnitCreationRequest {
-    required UnitType     type     = 1; //!< The agent typ
+    required UnitType     type     = 1; //!< The agent type
     required AutomatId    superior = 2; //!< The superior identifier
     required CoordLatLong position = 3; //!< The position
 }

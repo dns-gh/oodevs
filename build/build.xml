@@ -17,7 +17,7 @@
     <property name="version.version" value="${version.minor}"/><!-- required for version extension -->
 
     <property name="samples.dir" value="${src.dir}/samples"/>
-    
+
     <!--
     ============================================================================
       tools
@@ -207,7 +207,7 @@
             <defineset define="DtRPR=1"/>
         </build-lib>
     </target>
-    
+
     <target name="library.vrforces_plugin_dll" description="build vrforces_plugin dynamic library" depends="library.vrforces_plugin">
         <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="libprotobuf,libFedtime,
@@ -219,7 +219,7 @@
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
     </target>
-    
+
     <target name="library.dis_plugin" description="build dis_plugin static library" depends="library.dispatcher,library.rpr">
         <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
@@ -553,7 +553,7 @@
             <includepath path="${out.dir}/release/libraries/protocol"/>
         </build-app>
     </target>
-    
+
     <!--
     ============================================================================
     data
@@ -935,6 +935,11 @@
             <property name="COLLABORATION_GRAPH" value="NO"/>
             <property name="EXTRACT_ALL" value="NO"/>
             <property name="DISABLE_INDEX" value="NO"/>
+            <!--
+            <property name="GENERATE_DEPRECATEDLIST" value="NO"/>
+            <property name="GENERATE_TODOLIST" value="NO"/>
+            <property name="GENERATE_BUGLIST" value="NO"/>
+            -->
             <property name="SHOW_USED_FILES" value="NO"/>
             <property name="SHOW_FILES" value="NO"/>
             <property name="SHOW_NAMESPACES" value="NO"/>
