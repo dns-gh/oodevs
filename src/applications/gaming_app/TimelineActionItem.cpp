@@ -188,7 +188,7 @@ namespace
         if( item.isSelected() )
             return QColor( 200, 215, 240 );
         if( !item.isActive() )
-            return QColor( 210, 219, 135 );
+            return QColor( 255, 240, 20 );
         if( !item.isEnabled() )
             return QColor( 220, 220, 220 );
         return QColor( 163, 219, 135 );
