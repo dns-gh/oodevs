@@ -1438,7 +1438,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Wind direction/speed:</source>
-        <translation>Vitesse/direction du vent</translation>
+        <translation>Vitesse/direction du vent:</translation>
     </message>
 </context>
 <context>

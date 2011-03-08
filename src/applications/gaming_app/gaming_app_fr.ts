@@ -3397,7 +3397,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Wind speed/direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse/direction du vent:</translation>
     </message>
 </context>
 <context>
