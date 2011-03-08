@@ -56,6 +56,7 @@
 #include "AgentPositions.h"
 #include "PopulationPositions.h"
 #include "Lives.h"
+#include "Lives_ABC.h"
 #include "PopulationDecisions.h"
 #include "MagicOrders.h"
 #include "StaticModel.h"
@@ -127,7 +128,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     else
         superior = & (( tools::Resolver< kernel::Automat_ABC >&)  ( model_.agents_ )).Get( message.parent().automat().id() );
     result->Attach< kernel::TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
-    result->Attach( *new AutomatLives( *result ) );
+    result->Attach< Lives_ABC >( *new AutomatLives( *result, 2.f ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, result->GetLogisticLevel(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );
@@ -160,7 +161,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     Agent* result = new Agent( message, controllers_.controller_, static_.types_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
 
-    result->Attach( *new Lives( controllers_.controller_ ) );
+    result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
     result->Attach< kernel::Attributes_ABC >( *new Attributes( controllers_.controller_, static_.coordinateConverter_, dico, model_.teams_ ) );
     result->Attach( *new kernel::CommandPostAttributes( *result ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );

@@ -10,9 +10,8 @@
 #ifndef __Lives_h_
 #define __Lives_h_
 
-#include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
+#include "Lives_ABC.h"
 
 namespace sword
 {
@@ -31,10 +30,9 @@ namespace kernel
 */
 // Created: AGE 2006-04-10
 // =============================================================================
-class Lives : public kernel::Extension_ABC
+class Lives : public Lives_ABC
             , public kernel::Updatable_ABC< sword::UnitAttributes >
             , public kernel::Updatable_ABC< sword::UnitKnowledgeUpdate >
-            , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -48,7 +46,7 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DoUpdate( const sword::UnitAttributes& message );
     virtual void DoUpdate( const sword::UnitKnowledgeUpdate& message );
-    float GetLife() const;
+    virtual float GetLife() const;
     //@}
 
 private:

@@ -11,7 +11,7 @@
 #include "AutomatLives.h"
 #include "Lives.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 
@@ -21,8 +21,9 @@ using namespace kernel;
 // Name: AutomatLives constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-AutomatLives::AutomatLives( const Entity_ABC& automat )
+AutomatLives::AutomatLives( const Entity_ABC& automat, float factor )
     : automat_( automat )
+    , factor_ ( factor )
 {
     // NOTHING
 }
@@ -44,7 +45,7 @@ void AutomatLives::Draw( const geometry::Point2f& where, const kernel::Viewport_
 {
     if( ! viewport.IsHotpointVisible() )
         return;
-    tools.DrawLife( where, GetLife(), 2 );
+    tools.DrawLife( where, GetLife(), factor_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,10 +56,10 @@ float AutomatLives::GetLife() const
 {
     float result = 0;
     unsigned count = 0;
-    tools::Iterator< const Entity_ABC& > children = automat_.Get< CommunicationHierarchies >().CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = automat_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        result += children.NextElement().Get< Lives >().GetLife();
+        result += children.NextElement().Get< Lives_ABC >().GetLife();
         ++count;
     }
     return count ? result / count : result;

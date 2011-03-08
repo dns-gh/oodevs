@@ -10,8 +10,7 @@
 #ifndef __AutomatLives_h_
 #define __AutomatLives_h_
 
-#include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
+#include "Lives_ABC.h"
 
 namespace kernel
 {
@@ -24,19 +23,19 @@ namespace kernel
 */
 // Created: AGE 2006-10-06
 // =============================================================================
-class AutomatLives : public kernel::Extension_ABC
-                   , public kernel::Drawable_ABC
+class AutomatLives : public Lives_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AutomatLives( const kernel::Entity_ABC& automat );
+             AutomatLives( const kernel::Entity_ABC& automat, float factor );
     virtual ~AutomatLives();
     //@}
 
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual float GetLife() const;
     //@}
 
 private:
@@ -46,15 +45,11 @@ private:
     AutomatLives& operator=( const AutomatLives& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    float GetLife() const;
-    //@}
-
 private:
     //! @name Member data
     //@{
     const kernel::Entity_ABC& automat_;
+    float factor_;
     //@}
 };
 
