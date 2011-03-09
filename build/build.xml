@@ -510,7 +510,7 @@
     </target>
 
     <target name="application.selftraining_app" description="build Sword Self-training executable" depends="library.frontend,application.launcher_dll">
-        <build-app name="selftraining_app" depends="qt,boost,xerces,flexlm,protobuf"
+        <build-app name="selftraining_app" depends="qt,boost,xerces,xalan,flexlm,protobuf"
             libs="bugtrap,zipstream,zlib1,tools
                     launcher-${platform}-mt@{suffix},
                     lib${ant.project.name}_ENT-${platform}-mt,
@@ -871,9 +871,9 @@
     </macrodef>
 
     <target name="test-exercises" description="validates some significant exercises">
-        <!--<test-exercise exercise="Egypt"/>
+        <test-exercise exercise="Egypt"/>
         <test-exercise exercise="Cabourg"/>
-        <test-exercise exercise="Poseidon VA"/>-->
+        <test-exercise exercise="Poseidon VA"/>
     </target>
 
     <target name="protocol_test" description="build protocol test application" depends="library.protocol,library.tools">
