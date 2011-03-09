@@ -828,30 +828,22 @@ void TER_Localisation::Convexify()
 
 namespace
 {
-	T_PointVector GetVectorWithAdditionalPoint( const T_PointVector& pointVector )
-	{
-		double minDist = 0.;
-		int index = 0;
-		MT_Vector2D midPoint;
-		for( int i = 0; i < 4; ++i )
+    T_PointVector GetVectorWithAdditionalPoint( const T_PointVector& pointVector )
+    {
+        double minDist = 0.;
+        int index = 0;
+        T_PointVector result;
+        MT_Vector2D midPoint;
+        for( int i = 0; i < 3; ++i )
         {
-			MT_Vector2D segment = pointVector[i] - pointVector[i+1] ;
-			double d = segment.SquareMagnitude();
-			if( d > minDist )
-			{
-				midPoint = ( pointVector[i] + pointVector[i+1] ) / 2.;
-				minDist = d;
-				index = i;
-			}
-		}
-		T_PointVector result;
-		for( int i = 0; i <= index; ++i )
-			result.push_back( pointVector[i] );
-		result.push_back( midPoint );
-		for( int i = index + 1; i <= 4; ++i )
-			result.push_back( pointVector[i] );
-		return result;
-	}
+            MT_Vector2D segment = pointVector[i] - pointVector[i+1] ;
+            double d = segment.SquareMagnitude();
+            result.push_back( pointVector[i] );
+            result.push_back( midPoint );
+        }
+        result.push_back( pointVector[3] );
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -867,11 +859,11 @@ void TER_Localisation::Scale( double rDist )
         MT_Vector2D vBarycenter = ComputeBarycenter();
         // Scale (homothety from the barycenter)
         T_PointVector newPointVector;
-		if( pointVector_.size() == 4 )
-		{
-			T_PointVector polygonWithAtLeastFourSides = GetVectorWithAdditionalPoint( pointVector_ );
-			polygon_.Reset( polygonWithAtLeastFourSides, true );
-		}
+        if( pointVector_.size() == 4 )
+        {
+            T_PointVector polygonWithAtLeastFourSides = GetVectorWithAdditionalPoint( pointVector_ );
+            polygon_.Reset( polygonWithAtLeastFourSides, true );
+        }
         for( CIT_PointVector itPoint = pointVector_.begin(); itPoint != pointVector_.end(); ++itPoint )
         {
             MT_Vector2D vDir( *itPoint - vBarycenter );
