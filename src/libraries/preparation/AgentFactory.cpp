@@ -21,7 +21,7 @@
 #include "AutomatHierarchies.h"
 #include "AutomatPositions.h"
 #include "CommandPostAttributes.h"
-#include "Dotations.h"
+#include "InitialState.h"
 #include "KnowledgeGroupsModel.h"
 #include "LogisticBaseStates.h"
 #include "Model.h"
@@ -87,11 +87,9 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_, controllers_.controller_, position, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
-    result->Attach( *new Dotations( controllers_.controller_, *result, dico ) );
+    result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     if( commandPost )
         result->Attach( *new CommandPostAttributes( *result ) );
-    if( type.IsLogisticSupply() )
-        result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
     result->Polish();
     return result;
 }
@@ -207,7 +205,7 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
     result->Attach< Positions >( *new AgentPositions( xis, *result, static_.coordinateConverter_, controllers_.controller_, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
-    result->Attach( *new Dotations( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
+    result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
     if( result->IsCommandPost() )
         result->Attach( *new CommandPostAttributes( *result ) );
     if( result->GetType().IsLogisticSupply() )

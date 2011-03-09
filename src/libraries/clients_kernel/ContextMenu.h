@@ -10,6 +10,8 @@
 #ifndef __ContextMenu_h_
 #define __ContextMenu_h_
 
+#include <boost/noncopyable.hpp>
+
 class QPopupMenu;
 class QObject;
 class QWidget;
@@ -27,7 +29,7 @@ namespace kernel
 */
 // Created: AGE 2006-08-04
 // =============================================================================
-class ContextMenu
+class ContextMenu : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -63,12 +65,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ContextMenu( const ContextMenu& );            //!< Copy constructor
-    ContextMenu& operator=( const ContextMenu& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< std::string >     T_Categories;

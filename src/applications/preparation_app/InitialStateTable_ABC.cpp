@@ -3,35 +3,29 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "Dialogs.h"
-#include "ChangeDiplomacyDialog.h"
-#include "InitialStateDialog.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "preparation/StaticModel.h"
-
-using namespace kernel;
+#include "InitialStateTable_ABC.h"
 
 // -----------------------------------------------------------------------------
-// Name: Dialogs constructor
-// Created: AGE 2006-04-20
+// Name: InitialStateTable_ABC constructor
+// Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const StaticModel& model, const kernel::Profile_ABC& profile )
-    : QObject( parent )
+InitialStateTable_ABC::InitialStateTable_ABC( int numRows, int numCols, QWidget* parent, const char* name /*= 0*/ )
+    : QTable( numRows, numCols, parent, name )
 {
-    new ChangeDiplomacyDialog( parent, controllers, profile );
-    new InitialStateDialog( parent, controllers, model );
+    setShowGrid( false );
+    setLeftMargin( 0 );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Dialogs destructor
-// Created: AGE 2006-04-20
+// Name: InitialStateTable_ABC destructor
+// Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-Dialogs::~Dialogs()
+InitialStateTable_ABC::~InitialStateTable_ABC()
 {
     // NOTHING
 }

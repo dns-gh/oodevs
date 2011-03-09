@@ -3,60 +3,59 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "clients_kernel_pch.h"
-#include "AgentComposition.h"
+#include "BreakdownOriginType.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: AgentComposition constructor
-// Created: SBO 2010-03-23
+// Name: BreakdownOriginType constructor
+// Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-AgentComposition::AgentComposition( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& resolver )
-    : type_( resolver.Get( xis.attribute< std::string >( "type" ) ) )
-    , count_( xis.attribute< unsigned int >( "count" ) )
-    , crew_( xis.attribute< unsigned int >( "crew" ) )
+BreakdownOriginType::BreakdownOriginType( xml::xistream& xis )
+{
+    xis >> xml::attribute( "type", name_ )
+        >> xml::attribute( "origin", origin_ )
+        >> xml::attribute( "percentage", percentage_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BreakdownOriginType destructor
+// Created: ABR 2011-03-02
+// -----------------------------------------------------------------------------
+BreakdownOriginType::~BreakdownOriginType()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentComposition destructor
-// Created: SBO 2010-03-23
+// Name: BreakdownOriginType::GetName
+// Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-AgentComposition::~AgentComposition()
+std::string BreakdownOriginType::GetName() const
 {
-    // NOTHING
+    return name_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentComposition::GetType
-// Created: SBO 2010-03-23
+// Name: BreakdownOriginType::GetOrigin
+// Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-const ComponentType& AgentComposition::GetType() const
+std::string BreakdownOriginType::GetOrigin() const
 {
-    return type_;
+    return origin_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentComposition::GetCount
-// Created: SBO 2010-03-23
+// Name: BreakdownOriginType::GetPercentage
+// Created: ABR 2011-03-02
 // -----------------------------------------------------------------------------
-unsigned int AgentComposition::GetCount() const
+double BreakdownOriginType::GetPercentage() const
 {
-    return count_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentComposition::GetCrew
-// Created: ABR 2011-02-25
-// -----------------------------------------------------------------------------
-unsigned int AgentComposition::GetCrew() const
-{
-    return crew_;
+    return percentage_;
 }

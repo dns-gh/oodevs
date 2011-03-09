@@ -10,6 +10,7 @@
 #ifndef __EquipmentType_h_
 #define __EquipmentType_h_
 
+#include <boost/noncopyable.hpp>
 #include "tools/Resolver.h"
 
 namespace xml { class xistream; };
@@ -17,6 +18,8 @@ namespace xml { class xistream; };
 namespace kernel
 {
     class WeaponSystemType;
+    class DotationCapacityType;
+    class BreakdownOriginType;
 
 // =============================================================================
 /** @class  EquipmentType
@@ -24,7 +27,8 @@ namespace kernel
 */
 // Created: AGE 2006-02-21
 // =============================================================================
-class EquipmentType : public  tools::Resolver< WeaponSystemType, std::string >
+class EquipmentType : public tools::Resolver< WeaponSystemType, std::string >
+                    , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -38,18 +42,25 @@ public:
     const std::string& GetName() const;
     const std::string& GetProtection() const;
     unsigned long GetId() const;
+    tools::Iterator< const BreakdownOriginType& > CreateBreakdownsIterator() const;
+    tools::Iterator< const DotationCapacityType& > CreateResourcesIterator() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Type
     //@{
-    EquipmentType( const EquipmentType& );            //!< Copy constructor
-    EquipmentType& operator=( const EquipmentType& ); //!< Assignment operator
+    typedef std::vector< BreakdownOriginType* >   T_Breakdowns;
+    typedef T_Breakdowns::const_iterator        CIT_Breakdowns;
+    typedef std::vector< DotationCapacityType* >  T_Resources;
+    typedef T_Resources::const_iterator         CIT_Resources;
     //@}
 
     //! @name Helpers
     //@{
     void ReadWeaponSystem( xml::xistream& xis, const  tools::Resolver_ABC< WeaponSystemType, std::string >& weapons );
+    void ReadBreakdown( xml::xistream& xis );
+    void ReadResourceCategory( xml::xistream& xis );
+    void ReadResource( xml::xistream& xis );
     //@}
 
 private:
@@ -58,6 +69,8 @@ private:
     std::string name_;
     std::string protection_;
     unsigned long id_;
+    T_Breakdowns breakdowns_;
+    T_Resources resources_;
     //@}
 };
 

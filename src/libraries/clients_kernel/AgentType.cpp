@@ -11,6 +11,7 @@
 #include "AgentType.h"
 #include "AgentComposition.h"
 #include "AgentNature.h"
+#include "DotationCapacityType.h"
 #include "SymbolFactory.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -21,7 +22,9 @@ using namespace kernel;
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
 AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& componentResolver, const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver, const SymbolFactory& symbolFactory )
-    : nature_( 0 )
+    : nature_            ( 0 )
+    , nbrOfficers_       ( 0 )
+    , nbrWarrantOfficers_( 0 )
 {
     std::string modelName;
     xis >> xml::attribute( "name", name_ )
@@ -32,8 +35,16 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
 
     std::auto_ptr< AgentNature > nature( new AgentNature( xis ) );
     xis >> xml::start( "equipments" )
-        >> xml::list( "equipment", *this, &AgentType::ReadEquipment, componentResolver )
+            >> xml::list( "equipment", *this, &AgentType::ReadEquipment, componentResolver )
+        >> xml::end
+        >> xml::start( "crew-ranks" )
+            >> xml::list( "crew-rank", *this, &AgentType::ReadCrewRank )
+        >> xml::end
+        >> xml::optional
+        >> xml::start( "logistics" )
+            >> xml::list( "category", *this, &AgentType::ReadResourcesCategory )
         >> xml::end;
+
     symbol_      = symbolFactory.CreateSymbol( nature->GetNature() );
     levelSymbol_ = symbolFactory.CreateLevelSymbol( nature->GetLevel() );
     hqSymbol_    = symbolFactory.CreateAutomatSymbol();
@@ -47,6 +58,10 @@ AgentType::AgentType( xml::xistream& xis, const tools::Resolver_ABC< ComponentTy
 AgentType::~AgentType()
 {
     delete nature_;
+    for( CIT_Components it = equipments_.begin(); it != equipments_.end(); ++it )
+        delete *it;
+    for( CIT_Resources it = resources_.begin(); it != resources_.end(); ++it )
+        delete *it;
 }
 
 // -----------------------------------------------------------------------------
@@ -56,6 +71,40 @@ AgentType::~AgentType()
 void AgentType::ReadEquipment( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& resolver )
 {
     equipments_.push_back( new AgentComposition( xis, resolver ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::ReadCrewRank
+// Created: ABR 2011-02-25
+// -----------------------------------------------------------------------------
+void AgentType::ReadCrewRank( xml::xistream& xis )
+{
+    std::string type = xis.attribute< std::string >( "type");
+    if( type == "Officier" )
+        nbrOfficers_ = xis.attribute< unsigned int >( "count");
+    else if( type == "SousOfficier" )
+        nbrWarrantOfficers_ = xis.attribute< unsigned int >( "count");
+    else
+        xis.error( "crew-rank: type \'" + type + "\' undefined" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::ReadResourcesCategory
+// Created: ABR 2011-03-01
+// -----------------------------------------------------------------------------
+void AgentType::ReadResourcesCategory( xml::xistream& xis )
+{
+    std::string resourceCategory = xis.attribute< std::string >( "name" );
+    xis >> xml::list( "resource", *this, &AgentType::ReadResources );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::ReadResources
+// Created: ABR 2011-03-01
+// -----------------------------------------------------------------------------
+void AgentType::ReadResources( xml::xistream& xis )
+{
+    resources_.push_back( new DotationCapacityType( xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,6 +153,15 @@ tools::Iterator< const AgentComposition& > AgentType::CreateIterator() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: tools::Iterator< const DotationCapacityType& > AgentType::CreateResourcesIterator
+// Created: ABR 2011-03-02
+// -----------------------------------------------------------------------------
+tools::Iterator< const DotationCapacityType& > AgentType::CreateResourcesIterator() const
+{
+    return new tools::SimpleIterator< const DotationCapacityType&, T_Resources >( resources_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentType::GetSymbol
 // Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
@@ -128,6 +186,24 @@ const std::string& AgentType::GetLevelSymbol() const
 const std::string& AgentType::GetHQSymbol() const
 {
     return hqSymbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetNbrOfficers
+// Created: ABR 2011-02-25
+// -----------------------------------------------------------------------------
+unsigned int AgentType::GetNbrOfficers() const
+{
+    return nbrOfficers_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentType::GetNbrWarrantOfficers
+// Created: ABR 2011-02-25
+// -----------------------------------------------------------------------------
+unsigned int AgentType::GetNbrWarrantOfficers() const
+{
+    return nbrWarrantOfficers_;
 }
 
 // -----------------------------------------------------------------------------

@@ -16,6 +16,10 @@ Menu.cpp \
 ModelBuilder.cpp \
 InhabitantCreationPanel.cpp \
 InhabitantListView.cpp \
+InitialStateDialog.cpp \
+InitialStateTableCrew.cpp \
+InitialStateTableEquipments.cpp \
+InitialStateTableResources.cpp \
 ObjectCreationPanel.cpp \
 OrbatAttributesPanel.cpp \
 PopulationListView.cpp \

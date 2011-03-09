@@ -11,6 +11,7 @@
 #define __AgentComposition_h_
 
 #include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml { class xistream; };
 
@@ -24,7 +25,7 @@ namespace kernel
 */
 // Created: SBO 2010-03-23
 // =============================================================================
-class AgentComposition
+class AgentComposition : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -37,13 +38,7 @@ public:
     //@{
     const ComponentType& GetType() const;
     unsigned int GetCount() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AgentComposition( const AgentComposition& );            //!< Copy constructor
-    AgentComposition& operator=( const AgentComposition& ); //!< Assignment operator
+    unsigned int GetCrew() const;
     //@}
 
 private:
@@ -51,6 +46,7 @@ private:
     //@{
     const ComponentType& type_;
     const unsigned int count_;
+    const unsigned int crew_;
     //@}
 };
 

@@ -10,6 +10,8 @@
 #ifndef __DotationType_h_
 #define __DotationType_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace xml
 {
     class xistream;
@@ -24,7 +26,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-21
 // =============================================================================
-class DotationType
+class DotationType : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -45,13 +47,6 @@ public:
     bool IsGas() const;
     bool IsAmmunition() const;
     bool IsDType() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    DotationType( const DotationType& );            //!< Copy constructor
-    DotationType& operator=( const DotationType& ); //!< Assignment operator
     //@}
 
 private:

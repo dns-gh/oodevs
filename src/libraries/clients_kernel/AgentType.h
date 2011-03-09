@@ -10,13 +10,14 @@
 #ifndef __AgentType_h_
 #define __AgentType_h_
 
-#include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml { class xistream; };
 
 namespace tools
 {
     template< typename Container > class Iterator;
+    template< typename T, typename Identifier > class Resolver_ABC;
 }
 
 namespace kernel
@@ -25,6 +26,7 @@ namespace kernel
     class AgentNature;
     class ComponentType;
     class DecisionalModel;
+    class DotationCapacityType;
     class SymbolFactory;
 
 // =============================================================================
@@ -33,7 +35,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class AgentType
+class AgentType : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -51,11 +53,15 @@ public:
     const DecisionalModel& GetDecisionalModel() const;
     const AgentNature& GetNature() const;
     tools::Iterator< const AgentComposition& > CreateIterator() const;
+    tools::Iterator< const DotationCapacityType& > CreateResourcesIterator() const;
     unsigned int GetComponentCount( const ComponentType& ) const;
 
     const std::string& GetSymbol() const;
     const std::string& GetLevelSymbol() const;
     const std::string& GetHQSymbol() const;
+
+    unsigned int GetNbrOfficers() const;
+    unsigned int GetNbrWarrantOfficers() const;
 
     bool IsTC2() const;
     bool IsLogisticSupply() const;
@@ -64,20 +70,20 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentType( const AgentType& );            //!< Copy constructor
-    AgentType& operator=( const AgentType& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
-    typedef std::vector< AgentComposition* > T_Components;
+    typedef std::vector< AgentComposition* >      T_Components;
+    typedef T_Components::const_iterator        CIT_Components;
+    typedef std::vector< DotationCapacityType* >  T_Resources;
+    typedef T_Resources::const_iterator         CIT_Resources;
     //@}
 
     //! @name Helpers
     //@{
     void ReadEquipment( xml::xistream& xis, const  tools::Resolver_ABC< ComponentType, std::string >& resolver  );
+    void ReadCrewRank( xml::xistream& xis );
+    void ReadResourcesCategory( xml::xistream& xis );
+    void ReadResources( xml::xistream& xis );
     //@}
 
 private:
@@ -93,6 +99,10 @@ private:
     std::string symbol_; // $$$$ AGE 2006-10-24: devrait etre dans nature
     std::string levelSymbol_;
     std::string hqSymbol_;
+
+    unsigned int nbrOfficers_;
+    unsigned int nbrWarrantOfficers_;
+    T_Resources resources_;
     //@}
 };
 

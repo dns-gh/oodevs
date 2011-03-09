@@ -332,6 +332,166 @@ Por favor seleccione un archivo de orden de batalla para importar.</translation>
     </message>
 </context>
 <context>
+    <name>InitialStateDialog</name>
+    <message>
+        <source>Initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Change initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InitialStateTableCrew</name>
+    <message>
+        <source>Rank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Psyop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Officer</source>
+        <translation type="unfinished">Oficial</translation>
+    </message>
+    <message>
+        <source>Warrant officer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Private</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Healthy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UE Wounded - UE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>U1 Wounded - U1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>U2 Wounded - U2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>U3 Wounded - U3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead</source>
+        <translation type="unfinished">Muerto</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">Agregar</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Borrar</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InitialStateTableEquipments</name>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breakdowns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished">Disponible</translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Broken down</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InitialStateTableResources</name>
+    <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">Cantidad</translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic threshold (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LocalWeathersList</name>
     <message>
         <source>Local patch</source>
