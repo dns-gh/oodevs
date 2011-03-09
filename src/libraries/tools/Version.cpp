@@ -11,8 +11,12 @@
 #include "Version.h"
 #include <boost/preprocessor/stringize.hpp>
 
+#ifndef APP_MAJOR_VERSION
+#   define APP_MAJOR_VERSION 4.3.0
+#endif
+
 #ifndef APP_VERSION
-#   define APP_VERSION 4.3.0
+#   define APP_VERSION APP_MAJOR_VERSION##.dev
 #endif
 
 //$$$ Crap for Thales
@@ -27,6 +31,15 @@
 const char* tools::AppVersion()
 {
     return BOOST_PP_STRINGIZE( APP_VERSION );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tools::AppMajorVersion
+// Created: SBO 2008-08-20
+// -----------------------------------------------------------------------------
+const char* tools::AppMajorVersion()
+{
+    return BOOST_PP_STRINGIZE( APP_MAJOR_VERSION );
 }
 
 // -----------------------------------------------------------------------------

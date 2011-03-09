@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE( test_schema_writer )
     xos << xml::end();
     xos.str();
 
-    xml::xistringstream xisTmp( "<test xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" model-version=\"" + std::string( tools::AppModelVersion() ) + "\" xsi:noNamespaceSchemaLocation=\"schemas/" + std::string( tools::AppVersion() ) + "/exercise/test.xsd\"/>" );
+    xml::xistringstream xisTmp( "<test xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" model-version=\"" + std::string( tools::AppModelVersion() ) + "\" xsi:noNamespaceSchemaLocation=\"schemas/" + std::string( tools::AppMajorVersion() ) + "/exercise/test.xsd\"/>" );
     xml::xostringstream expected;
     expected << xisTmp;
     BOOST_CHECK_XML_EQUAL( expected.str(), xos.str() );

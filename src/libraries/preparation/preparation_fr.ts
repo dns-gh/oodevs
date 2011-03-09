@@ -136,17 +136,6 @@
     </message>
 </context>
 <context>
-    <name>Dotations</name>
-    <message>
-        <source>Dotations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dotations/Dotations</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FireAttribute</name>
     <message>
         <source>Info/Fire attributes/Fire class</source>
