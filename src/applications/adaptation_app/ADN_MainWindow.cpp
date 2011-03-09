@@ -516,7 +516,7 @@ void ADN_MainWindow::ConfigureDataTest()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::About()
 {
-    QMessageBox::about( this , tr( "Sword Adaptation Tool" ), "Sword Adaptation Tool - Copyright (c) MASA Group 2009" );
+    QMessageBox::about( this , tr( "Sword Adaptation Tool" ), "Sword Adaptation Tool - Copyright (c) MASA Group 2011" );
 }
 
 //-----------------------------------------------------------------------------

@@ -43,7 +43,7 @@ AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QStri
     message = QString( "%1 - %2<br>%3 <a href=\"http://%4\">%5</a>" )
             .arg( tools::translate( "Application", "SWORD" ) )
             .arg( line )
-            .arg( tools::translate( "Application", "© 2010 MASA Group" ) )
+            .arg( tools::translate( "Application", "© 2011 MASA Group" ) )
             .arg( tools::translate( "Application", "www.masagroup.net" ) )
             .arg( tools::translate( "Application", "www.masagroup.net" ) );
 
