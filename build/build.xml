@@ -766,11 +766,8 @@
 
     <target name="test-scripts" description="run all tests" depends="application.simulation_app">
         <!-- REMOVED BUT ? <test-scripts dataset="test" physical=""/> -->
-        <!--
-        TEMPORARY REMOVED - SIM CRASH IN XALAN WHEN EXITING
         <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="worldwide"/>
-        -->
     </target>
 
     <target name="checkpoint_test" description="save and load a checkpoint" depends="application.simulation_app">
@@ -1149,8 +1146,8 @@
         <update name="vrforces"/>
         <update name="vrlink"/>
         <update name="wise"/>
-        <update-database database="directia.core.bml" dir="${data.dir}/data/models/ada/decisional/directia5/models/directia.core"/>
         <antcall target="deploy-application-data"/>
+        <update-database database="directia.core.bml" dir="${data.dir}/data/models/ada/decisional/directia5/models/directia.core"/>
         <antcall target="generate-data"/>
     </target>
 
