@@ -31,6 +31,7 @@
         </mission>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Illuminer"/>
+        <mission name="MELEE Intercepter"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Barrer"/>
         <mission name="MELEE Neutraliser"/>
@@ -210,6 +211,7 @@
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="MELEE Harceler"/>
+        <mission name="MELEE Intercepter"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Barrer"/>
@@ -11345,4 +11347,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2051856615" -->
+<!-- signature="1655394714" -->
