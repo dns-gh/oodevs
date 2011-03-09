@@ -48,6 +48,7 @@ namespace
             "<type name='my_name' type='my_type' id='42' decisional-model='my_model'>"
                 "<nature level='iii' nature-app6='undefined/undefined' atlas-nature='none'/>"
                 "<equipments/>"
+                "<crew-ranks/>"
             "</type>"
         );
         xml::xistringstream xis( xml );
