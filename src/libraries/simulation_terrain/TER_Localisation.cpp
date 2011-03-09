@@ -836,8 +836,8 @@ namespace
         MT_Vector2D midPoint;
         for( int i = 0; i < 3; ++i )
         {
-            MT_Vector2D segment = pointVector[i] - pointVector[i+1] ;
-            double d = segment.SquareMagnitude();
+            midPoint = pointVector[i] + pointVector[i+1] ;
+            midPoint /= 2;
             result.push_back( pointVector[i] );
             result.push_back( midPoint );
         }
