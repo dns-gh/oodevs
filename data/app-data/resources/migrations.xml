@@ -1,20 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <migrations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/0.0/exercise/orbat.xsd">
   <default>
+    <!-- Exercise -->
     <match-if root-node="orbat" assign-schema="schemas/3.0/exercise/orbat.xsd"/>
     <match-if root-node="actions" assign-schema="schemas/3.0/exercise/orders.xsd"/>
+    <match-if non-versioned-schema="schemas/exercise/weather.xsd" assign-schema="schemas/4.3.0/exercise/weather.xsd"/>
+    <match-if non-versioned-schema="schemas/exercise/urbanstate.xsd" assign-schema="schemas/4.3.0/exercise/urbanstate.xsd"/>
+    
+    <!-- Terrain -->
+    <match-if non-versioned-schema="schemas/terrain/terrain.xsd" assign-schema="schemas/4.3.0/terrain/terrain.xsd"/>
+    
+    <!-- Physical -->
+    <match-if non-versioned-schema="schemas/physical/UrbanTypes.xsd" assign-schema="schemas/4.3.0/physical/UrbanTypes.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Reports.xsd" assign-schema="schemas/4.3.0/physical/Reports.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Maintenance.xsd" assign-schema="schemas/4.3.0/physical/Maintenance.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/FacteursHumains.xsd" assign-schema="schemas/4.3.0/physical/FacteursHumains.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Volumes.xsd" assign-schema="schemas/4.3.0/physical/Volumes.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Armors.xsd" assign-schema="schemas/4.3.0/physical/Armors.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/ResourceNatures.xsd" assign-schema="schemas/4.3.0/physical/ResourceNatures.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Resources.xsd" assign-schema="schemas/4.3.0/physical/Resources.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/ResourceNetworks.xsd" assign-schema="schemas/4.3.0/physical/ResourceNetworks.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Fires.xsd" assign-schema="schemas/4.3.0/physical/Fires.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/HumanFactors.xsd" assign-schema="schemas/4.3.0/physical/HumanFactors.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Objects.xsd" assign-schema="schemas/4.3.0/physical/Objects.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/WeaponSystems.xsd" assign-schema="schemas/4.3.0/physical/WeaponSystems.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Equipments.xsd" assign-schema="schemas/4.3.0/physical/Equipments.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Units.xsd" assign-schema="schemas/4.3.0/physical/Units.xsd"/>    
+    <match-if non-versioned-schema="schemas/physical/Breakdowns.xsd" assign-schema="schemas/4.3.0/physical/Breakdowns.xsd"/>    
+    <match-if non-versioned-schema="schemas/physical/ActiveProtections.xsd" assign-schema="schemas/4.3.0/physical/ActiveProtections.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/KnowledgeGroups.xsd" assign-schema="schemas/4.3.0/physical/KnowledgeGroups.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Inhabitants.xsd" assign-schema="schemas/4.3.0/physical/Inhabitants.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Pathfind.xsd" assign-schema="schemas/4.3.0/physical/Pathfind.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Medical.xsd" assign-schema="schemas/4.3.0/physical/Medical.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Automats.xsd" assign-schema="schemas/4.3.0/physical/Automats.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Sensors.xsd" assign-schema="schemas/4.3.0/physical/Sensors.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/NBC.xsd" assign-schema="schemas/4.3.0/physical/NBC.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Crowds.xsd" assign-schema="schemas/4.3.0/physical/Crowds.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/MedicalTreatment.xsd" assign-schema="schemas/4.3.0/physical/MedicalTreatment.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Communications.xsd" assign-schema="schemas/4.3.0/physical/Communications.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Decisional.xsd" assign-schema="schemas/4.3.0/physical/Decisional.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/ObjectNames.xsd" assign-schema="schemas/4.3.0/physical/ObjectNames.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Physical.xsd" assign-schema="schemas/4.3.0/physical/Physical.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Missions.xsd" assign-schema="schemas/4.3.0/physical/Missions.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Models.xsd" assign-schema="schemas/4.3.0/physical/Models.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Launchers.xsd" assign-schema="schemas/4.3.0/physical/Launchers.xsd"/>
+    <match-if non-versioned-schema="schemas/physical/Supply.xsd" assign-schema="schemas/4.3.0/physical/Supply.xsd"/>    
   </default>
-  
   
   <added-files/>
  
   <migration from="3.0" to="4.2.0">
-    <upgrade schema="schemas/3.0/exercise/orbat.xsd" apply="orbat0-4.2.xsl"/>
-    <upgrade schema="schemas/3.0/exercise/orders.xsd" apply="ordCompatibility.xsl"/>
-
+    <upgrade schema="schemas/3.0/exercise/orbat.xsd" apply="schemas/4.2.0/xsl/orbat0-4.2.xsl"/>
+    <upgrade schema="schemas/3.0/exercise/orders.xsd" apply="schemas/4.2.0/xsl/ordCompatibility.xsl"/>
   </migration>
-  <migration from="4.2.0" to="4.2.2">  
-    <!--    <upgrade schema="schemas/1.0/orbat.xsd" apply="testFileMigration/test-1.3.xsl"/>-->
-    <!--    <upgrade schema="testFileMigration/1.0/ord.xsd" apply="testFileMigration/test-1.3.xsl"/>-->
-  </migration>
+  <migration from="4.2.0" to="4.2.1"/>
+  <migration from="4.2.1" to="4.2.2"/>
+  <migration from="4.2.2" to="4.3.0"/>
 </migrations>
