@@ -26,14 +26,14 @@ class DecimalSpinBox : public QSpinBox
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DecimalSpinBox( QWidget* parent, float value = 0.f, unsigned short precision = 2, float min = 0.f, float max = 10.f, float gap = 0.1f );
+    explicit DecimalSpinBox( QWidget* parent, double value = 0.f, unsigned short precision = 2, double min = 0.f, double max = 10.f, double gap = 0.1f );
     virtual ~DecimalSpinBox();
     //@}
 
 public slots:
     //! @name Slots
     //@{
-    virtual void setValue( float value );
+    virtual void setValue( double value );
     //@}
 
 protected:
@@ -53,8 +53,8 @@ private:
 private:
     //! @name Member data
     //@{
-    float precision_;
-    float value_;
+    double precision_;
+    double value_;
     //@}
 };
 

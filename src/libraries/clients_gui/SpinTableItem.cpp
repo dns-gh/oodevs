@@ -9,34 +9,20 @@
 
 #include "clients_gui_pch.h"
 #include "SpinTableItem.h"
+#include "DecimalSpinBox.h"
 
-// -----------------------------------------------------------------------------
-// Name: SpinTableItem::SpinTableItem
-// Created: JSR 2010-08-30
-// -----------------------------------------------------------------------------
-SpinTableItem::SpinTableItem( QTable* table, int minValue, int maxValue, int step /*= 1*/ )
-    : QTableItem( table, QTableItem::WhenCurrent )
-    , minValue_( minValue )
-    , maxValue_( maxValue )
-    , step_( step )
-{
-    // NOTHING
-}
+using namespace gui;
 
-// -----------------------------------------------------------------------------
-// Name: SpinTableItem destructor
-// Created: JSR 2010-08-30
-// -----------------------------------------------------------------------------
-SpinTableItem::~SpinTableItem()
-{
-    // NOTHING
-}
+// =============================================================================
+// Int
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: SpinTableItem::createEditor
 // Created: JSR 2010-08-30
 // -----------------------------------------------------------------------------
-QWidget* SpinTableItem::createEditor() const
+template<>
+QWidget* SpinTableItem< int >::createEditor() const
 {
     QSpinBox* spinBox = new QSpinBox( minValue_, maxValue_, step_, table()->viewport(), "spintableitem" );
     QObject::connect( spinBox, SIGNAL( valueChanged( int ) ), table(), SLOT( doValueChanged() ) );
@@ -52,7 +38,42 @@ QWidget* SpinTableItem::createEditor() const
 // Name: SpinTableItem::setContentFromEditor
 // Created: JSR 2010-08-30
 // -----------------------------------------------------------------------------
-void SpinTableItem::setContentFromEditor( QWidget* widget )
+template<>
+void SpinTableItem< int >::setContentFromEditor( QWidget* widget )
+{
+    if( widget->inherits( "QSpinBox" ) )
+        setText( static_cast< QSpinBox* >( widget )->text() );
+    else
+        QTableItem::setContentFromEditor( widget );
+}
+
+// =============================================================================
+// Double
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: SpinTableItem::createEditor
+// Created: JSR 2010-08-30
+// -----------------------------------------------------------------------------
+template<>
+QWidget* SpinTableItem< double >::createEditor() const
+{
+    DecimalSpinBox* spinBox = new DecimalSpinBox( table()->viewport(), 0.0, 2, minValue_, maxValue_, step_ );
+    QObject::connect( spinBox, SIGNAL( valueChanged( int ) ), table(), SLOT( doValueChanged() ) );
+
+    if( !text().isNull() )
+        spinBox->setValue( text().toDouble() );
+    else
+        spinBox->setValue( 0.0 );
+    return spinBox;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpinTableItem::setContentFromEditor
+// Created: JSR 2010-08-30
+// -----------------------------------------------------------------------------
+template<>
+void SpinTableItem< double >::setContentFromEditor( QWidget* widget )
 {
     if( widget->inherits( "QSpinBox" ) )
         setText( static_cast< QSpinBox* >( widget )->text() );

@@ -173,7 +173,7 @@ void ResourceLinksDialog_ABC::Update()
     {
         table_->setText( j, 0, selected_->GetLinkName( resource, j ) );
         table_->setItem( j, 1, new QCheckTableItem( table_, ""  ) );
-        table_->setItem( j, 2, new SpinTableItem( table_, 0, std::numeric_limits< int >::max() ) );
+        table_->setItem( j, 2, new SpinTableItem< int >( table_, 0, std::numeric_limits< int >::max() ) );
         bool limited = node.links_[ j ].capacity_ != -1;
         table_->item( j, 2 )->setEnabled( limited );
         static_cast< QCheckTableItem* >( table_->item( j, 1 ) )->setChecked( limited );

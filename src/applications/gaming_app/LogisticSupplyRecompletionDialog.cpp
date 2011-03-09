@@ -222,7 +222,7 @@ void LogisticSupplyRecompletionDialog::AddPersonal( unsigned nPos, const QString
     personalsTable_->insertRows( nPos, 1 );
     personalsTable_->setItem( nPos, 0, new QCheckTableItem( personalsTable_, 0 ) );
     personalsTable_->setText( nPos, 1, label );
-    personalsTable_->setItem( nPos, 2, new SpinTableItem( personalsTable_, 0, nMax, 1 ) );
+    personalsTable_->setItem( nPos, 2, new SpinTableItem< int >( personalsTable_, 0, nMax, 1 ) );
     personalsTable_->setText( nPos, 3, QString::number( nMax ) );
 }
 
@@ -245,7 +245,7 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
         dotationsTable_->insertRows( nPos, 1 );
         dotationsTable_->setItem( nPos, 0, new QCheckTableItem( dotationsTable_, 0 ) );
         dotationsTable_->setText( nPos, 1, type.GetName().c_str() );
-        dotationsTable_->setItem( nPos, 2, new SpinTableItem( dotationsTable_, 0, 100, 1 ) );
+        dotationsTable_->setItem( nPos, 2, new SpinTableItem< int >( dotationsTable_, 0, 100, 1 ) );
     }
     dotationsTable_->setMinimumHeight( dotationsTable_->rowHeight( 0 ) * 5 );
 }
@@ -273,7 +273,7 @@ void LogisticSupplyRecompletionDialog::AddAmmunition( unsigned nPos, const QStri
     munitionsFamilyTable_->insertRows( nPos, 1 );
     munitionsFamilyTable_->setItem( nPos, 0, new QCheckTableItem( munitionsFamilyTable_, 0 ) );
     munitionsFamilyTable_->setText( nPos, 1, label );
-    munitionsFamilyTable_->setItem( nPos, 2, new SpinTableItem( munitionsFamilyTable_, 0, 100, 1 ) );
+    munitionsFamilyTable_->setItem( nPos, 2, new SpinTableItem< int >( munitionsFamilyTable_, 0, 100, 1 ) );
 }
 
 // -----------------------------------------------------------------------------

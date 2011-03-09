@@ -13,7 +13,7 @@
 
 namespace
 {
-    float Round( float value )
+    double Round( double value )
     {
         return ( value > 0.0f ) ? floor( value + 0.5f ) : ceil( value - 0.5f );
     }
@@ -26,7 +26,7 @@ namespace gui
 // Name: DecimalSpinBox constructor
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-DecimalSpinBox::DecimalSpinBox( QWidget* parent, float value /*= 0.f*/, unsigned short precision /*= 2*/, float min /*= 0*/, float max /*= 10*/, float gap /*= 0.1*/ )
+DecimalSpinBox::DecimalSpinBox( QWidget* parent, double value /*= 0.f*/, unsigned short precision /*= 2*/, double min /*= 0*/, double max /*= 10*/, double gap /*= 0.1*/ )
     : QSpinBox( parent )
     , precision_( std::pow( 10.f, precision ) )
 {
@@ -52,7 +52,7 @@ DecimalSpinBox::~DecimalSpinBox()
 // Name: DecimalSpinBox::setValue
 // Created: ABR 2011-01-31
 // -----------------------------------------------------------------------------
-void DecimalSpinBox::setValue( float value )
+void DecimalSpinBox::setValue( double value )
 {
     QSpinBox::setValue( static_cast< int >( value * precision_ ) );
 }
@@ -63,7 +63,7 @@ void DecimalSpinBox::setValue( float value )
 // -----------------------------------------------------------------------------
 QString DecimalSpinBox::mapValueToText( int value )
 {
-    return QString( "%1" ).arg( static_cast< float >( value ) / precision_ );
+    return QString( "%1" ).arg( static_cast< double >( value ) / precision_ );
 }
 
 // -----------------------------------------------------------------------------
