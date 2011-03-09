@@ -24,6 +24,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class ProgressPage;
 class ExerciseList;
 class SessionList;
@@ -41,7 +46,7 @@ class ReplayPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
+             ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
     virtual ~ReplayPage();
     //@}
 
@@ -72,6 +77,7 @@ private:
     //! @name Member data
     //@{
     const frontend::Config& config_;
+    const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;
     ProgressPage* progressPage_;
     ExerciseList* exercises_;

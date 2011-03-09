@@ -17,6 +17,7 @@
 #include "frontend/ProfileVisitor_ABC.h"
 #include "frontend/StartExercise.h"
 #include "frontend/StartReplay.h"
+#include "tools/Loader_ABC.h"
 #include <qstringlist.h>
 
 using namespace launcher;
@@ -25,8 +26,9 @@ using namespace launcher;
 // Name: ProcessService constructor
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
-ProcessService::ProcessService( const tools::GeneralConfig& config )
+ProcessService::ProcessService( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
     : config_( config )
+    , fileLoader_( fileLoader )
 {
     // NOTHING
 }
@@ -187,7 +189,7 @@ void ProcessService::SendProfileList( sword::ProfileDescriptionList& message )
         if( !it->second.expired() )
         {
             ProfileCollector collector( message );
-            frontend::Profile::VisitProfiles( config_, it->first, collector );
+            frontend::Profile::VisitProfiles( config_, fileLoader_, it->first, collector );
             return;
         }
 }

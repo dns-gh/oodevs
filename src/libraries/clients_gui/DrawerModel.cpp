@@ -13,6 +13,7 @@
 #include "DrawerShape.h"
 #include "clients_kernel/Controllers.h"
 #include "tools/GeneralConfig.h"
+#include "tools/SchemaWriter_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -87,12 +88,11 @@ void DrawerModel::ReadShape( xml::xistream& xis )
 // Name: DrawerModel::Save
 // Created: SBO 2007-03-21
 // -----------------------------------------------------------------------------
-void DrawerModel::Save( const std::string& filename ) const
+void DrawerModel::Save( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     xml::xofstream xos( filename );
-    xos << xml::start( "shapes" )
-        << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-        << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/drawings.xsd" );
+    xos << xml::start( "shapes" );
+    schemaWriter.WriteExerciseSchema( xos, "drawings" );
     std::for_each( elements_.begin(), elements_.end(), boost::bind( &Drawing_ABC::Serialize, boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( xos ) ) );
     xos << xml::end;
 }

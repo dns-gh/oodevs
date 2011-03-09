@@ -27,9 +27,10 @@
 // Name: ReplayPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
+ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, tools::translate( "ReplayPage", "Replay" ), previous, eButtonBack | eButtonStart, launcher )
     , config_( config )
+    , fileLoader_( fileLoader )
     , controllers_( controllers )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ReplayPage", "Starting replay session" ) ) )
 {
@@ -40,12 +41,12 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, const frontend:
         hbox->setMargin( 10 );
         hbox->setSpacing( 10 );
         {
-            exercises_ = new ExerciseList( hbox, config, controllers, false, true, false );
+            exercises_ = new ExerciseList( hbox, config, fileLoader_, controllers, false, true, false );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelectExercise( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
         }
         {
-            sessions_ = new SessionList( hbox, config );
+            sessions_ = new SessionList( hbox, config, fileLoader_ );
             connect( sessions_, SIGNAL( Select( const QString& ) ), SLOT( OnSelectSession( const QString& ) ) );
         }
     }

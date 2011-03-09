@@ -14,7 +14,6 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/noncopyable.hpp>
 
-
 class MIL_Time_ABC;
 
 // =============================================================================
@@ -23,7 +22,7 @@ class MIL_Time_ABC;
 */
 // Created: RPD 2010-02-08
 // =============================================================================
-class MIL_EntityManagerStaticMethods : public boost::noncopyable
+class MIL_EntityManagerStaticMethods : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -35,13 +34,6 @@ public:
     //! @name static Initialization
     //@{
     static void Initialize( MIL_Config& config, const MIL_Time_ABC& time );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_EntityManagerStaticMethods( const MIL_EntityManagerStaticMethods& );            //!< Copy constructor
-    MIL_EntityManagerStaticMethods& operator=( const MIL_EntityManagerStaticMethods& ); //!< Assignment operator
     //@}
 
 private:

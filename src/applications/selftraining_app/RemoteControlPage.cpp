@@ -41,10 +41,11 @@ namespace
 // Name: RemoteControlPage constructor
 // Created: SBO 2010-10-21
 // -----------------------------------------------------------------------------
-RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, frontend::LauncherClient& launcher )
+RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, tools::translate( "RemoteControlPage", "Remote control" ), previous, eButtonBack, launcher )
     , controllers_      ( controllers )
     , config_           ( config )
+    , fileLoader_       ( fileLoader )
     , exercise_         ( 0 )
     , runningExercise_  ( 0 )
 {
@@ -72,7 +73,7 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         {
             filter_.reset( new ExerciseFilter( *host_, *port_ ) );
-            exercises_ = new ExerciseList( hbox, config, controllers, false, false, false, false );
+            exercises_ = new ExerciseList( hbox, config, fileLoader_, controllers, false, false, false, false );
             exercises_->SetFilter( *filter_ );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
@@ -96,7 +97,7 @@ RemoteControlPage::RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, k
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         {
             runningFilter_.reset( new ExerciseFilter( *host_, *port_, true ) );
-            runningExercises_ = new ExerciseList( hbox, config, controllers, false, false, false, false );
+            runningExercises_ = new ExerciseList( hbox, config, fileLoader_, controllers, false, false, false, false );
             runningExercises_->SetFilter( *runningFilter_ );
             connect( runningExercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( SelectRunningExercise( const frontend::Exercise_ABC& ) ) );
             connect( runningExercises_, SIGNAL( ClearSelection() ), SLOT( ClearRunningSelection() ) );

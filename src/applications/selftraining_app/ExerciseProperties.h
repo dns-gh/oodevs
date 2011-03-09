@@ -20,6 +20,7 @@ namespace frontend
 namespace tools
 {
     class GeneralConfig;
+    class Loader_ABC;
 }
 
 namespace xml
@@ -40,7 +41,7 @@ class ExerciseProperties : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseProperties( QWidget* parent, const tools::GeneralConfig& config, bool briefing, bool models, bool editable );
+             ExerciseProperties( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable );
     virtual ~ExerciseProperties();
     //@}
 
@@ -72,6 +73,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    const tools::Loader_ABC& fileLoader_;
     const QString language_;
     QLabel* briefingImage_;
     QTextEdit* briefingText_;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<units xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Units.xsd">
+<units xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/physical/Units.xsd">
   <unit decisional-model="Marine CP" id="1" name="Marine CP" type="Pion JOINT">
     <nature atlas-nature="None" level="ooo" nature-app6="combat service support/transportation/spod spoe"/>
     <equipments>
@@ -2779,6 +2779,11 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="carburant">
+        <resource capacity="1500" logistic-threshold="0" name="Diesel" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="900s"/>
@@ -5131,4 +5136,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0961978134" -->
+<!-- signature="3867251692" -->

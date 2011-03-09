@@ -15,6 +15,7 @@
 #include "frontend/CreateExercise.h"
 #include "frontend/Exercise_ABC.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Loader_ABC.h"
 #include <qcombobox.h>
 #include <qsettings.h>
 #include <qtextcodec.h>
@@ -34,9 +35,10 @@ namespace
 // Name: ExerciseProperties constructor
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------
-ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralConfig& config, bool briefing, bool models, bool editable )
+ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, bool briefing, bool models, bool editable )
     : QVBox        ( parent )
     , config_      ( config )
+    , fileLoader_  ( fileLoader )
     , language_    ( ReadLang() )
     , briefingText_( 0 )
     , terrainList_ ( 0 )
@@ -125,9 +127,9 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
         return;
     try
     {
-        xml::xifstream xis( config_.GetExerciseFile( exercise->GetName() ) );
+        std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( exercise->GetName() ) );
         std::string image, terrain, data, physical;
-        xis >> xml::start( "exercise" )
+        *xis >> xml::start( "exercise" )
                 >> xml::start( "terrain" )
                     >> xml::attribute( "name", terrain )
                 >> xml::end
@@ -137,7 +139,7 @@ void ExerciseProperties::Select( const frontend::Exercise_ABC* exercise )
                 >> xml::end;
         if( briefingText_ )
         {
-            xis >> xml::optional >> xml::start( "meta" )
+            *xis >> xml::optional >> xml::start( "meta" )
                     >> xml::optional >> xml::start( "briefing" )
                         >> xml::optional  >> xml::content( "image", image )
                             >> xml::list( "text", *this, &ExerciseProperties::ReadBriefingText );

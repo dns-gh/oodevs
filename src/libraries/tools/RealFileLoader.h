@@ -15,6 +15,7 @@
 #include <list>
 #include <map>
 #include <memory>
+#include <boost/filesystem/path.hpp>
 
 namespace xml
 {
@@ -25,6 +26,8 @@ namespace tools
 {
     class FileMigration_ABC;
     class SchemaVersionExtractor_ABC;
+    class FileMatcher_ABC;
+    class FileMatcherFactory_ABC;
 
 // =============================================================================
 /** @class  RealFileLoader_ABC
@@ -49,24 +52,31 @@ public:
 private:
     //! @name Operations
     //@{
-    void ReadDefaultSchemaAssignment( xml::xistream& xis );
-    void ReadMigration              ( xml::xistream& xis );
+    void ReadFileMatcher( xml::xistream& xis );
+    void ReadAddedFile  ( xml::xistream& xis );
+    void ReadMigration  ( xml::xistream& xis );
 
-    const std::string&             AssignDefaultSchema ( xml::xistream& xis, const std::string& currentSchema ) const;
-    std::auto_ptr< xml::xistream > UpgradeToLastVersion( const std::string& inputFile, std::auto_ptr< xml::xistream > xis, const std::string& initialSchema, const std::string& initialVersion, RealFileLoaderObserver_ABC& observer ) const;
+    const std::string&             CheckIfAddedFile    ( const std::string& initialInputFileName ) const;
+    bool                           AssignDefaultSchema ( const std::string& inputFileName, xml::xistream& xis, std::string& newSchema ) const;
+    std::auto_ptr< xml::xistream > UpgradeToLastVersion( const std::string& inputFileName, std::auto_ptr< xml::xistream > xis, const std::string& initialSchema, const std::string& initialVersion, RealFileLoaderObserver_ABC& observer ) const;
     //@}
 
 private:
     //! @name Types
     //@{
+    typedef std::pair< std::string, std::string >               T_AddedFile; // filename/default file
+    typedef std::list< T_AddedFile >                            T_AddedFiles;
     typedef std::list< boost::shared_ptr< FileMigration_ABC > > T_Migrations;
-    typedef std::map< std::string, std::string >                T_DefaultSchemasAssignment;
+    typedef std::list< boost::shared_ptr< FileMatcher_ABC > >   T_DefaultSchemasAssignment;
+    
     //@}
 
 private:
+    const std::auto_ptr< FileMatcherFactory_ABC > fileMatcherFactory_;
     const SchemaVersionExtractor_ABC& versionExtractor_;
     T_Migrations migrations_;
     T_DefaultSchemasAssignment defaultSchemasAssignment_;
+    T_AddedFiles addedFiles_;
 };
 
 } // end namespace tools

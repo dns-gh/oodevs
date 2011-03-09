@@ -15,6 +15,7 @@
 namespace tools
 {
     class GeneralConfig;
+    class Loader_ABC;
 }
 
 namespace xml
@@ -41,7 +42,7 @@ class ProfileList : public QListBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ProfileList( QWidget* parent, const tools::GeneralConfig& config );
+             ProfileList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
     virtual ~ProfileList();
     //@}
 
@@ -76,6 +77,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    const tools::Loader_ABC& fileLoader_;
     std::vector< frontend::Profile > profiles_;
     //@}
 };

@@ -23,6 +23,7 @@ namespace xml
 namespace tools
 {
     class GeneralConfig;
+    class Loader_ABC;
 }
 
 namespace frontend
@@ -60,7 +61,7 @@ public:
 
     //! @name Operations
     //@{
-    static void VisitProfiles( const tools::GeneralConfig& config, const std::string& exercise, ProfileVisitor_ABC& visitor );
+    static void VisitProfiles( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const std::string& exercise, ProfileVisitor_ABC& visitor );
     void Send( sword::ProfileDescription& message ) const;
     //@}
 

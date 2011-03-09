@@ -88,9 +88,8 @@ class UrbanObjectWrapper;
 // @class  MIL_EntityManager
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_EntityManager : public MIL_EntityManager_ABC,
-                          public MIL_EntityManagerStaticMethods,
-                          private boost::noncopyable
+class MIL_EntityManager : public MIL_EntityManager_ABC
+                        , public MIL_EntityManagerStaticMethods
 {
 public:
              MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManager& effects, MIL_ProfilerMgr& profiler, unsigned int gcPause, unsigned int gcMult );

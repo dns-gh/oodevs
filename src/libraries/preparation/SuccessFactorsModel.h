@@ -16,6 +16,7 @@ namespace tools
 {
     class ExerciseConfig;
     class Loader_ABC;
+    class SchemaWriter_ABC;
 }
 
 namespace xml
@@ -49,8 +50,8 @@ public:
     void Delete( const SuccessFactor& factor );
     void Purge();
     void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
-    bool CheckValidity( ModelChecker_ABC& checker ) const;
-    void Serialize( const std::string& file ) const;
+    bool CheckValidity( ModelChecker_ABC& checker, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void SerializeScript( const tools::ExerciseConfig& config ) const;
     //@}
 
@@ -64,7 +65,7 @@ private:
     //! @name Helpers
     //@{
     void Read( xml::xistream& xis );
-    void Serialize( xml::xostream& xos ) const;
+    void Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void ReadFactor( xml::xistream& xis );
     //@}
 

@@ -26,8 +26,8 @@
 #include "ADN_Project_Data.h"
 #include "ADN_ProgressBar.h"
 #include "ADN_SplashScreen.h"
-#include "ADN_FileLoader.h"
 #include "ADN_FileLoaderObserver.h"
+#include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
 #include "qtundo.h"
 #include <qimage.h>
@@ -102,7 +102,7 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
     : QMainWindow        ()
     , generalConfig_     ( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).ascii() ) ) )
     , fileLoaderObserver_( new ADN_FileLoaderObserver() )
-    , fileLoader_        ( new ADN_FileLoader( *generalConfig_, *fileLoaderObserver_ ) )
+    , fileLoader_        ( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , workspace_         ( ADN_Workspace::GetWorkspace() )
     , config_            ( config )
     , rIdSaveAs_         ( 0 )

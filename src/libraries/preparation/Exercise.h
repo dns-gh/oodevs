@@ -21,6 +21,11 @@ namespace xml
     class xostream;
 }
 
+namespace tools
+{
+    class SchemaWriter_ABC;
+}
+
 class ExerciseVisitor_ABC
 {
 public:
@@ -49,7 +54,7 @@ public:
     //@{
     void Load( xml::xistream& xis );
     void Purge();
-    void Serialize( const std::string& file ) const;
+    void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Accept( ExerciseVisitor_ABC& visitor ) const;
     //@}
 
@@ -89,7 +94,6 @@ private:
     QString name_;
     T_Resources briefings_;
     T_Resources resources_;
-    QString generatorVersion_;
     //@}
 };
 

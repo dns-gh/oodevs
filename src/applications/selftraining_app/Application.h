@@ -22,6 +22,12 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+    class RealFileLoaderObserver_ABC;
+}
+
 class Config;
 class Launcher;
 class SessionTray;
@@ -71,6 +77,8 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< Config > config_;
+    std::auto_ptr< tools::RealFileLoaderObserver_ABC > fileLoaderObserver_;
+    std::auto_ptr< tools::Loader_ABC > fileLoader_;
     std::auto_ptr< kernel::Controllers > controllers_;
     std::auto_ptr< Launcher > launcher_;
     std::auto_ptr< frontend::LauncherClient > launcherClient_;

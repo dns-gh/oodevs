@@ -31,6 +31,11 @@ namespace gui
     class LinkInterpreter_ABC;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class ExerciseList;
 class ProgressPage;
 class QTabWidget;
@@ -49,7 +54,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers
-                 , const frontend::Config& config, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title = "" );
+                 , const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title = "" );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -88,16 +93,17 @@ protected:
 protected:
     //! @name Member data
     //@{
-    const frontend::Config&       config_;
-    kernel::Controllers&          controllers_;
-    gui::LinkInterpreter_ABC&     interpreter_;
-    ProgressPage*                 progressPage_;
-    ExerciseList*                 exercises_;
-    const frontend::Exercise_ABC* exercise_;
-    frontend::Profile             profile_;
-    QString                       session_;
-    QString                       checkpoint_;
-    T_Plugins                     plugins_;
+    const frontend::Config&          config_;
+    const tools::Loader_ABC&         fileLoader_;
+    kernel::Controllers&             controllers_;
+    gui::LinkInterpreter_ABC&        interpreter_;
+    ProgressPage*                    progressPage_;
+    ExerciseList*                    exercises_;
+    const frontend::Exercise_ABC*    exercise_;
+    frontend::Profile                profile_;
+    QString                          session_;
+    QString                          checkpoint_;
+    T_Plugins                        plugins_;
     //@}
 };
 

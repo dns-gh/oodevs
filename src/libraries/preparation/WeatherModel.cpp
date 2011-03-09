@@ -15,6 +15,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "tools/Loader_ABC.h"
+#include "tools/SchemaWriter_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #include <qregexp.h>
@@ -94,13 +95,12 @@ void WeatherModel::Read( xml::xistream& xis )
 // Name: WeatherModel::Serialize
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
-void WeatherModel::Serialize( const std::string& filename ) const
+void WeatherModel::Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     xml::xofstream xos( filename );
-    xos << xml::start( "weather" )
-            << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-            << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/weather.xsd" )
-            << xml::start( "exercise-date" )
+    xos << xml::start( "weather" );
+    schemaWriter.WriteExerciseSchema( xos, "weather" );
+    xos     << xml::start( "exercise-date" )
                 << xml::attribute( "value", time_.toString( "yyyyMMddThhmmss" ).ascii() )
             << xml::end
             << xml::start( "ephemerides" )

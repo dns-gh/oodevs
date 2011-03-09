@@ -13,6 +13,7 @@
 #include "frontend/commands.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Loader_ABC.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -24,9 +25,10 @@ namespace bfs = boost::filesystem;
 // Name: SessionList constructor
 // Created: SBO 2009-12-13
 // -----------------------------------------------------------------------------
-SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config )
+SessionList::SessionList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
     : QVBox( parent )
     , config_( config )
+    , fileLoader_( fileLoader )
 {
     setSpacing( 5 );
     setBackgroundOrigin( QWidget::WindowOrigin );
@@ -89,29 +91,30 @@ void SessionList::ReadComments( const QString& session )
     try
     {
         std::string date, name, comment;
-        xml::xifstream xis( ( bfs::path( config_.BuildSessionDir( exercise_.ascii(), session.ascii() ) ) / "session.xml" ).native_file_string() );
-        xis >> xml::start( "session" )
+        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( (bfs::path( config_.BuildSessionDir( exercise_.ascii(), session.ascii() ) ) / "session.xml" ).native_file_string() );
+        *xis >> xml::start( "session" )
                 >> xml::start( "meta" );
-        if( xis.has_child( "name" ) )
+        if( xis->has_child( "name" ) )
         {
-            xis >> xml::start( "name" );
-            if( xis.has_content() )
-                xis >> name;
-            xis >> xml::end;
+            *xis >> xml::start( "name" );
+            if( xis->has_content() )
+                *xis >> name;
+            *xis >> xml::end;
         }
-        if( xis.has_child( "comment" ) )
+        if( xis->has_child( "comment" ) )
         {
-            xis >> xml::start( "comment" );
-            if( xis.has_content() )
-                xis >> comment;
-            xis >> xml::end;
+            *xis >> xml::start( "comment" );
+            if( xis->has_content() )
+                *xis >> comment;
+            *xis >> xml::end;
         }
-        if( xis.has_child( "date" ) )
+        if( 
+            xis->has_child( "date" ) )
         {
-            xis >> xml::start( "date" );
-            if( xis.has_content() )
-                xis >> date;
-            xis >> xml::end;
+            *xis >> xml::start( "date" );
+            if( xis->has_content() )
+                *xis >> date;
+            *xis >> xml::end;
         }
         comments_->setShown( !name.empty() || !comment.empty() );
         comments_->setText( QString( "<b>%1</b><br><i>%2</i><br>%3" ).arg( name.c_str() ).arg( date.c_str() ).arg( comment.c_str() ) );

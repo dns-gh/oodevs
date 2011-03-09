@@ -153,7 +153,7 @@
         <translation>Info/Atributos de fuego/Clase de fuego</translation>
     </message>
     <message>
-        <source>Info/Fire attributes/Max combustion energy_</source>
+        <source>Info/Fire attributes/Max combustion energy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

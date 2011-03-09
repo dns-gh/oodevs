@@ -35,6 +35,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_gui/Tools.h"
+#include "tools/Loader_ABC.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem.hpp>
@@ -67,14 +68,13 @@ namespace
         return QString( "%1://%2" ).arg( protocol ).arg( info.absFilePath() ).ascii();
     }
 
-    std::string ReadTargetApplication( const tools::GeneralConfig& config, const QString& exercise )
+    std::string ReadTargetApplication( const std::string& fileName, const tools::Loader_ABC& fileLoader )
     {
-        const std::string file = config.GetExerciseFile( exercise.ascii() );
         std::string target = "gaming";
         try
         {
-            xml::xifstream xis( file );
-            xis >> xml::start( "exercise" )
+            std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
+            *xis >> xml::start( "exercise" )
                     >> xml::optional() >> xml::start( "meta" )
                         >> xml::optional() >> xml::start( "tutorial" )
                             >> xml::attribute( "target", target )
@@ -102,14 +102,14 @@ namespace
         QStringList& stringList_;
     };
 
-    QStringList GetResources( const tools::GeneralConfig& config, const QString& exercise )
+    QStringList GetResources( const std::string& fileName, const tools::Loader_ABC& fileLoader )
     {
         QStringList result;
         try
         {
-            xml::xifstream xis( config.GetExerciseFile( exercise.ascii() ) );
+            std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
             ResourcesLoadingWrapper loadingWrapper( result );
-            xis >> xml::start( "exercise" )
+            *xis >> xml::start( "exercise" )
                     >> xml::optional() >> xml::start( "meta" )
                         >> xml::optional() >> xml::start( "resources" )
                             >> xml::list( "resource", loadingWrapper, &ResourcesLoadingWrapper::ReadResource )
@@ -134,9 +134,10 @@ namespace
 // Name: ScenarioLauncherPage constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title /*= ""*/ )
+ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter, const QString& title /*= ""*/ )
     : LauncherClientPage( pages, MakeTitle( title ), previous, eButtonBack | eButtonStart, launcher )
     , config_( config )
+    , fileLoader_( fileLoader )
     , controllers_( controllers )
     , interpreter_( interpreter )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( MakeTitle( title ) ) ) )
@@ -148,7 +149,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
     {
         TabWidget* tabs = new TabWidget( box );
         {
-            exercises_ = new ExerciseList( tabs, config_, controllers, true, true, true, false );
+            exercises_ = new ExerciseList( tabs, config_, fileLoader_, controllers, true, true, true, false );
             exercises_->setBackgroundOrigin( QWidget::WindowOrigin );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
@@ -228,7 +229,8 @@ void ScenarioLauncherPage::OnStart()
     if( !CanBeStarted() || ! dialogs::KillRunningProcesses( this ) )
         return;
     const QString exerciseName = exercise_->GetName().c_str();
-    const std::string target = ReadTargetApplication( config_, exerciseName );
+
+    const std::string target = ReadTargetApplication( config_.GetExerciseFile( exerciseName.ascii() ), fileLoader_ );
     if( target == "gaming" )
     {
         const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
@@ -261,7 +263,7 @@ void ScenarioLauncherPage::OnStart()
     }
     if( target != "gaming" )
     {
-        const QStringList resources = GetResources( config_, exerciseName );
+        const QStringList resources = GetResources( config_.GetExerciseFile( exerciseName.ascii() ), fileLoader_ );
         if( ! resources.empty() )
         {
             std::string file = *resources.begin();
@@ -318,7 +320,7 @@ bool ScenarioLauncherPage::CanBeStarted() const
 {
     if( exercise_ )
     {
-        const std::string target = ReadTargetApplication( config_, exercise_->GetName().c_str() );
+        const std::string target = ReadTargetApplication( config_.GetExerciseFile( exercise_->GetName().c_str() ), fileLoader_ );
         if( target == "gaming" || target == "replayer" )
             return profile_.IsValid();
         if( target == "preparation" )

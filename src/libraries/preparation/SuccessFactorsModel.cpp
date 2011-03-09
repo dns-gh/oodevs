@@ -15,6 +15,7 @@
 #include "Tools.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
+#include "tools/SchemaWriter_ABC.h"
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -72,21 +73,20 @@ void SuccessFactorsModel::Read( xml::xistream& xis )
 // Name: SuccessFactorsModel::Serialize
 // Created: SBO 2009-06-17
 // -----------------------------------------------------------------------------
-void SuccessFactorsModel::Serialize( const std::string& file ) const
+void SuccessFactorsModel::Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     xml::xofstream xos( file );
-    Serialize( xos );
+    Serialize( xos, schemaWriter );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorsModel::Serialize
 // Created: SBO 2009-06-17
 // -----------------------------------------------------------------------------
-void SuccessFactorsModel::Serialize( xml::xostream& xos ) const
+void SuccessFactorsModel::Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    xos << xml::start( "factors" )
-            << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-            << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/success-factors.xsd" );
+    xos << xml::start( "factors" );
+    schemaWriter.WriteExerciseSchema( xos, "success-factors" );
     BOOST_FOREACH( const T_Elements::value_type factor, elements_ )
         factor.second->Serialize( xos );
     xos << xml::end;
@@ -106,12 +106,12 @@ void SuccessFactorsModel::SerializeScript( const tools::ExerciseConfig& config )
 // Name: SuccessFactorsModel::CheckValidity
 // Created: SBO 2009-06-17
 // -----------------------------------------------------------------------------
-bool SuccessFactorsModel::CheckValidity( ModelChecker_ABC& checker ) const
+bool SuccessFactorsModel::CheckValidity( ModelChecker_ABC& checker, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     try
     {
         xml::xostringstream xos;
-        Serialize( xos );
+        Serialize( xos, schemaWriter );
         xsl::xstringtransform xst( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ) );
         xml::xistringstream xis( xos.str() );
         xst << xis;

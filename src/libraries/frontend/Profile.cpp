@@ -12,6 +12,7 @@
 #include "ProfileVisitor_ABC.h"
 #include "protocol/Authentication.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace frontend;
@@ -93,20 +94,20 @@ namespace
 // Name: Profile::VisitProfiles
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void Profile::VisitProfiles( const tools::GeneralConfig& config, const std::string& exercise, ProfileVisitor_ABC& visitor )
+void Profile::VisitProfiles( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const std::string& exercise, ProfileVisitor_ABC& visitor )
 {
     const std::string exerciseFile = config.GetExerciseFile( exercise );
     std::string profilesFile;
     {
-        xml::xifstream xis( exerciseFile ) ;
-        xis >> xml::start( "exercise" )
+        std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( exerciseFile ) ;
+        *xis >> xml::start( "exercise" )
                 >> xml::start( "profiles" )
                     >> xml::attribute( "file", profilesFile );
     }
     {
-        xml::xifstream xis( config.BuildChildPath( exerciseFile, profilesFile ) );
+        std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( config.BuildChildPath( exerciseFile, profilesFile ) );
         ProfileReader reader;
-        xis >> xml::start( "profiles" )
+        *xis >> xml::start( "profiles" )
                 >> xml::list( "profile", reader, &ProfileReader::ReadProfile, visitor );
     }
 }

@@ -27,6 +27,11 @@ namespace gui
     class LinkInterpreter_ABC;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class Config;
 
 // =============================================================================
@@ -40,7 +45,7 @@ class SelfTrainingPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter );
+             SelfTrainingPage( QWidgetStack* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter );
     virtual ~SelfTrainingPage();
     //@}
 

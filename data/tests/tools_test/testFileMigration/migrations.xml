@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <migrations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="XXXX.xsd">
-  <legacy>
-    <assign root-node="physical" assign-schema="testFileMigration/1.0/schema.xsd"/>
-  </legacy>
+  <default>
+    <match-if root-node="physical" assign-schema="testFileMigration/1.0/schema.xsd"/>
+    <match-if filename="physical" assign-schema="testFileMigration/1.0/schema.xsd"/>
+  </default>
+   
+  <added-files/>
 
   <migration from="1.0" to="1.1"/>
   <migration from="1.1" to="1.2"/>
@@ -13,6 +16,3 @@
       <upgrade schema="testFileMigration/1.3/schema.xsd" apply="testFileMigration/test-1.4.xsl"/>
   </migration>
 </migrations>
-
-
-<!-- xsl::xstringtransform xst( "resources/ordCompatibility.xsl" ); -->

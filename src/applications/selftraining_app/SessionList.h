@@ -13,6 +13,7 @@
 namespace tools
 {
     class GeneralConfig;
+    class Loader_ABC;
 }
 
 // =============================================================================
@@ -28,7 +29,7 @@ class SessionList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionList( QWidget* parent, const tools::GeneralConfig& config );
+             SessionList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
     virtual ~SessionList();
     //@}
 
@@ -65,6 +66,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    const tools::Loader_ABC& fileLoader_;
     QListBox* list_;
     QTextEdit* comments_;
     QString exercise_;

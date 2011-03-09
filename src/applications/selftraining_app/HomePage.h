@@ -27,6 +27,11 @@ namespace gui
     class LinkInterpreter_ABC;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class Config;
 class MenuButton;
 class OptionsPage;
@@ -43,7 +48,7 @@ class HomePage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             HomePage( QWidgetStack* pages, Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter );
+             HomePage( QWidgetStack* pages, Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter );
     virtual ~HomePage();
     //@}
 

@@ -16,6 +16,7 @@
 #include "frontend/LocalExerciseFilter.h"
 #include "frontend/Profile.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Loader_ABC.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/Tools.h"
 #include <boost/filesystem.hpp>
@@ -56,9 +57,10 @@ namespace
 // Name: ExerciseList constructor
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, kernel::Controllers& controllers, bool showBrief /*= true*/, bool showProfile /*=true*/, bool showParams /*= true*/, bool enableParams /*= true*/ )
+ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, bool showBrief /*= true*/, bool showProfile /*=true*/, bool showParams /*= true*/, bool enableParams /*= true*/ )
     : QVBox             ( parent )
     , config_           ( config )
+    , fileLoader_       ( fileLoader )
     , controllers_      ( controllers )
     , filter_           ( 0 )
     , defaultFilter_    ( new frontend::LocalExerciseFilter() )
@@ -83,7 +85,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
 
         label = new QLabel( tools::translate( "ExerciseList", "Profile:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        profiles_ = new ProfileList( leftBox, config );
+        profiles_ = new ProfileList( leftBox, config, fileLoader_ );
         leftBox->setStretchFactor( exercises_, 3 );
         leftBox->setStretchFactor( profiles_, 1 );
         label->setShown( showProfile );
@@ -93,7 +95,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         connect( exercises_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( SelectExercise( QListViewItem* ) ) );
     }
     {
-        properties_ = new ExerciseProperties( box, config, showBrief, showParams, enableParams );
+        properties_ = new ExerciseProperties( box, config, fileLoader_, showBrief, showParams, enableParams );
     }
     controllers_.Register( *this );
 }
@@ -176,8 +178,8 @@ QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
         const std::string file = config_.GetExerciseFile( exercise.ascii() );
         if( boost::filesystem::exists( file ) )
         {
-            xml::xifstream xis( file );
-            xis >> xml::start( "exercise" )
+            std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );
+            *xis >> xml::start( "exercise" )
                     >> xml::optional >> xml::start( "meta" )
                         >> xml::optional >> xml::content( "name", displayName );
         }

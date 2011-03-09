@@ -27,6 +27,11 @@ namespace frontend
     class LauncherClient;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class Config;
 class QWidgetStack;
 
@@ -44,7 +49,7 @@ class MainWindow : public QMainWindow
 public:
     //! @name Constructors/Destructor
     //@{
-             MainWindow( Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient );
+             MainWindow( Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient );
     virtual ~MainWindow();
     //@}
 

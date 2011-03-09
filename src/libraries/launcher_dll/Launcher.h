@@ -27,6 +27,12 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+    class RealFileLoaderObserver_ABC;
+}
+
 namespace launcher
 {
     class Config;
@@ -75,6 +81,8 @@ private:
     //! @name Member data
     //@{
     const Config& config_;
+    std::auto_ptr< tools::RealFileLoaderObserver_ABC > fileLoaderObserver_;
+    std::auto_ptr< tools::Loader_ABC > fileLoader_;
     std::auto_ptr< LauncherService > server_;
     std::auto_ptr< ProcessService > processes_;
     //@}

@@ -10,13 +10,9 @@
 #include "frontend_pch.h"
 #include "CreateExercise.h"
 #include "tools/GeneralConfig.h"
-#include "tools/Version.h"
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4244 4245 )
+#include "tools/SchemaWriter.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
-#pragma warning( pop )
 #include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
 
@@ -27,8 +23,8 @@ namespace
     void CreateExerciseXml( const std::string& file, const std::string& terrain, const std::string& model, const std::string& physical, bool keepMeta )
     {
         xml::xofstream xos( file );
-        xos << xml::start( "exercise" )
-                << xml::attribute( "model-version", SWORD_EXERCISE_VERSION );
+        xos << xml::start( "exercise" );
+        tools::SchemaWriter().WriteExerciseSchema( xos, "exercise" );
         if( keepMeta && boost::filesystem::exists( file ) )
         {
             xml::xifstream xis( file );

@@ -23,6 +23,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class SchemaWriter_ABC;
+}
+
 namespace gui
 {
     class Drawing_ABC;
@@ -49,7 +54,7 @@ public:
     //! @name Operations
     //@{
     void Load( const std::string& filename );
-    void Save( const std::string& filename ) const;
+    void Save( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
     Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color ) const;

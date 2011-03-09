@@ -12,7 +12,12 @@
 #include <boost/preprocessor/stringize.hpp>
 
 #ifndef APP_VERSION
-#   define APP_VERSION dev
+#   define APP_VERSION 4.3.0
+#endif
+
+//$$$ Crap for Thales
+#ifndef APP_MODEL_VERSION
+#   define APP_MODEL_VERSION 4.4.1
 #endif
 
 // -----------------------------------------------------------------------------
@@ -23,3 +28,13 @@ const char* tools::AppVersion()
 {
     return BOOST_PP_STRINGIZE( APP_VERSION );
 }
+
+// -----------------------------------------------------------------------------
+// Name: tools::AppVersion
+// Created: SBO 2008-08-20
+// -----------------------------------------------------------------------------
+const char* tools::AppModelVersion()
+{
+    return BOOST_PP_STRINGIZE( APP_MODEL_VERSION );
+}
+

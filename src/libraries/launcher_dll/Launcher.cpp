@@ -13,6 +13,8 @@
 #include "LauncherPublisher.h"
 #include "LauncherService.h"
 #include "ProcessService.h"
+#include "tools/NullFileLoaderObserver.h"
+#include "tools/DefaultLoader.h"
 #include "protocol/LauncherSenders.h"
 #include "protocol/Version.h"
 
@@ -24,8 +26,10 @@ using namespace launcher;
 // -----------------------------------------------------------------------------
 Launcher::Launcher( const Config& config )
     : config_   ( config )
+    , fileLoaderObserver_( new tools::NullFileLoaderObserver() )
+    , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , server_   ( new LauncherService( config.GetLauncherPort() ) )
-    , processes_( new ProcessService( config ) )
+    , processes_( new ProcessService( config, *fileLoader_ ) )
 {
     server_->RegisterMessage( *this, &Launcher::HandleAdminToLauncher );
 }

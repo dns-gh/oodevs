@@ -27,6 +27,7 @@ namespace xml
 namespace tools
 {
     class Loader_ABC;
+    class SchemaWriter_ABC;
 }
 
 class ModelChecker_ABC;
@@ -55,9 +56,9 @@ public:
     void Delete( const Score_ABC& score );
     void Purge();
     void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
-    bool CheckValidity( ModelChecker_ABC& checker ) const;
-    void Serialize( const std::string& file ) const;
-    void GenerateScoresFromTemplate( const std::string &templateFile );
+    bool CheckValidity( ModelChecker_ABC& checker, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader, const std::string &templateFile );
     //@}
 
 private:
@@ -69,8 +70,9 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadTemplate( xml::xistream& xis );
     void Read( xml::xistream& xis );
-    void Serialize( xml::xostream& xos ) const;
+    void Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void ReadScore( xml::xistream& xis );
     void ReadForeach( xml::xistream& xis );
     void IterateAmmunitions( const std::string& content, const std::string& toReplace, const std::string& name, const std::string& toReplaceParties );

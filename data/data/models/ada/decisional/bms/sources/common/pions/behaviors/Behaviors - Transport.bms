@@ -252,7 +252,7 @@ elseif switch_1 == eTransporterDebarquer then
 self.done_ACT_Transport_Pion_TransportDebarquer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[4] = true
-                end
+                                end
             end
 
     end,

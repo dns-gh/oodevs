@@ -23,6 +23,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class Config;
 class ExerciseList;
 class QPushButton;
@@ -41,7 +46,7 @@ class RemoteControlPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, frontend::LauncherClient& launcher );
+             RemoteControlPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher );
     virtual ~RemoteControlPage();
     //@}
 
@@ -71,6 +76,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const Config& config_;
+    const tools::Loader_ABC& fileLoader_;
     QLineEdit* host_;
     QSpinBox* port_;
     ExerciseList* exercises_;

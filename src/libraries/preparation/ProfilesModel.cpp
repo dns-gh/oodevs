@@ -18,6 +18,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "tools/Iterator.h"
 #include "tools/Loader_ABC.h"
+#include "tools/SchemaWriter_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
@@ -76,12 +77,11 @@ void ProfilesModel::Read( xml::xistream& xis )
 // Name: ProfilesModel::Serialize
 // Created: SBO 2007-01-17
 // -----------------------------------------------------------------------------
-void ProfilesModel::Serialize( const std::string& file ) const
+void ProfilesModel::Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     xml::xofstream xos( file );
-    xos << xml::start( "profiles" )
-            << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-            << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/profiles.xsd" );
+    xos << xml::start( "profiles" );
+    schemaWriter.WriteExerciseSchema( xos, "profiles" );
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->Serialize( xos );
     xos << xml::end;

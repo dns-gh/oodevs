@@ -96,461 +96,349 @@
         <translation>Info/Moral</translation>
     </message>
     <message>
+        <source>Info/Armed-Individuals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Humans/Healthy</source>
-        <translation">Humains/Sains</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Humans/Contaminated</source>
-        <translation>Humains/Contaminés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Humans/Wounded</source>
-        <translation>Humains/Blessés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Humans/Dead</source>
-        <translation>Humains/Morts</translation>
-    </message>
-    <message>
-        <source>Info/Armed-Individuals</source>
-        <translation>Info/Individus armés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>M\F\C ratio/Males</source>
-        <translation>Répartion H\F\E/Hommes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>M\F\C ratio/Females</source>
-        <translation>Répartion H\F\E/Femmes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>M\F\C ratio/Children</source>
-        <translation>Répartion H\F\E/Enfants</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DelayAttribute</name>
     <message>
         <source>Info/Delay parameters/Delay</source>
-        <translation>Info/Paramètres du retard/Retard</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Dotations</name>
     <message>
         <source>Dotations</source>
-        <translation>Dotations</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Dotations/Dotations</source>
-        <translation>Dotations/Dotations</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FireAttribute</name>
     <message>
         <source>Info/Fire attributes/Fire class</source>
-        <translation>Info/Attributs d&apos;incendie/Classe d&apos;incendie</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Fire attributes/Max combustion energy_</source>
-        <translation>Info/Attributs de feu/Energie de combustion max</translation>
+        <source>Info/Fire attributes/Max combustion energy</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FloodAttribute</name>
     <message>
         <source>Info/Flood parameters/Depth</source>
-        <translation>Info/Paramètres de l&apos;inondation/Profondeur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Flood parameters/Reference distance</source>
-        <translation>Info/Paramètres de l&apos;inondation/Distance de référence</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Formation</name>
     <message>
+        <source>Formation [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
+        <translation type="unfinished">Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
-        <source>Formation [%1]</source>
-        <translation>Formation [%1]</translation>
+        <translation type="unfinished">Info/Nom</translation>
     </message>
     <message>
         <source>Info/LogisticLevel</source>
-        <translation>Info/Niveau logistique</translation>
+        <translation type="unfinished">Info/Niveau logistique</translation>
     </message>
 </context>
 <context>
     <name>Infrastructure</name>
     <message>
         <source>Infrastructure</source>
-        <translation>Infrastructure</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enable:</source>
-        <translation>Actif:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Threshold:</source>
-        <translation>Seuil:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Infrastructure/Type</source>
-        <translation>Info/Infrastructure/Type</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Infrastructure/Enable</source>
-        <translation>Info/Infrastructure/Actif</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Infrastructure/Threshold</source>
-        <translation>Info/Infrastructure/Seuil</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Intelligence</name>
     <message>
         <source>Intelligence [%1]</source>
-        <translation>Renseignement [%1]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
+        <translation type="unfinished">Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation>Info/Nom</translation>
+        <translation type="unfinished">Info/Nom</translation>
     </message>
     <message>
         <source>Info/Nature</source>
-        <translation>Info/Nature</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Mounted</source>
-        <translation>Info/Embarqué</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Level</source>
-        <translation>Info/Niveau</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Karma</source>
-        <translation>Info/Karma</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>KnowledgeGroup</name>
     <message>
+        <source>Knowledge group [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
+        <translation type="unfinished">Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
-        <source>Knowledge group [%1]</source>
-        <translation>Groupe de connaissance [%1]</translation>
+        <translation type="unfinished">Info/Nom</translation>
     </message>
     <message>
         <source>Type/Name</source>
-        <translation>Type/Nom</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Type/Delay</source>
-        <translation>Type/Délai</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Lima</name>
     <message>
         <source>Phase line</source>
-        <translation>Lima</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Limit</name>
     <message>
         <source>Limit</source>
-        <translation>Limite</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LocalWeather</name>
     <message>
         <source>Local weather %1</source>
-        <translation>Zone météo locale %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LogisticAttribute</name>
     <message>
         <source>Info/Camp attributes/Superior</source>
-        <translation>Info/Attributs de camp/Supérieur</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>LogisticBaseStates</name>
     <message>
-        <source>Logistic/LogisticBase/Superior</source>
-        <translation>Logistique/Base logistique/Supérieur</translation>
+        <source>Logistic/LogisticBase/Quotas</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic/LogisticBase/Quotas</source>
+        <source>Logistic/LogisticBase/Superior</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MedicalTreatment</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source>Medical Treatment</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Total number of doctors:</source>
-        <translation>Nombre total de médecins :</translation>
-    </message>
-    <message>
-        <source>Medical Treatment</source>
-        <translation>Traitement médical</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hospital ID:</source>
-        <translation>Id Hopital:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bed Capacities:</source>
-        <translation>Capacité en lits:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MedicalTreatmentAttribute</name>
     <message>
         <source>Info/Medical Treatment attributes/Doctors</source>
-        <translation>Info/Attributs Traitement médical/Docteurs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Medical Treatment attributes/Hospital ID</source>
-        <translation>Info/Attributs Traitement médical/Id Hopital</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MineAttribute</name>
     <message>
         <source>Info/Mine parameters/Density</source>
-        <translation>Info/Paramètres des mines/Densité</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>NBC</name>
     <message>
-        <source>NBC agent(s):</source>
-        <translation>Agent(s) NBC:</translation>
-    </message>
-    <message>
         <source>NBC</source>
-        <translation>NBC</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>NBC state:</source>
-        <translation>Etat NBC:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Danger:</source>
-        <translation>Danger:</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NBC agent(s):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>NBCAttribute</name>
     <message>
         <source>Info/NBC attributes/NBC state</source>
-        <translation>Info/Atributs NBC/Etat NBC</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/NBC attributes/NBC agents</source>
-        <translation>Info/Atributs NBC/Agents NBC</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Object</name>
     <message>
-        <source>Camp</source>
-        <translation>Camp</translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation>TC2:</translation>
-    </message>
-    <message>
-        <source>Crossing site</source>
-        <translation>Site de franchissement</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Largeur :</translation>
-    </message>
-    <message>
-        <source>Depth:</source>
-        <translation>Profondeur :</translation>
-    </message>
-    <message>
-        <source>Stream speed:</source>
-        <translation>Débit du courant :</translation>
-    </message>
-    <message>
-        <source>Build river banks:</source>
-        <translation>Aménagement des rives :</translation>
-    </message>
-    <message>
-        <source>Equipped:</source>
-        <translation>Equipé :</translation>
-    </message>
-    <message>
-        <source>Flow:</source>
-        <translation>Débit :</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation>Longueur :</translation>
-    </message>
-    <message>
-        <source>Maximum weight:</source>
-        <translation>Poids maximum :</translation>
-    </message>
-    <message>
         <source>Mine parameters</source>
-        <translation>Paramètres des mines</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Activity time:</source>
-        <translation>Durée d&apos;activité :</translation>
-    </message>
-    <message>
-        <source>Density:</source>
-        <translation>Densité :</translation>
-    </message>
-    <message>
-        <source>%1 [%2]</source>
-        <translation>%1 [%2]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Information</source>
-        <translation>Information</translation>
-    </message>
-    <message>
-        <source>Identifier:</source>
-        <translation>Identifiant :</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation>Nom :</translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation>Type :</translation>
-    </message>
-    <message>
-        <source>Location:</source>
-        <translation>Position :</translation>
-    </message>
-    <message>
-        <source>Construction:</source>
-        <translation>Construction :</translation>
-    </message>
-    <message>
-        <source>Mining:</source>
-        <translation>Valorisation :</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bypass:</source>
-        <translation>Contournement :</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Development dotation:</source>
-        <translation>Dotation de valorisation :</translation>
-    </message>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
-        <source>Info/Type</source>
-        <translation>Info/Type</translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation>Type d&apos;obstacle :</translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstacle de manoeuvre activé :</translation>
-    </message>
-    <message>
-        <source>Info/Demolition target parameters/Obstacle type</source>
-        <translation>Info/Attributs de destruction/Type d&apos;obstacle</translation>
-    </message>
-    <message>
-        <source>Info/Demolition target parameters/Obstacle activated</source>
-        <translation>Info/Attributs de destruction/Obstacle activé</translation>
-    </message>
-    <message>
-        <source>Supply route</source>
-        <translation>Itinéraire logistique</translation>
-    </message>
-    <message>
-        <source>Info/Construction/Dotation/Type</source>
-        <translation>Info/Construction/Dotation/Type</translation>
-    </message>
-    <message>
-        <source>Info/Construction/Dotation/Count</source>
-        <translation>Info/Construction/Dotation/Nombre</translation>
+        <source>Construction:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Construction/Completion</source>
-        <translation>Info/Construction/Réalisation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fire</source>
-        <translation>Feu</translation>
+        <source>Info/Construction/Dotation/Type</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Fire class:</source>
-        <translation>Classe de feu:</translation>
+        <source>Info/Construction/Dotation/Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossing site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Depth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stream speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build river banks:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delay time:</source>
-        <translation>Temps de retard:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Activation time:</source>
-        <translation>Délai avant activation</translation>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info/Demolition target parameters/Activation time</source>
-        <translation>Info/Attributs de destruction/Délai avant activation</translation>
-    </message>
-    <message>
-        <source>Object type:</source>
-        <translation>Type d&apos;objet :</translation>
-    </message>
-    <message>
-        <source>Occupant:</source>
-        <translation>Animateur:</translation>
-    </message>
-    <message>
-        <source>Info/Occupant attributes/Max Entities</source>
-        <translation>Info/Attributs animateurs/Animateurs max</translation>
+        <source>Fire class:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Max combustion energy:</source>
@@ -558,99 +446,203 @@
     </message>
     <message>
         <source>Flood</source>
-        <translation>Inondation</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Reference distance:</source>
-        <translation>Distance de référence:</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TC2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mining:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Development dotation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished">Info/Identifiant</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished">Info/Nom</translation>
+    </message>
+    <message>
+        <source>Info/Type</source>
+        <translation type="unfinished">Info/Type</translation>
+    </message>
+    <message>
+        <source>Obstacle type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Demolition target parameters/Obstacle type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Demolition target parameters/Obstacle activated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Demolition target parameters/Activation time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Occupant:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Occupant attributes/Max Entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipped:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flow:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum weight:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Population</name>
     <message>
+        <source>%1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
+        <translation type="unfinished">Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation>Info/Nom</translation>
+        <translation type="unfinished">Info/Nom</translation>
     </message>
     <message>
         <source>Info/Type</source>
-        <translation>Info/Type</translation>
+        <translation type="unfinished">Info/Type</translation>
     </message>
     <message>
         <source>Info/Info</source>
-        <translation>Info/Info</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Human/Alive</source>
-        <translation>Humains/Vivants</translation>
-    </message>
-    <message>
-        <source>Human/Dead</source>
-        <translation>Humains/Morts</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Human/Wounded</source>
-        <translation>Humains/Blessés</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Human/Dead</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Health/Infrastructures needed</source>
-        <translation>Santé/Infrastructures nécessaires</translation>
-    </message>
-    <message>
-        <source>%1 [%2]</source>
-        <translation>%1 [%2]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Living Area/%1</source>
-        <translation>Zone de vie/%1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PopulationAffinities</name>
     <message>
         <source>Affinities/%1</source>
-        <translation>Adhésions/%1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Preparation</name>
     <message>
         <source>Army %1</source>
-        <translation>Camp %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Communication model</source>
-        <translation>Modèle de communication</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unit &apos;%1&apos; in team &apos;%2&apos; has no knowledge group</source>
-        <translation>L&apos;unité &apos;%1&apos; du camp &apos;%2&apos; n&apos;a pas de groupe de connaissance</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ProfilesModel</name>
     <message>
         <source>New profile</source>
-        <translation>Nouveau profil</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Some units in the orbat are not &quot;readable&quot; to any user profile.
 You will not be able to see these units on the game.
 </source>
-        <translation>Certaines unités de l&apos;ODB ne sont &quot;lisibles&quot; par aucun profil utilisateur.
-Vous ne pourrez pas voir ces unités en phase de conduite.
-</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Some units in the orbat are not &quot;writeable&quot; to any user profile.
 You will not be able to give orders to these units.
 </source>
-        <translation>Certaines unités de l&apos;ODB ne sont &quot;en écriture&quot; pour aucun profil utilisateur.
-Vous ne pourrez pas donner d&apos;ordres à ces unités en phase de conduite.
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -658,26 +650,25 @@ Vous ne pourrez pas donner d&apos;ordres à ces unités en phase de conduite.
     <message>
         <source>Score definitions contain errors:
 Reason: %1.</source>
-        <translation>La définition des scores contient des erreurs:
-Détail: %1.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Stocks</name>
     <message>
         <source>Stocks</source>
-        <translation>Stocks</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Stocks/Stocks</source>
-        <translation>Stocks/Stocks</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>StructuralStateAttribute</name>
     <message>
         <source>Info/StructuralState</source>
-        <translation>Info/Etat structurel</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -685,79 +676,78 @@ Détail: %1.</translation>
     <message>
         <source>Success factor definitions contain errors:
 Reason: %1.</source>
-        <translation>La définition des facteurs de succès contient des erreurs:
-Détail: %1.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SupplyRouteAttribute</name>
     <message>
         <source>Info/Logistic route attributes/Flow</source>
-        <translation>Info/Attributs de l&apos;itinéraire logistique/Débit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Width</source>
-        <translation>Info/Attributs de l&apos;itinéraire logistique/Largeur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Length</source>
-        <translation>Info/Attributs de l&apos;itinéraire logistique/Longueur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Maximum weight</source>
-        <translation>Info/Attributs de l&apos;itinéraire logistique/Poids maximum</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Equipped</source>
-        <translation>Info/Attributs de l&apos;itinéraire logistique/Equipé</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TacticalLine_ABC</name>
     <message>
         <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
+        <translation type="unfinished">Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation>Info/Nom</translation>
+        <translation type="unfinished">Info/Nom</translation>
     </message>
 </context>
 <context>
     <name>Tc2States</name>
     <message>
         <source>Logistic/TC2/Superior</source>
-        <translation>Logistique/TC2/Supérieur</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Team</name>
     <message>
+        <source>Info/Karma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
+        <translation type="unfinished">Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
-        <source>Info/Karma</source>
-        <translation>Info/Karma</translation>
+        <translation type="unfinished">Info/Nom</translation>
     </message>
 </context>
 <context>
     <name>ToxicCloudAttribute</name>
     <message>
         <source>Info/Cloud parameters/Data source</source>
-        <translation>Info/Paramètres du nuage/Source des données</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Cloud parameters/Data field</source>
-        <translation>Info/Paramètres des nuages/Champ des données</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info/Cloud parameters/Data export</source>
-        <translation>Info/Paramètres des nuages/Export des données</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

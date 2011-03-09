@@ -23,6 +23,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class CreateExerciceWidget;
 class ExerciseList;
 class ExportWidget;
@@ -43,7 +48,7 @@ class ScenarioEditPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
+             ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
     virtual ~ScenarioEditPage();
     //@}
 
@@ -80,6 +85,7 @@ private:
     //! @name Member data
     //@{
     const frontend::Config& config_;
+    const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;
     ProgressPage* progressPage_;
     ExerciseList* exercises_;

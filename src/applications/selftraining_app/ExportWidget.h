@@ -20,6 +20,7 @@ class ScenarioEditPage;
 namespace tools
 {
     class GeneralConfig;
+    class Loader_ABC;
 }
 
 namespace zip
@@ -40,7 +41,7 @@ class ExportWidget : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config );
+             ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
     virtual ~ExportWidget();
     //@}
 
@@ -84,6 +85,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    const tools::Loader_ABC& fileLoader_;
     ScenarioEditPage& page_;
     QListBox*  list_;
     T_Package package_;

@@ -49,6 +49,15 @@ void Loader::LoadFile( const std::string& fileName, T_Loader loader ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Loader::LoadFile
+// Created: NLD 2010-02-23
+// -----------------------------------------------------------------------------
+std::auto_ptr< xml::xistream > Loader::LoadFile( const std::string& fileName ) const
+{
+    return fileLoader_->LoadFile( fileName, observer_ );
+};
+
+// -----------------------------------------------------------------------------
 // Name: Loader::LoadPhysicalFile
 // Created: NLD 2010-02-23
 // -----------------------------------------------------------------------------

@@ -19,6 +19,9 @@
 #include "clients_kernel/Tools.h"
 #include "frontend/LauncherClient.h"
 #include "frontend/ProcessList.h"
+#include "tools/NullFileLoaderObserver.h"
+#include "tools/DefaultLoader.h"
+#include <xeumeuleu/xml.hpp>
 #include <qsettings.h>
 #include <qtextcodec.h>
 #include <qtimer.h>
@@ -45,7 +48,9 @@ namespace
 // -----------------------------------------------------------------------------
 Application::Application( int argc, char** argv )
     : QApplication( argc, argv )
-    , config_( GetConfig() )
+    , config_     ( GetConfig() )
+    , fileLoaderObserver_( new tools::NullFileLoaderObserver() )
+    , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , controllers_( new kernel::Controllers() )
     , launcher_( new Launcher( argc, argv ) )
     , launcherClient_( new frontend::LauncherClient( controllers_->controller_ ) )
@@ -78,7 +83,7 @@ void Application::Initialize()
         closeAllWindows();
     }
 
-    mainWindow_ = new MainWindow( *config_, *controllers_, *launcherClient_ );
+    mainWindow_ = new MainWindow( *config_, *fileLoader_, *controllers_, *launcherClient_ );
     setMainWidget( mainWindow_ );
     mainWindow_->show();
 

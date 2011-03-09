@@ -23,6 +23,7 @@ namespace kernel
 namespace tools
 {
     class Loader_ABC;
+    class SchemaWriter_ABC;
 }
 
 class UserProfile;
@@ -48,7 +49,7 @@ public:
     //! @name Operations
     //@{
     void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
-    void Serialize( const std::string& file ) const;
+    void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
     bool CheckValidity( const Model& model, ModelChecker_ABC& checker ) const;
 

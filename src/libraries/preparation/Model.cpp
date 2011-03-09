@@ -42,6 +42,7 @@
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
+#include "tools/SchemaWriter.h"
 #include <tools/XmlCrc32Signature.h>
 #include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
@@ -147,14 +148,14 @@ void Model::Purge()
 namespace
 {
     template< typename M >
-    bool LoadOptional( const tools::Loader_ABC& fileLoader, const std::string& fileName, M& model )
+    bool LoadOptional( const tools::Loader_ABC& fileLoader, const std::string& fileName, M& model, const tools::SchemaWriter_ABC& schemaWriter )
     {
         if( bfs::exists( fileName ) )
         {
             model.Load( fileLoader, fileName );
             return true;
         }
-        model.Serialize( fileName );
+        model.Serialize( fileName, schemaWriter );
         tools::WriteXmlCrc32Signature( fileName );
         return false;
     }
@@ -166,45 +167,34 @@ namespace
 // -----------------------------------------------------------------------------
 void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors )
 {
+    config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
+
+    //$$ LOADING DE FICHIERS A UNIFIER
+    const std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
+    const bfs::path urbanFile = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
+    if( bfs::exists( urbanFile ) )
     {
-        const std::string exerciseFile = config.GetExerciseFile();
-        config.GetLoader().CheckFile( exerciseFile );
-        xml::xifstream xis( exerciseFile );
-        exercise_.Load( xis );
-        std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
-        try
-        {
-            urban::WorldParameters world( directoryPath );
-            //$$ LOADING DE FICHIERS A UNIFIER
-            const bfs::path urbanFile = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
-            config.GetLoader().CheckFile( urbanFile.string() );
-            urban_.Load( directoryPath, world, loadingErrors );
-            const std::string urbanStateFile = config.GetUrbanStateFile() ;
-            if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
-            {
-                config.GetLoader().CheckFile( urbanStateFile );
-                xml::xifstream xis( urbanStateFile );
-                urban_.LoadUrbanState( xis );
-            }
-        }
-        catch( std::exception& )
-        {
-        }
-    }
-    {
-        const std::string orbatFile = config.GetOrbatFile();
-        if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
-        {
-            UpdateName( orbatFile );
-            config.GetLoader().LoadFile( orbatFile, boost::bind( &TeamsModel::Load, &teams_, _1, boost::ref( *this ), boost::ref( loadingErrors ) ) );
-        }
+        config.GetLoader().CheckFile( urbanFile.string() );
+        urban::WorldParameters world( directoryPath );
+        urban_.Load( directoryPath, world, loadingErrors );
+        const std::string urbanStateFile = config.GetUrbanStateFile() ;
+        if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
+            config.GetLoader().LoadFile( urbanStateFile, boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
     }
 
-    if( ! LoadOptional( config.GetLoader(), config.GetWeatherFile(), weather_ ) )
+    const std::string orbatFile = config.GetOrbatFile();
+    if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
+    {
+        UpdateName( orbatFile );
+        config.GetLoader().LoadFile( orbatFile, boost::bind( &TeamsModel::Load, &teams_, _1, boost::ref( *this ), boost::ref( loadingErrors ) ) );
+    }
+
+    const tools::SchemaWriter schemaWriter;
+    if( ! LoadOptional( config.GetLoader(), config.GetWeatherFile(), weather_, schemaWriter ) )
         controllers_.controller_.Update( weather_);
-    LoadOptional( config.GetLoader(), config.GetProfilesFile(), profiles_ );
-    LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_ );
-    LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_ );
+    LoadOptional( config.GetLoader(), config.GetProfilesFile(), profiles_, schemaWriter );
+    LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_, schemaWriter );
+    LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
     SetLoaded( true );
 }
 
@@ -224,9 +214,9 @@ void Model::Import( const std::string& orbat, const OrbatImportFilter& filter, s
 namespace
 {
     template< class T >
-    void SerializeAndSign( const std::string& path, T& model )
+    void SerializeAndSign( const std::string& path, T& model, const tools::SchemaWriter_ABC& schemaWriter )
     {
-        model.Serialize( path );
+        model.Serialize( path, schemaWriter );
         tools::WriteXmlCrc32Signature( path );
     }
 }
@@ -237,28 +227,29 @@ namespace
 // -----------------------------------------------------------------------------
 bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker )
 {
+    const tools::SchemaWriter schemaWriter;
+
     const bool valid = teams_.CheckValidity( checker )
                     && agents_.CheckValidity( checker )
                     && profiles_.CheckValidity( *this, checker )
-                    && scores_.CheckValidity( checker )
-                    && successFactors_.CheckValidity( checker );
+                    && scores_.CheckValidity( checker, schemaWriter )
+                    && successFactors_.CheckValidity( checker, schemaWriter );
     if( valid )
     {
-        SerializeAndSign( config.GetExerciseFile(), exercise_ );
+        SerializeAndSign( config.GetExerciseFile(), exercise_, schemaWriter );
         {
             xml::xofstream xos( config.GetOrbatFile() );
-            xos << xml::start( "orbat" )
-                << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-                << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/orbat.xsd" );
+            xos << xml::start( "orbat" );
+            schemaWriter.WriteExerciseSchema( xos, "orbat" );
             teams_.Serialize( xos );
             xos << xml::end;
         }
         tools::WriteXmlCrc32Signature( config.GetOrbatFile() );
-        SerializeAndSign( config.GetUrbanStateFile(), urban_ );
-        SerializeAndSign( config.GetWeatherFile(), weather_ );
-        SerializeAndSign( config.GetProfilesFile(), profiles_ );
-        SerializeAndSign( config.GetScoresFile(), scores_ );
-        SerializeAndSign( config.GetSuccessFactorsFile(), successFactors_ );
+        SerializeAndSign( config.GetUrbanStateFile(), urban_, schemaWriter );
+        SerializeAndSign( config.GetWeatherFile(), weather_, schemaWriter );
+        SerializeAndSign( config.GetProfilesFile(), profiles_, schemaWriter );
+        SerializeAndSign( config.GetScoresFile(), scores_, schemaWriter );
+        SerializeAndSign( config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
         successFactors_.SerializeScript( config );
         UpdateName( config.GetOrbatFile() );
     }

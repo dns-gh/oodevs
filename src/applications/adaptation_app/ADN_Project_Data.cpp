@@ -20,7 +20,10 @@
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 #include <tools/XmlCrc32Signature.h>
+#include <boost/filesystem/operations.hpp>
 #include <windows.h>
+
+namespace bfs = boost::filesystem;
 
 ADN_Project_Data::WorkDirInfos  ADN_Project_Data::workDir_;
 std::string                     ADN_Project_Data::FileInfos::szUntitled_ = "Untitled";
@@ -324,6 +327,9 @@ void ADN_Project_Data::Load( const tools::Loader_ABC& fileLoader )
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData() );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "DrawingTemplates.xml" );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "templates.xml" );
+    //fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
+    //fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );
+    //fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "mapping.xml" );
 }
 
 namespace
@@ -371,6 +377,33 @@ void ADN_Project_Data::FilterNode( const std::string& node, xml::xistream& xis, 
         xos << xml::content( node, xis );
 }
 
+namespace 
+{
+    void ExtractRootNode( const std::string& nodeName, xml::xistream& , std::string& rootNode )
+    {
+        rootNode = nodeName;
+    }
+
+    void ChangeSchemaAndSignature( const std::string& inputFile, const std::string& schemaName )
+    {
+        if( !bfs::exists( bfs::path( inputFile ) ) )
+            return;
+
+        std::string rootNode;
+        xml::xifstream xis( inputFile );
+        xis >> xml::list( boost::bind( &ExtractRootNode, _2, _3, boost::ref( rootNode ) ) );
+        xis >> xml::start( rootNode );
+
+        xml::xofstream xos( inputFile );
+        xos << xml::start( rootNode );
+        xos << xis;
+        ADN_Tools::AddSchema( xos, schemaName );
+        xos << xml::end();
+
+        tools::WriteXmlCrc32Signature( inputFile );
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::Save
 // Created: JDY 03-06-20
@@ -393,18 +426,17 @@ void ADN_Project_Data::Save()
         xml::xifstream xis( path );
         xml::xofstream xos( path );
         xis >> xml::start( "pathfind" );
-        xos << xml::start( "pathfind" )
-                << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-                << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/physical/Pathfind.xsd" );
+        xos << xml::start( "pathfind" );
+        ADN_Tools::AddSchema( xos, "Pathfind" );
         xis >> xml::list( boost::bind( &ADN_Project_Data::FilterNode, this, _2, _3, boost::ref( xos ) ) );
     }
     addedObjects_.clear();
 
     // Save XML Signature for files not loaded, bypassing "temp" folder
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData() );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData() );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData() );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData() );
+    ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData(), "ObjectNames" );
+    ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData(), "HumanProtections" );
+    ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData(), "MedicalTreatment" );
+    // ?? Same thing to do ??
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "DrawingTemplates.xml" );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );

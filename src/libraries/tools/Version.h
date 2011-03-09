@@ -13,8 +13,7 @@
 namespace tools
 {
     const char* AppVersion();
+    const char* AppModelVersion(); //$$$ Crap for thales, à gicler à terme
 }
-
-#define SWORD_EXERCISE_VERSION "4.2.7"
 
 #endif // __Version_h_

@@ -146,9 +146,6 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     PHY_DotationLogisticType     ::Initialize();
     MIL_LimaFunction             ::Initialize();
 
-    xml::xifstream xis( config.GetPhysicalFile() );
-    xis >> xml::start( "physical" );
-
     InitializeType< PHY_MaterialCompositionType    >( config, "urban"              );
     InitializeType< PHY_AccomodationType           >( config, "urban"              );
     InitializeType< PHY_InfrastructureType         >( config, "urban"              );
@@ -183,8 +180,6 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< MIL_PopulationType             >( config, "populations"        );
     InitializeType< MIL_InhabitantType             >( config, "inhabitants"        );
     InitializeMedical( config );
-
-    xis >> xml::end; // physical
 }
 
 // -----------------------------------------------------------------------------

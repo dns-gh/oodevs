@@ -19,6 +19,7 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "tools/Loader_ABC.h"
+#include "tools/SchemaWriter_ABC.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -80,12 +81,12 @@ void ScoresModel::Read( xml::xistream& xis )
 // Name: ScoresModel::CheckValidity
 // Created: SBO 2009-05-26
 // -----------------------------------------------------------------------------
-bool ScoresModel::CheckValidity( ModelChecker_ABC& checker ) const
+bool ScoresModel::CheckValidity( ModelChecker_ABC& checker, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     try
     {
         xml::xostringstream xos;
-        Serialize( xos );
+        Serialize( xos, schemaWriter );
     }
     catch( std::exception& e )
     {
@@ -98,21 +99,20 @@ bool ScoresModel::CheckValidity( ModelChecker_ABC& checker ) const
 // Name: ScoresModel::Serialize
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-void ScoresModel::Serialize( const std::string& file ) const
+void ScoresModel::Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     xml::xofstream xos( file );
-    Serialize( xos );
+    Serialize( xos, schemaWriter );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScoresModel::Serialize
 // Created: SBO 2009-05-26
 // -----------------------------------------------------------------------------
-void ScoresModel::Serialize( xml::xostream& xos ) const
+void ScoresModel::Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
-    xos << xml::start( "scores" )
-            << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-            << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/scores.xsd" );
+    xos << xml::start( "scores" );
+    schemaWriter.WriteExerciseSchema( xos, "scores" );
     BOOST_FOREACH( const T_Elements::value_type factor, elements_ )
         factor.second->Serialize( xos );
     xos << xml::end;
@@ -122,9 +122,17 @@ void ScoresModel::Serialize( xml::xostream& xos ) const
 // Name: ScoresModel::GenerateScoresFromTemplate
 // Created: JSR 2011-02-08
 // -----------------------------------------------------------------------------
-void ScoresModel::GenerateScoresFromTemplate( const std::string &templateFile )
+void ScoresModel::GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader, const std::string& templateFile )
 {
-    xml::xifstream xis( templateFile );
+    fileLoader.LoadFile( templateFile, boost::bind( &ScoresModel::ReadTemplate, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoresModel::ReadTemplate
+// Created: JSR 2011-02-08
+// -----------------------------------------------------------------------------
+void ScoresModel::ReadTemplate( xml::xistream& xis )
+{
     xis >> xml::start( "scores" )
             >> xml::list( "score", *this, &ScoresModel::ReadScore )
             >> xml::list( "foreach", *this, &ScoresModel::ReadForeach );

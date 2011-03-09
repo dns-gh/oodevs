@@ -21,6 +21,7 @@
 #include "DrawingCategoryItem.h"
 #include "clients_kernel/Controllers.h"
 #include "resources.h"
+#include "tools/SchemaWriter.h"
 #include <xeumeuleu/xml.hpp>
 #include <qtoolbox.h>
 
@@ -211,7 +212,8 @@ void DrawerPanel::Save()
         filename.append( ".xml" );
     try
     {
-        model_.Save( filename.ascii() );
+        tools::SchemaWriter schemaWriter; //$$ Probablement à remonter
+        model_.Save( filename.ascii(), schemaWriter );
     }
     catch( xml::exception& )
     {

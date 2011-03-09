@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<launchers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Launchers.xsd">
+<launchers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/physical/Launchers.xsd">
   <launcher indirect-fire="true" name="20-mm Helicopter Chain Gun">
     <ph-modifiers posture="Mouvement">
       <ph-modifier target-posture="Mouvement" value="0.6"/>
@@ -2093,4 +2093,4 @@
     </ph-modifiers>
   </launcher>
 </launchers>
-<!-- signature="3513564826" -->
+<!-- signature="3063992266" -->

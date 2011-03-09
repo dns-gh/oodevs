@@ -24,6 +24,11 @@ namespace kernel
     class Controllers;
 }
 
+namespace tools
+{
+    class Loader_ABC;
+}
+
 class Config;
 class ExerciseList;
 class ProgressPage;
@@ -42,7 +47,7 @@ class BattleCenterJoinPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, frontend::LauncherClient& launcher );
+             BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher );
     virtual ~BattleCenterJoinPage();
     //@}
 
@@ -67,6 +72,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const Config& config_;
+    const tools::Loader_ABC& fileLoader_;
     ProgressPage* progressPage_;
     QLineEdit* host_;
     QSpinBox* port_;

@@ -27,6 +27,7 @@ namespace kernel
 namespace tools
 {
     class GeneralConfig;
+    class Loader_ABC;
 }
 
 class ExerciseProperties;
@@ -49,7 +50,7 @@ class ExerciseList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, kernel::Controllers& controllers, bool showBrief = true, bool showProfile = true, bool showParams = true, bool enableParams = true );
+             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, bool showBrief = true, bool showProfile = true, bool showParams = true, bool enableParams = true );
     virtual ~ExerciseList();
     //@}
 
@@ -105,6 +106,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;
     QListView* exercises_;
     ProfileList* profiles_;

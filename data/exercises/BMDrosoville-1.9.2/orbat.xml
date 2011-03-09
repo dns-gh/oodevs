@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <orbat xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/orbat.xsd">
-  <parties>
+  <sides>
     <party id="1" name="GoodGuys" type="friend">
       <objects>
         <object id="43" name="Poste de contrôle [43]" type="checkpoint">
@@ -254,7 +254,7 @@
       <inhabitants/>
       <logistics/>
     </party>
-  </parties>
+  </sides>
   <diplomacy>
     <party id="1">
       <relationship diplomacy="neutral" party="3"/>

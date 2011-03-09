@@ -24,6 +24,7 @@
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "tools/SchemaWriter_ABC.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/filesystem/path.hpp>
@@ -108,15 +109,14 @@ void UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters&
 // Name: UrbanModel::Serialize
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
-void UrbanModel::Serialize( const std::string& filename ) const
+void UrbanModel::Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     if( filename.empty() )
         return;
     xml::xofstream xos( filename, xml::encoding( "UTF-8" ) );
-    xos << xml::start( "urban-state" )
-        << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-        << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/urbanstate.xsd" )
-        << xml::attribute( "model-version", urbanStateVersion_ )
+    xos << xml::start( "urban-state" );
+    schemaWriter.WriteExerciseSchema( xos, "urbanstate" );
+    xos << xml::attribute( "model-version", urbanStateVersion_ )
             << xml::start( "urban-objects" );
     for( Resolver< gui::TerrainObjectProxy >::CIT_Elements it = Resolver< gui::TerrainObjectProxy >::elements_.begin(); it != Resolver< gui::TerrainObjectProxy >::elements_.end(); ++it )
     {

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <migrations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="XXXX.xsd">
-  <legacy>
-    <assign root-node="whatever" assign-schema="testFileMigration/1.0/schema.xsd"/>
-  </legacy>
+  <default/>
+  
+  <added-files>
+    <added-file filename="physical/test.xml" assign-file="testFileMigration/input-1.0.xml"/>
+  </added-files>
 
   <migration from="1.0" to="1.1"/>
   <migration from="1.1" to="1.2"/>

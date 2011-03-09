@@ -14,6 +14,7 @@
 #include "clients_gui/tools.h"
 #include "frontend/commands.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Loader_ABC.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <qfiledialog.h>
@@ -54,9 +55,10 @@ namespace
 // Name: ExportWidget constructor
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
-ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config )
+ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
     : QGroupBox( 2, Qt::Vertical, parent )
     , config_( config )
+    , fileLoader_( fileLoader )
     , page_( page )
 {
     setFrameShape( QFrame::NoFrame );
@@ -364,8 +366,8 @@ namespace
 QListViewItem* ExportWidget::BuildExerciseData( const std::string& exercise )
 {
     std::string terrain, population, dataset, physical;
-    xml::xifstream xis( config_.GetExerciseFile( exercise ) );
-    xis >> xml::start( "exercise" )
+    std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise ) );
+    *xis >> xml::start( "exercise" )
             >> xml::start( "terrain" ) >> xml::attribute( "name", terrain ) >> xml::end()
             >> xml::optional() >> xml::start( "population" ) >> xml::attribute( "name", population ) >> xml::end()
             >> xml::start( "model" ) >> xml::attribute( "dataset", dataset ) >> xml::attribute( "physical", physical ) >> xml::end()

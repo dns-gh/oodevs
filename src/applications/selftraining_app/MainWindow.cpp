@@ -28,7 +28,7 @@
 // Name: MainWindow constructor
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
+MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcherClient )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , interpreter_( new LinkInterpreter( this, controllers ) )
 {
@@ -38,7 +38,7 @@ MainWindow::MainWindow( Config& config, kernel::Controllers& controllers, fronte
     setMinimumHeight( 600 );
     SetStyle();
     pages_ = new QWidgetStack( this );
-    new HomePage( pages_, config, controllers, launcherClient, *interpreter_ );
+    new HomePage( pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
     setCentralWidget( pages_ );
     CenterWindow();
 }

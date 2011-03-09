@@ -12,6 +12,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Tools.h"
 #include "ENT/ENT_Tr.h"
+#include "tools/Version.h"
 #include <windows.h>
 #include <direct.h>
 #include <sys/types.h>
@@ -34,7 +35,6 @@ void ADN_Tools::CreatePathToFile( const std::string& strFilePath )
         nPos = nFind + 1;
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Tools::CopyFileToFile
@@ -170,7 +170,7 @@ void ADN_Tools::AddSchema( xml::xostream& xos, const std::string& name )
 {
     xos << xml::prefix( "http://www.w3.org/2001/XMLSchema-instance", "xsi" )
             << xml::ns( "http://www.w3.org/2001/XMLSchema-instance" )
-                << xml::attribute( "noNamespaceSchemaLocation", "schemas/physical/" + name + ".xsd" );
+            << xml::attribute( "noNamespaceSchemaLocation", "schemas/" + std::string( tools::AppVersion() ) + "/physical/" + name + ".xsd" );
 }
 
 // -----------------------------------------------------------------------------

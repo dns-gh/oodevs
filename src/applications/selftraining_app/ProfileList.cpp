@@ -15,15 +15,17 @@
 #include "frontend/Profile.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ProfileList constructor
 // Created: RDS 2008-09-05
 // -----------------------------------------------------------------------------
-ProfileList::ProfileList( QWidget* parent, const tools::GeneralConfig& config )
+ProfileList::ProfileList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
     : QListBox( parent )
     , config_( config )
+    , fileLoader_( fileLoader )
 {
     connect( this, SIGNAL( highlighted( int ) ), SLOT( OnSelect( int ) ) );
 }
@@ -66,15 +68,15 @@ void ProfileList::ReadProfiles( const std::string& exercise )
 {
     std::string profilesFile;
     {
-        xml::xifstream xis( config_.GetExerciseFile( exercise ) ) ;
-        xis >> xml::start( "exercise" )
+        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise ) );
+        *xis >> xml::start( "exercise" )
                 >> xml::start( "profiles" )
                     >> xml::attribute( "file", profilesFile );
     }
     {
         const std::string file = ( config_.BuildChildPath( config_.GetExerciseFile( exercise ), profilesFile ) );
-        xml::xifstream xis( file );
-        xis >> xml::start( "profiles" )
+        std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( file );
+        *xis >> xml::start( "profiles" )
                 >> xml::list( "profile", *this, &ProfileList::ReadProfile );
     }
 }

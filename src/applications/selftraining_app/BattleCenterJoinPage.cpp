@@ -45,10 +45,11 @@ namespace
 // Name: BattleCenterJoinPage constructor
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, frontend::LauncherClient& launcher )
+BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, tools::translate( "BattleCenterJoinPage", "Join" ), previous, eButtonBack | eButtonJoin, launcher )
     , controllers_      ( controllers )
     , config_           ( config )
+    , fileLoader_       ( fileLoader )
     , progressPage_     ( new ProgressPage( pages, *this, tools::translate( "BattleCenterJoinPage", "Joining host" ) ) )
     , exercise_         ( 0 )
 {
@@ -72,7 +73,7 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
     }
     {
         filter_.reset( new RunningExerciseFilter( *host_, *port_ ) );
-        exercises_ = new ExerciseList( box, config_, controllers, true, true, true, false );
+        exercises_ = new ExerciseList( box, config_, fileLoader_, controllers, true, true, true, false );
         exercises_->SetFilter( *filter_ );
         connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( SelectExercise( const frontend::Exercise_ABC&, const frontend::Profile& ) ) );
         connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );

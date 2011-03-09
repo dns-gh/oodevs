@@ -15,6 +15,7 @@
 namespace tools
 {
     class GeneralConfig;
+    class Loader_ABC;
 }
 
 namespace xml
@@ -35,7 +36,7 @@ class SideList : public QListBox
 public:
     //! @name Constructors/Destructor
     //@{
-             SideList( QWidget* parent, const tools::GeneralConfig& config );
+             SideList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
     virtual ~SideList();
     //@}
 
@@ -62,6 +63,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    const tools::Loader_ABC& fileLoader_;
     //@}
 };
 

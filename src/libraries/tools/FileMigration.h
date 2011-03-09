@@ -57,7 +57,6 @@ private:
     const std::string fromVersion_;
     const std::string toVersion_;
     T_XslTransforms transformsFromSchema_;
-    T_XslTransforms transformsFromRootNode_;
 };
 
 } // end namespace tools

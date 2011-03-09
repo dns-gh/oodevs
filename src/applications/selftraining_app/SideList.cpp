@@ -11,6 +11,7 @@
 #include "SideList.h"
 #include "moc_SideList.cpp"
 #include "tools/GeneralConfig.h"
+#include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <qpixmap.h>
 #include <qpainter.h>
@@ -19,9 +20,10 @@
 // Name: SideList constructor
 // Created: SBO 2008-02-22
 // -----------------------------------------------------------------------------
-SideList::SideList( QWidget* parent, const tools::GeneralConfig& config )
+SideList::SideList( QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader )
     : QListBox( parent )
     , config_( config )
+    , fileLoader_( fileLoader )
 {
     setSelectionMode( QListBox::NoSelection ) ;
 }
@@ -46,9 +48,9 @@ void SideList::Update( const QString& exercise )
     {
         if( !exercise.isEmpty() )
         {
-            xml::xifstream xis( config_.GetExerciseFile( exercise.ascii() ) );
+            std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( config_.GetExerciseFile( exercise.ascii() ) );
             std::string orbatFile;
-            xis >> xml::start( "exercise" )
+            *xis >> xml::start( "exercise" )
                     >> xml::start( "orbat" )
                         >> xml::attribute( "file", orbatFile );
             UpdateSides( config_.BuildChildPath( config_.GetExerciseFile( exercise.ascii() ), orbatFile ) );
@@ -67,8 +69,8 @@ void SideList::Update( const QString& exercise )
 // -----------------------------------------------------------------------------
 void SideList::UpdateSides( const std::string& orbat )
 {
-    xml::xifstream xis( orbat );
-     xis >> xml::start( "orbat" )
+    std::auto_ptr< xml::xistream > xis = fileLoader_.LoadFile( orbat );
+    *xis >> xml::start( "orbat" )
             >> xml::start( "parties" )
                 >> xml::list( "party", *this, &SideList::ReadSide );
 }

@@ -101,10 +101,8 @@ void ADN_ActiveProtections_Data::ReadProtection( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
 {
-    xos << xml::start( "protections" )
-            << xml::prefix( "http://www.w3.org/2001/XMLSchema-instance", "xsi" )
-                << xml::ns( "http://www.w3.org/2001/XMLSchema-instance" )
-                    << xml::attribute( "noNamespaceSchemaLocation", "schemas/physical/ActiveProtections.xsd" );
+    xos << xml::start( "protections" );
+    ADN_Tools::AddSchema( xos, "ActiveProtections" );
     for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
         (*it)->WriteArchive( xos );
     xos << xml::end;

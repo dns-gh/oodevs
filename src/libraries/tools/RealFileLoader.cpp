@@ -12,6 +12,8 @@
 #include "GeneralConfig.h"
 #include "RealFileLoaderObserver_ABC.h"
 #include "FileMigration.h"
+#include "FileMatcherFactory.h"
+#include "FileMatcher_ABC.h"
 #include "SchemaVersionExtractor_ABC.h"
 #include <tools/XmlCrc32Signature.h>
 #include <xeumeuleu/xml.hpp>
@@ -19,19 +21,27 @@
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/algorithm/string/replace.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/convenience.hpp>
+#include <boost/iterator/reverse_iterator.hpp>
 
 using namespace tools;
+namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: RealFileLoader constructor
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
 RealFileLoader::RealFileLoader( xml::xistream& xis, const SchemaVersionExtractor_ABC& versionExtractor )
-    : versionExtractor_( versionExtractor )
+    : fileMatcherFactory_( new FileMatcherFactory() )
+    , versionExtractor_  ( versionExtractor )
 {
     xis >> xml::start( "migrations" )
-            >> xml::start( "legacy" )
-                >> xml::list( "assign", *this, &RealFileLoader::ReadDefaultSchemaAssignment )
+            >> xml::start( "default" )
+                >> xml::list( "match-if", *this, &RealFileLoader::ReadFileMatcher )
+            >> xml::end
+            >> xml::start( "added-files" )
+                >> xml::list( "added-file", *this, &RealFileLoader::ReadAddedFile )
             >> xml::end
             >> xml::list( "migration", *this, &RealFileLoader::ReadMigration )
           >> xml::end;
@@ -51,14 +61,23 @@ RealFileLoader::~RealFileLoader()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: RealFileLoader::ReadDefaultSchemaAssignment
+// Name: RealFileLoader::ReadFileMatcher
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
-void RealFileLoader::ReadDefaultSchemaAssignment( xml::xistream& xis )
+void RealFileLoader::ReadFileMatcher( xml::xistream& xis )
 {
-    const std::string rootNode = xis.attribute< std::string >( "root-node" );
-    const std::string schema   = xis.attribute< std::string >( "assign-schema" );
-    defaultSchemasAssignment_.insert( std::make_pair( rootNode, schema ) );
+    defaultSchemasAssignment_.push_back( fileMatcherFactory_->CreateFileMatcher( xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RealFileLoader::ReadAddedFile
+// Created: NLD 2011-02-14
+// -----------------------------------------------------------------------------
+void RealFileLoader::ReadAddedFile( xml::xistream& xis )
+{
+    const std::string fileName = xis.attribute< std::string >( "filename" );
+    const std::string assignedFile = tools::GeneralConfig::BuildResourceChildFile( xis.attribute< std::string >( "assign-file" ) );
+    addedFiles_.push_back( std::make_pair( bfs::path( fileName ).string(), assignedFile ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,15 +120,14 @@ namespace
 // Name: RealFileLoader::AssignDefaultSchema
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
-const std::string& RealFileLoader::AssignDefaultSchema( xml::xistream& xis, const std::string& currentSchema ) const
+bool RealFileLoader::AssignDefaultSchema( const std::string& inputFileName, xml::xistream& xis, std::string& newSchema ) const
 {
-    std::string rootNode;
-    xis >> xml::list( boost::bind( &ExtractRootNode, _2, _3, boost::ref( rootNode ) ) );
-
-    T_DefaultSchemasAssignment::const_iterator it = defaultSchemasAssignment_.find( rootNode );
-    if( it != defaultSchemasAssignment_.end() )
-        return it->second;;
-    return currentSchema;
+    BOOST_FOREACH( boost::shared_ptr< FileMatcher_ABC > fileMatcher, defaultSchemasAssignment_ )
+    {
+        if( fileMatcher->MatchAndReturnNewSchema( inputFileName, xis, newSchema ) )
+            return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -140,8 +158,32 @@ std::auto_ptr< xml::xistream > RealFileLoader::UpgradeToLastVersion( const std::
 // Name: RealFileLoader::LoadFile
 // Created: NLD 2011-02-14
 // -----------------------------------------------------------------------------
-std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const std::string& inputFileName, RealFileLoaderObserver_ABC& observer ) const
+const std::string& RealFileLoader::CheckIfAddedFile( const std::string& initialInputFileName ) const
 {
+    const std::string genericInputFileName = bfs::path( initialInputFileName ).string();
+    if( !bfs::exists( initialInputFileName ) )
+    {
+        BOOST_FOREACH( const T_AddedFile& addedFile, addedFiles_ )
+        {
+            const std::string& match = addedFile.first;
+            if(  genericInputFileName.size() >= match.size() 
+                && genericInputFileName.compare( genericInputFileName.size() - match.size(), match.size(), match ) == 0 )
+                    return addedFile.second;
+        }
+    }
+    return initialInputFileName;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RealFileLoader::LoadFile
+// Created: NLD 2011-02-14
+// -----------------------------------------------------------------------------
+std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const std::string& initialInputFileName, RealFileLoaderObserver_ABC& observer ) const
+{
+    // Return default file if it's been explicitly added
+    const std::string& inputFileName = CheckIfAddedFile( initialInputFileName );
+
+    // Get schema and version
     std::auto_ptr< xml::xistream > xis( new xml::xifstream( inputFileName ) );
     std::string schema;
     *xis >> xml::list( boost::bind( &ExtractSchemaName, _3, boost::ref( schema ) ) );
@@ -149,8 +191,12 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const std::string& inpu
     std::string version = versionExtractor_.ExtractVersion( schema );
     if( version.empty() )
     {
-        schema = AssignDefaultSchema( *xis, schema );
-        version = versionExtractor_.ExtractVersion( schema );
+        std::string newSchema;
+        if( AssignDefaultSchema( inputFileName, *xis, newSchema ) )
+        {
+            schema = newSchema;
+            version = versionExtractor_.ExtractVersion( schema );
+        }
     }
 
     if( schema.empty() )

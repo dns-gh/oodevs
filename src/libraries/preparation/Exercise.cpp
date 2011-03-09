@@ -10,7 +10,7 @@
 #include "preparation_pch.h"
 #include "Exercise.h"
 #include "clients_kernel/Controller.h"
-#include "tools/Version.h"
+#include "tools/SchemaWriter_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -39,9 +39,8 @@ Exercise::~Exercise()
 // -----------------------------------------------------------------------------
 void Exercise::Load( xml::xistream& xis )
 {
-    std::string name, version;
+    std::string name;
     xis >> xml::start( "exercise" )
-        >> xml::attribute( "model-version", version )
         >> xml::optional >> xml::start( "meta" )
                 >> xml::optional >> xml::content( "name", name )
                 >> xml::optional >> xml::start( "briefing" )
@@ -53,7 +52,6 @@ void Exercise::Load( xml::xistream& xis )
             >> xml::end;
     xis >> xml::end;
     name_ = name.c_str();
-    generatorVersion_ = version.c_str(); // $$$$ RC LDC FIXME Should be removed or used to manage conversions but is useless right now.
     controller_.Create( *this );
 }
 
@@ -112,14 +110,12 @@ namespace
 // Name: Exercise::Serialize
 // Created: SBO 2010-03-08
 // -----------------------------------------------------------------------------
-void Exercise::Serialize( const std::string& file ) const
+void Exercise::Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const
 {
     xml::xofstream xos( file, xml::encoding( "UTF-8" ) );
-    xos << xml::start( "exercise" )
-        << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
-        << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/exercise/exercise.xsd" )
-        << xml::attribute( "model-version", SWORD_EXERCISE_VERSION )
-            << xml::start( "meta" );
+    xos << xml::start( "exercise" );
+    schemaWriter.WriteExerciseSchema( xos, "exercise" );
+    xos << xml::start( "meta" );
     if( ! name_.isEmpty() )
         xos << xml::start( "name" ) << xml::cdata( name_.ascii() ) << xml::end;
     SerializeBriefings( xos );

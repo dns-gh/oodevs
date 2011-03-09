@@ -43,9 +43,10 @@ namespace
 // Name: ScenarioEditPage constructor
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
-ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
+ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
     : LauncherClientPage( pages, tools::translate( "ScenarioEditPage", "Scenario" ), previous, eButtonBack | eButtonEdit, launcher )
     , config_( config )
+    , fileLoader_( fileLoader )
     , controllers_( controllers )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioEditPage", "Editing exercise" ) ) )
 {
@@ -56,7 +57,7 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
         mainTabs_ = new TabWidget( box );
         connect( mainTabs_, SIGNAL( currentChanged( QWidget* ) ), this, SLOT( UpdateEditButton( QWidget* ) ) );
         {
-            exercises_ = new ExerciseList( mainTabs_, config_, controllers, true, false );
+            exercises_ = new ExerciseList( mainTabs_, config_, fileLoader_, controllers, true, false );
             connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), SLOT( OnSelect( const frontend::Exercise_ABC& ) ) );
             connect( exercises_, SIGNAL( ClearSelection() ), SLOT( ClearSelection() ) );
             mainTabs_->addTab( exercises_, tools::translate( "ScenarioEditPage", "Edit" ) );
@@ -70,7 +71,7 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
             mainTabs_->addTab( importWidget_, tools::translate( "ScenarioEditPage", "Import" ) );
         }
         {
-            exportWidget_ = new ExportWidget( *this, box, config );
+            exportWidget_ = new ExportWidget( *this, box, config, fileLoader_ );
             mainTabs_->addTab( exportWidget_, tools::translate( "ScenarioEditPage", "Export" ) );
         }
     }
