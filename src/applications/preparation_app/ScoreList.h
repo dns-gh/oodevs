@@ -98,7 +98,7 @@ private:
     ScoresModel& model_;
     gui::ListDisplayer< ScoreList >* scores_;
     ScoreEditor* editor_;
-    tools::ExerciseConfig& config_;
+    const tools::ExerciseConfig& config_;
     //@}
 };
 

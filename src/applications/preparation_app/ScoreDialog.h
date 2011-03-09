@@ -29,6 +29,11 @@ namespace gui
     class ParametersLayer;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 class Score_ABC;
 class ScoresModel;
 class StaticModel;
@@ -47,7 +52,7 @@ class ScoreDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, gui::ParametersLayer& layer, const StaticModel& staticModel );
+             ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config );
     virtual ~ScoreDialog();
     //@}
 

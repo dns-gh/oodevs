@@ -15,7 +15,7 @@
 #include "indicators/Primitives.h"
 #include "preparation/Score_ABC.h"
 #include "preparation/ScoresModel.h"
-#include "tools/GeneralConfig.h"
+#include "tools/ExerciseConfig.h"
 #include <boost/filesystem/operations.hpp>
 
 namespace bfs = boost::filesystem;
@@ -92,7 +92,7 @@ void ScoreList::OnGenerate()
 {
     std::string templateFile = tools::GeneralConfig::BuildResourceChildFile( "Scores.xml" );
     if( bfs::exists( templateFile ) )
-        model_.GenerateScoresFromTemplate( templateFile, config_.GetLoader() );
+        model_.GenerateScoresFromTemplate( config_.GetLoader(), templateFile );
 }
 
 // -----------------------------------------------------------------------------
