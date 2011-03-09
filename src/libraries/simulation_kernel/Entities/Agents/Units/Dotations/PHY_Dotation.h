@@ -46,27 +46,28 @@ public:
 
     //! @name Operations
     //@{
-    void     AddCapacity        ( const PHY_DotationCapacity& capacity );
-    void     RemoveCapacity     ( const PHY_DotationCapacity& capacity );
+    void   AddCapacity        ( const PHY_DotationCapacity& capacity );
+    void   RemoveCapacity     ( const PHY_DotationCapacity& capacity );
     double GetCapacity        () const;
 
     double AddConsumptionReservation    ( double rNbr );
-    void     CancelConsumptionReservation ();
-    void     ConsumeConsumptionReservation();
+    void   CancelConsumptionReservation ();
+    void   ConsumeConsumptionReservation();
 
     double AddFireReservation    ( double rNbr );
-    void     ConsumeFireReservation();
+    void   ConsumeFireReservation();
 
     double GetValue() const;
     double Consume ( double rValue );
+    void Reset();
 
-    void     ReadValue( xml::xistream& xis );
-    void     Resupply ( double rFactor = 1. );
+    void   ReadValue( xml::xistream& xis );
+    void   Resupply ( double rFactor = 1. );
 
-    bool     HasReachedSupplyThreshold() const;
-    bool     NeedSupply               () const;
+    bool   HasReachedSupplyThreshold() const;
+    bool   NeedSupply               () const;
     double Supply                   ( double rValue );
-    void     ChangeValueUsingTC2      ( double rCapacityFactor, MIL_AutomateLOG& tc2 );
+    void   ChangeValueUsingTC2      ( double rCapacityFactor, MIL_AutomateLOG& tc2 );
 
     void NotifyCaptured(); //$$$ a renommer et abstraire
     void NotifyReleased();

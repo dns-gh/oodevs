@@ -52,6 +52,7 @@ public:
     virtual void ApplyBurn( const MIL_BurnEffectManipulator& burn ) = 0;
     virtual void ApplyFlood( const MIL_FloodEffectManipulator& flood ) = 0;
     virtual void ApplyMentalDisease() = 0;
+    virtual void ForceMentalDisease() = 0;
     virtual void CancelLogisticRequest() = 0;
     //@}*/
 

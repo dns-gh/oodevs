@@ -295,11 +295,20 @@ void PHY_Human::ApplyMentalDisease()
     if( !IsUsable() || IsWounded() || bMentalDiseased_ )
         return;
     if( PHY_HumanWound::ChooseMentalDisease() )
-    {
-        PHY_Human oldHumanState( *this );
-        bMentalDiseased_ = true;
-        NotifyHumanChanged( oldHumanState );
-    }
+        ForceMentalDisease();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Human::ForceMentalDisease
+// Created: ABR 2011-03-07
+// -----------------------------------------------------------------------------
+void PHY_Human::ForceMentalDisease()
+{
+    if( bMentalDiseased_ )
+        return;
+    PHY_Human oldHumanState( *this );
+    bMentalDiseased_ = true;
+    NotifyHumanChanged( oldHumanState );
 }
 
 // -----------------------------------------------------------------------------

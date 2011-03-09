@@ -50,10 +50,10 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&  GetName    () const;
-    unsigned int        GetID      () const;
-    sword::EnumHumanRank GetAsnID () const;
-    bool                IsCommander() const;
+    const std::string&   GetName    () const;
+    unsigned int         GetID      () const;
+    sword::EnumHumanRank GetAsnID   () const;
+    bool                 IsCommander() const;
     //@}
 
     //! @name Operators

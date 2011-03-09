@@ -20,6 +20,7 @@ class AttritionCapacity;
 class DEC_Knowledge_AgentComposante;
 class Human_ABC;
 class HumansComposante_ABC;
+class HumanStateHelper;
 class MIL_Agent_ABC;
 class MIL_AutomateLOG;
 class MIL_Injury_ABC;
@@ -132,8 +133,10 @@ public:
     unsigned int GetNbrUsableHumans() const;
     void HealAllHumans();
     unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange );
+    unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound, bool psyop = false, bool contaminated = false );
     unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound );
     bool ChangeHumanRank( const PHY_HumanRank& oldRank, const PHY_HumanRank&  newRank , const PHY_HumanWound& wound );
+    void FillHumanStateHelper( HumanStateHelper& helper ) const;
     //@}
 
     //! @name Fire / Dangerosity
@@ -238,7 +241,7 @@ public:
     void Execute( firing::WeaponAvailabilityComputer_ABC& algorithm ) const;
 
     double GetOperationalState() const;
-    void ReinitializeState( const PHY_ComposanteState& state );
+    void ReinitializeState( const PHY_ComposanteState& state, const PHY_BreakdownType* breakdownType = 0 );
     void Repair();
     //@}
 

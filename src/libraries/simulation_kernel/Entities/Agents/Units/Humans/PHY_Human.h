@@ -54,6 +54,7 @@ public:
     void ApplyBurn( const MIL_BurnEffectManipulator& burn );
     void ApplyFlood( const MIL_FloodEffectManipulator& flood );
     void ApplyMentalDisease();
+    void ForceMentalDisease();
     void CancelLogisticRequest();
     //@}
 

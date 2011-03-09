@@ -146,9 +146,9 @@ namespace
 // Name: PHY_RolePion_Humans::WriteODB
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::WriteODB( xml::xostream& /*xos*/ ) const
-{
-}
+//void PHY_RolePion_Humans::WriteODB( xml::xostream& /*xos*/ ) const
+//{
+//}
 
 // =============================================================================
 // OPERATIONS

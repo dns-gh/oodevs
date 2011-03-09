@@ -201,19 +201,25 @@ void PHY_ComposantePion::TransferComposante( PHY_RoleInterface_Composantes& newR
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ReinitializeState
 // Created: NLD 2004-09-08
-// Modified: JVT 2005-02-03
+// Modified: ABR 2011-03-07
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState )
+void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& state, const PHY_BreakdownType* breakdownType /*= 0*/ )
 {
     assert( pType_ );
-    const PHY_ComposanteState* pNewState = &tmpState;
+    const PHY_ComposanteState* pNewState = &state;
     if( pType_->GetProtection().IsHuman() && ( *pNewState == PHY_ComposanteState::repairableWithEvacuation_ || *pNewState == PHY_ComposanteState::repairableWithoutEvacuation_ ) )
         pNewState = &PHY_ComposanteState::undamaged_;
     if( *pState_ == *pNewState )
         return;
     const PHY_ComposanteState* pOldState = pState_;
     pState_ = pNewState;
-    if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
+    if( breakdownType )
+    {
+        if( pBreakdown_ )
+            delete pBreakdown_;
+        pBreakdown_ = new PHY_Breakdown( *breakdownType );
+    }
+    else if( *pState_ == PHY_ComposanteState::repairableWithEvacuation_ && !pBreakdown_ )
         pBreakdown_ = new PHY_Breakdown( pType_->GetRandomBreakdownType() );
     ManageEndMaintenance();
     assert( pRole_ );
@@ -1347,6 +1353,18 @@ unsigned int PHY_ComposantePion::HealHumans( const PHY_HumanRank& rank, unsigned
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::OverloadHumans
+// Created: ABR 2011-03-07
+// -----------------------------------------------------------------------------
+unsigned int PHY_ComposantePion::OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound, bool psyop /*= false*/, bool contaminated /*= false*/ )
+{
+    assert( pHumans_ );
+    if( *pState_ != PHY_ComposanteState::dead_ )
+        return pHumans_->OverloadHumans( rank, nNbrToChange, wound, psyop, contaminated );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::WoundHumans
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
@@ -1366,6 +1384,16 @@ bool PHY_ComposantePion::ChangeHumanRank( const PHY_HumanRank& oldRank, const PH
 {
     assert( pHumans_ );
     return pHumans_->ChangeHumanRank( oldRank, newRank, wound );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::FillHumanStateHelper
+// Created: ABR 2011-03-08
+// -----------------------------------------------------------------------------
+void PHY_ComposantePion::FillHumanStateHelper( HumanStateHelper& helper ) const
+{
+    assert( pHumans_ );
+    pHumans_->FillHumanStateHelper( helper );
 }
 
 // -----------------------------------------------------------------------------

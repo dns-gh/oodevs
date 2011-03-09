@@ -38,7 +38,7 @@ class PHY_DotationGroup : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, PHY_Dotation* > T_DotationMap;
+    typedef std::map< const PHY_DotationCategory*, PHY_Dotation* >   T_DotationMap;
     typedef T_DotationMap::const_iterator                          CIT_DotationMap;
     //@}
 
@@ -53,10 +53,8 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-
     void WriteODB( xml::xostream& xos ) const;
     //@}
 
@@ -67,26 +65,27 @@ public:
 
     //! @name Operations
     //@{
-    void     AddCapacity   ( const PHY_DotationCapacity& capacity );
-    void     RemoveCapacity( const PHY_DotationCapacity& capacity );
+    void   AddCapacity   ( const PHY_DotationCapacity& capacity );
+    void   RemoveCapacity( const PHY_DotationCapacity& capacity );
     double GetCapacity   ( const PHY_DotationCategory& category ) const;
 
-    void     CancelConsumptionReservations ();
+    void   CancelConsumptionReservations ();
     double AddConsumptionReservation     ( const PHY_DotationCategory& category, double rNbr );
-    void     ConsumeConsumptionReservations();
+    void   ConsumeConsumptionReservations();
 
     double AddFireReservation     ( const PHY_DotationCategory& category, double rNbr );
-    void     ConsumeFireReservations();
+    void   ConsumeFireReservations();
 
     double GetValue( const PHY_DotationCategory& category ) const;
     double Consume ( const PHY_DotationCategory& category, double rNbr );
     double Supply  ( const PHY_DotationCategory& category, double rNbr );
+    void Reset();
 
     const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
     float GetIlluminatingRange( ) const;
 
-    void     Resupply( double rFactor = 1. );
-    void     Resupply( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
+    void Resupply( double rFactor = 1. );
+    void Resupply( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
     //@}
 
     //! @name Misc

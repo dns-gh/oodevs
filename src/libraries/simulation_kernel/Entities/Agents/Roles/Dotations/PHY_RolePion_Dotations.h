@@ -86,10 +86,10 @@ public:
 
     //! @name Dotations management
     //@{
-    double SupplyDotation     ( const PHY_DotationCategory& category, double rNbr );
-    void     ResupplyDotations  ();
-    void     ResupplyDotations  ( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
-    void     ResupplyDotations  ( const PHY_DotationType&      type             , double rFactor );
+    double SupplyDotation   ( const PHY_DotationCategory& category, double rNbr );
+    void   ResupplyDotations();
+    void   ResupplyDotations( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
+    void   ResupplyDotations( const PHY_DotationType&      type             , double rFactor );
     //@}
 
     //! @name Consumption management

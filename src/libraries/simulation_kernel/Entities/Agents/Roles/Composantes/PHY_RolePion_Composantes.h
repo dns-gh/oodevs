@@ -273,9 +273,10 @@ private:
     //! @name Init
     //@{
     void DistributeCommanders      ();
-    void DistributeHumanWounds     ( const PHY_HumanRank& rank, const PHY_HumanWound& wound, unsigned int nNbr, PHY_ComposantePion::CIT_ComposantePionVector& itCurrentComp );
-    void ReadHumansOverloading     ( xml::xistream& xis );
     void ReadComposantesOverloading( xml::xistream& xis );
+    void ReadHumansOverloading     ( xml::xistream& xis );
+    void WriteComposantesODB       ( xml::xostream& xos ) const;
+    void WriteHumansODB            ( xml::xostream& xos ) const;
     //@}
 
     //! @name Tools
@@ -291,10 +292,8 @@ private:
     //@}
     //! @name Helpers
     //@{
-    void ReadEquipements( xml::xistream& xis );
-    void ReadEquipement ( xml::xistream& xis );
-    void ReadPersonnels ( xml::xistream& xis );
-    void ReadPersonnel  ( xml::xistream& xis );
+    void ReadEquipment( xml::xistream& xis );
+    void ReadHuman    ( xml::xistream& xis );
     void GetStockTransporterCapacity( const PHY_DotationNature& nature, double& rWeightMax, double& rVolumeMax ) const;
     //@}
 

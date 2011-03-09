@@ -40,19 +40,19 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int                   GetID                   () const;
-    const std::string&     GetName                 () const;
+    unsigned int          GetID                 () const;
+    const std::string&    GetName               () const;
 
-    bool                   IsLiquidContaminating   () const;
-    bool                   IsLiquidPoisonous       () const;
-    const PHY_HumanWound&  GetLiquidRandomWound    () const;
+    bool                  IsLiquidContaminating () const;
+    bool                  IsLiquidPoisonous     () const;
+    const PHY_HumanWound& GetLiquidRandomWound  () const;
 
-    bool                   IsGasContaminating      () const;
-    bool                   IsGasPoisonous          () const;
-    const PHY_HumanWound&  GetGasRandomWound       () const;
-    unsigned int                   GetGasLifeTime          () const;
-    double               GetGasPropagationAngle  () const;
-    bool                   CanBeVaporized          () const;
+    bool                  IsGasContaminating    () const;
+    bool                  IsGasPoisonous        () const;
+    const PHY_HumanWound& GetGasRandomWound     () const;
+    unsigned int          GetGasLifeTime        () const;
+    double                GetGasPropagationAngle() const;
+    bool                  CanBeVaporized        () const;
     //@}
 
     //! @name Accessors

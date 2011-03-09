@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_HumansComposante.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Units/Humans/HumanStateHelper.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
@@ -20,6 +21,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
+#include "Entities/Objects/MIL_NbcAgentType.h"
+#include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "HumansActionsNotificationHandler_ABC.h"
 #include <boost/serialization/vector.hpp>
 
@@ -121,6 +124,36 @@ unsigned int PHY_HumansComposante::HealHumans( const PHY_HumanRank& rank, unsign
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::OverloadHumans
+// Created: ABR 2011-03-07
+// -----------------------------------------------------------------------------
+unsigned int PHY_HumansComposante::OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop /*= false*/, bool contaminated /*= false*/ )
+{
+    if( newWound == PHY_HumanWound::notWounded_ )
+        return 0;
+    unsigned int nNbrChanged = 0;
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end() && nNbrToChange ; ++it )
+    {
+        Human_ABC& human = **it;
+        if( human.GetRank() != rank || human.GetWound() != PHY_HumanWound::notWounded_ || human.IsMentalDiseased() || human.IsContaminated() )
+            continue;
+        if( psyop )
+            human.ForceMentalDisease();
+        if( newWound != PHY_HumanWound::notWounded_ )
+            human.SetWound( newWound );
+        if( contaminated )
+        {
+            std::vector< const MIL_NbcAgentType* > nbcTypes;
+            MIL_ToxicEffectManipulator nbcAgent( nbcTypes, 1 );
+            human.ApplyContamination( nbcAgent );
+        }
+        --nNbrToChange;
+        ++nNbrChanged;
+    }
+    return nNbrChanged;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_HumansComposante::WoundHumans
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
@@ -143,6 +176,21 @@ unsigned int PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, unsig
     return nNbrChanged;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_HumansComposante::FillHumanStateHelper
+// Created: ABR 2011-03-08
+// -----------------------------------------------------------------------------
+void PHY_HumansComposante::FillHumanStateHelper( HumanStateHelper& helper ) const
+{
+    for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end(); ++it )
+    {
+        const Human_ABC& human = **it;
+        if( human.GetWound() != PHY_HumanWound::notWounded_ || human.IsContaminated() || human.IsMentalDiseased() )
+            helper.AddHumanMergeIfNeeded( human );
+    }
+}
+
+// -----------------------------------------------------------------------------
 namespace
 {
     double round( double rValue )

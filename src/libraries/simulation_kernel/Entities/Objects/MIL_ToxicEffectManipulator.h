@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     const MIL_NbcAgentType& GetType() const;
-    double                GetQuantity() const;
+    double                  GetQuantity() const;
     //@}
 
     //! @name

@@ -15,10 +15,13 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
+#include "Entities/Agents/Units/Humans/HumanStateHelper.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
-#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
+#include "Entities/Agents/Units/Logistic/PHY_BreakdownType.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
+#include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
@@ -215,15 +218,6 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const unsigned int )
          & nTickRcMaintenanceQuerySent_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::WriteODB
-// Created: NLD 2006-05-29
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::WriteODB( xml::xostream& /*xos*/ ) const
-{
-    // NOTHING
-}
-
 //-----------------------------------------------------------------------------
 // Name: PHY_UnitCanHaveComposante_ABC::DistributeCommanders
 // Created: JVT 03-08-27
@@ -255,118 +249,61 @@ void PHY_RolePion_Composantes::DistributeCommanders()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::DistributeHumanWounds
-// Created: NLD 2004-08-18
+// Name: PHY_RolePion_Composantes::WriteODB
+// Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::DistributeHumanWounds( const PHY_HumanRank& rank, const PHY_HumanWound& newWound, unsigned int nNbr, PHY_ComposantePion::CIT_ComposantePionVector& itCurrentComp )
+void PHY_RolePion_Composantes::WriteODB( xml::xostream& xos ) const
 {
-    assert( itCurrentComp != composantes_.end() );
-    if( newWound == PHY_HumanWound::notWounded_ )
-        return;
-    PHY_ComposantePion::CIT_ComposantePionVector itEndComp = itCurrentComp;
-    while( nNbr )
+    WriteComposantesODB( xos );
+    WriteHumansODB( xos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::WriteComposantesODB
+// Created: ABR 2011-03-08
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::WriteComposantesODB( xml::xostream& xos ) const
+{
+    xos.start( "equipments" );
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
-        nNbr -= ( *itCurrentComp )->WoundHumans( rank, nNbr, newWound );
-        if( ++itCurrentComp == composantes_.end() )
-            itCurrentComp = composantes_.begin();
-        if( itCurrentComp == itEndComp && nNbr > 0 )
+        const PHY_ComposantePion& composante = **it;
+
+        xos.start( "equipment" );
+        xos.attribute( "state", composante.GetType().GetName() );
+        xos.attribute( "type", composante.GetState().GetName() );
+        if( composante.GetState() == PHY_ComposanteState::repairableWithEvacuation_ )
         {
-            MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot apply all the human wounds overloading specified in ODB : " << nNbr << " " << rank.GetName() << " " << newWound.GetName() << " remaining" );
-            return;
+            const PHY_Breakdown* breakdown = composante.GetBreakdown();
+            assert( breakdown );
+            xos.attribute( "breakdown", breakdown->GetType().GetName() );
         }
+        xos.end(); // equipment
     }
+    xos.end(); // equipments
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ReadComposantesOverloading
-// Created: NLD 2004-09-10
+// Name: PHY_RolePion_Composantes::WriteHumansODB
+// Created: ABR 2011-03-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ReadComposantesOverloading( xml::xistream& xis )
+void PHY_RolePion_Composantes::WriteHumansODB( xml::xostream& xos ) const
 {
-    xis >> xml::list( "Equipements", *this, &PHY_RolePion_Composantes::ReadEquipements );
-}
+    HumanStateHelper helper;
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ReadEquipements
-// Created: ABL 2007-07-10
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ReadEquipements( xml::xistream& xis )
-{
-    xis >> xml::list( "Equipement", *this, &PHY_RolePion_Composantes::ReadEquipement );
-}
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        ( *it )->FillHumanStateHelper( helper );
 
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ReadEquipement
-// Created: ABL 2007-07-10
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ReadEquipement( xml::xistream& xis )
-{
-    const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( xis.attribute< std::string >( "type" ) );
-    if( !pType )
-        xis.error( "Unknwon composante type" );
-    unsigned int nNbrRepairable;
-    unsigned int nNbrDead;
-    xis >> xml::attribute( "reparable", nNbrRepairable )
-        >> xml::attribute( "indisponible", nNbrDead );
-    for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
-    {
-        PHY_ComposantePion& composante = **itComposante;
-        if( !( composante.GetType() == *pType && composante.GetState() == PHY_ComposanteState::undamaged_ ) )
-            continue;
-        if( nNbrDead )
-        {
-            --nNbrDead;
-            composante.ReinitializeState( PHY_ComposanteState::dead_ );
-        }
-        else if( nNbrRepairable )
-        {
-            --nNbrRepairable;
-            composante.ReinitializeState( PHY_ComposanteState::repairableWithEvacuation_ );
-        }
-        else
-            break;
-    }
-    if( nNbrDead || nNbrRepairable )
-        MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot apply all the composantes states overloading specified in ODB : " << nNbrDead << " deads and " << nNbrRepairable << " repairables '" << pType->GetName() << "' remaining" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ReadHumansOverloading
-// Created: NLD 2004-08-18
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ReadHumansOverloading( xml::xistream& xis )
-{
-    xis >> xml::list( "Personnels", *this, &PHY_RolePion_Composantes::ReadPersonnels );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ReadPersonnels
-// Created: ABL 2007-07-10
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ReadPersonnels( xml::xistream& xis )
-{
-    xis >> xml::list( "Personnel", *this, &PHY_RolePion_Composantes::ReadPersonnel );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Composantes::ReadPersonnel
-// Created: ABL 2007-07-10
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ReadPersonnel( xml::xistream& xis )
-{
-    PHY_ComposantePion::CIT_ComposantePionVector itCurrentComp = composantes_.begin();
-    const PHY_HumanWound* pWound = PHY_HumanWound::Find( xis.attribute< std::string >( "etat" ) );
-    if( !pWound )
-        xis.error( "Unknown human wound" );
-    const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
-    for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
-    {
-        const PHY_HumanRank& rank = *itRank->second;
-        std::stringstream strRank;
-        strRank << "nb" << rank.GetName();
-        unsigned int nNbr = xis.attribute< unsigned int >( strRank.str() );
-        DistributeHumanWounds( rank, *pWound, nNbr, itCurrentComp );
-    }
+    xos.start( "humans" );
+    for( HumanStateHelper::CIT_HumansStateVector it = helper.GetHumans().begin(); it != helper.GetHumans().end(); ++it )
+        xos << xml::start( "human" )
+                << xml::attribute( "rank", ( *it )->rank_.GetName() )
+                << xml::attribute( "state", ( *it )->state_.GetName() )
+                << xml::attribute( "contaminated", ( *it )->contaminated_ )
+                << xml::attribute( "psyop", ( *it )->psyop_ )
+                << xml::attribute( "number", ( *it )->number_ )
+            << xml::end; // human
+    xos.end(); // humans
 }
 
 // -----------------------------------------------------------------------------
@@ -377,6 +314,87 @@ void PHY_RolePion_Composantes::ReadOverloading( xml::xistream& xis )
 {
     ReadComposantesOverloading( xis );
     ReadHumansOverloading( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ReadComposantesOverloading
+// Created: NLD 2004-09-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ReadComposantesOverloading( xml::xistream& xis )
+{
+    xis >> xml::optional 
+        >> xml::start( "equipments" )
+            >> xml::list( "equipment", *this, &PHY_RolePion_Composantes::ReadEquipment )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ReadEquipment
+// Created: ABL 2007-07-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ReadEquipment( xml::xistream& xis )
+{
+    const PHY_ComposanteState* pState = PHY_ComposanteState::Find( xis.attribute< std::string >( "state" ) );
+    if( !pState )
+        xis.error( "Unknown composante state" );
+    if( *pState == PHY_ComposanteState::undamaged_ )
+        return;
+    const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( xis.attribute< std::string >( "type" ) );
+    if( !pType )
+        xis.error( "Unknown composante type" );
+    const PHY_BreakdownType* pBreakdownType = PHY_BreakdownType::Find( xis.attribute( "breakdown", "" ) );
+    if( *pState == PHY_ComposanteState::repairableWithEvacuation_ &&  !pBreakdownType )
+        xis.error( "Unknown breakdown type" );
+
+    for( PHY_ComposantePion::CIT_ComposantePionVector itComposante = composantes_.begin(); itComposante != composantes_.end(); ++itComposante )
+    {
+        PHY_ComposantePion& composante = **itComposante;
+        if( !( composante.GetType() == *pType && composante.GetState() == PHY_ComposanteState::undamaged_ ) )
+            continue;
+        composante.ReinitializeState( *pState, pBreakdownType );
+        break;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ReadHumansOverloading
+// Created: NLD 2004-08-18
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ReadHumansOverloading( xml::xistream& xis )
+{
+    xis >> xml::optional
+        >> xml::start( "humans")
+            >> xml::list( "human", *this, &PHY_RolePion_Composantes::ReadHuman )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::ReadHuman
+// Created: ABR 2011-03-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::ReadHuman( xml::xistream& xis )
+{
+    const PHY_HumanRank* pRank = PHY_HumanRank::Find( xis.attribute< std::string >( "rank" ) );
+    if( !pRank )
+        xis.error( "Unknown human rank" );
+    const PHY_HumanWound* pWound = PHY_HumanWound::Find( xis.attribute< std::string >( "state" ) );
+    if( !pWound )
+        xis.error( "Unknown human wound" );
+    bool contaminated = xis.attribute< bool >( "contaminated" );
+    bool psyop = xis.attribute< bool >( "psyop" );
+    unsigned int number = xis.attribute< bool >( "number" );
+
+    PHY_ComposantePion::CIT_ComposantePionVector itCurrentComp = composantes_.begin();
+    while( number )
+    {
+        assert( *pWound != PHY_HumanWound::notWounded_ || psyop || contaminated );
+        number -= ( *itCurrentComp )->OverloadHumans( *pRank, number, *pWound, psyop, contaminated );
+        if( ++itCurrentComp == composantes_.end() && number > 0 )
+        {
+            MT_LOG_WARNING_MSG( "Agent " << pion_.GetID() << " - Cannot apply all the human wounds overloading specified in ODB : " << number << " " << pRank->GetName() << " " << pWound->GetName() << " remaining" );
+            return;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

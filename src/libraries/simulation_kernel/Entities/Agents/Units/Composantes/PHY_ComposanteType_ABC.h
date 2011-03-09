@@ -35,10 +35,10 @@ public:
 
     //! @name Accessors
     //@{
-    sword::EquipmentType GetMosID     () const;
-    const PHY_Protection&      GetProtection() const;
-    const PHY_Volume&          GetVolume    () const;
-    const std::string&         GetName      () const;
+    sword::EquipmentType  GetMosID     () const;
+    const PHY_Protection& GetProtection() const;
+    const PHY_Volume&     GetVolume    () const;
+    const std::string&    GetName      () const;
     //@}
 
     //! @name Operations

@@ -217,6 +217,16 @@ double PHY_DotationGroup::Consume( const PHY_DotationCategory& category, double 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationGroup::Reset
+// Created: ABR 2011-03-08
+// -----------------------------------------------------------------------------
+void PHY_DotationGroup::Reset()
+{
+    for( T_DotationMap::iterator it = dotations_.begin(); it != dotations_.end(); it++ )
+        it->second->Reset();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroup::GetIlluminationDotations
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------

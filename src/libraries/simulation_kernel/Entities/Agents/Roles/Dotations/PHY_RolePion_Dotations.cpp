@@ -165,6 +165,7 @@ void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const unsigne
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::WriteODB( xml::xostream& xos ) const
 {
+    assert( pDotations_ );
     pDotations_->WriteODB( xos );
 }
 
@@ -178,7 +179,7 @@ void PHY_RolePion_Dotations::WriteODB( xml::xostream& xos ) const
 void PHY_RolePion_Dotations::ReadOverloading( xml::xistream& xis )
 {
     assert( pDotations_ );
-    pDotations_->ReadValues( xis );
+    pDotations_->ReadDotations( xis );
 }
 
 // -----------------------------------------------------------------------------

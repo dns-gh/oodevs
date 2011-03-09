@@ -140,3 +140,13 @@ const PHY_MaintenanceLevel& PHY_Breakdown::GetMaintenanceLevel() const
     assert( pType_ );
     return pType_->GetMaintenanceLevel();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Breakdown::GetType
+// Created: ABR 2011-03-08
+// -----------------------------------------------------------------------------
+const PHY_BreakdownType& PHY_Breakdown::GetType() const
+{
+    assert( pType_ );
+    return *pType_;
+}

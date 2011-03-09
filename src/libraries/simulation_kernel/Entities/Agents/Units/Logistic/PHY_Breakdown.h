@@ -39,13 +39,14 @@ public:
 
     //! @name accessors
     //@{
-          unsigned int                          GetTheoricRepairTime() const;
-          unsigned int                          GetRepairTime       () const;
-          unsigned int                          GetID               () const;
+          unsigned int                  GetTheoricRepairTime() const;
+          unsigned int                  GetRepairTime       () const;
+          unsigned int                  GetID               () const;
           bool                          AffectMobility      () const;
           bool                          AffectElectronic    () const;
     const PHY_MaintenanceLevel&         GetMaintenanceLevel () const;
     const PHY_BreakdownType::T_PartMap& GetNeededParts      () const;
+    const PHY_BreakdownType&            GetType             () const;
     //@}
 
 

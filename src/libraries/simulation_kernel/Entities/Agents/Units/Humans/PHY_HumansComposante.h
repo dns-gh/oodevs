@@ -57,9 +57,11 @@ public:
     void ApplyInjury( MIL_Injury_ABC& injury );
     PHY_InjuredHuman* GetInjury();
     void ApplyWounds( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
-    unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );
-    unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange );
     void HealAllHumans();
+    unsigned int HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange );
+    unsigned int OverloadHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound, bool psyop = false, bool contaminated = false );
+    unsigned int WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );
+    virtual void FillHumanStateHelper( HumanStateHelper& helper ) const;
 
     double GetOperationalState() const;
     bool IsViable () const;

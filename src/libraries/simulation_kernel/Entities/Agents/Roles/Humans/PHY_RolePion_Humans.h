@@ -43,7 +43,7 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive&, const unsigned int );
-    void WriteODB( xml::xostream& xos ) const;
+    //void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Accessors

@@ -301,6 +301,18 @@ double PHY_Dotation::Consume( double rValue )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Dotation::Reset
+// Created: ABR 2011-03-08
+// -----------------------------------------------------------------------------
+void PHY_Dotation::Reset()
+{
+    rValue_                  = 0;
+    rConsumptionReservation_ = 0;
+    rFireReservation_        = 0;
+    bDotationBlocked_        = false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Dotation::GetCategory
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------

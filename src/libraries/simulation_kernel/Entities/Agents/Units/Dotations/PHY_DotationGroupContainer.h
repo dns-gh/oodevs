@@ -61,31 +61,31 @@ public:
 
     //! @name Init
     //@{
-    void ReadValues( xml::xistream& xis );
-    void WriteODB  ( xml::xostream& xos ) const;
+    void ReadDotations( xml::xistream& xis );
+    void WriteODB     ( xml::xostream& xos ) const;
     //@}
 
     //! @name Operations
     //@{
-    void     AddCapacity   ( const PHY_DotationCapacity& capacity );
-    void     RemoveCapacity( const PHY_DotationCapacity& capacity );
+    void   AddCapacity   ( const PHY_DotationCapacity& capacity );
+    void   RemoveCapacity( const PHY_DotationCapacity& capacity );
     double GetCapacity   ( const PHY_DotationCategory& category ) const;
 
-    void     CancelConsumptionReservations ();
+    void   CancelConsumptionReservations ();
     double AddConsumptionReservation     ( const PHY_DotationCategory& category, double rNbr );
-    void     ConsumeConsumptionReservations();
+    void   ConsumeConsumptionReservations();
 
     double AddFireReservation     ( const PHY_DotationCategory& category, double rNbr );
-    void     ConsumeFireReservations();
+    void   ConsumeFireReservations();
 
     double GetValue( const PHY_DotationCategory& category ) const;
     double Consume ( const PHY_DotationCategory& category, double rNbr );
     double Supply  ( const PHY_DotationCategory& category, double rNbr );
-    void     Resupply();
-    void     Resupply( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
-    void     Resupply( const PHY_DotationType&     type              , double rFactor );
+    void   Resupply();
+    void   Resupply( const PHY_AmmoDotationClass& ammoDotationClass, double rFactor );
+    void   Resupply( const PHY_DotationType&     type              , double rFactor );
+    float  GetIlluminatingRange() const;
     const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
-    float     GetIlluminatingRange() const;
     //@}
 
     //! @name
@@ -118,7 +118,6 @@ private:
     //@}
     //! @name Helpers
     //@{
-    void ReadDotations( xml::xistream& xis );
     void ReadDotation ( xml::xistream& xis );
     //@}
 

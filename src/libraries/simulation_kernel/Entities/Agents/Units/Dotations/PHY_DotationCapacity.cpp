@@ -36,6 +36,22 @@ PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCapacity constructor
+// Created: ABR 2011-03-08
+// -----------------------------------------------------------------------------
+PHY_DotationCapacity::PHY_DotationCapacity( const PHY_DotationCategory& category, double capacity, double supplyThresholdPercentage )
+    : category_        ( category )
+    , rCapacity_       ( capacity )
+    , rSupplyThreshold_( 0. )
+{
+    if( rCapacity_ <= 0 )
+        throw std::runtime_error( __FUNCTION__ " dotation capacity <= 0" );
+    if( supplyThresholdPercentage < 0 || supplyThresholdPercentage > 100 )
+        throw std::runtime_error( __FUNCTION__ " dotation logistic-threshold not in [0..100]" );
+    rSupplyThreshold_ = (float)( rCapacity_ * supplyThresholdPercentage / 100. );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCapacity destructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------

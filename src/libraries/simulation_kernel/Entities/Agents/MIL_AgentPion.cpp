@@ -269,8 +269,7 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "type", pType_->GetName() )
             << xml::attribute( "command-post", bIsPC_ )
             << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
-    GetRole< PHY_RolePion_Composantes >().WriteODB( xos ); // Equipements
-    GetRole< human::PHY_RolePion_Humans >().WriteODB( xos ); // Personnels
+    GetRole< PHY_RolePion_Composantes >().WriteODB( xos ); // Equipments + Humans
     GetRole< dotation::PHY_RolePion_Dotations >().WriteODB( xos ); // Dotations
     const PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();//@TODO verify
     if( role )
@@ -297,9 +296,9 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
 void MIL_AgentPion::ReadOverloading( xml::xistream& xis )
 {
     // Dotations overloaded by ODB
-    GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Composantes + humans
-    GetRole< dotation::PHY_RolePion_Dotations >().ReadOverloading( xis );
-    GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( xis );
+    GetRole< PHY_RolePion_Composantes >().ReadOverloading( xis ); // Equipments + Humans
+    GetRole< dotation::PHY_RolePion_Dotations >().ReadOverloading( xis ); // Dotations
+    GetRole< PHY_RolePion_HumanFactors >().ReadOverloading( xis ); // Human factor
     PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
         role->ReadOverloading( xis ); // Stocks

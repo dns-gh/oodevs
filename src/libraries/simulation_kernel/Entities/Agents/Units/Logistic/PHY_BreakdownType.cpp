@@ -229,7 +229,6 @@ const PHY_BreakdownType* PHY_BreakdownType::Find( unsigned int nID )
     return it == breakdowns_.end() ? 0 :  it->second;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_BreakdownType::AffectMobility
 // Created: NLD 2004-12-23

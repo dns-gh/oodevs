@@ -143,37 +143,36 @@ void PHY_DotationGroupContainer::serialize( MIL_CheckPointInArchive& ar, unsigne
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_DotationGroupContainer::ReadValues
-// Created: NLD 2004-08-16
-// -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::ReadValues( xml::xistream& xis )
-{
-    xis >> xml::list( "resources", *this, &PHY_DotationGroupContainer::ReadDotations );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::ReadDotations
 // Created: ABL 2007-07-10
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ReadDotations( xml::xistream& xis )
 {
-    xis >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation );
+    if( xis.has_child( "resources" ) )
+    {
+        for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
+            it->second->Reset();
+        xis >> xml::start( "resources" )
+                >> xml::list( "resource", *this, &PHY_DotationGroupContainer::ReadDotation )
+            >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::ReadDotation
-// Created: ABL 2007-07-10
+// Created: ABR 2011-03-08
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::ReadDotation( xml::xistream& xis )
 {
-    std::string strType;
-    xis >> xml::attribute( "name", strType );
-    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( strType );
+    const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( xis.attribute< std::string >( "name" ) );
     if( !pDotationCategory )
         xis.error( "Unknown resource type" );
     PHY_DotationGroup* pGroup = GetDotationGroup( pDotationCategory->GetType() ); //$$$$$ TEMPORAIRE : merger PHY_DotationGroupContainer et PHY_DotationGroup
     if( !pGroup )
-        xis.error( "Resource type cannot be overloaded: not in types" );
+    {
+        pGroup = &CreateDotationGroup( pDotationCategory->GetType() );
+        pGroup->AddCapacity( PHY_DotationCapacity( *pDotationCategory, xis.attribute< double >( "quantity" ), xis.attribute( "logistic-threshold", 0. ) ) );
+    }
     pGroup->ReadValues( xis, *pDotationCategory );
 }
 
@@ -186,7 +185,7 @@ void PHY_DotationGroupContainer::WriteODB( xml::xostream& xos ) const
     xos << xml::start( "resources" );
     for( CIT_DotationGroupMap it = dotationGroups_.begin(); it != dotationGroups_.end(); ++it )
         it->second->WriteODB( xos );
-    xos << xml::end; // dotations
+    xos << xml::end; // resources
 }
 
 // -----------------------------------------------------------------------------
