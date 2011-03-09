@@ -53,12 +53,6 @@ public:
     //@}
 
 public:
-    //! @name Constructors/Destructor
-    //@{
-             Logger_ABC() {};
-    virtual ~Logger_ABC() {};
-    //@}
-
     //! @name Operations
     //@{
     virtual LogElement Info() = 0;
