@@ -3,6 +3,7 @@ HEADERS =
 SOURCES = AboutDialog.cpp \
 ActivityTimePrototype_ABC.cpp \
 AutomatsLayer.cpp \
+FormationLayer.cpp \
 BaseDisplayer.cpp \
 BypassPrototype_ABC.cpp \
 ConstructionPrototype_ABC.cpp \
