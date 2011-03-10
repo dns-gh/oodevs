@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AutomatLives_h_
-#define __AutomatLives_h_
+#ifndef __FormationLives_h_
+#define __FormationLives_h_
 
 #include "Lives_ABC.h"
 
@@ -18,18 +18,18 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  AutomatLives
-    @brief  AutomatLives
+/** @class  FormationLives
+    @brief  FormationLives
 */
-// Created: AGE 2006-10-06
+// Created: LGY 2011-03-09
 // =============================================================================
-class AutomatLives : public Lives_ABC
+class FormationLives : public Lives_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AutomatLives( const kernel::Entity_ABC& automat );
-    virtual ~AutomatLives();
+    explicit FormationLives( const kernel::Entity_ABC& formation );
+    virtual ~FormationLives();
     //@}
 
     //! @name Operations
@@ -41,15 +41,22 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    AutomatLives( const AutomatLives& );            //!< Copy constructor
-    AutomatLives& operator=( const AutomatLives& ); //!< Assignment operator
+    FormationLives( const FormationLives& );            //!< Copy constructor
+    FormationLives& operator=( const FormationLives& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    bool IsAggregated( const kernel::Entity_ABC& entity ) const;
+    bool HasAggregatedSubordinate() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const kernel::Entity_ABC& automat_;
+    const kernel::Entity_ABC& formation_;
     //@}
 };
 
-#endif // __AutomatLives_h_
+#endif // __FormationLives_h_

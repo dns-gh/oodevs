@@ -10,11 +10,7 @@
 #include "clients_gui_pch.h"
 #include "FormationLayer.h"
 #include "moc_FormationLayer.cpp"
-#include "ColorStrategy_ABC.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -28,7 +24,6 @@ using namespace gui;
 FormationLayer::FormationLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy, View_ABC& view,
                                 const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
     : EntityLayer< kernel::Formation_ABC >( controllers, tools, strategy, view, profile, filter )
-    , tools_   ( tools )
     , strategy_( strategy )
     , selected_( controllers )
 {
@@ -42,24 +37,6 @@ FormationLayer::FormationLayer( kernel::Controllers& controllers, const kernel::
 FormationLayer::~FormationLayer()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLayer::Draw
-// Created: LGY 2011-03-07
-// -----------------------------------------------------------------------------
-void FormationLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport )
-{
-    const kernel::Formation_ABC& formation = static_cast< const kernel::Formation_ABC& >( entity );
-    strategy_.SelectColor( formation );
-    if( ( tools_.ShouldDisplay( "Formations" ) && EntityLayer< kernel::Formation_ABC >::ShouldDisplay( entity ) ) || ShouldDisplay( formation ) )
-    {
-        SelectColor( entity );
-        const Positions& positions = entity.Get< kernel::Positions >();
-        const geometry::Point2f position = positions.GetPosition();
-        viewport.SetHotpoint( position );
-        entity.Draw( position, viewport, tools_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -137,18 +114,10 @@ void FormationLayer::Toggle( const kernel::Entity_ABC& entity, bool aggregate )
     while( it.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = it.NextElement();
-        child.Interface().Apply( &Aggregatable_ABC::Aggregate, aggregate );
+        if( IsAggregated( child ) != aggregate )
+            child.Interface().Apply( &Aggregatable_ABC::Aggregate, aggregate );
         Toggle( child, aggregate );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLayer::ShouldDisplay
-// Created: LGY 2011-03-04
-// -----------------------------------------------------------------------------
-bool FormationLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
-{
-    return EntityLayer< kernel::Formation_ABC >::ShouldDisplay( entity ) && !IsAggregated( entity ) && HasAggregatedSubordinate( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,14 +156,8 @@ bool FormationLayer::IsAggregated( const kernel::Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool FormationLayer::HasAggregatedSubordinate( const kernel::Entity_ABC& entity ) const
 {
-    bool children = false;
     tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( it.HasMoreElements() )
-    {
-        const kernel::Entity_ABC& child = it.NextElement();
-        if( !IsAggregated( child ) )
-            return false;
-        children = true;
-    }
-    return children;
+        return IsAggregated( it.NextElement() );
+    return false;
 }

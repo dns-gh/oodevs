@@ -1846,10 +1846,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Etat décisionnel</translation>
     </message>
     <message>
-        <source>Formations</source>
-        <translation>Formations</translation>
-    </message>
-    <message>
         <source>Units...</source>
         <translation>Unités...</translation>
     </message>
@@ -2571,16 +2567,16 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Agréger tous les automates</translation>
     </message>
     <message>
-        <source>Disaggregate all automats</source>
-        <translation>Désagréger tous les automates</translation>
-    </message>
-    <message>
         <source>Remove filter</source>
         <translation>Supprimer le filtre</translation>
     </message>
     <message>
         <source>Filter view</source>
         <translation>Filtrer la vue</translation>
+    </message>
+    <message>
+        <source>Disaggregate all</source>
+        <translation>Désagréger</translation>
     </message>
 </context>
 <context>

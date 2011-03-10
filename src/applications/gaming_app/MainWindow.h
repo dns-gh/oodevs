@@ -33,6 +33,7 @@ namespace gui
     class ParametersLayer;
     class AgentsLayer;
     class AutomatsLayer;
+    class FormationLayer;
     class ColorStrategy;
     class GlProxy;
     class ExclusiveEventStrategy;
@@ -116,8 +117,8 @@ private:
     static std::string BuildRemotePath( std::string server, std::string path );
 
    void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locationsLayer,
-       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
-        gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker );
+                      gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
+                      gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker );
 
     //! @name Copy/Assignment
     //@{

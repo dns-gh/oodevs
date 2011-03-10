@@ -114,7 +114,8 @@ void AutomatsLayer::Toggle( const Entity_ABC& entity, bool aggregate )
     while( it.HasMoreElements() )
     {
         const kernel::Entity_ABC& child = it.NextElement();
-        child.Interface().Apply( &Aggregatable_ABC::Aggregate, aggregate );
+        if( IsAggregated( child ) != aggregate )
+            child.Interface().Apply( &Aggregatable_ABC::Aggregate, aggregate );
         Toggle( child, aggregate );
     }
 }

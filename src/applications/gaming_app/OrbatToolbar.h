@@ -18,12 +18,14 @@ namespace kernel
 {
     class Controllers;
     class Automat_ABC;
+    class Formation_ABC;
     class Entity_ABC;
 }
 
 namespace gui
 {
     class AutomatsLayer;
+    class FormationLayer;
 }
 
 class Simulation;
@@ -38,6 +40,7 @@ class ProfileFilter;
 class OrbatToolbar : public QHBox
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+                   , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                    , public tools::ElementObserver_ABC< Simulation >
                    , public tools::ElementObserver_ABC< ProfileFilter >
@@ -47,7 +50,8 @@ class OrbatToolbar : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter, gui::AutomatsLayer& automats );
+             OrbatToolbar( QWidget* parent, kernel::Controllers& controllers, ProfileFilter& filter,
+                           gui::AutomatsLayer& automats, gui::FormationLayer& formations );
     virtual ~OrbatToolbar();
     //@}
 
@@ -56,9 +60,9 @@ private slots:
     //@{
     void OnSetFilter();
     void OnClearFilter();
-
-    void AggregateAll();
+    void Aggregate();
     void DisaggregateAll();
+    void Aggregate( int id );
     //@}
 
 private:
@@ -74,6 +78,8 @@ private:
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyCreated( const kernel::Automat_ABC& );
     virtual void NotifyDeleted( const kernel::Automat_ABC& );
+    virtual void NotifyCreated( const kernel::Formation_ABC& );
+    virtual void NotifyDeleted( const kernel::Formation_ABC& );
     virtual void NotifyUpdated( const Simulation& simu );
     virtual void NotifyUpdated( const ProfileFilter& filter );
 
@@ -82,9 +88,13 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const kernel::Automat_ABC* > T_Agents;
-    typedef T_Agents::iterator                       IT_Agents;
-    typedef T_Agents::const_iterator                CIT_Agents;
+    typedef std::vector< const kernel::Automat_ABC* > T_Automats;
+    typedef T_Automats::iterator                     IT_Automats;
+    typedef T_Automats::const_iterator              CIT_Automats;
+
+    typedef std::vector< const kernel::Formation_ABC* > T_Formations;
+    typedef T_Formations::iterator                     IT_Formations;
+    typedef T_Formations::const_iterator              CIT_Formations;
     //@}
 
 private:
@@ -94,8 +104,11 @@ private:
     ProfileFilter& filter_;
     kernel::SafePointer< kernel::Entity_ABC > entity_;
     gui::AutomatsLayer& automatsLayer_;
-    T_Agents automats_;
+    gui::FormationLayer& formationsLayer_;
+    T_Automats automats_;
+    T_Formations formations_;
     QToolButton* filterBtn_;
+    QPopupMenu* menu_;
     //@}
 };
 

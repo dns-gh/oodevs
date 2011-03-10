@@ -55,8 +55,6 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& entity );
-    virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
     virtual void NotifySelected( const kernel::Formation_ABC* formation );
     //@}
 
@@ -81,7 +79,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::GlTools_ABC& tools_;
     ColorStrategy_ABC& strategy_;
     kernel::SafePointer< kernel::Formation_ABC > selected_;
     //@}

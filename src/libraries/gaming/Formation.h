@@ -66,6 +66,8 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     void InitializeSymbol() const;
+    bool IsAggregated( const kernel::Entity_ABC& entity ) const;
+    bool HasAggregatedSubordinate() const;
     //@}
 
 private:

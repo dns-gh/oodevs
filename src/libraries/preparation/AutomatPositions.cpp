@@ -99,8 +99,6 @@ bool AutomatPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, fl
     const Point2f position = GetPosition( true );
     const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
                                  position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
-    if( agentBBox.IsInside( pos ) )
-        bool test = true;
     return agentBBox.IsInside( pos );
 }
 

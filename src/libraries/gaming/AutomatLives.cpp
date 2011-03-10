@@ -21,9 +21,8 @@ using namespace kernel;
 // Name: AutomatLives constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-AutomatLives::AutomatLives( const Entity_ABC& automat, float factor )
+AutomatLives::AutomatLives( const Entity_ABC& automat )
     : automat_( automat )
-    , factor_ ( factor )
 {
     // NOTHING
 }
@@ -45,7 +44,7 @@ void AutomatLives::Draw( const geometry::Point2f& where, const kernel::Viewport_
 {
     if( ! viewport.IsHotpointVisible() )
         return;
-    tools.DrawLife( where, GetLife(), factor_ );
+    tools.DrawLife( where, GetLife(), 2.f );
 }
 
 // -----------------------------------------------------------------------------

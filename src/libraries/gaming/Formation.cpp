@@ -18,6 +18,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -111,10 +112,33 @@ void Formation::InitializeSymbol() const
 // -----------------------------------------------------------------------------
 void Formation::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( !tools.ShouldDisplay( "Formations" ) && viewport.IsHotpointVisible() )
+    if( !IsAggregated( *this ) && HasAggregatedSubordinate() && viewport.IsHotpointVisible() )
     {
         InitializeSymbol();
         tools.DrawApp6Symbol( symbolPath_, where, 4 );
         tools.DrawApp6Symbol( levelPath_, where, 4 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::IsAggregated
+// Created: LGY 2011-03-10
+// -----------------------------------------------------------------------------
+bool Formation::IsAggregated( const kernel::Entity_ABC& entity ) const
+{
+    if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
+        return positions->IsAggregated();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::HasAggregatedSubordinate
+// Created: LGY 2011-03-10
+// -----------------------------------------------------------------------------
+bool Formation::HasAggregatedSubordinate() const
+{
+    tools::Iterator< const kernel::Entity_ABC& > it = Get< TacticalHierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+        return IsAggregated( it.NextElement() );
+    return false;
 }

@@ -1846,10 +1846,6 @@ Motivo: %3
         <translation>Estado decisional</translation>
     </message>
     <message>
-        <source>Formations</source>
-        <translation>Formaciones</translation>
-    </message>
-    <message>
         <source>Units...</source>
         <translation>Unidades...</translation>
     </message>
@@ -2571,16 +2567,16 @@ Motivo: %3
         <translation>Agrupar todos los autómatas</translation>
     </message>
     <message>
-        <source>Disaggregate all automats</source>
-        <translation>Desagrupar todos los autómatas</translation>
-    </message>
-    <message>
         <source>Remove filter</source>
         <translation>Eliminar filtro</translation>
     </message>
     <message>
         <source>Filter view</source>
         <translation>Filtrar vista</translation>
+    </message>
+    <message>
+        <source>Disaggregate all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

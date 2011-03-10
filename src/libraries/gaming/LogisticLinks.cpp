@@ -69,7 +69,7 @@ Automat_ABC* LogisticLinks::GetTC2() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::GetFormationSuperior
+// Name: LogisticLinks::GetSuperior
 // Created: AHC 2010-10-11
 // -----------------------------------------------------------------------------
 kernel::Entity_ABC* LogisticLinks::GetSuperior() const

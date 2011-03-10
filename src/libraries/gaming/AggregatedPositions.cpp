@@ -145,7 +145,7 @@ void AggregatedPositions::Accept( LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void AggregatedPositions::Draw( const Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
-    if( viewport.IsHotpointVisible() )
+    if( viewport.IsHotpointVisible() && !aggregated_ && HasAggregatedSubordinate() )
         tools.DrawCross( where, GL_CROSSSIZE );
 }
 
@@ -181,4 +181,20 @@ void AggregatedPositions::Aggregate( const bool& value )
 bool AggregatedPositions::IsAggregated() const
 {
     return aggregated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregatedPositions::HasAggregatedSubordinate
+// Created: LGY 2011-03-10
+// -----------------------------------------------------------------------------
+bool AggregatedPositions::HasAggregatedSubordinate() const
+{
+    tools::Iterator< const kernel::Entity_ABC& > it = entity_.Get< TacticalHierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        if( const kernel::Positions* positions = it.NextElement().Retrieve< kernel::Positions >() )
+            return positions->IsAggregated();
+        return false;
+    }
+    return false;
 }

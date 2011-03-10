@@ -57,10 +57,12 @@ private:
     AggregatedPositions& operator=( const AggregatedPositions& ); //!< Assignment operator
     //@}
 
+private:
     //! @name Helpers
     //@{
     void UpdateChildrenPositions() const;
     void ComputeHull() const;
+    bool HasAggregatedSubordinate() const;
     //@}
 
 private:

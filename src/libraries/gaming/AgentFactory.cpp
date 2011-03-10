@@ -128,7 +128,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     else
         superior = & (( tools::Resolver< kernel::Automat_ABC >&)  ( model_.agents_ )).Get( message.parent().automat().id() );
     result->Attach< kernel::TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
-    result->Attach< Lives_ABC >( *new AutomatLives( *result, 2.f ) );
+    result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, result->GetLogisticLevel(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );

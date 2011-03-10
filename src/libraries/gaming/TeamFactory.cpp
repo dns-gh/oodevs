@@ -34,7 +34,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "LogisticLinks.h"
 #include "LogisticConsigns.h"
-#include "AutomatLives.h"
+#include "FormationLives.h"
 #include "Lives_ABC.h"
 #include "Quotas.h"
 
@@ -92,7 +92,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
         (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() );
 
     Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_, static_ );
-    result->Attach< Lives_ABC >( *new AutomatLives( *result, 4.f ) );
+    result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::TacticalHierarchies >    ( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
     result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
