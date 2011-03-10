@@ -6,9 +6,10 @@
 #include "DEC_Workspace.h"
 #include "DEC_Model.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Agents/Actions/Firing/DirectFiring/PHY_DirectFireData.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_AutomateMission.h"
@@ -115,12 +116,16 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional )
     DEC_Knowledge_Agent     ::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
     PHY_RoleInterface_Composantes::rMaxDangerosityDegradationByNeutralizedState_ = nTmp / 100.;
 
-    xisDecisional     >> xml::end
-                          >> xml::start( "operational-state-weights" )
-                              >> xml::attribute( "component", PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ )
-                              >> xml::attribute( "major-component", PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_ )
-                              >> xml::attribute( "crew", PHY_ComposantePion::rOpStateWeightHumans_ )
-                          >> xml::end;
+    xisDecisional >> xml::end
+                  >> xml::start( "operational-state-weights" )
+                      >> xml::attribute( "component", PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ )
+                      >> xml::attribute( "major-component", PHY_RoleInterface_Composantes::rOpStateWeightMajorComposante_ )
+                      >> xml::attribute( "crew", PHY_ComposantePion::rOpStateWeightHumans_ )
+                  >> xml::end;
+
+    xisDecisional >> xml::optional() >> xml::start( "urban-combat" )
+        >> xml::attribute( "hit-factor", firing::PHY_DirectFireData::nUrbanCoefficient_ )
+                  >> xml::end;
 
     if( PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ < 0 || PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ > 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: component not in [0..1]" );

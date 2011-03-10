@@ -55,12 +55,13 @@ public:
     //@}
 
 public:
-     PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode = eFiringModeNormal, double rPercentageComposantesToUse = 1., const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
+    PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode = eFiringModeNormal, double rPercentageComposantesToUse = 1., const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
     virtual ~PHY_DirectFireData();
 
     //! @name Operations
     //@{
     virtual void operator() ( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
+    virtual bool CanFire( const PHY_ComposantePion& firer );
 
     void ChooseRandomWeapon  ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
     void ChooseBestWeapon    ( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pBestFirer, PHY_Weapon*& pBestWeapon ) const;
@@ -127,6 +128,10 @@ private:
           bool                   bHasWeaponsReady_;
           bool                   bHasWeaponsNotReady_;
           bool                   bHasWeaponsAndNoAmmo_;
+
+public:
+    // Factor applied to number of components that can fire in urban areas.
+    static unsigned int nUrbanCoefficient_;
 };
 
 } // namespace firing

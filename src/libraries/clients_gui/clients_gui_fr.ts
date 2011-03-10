@@ -14,8 +14,8 @@
         <translation>images/gui/splash_swordot.jpg</translation>
     </message>
     <message>
-        <source>&#xa9; 2010 MASA Group</source>
-        <translation>© 2010 MASA Group</translation>
+        <source>&#xa9; 2011 MASA Group</source>
+        <translation >© 2011 MASA Group</translation>
     </message>
 </context>
 <context>

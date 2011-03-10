@@ -23,6 +23,11 @@
             <xs:attribute name="default-feedback-time" type="T_Time" use="required"/>
           </xs:complexType>
         </xs:element>
+        <xs:element name="urban-combat" minOccurs="0">
+          <xs:complexType>
+            <xs:attribute name="hit-factor" type="xs:nonNegativeInteger" use="required"/>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
             <xs:attribute name="model-version" type="T_Version"/>
     </xs:complexType>

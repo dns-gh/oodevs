@@ -84,10 +84,16 @@ void ADN_AiEngine_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Major equipments state weight" ), data_.rMajorEquipmentWeight_, 0, eZeroOne );
     builder.AddField<ADN_EditLine_Double>( pOpStateBox, tr( "Crew state weight" ), data_.rHumanWeight_, 0, eZeroOne );
 
+    // Urban area effect on fire
+    QGroupBox* pUrbanStateBox = new QGroupBox( 3, Qt::Horizontal, tr( "Urban combat computation" ), pMainWidget_ );
+
+    builder.AddField<ADN_EditLine_Double>( pUrbanStateBox, tr( "Urban combat hit ratio" ), data_.rUrbanCombatWeight_, tr( "%" ), ePercentage );
+
     // Layout
     QVBoxLayout* pMainLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pDangerBox );
     pMainLayout->addWidget( pOpStateBox );
+    pMainLayout->addWidget( pUrbanStateBox );
 
     builder.AddStretcher( pMainWidget_, Qt::Vertical );
 }

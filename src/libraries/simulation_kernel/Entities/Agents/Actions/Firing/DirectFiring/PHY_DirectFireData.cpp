@@ -17,12 +17,15 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h" 
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 
 using namespace firing;
+
+unsigned int PHY_DirectFireData::nUrbanCoefficient_ = 100;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DirectFireData::sComposanteWeapons::sComposanteWeapons
@@ -151,6 +154,18 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
 
         bHasWeaponsNotReady_ |= data.IsFiring();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::CanFire
+// Created: LDC 2011-03-09
+// -----------------------------------------------------------------------------
+bool PHY_DirectFireData::CanFire( const PHY_ComposantePion& firer )
+{
+    bool isInCity = false;
+    if( !firer_.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
+        return true;
+    return( MT_Random::GetInstance().rand32_io( 0u, 100u ) < PHY_DirectFireData::nUrbanCoefficient_ );
 }
 
 // -----------------------------------------------------------------------------

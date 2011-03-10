@@ -154,6 +154,14 @@ Voulez vous sauvegarder malgré tout ?</translation>
         <source>Crew state weight</source>
         <translation>Poids de l&apos;équipage</translation>
     </message>
+    <message>
+        <source>Urban combat computation</source>
+        <translation>Calcul pour le combat en zone urbaine</translation>
+    </message>
+    <message>
+        <source>Urban combat hit ratio</source>
+        <translation>Proportion d'équipements pouvant tirer � chaque pas de temps</translation>
+    </message>
 </context>
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>

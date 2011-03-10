@@ -32,6 +32,7 @@ public:
     //! @name Operations
     //@{
     virtual void ApplyOnWeapon( const PHY_ComposantePion& firer, PHY_Weapon& weapon );
+    virtual bool CanFire( const PHY_ComposantePion& firer );
     //@}
 
 private:

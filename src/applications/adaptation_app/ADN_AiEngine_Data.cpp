@@ -30,6 +30,7 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , rMinorEquipmentWeight_       ( 0.f )
     , rMajorEquipmentWeight_       ( 1.f )
     , rHumanWeight_                ( 0.f )
+    , rUrbanCombatWeight_          ( 100.f )
     , rDefaultFeedbackTime_        ( "1s" )
     , modelVersion_                ( "0.0.0" )
 {
@@ -113,6 +114,10 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )
           >> xml::end;
 
+    input >> xml::optional() >> xml::start( "urban-combat" )
+            >> xml::attribute( "hit-factor", rUrbanCombatWeight_ )
+          >> xml::end();
+
     input >> xml::end;
 }
 
@@ -137,6 +142,9 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output )
             << xml::end
             << xml::start( "force-ratio" )
                 << xml::attribute( "default-feedback-time", rDefaultFeedbackTime_ )
+            << xml::end
+            << xml::start( "urban-combat" )
+                << xml::attribute( "hit-factor", rUrbanCombatWeight_ )
             << xml::end
            << xml::end;
 }
