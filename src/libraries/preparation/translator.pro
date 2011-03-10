@@ -10,7 +10,6 @@ ConstructionAttribute.cpp \
 CrossingSiteAttribute.cpp \
 DelayAttribute.cpp \
 Diplomacies.cpp \
-Dotations.cpp \
 FireAttribute.cpp \
 FloodAttribute.cpp \
 Formation.cpp \
