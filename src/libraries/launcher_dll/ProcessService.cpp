@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "Launcher_dll_pch.h"
+#include "launcher_dll_pch.h"
 #include "ProcessService.h"
 #include "frontend/commands.h"
 #include "frontend/Config.h"
@@ -68,8 +68,8 @@ void ProcessService::SendExerciseList( sword::ExercicesListResponse& message )
         sword::Exercise& exercise = *message.mutable_exercise()->Add();
         exercise.set_name( name );
         exercise.set_running( IsRunning( name ) );
-        if( exercise.running() )
-            exercise.set_port( 10001 ); // $$$$ SBO 2010-10-26: TODO: handle port configuration/multiple exercises
+        //if( exercise.running() ) // $$$$ LDC 2011-03-10: Why? If port is not set, replay will be unable to connect to port 0.
+        exercise.set_port( 10001 ); // $$$$ SBO 2010-10-26: TODO: handle port configuration/multiple exercises
     }
 }
 

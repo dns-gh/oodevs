@@ -118,8 +118,8 @@ void StartExercise::Start()
     while( !monitor.Connected() && !monitor.TimedOut() )
     {
         monitor.Update();
-        percentage_ = std::min< unsigned int >( percentage_ + 1, 100 );
-        boost::this_thread::sleep( boost::posix_time::milliseconds( 100 ) );
+        percentage_ = std::min< unsigned int >( percentage_ + 1, 99 );
+        boost::this_thread::sleep( boost::posix_time::milliseconds( 250 ) );
     }
     percentage_ = 100;
 }

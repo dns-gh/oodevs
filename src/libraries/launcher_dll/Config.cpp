@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "Launcher_dll_pch.h"
+#include "launcher_dll_pch.h"
 #include "Config.h"
 #include "clients_gui/Tools.h"
 #include <shlobj.h>

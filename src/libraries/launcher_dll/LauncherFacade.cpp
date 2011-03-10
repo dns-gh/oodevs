@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "Launcher_dll_pch.h"
+#include "launcher_dll_pch.h"
 #include "LauncherFacade.h"
 #include "Launcher.h"
 #include "Config.h"
