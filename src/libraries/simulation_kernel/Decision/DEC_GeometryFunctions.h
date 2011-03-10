@@ -95,6 +95,7 @@ public:
     static double ComputeAreaSize( TER_Localisation* pLocalisation );
     template< typename T > static boost::shared_ptr< MT_Vector2D > GetLeavingAreaPosition( const T& caller, TER_Localisation* pLocalisation );
     static double ComputeAreaDiameter( TER_Localisation* pLocalisation );
+    static bool IsPionInUrbanBlock( const MT_Vector2D& point, const UrbanObjectWrapper* pUrbanBlock );
     static bool IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point, bool loadedWeight );
     static bool IsPointInCity( const MT_Vector2D& point );
 
