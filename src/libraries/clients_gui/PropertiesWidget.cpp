@@ -16,27 +16,22 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "resources.h"
-
 #include <qpainter.h>
 
 using namespace gui;
-using namespace kernel;
-
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesWidget constructor
 // Created: AGE 2006-10-18
 // -----------------------------------------------------------------------------
-PropertiesWidget::PropertiesWidget( Controller& controller, QWidget* parent, const QString& name, EditorFactory_ABC& factory, TableItemDisplayer& displayer )
+PropertiesWidget::PropertiesWidget( kernel::Controller& controller, QWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer )
     : QWidget( parent )
     , controller_( controller )
     , factory_( factory )
     , displayer_( displayer )
+    , button_( 0 )
 {
-    FillUp( name );
-
-    spacer_ = new QSpacerItem( 100, 5, QSizePolicy::Minimum, QSizePolicy::Ignored );
-    layout_->addItem( spacer_, 3, 1 );
+    FillUp( name, true );
     controller_.Register( *this );
 }
 
@@ -44,12 +39,12 @@ PropertiesWidget::PropertiesWidget( Controller& controller, QWidget* parent, con
 // Name: PropertiesWidget constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-PropertiesWidget::PropertiesWidget( Controller& controller, PropertiesWidget* parent, const QString& name, EditorFactory_ABC& factory, TableItemDisplayer& displayer )
+PropertiesWidget::PropertiesWidget( kernel::Controller& controller, PropertiesWidget* parent, const QString& name, kernel::EditorFactory_ABC& factory, TableItemDisplayer& displayer )
     : QWidget( parent )
     , controller_( controller )
     , factory_( factory )
     , displayer_( displayer )
-    , spacer_( 0 )
+    , button_( 0 )
 {
     FillUp( name );
     controller_.Register( *this );
@@ -89,39 +84,45 @@ namespace
 // Name: PropertiesWidget::FillUp
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void PropertiesWidget::FillUp( const QString& name )
+void PropertiesWidget::FillUp( const QString& name, bool root /*= false*/ )
 {
+    static const QColor background( 115, 110, 100 );
+    static const QColor foreground( 255, 255, 255 );
+    if( root )
+    {
+        layout_ = new QGridLayout( this, 1, 1 );
+        table_ = new PropertiesTable( this, factory_, displayer_ );
+        layout_->addWidget( table_, 0, 0, Qt::AlignTop );
+        table_->hide();
+        return;
+    }
     layout_ = new QGridLayout( this, 2, 2 );
-
-    // Columns
     layout_->setColStretch( 0, 0 );
-    layout_->setColSpacing( 0, 10 );
     layout_->setColStretch( 1, 1 );
-    layout_->setColSpacing( 1, 100 );
+    {
+        QHBox* box = new QHBox( this );
+        button_ = new MyButton( box, MAKE_PIXMAP( minus ), MAKE_PIXMAP( plus ) );
+        button_->setToggleButton( true );
+        button_->setFixedSize( 13, 15 );
+        button_->setOn( true );
+        button_->setPaletteBackgroundColor( background );
+        QLabel* headerLabel = new QLabel( name, box );
+        QFont font( headerLabel->font() );
+        font.setBold( true );
+        headerLabel->setFont( font );
+        headerLabel->setMaximumHeight( 15 );
+        headerLabel->setPaletteBackgroundColor( background );
+        headerLabel->setPaletteForegroundColor( foreground );
+        layout_->addMultiCellWidget( box, 0, 0, 0, 1 );
+    }
+    QWidget* spacer = new QWidget( this );
+    spacer->setFixedWidth( 5 );
+    spacer->setPaletteBackgroundColor( background );
+    layout_->addMultiCellWidget( spacer, 1, 100, 0, 0 );
 
-    // First row
-    layout_->setRowStretch( 0, 0 );
-    layout_->setRowSpacing( 0, 10 );
-
-    button_ = new MyButton( this, MAKE_PIXMAP( minus ), MAKE_PIXMAP( plus ) );
-    button_->setToggleButton( true );
-    button_->setMinimumSize( 15, 15 );
-    button_->setMaximumSize( 15, 15 );
-    button_->setOn( true );
-    layout_->addWidget( button_, 0, 0 );
-
-    QLabel* headerLabel = new QLabel( name, this );
-    headerLabel->setMaximumHeight( 15 );
-    layout_->addWidget( headerLabel, 0, 1 );
-
-    // second row
-    layout_->setRowStretch( 1, 0 );
-    layout_->setRowSpacing( 1, 1 );
-
-    // table row
     table_ = new PropertiesTable( this, factory_, displayer_ );
     connect( button_, SIGNAL( toggled( bool ) ), table_, SLOT( Show( bool ) ) );
-    layout_->addWidget( table_, 2, 1 );
+    layout_->addWidget( table_, 1, 1 );
     table_->hide();
 }
 
@@ -133,7 +134,7 @@ void PropertiesWidget::FillUp( const QString& name )
 void PropertiesWidget::Clear()
 {
     categories_.clear();
-    for( CIT_SubWidgets it = subWidgets_.begin(); it != subWidgets_.end(); ++it )
+    for( T_SubWidgets::const_iterator it = subWidgets_.begin(); it != subWidgets_.end(); ++it )
         delete *it;
     subWidgets_.clear();
     table_->Clear();
@@ -149,41 +150,10 @@ void PropertiesWidget::Hide()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesWidget::sizeHint
-// Created: AGE 2006-10-19
-// -----------------------------------------------------------------------------
-QSize PropertiesWidget::sizeHint() const
-{
-    if( button_->isOn() )
-        return QWidget::sizeHint();
-    return minimumSizeHint();
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertiesWidget::minimumSizeHint
-// Created: AGE 2006-10-19
-// -----------------------------------------------------------------------------
-QSize PropertiesWidget::minimumSizeHint() const
-{
-    return QSize( 100, 15 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PropertiesWidget::sizePolicy
-// Created: AGE 2006-10-19
-// -----------------------------------------------------------------------------
-QSizePolicy PropertiesWidget::sizePolicy() const
-{
-    if( button_->isOn() )
-        return QWidget::sizePolicy();
-    return QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PropertiesWidget::SubItem
 // Created: AGE 2006-10-18
 // -----------------------------------------------------------------------------
-Displayer_ABC& PropertiesWidget::SubItem( const QString& name )
+kernel::Displayer_ABC& PropertiesWidget::SubItem( const QString& name )
 {
     QStringList path = QStringList::split( '/', name );
     if( path.size() >= 2 )
@@ -221,14 +191,8 @@ PropertiesWidget* PropertiesWidget::CreateWidget( const QString& subItem )
     connect( button_, SIGNAL( toggled( bool ) ), subWidget, SLOT( setShown( bool ) ) );
     subWidgets_.push_back( subWidget );
     categories_[ subItem ] = subWidgets_.size() - 1;
-    layout_->remove( table_ );
-    if( spacer_ )
-        layout_->removeItem( spacer_ );
     layout_->addWidget( subWidget, subWidgets_.size() + 1, 1 );
     subWidget->show();
-    layout_->addWidget( table_, subWidgets_.size() + 2, 1 );
-    if( spacer_ )
-        layout_->addItem( spacer_, subWidgets_.size() + 3, 1 );
     if( ! table_->numRows() )
         table_->hide();
     return subWidget;

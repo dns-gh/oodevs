@@ -49,9 +49,6 @@ public:
     //@{
     void Clear();
     virtual void Hide();
-    virtual QSize sizeHint() const;
-    virtual QSize minimumSizeHint() const;
-    virtual QSizePolicy sizePolicy() const;
     //@}
 
 private:
@@ -65,15 +62,13 @@ private:
     //! @name Types
     //@{
     typedef std::vector< PropertiesWidget* >  T_SubWidgets;
-    typedef T_SubWidgets::const_iterator    CIT_SubWidgets;
-
     typedef std::map< QString, unsigned int > T_SubCategories;
     typedef T_SubCategories::const_iterator CIT_SubCategories;
     //@}
 
     //! @name Helpers
     //@{
-    void FillUp( const QString& name );
+    void FillUp( const QString& name, bool root = false );
     kernel::Displayer_ABC& SubItem( const QString& name, const QString& path );
     PropertiesWidget* CreateWidget( const QString& subItem );
 
@@ -100,7 +95,6 @@ private:
     T_SubWidgets subWidgets_;
     PropertiesTable* table_;
     TableItemDisplayer& displayer_;
-    QSpacerItem* spacer_;
     //@}
 };
 

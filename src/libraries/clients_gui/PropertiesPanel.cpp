@@ -31,16 +31,10 @@ PropertiesPanel::PropertiesPanel( QWidget* parent, kernel::Controllers& controll
     , selected_( controllers )
     , displayer_( displayer )
 {
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
-    setResizePolicy( AutoOneFit );
-    setFrameStyle( QFrame::Box | QFrame::Sunken );
-
+    setResizePolicy( QScrollView::AutoOneFit );
     QVBox* box = new QVBox( viewport() );
     addChild( box );
-    box->setMargin( 5 );
-    box->setSpacing( 5 );
-
+    box->layout()->setAlignment( Qt::AlignTop );
     table_ = new gui::PropertiesWidget( controllers_.controller_, box, tools::translate( "gui::PropertiesPanel", "Properties" ), factory, displayer_ );
     controllers_.Register( *this );
 }
