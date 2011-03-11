@@ -10,7 +10,7 @@
         </orbat>
     </xsl:template>
     
-    <xsl:template match="sides/side">
+    <xsl:template match="parties/party">
         <side side="{@name}" affiliation="{@type}">
             <xsl:apply-templates/>
             <xsl:call-template name="list-diplomacies">
@@ -50,9 +50,9 @@
     
     <xsl:template name="list-diplomacies">
         <xsl:param name="id"/>
-        <xsl:for-each select="/orbat/diplomacies/side[@id=$id]/relationship">
-            <xsl:variable name="side" select="@side"/>
-            <element category="diplomacy" name="{/orbat/sides/side[@id=$side]/@name}" type="{@diplomacy}"/>
+        <xsl:for-each select="/orbat/diplomacy/party[@id=$id]/relationship">
+            <xsl:variable name="side" select="@party"/>
+            <element category="diplomacy" name="{/orbat/parties/party[@id=$party]/@name}" type="{@diplomacy}"/>
         </xsl:for-each>
     </xsl:template>
         

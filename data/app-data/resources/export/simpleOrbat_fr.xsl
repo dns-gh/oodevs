@@ -10,7 +10,7 @@
         </orbat>
     </xsl:template>
     
-    <xsl:template match="sides/side">
+    <xsl:template match="parties/party">
         <camp camp="{@name}" affiliation="{@type}">
             <xsl:apply-templates/>
             <xsl:call-template name="list-diplomacies">
@@ -27,7 +27,7 @@
     
     <xsl:template match="automat">
         <xsl:variable name="knowledge-group" select="@knowledge-group"/>
-        <element groupe-de-connaissance="{/orbat/sides/side/communication/knowledge-group[@id=$knowledge-group]/@name}" categorie="automate" nom="{@name}" type="{@type}"/>
+        <element groupe-de-connaissance="{/orbat/parties/party/communication/knowledge-group[@id=$knowledge-group]/@name}" categorie="automate" nom="{@name}" type="{@type}"/>
         <xsl:apply-templates/>
     </xsl:template>
     
@@ -50,9 +50,9 @@
     
     <xsl:template name="list-diplomacies">
         <xsl:param name="id"/>
-        <xsl:for-each select="/orbat/diplomacies/side[@id=$id]/relationship">
-            <xsl:variable name="side" select="@side"/>
-            <element categorie="diplomacie" nom="{/orbat/sides/side[@id=$side]/@name}" type="{@diplomacy}"/>
+        <xsl:for-each select="/orbat/diplomacy/party[@id=$id]/relationship">
+            <xsl:variable name="party" select="@party"/>
+            <element categorie="diplomacie" nom="{/orbat/parties/party[@id=$party]/@name}" type="{@diplomacy}"/>
         </xsl:for-each>
     </xsl:template>
     
