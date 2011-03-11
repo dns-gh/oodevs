@@ -78,6 +78,17 @@
     </message>
 </context>
 <context>
+    <name>FormationLayer</name>
+    <message>
+        <source>Aggregate</source>
+        <translation>Agréger</translation>
+    </message>
+    <message>
+        <source>Disaggregate</source>
+        <translation>Désagréger</translation>
+    </message>
+</context>
+<context>
     <name>R&#xe8;gle GL</name>
     <message>
         <source>2D: %1m

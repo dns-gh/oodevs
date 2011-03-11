@@ -1560,6 +1560,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Populations</source>
         <translation>Populations</translation>
     </message>
+    <message>
+        <source>Formations</source>
+        <translation>Formations</translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceConsignsWidget</name>

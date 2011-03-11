@@ -55,6 +55,12 @@ private:
     FormationPositions& operator=( const FormationPositions& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    bool IsAggregated( const kernel::Entity_ABC& entity ) const;
+    bool HasAggregatedSubordinate() const;
+    //@}
+
 private:
     //! @name Member data
     //@{

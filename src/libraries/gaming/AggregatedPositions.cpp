@@ -96,13 +96,17 @@ float AggregatedPositions::GetHeight( bool aggregated ) const
 // -----------------------------------------------------------------------------
 bool AggregatedPositions::IsAt( const Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor*/ /*= 1.f*/ ) const
 {
-    // $$$$ AGE 2006-10-06: CP de AgentPositions...
-    const float halfSizeX = 500.f * 0.5f * ( aggregated_ ? 4.f : factor_ ); // $$$$ SBO 2006-03-21: use font size?
-    const float sizeY     = 400.f * ( aggregated_ ? 4.f : factor_ );
-    const Point2f position = GetPosition( true );
-    const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
-                                 position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
-    return agentBBox.IsInside( pos );
+    if( !aggregated_ && HasAggregatedSubordinate() )
+    {
+        // $$$$ AGE 2006-10-06: CP de AgentPositions...
+        const float halfSizeX = 500.f * 0.5f * ( aggregated_ ? 4.f : factor_ ); // $$$$ SBO 2006-03-21: use font size?
+        const float sizeY     = 400.f * ( aggregated_ ? 4.f : factor_ );
+        const Point2f position = GetPosition( true );
+        const Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
+                                     position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
+        return agentBBox.IsInside( pos );
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

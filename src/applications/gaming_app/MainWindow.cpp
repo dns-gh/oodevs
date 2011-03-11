@@ -438,7 +438,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( objectKnowledges );                                                                         objectKnowledges    .SetPasses( "main,miniviews" );
     glProxy_->Register( populationKnowledges );                                                                     populationKnowledges.SetPasses( "main,miniviews" );
     glProxy_->Register( agentKnowledges );                                                                          agentKnowledges     .SetPasses( "main,miniviews" );
-    glProxy_->Register( formationLayer );                                                                           formationLayer      .SetPasses( "main,miniviews" );
+    glProxy_->Register( formationLayer );           preferences.AddLayer( tr( "Formations" ), formationLayer );     formationLayer      .SetPasses( "main,miniviews" );
     glProxy_->Register( teamLayer );                                                                                teamLayer           .SetPasses( "main,miniviews" );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main,miniviews" );
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowds" ),  populations );           populations         .SetPasses( "main,miniviews" );

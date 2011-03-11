@@ -346,7 +346,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationP
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowd" ), populations );             populations         .SetPasses( "main" );
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main" );
     glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main" );
-    glProxy_->Register( formation );                 /*preferences.AddLayer( tr( "Automats" ), automats );*/        formation            .SetPasses( "main" );
+    glProxy_->Register( formation );                preferences.AddLayer( tr( "Formations" ), formation );         formation           .SetPasses( "main" );
     glProxy_->Register( objectCreationLayer );                                                                      objectCreationLayer .SetPasses( "main" );
     glProxy_->Register( inhabitantCreationLayer );                                                                  inhabitantCreationLayer .SetPasses( "main" );
     glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );

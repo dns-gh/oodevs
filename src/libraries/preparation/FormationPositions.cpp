@@ -84,13 +84,17 @@ float FormationPositions::GetHeight( bool aggregated ) const
 // -----------------------------------------------------------------------------
 bool FormationPositions::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float /*adaptiveFactor = 1.f*/ ) const
 {
-    // $$$$ SBO 2009-02-02: Aggregated symbol position
-    const float halfSizeX = 500.f * 0.5f * 4.f; // $$$$ SBO 2006-03-21: use font size?
-    const float sizeY     = 400.f * 4.f;
-    const geometry::Point2f position = GetPosition( true );
-    const geometry::Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
-                                           position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
-    return agentBBox.IsInside( pos );
+    if( !IsAggregated( formation_ ) && HasAggregatedSubordinate() )
+    {
+        // $$$$ SBO 2009-02-02: Aggregated symbol position
+        const float halfSizeX = 500.f * 0.5f * 4.f; // $$$$ SBO 2006-03-21: use font size?
+        const float sizeY     = 400.f * 4.f;
+        const geometry::Point2f position = GetPosition( true );
+        const geometry::Rectangle2f agentBBox( position.X() - halfSizeX - precision, position.Y() - precision,
+                                               position.X() + halfSizeX + precision, position.Y() + sizeY + precision);
+        return agentBBox.IsInside( pos );
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -162,4 +166,27 @@ bool FormationPositions::IsAggregated() const
 void FormationPositions::Aggregate( const bool& bDummy )
 {
     aggregated_ = bDummy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationPositions::IsAggregated
+// Created: LGY 2011-03-11
+// -----------------------------------------------------------------------------
+bool FormationPositions::IsAggregated( const kernel::Entity_ABC& entity ) const
+{
+    if( const kernel::Positions* positions = entity.Retrieve< kernel::Positions >() )
+        return positions->IsAggregated();
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FormationPositions::HasAggregatedSubordinate
+// Created: LGY 2011-03-11
+// -----------------------------------------------------------------------------
+bool FormationPositions::HasAggregatedSubordinate() const
+{
+    tools::Iterator< const kernel::Entity_ABC& > it = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+        return IsAggregated( it.NextElement() );
+    return false;
 }

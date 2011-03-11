@@ -258,7 +258,7 @@ void OrbatToolbar::Aggregate( int id )
     for( IT_Automats it = automats_.begin(); it != automats_.end(); ++it )
     {
         const string path = (*it)->Get< kernel::TacticalHierarchies >().GetLevel();
-        if( IsValid( path.substr( 7, path.length() ), level ) ) // $$$$ _RC_ LGY 2011-03-09: à remanier
+        if( path != "" && IsValid( path.substr( 7, path.length() ), level ) ) // $$$$ _RC_ LGY 2011-03-09: à remanier
             automatsLayer_.Aggregate( **it );
     }
     menu_->setItemChecked( id, true );
