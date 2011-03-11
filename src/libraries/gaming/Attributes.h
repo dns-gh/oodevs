@@ -81,46 +81,37 @@ public:
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver_;
-
     geometry::Point2f vPos_;
     unsigned int nSpeed_;
-    int    nAltitude_;
-    int    nDirection_;
-
-    unsigned              nRawOpState_;
-    E_OperationalStatus    nOpState_;
-    E_ForceRatioStatus          nFightRateState_;
-    E_Roe                 nRulesOfEngagementState_;
-    E_PopulationRoe       nRulesOfEngagementPopulationState_;
+    int nAltitude_;
+    int nDirection_;
+    unsigned nRawOpState_;
+    E_OperationalStatus nOpState_;
+    E_ForceRatioStatus nFightRateState_;
+    E_Roe nRulesOfEngagementState_;
+    E_PopulationRoe nRulesOfEngagementPopulationState_;
     E_MeetingEngagementStatus nCloseCombatState_;
-
-    bool     bDead_;
-    bool     bNeutralized_;
-
+    bool  bDead_;
+    bool bNeutralized_;
     E_UnitPosture nOldPosture_;
     E_UnitPosture nCurrentPosture_;
-    uint          nPostureCompletionPourcentage_;
-    uint          nInstallationState_;
-
-    E_FireAvailability    nIndirectFireAvailability_;
-
+    uint nPostureCompletionPourcentage_;
+    uint nInstallationState_;
+    E_FireAvailability nIndirectFireAvailability_;
     bool bLoadingState_;
     bool bHumanTransportersReady_;
     bool bStealthModeEnabled_;
-
     bool bRadioEmitterSilence_;
     bool bRadioReceiverSilence_;
     bool bCommJammed_;
     unsigned int knowledgeGroupJammed_;
-
     bool bRadarEnabled_;
-
     bool bPrisoner_;
     const kernel::Team_ABC* surrenderedTo_;
     bool bRefugeesManaged_;
-
     bool aggregated_;
     std::map< std::string, std::string > extensions_;
+    std::string criticalIntelligence_;
     //@}
 };
 

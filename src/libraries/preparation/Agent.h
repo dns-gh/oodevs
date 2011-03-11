@@ -81,6 +81,7 @@ private:
     //@{
     const kernel::AgentType& type_;
     mutable std::string symbol_;
+    QString criticalIntelligence_;
     bool commandPost_;
     //@}
 };

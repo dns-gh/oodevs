@@ -282,6 +282,9 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_extension() )
         for( int i = 0; i < message.extension().entries_size(); ++i )
             extensions_[ message.extension().entries( i ).name() ] = message.extension().entries( i ).value();
+
+    UPDATE_ASN_ATTRIBUTE( critical_intelligence, criticalIntelligence_ );
+
     Observable< sword::UnitAttributes >::Notify( message );
 }
 
@@ -473,6 +476,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
+        asn().set_critical_intelligence( criticalIntelligence_ );
         asn.Send( publisher );
     }
 

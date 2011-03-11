@@ -20,6 +20,10 @@
         <source>Info/Command post</source>
         <translation>Info/Puesto de comando</translation>
     </message>
+    <message>
+        <source>Info/Critical intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentPositions</name>

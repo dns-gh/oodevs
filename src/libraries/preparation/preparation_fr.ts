@@ -20,6 +20,10 @@
         <source>Info/Command post</source>
         <translation>Info/Poste de commande</translation>
     </message>
+    <message>
+        <source>Info/Critical intelligence</source>
+        <translation>Info/Renseignement critique</translation>
+    </message>
 </context>
 <context>
     <name>AgentPositions</name>

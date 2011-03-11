@@ -82,6 +82,7 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Operational state" ),               nRawOpState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Speed" ),                           nSpeed_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Heading" ),                         nDirection_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Info/Critical intelligence" ),           criticalIntelligence_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Stances/Setup state" ),                  nInstallationState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
@@ -102,17 +103,17 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
 // -----------------------------------------------------------------------------
 void Attributes::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_position()  )
+    if( message.has_position() )
         vPos_ = converter_.ConvertToXY( message.position() );
 
-    if( message.has_raw_operational_state()  )
+    if( message.has_raw_operational_state() )
         nRawOpState_ = message.raw_operational_state();
 
-    if( message.has_operational_state()  )
+    if( message.has_operational_state() )
         nOpState_ = (E_OperationalStatus)message.operational_state();
 
-    if( message.has_indirect_fire_availability()  )
-        nIndirectFireAvailability_  = (E_FireAvailability)message.indirect_fire_availability();
+    if( message.has_indirect_fire_availability() )
+        nIndirectFireAvailability_ = (E_FireAvailability)message.indirect_fire_availability();
 
     if( message.has_new_posture()  )
         nCurrentPosture_ = (E_UnitPosture)message.new_posture();
@@ -120,75 +121,78 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_old_posture()  )
         nOldPosture_ = (E_UnitPosture)message.old_posture();
 
-    if( message.has_posture_transition()  )
+    if( message.has_posture_transition() )
         nPostureCompletionPourcentage_ = message.posture_transition();
 
-    if( message.has_installation()  )
+    if( message.has_installation() )
         nInstallationState_ = message.installation();
 
-    if( message.has_dead()  )
+    if( message.has_dead() )
         bDead_ = message.dead() != 0;
 
-    if( message.has_neutralized()  )
+    if( message.has_neutralized() )
         bNeutralized_ = message.neutralized() != 0;
 
-    if( message.has_force_ratio()  )
+    if( message.has_force_ratio() )
         nFightRateState_ = (E_ForceRatioStatus)message.force_ratio();
 
-    if( message.has_roe()  )
+    if( message.has_roe() )
         nRulesOfEngagementState_ = (E_Roe)message.roe();
 
-    if( message.has_roe_crowd()  )
+    if( message.has_roe_crowd() )
         nRulesOfEngagementPopulationState_ = (E_PopulationRoe)message.roe_crowd();
 
-    if( message.has_meeting_engagement()  )
+    if( message.has_meeting_engagement() )
         nCloseCombatState_ = (E_MeetingEngagementStatus)message.meeting_engagement();
 
-    if( message.has_embarked()  )
+    if( message.has_embarked() )
         bLoadingState_ = message.embarked() != 0;
 
     if( message.has_transporters_available()  )
         bHumanTransportersReady_ = message.transporters_available() != 0;
 
-    if( message.has_stealth()  )
+    if( message.has_stealth() )
         bStealthModeEnabled_ = message.stealth() != 0;
 
-    if( message.has_speed()  )
+    if( message.has_speed() )
         nSpeed_ = message.speed();
 
-    if( message.has_height()  )
+    if( message.has_height() )
         nAltitude_ = message.height();
 
-    if( message.has_direction()  )
+    if( message.has_direction() )
         nDirection_ = message.direction().heading();
 
-    if( message.has_communications() && message.communications().has_jammed()  )
+    if( message.has_communications() && message.communications().has_jammed() )
         bCommJammed_ = message.communications().jammed() != 0;
 
-    if( message.has_communications() && message.communications().has_knowledge_group()  )
+    if( message.has_communications() && message.communications().has_knowledge_group() )
         knowledgeGroupJammed_ = message.communications().knowledge_group().id();
 
-    if( message.has_radio_emitter_disabled()  )
+    if( message.has_radio_emitter_disabled() )
         bRadioEmitterSilence_ = message.radio_emitter_disabled() != 0;
 
-    if( message.has_radio_receiver_disabled()  )
+    if( message.has_radio_receiver_disabled() )
         bRadioReceiverSilence_ = message.radio_receiver_disabled() != 0;
 
-    if( message.has_radar_active()   )
+    if( message.has_radar_active() )
         bRadarEnabled_ = message.radar_active() != 0;
 
-    if( message.has_prisoner()  )
+    if( message.has_prisoner() )
         bPrisoner_ = message.prisoner() != 0;
 
-    if( message.has_surrendered_unit()  )
+    if( message.has_surrendered_unit() )
         surrenderedTo_ = teamResolver_.Find( message.surrendered_unit().id() );
 
-    if( message.has_refugees_managed()  )
+    if( message.has_refugees_managed() )
         bRefugeesManaged_ = message.refugees_managed() != 0;
 
     if( message.has_extension() )
         for( int i = 0; i < message.extension().entries_size(); ++i )
             extensions_[ message.extension().entries( i ).name() ] = message.extension().entries( i ).value();
+
+    if( message.has_critical_intelligence() )
+        criticalIntelligence_ = message.critical_intelligence();
 
     controller_.Update( *(Attributes_ABC*)this );
 }
@@ -201,14 +205,15 @@ void Attributes::Display( Displayer_ABC& displayer ) const
 {
     // $$$$ AGE 2006-03-17: Split attributes ?
     displayer.Group( tools::translate( "Attributes", "Info" ) )
-                .Display( tools::translate( "Attributes", "Operational state:" ),    nRawOpState_ * Units::percentage )
-                .Display( tools::translate( "Attributes", "Dead:" ),                 bDead_ )
-                .Display( tools::translate( "Attributes", "Neutralized:" ),          bNeutralized_ )
-                .Display( tools::translate( "Attributes", "Speed:" ),                nSpeed_ * Units::kilometersPerHour )
-                .Display( tools::translate( "Attributes", "Heading:" ),              nDirection_ * Units::degrees )
-                .Display( tools::translate( "Attributes", "Height:" ),               nAltitude_  * Units::meters )
-                .Display( tools::translate( "Attributes", "Troops:" ),               bLoadingState_ ? tools::translate( "Attributes", "on-board" ) : tools::translate( "Attributes", "off-board" ) )
-                .Display( tools::translate( "Attributes", "Human transportation:" ), bHumanTransportersReady_ ? tools::translate( "Attributes", "Available" ) : tools::translate( "Attributes", "Unavailable" ) );
+                .Display( tools::translate( "Attributes", "Operational state:" ),     nRawOpState_ * Units::percentage )
+                .Display( tools::translate( "Attributes", "Dead:" ),                  bDead_ )
+                .Display( tools::translate( "Attributes", "Neutralized:" ),           bNeutralized_ )
+                .Display( tools::translate( "Attributes", "Speed:" ),                 nSpeed_ * Units::kilometersPerHour )
+                .Display( tools::translate( "Attributes", "Heading:" ),               nDirection_ * Units::degrees )
+                .Display( tools::translate( "Attributes", "Critical intelligence:" ), criticalIntelligence_ )
+                .Display( tools::translate( "Attributes", "Height:" ),                nAltitude_  * Units::meters )
+                .Display( tools::translate( "Attributes", "Troops:" ),                bLoadingState_ ? tools::translate( "Attributes", "on-board" ) : tools::translate( "Attributes", "off-board" ) )
+                .Display( tools::translate( "Attributes", "Human transportation:" ),  bHumanTransportersReady_ ? tools::translate( "Attributes", "Available" ) : tools::translate( "Attributes", "Unavailable" ) );
 
     displayer.Group( tools::translate( "Attributes", "Stances" ) )
                 .Display( tools::translate( "Attributes", "Previous stance:" ), nOldPosture_ )

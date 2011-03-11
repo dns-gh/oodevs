@@ -921,7 +921,7 @@
                           <xs:documentation xml:lang="fr">Définit la panne de l'équipement dont on va redéfinir l'état initial. Renvoie vers "Pannes.xml".</xs:documentation>
                         </xs:annotation>
                       </xs:attribute>
-					</xs:complexType>
+                    </xs:complexType>
                   </xs:element>
                 </xs:sequence>
               </xs:complexType>
@@ -1032,6 +1032,15 @@
               </xs:unique>
             </xs:element>
             <xs:element name="extensions" type="T_ExtensionsType" minOccurs="0"/>
+            <xs:element name="critical-intelligence" minOccurs="0">
+              <xs:complexType>
+                <xs:attribute name="content" type="xs:string" use="required">
+                  <xs:annotation>
+                    <xs:documentation>Defines the critical intelligence known by the population.</xs:documentation>
+                  </xs:annotation>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
           </xs:all>
           <xs:attribute name="type" type="xs:string" use="required">
             <xs:annotation>

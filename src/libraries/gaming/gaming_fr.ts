@@ -274,6 +274,14 @@
         <source>Crowd RoE:</source>
         <translation>RoE foule:</translation>
     </message>
+    <message>
+        <source>Info/Critical intelligence</source>
+        <translation>Info/Renseignement critique</translation>
+    </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation>Renseignement critique</translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

@@ -113,7 +113,6 @@ private:
     const std::string                          name_;
     dispatcher::Automat_ABC*                   automat_;
     const bool                                 bPC_;
-
     geometry::Point2d                          position_; // x = longitude, y = latitude
     unsigned int                               nDirection_;
     unsigned int                               nHeight_;
@@ -135,10 +134,8 @@ private:
     std::vector< unsigned int >                nbcAgentTypesContaminating_;
     int                                        contaminationPercentage_;
     float                                      contaminationQuantity_;
-
     bool                                       communicationJammed_;
     unsigned int                               knowledgeGroupJammed_;
-
     bool                                       bRadioEmitterEnabled_;
     bool                                       bRadioRecieverEnabled_;
     bool                                       bRadarEnabled_;
@@ -157,20 +154,17 @@ private:
     bool                                       bPrisonner_;
     bool                                       bRefugeeManaged_;
     DecisionalState                            decisionalInfos_;
-
     tools::Resolver< Equipment >               equipments_;
     tools::Resolver< Humans >                  troops_;
     tools::Resolver< Dotation >                dotations_;
     tools::Resolver< Loan >                    borrowings_;
     tools::Resolver< Loan >                    lendings_;
-
     AgentLogMedical*                           pLogMedical_;
     AgentLogMaintenance*                       pLogMaintenance_;
     AgentLogSupply*                            pLogSupply_;
-
     std::auto_ptr< AgentOrder >                order_;
     std::map< std::string, std::string >       extensions_;
-
+    std::string                                criticalIntelligence_;
     Localisation                               currentPath_;
 };
 

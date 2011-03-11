@@ -32,9 +32,10 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Agent::Agent( const AgentType& type, Controller& controller, IdManager& idManager, bool commandPost )
     : EntityImplementation< Agent_ABC >( controller, idManager.GetNextId(), type.GetName().c_str() )
-    , type_( type )
-    , symbol_( type_.GetSymbol() )
-    , commandPost_( commandPost )
+    , type_                ( type )
+    , symbol_              ( type_.GetSymbol() )
+    , commandPost_         ( commandPost )
+    , criticalIntelligence_( "" )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -56,10 +57,16 @@ namespace
 // -----------------------------------------------------------------------------
 Agent::Agent( xml::xistream& xis, Controller& controller, IdManager& idManager, const AgentTypes& agentTypes )
     : EntityImplementation< Agent_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
-    , type_( agentTypes.Resolver< AgentType, std::string >::Get( xis.attribute< std::string >( "type" ) ) )
-    , symbol_( type_.GetSymbol() )
+    , type_       ( agentTypes.Resolver< AgentType, std::string >::Get( xis.attribute< std::string >( "type" ) ) )
+    , symbol_     ( type_.GetSymbol() )
     , commandPost_( xis.attribute< bool >( "command-post", false ) )
 {
+    std::string criticalIntelligence;
+    xis >> xml::optional
+            >> xml::start( "critical-intelligence" )
+                >> xml::attribute( "content", criticalIntelligence )
+            >> xml::end;
+    criticalIntelligence_ = criticalIntelligence.c_str();
     idManager.Lock( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -139,6 +146,7 @@ void Agent::CreateDictionary( kernel::Controller& controller )
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), name_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Command post" ), commandPost_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Critical intelligence" ), criticalIntelligence_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,6 +159,12 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "type", type_.GetName() )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "command-post", commandPost_ );
+    if( !criticalIntelligence_.empty() )
+    {
+        xos << xml::start( "critical-intelligence" )
+                << xml::attribute( "content", criticalIntelligence_.ascii() )
+            << xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------

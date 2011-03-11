@@ -274,6 +274,14 @@
         <source>Crowd RoE:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Info/Critical intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

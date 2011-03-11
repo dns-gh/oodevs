@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>&#xa9; 2011 MASA Group</source>
-        <translation >© 2011 MASA Group</translation>
+        <translation>© 2011 MASA Group</translation>
     </message>
 </context>
 <context>

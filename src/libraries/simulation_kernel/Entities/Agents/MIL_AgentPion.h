@@ -179,6 +179,7 @@ private:
     //@{
     const MIL_AgentTypePion* pType_;
     bool bIsPC_;
+    std::string criticalIntelligence_;
     MIL_Automate* pAutomate_;
     const AlgorithmsFactories& algorithmFactories_;
     DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;

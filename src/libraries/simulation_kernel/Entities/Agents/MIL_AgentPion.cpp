@@ -88,9 +88,14 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , algorithmFactories_  ( algorithmFactories )
 {
     automate.RegisterPion( *this, false );
-    xis >> xml::optional >> xml::start( "extensions" )
-        >> xml::list( "entry", *this, &MIL_AgentPion::ReadExtension )
-        >> xml::end;
+    xis >> xml::optional
+            >> xml::start( "critical-intelligence" )
+                >> xml::attribute( "content", criticalIntelligence_ )
+            >> xml::end
+        >> xml::optional
+            >> xml::start( "extensions" )
+                >> xml::list( "entry", *this, &MIL_AgentPion::ReadExtension )
+            >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -285,6 +290,12 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
                 << xml::end;
         }
         xos << xml::end;
+    }
+    if( criticalIntelligence_ != "" )
+    {
+        xos << xml::start( "critical-intelligence" )
+                << xml::attribute( "content", criticalIntelligence_ )
+            << xml::end;
     }
     xos << xml::end;// unit
 }
@@ -583,27 +594,28 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_AgentPion::CreateKnowledge( const M
 void MIL_AgentPion::SendCreation() const
 {
     assert( pType_ );
-    client::UnitCreation asnMsg;
-    asnMsg().mutable_unit()->set_id( GetID() );
-    asnMsg().mutable_type()->set_id( pType_->GetID() );
-    asnMsg().set_name( GetName() );
-    asnMsg().mutable_automat()->set_id( GetAutomate().GetID() );
-    asnMsg().set_pc( bIsPC_ );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    client::UnitCreation creationMsg;
+    creationMsg().mutable_unit()->set_id( GetID() );
+    creationMsg().mutable_type()->set_id( pType_->GetID() );
+    creationMsg().set_name( GetName() );
+    creationMsg().mutable_automat()->set_id( GetAutomate().GetID() );
+    creationMsg().set_pc( bIsPC_ );
+    creationMsg.Send( NET_Publisher_ABC::Publisher() );
     // TODO à mettre dans UnitCreation quand l'erreur dans le protocole pourra être corrigée (extensions dans creation et pas attributes)
+
+    client::UnitAttributes attributesMsg;
+    attributesMsg().mutable_unit()->set_id( GetID() );
+    if( !criticalIntelligence_.empty() )
+        attributesMsg().set_critical_intelligence( criticalIntelligence_ );
     if( extensions_.size() )
-    {
-        client::UnitAttributes msg;
-        msg().mutable_unit()->set_id( GetID() );
         for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
         {
-            sword::Extension_Entry* entry = msg().mutable_extension()->add_entries();
+            sword::Extension_Entry* entry = attributesMsg().mutable_extension()->add_entries();
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
-        msg.Send( NET_Publisher_ABC::Publisher() );
-        msg().mutable_extension()->mutable_entries()->Clear();
-    }
+    if( !criticalIntelligence_.empty() || !extensions_.empty() )
+        attributesMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
