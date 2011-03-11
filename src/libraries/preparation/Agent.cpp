@@ -20,6 +20,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Styles.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -150,4 +151,17 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "type", type_.GetName() )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "command-post", commandPost_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DisplayInTooltip
+// Created: LDC 2011-03-11
+// -----------------------------------------------------------------------------
+void Agent::DisplayInTooltip( Displayer_ABC& displayer ) const
+{
+    QString id = QString( "[%1]" ).arg( GetId() );
+    displayer.Item( "" ).Start( Styles::bold )
+                 .Add( (Agent_ABC*)this )
+                 .AddToDisplay( id );
+    displayer.End();
 }
