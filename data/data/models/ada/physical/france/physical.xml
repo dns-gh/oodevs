@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<physical xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Physical.xsd">
+<physical xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/physical/Physical.xsd">
   <decisional file="Decisionnel.xml"/>
   <volumes file="Volumes.xml"/>
   <protections file="Protections.xml"/>
@@ -34,4 +34,4 @@
   <urban file="Urban.xml"/>
   <resource-networks file="ResourceNetworks.xml"/>
 </physical>
-<!-- signature="2448163758" -->
+<!-- signature="1623446207" -->
