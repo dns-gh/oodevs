@@ -8,6 +8,7 @@
 
 #include "clients_kernel_pch.h"
 #include "AutomatType.h"
+#include "clients_kernel/App6Symbol.h"
 #include "tools/Iterator.h"
 #include "AutomatComposition.h"
 #include "AgentType.h"
@@ -32,7 +33,7 @@ AutomatType::AutomatType( xml::xistream& xis, const tools::Resolver_ABC< AgentTy
     model_ = & modelResolver.Get( modelName );
     if( ! pcType_ )
         throw std::runtime_error( "Automat '" + name + "' has no command-post" );
-    symbol_ = pcType_->GetSymbol();
+    UpdateSymbol();
 }
 
 // -----------------------------------------------------------------------------
@@ -42,6 +43,16 @@ AutomatType::AutomatType( xml::xistream& xis, const tools::Resolver_ABC< AgentTy
 AutomatType::~AutomatType()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatType::UpdateSymbol
+// Created: LDC 2011-03-11
+// -----------------------------------------------------------------------------
+void AutomatType::UpdateSymbol()
+{
+    for( T_UnitConstitution::const_iterator it = units_.begin(); it != units_.end(); ++it )
+        App6Symbol::Merge( (*it)->GetType().GetSymbol(), symbol_ );
 }
 
 // -----------------------------------------------------------------------------

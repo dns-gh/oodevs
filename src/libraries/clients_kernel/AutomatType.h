@@ -67,6 +67,7 @@ private:
     //! @name Helpers
     //@{
     void ReadAgent( xml::xistream& xis, const  tools::Resolver_ABC< AgentType, std::string >& agentResolver );
+    void UpdateSymbol();
     //@}
 
     //! @name Types
