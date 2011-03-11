@@ -159,7 +159,7 @@ void Agent::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "type", type_.GetName() )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "command-post", commandPost_ );
-    if( !criticalIntelligence_.empty() )
+    if( criticalIntelligence_ != "" )
     {
         xos << xml::start( "critical-intelligence" )
                 << xml::attribute( "content", criticalIntelligence_.ascii() )
