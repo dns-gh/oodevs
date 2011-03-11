@@ -244,7 +244,7 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
         const unsigned nPos = dotationsTable_->numRows();
         dotationsTable_->insertRows( nPos, 1 );
         dotationsTable_->setItem( nPos, 0, new QCheckTableItem( dotationsTable_, 0 ) );
-        dotationsTable_->setText( nPos, 1, type.GetName().c_str() );
+        dotationsTable_->setText( nPos, 1, type.GetCategory().c_str() );
         dotationsTable_->setItem( nPos, 2, new SpinTableItem< int >( dotationsTable_, 0, 100, 1 ) );
     }
     dotationsTable_->setMinimumHeight( dotationsTable_->rowHeight( 0 ) * 5 );
@@ -258,8 +258,8 @@ void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
 {
     munitionsFamilyTable_->setNumRows( 0 );
     AddAmmunition( eAmmunitionFamily_Obus, tr( "Shell" ) );
-    AddAmmunition( eAmmunitionFamily_MissileSol, tr( "Ground missile" ) );
     AddAmmunition( eAmmunitionFamily_MissileAir, tr( "Air missile" ) );
+    AddAmmunition( eAmmunitionFamily_MissileSol, tr( "Ground missile" ) );
     AddAmmunition( eAmmunitionFamily_Mitraille, tr( "Bullet" ) );
     munitionsFamilyTable_->setMinimumHeight( munitionsFamilyTable_->rowHeight( 0 ) * 5 );
 }
