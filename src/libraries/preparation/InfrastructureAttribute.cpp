@@ -27,7 +27,7 @@ using namespace kernel;
 // Name: InfrastructureAttribute constructor
 // Created: SLG 2011-01-11
 // -----------------------------------------------------------------------------
-InfrastructureAttribute::InfrastructureAttribute( kernel::Controllers& controllers, const gui::TerrainObjectProxy& object, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
+InfrastructureAttribute::InfrastructureAttribute( Controllers& controllers, const gui::TerrainObjectProxy& object, const InfrastructureType& infrastructureType, PropertiesDictionary& dico )
     : controllers_( controllers )
     , type_       ( infrastructureType )
     , enabled_    ( true )
@@ -133,7 +133,7 @@ void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico )
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::Draw( const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
-    if( controllers_.options_.GetOption( "Infra", false ).To< bool >() )
+    if( controllers_.options_.GetOption( "Infra", true ).To< bool >() )
         tools.DrawApp6Symbol( type_.GetSymbol(), object_.Barycenter(), 0.1f, 0.1f );
 }
 

@@ -98,7 +98,7 @@ void InfrastructureAttribute::UpdateData( const T& message )
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::Draw( const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
-    if( controllers_.options_.GetOption( "Infra", false ).To< bool >() )
+    if( controllers_.options_.GetOption( "Infra", true ).To< bool >() )
     {
         if( type_ )
             tools.DrawApp6Symbol( type_->GetSymbol(), object_.Barycenter() , 0.1f, 0.1f );
