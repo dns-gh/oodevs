@@ -47,6 +47,7 @@
 #include "actions_gui/ParamPolygonList.h"
 #include "actions_gui/ParamPopulationKnowledge.h"
 #include "actions_gui/ParamUrbanBlock.h"
+#include "actions_gui/ParamStringField.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
@@ -94,6 +95,7 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["heading"]             = &MissionInterfaceBuilder::BuildDirection;
     builderFunctors_["integer"]             = &MissionInterfaceBuilder::BuildNumeric;
     builderFunctors_["datetime"]            = &MissionInterfaceBuilder::BuildParamDateTime;
+    builderFunctors_["string"]              = &MissionInterfaceBuilder::BuildString;
 
     builderFunctors_["agentknowledge"]      = &MissionInterfaceBuilder::BuildAgentKnowledge;
     builderFunctors_["agentknowledgelist"]  = &MissionInterfaceBuilder::BuildAgentKnowledgeList;
@@ -248,6 +250,15 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildDirection( const OrderPar
 actions::gui::Param_ABC& MissionInterfaceBuilder::BuildNumeric( const OrderParameter& parameter ) const
 {
     return *new actions::gui::ParamNumericField( parameter, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildString
+// Created: BCI 2011-03-14
+// -----------------------------------------------------------------------------
+actions::gui::Param_ABC& MissionInterfaceBuilder::BuildString( const kernel::OrderParameter& parameter ) const
+{
+    return *new actions::gui::ParamStringField( parameter );
 }
 
 // -----------------------------------------------------------------------------
