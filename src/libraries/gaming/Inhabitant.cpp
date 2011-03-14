@@ -161,7 +161,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             mutableHuman.confined_ = occupation.confined();
             const T_Human& human = mutableHuman;
             PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-            const QString keyHuman = tools::translate( "Inhabitant", "Living Area/" ) + it->second->GetName().ascii() + " [" + boost::lexical_cast< std::string >( id ).c_str() + "]/";
+            const QString keyHuman = tools::translate( "Inhabitant", "Living Area/" ) + it->second->GetName().ascii() + "/";
             const QString keyNumber = keyHuman + tools::translate( "Inhabitant", "Resident" );
             if( !dictionary.HasKey( keyNumber ) )
                 dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, human.number_ );
