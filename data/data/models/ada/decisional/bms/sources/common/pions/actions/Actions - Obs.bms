@@ -145,6 +145,7 @@ end
         F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_EnReco )
         if( self.bRecoMax ) then
             self.params.__returnValue = eActionEffectuee
+            self:SendFeedback( eActionEffectuee )
         end
 
     end,
