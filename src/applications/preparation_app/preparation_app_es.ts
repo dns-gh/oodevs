@@ -825,6 +825,10 @@ Do you want to save anyway?</source>
         <source>Extensions</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PositionEditor</name>

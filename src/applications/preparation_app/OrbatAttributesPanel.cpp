@@ -104,7 +104,7 @@ void OrbatAttributesPanel::NotifySelected( const Entity_ABC* element )
                 type->GetAttributeTypes( "population", attributes );
             if( attributes.size() )
             {
-                pGroupBox_ = new QGroupBox( 1, Qt::Horizontal, "Enabled", pMainLayout_ );
+                pGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Enabled" ), pMainLayout_ );
                 pGroupBox_->setCheckable( true );
                 pGroupBox_->setMargin( 5 );
                 for( ExtensionType::CIT_AttributesTypes it = attributes.begin(); it != attributes.end(); ++it )

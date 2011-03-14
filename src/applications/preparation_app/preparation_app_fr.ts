@@ -825,6 +825,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Extensions</source>
         <translation>Extensions</translation>
     </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Activé</translation>
+    </message>
 </context>
 <context>
     <name>PositionEditor</name>
