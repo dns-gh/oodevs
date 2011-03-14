@@ -198,6 +198,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.mutable_surrendered_unit()->set_id( 0 );
                 message.set_prisoner( true );
                 message.set_refugees_managed( true );
+                message.set_critical_intelligence( "critical intelligence" );
                 BOOST_REQUIRE( message.IsInitialized() );
                 agents.Get( 1 ).Update( message );
             }
