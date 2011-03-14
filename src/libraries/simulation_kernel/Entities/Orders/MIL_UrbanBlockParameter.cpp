@@ -19,6 +19,7 @@
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
 MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, MIL_EntityManager_ABC& entityManager )
+    : pUrbanBlock_( 0 )
 {
     MIL_Object_ABC* pObject = entityManager.FindObject( asn.id() );
     if( pObject )

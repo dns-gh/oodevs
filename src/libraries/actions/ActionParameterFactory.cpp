@@ -316,7 +316,9 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
 // -----------------------------------------------------------------------------
 bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity, const std::string& type, std::auto_ptr< Parameter_ABC >& param ) const
 {
-    if( parameter.IsList() || type == "list" || type == "locationcomposite" )
+    if( !parameter.IsList() && type == "locationcomposite" )
+        xis >> xml::list( *this, &ActionParameterFactory::CreateLocationComposite, parameter, entity, param );
+    else if( parameter.IsList() || type == "list" || type == "locationcomposite" )
     {
         parameters::ParameterList* parameterList = new parameters::ParameterList( parameter );
         param.reset( parameterList );
@@ -333,4 +335,14 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     else
         return false;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::CreateLocationComposite
+// Created: ABN 2010-03-13
+// -----------------------------------------------------------------------------
+void ActionParameterFactory::CreateLocationComposite( const std::string &type, xml::xistream& xis, const kernel::OrderParameter& parameter, const kernel::Entity_ABC& entity, std::auto_ptr< actions::Parameter_ABC >& param ) const
+{
+    if( !DoCreateParameter( parameter, xis, entity, type, param ) )
+        DoCreateParameter( parameter, xis, type, param );
 }

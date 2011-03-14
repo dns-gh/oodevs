@@ -68,6 +68,7 @@ private:
     void CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list, const kernel::Entity_ABC& entity ) const;
     bool DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     bool DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const;
+    void CreateLocationComposite( const std::string &type, xml::xistream& xis, const kernel::OrderParameter& parameter, const kernel::Entity_ABC& entity, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     //@}
 
 private:
