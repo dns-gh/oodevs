@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __EntityAffinities_h_
-#define __EntityAffinities_h_
+#ifndef __Affinities_h_
+#define __Affinities_h_
 
 #include "Types.h"
 #include "clients_kernel/Extension_ABC.h"
@@ -32,23 +32,23 @@ namespace xml
 class Model;
 
 // =============================================================================
-/** @class  EntityAffinities
-    @brief  EntityAffinities
+/** @class  Affinities
+    @brief  Affinities
 */
 // Created: ABR 2011-01-27
 // =============================================================================
-class EntityAffinities : public kernel::Extension_ABC
-                           , public kernel::Serializable_ABC
-                           , public tools::Observer_ABC
-                           , public tools::ElementObserver_ABC< kernel::Team_ABC >
+class Affinities : public kernel::Extension_ABC
+                 , public kernel::Serializable_ABC
+                 , public tools::Observer_ABC
+                 , public tools::ElementObserver_ABC< kernel::Team_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityAffinities( kernel::Controllers& controllers, Model& model, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary );
-             EntityAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
-    virtual ~EntityAffinities();
+             Affinities( kernel::Controllers& controllers, Model& model, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary );
+             Affinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
+    virtual ~Affinities();
     //@}
 
     //! @name Operations
@@ -62,23 +62,23 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    EntityAffinities( const EntityAffinities& );            //!< Copy constructor
-    EntityAffinities& operator=( const EntityAffinities& ); //!< Assignment operator
+    Affinities( const Affinities& );            //!< Copy constructor
+    Affinities& operator=( const Affinities& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
-    void    InitializeAffinities();
-    bool    VerifyAffinitiesContent() const;
+    void InitializeAffinities();
+    bool VerifyAffinitiesContent() const;
     QString GetTeamNameFromId( unsigned long id ) const;
-    void    UpdateDictionary();
-    void    ReadAffinity( xml::xistream& xis );
+    void UpdateDictionary();
+    void ReadAffinity( xml::xistream& xis );
     //@}
 
     //! @name Types
     //@{
     typedef std::map< unsigned long, EntityAffinity > T_Affinities;
-    typedef T_Affinities::const_iterator                CIT_Affinities;
+    typedef T_Affinities::const_iterator            CIT_Affinities;
 
     typedef std::map< unsigned long, std::string > T_TeamMap;
     //@}
@@ -86,13 +86,13 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&            controllers_;
-    Model&                          model_;
-    const kernel::Entity_ABC&       entity_;
-    kernel::PropertiesDictionary&   dictionary_;
-    T_Affinities                    affinities_;
-    T_TeamMap                       knownTeams_;
+    kernel::Controllers& controllers_;
+    Model& model_;
+    const kernel::Entity_ABC& entity_;
+    kernel::PropertiesDictionary& dictionary_;
+    T_Affinities affinities_;
+    T_TeamMap knownTeams_;
     //@}
 };
 
-#endif // __EntityAffinities_h_
+#endif // __Affinities_h_

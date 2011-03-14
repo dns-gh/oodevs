@@ -26,7 +26,7 @@
 #include "LogisticBaseStates.h"
 #include "Model.h"
 #include "Inhabitant.h"
-#include "EntityAffinities.h"
+#include "Affinities.h"
 #include "InhabitantHierarchies.h"
 #include "InhabitantPositions.h"
 #include "Inhabitants.h"
@@ -132,7 +132,7 @@ Population_ABC* AgentFactory::Create( Entity_ABC& parent, const PopulationType& 
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new PopulationPositions( *result, static_.coordinateConverter_, position ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
-    result->Attach( *new EntityAffinities( controllers_, model_, *result, dico ) );
+    result->Attach( *new Affinities( controllers_, model_, *result, dico ) );
     if( Populations* popus = top->Retrieve< Populations >() )
         popus->AddPopulation( *result );
     result->Polish();
@@ -164,7 +164,7 @@ Inhabitant_ABC* AgentFactory::Create( Entity_ABC& parent, const InhabitantType& 
 
     result->Attach< Positions >( positions );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, top ) );
-    result->Attach( *new EntityAffinities( controllers_, model_, *result, dico ) );
+    result->Attach( *new Affinities( controllers_, model_, *result, dico ) );
     if( Inhabitants* inhabs = top->Retrieve< Inhabitants >() )
         inhabs->AddInhabitant( *result );
     result->Polish();
@@ -256,7 +256,7 @@ Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, Team_ABC& parent )
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new PopulationPositions( xis, *result, static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
-    result->Attach( *new EntityAffinities( xis, controllers_, model_, *result, dico ) );
+    result->Attach( *new Affinities( xis, controllers_, model_, *result, dico ) );
     if( xis.has_child( "extensions" ) )
     {
         xis.start( "extensions" );
@@ -280,7 +280,7 @@ Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, Team_ABC& parent 
 
     result->Attach< Positions >( *new InhabitantPositions( xis, static_.coordinateConverter_, model_.urban_, *result, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
-    result->Attach( *new EntityAffinities( xis, controllers_, model_, *result, dico ) );
+    result->Attach( *new Affinities( xis, controllers_, model_, *result, dico ) );
     if( xis.has_child( "extensions" ) )
     {
         xis.start( "extensions" );
