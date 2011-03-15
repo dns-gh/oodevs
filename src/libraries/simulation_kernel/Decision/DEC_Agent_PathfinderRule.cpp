@@ -363,7 +363,9 @@ double DEC_Agent_PathfinderRule::GetFuseauxCost( const MT_Vector2D& from, const 
 float DEC_Agent_PathfinderRule::EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to )
 {
     const float rDistance = from.Distance( to );
-    return bShort_ ? rDistance : ( rDistance / rMaxSpeed_ );
+    if( rMaxSpeed_ != 0 )
+        return bShort_ ? rDistance : ( rDistance / rMaxSpeed_ );
+    return INT_MAX;
 }
 
 // -----------------------------------------------------------------------------
