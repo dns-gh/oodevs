@@ -104,6 +104,7 @@ Function .onInit
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 FunctionEnd
 
+;--------------------------------
 Function .onInstSuccess
     ; Add uninstall information
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"

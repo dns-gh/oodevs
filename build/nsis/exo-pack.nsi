@@ -12,6 +12,7 @@
 !include "tools.nsh"
 
 !insertmacro OT.Initialize
+!insertmacro OT.CheckPrompt
 ;..................................................................................................
 
 !ifdef EVALUATION
@@ -147,7 +148,6 @@ SectionGroupEnd
 
 ;--------------------------------
 SectionGroup "Terrains" s_ter
-
     !if "${EXO_PACK}" == "defense-worldwide"
         !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
         !insertmacro OT.AddTerrain "Paris_Est" "s_ter2"
@@ -179,7 +179,6 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "lehavre" "s_ter2"  
         !insertmacro OT.AddTerrain "montereycross" "s_ter3"
     !endif
-
 SectionGroupEnd
 
 ;--------------------------------
@@ -192,22 +191,17 @@ SectionGroup "Populations" s_pop
         !insertmacro OT.AddPopulation "lehavre" "s_pop2"
         !insertmacro OT.AddPopulation "montereycross" "s_pop3"
     !endif    
-
 SectionGroupEnd
-
 
 ;--------------------------------
 Section "Uninstall"
-
     !insertmacro OT.KillRunning
     !insertmacro OT.UninstallAdditionalComponent "Terrain"
     !insertmacro OT.Uninstall
-
 SectionEnd
 
 ;--------------------------------
 Function .onInit
-
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
 
@@ -219,19 +213,22 @@ Function .onInit
     
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
+	!insertmacro OT.ParseCommandLine
 FunctionEnd
 
+;--------------------------------
 Function .onInstSuccess
     ;create/update log always within .onInstSuccess function
     !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 FunctionEnd
 
+;--------------------------------
 Function un.onInit
     !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
+;--------------------------------
 Function .onSelChange
-
     !if "${EXO_PACK}" == "defense-worldwide"
         !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
         !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
@@ -315,5 +312,4 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo3" "s_ter3"
         !insertmacro OT.CheckDependency "s_ter3" "s_pop3"       
     !endif
-     
 FunctionEnd

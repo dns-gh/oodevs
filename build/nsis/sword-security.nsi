@@ -16,6 +16,7 @@
 !include "tools.nsh"
 
 !insertmacro OT.Initialize
+!insertmacro OT.CheckPrompt
 ;..................................................................................................
 
 Name "${PRODUCT_NAME}"
@@ -50,18 +51,18 @@ Section "!${PRODUCT_NAME}"
     ; resources: documentation
     SetOutPath "$INSTDIR\applications\resources\help\en"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\en\*.chm"
+    File "${DOCDIR}\en\final\*.chm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     SetOutPath "$INSTDIR\applications\resources\help\fr"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\fr\*.chm"
+    File "${DOCDIR}\fr\final\*.chm"
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     ; readme / changelog files
     SetOutPath "$INSTDIR\doc"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File "${DOCDIR}\en\readme.txt" ; no language support
+    File "${DOCDIR}\readme.txt" ; no language support
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
     SetOutPath "$INSTDIR\applications"
@@ -242,7 +243,6 @@ SectionEnd
 
 ;--------------------------------
 Function .onInit
-
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
 
@@ -261,17 +261,21 @@ Function .onInit
 
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
+	!insertmacro OT.ParseCommandLine
 FunctionEnd
 
+;--------------------------------
 Function .onInstSuccess
     ;create/update log always within .onInstSuccess function
     !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 FunctionEnd
 
+;--------------------------------
 Function un.onInit
     !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
+;--------------------------------
 Function .onSelChange
 
     !insertmacro OT.CheckDependency "s_exo1" "s_ter1"

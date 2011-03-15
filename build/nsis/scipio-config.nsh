@@ -61,7 +61,7 @@ XPStyle on
 
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
-!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_DIRECTORY ; ABR 15.03.2001 : Fichier jamais inclu, donc pas de repertoir data ni de possibilite d'exclure le repertoire d'installation, mais peu se faire rapidement si besoin.
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 

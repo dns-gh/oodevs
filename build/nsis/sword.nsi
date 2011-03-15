@@ -12,6 +12,7 @@
 !include "tools.nsh"
 
 !insertmacro OT.Initialize
+!insertmacro OT.CheckPrompt
 ;..................................................................................................
 
 !ifdef EVALUATION
@@ -139,7 +140,6 @@ Section "!${PRODUCT_NAME}"
     File "${OUTDIR}\vcredist_${PLATFORM}.exe"
     ExecWait '"vcredist_${PLATFORM}.exe" /S /NCRC'
     Delete "vcredist_${PLATFORM}.exe"
-
 SectionEnd
 
 ;--------------------------------
@@ -156,42 +156,34 @@ SectionGroupEnd
 
 ;--------------------------------
 Section "Documentation" s_doc
-
     !insertmacro OT.AddDocumentation
-
 SectionEnd
 
+;--------------------------------
 SectionGroup "Shortcuts" s_sc
-
-    ;--------------------------------
+    ;----------------------------
     Section "Desktop" s_desktop
         SetOutPath "$INSTDIR\applications"
         CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
-
-    ;--------------------------------
+    ;----------------------------
     Section "Quick Launch" s_quick
         SetOutPath "$INSTDIR\applications"
         StrCmp $QUICKLAUNCH $TEMP +2
         CreateShortCut "$QUICKLAUNCH\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
-
 SectionGroupEnd
-
 
 ;--------------------------------
 Section "Uninstall"
-
     !insertmacro OT.KillRunning
     !insertmacro OT.UninstallAdditionalComponent "Terrain"
     !insertmacro OT.RemoveMasaLifeIde
     !insertmacro OT.Uninstall
-
 SectionEnd
 
 ;--------------------------------
 Function .onInit
-
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
 
@@ -206,17 +198,20 @@ Function .onInit
 
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
+	!insertmacro OT.ParseCommandLine
 FunctionEnd
 
+;--------------------------------
 Function .onInstSuccess
     ;create/update log always within .onInstSuccess function
     !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 FunctionEnd
 
+;--------------------------------
 Function un.onInit
     !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
+;--------------------------------
 Function .onSelChange
-
 FunctionEnd

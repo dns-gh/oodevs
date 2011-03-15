@@ -9,6 +9,9 @@
 !endif
 
 !include "Sections.nsh"
+!include "FileFunc.nsh"
+!insertmacro GetParameters
+!insertmacro GetOptions
 
 ;------------------------------------------------------------------------------
 ; Defines required constants
@@ -51,10 +54,6 @@
         !define APPLICATIONSDIR "..\..\src\applications"
     !endif
 
-    !ifndef INSTDATADIR
-        !define INSTDATADIR "$DOCUMENTS\${PRODUCT_NAME}"
-    !endif
-
 !macroend
 
 ;------------------------------------------------------------------------------
@@ -62,7 +61,7 @@
 ;------------------------------------------------------------------------------
 !macro OT.AddDecisionalModels DataSet
     Section "Decisional" s_decmod
-        SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional"
+        SetOutPath "$INSTDATADIR\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" /x ".poney" "${DATADIR}\data\models\${DataSet}\decisional\bms"
         File /r /x ".svn" /x ".poney" "${DATADIR}\data\models\${DataSet}\decisional\directia5"
@@ -76,7 +75,7 @@
 ;------------------------------------------------------------------------------
 !macro OT.AddDecisionalModelSources DataSet
     Section "Sources" s_decmodsrc
-        SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional"
+        SetOutPath "$INSTDATADIR\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\Sources"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
@@ -88,7 +87,7 @@
 ;------------------------------------------------------------------------------
 !macro OT.AddPhysicalModels DataSet Localization SectionId
     Section "Physical - ${Localization}" ${SectionId}
-        SetOutPath "${INSTDATADIR}\data\models\${DataSet}\physical\${Localization}"
+        SetOutPath "$INSTDATADIR\data\models\${DataSet}\physical\${Localization}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\physical\${Localization}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
@@ -100,7 +99,7 @@
 ;------------------------------------------------------------------------------
 !macro OT.AddExercise ExerciseName TerrainName SectionId
     Section "${ExerciseName} - ${TerrainName}" ${SectionId}
-        SetOutPath "${INSTDATADIR}\exercises\${ExerciseName}"
+        SetOutPath "$INSTDATADIR\exercises\${ExerciseName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /x ".svn" "${DATADIR}\exercises\${ExerciseName}\*.xml"
         File /nonfatal /r /x ".svn" "${DATADIR}\exercises\${ExerciseName}\scripts"
@@ -117,7 +116,7 @@
 !macro OT.AddTerrain TerrainName SectionId
     Section "${TerrainName}" ${SectionId}
         ;SectionIn RO
-        SetOutPath "${INSTDATADIR}\data\terrains\${TerrainName}"
+        SetOutPath "$INSTDATADIR\data\terrains\${TerrainName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\terrains\${TerrainName}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
@@ -131,7 +130,7 @@
 
     Section "${PopulationName}" ${SectionId}
         ;SectionIn RO
-        SetOutPath "${INSTDATADIR}\data\population\${PopulationName}"
+        SetOutPath "$INSTDATADIR\data\population\${PopulationName}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\population\${PopulationName}\*"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
@@ -146,7 +145,7 @@
 !macro OT.AddPropagation PropagationName
     ; Sample propagation model
     Section "${PropagationName}"
-        SetOutPath "${INSTDATADIR}\data\propagations"
+        SetOutPath "$INSTDATADIR\data\propagations"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File /r /x ".svn" "${DATADIR}\data\propagations\test"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
@@ -160,7 +159,7 @@
 !macro OT.AddLTOExercise SectionName
     ; Sample LTO EXERCICE
     Section "${SectionName}"
-    SetOutPath "${INSTDATADIR}\data\import_lto"
+    SetOutPath "$INSTDATADIR\data\import_lto"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${DATADIR}\tests\import_lto\*.xml"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -244,7 +243,7 @@
 !macro OT.AddCommonConfig
 
     WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "Language" "$(OT_LANG)"
-    WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory" "${INSTDATADIR}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory" "$INSTDATADIR"
 
 !macroend
 
@@ -337,7 +336,6 @@ FunctionEnd
 
 !macroend
 
-
 ;------------------------------------------------------------------------------
 ; Additional Component Installation helper
 ;------------------------------------------------------------------------------
@@ -366,7 +364,7 @@ FunctionEnd
         nsisunz::Unzip "$INSTDIR\installation files\net.masagroup.life.brain.ide-win32.win32.x86.zip" "$INSTDIR\MasaLife Brain IDE"
         CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MasaLife Brain IDE.lnk" "$INSTDIR\MasaLife Brain IDE\masalife-ide.exe"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-        WriteRegExpandStr "HKLM" "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "BRAIN_CORE" "${INSTDATADIR}\data\models\ada\decisional\directia5\models\directia.core"
+        WriteRegExpandStr "HKLM" "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "BRAIN_CORE" "$INSTDATADIR\data\models\ada\decisional\directia5\models\directia.core"
         SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
         
         SetOutPath "$INSTDIR\doc\en"
@@ -420,7 +418,7 @@ FunctionEnd
     !insertmacro UNINSTALL.LOG_END_UNINSTALL
 
     ${locate::RMDirEmpty} "$INSTDIR" "/M=*.* /G=1 /B=1" $R1
-    ${locate::RMDirEmpty} "${INSTDATADIR}" "/M=*.* /G=1 /B=1" $R1
+    ${locate::RMDirEmpty} "$INSTDATADIR" "/M=*.* /G=1 /B=1" $R1
     ${locate::Unload}
 
     Delete "${UNINST_DAT}"
@@ -451,3 +449,46 @@ Function adobeReader
             ExecShell "open" "http://www.adobe.com/products/acrobat/readstep2.html"
     Pop $0
 FunctionEnd
+
+;------------------------------------------------------------------------------
+; Check directory prompt
+;------------------------------------------------------------------------------
+!macro OT.CheckPrompt
+	!ifdef NO_PROMPT_DATA_DIRECTORY & NO_PROMPT_PROGRAM_DIRECTORY
+        !error "You must insert either NO_PROMPT_DATA or NO_PROMPT_PROGRAM neither both."
+	!endif
+!macroend
+
+;------------------------------------------------------------------------------
+; Parse command line
+;------------------------------------------------------------------------------
+!macro OT.ParseCommandLine
+	${GetParameters} $R0
+
+	${GetOptions} $R0 "/SILENT=" $R1 ; Check SILENT option
+	IfErrors +3 0
+	StrCmp $R1 "yes" 0 +2
+		SetSilent silent
+
+	IfSilent 0 CommandLineExit
+		
+	!ifndef NO_PROMPT_PROGRAM_DIRECTORY
+		${GetOptions} $R0 "/INSTALLDIRECTORY=" $R1 ; Check INSTALLDIRECTORY option
+		IfErrors 0 +3
+			MessageBox MB_OK|MB_ICONEXCLAMATION "$(OT_MISSING_INSTALL_PATH)"
+			Abort
+		StrCpy $INSTDIR $R1
+	!endif
+
+	!ifndef NO_PROMPT_DATA_DIRECTORY
+		${GetOptions} $R0 "/DATADIRECTORY=" $R1 ; Check DATADIRECTORY option
+		IfErrors 0 +3
+			MessageBox MB_OK|MB_ICONEXCLAMATION "$(OT_MISSING_DATA_PATH)"
+			Abort
+		StrCpy $INSTDATADIR $R1
+	!endif
+
+CommandLineExit:
+
+!macroend	
+
