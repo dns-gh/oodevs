@@ -156,7 +156,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     --[[// On ne se rapproche pas trop pour eviter de se faire prendre 
 ]]--[[// a parti
-]]if( S_EstADistanceTir_Pt( self.mission.objectif_ ) ) then
+]]if( S_EstADistanceTir_Pt( self.mission.pointObjectif_ ) ) then
                         self.eAction = eActionEffectuee
                     end
 
@@ -173,7 +173,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.objectif_, false, } )
+                    Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.pointObjectif_, false, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     if( not DEC_Agent_AutomateEstEmbraye() and F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         Activate( self.activations.BEH_Ordre_Pion_VAB_Semparer_Demande, 1, {} )
@@ -219,7 +219,7 @@ elseif switch_1 == eObserver then
 --[[//On envoie une patrouille en reconnaissance.
 ]]                    end
 
-                    Activate( self.activations.BEH_Obs_Pion_INF_EnReconnaissance, 1, { self.mission.objectif_, } )
+                    Activate( self.activations.BEH_Obs_Pion_INF_EnReconnaissance, 1, { self.mission.pointObjectif_, } )
 self.done_BEH_Obs_Pion_INF_EnReconnaissance = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[// On rejoint l'objectif pour s'en emparer
@@ -229,7 +229,7 @@ elseif switch_1 == eRejoindreAssaut then
                     if( F_Pion_GeteniEnCours( myself ) == nil ) then
                         do
                             self.eAction = eActionEnCours
-                            if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.objectif_, 100 ) ) then
+                            if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.pointObjectif_, 100 ) ) then
                                 self.ePhase = eFouiller
                             else
                                 self.ePhase = eRejoindre
@@ -243,7 +243,7 @@ elseif switch_1 == eRejoindreAssaut then
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    if( not S_EstADistanceTir_Pt( self.mission.objectif_ ) ) then
+                    if( not S_EstADistanceTir_Pt( self.mission.pointObjectif_ ) ) then
                         Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
                     end
 
@@ -269,7 +269,7 @@ elseif switch_1 == eRejoindre then
 ]]                    end
 
                     Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.mission.objectif_, eProgressionDirect, eTypeItiMouvement, } )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.mission.pointObjectif_, eProgressionDirect, eTypeItiMouvement, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[// Une fois sur place, on fouille les lieux
@@ -336,7 +336,7 @@ node "BEH_Eni_Pion_VAB_Semparer"
         local Activate = Activate
                 self.mission = self.mission or DEC_GetMission( myself )
         self.eActionEni = self.eActionEni or eActionEnCours
-        if( not DEC_Connaissances_PresenceEnnemieDansCercle( self.mission.objectif_, 1500 ) ) then
+        if( not DEC_Connaissances_PresenceEnnemieDansCercle( self.mission.pointObjectif_, 1500 ) ) then
             do return end
         end
 
@@ -348,7 +348,7 @@ node "BEH_Eni_Pion_VAB_Semparer"
         local _continue = true
 do
                 --[[// L'ennemi est trop loin de la position
-]]if( DEC_Geometrie_Distance( DEC_ConnaissanceAgent_Position( ksEni ), self.mission.objectif_ ) > 1500 ) then
+]]if( DEC_Geometrie_Distance( DEC_ConnaissanceAgent_Position( ksEni ), self.mission.pointObjectif_ ) > 1500 ) then
                     _continue = false
                 end
 
