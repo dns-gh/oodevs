@@ -63,6 +63,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
+#include "MIL_AffinitiesMap.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
@@ -86,6 +87,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_        ( *new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
+    , pAffinities_         ( new MIL_AffinitiesMap( xis ) )
 {
     automate.RegisterPion( *this, false );
     xis >> xml::optional
@@ -110,6 +112,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_        ( *new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
+    , pAffinities_         ( 0 )
 {
     automate.RegisterPion( *this );
 }
@@ -126,6 +129,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_        ( *new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
+    , pAffinities_         ( 0 )
 {
     // NOTHING
 }
@@ -178,11 +182,13 @@ void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned 
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    MIL_AffinitiesMap* pAffinities;
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file >> const_cast< bool& >( bIsPC_ )
          >> pAutomate_
       // >> actions_ // actions non sauvegardées
-         >> pKnowledgeBlackBoard_;
+         >> pKnowledgeBlackBoard_
+         >> pAffinities;
     LoadRole< network::NET_RolePion_Dotations >( file, *this );
     LoadRole< PHY_RolePion_Reinforcement >( file, *this );
     LoadRole< PHY_RolePion_Posture >( file, *this );
@@ -215,6 +221,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     LoadRole< PHY_RolePion_Illumination >( file, *this ); // LTO
     RegisterRole( *new DEC_Representations() );
     RegisterRole( *new PHY_RolePion_TerrainAnalysis( *this ) );
+    pAffinities_.reset( pAffinities );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,11 +231,13 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pType_ );
+    const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file << bIsPC_
         << pAutomate_
         // << actions_ // actions non sauvegardées
-        << pKnowledgeBlackBoard_;
+        << pKnowledgeBlackBoard_
+        << pAffinities;
     SaveRole< network::NET_RolePion_Dotations >( *this, file );
     SaveRole< PHY_RolePion_Reinforcement >( *this, file );
     SaveRole< PHY_RolePion_Posture >( *this, file );
@@ -297,6 +306,8 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
                 << xml::attribute( "content", criticalIntelligence_ )
             << xml::end;
     }
+    if( pAffinities_.get() )
+        pAffinities_->WriteODB( xos );
     xos << xml::end;// unit
 }
 
@@ -373,7 +384,6 @@ void MIL_AgentPion::SetPionAsPostCommand()
 {
     bIsPC_ = true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::UpdateDecision
@@ -614,7 +624,9 @@ void MIL_AgentPion::SendCreation() const
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
-    if( !criticalIntelligence_.empty() || !extensions_.empty() )
+    if( pAffinities_.get() )
+        pAffinities_->SendFullState( attributesMsg );
+    if( !criticalIntelligence_.empty() || !extensions_.empty() || attributesMsg().adhesions_size() > 0 )
         attributesMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 

@@ -15,6 +15,7 @@
 #include "DecisionalState.h"
 #include "tools/Resolver.h"
 #include "protocol/SimulationSenders.h"
+#include <map>
 
 namespace kernel
 {
@@ -108,6 +109,13 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::map< unsigned long, float > T_Affinities;
+    typedef T_Affinities::const_iterator   CIT_Affinities;
+    //@}
+
+private:
     Model_ABC&                                 model_;
     const kernel::AgentType&                   type_;
     const std::string                          name_;
@@ -166,6 +174,7 @@ private:
     std::map< std::string, std::string >       extensions_;
     std::string                                criticalIntelligence_;
     Localisation                               currentPath_;
+    T_Affinities                               affinities_;
 };
 
 }

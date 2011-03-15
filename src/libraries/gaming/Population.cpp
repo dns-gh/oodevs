@@ -412,7 +412,6 @@ void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Crowd", "Domination:" ), nDomination_ );
     displayer.Display( tools::translate( "Crowd", "Critical intelligence:" ), criticalIntelligence_ );
     displayer.Display( tools::translate( "Crowd", "Armed individuals:" ), armedIndividuals_ );
-    Get< Affinities >().Display( &displayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -444,7 +443,6 @@ void Population::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
                     .Display( tools::translate( "Crowd", "Domination:" ), nDomination_ )
                     .Display( tools::translate( "Crowd", "Critical intelligence:" ), criticalIntelligence_ )
                     .Display( tools::translate( "Crowd", "Armed individuals:" ), armedIndividuals_ );
-            Get< Affinities >().Display( *it );
         }
         displayers_.clear();
     }

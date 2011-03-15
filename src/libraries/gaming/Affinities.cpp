@@ -24,7 +24,7 @@
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
 Affinities::Affinities( TeamsModel& teams )
-    : teams_ ( teams )
+    : teams_( teams )
 {
     // NOTHING
 }
@@ -65,15 +65,15 @@ void Affinities::DoUpdate( const sword::CrowdUpdate& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Affinities::Display
-// Created: ABR 2011-01-28
+// Name: Affinities::DoUpdate
+// Created: LGY 2011-03-15
 // -----------------------------------------------------------------------------
-void Affinities::Display(kernel::Displayer_ABC* displayer) const
+void Affinities::DoUpdate( const sword::UnitAttributes& message )
 {
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    for( int i = 0; i < message.adhesions_size(); ++i )
     {
-        kernel::Team_ABC& team = teams_.GetTeam( it->first );
-        displayer->Display( tools::translate( "Affinities", "Affinity %1:" ).arg( team.GetName() ), it->second );
+        const sword::PartyAdhesion& adhesion = message.adhesions( i );
+        affinities_[ adhesion.party().id() ] = adhesion.value();
     }
 }
 
@@ -104,5 +104,18 @@ void Affinities::FillParameterList( actions::parameters::ParameterList* paramete
         actions::parameters::ParameterList& list = parameterList->AddList( "Affinity" );
         list.AddIdentifier( "ID", it->first );
         list.AddNumeric( "Value", it->second );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Affinities::DisplayInSummary
+// Created: LGY 2011-03-15
+// -----------------------------------------------------------------------------
+void Affinities::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    {
+        kernel::Team_ABC& team = teams_.GetTeam( it->first );
+       displayer.Display( tools::translate( "Affinities", "Affinity %1:" ).arg( team.GetName() ), it->second );
     }
 }

@@ -878,6 +878,7 @@ message UnitAttributes {
     optional bool                        refugees_managed           = 44; //!< Whether refugees are being handled by the unit or not
     optional Extension                   extension                  = 45; //!< @todo What's this ?
     optional string                      critical_intelligence      = 46; //!<  The current critical intelligence
+    repeated PartyAdhesion               adhesions                  = 47; //!< The party adhesions
 }
 
 /** @struct UnitPathFind

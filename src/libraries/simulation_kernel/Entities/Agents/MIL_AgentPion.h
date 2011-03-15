@@ -36,6 +36,7 @@ class DEC_KnowledgeBlackBoard_AgentPion;
 class MIL_Army;
 class MIL_Automate;
 class MIL_EntityManager;
+class MIL_AffinitiesMap;
 
 // =============================================================================
 /** @class  MIL_AgentPion
@@ -185,6 +186,7 @@ private:
     DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;
     MIL_PionOrderManager& orderManager_;
     T_Extensions extensions_;
+    std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
     //@}
 };
 

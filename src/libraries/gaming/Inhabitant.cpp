@@ -272,7 +272,6 @@ void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
         displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( it->first.c_str() ), it->second );
     for( CIT_ResourceSatisfactions it = resourceSatisfactions_.begin(); it != resourceSatisfactions_.end(); ++it )
         displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( it->first->GetName().c_str() ), it->second );
-    Get< Affinities >().Display( &displayer );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,7 +303,6 @@ void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
                 ( *it )->Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( satisfaction->first.c_str() ), satisfaction->second );
             for( CIT_ResourceSatisfactions resource = resourceSatisfactions_.begin(); resource != resourceSatisfactions_.end(); ++resource )
                 ( *it )->Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( resource->first->GetName().c_str() ), resource->second );
-            Get< Affinities >().Display( *it );
         }
         displayers_.clear();
     }

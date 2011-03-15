@@ -191,6 +191,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new DecisionalStates() );
     result->Attach( *new Speeds( static_.coordinateConverter_ ) );
     result->Attach( *new Weapons( controllers_, static_.objectTypes_, static_.objectTypes_ ) );
+    result->Attach( *new Affinities( model_.teams_ ) );
     AttachExtensions( *result );
 
     result->Update( message );

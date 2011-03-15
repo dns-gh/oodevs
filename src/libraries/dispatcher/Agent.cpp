@@ -27,6 +27,7 @@
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/StaticModel.h"
 #include "protocol/ClientSenders.h"
+#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -285,6 +286,12 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
 
     UPDATE_ASN_ATTRIBUTE( critical_intelligence, criticalIntelligence_ );
 
+    for( int i = 0; i < message.adhesions_size(); ++i )
+    {
+        const sword::PartyAdhesion& adhesion = message.adhesions( i );
+        affinities_[ adhesion.party().id() ] = adhesion.value();
+    }
+
     Observable< sword::UnitAttributes >::Notify( message );
 }
 
@@ -477,6 +484,12 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             entry->set_value( it->second );
         }
         asn().set_critical_intelligence( criticalIntelligence_ );
+        BOOST_FOREACH( const T_Affinities::value_type& affinity, affinities_ )
+        {
+            sword::PartyAdhesion& adhesion = *asn().add_adhesions();
+            adhesion.mutable_party()->set_id( affinity.first );
+            adhesion.set_value( affinity.second );
+        }
         asn.Send( publisher );
     }
 
