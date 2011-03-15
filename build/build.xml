@@ -18,62 +18,7 @@
     <property name="masalife.version" value="2010-1.0/1.0.6"/>
 
     <property name="samples.dir" value="${src.dir}/samples"/>
-
-    <!--
-    ============================================================================
-      tools
-    ============================================================================
-    -->
-    <macrodef name="echo-files">
-        <attribute name="files"/>
-        <attribute name="prefix" default=""/>
-        <sequential>
-            <for list="@{files}" param="file" delimiter=";">
-                <sequential>
-                    <echo>@{prefix}@{file}</echo>
-                </sequential>
-            </for>
-        </sequential>
-    </macrodef>
-
-    <macrodef name="compare-dirs">
-        <attribute name="dir1"/>
-        <attribute name="dir2"/>
-        <attribute name="excludes" default=""/>
-        <attribute name="includes" default=""/>
-        <attribute name="property"/>
-        <sequential>
-            <fileset id="@{dir1}.id" dir="@{dir1}" excludes="@{excludes}" includes="@{includes}">
-                <different targetdir="@{dir2}" ignorefiletimes="true"/> <!-- ne prend pas en compte les fichiers 'en trop' dans dir2 -->
-            </fileset>
-            <pathconvert property="@{property}.@{dir1}" refid="@{dir1}.id" setonempty="false"/>
-            <fileset id="@{dir2}.id" dir="@{dir2}" excludes="@{excludes}" includes="@{includes}">
-                <different targetdir="@{dir1}" ignorefiletimes="true"/>
-            </fileset>
-            <pathconvert property="@{property}.@{dir2}" refid="@{dir2}.id" setonempty="false"/>
-            <if>
-                <and>
-                    <isset property="@{property}.@{dir1}"/>
-                    <isset property="@{property}.@{dir2}"/>
-                </and>
-                <then>
-                    <property name="@{property}" value="${@{property}.@{dir1}};${@{property}.@{dir2}}"/>
-                </then>
-            </if>
-            <if>
-                <isset property="@{property}.@{dir1}"/>
-                <then>
-                    <property name="@{property}" value="${@{property}.@{dir1}}"/>
-                </then>
-            </if>
-            <if>
-                <isset property="@{property}.@{dir2}"/>
-                <then>
-                    <property name="@{property}" value="${@{property}.@{dir2}}"/>
-                </then>
-            </if>
-        </sequential>
-    </macrodef>
+    <property name="models.dir" value="${data.dir}/data/models/ada/decisional/directia5/models"/>
 
     <!--
     ============================================================================
@@ -89,7 +34,7 @@
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
             <defineset>
                 <define name="APP_VERSION" value="${version.minor}"/>
-                <define name="APP_MAJOR_VERSION" value="${version.major}"/>                
+                <define name="APP_MAJOR_VERSION" value="${version.major}"/>
             </defineset>
         </build-lib>
     </target>
@@ -269,7 +214,6 @@
 
     <target name="library.script_plugin" description="build script_plugin static library" depends="library.dispatcher">
         <build-lib name="script_plugin" pattern="lib${ant.project.name}_script_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
-        <mkdir dir="${run.dir}/resources/scripts"/>
         <copy todir="${run.dir}/resources/scripts">
             <fileset dir="${libraries.dir}/script_plugin" includes="**/*.lua"/>
         </copy>
@@ -577,46 +521,36 @@
         </sequential>
     </macrodef>
 
-    <macrodef name="update-database">
-        <attribute name="database"/>
-        <attribute name="dir"/>
+    <macrodef name="generate-database">
+        <attribute name="name"/>
+        <attribute name="core"/>
         <sequential>
-            <delete dir="@{dir}"/>
-            <update name="masalife/brain" version="${masalife.version}" package="@{database}" todir="@{dir}"/>
+            <delete>
+                <fileset dir="${models.dir}/@{name}/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
+            </delete>
+            <bmc dir="${models.dir}/@{name}/src" core="@{core}"/>
         </sequential>
     </macrodef>
 
-	<target name="generate-symbols" description="generate symbols">
-		<zip destfile="${run.dir}/resources/symbols.pak">
-            <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
-        </zip>
-	</target>
-	
-    <target name="generate-database" description="compile behavior model database">
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml"/>
-        <delete>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.france/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.security/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.worldwide/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
-        </delete>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.test/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.france/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.security/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword.worldwide/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.military/src;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
+    <target name="generate-data" description="generate data">
+        <generate-database name="net.masagroup.military" core="${models.dir}/directia.core/directia.core.bml"/>
+        <generate-database name="net.masagroup.sword" core="${models.dir}/directia.core/directia.core.bml;${models.dir}/net.masagroup.military/src"/>
+        <generate-database name="net.masagroup.sword.test" core="${models.dir}/directia.core/directia.core.bml;${models.dir}/net.masagroup.military/src;${models.dir}/net.masagroup.sword/src"/>
+        <generate-database name="net.masagroup.sword.france" core="${models.dir}/directia.core/directia.core.bml;${models.dir}/net.masagroup.military/src;${models.dir}/net.masagroup.sword/src"/>
+        <generate-database name="net.masagroup.sword.security" core="${models.dir}/directia.core/directia.core.bml;${models.dir}/net.masagroup.military/src;${models.dir}/net.masagroup.sword/src"/>
+        <generate-database name="net.masagroup.sword.worldwide" core="${models.dir}/directia.core/directia.core.bml;${models.dir}/net.masagroup.military/src;${models.dir}/net.masagroup.sword/src"/>
     </target>
 
-    <target name="generate-data" depends="generate-database" description="generate data"/>
+    <target name="generate-symbols" description="generate symbols">
+        <zip destfile="${run.dir}/resources/symbols.pak">
+            <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
+        </zip>
+    </target>
 
-    <!--
-    ============================================================================
-    clean
-    ============================================================================
-    -->
-    <target name="clean" description="clean intermediate build artifacts">
-        <delete dir="${out.dir}"/>
+    <target name="deploy-application-data" description="deploy applications data to run directory">
+        <copy todir="${run.dir}">
+            <fileset dir="${data.dir}/app-data"/>
+        </copy>
     </target>
 
     <!--
@@ -640,10 +574,10 @@
     tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-scripts,test-adaptation,tools_test,3a_test,plugins_test,hla_plugin_test,shield_test,
-                                 clients_test,test-exercises,dispatcher_test,application.simulation_kernel_test,
+    <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,
+                                 shield_test,clients_test,exercises_test,dispatcher_test,application.simulation_kernel_test,
                                  application.integration_decisionnal_test,protocol_test,checkpoint_test,import_test,
-                                 actions_test,launcher_test,test-data-reports,flood_test" description="run all tests"/>
+                                 actions_test,launcher_test,reports_test,flood_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xerces,terrain,boost,protobuf"
@@ -739,42 +673,7 @@
         </build-test>
     </target>
 
-    <macrodef name="test-scripts">
-        <attribute name="dataset"/>
-        <attribute name="physical"/>
-        <attribute name="simulation" default="simulation_app"/>
-        <sequential>
-            <delete dir="${data.dir}/exercises/test-scripts"/>
-            <mkdir dir="${data.dir}/exercises/test-scripts"/>
-            <mkdir dir="${data.dir}/exercises/test-scripts/sessions"/>
-            <mkdir dir="${data.dir}/exercises/test-scripts/sessions/test-session"/>
-            <copy file="test-scripts/session.xml" todir="${data.dir}/exercises/test-scripts/sessions/test-session"/>
-            <copy file="test-scripts/orbat.xml" todir="${data.dir}/exercises/test-scripts"/>
-            <copy file="test-scripts/profiles.xml" todir="${data.dir}/exercises/test-scripts"/>
-            <copy file="test-scripts/weather.xml" todir="${data.dir}/exercises/test-scripts"/>
-            <copy file="test-scripts/exercise.xml.tmpl" tofile="${data.dir}/exercises/test-scripts/exercise.xml" overwrite="true">
-                <filterset>
-                    <filter token="DATASET" value="@{dataset}"/>
-                    <filter token="PHYSICAL" value="@{physical}"/>
-                </filterset>
-            </copy>
-            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
-                <arg value="--root-dir=../../data"/>
-                <arg value="--exercise=test-scripts"/>
-                <arg value="--session=test-session"/>
-                <arg value="--test"/>
-            </exec>
-            <delete dir="${data.dir}/exercises/test-scripts"/>
-        </sequential>
-    </macrodef>
-
-    <target name="test-scripts" description="run all tests" depends="application.simulation_app">
-        <!-- REMOVED BUT ? <test-scripts dataset="test" physical=""/> -->
-        <test-scripts dataset="ada" physical="france"/>
-        <test-scripts dataset="ada" physical="worldwide"/>
-    </target>
-
-    <target name="checkpoint_test" description="save and load a checkpoint" depends="application.simulation_app">
+    <target name="checkpoint_test" depends="application.simulation_app" description="save and load a checkpoint">
         <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=CheckpointTests"/>
@@ -791,6 +690,89 @@
             <arg value="--deletecheckpoint"/>
         </exec>
     </target>
+
+    <macrodef name="test-scripts">
+        <attribute name="dataset"/>
+        <attribute name="physical"/>
+        <attribute name="simulation" default="simulation_app"/>
+        <sequential>
+            <delete dir="${data.dir}/exercises/scripts_test"/>
+            <copy todir="${data.dir}/exercises/scripts_test" overwrite="true">
+                <fileset dir="${data.dir}/tests/scripts_test" includes="**/*.xml"/>
+                <filterset>
+                    <filter token="DATASET" value="@{dataset}"/>
+                    <filter token="PHYSICAL" value="@{physical}"/>
+                </filterset>
+            </copy>
+            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+                <arg value="--root-dir=../../data"/>
+                <arg value="--exercise=scripts_test"/>
+                <arg value="--session=test-session"/>
+                <arg value="--test"/>
+            </exec>
+            <delete dir="${data.dir}/exercises/scripts_test"/>
+        </sequential>
+    </macrodef>
+
+    <target name="scripts_test" description="run all tests">
+        <test-scripts dataset="ada" physical="france"/>
+        <!--
+        <test-scripts dataset="ada" physical="scipio-1.9.2"/>
+        <test-scripts dataset="ada" physical="security-fr"/>
+        -->
+        <test-scripts dataset="ada" physical="worldwide"/>
+    </target>
+
+    <macrodef name="echo-files">
+        <attribute name="files"/>
+        <attribute name="prefix" default=""/>
+        <sequential>
+            <for list="@{files}" param="file" delimiter=";">
+                <sequential>
+                    <echo>@{prefix}@{file}</echo>
+                </sequential>
+            </for>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="compare-dirs">
+        <attribute name="dir1"/>
+        <attribute name="dir2"/>
+        <attribute name="excludes" default=""/>
+        <attribute name="includes" default=""/>
+        <attribute name="property"/>
+        <sequential>
+            <fileset id="@{dir1}.id" dir="@{dir1}" excludes="@{excludes}" includes="@{includes}">
+                <different targetdir="@{dir2}" ignorefiletimes="true"/> <!-- ne prend pas en compte les fichiers 'en trop' dans dir2 -->
+            </fileset>
+            <pathconvert property="@{property}.@{dir1}" refid="@{dir1}.id" setonempty="false"/>
+            <fileset id="@{dir2}.id" dir="@{dir2}" excludes="@{excludes}" includes="@{includes}">
+                <different targetdir="@{dir1}" ignorefiletimes="true"/>
+            </fileset>
+            <pathconvert property="@{property}.@{dir2}" refid="@{dir2}.id" setonempty="false"/>
+            <if>
+                <and>
+                    <isset property="@{property}.@{dir1}"/>
+                    <isset property="@{property}.@{dir2}"/>
+                </and>
+                <then>
+                    <property name="@{property}" value="${@{property}.@{dir1}};${@{property}.@{dir2}}"/>
+                </then>
+            </if>
+            <if>
+                <isset property="@{property}.@{dir1}"/>
+                <then>
+                    <property name="@{property}" value="${@{property}.@{dir1}}"/>
+                </then>
+            </if>
+            <if>
+                <isset property="@{property}.@{dir2}"/>
+                <then>
+                    <property name="@{property}" value="${@{property}.@{dir2}}"/>
+                </then>
+            </if>
+        </sequential>
+    </macrodef>
 
     <macrodef name="test-adaptation">
         <attribute name="input"/>
@@ -819,13 +801,16 @@
         </sequential>
     </macrodef>
 
-    <target name="test-adaptation" description="load and save adaptation main data, check that output==input">
-        <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
+    <target name="adaptation_test" description="load and save adaptation main data then check that output is the same as input">
         <test-adaptation input="${data.dir}/data/models/ada/physical/france"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio-1.9.2"/>
+        <!--
+        <test-adaptation input="${data.dir}/data/models/ada/physical/security-fr"/>
+        -->
+        <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
     </target>
 
-    <target name="application.simulation_kernel_test" description="build Sword Simulation kernel test executable" depends="library.simulation_kernel">
+    <target name="application.simulation_kernel_test" depends="library.simulation_kernel" description="build Sword Simulation kernel test executable">
         <build-test name="simulation_kernel"
                    libs="masalloc,tools,directia-${platform}-mt-4_6,library-${platform}-mt,
                    gdal_i,gdal_ogr,geodata,
@@ -847,10 +832,7 @@
     </target>
 
     <target name="application.integration_decisionnal_test" description="build Sword Integration DIA5 test executable">
-        <build-test name="integration_decisionnal"
-            libs="directia-${platform}-mt-4_6"
-            depends="boost"
-            dir="../../data/data/models/ada/decisional/directia5">
+        <build-test name="integration_decisionnal" depends="boost" libs="directia-${platform}-mt-4_6" dir="../../data/data/models/ada/decisional/directia5">
             <includepath path="${libraries.dir}/simulation_kernel"/>
         </build-test>
     </target>
@@ -874,17 +856,15 @@
         </sequential>
     </macrodef>
 
-    <target name="test-exercises" description="validates some significant exercises">
+    <target name="exercises_test" description="validates some significant exercises">
         <test-exercise exercise="Egypt"/>
         <test-exercise exercise="Cabourg"/>
         <test-exercise exercise="Poseidon VA"/>
     </target>
 
     <target name="protocol_test" description="build protocol test application" depends="library.protocol,library.tools">
-        <build-test name="protocol" libs="masalloc,
-                         lib${ant.project.name}_tools-${platform}-mt@{suffix}
-                         lib${ant.project.name}_protocol-${platform}-mt@{suffix}"
-                   depends="boost,protobuf"/>
+        <build-test name="protocol" depends="boost,protobuf"
+                    libs="masalloc,lib${ant.project.name}_tools-${platform}-mt@{suffix}lib${ant.project.name}_protocol-${platform}-mt@{suffix}"/>
     </target>
 
     <macrodef name="count">
@@ -906,13 +886,14 @@
             </resourcecount>
         </sequential>
     </macrodef>
-    <target name="test-data-reports" description="check that ada/physical/france/Reports.xml and ada/physical/worldwide/Reports.xml contain the same amount of reports">
-        <count property="test-data-reports.worldwide" string="report id=" file="${data.dir}/data/models/Ada/physical/worldwide/Reports.xml"/>
-        <count property="test-data-reports.france" string="report id=" file="${data.dir}/data/models/Ada/physical/france/Reports.xml"/>
-        <fail message="File 'reports.xml' from physical databases doesn't contain the same amount of entries - France:${test-data-reports.france} vs Worldwide:${test-data-reports.worldwide}">
+
+    <target name="reports_test" description="check that ada/physical/france/Reports.xml and ada/physical/worldwide/Reports.xml contain the same amount of reports">
+        <count property="reports_test.worldwide" string="report id=" file="${data.dir}/data/models/Ada/physical/worldwide/Reports.xml"/>
+        <count property="reports_test.france" string="report id=" file="${data.dir}/data/models/Ada/physical/france/Reports.xml"/>
+        <fail message="File 'reports.xml' from physical databases doesn't contain the same amount of entries - France:${reports_test.france} vs Worldwide:${reports_test.worldwide}">
             <condition>
                 <not>
-                    <equals arg1="${test-data-reports.worldwide}" arg2="${test-data-reports.france}"/>
+                    <equals arg1="${reports_test.worldwide}" arg2="${reports_test.france}"/>
                 </not>
             </condition>
         </fail>
@@ -966,8 +947,7 @@
     package
     ============================================================================
     -->
-    <!-- <target name="package" description="package the installers" depends="package.defense,package.france,package.security,package.security.demo,package.debug,package.app,package.exo"/> -->
-    <target name="package" description="package the installers" depends="package.app,package.exo,package.debug,package.wise-driver"/>
+    <target name="package" depends="package.app,package.exo,package.debug,package.wise-driver" description="package the installers"/>
 
     <!-- standard packages -->
     <target name="package.defense" description="package the standard installer : worldwide, no license">
@@ -1036,7 +1016,7 @@
         </zip>
     </target>
 
-    <target name="package.wise-driver" description="package the wise driver installer" depends="application.wise_driver_dll">
+    <target name="package.wise-driver" depends="application.wise_driver_dll" description="package the wise driver installer">
         <nsis name="sword-wise_driver" script="sword-wise_driver.nsi">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
@@ -1053,7 +1033,7 @@
     </target>
 
     <!-- Package Exo -->
-    <target name="package.exo" description="package the exercices installers" depends="package.exo.defense.france,package.exo.defense.worldwide,package.exo.defense.scipio,package.exo.security.worldwide,package.exo.security.masa"/>
+    <target name="package.exo" depends="package.exo.defense.france,package.exo.defense.worldwide,package.exo.defense.scipio,package.exo.security.worldwide,package.exo.security.masa" description="package the exercices installers"/>
 
     <target name="package.exo.defense.worldwide" description="package des exercices worldwide defense">
         <nsis name="sword" script="exo-pack.nsi" nsh="config.nsh">
@@ -1107,14 +1087,17 @@
 
     <!--
     ============================================================================
-    configure
+    main
     ============================================================================
     -->
-    <target name="deploy-application-data" description="">
-        <copy todir="${run.dir}">
-            <fileset dir="${data.dir}/app-data" excludes="**/.svn"/>
-        </copy>
-    </target>
+    <macrodef name="update-database">
+        <attribute name="database"/>
+        <attribute name="dir"/>
+        <sequential>
+            <delete dir="@{dir}"/>
+            <update name="masalife/brain" version="${masalife.version}" package="@{database}" todir="@{dir}"/>
+        </sequential>
+    </macrodef>
 
     <target name="configure" description="initialize local project structure with libraries">
         <update name="geometry"/>
@@ -1151,16 +1134,15 @@
         <update name="vrlink"/>
         <update name="wise"/>
         <antcall target="deploy-application-data"/>
-        <update-database database="directia.core.bml" dir="${data.dir}/data/models/ada/decisional/directia5/models/directia.core"/>
+        <update-database database="directia.core.bml" dir="${models.dir}/directia.core"/>
         <antcall target="generate-data"/>
-		<antcall target="generate-symbols"/>
+        <antcall target="generate-symbols"/>
     </target>
 
-    <!--
-    ============================================================================
-    main
-    ============================================================================
-    -->
+    <target name="clean" description="clean intermediate build artifacts">
+        <delete dir="${out.dir}"/>
+    </target>
+
     <target name="build" depends="libraries,applications"/>
 
     <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
