@@ -1,8 +1,0 @@
-// *****************************************************************************
-// globals
-// *****************************************************************************
-signatures
-{
-    I /*E_ValiditeRequete&*/ A::DEC_Circulation_EquiperItineraireLogistique( U /*T_ConnaissanceObjet*/ );
-}
-

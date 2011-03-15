@@ -1,4 +1,0 @@
-globals     = "For Tests\Tests\Pion NBC\Globals.hal";
-knowledge   = "For Tests\Tests\Pion NBC\Perception.hal";
-motivations = "For Tests\Tests\Pion NBC\Motivations.hal";
-behaviors   = "For Tests\Tests\Pion NBC\Behaviors.hal";
