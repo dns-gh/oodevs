@@ -75,7 +75,7 @@ private:
 private:
     //! @name  Member data
     //@{
-    const DEC_Knowledge_Population*pPopulationKnowledge_;
+    const DEC_Knowledge_Population* pPopulationKnowledge_;
     const MIL_PopulationConcentration* pConcentrationKnown_;
     const unsigned int nID_;
     unsigned int nTimeLastUpdate_;

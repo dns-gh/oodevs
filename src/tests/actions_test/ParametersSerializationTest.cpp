@@ -98,7 +98,9 @@ namespace
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( GetId, 0 );
         MOCK_METHOD( GetType, 0 );
-        MOCK_METHOD( GetLivingHumans, 0 );
+        MOCK_METHOD( GetHealthyHumans, 0 );
+        MOCK_METHOD( GetWoundedHumans, 0 );
+        MOCK_METHOD( GetContaminatedHumans, 0 );
         MOCK_METHOD( GetDeadHumans, 0 );
     };
 

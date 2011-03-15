@@ -23,6 +23,7 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_Army.h"
 #include "simulation_terrain/TER_AgentManager.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_World.h"
 #include <boost/serialization/vector.hpp>
 
@@ -33,8 +34,6 @@
 MIL_PopulationElement_ABC::MIL_PopulationElement_ABC( MIL_Population& population, unsigned int nID )
     : pPopulation_     ( &population )
     , nID_             ( nID )
-    , nNbrAliveHumans_ ( 0 )
-    , nNbrDeadHumans_  ( 0 )
     , rDensity_        ( 0. )
     , pAttitude_       ( &population.GetDefaultAttitude() )
     , bAttitudeUpdated_( true )
@@ -60,7 +59,6 @@ double MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target ) 
 {
     assert( pAttitude_   );
     assert( pPopulation_ );
-
     if( target.GetRole< PHY_RoleInterface_Population >().IsInvulnerable() )
         return 0.;
 
@@ -68,7 +66,7 @@ double MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target ) 
     if( !pTargetComposante )
         return 0.;
 
-    const double           rPH           = pPopulation_->GetType().GetPH( *pAttitude_, rDensity_ );
+    const double rPH = pPopulation_->GetType().GetPH( *pAttitude_, rDensity_ );
     const PHY_AttritionData& attritionData = pPopulation_->GetType().GetAttritionData( *pAttitude_, pTargetComposante->GetType().GetProtection() );
 
     return rPH * attritionData.GetScore();
@@ -123,16 +121,12 @@ void MIL_PopulationElement_ABC::FireOnPions( double rIntensity, PHY_FireResults_
 void MIL_PopulationElement_ABC::ApplyFire( unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult )
 {
     assert( pPopulation_ );
-
-    unsigned int nTmp = std::min( nNbrAliveHumans_, nNbrAmmoFired );
-    if( nTmp == 0 )
+    unsigned int nDead = std::min( humans_.GetTotalLivingHumans(), nNbrAmmoFired );
+    if( nDead == 0 )
         return;
-
-    nNbrDeadHumans_  += nTmp;
-    nNbrAliveHumans_ -= nTmp;
+    humans_.ApplyNumberOfDead( nDead );
     bHumansUpdated_ = true;
-
-    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nTmp );
+    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nDead );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,14 +136,12 @@ void MIL_PopulationElement_ABC::ApplyFire( unsigned int nNbrAmmoFired, PHY_FireR
 void MIL_PopulationElement_ABC::ApplyIndirectFire( const MT_Circle& attritionCircle, PHY_FireResults_ABC& fireResult )
 {
     assert( pPopulation_ );
+    double rDead = std::min( static_cast< double >( humans_.GetTotalLivingHumans() ), rDensity_ * GetLocation().GetIntersectionAreaWithCircle( attritionCircle ) );
     // $$$$ SBO 2006-04-07: 2% kill, at least one kill
-    unsigned int nTmp = unsigned int ( ceil( 0.02f * std::min( double( nNbrAliveHumans_ ), rDensity_ * GetLocation().GetIntersectionAreaWithCircle( attritionCircle ) ) ) );
-
-    nNbrDeadHumans_  += nTmp;
-    nNbrAliveHumans_ -= nTmp;
-    bHumansUpdated_   = true;
-
-    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nTmp );
+    unsigned int nDead = static_cast< unsigned int >( ceil( 0.02f * rDead ) );
+    humans_.ApplyNumberOfDead( nDead );
+    bHumansUpdated_ = true;
+    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nDead );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,17 +150,15 @@ void MIL_PopulationElement_ABC::ApplyIndirectFire( const MT_Circle& attritionCir
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult )
 {
-    const unsigned int nNbrTarget = std::min( nNbrAliveHumans_, unsigned int ( std::max( 1., rDensity_ * capacity.GetAttritionSurface() ) ) );
-
+    assert( pPopulation_ );
+    const unsigned int nNbrTarget = std::min( humans_.GetTotalLivingHumans(), static_cast< unsigned int >( std::max( 1., rDensity_ * capacity.GetAttritionSurface() ) ) );
     const double rPH = capacity.GetAttritionPH();
     unsigned int nHit = 0;
     for( unsigned int i = 0; i < nNbrTarget; ++i )
         if( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH )
             ++nHit;
-
-    nNbrDeadHumans_  += nHit;
-    nNbrAliveHumans_ -= nHit;
-
+    humans_.ApplyNumberOfDead( nHit );
+    bHumansUpdated_ = true;
     fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
 }
 
@@ -178,7 +168,7 @@ void MIL_PopulationElement_ABC::ApplyExplosion( const AttritionCapacity& capacit
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::ApplyInjury( MIL_Injury_ABC& injury )
 {
-    injury.SetInjury( nNbrAliveHumans_ , rDensity_ );
+    injury.SetInjury( humans_.GetTotalLivingHumans(), rDensity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +186,6 @@ void MIL_PopulationElement_ABC::ApplyBurn( const MIL_BurnEffectManipulator& /*bu
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::UpdateCollisions()
 {
-
     TER_Agent_ABC::T_AgentPtrVector agents;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocation(), agents, 100. ); //$$$ TEST
     collidingAgents_.clear(); collidingAgents_.reserve( agents.size() );
@@ -215,7 +204,7 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
 double MIL_PopulationElement_ABC::GetPionMaxSpeed( const PHY_Volume& pionVolume ) const
 {
     assert( pAttitude_ );
-    return pPopulation_->GetPionMaxSpeed( *pAttitude_, static_cast< double >( nNbrAliveHumans_ ) / ( nNbrAliveHumans_ + nNbrDeadHumans_ ) * GetDefaultDensity( pPopulation_->GetType() ), pionVolume );
+    return pPopulation_->GetPionMaxSpeed( *pAttitude_, humans_.GetLivingRatio() * GetDefaultDensity( pPopulation_->GetType() ), pionVolume );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,8 +233,7 @@ MT_Vector2D MIL_PopulationElement_ABC::GetSecuringPoint( const MIL_Agent_ABC& se
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> nNbrAliveHumans_
-         >> nNbrDeadHumans_
+    file >> humans_
          >> rDensity_
          >> collidingAgents_;
     unsigned int nAttitudeID;
@@ -261,8 +249,7 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsig
 void MIL_PopulationElement_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned attitude = pAttitude_->GetID();
-    file << nNbrAliveHumans_
-         << nNbrDeadHumans_
+    file << humans_
          << rDensity_
          << collidingAgents_
          << attitude;
@@ -335,30 +322,57 @@ unsigned int MIL_PopulationElement_ABC::GetID() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC::GetNbrAliveHumans
-// Created: NLD 2005-10-13
+// Name: MIL_PopulationElement_ABC::GetAllHumans
+// Created: JSR 2011-03-10
 // -----------------------------------------------------------------------------
-unsigned int MIL_PopulationElement_ABC::GetNbrAliveHumans() const
+unsigned int MIL_PopulationElement_ABC::GetAllHumans() const
 {
-    return nNbrAliveHumans_;
+    return humans_.GetAllHumans();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC::GetNbrDeadHumans
-// Created: NLD 2005-10-13
+// Name: MIL_PopulationElement_ABC::GetTotalLivingHumans
+// Created: JSR 2011-03-10
 // -----------------------------------------------------------------------------
-unsigned int MIL_PopulationElement_ABC::GetNbrDeadHumans() const
+unsigned int MIL_PopulationElement_ABC::GetTotalLivingHumans() const
 {
-    return nNbrDeadHumans_;
+    return humans_.GetTotalLivingHumans();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC::GetNbrHumans
-// Created: NLD 2005-12-01
+// Name: MIL_PopulationElement_ABC::GetHealthyHumans
+// Created: JSR 2011-03-10
 // -----------------------------------------------------------------------------
-unsigned int MIL_PopulationElement_ABC::GetNbrHumans() const
+unsigned int MIL_PopulationElement_ABC::GetHealthyHumans() const
 {
-    return nNbrDeadHumans_ + nNbrAliveHumans_;
+    return humans_.GetHealthyHumans();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetWoundedHumans
+// Created: JSR 2011-03-10
+// -----------------------------------------------------------------------------
+unsigned int MIL_PopulationElement_ABC::GetWoundedHumans() const
+{
+    return humans_.GetWoundedHumans();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetContaminatedHumans
+// Created: JSR 2011-03-10
+// -----------------------------------------------------------------------------
+unsigned int MIL_PopulationElement_ABC::GetContaminatedHumans() const
+{
+    return humans_.GetContaminatedHumans();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::GetDeadHumans
+// Created: JSR 2011-03-10
+// -----------------------------------------------------------------------------
+unsigned int MIL_PopulationElement_ABC::GetDeadHumans() const
+{
+    return humans_.GetDeadHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -371,7 +385,7 @@ void MIL_PopulationElement_ABC::UpdateDensity()
     if( rArea == 0. )
         rDensity_ = 0; // $$$ +infini sauf si aucun humain
     else
-        rDensity_ = double( nNbrAliveHumans_ ) / rArea;
+        rDensity_ = static_cast< double >( humans_.GetTotalLivingHumans() ) / rArea;
 }
 
 // -----------------------------------------------------------------------------
@@ -391,32 +405,25 @@ void MIL_PopulationElement_ABC::SetAttitude( const MIL_PopulationAttitude& attit
 // Name: MIL_PopulationElement_ABC::PushHumans
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::PushHumans( const T_Humans& humans )
+void MIL_PopulationElement_ABC::PushHumans( const MIL_PopulationHumans& humans )
 {
-    if( humans.first == 0 && humans.second == 0 )
+    if( humans.IsEmpty() )
         return;
-
     bHumansUpdated_ = true;
-    nNbrAliveHumans_ += humans.first;
-    nNbrDeadHumans_  += humans.second;
+    humans_ += humans;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::PullHumans
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_PopulationElement_ABC::T_Humans MIL_PopulationElement_ABC::PullHumans( unsigned int nNbr )
+MIL_PopulationHumans MIL_PopulationElement_ABC::PullHumans( unsigned int nNbr )
 {
-    const unsigned int nNbrAlive = std::min( nNbr, nNbrAliveHumans_ );
-    nNbrAliveHumans_ -= nNbrAlive;
-
-    const unsigned int nNbrDead = std::min( nNbr - nNbrAlive, nNbrDeadHumans_ );
-    nNbrDeadHumans_ -= nNbrDead;
-
-    if( nNbrAlive > 0 || nNbrDead > 0 )
+    MIL_PopulationHumans humans;
+    humans.PullFrom( nNbr, humans_ );
+    if( !humans.IsEmpty() )
         bHumansUpdated_ = true;
-
-    return T_Humans( nNbrAlive, nNbrDead );
+    return humans;
 }
 
 // -----------------------------------------------------------------------------
@@ -425,12 +432,10 @@ MIL_PopulationElement_ABC::T_Humans MIL_PopulationElement_ABC::PullHumans( unsig
 // -----------------------------------------------------------------------------
 void MIL_PopulationElement_ABC::KillAllHumans()
 {
-    if( nNbrAliveHumans_ == 0. )
+    if( humans_.GetTotalLivingHumans() == 0. )
         return;
-
-    nNbrDeadHumans_ += nNbrAliveHumans_;
-    nNbrAliveHumans_ = 0;
-    bHumansUpdated_  = true;
+    humans_.KillAll();
+    bHumansUpdated_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -440,14 +445,10 @@ void MIL_PopulationElement_ABC::KillAllHumans()
 double MIL_PopulationElement_ABC::Exterminate( double rSurface )
 {
     assert( rDensity_ != 0 );
-    double rKills = rSurface * rDensity_;
-    if( rKills > nNbrAliveHumans_ )
-        rKills = nNbrAliveHumans_;
-
-    nNbrDeadHumans_  += unsigned int ( rKills );
-    nNbrAliveHumans_ -= unsigned int ( rKills );
-    bHumansUpdated_   = true;
-    return rKills / rDensity_;
+    unsigned int nKills = static_cast< unsigned int >( rSurface * rDensity_ );
+    nKills = humans_.ApplyNumberOfDead( nKills );
+    bHumansUpdated_ = true;
+    return nKills / rDensity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -456,20 +457,9 @@ double MIL_PopulationElement_ABC::Exterminate( double rSurface )
 // -----------------------------------------------------------------------------
 unsigned int MIL_PopulationElement_ABC::Kill( unsigned int count )
 {
-    unsigned int kills = count;
-    if( count > nNbrAliveHumans_ )
-    {
-        kills = nNbrAliveHumans_;
-        nNbrDeadHumans_ += nNbrAliveHumans_;
-        nNbrAliveHumans_ = 0;
-    }
-    else
-    {
-        nNbrAliveHumans_ -= kills;
-        nNbrDeadHumans_  += kills;
-    }
+    // $$$$ _RC_ JSR 2011-03-10: à virer, ancienne action magique
     bHumansUpdated_ = true;
-    return kills;
+    return humans_.ApplyNumberOfDead( count );
 }
 
 // -----------------------------------------------------------------------------
@@ -478,7 +468,8 @@ unsigned int MIL_PopulationElement_ABC::Kill( unsigned int count )
 // -----------------------------------------------------------------------------
 unsigned int MIL_PopulationElement_ABC::Resurrect( unsigned int count )
 {
-    unsigned int resurrections = count;
+    // $$$$ _RC_ JSR 2011-03-10: à virer, ancienne action magique
+    /*unsigned int resurrections = count;
     if( count > nNbrDeadHumans_ )
     {
         resurrections = nNbrDeadHumans_;
@@ -491,7 +482,8 @@ unsigned int MIL_PopulationElement_ABC::Resurrect( unsigned int count )
         nNbrDeadHumans_  -= resurrections;
     }
     bHumansUpdated_ = true;
-    return resurrections;
+    return resurrections;*/
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -500,7 +492,7 @@ unsigned int MIL_PopulationElement_ABC::Resurrect( unsigned int count )
 // -----------------------------------------------------------------------------
 bool MIL_PopulationElement_ABC::IsDead() const
 {
-    return nNbrAliveHumans_ == 0.;
+    return humans_.GetTotalLivingHumans() == 0;
 }
 
 // -----------------------------------------------------------------------------

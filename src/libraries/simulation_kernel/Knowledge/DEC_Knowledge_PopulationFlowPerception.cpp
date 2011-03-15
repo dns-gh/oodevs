@@ -13,6 +13,7 @@
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
@@ -141,7 +142,7 @@ bool DEC_Knowledge_PopulationFlowPerception::IsPerceived() const
 unsigned int DEC_Knowledge_PopulationFlowPerception::GetNbrAliveHumans() const
 {
     assert( pPopulationFlowPerceived_ );
-    return pPopulationFlowPerceived_->GetNbrAliveHumans();
+    return pPopulationFlowPerceived_->GetTotalLivingHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +152,7 @@ unsigned int DEC_Knowledge_PopulationFlowPerception::GetNbrAliveHumans() const
 unsigned int DEC_Knowledge_PopulationFlowPerception::GetNbrDeadHumans() const
 {
     assert( pPopulationFlowPerceived_ );
-    return pPopulationFlowPerceived_->GetNbrDeadHumans();
+    return pPopulationFlowPerceived_->GetDeadHumans();
 }
 
 // -----------------------------------------------------------------------------

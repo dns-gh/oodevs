@@ -15,6 +15,7 @@
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_Population.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include <boost/serialization/split_free.hpp>

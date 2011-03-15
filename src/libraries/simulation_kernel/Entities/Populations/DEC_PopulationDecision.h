@@ -49,7 +49,7 @@ public:
     //! @name Operations
     //@{
     void SetModel( const DEC_Model_ABC& model );
-    void Clean         ();
+    void Clean();
 
     virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
@@ -57,9 +57,9 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_Population&    GetPopulation     () const;
-    double           GetDominationState() const;
-    bool               HasStateChanged   () const; // Etat decisionnel
+    MIL_Population& GetPopulation() const;
+    double GetDominationState() const;
+    bool HasStateChanged() const; // Etat decisionnel
     virtual DEC_AutomateDecision* GetDecAutomate() const;
     virtual std::string GetName() const;
     //@}
@@ -78,8 +78,7 @@ public:
 protected:
     //! @name Helpers
     //@{
-    virtual void      EndCleanStateAfterCrash      ();
-
+    virtual void EndCleanStateAfterCrash();
     virtual void RegisterUserFunctions( directia::brain::Brain& brain );
     virtual void RegisterUserArchetypeFunctions( directia::brain::Brain& brain );
     //@}
@@ -91,10 +90,10 @@ private:
     //@}
 
 private:
-    double                             rDominationState_;
-    double                             rLastDominationState_;
-    bool                                 bStateHasChanged_;
-    std::string                          name_;
+    double rDominationState_;
+    double rLastDominationState_;
+    bool bStateHasChanged_;
+    std::string name_;
 
 private:
     static int nDIAMissionIdx_; // index de mission_ dans T_Population
@@ -107,8 +106,8 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const DEC_PopulationDecision* role, const unsigned int /*version*/ )
 {
     archive << role->pEntity_
-        << role->gcPause_
-        << role->gcMult_;
+            << role->gcPause_
+            << role->gcMult_;
 }
 
 template< typename Archive >
@@ -118,10 +117,9 @@ void load_construct_data( Archive& archive, DEC_PopulationDecision* role, const 
     unsigned int gcPause;
     unsigned int gcMult;
     archive >> population
-        >> gcPause
-        >> gcMult;
+            >> gcPause
+            >> gcMult;
     ::new( role )DEC_PopulationDecision( *population, gcPause, gcMult );
 }
-
 
 #endif // __DEC_PopulationDecision_h_

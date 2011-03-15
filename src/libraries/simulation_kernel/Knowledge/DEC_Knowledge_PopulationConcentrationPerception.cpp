@@ -14,6 +14,7 @@
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -142,7 +143,7 @@ bool DEC_Knowledge_PopulationConcentrationPerception::IsPerceived() const
 unsigned int DEC_Knowledge_PopulationConcentrationPerception::GetNbrAliveHumans() const
 {
     assert( pPopulationConcentrationPerceived_ );
-    return pPopulationConcentrationPerceived_->GetNbrAliveHumans();
+    return pPopulationConcentrationPerceived_->GetTotalLivingHumans();
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +153,7 @@ unsigned int DEC_Knowledge_PopulationConcentrationPerception::GetNbrAliveHumans(
 unsigned int DEC_Knowledge_PopulationConcentrationPerception::GetNbrDeadHumans() const
 {
     assert( pPopulationConcentrationPerceived_ );
-    return pPopulationConcentrationPerceived_->GetNbrDeadHumans();
+    return pPopulationConcentrationPerceived_->GetDeadHumans();
 }
 
 // -----------------------------------------------------------------------------

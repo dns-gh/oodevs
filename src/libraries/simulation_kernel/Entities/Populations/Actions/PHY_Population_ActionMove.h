@@ -31,14 +31,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Execute         ();
+    virtual void Execute();
     virtual void ExecuteSuspended();
     virtual void Stop();
     //@}
 
 private:
-    MIL_Population&        population_;
-    MT_Vector2D            destination_;
+    MIL_Population& population_;
+    MT_Vector2D destination_;
 };
 
 #endif // __PHY_Population_ActionMove_h_

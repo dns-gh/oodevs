@@ -59,13 +59,10 @@ void MIL_PopulationPionAttritionData::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_PopulationPionAttritionData::ReadAttritionEffect( xml::xistream& xis )
 {
-    std::string strAttitude;
-    xis >> xml::attribute( "population-attitude", strAttitude );
-
+    std::string strAttitude = xis.attribute< std::string >( "population-attitude" );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
     if( !pAttitude )
         xis.error( "Unknown attitude '" + strAttitude + "'" );
-
     ReadAttitudeData( *pAttitude, xis );
 }
 
@@ -76,17 +73,13 @@ void MIL_PopulationPionAttritionData::ReadAttritionEffect( xml::xistream& xis )
 void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAttitude& attitude, xml::xistream& xis )
 {
     assert( attitudeAttritionData_.size() > attitude.GetID() );
-
     sAttritionData& attitudeData = attitudeAttritionData_[ attitude.GetID() ];
-
     xis >> xml::attribute( "population-density", attitudeData.rPopulationDensity_ )
         >> xml::attribute( "intensity", attitudeData.rIntensity_ );
-
     if( attitudeData.rPopulationDensity_ < 0 )
         xis.error( "attrition-effect: population-density < 0" );
     if( attitudeData.rIntensity_ < 0 || attitudeData.rIntensity_ > 1 )
         xis.error( "attrition-effetc: intensity not in [0..1]" );
-
     xis >> xml::list( "unit", *this, &MIL_PopulationPionAttritionData::ReadAttritionUnitEffect, attitudeData );
 }
 
@@ -96,12 +89,10 @@ void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAtti
 // -----------------------------------------------------------------------------
 void MIL_PopulationPionAttritionData::ReadAttritionUnitEffect( xml::xistream& xis, sAttritionData& attitudeData )
 {
-    std::string strProtection;
-    xis >> xml::attribute( "protection", strProtection );
+    std::string strProtection = xis.attribute< std::string >( "protection" );
     const PHY_Protection* pProtection = PHY_Protection::Find( strProtection );
     if( !pProtection )
         xis.error( "Unknown protection '" + strProtection + "'" );
-
     assert( attitudeData.attritions_.size() > pProtection->GetID() );
     attitudeData.attritions_[ pProtection->GetID() ] = PHY_AttritionData( xis );
 }
@@ -113,9 +104,7 @@ void MIL_PopulationPionAttritionData::ReadAttritionUnitEffect( xml::xistream& xi
 const PHY_AttritionData& MIL_PopulationPionAttritionData::GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const
 {
     assert( attitudeAttritionData_.size() > attitude.GetID() );
-
     const sAttritionData& attitudeData = attitudeAttritionData_[ attitude.GetID() ];
-
     assert( attitudeData.attritions_.size() > protection.GetID() );
     return attitudeData.attritions_[ protection.GetID() ];
 }
@@ -127,11 +116,8 @@ const PHY_AttritionData& MIL_PopulationPionAttritionData::GetAttritionData( cons
 double MIL_PopulationPionAttritionData::GetPH( const MIL_PopulationAttitude& attitude, double rDensity ) const
 {
     assert( attitudeAttritionData_.size() > attitude.GetID() );
-
     const sAttritionData& attitudeData = attitudeAttritionData_[ attitude.GetID() ];
-
     if( attitudeData.rPopulationDensity_ == 0. )
         return 0.;
-
     return std::min( 1., rDensity * attitudeData.rIntensity_ / attitudeData.rPopulationDensity_ );
 }

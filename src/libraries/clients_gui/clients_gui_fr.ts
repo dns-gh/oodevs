@@ -998,6 +998,30 @@ Do you want to remove it?</source>
         <source>Alive density</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Healthy</source>
+        <translation>Sains</translation>
+    </message>
+    <message>
+        <source>Wounded</source>
+        <translation>Blessés</translation>
+    </message>
+    <message>
+        <source>Contaminated</source>
+        <translation>Contaminés</translation>
+    </message>
+    <message>
+        <source>Healthy people:</source>
+        <translation>Personnes saines:</translation>
+    </message>
+    <message>
+        <source>Wounded people:</source>
+        <translation>Personnes blessées:</translation>
+    </message>
+    <message>
+        <source>Contaminated people:</source>
+        <translation>Personnes contaminées:</translation>
+    </message>
 </context>
 <context>
     <name>gui::PopulationTypesListView</name>

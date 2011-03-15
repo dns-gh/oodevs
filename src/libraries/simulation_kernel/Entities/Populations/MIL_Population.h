@@ -31,6 +31,7 @@ namespace xml
 
 class DEC_PopulationDecision;
 class DEC_PopulationKnowledge;
+class MIL_AffinitiesMap;
 class MIL_Formation;
 class MIL_PopulationType;
 class MIL_PopulationFlow;
@@ -74,8 +75,10 @@ public:
     const DEC_PopulationKnowledge& GetKnowledge() const;
     bool IsDead() const;
     bool HasDoneMagicMove() const;
-    unsigned int GetNbrAliveHumans() const;
-    unsigned int GetNbrDeadHumans() const;
+    unsigned int GetHealthyHumans() const;
+    unsigned int GetWoundedHumans() const;
+    unsigned int GetContaminatedHumans() const;
+    unsigned int GetDeadHumans() const;
     bool HasFlow() const;
     //@}
 
@@ -159,16 +162,6 @@ public:
     virtual void Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& visitor ) const;
     //@}
 
-    //! @name People Counter
-    //@{
-    struct sPeopleCounter
-    {
-        sPeopleCounter( unsigned int rInit );
-        unsigned GetBoundedPeople( unsigned int nPeople );
-        unsigned int nPeople_;
-    };
-    //@}
-
 protected:
     //! @name Constructor
     //@{
@@ -222,7 +215,11 @@ private:
     const unsigned int nID_;
     MIL_Army_ABC* pArmy_;
     const MIL_PopulationAttitude* pDefaultAttitude_;
-    unsigned int nPeopleCount_;
+    double rArmedIndividuals_;
+    double rMale_;
+    double rFemale_;
+    double rChildren_;
+    std::string criticalIntelligence_;
     T_ConcentrationVector concentrations_;
     T_FlowVector flows_;
     T_ConcentrationVector trashedConcentrations_;
@@ -236,7 +233,10 @@ private:
     bool bBlinded_;
     // Misc
     bool bHasDoneMagicMove_;
+    bool criticalIntelligenceChanged_;
+    bool armedIndividualsChanged_;
     T_Extensions extensions_;
+    std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );

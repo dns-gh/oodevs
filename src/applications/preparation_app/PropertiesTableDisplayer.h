@@ -19,6 +19,7 @@ namespace kernel
 }
 
 class DotationsItem;
+class PopulationRepartition;
 
 // =============================================================================
 /** @class  PropertiesTableDisplayer
@@ -32,6 +33,7 @@ class PropertiesTableDisplayer : public gui::TableItemDisplayer
                                , public tools::Caller< DotationsItem >
                                , public tools::Caller< geometry::Point2f >
                                , public tools::Caller< kernel::Moveable_ABC >
+                               , public tools::Caller< PopulationRepartition >
 {
 public:
     //! @name Constructors/Destructor
@@ -47,6 +49,7 @@ public:
     virtual void Call( const DotationsItem& value );
     virtual void Call( const geometry::Point2f& value );
     virtual void Call( const kernel::Moveable_ABC& value );
+    virtual void Call( const PopulationRepartition& value );
     //@}
 
 private:

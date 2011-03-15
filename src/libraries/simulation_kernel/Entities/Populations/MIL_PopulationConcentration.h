@@ -12,7 +12,6 @@
 
 #include "MIL.h"
 #include "MIL_PopulationElement_ABC.h"
-#include "MIL_Population.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "Tools/MIL_IDManager.h"
 
@@ -21,10 +20,9 @@ namespace xml
     class xistream;
 }
 
+class MIL_Population;
 class MIL_PopulationFlow;
-class MIL_PopulationAttitude;
 class MIL_Object_ABC;
-class PHY_Volume;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -35,53 +33,51 @@ class MIL_PopulationConcentration : public MIL_PopulationElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MIL_PopulationConcentration( MIL_Population& population, unsigned int id );
-    MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
-    MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nHumans = 0 );
+             MIL_PopulationConcentration( MIL_Population& population, unsigned int id );
+             MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
+             MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nHumans = 0 );
     virtual ~MIL_PopulationConcentration();
     //@}
 
     //! @name Operations
     //@{
-            bool Update(); // Return false if the concentration must be deleted
-    virtual void Clean ();
-
-    bool IsValid       () const; // false = will be deleted
+    bool Update(); // Return false if the concentration must be deleted
+    virtual void Clean();
+    bool IsValid() const; // false = will be deleted
     bool CanBePerceived() const;
     //@}
 
     //! @name Actions
     //@{
     void MagicMove( const MT_Vector2D& destination );
-    void Move     ( const MT_Vector2D& destination );
+    void Move( const MT_Vector2D& destination );
     //@}
 
     //! @name Flows management
     //@{
-    void     RegisterPushingFlow   ( MIL_PopulationFlow& flow );
-    void     UnregisterPushingFlow ( MIL_PopulationFlow& flow );
+    void RegisterPushingFlow( MIL_PopulationFlow& flow );
+    void UnregisterPushingFlow( MIL_PopulationFlow& flow );
 
     double GetPullingFlowsDensity() const;
-    void     SetPullingFlowsDensity( const MIL_Object_ABC& splittingObject );
+    void SetPullingFlowsDensity( const MIL_Object_ABC& splittingObject );
     //@}
 
     //! @name Accessors
     //@{
     const MIL_Object_ABC* GetSplittingObject() const;
-    const MT_Vector2D&        GetPosition       () const;
-          bool                IsNearPosition    ( const MT_Vector2D& position ) const;
-
-    virtual const TER_Localisation& GetLocation      () const;
-    virtual       MT_Vector2D       GetSecuringPoint ( const MIL_Agent_ABC& securingAgent ) const;
-    virtual       MT_Vector2D       GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const;
-    virtual       double            GetDefaultDensity( const MIL_PopulationType& type ) const;
+    const MT_Vector2D& GetPosition() const;
+    bool IsNearPosition( const MT_Vector2D& position ) const;
+    virtual const TER_Localisation& GetLocation() const;
+    virtual MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
+    virtual MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance, double rSeed ) const;
+    virtual double GetDefaultDensity( const MIL_PopulationType& type ) const;
     //@}
 
     //! @name Network
     //@{
     void SendCreation    () const;
-    void SendFullState   ( MIL_Population::sPeopleCounter& peopleCounter ) const;
-    void SendChangedState( MIL_Population::sPeopleCounter& peopleCounter ) const;
+    void SendFullState   () const;
+    void SendChangedState() const;
     //@}
 
     //! @name CheckPoints
@@ -96,16 +92,10 @@ public:
     //! @name Types
     //@{
     typedef std::set< MIL_PopulationFlow* > T_FlowSet;
-    typedef T_FlowSet::const_iterator       CIT_FlowSet;
+    typedef T_FlowSet::const_iterator     CIT_FlowSet;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_PopulationConcentration( const MIL_PopulationConcentration& );            //!< Copy constructor
-    MIL_PopulationConcentration& operator=( const MIL_PopulationConcentration& ); //!< Assignment operator
-    //@}
-
     //! @name Tools
     //@{
     void NotifyCollision( MIL_Agent_ABC& agent );
@@ -119,20 +109,15 @@ private:
     //@}
 
 private:
-    MT_Vector2D             position_;
-    TER_Localisation        location_;
-
-    MIL_PopulationFlow*     pPullingFlow_;
-    T_FlowSet               pushingFlows_;
-
+    MT_Vector2D position_;
+    TER_Localisation location_;
+    MIL_PopulationFlow* pPullingFlow_;
+    T_FlowSet pushingFlows_;
     const MIL_Object_ABC* pSplittingObject_;
-    double                  rPullingFlowsDensity_;
-
+    double rPullingFlowsDensity_;
     static MIL_IDManager idManager_;
-
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );
-
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_PopulationConcentration )

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Population.h"
+#include "MIL_AffinitiesMap.h"
 #include "MIL_PopulationType.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationFlow.h"
@@ -65,17 +66,22 @@ void load_construct_data( Archive& archive, MIL_Population* population, const un
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army_ABC& army, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC( xis )
-    , pType_                  ( &type )
-    , nID_                    ( xis.attribute< unsigned int >( "id" ) )
-    , pArmy_                  ( &army )
-    , pDefaultAttitude_       ( 0 )
-    , nPeopleCount_           ( 0 )
-    , pKnowledge_             ( 0 )
-    , orderManager_           ( *this )
-    , bPionMaxSpeedOverloaded_( false )
-    , rOverloadedPionMaxSpeed_( 0. )
-    , bHasDoneMagicMove_      ( false )
-    , bBlinded_               ( false )
+    , pType_                      ( &type )
+    , nID_                        ( xis.attribute< unsigned int >( "id" ) )
+    , pArmy_                      ( &army )
+    , pDefaultAttitude_           ( 0 )
+    , rArmedIndividuals_          ( type.GetArmedIndividuals() )
+    , rMale_                      ( type.GetMale() )
+    , rFemale_                    ( type.GetFemale() )
+    , rChildren_                  ( type.GetChildren() )
+    , pKnowledge_                 ( 0 )
+    , orderManager_               ( *this )
+    , bPionMaxSpeedOverloaded_    ( false )
+    , rOverloadedPionMaxSpeed_    ( 0. )
+    , bBlinded_                   ( false )
+    , bHasDoneMagicMove_          ( false )
+    , criticalIntelligenceChanged_( false )
+    , armedIndividualsChanged_    ( false )
 {
     idManager_.Lock( nID_ );
     std::string strAttitude;
@@ -83,18 +89,29 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
     if( !pDefaultAttitude_ )
         xis.error( "Unknown attitude" );
+    xis >> xml::optional >> xml::start( "armed-individuals" )
+            >> xml::attribute( "value", rArmedIndividuals_ )
+        >> xml::end
+        >> xml::optional >> xml::start( "repartition" )
+            >> xml::attribute( "male", rMale_ )
+            >> xml::attribute( "female", rFemale_ )
+            >> xml::attribute( "children", rChildren_ )
+        >> xml::end
+        >> xml::optional >> xml::start( "critical-intelligence" )
+            >> xml::attribute( "content", criticalIntelligence_ )
+        >> xml::end
+        >> xml::optional >> xml::start( "extensions" )
+            >> xml::list( "entry", *this, &MIL_Population::ReadExtension )
+        >> xml::end;
+    pAffinities_.reset( new MIL_AffinitiesMap( xis ) );
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult ) );
     RegisterRole( *new DEC_Representations() );
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, xis );
     concentrations_.push_back( pConcentration );
-    nPeopleCount_ = pConcentration->GetNbrAliveHumans();
     pArmy_->RegisterPopulation( *this );
     vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
-    xis >> xml::optional >> xml::start( "extensions" )
-            >> xml::list( "entry", *this, &MIL_Population::ReadExtension )
-        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,17 +120,22 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population(const MIL_PopulationType& type )
     : MIL_Entity_ABC( type.GetName() )
-    , pType_                  ( &type )
-    , nID_                    ( 0 )
-    , pArmy_                  ( 0 )
-    , pDefaultAttitude_       ( MIL_PopulationAttitude::Find( "calme" ) )
-    , nPeopleCount_           ( 0 )
-    , pKnowledge_             ( 0 )
-    , orderManager_           ( *this )
-    , bPionMaxSpeedOverloaded_( false )
-    , rOverloadedPionMaxSpeed_( 0. )
-    , bHasDoneMagicMove_      ( false )
-    , bBlinded_               ( false )
+    , pType_                      ( &type )
+    , nID_                        ( 0 )
+    , pArmy_                      ( 0 )
+    , pDefaultAttitude_           ( MIL_PopulationAttitude::Find( "calme" ) )
+    , rArmedIndividuals_          ( type.GetArmedIndividuals() )
+    , rMale_                      ( type.GetMale() )
+    , rFemale_                    ( type.GetFemale() )
+    , rChildren_                  ( type.GetChildren() )
+    , pKnowledge_                 ( 0 )
+    , orderManager_               ( *this )
+    , bPionMaxSpeedOverloaded_    ( false )
+    , rOverloadedPionMaxSpeed_    ( 0. )
+    , bBlinded_                   ( false )
+    , bHasDoneMagicMove_          ( false )
+    , criticalIntelligenceChanged_( false )
+    , armedIndividualsChanged_    ( false )
 {
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     vBarycenter_.reset( new MT_Vector2D() );
@@ -126,17 +148,22 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
 // -----------------------------------------------------------------------------
 MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& army, const MT_Vector2D& point, int number, const std::string& name, unsigned int gcPause, unsigned int gcMult )
     : MIL_Entity_ABC( name )
-    , pType_                  ( &type )
-    , nID_                    ( idManager_.GetFreeId() )
-    , pArmy_                  ( &army )
-    , pDefaultAttitude_       ( 0 )
-    , nPeopleCount_           ( number )
-    , pKnowledge_             ( 0 )
-    , orderManager_           ( *this )
-    , bPionMaxSpeedOverloaded_( false )
-    , rOverloadedPionMaxSpeed_( 0. )
-    , bHasDoneMagicMove_      ( false )
-    , bBlinded_               ( false )
+    , pType_                      ( &type )
+    , nID_                        ( idManager_.GetFreeId() )
+    , pArmy_                      ( &army )
+    , pDefaultAttitude_           ( 0 )
+    , rArmedIndividuals_          ( type.GetArmedIndividuals() )
+    , rMale_                      ( type.GetMale() )
+    , rFemale_                    ( type.GetFemale() )
+    , rChildren_                  ( type.GetChildren() )
+    , pKnowledge_                 ( 0 )
+    , orderManager_               ( *this )
+    , bPionMaxSpeedOverloaded_    ( false )
+    , rOverloadedPionMaxSpeed_    ( 0. )
+    , bBlinded_                   ( false )
+    , bHasDoneMagicMove_          ( false )
+    , criticalIntelligenceChanged_( false )
+    , armedIndividualsChanged_    ( false )
 {
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( "calme" );
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
@@ -145,8 +172,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     SendCreation();
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, point, number );
     concentrations_.push_back( pConcentration );
-    nPeopleCount_ = pConcentration->GetNbrAliveHumans();
     pArmy_->RegisterPopulation( *this );
+    pAffinities_.reset( new MIL_AffinitiesMap() );
     vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
 }
@@ -190,11 +217,16 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army_ABC*& >( pArmy_ );
     idManager_.Lock( nID_ );
+    MIL_AffinitiesMap* pAffinities;
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
     assert( pDefaultAttitude_ );
-    file >> nPeopleCount_
+    file >> rArmedIndividuals_
+         >> rMale_
+         >> rFemale_
+         >> rChildren_
+         >> criticalIntelligence_
          >> concentrations_
          >> flows_
          >> trashedConcentrations_
@@ -202,7 +234,9 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> bPionMaxSpeedOverloaded_
          >> rOverloadedPionMaxSpeed_
          >> pKnowledge_
-         >> bHasDoneMagicMove_;
+         >> bHasDoneMagicMove_
+         >> pAffinities;
+    pAffinities_.reset( pAffinities );
     MT_Vector2D tmp;
     file >> tmp;
     vBarycenter_.reset( new MT_Vector2D( tmp ) );
@@ -220,12 +254,17 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     unsigned attitude = pDefaultAttitude_->GetID();
     file << nID_
          << pArmy_
          << attitude
-         << nPeopleCount_
+         << rArmedIndividuals_
+         << rMale_
+         << rFemale_
+         << rChildren_
+         << criticalIntelligence_
          << concentrations_
          << flows_
          << trashedConcentrations_
@@ -234,6 +273,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << rOverloadedPionMaxSpeed_
          << pKnowledge_
          << bHasDoneMagicMove_
+         << pAffinities
          << (*vBarycenter_);
     SaveRole< DEC_PopulationDecision >( *this, file );
 }
@@ -252,12 +292,32 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
     MIL_Entity_ABC::WriteODB ( xos ) ;
     xos << xml::attribute( "id", nID_ )
         << xml::attribute( "type", pType_->GetName() )
-        << xml::attribute( "humans", GetNbrAliveHumans() + GetNbrDeadHumans() )
         << xml::attribute( "attitude", pDefaultAttitude_->GetName() );
     if( !concentrations_.empty() )
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
     else
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition() ) );
+    xos << xml::start( "composition" )
+            << xml::attribute( "healthy", GetHealthyHumans() )
+            << xml::attribute( "wounded", GetWoundedHumans() )
+            << xml::attribute( "dead", GetDeadHumans() )
+            << xml::attribute( "contaminated", GetContaminatedHumans() )
+        << xml::end;
+    if( rArmedIndividuals_ != pType_->GetArmedIndividuals() )
+        xos << xml::start( "armed-individuals" )
+                << xml::attribute( "value", rArmedIndividuals_ )
+            << xml::end;
+    if( rMale_ != pType_->GetMale() || rFemale_ != pType_->GetFemale() || rChildren_ != pType_->GetChildren() )
+        xos << xml::start( "repartition" )
+                << xml::attribute( "male", rMale_ )
+                << xml::attribute( "female", rFemale_ )
+                << xml::attribute( "children", rChildren_ )
+            << xml::end;
+    if( !criticalIntelligence_.empty() )
+        xos << xml::start( "critical-intelligence" )
+                << xml::attribute( "content", criticalIntelligence_ )
+            << xml::end;
+    pAffinities_->WriteODB( xos );
     if( !extensions_.empty() )
     {
         xos << xml::start( "extensions" );
@@ -674,30 +734,58 @@ const MIL_PopulationAttitude& MIL_Population::GetAttitude() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetNbrAliveHumans
+// Name: MIL_Population::GetHealthyHumans
 // Created: SBO 2006-02-22
 // -----------------------------------------------------------------------------
-unsigned int MIL_Population::GetNbrAliveHumans() const
+unsigned int MIL_Population::GetHealthyHumans() const
 {
     unsigned int nResult = 0;
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        nResult += ( **itConcentration ).GetNbrAliveHumans();
+        nResult += ( **itConcentration ).GetHealthyHumans();
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        nResult += ( **itFlow ).GetNbrAliveHumans();
+        nResult += ( **itFlow ).GetHealthyHumans();
     return nResult;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetNbrDeadHumans
-// Created: SBO 2006-02-22
+// Name: MIL_Population::GetWoundedHumans
+// Created: JSR 2011-03-10
 // -----------------------------------------------------------------------------
-unsigned int MIL_Population::GetNbrDeadHumans() const
+unsigned int MIL_Population::GetWoundedHumans() const
 {
     unsigned int nResult = 0;
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        nResult += ( **itConcentration ).GetNbrDeadHumans();
+        nResult += ( **itConcentration ).GetWoundedHumans();
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        nResult += ( **itFlow ).GetNbrDeadHumans();
+        nResult += ( **itFlow ).GetWoundedHumans();
+    return nResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetContaminatedHumans
+// Created: JSR 2011-03-10
+// -----------------------------------------------------------------------------
+unsigned int MIL_Population::GetContaminatedHumans() const
+{
+    unsigned int nResult = 0;
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        nResult += ( **itConcentration ).GetContaminatedHumans();
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        nResult += ( **itFlow ).GetContaminatedHumans();
+    return nResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetDeadHumans
+// Created: SBO 2006-02-22
+// -----------------------------------------------------------------------------
+unsigned int MIL_Population::GetDeadHumans() const
+{
+    unsigned int nResult = 0;
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        nResult += ( **itConcentration ).GetDeadHumans();
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        nResult += ( **itFlow ).GetDeadHumans();
     return nResult;
 }
 
@@ -877,12 +965,13 @@ void MIL_Population::OnReceiveCrowdMagicAction( const sword::UnitMagicAction& ms
     case sword::UnitMagicAction::crowd_total_destruction:
         OnReceiveMsgDestroyAll();
         break;
-    case sword::UnitMagicAction::crowd_kill:
+        // TODO
+    /*case sword::UnitMagicAction::crowd_kill:
         OnReceiveMsgKill( msg );
         break;
     case sword::UnitMagicAction::crowd_resurrect:
         OnReceiveMsgResurrect( msg );
-        break;
+        break;*/
     case sword::UnitMagicAction::crowd_change_attitude:
         OnReceiveMsgChangeAttitude( msg );
         break;
@@ -1059,6 +1148,9 @@ void MIL_Population::SendCreation() const
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
+    asnMsg().set_male( rMale_ );
+    asnMsg().set_female( rFemale_ );
+    asnMsg().set_children( rChildren_ );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
     if( asnMsg().has_extension() )
         asnMsg().mutable_extension()->mutable_entries()->Clear();
@@ -1081,17 +1173,18 @@ void MIL_Population::SendFullState() const
     client::CrowdUpdate asnMsg;
     asnMsg().mutable_crowd()->set_id( nID_ );
     GetRole< DEC_PopulationDecision >().SendFullState( asnMsg );
+    asnMsg().set_critical_intelligence( criticalIntelligence_ );
+    asnMsg().set_armed_individuals( rArmedIndividuals_ );
+    pAffinities_->SendFullState( asnMsg );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    sPeopleCounter counter( nPeopleCount_ );
-    sPeopleCounter trashCounter( nPeopleCount_ );
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        ( **it ).SendFullState( counter );
+        ( **it ).SendFullState();
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        ( **it ).SendFullState( trashCounter );
+        ( **it ).SendFullState();
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).SendFullState( counter );
+        ( **it ).SendFullState();
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        ( **it ).SendFullState( trashCounter );
+        ( **it ).SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1100,23 +1193,26 @@ void MIL_Population::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateNetwork()
 {
-    if( GetRole< DEC_PopulationDecision >().HasStateChanged() )
+    if( GetRole< DEC_PopulationDecision >().HasStateChanged() || criticalIntelligenceChanged_ || armedIndividualsChanged_ || pAffinities_->HasChanged() )
     {
         client::CrowdUpdate asnMsg;
         asnMsg().mutable_crowd()->set_id( nID_ );
         GetRole< DEC_PopulationDecision >().SendChangedState( asnMsg );
+        if( criticalIntelligenceChanged_ )
+            asnMsg().set_critical_intelligence( criticalIntelligence_ );
+        if( armedIndividualsChanged_ )
+            asnMsg().set_armed_individuals( rArmedIndividuals_ );
+        pAffinities_->UpdateNetwork( asnMsg );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
-    sPeopleCounter counter( nPeopleCount_ );
-    sPeopleCounter trashCounter( nPeopleCount_ );
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-        ( **it ).SendChangedState( counter );
+        ( **it ).SendChangedState();
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
-        ( **it ).SendChangedState( trashCounter);
+        ( **it ).SendChangedState();
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-        ( **it ).SendChangedState( counter);
+        ( **it ).SendChangedState();
     for( CIT_FlowVector it = trashedFlows_.begin(); it != trashedFlows_.end(); ++it )
-        ( **it ).SendChangedState( trashCounter );
+        ( **it ).SendChangedState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1129,29 +1225,6 @@ void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& 
         visitor.Visit( **it );
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         visitor.Visit( **it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Population::sPeopleCounter::sPeopleCounter
-// Created: MGD 2009-10-21
-// -----------------------------------------------------------------------------
-MIL_Population::sPeopleCounter::sPeopleCounter( unsigned int nInit )
-    : nPeople_ ( nInit )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Population::sPeopleCounter::GetBoundedPeople
-// Created: SBO 2006-04-03
-// -----------------------------------------------------------------------------
-unsigned int MIL_Population::sPeopleCounter::GetBoundedPeople( unsigned int nPeople )
-{
-    unsigned int nResult = std::min( nPeople_, nPeople );
-    nPeople_ -= nResult;
-    if( nPeople_ < 0. )
-        nPeople_ = 0;
-    return nResult;
 }
 
 // -----------------------------------------------------------------------------

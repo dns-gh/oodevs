@@ -14,11 +14,16 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
+}
+
+namespace sword
+{
+    class CrowdConcentrationCreation;
+    class CrowdConcentrationUpdate;
 }
 
 // =============================================================================
@@ -38,18 +43,18 @@ public:
 
     //! @name Accessors
     //@{
-    float   GetArea   () const;
+    float GetArea() const;
 
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
-    virtual unsigned int GetLivingHumans() const;
+    virtual unsigned int GetHealthyHumans() const;
+    virtual unsigned int GetWoundedHumans() const;
+    virtual unsigned int GetContaminatedHumans() const;
     virtual unsigned int GetDeadHumans() const;
     virtual float GetDensity() const;
-    virtual QString  GetAttitude() const;
+    virtual QString GetAttitude() const;
     virtual float GetHeight( bool aggregated ) const;
-
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-
     virtual geometry::Point2f GetPosition( bool aggregated ) const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
@@ -76,10 +81,11 @@ private:
     //@{
     geometry::Point2f position_;
     geometry::Rectangle2f boundingBox_;
-
     float density_;
-    uint  nID_;
-    int   nLivingHumans_;
+    uint nID_;
+    int   nHealthyHumans_;
+    int   nWoundedHumans_;
+    int   nContaminatedHumans_;
     int   nDeadHumans_;
     float radius_;
     float deadRadius_;

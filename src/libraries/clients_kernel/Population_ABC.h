@@ -46,7 +46,9 @@ public:
     //@{
     virtual const PopulationType& GetType() const = 0;
 
-    virtual unsigned int GetLivingHumans() const = 0;
+    virtual unsigned int GetHealthyHumans() const = 0;
+    virtual unsigned int GetWoundedHumans() const = 0;
+    virtual unsigned int GetContaminatedHumans() const = 0;
     virtual unsigned int GetDeadHumans() const = 0;
     //@}
 

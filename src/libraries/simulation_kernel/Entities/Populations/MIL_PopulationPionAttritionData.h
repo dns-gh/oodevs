@@ -23,12 +23,12 @@ class PHY_Protection;
 // =============================================================================
 // Created: NLD 2005-11-02
 // =============================================================================
-class MIL_PopulationPionAttritionData
+class MIL_PopulationPionAttritionData : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_PopulationPionAttritionData();
+             MIL_PopulationPionAttritionData();
     virtual ~MIL_PopulationPionAttritionData();
     //@}
 
@@ -40,16 +40,10 @@ public:
     //! @name Accessors
     //@{
     const PHY_AttritionData& GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
-          double           GetPH           ( const MIL_PopulationAttitude& attitude, double rDensity ) const;
+    double GetPH ( const MIL_PopulationAttitude& attitude, double rDensity ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_PopulationPionAttritionData( const MIL_PopulationPionAttritionData& );            //!< Copy constructor
-    MIL_PopulationPionAttritionData& operator=( const MIL_PopulationPionAttritionData& ); //!< Assignment operator
-    //@}
-
     //! @name Initialization
     //@{
     void ReadAttitudeData( const MIL_PopulationAttitude& attitude, xml::xistream& xis );
@@ -58,16 +52,15 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< PHY_AttritionData >   T_AttritionVector;
-    typedef T_AttritionVector::const_iterator  CIT_AttritionVector;
+    typedef std::vector< PHY_AttritionData >    T_AttritionVector;
+    typedef T_AttritionVector::const_iterator CIT_AttritionVector;
 
     struct sAttritionData
     {
         sAttritionData();
-
         T_AttritionVector attritions_; // Per protection
-        double          rPopulationDensity_;
-        double          rIntensity_;
+        double rPopulationDensity_;
+        double rIntensity_;
     };
 
     typedef std::vector< sAttritionData > T_AttitudeAttritionDataVector; // Per attitude

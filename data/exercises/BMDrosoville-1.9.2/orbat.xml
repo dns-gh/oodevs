@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/orbat.xsd">
-  <sides>
+<orbat model-version="4.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/exercise/orbat.xsd">
+  <parties>
     <party id="1" name="GoodGuys" type="friend">
       <objects>
         <object id="43" name="Poste de contrôle [43]" type="checkpoint">
@@ -179,11 +179,12 @@
         <knowledge-group id="61" name="Groupe de connaissance [61]" type="Standard"/>
       </communication>
       <populations>
-        <population armed-individuals="0" attitude="calme" children="0" contaminated="5" dead="1" female="0" healthy="10000" id="66" male="1" name="Population standard [66]" position="31TCM0866089404" type="Population standard BM" wounded="10">
+        <population attitude="calme" id="66" name="Population standard [66]" position="31TCM0866089404" type="Population standard BM">
+          <composition contaminated="0" dead="0" healthy="10000" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="3" value="0"/>
-            <adhesion party="13" value="1.4013e-045"/>
+            <adhesion party="13" value="-1.07374e+008"/>
           </adhesions>
         </population>
       </populations>
@@ -243,18 +244,19 @@
         <knowledge-group id="17" name="Groupe de connaissance [17]" type="Standard"/>
       </communication>
       <populations>
-        <population armed-individuals="0" attitude="calme" children="0" contaminated="0" dead="4" female="0" healthy="1000" id="77" male="0" name="Population bad [77]" position="31TCM0866087404" type="Population standard BM" wounded="0">
+        <population attitude="calme" id="77" name="Population bad [77]" position="31TCM0866087404" type="Population standard BM">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="3" value="0"/>
-            <adhesion party="13" value="-1"/>
+            <adhesion party="13" value="0"/>
           </adhesions>
         </population>
       </populations>
       <inhabitants/>
       <logistics/>
     </party>
-  </sides>
+  </parties>
   <diplomacy>
     <party id="1">
       <relationship diplomacy="neutral" party="3"/>
@@ -270,4 +272,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3694888521" -->
+<!-- signature="1588823197" -->

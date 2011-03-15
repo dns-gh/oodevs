@@ -31,6 +31,7 @@ namespace kernel
 class Model;
 class StaticModel;
 class DotationsItem;
+class PopulationRepartition;
 
 // =============================================================================
 /** @class  EditorFactory
@@ -54,6 +55,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< DotationsItem** >
                     , public tools::Caller< kernel::Moveable_ABC** >
                     , public tools::Caller< EntityAffinity* >
+                    , public tools::Caller< PopulationRepartition** >
 {
 public:
     //! @name Constructors/Destructor
@@ -77,6 +79,7 @@ public:
     virtual void Call( kernel::LogisticLevel** const& value );
     virtual void Call( kernel::Moveable_ABC** const& value );
     virtual void Call( EntityAffinity* const& value );
+    virtual void Call( PopulationRepartition** const& value );
     //@}
 
 private:

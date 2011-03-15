@@ -829,9 +829,10 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const sword::UnitMagicAction& 
                 throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
             break;
         case sword::UnitMagicAction::crowd_total_destruction:
-        case sword::UnitMagicAction::crowd_kill:
-        case sword::UnitMagicAction::crowd_resurrect:
+        case sword::UnitMagicAction::crowd_change_health_state:
         case sword::UnitMagicAction::crowd_change_attitude:
+        case sword::UnitMagicAction::crowd_change_affinities:
+        case sword::UnitMagicAction::crowd_change_armed_individuals:
             if( MIL_Population* pPopulation = populationFactory_->Find ( id ) )
                 pPopulation->OnReceiveCrowdMagicAction( message );
             else

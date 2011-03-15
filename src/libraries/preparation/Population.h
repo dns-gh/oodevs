@@ -10,12 +10,13 @@
 #ifndef __Population_h_
 #define __Population_h_
 
+#include "EnumTypes.h"
+#include "PopulationRepartition.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Units.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "EnumTypes.h"
 
 namespace kernel
 {
@@ -52,9 +53,11 @@ public:
     //! @name Operations
     //@{
     virtual const kernel::PopulationType& GetType() const;
-
-    virtual unsigned int GetLivingHumans() const;
+    virtual unsigned int GetHealthyHumans() const;
+    virtual unsigned int GetWoundedHumans() const;
+    virtual unsigned int GetContaminatedHumans() const;
     virtual unsigned int GetDeadHumans() const;
+    unsigned int GetTotalLivingHumans() const;
     //@}
 
 private:
@@ -74,15 +77,14 @@ private:
     //! @name Member data
     //@{
     const kernel::PopulationType& type_;
-    unsigned long                 healthy_;
-    unsigned long                 wounded_;
-    unsigned long                 dead_;
-    unsigned long                 contaminated_;
+    unsigned long healthy_;
+    unsigned long wounded_;
+    unsigned long dead_;
+    unsigned long contaminated_;
     kernel::UnitedValue< unsigned int > armedIndividuals_;
-    kernel::UnitedValue< unsigned int >  male_;
-    kernel::UnitedValue< unsigned int >  female_;
-    kernel::UnitedValue< unsigned int >  children_;
-    Enum_PopulationAttitude       attitude_;
+    PopulationRepartition* repartition_;
+    Enum_PopulationAttitude attitude_;
+    QString criticalIntelligence_;
     //@}
 };
 

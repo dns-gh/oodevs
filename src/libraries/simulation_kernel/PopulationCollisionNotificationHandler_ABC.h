@@ -14,9 +14,6 @@
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
 
-namespace population
-{
-
 // =============================================================================
 /** @class  PopulationCollisionNotificationHandler_ABC
     @brief  Population collision notification handler declaration
@@ -38,7 +35,5 @@ public:
     virtual void NotifyConcentrationCollision( MIL_PopulationConcentration& population ) = 0;
     //@}
 };
-
-}
 
 #endif /* __population_PopulationCollisionNotificationHandler_ABC_H__ */

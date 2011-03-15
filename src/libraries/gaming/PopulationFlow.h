@@ -15,11 +15,16 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
+}
+
+namespace sword
+{
+    class CrowdFlowCreation;
+    class CrowdFlowUpdate;
 }
 
 // =============================================================================
@@ -42,16 +47,16 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString  GetName() const;
+    virtual QString GetName() const;
     virtual unsigned long GetId() const;
-    virtual unsigned int GetLivingHumans() const;
+    virtual unsigned int GetHealthyHumans() const;
+    virtual unsigned int GetWoundedHumans() const;
+    virtual unsigned int GetContaminatedHumans() const;
     virtual unsigned int GetDeadHumans() const;
     virtual float GetDensity() const;
-    virtual QString      GetAttitude() const;
+    virtual QString GetAttitude() const;
     virtual float GetHeight( bool aggregated ) const;
-
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-
     virtual geometry::Point2f GetPosition( bool aggregated ) const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
@@ -77,17 +82,16 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-
-    uint          nID_;
-    T_PointVector itineraire_; // $$$$ AGE 2006-03-23: extension
+    uint nID_;
     T_PointVector flow_;
     geometry::Rectangle2f boundingBox_;
-    int              nDirection_;
-    int              nSpeed_;
-
-    int           nLivingHumans_;
-    int           nDeadHumans_;
-    float         rDensity_;
+    int nDirection_;
+    int nSpeed_;
+    int nHealthyHumans_;
+    int nWoundedHumans_;
+    int nContaminatedHumans_;
+    int nDeadHumans_;
+    float rDensity_;
     E_PopulationAttitude attitude_;
     //@}
 };

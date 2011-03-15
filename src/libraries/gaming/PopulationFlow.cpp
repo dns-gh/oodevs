@@ -22,14 +22,16 @@ using namespace kernel;
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 PopulationFlow::PopulationFlow( const sword::CrowdFlowCreation& message, const CoordinateConverter_ABC& converter )
-    : converter_    ( converter )
-    , nID_          ( message.flow().id() )
-    , flow_         ( 2, geometry::Point2f( 0, 0 ) )
-    , nDirection_   ( 0 )
-    , nSpeed_       ( 0 )
-    , nLivingHumans_( 0 )
-    , nDeadHumans_  ( 0 )
-    , rDensity_     ( 0 )
+    : converter_          ( converter )
+    , nID_                ( message.flow().id() )
+    , flow_               ( 2, Point2f( 0, 0 ) )
+    , nDirection_         ( 0 )
+    , nSpeed_             ( 0 )
+    , nHealthyHumans_     ( 0 )
+    , nWoundedHumans_     ( 0 )
+    , nContaminatedHumans_( 0 )
+    , nDeadHumans_        ( 0 )
+    , rDensity_           ( 0 )
 {
     RegisterSelf( *this );
 }
@@ -68,42 +70,39 @@ unsigned long PopulationFlow::GetId() const
 // -----------------------------------------------------------------------------
 void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& message )
 {
-    if( message.has_attitude()  )
-        attitude_ = (E_PopulationAttitude)message.attitude();
-    if( message.has_alive()  )
-        nLivingHumans_ = message.alive();
-    if( message.has_dead()  )
+    if( message.has_attitude() )
+        attitude_ = static_cast< E_PopulationAttitude >( message.attitude() );
+    if( message.has_healthy() )
+        nHealthyHumans_ = message.healthy();
+    if( message.has_wounded() )
+        nWoundedHumans_ = message.wounded();
+    if( message.has_contaminated() )
+        nContaminatedHumans_ = message.contaminated();
+    if( message.has_dead() )
         nDeadHumans_ = message.dead();
-    if( message.has_speed()  )
+    if( message.has_speed() )
         nSpeed_ = message.speed();
-    if( message.has_direction()  )
-        nDirection_    = message.direction().heading();
-    if( message.has_path()  )
+    if( message.has_direction() )
+        nDirection_ = message.direction().heading();
+    if( message.has_parts() )
     {
-        itineraire_.clear();
-        for( int i = 0; i < message.path().location().coordinates().elem_size(); ++i )
-            itineraire_.push_back( converter_.ConvertToXY( message.path().location().coordinates().elem(i) ) );
-    }
-    if( message.has_parts()  )
-    {
-        flow_.clear(); flow_.reserve( message.parts().location().coordinates().elem_size() );
+        flow_.clear();
+        flow_.reserve( message.parts().location().coordinates().elem_size() );
         boundingBox_ = Rectangle2f();
         for( int i = 0; i < message.parts().location().coordinates().elem_size(); ++i )
         {
-            flow_.push_back( converter_.ConvertToXY( message.parts().location().coordinates().elem(i) ) );
+            flow_.push_back( converter_.ConvertToXY( message.parts().location().coordinates().elem( i ) ) );
             boundingBox_.Incorporate( flow_.back() );
         }
-
         // Density
         float rLength = 0.;
         CIT_PointVector itCur = flow_.begin();
         CIT_PointVector itNext = itCur;
         ++itNext;
         for( ; itNext != flow_.end(); ++itNext, ++itCur )
-            rLength += (*itCur).Distance( *itNext );
-
+            rLength += ( *itCur ).Distance( *itNext );
         if( rLength > 0. )
-            rDensity_ = nLivingHumans_ / rLength;
+            rDensity_ = ( nHealthyHumans_ + nWoundedHumans_ + nContaminatedHumans_ ) / rLength;
         else
             rDensity_ = 0.;
     }
@@ -119,12 +118,30 @@ float PopulationFlow::GetDensity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationFlow::GetLivingHumans
-// Created: AGE 2006-02-20
+// Name: PopulationFlow::GetHealthyHumans
+// Created: JSR 2011-03-11
 // -----------------------------------------------------------------------------
-unsigned int PopulationFlow::GetLivingHumans() const
+unsigned int PopulationFlow::GetHealthyHumans() const
 {
-    return nLivingHumans_;
+    return nHealthyHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetWoundedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetWoundedHumans() const
+{
+    return nWoundedHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetContaminatedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetContaminatedHumans() const
+{
+    return nContaminatedHumans_;
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +190,7 @@ namespace
 // Name: PopulationFlow::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationFlow::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& , const GlTools_ABC& tools ) const
+void PopulationFlow::Draw( const Point2f& /*where*/, const Viewport_ABC& , const GlTools_ABC& tools ) const
 {
     glPushAttrib( GL_LINE_BIT );
         glLineWidth( 10.f );
@@ -190,7 +207,7 @@ void PopulationFlow::Draw( const geometry::Point2f& /*where*/, const kernel::Vie
 // Name: PopulationFlow::GetPosition
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-geometry::Point2f PopulationFlow::GetPosition( bool ) const
+Point2f PopulationFlow::GetPosition( bool ) const
 {
     if( ! flow_.empty() )
         return flow_.front();
@@ -201,19 +218,18 @@ geometry::Point2f PopulationFlow::GetPosition( bool ) const
 // Name: PopulationFlow::IsAt
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-bool PopulationFlow::IsAt( const geometry::Point2f& point, float precision /*= 100.f*/, float /*adaptiveFactor*/ ) const
+bool PopulationFlow::IsAt( const Point2f& point, float precision /*= 100.f*/, float /*adaptiveFactor*/ ) const
 {
     // $$$$ AGE 2006-04-10: Factoriser ce basard
     if( flow_.empty() )
         return false;
-    precision*=precision;
+    precision *= precision;
     if( flow_.size() == 1 )
         return flow_.front().SquareDistance( point ) <= precision;
-
     CIT_PointVector previous = flow_.begin();
     for( CIT_PointVector current = previous + 1; current != flow_.end(); ++current )
     {
-        const geometry::Segment2f segment( *previous, *current );
+        const Segment2f segment( *previous, *current );
         if( segment.SquareDistance( point ) < precision )
             return true;
         previous = current;
@@ -225,7 +241,7 @@ bool PopulationFlow::IsAt( const geometry::Point2f& point, float precision /*= 1
 // Name: PopulationFlow::IsIn
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-bool PopulationFlow::IsIn( const geometry::Rectangle2f& rect ) const
+bool PopulationFlow::IsIn( const Rectangle2f& rect ) const
 {
     return ! boundingBox_.Intersect( rect ).IsEmpty();
 }
@@ -234,7 +250,7 @@ bool PopulationFlow::IsIn( const geometry::Rectangle2f& rect ) const
 // Name: PopulationFlow::GetBoundingBox
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-geometry::Rectangle2f PopulationFlow::GetBoundingBox() const
+Rectangle2f PopulationFlow::GetBoundingBox() const
 {
     return boundingBox_;
 }
@@ -243,7 +259,7 @@ geometry::Rectangle2f PopulationFlow::GetBoundingBox() const
 // Name: PopulationFlow::Accept
 // Created: SBO 2009-05-25
 // -----------------------------------------------------------------------------
-void PopulationFlow::Accept( kernel::LocationVisitor_ABC& visitor ) const
+void PopulationFlow::Accept( LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitLines( flow_ );
 }

@@ -11,11 +11,15 @@
 #define __PopulationFireResult_h_
 
 #include "tools/Resolver_ABC.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
     class Population_ABC;
+}
+
+namespace sword
+{
+    class CrowdFireDamages;
 }
 
 // =============================================================================

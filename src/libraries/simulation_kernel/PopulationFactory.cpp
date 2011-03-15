@@ -22,8 +22,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
 PopulationFactory::PopulationFactory( unsigned int gcPause, unsigned int gcMult )
-    : gcPause_ ( gcPause )
-    , gcMult_  ( gcMult )
+    : gcPause_( gcPause )
+    , gcMult_ ( gcMult )
 {
     // NOTHING
 }
@@ -43,8 +43,7 @@ PopulationFactory::~PopulationFactory()
 // -----------------------------------------------------------------------------
 MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& army )
 {
-    std::string strType( xis.attribute< std::string >( "type" ) );
-    const MIL_PopulationType* pType = MIL_PopulationType::Find( strType );
+    const MIL_PopulationType* pType = MIL_PopulationType::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         xis.error( "Unknown population type" );
     MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_ );

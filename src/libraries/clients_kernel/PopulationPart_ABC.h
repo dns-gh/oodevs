@@ -11,7 +11,6 @@
 #define __PopulationPart_ABC_h_
 
 #include "Entity_ABC.h"
-#include "Positions.h"
 
 namespace kernel
 {
@@ -27,14 +26,16 @@ class PopulationPart_ABC : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationPart_ABC() {};
-    virtual ~PopulationPart_ABC() {};
+             PopulationPart_ABC() {}
+    virtual ~PopulationPart_ABC() {}
     //@}
 
     //! @name Accessors
     //@{
+    virtual unsigned int GetHealthyHumans() const = 0;
+    virtual unsigned int GetWoundedHumans() const = 0;
+    virtual unsigned int GetContaminatedHumans() const = 0;
     virtual unsigned int GetDeadHumans() const = 0;
-    virtual unsigned int GetLivingHumans() const = 0;
     virtual float        GetDensity() const = 0;
     virtual QString      GetAttitude() const = 0;
     //@}

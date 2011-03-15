@@ -30,6 +30,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/CoordinateSystems.h"
+#include "PopulationRepartitionEditor.h"
 #include "PositionEditor.h"
 #include <qvalidator.h>
 
@@ -282,7 +283,7 @@ void EditorFactory::Call( Enum_PopulationAttitude* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( Enum_DemolitionTargetType* const& value )
 {
-    EnumEditor< Enum_DemolitionTargetType >* editor= new EnumEditor< Enum_DemolitionTargetType >( parent_ );
+    EnumEditor< Enum_DemolitionTargetType >* editor = new EnumEditor< Enum_DemolitionTargetType >( parent_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }
@@ -346,4 +347,19 @@ namespace
 void EditorFactory::Call( EntityAffinity* const& value )
 {
     result_ = new BoundedFloatEditor( parent_, *value, 2, -1.f, 1.f, 0.01f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: JSR 2011-03-08
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( PopulationRepartition** const& value )
+{
+    if( !modalDialog_ || !modalDialog_->isActiveWindow() )
+    {
+        delete modalDialog_;
+        PopulationRepartitionEditor* populationRepartitionEditor = new PopulationRepartitionEditor( modalDialog_, parent_, controllers_.controller_ );
+        populationRepartitionEditor->SetValue( *value );
+        result_ = 0;
+    }
 }

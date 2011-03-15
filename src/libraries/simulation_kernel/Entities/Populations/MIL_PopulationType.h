@@ -13,7 +13,6 @@
 #define __MIL_PopulationType_h_
 
 #include "MT_Tools/MT_Stl.h"
-#include "Tools/MIL_Config.h"
 #include "MIL_PopulationPionAttritionData.h"
 
 namespace xml
@@ -38,21 +37,24 @@ class MIL_PopulationType : private boost::noncopyable
 public:
     //! @name Manager
     //@{
-    static void                      Initialize( xml::xistream& xis );
-    static void                      Terminate ();
-    static const MIL_PopulationType* Find      ( const std::string& strName );
-    static const MIL_PopulationType* Find      ( unsigned int nID );
+    static void Initialize( xml::xistream& xis );
+    static void Terminate();
+    static const MIL_PopulationType* Find( const std::string& strName );
+    static const MIL_PopulationType* Find( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&                       GetName                () const;
-          unsigned int                       GetID                  () const;
-          double                             GetConcentrationDensity() const;
-          double                             GetDefaultFlowDensity  () const;
-          double                             GetMaxSpeed            () const;
-
-    const DEC_Model_ABC&                     GetModel               () const;
+    const std::string& GetName() const;
+    unsigned int GetID() const;
+    double GetArmedIndividuals() const;
+    double GetMale() const;
+    double GetFemale() const;
+    double GetChildren() const;
+    double GetConcentrationDensity() const;
+    double GetDefaultFlowDensity() const;
+    double GetMaxSpeed() const;
+    const DEC_Model_ABC& GetModel() const;
     //@}
 
     //! @name Operations
@@ -62,14 +64,12 @@ public:
 
     //! @name Effects
     //@{
-          double             GetPionMaxSpeed           ( const MIL_PopulationAttitude& populationAttitude, double rPopulationDensity, const PHY_Volume& pionVolume ) const;
-          double             GetPionReloadingTimeFactor( double rPopulationDensity ) const;
-
-    const PHY_AttritionData& GetAttritionData          ( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
-          double             GetPH                     ( const MIL_PopulationAttitude& attitude, double rDensity ) const;
-
-          double             GetDamageSurface          ( const PHY_RoePopulation& roeFirer ) const;
-          double             GetDamagePH               ( const PHY_RoePopulation& roeFirer ) const;
+    double GetPionMaxSpeed( const MIL_PopulationAttitude& populationAttitude, double rPopulationDensity, const PHY_Volume& pionVolume ) const;
+    double GetPionReloadingTimeFactor( double rPopulationDensity ) const;
+    const PHY_AttritionData& GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
+    double GetPH( const MIL_PopulationAttitude& attitude, double rDensity ) const;
+    double GetDamageSurface( const PHY_RoePopulation& roeFirer ) const;
+    double GetDamagePH( const PHY_RoePopulation& roeFirer ) const;
     //@}
 
 protected:
@@ -80,7 +80,7 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_PopulationType*, sCaseInsensitiveLess > T_PopulationMap;
-    typedef T_PopulationMap::const_iterator                                          CIT_PopulationMap;
+    typedef T_PopulationMap::const_iterator                                        CIT_PopulationMap;
     //@}
 
 private:
@@ -98,7 +98,12 @@ private:
     //@{
     struct sSlowDownData
     {
-        sSlowDownData( double rPopulationDensity, double rMaxSpeed ) : rPopulationDensity_( rPopulationDensity ), rMaxSpeed_( rMaxSpeed ) {}
+        sSlowDownData( double rPopulationDensity, double rMaxSpeed )
+            : rPopulationDensity_( rPopulationDensity )
+            , rMaxSpeed_( rMaxSpeed )
+        {
+            // NOTHING
+        }
         double rPopulationDensity_;
         double rMaxSpeed_;
     };
@@ -106,11 +111,16 @@ private:
     typedef std::vector< T_VolumeSlowDownData > T_AttitudeSlowDownData;
     struct sDamageData
     {
-        sDamageData( double rAttritionSurface, double rPH ) : rAttritionSurface_( rAttritionSurface ), rPH_( rPH ) {}
+        sDamageData( double rAttritionSurface, double rPH )
+            : rAttritionSurface_( rAttritionSurface )
+            , rPH_( rPH )
+        {
+            // NOTHING
+        }
         double rAttritionSurface_;
         double rPH_;
     };
-    typedef std::vector< sDamageData >          T_DamageData;
+    typedef std::vector< sDamageData > T_DamageData;
     //@}
 
     //! @name Helpers
@@ -123,21 +133,30 @@ private:
     //@}
 
 private:
-    const std::string                       strName_;
-          unsigned int                      nID_;
-          double                            rConcentrationDensity_;
-          double                            rDefaultFlowDensity_;
-          double                            rMaxSpeed_;
-          T_AttitudeSlowDownData            slowDownData_;
-          MIL_PopulationPionAttritionData   attritionData_;
-          T_DamageData                      damageData_;
-
-    const DEC_Model_ABC*                    pModel_;
+    //! @name Member data
+    //@{
+    const std::string strName_;
+    unsigned int nID_;
+    double rConcentrationDensity_;
+    double rDefaultFlowDensity_;
+    double rMaxSpeed_;
+    double rArmedIndividuals_;
+    double rMale_;
+    double rFemale_;
+    double rChildren_;
+    T_AttitudeSlowDownData slowDownData_;
+    MIL_PopulationPionAttritionData attritionData_;
+    T_DamageData damageData_;    
+    const DEC_Model_ABC* pModel_;
+    //@}
 
 private:
+    //! @name Static data
+    //@{
     static T_PopulationMap populations_;
-    static double        rEffectReloadingTimeDensity_;
-    static double        rEffectReloadingTimeFactor_;
+    static double rEffectReloadingTimeDensity_;
+    static double rEffectReloadingTimeFactor_;
+    //@}
 };
 
 #endif // __MIL_PopulationType_h_

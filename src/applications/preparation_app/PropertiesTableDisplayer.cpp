@@ -105,3 +105,12 @@ void PropertiesTableDisplayer::Call( const kernel::Moveable_ABC& value )
         AddToDisplay( tools::translate( "PropertiesTableDisplayer", "invalid" ) );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: JSR 2011-03-08
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const PopulationRepartition& /*value*/ )
+{
+    AddToDisplay( tools::translate( "PropertiesTableDisplayer", "<Edit repartition...>" ) );
+}

@@ -999,6 +999,30 @@ Voulez-vous le supprimer?</translation>
         <source>Crowd state</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Healthy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Healthy people:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded people:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated people:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::PopulationTypesListView</name>

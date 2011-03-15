@@ -19,6 +19,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 
 using namespace dispatcher;
 
@@ -29,12 +30,16 @@ using namespace dispatcher;
 Population::Population( Model_ABC& model, const sword::CrowdCreation& msg )
     : dispatcher::Population_ABC( msg.crowd().id(), QString( msg.name().c_str() ) )
     , model_           ( model )
-    , decisionalInfos_ ( model )
     , nType_           ( msg.type().id() )
     , strName_         ( msg.name() )
     , side_            ( model.Sides().Get( msg.party().id() ) )
+    , male_            ( msg.male() )
+    , female_          ( msg.female() )
+    , children_        ( msg.children() )
     , nDominationState_( 0 )
     , order_           ( 0 )
+    , decisionalInfos_ ( model )
+    , armedIndividuals_( 0 )
 {
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
@@ -69,6 +74,15 @@ void Population::DoUpdate( const sword::CrowdUpdate& msg )
 {
     if( msg.has_domination() )
         nDominationState_ = msg.domination();
+    for( int i = 0; i < msg.adhesions_size(); ++i )
+    {
+        const sword::PartyAdhesion& adhesion = msg.adhesions( i );
+        affinities_[ adhesion.party().id() ] = adhesion.value();
+    }
+    if( msg.has_critical_intelligence() )
+        criticalIntelligence_ = msg.critical_intelligence();
+    if( msg.has_armed_individuals() )
+        armedIndividuals_ = msg.armed_individuals();
 }
 
 // -----------------------------------------------------------------------------
@@ -186,6 +200,9 @@ void Population::SendCreation( ClientPublisher_ABC& publisher ) const
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
+    asn().set_male( male_ );
+    asn().set_female( female_ );
+    asn().set_children( children_ );
     asn.Send( publisher );
 }
 
@@ -198,6 +215,14 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     client::CrowdUpdate asn;
     asn().mutable_crowd()->set_id( GetId() );
     asn().set_domination( nDominationState_ );
+    BOOST_FOREACH( const T_Affinities::value_type& affinity, affinities_ )
+    {
+        sword::PartyAdhesion& adhesion = *asn().add_adhesions();
+        adhesion.mutable_party()->set_id( affinity.first );
+        adhesion.set_value( affinity.second );
+    }
+    asn().set_critical_intelligence( criticalIntelligence_ );
+    asn().set_armed_individuals( armedIndividuals_ );
     asn.Send( publisher );
     if( order_.get() )
         order_->Send( publisher );
@@ -246,10 +271,28 @@ const kernel::PopulationType& Population::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Population::GetLivingHumans
-// Created: AGE 2008-06-20
+// Name: Population::GetHealthyHumans
+// Created: JSR 2011-03-11
 // -----------------------------------------------------------------------------
-unsigned int Population::GetLivingHumans() const
+unsigned int Population::GetHealthyHumans() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetWoundedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int Population::GetWoundedHumans() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetContaminatedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int Population::GetContaminatedHumans() const
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

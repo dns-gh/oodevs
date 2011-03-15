@@ -23,12 +23,18 @@ class MIL_Population;
 class PHY_FireResults_Population : public PHY_FireResults_ABC
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
     explicit PHY_FireResults_Population( const MIL_Population& firer );
     virtual ~PHY_FireResults_Population();
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     const MIL_Population& firer_;
-    const unsigned int            nID_;
+    const unsigned int nID_;
+    //@}
 };
 
 #endif // __PHY_FireResults_Population_h_

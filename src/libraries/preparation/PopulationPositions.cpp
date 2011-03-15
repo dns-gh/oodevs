@@ -73,9 +73,9 @@ void PopulationPositions::UpdatePosition()
 {
     static const float oneOnpi = 1.f / std::acos( -1.f );
 
-    if( owner_.GetLivingHumans() != livingHumans_ )
+    if( owner_.GetTotalLivingHumans() != livingHumans_ )
     {
-        livingHumans_ = owner_.GetLivingHumans();
+        livingHumans_ = owner_.GetTotalLivingHumans();
         const float density = owner_.GetType().GetDensity();
         if( density > 0 )
             radius_ = std::sqrt( ( livingHumans_ / density ) * oneOnpi );

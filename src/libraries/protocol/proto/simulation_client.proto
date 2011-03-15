@@ -1690,14 +1690,20 @@ message CrowdCreation {
    optional string    name      = 3; //!< The crowd name
    required PartyId   party     = 4; //!< The crowd party
    optional Extension extension = 5; //!< @todo What's this ?
+   required float     male      = 6; //!< The population male proportion between 0 and 1
+   required float     female    = 7; //!< The population female proportion between 0 and 1
+   required float     children  = 8; //!< The population children proportion between 0 and 1
 }
 
 /** @struct CrowdUpdate
     @brief Notifies of the update of a crowd
 */
 message CrowdUpdate {
-   required CrowdId crowd      = 1; //!< The crowd identifier
-   optional int32   domination = 2; //!< The crowd domination
+   required CrowdId       crowd                 = 1; //!< The crowd identifier
+   optional int32         domination            = 2; //!< The crowd domination
+   repeated PartyAdhesion adhesions             = 3; //!< The party adhesions
+   optional string        critical_intelligence = 4; //!< The crowd critical intelligence
+   optional float         armed_individuals     = 5; //!< The armed individuals proportion between 0 and 1
 }
 
 /** @struct CrowdDestruction
@@ -1740,9 +1746,11 @@ enum EnumCrowdAttitude {
 message CrowdConcentrationUpdate {
    required CrowdConcentrationId concentration = 1; //!< The crowd concentration identifier
    required CrowdId              crowd         = 2; //!< The crowd identifier
-   optional int32                alive         = 3; //!< The number of persons alive
-   optional int32                dead          = 4; //!< The number of dead persons
-   optional EnumCrowdAttitude    attitude      = 5; //!< The crowd attitude
+   optional int32                healthy       = 3; //!< The number of healthy persons
+   optional int32                wounded       = 4; //!< The number of wounded persons
+   optional int32                contaminated  = 5; //!< The number of contaminated persons
+   optional int32                dead          = 6; //!< The number of dead persons
+   optional EnumCrowdAttitude    attitude      = 7; //!< The crowd attitude
 }
 
 /** @struct CrowdFlowCreation
@@ -1765,15 +1773,16 @@ message CrowdFlowDestruction {
     @brief Notifies of the update of a crowd flow
 */
 message CrowdFlowUpdate {
-   required CrowdFlowId       flow      = 1; //!< The crowd flow identifier
-   required CrowdId           crowd     = 2; //!< The crowd identifier
-   optional Path              path      = 3; //!< @todo What's this ?
-   optional Path              parts     = 4; //!< @todo What's this ?
-   optional Heading           direction = 5; //!< @todo What's this ?
-   optional int32             speed     = 6; //!< The flow speed
-   optional int32             alive     = 7; //!< The number of persons alive
-   optional int32             dead      = 8; //!< The number of dead persons
-   optional EnumCrowdAttitude attitude  = 9; //!< The crowd attitude
+   required CrowdFlowId       flow         = 1;  //!< The crowd flow identifier
+   required CrowdId           crowd        = 2;  //!< The crowd identifier
+   optional Path              parts        = 3;  //!< @todo What's this ?
+   optional Heading           direction    = 4;  //!< @todo What's this ?
+   optional int32             speed        = 5;  //!< The flow speed
+   optional int32             healthy      = 6;  //!< The number of healthy persons
+   optional int32             wounded      = 7;  //!< The number of wounded persons
+   optional int32             contaminated = 8;  //!< The number of contaminated persons
+   optional int32             dead         = 9;  //!< The number of dead persons
+   optional EnumCrowdAttitude attitude     = 10; //!< The crowd attitude
 }
 
 /** @struct CrowdKnowledgeCreation

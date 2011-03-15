@@ -49,9 +49,12 @@ public:
     //! @name Operations
     //@{
     void WriteODB( xml::xostream& xos ) const;
-    void SendFullState( client::PopulationUpdate& msg ) const;
-    void UpdateNetwork( client::PopulationUpdate& msg );
+    template< typename T >
+    void SendFullState( T& msg ) const;
+    template< typename T >
+    void UpdateNetwork( T& msg );
     void OnReceiveMsgChangeAffinities( const sword::UnitMagicAction& msg );
+    bool HasChanged() const;
     //@}
 
     //! @name CheckPoints
@@ -83,5 +86,39 @@ private:
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_AffinitiesMap )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AffinitiesMap::SendFullState
+// Created: ABR 2011-02-03
+// -----------------------------------------------------------------------------
+template< typename T >
+void MIL_AffinitiesMap::SendFullState( T& msg ) const
+{
+    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    {
+        sword::PartyAdhesion& adhesion = *msg().add_adhesions();
+        adhesion.mutable_party()->set_id( it->first );
+        adhesion.set_value( it->second );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AffinitiesMap::UpdateNetwork
+// Created: ABR 2011-02-03
+// -----------------------------------------------------------------------------
+template< typename T >
+void MIL_AffinitiesMap::UpdateNetwork( T& msg )
+{
+    if( hasChanged_ )
+    {
+        for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+        {
+            sword::PartyAdhesion& adhesion = *msg().add_adhesions();
+            adhesion.mutable_party()->set_id( it->first );
+            adhesion.set_value( it->second );
+        }
+        hasChanged_ = false;
+    }
+}
 
 #endif // __MIL_AffinitiesMap_h_

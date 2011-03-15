@@ -23,8 +23,8 @@
 #include <xeumeuleu/xml.hpp>
 
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
-double                            MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
-double                            MIL_PopulationType::rEffectReloadingTimeFactor_  = 0.;
+double MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
+double MIL_PopulationType::rEffectReloadingTimeFactor_  = 0.;
 
 struct MIL_PopulationType::LoadingWrapper
 {
@@ -61,13 +61,10 @@ void MIL_PopulationType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::ReadPopulation( xml::xistream& xis )
 {
-    std::string strName;
-    xis >> xml::attribute( "name", strName );
-
+    std::string strName = xis.attribute< std::string >( "name" );
     const MIL_PopulationType*& pPopulation = populations_[ strName ];
     if( pPopulation )
         xis.error( "Population type already exists" );
-
     pPopulation = new MIL_PopulationType( strName, xis );
 }
 
@@ -91,6 +88,10 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     , rConcentrationDensity_( 0. )
     , rDefaultFlowDensity_  ( 0. )
     , rMaxSpeed_            ( 0. )
+    , rArmedIndividuals_    ( 0. )
+    , rMale_                ( 1. )
+    , rFemale_              ( 0. )
+    , rChildren_            ( 0. )
     , pModel_               ( 0 )
     , slowDownData_         ( MIL_PopulationAttitude::GetAttitudes().size(), T_VolumeSlowDownData( PHY_Volume::GetVolumes().size(), sSlowDownData( 0., 0. ) ) )
     , attritionData_        ()
@@ -99,7 +100,8 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "concentration-density", rConcentrationDensity_ )
         >> xml::attribute( "moving-base-density", rDefaultFlowDensity_ )
-        >> xml::attribute( "moving-speed", rMaxSpeed_ );
+        >> xml::attribute( "moving-speed", rMaxSpeed_ )
+        >> xml::optional >> xml::attribute( "armed-individuals", rArmedIndividuals_ );
 
     if( rConcentrationDensity_ <= 0 )
         xis.error( "population: concentration-density <= 0" );
@@ -110,25 +112,28 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
 
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
 
+    xis >> xml::optional >> xml::start( "repartition" )
+        >> xml::attribute( "male", rMale_ )
+        >> xml::attribute( "female", rFemale_ )
+        >> xml::attribute( "children", rChildren_ )
+        >> xml::end;
+
     InitializeSlowDownData( xis );
     InitializeFireData    ( xis );
 
-    std::string strModel;
-    xis >> xml::attribute( "decisional-model", strModel );
-    pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( strModel );
+    pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( xis.attribute< std::string >( "decisional-model" ) );
     if( !pModel_ )
         xis.error( "Unknown population model" );
 
     InitializeDiaFunctions();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationType constructor
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
 MIL_PopulationType::MIL_PopulationType( const DEC_Model_ABC& model )
-    : pModel_               ( &model )
+    : pModel_( &model )
 {
     // NOTHING
 }
@@ -139,6 +144,7 @@ MIL_PopulationType::MIL_PopulationType( const DEC_Model_ABC& model )
 // -----------------------------------------------------------------------------
 MIL_PopulationType::~MIL_PopulationType()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -158,16 +164,12 @@ void MIL_PopulationType::InitializeSlowDownData( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::ReadSlowingEffect( xml::xistream& xis )
 {
-    std::string strAttitude;
-    xis >> xml::attribute( "population-attitude", strAttitude );
-
+    std::string strAttitude = xis.attribute< std::string >( "population-attitude" );
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
     if( !pAttitude )
         xis.error( "Unknown attitude '" + strAttitude + "'" );
-
     assert( slowDownData_.size() > pAttitude->GetID() );
     T_VolumeSlowDownData& volumeSlowDownData = slowDownData_[ pAttitude->GetID() ];
-
     xis >> xml::list( "unit", *this, &MIL_PopulationType::ReadSlowingUnitEffect, volumeSlowDownData );
 }
 
@@ -178,8 +180,8 @@ void MIL_PopulationType::ReadSlowingEffect( xml::xistream& xis )
 void MIL_PopulationType::ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlowDownData& volumeSlowDownData )
 {
     std::string strVolume;
-    double    rPopulationDensity = 0.;
-    double    rMaxSpeed          = 0.;
+    double rPopulationDensity = 0.;
+    double rMaxSpeed          = 0.;
 
     xis >> xml::attribute( "unit-size", strVolume )
         >> xml::attribute( "population-density", rPopulationDensity )
@@ -221,8 +223,7 @@ void MIL_PopulationType::InitializeFireData( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
 {
-    std::string strRoe;
-    xis >> xml::attribute( "rule-of-engagment", strRoe );
+    std::string strRoe = xis.attribute< std::string >( "rule-of-engagment" );
     const PHY_RoePopulation* pRoe = PHY_RoePopulation::Find( strRoe );
     if( !pRoe )
         xis.error( "Unknown population roe '" + strRoe + "'" );
@@ -244,6 +245,7 @@ void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::InitializeDiaFunctions()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -349,6 +351,42 @@ const std::string& MIL_PopulationType::GetName() const
 unsigned int MIL_PopulationType::GetID() const
 {
     return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetArmedIndividuals
+// Created: JSR 2011-03-07
+// -----------------------------------------------------------------------------
+double MIL_PopulationType::GetArmedIndividuals() const
+{
+    return rArmedIndividuals_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetMale
+// Created: JSR 2011-03-07
+// -----------------------------------------------------------------------------
+double MIL_PopulationType::GetMale() const
+{
+    return rMale_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetFemale
+// Created: JSR 2011-03-07
+// -----------------------------------------------------------------------------
+double MIL_PopulationType::GetFemale() const
+{
+    return rFemale_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetChildren
+// Created: JSR 2011-03-07
+// -----------------------------------------------------------------------------
+double MIL_PopulationType::GetChildren() const
+{
+    return rChildren_;
 }
 
 // -----------------------------------------------------------------------------

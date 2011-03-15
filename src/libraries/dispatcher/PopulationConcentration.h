@@ -42,17 +42,17 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate       ( const sword::CrowdConcentrationUpdate& msg );
-    virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
+    virtual void DoUpdate( const sword::CrowdConcentrationUpdate& msg );
+    virtual void SendCreation( ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-
+    virtual unsigned int GetHealthyHumans() const;
+    virtual unsigned int GetWoundedHumans() const;
+    virtual unsigned int GetContaminatedHumans() const;
     virtual unsigned int GetDeadHumans() const;
-    virtual unsigned int GetLivingHumans() const;
-    virtual float        GetDensity() const;
-    virtual QString      GetAttitude() const;
-
+    virtual float GetDensity() const;
+    virtual QString GetAttitude() const;
     virtual const sword::CoordLatLong& GetPosition() const;
     //@}
 
@@ -66,12 +66,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const Population&   population_;
+    const Population& population_;
     const unsigned long nID_;
     const sword::CoordLatLong position_;
-
-    unsigned long             nNbrAliveHumans_;
-    unsigned long             nNbrDeadHumans_;
+    unsigned int nHealthyHumans_;
+    unsigned int nWoundedHumans_;
+    unsigned int nContaminatedHumans_;
+    unsigned int nDeadHumans_;
     sword::EnumCrowdAttitude nAttitude_;
     //@}
 };

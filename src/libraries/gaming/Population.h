@@ -10,18 +10,13 @@
 #ifndef __Population_h_
 #define __Population_h_
 
-#include "clients_kernel/StaticModel.h"
-#include "clients_kernel/Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionalValue.h"
-#include "clients_kernel/Displayable_ABC.h"
 #include "Simulation.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
@@ -32,10 +27,6 @@ namespace kernel
     class Displayer_ABC;
     class StaticModel;
 }
-
-class PopulationPart_ABC;
-class PopulationConcentration;
-class PopulationFlow;
 
 // =============================================================================
 // Created: HME 2005-09-29
@@ -66,11 +57,12 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    unsigned int GetLivingHumans() const;
-    unsigned int GetDeadHumans() const;
-
+    virtual unsigned int GetHealthyHumans() const;
+    virtual unsigned int GetWoundedHumans() const;
+    virtual unsigned int GetContaminatedHumans() const;
+    virtual unsigned int GetDeadHumans() const;
     virtual geometry::Point2f GetPosition( bool aggregated ) const;
-    virtual float             GetHeight( bool aggregated ) const;
+    virtual float GetHeight( bool aggregated ) const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
@@ -81,7 +73,7 @@ public:
 
     //! @name Accessors
     //@{
-    const kernel::PopulationType& GetType() const;
+    virtual const kernel::PopulationType& GetType() const;
     //@}
 
 private:
@@ -93,8 +85,6 @@ private:
 
     //! @name Helpers
     //@{
-    unsigned int ComputeLivingHumans() const;
-    unsigned int ComputeDeadHumans() const;
     void DoUpdate( const sword::CrowdFlowCreation& message );
     void DoUpdate( const sword::CrowdFlowUpdate& message );
     void DoUpdate( const sword::CrowdFlowDestruction& message );
@@ -103,7 +93,6 @@ private:
     void DoUpdate( const sword::CrowdConcentrationUpdate& message );
     void DoUpdate( const sword::CrowdConcentrationDestruction& message );
     void ComputeCenter();
-
     virtual void NotifyUpdated( const Simulation::sEndTick& tick );
     //@}
 
@@ -113,6 +102,11 @@ private:
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::PopulationType& type_;
+    float male_;
+    float female_;
+    float children_;
+    kernel::OptionalValue< std::string > criticalIntelligence_;
+    kernel::OptionalValue< float > armedIndividuals_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f center_;
     kernel::OptionalValue< int > nDomination_;

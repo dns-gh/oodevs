@@ -850,6 +850,37 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
+    <name>PopulationRepartitionEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Repartition Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Male (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Female (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Children (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;font color=&quot;#ff0000&quot;&gt;Total must be equal to 100&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PositionEditor</name>
     <message>
         <source>Position Editor</source>
@@ -962,6 +993,10 @@ Do you want to save anyway?</source>
     <message>
         <source>invalid</source>
         <translation>no válido</translation>
+    </message>
+    <message>
+        <source>&lt;Edit repartition...&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

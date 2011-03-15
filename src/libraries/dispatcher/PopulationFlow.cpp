@@ -22,15 +22,15 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 PopulationFlow::PopulationFlow( const Population& population, const sword::CrowdFlowCreation& msg )
     : dispatcher::PopulationFlow_ABC( msg.flow().id() )
-    , population_     ( population )
-    , nID_            ( msg.flow().id() )
-    , path_           ()
-    , flow_           ()
-    , nDirection_     ()
-    , nSpeed_         ()
-    , nNbrAliveHumans_( 0 )
-    , nNbrDeadHumans_ ( 0 )
-    , nAttitude_      ( sword::agressive )
+    , population_         ( population )
+    , nID_                ( msg.flow().id() )
+    , nDirection_         ( 0 )
+    , nSpeed_             ( 0 )
+    , nHealthyHumans_     ( 0 )
+    , nWoundedHumans_     ( 0 )
+    , nContaminatedHumans_( 0 )
+    , nDeadHumans_        ( 0 )
+    , nAttitude_          ( sword::agressive )
 {
     RegisterSelf( *this );
 }
@@ -50,20 +50,22 @@ PopulationFlow::~PopulationFlow()
 // -----------------------------------------------------------------------------
 void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& msg )
 {
-    if( msg.has_path()  )
-        path_.Update( msg.path().location() );
-    if( msg.has_parts()  )
+    if( msg.has_parts() )
         flow_.Update( msg.parts().location() );
-    if( msg.has_direction()  )
+    if( msg.has_direction() )
         nDirection_ = msg.direction().heading();
-    if( msg.has_speed()  )
+    if( msg.has_speed() )
         nSpeed_ = msg.speed();
-    if( msg.has_attitude()  )
+    if( msg.has_attitude() )
         nAttitude_ = msg.attitude();
-    if( msg.has_dead()  )
-        nNbrDeadHumans_ = msg.dead();
-    if( msg.has_alive()  )
-        nNbrAliveHumans_ = msg.alive();
+    if( msg.has_healthy() )
+        nHealthyHumans_ = msg.healthy();
+    if( msg.has_wounded() )
+        nWoundedHumans_ = msg.wounded();
+    if( msg.has_contaminated() )
+        nContaminatedHumans_ = msg.contaminated();
+    if( msg.has_dead() )
+        nDeadHumans_ = msg.dead();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,13 +89,14 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     client::CrowdFlowUpdate asn;
     asn().mutable_flow()->set_id( nID_ );
     asn().mutable_crowd()->set_id( population_.GetId() );
+    flow_.Send( *asn().mutable_parts()->mutable_location() );
     asn().mutable_direction()->set_heading( nDirection_ );
     asn().set_speed( nSpeed_ );
+    asn().set_healthy( nHealthyHumans_ );
+    asn().set_wounded( nWoundedHumans_ );
+    asn().set_contaminated( nContaminatedHumans_ );
+    asn().set_dead( nDeadHumans_ );
     asn().set_attitude( nAttitude_ );
-    asn().set_dead( nNbrDeadHumans_ );
-    asn().set_alive( nNbrAliveHumans_ );
-    path_.Send( *asn().mutable_path()->mutable_location() );
-    flow_.Send( *asn().mutable_parts()->mutable_location() );
     asn.Send( publisher );
 }
 
@@ -119,21 +122,39 @@ void PopulationFlow::Accept( kernel::ModelVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetHealthyHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetHealthyHumans() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetWoundedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetWoundedHumans() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationFlow::GetContaminatedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int PopulationFlow::GetContaminatedHumans() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationFlow::GetDeadHumans
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
 unsigned int PopulationFlow::GetDeadHumans() const
 {
-    return nNbrDeadHumans_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationFlow::GetLivingHumans
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-unsigned int PopulationFlow::GetLivingHumans() const
-{
-    return nNbrAliveHumans_;
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------

@@ -22,12 +22,14 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 PopulationConcentration::PopulationConcentration( const Population& population, const sword::CrowdConcentrationCreation& msg )
     : dispatcher::PopulationConcentration_ABC( msg.concentration().id() )
-    , population_     ( population )
-    , nID_            ( msg.concentration().id() )
-    , position_       ( msg.position() )
-    , nNbrAliveHumans_( 0 )
-    , nNbrDeadHumans_ ( 0 )
-    , nAttitude_      ( sword::agressive )
+    , population_         ( population )
+    , nID_                ( msg.concentration().id() )
+    , position_           ( msg.position() )
+    , nHealthyHumans_     ( 0 )
+    , nWoundedHumans_     ( 0 )
+    , nContaminatedHumans_( 0 )
+    , nDeadHumans_        ( 0 )
+    , nAttitude_          ( sword::agressive )
 {
     Register( *this );
 }
@@ -49,10 +51,14 @@ void PopulationConcentration::DoUpdate( const sword::CrowdConcentrationUpdate& m
 {
     if( msg.has_attitude()  )
         nAttitude_ = msg.attitude();
+    if( msg.has_healthy()  )
+        nHealthyHumans_ = msg.healthy();
+    if( msg.has_wounded()  )
+        nWoundedHumans_ = msg.wounded();
+    if( msg.has_contaminated()  )
+        nContaminatedHumans_ = msg.contaminated();
     if( msg.has_dead()  )
-        nNbrDeadHumans_ = msg.dead();
-    if( msg.has_alive()  )
-        nNbrAliveHumans_ = msg.alive();
+        nDeadHumans_ = msg.dead();
 }
 
 // -----------------------------------------------------------------------------
@@ -78,8 +84,10 @@ void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) c
     asn().mutable_concentration()->set_id( nID_ );
     asn().mutable_crowd()->set_id( population_.GetId() );
     asn().set_attitude( nAttitude_ );
-    asn().set_dead( nNbrDeadHumans_ );
-    asn().set_alive( nNbrAliveHumans_ );
+    asn().set_healthy( nHealthyHumans_ );
+    asn().set_wounded( nWoundedHumans_ );
+    asn().set_contaminated( nContaminatedHumans_ );
+    asn().set_dead( nDeadHumans_ );
     asn.Send( publisher );
 }
 
@@ -105,21 +113,39 @@ void PopulationConcentration::Accept( kernel::ModelVisitor_ABC& visitor ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetHealthyHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int PopulationConcentration::GetHealthyHumans() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetWoundedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int PopulationConcentration::GetWoundedHumans() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetContaminatedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int PopulationConcentration::GetContaminatedHumans() const
+{
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationConcentration::GetDeadHumans
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
 unsigned int PopulationConcentration::GetDeadHumans() const
 {
-    return nNbrDeadHumans_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationConcentration::GetLivingHumans
-// Created: AGE 2008-06-20
-// -----------------------------------------------------------------------------
-unsigned int PopulationConcentration::GetLivingHumans() const
-{
-    return nNbrAliveHumans_;
+    throw std::runtime_error( __FUNCTION__ " not implemented" );
 }
 
 // -----------------------------------------------------------------------------

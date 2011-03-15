@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __InhabitantAffinities_h_
-#define __InhabitantAffinities_h_
+#ifndef __Affinities_h_
+#define __Affinities_h_
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -34,25 +34,27 @@ namespace kernel
 namespace sword
 {
     class PopulationUpdate;
+    class CrowdUpdate;
 }
 
 class QGrid;
 class TeamsModel;
 
 // =============================================================================
-/** @class  InhabitantAffinities
-    @brief  InhabitantAffinities
+/** @class  Affinities
+    @brief  Affinities
 */
 // Created: ABR 2011-01-28
 // =============================================================================
-class InhabitantAffinities : public kernel::Extension_ABC
-                           , public kernel::Updatable_ABC< sword::PopulationUpdate >
+class Affinities : public kernel::Extension_ABC
+                 , public kernel::Updatable_ABC< sword::PopulationUpdate >
+                 , public kernel::Updatable_ABC< sword::CrowdUpdate >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantAffinities( TeamsModel& teams );
-    virtual ~InhabitantAffinities();
+             Affinities( TeamsModel& teams );
+    virtual ~Affinities();
     //@}
 
     //! @name Operations
@@ -65,13 +67,14 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    InhabitantAffinities( const InhabitantAffinities& );            //!< Copy constructor
-    InhabitantAffinities& operator=( const InhabitantAffinities& ); //!< Assignment operator
+    Affinities( const Affinities& );            //!< Copy constructor
+    Affinities& operator=( const Affinities& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::PopulationUpdate& message );
+    virtual void DoUpdate( const sword::CrowdUpdate& message );
     //@}
 
     //! @name Types
@@ -89,4 +92,4 @@ private:
     //@}
 };
 
-#endif // __InhabitantAffinities_h_
+#endif // __Affinities_h_

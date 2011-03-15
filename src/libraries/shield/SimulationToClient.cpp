@@ -1641,6 +1641,9 @@ void SimulationToClient::Convert( const sword::CrowdCreation& from, MsgsSimToCli
     CONVERT_ID( party );
     if( from.has_extension() )
         ConvertExtension( from.extension(), to->mutable_extension() );
+    CONVERT( male );
+    CONVERT( female );
+    CONVERT( children );
 }
 
 // -----------------------------------------------------------------------------
@@ -1650,7 +1653,11 @@ void SimulationToClient::Convert( const sword::CrowdCreation& from, MsgsSimToCli
 void SimulationToClient::Convert( const sword::CrowdUpdate& from, MsgsSimToClient::MsgCrowdUpdate* to )
 {
     CONVERT_ID( crowd );
-    CONVERT_TO( domination, etat_domination );
+    CONVERT( domination );
+    for( int i = 0; i < from.adhesions().size(); ++i )
+        ConvertPartyAdhesion( from.adhesions( i ), to->add_adhesions() );
+    CONVERT( critical_intelligence );
+    CONVERT( armed_individuals );
 }
 
 // -----------------------------------------------------------------------------
@@ -1694,8 +1701,10 @@ void SimulationToClient::Convert( const sword::CrowdConcentrationUpdate& from, M
 {
     CONVERT_ID( concentration );
     CONVERT_ID( crowd );
-    CONVERT_TO( alive, nb_humains_vivants );
-    CONVERT_TO( dead, nb_humains_morts );
+    CONVERT( healthy );
+    CONVERT( wounded );
+    CONVERT( contaminated );
+    CONVERT( dead );
     ConvertCrowdAttitude( from, to );
 }
 
@@ -1727,15 +1736,15 @@ void SimulationToClient::Convert( const sword::CrowdFlowUpdate& from, MsgsSimToC
 {
     CONVERT_ID( flow );
     CONVERT_ID( crowd );
-    if( from.has_path() )
-        ConvertLocation( from.path().location(), to->mutable_itineraire()->mutable_location() );
     if( from.has_parts() )
         ConvertLocation( from.parts().location(), to->mutable_parts()->mutable_location() );
     if( from.has_direction() )
         ConvertHeading( from.direction(), to->mutable_direction() );
-    CONVERT_TO( speed, vitesse );
-    CONVERT_TO( alive, nb_humains_vivants );
-    CONVERT_TO( dead, nb_humains_morts );
+    CONVERT( speed );
+    CONVERT( healthy );
+    CONVERT( wounded );
+    CONVERT( contaminated );
+    CONVERT( dead );
     ConvertCrowdAttitude( from, to );
 }
 

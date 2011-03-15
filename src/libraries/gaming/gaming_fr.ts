@@ -1,5 +1,12 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>Affinities</name>
+    <message>
+        <source>Affinity %1:</source>
+        <translation>Adhésion %1:</translation>
+    </message>
+</context>
+<context>
     <name>Agent</name>
     <message>
         <source>Info/Identifier</source>
@@ -327,10 +334,6 @@
 <context>
     <name>Crowd</name>
     <message>
-        <source>Alive:</source>
-        <translation>Vivants:</translation>
-    </message>
-    <message>
         <source>Domination:</source>
         <translation>Domination:</translation>
     </message>
@@ -401,6 +404,38 @@
     <message>
         <source>Side:</source>
         <translation>Camp:</translation>
+    </message>
+    <message>
+        <source>Healthy:</source>
+        <translation>Sains:</translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation>Blessés:</translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation>Contaminés:</translation>
+    </message>
+    <message>
+        <source>Male:</source>
+        <translation>Hommes:</translation>
+    </message>
+    <message>
+        <source>Female:</source>
+        <translation>Femmes:</translation>
+    </message>
+    <message>
+        <source>Children:</source>
+        <translation>Enfants:</translation>
+    </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation>Renseignement critique</translation>
+    </message>
+    <message>
+        <source>Armed individuals:</source>
+        <translation>Individus armés:</translation>
     </message>
 </context>
 <context>
@@ -559,10 +594,6 @@
     <message>
         <source>Living Area/</source>
         <translation>Zone de vie/</translation>
-    </message>
-    <message>
-        <source>Affinity %1:</source>
-        <translation>Adhésion %1:</translation>
     </message>
     <message>
         <source>Satisfaction/Resource/</source>

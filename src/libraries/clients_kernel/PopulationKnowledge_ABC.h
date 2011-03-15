@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual const kernel::Population_ABC*     GetEntity() const = 0;
+    virtual const kernel::Population_ABC* GetEntity() const = 0;
     virtual const kernel::KnowledgeGroup_ABC& GetOwner() const = 0;
 
     virtual void Display( kernel::Displayer_ABC& displayer ) const = 0;
@@ -52,7 +52,6 @@ public:
     //! @name Operations
     //@{
     virtual QString GetTypeName() const;
-
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;

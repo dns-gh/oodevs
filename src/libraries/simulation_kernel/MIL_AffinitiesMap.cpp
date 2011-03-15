@@ -71,38 +71,6 @@ void MIL_AffinitiesMap::WriteODB( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AffinitiesMap::SendFullState
-// Created: ABR 2011-02-03
-// -----------------------------------------------------------------------------
-void MIL_AffinitiesMap::SendFullState( client::PopulationUpdate& msg ) const
-{
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-    {
-        sword::PartyAdhesion& adhesion = *msg().add_adhesions();
-        adhesion.mutable_party()->set_id( it->first );
-        adhesion.set_value( it->second );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AffinitiesMap::UpdateNetwork
-// Created: ABR 2011-02-03
-// -----------------------------------------------------------------------------
-void MIL_AffinitiesMap::UpdateNetwork( client::PopulationUpdate& msg )
-{
-    if( hasChanged_ )
-    {
-        for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-        {
-            sword::PartyAdhesion& adhesion = *msg().add_adhesions();
-            adhesion.mutable_party()->set_id( it->first );
-            adhesion.set_value( it->second );
-        }
-        hasChanged_ = false;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AffinitiesMap::OnReceiveMsgChangeAffinities
 // Created: ABR 2011-02-03
 // -----------------------------------------------------------------------------
@@ -153,4 +121,13 @@ void MIL_AffinitiesMap::save( MIL_CheckPointOutArchive& file, const unsigned int
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         file << it->first
              << it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AffinitiesMap::HasChanged
+// Created: JSR 2011-03-09
+// -----------------------------------------------------------------------------
+bool MIL_AffinitiesMap::HasChanged() const
+{
+    return hasChanged_;
 }

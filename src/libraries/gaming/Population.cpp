@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Population.h"
+#include "Affinities.h"
 #include "PopulationFlow.h"
 #include "PopulationConcentration.h"
 #include "PopulationPartPositionsProxy.h"
@@ -33,13 +34,18 @@ using namespace kernel;
 Population::Population( const sword::CrowdCreation& message,
                         Controllers& controllers,
                         const CoordinateConverter_ABC& converter,
-                        const tools::Resolver_ABC< kernel::PopulationType >& typeResolver,
-                        const kernel::StaticModel& staticModel )
+                        const tools::Resolver_ABC< PopulationType >& typeResolver,
+                        const StaticModel& staticModel )
     : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ) )
-    , controllers_  ( controllers )
-    , converter_    ( converter )
-    , type_         ( typeResolver.Get( message.type().id() ) )
-    , nDomination_  ( 0, false )
+    , controllers_( controllers )
+    , converter_  ( converter )
+    , type_       ( typeResolver.Get( message.type().id() ) )
+    , male_       ( message.male() )
+    , female_     ( message.female() )
+    , children_   ( message.children() )
+    , nDomination_( 0, false )
+    , criticalIntelligence_( "", false )
+    , armedIndividuals_( 0, false )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.crowd().id() );
@@ -68,6 +74,66 @@ Population::~Population()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Population::GetHealthyHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int Population::GetHealthyHumans() const
+{
+    unsigned int healthy = 0;
+    {
+        tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            healthy += it.NextElement().GetHealthyHumans();
+    }
+    {
+        tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            healthy += it.NextElement().GetHealthyHumans();
+    }
+    return healthy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetWoundedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int Population::GetWoundedHumans() const
+{
+    unsigned int wounded = 0;
+    {
+        tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            wounded += it.NextElement().GetWoundedHumans();
+    }
+    {
+        tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            wounded += it.NextElement().GetWoundedHumans();
+    }
+    return wounded;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::GetContaminatedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int Population::GetContaminatedHumans() const
+{
+    unsigned int contaminated = 0;
+    {
+        tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            contaminated += it.NextElement().GetContaminatedHumans();
+    }
+    {
+        tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            contaminated += it.NextElement().GetContaminatedHumans();
+    }
+    return contaminated;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Population::GetDeadHumans
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
@@ -85,26 +151,6 @@ unsigned int Population::GetDeadHumans() const
             dead += it.NextElement().GetDeadHumans();
     }
     return dead;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::GetLivingHumans
-// Created: AGE 2006-02-20
-// -----------------------------------------------------------------------------
-unsigned int Population::GetLivingHumans() const
-{
-    unsigned int living = 0;
-    {
-        tools::Iterator< const PopulationFlow_ABC& > it = tools::Resolver< PopulationFlow_ABC >::CreateIterator();
-        while( it.HasMoreElements() )
-            living += it.NextElement().GetLivingHumans();
-    }
-    {
-        tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
-        while( it.HasMoreElements() )
-            living += it.NextElement().GetLivingHumans();
-    }
-    return living;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +184,7 @@ void Population::DoUpdate( const sword::CrowdFlowCreation& message )
     if( ! tools::Resolver< PopulationFlow_ABC >::Find( message.flow().id() ) )
     {
         PopulationFlow* entity = new PopulationFlow( message, converter_ );
-        entity->Attach< kernel::Positions >( *new PopulationPartPositionsProxy( *entity ) );
+        entity->Attach< Positions >( *new PopulationPartPositionsProxy( *entity ) );
         tools::Resolver< PopulationFlow_ABC >::Register( message.flow().id(), *entity );
         ComputeCenter();
         Touch();
@@ -154,7 +200,7 @@ void Population::DoUpdate( const sword::CrowdConcentrationCreation& message )
     if( ! tools::Resolver< PopulationConcentration_ABC >::Find( message.concentration().id() ) )
     {
         PopulationConcentration* entity = new PopulationConcentration( message, converter_, type_.GetDensity() );
-        entity->Attach< kernel::Positions >( *new PopulationPartPositionsProxy( *entity ) );
+        entity->Attach< Positions >( *new PopulationPartPositionsProxy( *entity ) );
         tools::Resolver< PopulationConcentration_ABC >::Register( message.concentration().id(), *entity );
         ComputeCenter();
         Touch();
@@ -191,15 +237,19 @@ void Population::DoUpdate( const sword::CrowdConcentrationDestruction& message )
 // -----------------------------------------------------------------------------
 void Population::DoUpdate( const sword::CrowdUpdate& message )
 {
-    if( message.has_domination()  )
+    if( message.has_domination() )
         nDomination_ = message.domination();
+    if( message.has_critical_intelligence() )
+        criticalIntelligence_ = message.critical_intelligence();
+    if( message.has_armed_individuals() )
+        armedIndividuals_ = message.armed_individuals();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Population::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void Population::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Population::Draw( const Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( viewport.IsVisible( boundingBox_ ) )
     {
@@ -225,7 +275,7 @@ namespace
         while( it.HasMoreElements() )
         {
             const ConcreteEntity& concreteEntity = static_cast< const ConcreteEntity& >( it.NextElement() );
-            const geometry::Rectangle2f bbox = concreteEntity.GetBoundingBox();
+            const Rectangle2f bbox = concreteEntity.GetBoundingBox();
             boundingBox.Incorporate( bbox.TopRight() );
             boundingBox.Incorporate( bbox.BottomLeft() );
             if( center.IsZero() )
@@ -250,7 +300,7 @@ void Population::ComputeCenter()
 // Name: Population::GetPosition
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-geometry::Point2f Population::GetPosition( bool ) const
+Point2f Population::GetPosition( bool ) const
 {
     return center_;
 }
@@ -268,7 +318,7 @@ float Population::GetHeight( bool ) const
 // Name: Population::IsAt
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/, float adaptiveFactor ) const
+bool Population::IsAt( const Point2f& pos, float precision /*= 100.f*/, float adaptiveFactor ) const
 {
     {
         tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
@@ -295,7 +345,7 @@ bool Population::IsAt( const geometry::Point2f& pos, float precision /*= 100.f*/
 // Name: Population::IsIn
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-bool Population::IsIn( const geometry::Rectangle2f& rectangle ) const
+bool Population::IsIn( const Rectangle2f& rectangle ) const
 {
     {
         tools::Iterator< const PopulationConcentration_ABC& > it = tools::Resolver< PopulationConcentration_ABC >::CreateIterator();
@@ -322,7 +372,7 @@ bool Population::IsIn( const geometry::Rectangle2f& rectangle ) const
 // Name: Population::GetBoundingBox
 // Created: SBO 2006-07-05
 // -----------------------------------------------------------------------------
-geometry::Rectangle2f Population::GetBoundingBox() const
+Rectangle2f Population::GetBoundingBox() const
 {
     return boundingBox_;
 }
@@ -331,7 +381,7 @@ geometry::Rectangle2f Population::GetBoundingBox() const
 // Name: Population::Accept
 // Created: SBO 2009-05-25
 // -----------------------------------------------------------------------------
-void Population::Accept( kernel::LocationVisitor_ABC& visitor ) const
+void Population::Accept( LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitPoint( GetPosition( true ) );
 }
@@ -340,7 +390,7 @@ void Population::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: Population::GetType
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-const kernel::PopulationType& Population::GetType() const
+const PopulationType& Population::GetType() const
 {
     return type_;
 }
@@ -351,16 +401,25 @@ const kernel::PopulationType& Population::GetType() const
 // -----------------------------------------------------------------------------
 void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Item( "" ).Start( Styles::bold ).Add( (Population_ABC*)this ).End();
-    displayer.Display( tools::translate( "Crowd", "Alive:" ), GetLivingHumans() );
+    displayer.Item( "" ).Start( Styles::bold ).Add( static_cast< Population_ABC* >( const_cast< Population* >( this ) ) ).End();
+    displayer.Display( tools::translate( "Crowd", "Healthy:" ), GetHealthyHumans() );
+    displayer.Display( tools::translate( "Crowd", "Wounded:" ), GetWoundedHumans() );
+    displayer.Display( tools::translate( "Crowd", "Contaminated:" ), GetContaminatedHumans() );
+    displayer.Display( tools::translate( "Crowd", "Dead:" ), GetDeadHumans() );
+    displayer.Display( tools::translate( "Crowd", "Male:" ), male_ );
+    displayer.Display( tools::translate( "Crowd", "Female:" ), female_ );
+    displayer.Display( tools::translate( "Crowd", "Children:" ), children_ );
     displayer.Display( tools::translate( "Crowd", "Domination:" ), nDomination_ );
+    displayer.Display( tools::translate( "Crowd", "Critical intelligence:" ), criticalIntelligence_ );
+    displayer.Display( tools::translate( "Crowd", "Armed individuals:" ), armedIndividuals_ );
+    Get< Affinities >().Display( &displayer );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Population::DisplayInSummary
 // Created: SBO 2007-03-01
 // -----------------------------------------------------------------------------
-void Population::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+void Population::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     const_cast< Population* >( this )->displayers_.insert( &displayer );
 }
@@ -373,10 +432,20 @@ void Population::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
 {
     if( !displayers_.empty() )
     {
-        for( std::set< kernel::Displayer_ABC* >::iterator it = displayers_.begin(); it != displayers_.end(); ++it )
-            (*it)->Display( tools::translate( "Crowd", "Alive:" ), GetLivingHumans() )
-                  .Display( tools::translate( "Crowd", "Dead:" ), GetDeadHumans() )
-                  .Display( tools::translate( "Crowd", "Domination:" ), nDomination_ );
+        for( std::set< Displayer_ABC* >::iterator it = displayers_.begin(); it != displayers_.end(); ++it )
+        {
+            ( *it )->Display( tools::translate( "Crowd", "Healthy:" ), GetHealthyHumans() )
+                    .Display( tools::translate( "Crowd", "Wounded:" ), GetWoundedHumans() )
+                    .Display( tools::translate( "Crowd", "Contaminated:" ), GetContaminatedHumans() )
+                    .Display( tools::translate( "Crowd", "Dead:" ), GetDeadHumans() )
+                    .Display( tools::translate( "Crowd", "Male:" ), male_ )
+                    .Display( tools::translate( "Crowd", "Female:" ), female_ )
+                    .Display( tools::translate( "Crowd", "Children:" ), children_ )
+                    .Display( tools::translate( "Crowd", "Domination:" ), nDomination_ )
+                    .Display( tools::translate( "Crowd", "Critical intelligence:" ), criticalIntelligence_ )
+                    .Display( tools::translate( "Crowd", "Armed individuals:" ), armedIndividuals_ );
+            Get< Affinities >().Display( *it );
+        }
         displayers_.clear();
     }
 }

@@ -25,7 +25,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_PopulationAttitude*, sCaseInsensitiveLess > T_AttitudeMap;
-    typedef T_AttitudeMap::const_iterator                                                CIT_AttitudeMap;
+    typedef T_AttitudeMap::const_iterator                                              CIT_AttitudeMap;
     //@}
 
 public:
@@ -34,10 +34,10 @@ public:
     static void Initialize();
     static void Terminate ();
 
-    static const MIL_PopulationAttitude* Find        ( const std::string&           strName );
-    static const MIL_PopulationAttitude* Find        ( sword::EnumCrowdAttitude nAsnID  );
-    static const MIL_PopulationAttitude* Find        ( unsigned int                         nID     );
-    static const T_AttitudeMap&          GetAttitudes();
+    static const MIL_PopulationAttitude* Find( const std::string& strName );
+    static const MIL_PopulationAttitude* Find( sword::EnumCrowdAttitude nAsnID );
+    static const MIL_PopulationAttitude* Find( unsigned int nID );
+    static const T_AttitudeMap& GetAttitudes();
     //@}
 
     //! @name Accessors
@@ -79,8 +79,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string                  strName_;
-    const E_Attitude                   nAttitude_;
+    const std::string strName_;
+    const E_Attitude nAttitude_;
     const sword::EnumCrowdAttitude nAsnID_;
     //@}
 

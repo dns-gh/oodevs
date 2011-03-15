@@ -11,11 +11,11 @@
 #define __DEC_Path_KnowledgePopulation_h_
 
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 class DEC_Agent_PathClass;
 class DEC_Knowledge_Population;
 class MIL_PopulationAttitude;
-class TER_Localisation;
 class TerrainData;
 
 // =============================================================================

@@ -5112,9 +5112,9 @@
 				<label text="Nationalite" language="fr"/>
 			</labels>
   	</attribute>
-	 <attribute extends="population;crowd" name="Ethnicite" type="string">
+	 <attribute extends="population;crowd" name="Ethnie" type="string">
 			<labels>
-				<label text="Ethnicite" language="fr"/>
+				<label text="Ethnie" language="fr"/>
 			</labels>
 		</attribute>
 		<attribute extends="population;crowd" name="Religion" type="string">

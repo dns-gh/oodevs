@@ -1,5 +1,12 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>Affinities</name>
+    <message>
+        <source>Affinity %1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Agent</name>
     <message>
         <source>Info/Identifier</source>
@@ -327,10 +334,6 @@
 <context>
     <name>Crowd</name>
     <message>
-        <source>Alive:</source>
-        <translation type="unfinished">Vivos:</translation>
-    </message>
-    <message>
         <source>Domination:</source>
         <translation type="unfinished">Dominación:</translation>
     </message>
@@ -401,6 +404,38 @@
     <message>
         <source>Side:</source>
         <translation type="unfinished">Bando:</translation>
+    </message>
+    <message>
+        <source>Healthy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Male:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Female:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Children:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Armed individuals:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -530,7 +565,7 @@
     </message>
     <message>
         <source>Alive:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vivos:</translation>
     </message>
     <message>
         <source>Wounded:</source>
@@ -559,10 +594,6 @@
     <message>
         <source>Living Area/</source>
         <translation>Zone de vie</translation>
-    </message>
-    <message>
-        <source>Affinity %1:</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Satisfaction/Resource/</source>

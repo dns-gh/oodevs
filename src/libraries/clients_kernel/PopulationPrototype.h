@@ -23,11 +23,20 @@ namespace kernel
 struct PopulationPrototype
 {
 public:
-    PopulationPrototype() : type_( 0 ), number_( 0 ) {}
-    ~PopulationPrototype() {}
+    PopulationPrototype()
+        : type_  ( 0 )
+        , number_( 0 )
+    {
+        // NOTHING
+    }
+    ~PopulationPrototype()
+    {
+        // NOTHING
+    }
     const PopulationType* type_;
     int number_;
 };
+
 }
 
 #endif // __PopulationPrototype_h_

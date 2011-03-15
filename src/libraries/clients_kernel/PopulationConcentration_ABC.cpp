@@ -48,7 +48,7 @@ QString PopulationConcentration_ABC::GetTypeName() const
 // -----------------------------------------------------------------------------
 void PopulationConcentration_ABC::Select( ActionController& controller ) const
 {
-    controller.Select( *this, *(const Entity_ABC*)this );
+    controller.Select( *this, *static_cast< const Entity_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ void PopulationConcentration_ABC::Select( ActionController& controller ) const
 // -----------------------------------------------------------------------------
 void PopulationConcentration_ABC::ContextMenu( ActionController& controller, const QPoint& where ) const
 {
-    controller.ContextMenu( *this, *(const Entity_ABC*)this, where );
+    controller.ContextMenu( *this, *static_cast< const Entity_ABC* >( this ), where );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,5 +66,5 @@ void PopulationConcentration_ABC::ContextMenu( ActionController& controller, con
 // -----------------------------------------------------------------------------
 void PopulationConcentration_ABC::Activate( ActionController& controller ) const
 {
-    controller.Activate( *this, *(const Entity_ABC*)this );
+    controller.Activate( *this, *static_cast< const Entity_ABC* >( this ) );
 }

@@ -30,8 +30,6 @@ namespace sword
 namespace dispatcher
 {
     class Model_ABC;
-    class PopulationConcentration;
-    class PopulationFlow;
     class PopulationOrder;
     class Team_ABC;
 
@@ -72,7 +70,7 @@ public:
     virtual void DoUpdate( const sword::CrowdFlowCreation&             msg );
     virtual void DoUpdate( const sword::CrowdFlowUpdate&               msg );
     virtual void DoUpdate( const sword::CrowdFlowDestruction&          msg );
-    virtual void DoUpdate( const sword::CrowdOrder&                             msg );
+    virtual void DoUpdate( const sword::CrowdOrder&                    msg );
     virtual void DoUpdate( const sword::DecisionalState&               msg );
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
@@ -82,7 +80,9 @@ public:
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
     virtual const kernel::PopulationType& GetType() const;
-    virtual unsigned int GetLivingHumans() const;
+    virtual unsigned int GetHealthyHumans() const;
+    virtual unsigned int GetWoundedHumans() const;
+    virtual unsigned int GetContaminatedHumans() const;
     virtual unsigned int GetDeadHumans() const;
     //@}
 
@@ -94,16 +94,29 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::map< unsigned long, float > T_Affinities;
+    typedef T_Affinities::const_iterator   CIT_Affinities;
+    //@}
+
+private:
     //! @name Member data
     //@{
     Model_ABC& model_;
     const unsigned long nType_;
     const std::string strName_;
     dispatcher::Team_ABC& side_;
+    float male_;
+    float female_;
+    float children_;
     unsigned int nDominationState_;
     std::auto_ptr< PopulationOrder > order_;
     DecisionalState decisionalInfos_;
     std::map< std::string, std::string > extensions_;
+    T_Affinities affinities_;
+    std::string criticalIntelligence_;
+    float armedIndividuals_;
     //@}
 };
 

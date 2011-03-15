@@ -27,12 +27,15 @@ class MIL_Army_ABC;
 // Created: MGD 2009-10-24
 // =============================================================================
 class PopulationFactory_ABC : public tools::Resolver< MIL_Population >
-                      , private boost::noncopyable
+                            , private boost::noncopyable
 {
 public:
     //! @name Destructor
     //@{
-    virtual ~PopulationFactory_ABC() { DeleteAll(); };
+    virtual ~PopulationFactory_ABC()
+    {
+        DeleteAll();
+    }
     //@}
 
     //! @name Operations
@@ -49,7 +52,10 @@ public:
 protected:
     //! @name Constructor
     //@{
-    PopulationFactory_ABC() {};
+    PopulationFactory_ABC()
+    {
+        // NOTHING
+    }
     //@}
 };
 

@@ -107,7 +107,9 @@ void PopulationPanel::DisplayParts( const Population_ABC& population )
 void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& displayer, ValuedListItem* )
 {
     displayer.Display( tools::translate( "gui::PopulationPanel", "Chunks" ), part.GetName() )
-             .Display( tools::translate( "gui::PopulationPanel", "Alive" ), part.GetLivingHumans() )
+             .Display( tools::translate( "gui::PopulationPanel", "Healthy" ), part.GetHealthyHumans() )
+             .Display( tools::translate( "gui::PopulationPanel", "Wounded" ), part.GetWoundedHumans() )
+             .Display( tools::translate( "gui::PopulationPanel", "Contaminated" ), part.GetContaminatedHumans() )
              .Display( tools::translate( "gui::PopulationPanel", "Dead" ), part.GetDeadHumans() )
              .Display( tools::translate( "gui::PopulationPanel", "Mood" ), part.GetAttitude() )
              .Display( tools::translate( "gui::PopulationPanel", "Alive density" ), part.GetDensity() );
@@ -123,7 +125,9 @@ void PopulationPanel::NotifyUpdated( const Population_ABC& p )
         return;
     display_->Group( tools::translate( "gui::PopulationPanel", "Information" ) )
                 .Display( tools::translate( "gui::PopulationPanel", "Name:" ), p )
-                .Display( tools::translate( "gui::PopulationPanel", "Alive people:" ), p.GetLivingHumans() )
+                .Display( tools::translate( "gui::PopulationPanel", "Healthy people:" ), p.GetHealthyHumans() )
+                .Display( tools::translate( "gui::PopulationPanel", "Wounded people:" ), p.GetWoundedHumans() )
+                .Display( tools::translate( "gui::PopulationPanel", "Contaminated people:" ), p.GetContaminatedHumans() )
                 .Display( tools::translate( "gui::PopulationPanel", "Dead people:" ),  p.GetDeadHumans() );
     DisplayParts( p );
 }

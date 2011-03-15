@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "PopulationConcentration.h"
-#include "clients_kernel/ActionController.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
@@ -22,14 +21,16 @@ using namespace kernel;
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
 PopulationConcentration::PopulationConcentration( const sword::CrowdConcentrationCreation& message, const CoordinateConverter_ABC& converter, float density )
-    : position_( converter.ConvertToXY( message.position() ) )
-    , nID_( message.concentration().id() )
-    , density_ ( density )
-    , nLivingHumans_( 0 )
-    , nDeadHumans_( 0 )
-    , radius_( 0 )
-    , deadRadius_( 0 )
-    , attitude_( E_PopulationAttitude( 0 ) )
+    : position_           ( converter.ConvertToXY( message.position() ) )
+    , nID_                ( message.concentration().id() )
+    , density_            ( density )
+    , nHealthyHumans_     ( 0 )
+    , nWoundedHumans_     ( 0 )
+    , nContaminatedHumans_( 0 )
+    , nDeadHumans_        ( 0 )
+    , radius_             ( 0 )
+    , deadRadius_         ( 0 )
+    , attitude_           ( static_cast< E_PopulationAttitude> ( 0 ) )
 {
     RegisterSelf( *this );
 }
@@ -69,17 +70,19 @@ unsigned long PopulationConcentration::GetId() const
 void PopulationConcentration::DoUpdate( const sword::CrowdConcentrationUpdate& message )
 {
     if( message.has_attitude()  )
-        attitude_ = (E_PopulationAttitude)message.attitude();
+        attitude_ = static_cast< E_PopulationAttitude >( message.attitude() );
     static const float oneOnpi = 1.f / std::acos( -1.f );
-    if( message.has_alive()  )
-        nLivingHumans_ = message.alive();
-
+    if( message.has_healthy()  )
+        nHealthyHumans_ = message.healthy();
+    if( message.has_wounded()  )
+        nWoundedHumans_ = message.wounded();
+    if( message.has_contaminated()  )
+        nContaminatedHumans_ = message.contaminated();
     if( message.has_dead()  )
         nDeadHumans_ = message.dead();
-
     if( density_ > 0 )
     {
-        radius_     = std::sqrt( ( ( nLivingHumans_ + nDeadHumans_ ) / density_ ) * oneOnpi );
+        radius_ = std::sqrt( ( ( nHealthyHumans_ + nWoundedHumans_ + nContaminatedHumans_ + nDeadHumans_ ) / density_ ) * oneOnpi );
         deadRadius_ = std::sqrt( ( nDeadHumans_ / density_ ) * oneOnpi );
     }
     const geometry::Vector2f diag( radius_, radius_ );
@@ -87,17 +90,35 @@ void PopulationConcentration::DoUpdate( const sword::CrowdConcentrationUpdate& m
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationConcentration::GetLivingHumans
-// Created: AGE 2006-02-20
+// Name: PopulationConcentration::GetHealthyHumans
+// Created: JSR 2011-03-11
 // -----------------------------------------------------------------------------
-unsigned int PopulationConcentration::GetLivingHumans() const
+unsigned int PopulationConcentration::GetHealthyHumans() const
 {
-    return nLivingHumans_;
+    return nHealthyHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetWoundedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int PopulationConcentration::GetWoundedHumans() const
+{
+    return nWoundedHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationConcentration::GetContaminatedHumans
+// Created: JSR 2011-03-11
+// -----------------------------------------------------------------------------
+unsigned int PopulationConcentration::GetContaminatedHumans() const
+{
+    return nContaminatedHumans_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentration::GetDeadHumans
-// Created: AGE 2006-02-20
+// Created: JSR 2011-03-11
 // -----------------------------------------------------------------------------
 unsigned int PopulationConcentration::GetDeadHumans() const
 {
@@ -150,7 +171,7 @@ namespace
 // Name: PopulationConcentration::Draw
 // Created: AGE 2006-03-23
 // -----------------------------------------------------------------------------
-void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& , const GlTools_ABC& tools ) const
+void PopulationConcentration::Draw( const geometry::Point2f& /*where*/, const Viewport_ABC& , const GlTools_ABC& tools ) const
 {
     tools.DrawDisc( position_, radius_ );
     glPushAttrib( GL_CURRENT_BIT );
@@ -202,7 +223,7 @@ geometry::Rectangle2f PopulationConcentration::GetBoundingBox() const
 // Name: PopulationConcentration::Accept
 // Created: SBO 2009-05-25
 // -----------------------------------------------------------------------------
-void PopulationConcentration::Accept( kernel::LocationVisitor_ABC& visitor ) const
+void PopulationConcentration::Accept( LocationVisitor_ABC& visitor ) const
 {
     visitor.VisitCircle( position_, radius_ );
 }

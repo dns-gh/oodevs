@@ -56,10 +56,6 @@ DEC_PopulationDecision::~DEC_PopulationDecision()
     // NOTHING
 }
 
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::load
 // Created: JVT 2005-04-05
@@ -70,11 +66,7 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const unsigned
     file >> pEntity_
          >> rDominationState_
          >> rLastDominationState_;
-
-    const DEC_Model_ABC& model = pEntity_->GetType().GetModel();
-
-    SetModel( model );
-
+    SetModel( pEntity_->GetType().GetModel() );
     StartDefaultBehavior();
 }
 
@@ -85,7 +77,6 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const unsigned
 void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pEntity_ );
-
     file << boost::serialization::base_object< DEC_Decision< MIL_Population  > >( *this )
          << pEntity_
          << rDominationState_
@@ -97,10 +88,6 @@ void DEC_PopulationDecision::SetModel( const DEC_Model_ABC& model )
     InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "none", model.IsMasalife() );
     diaType_ = model.GetDIAType();
 }
-
-// =============================================================================
-// TOOLS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::EndCleanStateAfterCrash
@@ -225,9 +212,9 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
 
     // Etats decisionnel
     brain[ "DEC_Population_ChangeEtatDomination" ] =
-        boost::function<void (double)>(boost::bind(&DEC_PopulationFunctions::NotifyDominationStateChanged, boost::ref( GetPopulation() ), _1 ) );
+        boost::function< void( double ) >( boost::bind( &DEC_PopulationFunctions::NotifyDominationStateChanged, boost::ref( GetPopulation() ), _1 ) );
     brain[ "DEC_Population_Morts" ] =
-        boost::function<unsigned int()>( boost::bind(&MIL_Population::GetNbrDeadHumans, boost::ref(GetPopulation()) ) );
+        boost::function< unsigned int() >( boost::bind( &MIL_Population::GetDeadHumans, boost::ref( GetPopulation() ) ) );
 
     // Representations
     brain[ "DEC_GetOrdersCategory" ] =
@@ -411,7 +398,6 @@ void DEC_PopulationDecision::SeteNiveauAction(int value )
 void DEC_PopulationDecision::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     const std::string& strBehavior = mission->GetType().GetDIABehavior();
-
     ActivateOrder( strBehavior, mission );
 }
 
@@ -431,7 +417,7 @@ void DEC_PopulationDecision::StopMissionBehavior( const boost::shared_ptr< MIL_M
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::SendFullState( client::CrowdUpdate& msg ) const
 {
-    msg().set_domination( (unsigned int)( rDominationState_ * 100. ) );
+    msg().set_domination( static_cast< unsigned int >( rDominationState_ * 100. ) );
 }
 
 // -----------------------------------------------------------------------------

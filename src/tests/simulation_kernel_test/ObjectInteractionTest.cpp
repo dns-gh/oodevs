@@ -483,7 +483,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType );
 
-    xml::xistringstream xisConcentration( "<population attitude='calme' healthy='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+    xml::xistringstream xisConcentration( "<population attitude='calme' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'><composition healthy='10001' wounded='0' contaminated='0' dead='0'/></population>");
     xisConcentration.start( "population" );
     MIL_PopulationConcentration concentration( population, xisConcentration );
 
@@ -524,7 +524,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType );
 
-    xml::xistringstream xisConcentration( "<population attitude='agressive' healthy='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+    xml::xistringstream xisConcentration( "<population attitude='agressive' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'><composition healthy='10001' wounded='0' contaminated='0' dead='0'/></population>");
     xisConcentration.start( "population" );
     MIL_PopulationConcentration concentration( population, xisConcentration );
 
@@ -565,13 +565,13 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionScattering )
     StubMIL_PopulationType popuType( model );
     StubMIL_Population population( popuType );
 
-    xml::xistringstream xisConcentration( "<population attitude='agressive' healthy='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+    xml::xistringstream xisConcentration( "<population attitude='agressive' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'><composition healthy='10001' wounded='0' contaminated='0' dead='0'/></population>");
     xisConcentration.start( "population" );
     MIL_PopulationConcentration concentration( population, xisConcentration );
 
-    unsigned int before = concentration.GetNbrHumans();
+    unsigned int before = concentration.GetTotalLivingHumans();
     object->ProcessPopulationInside( concentration );
-    BOOST_CHECK( before > concentration.GetNbrHumans() );
+    BOOST_CHECK( before > concentration.GetTotalLivingHumans() );
     MOCK_EXPECT( army, UnregisterObject ).once();
 }
 

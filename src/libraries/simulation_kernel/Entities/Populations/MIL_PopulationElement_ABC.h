@@ -11,33 +11,27 @@
 #define __MIL_PopulationElement_ABC_h_
 
 #include "MIL.h"
-#include "simulation_terrain/TER_PopulationConcentration_ABC.h"
-#include "MIL_Random.h"
+#include "MIL_PopulationHumans.h"
 
-class MIL_Population;
-class MIL_PopulationType;
-class MIL_PopulationFlow;
-class MIL_PopulationAttitude;
+class AttritionCapacity;
 class MIL_Agent_ABC;
 class MIL_AgentPion;
-class AttritionCapacity;
-class PHY_Volume;
-class PHY_FireResults_Population;
-class PHY_FireResults_ABC;
-class MIL_Injury_ABC;
 class MIL_BurnEffectManipulator;
+class MIL_Injury_ABC;
+class MIL_Population;
+class MIL_PopulationAttitude;
+class MIL_PopulationType;
+class MT_Circle;
+class PHY_Volume;
+class PHY_FireResults_ABC;
+class PHY_FireResults_Population;
+class TER_Localisation;
 
 // =============================================================================
 // Created: NLD 2005-09-28
 // =============================================================================
-class MIL_PopulationElement_ABC
+class MIL_PopulationElement_ABC : private boost::noncopyable
 {
-public:
-    //! @name Types
-    //@{
-    typedef std::pair< unsigned int, unsigned int > T_Humans;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -57,8 +51,8 @@ public:
 
     //! @name Humans management
     //@{
-    void PushHumans( const T_Humans& humans );
-    T_Humans PullHumans( unsigned int nNbr );
+    void PushHumans( const MIL_PopulationHumans& humans );
+    MIL_PopulationHumans PullHumans( unsigned int nNbr );
     void KillAllHumans();
     double Exterminate( double rSurface );
     unsigned int Kill( unsigned int count );
@@ -82,9 +76,12 @@ public:
     MIL_Population& GetPopulation() const;
     const MIL_PopulationAttitude& GetAttitude() const;
     unsigned int GetID() const;
-    unsigned int GetNbrAliveHumans() const;
-    unsigned int GetNbrDeadHumans() const;
-    unsigned int GetNbrHumans() const;
+    unsigned int GetAllHumans() const;
+    unsigned int GetTotalLivingHumans() const;
+    unsigned int GetHealthyHumans() const;
+    unsigned int GetWoundedHumans() const;
+    unsigned int GetContaminatedHumans() const;
+    unsigned int GetDeadHumans() const;
     double GetDensity() const;
     bool IsDead() const;
     bool IsInZone( const TER_Localisation& loc ) const;
@@ -110,12 +107,6 @@ public:
     //@}
 
 protected:
-    //! @name Copy/Assignment
-    //@{
-    MIL_PopulationElement_ABC( const MIL_PopulationElement_ABC& );            //!< Copy constructor
-    MIL_PopulationElement_ABC& operator=( const MIL_PopulationElement_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Tools
     //@{
     void UpdateDensity();
@@ -144,8 +135,7 @@ private:
 private:
     const unsigned int nID_;
     MIL_Population* pPopulation_;
-    unsigned int nNbrAliveHumans_;
-    unsigned int nNbrDeadHumans_;
+    MIL_PopulationHumans humans_;
     double rDensity_; // Alive humans density
     const MIL_PopulationAttitude* pAttitude_;
     T_AgentVector collidingAgents_;

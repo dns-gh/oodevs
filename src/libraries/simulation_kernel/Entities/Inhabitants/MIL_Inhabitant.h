@@ -129,7 +129,6 @@ private:
     std::auto_ptr< MIL_InhabitantSatisfactions > pSatisfactions_;
     std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
     std::string text_;
-    bool affinitiesChanged_;
     unsigned long nNbrHealthyHumans_;
     unsigned long nNbrDeadHumans_;
     unsigned long nNbrWoundedHumans_;

@@ -14,7 +14,7 @@
 #include "Automat.h"
 #include "Population.h"
 #include "Inhabitant.h"
-#include "InhabitantAffinities.h"
+#include "Affinities.h"
 #include "InhabitantHierarchies.h"
 #include "InhabitantPositions.h"
 #include "Attributes.h"
@@ -210,6 +210,7 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
     result->Attach( *new DecisionalStates() );
+    result->Attach( *new Affinities( model_.teams_ ) );
     AttachExtensions( *result );
     result->Polish();
     return result;
@@ -224,7 +225,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& m
     Inhabitant* result = new Inhabitant( message, controllers_, model_.urbanObjects_, static_.types_, static_.objectTypes_, static_ );
     result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
-    result->Attach( *new InhabitantAffinities( model_.teams_ ) );
+    result->Attach( *new Affinities( model_.teams_ ) );
     result->Polish();
     return result;
 }

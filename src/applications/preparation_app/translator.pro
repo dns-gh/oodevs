@@ -24,6 +24,7 @@ InitialStateTableResources.cpp \
 ObjectCreationPanel.cpp \
 OrbatAttributesPanel.cpp \
 PopulationListView.cpp \
+PopulationRepartitionEditor.cpp \
 PositionEditor.cpp \
 ProfileDialog.cpp \
 ProfileEditor.cpp \

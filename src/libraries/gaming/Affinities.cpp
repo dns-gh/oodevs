@@ -8,8 +8,7 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "InhabitantAffinities.h"
-
+#include "Affinities.h"
 #include "TeamsModel.h"
 #include "actions/ParameterList.h"
 #include "clients_gui/DecimalSpinBoxAndSlider.h"
@@ -21,29 +20,29 @@
 #include <qlabel.h>
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities constructor
+// Name: Affinities constructor
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-InhabitantAffinities::InhabitantAffinities( TeamsModel& teams )
+Affinities::Affinities( TeamsModel& teams )
     : teams_ ( teams )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities destructor
+// Name: Affinities destructor
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-InhabitantAffinities::~InhabitantAffinities()
+Affinities::~Affinities()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::DoUpdate
+// Name: Affinities::DoUpdate
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::DoUpdate( const sword::PopulationUpdate& message )
+void Affinities::DoUpdate( const sword::PopulationUpdate& message )
 {
     for( int i = 0; i < message.adhesions_size(); ++i )
     {
@@ -53,23 +52,36 @@ void InhabitantAffinities::DoUpdate( const sword::PopulationUpdate& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::Display
-// Created: ABR 2011-01-28
+// Name: Affinities::DoUpdate
+// Created: JSR 2011-03-11
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::Display(kernel::Displayer_ABC* displayer) const
+void Affinities::DoUpdate( const sword::CrowdUpdate& message )
 {
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    for( int i = 0; i < message.adhesions_size(); ++i )
     {
-        kernel::Team_ABC& team = teams_.GetTeam( it->first );
-        displayer->Display( tools::translate( "Inhabitant", "Affinity %1:" ).arg( team.GetName() ), it->second );
+        const sword::PartyAdhesion& adhesion = message.adhesions( i );
+        affinities_[ adhesion.party().id() ] = adhesion.value();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::FillDialog
+// Name: Affinities::Display
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::CreateAffinitiesSpinBoxs( QGrid* grid, std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >& spinboxs )
+void Affinities::Display(kernel::Displayer_ABC* displayer) const
+{
+    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    {
+        kernel::Team_ABC& team = teams_.GetTeam( it->first );
+        displayer->Display( tools::translate( "Affinities", "Affinity %1:" ).arg( team.GetName() ), it->second );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Affinities::FillDialog
+// Created: ABR 2011-01-28
+// -----------------------------------------------------------------------------
+void Affinities::CreateAffinitiesSpinBoxs( QGrid* grid, std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >& spinboxs )
 {
     for( IT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
     {
@@ -82,10 +94,10 @@ void InhabitantAffinities::CreateAffinitiesSpinBoxs( QGrid* grid, std::map< unsi
 }
 
 // -----------------------------------------------------------------------------
-// Name: InhabitantAffinities::FillParameterList
+// Name: Affinities::FillParameterList
 // Created: ABR 2011-01-31
 // -----------------------------------------------------------------------------
-void InhabitantAffinities::FillParameterList( actions::parameters::ParameterList* parameterList ) const
+void Affinities::FillParameterList( actions::parameters::ParameterList* parameterList ) const
 {
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
     {

@@ -19,7 +19,6 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/PopulationAttribute.h"
-#include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -58,13 +57,11 @@ void load_construct_data( Archive& archive, MIL_PopulationConcentration* concent
 // Created: JSR 2010-11-17
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, unsigned int id )
-    : MIL_PopulationElement_ABC      ( population, id )
+    : MIL_PopulationElement_ABC( population, id )
     , TER_PopulationConcentration_ABC()
-    , location_                      ()
-    , pPullingFlow_                  ( 0 )
-    , pushingFlows_                  ()
-    , rPullingFlowsDensity_          ( population.GetDefaultFlowDensity() )
-    , pSplittingObject_              ( 0 )
+    , pPullingFlow_        ( 0 )
+    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
+    , pSplittingObject_    ( 0 )
 {
     // NOTHING
 }
@@ -75,28 +72,17 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis )
     : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
-    , TER_PopulationConcentration_ABC()
-    , position_            ()
-    , location_            ()
     , pPullingFlow_        ( 0 )
-    , pushingFlows_        ()
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
 {
     // Position
-    std::string strPosition;
-    xis >> xml::attribute( "position", strPosition );
-    MIL_Tools::ConvertCoordMosToSim( strPosition, position_ );
-    unsigned int nNbrHumans;
-    xis >> xml::attribute( "healthy", nNbrHumans );
-    if( nNbrHumans <= 0 )
-        xis.error( "nNbrHumans is not greater than 0." );
-
-    PushHumans( T_Humans( nNbrHumans, 0 ) );
-
+    MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), position_ );
+    xis.start( "composition" );
+    PushHumans( MIL_PopulationHumans( xis ) );
+    xis.end();
     UpdateLocation();
     UpdateDensity();
-    // SendCreation()
 }
 
 // -----------------------------------------------------------------------------
@@ -104,16 +90,13 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 // Created: NLD 2005-10-05
 // -----------------------------------------------------------------------------
 MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nHumans )
-    : MIL_PopulationElement_ABC      ( population, idManager_.GetFreeId() )
-    , TER_PopulationConcentration_ABC()
+    : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
     , position_            ( position )
-    , location_            ()
     , pPullingFlow_        ( 0 )
-    , pushingFlows_        ()
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
 {
-    PushHumans( T_Humans( nHumans, 0 ) );
+    PushHumans( MIL_PopulationHumans( nHumans ) );
     UpdateLocation();
     UpdateDensity();
     SendCreation();
@@ -127,7 +110,6 @@ MIL_PopulationConcentration::~MIL_PopulationConcentration()
 {
     assert( !pPullingFlow_ );
     assert( pushingFlows_.empty() );
-
     SendDestruction();
     RemoveFromPatch();
 }
@@ -140,7 +122,6 @@ bool MIL_PopulationConcentration::Update()
 {
     if( pSplittingObject_ && pSplittingObject_->IsMarkedForDestruction() )
         pSplittingObject_ = 0;
-
     ClearCollisions();
     if( !IsValid() )
     {
@@ -152,13 +133,11 @@ bool MIL_PopulationConcentration::Update()
         RemoveFromPatch();
         return false;
     }
-
     if( HasHumansChanged() )
     {
         UpdateLocation();
         UpdateDensity ();
     }
-
     UpdateCollisions();
     return true;
 }
@@ -170,7 +149,7 @@ bool MIL_PopulationConcentration::Update()
 void MIL_PopulationConcentration::UpdateLocation()
 {
     assert( GetPopulation().GetType().GetConcentrationDensity() );
-    double rSurface = double( GetNbrAliveHumans() ) / GetPopulation().GetType().GetConcentrationDensity();
+    double rSurface = static_cast< double >( GetTotalLivingHumans() ) / GetPopulation().GetType().GetConcentrationDensity();
     location_.Reset( TER_Localisation( position_, std::sqrt( rSurface / MT_PI ) ) );
     UpdatePatch();
 }
@@ -181,7 +160,7 @@ void MIL_PopulationConcentration::UpdateLocation()
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::NotifyCollision( MIL_Agent_ABC& agent )
 {
-    agent.Apply( &population::PopulationCollisionNotificationHandler_ABC::NotifyConcentrationCollision, *this );
+    agent.Apply( &PopulationCollisionNotificationHandler_ABC::NotifyConcentrationCollision, *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +172,7 @@ void MIL_PopulationConcentration::MagicMove( const MT_Vector2D& destination )
     if( position_ != destination )
     {
         MIL_PopulationConcentration& newConcentration = GetPopulation().GetConcentration( destination );
-        newConcentration.PushHumans( PullHumans( GetNbrHumans() ) );
+        newConcentration.PushHumans( PullHumans( GetAllHumans() ) );
     }
     if( pPullingFlow_ )
     {
@@ -210,7 +189,6 @@ void MIL_PopulationConcentration::Move( const MT_Vector2D& destination )
 {
     if( pPullingFlow_ || IsNearPosition( destination ) )
         return;
-
     pPullingFlow_ = &GetPopulation().CreateFlow( *this );
     pPullingFlow_->Move( destination );
 }
@@ -231,7 +209,7 @@ bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) 
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow )
 {
-    if( ! pushingFlows_.insert( &flow ).second )
+    if( !pushingFlows_.insert( &flow ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     SetAttitude( flow.GetAttitude() );
 }
@@ -244,10 +222,8 @@ MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion&
 {
     const MT_Vector2D& agentPosition = agent.GetRole< PHY_RoleInterface_Location >().GetPosition();
     MT_Vector2D evadeDirection = ( agentPosition - position_ ).Normalize().Rotate( rSeed );
-
     if( evadeDirection.IsZero() )
         evadeDirection = -agent.GetOrderManager().GetDirDanger();
-
     MT_Vector2D safetyPos = location_.GetCircleCenter() + evadeDirection * ( location_.GetCircleRadius() + rMinDistance );
     TER_World::GetWorld().ClipPointInsideWorld( safetyPos );
     return safetyPos;
@@ -308,15 +284,16 @@ void MIL_PopulationConcentration::SendDestruction() const
 // Name: MIL_PopulationConcentration::SendFullState
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-void MIL_PopulationConcentration::SendFullState( MIL_Population::sPeopleCounter& peopleCounter ) const
+void MIL_PopulationConcentration::SendFullState() const
 {
     client::CrowdConcentrationUpdate asnMsg;
     asnMsg().mutable_concentration()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
-    asnMsg().set_attitude          ( GetAttitude().GetAsnID() );
-    asnMsg().set_dead  ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
-    asnMsg().set_alive( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
-
+    asnMsg().set_healthy( GetHealthyHumans() );
+    asnMsg().set_wounded( GetWoundedHumans() );
+    asnMsg().set_contaminated( GetContaminatedHumans() );
+    asnMsg().set_dead( GetDeadHumans() );
+    asnMsg().set_attitude( GetAttitude().GetAsnID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -324,26 +301,22 @@ void MIL_PopulationConcentration::SendFullState( MIL_Population::sPeopleCounter&
 // Name: MIL_PopulationConcentration::SendChangedState
 // Created: NLD 2005-10-04
 // -----------------------------------------------------------------------------
-void MIL_PopulationConcentration::SendChangedState( MIL_Population::sPeopleCounter& peopleCounter ) const
+void MIL_PopulationConcentration::SendChangedState() const
 {
     if( !HasChanged() )
         return;
-
     client::CrowdConcentrationUpdate asnMsg;
     asnMsg().mutable_concentration()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
-
     if( HasAttitudeChanged() )
-    {
         asnMsg().set_attitude( GetAttitude().GetAsnID() );
-    }
-
     if( HasHumansChanged() )
     {
-        asnMsg().set_dead  ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
-        asnMsg().set_alive( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
+        asnMsg().set_healthy( GetHealthyHumans() );
+        asnMsg().set_wounded( GetWoundedHumans() );
+        asnMsg().set_contaminated( GetContaminatedHumans() );
+        asnMsg().set_dead( GetDeadHumans() );
     }
-
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -449,7 +422,7 @@ MT_Vector2D MIL_PopulationConcentration::GetSecuringPoint( const MIL_Agent_ABC& 
 // -----------------------------------------------------------------------------
 bool MIL_PopulationConcentration::IsValid() const
 {
-    return GetNbrHumans() > 0. || !pushingFlows_.empty();
+    return GetAllHumans() > 0. || !pushingFlows_.empty();
 }
 
 // -----------------------------------------------------------------------------

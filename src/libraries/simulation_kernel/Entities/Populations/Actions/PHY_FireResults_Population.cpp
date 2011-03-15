@@ -20,8 +20,7 @@
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
 PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& firer )
-    : PHY_FireResults_ABC()
-    , firer_( firer )
+    : firer_( firer )
     , nID_  ( idManager_.GetFreeId() )
 {
     client::StartCrowdFire asnMsg;

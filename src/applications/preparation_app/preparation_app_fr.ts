@@ -850,6 +850,37 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>PopulationRepartitionEditor</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Repartition Editor</source>
+        <translation>Edition de la répartition</translation>
+    </message>
+    <message>
+        <source>Male (%)</source>
+        <translation>Hommes (%)</translation>
+    </message>
+    <message>
+        <source>Female (%)</source>
+        <translation>Femmes (%)</translation>
+    </message>
+    <message>
+        <source>Children (%)</source>
+        <translation>Enfants (%)</translation>
+    </message>
+    <message>
+        <source>&lt;font color=&quot;#ff0000&quot;&gt;Total must be equal to 100&lt;/font&gt;</source>
+        <translation>&lt;font color=&quot;#ff0000&quot;&gt;La somme doit être égale à 100&lt;/font&gt;</translation>
+    </message>
+</context>
+<context>
     <name>PositionEditor</name>
     <message>
         <source>Position Editor</source>
@@ -962,6 +993,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>invalid</source>
         <translation>invalide</translation>
+    </message>
+    <message>
+        <source>&lt;Edit repartition...&gt;</source>
+        <translation>&lt;Editer la répartition...&gt;</translation>
     </message>
 </context>
 <context>

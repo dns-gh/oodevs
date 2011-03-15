@@ -22,7 +22,7 @@
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/tools.h"
-#include "gaming/InhabitantAffinities.h"
+#include "gaming/Affinities.h"
 #include "gaming/StaticModel.h"
 #include "gaming/TeamsModel.h"
 
@@ -80,7 +80,7 @@ void InhabitantChangeAffinitiesDialog::Show()
     affinitiesGrid_ = new QGrid( 2, this );
     mainLayout_->add( affinitiesGrid_ );
     mainLayout_->add( buttonLayout_ );
-    selected_.ConstCast()->Get< InhabitantAffinities >().CreateAffinitiesSpinBoxs( affinitiesGrid_, affinitiesSpinboxs_ );
+    selected_.ConstCast()->Get< Affinities >().CreateAffinitiesSpinBoxs( affinitiesGrid_, affinitiesSpinboxs_ );
     show();
 }
 
@@ -98,7 +98,7 @@ void InhabitantChangeAffinitiesDialog::Validate()
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     actions::parameters::ParameterList* affinitiesList = new actions::parameters::ParameterList( it.NextElement() );
     action->AddParameter( *affinitiesList );
-    selected_->Get< InhabitantAffinities >().FillParameterList( affinitiesList );
+    selected_->Get< Affinities >().FillParameterList( affinitiesList );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );

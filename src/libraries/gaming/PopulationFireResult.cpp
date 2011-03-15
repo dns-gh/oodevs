@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "PopulationFireResult.h"
+#include "protocol/protocol.h"
 
 using namespace kernel;
 
@@ -17,9 +18,9 @@ using namespace kernel;
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
 PopulationFireResult::PopulationFireResult( const sword::CrowdFireDamages& message , const tools::Resolver_ABC< Population_ABC >& resolver, const QDateTime& time )
-    : target_( resolver.Get( message.target().id() ) )
+    : target_    ( resolver.Get( message.target().id() ) )
     , deadPeople_( message.dead() )
-    , time_( time )
+    , time_      ( time )
 {
     // NOTHING
 }

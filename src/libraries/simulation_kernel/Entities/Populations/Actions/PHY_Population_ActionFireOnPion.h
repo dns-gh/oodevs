@@ -33,16 +33,16 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Execute         ();
+    virtual void Execute();
     virtual void ExecuteSuspended();
     virtual void Stop();
     //@}
 
 private:
-    MIL_Population&            population_;
+    MIL_Population& population_;
     PHY_FireResults_Population fireResults_;
-    const double             rIntensity_;
-    MIL_Agent_ABC*             pTarget_;
+    const double rIntensity_;
+    MIL_Agent_ABC* pTarget_;
 };
 
 #endif // __PHY_Population_ActionFireOnPion_h_

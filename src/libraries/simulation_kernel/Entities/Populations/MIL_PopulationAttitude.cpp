@@ -124,7 +124,7 @@ sword::EnumCrowdAttitude MIL_PopulationAttitude::GetAsnID() const
 // -----------------------------------------------------------------------------
 unsigned int MIL_PopulationAttitude::GetID() const
 {
-    return (unsigned int)nAttitude_;
+    return static_cast< unsigned int >( nAttitude_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -32,7 +32,7 @@ class MIL_AgentPion;
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RolePion_Location : public PHY_RoleInterface_Location
-                            , public population::PopulationCollisionNotificationHandler_ABC
+                            , public PopulationCollisionNotificationHandler_ABC
                             , public terrain::ObjectCollisionNotificationHandler_ABC
                             , public network::NetworkUnitAttributesMessageSender_ABC
                             , public location::LocationActionNotificationHandler_ABC

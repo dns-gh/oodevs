@@ -11,14 +11,12 @@
 
 #include "MIL.h"
 #include "MIL_PopulationElement_ABC.h"
-#include "MIL_Population.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "Tools/MIL_IDManager.h"
 #include <boost/shared_ptr.hpp>
 
 class MIL_PopulationConcentration;
-class MIL_PopulationAttitude;
 class DEC_Population_Path;
 
 // =============================================================================
@@ -40,7 +38,6 @@ public:
     //@{
     bool Update();
     void Clean ();
-
     bool IsValid() const; // false = will be deleted
     bool CanBePerceived() const;
     //@}
@@ -69,8 +66,8 @@ public:
     //! @name Network
     //@{
     void SendCreation() const;
-    void SendFullState( MIL_Population::sPeopleCounter& peopleCounter ) const;
-    void SendChangedState( MIL_Population::sPeopleCounter& peopleCounter ) const;
+    void SendFullState() const;
+    void SendChangedState() const;
     //@}
 
     //! @name CheckPoints
@@ -85,13 +82,7 @@ protected:
     MIL_PopulationFlow( MIL_Population& population, unsigned int nID );
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_PopulationFlow( const MIL_PopulationFlow& );            //!< Copy constructor
-    MIL_PopulationFlow& operator=( const MIL_PopulationFlow& ); //!< Assignment operator
-    //@}
-
-    //! @name
+    //! @name Helpers
     //@{
     virtual double GetMaxSpeed() const;
     virtual double GetSpeedWithReinforcement( const TerrainData& environment ) const;
@@ -100,7 +91,7 @@ private:
 
     //! @name  Position operations
     //@{
-    virtual void ApplyMove ( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
+    virtual void ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double rWalkedDistance );
     void UpdateTailPosition( const double rWalkedDistance );
     const MT_Vector2D& GetHeadPosition() const;
     const MT_Vector2D& GetTailPosition() const;
@@ -119,7 +110,6 @@ private:
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& object );
     virtual void NotifyEnvironmentChanged();
     virtual void NotifyCurrentPathChanged();
-
     virtual void NotifyCollision( MIL_Agent_ABC& agent );
     //@}
 

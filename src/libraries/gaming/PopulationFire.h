@@ -11,7 +11,6 @@
 #define __PopulationFiree_h_
 
 #include "Fire_ABC.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
