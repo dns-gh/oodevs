@@ -11,6 +11,7 @@
 #include "Dialogs.h"
 #include "ChangeDiplomacyDialog.h"
 #include "InitialStateDialog.h"
+#include "AgentAffinitiesDialog.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/StaticModel.h"
 
@@ -25,6 +26,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const StaticModel& 
 {
     new ChangeDiplomacyDialog( parent, controllers, profile );
     new InitialStateDialog( parent, controllers, model );
+    new AgentAffinitiesDialog( parent, controllers );
 }
 
 // -----------------------------------------------------------------------------

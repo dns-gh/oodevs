@@ -38,6 +38,7 @@
 #include "Stocks.h"
 #include "TacticalLines.h"
 #include "Tc2States.h"
+#include "AgentAffinities.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
@@ -88,6 +89,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
+    result->Attach( *new AgentAffinities( controllers_ ) );
     if( commandPost )
         result->Attach( *new CommandPostAttributes( *result ) );
     result->Polish();
@@ -206,6 +208,7 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
+    result->Attach( *new AgentAffinities( xis, controllers_ ) );
     if( result->IsCommandPost() )
         result->Attach( *new CommandPostAttributes( *result ) );
     if( result->GetType().IsLogisticSupply() )

@@ -1041,6 +1041,7 @@
                 </xs:attribute>
               </xs:complexType>
             </xs:element>
+            <xs:element ref="adhesions"/>
           </xs:all>
           <xs:attribute name="type" type="xs:string" use="required">
             <xs:annotation>

@@ -12,8 +12,7 @@
 #include "moc_DecimalSpinBoxAndSlider.cpp"
 #include "DecimalSpinBox.h"
 
-namespace gui
-{
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: DecimalSpinBoxAndSlider constructor
@@ -21,9 +20,9 @@ namespace gui
 // -----------------------------------------------------------------------------
 DecimalSpinBoxAndSlider::DecimalSpinBoxAndSlider( QWidget* parent, float& value, unsigned short precision /*= 2*/, float min /*= 0*/, float max /*= 10*/, float gap /*= 0.1*/,
                                                   Qt::Orientation orientation /*= Qt::Horizontal*/, Qt::Orientation sliderOrientation /*= Qt::Horizontal*/, bool spinboxFirst /*= true*/ )
-    : QWidget    ( parent )
-    , precision_ ( std::pow( 10.f, precision ) )
-    , value_     ( value )
+    : QWidget( parent )
+    , precision_( std::pow( 10.f, precision ) )
+    , value_    ( value )
 {
     if( orientation == Qt::Horizontal )
         layout_ = new QHBoxLayout( this );
@@ -113,4 +112,12 @@ void DecimalSpinBoxAndSlider::setValue( float value )
     spinbox_->setValue( value );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DecimalSpinBoxAndSlider::setEnabled
+// Created: LGY 2011-03-14
+// -----------------------------------------------------------------------------
+void DecimalSpinBoxAndSlider::setEnabled( bool value )
+{
+    spinbox_->setEnabled( value );
+    slider_->setEnabled( value );
 }

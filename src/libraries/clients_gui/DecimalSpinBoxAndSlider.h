@@ -40,6 +40,7 @@ public:
     //@{
     void setMargin( int value );
     void setSpacing( int value );
+    void setEnabled( bool value );
     float value() const;
     //@}
 

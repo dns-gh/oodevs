@@ -1,5 +1,24 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>AgentAffinitiesDialog</name>
+    <message>
+        <source>Change affinities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
