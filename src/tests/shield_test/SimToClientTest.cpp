@@ -1271,8 +1271,11 @@ BOOST_FIXTURE_TEST_CASE( crowd_creation_to_client_is_converted, ContextFixture< 
     content.mutable_crowd_creation()->set_name( "name" );
     content.mutable_crowd_creation()->mutable_party()->set_id( 9 );
     FillExtension( content.mutable_crowd_creation()->mutable_extension()->add_entries() );
+    content.mutable_crowd_creation()->set_male( 0.5f );
+    content.mutable_crowd_creation()->set_female( 0.3f );
+    content.mutable_crowd_creation()->set_children( 0.2f );
     FillExtension( content.mutable_crowd_creation()->mutable_extension()->add_entries() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_creation { crowd { id: 7 } type { id: 8 } nom: \"name\" party { id: 9 } extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_creation { crowd { id: 7 } type { id: 8 } nom: \"name\" party { id: 9 } extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } male: 0.5 female: 0.3 children: 0.2 } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -1280,7 +1283,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_update_to_client_is_converted, ContextFixture< sw
 {
     content.mutable_crowd_update()->mutable_crowd()->set_id( 7 );
     content.mutable_crowd_update()->set_domination( 8 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_update { crowd { id: 7 } etat_domination: 8 } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_update { crowd { id: 7 } domination: 8 } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -1342,7 +1345,7 @@ BOOST_FIXTURE_TEST_CASE( crowd_flow_update_to_client_is_converted, ContextFixtur
     content.mutable_crowd_flow_update()->set_contaminated( 24 );
     content.mutable_crowd_flow_update()->set_dead( 25 );
     content.mutable_crowd_flow_update()->set_attitude( sword::agitated );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_flow_update { flow { id: 7 } crowd { id: 8 } parts { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } direction { heading: 20 } vitesse: 21 healthy: 22 wounded: 23 contaminated: 24 dead: 25 attitude: agitee } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_flow_update { flow { id: 7 } crowd { id: 8 } parts { location { type: rectangle coordinates { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } direction { heading: 20 } speed: 21 healthy: 22 wounded: 23 contaminated: 24 dead: 25 attitude: agitee } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
