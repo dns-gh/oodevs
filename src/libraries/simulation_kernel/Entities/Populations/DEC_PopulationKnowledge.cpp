@@ -11,8 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PopulationKnowledge.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "protocol/Protocol.h"
 #include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationKnowledge )
@@ -179,18 +182,18 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowled
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( const sword::ObjectKnowledgeId& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const
 {
-    return boost::shared_ptr< DEC_Knowledge_Object >();
+    return population_.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn.id() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( unsigned int /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( unsigned int nID ) const
 {
-    return boost::shared_ptr< DEC_Knowledge_Object >();
+    return population_.GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
 }
 
 // -----------------------------------------------------------------------------

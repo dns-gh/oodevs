@@ -14,6 +14,7 @@
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 
 using namespace actions::gui;
@@ -59,7 +60,10 @@ ParamObjectKnowledge::~ParamObjectKnowledge()
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledge::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
 {
-    const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( agent_.Get< kernel::CommunicationHierarchies >().GetTop() );
+    const kernel::Hierarchies* hierarchies = agent_.Retrieve< kernel::CommunicationHierarchies >();
+    if( ! hierarchies )
+        hierarchies = agent_.Retrieve< kernel::TacticalHierarchies >();
+    const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( hierarchies->GetTop() );
     const kernel::ObjectKnowledge_ABC* knowledge = converter_.Find( entity, team );
     if( knowledge )
         EntityParameter< kernel::ObjectKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
