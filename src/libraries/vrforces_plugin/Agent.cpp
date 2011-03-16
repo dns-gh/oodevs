@@ -10,6 +10,7 @@
 #include "vrforces_plugin_pch.h"
 #include "Agent.h"
 #include "Facade.h"
+#include "ForceResolver_ABC.h"
 #include "protocol/Protocol.h"
 #pragma warning( push, 0 )
 #include <matrix/geodcoord.h>
@@ -27,7 +28,7 @@ using namespace plugins::vrforces;
 // Name: Agent constructor
 // Created: SBO 2011-01-21
 // -----------------------------------------------------------------------------
-Agent::Agent( DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message )
+Agent::Agent( DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces )
     : connection_( connection )
     , vrForces_  ( vrForces )
     , id_        ( message.unit().id() )
@@ -35,7 +36,7 @@ Agent::Agent( DtExerciseConn& connection, Facade& vrForces, const sword::UnitCre
     , reflected_ ( 0 )
 {
     DtEntityType type( DtPlatform, DtPlatformDomainLand, DtFrance, 3 /* platoon */, 2 /* armor */, message.pc(), 0 );
-    publisher_.reset( new DtAggregatePublisher( type, &connection_, DtDrStatic, DtForceFriendly, message.name().c_str() ) );
+    publisher_.reset( new DtAggregatePublisher( type, &connection_, DtDrStatic, forces.Resolve( id_ ), message.name().c_str() ) );
     publisher_->asr()->setMarkingText( message.name().c_str() );
     publisher_->tick();
 }

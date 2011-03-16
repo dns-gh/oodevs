@@ -138,7 +138,7 @@
     </target>
 
     <target name="library.vrforces_plugin" depends="library.protocol" description="build vrforces_plugin static library">
-        <build-lib name="vrforces_plugin" pattern="lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd">
+        <build-lib name="vrforces_plugin" pattern="lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/vrforces"/>
             <includepath path="${include.dir}/vrlink"/>
             <includepath path="${include.dir}/RTI_1.3/HLA"/>
@@ -150,10 +150,12 @@
         </build-lib>
     </target>
 
-    <target name="library.vrforces_plugin_dll" depends="library.vrforces_plugin" description="build vrforces_plugin dynamic library">
+    <target name="library.vrforces_plugin_dll" depends="library.clients_kernel,library.vrforces_plugin" description="build vrforces_plugin dynamic library">
         <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="libprotobuf,libFedtime,
                   matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilRT,vrfcontrolHLA13RT,
+                  lib${ant.project.name}_ENT-${platform}-mt@{suffix},
+                  lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>

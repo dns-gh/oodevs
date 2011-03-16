@@ -11,6 +11,7 @@
 #define __Plugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <map>
 #include <set>
@@ -42,6 +43,7 @@ namespace vrforces
 {
     class Agent;
     class Facade;
+    class ForceResolver_ABC;
 
 // =============================================================================
 /** @class  Plugin
@@ -50,8 +52,8 @@ namespace vrforces
 // Created: SBO 2011-01-19
 // =============================================================================
 class Plugin : public dispatcher::Plugin_ABC
+             , private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -67,12 +69,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Plugin( const Plugin& );            //!< Copy constructor
-    Plugin& operator=( const Plugin& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Create( const sword::UnitCreation& message );
@@ -97,6 +93,7 @@ private:
     std::auto_ptr< DtExerciseConn > connection_;
     std::auto_ptr< DtFilePrinter > logger_;
     std::auto_ptr< Facade > vrForces_;
+    std::auto_ptr< ForceResolver_ABC > forceResolver_;
     //@}
 };
 

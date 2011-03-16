@@ -30,6 +30,7 @@ namespace plugins
 namespace vrforces
 {
     class Facade;
+    class ForceResolver_ABC;
 
 // =============================================================================
 /** @class  Agent
@@ -43,7 +44,7 @@ class Agent
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message );
+             Agent( DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces );
     virtual ~Agent();
     //@}
 

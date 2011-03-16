@@ -11,6 +11,7 @@
 #include "Plugin.h"
 #include "Agent.h"
 #include "Facade.h"
+#include "ForceResolver.h"
 #include "dispatcher/Config.h"
 #include "protocol/Protocol.h"
 #pragma warning( push, 0 )
@@ -27,10 +28,11 @@ using namespace plugins::vrforces;
 // Created: SBO 2011-01-19
 // -----------------------------------------------------------------------------
 Plugin::Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& /*xis*/ )
-    : model_     ( model )
-    , connection_( new DtExerciseConn( DtVrlApplicationInitializer( 0, 0, "VR-Link Plugin" ) ) )
-    , logger_    ( new DtFilePrinter( config.BuildSessionChildFile( "vrforces.log" ).c_str() ) )
-    , vrForces_  ( new Facade( *connection_ ) )
+    : model_        ( model )
+    , connection_   ( new DtExerciseConn( DtVrlApplicationInitializer( 0, 0, "VR-Link Plugin" ) ) )
+    , logger_       ( new DtFilePrinter( config.BuildSessionChildFile( "vrforces.log" ).c_str() ) )
+    , vrForces_     ( new Facade( *connection_ ) )
+    , forceResolver_( new ForceResolver( model_ ) )
 {
     DtWarn.attachPrinter( logger_.get() );
     DtInfo.attachPrinter( logger_.get() );
@@ -103,7 +105,7 @@ void Plugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
 // -----------------------------------------------------------------------------
 void Plugin::Create( const sword::UnitCreation& message )
 {
-    agents_[ message.unit().id() ].reset( new Agent( *connection_, *vrForces_, message ) );
+    agents_[ message.unit().id() ].reset( new Agent( *connection_, *vrForces_, message, *forceResolver_ ) );
     automatAgents_[ message.automat().id() ].insert( agents_[ message.unit().id() ] );
     agentAutomat_[ message.unit().id() ] = message.automat().id();
 }
