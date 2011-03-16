@@ -12234,7 +12234,7 @@
     <power-indicators close-combat="0" direct-fire="0" engineering="0" indirect-fire="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="net.masagroup.sword.france.military.platoon.roles.PlatoonINF" id="446" name="Groupe . MO81 VAB" type="Pion INF">
+  <unit decisional-model="net.masagroup.sword.france.military.platoon.roles.Mortier" id="446" name="Groupe . MO81 VAB" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Equipe Mortier 81"/>
@@ -12355,4 +12355,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3447285629" -->
+<!-- signature="3316212921" -->
