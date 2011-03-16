@@ -25,6 +25,7 @@
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/BuildableCapacity.h"
+#include "Entities/Objects/ImprovableCapacity.h"
 #include "Entities/Objects/WorkableCapacity.h"
 #include "Entities/Objects/SpawnCapacity.h"
 #include "Entities/Objects/OccupantAttribute.h"
@@ -231,8 +232,20 @@ int PHY_RoleAction_Objects::Mine( MIL_Object_ABC& object )
     if( rDeltaPercentage == std::numeric_limits< double >::max() )
         return eNoCapacity;
 
+    const MineAttribute& attribute = object.GetAttribute< MineAttribute >();
+    const unsigned int nDotationNeeded = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
+    const PHY_DotationCategory* pDotationCategory = 0;
+    if( nDotationNeeded )
+    {
+        pDotationCategory = object.Get< ImprovableCapacity >().GetDotationCategory();
+        if( pDotationCategory && !dataComputer.HasDotations( *pDotationCategory, nDotationNeeded ) )
+            return eNoMoreDotation;
+    }
+
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
     object().Mine( rDeltaPercentage );
+    if( pDotationCategory )
+        dataComputer.ConsumeDotations( *pDotationCategory, nDotationNeeded );
     if( object().IsFullyMined() )
         return eFinished;
     return eRunning;
