@@ -716,10 +716,8 @@
 
     <target name="scripts_test" description="run all tests">
         <test-scripts dataset="ada" physical="france"/>
-        <!--
         <test-scripts dataset="ada" physical="scipio-1.9.2"/>
         <test-scripts dataset="ada" physical="security-fr"/>
-        -->
         <test-scripts dataset="ada" physical="worldwide"/>
     </target>
 
@@ -804,9 +802,7 @@
     <target name="adaptation_test" description="load and save adaptation main data then check that output is the same as input">
         <test-adaptation input="${data.dir}/data/models/ada/physical/france"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio-1.9.2"/>
-        <!--
         <test-adaptation input="${data.dir}/data/models/ada/physical/security-fr"/>
-        -->
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
     </target>
 
