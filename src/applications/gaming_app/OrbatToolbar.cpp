@@ -28,8 +28,8 @@
 
 namespace
 {
-    static const std::vector< std::string > LEVELS = boost::assign::list_of( "i" )( "ii" )( "iii" )
-                                                                           ( "o" )( "oo" )( "ooo" )
+    static const std::vector< std::string > LEVELS = boost::assign::list_of( "o" )( "oo" )( "ooo" )
+                                                                           ( "i" )( "ii" )( "iii" )
                                                                            ( "x" )( "xx" )( "xxx" )( "xxxx" );
 }
 
