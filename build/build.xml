@@ -674,6 +674,10 @@
         </build-test>
     </target>
 
+    <target name="flood_test" depends="library.flood">
+        <build-test name="flood" depends="boost" libs="lib${ant.project.name}_flood-${platform}-mt"/>
+    </target>
+
     <target name="checkpoint_test" depends="application.simulation_app" description="save and load a checkpoint">
         <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
             <arg value="--root-dir=../../data"/>
@@ -718,7 +722,9 @@
     <target name="scripts_test" description="run all tests">
         <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="scipio-1.9.2"/>
+        <!--
         <test-scripts dataset="ada" physical="security-fr"/>
+        -->
         <test-scripts dataset="ada" physical="worldwide"/>
     </target>
 
@@ -894,10 +900,6 @@
                 </not>
             </condition>
         </fail>
-    </target>
-
-    <target name="flood_test" depends="library.flood">
-        <build-test name="flood" depends="boost" libs="lib${ant.project.name}_flood-${platform}-mt"/>
     </target>
 
     <!--
