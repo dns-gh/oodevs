@@ -474,17 +474,15 @@ FunctionEnd
 		
 	!ifndef NO_PROMPT_PROGRAM_DIRECTORY
 		${GetOptions} $R0 "/INSTALLDIRECTORY=" $R1 ; Check INSTALLDIRECTORY option
-		IfErrors 0 +3
-			MessageBox MB_OK|MB_ICONEXCLAMATION "$(OT_MISSING_INSTALL_PATH)"
-			Abort
+		IfErrors +2 0
 		StrCpy $INSTDIR $R1
 	!endif
 
 	!ifndef NO_PROMPT_DATA_DIRECTORY
 		${GetOptions} $R0 "/DATADIRECTORY=" $R1 ; Check DATADIRECTORY option
 		IfErrors 0 +3
-			MessageBox MB_OK|MB_ICONEXCLAMATION "$(OT_MISSING_DATA_PATH)"
-			Abort
+		StrCpy $INSTDATADIR "$DOCUMENTS\${PRODUCT_NAME}"
+		Goto CommandLineExit
 		StrCpy $INSTDATADIR $R1
 	!endif
 

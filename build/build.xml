@@ -948,7 +948,6 @@
     ============================================================================
     -->
     <target name="package" depends="package.app,package.exo,package.debug,package.wise-driver" description="package the installers"/>
-    <target name="package.all" description="package all the installers" depends="package,package.defense,package.france,package.security,package.security.demo,package.eval,package.patch"/>
 
     <!-- standard packages -->
     <target name="package.defense" description="package the standard installer : worldwide, no license">

@@ -95,11 +95,5 @@ LangString OT_DATA_PAGE_TEXT_DESTINATION ${LANG_FRENCH}  "Dossier de données"
 LangString OT_DATA_PAGE_TEXT_TOP ${LANG_ENGLISH} "Setup will install the decisional model, the physical model and the exercises int the following folder. To install in a different folder, click Browse and select another folder. Click Next to continue."
 LangString OT_DATA_PAGE_TEXT_TOP ${LANG_FRENCH}  "Ceci installera le modèle décisionnel, le modèle physique et les exercices dans le dossier suivant. Pour installer dans un autre dossier, cliquez sur Parcourir et choisissez un autre dossier. Cliquez sur Suivant pour continuer."
 
-LangString OT_MISSING_INSTALL_PATH ${LANG_ENGLISH} "Missing /INSTALLDIRECTORY=path option on command line."
-LangString OT_MISSING_INSTALL_PATH ${LANG_FRENCH}  "L'option /INSTALLDIRECTORY=path n'est pas sur la ligne de commande."
-
-LangString OT_MISSING_DATA_PATH ${LANG_ENGLISH} "Missing /DATADIRECTORY=path option on command line."
-LangString OT_MISSING_DATA_PATH ${LANG_FRENCH}  "L'option /DATADIRECTORY=path n'est pas sur la ligne de commande."
-
 LicenseLangString LICENSE ${LANG_ENGLISH} "resources/license-english.txt"
 LicenseLangString LICENSE ${LANG_FRENCH} "resources/license-french.txt"
