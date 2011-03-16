@@ -13,6 +13,7 @@
 #include "actions/Direction.h"
 #include "actions/Action_ABC.h"
 #include "clients_kernel/OrderParameter.h"
+#include "ENT/Ent_Tr.h"
 #include <qdial.h>
 
 using namespace actions::gui;
@@ -22,10 +23,10 @@ using namespace actions::gui;
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
 ParamDirection::ParamDirection( QObject* parent, const kernel::OrderParameter& parameter )
-    : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str() )
+    : QObject   ( parent )
+    , Param_ABC ( ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str() )
     , parameter_( parameter )
-    , value_( 180 )
+    , value_    ( 180 )
 {
     // NOTHING
 }

@@ -504,4 +504,13 @@ enum E_Location
     eNbrLocation
 };
 
+
+enum E_ActionParameter
+{
+    eActionParameter_DangerDirection,
+    eActionParameter_Limit1,
+    eActionParameter_Limit2,
+    eNbrActionParameter
+};
+
 #endif // __ENT_Enums_Gen_h_

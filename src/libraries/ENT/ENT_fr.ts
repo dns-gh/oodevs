@@ -958,5 +958,17 @@
         <source>mountain edge</source>
         <translation>bord de montagne</translation>
     </message>
+    <message>
+        <source>danger direction</source>
+        <translation>direction dangereuse</translation>
+    </message>
+    <message>
+        <source>limit 1</source>
+        <translation>limite 1</translation>
+    </message>
+    <message>
+        <source>limit 2</source>
+        <translation>limite 2</translation>
+    </message>
 </context>
 </TS>

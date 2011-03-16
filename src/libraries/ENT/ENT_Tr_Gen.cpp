@@ -502,6 +502,14 @@ ENT_Tr::T_ConverterLocation ENT_Tr::LocationConverter_[] =
     T_ConverterLocation( "", "", (E_Location)-1 )
 };
 
+ENT_Tr::T_ConverterActionParameter ENT_Tr::ActionParameterConverter_[] =
+{
+    T_ConverterActionParameter( "direction dangereuse", QT_TRANSLATE_NOOP( "ENT_Tr", "danger direction" ), eActionParameter_DangerDirection ),
+    T_ConverterActionParameter( "limit 1"             , QT_TRANSLATE_NOOP( "ENT_Tr", "limit 1" )         , eActionParameter_Limit1          ),
+    T_ConverterActionParameter( "limit 2"             , QT_TRANSLATE_NOOP( "ENT_Tr", "limit 2" )         , eActionParameter_Limit2          ),
+    T_ConverterActionParameter( "", "", ( E_ActionParameter ) - 1 )
+};
+
 //-----------------------------------------------------------------------------
 // Name: ENT_Tr::InitTranslations
 // Created: AGR
@@ -552,6 +560,7 @@ void ENT_Tr::InitTranslations()
     InitTr( PopulationErrorCodeConverter_, "ENT_Tr" );
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
     InitTr( LocationConverter_, "ENT_Tr" );
+    InitTr( ActionParameterConverter_, "ENT_Tr" );
 }
 
 //-----------------------------------------------------------------------------
@@ -951,6 +960,15 @@ const std::string& ENT_Tr::ConvertFromLocation( E_Location nValue, ENT_Tr_ABC::E
 }
 
 //-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertFromActïonParameter
+// Created: PHC
+//-----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromActionParameter( E_ActionParameter nValue, ENT_Tr_ABC::E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( ActionParameterConverter_, nValue, nConverterType );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToChangeHierarchyErrorCode
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1335,4 +1353,13 @@ E_PopulationAttitude ENT_Tr::ConvertToPopulationAttitude( const std::string& str
 E_Location ENT_Tr::ConvertToLocation( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( LocationConverter_, strName );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ENT_Tr::ConvertToActionParameter
+// Created: PHC
+//-----------------------------------------------------------------------------
+E_ActionParameter ENT_Tr::ConvertToActionParameter( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( ActionParameterConverter_, strName );
 }

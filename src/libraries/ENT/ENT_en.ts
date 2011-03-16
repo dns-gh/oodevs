@@ -841,5 +841,13 @@
         <source>c</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>danger direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>limit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

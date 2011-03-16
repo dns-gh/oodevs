@@ -17,6 +17,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_gui/RichLabel.h"
+#include "ENT/Ent_Tr.h"
 
 using namespace actions::gui;
 
@@ -25,8 +26,8 @@ using namespace actions::gui;
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
 LimitParameter::LimitParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller )
-    : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str() )
+    : QObject    ( parent )
+    , Param_ABC  ( ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str() )
     , controller_( controller )
     , parameter_ ( parameter )
     , converter_ ( converter )

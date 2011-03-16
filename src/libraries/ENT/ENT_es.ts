@@ -958,5 +958,17 @@
         <source>mountain edge</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>danger direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>limit 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>limit 2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
