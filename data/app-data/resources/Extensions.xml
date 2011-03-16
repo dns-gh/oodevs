@@ -5112,12 +5112,12 @@
 				<label text="Nationalite" language="fr"/>
 			</labels>
   	</attribute>
-	 <attribute extends="population;crowd" name="Ethnie" type="string">
+	 <attribute extends="unit;population;crowd" name="Ethnie" type="string">
 			<labels>
 				<label text="Ethnie" language="fr"/>
 			</labels>
 		</attribute>
-		<attribute extends="population;crowd" name="Religion" type="string">
+		<attribute extends="unit;population;crowd" name="Religion" type="string">
 			<labels>
 				<label text="Religion" language="fr"/>
 			</labels>
@@ -5127,7 +5127,7 @@
 				<label text="Id 64 bits" language="fr"/>
 			</labels>
 		</attribute>
-		<attribute extends="crowd" name="Information" type="string">
+		<attribute extends="unit;crowd" name="Information" type="string">
 			<labels>
 				<label text="Information" language="fr"/>
 			</labels>
@@ -5141,4 +5141,4 @@
 		</attribute>
 	</profile-attributes>
 </extensions>
-<!-- signature="3911298221" -->
+<!-- signature="1240522122" -->
