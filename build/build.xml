@@ -111,9 +111,7 @@
     </target>
 
     <target name="library.crossbow_plugin" depends="library.MT_Tools,library.tools,library.protocol" description="build crossbow dispatcher plugin static library">
-        <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
-<!--            <includepath path="${include.dir}/esri"/> -->
-        </build-lib>
+        <build-lib name="crossbow_plugin" pattern="lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
     <target name="library.rpr" description="build rpr static library">
@@ -841,11 +839,13 @@
             <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/4.3.0/exercise/profiles.xsd" file="../data/exercises/@{exercise}/profiles.xml" failonerror="true" warn="true"/>
             <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/4.3.0/exercise/weather.xsd" file="../data/exercises/@{exercise}/weather.xml" failonerror="true" warn="true"/>
             <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/4.3.0/exercise/session.xsd" file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" warn="true"/>
+            <!--
             <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true" timeout="900000">
                 <arg value="- -root-dir=../../data"/>
                 <arg value="- -exercise=@{exercise}"/>
                 <arg value="- -session=@{session}"/>
                 <arg value="- -test"/>
+                -->
             </exec>
         </sequential>
     </macrodef>
