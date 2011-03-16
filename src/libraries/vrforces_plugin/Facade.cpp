@@ -15,8 +15,6 @@
 #include <vrforces/vrfBeListener.h>
 #include <vrforces/vrfController.h>
 #pragma warning( pop )
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
 
 using namespace plugins::vrforces;
 
@@ -29,8 +27,6 @@ Facade::Facade( DtExerciseConn& connection )
 {
     controller_->init( &connection );
     reflectedAggregates_.reset( new DtReflectedAggregateList( &connection ) );
-//    boost::function< void ( const DtSimulationAddress& addr, void* usr ) > function = boost::bind( &Facade::OnBackendDiscovery, this, _1, _2 );
-//    controller_->backendListener()->addBackendDiscoveryCallback( *function.target< DtBackendCallbackFcn >(), 0 );
     controller_->backendListener()->addBackendDiscoveryCallback( &Facade::OnBackendDiscovery, this );
     controller_->backendListener()->addBackendRemovalCallback( &Facade::OnBackendRemoval, this );
     reflectedAggregates_->addAggregateAdditionCallback( &Facade::OnAggregateAddition, this );

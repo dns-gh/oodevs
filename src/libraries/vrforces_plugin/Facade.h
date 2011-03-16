@@ -49,12 +49,6 @@ public:
     const DtReflectedAggregate* Find( const DtEntityIdentifier& id ) const;
     void RegisterReflectedCreationListener( Agent& agent );
     void UnregisterReflectedCreationListener( Agent& agent );
-
-    static void OnBackendDiscovery( const DtSimulationAddress& addr, void* usr );
-    static void OnBackendRemoval( const DtSimulationAddress& addr, void* usr );
-    static void OnAggregateAddition( DtReflectedAggregate* obj, void* userData );
-    static void OnAggregateRemoval( DtReflectedAggregate* obj, void* userData );
-    static bool CheckAggregateDiscoveryCondition( DtReflectedObject* refObj, void* usr );
     //@}
 
 private:
@@ -68,6 +62,12 @@ private:
     //@{*
     void StartScenario( const DtSimulationAddress& address );
     bool IsConnected() const;
+
+    static void OnBackendDiscovery( const DtSimulationAddress& addr, void* usr );
+    static void OnBackendRemoval( const DtSimulationAddress& addr, void* usr );
+    static void OnAggregateAddition( DtReflectedAggregate* obj, void* userData );
+    static void OnAggregateRemoval( DtReflectedAggregate* obj, void* userData );
+    static bool CheckAggregateDiscoveryCondition( DtReflectedObject* refObj, void* usr );
     //@}
 
     //! @name Types

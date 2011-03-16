@@ -93,18 +93,18 @@ void PluginFactory::Instanciate()
 // -----------------------------------------------------------------------------
 void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
 {
-    if( name == "hla" )
+    if( name == "hla" || name == "vrforces" )
         LoadPlugin( name, xis );
-    if( name == "recorder" )
-    {
+    else if( name == "recorder" )
         handler_.Add( new plugins::saver::SaverPlugin( model_, config_ ) );
-        return;
-    }
-    for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )
+    else
     {
-        std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, staticModel_, simulation_, clients_, clients_ , clients_, registrables_ ) );
-        if( plugin.get() )
-            handler_.Add( plugin.release() );
+        for( T_Factories::const_iterator it = factories_.begin(); it != factories_.end(); ++it )
+        {
+            std::auto_ptr< Plugin_ABC > plugin( (*it)->Create( name, xis, config_, model_, staticModel_, simulation_, clients_, clients_ , clients_, registrables_ ) );
+            if( plugin.get() )
+                handler_.Add( plugin.release() );
+        }
     }
 }
 

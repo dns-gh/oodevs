@@ -141,7 +141,7 @@
     </target>
 
     <target name="library.vrforces_plugin" description="build vrforces_plugin static library" depends="library.protocol">
-        <build-lib name="vrforces_plugin" pattern="lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
+        <build-lib name="vrforces_plugin" pattern="lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${include.dir}/vrforces"/>
             <includepath path="${include.dir}/vrlink"/>
             <includepath path="${include.dir}/RTI_1.3/HLA"/>
@@ -149,16 +149,17 @@
             <defineset define="DtHLA=1"/>
             <defineset define="RTI_USES_STD_FSTREAM=1"/>
             <defineset define="DtRPR=1"/>
+            <defineset define="DT_USE_DLL=1"/>
         </build-lib>
     </target>
 
     <target name="library.vrforces_plugin_dll" description="build vrforces_plugin dynamic library" depends="library.vrforces_plugin">
         <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="libprotobuf,libFedtime,
-                  matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilMD,vrfcontrolHLA13RT,
+                  matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilRT,vrfcontrolHLA13RT,
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}">
-            <syslibset libs="shell32,user32,wsock32"/>
+            <syslibset libs="shell32,user32"/>
             <defineset define="VRFORCES_PLUGIN_DLL_EXPORTS"/>
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
@@ -1131,8 +1132,7 @@
         <update name="vcredist" package="vcredist"/>
         <update name="system"/>
         <update name="openssl"/>
-        <update name="vrforces"/>
-        <update name="vrlink"/>
+        <update name="mak"/><!-- overwrites rti -->
         <update name="wise"/>
         <antcall target="deploy-application-data"/>
         <update-database database="directia.core.bml" dir="${models.dir}/directia.core"/>
