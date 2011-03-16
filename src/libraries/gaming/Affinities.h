@@ -57,7 +57,7 @@ class Affinities : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Affinities( TeamsModel& teams );
+             Affinities( kernel::Controller& controller, TeamsModel& teams );
     virtual ~Affinities();
     //@}
 
@@ -93,8 +93,9 @@ private:
 private:
     //! @name Member data
     //@{
-    T_Affinities affinities_;
+    kernel::Controller& controller_;
     TeamsModel& teams_;
+    T_Affinities affinities_;
     //@}
 };
 

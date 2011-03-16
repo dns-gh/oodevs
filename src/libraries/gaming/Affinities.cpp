@@ -23,8 +23,9 @@
 // Name: Affinities constructor
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-Affinities::Affinities( TeamsModel& teams )
-    : teams_( teams )
+Affinities::Affinities( kernel::Controller& controller, TeamsModel& teams )
+    : teams_     ( teams )
+    , controller_( controller )
 {
     // NOTHING
 }
@@ -49,6 +50,7 @@ void Affinities::DoUpdate( const sword::PopulationUpdate& message )
         const sword::PartyAdhesion& adhesion = message.adhesions( i );
         affinities_[ adhesion.party().id() ] = adhesion.value();
     }
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,6 +64,7 @@ void Affinities::DoUpdate( const sword::CrowdUpdate& message )
         const sword::PartyAdhesion& adhesion = message.adhesions( i );
         affinities_[ adhesion.party().id() ] = adhesion.value();
     }
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,6 +78,7 @@ void Affinities::DoUpdate( const sword::UnitAttributes& message )
         const sword::PartyAdhesion& adhesion = message.adhesions( i );
         affinities_[ adhesion.party().id() ] = adhesion.value();
     }
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------

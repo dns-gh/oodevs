@@ -471,6 +471,15 @@ void MIL_AgentPion::UpdateNetwork()
 {
     GetRole< network::NET_RolePion_Dotations >().SendChangedState();
     GetRole< network::NET_RolePion_Dotations >().Clean();
+
+    if( pAffinities_.get() )
+    {
+        client::UnitAttributes attributesMsg;
+        attributesMsg().mutable_unit()->set_id( GetID() );
+        pAffinities_->UpdateNetwork( attributesMsg );
+        if( attributesMsg().adhesions_size() > 0 )
+            attributesMsg.Send( NET_Publisher_ABC::Publisher() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -942,6 +951,9 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         break;
     case sword::UnitMagicAction::create_wound:
         OnReceiveCreateWound( msg.parameters() );
+        break;
+    case sword::UnitMagicAction::unit_change_affinities:
+        pAffinities_->OnReceiveMsgChangeAffinities( msg );
         break;
     default:
         assert( false );

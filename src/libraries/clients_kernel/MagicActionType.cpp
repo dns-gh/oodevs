@@ -294,4 +294,8 @@ void MagicActionType::Initialize()
     {
         CreateOrderParameter( "Alerted", "bool" );
     }
+    else if( name_ == "unit_change_affinities" )
+    {
+        CreateOrderParameter( "Affinities", "list" );
+    }
 }
