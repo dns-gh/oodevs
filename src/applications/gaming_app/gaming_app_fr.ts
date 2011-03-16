@@ -132,6 +132,13 @@
     </message>
 </context>
 <context>
+    <name>AgentChangeAffinitiesDialog</name>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
+    </message>
+</context>
+<context>
     <name>AgentKnowledgePanel</name>
     <message>
         <source>Nature:</source>
@@ -311,6 +318,21 @@
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
+    </message>
+</context>
+<context>
+    <name>ChangeAffinitiesDialog</name>
+    <message>
+        <source>Change affinities</source>
+        <translation>Modifier la liste d&apos;adhésions</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -1049,24 +1071,8 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>InhabitantChangeAffinitiesDialog</name>
     <message>
-        <source>Change affinities</source>
-        <translation>Modifier la liste d&apos;adhésions</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
         <source>Magic orders</source>
         <translation>Actions magiques</translation>
-    </message>
-    <message>
-        <source>Population Change Affinities</source>
-        <translation>Changer la liste d&apos;adhésion de la population</translation>
     </message>
 </context>
 <context>
@@ -2581,6 +2587,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Disaggregate all</source>
         <translation>Désagréger</translation>
+    </message>
+</context>
+<context>
+    <name>PopulationChangeAffinitiesDialog</name>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
     </message>
 </context>
 <context>

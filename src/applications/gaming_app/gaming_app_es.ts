@@ -132,6 +132,13 @@
     </message>
 </context>
 <context>
+    <name>AgentChangeAffinitiesDialog</name>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AgentKnowledgePanel</name>
     <message>
         <source>Nature:</source>
@@ -311,6 +318,21 @@
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
+    </message>
+</context>
+<context>
+    <name>ChangeAffinitiesDialog</name>
+    <message>
+        <source>Change affinities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1049,23 +1071,7 @@ Motivo: %3
 <context>
     <name>InhabitantChangeAffinitiesDialog</name>
     <message>
-        <source>Change affinities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Magic orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population Change Affinities</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2580,6 +2586,13 @@ Motivo: %3
     </message>
     <message>
         <source>Disaggregate all</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PopulationChangeAffinitiesDialog</name>
+    <message>
+        <source>Magic orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

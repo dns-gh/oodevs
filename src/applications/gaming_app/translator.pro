@@ -13,6 +13,10 @@ AlarmsWidget.cpp \
 Application.cpp \
 BorrowingsListView.cpp \
 BriefingDialog.cpp \
+ChangeAffinitiesDialog.cpp \
+AgentChangeAffinitiesDialog.cpp \
+PopulationChangeAffinitiesDialog.cpp \
+InhabitantChangeAffinitiesDialog.cpp \
 ChangeDiplomacyDialog.cpp \
 ChangeHumanFactorsDialog.cpp \
 ChangeLogisticLinksDialog.cpp \
@@ -48,7 +52,6 @@ InfoStancesWidget.cpp \
 InfoStatusWidget.cpp \
 InfoSupplyDialog.cpp \
 InfoWidget.cpp \
-InhabitantChangeAffinitiesDialog.cpp \
 InhabitantChangeHealthStateDialog.cpp \
 InhabitantExtractCrowdDialog.cpp \
 KnowledgeGroupMagicOrdersInterface.cpp \

@@ -14,8 +14,10 @@
 #include "ChangeHumanFactorsDialog.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "CreateFormationDialog.h"
-#include "InhabitantChangeHealthStateDialog.h"
+#include "AgentChangeAffinitiesDialog.h"
+#include "PopulationChangeAffinitiesDialog.h"
 #include "InhabitantChangeAffinitiesDialog.h"
+#include "InhabitantChangeHealthStateDialog.h"
 #include "InhabitantChangeAlertedStateDialog.h"
 #include "InhabitantChangeConfinedStateDialog.h"
 #include "InhabitantExtractCrowdDialog.h"
@@ -49,7 +51,9 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new BriefingDialog( parent, controllers, publisher, handler, config );
     new CreateFormationDialog( parent, controllers, model.formations_, profile, actionsModel, simulation );
     new OrbatAttributesDialog( parent, controllers );
-    new InhabitantChangeAffinitiesDialog( parent, controllers, model.teams_, staticModel, actionsModel, simulation, profile );
+    new AgentChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new PopulationChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new InhabitantChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new InhabitantChangeHealthStateDialog( parent, controllers, actionsModel, simulation, profile );
     new InhabitantChangeAlertedStateDialog( parent, controllers, actionsModel, simulation, profile );
     new InhabitantChangeConfinedStateDialog( parent, controllers, actionsModel, simulation, profile );

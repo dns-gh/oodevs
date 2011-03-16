@@ -119,3 +119,12 @@ void Affinities::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
        displayer.Display( tools::translate( "Affinities", "Affinity %1:" ).arg( team.GetName() ), it->second );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: Affinities::HasAffinities
+// Created: LGY 2011-03-15
+// -----------------------------------------------------------------------------
+bool Affinities::HasAffinities() const
+{
+    return !affinities_.empty();
+}

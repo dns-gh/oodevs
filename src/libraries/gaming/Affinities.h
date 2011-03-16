@@ -66,6 +66,7 @@ public:
     void CreateAffinitiesSpinBoxs( QGrid* grid, std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >& spinboxs );
     void FillParameterList( actions::parameters::ParameterList* parameterList ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& ) const;
+    bool HasAffinities() const;
     //@}
 
 private:

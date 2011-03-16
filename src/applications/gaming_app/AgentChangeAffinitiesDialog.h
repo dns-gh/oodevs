@@ -7,15 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef __InhabitantChangeAffinitiesDialog_h_
-#define __InhabitantChangeAffinitiesDialog_h_
+#ifndef __AgentChangeAffinitiesDialog_h_
+#define __AgentChangeAffinitiesDialog_h_
 
 #include "ChangeAffinitiesDialog.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
 namespace kernel
 {
-    class Inhabitant_ABC;
+    class Agent_ABC;
     class Controllers;
     class Profile_ABC;
     class Time_ABC;
@@ -29,34 +29,34 @@ namespace actions
 class StaticModel;
 
 // =============================================================================
-/** @class  InhabitantChangeAffinitiesDialog
-    @brief  Inhabitant change affinities dialog
+/** @class  AgentChangeAffinitiesDialog
+    @brief  Agent change affinities dialog
 */
 // Created: LGY 2011-03-16
 // =============================================================================
-class InhabitantChangeAffinitiesDialog : public ChangeAffinitiesDialog
-                                       , public tools::Observer_ABC
-                                       , public kernel::ContextMenuObserver_ABC< kernel::Inhabitant_ABC >
+class AgentChangeAffinitiesDialog : public ChangeAffinitiesDialog
+                                  , public tools::Observer_ABC
+                                  , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             InhabitantChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel,
-                                               actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
-    virtual ~InhabitantChangeAffinitiesDialog();
+             AgentChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel,
+                                          actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile );
+    virtual ~AgentChangeAffinitiesDialog();
     //@}
 
     //! @name Operations
     //@{
     virtual void DoValidate();
-    virtual void NotifyContextMenu( const kernel::Inhabitant_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    InhabitantChangeAffinitiesDialog( const InhabitantChangeAffinitiesDialog& );            //!< Copy constructor
-    InhabitantChangeAffinitiesDialog& operator=( const InhabitantChangeAffinitiesDialog& ); //!< Assignment operator
+    AgentChangeAffinitiesDialog( const AgentChangeAffinitiesDialog& );            //!< Copy constructor
+    AgentChangeAffinitiesDialog& operator=( const AgentChangeAffinitiesDialog& ); //!< Assignment operator
     //@}
 
 private:
@@ -70,4 +70,4 @@ private:
     //@}
 };
 
-#endif // __InhabitantChangeAffinitiesDialog_h_
+#endif // __AgentChangeAffinitiesDialog_h_
