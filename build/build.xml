@@ -850,12 +850,12 @@
             <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/4.3.0/exercise/profiles.xsd" file="../data/exercises/@{exercise}/profiles.xml" failonerror="true" warn="true"/>
             <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/4.3.0/exercise/weather.xsd" file="../data/exercises/@{exercise}/weather.xml" failonerror="true" warn="true"/>
             <schemavalidate noNamespaceFile="${run.dir}/resources/schemas/4.3.0/exercise/session.xsd" file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" warn="true"/>
-            <!-- <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true" timeout="900000">
+            <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true" timeout="900000">
                 <arg value="- -root-dir=../../data"/>
                 <arg value="- -exercise=@{exercise}"/>
                 <arg value="- -session=@{session}"/>
                 <arg value="- -test"/>
-            </exec>-->
+            </exec>
         </sequential>
     </macrodef>
 
