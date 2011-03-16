@@ -845,8 +845,8 @@
                 <arg value="- -exercise=@{exercise}"/>
                 <arg value="- -session=@{session}"/>
                 <arg value="- -test"/>
-                -->
             </exec>
+                -->
         </sequential>
     </macrodef>
 
