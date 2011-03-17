@@ -372,7 +372,9 @@ eRC_ZoneConfinementInProgress = 353
 eRC_ZoneEvacuated = 354
 eRC_ArrivedOnEvacuateZone = 355
 eRC_ZoneEvacuationInProgress = 356
-eNbr = 356
+eRC_DebutValorisation = 357
+eRC_FinValorisation = 358
+eNbr = 358
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

@@ -114,8 +114,8 @@
       <value id="9" name="ligne_identification_accueil"/>
     </parameter>
   </report>
-  <report category="operational" id="79" message="debut travaux"/>
-  <report category="operational" id="80" message="fin travaux"/>
+  <report category="operational" id="79" message="Début travaux"/>
+  <report category="operational" id="80" message="Fin travaux"/>
   <report category="operational" id="81" message="obstacle degage"/>
   <report category="operational" id="82" message="organisation chantier"/>
   <report category="operational" id="83" message="desorganisation chantier"/>
@@ -496,6 +496,8 @@
     </parameter>
   </report>
   <report category="operational" id="351" message="Pas de drone disponible"/>
+  <report category="operational" id="357" message="Début de Valorisation"/>
+  <report category="operational" id="358" message="Fin de Valorisation"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -507,4 +509,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="0382851981" -->
+<!-- signature="0040901985" -->
