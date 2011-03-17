@@ -971,19 +971,11 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alive people:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dead people:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Chunks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -734,6 +734,20 @@ const MIL_PopulationAttitude& MIL_Population::GetAttitude() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::GetAllHumans
+// Created: JSR 2011-03-16
+// -----------------------------------------------------------------------------
+unsigned int MIL_Population::GetAllHumans() const
+{
+    unsigned int nResult = 0;
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        nResult += ( **itConcentration ).GetAllHumans();
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        nResult += ( **itFlow ).GetAllHumans();
+    return nResult;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetHealthyHumans
 // Created: SBO 2006-02-22
 // -----------------------------------------------------------------------------
@@ -965,13 +979,15 @@ void MIL_Population::OnReceiveCrowdMagicAction( const sword::UnitMagicAction& ms
     case sword::UnitMagicAction::crowd_total_destruction:
         OnReceiveMsgDestroyAll();
         break;
-        // TODO
-    /*case sword::UnitMagicAction::crowd_kill:
-        OnReceiveMsgKill( msg );
+    case sword::UnitMagicAction::crowd_change_health_state:
+        OnReceiveMsgChangeHealthState( msg );
         break;
-    case sword::UnitMagicAction::crowd_resurrect:
-        OnReceiveMsgResurrect( msg );
-        break;*/
+    case sword::UnitMagicAction::crowd_change_affinities:
+        pAffinities_->OnReceiveMsgChangeAffinities( msg );
+        break;
+    case sword::UnitMagicAction::crowd_change_armed_individuals:
+        OnReceiveMsgChangeArmedIndividuals( msg);
+        break;
     case sword::UnitMagicAction::crowd_change_attitude:
         OnReceiveMsgChangeAttitude( msg );
         break;
@@ -1039,96 +1055,85 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& m
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parametre.value().Get(0).enumeration() );
     if( !pAttitude )
         throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
-
-    // $$$$ JSR 2010-04-16: TODO concentration, flux et global non définis.
-    // On fait comme si c'était en global.
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SetAttitude( *pAttitude );
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         ( **it ).SetAttitude( *pAttitude );
-
-    // concentration
-    /*if( asn.beneficiaire().has_concentration() )
-    {
-        for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-            if( static_cast<int>( ( **it ).GetID() ) == asn.beneficiaire().concentration() )
-            {
-                ( **it ).SetAttitude( *pAttitude );
-                return;
-            }
-        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
-    }
-    // flow
-    else if( asn.beneficiaire().has_flux() )
-    {
-        for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-            if( static_cast<int>( ( **it ).GetID() ) == asn.beneficiaire().flux() )
-            {
-                ( **it ).SetAttitude( *pAttitude );
-                return;
-            }
-        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
-    }
-    // global
-    else if( asn.beneficiaire().has_global() )
-    {
-        for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-            ( **it ).SetAttitude( *pAttitude );
-        for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-            ( **it ).SetAttitude( *pAttitude );
-    }*/
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_Population::OnReceiveMsgKill
-// Created: SBO 2006-04-05
-// -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgKill( const sword::UnitMagicAction& msg )
+namespace
 {
-    if( !msg.has_parameters() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
-    const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
-    if( parametre.value_size() != 1 || !parametre.value().Get(0).has_quantity() )
-        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
-    unsigned int remainingKills = parametre.value().Get(0).quantity();
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    void ChangeHealthState( MIL_PopulationElement_ABC& element, unsigned int& healthy, unsigned int& contaminated, unsigned int& wounded, unsigned int& dead, float ratio )
     {
-        if( remainingKills == 0 )
-            return;
-        remainingKills -= ( **it ).Kill( remainingKills );
-    }
-    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-    {
-        if( remainingKills == 0 )
-            return;
-        remainingKills -= ( **it ).Kill( remainingKills );
+        unsigned int elementTotal = element.GetAllHumans();
+        element.PullHumans( elementTotal );
+        unsigned int newNumber = static_cast< unsigned int >( ratio * elementTotal );
+        unsigned int newDead = std::min( dead, newNumber );
+        newNumber -= newDead;
+        dead -= newDead;
+        unsigned int newWounded = std::min( wounded, newNumber );
+        newNumber -= newWounded;
+        wounded -= newWounded;
+        unsigned int newContaminated = std::min( contaminated, newNumber );
+        newNumber -= newContaminated;
+        contaminated -= newContaminated;
+        unsigned int newHealthy = std::min( healthy, newNumber );
+        newNumber -= newHealthy;
+        healthy -= newHealthy;
+        element.PushHumans( MIL_PopulationHumans( newHealthy, newContaminated, newWounded, newDead ) );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::OnReceiveMsgResurrect
-// Created: SBO 2006-04-05
+// Name: MIL_Population::OnReceiveMsgChangeHealthState
+// Created: JSR 2011-03-16
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgResurrect( const sword::UnitMagicAction& msg )
+void MIL_Population::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg )
 {
-    if( !msg.has_parameters() )
-        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
-    const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
-    if( parametre.value_size() != 1 || !parametre.value().Get(0).has_quantity() )
-        throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
-    unsigned int remainingResurrections = parametre.value().Get(0).quantity();
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 4 )
+        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+    const sword::MissionParameter& healthyParam = msg.parameters().elem( 0 );
+    const sword::MissionParameter& woundedParam = msg.parameters().elem( 1 );
+    const sword::MissionParameter& contaminatedParam = msg.parameters().elem( 2 );
+    const sword::MissionParameter& deadParam = msg.parameters().elem( 3 );
+    if( healthyParam.value_size() != 1 || !healthyParam.value().Get( 0 ).has_quantity() ||
+        woundedParam.value_size() != 1 || !woundedParam.value().Get( 0 ).has_quantity() ||
+        contaminatedParam.value_size() != 1 || !contaminatedParam.value().Get( 0 ).has_quantity() ||
+        deadParam.value_size() != 1 || !deadParam.value().Get( 0 ).has_quantity() )
+        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
+    unsigned int healthy = healthyParam.value().Get( 0 ).quantity();
+    unsigned int wounded = woundedParam.value().Get( 0 ).quantity();
+    unsigned int contaminated = contaminatedParam.value().Get( 0 ).quantity();
+    unsigned int dead = deadParam.value().Get( 0 ).quantity();
+    float ratio = static_cast< float >( healthy + wounded + contaminated + dead ) / GetAllHumans();
+    MIL_PopulationElement_ABC* last = 0;
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
-        if( remainingResurrections == 0 )
-            return;
-        remainingResurrections -= ( **it ).Resurrect( remainingResurrections );
+        last = *it;
+        ChangeHealthState( **it, healthy, contaminated, wounded, dead, ratio );
     }
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
     {
-        if( remainingResurrections == 0 )
-            return;
-        remainingResurrections -= ( **it ).Resurrect( remainingResurrections );
+        last = *it;
+        ChangeHealthState( **it, healthy, contaminated, wounded, dead, ratio );
     }
+    if( last )
+        last->PushHumans( MIL_PopulationHumans( healthy, contaminated, wounded, dead ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveMsgChangeArmedIndividuals
+// Created: JSR 2011-03-16
+// -----------------------------------------------------------------------------
+void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& msg )
+{
+    if( !msg.has_parameters() )
+        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+    const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
+    if( parametre.value_size() != 1 || !parametre.value().Get( 0 ).has_quantity() )
+        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
+    rArmedIndividuals_ = parametre.value().Get( 0 ).quantity();
+    armedIndividualsChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -1202,6 +1207,8 @@ void MIL_Population::UpdateNetwork()
             asnMsg().set_critical_intelligence( criticalIntelligence_ );
         if( armedIndividualsChanged_ )
             asnMsg().set_armed_individuals( rArmedIndividuals_ );
+        criticalIntelligenceChanged_ = false;
+        armedIndividualsChanged_ = false;
         pAffinities_->UpdateNetwork( asnMsg );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }

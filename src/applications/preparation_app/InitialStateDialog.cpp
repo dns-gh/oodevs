@@ -24,10 +24,10 @@
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
 InitialStateDialog::InitialStateDialog( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel )
-    : QDialog( parent, "InitialStateDialog_Dialog" )
+    : QDialog( parent, "InitialStateDialog_Dialog", true )
     , controllers_( controllers )
     , staticModel_( staticModel )
-    //, selected_   ( controllers )
+    , selected_   ( 0 )
 {
     // Init dialog
     setCaption( tools::translate( "InitialStateDialog", "Initial state" ) );

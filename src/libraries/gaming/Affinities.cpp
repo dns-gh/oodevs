@@ -87,7 +87,8 @@ void Affinities::DoUpdate( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Affinities::CreateAffinitiesSpinBoxs( QGrid* grid, std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >& spinboxs )
 {
-    for( IT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    changingAffinities_ = affinities_;
+    for( IT_Affinities it = changingAffinities_.begin(); it != changingAffinities_.end(); ++it )
     {
         kernel::Team_ABC& team = teams_.GetTeam( it->first );
         new QLabel( team.GetName(), grid );
@@ -95,6 +96,25 @@ void Affinities::CreateAffinitiesSpinBoxs( QGrid* grid, std::map< unsigned long,
         spinboxs[ it->first ]->setMargin( 5 );
         spinboxs[ it->first ]->setSpacing( 5 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Affinities::CancelChanges
+// Created: JSR 2011-03-17
+// -----------------------------------------------------------------------------
+void Affinities::CancelChanges()
+{
+    changingAffinities_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Affinities::ValidateChanges
+// Created: JSR 2011-03-17
+// -----------------------------------------------------------------------------
+void Affinities::ValidateChanges()
+{
+    affinities_ = changingAffinities_;
+    changingAffinities_.clear();
 }
 
 // -----------------------------------------------------------------------------

@@ -21,7 +21,6 @@ using namespace kernel;
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
 MagicActionType::MagicActionType()
-    : OrderType()
 {
     Initialize();
 }
@@ -31,10 +30,8 @@ MagicActionType::MagicActionType()
 // Created: JSR 2010-04-13
 // -----------------------------------------------------------------------------
 MagicActionType::MagicActionType( const std::string& name, unsigned long id )
-    : OrderType()
+    : OrderType( name, id )
 {
-    name_ = name;
-    id_ = id;
     Initialize();
 }
 
@@ -43,9 +40,8 @@ MagicActionType::MagicActionType( const std::string& name, unsigned long id )
 // Created: FDS 2010-11-23
 // -----------------------------------------------------------------------------
 MagicActionType::MagicActionType( const std::string& name )
-    : OrderType()
+    : OrderType( name, 0 )
 {
-    name_ = name;
     Initialize();
 }
 
@@ -54,15 +50,6 @@ MagicActionType::MagicActionType( const std::string& name )
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
 MagicActionType::~MagicActionType()
-{
-    Clean();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MagicActionType::Clean
-// Created: JSR 2010-04-06
-// -----------------------------------------------------------------------------
-void MagicActionType::Clean()
 {
     DeleteAll();
 }
@@ -84,15 +71,12 @@ OrderParameter* MagicActionType::CreateOrderParameter( const std::string& name, 
 // -----------------------------------------------------------------------------
 void MagicActionType::Initialize()
 {
-    if( name_ == "teleport" )
-    {
+    const std::string& name = GetName();
+    if( name == "teleport" )
         CreateOrderParameter( "Location", "point" );
-    }
-    else if( name_ == "surrender" )
-    {
+    else if( name == "surrender" )
         CreateOrderParameter( "Camp", "army" );
-    }
-    else if( name_ == "change_human_factors" )
+    else if( name == "change_human_factors" )
     {
         OrderParameter* tiredness = CreateOrderParameter( "Tiredness", "enumeration" );
         tiredness->AddValue( eUnitTiredness_Normal, tools::ToString( eUnitTiredness_Normal ).ascii() );
@@ -110,7 +94,7 @@ void MagicActionType::Initialize()
         experience->AddValue( eUnitExperience_Experimente, tools::ToString( eUnitExperience_Experimente ).ascii() );
         experience->AddValue( eUnitExperience_Conscrit, tools::ToString( eUnitExperience_Conscrit ).ascii() );
     }
-    else if( name_ == "partial_recovery" )
+    else if( name == "partial_recovery" )
     {
         CreateOrderParameter( "Equipments", "list" );
         CreateOrderParameter( "Humans", "list" );
@@ -118,99 +102,79 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Ammo", "list" );
         CreateOrderParameter( "Stocks", "list" );
     }
-    else if( name_ == "formation_creation" )
+    else if( name == "formation_creation" )
     {
         CreateOrderParameter( "Level", "numeric" );
         CreateOrderParameter( "Name", "string" );
         CreateOrderParameter( "LogLevel", "string" );
     }
-    else if( name_ == "unit_creation" )
+    else if( name == "unit_creation" )
     {
         CreateOrderParameter( "UnitType", "identifier" );
         CreateOrderParameter( "Location", "point" );
     }
-    else if( name_ == "crowd_creation" )
+    else if( name == "crowd_creation" )
     {
         CreateOrderParameter( "PopulationType", "string" );
         CreateOrderParameter( "Location", "point" );
         CreateOrderParameter( "Number", "numeric" );
         CreateOrderParameter( "Name", "string" );
     }
-    else if( name_ == "population_kill" || name_ == "population_resurrect" )
-    {
-        CreateOrderParameter( "Number", "quantity" );
-    }
-    else if( name_ == "population_change_attitude" )
+    else if( name == "crowd_change_attitude" )
     {
         OrderParameter* attitude = CreateOrderParameter( "Attitude", "enumeration" );
         attitude->AddValue( ePopulationAttitude_Calme, tools::ToString( ePopulationAttitude_Calme ).ascii() );
         attitude->AddValue( ePopulationAttitude_Agitee, tools::ToString( ePopulationAttitude_Agitee ).ascii() );
         attitude->AddValue( ePopulationAttitude_Excitee, tools::ToString( ePopulationAttitude_Excitee ).ascii() );
         attitude->AddValue( ePopulationAttitude_Agressive, tools::ToString( ePopulationAttitude_Agressive ).ascii() );
-        // $$$$ JSR 2010-04-16: TODO? not used by now
-        // optional int32 flux
-        // optional int32 concentration
-        // optional bool global
     }
-    else if( name_ == "fire_order" )
+    else if( name == "fire_order" )
     {
         CreateOrderParameter( "UnitTarget", "identifier" );
         CreateOrderParameter( "Ammo", "dotationtype" );
         CreateOrderParameter( "Iterations", "numeric" );
     }
-    else if( name_ == "fire_order_on_location" )
+    else if( name == "fire_order_on_location" )
     {
         CreateOrderParameter( "LocationTarget", "location" );
         CreateOrderParameter( "Ammo", "dotationtype" );
         CreateOrderParameter( "Iterations", "numeric" );
     }
-    else if( name_ == "change_knowledge_group" )
+    else if( name == "change_knowledge_group" )
     {
         CreateOrderParameter( "Group", "knowledgegroup" );
         CreateOrderParameter( "Camp", "army" );
     }
-    else if( name_ == "unit_change_superior" )
-    {
+    else if( name == "unit_change_superior" )
         CreateOrderParameter( "Superior", "automate" );
-    }
-    else if( name_ == "change_automat_superior" )
-    {
+    else if( name == "change_automat_superior" )
         CreateOrderParameter( "Automat", "automate" );
-    }
-    else if( name_ == "change_formation_superior" )
-    {
+    else if( name == "change_formation_superior" )
         CreateOrderParameter( "Formation", "formation" );
-    }
-    else if( name_ == "change_logistic_links" )
+    else if( name == "change_logistic_links" )
     {
         CreateOrderParameter( "TC2", "identifier" );
         CreateOrderParameter( "Maintenance", "identifier" );
         CreateOrderParameter( "Sante", "identifier" );
         CreateOrderParameter( "Ravitaillement", "identifier" );
     }
-    else if( name_ == "knowledge_group_enable" )
-    {
+    else if( name == "knowledge_group_enable" )
         CreateOrderParameter( "Enabled", "bool" );
-    }
-    else if( name_ == "knowledge_group_update_side" )
-    {
+    else if( name == "knowledge_group_update_side" )
         CreateOrderParameter( "Camp", "army" );
-    }
-    else if( name_ == "knowledge_group_update_side_parent" )
+    else if( name == "knowledge_group_update_side_parent" )
     {
         CreateOrderParameter( "Camp", "army" );
         CreateOrderParameter( "Parent", "knowledgegroup" );
     }
-    else if( name_ == "knowledge_group_update_type" )
-    {
+    else if( name == "knowledge_group_update_type" )
         CreateOrderParameter( "Type", "string" );
-    }
-    else if( name_ == "log_supply_push_flow" || name_ == "log_supply_pull_flow" || name_ == "log_supply_change_quotas" )
+    else if( name == "log_supply_push_flow" || name == "log_supply_pull_flow" || name == "log_supply_change_quotas" )
     {
         CreateOrderParameter( "Receiver", "RegisterObjectNames" );
         CreateOrderParameter( "Dotations", "list" );
     }
-    else if( name_ == "create_object" )
+    else if( name == "create_object" )
     {
         CreateOrderParameter( "Type", "string" );
         CreateOrderParameter( "Location", "location" );
@@ -218,11 +182,9 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Camp", "army" );
         CreateOrderParameter( "Attributes", "list" );
     }
-    else if( name_ == "update_object" )
-    {
+    else if( name == "update_object" )
         CreateOrderParameter( "Attributes", "list" );
-    }
-    else if( name_ == "global_weather" || name_ == "local_weather" )
+    else if( name == "global_weather" || name == "local_weather" )
     {
         CreateOrderParameter( "Temperature", "numeric" );
         CreateOrderParameter( "WindSpeed", "numeric" );
@@ -239,63 +201,68 @@ void MagicActionType::Initialize()
         precipitation->AddValue( 5, "Neige"              );
         precipitation->AddValue( 6, "Fumigene"           );
 
-        if( name_ == "local_weather" )
+        if( name == "local_weather" )
         {
             CreateOrderParameter( "StartTime", "datetime" );
             CreateOrderParameter( "EndTime", "datetime" );
             CreateOrderParameter( "Location", "location" );
         }
     }
-    else if( name_ == "change_diplomacy" )
+    else if( name == "change_diplomacy" )
     {
         CreateOrderParameter( "Camp1", "identifier" );
         CreateOrderParameter( "Camp2", "identifier" );
         OrderParameter* diplomacy = CreateOrderParameter( "Diplomacy", "enumeration" );
-        diplomacy->AddValue( sword::unknown, kernel::Karma::unknown_.GetName().ascii() );
-        diplomacy->AddValue( sword::friendly, kernel::Karma::friend_.GetName().ascii() );
-        diplomacy->AddValue( sword::enemy, kernel::Karma::enemy_.GetName().ascii() );
-        diplomacy->AddValue( sword::neutral, kernel::Karma::neutral_.GetName().ascii() );
+        diplomacy->AddValue( sword::unknown, Karma::unknown_.GetName().ascii() );
+        diplomacy->AddValue( sword::friendly, Karma::friend_.GetName().ascii() );
+        diplomacy->AddValue( sword::enemy, Karma::enemy_.GetName().ascii() );
+        diplomacy->AddValue( sword::neutral, Karma::neutral_.GetName().ascii() );
     }
-    else if( name_ == "create_knowledge_group" )
+    else if( name == "create_knowledge_group" )
     {
         CreateOrderParameter( "Camp", "identifier" );
         CreateOrderParameter( "Parent", "identifier" );
         CreateOrderParameter( "Type", "string" );
     }
-    else if( name_ == "change_resource_links" )
+    else if( name == "change_resource_links" )
     {
         CreateOrderParameter( "Target", "identifier" );
         CreateOrderParameter( "Urban", "bool" );
         CreateOrderParameter( "Nodes", "list" );
     }
-    else if( name_ == "update_urban" )
+    else if( name == "update_urban" )
     {
         CreateOrderParameter( "Target", "identifier" );
         CreateOrderParameter( "StructuralState", "quantity" );
         //CreateOrderParameter( "Threshold", "quantity" );
     }
-    else if( name_ == "automat_creation" )
+    else if( name == "automat_creation" )
     {
         CreateOrderParameter( "AutomatType", "identifier" );
         CreateOrderParameter( "KnowledgeGroup", "identifier" );
         CreateOrderParameter( "Location", "point" );
     }
-    else if( name_ == "inhabitant_change_health_state" )
+    else if( name == "crowd_change_health_state" )
+    {
+        CreateOrderParameter( "Healthy", "quantity" );
+        CreateOrderParameter( "Wounded", "quantity" );
+        CreateOrderParameter( "Contaminated", "quantity" );
+        CreateOrderParameter( "Dead", "quantity" );
+    }
+    else if( name == "crowd_change_affinities" )
+        CreateOrderParameter( "Affinities", "list" );
+    else if( name == "crowd_change_armed_individuals" )
+        CreateOrderParameter( "ArmedIndividuals", "quantity" );
+    else if( name == "inhabitant_change_health_state" )
     {
         CreateOrderParameter( "Healthy", "quantity" );
         CreateOrderParameter( "Wounded", "quantity" );
         CreateOrderParameter( "Dead", "quantity" );
     }
-    else if( name_ == "inhabitant_change_affinities" )
-    {
+    else if( name == "inhabitant_change_affinities" )
         CreateOrderParameter( "Affinities", "list" );
-    }
-    else if( name_ == "inhabitant_change_alerted_state" )
-    {
+    else if( name == "inhabitant_change_alerted_state" )
         CreateOrderParameter( "Alerted", "bool" );
-    }
-    else if( name_ == "unit_change_affinities" )
-    {
+    else if( name == "unit_change_affinities" )
         CreateOrderParameter( "Affinities", "list" );
-    }
 }

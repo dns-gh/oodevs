@@ -968,20 +968,12 @@ Voulez-vous le supprimer?</translation>
         <translation>Nom:</translation>
     </message>
     <message>
-        <source>Alive people:</source>
-        <translation>Personnes vivantes:</translation>
-    </message>
-    <message>
         <source>Dead people:</source>
         <translation>Personnes décédées:</translation>
     </message>
     <message>
         <source>Chunks</source>
         <translation>Portions</translation>
-    </message>
-    <message>
-        <source>Alive</source>
-        <translation>Vivants</translation>
     </message>
     <message>
         <source>Dead</source>

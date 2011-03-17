@@ -137,6 +137,17 @@ Action_ABC* ActionsModel::CreateCrowdCreationAction( const kernel::PopulationTyp
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::CreateCrowdChangeHealthStateAction
+// Created: JSR 2011-03-15
+// -----------------------------------------------------------------------------
+Action_ABC* ActionsModel::CreateCrowdChangeHealthStateAction( int healthy, int wounded, int contaminated, int dead, const kernel::Entity_ABC& selected )
+{
+    Action_ABC* action = factory_.CreateCrowdChangeHealthStateAction( healthy, wounded, contaminated, dead, selected );
+    Register( action->GetId(), *action );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::CreateInhabitantChangeHealthStateAction
 // Created: ABR 2011-01-26
 // -----------------------------------------------------------------------------

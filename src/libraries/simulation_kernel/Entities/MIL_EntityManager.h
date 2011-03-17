@@ -24,13 +24,7 @@ namespace sword
     class CrowdOrder;
     class UnitOrder;
     class AutomatOrder;
-    class AutomatChangeKnowledgeGroup;
-    class AutomatChangeLogisticLinks;
-    class AutomatChangeSuperior;
-    class UnitChangeSuperior;
     class Tasker;
-    class KnowledgeGroupCreation;
-    class KnowledgeGroupUpdate;
     class FragOrder;
     class ObjectMagicAction;
     class SetAutomatMode;
@@ -62,7 +56,6 @@ class MIL_AgentTypePion;
 class MIL_AutomateType;
 class MIL_EffectManager;
 class MIL_ObjectManager;
-class MIL_Army;
 class MIL_Army_ABC;
 class MIL_AgentPion;
 class MIL_Automate;
@@ -113,13 +106,13 @@ public:
 
     //! @name Accessors
     //@{
-    virtual       MIL_Automate*       FindAutomate  ( unsigned int nID ) const;
-    virtual       MIL_Population*     FindPopulation( unsigned int nID ) const;
-    virtual       MIL_Inhabitant*     FindInhabitant( unsigned int nID ) const;
-    virtual       MIL_Formation*      FindFormation ( unsigned int nID ) const;
-    virtual       MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const; // LTO
-    virtual       MIL_AgentPion*      FindAgentPion ( unsigned int nID ) const;
-    virtual       MIL_Object_ABC*     FindObject    ( unsigned int nID ) const;
+    virtual MIL_Automate*       FindAutomate      ( unsigned int nID ) const;
+    virtual MIL_Population*     FindPopulation    ( unsigned int nID ) const;
+    virtual MIL_Inhabitant*     FindInhabitant    ( unsigned int nID ) const;
+    virtual MIL_Formation*      FindFormation     ( unsigned int nID ) const;
+    virtual MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const; // LTO
+    virtual MIL_AgentPion*      FindAgentPion     ( unsigned int nID ) const;
+    virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
     const bool HasInfiniteDotations() const;
@@ -142,7 +135,7 @@ public:
     //! @name Operations
     //@{
     void ReadODB( const MIL_Config& config );
-    void CreateUrbanObjects ( urban::Model& urbanModel, const MIL_Config& config );
+    void CreateUrbanObjects( urban::Model& urbanModel, const MIL_Config& config );
     void SendStateToNewClient() const;
     void Update();
     void Clean();
@@ -155,21 +148,21 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveUnitMagicAction             ( const sword::UnitMagicAction&               message, unsigned int nCtx );
-    void OnReceiveObjectMagicAction           ( const sword::ObjectMagicAction&             message, unsigned int nCtx );
-    void OnReceiveUnitOrder                   ( const sword::UnitOrder&                              message, unsigned int nCtx );
-    void OnReceiveAutomatOrder                ( const sword::AutomatOrder&                           message, unsigned int nCtx );
-    void OnReceiveCrowdOrder                  ( const sword::CrowdOrder&                             message, unsigned int nCtx );
-    void OnReceiveFragOrder                   ( const sword::FragOrder&                     message, unsigned int nCtx );
-    void OnReceiveSetAutomateMode             ( const sword::SetAutomatMode&                message, unsigned int nCtx );
-    void OnReceiveUnitCreationRequest         ( const sword::UnitCreationRequest&           message, unsigned int nCtx );
-    void OnReceiveKnowledgeMagicAction        ( const sword::KnowledgeMagicAction&          message, unsigned int nCtx );
-    void OnReceiveChangeDiplomacy             ( const sword::MagicAction&                   message, unsigned int nCtx );
-    void OnReceiveChangeResourceLinks         ( const sword::MagicAction&                   message, unsigned int nCtx );
-    void OnReceiveCreateFireOrderOnLocation   ( const sword::MagicAction&                   message, unsigned int nCtx );
-    void OnReceiveBurningCellRequest          ( const sword::BurningCellRequest&           message, unsigned int nCtx );
+    void OnReceiveUnitMagicAction          ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void OnReceiveObjectMagicAction        ( const sword::ObjectMagicAction&    message, unsigned int nCtx );
+    void OnReceiveUnitOrder                ( const sword::UnitOrder&            message, unsigned int nCtx );
+    void OnReceiveAutomatOrder             ( const sword::AutomatOrder&         message, unsigned int nCtx );
+    void OnReceiveCrowdOrder               ( const sword::CrowdOrder&           message, unsigned int nCtx );
+    void OnReceiveFragOrder                ( const sword::FragOrder&            message, unsigned int nCtx );
+    void OnReceiveSetAutomateMode          ( const sword::SetAutomatMode&       message, unsigned int nCtx );
+    void OnReceiveUnitCreationRequest      ( const sword::UnitCreationRequest&  message, unsigned int nCtx );
+    void OnReceiveKnowledgeMagicAction     ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
+    void OnReceiveChangeDiplomacy          ( const sword::MagicAction&          message, unsigned int nCtx );
+    void OnReceiveChangeResourceLinks      ( const sword::MagicAction&          message, unsigned int nCtx );
+    void OnReceiveCreateFireOrderOnLocation( const sword::MagicAction&          message, unsigned int nCtx );
+    void OnReceiveBurningCellRequest       ( const sword::BurningCellRequest&   message, unsigned int nCtx );
     // LTO begin
-    void OnReceiveKnowledgeGroupCreation      ( const sword::MagicAction&                   message, unsigned int nCtx );
+    void OnReceiveKnowledgeGroupCreation    ( const sword::MagicAction&         message, unsigned int nCtx );
     // LTO end
     //@}
 
@@ -196,27 +189,27 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ProcessAutomateChangeKnowledgeGroup         ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessAutomateChangeLogisticLinks          ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessAutomateChangeSuperior               ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessUnitChangeSuperior                   ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessLogSupplyChangeQuotas                ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessLogSupplyPushFlow                    ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessLogSupplyPullFlow                    ( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessMagicActionMoveTo                    ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessAutomateChangeKnowledgeGroup( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessAutomateChangeLogisticLinks ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessAutomateChangeSuperior      ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessUnitChangeSuperior          ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessLogSupplyChangeQuotas       ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessLogSupplyPullFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessMagicActionMoveTo           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     // LTO begin
-    void ProcessKnowledgeGroupUpdate                 ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
-    void ProcessMagicActionCreateFireOrder           ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessKnowledgeGroupUpdate        ( const sword::KnowledgeMagicAction& message, unsigned int nCtx );
+    void ProcessMagicActionCreateFireOrder  ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     // LTO end
-    void ProcessAutomatCreationRequest               ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
-    void ProcessFormationCreationRequest             ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation );
-    void ProcessCrowdCreationRequest                 ( const sword::UnitMagicAction&      message, MIL_Army_ABC& army );
+    void ProcessAutomatCreationRequest      ( const sword::UnitMagicAction&      message, MIL_Entity_ABC& entity, unsigned int nCtx );
+    void ProcessFormationCreationRequest    ( const sword::UnitMagicAction&      message, MIL_Army_ABC* army, MIL_Formation* formation );
+    void ProcessCrowdCreationRequest        ( const sword::UnitMagicAction&      message, MIL_Army_ABC& army );
     //@}
 
     //! @name types
     //@{
     typedef std::map< unsigned int, MIL_Intelligence* > T_IntelligenceMap;
-    typedef T_IntelligenceMap::const_iterator   CIT_IntelligenceMap;
+    typedef T_IntelligenceMap::const_iterator         CIT_IntelligenceMap;
     //@}
 
 private:
@@ -224,11 +217,11 @@ private:
     //@{
 
     // ODB
-    void ReadOrbat( xml::xistream& xis );
-    void InitializeArmies     ( xml::xistream& xis );
-    void InitializeDiplomacy  ( xml::xistream& xis );
-    void InitializeDotations  ( xml::xistream& xis );
-    void ReadDiplomacy        ( xml::xistream& xis );
+    void ReadOrbat          ( xml::xistream& xis );
+    void InitializeArmies   ( xml::xistream& xis );
+    void InitializeDiplomacy( xml::xistream& xis );
+    void InitializeDotations( xml::xistream& xis );
+    void ReadDiplomacy      ( xml::xistream& xis );
     //@}
 
     //! @name Urban
@@ -241,9 +234,9 @@ private:
     //@{
     void UpdateKnowledges();
     void UpdateDecisions ();
-    void UpdateActions   ();
-    void UpdateEffects   ();
-    void UpdateStates    ();
+    void UpdateActions();
+    void UpdateEffects();
+    void UpdateStates();
     void UpdateKnowledgeGroups(); // LTO
 
     void PreprocessRandomBreakdowns();
@@ -253,7 +246,7 @@ private:
     //! @name Member data
     //@{
     const MIL_Time_ABC& time_;
-    MIL_EffectManager&  effectManager_;
+    MIL_EffectManager& effectManager_;
 
     // Profiling
     MIL_ProfilerMgr& profilerManager_;
@@ -272,13 +265,13 @@ private:
     T_IntelligenceMap intelligences_;
 
     // Factories
-    std::auto_ptr< PopulationFactory_ABC >      populationFactory_;
-    std::auto_ptr< InhabitantFactory_ABC >      inhabitantFactory_;
-    std::auto_ptr< AgentFactory_ABC >           agentFactory_;
-    std::auto_ptr< AutomateFactory_ABC >        automateFactory_;
-    std::auto_ptr< FormationFactory_ABC >       formationFactory_;
-    std::auto_ptr< KnowledgeGroupFactory_ABC >  knowledgeGroupFactory_;
-    std::auto_ptr< ArmyFactory_ABC >            armyFactory_;
+    std::auto_ptr< PopulationFactory_ABC >     populationFactory_;
+    std::auto_ptr< InhabitantFactory_ABC >     inhabitantFactory_;
+    std::auto_ptr< AgentFactory_ABC >          agentFactory_;
+    std::auto_ptr< AutomateFactory_ABC >       automateFactory_;
+    std::auto_ptr< FormationFactory_ABC >      formationFactory_;
+    std::auto_ptr< KnowledgeGroupFactory_ABC > knowledgeGroupFactory_;
+    std::auto_ptr< ArmyFactory_ABC >           armyFactory_;
 
     unsigned int  gcPause_;
     unsigned int  gcMult_;
@@ -289,5 +282,3 @@ private:
 BOOST_CLASS_EXPORT_KEY( MIL_EntityManager )
 
 #endif // __MIL_EntityManager_h_
-
-

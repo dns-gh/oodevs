@@ -64,6 +64,8 @@ public:
     //! @name Operations
     //@{
     void CreateAffinitiesSpinBoxs( QGrid* grid, std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >& spinboxs );
+    void CancelChanges();
+    void ValidateChanges();
     void FillParameterList( actions::parameters::ParameterList* parameterList ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& ) const;
     bool HasAffinities() const;
@@ -96,6 +98,7 @@ private:
     kernel::Controller& controller_;
     TeamsModel& teams_;
     T_Affinities affinities_;
+    T_Affinities changingAffinities_;
     //@}
 };
 

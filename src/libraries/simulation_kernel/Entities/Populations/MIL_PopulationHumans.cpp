@@ -40,11 +40,11 @@ MIL_PopulationHumans::MIL_PopulationHumans( xml::xistream& xis )
 // Name: MIL_PopulationHumans constructor
 // Created: JSR 2011-03-10
 // -----------------------------------------------------------------------------
-MIL_PopulationHumans::MIL_PopulationHumans( unsigned int number )
-    : healthy_     ( number )
-    , wounded_     ( 0 )
-    , contaminated_( 0 )
-    , dead_        ( 0 )
+MIL_PopulationHumans::MIL_PopulationHumans( unsigned int healthy, unsigned int contaminated, unsigned int wounded, unsigned int dead )
+    : healthy_     ( healthy )
+    , wounded_     ( wounded )
+    , contaminated_( contaminated )
+    , dead_        ( dead )
 {
     // NOTHING
 }

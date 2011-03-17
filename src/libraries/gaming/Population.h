@@ -16,7 +16,6 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionalValue.h"
-#include "Simulation.h"
 
 namespace kernel
 {
@@ -26,6 +25,18 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Displayer_ABC;
     class StaticModel;
+}
+
+namespace sword
+{
+    class CrowdCreation;
+    class CrowdUpdate;
+    class CrowdFlowCreation;
+    class CrowdFlowUpdate;
+    class CrowdFlowDestruction;
+    class CrowdConcentrationCreation;
+    class CrowdConcentrationUpdate;
+    class CrowdConcentrationDestruction;
 }
 
 // =============================================================================
@@ -42,7 +53,6 @@ class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Drawable_ABC
                  , public kernel::Positions
                  , public tools::Observer_ABC
-                 , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
 public:
     //! @name Constructor/Destructor
@@ -93,7 +103,6 @@ private:
     void DoUpdate( const sword::CrowdConcentrationUpdate& message );
     void DoUpdate( const sword::CrowdConcentrationDestruction& message );
     void ComputeCenter();
-    virtual void NotifyUpdated( const Simulation::sEndTick& tick );
     //@}
 
 private:
@@ -110,7 +119,6 @@ private:
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f center_;
     kernel::OptionalValue< int > nDomination_;
-    std::set< kernel::Displayer_ABC* > displayers_;
     //@}
 
 };

@@ -75,6 +75,7 @@ public:
     const DEC_PopulationKnowledge& GetKnowledge() const;
     bool IsDead() const;
     bool HasDoneMagicMove() const;
+    unsigned int GetAllHumans() const;
     unsigned int GetHealthyHumans() const;
     unsigned int GetWoundedHumans() const;
     unsigned int GetContaminatedHumans() const;
@@ -179,9 +180,9 @@ private:
     //! @name Magic actions
     //@{
     void OnReceiveMsgDestroyAll();
+    void OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& asn );
+    void OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& asn );
     void OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& asn );
-    void OnReceiveMsgKill( const sword::UnitMagicAction& asn );
-    void OnReceiveMsgResurrect( const sword::UnitMagicAction& asn );
     //@}
 
     //! @name Network

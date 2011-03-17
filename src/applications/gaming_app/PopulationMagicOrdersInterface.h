@@ -67,8 +67,7 @@ private slots:
     //@{
     void Move();
     void KillAllPopulation();
-    void KillSomePopulation();
-    void ResurectSomePopulation();
+    void ChangeArmedIndividuals();
     void ChangePopulationAttitude( int index );
     //@}
 

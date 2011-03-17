@@ -280,32 +280,16 @@ void Inhabitant::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Inhabitant::DisplayInSummary( Displayer_ABC& displayer ) const
 {
-    const_cast< Inhabitant* >( this )->displayers_.insert( &displayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Inhabitant::NotifyUpdated
-// Created: SLG 2010-12-05
-// -----------------------------------------------------------------------------
-void Inhabitant::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
-{
-    if( !displayers_.empty() )
-    {
-        for( std::set< Displayer_ABC* >::const_iterator it = displayers_.begin(); it != displayers_.end(); ++it )
-        {
-            ( *it )->Display( tools::translate( "Inhabitant", "Alive:" ), healthy_ )
-                    .Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ )
-                    .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ )
-                    .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ )
-                    .Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ )
-                    .Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
-            for( CIT_MotivationSatisfactions satisfaction = motivationSatisfactions_.begin(); satisfaction != motivationSatisfactions_.end(); ++satisfaction )
-                ( *it )->Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( satisfaction->first.c_str() ), satisfaction->second );
-            for( CIT_ResourceSatisfactions resource = resourceSatisfactions_.begin(); resource != resourceSatisfactions_.end(); ++resource )
-                ( *it )->Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( resource->first->GetName().c_str() ), resource->second );
-        }
-        displayers_.clear();
-    }
+    displayer.Display( tools::translate( "Inhabitant", "Alive:" ), healthy_ )
+             .Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ )
+             .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ )
+             .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ )
+             .Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ )
+             .Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
+    for( CIT_MotivationSatisfactions satisfaction = motivationSatisfactions_.begin(); satisfaction != motivationSatisfactions_.end(); ++satisfaction )
+        displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( satisfaction->first.c_str() ), satisfaction->second );
+    for( CIT_ResourceSatisfactions resource = resourceSatisfactions_.begin(); resource != resourceSatisfactions_.end(); ++resource )
+        displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( resource->first->GetName().c_str() ), resource->second );
 }
 
 // -----------------------------------------------------------------------------

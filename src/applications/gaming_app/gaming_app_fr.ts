@@ -347,6 +347,25 @@
     </message>
 </context>
 <context>
+    <name>ChangeHealthStateDialog_ABC</name>
+    <message>
+        <source>Change health state</source>
+        <translation>Changer l'état de santé</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
+    </message>
+</context>
+<context>
     <name>ChangeHumanFactorsDialog</name>
     <message>
         <source>Moral:</source>
@@ -1082,26 +1101,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>InhabitantChangeHealthStateDialog</name>
     <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
-        <translation>Actions magiques</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Change health state</source>
-        <translation>Modifier l&apos;état de santé</translation>
-    </message>
-    <message>
-        <source>Alive:</source>
-        <translation>Vivants:</translation>
-    </message>
-    <message>
         <source>Wounded:</source>
         <translation>Blessés</translation>
     </message>
@@ -1116,6 +1115,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Original total:</source>
         <translation>Total original:</translation>
+    </message>
+    <message>
+        <source>Healthy:</source>
+        <translation>Sains:</translation>
     </message>
 </context>
 <context>
@@ -2601,6 +2604,25 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>PopulationChangeHealthStateDialog</name>
+    <message>
+        <source>Healthy:</source>
+        <translation>Sains:</translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation>Blessés</translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation>Contaminés</translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation>Morts:</translation>
+    </message>
+</context>
+<context>
     <name>PopulationKnowledgePanel</name>
     <message>
         <source>Details</source>
@@ -2682,22 +2704,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Tuer la foule</translation>
     </message>
     <message>
-        <source>Kill people:</source>
-        <translation>Tuer des personnes:</translation>
-    </message>
-    <message>
-        <source>Resurect people:</source>
-        <translation>Ressusciter des personnes:</translation>
-    </message>
-    <message>
-        <source>Enter value</source>
-        <translation>Saisir une valeur</translation>
-    </message>
-    <message>
-        <source>Type-in value then press &apos;Enter&apos;</source>
-        <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
-    </message>
-    <message>
         <source>Change crowd attitude</source>
         <translation>Changer l&apos;attitude</translation>
     </message>
@@ -2706,16 +2712,24 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Destruction totale de la foule</translation>
     </message>
     <message>
-        <source>Crowd Kill</source>
-        <translation>Tuer la foule</translation>
-    </message>
-    <message>
-        <source>Crowd Resurrect</source>
-        <translation>Ressusciter la foule</translation>
-    </message>
-    <message>
         <source>Crowd Change Attitude</source>
         <translation>Changer l&apos;attitude de la foule</translation>
+    </message>
+    <message>
+        <source>Change armed individuals:</source>
+        <translation>Changer les individus armés:</translation>
+    </message>
+    <message>
+        <source>Crowd Change Armed Individuals</source>
+        <translation>Changer les individus armés d'une foule</translation>
+    </message>
+    <message>
+        <source>Enter value</source>
+        <translation>Saisir une valeur</translation>
+    </message>
+    <message>
+        <source>Type-in value then press &apos;Enter&apos;</source>
+        <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
     </message>
 </context>
 <context>

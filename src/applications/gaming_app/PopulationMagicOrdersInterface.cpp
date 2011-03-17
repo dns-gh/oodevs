@@ -18,13 +18,11 @@
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/Point.h"
 #include "gaming/StaticModel.h"
 #include "gaming/tools.h"
 #include "protocol/SimulationSenders.h"
@@ -41,7 +39,7 @@ namespace
         InitializedLineEdit( QWidget* parent, const QString& initialValue )
             : QLineEdit( initialValue, parent ), initialValue_( initialValue )
         {
-            setValidator( new QIntValidator( this ) );
+            setValidator( new QIntValidator( 0, 100, this ) );
         }
 
         virtual void keyPressEvent( QKeyEvent* e )
@@ -73,7 +71,7 @@ namespace
 // Name: PopulationMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ParametersLayer& layer, const Profile_ABC& profile )
+PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, ActionsModel& actionsModel, const ::StaticModel& staticModel, const Time_ABC& simulation, ParametersLayer& layer, const Profile_ABC& profile )
     : QObject( parent )
     , controllers_   ( controllers )
     , actionsModel_  ( actionsModel )
@@ -110,9 +108,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );
-    AddValuedMagic( magicMenu, menu, tr( "Kill people:" ), SLOT( KillSomePopulation() ) );
-    AddValuedMagic( magicMenu, menu, tr( "Resurect people:" ), SLOT( ResurectSomePopulation() ) );
-
+    AddValuedMagic( magicMenu, menu, tr( "Change armed individuals:" ), SLOT( ChangeArmedIndividuals() ) );
     QPopupMenu* choiceMenu = new QPopupMenu( magicMenu );
     for( unsigned int i = 0; i < unsigned int( eNbrPopulationAttitude ); ++i )
         choiceMenu->insertItem( tools::ToString( static_cast< E_PopulationAttitude >( i ) ), this, SLOT( ChangePopulationAttitude( int ) ), 0, i );
@@ -164,7 +160,7 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
     if( selectedEntity_ )
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_total_destruction" );
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_total_destruction" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Crowd Total Destruction" ), true );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
@@ -173,37 +169,17 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationMagicOrdersInterface::KillSomePopulation
-// Created: SBO 2007-05-04
+// Name: PopulationMagicOrdersInterface::ChangeArmedIndividuals
+// Created: JSR 2011-03-16
 // -----------------------------------------------------------------------------
-void PopulationMagicOrdersInterface::KillSomePopulation()
+void PopulationMagicOrdersInterface::ChangeArmedIndividuals()
 {
     if( selectedEntity_ )
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
             // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_kill" );
-            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Crowd Kill" ), true );
-            tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-            action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
-            action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-            action->Attach( *new ActionTasker( selectedEntity_, false ) );
-            action->RegisterAndPublish( actionsModel_ );
-        }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationMagicOrdersInterface::ResurectSomePopulation
-// Created: SBO 2007-05-04
-// -----------------------------------------------------------------------------
-void PopulationMagicOrdersInterface::ResurectSomePopulation()
-{
-    if( selectedEntity_ )
-        if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
-        {
-            // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_resurrect" );
-            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Crowd Resurrect" ), true );
+            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_change_armed_individuals" );
+            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Crowd Change Armed Individuals" ), true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
@@ -221,14 +197,10 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
     if( selectedEntity_ )
     {
         // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_change_attitude" );
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "crowd_change_attitude" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Crowd Change Attitude" ), true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Enumeration( it.NextElement(), index ) );
-        // $$$$ JSR 2010-04-16: TODO? not used by now
-        // optional int32 flux
-        // optional int32 concentration
-        // optional bool global
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );

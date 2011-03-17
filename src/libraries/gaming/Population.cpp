@@ -243,6 +243,7 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
         criticalIntelligence_ = message.critical_intelligence();
     if( message.has_armed_individuals() )
         armedIndividuals_ = message.armed_individuals();
+    controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -420,32 +421,16 @@ void Population::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void Population::DisplayInSummary( Displayer_ABC& displayer ) const
 {
-    const_cast< Population* >( this )->displayers_.insert( &displayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Population::NotifyUpdated
-// Created: JSR 2010-05-20
-// -----------------------------------------------------------------------------
-void Population::NotifyUpdated( const Simulation::sEndTick& /*tick*/ )
-{
-    if( !displayers_.empty() )
-    {
-        for( std::set< Displayer_ABC* >::iterator it = displayers_.begin(); it != displayers_.end(); ++it )
-        {
-            ( *it )->Display( tools::translate( "Crowd", "Healthy:" ), GetHealthyHumans() )
-                    .Display( tools::translate( "Crowd", "Wounded:" ), GetWoundedHumans() )
-                    .Display( tools::translate( "Crowd", "Contaminated:" ), GetContaminatedHumans() )
-                    .Display( tools::translate( "Crowd", "Dead:" ), GetDeadHumans() )
-                    .Display( tools::translate( "Crowd", "Male:" ), male_ )
-                    .Display( tools::translate( "Crowd", "Female:" ), female_ )
-                    .Display( tools::translate( "Crowd", "Children:" ), children_ )
-                    .Display( tools::translate( "Crowd", "Domination:" ), nDomination_ )
-                    .Display( tools::translate( "Crowd", "Critical intelligence:" ), criticalIntelligence_ )
-                    .Display( tools::translate( "Crowd", "Armed individuals:" ), armedIndividuals_ );
-        }
-        displayers_.clear();
-    }
+    displayer.Display( tools::translate( "Crowd", "Healthy:" ), GetHealthyHumans() )
+             .Display( tools::translate( "Crowd", "Wounded:" ), GetWoundedHumans() )
+             .Display( tools::translate( "Crowd", "Contaminated:" ), GetContaminatedHumans() )
+             .Display( tools::translate( "Crowd", "Dead:" ), GetDeadHumans() )
+             .Display( tools::translate( "Crowd", "Male:" ), male_ )
+             .Display( tools::translate( "Crowd", "Female:" ), female_ )
+             .Display( tools::translate( "Crowd", "Children:" ), children_ )
+             .Display( tools::translate( "Crowd", "Domination:" ), nDomination_ )
+             .Display( tools::translate( "Crowd", "Critical intelligence:" ), criticalIntelligence_ )
+             .Display( tools::translate( "Crowd", "Armed individuals:" ), armedIndividuals_ );
 }
 
 // -----------------------------------------------------------------------------

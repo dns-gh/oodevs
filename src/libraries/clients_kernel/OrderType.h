@@ -32,8 +32,9 @@ class OrderType : public  tools::Resolver< OrderParameter >
 public:
     //! @name Constructors/Destructor
     //@{
+             OrderType();
+             OrderType( const std::string& name, unsigned long id );
     explicit OrderType( xml::xistream& xis );
-    explicit OrderType( );
     virtual ~OrderType();
     //@}
 
@@ -52,16 +53,11 @@ protected:
     void ReadDescriptions( xml::xistream& xis );
     //@}
 
-protected:
+private:
     //! @name Member data
     //@{
     std::string name_;
     unsigned long id_;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     std::string doctrine_;
     std::string usage_;
     //@}

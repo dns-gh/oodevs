@@ -27,6 +27,7 @@
 #include "LogisticSupplyRecompletionDialog.h"
 #include "MedicalCapacityUpdateDialog.h"
 #include "OrbatAttributesDialog.h"
+#include "PopulationChangeHealthStateDialog.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
@@ -58,6 +59,7 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new InhabitantChangeAlertedStateDialog( parent, controllers, actionsModel, simulation, profile );
     new InhabitantChangeConfinedStateDialog( parent, controllers, actionsModel, simulation, profile );
     new InhabitantExtractCrowdDialog( parent, controllers, actionsModel, simulation, profile );
+    new PopulationChangeHealthStateDialog( parent, controllers, actionsModel, simulation, profile );
 }
 
 // -----------------------------------------------------------------------------

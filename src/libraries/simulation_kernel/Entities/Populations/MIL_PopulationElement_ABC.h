@@ -55,8 +55,6 @@ public:
     MIL_PopulationHumans PullHumans( unsigned int nNbr );
     void KillAllHumans();
     double Exterminate( double rSurface );
-    unsigned int Kill( unsigned int count );
-    unsigned int Resurrect( unsigned int count );
     //@}
 
     //! @name Actions

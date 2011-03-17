@@ -184,7 +184,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="3" value="0"/>
-            <adhesion party="13" value="-1.07374e+008"/>
+            <adhesion party="13" value="-1"/>
           </adhesions>
         </population>
       </populations>
@@ -272,4 +272,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1588823197" -->
+<!-- signature="0694251953" -->

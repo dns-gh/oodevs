@@ -28,8 +28,19 @@ OrderType::OrderType( xml::xistream& xis )
 // Name: OrderType constructor
 // Created: JSR 2010-04-06
 // -----------------------------------------------------------------------------
-OrderType::OrderType( )
+OrderType::OrderType()
     : id_( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderType constructor
+// Created: JSR 2011-03-16
+// -----------------------------------------------------------------------------
+OrderType::OrderType( const std::string& name, unsigned long id )
+    : name_( name )
+    , id_  ( id )
 {
     // NOTHING
 }
@@ -85,8 +96,7 @@ const std::string& OrderType::GetUsageInformation() const
 // -----------------------------------------------------------------------------
 void OrderType::AddParameter( const OrderParameter& parameter )
 {
-    OrderParameter* copy = new OrderParameter( parameter );
-    Register( Count(), *copy );
+    Register( Count(), *new OrderParameter( parameter ) );
 }
 
 // -----------------------------------------------------------------------------

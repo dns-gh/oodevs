@@ -29,7 +29,7 @@ public:
              MIL_PopulationHumans();
              MIL_PopulationHumans( const MIL_PopulationHumans& );            //!< Copy constructor
     explicit MIL_PopulationHumans( xml::xistream& xis );
-    explicit MIL_PopulationHumans( unsigned int number );
+    explicit MIL_PopulationHumans( unsigned int healthy, unsigned int contaminated = 0, unsigned int wounded = 0, unsigned int dead = 0 );
     virtual ~MIL_PopulationHumans();
     //@}
 
@@ -63,10 +63,6 @@ private:
     //! @name Copy/Assignment
     //@{
     MIL_PopulationHumans& operator=( const MIL_PopulationHumans& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

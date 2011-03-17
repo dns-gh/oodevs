@@ -37,12 +37,10 @@
 #include "Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Agents/Units/HumanFactors/PHY_Morale.h"
-#include "Agents/Units/Postures/PHY_Posture.h"
 #include "Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Agents/Units/Dotations/PHY_DotationType.h"
 #include "Agents/Units/Dotations/PHY_DotationLogisticType.h"
-#include "Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Agents/Units/Dotations/PHY_DotationNature.h"
@@ -53,24 +51,18 @@
 #include "Agents/Units/Radars/PHY_RadarClass.h"
 #include "Agents/Units/Humans/PHY_HumanRank.h"
 #include "Agents/Units/Humans/PHY_HumanWound.h"
-#include "Agents/Units/Composantes/PHY_ActiveProtection.h"
 #include "Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceLevel.h"
-#include "Agents/Units/Logistic/PHY_BreakdownType.h"
 #include "Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
 #include "Agents/Roles/Logistic/PHY_Convoy_ABC.h"
 #include "Agents/Roles/Logistic/PHY_MaintenanceResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_MedicalResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_SupplyResourcesAlarms.h"
-#include "Agents/Roles/Communications/PHY_RolePion_Communications.h"
-#include "Agents/Perceptions/PHY_PerceptionRecoSurveillance.h"
-#include "Agents/Perceptions/PHY_PerceptionFlyingShell.h"
 #include "Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Automates/MIL_AutomateType.h"
 #include "Automates/MIL_Automate.h"
-#include "Decision/DEC_Workspace.h"
 #include "Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -87,7 +79,6 @@
 #include "Objects/MIL_MedicalTreatmentType.h"
 #include "Objects/MIL_NbcAgentType.h"
 #include "Objects/MIL_ObjectManager.h"
-#include "Objects/MIL_ObjectFactory.h"
 #include "Objects/MIL_Object_ABC.h"
 #include "Orders/MIL_LimaFunction.h"
 #include "Orders/MIL_Report.h"
@@ -247,7 +238,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_MedicalResourcesAlarms    ::Terminate();
     MIL_LimaFunction              ::Terminate();
     PHY_MaterialCompositionType   ::Terminate();
-    PHY_AccomodationType            ::Terminate();
+    PHY_AccomodationType          ::Terminate();
     PHY_InfrastructureType        ::Terminate();
     PHY_RoofShapeType             ::Terminate();
     PHY_ResourceNetworkType       ::Terminate();
@@ -276,20 +267,16 @@ void MIL_EntityManager::ReadODB( const MIL_Config& config )
 
     // Check automate composition
     if( config.CheckAutomateComposition() )
-    {
         for( tools::Iterator< const MIL_Automate& > it = automateFactory_->CreateIterator(); it.HasMoreElements(); )
         {
             const MIL_Automate& automate = it.NextElement();
             if( !automate.CheckComposition() )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "The effective composition of the automate '%d' ('%s') is not consistent with the composition described in the type '%s'", automate.GetID(), automate.GetName().c_str(), automate.GetType().GetName().c_str() ) );
         }
-    }
 
     // Disengage automata for frozen mode
     if( config.IsFrozenMode() )
-    {
         automateFactory_->Apply( boost::bind( &MIL_Automate::Disengage, _1 ) );
-    }
     UpdateStates();
 }
 
@@ -309,23 +296,29 @@ namespace
 {
     class UrbanWrapperVisitor : public urban::ObjectVisitor_ABC
     {
-public:
-    UrbanWrapperVisitor( MIL_EntityManager& manager ) : manager_( manager )
-    {}
-    ~UrbanWrapperVisitor(){}
-    virtual void Visit( const urban::TerrainObject_ABC& object )
-    {
-        const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
-        if( pPhysical && pPhysical->GetArchitecture() && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture()->GetRoofShape() ) ) )
+    public:
+        UrbanWrapperVisitor( MIL_EntityManager& manager )
+            : manager_( manager )
         {
-            MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
-            return;
+            // NOTHING
         }
-        manager_.CreateUrbanObject( object );
-    }
-private:
-    MIL_EntityManager& manager_;
-};
+        ~UrbanWrapperVisitor()
+        {
+            // NOTHING
+        }
+        virtual void Visit( const urban::TerrainObject_ABC& object )
+        {
+            const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
+            if( pPhysical && pPhysical->GetArchitecture() && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture()->GetRoofShape() ) ) )
+            {
+                MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
+                return;
+            }
+            manager_.CreateUrbanObject( object );
+        }
+    private:
+        MIL_EntityManager& manager_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -376,6 +369,7 @@ namespace
         agent.GetRole< PHY_RoleInterface_UrbanLocation >().MagicMove( position );
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::NotifyPionsInsideUrbanObject
 // Created: SBO 2010-07-07
@@ -417,10 +411,7 @@ void MIL_EntityManager::InitializeDotations( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ReadDiplomacy( xml::xistream& xis )
 {
-    unsigned int id;
-    xis >> xml::attribute( "id", id );
-
-    MIL_Army_ABC* pArmy = armyFactory_->Find( id );
+    MIL_Army_ABC* pArmy = armyFactory_->Find( xis.attribute< unsigned long >( "id" ) );
     if( !pArmy )
         xis.error( "Unknown side" );
     pArmy->InitializeDiplomacy( xis );
@@ -721,7 +712,7 @@ void MIL_EntityManager::Update()
     UpdateEffects();
     UpdateStates();
     UpdateKnowledgeGroups(); // LTO
-};
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::Clean
@@ -751,19 +742,19 @@ void MIL_EntityManager::SendStateToNewClient() const
 // Name: MIL_EntityManager::OnReceiveUnitOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveUnitOrder( const sword::UnitOrder& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveUnitOrder( const UnitOrder& message, unsigned int nCtx )
 {
     client::TaskCreationRequestAck ack;
     ack().mutable_tasker()->mutable_unit()->set_id( message.tasker().id() );
-    ack().set_error_code( sword::OrderAck::no_error );
+    ack().set_error_code( OrderAck::no_error );
     try
     {
         MIL_AgentPion* pPion = FindAgentPion( message.tasker().id() );
         if( !pPion )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_unit );
+            throw NET_AsnException< OrderAck_ErrorCode >( OrderAck::error_invalid_unit );
         pPion->OnReceiveOrder( message );
     }
-    catch( NET_AsnException< sword::OrderAck_ErrorCode >& e )
+    catch( NET_AsnException< OrderAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -774,19 +765,19 @@ void MIL_EntityManager::OnReceiveUnitOrder( const sword::UnitOrder& message, uns
 // Name: MIL_EntityManager::OnReceiveAutomatOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveAutomatOrder( const sword::AutomatOrder& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveAutomatOrder( const AutomatOrder& message, unsigned int nCtx )
 {
     client::TaskCreationRequestAck ack;
     ack().mutable_tasker()->mutable_automat()->set_id( message.tasker().id() );
-    ack().set_error_code( sword::OrderAck::no_error );
+    ack().set_error_code( OrderAck::no_error );
     try
     {
         MIL_Automate* pAutomate = FindAutomate( message.tasker().id() );
         if( !pAutomate )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_unit );
+            throw NET_AsnException< OrderAck_ErrorCode >( OrderAck::error_invalid_unit );
         pAutomate->OnReceiveOrder( message );
     }
-    catch( NET_AsnException< sword::OrderAck_ErrorCode >& e )
+    catch( NET_AsnException< OrderAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -797,103 +788,103 @@ void MIL_EntityManager::OnReceiveAutomatOrder( const sword::AutomatOrder& messag
 // Name: MIL_EntityManager::OnReceiveUnitMagicAction
 // Created: JSR 2010-04-13
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveUnitMagicAction( const sword::UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::UnitMagicActionAck ack;
     unsigned int id = 0;
     try
     {
-        const sword::Tasker& tasker = message.tasker();
+        const Tasker& tasker = message.tasker();
         id = TaskerToId( tasker );
     }
     catch( std::exception& )
     {
         ack().mutable_unit()->set_id( 0 );
-        ack().set_error_code( sword::UnitActionAck::error_invalid_unit );
+        ack().set_error_code( UnitActionAck::error_invalid_unit );
         return;
     }
 
     ack().mutable_unit()->set_id( id );
-    ack().set_error_code( sword::UnitActionAck::no_error );
+    ack().set_error_code( UnitActionAck::no_error );
     try
     {
         switch( message.type() )
         {
-        case sword::UnitMagicAction::move_to :
+        case UnitMagicAction::move_to :
             ProcessMagicActionMoveTo( message, nCtx );
             break;
-        case sword::UnitMagicAction::unit_creation :
+        case UnitMagicAction::unit_creation :
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
                 pAutomate->OnReceiveUnitCreationRequest( message );
             else
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+                throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
-        case sword::UnitMagicAction::crowd_total_destruction:
-        case sword::UnitMagicAction::crowd_change_health_state:
-        case sword::UnitMagicAction::crowd_change_attitude:
-        case sword::UnitMagicAction::crowd_change_affinities:
-        case sword::UnitMagicAction::crowd_change_armed_individuals:
+        case UnitMagicAction::crowd_total_destruction:
+        case UnitMagicAction::crowd_change_health_state:
+        case UnitMagicAction::crowd_change_attitude:
+        case UnitMagicAction::crowd_change_affinities:
+        case UnitMagicAction::crowd_change_armed_individuals:
             if( MIL_Population* pPopulation = populationFactory_->Find ( id ) )
                 pPopulation->OnReceiveCrowdMagicAction( message );
             else
-                throw NET_AsnException< sword::CrowdMagicActionAck_ErrorCode >( sword::CrowdMagicActionAck::error_invalid_unit );
+                throw NET_AsnException< CrowdMagicActionAck_ErrorCode >( CrowdMagicActionAck::error_invalid_unit );
             break;
-        case sword::UnitMagicAction::create_fire_order:
+        case UnitMagicAction::create_fire_order:
             ProcessMagicActionCreateFireOrder( message, nCtx );
             break;
-        case sword::UnitMagicAction::change_knowledge_group:
+        case UnitMagicAction::change_knowledge_group:
             ProcessAutomateChangeKnowledgeGroup( message, nCtx );
             break;
-        case sword::UnitMagicAction::change_logistic_links:
+        case UnitMagicAction::change_logistic_links:
             ProcessAutomateChangeLogisticLinks( message, nCtx );
             break;
-        case sword::UnitMagicAction::unit_change_superior:
+        case UnitMagicAction::unit_change_superior:
             ProcessUnitChangeSuperior( message, nCtx );
             break;
-        case sword::UnitMagicAction::change_automat_superior:
-        case sword::UnitMagicAction::change_formation_superior:
+        case UnitMagicAction::change_automat_superior:
+        case UnitMagicAction::change_formation_superior:
             ProcessAutomateChangeSuperior( message, nCtx );
             break;
-        case sword::UnitMagicAction::log_supply_push_flow:
+        case UnitMagicAction::log_supply_push_flow:
             ProcessLogSupplyPushFlow( message, nCtx );
             break;
-        case sword::UnitMagicAction_Type_log_supply_pull_flow:
+        case UnitMagicAction::log_supply_pull_flow:
             ProcessLogSupplyPullFlow( message, nCtx );
             break;
-        case sword::UnitMagicAction_Type_log_supply_change_quotas:
+        case UnitMagicAction::log_supply_change_quotas:
             ProcessLogSupplyChangeQuotas( message, nCtx );
             break;
-        case sword::UnitMagicAction::automat_creation:
+        case UnitMagicAction::automat_creation:
             if( MIL_Automate*  pAutomate = FindAutomate( id ) )
                 ProcessAutomatCreationRequest( message, *pAutomate, nCtx );
             else if( MIL_Formation* pFormation = FindFormation( id ) )
                 ProcessAutomatCreationRequest( message, *pFormation, nCtx );
             else
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+                throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
-        case sword::UnitMagicAction::formation_creation :
+        case UnitMagicAction::formation_creation :
             if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
                 ProcessFormationCreationRequest( message, pArmy, 0 );
             else if( MIL_Formation* pFormation = FindFormation( id ) )
                 ProcessFormationCreationRequest( message, 0, pFormation );
             else
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+                throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
-        case sword::UnitMagicAction::crowd_creation:
+        case UnitMagicAction::crowd_creation:
             if( MIL_Formation* pFormation = FindFormation( id ) )
                 ProcessCrowdCreationRequest( message, pFormation->GetArmy() );
             else if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
                 ProcessCrowdCreationRequest( message, *pArmy );
             else
-                throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+                throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
-        case sword::UnitMagicAction::inhabitant_change_health_state:
-        case sword::UnitMagicAction::inhabitant_change_affinities:
-        case sword::UnitMagicAction::inhabitant_change_alerted_state:
+        case UnitMagicAction::inhabitant_change_health_state:
+        case UnitMagicAction::inhabitant_change_affinities:
+        case UnitMagicAction::inhabitant_change_alerted_state:
             if( MIL_Inhabitant* pInhabitant = inhabitantFactory_->Find ( id ) )
                 pInhabitant->OnReceiveInhabitantMagicAction( message );
             else
-                throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_population );
+                throw NET_AsnException< ChangePopulationMagicActionAck_ErrorCode >( ChangePopulationMagicActionAck::error_invalid_population );
             break;
 
         default:
@@ -902,11 +893,11 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const sword::UnitMagicAction& 
             else if( MIL_AgentPion* pPion = FindAgentPion( id ) )
                 pPion->OnReceiveUnitMagicAction( message, *armyFactory_ );
             else
-                throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+                throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
         }
     }
-    catch( NET_AsnException< sword::UnitActionAck::ErrorCode >& e )
+    catch( NET_AsnException< UnitActionAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -917,37 +908,37 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const sword::UnitMagicAction& 
 // Name: MIL_EntityManager::ProcessAutomatCreationRequest
 // Created: LDC 2010-10-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessAutomatCreationRequest( const sword::UnitMagicAction& msg, MIL_Entity_ABC& entity, unsigned int nCtx )
+void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& msg, MIL_Entity_ABC& entity, unsigned int nCtx )
 {
     try
     {
-        if( msg.type() != sword::UnitMagicAction_Type_automat_creation )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        if( msg.type() != UnitMagicAction::automat_creation )
+            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
         if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
-        const sword::MissionParameter& id = msg.parameters().elem( 0 );
-        if( id.value_size() != 1 || !id.value().Get(0).has_identifier() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        const MissionParameter& id = msg.parameters().elem( 0 );
+        if( id.value_size() != 1 || !id.value().Get( 0 ).has_identifier() )
+            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
-        const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( id.value().Get(0).identifier() );
+        const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( id.value().Get( 0 ).identifier() );
         if( !pType )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
 
-        const sword::MissionParameter& groupId = msg.parameters().elem( 1 );
-        if( groupId.value_size() != 1  || !groupId.value().Get(0).has_identifier() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        const MissionParameter& groupId = msg.parameters().elem( 1 );
+        if( groupId.value_size() != 1 || !groupId.value().Get( 0 ).has_identifier() )
+            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
-        const sword::MissionParameter& nameParam = msg.parameters().elem( 2 );
-        if( nameParam.value_size() != 1 || !nameParam.value().Get(0).has_acharstr() )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-        const std::string name = nameParam.value().Get(0).acharstr();
-        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, groupId.value().Get(0).identifier(), name, entity, nCtx ); // auto-registration
+        const MissionParameter& nameParam = msg.parameters().elem( 2 );
+        if( nameParam.value_size() != 1 || !nameParam.value().Get( 0 ).has_acharstr() )
+            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
+        const std::string name = nameParam.value().Get( 0 ).acharstr();
+        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, groupId.value().Get( 0 ).identifier(), name, entity, nCtx ); // auto-registration
     }
     catch( std::runtime_error& )
     {
-        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+        throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
     }
 }
 
@@ -955,28 +946,28 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const sword::UnitMagicAct
 // Name: MIL_EntityManager::ProcessFormationCreationRequest
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessFormationCreationRequest( const sword::UnitMagicAction& message, MIL_Army_ABC* army, MIL_Formation* formation )
+void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& message, MIL_Army_ABC* army, MIL_Formation* formation )
 {
     client::MagicActionAck ack;
-    ack().set_error_code( sword::MagicActionAck::no_error );
+    ack().set_error_code( MagicActionAck::no_error );
     if( !army )
     {
         if( !formation )
         {
-            ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
+            ack().set_error_code( MagicActionAck::error_invalid_parameter );
             return;
         }
         army = &(formation->GetArmy());
     }
-    if( !message.has_parameters() || message.parameters().elem_size() != 3 || !(message.parameters().elem( 0 ).value_size() == 1) || !message.parameters().elem( 0 ).value().Get(0).has_areal() )
+    if( !message.has_parameters() || message.parameters().elem_size() != 3 || !( message.parameters().elem( 0 ).value_size() == 1 ) || !message.parameters().elem( 0 ).value().Get( 0 ).has_areal() )
     {
-        ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
+        ack().set_error_code( MagicActionAck::error_invalid_parameter );
         return;
     }
-    const ::sword::MissionParameters& parameters = message.parameters();
-    int level = static_cast< int >( parameters.elem( 0 ).value().Get(0).areal() );
-    std::string name = ( parameters.elem( 1 ).value_size() == 1 && parameters.elem( 1 ).value().Get(0).has_acharstr() ) ? parameters.elem( 1 ).value().Get(0).acharstr() : std::string();
-    std::string logLevel = ( parameters.elem( 2 ).value_size() == 1 && parameters.elem( 2 ).value().Get(0).has_acharstr() ) ? parameters.elem( 2 ).value().Get(0).acharstr() : std::string();;
+    const ::MissionParameters& parameters = message.parameters();
+    int level = static_cast< int >( parameters.elem( 0 ).value().Get( 0 ).areal() );
+    std::string name = ( parameters.elem( 1 ).value_size() == 1 && parameters.elem( 1 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 1 ).value().Get( 0 ).acharstr() : std::string();
+    std::string logLevel = ( parameters.elem( 2 ).value_size() == 1 && parameters.elem( 2 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 2 ).value().Get( 0 ).acharstr() : std::string();;
     MIL_Formation& newFormation = formationFactory_->Create( level, name, logLevel, *army, formation );
     ack.Send( NET_Publisher_ABC::Publisher() );
     newFormation.SendCreation();
@@ -986,31 +977,31 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const sword::UnitMagicA
 // Name: MIL_EntityManager::ProcessCrowdCreationRequest
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessCrowdCreationRequest( const sword::UnitMagicAction& message, MIL_Army_ABC& army )
+void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& message, MIL_Army_ABC& army )
 {
     client::MagicActionAck ack;
-    ack().set_error_code( sword::MagicActionAck::no_error );
+    ack().set_error_code( MagicActionAck::no_error );
     if( !message.has_parameters() || message.parameters().elem_size() != 4
-        || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get(0).has_acharstr()
-        || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get(0).has_point()
-        || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get(0).has_areal() )
+        || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr()
+        || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get( 0 ).has_point()
+        || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get( 0 ).has_areal() )
     {
-        ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
+        ack().set_error_code( MagicActionAck::error_invalid_parameter );
         return;
     }
-    const ::sword::MissionParameters& parameters = message.parameters();
-    std::string type = parameters.elem( 0 ).value().Get(0).acharstr();
-    ::sword::Location location = parameters.elem( 1 ).value().Get(0).point().location();
+    const ::MissionParameters& parameters = message.parameters();
+    std::string type = parameters.elem( 0 ).value().Get( 0 ).acharstr();
+    ::Location location = parameters.elem( 1 ).value().Get( 0 ).point().location();
     if( !location.has_coordinates() )
     {
-        ack().set_error_code( sword::MagicActionAck::error_invalid_parameter );
+        ack().set_error_code( MagicActionAck::error_invalid_parameter );
         return;
     }
     ack.Send( NET_Publisher_ABC::Publisher() );
     MT_Vector2D point;
     MIL_Tools::ConvertCoordMosToSim( location.coordinates().elem( 0 ), point );
-    int number = static_cast< int >( parameters.elem( 2 ).value().Get(0).areal() );
-    std::string name = ( parameters.elem( 3 ).value_size() == 1 && parameters.elem( 3 ).value().Get(0).has_acharstr() ) ? parameters.elem( 3 ).value().Get(0).acharstr() : std::string();
+    int number = static_cast< int >( parameters.elem( 2 ).value().Get( 0 ).areal() );
+    std::string name = ( parameters.elem( 3 ).value_size() == 1 && parameters.elem( 3 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 3 ).value().Get( 0 ).acharstr() : std::string();
     populationFactory_->Create( type, point, number, name, army );
 }
 
@@ -1018,27 +1009,27 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const sword::UnitMagicActio
 // Name: MIL_EntityManager::OnReceiveKnowledgeMagicAction
 // Created: JSR 2010-04-20
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const sword::KnowledgeMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicAction& message, unsigned int nCtx )
 {
     client::KnowledgeGroupMagicActionAck ack;
     ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
-    ack().set_error_code( sword::KnowledgeGroupAck::no_error );
+    ack().set_error_code( KnowledgeGroupAck::no_error );
     try
     {
         switch( message.type() )
         {
-        case sword::KnowledgeMagicAction::enable :
-        case sword::KnowledgeMagicAction::update_party :
-        case sword::KnowledgeMagicAction::update_party_parent :
-        case sword::KnowledgeMagicAction::update_type :
+        case KnowledgeMagicAction::enable :
+        case KnowledgeMagicAction::update_party :
+        case KnowledgeMagicAction::update_party_parent :
+        case KnowledgeMagicAction::update_type :
             ProcessKnowledgeGroupUpdate( message, nCtx );
             break;
         default:
-            throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_type );
+            throw NET_AsnException< KnowledgeGroupAck::ErrorCode >( KnowledgeGroupAck::error_invalid_type );
             break;
         }
     }
-    catch( NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >& e )
+    catch( NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1049,19 +1040,19 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const sword::KnowledgeMag
 // Name: MIL_EntityManager::OnReceiveCrowdOrder
 // Created: NLD 2005-09-29
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveCrowdOrder( const sword::CrowdOrder& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveCrowdOrder( const CrowdOrder& message, unsigned int nCtx )
 {
     client::TaskCreationRequestAck ack;
     ack().mutable_tasker()->mutable_crowd()->set_id( message.tasker().id() );
-    ack().set_error_code( sword::OrderAck::no_error );
+    ack().set_error_code( OrderAck::no_error );
     try
     {
         MIL_Population* pPopulation = populationFactory_->Find( message.tasker().id() );
         if( !pPopulation )
-            throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_unit );
+            throw NET_AsnException< OrderAck_ErrorCode >( OrderAck::error_invalid_unit );
         pPopulation->OnReceiveOrder( message );
     }
-    catch( NET_AsnException< sword::OrderAck_ErrorCode >& e )
+    catch( NET_AsnException< OrderAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1072,11 +1063,11 @@ void MIL_EntityManager::OnReceiveCrowdOrder( const sword::CrowdOrder& message, u
 // Name: MIL_EntityManager::OnReceiveFragOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveFragOrder( const sword::FragOrder& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveFragOrder( const FragOrder& message, unsigned int nCtx )
 {
     client::FragOrderAck ack;
     unsigned int taskerId = TaskerToId( message.tasker() );
-    ack().set_error_code( sword::OrderAck::no_error );
+    ack().set_error_code( OrderAck::no_error );
     try
     {
         if( MIL_Automate* pAutomate = FindAutomate( taskerId ) )
@@ -1097,10 +1088,10 @@ void MIL_EntityManager::OnReceiveFragOrder( const sword::FragOrder& message, uns
         else
         {
             ack().mutable_tasker()->mutable_unit()->set_id( 0 );
-            throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_unit );
+            throw NET_AsnException< OrderAck::ErrorCode >( OrderAck::error_invalid_unit );
         }
     }
-    catch( NET_AsnException< sword::OrderAck::ErrorCode >& e )
+    catch( NET_AsnException< OrderAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1111,19 +1102,19 @@ void MIL_EntityManager::OnReceiveFragOrder( const sword::FragOrder& message, uns
 // Name: MIL_EntityManager::OnReceiveSetAutomateMode
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveSetAutomateMode( const sword::SetAutomatMode& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message, unsigned int nCtx )
 {
     client::SetAutomatModeAck ack;
     ack().mutable_automate()->set_id( message.automate().id() );
-    ack().set_error_code( sword::SetAutomatModeAck::no_error );
+    ack().set_error_code( SetAutomatModeAck::no_error );
     try
     {
         MIL_Automate* pAutomate = FindAutomate( message.automate().id() );
         if( !pAutomate )
-            throw NET_AsnException< sword::SetAutomatModeAck::ErrorCode >( sword::SetAutomatModeAck::error_invalid_unit );
+            throw NET_AsnException< SetAutomatModeAck::ErrorCode >( SetAutomatModeAck::error_invalid_unit );
         pAutomate->OnReceiveSetAutomateMode( message );
     }
-    catch( NET_AsnException< sword::SetAutomatModeAck::ErrorCode >& e )
+    catch( NET_AsnException< SetAutomatModeAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1134,18 +1125,18 @@ void MIL_EntityManager::OnReceiveSetAutomateMode( const sword::SetAutomatMode& m
 // Name: MIL_EntityManager::OnReceiveUnitCreationRequest
 // Created: AGE 2007-06-18
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveUnitCreationRequest( const sword::UnitCreationRequest& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest& message, unsigned int nCtx )
 {
     client::UnitCreationRequestAck ack;
-    ack().set_error( sword::UnitActionAck::no_error );
+    ack().set_error( UnitActionAck::no_error );
     try
     {
         MIL_Automate* pAutomate = FindAutomate( message.superior().id() );
         if( !pAutomate )
-            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
         pAutomate->OnReceiveUnitCreationRequest( message );
     }
-    catch( NET_AsnException< sword::UnitActionAck_ErrorCode >& e )
+    catch( NET_AsnException< UnitActionAck_ErrorCode >& e )
     {
         ack().set_error( e.GetErrorID() );
     }
@@ -1156,7 +1147,7 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const sword::UnitCreationR
 // Name: MIL_EntityManager::OnReceiveObjectMagicAction
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveObjectMagicAction( const sword::ObjectMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveObjectMagicAction( const ObjectMagicAction& message, unsigned int nCtx )
 {
     pObjectManager_->OnReceiveObjectMagicAction( message, nCtx, *armyFactory_ );
 }
@@ -1168,18 +1159,18 @@ void MIL_EntityManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
 void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, unsigned int nCtx )
 {
     client::ChangeDiplomacyAck ack;
-    ack().mutable_party1()->set_id( message.parameters().elem( 0 ).value().Get(0).identifier() );
-    ack().mutable_party2()->set_id( message.parameters().elem( 1 ).value().Get(0).identifier() );
-    ack().set_diplomacy( ( sword::EnumDiplomacy ) message.parameters().elem( 2 ).value().Get(0).enumeration() );
-    ack().set_error_code( sword::ChangeDiplomacyAck::no_error_diplomacy );
+    ack().mutable_party1()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).identifier() );
+    ack().mutable_party2()->set_id( message.parameters().elem( 1 ).value().Get( 0 ).identifier() );
+    ack().set_diplomacy( ( EnumDiplomacy ) message.parameters().elem( 2 ).value().Get( 0 ).enumeration() );
+    ack().set_error_code( ChangeDiplomacyAck::no_error_diplomacy );
     try
     {
-        MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.parameters().elem( 0 ).value().Get(0).identifier() );
+        MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.parameters().elem( 0 ).value().Get( 0 ).identifier() );
         if( !pArmy1 )
-            throw NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
+            throw NET_AsnException< ChangeDiplomacyAck_ErrorCode >( ChangeDiplomacyAck::error_invalid_party_diplomacy );
         pArmy1->OnReceiveChangeDiplomacy( message.parameters() );
     }
-    catch( NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >& e )
+    catch( NET_AsnException< ChangeDiplomacyAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1190,7 +1181,7 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
 // Name: MIL_EntityManager::OnReceiveChangeResourceLinks
 // Created: JSR 2010-08-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveChangeResourceLinks( const sword::MagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveChangeResourceLinks( const MagicAction& message, unsigned int nCtx )
 {
     pObjectManager_->OnReceiveChangeResourceLinks( message, nCtx );
 }
@@ -1199,34 +1190,33 @@ void MIL_EntityManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
 // Name: MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const sword::UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::AutomatChangeKnowledgeGroupAck ack;
-    ack().set_error_code( sword::HierarchyModificationAck::no_error_hierarchy );
+    ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
         if( !pAutomate )
-            throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_automate );
+            throw NET_AsnException< HierarchyModificationAck_ErrorCode >( HierarchyModificationAck::error_invalid_automate );
         pAutomate->OnReceiveChangeKnowledgeGroup( message, *armyFactory_ );
     }
-    catch( NET_AsnException< sword::HierarchyModificationAck_ErrorCode >& e )
+    catch( NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 
-    if( ack().error_code() == sword::HierarchyModificationAck::no_error_hierarchy )
+    if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
     {
-        if( message.has_parameters() &&
-            message.parameters().elem_size() == 2 )
+        if( message.has_parameters() && message.parameters().elem_size() == 2 )
         {
             client::AutomatChangeKnowledgeGroup resendMessage;
             resendMessage().mutable_automat()->set_id( message.tasker().automat().id() );
-            if( message.parameters().elem( 0 ).value_size() == 1 && message.parameters().elem( 0 ).value().Get(0).has_knowledgegroup() )
-                resendMessage().mutable_knowledge_group()->set_id( message.parameters().elem( 0 ).value().Get(0).knowledgegroup().id() );
-            if( message.parameters().elem( 1 ).value_size() == 1 && message.parameters().elem( 1 ).value().Get(0).has_party() )
-                resendMessage().mutable_party()->set_id( message.parameters().elem( 1 ).value().Get(0).party().id() );
+            if( message.parameters().elem( 0 ).value_size() == 1 && message.parameters().elem( 0 ).value().Get( 0 ).has_knowledgegroup() )
+                resendMessage().mutable_knowledge_group()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).knowledgegroup().id() );
+            if( message.parameters().elem( 1 ).value_size() == 1 && message.parameters().elem( 1 ).value().Get( 0 ).has_party() )
+                resendMessage().mutable_party()->set_id( message.parameters().elem( 1 ).value().Get( 0 ).party().id() );
             resendMessage.Send( NET_Publisher_ABC::Publisher() );
         }
     }
@@ -1236,10 +1226,10 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const sword::UnitMa
 // Name: MIL_EntityManager::ProcessAutomateChangeLogisticLinks
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessAutomateChangeLogisticLinks( const sword::UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessAutomateChangeLogisticLinks( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::ChangeLogisticLinksAck ack;
-    ack().set_error_code( sword::HierarchyModificationAck::no_error_hierarchy );
+    ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
@@ -1247,19 +1237,19 @@ void MIL_EntityManager::ProcessAutomateChangeLogisticLinks( const sword::UnitMag
         if( pAutomate )
             pAutomate->OnReceiveChangeLogisticLinks( message );
 
-        if( pAutomate == 0 && pFormation == 0)
-            throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_automate );
-        MIL_AutomateLOG* brainLog = pAutomate!=0 ? pAutomate->GetBrainLogistic() :  pFormation->GetBrainLogistic();
+        if( pAutomate == 0 && pFormation == 0 )
+            throw NET_AsnException< HierarchyModificationAck_ErrorCode >( HierarchyModificationAck::error_invalid_automate );
+        MIL_AutomateLOG* brainLog = pAutomate != 0 ? pAutomate->GetBrainLogistic() : pFormation->GetBrainLogistic();
         if( brainLog )
             brainLog->OnReceiveChangeLogisticLinks( message );
     }
-    catch( NET_AsnException< sword::HierarchyModificationAck_ErrorCode >& e )
+    catch( NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 
-    if( ack().error_code() == sword::HierarchyModificationAck::no_error_hierarchy )
+    if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
         MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
@@ -1274,31 +1264,31 @@ void MIL_EntityManager::ProcessAutomateChangeLogisticLinks( const sword::UnitMag
 // Name: MIL_EntityManager::ProcessAutomateChangeSuperior
 // Created: NLD 2007-04-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessAutomateChangeSuperior( const sword::UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessAutomateChangeSuperior( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::AutomatChangeSuperiorAck ack;
-    ack().set_error_code( sword::HierarchyModificationAck::no_error_hierarchy );
+    ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
         if( !pAutomate )
-            throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_automate );
+            throw NET_AsnException< HierarchyModificationAck_ErrorCode >( HierarchyModificationAck::error_invalid_automate );
         pAutomate->OnReceiveChangeSuperior( message, *formationFactory_ );
     }
-    catch( NET_AsnException< sword::HierarchyModificationAck_ErrorCode >& e )
+    catch( NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 
-    if( ack().error_code() == sword::HierarchyModificationAck::no_error_hierarchy )
+    if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
     {
         client::AutomatChangeSuperior resendMessage;
         resendMessage().mutable_automat()->set_id( message.tasker().automat().id() );
-        if( message.type() == sword::UnitMagicAction_Type_change_formation_superior )
-            resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get(0).formation().id() );
-        else if( message.type() == sword::UnitMagicAction_Type_change_automat_superior )
-            resendMessage().mutable_superior()->mutable_automat()->set_id( message.parameters().elem( 0 ).value().Get(0).automat().id() );
+        if( message.type() == UnitMagicAction::change_formation_superior )
+            resendMessage().mutable_superior()->mutable_formation()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).formation().id() );
+        else if( message.type() == UnitMagicAction::change_automat_superior )
+            resendMessage().mutable_superior()->mutable_automat()->set_id( message.parameters().elem( 0 ).value().Get( 0 ).automat().id() );
         resendMessage.Send( NET_Publisher_ABC::Publisher() );
     }
 }
@@ -1307,23 +1297,23 @@ void MIL_EntityManager::ProcessAutomateChangeSuperior( const sword::UnitMagicAct
 // Name: MIL_EntityManager::ProcessUnitChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessUnitChangeSuperior( const sword::UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::UnitChangeSuperiorAck ack;
-    ack().set_error_code( sword::HierarchyModificationAck::no_error_hierarchy );
+    ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
     try
     {
         MIL_AgentPion* pPion = ( message.tasker().has_unit() && message.tasker().unit().has_id() ) ? FindAgentPion( message.tasker().unit().id() ) : 0;
         if( !pPion )
-            throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_agent );
+            throw NET_AsnException< HierarchyModificationAck_ErrorCode >( HierarchyModificationAck::error_invalid_agent );
         pPion->OnReceiveChangeSuperior( *this, message );
     }
-    catch( NET_AsnException< sword::HierarchyModificationAck_ErrorCode >& e )
+    catch( NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
-    if( ack().error_code() == sword::HierarchyModificationAck::no_error_hierarchy )
+    if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
     {
         client::UnitChangeSuperior resendMessage;
         resendMessage().mutable_unit()->set_id ( message.tasker().unit().id() );
@@ -1336,22 +1326,22 @@ void MIL_EntityManager::ProcessUnitChangeSuperior( const sword::UnitMagicAction&
 // Name: MIL_EntityManager::ProcessLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const sword::UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyChangeQuotasAck ack;
-    ack().set_ack( sword::LogSupplyChangeQuotasAck::no_error_quotas );
+    ack().set_ack( LogSupplyChangeQuotasAck::no_error_quotas );
     try
     {
         MIL_Automate* pAutomat = TaskerToAutomat( *this, message.tasker() );
         MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
         if( !pAutomat && !pFormation )
-            throw NET_AsnException< sword::LogSupplyChangeQuotasAck::ErrorCode >( sword::LogSupplyChangeQuotasAck::error_invalid_receiver );
+            throw NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >( LogSupplyChangeQuotasAck::error_invalid_receiver );
         MIL_AutomateLOG* pReceiver = pAutomat ? pAutomat->GetBrainLogistic() : pFormation->GetBrainLogistic();
         if( !pReceiver )
-            throw NET_AsnException< sword::LogSupplyChangeQuotasAck::ErrorCode >( sword::LogSupplyChangeQuotasAck::error_invalid_receiver );
+            throw NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >( LogSupplyChangeQuotasAck::error_invalid_receiver );
         pReceiver->OnReceiveLogSupplyChangeQuotas( message.parameters() );
     }
-    catch( NET_AsnException< sword::LogSupplyChangeQuotasAck::ErrorCode >& e )
+    catch( NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >& e )
     {
         ack().set_ack( e.GetErrorID() );
     }
@@ -1362,19 +1352,19 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const sword::UnitMagicActi
 // Name: MIL_EntityManager::ProcessLogSupplyPushFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyPushFlow( const sword::UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyPushFlowAck ack;
-    ack().set_ack( sword::LogSupplyPushFlowAck::no_error_pushflow );
+    ack().set_ack( LogSupplyPushFlowAck::no_error_pushflow );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
         if( pAutomate )
             pAutomate->OnReceiveLogSupplyPushFlow( message.parameters() );
         else
-            throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
+            throw NET_AsnException< LogSupplyPushFlowAck::ErrorCode >( LogSupplyPushFlowAck::error_invalid_receiver );
     }
-    catch( NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >& e )
+    catch( NET_AsnException< LogSupplyPushFlowAck::ErrorCode >& e )
     {
         ack().set_ack( e.GetErrorID() );
     }
@@ -1385,19 +1375,19 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const sword::UnitMagicAction& 
 // Name: MIL_EntityManager::ProcessLogSupplyPushFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessLogSupplyPullFlow( const sword::UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyPullFlowAck ack;
-    ack().set_ack( sword::LogSupplyPullFlowAck::no_error_pullflow );
+    ack().set_ack( LogSupplyPullFlowAck::no_error_pullflow );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
         if( pAutomate )
             pAutomate->OnReceiveLogSupplyPullFlow( message.parameters() );
         else
-            throw NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >( sword::LogSupplyPullFlowAck::error_invalid_receiver );
+            throw NET_AsnException< LogSupplyPullFlowAck::ErrorCode >( LogSupplyPullFlowAck::error_invalid_receiver );
     }
-    catch( NET_AsnException< sword::LogSupplyPullFlowAck::ErrorCode >& e )
+    catch( NET_AsnException< LogSupplyPullFlowAck::ErrorCode >& e )
     {
         ack().set_ack( e.GetErrorID() );
     }
@@ -1408,7 +1398,7 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const sword::UnitMagicAction& 
 // Name: MIL_EntityManager::ProcessMagicActionMoveTo
 // Created: JSR 2010-04-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessMagicActionMoveTo( const sword::UnitMagicAction& message, unsigned int )
+void MIL_EntityManager::ProcessMagicActionMoveTo( const UnitMagicAction& message, unsigned int )
 {
     if( message.tasker().has_automat() && message.tasker().automat().has_id() )
     {
@@ -1425,7 +1415,7 @@ void MIL_EntityManager::ProcessMagicActionMoveTo( const sword::UnitMagicAction& 
         if( MIL_Population* pPopulation = populationFactory_->Find( message.tasker().crowd().id() ) )
             return pPopulation->OnReceiveCrowdMagicActionMoveTo( message );
     }
-    throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+    throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
 }
 
 // -----------------------------------------------------------------------------
@@ -1433,11 +1423,11 @@ void MIL_EntityManager::ProcessMagicActionMoveTo( const sword::UnitMagicAction& 
 // Created: FHD 2009-12-15:
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const sword::MagicAction& /*message*/, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const MagicAction& /*message*/, unsigned int nCtx )
 {
     client::KnowledgeGroupCreationAck ack;
     ack().mutable_knowledge_group()->set_id( 0 );
-    ack().set_error_code( sword::KnowledgeGroupAck::no_error );
+    ack().set_error_code( KnowledgeGroupAck::no_error );
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
@@ -1446,19 +1436,19 @@ void MIL_EntityManager::OnReceiveKnowledgeGroupCreation( const sword::MagicActio
 // Created: FDS 2010-01-13
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const sword::KnowledgeMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction& message, unsigned int nCtx )
 {
     client::KnowledgeGroupUpdateAck ack;
     ack().mutable_knowledge_group()->set_id( message.knowledge_group().id() );
-    ack().set_error_code( sword::KnowledgeGroupAck::no_error );
+    ack().set_error_code( KnowledgeGroupAck::no_error );
     try
     {
         MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
         if( !pReceiver || pReceiver->IsJammed() )
-            throw NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >( sword::KnowledgeGroupAck::error_invalid_type );
+            throw NET_AsnException< KnowledgeGroupAck::ErrorCode >( KnowledgeGroupAck::error_invalid_type );
         pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
     }
-    catch( NET_AsnException< sword::KnowledgeGroupAck::ErrorCode >& e )
+    catch( NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1470,45 +1460,45 @@ void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const sword::KnowledgeMagic
 // Created: MGD 2010-02-24
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagicAction& msg, unsigned int nCtx )
+void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction& msg, unsigned int nCtx )
 {
     client::ActionCreateFireOrderAck ack;
-    ack().set_error_code( sword::ActionCreateFireOrderAck::no_error );
+    ack().set_error_code( ActionCreateFireOrderAck::no_error );
     try
     {
         if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
 
         // Reporter
         MIL_Agent_ABC* reporter = ( msg.tasker().has_unit() && msg.tasker().unit().has_id() ) ? FindAgentPion( msg.tasker().unit().id() ) : 0;
         if( !reporter )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_reporter );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_reporter );
 
         // Target
-        const sword::MissionParameter& target = msg.parameters().elem( 0 );
+        const MissionParameter& target = msg.parameters().elem( 0 );
         if( target.value_size() != 1 || !target.value().Get(0).has_identifier() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
 
         boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( target.value().Get(0).identifier() );
         if( !targetKn )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
 
         // Ammo
-        const sword::MissionParameter& ammo = msg.parameters().elem( 1 );
+        const MissionParameter& ammo = msg.parameters().elem( 1 );
         if( ammo.value_size() != 1 || !ammo.value().Get(0).has_resourcetype() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_ammunition );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
         if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_ammunition );
 
         if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_target_not_illuminated );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_target_not_illuminated );
 
         // Iterations
-        const sword::MissionParameter& iterations = msg.parameters().elem( 2 );
+        const MissionParameter& iterations = msg.parameters().elem( 2 );
         if( iterations.value_size() != 1 || !iterations.value().Get(0).has_areal() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_iteration );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_iteration );
 
         PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
         unsigned int ammos = (unsigned int) pDotationCategory->GetIndirectFireData()->ConvertToNbrAmmo( iterations.value().Get(0).areal() );
@@ -1517,7 +1507,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
 
         pDotationCategory->ApplyIndirectFireEffect( *reporter, targetKn->GetAgentKnown(), ammos , fireResult );
     }
-    catch( NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >& e )
+    catch( NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1528,35 +1518,35 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const sword::UnitMagi
 // Name: MIL_EntityManager::OnReceiveCreateFireOrderOnLocation
 // Created: ABR 2011-01-19
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const sword::MagicAction& msg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& msg, unsigned int nCtx )
 {
     client::ActionCreateFireOrderAck ack;
-    ack().set_error_code( sword::ActionCreateFireOrderAck::no_error );
+    ack().set_error_code( ActionCreateFireOrderAck::no_error );
     try
     {
         if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
 
         // Location
-        const sword::MissionParameter& location = msg.parameters().elem( 0 );
+        const MissionParameter& location = msg.parameters().elem( 0 );
         if( location.value_size() != 1 || !location.value().Get( 0 ).has_location() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_target );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_target );
 
         // Ammo
-        const sword::MissionParameter& ammo = msg.parameters().elem( 1 );
+        const MissionParameter& ammo = msg.parameters().elem( 1 );
         if( ammo.value_size() != 1 || !ammo.value().Get( 0 ).has_resourcetype() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_ammunition );
 
         const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( ammo.value().Get(0).resourcetype().id() );
         if( !pDotationCategory || !pDotationCategory->CanBeUsedForIndirectFire() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_ammunition );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_ammunition );
 
         // Iterations
-        const sword::MissionParameter& iterations = msg.parameters().elem( 2 );
+        const MissionParameter& iterations = msg.parameters().elem( 2 );
         if( iterations.value_size() != 1 || !iterations.value().Get( 0 ).has_areal() )
-            throw NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >( sword::ActionCreateFireOrderAck::error_invalid_iteration );
+            throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_iteration );
 
-        unsigned int ammos = (unsigned int) pDotationCategory->GetIndirectFireData()->ConvertToNbrAmmo( iterations.value().Get(0).areal() );
+        unsigned int ammos = static_cast< unsigned int >( pDotationCategory->GetIndirectFireData()->ConvertToNbrAmmo( iterations.value().Get(0).areal() ) );
 
         PHY_FireResults_Default fireResult;
         MT_Vector2D targetPos;
@@ -1564,7 +1554,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const sword::MagicAc
 
         pDotationCategory->ApplyIndirectFireEffect( targetPos, targetPos, ammos, fireResult );
     }
-    catch( NET_AsnException< sword::ActionCreateFireOrderAck::ErrorCode >& e )
+    catch( NET_AsnException< ActionCreateFireOrderAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1575,10 +1565,10 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const sword::MagicAc
 // Name: MIL_EntityManager::OnReceiveBurningCellRequest
 // Created: BCI 2011-03-01
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveBurningCellRequest( const sword::BurningCellRequest& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveBurningCellRequest( const BurningCellRequest& message, unsigned int nCtx )
 {
     client::BurningCellRequestAck ack;
-    ack().set_error_code( sword::BurningCellRequestAck::no_error );
+    ack().set_error_code( BurningCellRequestAck::no_error );
     try
     {
         MIL_Object_ABC* object = FindObject( message.object().id() );
@@ -1589,7 +1579,7 @@ void MIL_EntityManager::OnReceiveBurningCellRequest( const sword::BurningCellReq
                 burnSurfaceAttribute->OnReceiveBurningCellRequest( message );
         }
     }
-    catch( NET_AsnException< sword::BurningCellRequestAck::ErrorCode >& e )
+    catch( NET_AsnException< BurningCellRequestAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -1626,10 +1616,12 @@ void MIL_EntityManager::ConfineInhabitants( const TER_Localisation& localisation
 struct IsInhabitantsAlertedFunctor : boost::noncopyable
 {
     IsInhabitantsAlertedFunctor( const TER_Localisation& localisation )
-        : nbAlerted_( 0 )
-        , total_( 0 )
+        : nbAlerted_   ( 0 )
+        , total_       ( 0 )
         , localisation_( localisation )
-    {}
+    {
+        // NOTHING
+    }
     void operator()( const MIL_Inhabitant& inhabitant ) const
     {
         if( inhabitant.IsAlerted( localisation_ ) )
@@ -1741,11 +1733,9 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "orbat" );
     if ( infiniteDotations_ )
-    {
         xos << xml::start( "resources" )
                 << xml::attribute( "infinite", infiniteDotations_ )
             << xml::end;
-    }
     xos     << xml::start( "parties" );
                 armyFactory_->Apply( boost::bind( &MIL_Army_ABC::WriteODB, _1, boost::ref( xos ) ) );
     xos     << xml::end
@@ -1922,7 +1912,7 @@ double MIL_EntityManager::GetStatesTime() const
 // Name: Model::setToTasker
 // Created: PHC 2010-07-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::SetToTasker( sword::Tasker& tasker, unsigned int id ) const
+void MIL_EntityManager::SetToTasker( Tasker& tasker, unsigned int id ) const
 {
     if( FindAutomate( id ) )
         tasker.mutable_automat()->set_id( id );

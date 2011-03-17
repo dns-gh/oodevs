@@ -19,7 +19,7 @@
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
 ChangeAffinitiesDialog::ChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers )
-    : QDialog( pParent, tools::translate( "ChangeAffinitiesDialog", "Change affinities" ) )
+    : QDialog( pParent, tools::translate( "ChangeAffinitiesDialog", "Change affinities" ), true )
     , selected_      ( controllers )
     , affinitiesGrid_( 0 )
 {
@@ -73,6 +73,7 @@ void ChangeAffinitiesDialog::Validate()
 {
     if( ! selected_ )
         return;
+    selected_.ConstCast()->Get< Affinities >().ValidateChanges();
     accept();
     DoValidate();
 }
@@ -83,6 +84,7 @@ void ChangeAffinitiesDialog::Validate()
 // -----------------------------------------------------------------------------
 void ChangeAffinitiesDialog::Reject()
 {
+    selected_.ConstCast()->Get< Affinities >().CancelChanges();
     reject();
     selected_ = 0;
 }

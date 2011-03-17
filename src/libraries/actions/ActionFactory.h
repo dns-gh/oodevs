@@ -70,6 +70,8 @@ public:
     virtual Action_ABC* CreateObjectUpdateMagicAction( const kernel::Object_ABC& object, parameters::ParameterList& attribute ) const;
     virtual Action_ABC* CreateObjectDestroyMagicAction( const kernel::Object_ABC& object ) const;
 
+    virtual Action_ABC* CreateCrowdChangeHealthStateAction( int healthy, int wounded, int contaminated, int dead, const kernel::Entity_ABC& selected ) const;
+
     virtual Action_ABC* CreateInhabitantChangeHealthStateAction( int healthy, int wounded, int dead, const kernel::Entity_ABC& selected ) const;
     virtual Action_ABC* CreateInhabitantChangeAlertedStateAction( bool alerted, const kernel::Entity_ABC& selected ) const;
     virtual Action_ABC* CreateInhabitantChangeConfinedStateAction( bool confined, const kernel::Entity_ABC& selected ) const;

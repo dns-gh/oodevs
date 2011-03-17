@@ -37,12 +37,16 @@ PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Contro
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tools::translate( "gui::PopulationPanel", "Information" ) )
                 .AddLabel( tools::translate( "gui::PopulationPanel", "Name:" ), true )
-                .AddLabel( tools::translate( "gui::PopulationPanel", "Alive people:" ) )
+                .AddLabel( tools::translate( "gui::PopulationPanel", "Healthy people:" ) )
+                .AddLabel( tools::translate( "gui::PopulationPanel", "Wounded people:" ) )
+                .AddLabel( tools::translate( "gui::PopulationPanel", "Contaminated people:" ) )
                 .AddLabel( tools::translate( "gui::PopulationPanel", "Dead people:" ) );
 
     pPartsListView_ = new ListDisplayer< PopulationPanel >( this, *this, factory );
     pPartsListView_->AddColumn( tools::translate( "gui::PopulationPanel", "Chunks" ) )
-                    .AddColumn( tools::translate( "gui::PopulationPanel", "Alive" ) )
+                    .AddColumn( tools::translate( "gui::PopulationPanel", "Healthy" ) )
+                    .AddColumn( tools::translate( "gui::PopulationPanel", "Wounded" ) )
+                    .AddColumn( tools::translate( "gui::PopulationPanel", "Contaminated" ) )
                     .AddColumn( tools::translate( "gui::PopulationPanel", "Dead" ) )
                     .AddColumn( tools::translate( "gui::PopulationPanel", "Mood" ) )
                     .AddColumn( tools::translate( "gui::PopulationPanel", "Alive density" ) );

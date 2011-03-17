@@ -776,6 +776,22 @@ actions::Action_ABC* ActionFactory::CreateCrowdCreationAction( const kernel::Pop
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateCrowdChangeHealthStateAction
+// Created: JSR 2011-03-15
+// -----------------------------------------------------------------------------
+Action_ABC* ActionFactory::CreateCrowdChangeHealthStateAction( int healthy, int wounded, int contaminated, int dead, const kernel::Entity_ABC& selected ) const
+{
+    kernel::MagicActionType& actionType = magicActions_.Get( "crowd_change_health_state" );
+    UnitMagicAction* action = new UnitMagicAction( selected, actionType, controller_, tools::translate( "ActionFactory", "Population Change Health State" ), true );
+    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Quantity( it.NextElement(), healthy ) );
+    action->AddParameter( *new parameters::Quantity( it.NextElement(), wounded ) );
+    action->AddParameter( *new parameters::Quantity( it.NextElement(), contaminated ) );
+    action->AddParameter( *new parameters::Quantity( it.NextElement(), dead ) );
+    return action;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateInhabitantChangeHealthStateAction
 // Created: ABR 2011-01-26
 // -----------------------------------------------------------------------------

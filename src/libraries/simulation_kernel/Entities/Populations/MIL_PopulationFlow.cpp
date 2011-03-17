@@ -180,7 +180,7 @@ void MIL_PopulationFlow::ComputePath( const MT_Vector2D& destination )
 void MIL_PopulationFlow::MagicMove( const MT_Vector2D& destination )
 {
     MIL_PopulationConcentration& newConcentration = GetPopulation().GetConcentration( destination );
-    newConcentration.PushHumans( PullHumans( GetTotalLivingHumans() ) );
+    newConcentration.PushHumans( PullHumans( GetAllHumans() ) );
     DetachFromDestConcentration();
 }
 
@@ -375,7 +375,7 @@ bool MIL_PopulationFlow::ManageSplit()
     pHeadPath_ = pTailPath_; ///$$$ Degueu : destruction de pHeadPath ... (newFlow.pHeadPath_ = pHeadPath_)
     pTailPath_.reset();
     const int nNbrHumans = static_cast< unsigned int >( GetLocation().GetArea() * rDensityBeforeSplit );
-    newFlow.PushHumans( PullHumans( GetTotalLivingHumans() - nNbrHumans ) );
+    newFlow.PushHumans( PullHumans( GetAllHumans() - nNbrHumans ) );
     UpdateDensity();
     return true;
 }
@@ -447,9 +447,9 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     {
         const double rArea = GetLocation().GetArea();
         if( rArea )
-            nNbrHumans = static_cast< unsigned int >( rWalkedDistance * ( GetTotalLivingHumans() / rArea ) );
+            nNbrHumans = static_cast< unsigned int >( rWalkedDistance * ( GetAllHumans() / rArea ) );
         else
-            nNbrHumans = GetTotalLivingHumans();
+            nNbrHumans = GetAllHumans();
     }
     if( nNbrHumans == 0 )
         return;
@@ -869,7 +869,7 @@ double MIL_PopulationFlow::GetSpeed() const
 // -----------------------------------------------------------------------------
 bool MIL_PopulationFlow::IsValid() const
 {
-    return GetTotalLivingHumans() > 0. || pSourceConcentration_;
+    return GetAllHumans() > 0. || pSourceConcentration_;
 }
 
 // -----------------------------------------------------------------------------

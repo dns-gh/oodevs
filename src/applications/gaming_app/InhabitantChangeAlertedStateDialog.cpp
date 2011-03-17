@@ -27,7 +27,7 @@
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
 InhabitantChangeAlertedStateDialog::InhabitantChangeAlertedStateDialog( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
-    : QDialog( pParent, tools::translate( "InhabitantChangeAlertedStateDialog", "Change alert state" ) )
+    : QDialog( pParent, tools::translate( "InhabitantChangeAlertedStateDialog", "Change alert state" ), true )
     , controllers_  ( controllers )
     , actionsModel_ ( actionsModel )
     , simulation_   ( simulation )

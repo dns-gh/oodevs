@@ -15,7 +15,6 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "Simulation.h"
 #include "tools/Resolver.h"
 
 namespace gui
@@ -33,6 +32,12 @@ namespace kernel
     class StaticModel;
 }
 
+namespace sword
+{
+    class PopulationCreation;
+    class PopulationUpdate;
+}
+
 class UrbanModel;
 
 // =============================================================================
@@ -43,7 +48,6 @@ class Inhabitant : public kernel::EntityImplementation< kernel::Inhabitant_ABC >
                  , public kernel::Drawable_ABC
                  , public kernel::Positions
                  , public tools::Observer_ABC
-                 , public tools::ElementObserver_ABC< Simulation::sEndTick >
 {
 public:
     //! @name Constructor/Destructor
@@ -81,7 +85,6 @@ private:
     //@{
     void DoUpdate( const sword::PopulationUpdate& message );
     void CreateDictionary( kernel::Controller& controller );
-    virtual void NotifyUpdated( const Simulation::sEndTick& tick );
     //@}
 
 private:
@@ -113,7 +116,6 @@ private:
     kernel::Controllers& controllers_;
     const kernel::InhabitantType& type_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
-    std::set< kernel::Displayer_ABC* > displayers_;
     unsigned int healthSatisfaction_;
     unsigned int safetySatisfaction_;
     unsigned int lodgingSatisfaction_;

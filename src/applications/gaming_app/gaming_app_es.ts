@@ -347,6 +347,25 @@
     </message>
 </context>
 <context>
+    <name>ChangeHealthStateDialog_ABC</name>
+    <message>
+        <source>Change health state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChangeHumanFactorsDialog</name>
     <message>
         <source>Moral:</source>
@@ -1082,26 +1101,6 @@ Motivo: %3
 <context>
     <name>InhabitantChangeHealthStateDialog</name>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Magic orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Change health state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alive:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Wounded:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1115,6 +1114,10 @@ Motivo: %3
     </message>
     <message>
         <source>Original total:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Healthy:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2601,6 +2604,25 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>PopulationChangeHealthStateDialog</name>
+    <message>
+        <source>Healthy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation type="unfinished">Muerto:</translation>
+    </message>
+</context>
+<context>
     <name>PopulationKnowledgePanel</name>
     <message>
         <source>Details</source>
@@ -2682,22 +2704,6 @@ Motivo: %3
         <translation>Matar a todos</translation>
     </message>
     <message>
-        <source>Kill people:</source>
-        <translation>Matar gente:</translation>
-    </message>
-    <message>
-        <source>Resurect people:</source>
-        <translation>Resucitar gente:</translation>
-    </message>
-    <message>
-        <source>Enter value</source>
-        <translation>Ingresar valor</translation>
-    </message>
-    <message>
-        <source>Type-in value then press &apos;Enter&apos;</source>
-        <translation>Ingrese un valor y luego presione &apos;enter&apos;</translation>
-    </message>
-    <message>
         <source>Change crowd attitude</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2706,15 +2712,23 @@ Motivo: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Crowd Kill</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowd Resurrect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crowd Change Attitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change armed individuals:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd Change Armed Individuals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type-in value then press &apos;Enter&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

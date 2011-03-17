@@ -26,18 +26,17 @@ class MagicActionType : public OrderType
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MagicActionType();
+             MagicActionType();
+             MagicActionType( const std::string& name, unsigned long id );
     explicit MagicActionType( const std::string& name );
-    explicit MagicActionType( const std::string& name, unsigned long id );
     virtual ~MagicActionType();
     //@}
 
 private:
     //! @name Operations
     //@{
-    void Clean();
     OrderParameter* CreateOrderParameter( const std::string& name, const std::string& type );
-    virtual void Initialize();
+    void Initialize();
     //@}
 };
 

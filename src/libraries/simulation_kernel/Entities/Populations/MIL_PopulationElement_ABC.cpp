@@ -452,41 +452,6 @@ double MIL_PopulationElement_ABC::Exterminate( double rSurface )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC::Kill
-// Created: SBO 2006-04-05
-// -----------------------------------------------------------------------------
-unsigned int MIL_PopulationElement_ABC::Kill( unsigned int count )
-{
-    // $$$$ _RC_ JSR 2011-03-10: à virer, ancienne action magique
-    bHumansUpdated_ = true;
-    return humans_.ApplyNumberOfDead( count );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationElement_ABC::Resurrect
-// Created: SBO 2006-04-05
-// -----------------------------------------------------------------------------
-unsigned int MIL_PopulationElement_ABC::Resurrect( unsigned int count )
-{
-    // $$$$ _RC_ JSR 2011-03-10: à virer, ancienne action magique
-    /*unsigned int resurrections = count;
-    if( count > nNbrDeadHumans_ )
-    {
-        resurrections = nNbrDeadHumans_;
-        nNbrAliveHumans_ += nNbrDeadHumans_;
-        nNbrDeadHumans_ = 0;
-    }
-    else
-    {
-        nNbrAliveHumans_ += resurrections;
-        nNbrDeadHumans_  -= resurrections;
-    }
-    bHumansUpdated_ = true;
-    return resurrections;*/
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::IsDead
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------

@@ -18,6 +18,7 @@ AgentChangeAffinitiesDialog.cpp \
 PopulationChangeAffinitiesDialog.cpp \
 InhabitantChangeAffinitiesDialog.cpp \
 ChangeDiplomacyDialog.cpp \
+ChangeHealthStateDialog_ABC.cpp \
 ChangeHumanFactorsDialog.cpp \
 ChangeLogisticLinksDialog.cpp \
 ChatDock.cpp \
@@ -83,6 +84,7 @@ ObjectPanel.cpp \
 ObjectPrototype.cpp \
 OrbatAttributesDialog.cpp \
 OrbatToolbar.cpp \
+PopulationChangeHealthStateDialog.cpp \
 PopulationKnowledgePanel.cpp \
 PopulationMagicOrdersInterface.cpp \
 ProfilingPanel.cpp \

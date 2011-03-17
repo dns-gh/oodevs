@@ -381,11 +381,6 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "formation_creation", sword::UnitMagicAction::formation_creation ) );
     RegisterActionType( *new MagicActionType( "unit_creation", sword::UnitMagicAction::unit_creation ) );
     RegisterActionType( *new MagicActionType( "fire_order", sword::UnitMagicAction::create_fire_order ) );
-    RegisterActionType( *new MagicActionType( "population_total_destruction", sword::UnitMagicAction::crowd_total_destruction ) );
-    RegisterActionType( *new MagicActionType( "population_change_attitude", sword::UnitMagicAction::crowd_change_attitude ) );
-    RegisterActionType( *new MagicActionType( "population_change_health_state", sword::UnitMagicAction::crowd_change_health_state ) );
-    RegisterActionType( *new MagicActionType( "population_change_affinities", sword::UnitMagicAction::crowd_change_affinities ) );
-    RegisterActionType( *new MagicActionType( "population_change_armed_individuals", sword::UnitMagicAction::crowd_change_armed_individuals ) );
     RegisterActionType( *new MagicActionType( "change_knowledge_group", sword::UnitMagicAction::change_knowledge_group ) );
     RegisterActionType( *new MagicActionType( "unit_change_superior", sword::UnitMagicAction::unit_change_superior ) );
     RegisterActionType( *new MagicActionType( "change_automat_superior", sword::UnitMagicAction::change_automat_superior ) );
@@ -394,6 +389,11 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "log_supply_push_flow", sword::UnitMagicAction::log_supply_push_flow ) );
     RegisterActionType( *new MagicActionType( "log_supply_pull_flow", sword::UnitMagicAction::log_supply_pull_flow ) );
     RegisterActionType( *new MagicActionType( "log_supply_change_quotas", sword::UnitMagicAction::log_supply_change_quotas ) );
+    RegisterActionType( *new MagicActionType( "crowd_total_destruction", sword::UnitMagicAction::crowd_total_destruction ) );
+    RegisterActionType( *new MagicActionType( "crowd_change_attitude", sword::UnitMagicAction::crowd_change_attitude ) );
+    RegisterActionType( *new MagicActionType( "crowd_change_health_state", sword::UnitMagicAction::crowd_change_health_state ) );
+    RegisterActionType( *new MagicActionType( "crowd_change_affinities", sword::UnitMagicAction::crowd_change_affinities ) );
+    RegisterActionType( *new MagicActionType( "crowd_change_armed_individuals", sword::UnitMagicAction::crowd_change_armed_individuals ) );
     RegisterActionType( *new MagicActionType( "inhabitant_change_health_state", sword::UnitMagicAction::inhabitant_change_health_state ) );
     RegisterActionType( *new MagicActionType( "inhabitant_change_affinities", sword::UnitMagicAction::inhabitant_change_affinities ) );
     RegisterActionType( *new MagicActionType( "inhabitant_change_alerted_state", sword::UnitMagicAction::inhabitant_change_alerted_state ) );
