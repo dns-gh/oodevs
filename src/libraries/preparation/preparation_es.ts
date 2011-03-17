@@ -120,15 +120,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>M\F\C ratio/Males</source>
+        <source>Info/Critical Intelligence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>M\F\C ratio/Females</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>M\F\C ratio/Children</source>
+        <source>Male\Female\Children/Repartition</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

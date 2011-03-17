@@ -101,7 +101,7 @@
     </message>
     <message>
         <source>Humans/Healthy</source>
-        <translation">Humains/Sains</translation>
+        <translation>Humains/Sains</translation>
     </message>
     <message>
         <source>Humans/Contaminated</source>
@@ -120,16 +120,12 @@
         <translation>Info/Individus armés</translation>
     </message>
     <message>
-        <source>M\F\C ratio/Males</source>
-        <translation>Répartion H\F\E/Hommes</translation>
-    </message>
-    <message>
         <source>Male\Female\Children/Repartition</source>
         <translation>Répartion H\F\E/Femmes</translation>
     </message>
     <message>
-        <source>M\F\C ratio/Children</source>
-        <translation>Répartion H\F\E/Enfants</translation>
+        <source>Info/Critical Intelligence</source>
+        <translation>Info/Renseignement critique</translation>
     </message>
 </context>
 <context>
@@ -140,24 +136,13 @@
     </message>
 </context>
 <context>
-    <name>Dotations</name>
-    <message>
-        <source>Dotations</source>
-        <translation>Dotations</translation>
-    </message>
-    <message>
-        <source>Dotations/Dotations</source>
-        <translation>Dotations/Dotations</translation>
-    </message>
-</context>
-<context>
     <name>FireAttribute</name>
     <message>
         <source>Info/Fire attributes/Fire class</source>
         <translation>Info/Attributs d&apos;incendie/Classe d&apos;incendie</translation>
     </message>
     <message>
-        <source>Info/Fire attributes/Max combustion energy_</source>
+        <source>Info/Fire attributes/Max combustion energy</source>
         <translation>Info/Attributs de feu/Energie de combustion max</translation>
     </message>
 </context>
@@ -308,7 +293,7 @@
     </message>
     <message>
         <source>Logistic/LogisticBase/Quotas</source>
-        <translation type="unfinished"></translation>
+        <translation>Logistique/Base logistique/Quotas</translation>
     </message>
 </context>
 <context>
@@ -558,7 +543,7 @@
     </message>
     <message>
         <source>Max combustion energy:</source>
-        <translation type="unfinished"></translation>
+        <translation>Energie de combustion max:</translation>
     </message>
     <message>
         <source>Flood</source>
