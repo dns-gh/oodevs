@@ -67,7 +67,7 @@ void FileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& file )
 // Name: FileLoaderObserver::NotifyFileMigrated
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
-void FileLoaderObserver::NotifyFileMigrated( const std::string& file , const std::string& fromVersion, const std::string& toVersion )
+void FileLoaderObserver::NotifyFileMigrated( const std::string& /*file*/ , const std::string& /*fromVersion*/, const std::string& /*toVersion*/ )
 {
     // NOTHING
 }
