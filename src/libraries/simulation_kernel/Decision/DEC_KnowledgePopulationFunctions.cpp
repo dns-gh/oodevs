@@ -126,3 +126,13 @@ bool DEC_KnowledgePopulationFunctions::IsPerceivedByAgent( const MIL_AgentPion& 
         return false;
     return caller.GetKnowledge().IsPerceived( pKnowledge->GetPopulationKnown() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetCriticalIntelligence
+// Created: ABR 2011-03-16
+// -----------------------------------------------------------------------------
+const std::string DEC_KnowledgePopulationFunctions::GetCriticalIntelligence( boost::shared_ptr< DEC_Knowledge_Population > pKnowledge )
+{
+    pKnowledge->SetCriticalIntelligenceFromPopulationKnown();
+    return pKnowledge->GetCriticalIntelligence();
+}

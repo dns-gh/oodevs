@@ -51,6 +51,7 @@ AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const sword::Un
     , bPrisonner_  ( false, false )
     , bRefugies_   ( false, false )
     , nRelevance_  ( 0u, false )
+    , criticalIntelligence_( "", false )
 {
     fullSymbol_  = realAgent_.GetType().GetSymbol();
     UpdateSymbol();
@@ -72,10 +73,10 @@ AgentKnowledge::~AgentKnowledge()
 // -----------------------------------------------------------------------------
 void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
 {
-    if( message.has_max_identification_level()  )
+    if( message.has_max_identification_level() )
         nMaxPerceptionLevel_ = (E_PerceptionResult)( 3 - message.max_identification_level() );
 
-    if( message.has_identification_level()  )
+    if( message.has_identification_level() )
     {
         // $$$$ AGE 2005-03-23: !! Les enums message et sim ne correspondent pas...
         nCurrentPerceptionLevel_ = (E_PerceptionResult)( 3 - message.identification_level() );
@@ -83,36 +84,35 @@ void AgentKnowledge::DoUpdate( const sword::UnitKnowledgeUpdate& message )
             nMaxPerceptionLevel_ = nCurrentPerceptionLevel_;
     }
 
-    if( message.has_operational_state()  )
+    if( message.has_operational_state() )
         nEtatOps_ = message.operational_state();
 
-    // $$$$ AGE 2008-04-03:
-//    if( message.has_position()  )
-//        strPosition_ = std::string( (const char*)message.position.data, 15 );
-
-    if( message.has_direction()  )
+    if( message.has_direction() )
         nDirection_ = message.direction().heading();
 
-    if( message.has_speed()  )
+    if( message.has_speed() )
         nSpeed_ = message.speed();
 
-    if( message.has_party()  )
+    if( message.has_party() )
         team_ = & teamResolver_.Get( message.party().id() );
 
-    if( message.has_command_post()  )
+    if( message.has_command_post() )
         bIsPC_ = message.command_post() != 0;
 
-    if( message.has_pertinence()  )
+    if( message.has_pertinence() )
         nRelevance_ = message.pertinence();
 
-    if( message.has_prisoner()  )
+    if( message.has_prisoner() )
         bPrisonner_ = message.prisoner() != 0;
 
-    if( message.has_surrendered_unit()  )
+    if( message.has_surrendered_unit() )
         surrenderedTo_ = teamResolver_.Find( message.surrendered_unit().id() );
 
-    if( message.has_refugees_managed()  )
+    if( message.has_refugees_managed() )
         bRefugies_ = message.refugees_managed() != 0;
+
+    if( message.has_critical_intelligence() )
+        criticalIntelligence_ = message.critical_intelligence();
 
     UpdateSymbol();
 
@@ -197,7 +197,8 @@ void AgentKnowledge::Display( Displayer_ABC& displayer ) const
              .Display( tools::translate( "AgentKnowledge", "Prisoner:" ), bPrisonner_ )
              .Display( tools::translate( "AgentKnowledge", "Refugees picked up:" ), bRefugies_ )
              .Display( tools::translate( "AgentKnowledge", "Command post:" ), bIsPC_ )
-             .Display( tools::translate( "AgentKnowledge", "Relevance:" ), nRelevance_ * Units::percentage );
+             .Display( tools::translate( "AgentKnowledge", "Relevance:" ), nRelevance_ * Units::percentage )
+             .Display( tools::translate( "AgentKnowledge", "Critical intelligence:" ), criticalIntelligence_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +212,8 @@ void AgentKnowledge::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
              .Display( tools::translate( "AgentKnowledge", "Nature:" ), currentNature_ )
              .Display( tools::translate( "AgentKnowledge", "Level:" ), nLevel_ )
              .Display( tools::translate( "AgentKnowledge", "Operational state:" ), nEtatOps_ * Units::percentage )
-             .Display( tools::translate( "AgentKnowledge", "Relevance:" ), nRelevance_ * Units::percentage );
+             .Display( tools::translate( "AgentKnowledge", "Relevance:" ), nRelevance_ * Units::percentage )
+             .Display( tools::translate( "AgentKnowledge", "Critical intelligence:" ), criticalIntelligence_ );
 }
 
 // -----------------------------------------------------------------------------

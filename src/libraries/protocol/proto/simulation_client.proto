@@ -967,6 +967,7 @@ message UnitKnowledgeUpdate {
     optional UnitId                   surrendered_unit         = 14; //!< The unit to which this unit has surrendered @see UnitId
     optional bool                     prisoner                 = 15; //!< Whether the unit has been made prisoner or not
     optional bool                     refugees_managed         = 16; //!< Whether refugees are being handled by the unit or not
+    optional string                   critical_intelligence    = 17; //!< The unit critical intelligence
 }
 
 /** @struct UnitKnowledgeDestruction
@@ -1800,9 +1801,10 @@ message CrowdKnowledgeCreation {
     @brief Notifies of the update of a crowd knowledge
 */
 message CrowdKnowledgeUpdate {
-   required CrowdKnowledgeId knowledge       = 1; //!< The crowd knowledge identifier
-   required KnowledgeGroupId knowledge_group = 2; //!< The knowledge group identifier
-   optional int32            domination      = 3; //!< The crowd domination
+   required CrowdKnowledgeId knowledge             = 1; //!< The crowd knowledge identifier
+   required KnowledgeGroupId knowledge_group       = 2; //!< The knowledge group identifier
+   optional int32            domination            = 3; //!< The crowd domination
+   optional string           critical_intelligence = 4; //!< The crowd critical intelligence
 }
 
 /** @struct CrowdKnowledgeDestruction

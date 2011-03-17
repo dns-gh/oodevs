@@ -64,7 +64,9 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
     , bRelevanceUpdated_             ( false )
     , bCurrentPerceptionLevelUpdated_( false )
     , bMaxPerceptionLevelUpdated_    ( false )
+    , bCriticalIntelligenceUpdated_  ( false )
     , rLastRelevanceSent_            ( 0. )
+    , criticalIntelligence_          ( "" )
 {
     if( bCreatedOnNetwork_ )
         SendMsgCreation();
@@ -96,7 +98,9 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     , bRelevanceUpdated_             ( true )
     , bCurrentPerceptionLevelUpdated_( true )
     , bMaxPerceptionLevelUpdated_    ( true )
+    , bCriticalIntelligenceUpdated_  ( false )
     , rLastRelevanceSent_            ( 0. )
+    , criticalIntelligence_          ( "" )
 {
     // NOTHING
 }
@@ -181,7 +185,8 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> bRelevanceUpdated_
          >> bCurrentPerceptionLevelUpdated_
          >> bMaxPerceptionLevelUpdated_
-         >> nTimeExtrapolationEnd_;
+         >> nTimeExtrapolationEnd_
+         >> criticalIntelligence_;
     if( rRelevance_ < 0. || rRelevance_ > 1. )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Relevance: major-component not in [0..1]" );
 }
@@ -213,7 +218,8 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned i
          << bRelevanceUpdated_
          << bCurrentPerceptionLevelUpdated_
          << bMaxPerceptionLevelUpdated_
-         << nTimeExtrapolationEnd_;
+         << nTimeExtrapolationEnd_
+         << criticalIntelligence_;
 }
 
 // -----------------------------------------------------------------------------
@@ -394,7 +400,7 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( sword::UnitKnowledgeUpdate&
 void DEC_Knowledge_Agent::SendChangedState()
 {
     const bool bPerceptionPerAutomateUpdated = ( previousPerceptionLevelPerAutomateMap_ != perceptionLevelPerAutomateMap_ );
-    if( !( bCurrentPerceptionLevelUpdated_ || bMaxPerceptionLevelUpdated_ || bRelevanceUpdated_  ||  bPerceptionPerAutomateUpdated
+    if( !( bCurrentPerceptionLevelUpdated_ || bMaxPerceptionLevelUpdated_ || bRelevanceUpdated_ || bPerceptionPerAutomateUpdated || bCriticalIntelligenceUpdated_
          || dataDetection_.HasChanged() || dataRecognition_.HasChanged() || dataIdentification_.HasChanged() ) )
         return;
     assert( pKnowledgeGroup_ );
@@ -420,6 +426,11 @@ void DEC_Knowledge_Agent::SendChangedState()
     }
     if( bPerceptionPerAutomateUpdated )
         WriteMsgPerceptionSources( asnMsg() );
+    if( bCriticalIntelligenceUpdated_ )
+    {
+        asnMsg().set_critical_intelligence( criticalIntelligence_ );
+        bCriticalIntelligenceUpdated_ = false;
+    }
 
     dataDetection_.SendChangedState( asnMsg() );
     dataRecognition_.SendChangedState( asnMsg() );
@@ -448,6 +459,7 @@ void DEC_Knowledge_Agent::SendFullState()
     pMaxPerceptionLevel_->Serialize( maxlevel );
     asnMsg().set_max_identification_level( maxlevel );
     WriteMsgPerceptionSources( asnMsg() );
+    asnMsg().set_critical_intelligence( criticalIntelligence_ );
     dataDetection_.SendFullState( asnMsg() );
     dataRecognition_ .SendFullState( asnMsg() );
     dataIdentification_.SendFullState( asnMsg() );
@@ -1017,6 +1029,25 @@ bool DEC_Knowledge_Agent::IsValid() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetCriticalIntelligence
+// Created: ABR 2011-03-16
+// -----------------------------------------------------------------------------
+const std::string& DEC_Knowledge_Agent::GetCriticalIntelligence() const
+{
+    return criticalIntelligence_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::SetCriticalIntelligenceFromAgentKnown
+// Created: ABR 2011-03-16
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Agent::SetCriticalIntelligenceFromAgentKnown()
+{
+    criticalIntelligence_ = pAgentKnown_->GetCriticalIntelligence();
+    bCriticalIntelligenceUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::CopyFrom
 // Created: LDC 2010-04-13
 // -----------------------------------------------------------------------------
@@ -1033,7 +1064,9 @@ void DEC_Knowledge_Agent::CopyFrom( const DEC_Knowledge_Agent& agent )
     nTimeExtrapolationEnd_ = agent.nTimeExtrapolationEnd_;
     bLocked_ = agent.bLocked_;
     bValid_ = agent.bValid_;
+    criticalIntelligence_ = agent.criticalIntelligence_;
     bRelevanceUpdated_ = true;
     bMaxPerceptionLevelUpdated_ = true;
     bCurrentPerceptionLevelUpdated_ = true;
+    bCriticalIntelligenceUpdated_ = true;
 }

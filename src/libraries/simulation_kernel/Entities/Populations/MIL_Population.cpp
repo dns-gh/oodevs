@@ -1361,3 +1361,12 @@ void MIL_Population::UpdateBarycenter()
         vBarycenter_->rY_ = currentBarycenter.rY_;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetCriticalIntelligence
+// Created: ABR 2011-03-16
+// -----------------------------------------------------------------------------
+const std::string& MIL_Population::GetCriticalIntelligence() const
+{
+    return criticalIntelligence_;
+}

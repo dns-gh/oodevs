@@ -101,6 +101,7 @@ public:
     kernel::OptionalValue< bool >                       bPrisonner_;
     kernel::OptionalValue< bool >                       bRefugies_;
     kernel::OptionalValue< uint >                       nRelevance_;
+    kernel::OptionalValue< std::string >                criticalIntelligence_;
 };
 
 #endif // __AgentKnowledge_h_

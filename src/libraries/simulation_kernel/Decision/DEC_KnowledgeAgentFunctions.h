@@ -52,7 +52,8 @@ public:
     static int   Lock                                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void  Unlock                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
-    static double   GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget, UrbanObjectWrapper* pUrbanBlock );
+    static double            GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget, UrbanObjectWrapper* pUrbanBlock );
+    static const std::string GetCriticalIntelligence              ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
     static bool  IsIlluminated                          ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsDefinitivelyIlluminated              ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

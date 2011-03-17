@@ -45,7 +45,8 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
     display_->AddGroup( tr( "Details" ) )
                 .AddLabel( tr( "Identifier:" ) )
                 .AddLabel( tr( "Associated crowd:" ) )
-                .AddLabel( tr( "Side:" ) );
+                .AddLabel( tr( "Side:" ) )
+                .AddLabel( tr( "Critical intelligence:" ) );
 
     display_->AddGroup( tr( "Concentration" ) )
                 .AddLabel( tr( "Alive people:" ) )

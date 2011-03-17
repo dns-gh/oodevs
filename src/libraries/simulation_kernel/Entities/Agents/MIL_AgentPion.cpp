@@ -1200,3 +1200,12 @@ double MIL_AgentPion::Distance( const MIL_Agent_ABC& target ) const
         return vFirerPosition.Distance( vTargetPosition );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetCriticalIntelligence
+// Created: ABR 2011-03-16
+// -----------------------------------------------------------------------------
+const std::string& MIL_AgentPion::GetCriticalIntelligence() const
+{
+    return criticalIntelligence_;
+}

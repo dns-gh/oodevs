@@ -655,6 +655,9 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );
     if( from.has_extension() )
         ConvertExtension( from.extension(), to->mutable_extension() );
+    CONVERT( critical_intelligence );
+    for( int i = 0; i < from.adhesions().size(); ++i )
+        ConvertPartyAdhesion( from.adhesions( i ), to->add_adhesions() );
 }
 
 // -----------------------------------------------------------------------------
@@ -799,6 +802,7 @@ void SimulationToClient::Convert( const sword::UnitKnowledgeUpdate& from, MsgsSi
     CONVERT_ID( surrendered_unit );
     CONVERT_TO( prisoner, prisonnier );
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );
+    CONVERT( critical_intelligence );
 }
 
 // -----------------------------------------------------------------------------
@@ -1769,6 +1773,7 @@ void SimulationToClient::Convert( const sword::CrowdKnowledgeUpdate& from, MsgsS
     CONVERT_ID( knowledge );
     CONVERT_ID( knowledge_group );
     CONVERT_TO( domination, etat_domination );
+    CONVERT( critical_intelligence );
 }
 
 // -----------------------------------------------------------------------------

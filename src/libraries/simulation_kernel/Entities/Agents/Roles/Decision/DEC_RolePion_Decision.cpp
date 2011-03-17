@@ -304,6 +304,10 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
 
     // Missions
     brain[ "DEC_GetDirectionDanger" ] = &DEC_AgentFunctions::GetDirectionDanger;
+
+    // Critical Intelligence
+    brain[ "DEC_ObtenirRenseignementCritiqueSurPion" ] = &DEC_KnowledgeAgentFunctions::GetCriticalIntelligence;
+    brain[ "DEC_ObtenirRenseignementCritiqueSurFoule" ] = &DEC_KnowledgePopulationFunctions::GetCriticalIntelligence;
 }
 
 // -----------------------------------------------------------------------------

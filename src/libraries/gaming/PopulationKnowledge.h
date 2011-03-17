@@ -96,6 +96,7 @@ private:
     const kernel::Population_ABC& popu_;
     const kernel::Team_ABC* pTeam_;
     unsigned int domination_;
+    std::string criticalIntelligence_;
     //@}
 };
 

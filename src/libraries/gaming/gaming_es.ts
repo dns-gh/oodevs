@@ -87,6 +87,10 @@
         <source>Unknown unit</source>
         <translation>Unidad desconocida</translation>
     </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentPositions</name>

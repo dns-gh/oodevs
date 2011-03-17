@@ -91,6 +91,7 @@ public:
     virtual void SetPionAsPostCommand();
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
     virtual double Distance( const MIL_Agent_ABC& pion ) const;
+    virtual const std::string& GetCriticalIntelligence() const;
 
     bool IsAutonomous() const; // Drones
     //@}

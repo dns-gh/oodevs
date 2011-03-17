@@ -79,6 +79,7 @@ private:
       unsigned directionPresent : 1;
       unsigned campPresent : 1;
       unsigned perceptionsPresent : 1;
+      unsigned critical_intelligencePresent : 1;
     };
     //@}
 
@@ -103,6 +104,7 @@ private:
     unsigned long surrendered_;
     bool bPrisoner_;
     bool bRefugeeManaged_;
+    std::string criticalIntelligence_;
     T_Optionals optionals_;
     //@}
 };

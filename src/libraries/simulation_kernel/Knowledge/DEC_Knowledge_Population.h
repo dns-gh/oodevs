@@ -68,6 +68,7 @@ public:
     void Secure( const MIL_AgentPion& pionSecuring );
     void Exterminate( const MIL_AgentPion& exterminator, double rSurface );
     void CopyFrom( const DEC_Knowledge_Population& knowledge );
+    void SetCriticalIntelligenceFromPopulationKnown();
     //@}
 
     //! @name Accessors
@@ -84,6 +85,7 @@ public:
     MT_Vector2D GetClosestPoint( const MT_Vector2D& refPos ) const;
     MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
     MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const;
+    const std::string& GetCriticalIntelligence() const;
     //@}
 
     //! @name Network operations
@@ -131,6 +133,8 @@ private:
     double rDominationState_;
     bool bDecStateUpdated_;
     static MIL_IDManager idManager_;
+    bool bCriticalIntelligenceUpdated_;
+    std::string criticalIntelligence_;
     //@}
 };
 

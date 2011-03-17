@@ -46,19 +46,20 @@ public:
 
     //! @name Accessors
     //@{
-                  unsigned int        GetID              () const;
-    virtual       MIL_KnowledgeGroup& GetKnowledgeGroup  () const = 0;
-    virtual const MIL_AgentType_ABC&  GetType      () const = 0;
-    virtual bool                      IsDead       () const = 0;
-    virtual bool                      IsNeutralized() const = 0;
-    virtual bool                      IsPC         () const = 0;
-    virtual bool                      IsAutonomous       () const = 0;
+    unsigned int GetID() const;
+    virtual MIL_KnowledgeGroup& GetKnowledgeGroup() const = 0;
+    virtual const MIL_AgentType_ABC& GetType() const = 0;
+    virtual bool IsDead() const = 0;
+    virtual bool IsNeutralized() const = 0;
+    virtual bool IsPC() const = 0;
+    virtual bool IsAutonomous() const = 0;
+    virtual const std::string& GetCriticalIntelligence() const = 0;
 
-    virtual const MIL_Automate&       GetAutomate        () const = 0;
-    virtual       MIL_Automate&       GetAutomate        () = 0;
+    virtual const MIL_Automate& GetAutomate() const = 0;
+    virtual       MIL_Automate& GetAutomate() = 0;
 
-    virtual       DEC_Decision_ABC& GetDecision() = 0;
     virtual const DEC_Decision_ABC& GetDecision() const = 0;
+    virtual       DEC_Decision_ABC& GetDecision() = 0;
 
     virtual const AlgorithmsFactories& GetAlgorithms() const = 0;
 

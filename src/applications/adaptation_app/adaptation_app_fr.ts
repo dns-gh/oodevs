@@ -160,7 +160,7 @@ Voulez vous sauvegarder malgré tout ?</translation>
     </message>
     <message>
         <source>Urban combat hit ratio</source>
-        <translation>Proportion d'équipements pouvant tirer � chaque pas de temps</translation>
+        <translation>Proportion d&apos;équipements pouvant tirer �chaque pas de temps</translation>
     </message>
 </context>
 <context>

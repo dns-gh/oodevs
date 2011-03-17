@@ -74,9 +74,12 @@ QString PopulationKnowledge::GetName() const
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::DoUpdate( const sword::CrowdKnowledgeUpdate& message )
 {
-    if( message.has_domination()  )
+    if( message.has_domination() || message.has_critical_intelligence() )
     {
-        domination_ = message.domination();
+        if( message.has_domination() )
+            domination_ = message.domination();
+        if( message.has_critical_intelligence() )
+            criticalIntelligence_ = message.critical_intelligence();
         Touch();
     }
 }
@@ -169,7 +172,8 @@ void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
    displayer.Group( tools::translate( "Crowd", "Details" ) )
                 .Display( tools::translate( "Crowd", "Identifier:" ), id_ )
                 .Display( tools::translate( "Crowd", "Associated crowd:" ), popu_ )
-                .Display( tools::translate( "Crowd", "Side:" ), popu_.Get< TacticalHierarchies >().GetTop() );
+                .Display( tools::translate( "Crowd", "Side:" ), popu_.Get< TacticalHierarchies >().GetTop() )
+                .Display( tools::translate( "Crowd", "Critical intelligence:" ), criticalIntelligence_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,7 +183,8 @@ void PopulationKnowledge::Display( Displayer_ABC& displayer ) const
 void PopulationKnowledge::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Crowd", "Side:" ), popu_.Get< TacticalHierarchies >().GetTop() )
-             .Display( tools::translate( "Crowd", "Domination:" ), domination_ );
+             .Display( tools::translate( "Crowd", "Domination:" ), domination_ )
+             .Display( tools::translate( "Crowd", "Critical intelligence:" ), criticalIntelligence_ );
 }
 
 // -----------------------------------------------------------------------------

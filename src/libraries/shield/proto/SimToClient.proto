@@ -500,6 +500,8 @@ message MsgUnitAttributes {
     optional bool                               prisonnier                    = 43;
     optional bool                               refugie_pris_en_compte        = 44;
     optional Extension                          extension                     = 45;
+    optional string                             critical_intelligence         = 46;
+    repeated Common.PartyAdhesion               adhesions                     = 47;
 }
 
 message MsgUnitPathFind {
@@ -558,6 +560,7 @@ message MsgUnitKnowledgeUpdate {
     optional Common.UnitId               surrendered_unit           = 14;
     optional bool                        prisonnier                 = 15;
     optional bool                        refugie_pris_en_compte     = 16;
+    optional string                      critical_intelligence      = 17;
 }
 
 message MsgUnitKnowledgeDestruction {
@@ -1021,9 +1024,10 @@ message MsgCrowdKnowledgeCreation {
 }
 
 message MsgCrowdKnowledgeUpdate {
-   required Common.CrowdKnowledgeId  knowledge       = 1;
-   required Common.KnowledgeGroupId  knowledge_group = 2;
-   optional int32                    etat_domination = 3;
+   required Common.CrowdKnowledgeId  knowledge             = 1;
+   required Common.KnowledgeGroupId  knowledge_group       = 2;
+   optional int32                    etat_domination       = 3;
+   optional string                   critical_intelligence = 4;
 }
 
 message MsgCrowdKnowledgeDestruction {

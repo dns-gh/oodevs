@@ -224,6 +224,10 @@
         <source>Perception level</source>
         <translation>Nivel de percepción</translation>
     </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AgentListView</name>
@@ -2656,6 +2660,10 @@ Motivo: %3
     </message>
     <message>
         <source>Associated crowd:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Critical intelligence:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

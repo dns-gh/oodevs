@@ -16,6 +16,7 @@ class MIL_AgentPion;
 class PHY_DotationCategory;
 class TER_Localisation;
 class MT_Vector2D;
+class DEC_Knowledge_Population;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -37,6 +38,7 @@ public:
                            static boost::shared_ptr< MT_Vector2D > SecuringPoint ( const MIL_AgentPion& caller, int knowledgeId );
                            static bool IsEnemy( const MIL_AgentPion& caller, int knowledgeId );
                            static int Exterminate( MIL_AgentPion& caller, int knowledgeId, float surface, const PHY_DotationCategory* dotation );
+                           static const std::string GetCriticalIntelligence( boost::shared_ptr< DEC_Knowledge_Population > pKnowledge );
     //@}
 };
 

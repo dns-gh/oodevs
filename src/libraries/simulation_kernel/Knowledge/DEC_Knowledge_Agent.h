@@ -118,6 +118,7 @@ public:
     E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const;
     E_Tristate IsAFriend( const MIL_Army_ABC& army ) const;
     bool IsInUrbanBlock( const MIL_Object_ABC& urban ) const;
+    const std::string& GetCriticalIntelligence() const;
     //@}
 
     //! @name Perception
@@ -130,6 +131,7 @@ public:
 
     //! @name Decisional operations
     //@{
+    void SetCriticalIntelligenceFromAgentKnown();
     double GetDangerosity( const DEC_Knowledge_Agent& target ) const;
     double GetDangerosity( const MIL_Agent_ABC& target ) const;
     double GetMaxRangeToFireOn( const MIL_Agent_ABC& target, double rWantedPH ) const;
@@ -183,6 +185,7 @@ private:
     DEC_Knowledge_AgentDataDetection dataDetection_;
     DEC_Knowledge_AgentDataRecognition dataRecognition_;
     DEC_Knowledge_AgentDataIdentification dataIdentification_;
+    std::string criticalIntelligence_;
     // Internal attributes
     unsigned int nTimeLastUpdate_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
@@ -200,6 +203,7 @@ private:
     bool bRelevanceUpdated_;
     bool bCurrentPerceptionLevelUpdated_;
     bool bMaxPerceptionLevelUpdated_;
+    bool bCriticalIntelligenceUpdated_;
     double rLastRelevanceSent_;
     static MIL_IDManager idManager_;
     //@}

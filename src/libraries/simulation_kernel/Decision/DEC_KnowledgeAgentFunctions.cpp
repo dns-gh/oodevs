@@ -323,3 +323,13 @@ double DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel( boost
         return 1.f - pTarget->GetMaterialComposantesAttritionLevel( pUrbanBlock );
     throw std::exception( "urbanBlock not valid" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::GetCriticalIntelligence
+// Created: ABR 2011-03-16
+// -----------------------------------------------------------------------------
+const std::string DEC_KnowledgeAgentFunctions::GetCriticalIntelligence( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    pKnowledge->SetCriticalIntelligenceFromAgentKnown();
+    return pKnowledge->GetCriticalIntelligence();
+}

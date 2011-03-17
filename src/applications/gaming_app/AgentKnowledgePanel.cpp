@@ -60,7 +60,8 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tr( "Prisoner:" ) )
                 .AddLabel( tr( "Refugees picked up:" ) )
                 .AddLabel( tr( "Command post:" ) )
-                .AddLabel( tr( "Relevance:"  ) );
+                .AddLabel( tr( "Relevance:" ) )
+                .AddLabel( tr( "Critical intelligence:" ) );
 
     pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tr( "Unit" ) ).

@@ -29,11 +29,12 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 PopulationKnowledge::PopulationKnowledge( Model& model, const sword::CrowdKnowledgeCreation& msg )
     : SimpleEntity< kernel::PopulationKnowledge_ABC >( msg.knowledge().id() )
-    , model_           ( model )
-    , knowledgeGroup_  ( model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
-    , population_      ( model.Populations().Get( msg.crowd().id() ) )
-    , team_            ( model.Sides().Get( msg.party().id() ) )
-    , nDominationState_( 0 )
+    , model_               ( model )
+    , knowledgeGroup_      ( model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
+    , population_          ( model.Populations().Get( msg.crowd().id() ) )
+    , team_                ( model.Sides().Get( msg.party().id() ) )
+    , nDominationState_    ( 0 )
+    , criticalIntelligence_( "" )
 {
     // NOTHING
 }
@@ -53,8 +54,10 @@ PopulationKnowledge::~PopulationKnowledge()
 // -----------------------------------------------------------------------------
 void PopulationKnowledge::Update( const sword::CrowdKnowledgeUpdate& msg )
 {
-    if( msg.has_domination()  )
+    if( msg.has_domination() )
         nDominationState_ = msg.domination();
+    if( msg.has_critical_intelligence() )
+        criticalIntelligence_ = msg.critical_intelligence();
 }
 
 // -----------------------------------------------------------------------------
@@ -154,6 +157,7 @@ void PopulationKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().mutable_knowledge()->set_id( GetId() );
     asn().mutable_knowledge_group()->set_id( knowledgeGroup_.GetId() );
     asn().set_domination( nDominationState_ );
+    asn().set_critical_intelligence( criticalIntelligence_ );
 
     asn.Send( publisher );
 }

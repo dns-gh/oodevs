@@ -80,6 +80,7 @@ public:
     unsigned int GetContaminatedHumans() const;
     unsigned int GetDeadHumans() const;
     bool HasFlow() const;
+    const std::string& GetCriticalIntelligence() const;
     //@}
 
     //! @name Geometry

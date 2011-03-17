@@ -224,6 +224,10 @@
         <source>Perception level</source>
         <translation>Niveau de perception</translation>
     </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation>Renseignement critique:</translation>
+    </message>
 </context>
 <context>
     <name>AgentListView</name>
@@ -2657,6 +2661,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Associated crowd:</source>
         <translation>Foule associée:</translation>
+    </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -37,13 +37,15 @@ MIL_IDManager DEC_Knowledge_Population::idManager_;
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationKnown )
     : DEC_Knowledge_ABC()
-    , nID_                  ( idManager_.GetFreeId() )
-    , pKnowledgeGroup_      ( &knowledgeGroup )
-    , pPopulationKnown_     ( &populationKnown )
-    , bIsRecon_             ( false )
-    , bReconAttributesValid_( false )
-    , bDecStateUpdated_     ( false )
-    , rDominationState_     ( 0. )
+    , nID_                         ( idManager_.GetFreeId() )
+    , pKnowledgeGroup_             ( &knowledgeGroup )
+    , pPopulationKnown_            ( &populationKnown )
+    , bIsRecon_                    ( false )
+    , bReconAttributesValid_       ( false )
+    , bDecStateUpdated_            ( false )
+    , bCriticalIntelligenceUpdated_( false )
+    , rDominationState_            ( 0. )
+    , criticalIntelligence_        ( "" )
 {
     SendMsgCreation();
 }
@@ -54,13 +56,15 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& kn
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Population::DEC_Knowledge_Population()
     : DEC_Knowledge_ABC()
-    , nID_                  ( 0 )
-    , pKnowledgeGroup_      ( 0 )
-    , pPopulationKnown_     ( 0 )
-    , bIsRecon_             ( false )
-    , bReconAttributesValid_( false )
-    , bDecStateUpdated_     ( false )
-    , rDominationState_     ( 0. )
+    , nID_                         ( 0 )
+    , pKnowledgeGroup_             ( 0 )
+    , pPopulationKnown_            ( 0 )
+    , bIsRecon_                    ( false )
+    , bReconAttributesValid_       ( false )
+    , bDecStateUpdated_            ( false )
+    , bCriticalIntelligenceUpdated_( false )
+    , rDominationState_            ( 0. )
+    , criticalIntelligence_        ( "" )
 {
     // NOTHING
 }
@@ -88,7 +92,8 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const unsign
          >> flows_
          >> bIsRecon_
          >> bReconAttributesValid_
-         >> rDominationState_;
+         >> rDominationState_
+         >> criticalIntelligence_;
     idManager_.Lock( nID_ );
     assert( pPopulationKnown_ );
 }
@@ -107,7 +112,8 @@ void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const unsig
          << flows_
          << bIsRecon_
          << bReconAttributesValid_
-         << rDominationState_;
+         << rDominationState_
+         << criticalIntelligence_;
 }
 
 // -----------------------------------------------------------------------------
@@ -392,12 +398,15 @@ void DEC_Knowledge_Population::SendMsgDestruction() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::UpdateOnNetwork() const
 {
-    if( bReconAttributesValid_ && bDecStateUpdated_ )
+    if( bReconAttributesValid_ && ( bDecStateUpdated_ || bCriticalIntelligenceUpdated_ ) )
     {
         client::CrowdKnowledgeUpdate asnMsg;
         asnMsg().mutable_knowledge()->set_id( nID_ );
         asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_ ->GetId() );
-        asnMsg().set_domination( static_cast< unsigned int >( rDominationState_ * 100. ) );
+        if( bDecStateUpdated_ )
+            asnMsg().set_domination( static_cast< unsigned int >( rDominationState_ * 100. ) );
+        if( bCriticalIntelligenceUpdated_ )
+            asnMsg().set_critical_intelligence( criticalIntelligence_ );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -419,6 +428,7 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
         asnMsg().mutable_knowledge()->set_id( nID_ );
         asnMsg().mutable_knowledge_group()->set_id( pKnowledgeGroup_ ->GetId() );
         asnMsg().set_domination( static_cast< unsigned int>( rDominationState_ * 100. ) );
+        asnMsg().set_critical_intelligence( criticalIntelligence_ );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -484,6 +494,25 @@ void DEC_Knowledge_Population::Recon()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetCriticalIntelligence
+// Created: ABR 2011-03-16
+// -----------------------------------------------------------------------------
+const std::string& DEC_Knowledge_Population::GetCriticalIntelligence() const
+{
+    return criticalIntelligence_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::SetCriticalIntelligenceFromPopulationKnown
+// Created: ABR 2011-03-16
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::SetCriticalIntelligenceFromPopulationKnown()
+{
+    criticalIntelligence_ = pPopulationKnown_->GetCriticalIntelligence();
+    bCriticalIntelligenceUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Population::CopyFrom
 // Created: LDC 2010-04-13
 // -----------------------------------------------------------------------------
@@ -496,5 +525,6 @@ void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowled
     bIsRecon_ = knowledge.bIsRecon_;
     bReconAttributesValid_ = knowledge.bReconAttributesValid_;
     rDominationState_ = knowledge.rDominationState_;
+    criticalIntelligence_ = knowledge.criticalIntelligence_;
     bDecStateUpdated_ = true;
 }
