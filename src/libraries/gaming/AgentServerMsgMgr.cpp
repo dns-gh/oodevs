@@ -1319,7 +1319,7 @@ void AgentServerMsgMgr::OnReceiveChangePopulationMagicActionAck( const sword::Ch
 // Name: AgentServerMsgMgr::OnReceiveBurningCellRequestAck
 // Created: BCI 2011-03-08
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveBurningCellRequestAck( const sword::BurningCellRequestAck& message, unsigned long nCtx )
+void AgentServerMsgMgr::OnReceiveBurningCellRequestAck( const sword::BurningCellRequestAck& message, unsigned long /*nCtx*/ )
 {
     CheckAcknowledge( logger_, message.error_code(), "BurningCellRequestAck" );
 }

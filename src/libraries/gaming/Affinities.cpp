@@ -120,7 +120,7 @@ void Affinities::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
     {
         kernel::Team_ABC& team = teams_.GetTeam( it->first );
-       displayer.Display( tools::translate( "Affinities", "Affinity %1:" ).arg( team.GetName() ), it->second );
+        displayer.Display( tools::translate( "Affinities", "Affinity %1:" ).arg( team.GetName() ), it->second );
     }
 }
 

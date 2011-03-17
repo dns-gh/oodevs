@@ -553,7 +553,6 @@ void GQ_Plot::UpdateBackground( const QColorGroup& colors )
     
     for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
-        int nDepth = it->first;
         T_PlotLayer& layer = it->second;
         unsigned int nNbrPlots = layer.size();
         for( unsigned int i = 0; i < nNbrPlots; ++i )
@@ -561,7 +560,7 @@ void GQ_Plot::UpdateBackground( const QColorGroup& colors )
             GQ_PlotData* pData = layer[i];
             assert( pData );
             int titleSize = pData->CaptionSize();
-            QRect rect( plotRect_.x() + plotRect_.width() - nLeftMargin - titleSize , - (1 + i) * nXCaptionSize, titleSize, nXCaptionSize );
+            QRect rect( plotRect_.x() + plotRect_.width() - static_cast< int >( nLeftMargin ) - titleSize , - static_cast< int >( (1 + i) * nXCaptionSize ), titleSize, nXCaptionSize );
             pData->DrawCaption( painter, rect );
         }
     }
