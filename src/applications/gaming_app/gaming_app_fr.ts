@@ -350,7 +350,7 @@
     <name>ChangeHealthStateDialog_ABC</name>
     <message>
         <source>Change health state</source>
-        <translation>Changer l'état de santé</translation>
+        <translation>Changer l&apos;état de santé</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -2686,7 +2686,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Critical intelligence:</source>
-        <translation type="unfinished"></translation>
+        <translation>Renseignement critique:</translation>
     </message>
 </context>
 <context>
@@ -2721,7 +2721,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Crowd Change Armed Individuals</source>
-        <translation>Changer les individus armés d'une foule</translation>
+        <translation>Changer les individus armés d&apos;une foule</translation>
     </message>
     <message>
         <source>Enter value</source>
