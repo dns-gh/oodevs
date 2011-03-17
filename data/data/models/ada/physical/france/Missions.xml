@@ -1991,6 +1991,7 @@
           <parameter type="Agent"/>
         </choice>
       </parameter>
+      <parameter dia-name="contextRetrograde" name="Contexte retrograde" optional="false" type="Integer"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" id="2013" name="MELEE Detruire" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4380,4 +4381,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0822302226" -->
+<!-- signature="2245003338" -->
