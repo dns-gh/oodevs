@@ -135,8 +135,7 @@ kernel::ResourceNetwork_ABC::ResourceNode& ResourceNetworkAttribute::FindOrCreat
 // -----------------------------------------------------------------------------
 void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    // TODO utiliser un enum pour les options
-    char filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< char >();
+    int filter = controllers_.options_.GetOption( "ResourceNetworks", 0 ).To< int >();
     if( filter == 1 )// off
         return;
     if( filter == 3 && !IsSelected() ) // selected outgoing

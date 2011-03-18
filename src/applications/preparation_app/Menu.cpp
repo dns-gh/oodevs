@@ -95,7 +95,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" ), controllers.options_, "LogisticLinks" );
     AddSubMenu4( subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
     {
-        OptionMenu< char >* resourceMenu = new OptionMenu< char >( subMenu, controllers.options_, "ResourceNetworks" );
+        OptionMenu< int >* resourceMenu = new OptionMenu< int >( subMenu, controllers.options_, "ResourceNetworks" );
         resourceMenu->AddItem( tools::translate( "Menu", "On" ), 0 );
         resourceMenu->AddItem( tools::translate( "Menu", "Off" ), 1 );
         resourceMenu->AddItem( tools::translate( "Menu", "Selected: all links" ), 2 );
