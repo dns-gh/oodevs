@@ -114,6 +114,7 @@ ADN_Missions_GUI.cpp \
 ADN_Model_Wizard.cpp \
 ADN_Models_Data.cpp \
 ADN_Models_GUI.cpp \
+ADN_MultiPercentage.cpp \
 ADN_NBC_Datas.cpp \
 ADN_NBC_GUI.cpp \
 ADN_NBC_Intox_GUI.cpp \

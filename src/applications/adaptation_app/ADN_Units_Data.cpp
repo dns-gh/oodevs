@@ -457,7 +457,7 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     , nPowerCloseCombat_                ( 0 )
     , nPowerEngineering_                ( 0 )
     , bIsCivilian_                      ( false )
-    , repartition_                      ()
+    , repartition_                      ( tools::translate( "Units_Data", "Units" ) )
 {
     BindExistenceTo(&ptrModel_);
 

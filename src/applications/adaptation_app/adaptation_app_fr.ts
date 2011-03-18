@@ -2619,6 +2619,17 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_MultiPercentage</name>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Warning: only %1% set, need 100% or you won&apos;t be able to save.</source>
+        <translation>Attention: seulement %1% définis, il faut 100% pour pouvoir sauvegarder.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_NBC_GUI</name>
     <message>
         <source>Propagation</source>
@@ -4864,8 +4875,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
 <context>
     <name>ADN_Type_Repartition</name>
     <message>
-        <source>Invalid repartition - Males/Females/Children repartition doesn&apos;t fit 100%.</source>
-        <translation type="unfinished"></translation>
+        <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition doesn&apos;t fit 100%.</source>
+        <translation>Répartition invalide sur l&apos;onglet &apos;%1&apos; - La répartition Hommes/Femmes/Enfants ne fait pas 100%.</translation>
     </message>
 </context>
 <context>
@@ -5126,10 +5137,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Children</source>
         <translation>Enfants</translation>
-    </message>
-    <message>
-        <source>Warning: only %1% set, need 100% or you won&apos;t be able to save.</source>
-        <translation>Attention: seulement %1% de définis, il faut 100% pour pouvoir sauvegarder.</translation>
     </message>
 </context>
 <context>
@@ -5987,6 +5994,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Population - Invalid resource &apos;%1/%2&apos;</source>
         <translation>Population - Resource &apos;%1/%2&apos; invalide</translation>
     </message>
+    <message>
+        <source>Population</source>
+        <translation>Population</translation>
+    </message>
 </context>
 <context>
     <name>Population_Data</name>
@@ -6005,6 +6016,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Population types - Invalid Population type &apos;%1&apos;</source>
         <translation>Types Population - Type de population invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation>Foule</translation>
     </message>
 </context>
 <context>
@@ -6128,6 +6143,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Unit types - Invalid crossing height &apos;%1&apos;</source>
         <translation>Type de pion - Hauteur de franchissement invalide &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Pions</translation>
     </message>
 </context>
 <context>

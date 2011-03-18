@@ -445,7 +445,6 @@ void ADN_GuiBuilder::SetValidator( QRegExpValidator& validator, E_Validator nVal
     validator.setRegExp( QRegExp( "([A-Z]|[a-z]|[0-9])*" ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::DoValidator
 // Created: APE 2005-04-14
@@ -455,7 +454,6 @@ void ADN_GuiBuilder::DoValidator( T* /*pWidget*/, E_Validator /*nValidator*/ )
 {
     // Nothing
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::DoValidator
@@ -468,7 +466,6 @@ void ADN_GuiBuilder::DoValidator< ADN_EditLine_String >( ADN_EditLine_String* pW
     SetValidator( pWidget->GetValidator(), nValidator );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::DoValidator
 // Created: APE 2005-04-14
@@ -479,7 +476,6 @@ void ADN_GuiBuilder::DoValidator< ADN_EditLine_Int >( ADN_EditLine_Int* pWidget,
 {
     SetValidator( pWidget->GetValidator(), nValidator );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::DoValidator

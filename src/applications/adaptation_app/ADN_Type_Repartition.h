@@ -26,7 +26,7 @@ namespace xml
 class ADN_Type_Repartition
 {
 public:
-    explicit ADN_Type_Repartition();
+    explicit ADN_Type_Repartition( const QString& parentGuiName );
     virtual ~ADN_Type_Repartition();
 
     //! @name Operations
@@ -39,9 +39,10 @@ public:
 
     //! @name Members
     //@{
-    ADN_Type_Int male_;
-    ADN_Type_Int female_;
-    ADN_Type_Int children_;
+    const QString   parentGuiName_;
+    ADN_Type_Double male_;
+    ADN_Type_Double female_;
+    ADN_Type_Double children_;
     //@}
 };
 

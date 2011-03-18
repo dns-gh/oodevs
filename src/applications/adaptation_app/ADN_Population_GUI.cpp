@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Population_GUI.h"
-#include "moc_ADN_Population_GUI.cpp"
 #include "ADN_MainWindow.h"
 #include "ADN_App.h"
 #include "ADN_GuiBuilder.h"
@@ -17,6 +16,7 @@
 #include "ADN_CommonGfx.h"
 #include "ADN_Population_Data.h"
 #include "ADN_Connector_Vector_ABC.h"
+#include "ADN_MultiPercentage.h"
 #include "ADN_Population_ListView.h"
 #include "ADN_Population_SpeedEffect_Attitude_ListView.h"
 #include "ADN_Population_SpeedEffect_Volume_ListView.h"
@@ -110,17 +110,15 @@ void ADN_Population_GUI::Build()
     // Move speed
     builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Average movement speed" ), vInfosConnectors[eMoveSpeed], tr( "km/h" ), eGreaterZero );
 
-    //Repartition
-    pMaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Males" ), vInfosConnectors[ eMale ], tr( "%" ), ePercentage );
-    connect( pMaleEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-    pFemaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Females" ), vInfosConnectors[ eFemale ], tr( "%" ), ePercentage );
-    connect( pFemaleEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-    pChildrenEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Children" ), vInfosConnectors[ eChildren ], tr( "%" ), ePercentage );
-    connect( pChildrenEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-
     //Armed Individuals
-    pArmedIndividualsEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Armed individuals" ), vInfosConnectors[ eArmedIndividuals ], tr( "%" ), ePercentage );
+    builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Armed individuals" ), vInfosConnectors[ eArmedIndividuals ], tr( "%" ), ePercentage );
 
+    //Repartition
+    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pPropertiesGroup, builder );
+    pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ] );
+    pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ] );
+    pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ] );
+    pMultiPercentage->AddWarning();
 
     // Speed effects
     //@{
@@ -190,22 +188,4 @@ void ADN_Population_GUI::Build()
     pFireEffectLayout->addWidget( pFireEffectRoeGroup, 0, 3 );
     pFireEffectLayout->setColStretch( 0, 3 );
     pFireEffectLayout->setColStretch( 3, 1 );
-
-    //QVBoxLayout* pGroupLayout = new QVBoxLayout( pGroup->layout(), 6 );
-    //pGroupLayout->addWidget( pPropertiesGroup, 0, 0 );
-    //builder.AddStretcher( pGroupLayout, Qt::Vertical );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Population_GUI::PercentageChanged
-// Created: LGY 2010-12-28
-// -----------------------------------------------------------------------------
-void ADN_Population_GUI::PercentageChanged()
-{
-    ADN_Population_Data::PopulationInfos* pInfos = static_cast< ADN_Population_Data::PopulationInfos* >( pPopulationList_->GetCurrentData() );
-    if( pInfos == 0 )
-        return;
-    pMaleEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.children_.GetData() - pInfos->repartition_.female_.GetData() );
-    pFemaleEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.children_.GetData() - pInfos->repartition_.male_.GetData() );
-    pChildrenEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.female_.GetData() - pInfos->repartition_.male_.GetData() );
 }

@@ -9,12 +9,12 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_People_GUI.h"
-#include "moc_ADN_People_GUI.cpp"
 #include "ADN_GuiBuilder.h"
 #include "ADN_People_Data.h"
 #include "ADN_People_ListView.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_Consumptions_Table.h"
+#include "ADN_MultiPercentage.h"
 #include "ADN_Schedule_Table.h"
 
 // -----------------------------------------------------------------------------
@@ -64,12 +64,12 @@ void ADN_People_GUI::Build()
 
     builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vInfosConnectors[ eName ] );
     builder.AddField< ADN_ComboBox_Vector< ADN_Population_Data::PopulationInfos > >( pPropertiesGroup, tr( "Associated Crowd" ), vInfosConnectors[ eModel ] );
-    pMaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Males" ), vInfosConnectors[ eMale ], tr( "%" ), ePercentage );
-    connect( pMaleEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-    pFemaleEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Females" ), vInfosConnectors[ eFemale ], tr( "%" ), ePercentage );
-    connect( pFemaleEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-    pChildrenEditLine_ = builder.AddField< ADN_EditLine_Int >( pPropertiesGroup, tr( "Children" ), vInfosConnectors[ eChildren ], tr( "%" ), ePercentage );
-    connect( pChildrenEditLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
+    // repartition
+    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pPropertiesGroup, builder );
+    pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ] );
+    pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ] );
+    pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ] );
+    pMultiPercentage->AddWarning();
 
     QGroupBox* pSecurityGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Security satisfaction level" ), pGroup );
     builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Loss on fire" ), vInfosConnectors[ eLossOnFire ], tr( "%" ), ePercentage );
@@ -93,18 +93,4 @@ void ADN_People_GUI::Build()
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pPeopleList_, 1 );
     pMainLayout->addWidget( pMainBox, 3 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_People_GUI::PercentageChanged
-// Created: LGY 2010-12-28
-// -----------------------------------------------------------------------------
-void ADN_People_GUI::PercentageChanged()
-{
-    ADN_People_Data::PeopleInfos* pInfos = static_cast< ADN_People_Data::PeopleInfos* >( pPeopleList_->GetCurrentData() );
-    if( pInfos == 0 )
-        return;
-    pMaleEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.children_.GetData() - pInfos->repartition_.female_.GetData() );
-    pFemaleEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.children_.GetData() - pInfos->repartition_.male_.GetData() );
-    pChildrenEditLine_->GetValidator().setTop( 100 - pInfos->repartition_.female_.GetData() - pInfos->repartition_.male_.GetData() );
 }

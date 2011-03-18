@@ -16,10 +16,11 @@
 // Name: ADN_Type_Repartition::ADN_Type_Repartition
 // Created: MGD 2011-02-22
 // -----------------------------------------------------------------------------
-ADN_Type_Repartition::ADN_Type_Repartition()
-: male_( 100 ),
-  female_( 0 ),
-  children_( 0 )
+ADN_Type_Repartition::ADN_Type_Repartition( const QString& parentGuiName )
+    : parentGuiName_( parentGuiName )
+    , male_         ( 100. )
+    , female_       ( 0. )
+    , children_     ( 0. )
 {
 }
 
@@ -58,9 +59,9 @@ void ADN_Type_Repartition::ReadArchive( xml::xistream& input )
           >> xml::attribute( "female", rFemale )
           >> xml::attribute( "children", rChildren );
 
-    male_ = static_cast< int >( rMale * 100. );
-    female_ = static_cast< int >( rFemale * 100. );
-    children_ = static_cast< int >( rChildren * 100. );
+    male_ = rMale * 100.;
+    female_ = rFemale * 100.;
+    children_ = rChildren * 100.;
 }
 
 //-----------------------------------------------------------------------------
@@ -81,5 +82,5 @@ void ADN_Type_Repartition::WriteArchive( xml::xostream& output ) const
 void ADN_Type_Repartition::CheckNoError( const std::string& filename ) const
 {
     if( male_.GetData() + female_.GetData() + children_.GetData() != 100 )
-        throw ADN_DataException( filename, tools::translate( "ADN_Type_Repartition", "Invalid repartition - Males/Females/Children repartition doesn't fit 100%." ).ascii() );
+        throw ADN_DataException( filename, tools::translate( "ADN_Type_Repartition", "Invalid repartition on tab \'%1\' - Males/Females/Children repartition doesn't fit 100%." ).arg( parentGuiName_ ).ascii() );
 }

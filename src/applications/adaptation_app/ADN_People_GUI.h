@@ -24,7 +24,6 @@ class ADN_People_ListView;
 // =============================================================================
 class ADN_People_GUI : public ADN_GUI_ABC
 {
-    Q_OBJECT
 
 public:
     //! @name Types
@@ -57,20 +56,11 @@ public:
     void Build();
     //@}
 
-private slots:
-    //! @name slots
-    //@{
-    void PercentageChanged();
-    //@}
-
 private:
     //! @name Member data
     //@{
     ADN_People_Data& data_;
     ADN_People_ListView* pPeopleList_;
-    ADN_EditLine_Int* pMaleEditLine_;
-    ADN_EditLine_Int* pFemaleEditLine_;
-    ADN_EditLine_Int* pChildrenEditLine_;
     //@}
 };
 

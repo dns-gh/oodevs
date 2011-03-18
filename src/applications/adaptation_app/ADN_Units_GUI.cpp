@@ -19,6 +19,7 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_ListView_Units.h"
+#include "ADN_MultiPercentage.h"
 #include "ADN_Nature_GUI.h"
 #include "ADN_Point_GUI.h"
 #include "ADN_SymbolWidget.h"
@@ -43,8 +44,6 @@
 #include <qtooltip.h>
 #include <numeric>
 #include <boost/bind.hpp>
-
-#pragma warning( disable : 4129 )
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_GUI constructor
@@ -231,17 +230,12 @@ void ADN_Units_GUI::Build()
     // Civilian
     ADN_GroupBox* pCivilianGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Civilian" ), pGroup );
     vInfosConnectors[ eIsCivilian ] = &pCivilianGroup->GetConnector();
-
-    pMaleLine_ = builder.AddField< ADN_EditLine_Int >( pCivilianGroup, tr( "Males" ), vInfosConnectors[ eMalesPercent ], tr( "%" ), ePercentage );
-    pFemaleLine_ = builder.AddField< ADN_EditLine_Int >( pCivilianGroup, tr( "Females" ), vInfosConnectors[ eFemalesPercent ], tr( "%" ), ePercentage );
-    pChildrenLine_ = builder.AddField< ADN_EditLine_Int >( pCivilianGroup, tr( "Children" ), vInfosConnectors[ eChildrenPercent ], tr( "%" ), ePercentage );
-    pCivilianGroup->addSpace( 0 );
-    pWarningLabel_ = new QLabel( pCivilianGroup );
-    pCivilianGroup->addSpace( 0 );
-    connect( pMaleLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-    connect( pFemaleLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-    connect( pChildrenLine_, SIGNAL( textChanged( const QString& ) ), this, SLOT( PercentageChanged() ) );
-    connect( pCivilianGroup, SIGNAL( toggled( bool ) ), this, SLOT( PercentageChanged() ) );
+    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pCivilianGroup, builder );
+    pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMalesPercent ] );
+    pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemalesPercent ] );
+    pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildrenPercent ] );
+    pMultiPercentage->AddWarning();
+    connect( pCivilianGroup, SIGNAL( toggled( bool ) ), pMultiPercentage, SLOT( PercentageChanged() ) );
 
     // set list units auto connectors
     pListUnits_->SetItemConnectors( vInfosConnectors );
@@ -389,24 +383,4 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString
 
     QString strText = "<a href=\"" + tr( "Units/" ) + "index.htm\">" + tr( "Units" ) + "</a>";
     mainIndexBuilder.ListItem( strText );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Units_GUI::PercentageChanged
-// Created: ABR 2011-02-22
-// -----------------------------------------------------------------------------
-void ADN_Units_GUI::PercentageChanged()
-{
-    ADN_Units_Data::UnitInfos* pInfos = ( ADN_Units_Data::UnitInfos* )pListUnits_->GetCurrentData();
-    if( pInfos == 0 || !pInfos->bIsCivilian_.GetData() )
-    {
-        pWarningLabel_->clear();
-        return;
-    }
-    pMaleLine_->GetValidator().setTop( 100 - pInfos->repartition_.female_.GetData() - pInfos->repartition_.children_.GetData() );
-    pFemaleLine_->GetValidator().setTop( 100 - pInfos->repartition_.male_.GetData() - pInfos->repartition_.children_.GetData() );
-    pChildrenLine_->GetValidator().setTop( 100 - pInfos->repartition_.male_.GetData() - pInfos->repartition_.female_.GetData() );
-
-    double sum = pInfos->repartition_.male_.GetData() + pInfos->repartition_.female_.GetData() + pInfos->repartition_.children_.GetData();
-    pWarningLabel_->setText( ( sum < 100 ) ? "<font color=\"#FF0000\">" + tr( "Warning: only %1\% set, need 100\% or you won't be able to save." ).arg( sum ) + "</font>" : "" );
 }
