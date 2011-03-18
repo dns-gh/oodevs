@@ -187,7 +187,8 @@ void ResourceLinksDialog_ABC::Update()
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnActivationChanged( bool on )
 {
-    resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].isEnabled_ = on;
+    if( dotationList_->selectedItem() )
+        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].isEnabled_ = on;
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +197,8 @@ void ResourceLinksDialog_ABC::OnActivationChanged( bool on )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnProductionChanged( int value )
 {
-    resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].production_ = value;
+    if( dotationList_->selectedItem() )
+        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].production_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +207,8 @@ void ResourceLinksDialog_ABC::OnProductionChanged( int value )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 {
-    resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].consumption_ = value;
+    if( dotationList_->selectedItem() )
+        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].consumption_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +217,8 @@ void ResourceLinksDialog_ABC::OnConsumptionChanged( int value )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
 {
-    resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].critical_ = on;
+    if( dotationList_->selectedItem() )
+        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].critical_ = on;
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +227,8 @@ void ResourceLinksDialog_ABC::OnCriticalChanged( bool on )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
 {
-    resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].maxStock_ = value;
+    if( dotationList_->selectedItem() )
+        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].maxStock_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +237,8 @@ void ResourceLinksDialog_ABC::OnMaxStockChanged( int value )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnStockChanged( int value )
 {
-    resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].stock_ = value;
+    if( dotationList_->selectedItem() )
+        resourceNodes_[ dotationList_->selectedItem()->text().ascii() ].stock_ = value;
 }
 
 // -----------------------------------------------------------------------------
@@ -241,15 +247,18 @@ void ResourceLinksDialog_ABC::OnStockChanged( int value )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::OnValueChanged( int, int )
 {
-    std::string resource = dotationList_->selectedItem()->text().ascii();
-    for( int j = 0; j < table_->numRows(); ++j )
+    if( dotationList_->selectedItem() )
     {
-        QCheckTableItem* item = static_cast< QCheckTableItem* >( table_->item( j, 1 ) );
-        if( item )
+        std::string resource = dotationList_->selectedItem()->text().ascii();
+        for( int j = 0; j < table_->numRows(); ++j )
         {
-            bool enable = item->isChecked();
-            table_->item( j, 2 )->setEnabled( enable );
-            resourceNodes_[ resource ].links_[ j ].capacity_ = enable ? table_->text( j, 2 ).toInt() : -1;
+            QCheckTableItem* item = static_cast< QCheckTableItem* >( table_->item( j, 1 ) );
+            if( item )
+            {
+                bool enable = item->isChecked();
+                table_->item( j, 2 )->setEnabled( enable );
+                resourceNodes_[ resource ].links_[ j ].capacity_ = enable ? table_->text( j, 2 ).toInt() : -1;
+            }
         }
     }
 }
@@ -260,14 +269,17 @@ void ResourceLinksDialog_ABC::OnValueChanged( int, int )
 // -----------------------------------------------------------------------------
 void ResourceLinksDialog_ABC::Validate()
 {
-    // in case spin boxes have not been validated
-    std::string resource = dotationList_->selectedItem()->text().ascii();
-    resourceNodes_[ resource ].production_ = production_->value();
-    resourceNodes_[ resource ].consumption_ = consumption_->value();
-    resourceNodes_[ resource ].maxStock_ = maxStock_->value();
-    resourceNodes_[ resource ].stock_ = stock_->value();
-    DoValidate();
-    controllers_.controller_.Update( *selected_ );
+    if( dotationList_->selectedItem() )
+    {
+        // in case spin boxes have not been validated
+        std::string resource = dotationList_->selectedItem()->text().ascii();
+        resourceNodes_[ resource ].production_ = production_->value();
+        resourceNodes_[ resource ].consumption_ = consumption_->value();
+        resourceNodes_[ resource ].maxStock_ = maxStock_->value();
+        resourceNodes_[ resource ].stock_ = stock_->value();
+        DoValidate();
+        controllers_.controller_.Update( *selected_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +328,6 @@ void ResourceLinksDialog_ABC::Show()
     dotationList_->clear();
     resourceNodes_ = selected_->GetResourceNodes();
     for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
-    {
         if( it == resourceNodes_.begin() )
         {
             selectedItem_ = new QListBoxText( dotationList_, it->second.resource_.c_str() );
@@ -324,15 +335,20 @@ void ResourceLinksDialog_ABC::Show()
         }
         else
             dotationList_->setSelected( new QListBoxText( dotationList_, it->second.resource_.c_str() ), false );
+
+    if( dotationList_->count() > 0 )
+        groupBox_->setEnabled( true );
+    else
+    {
+        groupBox_->setEnabled( false );
+        groupBox_->setChecked( true );
+        production_->setValue( 0 );
+        consumption_->setValue( 0 );
+        critical_->setChecked( false );
+        maxStock_->setValue( 0 );
+        stock_->setValue( 0 );
+        table_->setNumRows( 0 );
     }
-    groupBox_->setEnabled( dotationList_->count() > 0 );
-    groupBox_->setChecked( true );
-    production_->setValue( 0 );
-    consumption_->setValue( 0 );
-    critical_->setChecked( false );
-    maxStock_->setValue( 0 );
-    stock_->setValue( 0 );
-    table_->setNumRows( 0 );
     Update();
     pMainLayout_->show();
 }

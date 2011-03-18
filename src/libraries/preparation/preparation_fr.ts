@@ -121,7 +121,7 @@
     </message>
     <message>
         <source>Male\Female\Children/Repartition</source>
-        <translation>Répartion H\F\E/Femmes</translation>
+        <translation>Répartition H\F\E/Répartition</translation>
     </message>
     <message>
         <source>Info/Critical Intelligence</source>
