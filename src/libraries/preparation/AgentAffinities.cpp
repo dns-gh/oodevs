@@ -17,7 +17,8 @@
 // Created: LGY 2011-03-14
 // -----------------------------------------------------------------------------
 AgentAffinities::AgentAffinities( kernel::Controllers& controllers )
-    : controllers_( controllers )
+    : Affinities()
+    , controllers_( controllers )
 {
     controllers_.Register( *this );
 }
@@ -27,22 +28,10 @@ AgentAffinities::AgentAffinities( kernel::Controllers& controllers )
 // Created: LGY 2011-01-14
 // -----------------------------------------------------------------------------
 AgentAffinities::AgentAffinities( xml::xistream& xis, kernel::Controllers& controllers )
-    : controllers_( controllers )
+    : Affinities( xis )
+    , controllers_( controllers )
 {
-    xis >> xml::optional
-            >> xml::start( "adhesions" )
-                >> xml::list( "adhesion", *this, &AgentAffinities::ReadAffinity )
-        >> xml::end;
     controllers_.Register( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentAffinities::ReadAffinity
-// Created: LGY 2011-03-14
-// -----------------------------------------------------------------------------
-void AgentAffinities::ReadAffinity( xml::xistream& xis )
-{
-    affinities_[ xis.attribute< unsigned long >( "party" ) ] = xis.attribute< float >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,58 +44,10 @@ AgentAffinities::~AgentAffinities()
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentAffinities::SerializeAttributes
-// Created: LGY 2011-03-14
-// -----------------------------------------------------------------------------
-void AgentAffinities::SerializeAttributes( xml::xostream& xos ) const
-{
-    if( !affinities_.empty() )
-    {
-        xos << xml::start( "adhesions" );
-        for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-        {
-            xos << xml::start( "adhesion" )
-                    << xml::attribute( "party", it->first )
-                    << xml::attribute( "value", it->second )
-                << xml::end;
-        }
-        xos << xml::end;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentAffinities::Clear
-// Created: LGY 2011-03-14
+// Created: LGY 2011-03-17
 // -----------------------------------------------------------------------------
 void AgentAffinities::Clear()
 {
     affinities_.clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentAffinities::HasAffinities
-// Created: LGY 2011-03-14
-// -----------------------------------------------------------------------------
-bool AgentAffinities::HasAffinities() const
-{
-    return !affinities_.empty();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentAffinities::Add
-// Created: LGY 2011-03-14
-// -----------------------------------------------------------------------------
-void AgentAffinities::Add( unsigned long team, float value )
-{
-    affinities_[ team ] = value;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentAffinities::Fill
-// Created: LGY 2011-03-14
-// -----------------------------------------------------------------------------
-void AgentAffinities::Fill( std::map< unsigned long, float >& content )
-{
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-        content[ it->first ] = it->second;
 }

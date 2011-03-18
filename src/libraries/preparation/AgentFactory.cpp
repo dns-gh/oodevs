@@ -27,6 +27,7 @@
 #include "Model.h"
 #include "Inhabitant.h"
 #include "Affinities.h"
+#include "PeopleAffinities.h"
 #include "InhabitantHierarchies.h"
 #include "InhabitantPositions.h"
 #include "Inhabitants.h"
@@ -89,7 +90,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
-    result->Attach( *new AgentAffinities( controllers_ ) );
+    result->Attach< Affinities >( *new AgentAffinities( controllers_ ) );
     if( commandPost )
         result->Attach( *new CommandPostAttributes( *result ) );
     result->Polish();
@@ -131,10 +132,9 @@ Population_ABC* AgentFactory::Create( Entity_ABC& parent, const PopulationType& 
     else
         top = const_cast< Entity_ABC* >( &parent.Get< CommunicationHierarchies >().GetTop() );
     Population* result = new Population( type, number, controllers_.controller_, idManager_ );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new PopulationPositions( *result, static_.coordinateConverter_, position ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
-    result->Attach( *new Affinities( controllers_, model_, *result, dico ) );
+    result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_ ) );
     if( Populations* popus = top->Retrieve< Populations >() )
         popus->AddPopulation( *result );
     result->Polish();
@@ -166,7 +166,7 @@ Inhabitant_ABC* AgentFactory::Create( Entity_ABC& parent, const InhabitantType& 
 
     result->Attach< Positions >( positions );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, top ) );
-    result->Attach( *new Affinities( controllers_, model_, *result, dico ) );
+    result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_ ) );
     if( Inhabitants* inhabs = top->Retrieve< Inhabitants >() )
         inhabs->AddInhabitant( *result );
     result->Polish();
@@ -208,7 +208,7 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
-    result->Attach( *new AgentAffinities( xis, controllers_ ) );
+    result->Attach< Affinities >( *new AgentAffinities( xis, controllers_ ) );
     if( result->IsCommandPost() )
         result->Attach( *new CommandPostAttributes( *result ) );
     if( result->GetType().IsLogisticSupply() )
@@ -256,10 +256,9 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
 Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, Team_ABC& parent )
 {
     Population* result = new Population( xis, controllers_.controller_, idManager_, static_.types_ );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new PopulationPositions( xis, *result, static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
-    result->Attach( *new Affinities( xis, controllers_, model_, *result, dico ) );
+    result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_ ) );
     if( xis.has_child( "extensions" ) )
     {
         xis.start( "extensions" );
@@ -283,7 +282,7 @@ Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, Team_ABC& parent 
 
     result->Attach< Positions >( *new InhabitantPositions( xis, static_.coordinateConverter_, model_.urban_, *result, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
-    result->Attach( *new Affinities( xis, controllers_, model_, *result, dico ) );
+    result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_ ) );
     if( xis.has_child( "extensions" ) )
     {
         xis.start( "extensions" );

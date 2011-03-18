@@ -1,7 +1,9 @@
 HEADERS = 
 
 SOURCES = Application.cpp \
+AffinitiesDialog.cpp \
 AgentAffinitiesDialog.cpp \
+PeopleAffinitiesDialog.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
 ExerciseCreationDialog.cpp \

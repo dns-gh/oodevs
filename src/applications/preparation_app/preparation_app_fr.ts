@@ -1,6 +1,6 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>AgentAffinitiesDialog</name>
+    <name>AffinitiesDialog</name>
     <message>
         <source>Change affinities</source>
         <translation>Modifier la liste d&apos;adhésions</translation>

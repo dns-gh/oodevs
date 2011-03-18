@@ -7,92 +7,63 @@
 //
 // *****************************************************************************
 
-#ifndef __Affinities_h_
-#define __Affinities_h_
+#ifndef _Affinities_ABC_h
+#define _Affinities_ABC_h
 
-#include "Types.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "tools/ElementObserver_ABC.h"
-
-namespace kernel
-{
-    class Controllers;
-    class Entity_ABC;
-    class entity_ABC;
-    class PropertiesDictionary;
-    class Team_ABC;
-}
+#include "Types.h"
+#include <map>
 
 namespace xml
 {
     class xistream;
 }
 
-class Model;
-
 // =============================================================================
 /** @class  Affinities
-    @brief  Affinities
+    @brief  Affinities declaration
 */
-// Created: ABR 2011-01-27
+// Created: LGY 2011-03-17
 // =============================================================================
 class Affinities : public kernel::Extension_ABC
                  , public kernel::Serializable_ABC
-                 , public tools::Observer_ABC
-                 , public tools::ElementObserver_ABC< kernel::Team_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             Affinities( kernel::Controllers& controllers, Model& model, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dictionary );
-             Affinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, const kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
+             Affinities();
+    explicit Affinities( xml::xistream& xis );
     virtual ~Affinities();
     //@}
 
     //! @name Operations
     //@{
+    virtual void Clear() = 0;
+    virtual void Add( unsigned long team, EntityAffinity value );
+    virtual void Fill( std::map< unsigned long, EntityAffinity >& content );
+    virtual bool HasAffinities() const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-    virtual void NotifyCreated( const kernel::Team_ABC& );
-    virtual void NotifyUpdated( const kernel::Team_ABC& );
-    virtual void NotifyDeleted( const kernel::Team_ABC& );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Affinities( const Affinities& );            //!< Copy constructor
-    Affinities& operator=( const Affinities& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void InitializeAffinities();
-    bool VerifyAffinitiesContent() const;
-    QString GetTeamNameFromId( unsigned long id ) const;
-    void UpdateDictionary();
     void ReadAffinity( xml::xistream& xis );
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::map< unsigned long, EntityAffinity > T_Affinities;
     typedef T_Affinities::const_iterator            CIT_Affinities;
-
-    typedef std::map< unsigned long, std::string > T_TeamMap;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    Model& model_;
-    const kernel::Entity_ABC& entity_;
-    kernel::PropertiesDictionary& dictionary_;
     T_Affinities affinities_;
-    T_TeamMap knownTeams_;
     //@}
 };
 
-#endif // __Affinities_h_
+#endif // _Affinities_ABC_h

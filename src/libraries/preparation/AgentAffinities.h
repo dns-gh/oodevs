@@ -10,20 +10,13 @@
 #ifndef __AgentAffinities_h_
 #define __AgentAffinities_h_
 
-#include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Serializable_ABC.h"
-#include "tools/ElementObserver_ABC.h"
+#include "Affinities.h"
 #include "Types.h"
-#include <map>
+#include "tools/Observer_ABC.h"
 
 namespace kernel
 {
     class Controllers;
-}
-
-namespace xml
-{
-    class xistream;
 }
 
 
@@ -33,8 +26,7 @@ namespace xml
 */
 // Created: LGY 2011-03-14
 // =============================================================================
-class AgentAffinities : public kernel::Extension_ABC
-                      , public kernel::Serializable_ABC
+class AgentAffinities : public Affinities
                       , public tools::Observer_ABC
 {
 public:
@@ -47,11 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SerializeAttributes( xml::xostream& xos ) const;
-    void Clear();
-    void Add( unsigned long team, float value );
-    void Fill( std::map< unsigned long, float >& content );
-    bool HasAffinities() const;
+    virtual void Clear();
     //@}
 
 private:
@@ -62,23 +50,9 @@ private:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void ReadAffinity( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned long, EntityAffinity > T_Affinities;
-    typedef T_Affinities::const_iterator            CIT_Affinities;
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_Affinities affinities_;
     //@}
 };
 
