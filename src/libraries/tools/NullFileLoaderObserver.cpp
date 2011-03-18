@@ -51,7 +51,7 @@ bool NullFileLoaderObserver::NotifyInvalidXml( const std::string& fileName, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: NullFileLoaderObserver::NotifyNoXmlSchemaSpecified 
+// Name: NullFileLoaderObserver::NotifyNoXmlSchemaSpecified
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
 void NullFileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& fileName )

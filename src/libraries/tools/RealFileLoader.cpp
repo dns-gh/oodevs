@@ -166,7 +166,7 @@ const std::string& RealFileLoader::CheckIfAddedFile( const std::string& initialI
         BOOST_FOREACH( const T_AddedFile& addedFile, addedFiles_ )
         {
             const std::string& match = addedFile.first;
-            if(  genericInputFileName.size() >= match.size() 
+            if(  genericInputFileName.size() >= match.size()
                 && genericInputFileName.compare( genericInputFileName.size() - match.size(), match.size(), match ) == 0 )
                     return addedFile.second;
         }

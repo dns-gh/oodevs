@@ -29,7 +29,7 @@ public:
              FileMigration( xml::xistream& xis );
     virtual ~FileMigration();
     //@}
-    
+
     //! @name Accessors
     //@{
     virtual const std::string& GetFromVersion() const { return fromVersion_; }

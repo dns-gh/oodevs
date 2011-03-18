@@ -399,7 +399,7 @@ void MainWindow::DoLoad( QString filename )
         return;
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
-    
+
     config_.LoadExercise( filename.ascii() );
     if( Load() )
     {

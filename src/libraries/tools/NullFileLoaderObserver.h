@@ -29,7 +29,7 @@ public:
              NullFileLoaderObserver();
     virtual ~NullFileLoaderObserver();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual bool NotifySignatureError      ( const std::string& file, const tools::EXmlCrc32SignatureError& error );

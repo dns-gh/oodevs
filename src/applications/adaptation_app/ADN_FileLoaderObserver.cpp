@@ -52,7 +52,7 @@ bool ADN_FileLoaderObserver::NotifyInvalidXml( const std::string& fileName, cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_FileLoaderObserver::NotifyNoXmlSchemaSpecified 
+// Name: ADN_FileLoaderObserver::NotifyNoXmlSchemaSpecified
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
 void ADN_FileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& fileName )

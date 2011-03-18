@@ -550,7 +550,7 @@ void GQ_Plot::UpdateBackground( const QColorGroup& colors )
     CenterOnPlotRect( painter );
     x_.DrawGrid( painter, colors, plotRect_ );
     y_.DrawGrid( painter, colors, plotRect_ );
-    
+
     for( IT_LayerMap it = layerMap_.begin(); it != layerMap_.end(); ++it )
     {
         T_PlotLayer& layer = it->second;

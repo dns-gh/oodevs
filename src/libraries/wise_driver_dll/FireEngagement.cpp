@@ -15,7 +15,7 @@
 #pragma warning( push )
 #pragma warning( disable: 4100 4201 )
 #include <wise/iwisedriversink.h>
-#include <wise/WISEAttributeGroupConverter.h> 
+#include <wise/WISEAttributeGroupConverter.h>
 #include <wise/wisedriver.h>
 #pragma warning( pop )
 

@@ -17,7 +17,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
-#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h" 
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"

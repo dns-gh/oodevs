@@ -12,7 +12,7 @@
 
 #include "tools/SessionConfig.h"
 
-namespace tools 
+namespace tools
 {
     class RealFileLoaderObserver_ABC;
 }

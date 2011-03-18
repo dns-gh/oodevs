@@ -190,7 +190,7 @@ unsigned int MIL_PopulationHumans::ApplyNumberOfDead( unsigned int dead )
             deadRemaining -= contaminated_;
             contaminated_ = 0;
             wounded_ = std::max( 0u, wounded_ - deadRemaining );
-        }        
+        }
     }
     return dead;
 }

@@ -35,7 +35,7 @@ public:
     //@{
     virtual std::string GetSymbol() const;
     virtual void UpdateSymbol( bool up = true );
-    
+
     static std::string MaxLevel( const std::string& lhs, const std::string& rhs );
     static std::string IncreaseLevel( const std::string& level );
     //@}
@@ -54,7 +54,7 @@ private:
     MergingTacticalHierarchies( const MergingTacticalHierarchies& );            //!< Copy constructor
     MergingTacticalHierarchies& operator=( const MergingTacticalHierarchies& ); //!< Assignment operator
     //@}
-    
+
 private:
     //! @name Helpers
     //@{

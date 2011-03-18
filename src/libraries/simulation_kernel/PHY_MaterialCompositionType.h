@@ -58,7 +58,7 @@ public:
     //@{
     unsigned int GetId() const;
     const std::string& GetName() const;
-    PHY_MaterialCompositionType::AttritionData* FindAttrition( const std::string& protection ) const; 
+    PHY_MaterialCompositionType::AttritionData* FindAttrition( const std::string& protection ) const;
     //@}
 
 private:

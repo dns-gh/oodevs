@@ -35,7 +35,7 @@ public:
              FileMigration_ABC() {}
     virtual ~FileMigration_ABC() {}
     //@}
-    
+
     //! @name Accessors
     //@{
     virtual const std::string& GetFromVersion() const = 0;

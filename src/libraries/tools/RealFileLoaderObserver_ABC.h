@@ -34,7 +34,7 @@ public:
              RealFileLoaderObserver_ABC() {}
     virtual ~RealFileLoaderObserver_ABC() {}
     //@}
-    
+
     //! @name Operations
     //@{
     virtual bool NotifySignatureError      ( const std::string& file, const EXmlCrc32SignatureError& error ) = 0;

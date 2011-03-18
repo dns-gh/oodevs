@@ -322,7 +322,7 @@ void PHY_RolePion_Composantes::ReadOverloading( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ReadComposantesOverloading( xml::xistream& xis )
 {
-    xis >> xml::optional 
+    xis >> xml::optional
         >> xml::start( "equipments" )
             >> xml::list( "equipment", *this, &PHY_RolePion_Composantes::ReadEquipment )
         >> xml::end;

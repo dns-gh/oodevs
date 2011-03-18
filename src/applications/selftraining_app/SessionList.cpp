@@ -108,7 +108,7 @@ void SessionList::ReadComments( const QString& session )
                 *xis >> comment;
             *xis >> xml::end;
         }
-        if( 
+        if(
             xis->has_child( "date" ) )
         {
             *xis >> xml::start( "date" );

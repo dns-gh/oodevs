@@ -29,7 +29,7 @@ public:
              SchemaVersionExtractor();
     virtual ~SchemaVersionExtractor();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual std::string ExtractVersion( const std::string& schema ) const;

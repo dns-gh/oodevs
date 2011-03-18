@@ -78,7 +78,7 @@ bool Wgs84DmsParser::FormatDmsCoordinate( const QString content, bool longitude,
     coordValue.replace( 'N', ' ' );
     coordValue.replace( 'S', ' ' );
     coordValue.replace( 'E', ' ' );
-    coordValue.replace( 'W', ' ' ); 
+    coordValue.replace( 'W', ' ' );
 
     QStringList listParameters = QStringList::split( " ", coordValue );
     if( listParameters.count() != 3 )

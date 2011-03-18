@@ -37,7 +37,7 @@ public:
              RealFileLoader_ABC() {}
     virtual ~RealFileLoader_ABC() {}
     //@}
-    
+
     //! @name Operations
     //@{
     virtual std::auto_ptr< xml::xistream > LoadFile( const std::string& file, RealFileLoaderObserver_ABC& observer ) const = 0;

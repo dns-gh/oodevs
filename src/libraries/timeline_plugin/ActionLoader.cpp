@@ -64,19 +64,19 @@ namespace
         ss << "Unit [" << xis.attribute< std::string >( "target" ) << "] is requested to execute "
             << xis.attribute< std::string >( "type" ) << ": " << "'"
             << xis.attribute< std::string >( "name" ) << "'";
-        } 
+        }
         else if ( type == "magicobject" )
         {
             const std::string name( xis.attribute< std::string >( "name" ) );
 
             // JCR: The first parameter should be the type of the object
             xis >> xml::start( "parameter" );
-            ss << "Magic action [" << type << "] is requested to create " 
+            ss << "Magic action [" << type << "] is requested to create "
                << xis.attribute< std::string >( "value" ) << ": '" << name << "'";
         }
         else
         {
-            ss << "Magic action [" << xis.attribute< std::string >( "type" ) << "] is requested to be executed " 
+            ss << "Magic action [" << xis.attribute< std::string >( "type" ) << "] is requested to be executed "
                 << ": " << "'" << xis.attribute< std::string >( "name" ) << "'";
         }
         return ss.str();
@@ -96,7 +96,7 @@ void ActionLoader::ReadAction( xml::xistream& xis, std::string& error )
                 << xml::attribute( "xmlns:noNamespaceSchemaLocation", "CommitScenario.xsd" )
                 << xml::attribute( "id", scenarioId_ )
                 << xml::start( "CommitTask" ) << xml::attribute( "timestamp", 0 )
-                    << xml::start( "task" ) << xml::attribute( "id", -1 ) << xml::attribute( "name", BuildMessage( xml::xisubstream( xis ) ) ) 
+                    << xml::start( "task" ) << xml::attribute( "id", -1 ) << xml::attribute( "name", BuildMessage( xml::xisubstream( xis ) ) )
                     << xml::attribute( "actor", actorId_ ) << xml::attribute( "type", "action" )
                         << xml::start( "action" )
                             << xml::xisubstream( xis )

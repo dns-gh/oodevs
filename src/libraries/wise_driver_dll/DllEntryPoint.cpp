@@ -39,11 +39,11 @@ DLLDRIVER_API long DestroyMarshalledDriverInstance( IWISEGenericStub* pDriver )
     // Delete the stub instance...
     delete pStub;
     pStub = NULL;
-    
+
     return wResult;
 }
 
-// Implementation of exported DLL function CreateDriverInstance 
+// Implementation of exported DLL function CreateDriverInstance
 // for creating a new instance of the driver.
 DLLDRIVER_API long CreateDriverInstance( IWISEDriver** ppDriver )
 {
@@ -52,7 +52,7 @@ DLLDRIVER_API long CreateDriverInstance( IWISEDriver** ppDriver )
 
     // Create instance of the driver
     Driver* pSWORDDriver = new Driver();
-    
+
     // Cast to IWISEDriver interface and return...
     *ppDriver = static_cast<IWISEDriver*>( pSWORDDriver );
     return WISE_OK;
@@ -71,6 +71,6 @@ DLLDRIVER_API long DestroyDriverInstance( IWISEDriver* pDriver )
     // Delete the instance...
     delete pSWORDDriver;
     pSWORDDriver = NULL;
-    
+
     return WISE_OK;
 }

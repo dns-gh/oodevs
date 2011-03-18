@@ -182,7 +182,7 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadin
 // Created: SBO 2006-10-10
 // -----------------------------------------------------------------------------
 void TeamsModel::ReadDiplomacy( xml::xistream& xis )
-{    
+{
     static_cast< Diplomacies& >( Get( xis.attribute< int >( "id" ) ).Get< Diplomacies_ABC >() ).Load( xis ); // $$$$ SBO 2008-12-09: !
 }
 

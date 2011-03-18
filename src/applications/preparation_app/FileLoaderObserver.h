@@ -26,7 +26,7 @@ public:
              FileLoaderObserver();
     virtual ~FileLoaderObserver();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual bool NotifySignatureError      ( const std::string& file, const tools::EXmlCrc32SignatureError& error );

@@ -198,8 +198,8 @@ namespace
                         ReadMessage< sword::SimToClient >( body_size, "Simulation message" );
                     else
                     {
-                        std::cerr << "Received unhandled message: " 
-                                  << std::dec << "size=" << size 
+                        std::cerr << "Received unhandled message: "
+                                  << std::dec << "size=" << size
                                   << std::hex << " tag=" << tag << std::endl;
                     }
                     // remove processed message from buffer

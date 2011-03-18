@@ -56,7 +56,7 @@ public:
     public:
         //! @name Member Data
         //@{
-        ADN_Type_String strName_; 
+        ADN_Type_String strName_;
         //@}
     };
 
@@ -186,7 +186,7 @@ public:
     AccommodationInfos* FindAccommodation( const std::string& strName );
     T_InfrastructureInfos_Vector& GetInfrastructuresInfos();
     InfrastructureInfos* FindInfrastructure( const std::string& strName );
-    T_SymbolsInfraInfos_Vector& GetInfraSymbolsInfos();  
+    T_SymbolsInfraInfos_Vector& GetInfraSymbolsInfos();
     SymbolsInfraInfos* FindInfraSymbol( const std::string& strName );
 
 private:

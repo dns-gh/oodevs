@@ -146,7 +146,7 @@ private:
     double rChildren_;
     T_AttitudeSlowDownData slowDownData_;
     MIL_PopulationPionAttritionData attritionData_;
-    T_DamageData damageData_;    
+    T_DamageData damageData_;
     const DEC_Model_ABC* pModel_;
     //@}
 

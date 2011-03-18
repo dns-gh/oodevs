@@ -183,7 +183,7 @@ void MIL_FireClass::ReadSurface( xml::xistream& xis )
     if( surface.terrainData_.Area() == 0xFF )
         xis.error( "Unknown terrain type '" + strTerrainType + "'" );
 
-    surfaces_.push_back( surface );    
+    surfaces_.push_back( surface );
 }
 
 // -----------------------------------------------------------------------------
@@ -327,18 +327,18 @@ const PHY_HumanWound* MIL_FireClass::ChooseRandomWound() const
 // -----------------------------------------------------------------------------
 void MIL_FireClass::GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const
 {
-	ignitionThreshold = 0;
-	maxCombustionEnergy = std::numeric_limits< int >::max();
-	for( T_Surfaces::const_iterator it = surfaces_.begin(); it != surfaces_.end(); ++it )
-	{
+    ignitionThreshold = 0;
+    maxCombustionEnergy = std::numeric_limits< int >::max();
+    for( T_Surfaces::const_iterator it = surfaces_.begin(); it != surfaces_.end(); ++it )
+    {
         if( it->terrainData_.ContainsOne( terrainData ) )
-		{
-			ignitionThreshold = std::max( ignitionThreshold, it->ignitionThreshold_ );
-			maxCombustionEnergy = std::min( maxCombustionEnergy, it->maxCombustionEnergy_ );
-		}
-	}
-	if( maxCombustionEnergy == std::numeric_limits< int >::max() )
-		maxCombustionEnergy = 0;
+        {
+            ignitionThreshold = std::max( ignitionThreshold, it->ignitionThreshold_ );
+            maxCombustionEnergy = std::min( maxCombustionEnergy, it->maxCombustionEnergy_ );
+        }
+    }
+    if( maxCombustionEnergy == std::numeric_limits< int >::max() )
+        maxCombustionEnergy = 0;
 }
 
 // -----------------------------------------------------------------------------

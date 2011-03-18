@@ -42,7 +42,7 @@ private:
     //@{
     virtual void OnStart();
     //@}
-    
+
     //! @name Helpers
     //@{
     virtual std::string BuildSessionName() const;

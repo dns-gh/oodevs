@@ -65,7 +65,7 @@ void InhabitantChangeAffinitiesDialog::NotifyContextMenu( const kernel::Inhabita
 // Name: InhabitantChangeAffinitiesDialog::DoValidate
 // Created: LGY 2011-03-15
 // -----------------------------------------------------------------------------
-void InhabitantChangeAffinitiesDialog::DoValidate() 
+void InhabitantChangeAffinitiesDialog::DoValidate()
 {
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "inhabitant_change_affinities" );
     actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "ChangeAffinitiesDialog", "Change affinities" ), true );

@@ -37,7 +37,7 @@ void PHY_RoofShapeType::Initialize( xml::xistream& xis )
             >> xml::end
         >> xml::end;
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoofShapeType::Terminate
 // Created: JSR 2011-02-17
@@ -48,7 +48,7 @@ void PHY_RoofShapeType::Terminate()
         delete itRoofShape->second;
     roofShapes_.clear();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoofShapeType::Find
 // Created: JSR 2011-02-17

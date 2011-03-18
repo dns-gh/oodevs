@@ -329,7 +329,7 @@ void MIL_EntityManager::CreateUrbanObjects( urban::Model& urbanModel, const MIL_
 {
     UrbanWrapperVisitor visitor( *this );
     urbanModel.Accept( visitor );
-    
+
     const std::string strUrbanState = config.GetUrbanStateFile();
     if( !strUrbanState.empty() && bfs::exists( bfs::path( strUrbanState, bfs::native ) ) )
     {

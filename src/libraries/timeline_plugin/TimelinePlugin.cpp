@@ -35,7 +35,7 @@ TimelinePlugin::TimelinePlugin( dispatcher::Model_ABC& model, const kernel::Stat
     try
     {
         Load( config, xis );
-    } 
+    }
     catch ( const std::exception& e )
     {
         MT_LOG_ERROR_MSG( "TimelinePlugin : error occured while loading plugin." )

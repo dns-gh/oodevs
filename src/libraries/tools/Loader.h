@@ -13,7 +13,7 @@
 #include "Loader_ABC.h"
 #include <memory>
 
-namespace tools 
+namespace tools
 {
     class RealFileLoader_ABC;
     class SchemaVersionExtractor_ABC;
@@ -34,7 +34,7 @@ public:
     Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observer );
     virtual ~Loader();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual void                           CheckFile       ( const std::string& file ) const;
@@ -46,7 +46,7 @@ public:
 private:
     const ExerciseConfig& config_;
     RealFileLoaderObserver_ABC& observer_;
-    std::auto_ptr< SchemaVersionExtractor_ABC > schemaVersionExtractor_; 
+    std::auto_ptr< SchemaVersionExtractor_ABC > schemaVersionExtractor_;
     std::auto_ptr< RealFileLoader_ABC > fileLoader_;
     mutable std::auto_ptr< xml::xistream > physicalFileXis_;
 };

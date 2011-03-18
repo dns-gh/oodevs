@@ -43,7 +43,7 @@ bool FileMatcherFileName::MatchAndReturnNewSchema( const std::string& inputFileN
     outputSchema.clear();
     const std::string genericInputFileName = bfs::path( inputFileName ).string();
 
-    if(   genericInputFileName.size() >= fileNameToMatch_.size() 
+    if(   genericInputFileName.size() >= fileNameToMatch_.size()
         && genericInputFileName.compare( genericInputFileName.size() - fileNameToMatch_.size(), fileNameToMatch_.size(), fileNameToMatch_ ) == 0 )
     {
         outputSchema = assignedSchema_;

@@ -717,7 +717,7 @@ void ADN_Population_Data::ReadArchive( xml::xistream& input )
     std::string time = "1h";
     input >> xml::start( "populations" )
           >> xml::optional >> xml::start( "time-between-nbc-applications")
-          >> xml::attribute( "delay", time ) >> xml::end; 
+          >> xml::attribute( "delay", time ) >> xml::end;
     reloadingSpeedEffectInfos_.ReadArchive( input );
     timeBetweenNbcApplication_ = time;
     input >> xml::list( "population", *this, &ADN_Population_Data::ReadPopulation )

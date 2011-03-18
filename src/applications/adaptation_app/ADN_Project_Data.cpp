@@ -377,7 +377,7 @@ void ADN_Project_Data::FilterNode( const std::string& node, xml::xistream& xis, 
         xos << xml::content( node, xis );
 }
 
-namespace 
+namespace
 {
     void ExtractRootNode( const std::string& nodeName, xml::xistream& , std::string& rootNode )
     {

@@ -210,7 +210,7 @@ void ADN_Units_GUI::Build()
     builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Counter mobility support" ), vInfosConnectors[ eCounterMobilitySupport ], tr( "%" ), ePercentage );
     builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Protection support" ), vInfosConnectors[ eProtectionSupport ], tr( "%" ), ePercentage );
     builder.AddField< ADN_EditLine_Int >( pSkillsGroup, tr( "Engineering recon" ), vInfosConnectors[ eEngineeringRecon ], tr( "%" ), ePercentage );
-   
+
     // Efficiencies
     QGroupBox* pEfficienciesGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Efficiencies" ), pGroup );
     pEfficienciesGroup->setInsideMargin( 20 );

@@ -29,7 +29,7 @@ public:
              SchemaVersionExtractor_ABC() {}
     virtual ~SchemaVersionExtractor_ABC() {}
     //@}
-    
+
     //! @name Operations
     //@{
     virtual std::string ExtractVersion( const std::string& schema ) const = 0;

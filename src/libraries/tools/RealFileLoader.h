@@ -43,7 +43,7 @@ public:
     explicit RealFileLoader( xml::xistream& xis, const SchemaVersionExtractor_ABC& versionExtractor );
     virtual ~RealFileLoader();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual std::auto_ptr< xml::xistream > LoadFile( const std::string& file, RealFileLoaderObserver_ABC& observer ) const;
@@ -68,7 +68,6 @@ private:
     typedef std::list< T_AddedFile >                            T_AddedFiles;
     typedef std::list< boost::shared_ptr< FileMigration_ABC > > T_Migrations;
     typedef std::list< boost::shared_ptr< FileMatcher_ABC > >   T_DefaultSchemasAssignment;
-    
     //@}
 
 private:

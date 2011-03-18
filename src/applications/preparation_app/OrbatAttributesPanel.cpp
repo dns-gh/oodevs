@@ -377,10 +377,10 @@ void OrbatAttributesPanel::Commit()
                     if( !edit->validator() || edit->validator()->validate( text, pos ) == QValidator::Acceptable )
                     {
                         ext->SetValue( ( *it )->name(), text.ascii() );
-                        edit->setPaletteBackgroundColor( Qt::white );  
+                        edit->setPaletteBackgroundColor( Qt::white );
                     }
                      else
-                         edit->setPaletteBackgroundColor( Qt::yellow );  
+                         edit->setPaletteBackgroundColor( Qt::yellow );
                 }
                 break;
             case AttributeType::ETypeDictionary:
@@ -399,10 +399,10 @@ void OrbatAttributesPanel::Commit()
                     if( !combo->validator() || combo->validator()->validate( text, pos ) == QValidator::Acceptable )
                     {
                         ext->SetValue( ( *it )->name(), text.ascii() );
-                        combo->setPaletteBackgroundColor( Qt::white );  
+                        combo->setPaletteBackgroundColor( Qt::white );
                     }
                     else
-                        combo->setPaletteBackgroundColor( Qt::yellow );  
+                        combo->setPaletteBackgroundColor( Qt::yellow );
                 }
                 break;
             default:

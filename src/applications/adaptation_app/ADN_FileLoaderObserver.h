@@ -27,7 +27,7 @@ public:
              ADN_FileLoaderObserver();
     virtual ~ADN_FileLoaderObserver();
     //@}
-    
+
     //! @name Operations
     //@{
     virtual bool NotifySignatureError      ( const std::string& file, const tools::EXmlCrc32SignatureError& error );

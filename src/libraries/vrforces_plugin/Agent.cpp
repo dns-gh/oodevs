@@ -181,7 +181,7 @@ void Agent::OnDestroyPseudoAggregate( const DtString& /*name*/, const DtEntityId
             that->publisher_->asr()->setLocation( that->reflected_->asr()->location() );
             that->publisher_->asr()->setOrientation( that->reflected_->asr()->orientation() );
             that->publisher_->tick();
-            
+
         }
         that->reflectedId_ = DtEntityIdentifier::nullId();
         that->reflected_ = 0;

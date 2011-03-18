@@ -51,7 +51,7 @@ BOOST_FIXTURE_TEST_CASE( test_single_migration, Fixture )
     xml::xifstream tmp( BOOST_RESOLVE( "testFileMigration/input-1.3.xml" ) );
     xml::xostringstream expected;
     expected << tmp;
-    BOOST_CHECK_XML_EQUAL( actual.str(), expected.str() ); 
+    BOOST_CHECK_XML_EQUAL( actual.str(), expected.str() );
 }
 
 BOOST_FIXTURE_TEST_CASE( test_single_migration_not_applicable, Fixture )
@@ -74,7 +74,7 @@ BOOST_FIXTURE_TEST_CASE( test_single_migration_not_applicable, Fixture )
     xml::xostringstream expected;
     expected << tmp;
 
-    BOOST_CHECK_XML_EQUAL( actual.str(), expected.str() ); 
+    BOOST_CHECK_XML_EQUAL( actual.str(), expected.str() );
 }
 
 BOOST_FIXTURE_TEST_CASE( test_migration_invalid_xsl, Fixture )

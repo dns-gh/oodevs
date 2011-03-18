@@ -159,7 +159,7 @@ void SwordFacade::OnConnectionError( const std::string& endpoint, const std::str
 void SwordFacade::OnAuthenticationSucceeded( const std::string& profile )
 {
     std::wstringstream message;
-    message << L"Authenticated using profile '" << ToWideString( profile ) << L"'"; 
+    message << L"Authenticated using profile '" << ToWideString( profile ) << L"'";
     driver_.NotifyInfoMessage( message.str() );
 }
 

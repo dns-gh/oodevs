@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_CASE( test_matcher_root_node )
     matcherConf >> xml::start( "match-if" );
     boost::shared_ptr< tools::FileMatcher_ABC > matcher = factory.CreateFileMatcher( matcherConf );
     matcherConf >> xml::end();
-    
+
     xml::xistringstream xisMatching( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
                                      "<physical xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"whatever.xsd\">"
                                      "  <decisional file=\"Decisionnel.xml\"/>"
@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE( test_matcher_non_versioned_schema )
     matcherConf >> xml::start( "match-if" );
     boost::shared_ptr< tools::FileMatcher_ABC > matcher = factory.CreateFileMatcher( matcherConf );
     matcherConf >> xml::end();
-    
+
     xml::xistringstream xisMatching( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
                                      "<physical xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"/stupid/schema.xsd\">"
                                      "  <decisional file=\"Decisionnel.xml\"/>"

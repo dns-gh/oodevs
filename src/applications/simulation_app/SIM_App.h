@@ -19,7 +19,7 @@
 #include <boost/thread.hpp>
 #pragma warning( pop )
 
-namespace tools 
+namespace tools
 {
     class RealFileLoaderObserver_ABC;
 }

@@ -126,7 +126,7 @@ void MIL_ObjectManipulator::Destroy()
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManipulator::Mine
 // Created: JCR 2008-06-02
-// -----------------------------------------------------------------------------    
+// -----------------------------------------------------------------------------
 void MIL_ObjectManipulator::Mine( double rDeltaPercentage )
 {
     object_.GetAttribute< MineAttribute >().Update( rDeltaPercentage );

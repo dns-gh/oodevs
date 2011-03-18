@@ -32,7 +32,7 @@ class StaticModel;
 // =============================================================================
 class InitialStateDialog : public QDialog
                          , public tools::Observer_ABC
-                         , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC > 
+                         , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                          , private boost::noncopyable
 {
     Q_OBJECT

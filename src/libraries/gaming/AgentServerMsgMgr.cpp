@@ -1209,7 +1209,7 @@ void AgentServerMsgMgr::OnReceiveStartUnitFire( const sword::StartUnitFire& mess
     src.Update( message );
     GetModel().fires_.AddFire( message );
     Entity_ABC* target = GetModel().fires_.FindTarget( message );
-    if( target ) 
+    if( target )
         target->Update( message );
 }
 

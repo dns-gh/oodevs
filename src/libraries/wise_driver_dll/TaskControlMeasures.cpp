@@ -19,7 +19,7 @@
 #pragma warning( push )
 #pragma warning( disable: 4100 4201 )
 #include <wise/iwisedriversink.h>
-#include <wise/WISEAttributeGroupConverter.h> 
+#include <wise/WISEAttributeGroupConverter.h>
 #include <wise/wisedriver.h>
 #pragma warning( pop )
 
@@ -388,7 +388,7 @@ void TaskControlMeasures::CreateLocationList( const sword::LocationList& list )
 
 namespace
 {
-   
+
     void FillLocation( sword::Location& message, const sword::Location::Geometry& geometry, const std::list< CWISEVec3 >& points )
     {
         message.set_type( geometry );
