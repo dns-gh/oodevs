@@ -102,6 +102,7 @@ private:
     void DoUpdate( const sword::CrowdConcentrationCreation& message );
     void DoUpdate( const sword::CrowdConcentrationUpdate& message );
     void DoUpdate( const sword::CrowdConcentrationDestruction& message );
+    void CreateDictionary( kernel::Controller& controller );
     void ComputeCenter();
     //@}
 
@@ -111,9 +112,9 @@ private:
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::PopulationType& type_;
-    float male_;
-    float female_;
-    float children_;
+    unsigned int male_;
+    unsigned int female_;
+    unsigned int children_;
     kernel::OptionalValue< std::string > criticalIntelligence_;
     kernel::OptionalValue< float > armedIndividuals_;
     geometry::Rectangle2f boundingBox_;

@@ -36,6 +36,9 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& c
     : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
     , controllers_     ( controllers )
     , type_            ( typeResolver.Get( message.type().id() ) )
+    , male_            ( static_cast< unsigned int >( 100 * type_.GetMalePercentage() + 0.5f ) )
+    , female_          ( static_cast< unsigned int >( 100 * type_.GetFemalePercentage() + 0.5f ) )
+    , children_        ( static_cast< unsigned int >( 100 * type_.GetChildrenPercentage() + 0.5f ) )
     , dotationResolver_( dotationResolver )
 {
     if( name_.isEmpty() )
@@ -79,11 +82,15 @@ void Inhabitant::CreateDictionary( Controller& controller )
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );
     const Inhabitant& self = *this;
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Info/Identifier" ), self.id_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Info/Name" ), self.name_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Health" ), self.healthSatisfaction_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Safety" ), self.safetySatisfaction_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Satisfaction/Lodging" ), self.lodgingSatisfaction_ );
+    const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Identifier" ), self.id_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Name" ), self.name_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Male" ), male_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Female" ), female_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Children" ), children_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Health" ), self.healthSatisfaction_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Safety" ), self.safetySatisfaction_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Lodging" ), self.lodgingSatisfaction_ );
     BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
     {
         QString info = tools::translate( "Inhabitant", "Details/" ) + extension.first.c_str();
@@ -123,7 +130,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         {
             const sword::PopulationUpdate_MotivationSatisfaction& motivation = msg.satisfaction().motivations( i );
             motivationSatisfactions_[ motivation.motivation() ] = ToInt( motivation.percentage() );
-            const QString key = tools::translate( "Inhabitant", "Satisfaction/Usage/" ) + motivation.motivation().c_str();
+            const QString key = tools::translate( "Inhabitant", "Satisfactions/Usage/" ) + motivation.motivation().c_str();
             PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
             if( !dictionary.HasKey( key ) )
             {
@@ -138,7 +145,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             if( !dotation )
                 continue;
             resourceSatisfactions_[ dotation ] = ToInt( resource.value() );
-            const QString key = tools::translate( "Inhabitant", "Satisfaction/Resource/" ) + dotation->GetName().c_str();
+            const QString key = tools::translate( "Inhabitant", "Satisfactions/Resource/" ) + dotation->GetName().c_str();
             PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
             if( !dictionary.HasKey( key ) )
             {
@@ -282,14 +289,7 @@ void Inhabitant::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Inhabitant", "Alive:" ), healthy_ )
              .Display( tools::translate( "Inhabitant", "Wounded:" ), wounded_ )
-             .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ )
-             .Display( tools::translate( "Inhabitant", "Health satisfaction:" ), healthSatisfaction_ )
-             .Display( tools::translate( "Inhabitant", "Safety satisfaction:" ), safetySatisfaction_ )
-             .Display( tools::translate( "Inhabitant", "Lodging satisfaction:" ), lodgingSatisfaction_ );
-    for( CIT_MotivationSatisfactions satisfaction = motivationSatisfactions_.begin(); satisfaction != motivationSatisfactions_.end(); ++satisfaction )
-        displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( satisfaction->first.c_str() ), satisfaction->second );
-    for( CIT_ResourceSatisfactions resource = resourceSatisfactions_.begin(); resource != resourceSatisfactions_.end(); ++resource )
-        displayer.Display( tools::translate( "Inhabitant", "%1 satisfaction:" ).arg( resource->first->GetName().c_str() ), resource->second );
+             .Display( tools::translate( "Inhabitant", "Dead:" ), dead_ );
 }
 
 // -----------------------------------------------------------------------------

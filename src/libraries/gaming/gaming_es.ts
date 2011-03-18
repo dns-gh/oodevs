@@ -2,7 +2,7 @@
 <context>
     <name>Affinities</name>
     <message>
-        <source>Affinity %1:</source>
+        <source>Affinities/%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -441,6 +441,38 @@
         <source>Armed individuals:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Info/Identifier</source>
+        <translation type="unfinished">Info/Identificador</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation type="unfinished">Info/Nombre</translation>
+    </message>
+    <message>
+        <source>Info/Critical intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Domination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info/Armed individuals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Male</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Female</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Children</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Decisions</name>
@@ -548,23 +580,7 @@
         <translation type="unfinished">Info/Nombre</translation>
     </message>
     <message>
-        <source>Satisfaction/Health</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Satisfaction/Safety</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Satisfaction/Lodging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Details/</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Satisfaction/Usage/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -600,10 +616,6 @@
         <translation>Zone de vie</translation>
     </message>
     <message>
-        <source>Satisfaction/Resource/</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Resident</source>
         <translation type="unfinished"></translation>
     </message>
@@ -613,6 +625,38 @@
     </message>
     <message>
         <source>Confined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Male</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Female</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfactions/Health</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfactions/Safety</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfactions/Lodging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfactions/Usage/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfactions/Resource/</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

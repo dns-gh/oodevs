@@ -40,9 +40,9 @@ Population::Population( const sword::CrowdCreation& message,
     , controllers_( controllers )
     , converter_  ( converter )
     , type_       ( typeResolver.Get( message.type().id() ) )
-    , male_       ( message.male() )
-    , female_     ( message.female() )
-    , children_   ( message.children() )
+    , male_       ( static_cast< unsigned int >( 100 * message.male() + 0.5f ) )
+    , female_     ( static_cast< unsigned int >( 100 * message.female() + 0.5f ) )
+    , children_   ( static_cast< unsigned int >( 100 * message.children() + 0.5f ) )
     , nDomination_( 0, false )
     , criticalIntelligence_( "", false )
     , armedIndividuals_( 0, false )
@@ -57,7 +57,7 @@ Population::Population( const sword::CrowdCreation& message,
         Attach( *extensions );
     }
     RegisterSelf( *this );
-    Attach( *new PropertiesDictionary( controllers.controller_ ) );
+    CreateDictionary( controllers_.controller_ );
     controllers_.Register( *this );
 }
 
@@ -397,6 +397,26 @@ const PopulationType& Population::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Population::CreateDictionary
+// Created: JSR 2011-03-18
+// -----------------------------------------------------------------------------
+void Population::CreateDictionary( kernel::Controller& controller )
+{
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
+    Attach( dictionary );
+    const Population& self = *this;
+    const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Identifier" ), self.id_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Name" ), self.name_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Critical intelligence" ), criticalIntelligence_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Domination" ), nDomination_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Armed individuals" ), armedIndividuals_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Male" ), male_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Female" ), female_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Children" ), children_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Population::DisplayInTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
@@ -424,13 +444,7 @@ void Population::DisplayInSummary( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Crowd", "Healthy:" ), GetHealthyHumans() )
              .Display( tools::translate( "Crowd", "Wounded:" ), GetWoundedHumans() )
              .Display( tools::translate( "Crowd", "Contaminated:" ), GetContaminatedHumans() )
-             .Display( tools::translate( "Crowd", "Dead:" ), GetDeadHumans() )
-             .Display( tools::translate( "Crowd", "Male:" ), male_ )
-             .Display( tools::translate( "Crowd", "Female:" ), female_ )
-             .Display( tools::translate( "Crowd", "Children:" ), children_ )
-             .Display( tools::translate( "Crowd", "Domination:" ), nDomination_ )
-             .Display( tools::translate( "Crowd", "Critical intelligence:" ), criticalIntelligence_ )
-             .Display( tools::translate( "Crowd", "Armed individuals:" ), armedIndividuals_ );
+             .Display( tools::translate( "Crowd", "Dead:" ), GetDeadHumans() );
 }
 
 // -----------------------------------------------------------------------------

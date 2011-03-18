@@ -15,7 +15,6 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/StockAttribute_ABC.h"
-#include "gaming/Affinities.h"
 
 namespace kernel
 {
@@ -57,7 +56,6 @@ class InfoSummariesWidget : public QVBox
                           , public tools::ElementObserver_ABC< kernel::SealOffAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::FloodAttribute_ABC >
                           , public tools::ElementObserver_ABC< kernel::StockAttribute_ABC >
-                          , public tools::ElementObserver_ABC< Affinities >
 {
 public:
     //! @name Constructors/Destructor
@@ -100,7 +98,6 @@ private:
     virtual void NotifyUpdated( const kernel::SealOffAttribute_ABC& extension )          { UpdateDisplayIfNeeded< kernel::SealOffAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::FloodAttribute_ABC& extension )            { UpdateDisplayIfNeeded< kernel::FloodAttribute_ABC >( extension ); }
     virtual void NotifyUpdated( const kernel::StockAttribute_ABC& extension )            { UpdateDisplayIfNeeded< kernel::StockAttribute_ABC >( extension ); }
-    virtual void NotifyUpdated( const Affinities& extension )                            { UpdateDisplayIfNeeded< Affinities >( extension ); }
 
     template< class T >
     void UpdateDisplayIfNeeded( const T& extension );

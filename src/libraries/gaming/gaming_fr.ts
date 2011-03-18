@@ -2,8 +2,8 @@
 <context>
     <name>Affinities</name>
     <message>
-        <source>Affinity %1:</source>
-        <translation>Adhésion %1:</translation>
+        <source>Affinities/%1</source>
+        <translation>Adhésions/%1</translation>
     </message>
 </context>
 <context>
@@ -441,6 +441,38 @@
         <source>Armed individuals:</source>
         <translation>Individus armés:</translation>
     </message>
+    <message>
+        <source>Info/Identifier</source>
+        <translation>Info/Identifiant</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation>Info/Nom</translation>
+    </message>
+    <message>
+        <source>Info/Critical intelligence</source>
+        <translation>Info/Renseignement critique</translation>
+    </message>
+    <message>
+        <source>Info/Domination</source>
+        <translation>Info/Domination</translation>
+    </message>
+    <message>
+        <source>Info/Armed individuals</source>
+        <translation>Info/Individus armés</translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Male</source>
+        <translation>Répartition H\F\E/Hommes</translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Female</source>
+        <translation>Répartition H\F\E/Femmes</translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Children</source>
+        <translation>Répartition H\F\E/Enfants</translation>
+    </message>
 </context>
 <context>
     <name>Decisions</name>
@@ -548,24 +580,8 @@
         <translation>Info/Nom</translation>
     </message>
     <message>
-        <source>Satisfaction/Health</source>
-        <translation>Satisfaction/Santé</translation>
-    </message>
-    <message>
-        <source>Satisfaction/Safety</source>
-        <translation>Satisfaction/Sécurité</translation>
-    </message>
-    <message>
-        <source>Satisfaction/Lodging</source>
-        <translation>Satisfaction/Hébergement</translation>
-    </message>
-    <message>
         <source>Details/</source>
         <translation>Details/</translation>
-    </message>
-    <message>
-        <source>Satisfaction/Usage/</source>
-        <translation>Satisfaction/Motivation/</translation>
     </message>
     <message>
         <source>Alive:</source>
@@ -600,10 +616,6 @@
         <translation>Zone de vie/</translation>
     </message>
     <message>
-        <source>Satisfaction/Resource/</source>
-        <translation>Satisfaction/Ressource/</translation>
-    </message>
-    <message>
         <source>Resident</source>
         <translation>Habitant</translation>
     </message>
@@ -614,6 +626,38 @@
     <message>
         <source>Confined</source>
         <translation>Confiné</translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Male</source>
+        <translation>Répartition H\F\E/Hommes</translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Female</source>
+        <translation>Répartition H\F\E/Femmes</translation>
+    </message>
+    <message>
+        <source>M\F\C Repartition/Children</source>
+        <translation>Répartition H\F\E/Enfants</translation>
+    </message>
+    <message>
+        <source>Satisfactions/Health</source>
+        <translation>Satisfaction/Santé</translation>
+    </message>
+    <message>
+        <source>Satisfactions/Safety</source>
+        <translation>Satisfaction/Sécurité</translation>
+    </message>
+    <message>
+        <source>Satisfactions/Lodging</source>
+        <translation>Satisfaction/Hébergement</translation>
+    </message>
+    <message>
+        <source>Satisfactions/Usage/</source>
+        <translation>Satisfaction/Motivations</translation>
+    </message>
+    <message>
+        <source>Satisfactions/Resource/</source>
+        <translation>Satisfaction/Ressource/</translation>
     </message>
 </context>
 <context>

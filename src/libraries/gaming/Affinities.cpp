@@ -12,7 +12,7 @@
 #include "TeamsModel.h"
 #include "actions/ParameterList.h"
 #include "clients_gui/DecimalSpinBoxAndSlider.h"
-#include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Tools.h"
@@ -23,9 +23,10 @@
 // Name: Affinities constructor
 // Created: ABR 2011-01-28
 // -----------------------------------------------------------------------------
-Affinities::Affinities( kernel::Controller& controller, TeamsModel& teams )
+Affinities::Affinities( kernel::Controller& controller, TeamsModel& teams, kernel::PropertiesDictionary& dico )
     : teams_     ( teams )
     , controller_( controller )
+    , dico_      ( dico )
 {
     // NOTHING
 }
@@ -50,6 +51,7 @@ void Affinities::DoUpdate( const sword::PopulationUpdate& message )
         const sword::PartyAdhesion& adhesion = message.adhesions( i );
         affinities_[ adhesion.party().id() ] = adhesion.value();
     }
+    CreateDictionary();
     controller_.Update( *this );
 }
 
@@ -64,6 +66,7 @@ void Affinities::DoUpdate( const sword::CrowdUpdate& message )
         const sword::PartyAdhesion& adhesion = message.adhesions( i );
         affinities_[ adhesion.party().id() ] = adhesion.value();
     }
+    CreateDictionary();
     controller_.Update( *this );
 }
 
@@ -78,7 +81,23 @@ void Affinities::DoUpdate( const sword::UnitAttributes& message )
         const sword::PartyAdhesion& adhesion = message.adhesions( i );
         affinities_[ adhesion.party().id() ] = adhesion.value();
     }
+    CreateDictionary();
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Affinities::CreateDictionary
+// Created: JSR 2011-03-18
+// -----------------------------------------------------------------------------
+void Affinities::CreateDictionary() const
+{
+    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+    {
+        kernel::Team_ABC& team = teams_.GetTeam( it->first );
+        const QString key = tools::translate( "Affinities", "Affinities/%1" ).arg( team.GetName() );
+        if( !dico_.HasKey( key ) )
+            dico_.Register( *this, key,  it->second );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -128,19 +147,6 @@ void Affinities::FillParameterList( actions::parameters::ParameterList* paramete
         actions::parameters::ParameterList& list = parameterList->AddList( "Affinity" );
         list.AddIdentifier( "ID", it->first );
         list.AddNumeric( "Value", it->second );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Affinities::DisplayInSummary
-// Created: LGY 2011-03-15
-// -----------------------------------------------------------------------------
-void Affinities::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
-{
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-    {
-        kernel::Team_ABC& team = teams_.GetTeam( it->first );
-        displayer.Display( tools::translate( "Affinities", "Affinity %1:" ).arg( team.GetName() ), it->second );
     }
 }
 

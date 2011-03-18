@@ -29,7 +29,7 @@ namespace actions
 
 namespace kernel
 {
-    class Displayer_ABC;
+    class PropertiesDictionary;
 }
 
 namespace sword
@@ -49,7 +49,6 @@ class TeamsModel;
 // Created: ABR 2011-01-28
 // =============================================================================
 class Affinities : public kernel::Extension_ABC
-                 , public kernel::Displayable_ABC
                  , public kernel::Updatable_ABC< sword::PopulationUpdate >
                  , public kernel::Updatable_ABC< sword::CrowdUpdate >
                  , public kernel::Updatable_ABC< sword::UnitAttributes >
@@ -57,7 +56,7 @@ class Affinities : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Affinities( kernel::Controller& controller, TeamsModel& teams );
+             Affinities( kernel::Controller& controller, TeamsModel& teams, kernel::PropertiesDictionary& dico );
     virtual ~Affinities();
     //@}
 
@@ -67,7 +66,6 @@ public:
     void CancelChanges();
     void ValidateChanges();
     void FillParameterList( actions::parameters::ParameterList* parameterList ) const;
-    virtual void DisplayInSummary( kernel::Displayer_ABC& ) const;
     bool HasAffinities() const;
     //@}
 
@@ -83,6 +81,7 @@ private:
     virtual void DoUpdate( const sword::PopulationUpdate& message );
     virtual void DoUpdate( const sword::CrowdUpdate& message );
     virtual void DoUpdate( const sword::UnitAttributes& message );
+    void CreateDictionary() const;
     //@}
 
     //! @name Types
@@ -99,6 +98,7 @@ private:
     TeamsModel& teams_;
     T_Affinities affinities_;
     T_Affinities changingAffinities_;
+    kernel::PropertiesDictionary& dico_;
     //@}
 };
 

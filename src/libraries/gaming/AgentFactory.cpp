@@ -191,7 +191,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new DecisionalStates() );
     result->Attach( *new Speeds( static_.coordinateConverter_ ) );
     result->Attach( *new Weapons( controllers_, static_.objectTypes_, static_.objectTypes_ ) );
-    result->Attach( *new Affinities( controllers_.controller_, model_.teams_ ) );
+    result->Attach( *new Affinities( controllers_.controller_, model_.teams_, dico ) );
     AttachExtensions( *result );
 
     result->Update( message );
@@ -207,11 +207,12 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& message )
 {
     Population* result = new Population( message, controllers_, static_.coordinateConverter_, static_.types_, static_ );
+    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
     result->Attach( *new DecisionalStates() );
-    result->Attach( *new Affinities( controllers_.controller_, model_.teams_ ) );
+    result->Attach( *new Affinities( controllers_.controller_, model_.teams_, dico ) );
     AttachExtensions( *result );
     result->Polish();
     return result;
@@ -224,9 +225,10 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
 kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& message )
 {
     Inhabitant* result = new Inhabitant( message, controllers_, model_.urbanObjects_, static_.types_, static_.objectTypes_, static_ );
+    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
-    result->Attach( *new Affinities( controllers_.controller_, model_.teams_ ) );
+    result->Attach( *new Affinities( controllers_.controller_, model_.teams_, dico ) );
     result->Polish();
     return result;
 }

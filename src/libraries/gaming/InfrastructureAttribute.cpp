@@ -88,7 +88,7 @@ void InfrastructureAttribute::UpdateData( const T& message )
         threshold_ = static_cast< unsigned int >( message.infrastructures().infrastructure().threshold() * 100 + 0.5 );
         role_ = message.infrastructures().infrastructure().type();
         type_ = resolver_.Find( role_ );
-        controllers_.controller_.Update( *static_cast< Infrastructure_ABC* >( this ) );
+        controllers_.controller_.Update( static_cast< Entity_ABC& >( const_cast< gui::TerrainObjectProxy& >( object_ ) ) );
     }
 }
 
