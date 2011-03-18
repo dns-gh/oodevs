@@ -1991,7 +1991,7 @@
           <parameter type="Agent"/>
         </choice>
       </parameter>
-      <parameter dia-name="contextRetrograde" name="Contexte retrograde" optional="false" type="Integer"/>
+      <parameter dia-name="context" name="Contexte retrograde" optional="false" type="Integer"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" id="2013" name="MELEE Detruire" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4114,7 +4114,7 @@
     </mission>
     <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Freiner" dia-type="net.masagroup.sword.france.military.company.tasks.Freiner" id="1037" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Freiner" name="MELEE Freiner" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="false" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
