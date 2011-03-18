@@ -28,6 +28,7 @@
 AffinitiesDialog::AffinitiesDialog( QWidget* parent, kernel::Controllers& controllers, bool optional )
     : QDialog( parent, "AffinitiesDialog" )
     , controllers_( controllers )
+    , pGrid_      ( 0 )
 {
     setCaption( tools::translate( "AffinitiesDialog", "Change affinities" ) );
     resize( 320, 150 );
@@ -72,9 +73,7 @@ void AffinitiesDialog::NotifyCreated( const kernel::Team_ABC& team )
 void AffinitiesDialog::NotifyUpdated( const kernel::Team_ABC& team )
 {
     teams_.erase( team.GetId() );
-    affinities_.erase( team.GetId() );
     teams_[ team.GetId() ] = team.GetName();
-    affinities_[ team.GetId() ] = 0.f;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +135,7 @@ void AffinitiesDialog::Validate()
     selected_->Get< Affinities >().Clear();
     if( pCheckBox_->isChecked () )
         BOOST_FOREACH( const T_QAffinities::value_type& content, spinboxs_ )
-        selected_->Get< Affinities >().Add( content.get< 0 >(), content.get< 2 >()->value() );
+            selected_->Get< Affinities >().Add( content.get< 0 >(), content.get< 2 >()->value() );
     controllers_.controller_.Update( *selected_ );
     selected_ = 0;
 }
@@ -168,8 +167,9 @@ void AffinitiesDialog::Clear()
 {
     pMainLayout_->remove( pGrid_ );
     pMainLayout_->remove( pButtonLayout_ );
-    if( pGrid_ != 0 )
+    if( pGrid_ )
         delete pGrid_;
+    spinboxs_.clear();
     BOOST_FOREACH( T_Affinities::value_type& content, affinities_ )
         content.second = 0.f;
     pGrid_ = new QGrid( 2, this );

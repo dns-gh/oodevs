@@ -60,7 +60,8 @@ PeopleAffinities::~PeopleAffinities()
 // -----------------------------------------------------------------------------
 void PeopleAffinities::NotifyCreated( const kernel::Team_ABC& team )
 {
-    affinities_[ team.GetId() ] = 0.f;
+    if( affinities_.find( team.GetId() ) == affinities_.end() )
+        affinities_[ team.GetId() ] = 0.f;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,5 +90,6 @@ void PeopleAffinities::InitializeAffinities()
 {
     tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
     while( it.HasMoreElements() )
-        affinities_[ it.NextElement().GetId() ] = 0.f;
+        if( affinities_.find( it.NextElement().GetId() ) == affinities_.end() )
+            affinities_[ it.NextElement().GetId() ] = 0.f;
 }
