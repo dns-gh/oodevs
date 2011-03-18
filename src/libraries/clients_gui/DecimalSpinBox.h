@@ -10,6 +10,8 @@
 #ifndef __DecimalSpinBox_h_
 #define __DecimalSpinBox_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
 
@@ -20,6 +22,7 @@ namespace gui
 // Created: ABR 2011-01-28
 // =============================================================================
 class DecimalSpinBox : public QSpinBox
+                     , private boost::noncopyable
 {
     Q_OBJECT
 
@@ -41,13 +44,6 @@ protected:
     //@{
     virtual QString mapValueToText( int value );
     virtual int mapTextToValue( bool* ok );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    DecimalSpinBox( const DecimalSpinBox& );            //!< Copy constructor
-    DecimalSpinBox& operator=( const DecimalSpinBox& ); //!< Assignment operator
     //@}
 
 private:
