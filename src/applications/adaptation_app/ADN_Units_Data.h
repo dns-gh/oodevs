@@ -104,8 +104,8 @@ public:
         virtual std::string GetNodeName();
         std::string GetItemName();
 
-        void ReadArchive( xml::xistream& input );
-        void ReadStock( xml::xistream& input );
+        void ReadArchive( xml::xistream& input, ADN_Type_Bool& stockThresholds );
+        void ReadStock( xml::xistream& input, ADN_Type_Bool& stockThresholds );
         void WriteArchive( const std::string& strName, xml::xostream& output ) const;
 
     public:

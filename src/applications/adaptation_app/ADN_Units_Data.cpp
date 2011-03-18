@@ -241,21 +241,22 @@ std::string ADN_Units_Data::StockInfos::GetItemName()
 // Name: ADN_Units_Data::StockInfos::ReadStock
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::StockInfos::ReadStock( xml::xistream& input )
+void ADN_Units_Data::StockInfos::ReadStock( xml::xistream& input, ADN_Type_Bool& stockThresholds )
 {
     std::auto_ptr< StockLogThresholdInfos > spNew( new StockLogThresholdInfos() );
     spNew->ReadArchive( input );
     vLogThresholds_.AddItem( spNew.release() );
+    stockThresholds = true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::StockInfos::ReadArchive
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------
-void ADN_Units_Data::StockInfos::ReadArchive( xml::xistream& input )
+void ADN_Units_Data::StockInfos::ReadArchive( xml::xistream& input, ADN_Type_Bool& stockThresholds )
 {
     input >> xml::optional >> xml::start( "stocks" )
-            >> xml::list( "stock", *this, &ADN_Units_Data::StockInfos::ReadStock )
+            >> xml::list( "stock", *this, &ADN_Units_Data::StockInfos::ReadStock, stockThresholds )
           >> xml::end;
 }
 
@@ -697,7 +698,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
     for( ADN_Composantes_Data::T_CategoryInfos_Vector::iterator it = contenancesTC1_.categories_.begin(); it != contenancesTC1_.categories_.end(); ++it )
         (*it)->rNormalizedConsumption_ = 0.;
 
-    stocks_.ReadArchive( input );
+    stocks_.ReadArchive( input, bStock_ );
 
     input >> xml::start( "postures" )
             >> xml::list( "posture", *this, &ADN_Units_Data::UnitInfos::ReadPosture )
