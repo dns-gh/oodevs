@@ -132,7 +132,7 @@ Population_ABC* AgentFactory::Create( Entity_ABC& parent, const PopulationType& 
     else
         top = const_cast< Entity_ABC* >( &parent.Get< CommunicationHierarchies >().GetTop() );
     Population* result = new Population( type, number, controllers_.controller_, idManager_ );
-    result->Attach< Positions >( *new PopulationPositions( *result, static_.coordinateConverter_, position ) );
+    result->Attach< Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_ ) );
     if( Populations* popus = top->Retrieve< Populations >() )
@@ -256,7 +256,7 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
 Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, Team_ABC& parent )
 {
     Population* result = new Population( xis, controllers_.controller_, idManager_, static_.types_ );
-    result->Attach< Positions >( *new PopulationPositions( xis, *result, static_.coordinateConverter_ ) );
+    result->Attach< Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_ ) );
     if( xis.has_child( "extensions" ) )

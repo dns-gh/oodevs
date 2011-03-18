@@ -10,13 +10,14 @@
 #ifndef __PopulationPositions_h_
 #define __PopulationPositions_h_
 
-#include "clients_kernel/Positions.h"
+#include "clients_kernel/Moveable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class Controller;
 }
 
 namespace xml
@@ -32,33 +33,29 @@ class Population;
 */
 // Created: SBO 2006-11-08
 // =============================================================================
-class PopulationPositions : public kernel::Positions
+class PopulationPositions : public kernel::Moveable_ABC
                           , public kernel::Drawable_ABC
                           , public kernel::Serializable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationPositions( const Population& owner, const kernel::CoordinateConverter_ABC& converter, const geometry::Point2f& position );
-             PopulationPositions( xml::xistream& xis, const Population& owner, const kernel::CoordinateConverter_ABC& converter );
+             PopulationPositions( const Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const geometry::Point2f& position );
+             PopulationPositions( xml::xistream& xis, const Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
     virtual ~PopulationPositions();
     //@}
 
     //! @name Operations
     //@{
     virtual geometry::Point2f GetPosition( bool aggregated ) const;
-    virtual float             GetHeight( bool aggregated ) const;
+    virtual float GetHeight( bool aggregated ) const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual bool CanAggregate() const;
     virtual bool IsAggregated() const;
-    //@}
-
-    //! @name Modifiers
-    //@{
-    void Set( const geometry::Point2f& point );
+    virtual void Move( const geometry::Point2f& position );
     //@}
 
 private:
@@ -81,11 +78,12 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    const Population&                      owner_;
-    geometry::Rectangle2f                  boundingBox_;
-    geometry::Point2f                      center_;
-    unsigned long                          livingHumans_;
-    float                                  radius_;
+    const Population& owner_;
+    kernel::Controller& controller_;
+    geometry::Rectangle2f boundingBox_;
+    geometry::Point2f center_;
+    unsigned long livingHumans_;
+    float radius_;
     //@}
 };
 

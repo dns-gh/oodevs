@@ -21,12 +21,13 @@
 // Name: PopulationPositions constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-PopulationPositions::PopulationPositions( const Population& owner, const kernel::CoordinateConverter_ABC& converter, const geometry::Point2f& position )
-    : converter_( converter )
-    , owner_( owner )
-    , center_( position )
+PopulationPositions::PopulationPositions( const Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const geometry::Point2f& position )
+    : converter_   ( converter )
+    , owner_       ( owner )
+    , controller_  ( controller )
+    , center_      ( position )
     , livingHumans_( 0 )
-    , radius_( 0.f )
+    , radius_      ( 0.f )
 {
     UpdatePosition();
 }
@@ -35,12 +36,13 @@ PopulationPositions::PopulationPositions( const Population& owner, const kernel:
 // Name: PopulationPositions constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-PopulationPositions::PopulationPositions( xml::xistream& xis, const Population& owner, const kernel::CoordinateConverter_ABC& converter )
-    : converter_( converter )
-    , owner_( owner )
-    , center_( ReadPosition( xis, converter ) )
+PopulationPositions::PopulationPositions( xml::xistream& xis, const Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter )
+    : converter_   ( converter )
+    , owner_       ( owner )
+    , controller_  ( controller )
+    , center_      ( ReadPosition( xis, converter ) )
     , livingHumans_( 0 )
-    , radius_( 0.f )
+    , radius_      ( 0.f )
 {
     UpdatePosition();
 }
@@ -159,12 +161,13 @@ void PopulationPositions::SerializeAttributes( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationPositions::Set
-// Created: AGE 2007-07-03
+// Name: PopulationPositions::Move
+// Created: LGY 2011-03-18
 // -----------------------------------------------------------------------------
-void PopulationPositions::Set( const geometry::Point2f& point )
+void PopulationPositions::Move( const geometry::Point2f& position )
 {
-    center_ = point;
+    center_ = position;
+    controller_.Update( owner_ );
 }
 
 // -----------------------------------------------------------------------------

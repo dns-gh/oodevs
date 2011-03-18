@@ -71,7 +71,7 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
     {
         if( PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event ) )
         {
-            positions->Set( point );
+            positions->Move( point );
             return true;
         }
     }
