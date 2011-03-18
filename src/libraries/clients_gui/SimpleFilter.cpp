@@ -35,7 +35,7 @@ SimpleFilter::~SimpleFilter()
 // Name: SimpleFilter::IsAllowed
 // Created: ABR 2011-03-01
 // -----------------------------------------------------------------------------
-bool SimpleFilter::IsAllowed( const QString& typeName ) const
+bool SimpleFilter::IsAllowed( const QString& /*typeName*/ ) const
 {
     return true;
 }

@@ -36,4 +36,21 @@ private:
     T_ValuesVector linkedValues_;
 };
 
+// =============================================================================
+/** @class ADN_DoubleValidator
+@brief
+*/
+// Created: APE 2005-01-03
+// =============================================================================
+class ADN_DoubleValidator : public QDoubleValidator
+{
+public:
+    explicit ADN_DoubleValidator( QObject* parent, const char* name = 0 );
+             ADN_DoubleValidator( double bottom, double top, int decimals, QObject * parent, const char *name = 0 );
+    virtual ~ADN_DoubleValidator();
+
+    void fixup( QString& strInput ) const;
+    QValidator::State validate( QString& input, int& nPos ) const;
+};
+
 #endif // __ADN_Validator_h_

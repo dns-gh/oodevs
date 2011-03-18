@@ -59,3 +59,117 @@ void ADN_PercentageValidator::fixup( QString& strInput ) const
     if( rSum + rValue > 100.f )
         strInput = QString::number( 100.f - rSum );
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_DoubleValidator::ADN_DoubleValidator
+// Created: ABR 2011-03-17
+// -----------------------------------------------------------------------------
+ADN_DoubleValidator::ADN_DoubleValidator( QObject* parent, const char* name /*= 0*/ )
+    : QDoubleValidator( parent, name )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_DoubleValidator::ADN_DoubleValidator
+// Created: ABR 2011-03-17
+// -----------------------------------------------------------------------------
+ADN_DoubleValidator::ADN_DoubleValidator( double bottom, double top, int decimals, QObject * parent, const char *name /*= 0*/ )
+    : QDoubleValidator( bottom, top, decimals, parent, name )
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_DoubleValidator::~ADN_DoubleValidator
+// Created: ABR 2011-03-17
+// -----------------------------------------------------------------------------
+ADN_DoubleValidator::~ADN_DoubleValidator()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_DoubleValidator::fixup
+// Created: JDY 03-09-04
+// -----------------------------------------------------------------------------
+void ADN_DoubleValidator::fixup( QString& strInput ) const
+{
+    double b = bottom();
+    double t = top();
+    bool bOk = true;
+    double rValue = strInput.toDouble( &bOk );
+    if( ! bOk )
+        return;
+    if( rValue > t )
+        strInput = QString::number( t );
+    else if( rValue < b )
+        strInput = QString::number( b );
+}
+
+//-----------------------------------------------------------------------------
+// Name: ADN_DoubleValidator::validate
+/** Copied from Qt.
+*/
+// Created: JDY 03-09-04
+//-----------------------------------------------------------------------------
+QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) const
+{
+    double b = bottom();
+    double t = top();
+    int d = decimals();
+    QRegExp empty( QString::fromLatin1( " *-?\\.? *" ) );
+    if( b >= 0 && input.stripWhiteSpace().startsWith( QString::fromLatin1( "-" ) ) )
+        return Invalid;
+    if( input.stripWhiteSpace() == "." )
+        return Invalid;
+    if( empty.exactMatch( input ) )
+        return Intermediate;
+    bool ok = TRUE;
+    double entered = input.toDouble( &ok );
+    int nume = input.contains( 'e', FALSE );
+    if( !ok )
+    {
+        // explicit exponent regexp
+        QRegExp expexpexp( QString::fromLatin1( "[Ee][+-]?\\d*$" ) );
+        int eeePos = expexpexp.search( input );
+        if( eeePos > 0 && nume == 1 )
+        {
+            QString mantissa = input.left( eeePos );
+            entered = mantissa.toDouble( &ok );
+            if( !ok )
+                return Invalid;
+        }
+        else if( eeePos == 0 )
+            return Intermediate;
+        else
+            return Invalid;
+    }
+
+    int i = input.find( '.' );
+    if( i >= 0 )
+        if( d == 0 )
+            return Invalid;
+        else if( nume == 0 )
+        {
+            // has decimal point (but no E), now count digits after that
+            ++i;
+            int j = i;
+            while( input[ j ].isDigit() )
+                ++j;
+            if( j - i > d )
+                return Invalid;
+        }
+        if( entered > t )
+        {
+            this->fixup( input );
+            nPos = input.length();
+            return Acceptable;
+        }
+        else if( entered < b )
+            return Intermediate;
+        else
+            return Acceptable;
+}

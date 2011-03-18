@@ -178,7 +178,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     vConnectors[ eModifStances ] = &pStance->GetConnector();
     pHolder = builder.AddFieldHolder( pExplosiveParametersGroup_ );
     builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Neutralization ratio" ), vConnectors[ eNeutralizationRatio ] );
-    builder.SetValidator( new QDoubleValidator( 1, INT_MAX, 2, this ) );
+    builder.SetValidator( new ADN_DoubleValidator( 1, INT_MAX, 2, this ) );
     // Flare parameters
     pFlareParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Flare/Smoke ammo parameters" ), pIndirectGroup );
     pFlareParametersGroup_->hide();

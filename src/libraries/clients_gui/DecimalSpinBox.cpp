@@ -13,9 +13,9 @@
 
 namespace
 {
-    double Round( double value )
+    int Round( double value )
     {
-        return ( value > 0.0f ) ? floor( value + 0.5f ) : ceil( value - 0.5f );
+        return static_cast< int >( ( value > 0.0f ) ? floor( value + 0.5f ) : ceil( value - 0.5f ) );
     }
 }
 
@@ -32,10 +32,10 @@ DecimalSpinBox::DecimalSpinBox( QWidget* parent, double value /*= 0.f*/, unsigne
 {
     if( value < min || value > max )
         throw std::runtime_error( __FUNCTION__ ": value not between min and max limit." );
-    setMinValue( static_cast< int >( Round( min * precision_ ) ) );
-    setMaxValue( static_cast< int >( Round( max * precision_ ) ) );
-    setLineStep( static_cast< int >( Round( gap * precision_ ) ) );
-    QSpinBox::setValue( static_cast< int >( Round( value * precision_ ) ) );
+    setMinValue( Round( min * precision_ ) );
+    setMaxValue( Round( max * precision_ ) );
+    setLineStep( Round( gap * precision_ ) );
+    QSpinBox::setValue( Round( value * precision_ ) );
     setValidator( new QDoubleValidator( min, max, 2, parent ) );
 }
 

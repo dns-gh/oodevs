@@ -37,7 +37,7 @@ public:
         tab_.verticalHeader()->setLabel( i, pAttrition->ptrArmor_.GetData()->strName_.GetData().c_str() );
 
         // add a new row & set new values
-        ADN_TableItem_Double* pItem0 = new ADN_TableItem_Double( &tab_, pObj );
+        ADN_TableItem_Percentage* pItem0 = new ADN_TableItem_Percentage( &tab_, pObj );
         pItem0->UseColor( true );
         pItem0->SetRangeForColor( 0.0, 100.0 );
         tab_.setItem( i, 0, pItem0 );
@@ -47,7 +47,7 @@ public:
         pItem0->SetValidator( pValidator0 );
         pItem0->GetConnector().Connect( & pAttrition->rDestroy_ );
 
-        ADN_TableItem_Double* pItem1 = new ADN_TableItem_Double( &tab_, pObj );
+        ADN_TableItem_Percentage* pItem1 = new ADN_TableItem_Percentage( &tab_, pObj );
         pItem1->UseColor( true );
         pItem1->SetRangeForColor( 0.0, 100.0 );
         tab_.setItem( i, 1, pItem1 );
@@ -57,7 +57,7 @@ public:
         pItem1->SetValidator( pValidator1 );
         pItem1->GetConnector().Connect( & pAttrition->rRepairWithEvac_ );
 
-        ADN_TableItem_Double* pItem2 = new ADN_TableItem_Double( &tab_, pObj );
+        ADN_TableItem_Percentage* pItem2 = new ADN_TableItem_Percentage( &tab_, pObj );
         pItem2->UseColor( true );
         pItem2->SetRangeForColor( 0.0, 100.0 );
         tab_.setItem( i, 2, pItem2 );

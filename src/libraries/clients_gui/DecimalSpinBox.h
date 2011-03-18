@@ -54,7 +54,6 @@ private:
     //! @name Member data
     //@{
     double precision_;
-    double value_;
     //@}
 };
 

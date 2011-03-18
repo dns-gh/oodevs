@@ -335,7 +335,7 @@ T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int 
 // Created: APE 2005-04-13
 // -----------------------------------------------------------------------------
 template< class T >
-void ADN_GuiBuilder::SetValidator( T& validator, E_Validator nValidator )
+void ADN_GuiBuilder::SetValidator( T& /*validator*/, E_Validator nValidator )
 {
     assert( nValidator == eNone );
 }
@@ -376,7 +376,7 @@ void ADN_GuiBuilder::SetValidator( QIntValidator& validator, E_Validator nValida
 // -----------------------------------------------------------------------------
 template<>
 inline
-void ADN_GuiBuilder::SetValidator( QDoubleValidator& validator, E_Validator nValidator )
+void ADN_GuiBuilder::SetValidator( ADN_DoubleValidator& validator, E_Validator nValidator )
 {
     if( nValidator == eNone )
         return;
@@ -398,6 +398,32 @@ void ADN_GuiBuilder::SetValidator( QDoubleValidator& validator, E_Validator nVal
     case eDegrees:
         validator.setRange( 0, 360, 2 );
         break;
+    default:
+        assert( 0 );
+    }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddValidator
+// Created: APE 2005-04-13
+// -----------------------------------------------------------------------------
+template<>
+inline
+void ADN_GuiBuilder::SetValidator( ADN_PercentageValidator& validator, E_Validator nValidator )
+{
+    if( nValidator == eNone )
+        return;
+
+    switch( nValidator )
+    {
+    case ePercentage:
+        validator.setRange( 0, 100, 2 );
+        break;
+    case eGreaterZero:
+    case eGreaterEqualZero:
+    case eZeroOne:
+    case eDegrees:
     default:
         assert( 0 );
     }
