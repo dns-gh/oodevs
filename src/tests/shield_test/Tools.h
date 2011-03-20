@@ -32,16 +32,16 @@ namespace google
 {
 namespace protobuf
 {
-    inline void format( std::ostream& s, const google::protobuf::Message& msg )
+    inline mock::stream& operator<<( mock::stream& s, const Message& msg )
     {
-        s << msg.ShortDebugString();
+        return s << msg.ShortDebugString();
     }
 }
 }
 
 namespace shield
 {
-    MOCK_BASE_CLASS( MockClient, shield::Client_ABC )
+    MOCK_BASE_CLASS( MockClient, Client_ABC )
     {
         MOCK_METHOD_EXT( Send, 1, void( const MsgsAarToClient::MsgAarToClient& ), SendAarToClient )
         MOCK_METHOD_EXT( Send, 1, void( const MsgsAuthenticationToClient::MsgAuthenticationToClient& ), SendAuthenticationToClient )
