@@ -13,6 +13,7 @@
 #include "Decision/DEC_Model_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -103,6 +104,9 @@ void MIL_PionMission::Start( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     assert( !bDIABehaviorActivated_ );
 
+    const transport::PHY_RoleInterface_Transported& roleTransported = pion_.GetRole< transport::PHY_RoleInterface_Transported >();
+    if( roleTransported.IsTransported() )
+        throw std::runtime_error( "Cannot receive mission while transported" );
     pion_.GetDecision().StartMissionBehavior( self );
     bDIABehaviorActivated_ = true;
     Send();
