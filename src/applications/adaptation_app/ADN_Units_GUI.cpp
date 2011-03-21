@@ -99,7 +99,8 @@ void ADN_Units_GUI::Build()
     builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pParamGroup, tr( "Doctrine model" ), vInfosConnectors[eModel] );
     builder.SetToolTip( "Le modèle comportemental associé à l'unité." );
     // Decontamination delay
-    builder.AddField<ADN_TimeField>( pParamGroup, tr( "Decontamination delay" ), vInfosConnectors[eDecontaminationDelay], 0, eGreaterZero );
+    ADN_TimeField* pTimeField = builder.AddField<ADN_TimeField>( pParamGroup, tr( "Decontamination delay" ), vInfosConnectors[eDecontaminationDelay], 0, eGreaterZero );
+    pTimeField->SetMinimumValueInSecond( 1 );
     // Feedback time
     builder.AddOptionnalField<ADN_TimeField>( pParamGroup, tr( "Force ratio feedback time" ), vInfosConnectors[eHasStrengthRatioFeedbackTime], vInfosConnectors[eStrengthRatioFeedbackTime] );
     // Can fly

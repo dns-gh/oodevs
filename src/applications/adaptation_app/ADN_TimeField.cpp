@@ -79,6 +79,8 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /*= 0*/ )
     , ADN_Gfx_ABC          ()
     , nSecondsValue_       ( 0 )
     , nMinimumSecondsValue_( 0 )
+    , nMinimumMinutesValue_( 0 )
+    , nMinimumHoursValue_  ( 0 )
     , bFreezeSlot_         ( false )
 {
     pConnector_ = new ADN_Connector_String<ADN_TimeField>(this);
@@ -132,7 +134,17 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
 
     if( strValue.isEmpty() || nSecondsValue_ < nMinimumSecondsValue_ )
     {
-        QString currentEmptyValue = QString::number( ( pComboBox_->currentText() == "s" ) ? nMinimumSecondsValue_ : 0 );
+        QString currentEmptyValue = QString::number( 0 );
+        if ( nMinimumSecondsValue_ > 0 )
+        {
+            if( pComboBox_->currentText() == "s" )
+                currentEmptyValue = QString::number(nMinimumSecondsValue_);
+            else if( pComboBox_->currentText() == "m" )
+                currentEmptyValue = QString::number(nMinimumMinutesValue_);
+            else if( pComboBox_->currentText() == "h" )
+                currentEmptyValue = QString::number(nMinimumHoursValue_);
+        }
+
         nSecondsValue_ = nMinimumSecondsValue_;
         pLineEdit_->setText( currentEmptyValue );
         static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( currentEmptyValue + pComboBox_->currentText() );
@@ -149,13 +161,17 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
 // -----------------------------------------------------------------------------
 void ADN_TimeField::OnUnitChanged( const QString& strUnit )
 {
+    unsigned int minutesValue = nSecondsValue_ / 60;
+    unsigned int hoursValue = nSecondsValue_ / 3600;   
+
     bFreezeSlot_ = true;
     if( strUnit == "s" )
         pLineEdit_->setText( QString::number( nSecondsValue_ ) );
     else if( strUnit == "m" )
-        pLineEdit_->setText( QString::number( nSecondsValue_ / 60 ) );
+        pLineEdit_->setText( QString::number( std::max<unsigned int>( minutesValue, nMinimumMinutesValue_) )  );
     else if( strUnit == "h" )
-        pLineEdit_->setText( QString::number( nSecondsValue_ / 3600 ) );
+        pLineEdit_->setText( QString::number( std::max<unsigned int>( hoursValue, nMinimumHoursValue_) ) );
+
     static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( pLineEdit_->text() + strUnit );
     bFreezeSlot_ = false;
     pLineEdit_->setFocus();
@@ -228,4 +244,11 @@ QIntValidator& ADN_TimeField::GetValidator()
 void ADN_TimeField::SetMinimumValueInSecond( unsigned int value )
 {
     nMinimumSecondsValue_ = value;
+    nMinimumMinutesValue_ = value/60;
+    nMinimumHoursValue_ = value/3600;
+
+    if ( value%60 > 0 )
+        nMinimumMinutesValue_ += 1;
+    if ( value%3600 > 0 )
+        nMinimumHoursValue_ += 1;
 }

@@ -63,6 +63,8 @@ private:
     QComboBox*              pComboBox_;
     unsigned int            nSecondsValue_;
     unsigned int            nMinimumSecondsValue_;
+    unsigned int            nMinimumMinutesValue_;
+    unsigned int            nMinimumHoursValue_;
     bool                    bFreezeSlot_;
     QIntValidator*          pValidator_;
     //@}
