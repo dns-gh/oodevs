@@ -517,7 +517,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_AgentList )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
 {
-    const std::string input( "<parameter name='test' type='populationknowledge' value='42'/>" );
+    const std::string input( "<parameter name='test' type='crowdknowledge' value='42'/>" );
 
     MockPopulation population;
     MOCK_EXPECT( population, GetId ).returns( 42 );
@@ -531,7 +531,7 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_PopulationKnowledge )
 
     kernel::Controller controller;
     MOCK_EXPECT( knowledge, GetPopulationEntity ).returns( &population );
-    std::auto_ptr< sword::MissionParameter > message( Serialize( "populationknowledge", input,
+    std::auto_ptr< sword::MissionParameter > message( Serialize( "crowdknowledge", input,
         bl::bind( bl::new_ptr< actions::parameters::PopulationKnowledge >(), bl::_1, bl::_2, bl::var( resolver ), bl::var( converter ), bl::var( owner ), bl::var( controller ) ) ) );
     BOOST_CHECK_EQUAL( 15u, message->value().Get( 0 ).crowdknowledge().id() );
 }

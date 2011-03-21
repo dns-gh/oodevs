@@ -326,7 +326,7 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
     }
     else if( type == "agentknowledge" )
         param.reset( new parameters::AgentKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "populationknowledge" )
+    else if( type == "crowdknowledge" )
         param.reset( new parameters::PopulationKnowledge( parameter, xis, entities_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "objectknowledge" )
         param.reset( new parameters::ObjectKnowledge( parameter, xis, entities_, objectKnowledgeConverter_, entity, controller_ ) );
