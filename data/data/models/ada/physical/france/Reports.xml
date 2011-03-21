@@ -502,6 +502,7 @@
   <report category="operational" id="358" message="Fin de valorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
+  <report category="operational" id="359" message="La mission ne peut être effectuée sur un automate sans mission"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -513,4 +514,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="4275713730" -->
+<!-- signature="0337552901" -->
