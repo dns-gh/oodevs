@@ -165,7 +165,7 @@ void PHY_UnitType::InitializeNBC( xml::xistream& xis )
     float rTmp;
     xis >> xml::start( "nbc" );
     tools::ReadTimeAttribute( xis, "decontamination-delay", rTmp );
-    rTmp = std::max( 1, rTmp );
+    rTmp = std::max<float>( 1.0, rTmp );
 
     rCoefDecontaminationPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rTmp );
     xis >> xml::end;
