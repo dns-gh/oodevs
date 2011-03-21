@@ -224,6 +224,7 @@ FunctionEnd
 
 ;--------------------------------
 Function un.onInit
+    ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}DataDirectory"
     !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 

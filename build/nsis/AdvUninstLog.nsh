@@ -17,7 +17,7 @@
 !endif
 
 !ifndef UNINSTALL_LOG
-   !define UNINSTALL_LOG         "Uninstall"
+   !define UNINSTALL_LOG         "uninstall"
 !endif
 
 !ifndef UNINST_LOG_VERBOSE
@@ -31,8 +31,14 @@
 !verbose push
    !verbose ${UNINST_LOG_VERBOSE}
 
-!define UNINST_EXE     "$INSTDIR\${UNINSTALL_LOG}.exe"
-!define UNINST_DAT     "$INSTDIR\${UNINSTALL_LOG}.dat"
+!ifdef NO_PROMPT_PROGRAM_DIRECTORY
+	!define UNINST_EXE     "$INSTDATADIR\${UNINSTALL_LOG}.exe"
+	!define UNINST_DAT     "$INSTDATADIR\${UNINSTALL_LOG}.dat"
+!else
+	!define UNINST_EXE     "$INSTDIR\${UNINSTALL_LOG}.exe"
+	!define UNINST_DAT     "$INSTDIR\${UNINSTALL_LOG}.dat"
+!endif
+
 !define UNLOG_PART     "$PLUGINSDIR\part."
 !define UNLOG_TEMP     "$PLUGINSDIR\unlog.tmp"
 !define EXCLU_LIST     "$PLUGINSDIR\exclude.tmp"
@@ -85,6 +91,7 @@
         FileClose $unlog_tmp_2
         DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}.dat"
         DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory"
+        DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}DataDirectory"
 
   !verbose pop
 !macroend
@@ -389,7 +396,7 @@
       Push $0
       Push $1
         ClearErrors
-        ReadRegStr "$0"  ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory"
+        ReadRegStr $0 ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory"
         IfErrors next
         ${DirState} "$0" $1
         StrCmp "$1" "-1" next
@@ -429,6 +436,7 @@
         WriteUninstaller "${UNINST_EXE}"
         WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}.dat" "${UNINST_DAT}"
         WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory" "$INSTDIR"
+        WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}DataDirectory" "$INSTDATADIR"
 
   !verbose pop
 !macroend
