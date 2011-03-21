@@ -382,7 +382,7 @@ void PHY_RolePion_Composantes::ReadHuman( xml::xistream& xis )
         xis.error( "Unknown human wound" );
     bool contaminated = xis.attribute< bool >( "contaminated" );
     bool psyop = xis.attribute< bool >( "psyop" );
-    unsigned int number = xis.attribute< bool >( "number" );
+    unsigned int number = xis.attribute< unsigned int >( "number" );
 
     PHY_ComposantePion::CIT_ComposantePionVector itCurrentComp = composantes_.begin();
     while( number )

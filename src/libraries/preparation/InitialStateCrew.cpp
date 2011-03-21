@@ -23,7 +23,7 @@ namespace
             return InitialStateCrew::eOfficer;
         else if( value == "SousOfficier" )
             return InitialStateCrew::eWarrant;
-        else if( value == "Crew" )
+        else if( value == "MilitaireDuRang" )
             return InitialStateCrew::ePrivate;
         assert( false );
         return InitialStateCrew::eOfficer;
@@ -35,7 +35,7 @@ namespace
         else if( value == InitialStateCrew::eWarrant )
             return "SousOfficier";
         else if( value == InitialStateCrew::ePrivate )
-            return "Crew";
+            return "MilitaireDuRang";
         assert( false );
         return "";
     }
