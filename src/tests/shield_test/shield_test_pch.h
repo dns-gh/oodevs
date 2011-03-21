@@ -18,7 +18,7 @@
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
-#define MOCK_LOG_CONVERSIONS
+#define MOCK_USE_CONVERSIONS
 #include <turtle/mock.hpp>
 #pragma warning( disable : 4505 )
 #pragma warning( disable : 4355 ) // used in base member initializer list
