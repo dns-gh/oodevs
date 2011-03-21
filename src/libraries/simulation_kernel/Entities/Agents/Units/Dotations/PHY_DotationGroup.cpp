@@ -127,11 +127,8 @@ void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const unsigned int
 // -----------------------------------------------------------------------------
 void PHY_DotationGroup::ReadValues( xml::xistream& xis, const PHY_DotationCategory& category )
 {
-    PHY_Dotation* pDotation = GetDotation( category );
-    if( !pDotation )
-        xis.error( "Unknown dotation" );
-
-    pDotation->ReadValue( xis );
+    PHY_Dotation& dotation = CreateDotation( category );
+    dotation.ReadValue( xis );
 }
 
 // -----------------------------------------------------------------------------
