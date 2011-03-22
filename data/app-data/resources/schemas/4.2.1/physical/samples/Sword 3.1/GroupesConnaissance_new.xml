@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<knowledge-groups>
-	<!-- Liste de groupes de connaissance -->
-	<knowledge-group name="Standard">
-		<unit-knowledge max-lifetime="1800s" max-unit-to-knowledge-distance="60000" interpolation-time="60s"/> //$$$ dernier non obligatoire
-		<population-knowledge max-lifetime="1800s"/>
-	</knowledge-group>
-</knowledge-groups>

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<humans-factors xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\Documents and Settings\abl\Bureau\xml\csword\revus\FacteursHumains_new_schema.xsd">
-	<experience-factor>
-		<modifier state="Veteran" max-speed="1" ph="1" sensor-distance="1" loading-time="1" posture-setup-time="1"/>
-	</experience-factor>
-	<tiredness-factor>
-		<modifier state="Normal" max-speed="0.5" ph="0.5" sensor-distance="0.5" loading-time="2" posture-setup-time="2"/>
-	</tiredness-factor>
-</humans-factors>
