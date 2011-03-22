@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="common.xsd"/>
 	<xs:simpleType name="T_CompositionOperator">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Defines the list of available operators for composing conditions.</xs:documentation>
@@ -203,6 +204,7 @@
 			<xs:sequence>
 				<xs:element ref="factor" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
