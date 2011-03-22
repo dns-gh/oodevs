@@ -34,7 +34,7 @@ class ExerciseConfig : public GeneralConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseConfig( RealFileLoaderObserver_ABC& observer );
+    explicit ExerciseConfig( RealFileLoaderObserver_ABC& observer );
     virtual ~ExerciseConfig();
     //@}
 
