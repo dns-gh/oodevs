@@ -417,7 +417,9 @@ FunctionEnd
     !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
     !insertmacro UNINSTALL.LOG_END_UNINSTALL
 
+    StrCmp $INSTDIR "" +2 0
     ${locate::RMDirEmpty} "$INSTDIR" "/M=*.* /G=1 /B=1" $R1
+    StrCmp $INSTDATADIR "" +2 0
     ${locate::RMDirEmpty} "$INSTDATADIR" "/M=*.* /G=1 /B=1" $R1
     ${locate::Unload}
 
@@ -488,5 +490,21 @@ FunctionEnd
 
 CommandLineExit:
 
-!macroend	
+!macroend
+
+!macro OT.ReadDataDirectoryFromRegister
+
+    ;Hack pour faire marcher les desinstall, 
+    ;TODO: faire un gros refactor de tous les installeur
+
+    !ifdef NO_PROMPT_PROGRAM_DIRECTORY
+        StrCpy $INSTDATADIR $INSTDIR 
+    !else
+        ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory"
+        StrCmp $INSTDATADIR "" 0 +2
+            ReadRegStr $INSTDATADIR HKCU "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory"
+    !endif
+
+!macroend
+
 

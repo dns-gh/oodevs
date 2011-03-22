@@ -273,6 +273,7 @@ FunctionEnd
 ;--------------------------------
 Function un.onInit
     !insertmacro MULTIUSER_UNINIT
+    !insertmacro OT.ReadDataDirectoryFromRegister
 FunctionEnd
 
 ;--------------------------------
