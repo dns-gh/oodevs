@@ -121,7 +121,8 @@ int SIM_App::Initialize()
     catch( MT_ScipioException& exception )
     {
         MT_LOG_ERROR_MSG( MT_FormatString( "Error initializing workspace : '%s'", exception.GetMsg().c_str() ) );
-        return EXIT_FAILURE;
+        throw exception;
+        //return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
 }

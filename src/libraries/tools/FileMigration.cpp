@@ -13,6 +13,7 @@
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
 #include <boost/bind.hpp>
+#include <boost/format.hpp>
 
 using namespace tools;
 
@@ -49,7 +50,8 @@ void FileMigration::ReadXslTransform( xml::xistream& xis )
     const std::string schema = xis.attribute< std::string >( "schema" );
     const std::string xslFile = GeneralConfig::BuildResourceChildFile( xis.attribute< std::string >( "apply" ) );
     xsl::xstringtransform xslTmp( xslFile );
-    transformsFromSchema_.insert( std::make_pair( schema, xslFile ) );
+    if( !transformsFromSchema_.insert( std::make_pair( schema, xslFile ) ).second )
+        throw std::runtime_error( boost::str( boost::format( "Invalid migration from %s to %s for schema %s: more than one transformtion for this schema" ) % fromVersion_ % toVersion_ % schema ) );
 }
 
 // =============================================================================

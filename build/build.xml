@@ -567,7 +567,7 @@
     ============================================================================
     -->
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,
-                                 shield_test,clients_test,exercises_test,dispatcher_test,application.simulation_kernel_test,
+                                 shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,application.simulation_kernel_test,
                                  application.integration_decisionnal_test,protocol_test,checkpoint_test,import_test,
                                  actions_test,launcher_test,reports_test,flood_test" description="run all tests"/>
 
@@ -855,6 +855,57 @@
         <test-exercise exercise="Egypt"/>
         <test-exercise exercise="Cabourg"/>
         <test-exercise exercise="Poseidon VA"/>
+    </target>
+    
+    <macrodef name="test-data-migration">
+        <attribute name="exercise"/>
+        <attribute name="old-version"/>
+        <attribute name="session" default="default"/>
+        <attribute name="temporary-name" default="test-data-migration"/>
+        <sequential>
+            <echo>Testing automatic migration from version @{old-version} using exercise '@{exercise}'</echo>
+            <!-- Copy physical database -->
+            <delete dir="${data.dir}/data/models/ada/physical/@{temporary-name}" failonerror="false"/>
+            <copy todir="${data.dir}/data/models/ada/physical/@{temporary-name}">
+                <fileset dir="../data/tests/test_data_migration/@{old-version}/physical"/>
+            </copy>
+            <!-- ADN -->           
+            <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
+            <delete dir="${adaptation_test.dir2}"/>
+            <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+                <arg value="-i"/>
+                <arg value="${data.dir}/data/models/ada/physical/@{temporary-name}/physical.xml"/>
+                <arg value="-o"/>
+                <arg value="${adaptation_test.dir2}/physical.xml"/>
+            </exec>
+            <!-- Copy exercise -->
+            <delete dir="${data.dir}/exercises/@{temporary-name}" failonerror="false"/>
+            <copy todir="${data.dir}/exercises/@{temporary-name}">
+                <fileset dir="../data/tests/test_data_migration/@{old-version}/exercises/@{exercise}"/>
+                <filterset>
+                    <filter token="DATASET" value="ada"/>
+                    <filter token="PHYSICAL" value="@{temporary-name}"/>
+                </filterset>
+            </copy>
+            <!-- SIM -->
+            <exec executable="${out.dir}/Release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="900000">
+                <arg value="--root-dir=../../data"/>
+                <arg value="--exercise=@{temporary-name}"/>
+                <arg value="--session=@{session}"/>
+                <arg value="--test"/>
+            </exec>
+            <!-- cleanup -->
+            <delete dir="${adaptation_test.dir2}" failonerror="false"/>
+            <delete dir="${data.dir}/data/models/ada/physical/@{temporary-name}"  failonerror="false"/>
+            <delete dir="${data.dir}/exercises/@{temporary-name}"  failonerror="false"/>
+        </sequential>
+    </macrodef>
+    
+    <target name="data_migrations_test">
+        <test-data-migration old-version="3.0" exercise="CabourgOld"/>
+        <test-data-migration old-version="4.2.0" exercise="Cabourg"/>
+        <test-data-migration old-version="4.2.1" exercise="Cabourg"/>
+        <test-data-migration old-version="4.2.2" exercise="Cabourg"/>
     </target>
 
     <target name="protocol_test" description="build protocol test application" depends="library.protocol,library.tools">

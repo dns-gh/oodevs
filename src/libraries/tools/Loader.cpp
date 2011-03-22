@@ -63,11 +63,9 @@ std::auto_ptr< xml::xistream > Loader::LoadFile( const std::string& fileName ) c
 // -----------------------------------------------------------------------------
 std::string Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const
 {
-    if( !physicalFileXis_.get() )
-        physicalFileXis_ = fileLoader_->LoadFile( config_.GetPhysicalFile(), observer_ );
-
+    std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( config_.GetPhysicalFile(), observer_ );
     std::string childFileName;
-    *physicalFileXis_ >> xml::start( "physical" )
+    *physicalFileXis >> xml::start( "physical" )
                          >> xml::start( rootTag )
                              >> xml::attribute( "file", childFileName )
                          >> xml::end

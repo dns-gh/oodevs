@@ -112,7 +112,7 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
 
     rMaxSpeed_ = MIL_Tools::ConvertSpeedMosToSim( rMaxSpeed_ );
 
-    xis >> xml::optional >> xml::start( "repartition" )
+    xis >> xml::start( "repartition" )
         >> xml::attribute( "male", rMale_ )
         >> xml::attribute( "female", rFemale_ )
         >> xml::attribute( "children", rChildren_ )

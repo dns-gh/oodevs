@@ -102,6 +102,7 @@
           </xs:complexType>
         </xs:element>
       </xs:all>
+      <xs:attribute name="model-version" type="T_Version"/>			
     </xs:complexType>
   </xs:element>
 </xs:schema>

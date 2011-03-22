@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="238" name="ABC Freiner" target="212" time="2008-12-03T08:49:42" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="173"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UYV1815354996"/>
+            <point coordinates="30UYV0757351125"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T054412"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T054532"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV1617768180"/>
+        <point coordinates="30UYV1766747173"/>
+        <point coordinates="30UYV1724534647"/>
+        <point coordinates="31UBQ8429222680"/>
+        <point coordinates="31UBQ9167518761"/>
+        <point coordinates="31UBQ9352011000"/>
+        <point coordinates="31UBP9296095344"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8869495615"/>
+        <point coordinates="31UBQ8660810364"/>
+        <point coordinates="31UBQ8069221822"/>
+        <point coordinates="30UYV1232834550"/>
+        <point coordinates="30UYV1300666545"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="238" name="ABC Freiner" target="217" time="2008-12-03T08:50:42" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="170"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UYV1815354996"/>
+            <point coordinates="30UYV0757351125"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T055322"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T055412"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8625597848"/>
+        <point coordinates="31UBQ8457608737"/>
+        <point coordinates="30UYV1577923848"/>
+        <point coordinates="30UYV0921336117"/>
+        <point coordinates="30UYV0828149661"/>
+        <point coordinates="30UYV1087265464"/>
+        <point coordinates="30UYV1087265464"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8869495615"/>
+        <point coordinates="31UBQ8660810364"/>
+        <point coordinates="31UBQ8069221822"/>
+        <point coordinates="30UYV1232834550"/>
+        <point coordinates="30UYV1300666545"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="263" name="INF Freiner" target="185" time="2008-12-03T10:20:22" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="184"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV0656365765"/>
+        <point coordinates="30UYV0062348718"/>
+        <point coordinates="30UYV0189038462"/>
+        <point coordinates="30UYV0529529576"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV0031164701"/>
+        <point coordinates="30UXV9501151195"/>
+        <point coordinates="30UXV9444946360"/>
+        <point coordinates="30UXV9345644778"/>
+        <point coordinates="30UYV0431514558"/>
+        <point coordinates="30UYU2029695236"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="263" name="INF Freiner" target="191" time="2008-12-03T10:20:22" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="183"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV1327967060"/>
+        <point coordinates="30UYV1193734699"/>
+        <point coordinates="30UYV1475530897"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV0875565860"/>
+        <point coordinates="30UYV0610748864"/>
+        <point coordinates="30UYV0626636735"/>
+        <point coordinates="30UYV0937030573"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="263" name="INF Freiner" target="197" time="2008-12-03T10:18:52" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="175"/>
+    <parameter name="Limas" type="PhaseLineList"/>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV1327967060"/>
+        <point coordinates="30UYV1193734699"/>
+        <point coordinates="30UYV1475530897"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV0875565860"/>
+        <point coordinates="30UYV0610748864"/>
+        <point coordinates="30UYV0626636735"/>
+        <point coordinates="30UYV0937030573"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+</actions>

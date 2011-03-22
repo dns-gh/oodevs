@@ -87,3 +87,15 @@ BOOST_FIXTURE_TEST_CASE( test_migration_invalid_xsl, Fixture )
     xis.start( "migration" );
     BOOST_CHECK_THROW( tools::FileMigration fileMigration( xis ), std::exception );
 }
+
+
+BOOST_FIXTURE_TEST_CASE( test_invalid_migration_several_migrations_for_schema, Fixture )
+{
+    xml::xistringstream xis( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
+                             "<migration from=\"1.2\" to=\"1.3\">"
+                             "  <upgrade schema=\"testFileMigration/1.2/schema.xsd\" apply=\"testFileMigration/INVALID.xsl\"/>"
+                             "  <upgrade schema=\"testFileMigration/1.2/schema.xsd\" apply=\"testFileMigration/INVALID.xsl\"/>"
+                             "</migration>" );
+    xis.start( "migration" );
+    BOOST_CHECK_THROW( tools::FileMigration fileMigration( xis ), std::exception );
+}

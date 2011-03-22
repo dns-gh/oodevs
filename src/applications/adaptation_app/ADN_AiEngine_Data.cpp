@@ -32,7 +32,6 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , rHumanWeight_                ( 0.f )
     , rUrbanCombatWeight_          ( 100.f )
     , rDefaultFeedbackTime_        ( "1s" )
-    , modelVersion_                ( "0.0.0" )
 {
     rMinorEquipmentWeight_.SetDataName( "Poids des composantes non majeures." );
     rMajorEquipmentWeight_.SetDataName( "Poids des composantes majeures." );
@@ -76,7 +75,6 @@ void ADN_AiEngine_Data::FilesNeeded( T_StringList& vFiles ) const
 void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
 {
     input >> xml::start( "decisional" )
-        >> xml::attribute("model-version", modelVersion_ )
             >> xml::start( "dangerosity-modifiers" )
                 >> xml::attribute( "max-accuracy", rPertinenceMaxDecrease_ )
                 >> xml::attribute( "max-operational-state", rOperationalStateMaxDecrease_ )
@@ -129,7 +127,6 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "decisional" );
     ADN_Tools::AddSchema( output, "Decisional" );
-    output << xml::attribute("model-version", modelVersion_ );
     output  << xml::start( "dangerosity-modifiers" )
                 << xml::attribute( "max-accuracy", rPertinenceMaxDecrease_ )
                 << xml::attribute( "max-operational-state", rOperationalStateMaxDecrease_ )

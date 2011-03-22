@@ -6,6 +6,7 @@
 			<xs:sequence>
 				<xs:element name="equipment" type="T_Equipment" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="T_Equipment">

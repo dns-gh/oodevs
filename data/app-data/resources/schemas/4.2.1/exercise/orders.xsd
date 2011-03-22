@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.2.7">
+	<xs:include schemaLocation="common.xsd"/>
+	<xs:simpleType name="ParameterType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Describes the list of available action parameters, including magic actions, missions and fragorders</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<!--  parameters used for all types of orders: -->
+			<xs:enumeration value="Boolean"/>
+			<xs:enumeration value="Integer"/>
+			<xs:enumeration value="Heading"/>
+			<xs:enumeration value="Enumeration"/>
+			<xs:enumeration value="DateTime"/>
+			<xs:enumeration value="Point"/>
+			<xs:enumeration value="Area"/>
+			<xs:enumeration value="Path"/>
+			<xs:enumeration value="Limit"/>
+			<xs:enumeration value="PhaseLine"/>
+			<xs:enumeration value="Automat"/>
+			<xs:enumeration value="Agent"/>
+			<xs:enumeration value="AgentKnowledge"/>
+			<xs:enumeration value="CrowdKnowledge"/>
+			<xs:enumeration value="ObjectKnowledge"/>
+			<xs:enumeration value="UrbanKnowledge"/>
+			<xs:enumeration value="PlannedWork"/>
+			<xs:enumeration value="ResourceType"/>
+			<xs:enumeration value="NatureAtlas"/>
+			<xs:enumeration value="MaintenancePriorities"/>
+			<xs:enumeration value="MedicalPriorities"/>
+			<xs:enumeration value="LocationComposite"/>
+			<!--  parameters not used for missions and fragorders: -->
+			<xs:enumeration value="Army"/>
+			<xs:enumeration value="Formation"/>
+			<xs:enumeration value="TC2"/>
+			<xs:enumeration value="KnowledgeGroup"/>
+			<xs:enumeration value="Location"/>
+			<xs:enumeration value="ObstacleType"/>
+			<xs:enumeration value="PathPoint"/>
+			<xs:enumeration value="Objective"/>
+			<xs:enumeration value="IntelligenceList"/>
+			<xs:enumeration value="Level"/>
+			<xs:enumeration value="Karma"/>
+			<xs:enumeration value="Name"/>
+			<xs:enumeration value="Nature"/>
+			<xs:enumeration value="Density"/>
+			<xs:enumeration value="Quantity"/>
+			<xs:enumeration value="Identifier"/>
+			<xs:enumeration value="String"/>
+			<xs:enumeration value="List"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GeometryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="point"/>
+			<xs:enumeration value="line"/>
+			<xs:enumeration value="circle"/>
+			<xs:enumeration value="polygon"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UtmCoordinates">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{2}[A-Z]{3}\d{8}(\d{2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ActionIdentifier">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d+|teleport|surrender|cancel_surrender|recover_transporters|destroy_component|recover_all|recover_troops|recover_equipments|recover_resources|destroy_all|change_human_factors|partial_recovery|unit_creation|fire_order|population_total_destruction|population_kill|population_resurrect|population_change_attitude|change_knowledge_group|unit_change_superior|change_automat_superior|change_formation_superior|change_logistic_links|log_supply_push_flow|log_supply_change_quotas|knowledge_group_enable|knowledge_group_update_side|knowledge_group_update_side_parent|knowledge_group_update_type|create_object|update_object|destroy_object|global_meteo|local_meteo|change_diplomacy|create_knowledge_group|"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Point">
+		<xs:attribute name="coordinates" type="UtmCoordinates"/>
+	</xs:complexType>
+	<xs:complexType name="Geometry">
+		<xs:sequence>
+			<xs:element name="point" type="Point" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="type" type="GeometryType"/>
+	</xs:complexType>
+	<xs:complexType name="ParameterBase">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Base class for action parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="parameter" type="ParameterBase" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">List of embedded parameters.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="location" type="Geometry" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="type" type="ParameterType" use="optional"/>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:simpleType name="ActionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Describes the list of available actions.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="mission"/>
+			<xs:enumeration value="fragorder"/>
+			<xs:enumeration value="magic"/>
+			<xs:enumeration value="magicunit"/>
+			<xs:enumeration value="magicobject"/>
+			<xs:enumeration value="magicknowledge"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ActionBase">
+		<xs:sequence>
+			<xs:element name="parameter" type="ParameterBase" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="ActionIdentifier">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Action identifier, such as mission ID.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Name of the action, used for display and identification purpose.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="target" type="xs:nonNegativeInteger">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Identifier of target entity executing action.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="time" type="xs:dateTime">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Date and time of action planned execution using exercise time. For backward compatibility, time in "tick" value is also supported but is considered obsolete.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" type="ActionType"/>
+	</xs:complexType>
+	<xs:element name="actions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="action" type="ActionBase" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ParameterDirection">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Direction parameter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ParameterBase">
+				<xs:attribute name="value">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="\d{1,3}"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="type" type="ParameterType" fixed="Heading"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ParameterLocationBase">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Location parameter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ParameterBase">
+				<xs:sequence>
+					<xs:element name="location" type="Geometry"/>
+				</xs:sequence>
+				<xs:attribute name="type" type="ParameterType" fixed="Location"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Parameter - location -->
+	<xs:complexType name="ParameterLocation">
+		<xs:complexContent>
+			<xs:extension base="ParameterLocationBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Parameter - line -->
+	<xs:complexType name="ParameterLine">
+		<xs:complexContent>
+			<xs:extension base="ParameterLocationBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Parameter - point -->
+	<xs:complexType name="ParameterPoint">
+		<xs:complexContent>
+			<xs:extension base="ParameterLocationBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PhaseLineFunctionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Phase line function types.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LD"/>
+			<xs:enumeration value="LCA"/>
+			<xs:enumeration value="LC"/>
+			<xs:enumeration value="LI"/>
+			<xs:enumeration value="LO"/>
+			<xs:enumeration value="LCAR"/>
+			<xs:enumeration value="LR"/>
+			<xs:enumeration value="LDM"/>
+			<xs:enumeration value="LFM"/>
+			<xs:enumeration value="LIA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ParameterPhaseLine">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Phase line parameter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="ParameterBase">
+				<xs:sequence>
+					<xs:element name="parameter" type="ParameterLocationBase"/>
+				</xs:sequence>
+				<xs:attribute name="type" type="ParameterType" fixed="PhaseLine"/>
+				<xs:attribute name="value" type="PhaseLineFunctionType"/>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

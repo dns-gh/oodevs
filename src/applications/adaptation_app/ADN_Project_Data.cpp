@@ -21,6 +21,7 @@
 #include <boost/bind.hpp>
 #include <tools/XmlCrc32Signature.h>
 #include <boost/filesystem/operations.hpp>
+#include <boost/bind.hpp>
 #include <windows.h>
 
 namespace bfs = boost::filesystem;

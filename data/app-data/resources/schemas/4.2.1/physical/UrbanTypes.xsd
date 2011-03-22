@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.2.7">
+	<xs:element name="urban">
+		<xs:annotation>
+			<xs:documentation xml:lang="fr">Object and parameter types used in urban area</xs:documentation>
+			<xs:documentation xml:lang="fr">Types d'objets et de paramètres utilisés en zone urbaine</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="urban-block-types">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="material-composition-types">
+								<xs:complexType>
+									<xs:sequence minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="material-composition-type">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="attritions">
+														<xs:complexType>
+															<xs:sequence minOccurs="0" maxOccurs="unbounded">
+																<xs:element name="attrition">
+																	<xs:complexType>
+																		<xs:attribute name="protection" type="xs:string" use="required"/>
+																		<xs:attribute name="destruction" type="xs:float"/>
+																		<xs:attribute name="repairable-with-evacuation" type="xs:float" use="required"/>
+																		<xs:attribute name="repairable-without-evacuation" type="xs:float" use="required"/>
+																	</xs:complexType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="facade-types">
+								<xs:complexType>
+									<xs:sequence minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="facade-type">
+											<xs:complexType>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="roof-shape-types">
+								<xs:complexType>
+									<xs:sequence minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="roof-shape-type">
+											<xs:complexType>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

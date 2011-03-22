@@ -81,6 +81,16 @@ BOOST_FIXTURE_TEST_CASE( test_invalid_xml_schema_nothrows, Fixture )
     BOOST_REQUIRE( inputStream.get() );
 }
 
+BOOST_FIXTURE_TEST_CASE( test_invalid_xml_no_version_in_schema, Fixture )
+{
+    const std::string inputFile( "testFileMigration/input_invalid_no_version_in_schema.xml" );
+    tools::SchemaVersionExtractor ve;
+    tools::RealFileLoader loader( emptyMigrations_, ve );
+    MockRealFileLoaderObserver observer;
+    // NotifyInvalidXml won't be called: no version in initial schema = don't check
+    loader.LoadFile( BOOST_RESOLVE( inputFile ), observer );
+}
+
 BOOST_FIXTURE_TEST_CASE( test_invalid_xml_signature_throws, Fixture )
 {
     const std::string inputFile( "testFileMigration/input_invalid_signature.xml" );

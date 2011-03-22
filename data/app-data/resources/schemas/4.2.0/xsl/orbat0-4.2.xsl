@@ -66,7 +66,4 @@
             <xsl:apply-templates select="node()|@*"/>
         </xsl:element>
     </xsl:template>
-    <xsl:template match="@humans">
-        <xsl:attribute name="healthy"><xsl:value-of select="."></xsl:value-of></xsl:attribute>
-    </xsl:template>
 </xsl:stylesheet>

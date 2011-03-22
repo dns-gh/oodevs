@@ -197,10 +197,10 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const std::string& init
             schema = newSchema;
             version = versionExtractor_.ExtractVersion( schema );
         }
+        if( schema.empty() )
+            observer.NotifyNoXmlSchemaSpecified( inputFileName );
     }
-
-    if( schema.empty() )
-        observer.NotifyNoXmlSchemaSpecified( inputFileName );
+    // Check XML against its schema, only if it was initially set, and contains a version number
     else
     {
         try
@@ -213,6 +213,7 @@ std::auto_ptr< xml::xistream > RealFileLoader::LoadFile( const std::string& init
                 throw e;
         }
     }
+
     CheckSignature( inputFileName, observer );
     return UpgradeToLastVersion( inputFileName, xis, schema, version, observer );
 }

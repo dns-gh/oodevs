@@ -11,6 +11,7 @@
 #include "MIL_FragOrderType.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/format.hpp>
 
 MIL_FragOrderType::T_MissionIDMap MIL_FragOrderType::missionIDs_;
 MIL_FragOrderType::T_MissionNameMap MIL_FragOrderType::missionNames_;
@@ -60,7 +61,7 @@ void MIL_FragOrderType::ReadFragorder( xml::xistream& xis )
 
     const MIL_FragOrderType*& pMissionDiaType = fragOrderDiaTypes_[ pMission->GetDIAType() ];
     if( pMissionDiaType )
-        xis.error( "Entity fragOrder diaType already defined" );
+        MT_LOG_WARNING_MSG( boost::format( "Entity fragOrder for diaType %s defined multiple times" ) % pMission->GetDIAType() );
     pMissionDiaType = pMission;
 }
 

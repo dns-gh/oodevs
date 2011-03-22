@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<extensions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/common/Extensions.xsd">
+<extensions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.2.2/common/Extensions.xsd">
 	<dictionaries>
 		<dictionary name="T_SIC_TypeSIOC" alias="Unite.TypeSIOC">
 			<entry id="1" name="ATLAS" alias="ATLAS">

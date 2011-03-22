@@ -2144,7 +2144,8 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     if( bMaxSlope_.GetData() )
         output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );
 
-    output << xml::content( "equipment-category", equipmentCategory_ );
+    if( !equipmentCategory_.GetData().empty() )
+        output << xml::content( "equipment-category", equipmentCategory_ );
 
     output << xml::end;
 }

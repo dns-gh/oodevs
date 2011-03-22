@@ -124,6 +124,7 @@ void PHY_UnitType::InitializeEfficiencies( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::InitializeCrossingHeight( xml::xistream& xis )
 {
+    crossingHeight_ = eCrossingHeightNever;
     std::string strCrossingHeight;
     xis >> xml::optional
             >> xml::start( "crossing-height" )
@@ -135,8 +136,6 @@ void PHY_UnitType::InitializeCrossingHeight( xml::xistream& xis )
         crossingHeight_ = eCrossingHeightNever;
     else if( strCrossingHeight == ">1m" )
         crossingHeight_ = eCrossingHeightAlways;
-    else
-        throw std::exception( "InitializeCrossingHeight : bad value" );
 }
 
 // -----------------------------------------------------------------------------
