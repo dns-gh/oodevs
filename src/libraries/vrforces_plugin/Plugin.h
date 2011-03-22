@@ -90,8 +90,6 @@ private:
     //@{
     dispatcher::Model_ABC& model_;
     T_Agents agents_;
-    T_AutomatAgents automatAgents_;
-    T_AgentAutomat agentAutomat_;
     std::auto_ptr< DtExerciseConn > connection_;
     std::auto_ptr< DtFilePrinter > logger_;
     std::auto_ptr< Facade > vrForces_;

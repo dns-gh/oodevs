@@ -111,8 +111,6 @@ void Plugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
 void Plugin::Create( const sword::UnitCreation& message )
 {
     agents_[ message.unit().id() ].reset( new Agent( *connection_, *vrForces_, message, *forceResolver_, *disaggregator_ ) );
-    automatAgents_[ message.automat().id() ].insert( agents_[ message.unit().id() ] );
-    agentAutomat_[ message.unit().id() ] = message.automat().id();
 }
 
 // -----------------------------------------------------------------------------
@@ -132,19 +130,5 @@ void Plugin::Update( const sword::UnitAttributes& message )
 // -----------------------------------------------------------------------------
 void Plugin::Destroy( const sword::UnitDestruction& message )
 {
-    const unsigned long id = message.unit().id();
-    T_AgentAutomat::iterator itAutomat = agentAutomat_.find( id );
-    if( itAutomat != agentAutomat_.end() )
-    {
-        T_AutomatAgents::iterator itAgents = automatAgents_.find( itAutomat->second );
-        if( itAgents != automatAgents_.end() )
-            for( std::set< boost::shared_ptr< Agent > >::iterator itAgent = itAgents->second.begin(); itAgent != itAgents->second.end(); ++itAgent )
-                if( (*itAgent)->GetId() == id )
-                {
-                    itAgents->second.erase( itAgent );
-                    break;
-                }
-        agentAutomat_.erase( id );
-    }
-    agents_.erase( id );
+    agents_.erase( message.unit().id() );
 }
