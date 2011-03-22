@@ -76,17 +76,6 @@ void PropertiesPanel::NotifySelected( const kernel::Entity_ABC* element )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesPanel::NotifyUpdated
-// Created: JSR 2011-03-18
-// -----------------------------------------------------------------------------
-void PropertiesPanel::NotifyUpdated( const kernel::Entity_ABC& element )
-{
-    if( &element == selected_ && isVisible() )
-        if( kernel::PropertiesDictionary* dico = const_cast< kernel::Entity_ABC& >( element ).Retrieve< kernel::PropertiesDictionary >() )
-            dico->Display( *table_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: PropertiesPanel::NotifyDeleted
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------

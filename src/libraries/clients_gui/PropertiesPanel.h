@@ -56,7 +56,6 @@ private:
     //@{
     virtual void showEvent( QShowEvent* );
     virtual void NotifySelected( const kernel::Entity_ABC* element );
-    virtual void NotifyUpdated( const kernel::Entity_ABC& element );
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
     //@}
 
