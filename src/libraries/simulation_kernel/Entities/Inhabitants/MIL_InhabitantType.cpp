@@ -74,12 +74,12 @@ MIL_InhabitantType::MIL_InhabitantType( const std::string& strName, xml::xistrea
     pModel_ = MIL_PopulationType::Find( xis.attribute< std::string >( "associated-crowd" ) );
     if( !pModel_ )
         xis.error( "Unknown crowd type" );
-    angryCrowdMissionType_ = xis.attribute< std::string >( "angry-crowd-mission" );
-    xis >> xml::start( "safety-level" )
-            >> xml::attribute( "gain-per-hour", safetyGainPerHour_ )
-            >> xml::attribute( "loss-on-fire", safetyLossOnFire_ )
-        >> xml::end
-        >> xml::start( "schedule" );
+    xis >> xml::optional >> xml::attribute( "angry-crowd-mission", angryCrowdMissionType_ )
+        >> xml::start( "safety-level" )
+                >> xml::attribute( "gain-per-hour", safetyGainPerHour_ )
+                >> xml::attribute( "loss-on-fire", safetyLossOnFire_ )
+           >> xml::end
+     >> xml::start( "schedule" );
     pXisSchedule_.reset( new xml::xibufferstream( xis ) );
     xis >> xml::end
         >> xml::start( "consumption" )
