@@ -103,6 +103,23 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration constructor
+// Created: BCI 2011-03-21
+// -----------------------------------------------------------------------------
+MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, const MIL_PopulationHumans& humans )
+    : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
+    , position_            ( position )
+    , pPullingFlow_        ( 0 )
+    , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
+    , pSplittingObject_    ( 0 )
+{
+    PushHumans( humans );
+    UpdateLocation();
+    UpdateDensity();
+    SendCreation();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration destructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------

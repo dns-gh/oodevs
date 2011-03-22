@@ -41,6 +41,30 @@ class TER_Localisation;
 class MIL_LivingArea : public MIL_LivingArea_ABC
 {
 public:
+    struct T_Block
+    {
+        T_Block( UrbanObjectWrapper* pUrbanObject, unsigned int person = 0, bool alerted = false, bool confined = false )
+            : pUrbanObject_( pUrbanObject )
+            , person_      ( person )
+            , angriness_   ( 0.f )
+            , alerted_     ( alerted )
+            , confined_    ( confined )
+            , outsideAngry_( false )
+        {}
+
+        UrbanObjectWrapper* pUrbanObject_;
+        unsigned int person_;
+        float angriness_;
+        bool alerted_;
+        bool confined_;
+        bool outsideAngry_;
+    };
+
+    typedef std::vector< T_Block >     T_Blocks;
+    typedef T_Blocks::iterator        IT_Blocks;
+    typedef T_Blocks::const_iterator CIT_Blocks;
+
+public:
     //! @name Constructors/Destructor
     //@{
              MIL_LivingArea();
@@ -69,7 +93,9 @@ public:
     void SetAlerted( bool, UrbanObjectWrapper* pUrbanObject = 0 );
     void Confine( const TER_Localisation& localisation );
     void SetConfined( bool, UrbanObjectWrapper* pUrbanObject = 0 );
-    float Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption );
+    void SetOutsideAngry( bool, UrbanObjectWrapper* pUrbanObject );
+
+    float Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption, T_Blocks& angryBlocks );
     //@}
 
     //! @name CheckPoints
@@ -82,24 +108,6 @@ public:
 private:
     //! @name Types
     //@{
-    struct T_Block
-    {
-        T_Block( UrbanObjectWrapper* pUrbanObject, unsigned int person = 0, bool alerted = false, bool confined = false )
-            : pUrbanObject_( pUrbanObject )
-            , person_      ( person )
-            , alerted_     ( alerted )
-            , confined_( confined )
-        {}
-
-        UrbanObjectWrapper* pUrbanObject_;
-        unsigned int person_;
-        bool alerted_;
-        bool confined_;
-    };
-    typedef std::vector< T_Block >     T_Blocks;
-    typedef T_Blocks::iterator        IT_Blocks;
-    typedef T_Blocks::const_iterator CIT_Blocks;
-
     typedef std::map< unsigned long, unsigned int > T_Identifiers;
     typedef T_Identifiers::const_iterator         CIT_Identifiers;
 
@@ -115,7 +123,7 @@ private:
     float GetProportion( const T_Block& block, const std::string& motivation ) const;
     T_Blocks GetBlockUsage( const std::string& motivation ) const;
     unsigned int GetOccupation( const T_Block& block, const std::string& motivation ) const;
-    T_Blocks GetNonConfinedBlocks() const;
+    const T_Blocks GetNonConfinedBlocks() const;
     unsigned long ComputeNonConfinedPopulation() const;
     //@}
 

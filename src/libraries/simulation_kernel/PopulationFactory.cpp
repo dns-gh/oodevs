@@ -55,13 +55,15 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
 // Name: PopulationFactory::Create
 // Created: LDC 2010-10-22
 // -----------------------------------------------------------------------------
-MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army )
+MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
 {
     const MIL_PopulationType* pType = MIL_PopulationType::Find( type );
     if( !pType )
         throw std::runtime_error( "Unknown population type" );
     MIL_Population& population = *new MIL_Population( *pType, army, point, number, name, gcPause_, gcMult_ );
     Register( population.GetID(), population );
+    if( pUrbanObject )
+        populationFromUrbanObjectResolver_.Register( pUrbanObject, population );
     return population;
 }
 

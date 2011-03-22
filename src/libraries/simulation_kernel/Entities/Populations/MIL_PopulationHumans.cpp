@@ -216,3 +216,16 @@ void MIL_PopulationHumans::PullFrom( unsigned int number, MIL_PopulationHumans& 
     dead_ = std::min( number, humans.dead_ );
     humans.dead_ -= dead_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationHumans::ReintegrateUrbanBlock
+// Created: BCI 2011-03-21
+// -----------------------------------------------------------------------------
+void MIL_PopulationHumans::ReintegrateUrbanBlock()
+{
+    healthy_ = 0;
+    wounded_ = 0;
+    contaminated_ = 0;
+    dead_ = 0;
+
+}

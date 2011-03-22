@@ -54,6 +54,7 @@ public:
     void PushHumans( const MIL_PopulationHumans& humans );
     MIL_PopulationHumans PullHumans( unsigned int nNbr );
     void KillAllHumans();
+    void ReintegrateUrbanBlock();
     double Exterminate( double rSurface );
     //@}
 

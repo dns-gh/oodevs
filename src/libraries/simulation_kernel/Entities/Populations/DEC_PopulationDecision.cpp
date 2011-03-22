@@ -105,12 +105,13 @@ void DEC_PopulationDecision::RegisterUserArchetypeFunctions ( directia::brain::B
 {
     // Knowledge objects
     brain[ "DEC_IsValidKnowledgeObject" ] = &DEC_PopulationFunctions::IsKnowledgeObjectValid;
-    brain[ "DEC_ObjectKnowledgesInZone" ] =
-        boost::function<  std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_PopulationFunctions::GetObjectsInZone, boost::cref( GetPopulation() ), _1, _2 ) );
 
     // Former szName_, mission_, automate_:
     brain[ "DEC_GetSzName" ] = &DEC_PopulationFunctions::GetSzName;
     brain[ "DEC_GetRawMission" ] = &DEC_PopulationFunctions::GetMission;
+
+    // Time
+    brain[ "DEC_GetTimeInSeconds" ] = &DEC_MiscFunctions::GetTimeInSeconds;
 }
 
 // -----------------------------------------------------------------------------
@@ -119,6 +120,12 @@ void DEC_PopulationDecision::RegisterUserArchetypeFunctions ( directia::brain::B
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brain )
 {
+    // Knowledge objects
+    brain[ "DEC_ObjectKnowledgesInZone" ] =
+        boost::function<  std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_PopulationFunctions::GetObjectsInZone, boost::cref( GetPopulation() ), _1, _2 ) );
+    brain[ "DEC_ObjectKnowledgesInCircle" ] =
+        boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( double, const std::vector< std::string >& ) >( boost::bind( &DEC_PopulationFunctions::GetObjectsInCircle, boost::ref( GetPopulation() ), _1, _2 ) );
+
     // Actions
     brain[ "DEC__StopAction" ] =
         boost::function< unsigned int ( unsigned int ) >( boost::bind( &DEC_ActionFunctions::StopAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) );
@@ -232,6 +239,11 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     brain[ "DEC_SetMission" ] =
         boost::function< void ( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_PopulationFunctions::SetMission, _1, _2 ) );
     brain[ "DEC_FinMission" ] = boost::bind( &DEC_OrdersFunctions::FinishMission< MIL_Population >, boost::ref( GetPopulation() ) );
+
+    //Security
+    brain[ "DEC_GetUrbanBlockAngriness" ] =
+        boost::function< double() >( boost::bind( &DEC_PopulationFunctions::GetUrbanBlockAngriness, boost::ref( GetPopulation() ) ) );
+    brain[ "DEC_ReintegrateUrbanBlock" ] = boost::function< void() >( boost::bind( &DEC_PopulationFunctions::ReintegrateUrbanBlock, boost::ref( GetPopulation() ) ) );
 }
 
 /*

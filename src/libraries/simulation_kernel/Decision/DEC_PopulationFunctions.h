@@ -37,6 +37,8 @@ public:
     static void SetAttitude( MIL_Population& callerPopulation, unsigned int attitudeId );
     static unsigned int GetAttitude( const MIL_Population& callerPopulation );
     static std::vector< boost::shared_ptr< TER_Localisation > > GetCurrentLocations ( const MIL_Population& callerPopulation );
+    static double GetUrbanBlockAngriness( const MIL_Population& callerPopulation );
+    static void ReintegrateUrbanBlock( MIL_Population& callerPopulation );
 
     // Knowledge agents
     static int GetKnowledgeAgentRoePopulation ( unsigned int agentId );
@@ -45,6 +47,7 @@ public:
     static const TER_Localisation* GetKnowledgeObjectLocalisation( boost::shared_ptr< DEC_Knowledge_Object > knowledge );
     static bool IsKnowledgeObjectValid( boost::shared_ptr< DEC_Knowledge_Object > knowledge );
     static std::vector< boost::shared_ptr< DEC_Knowledge_Object > > GetObjectsInZone( const MIL_Population& caller, const TER_Localisation* pZone, const std::vector< std::string >& parameters );
+    static std::vector< boost::shared_ptr< DEC_Knowledge_Object > > GetObjectsInCircle( const MIL_Population& caller, double radius, const std::vector< std::string >& parameters );
     static int DamageObject( boost::shared_ptr< DEC_Knowledge_Object > knowledge, double damageFactor ) ;
     static float GetKnowledgeObjectDistance( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge ) ;
     static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectClosestPoint( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge ) ;

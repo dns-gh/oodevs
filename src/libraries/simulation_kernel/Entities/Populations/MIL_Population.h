@@ -131,6 +131,9 @@ public:
     bool IsBlinded() const;
     MIL_PopulationElement_ABC* GetClosestAliveElement( const MIL_Agent_ABC& reference ) const;
     void ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, double& rMinDistance ) const;
+    double GetUrbanBlockAngriness() const;
+    void SetUrbanBlockAngriness( double );
+    void ChangeComposition( unsigned int healthy, unsigned int wounded, unsigned int contaminated, unsigned int dead );
     //@}
 
     //! @name Tools
@@ -239,6 +242,7 @@ private:
     bool armedIndividualsChanged_;
     T_Extensions extensions_;
     std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
+    double urbanBlockAngriness_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );

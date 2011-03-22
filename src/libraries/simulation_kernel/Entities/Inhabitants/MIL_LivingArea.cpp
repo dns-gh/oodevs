@@ -19,6 +19,7 @@
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <urban/MotivationsVisitor_ABC.h>
@@ -273,17 +274,30 @@ void MIL_LivingArea::GetUsagesOccupation( std::map< std::string, unsigned int >&
 // Name: MIL_LivingArea::Consume
 // Created: JSR 2011-02-01
 // -----------------------------------------------------------------------------
-float MIL_LivingArea::Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption )
+float MIL_LivingArea::Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption, T_Blocks& angryBlocks )
 {
     if( population_ == 0 )
         return 1.f;
     float satisfaction = 0;
-    BOOST_FOREACH( const T_Block& block, blocks_ )
+    BOOST_FOREACH( T_Block& block, blocks_ )
         if( block.person_ > 0 )
             if( ResourceNetworkCapacity* capacity = block.pUrbanObject_->Retrieve< ResourceNetworkCapacity >() )
             {
-                satisfaction += block.person_ * capacity->GetConsumptionState( resource.GetId() );
+                float blockSatisfaction = block.person_ * capacity->GetConsumptionState( resource.GetId() );
+                satisfaction += blockSatisfaction;
                 capacity->AddConsumption( resource.GetId(), block.person_ * consumption );
+
+                if( ( block.alerted_ || block.outsideAngry_ ) && blockSatisfaction < 0.1f && block.person_ > 0 )
+                    block.angriness_ = std::min( block.angriness_ + 0.001f, 1.f );
+                else
+                    block.angriness_ = std::max( block.angriness_ - 0.001f, 0.f );
+
+                MIL_Population* pAngryCrowd = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( *block.pUrbanObject_ );
+                if( pAngryCrowd )
+                     pAngryCrowd->SetUrbanBlockAngriness( block.angriness_ );
+
+                if( block.outsideAngry_ || block.angriness_ >= 1.f )
+                    angryBlocks.push_back( block );
             }
     return satisfaction / population_;
 }
@@ -335,8 +349,7 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
         }
         BOOST_FOREACH( const T_Block& block, GetNonConfinedBlocks() )
         {
-            if( !block.confined_ )
-                peopleMovingBlock_[ block.pUrbanObject_->GetID() ] = block.person_;
+            peopleMovingBlock_[ block.pUrbanObject_->GetID() ] = block.person_;
         }
         hasChanged_ = true;
     }
@@ -354,19 +367,16 @@ void MIL_LivingArea::MovePeople( int occurence )
         T_Blocks blocks = GetNonConfinedBlocks();
         BOOST_FOREACH( T_Block& block, blocks )
         {
-            if( !block.confined_ )
+            CIT_Identifiers it = identifiers_.find( block.pUrbanObject_->GetID() );
+            if( it == identifiers_.end() )
+                block.person_ -= ( peopleMovingBlock_.find( block.pUrbanObject_->GetID() )->second ) / occurence;
+            else
             {
-                CIT_Identifiers it = identifiers_.find( block.pUrbanObject_->GetID() );
-                if( it == identifiers_.end() )
-                    block.person_ -= ( peopleMovingBlock_.find( block.pUrbanObject_->GetID() )->second ) / occurence;
-                else
-                {
-                    int peopleToMove = ( it->second - peopleMovingBlock_.find( block.pUrbanObject_->GetID() )->second );
-                    peopleToMove /= occurence;
-                    block.person_ += peopleToMove;
-                }
-                temp += block.person_;
+                int peopleToMove = ( it->second - peopleMovingBlock_.find( block.pUrbanObject_->GetID() )->second );
+                peopleToMove /= occurence;
+                block.person_ += peopleToMove;
             }
+            temp += block.person_;
         }
         unsigned long movablePopulation = ComputeNonConfinedPopulation();
         if( movablePopulation > temp )
@@ -389,7 +399,7 @@ void MIL_LivingArea::FinishMoving()
     {
         BOOST_FOREACH( T_Block& block, blocks_ )
         {
-            if( !block.confined_ )
+            if( !block.confined_ && !block.outsideAngry_ )
             {
                 CIT_Identifiers it = identifiers_.find( block.pUrbanObject_->GetID() );
                 block.person_ = ( it == identifiers_.end() ) ? 0u : it->second;
@@ -421,8 +431,8 @@ unsigned int MIL_LivingArea::GetOccupation( const T_Block& block, const std::str
 MIL_LivingArea::T_Blocks MIL_LivingArea::GetBlockUsage( const std::string& motivation ) const
 {
     T_Blocks blocks;
-    BOOST_FOREACH( const T_Block& block, blocks_ )
-        if( !block.confined_ && GetProportion( block, motivation ) != 0.f )
+    BOOST_FOREACH( const T_Block& block, GetNonConfinedBlocks() )
+        if( GetProportion( block, motivation ) != 0.f )
             blocks.push_back( block );
     return blocks;
 }
@@ -526,6 +536,21 @@ void MIL_LivingArea::SetConfined( bool confined, UrbanObjectWrapper* pUrbanObjec
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::SetOutsideAngry
+// Created: BCI 2011-03-17
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::SetOutsideAngry( bool outsideAngry, UrbanObjectWrapper* pUrbanObject )
+{
+    BOOST_FOREACH( T_Block& block, blocks_ )
+    {
+        if( pUrbanObject == block.pUrbanObject_ )
+        {
+            block.outsideAngry_ = outsideAngry;
+            return;
+        }
+    }
+}
+// -----------------------------------------------------------------------------
 // Name: MIL_LivingArea::Confine
 // Created: BCI 2011-02-18
 // -----------------------------------------------------------------------------
@@ -566,12 +591,12 @@ geometry::Polygon2f MIL_LivingArea::ComputeMovingArea() const
 // Name: MIL_LivingArea::GetNonConfinedBlocks
 // Created: BCI 2011-02-22
 // -----------------------------------------------------------------------------
-MIL_LivingArea::T_Blocks MIL_LivingArea::GetNonConfinedBlocks() const
+const MIL_LivingArea::T_Blocks MIL_LivingArea::GetNonConfinedBlocks() const
 {
     T_Blocks results;
     BOOST_FOREACH( const T_Block& block, blocks_ )
     {
-        if( !block.confined_ )
+        if( !block.confined_ && !block.outsideAngry_ )
             results.push_back( block );
     }
     return results;
@@ -584,10 +609,9 @@ MIL_LivingArea::T_Blocks MIL_LivingArea::GetNonConfinedBlocks() const
 unsigned long MIL_LivingArea::ComputeNonConfinedPopulation() const
 {
     unsigned long population = 0;
-    BOOST_FOREACH( const T_Block& block, blocks_ )
+    BOOST_FOREACH( const T_Block& block, GetNonConfinedBlocks() )
     {
-        if( !block.confined_ )
-            population += block.person_;
+        population += block.person_;
     }
     return population;
 }

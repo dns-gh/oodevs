@@ -1926,3 +1926,21 @@ void MIL_EntityManager::SetToTasker( Tasker& tasker, unsigned int id ) const
         tasker.mutable_population()->set_id( id );*/
     else throw( std::exception( "Misformed tasker in protocol message" ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreateCrowd
+// Created: BCI 2011-03-16
+// -----------------------------------------------------------------------------
+MIL_Population* MIL_EntityManager::CreateCrowd( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
+{
+    return &populationFactory_->Create( type, point, number, name, army, pUrbanObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindPopulation
+// Created: BCI 2011-03-17
+// -----------------------------------------------------------------------------
+MIL_Population* MIL_EntityManager::FindPopulation( UrbanObjectWrapper& urbanObject ) const
+{
+    return populationFactory_->FindByUrbanObject( urbanObject );
+}

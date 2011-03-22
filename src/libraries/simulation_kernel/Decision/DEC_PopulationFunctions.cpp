@@ -131,6 +131,16 @@ std::vector< boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions::GetObjectsInCircle
+// Created: BCI 2011-03-18
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< DEC_Knowledge_Object > > DEC_PopulationFunctions::GetObjectsInCircle( const MIL_Population& caller, double radius, const std::vector< std::string >& parameters )
+{
+    TER_Localisation circle( *caller.GetBarycenter(), radius );
+    return GetObjectsInZone( caller, &circle, parameters );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetKnowledgeObjectLocalisation
 // Created: NLD 2005-12-05
 // -----------------------------------------------------------------------------
@@ -265,4 +275,23 @@ void DEC_PopulationFunctions::SetMission( DEC_Decision_ABC* object, boost::share
 boost::shared_ptr< MT_Vector2D > DEC_PopulationFunctions::GetBarycenter( const MIL_Population& callerPopulation )
 {
     return callerPopulation.GetBarycenter();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetPopulationAngriness
+// Created: BCI 2011-03-18
+// -----------------------------------------------------------------------------
+double DEC_PopulationFunctions::GetUrbanBlockAngriness( const MIL_Population& callerPopulation )
+{
+    return callerPopulation.GetUrbanBlockAngriness();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::ReintegrateUrbanBlock
+// Created: BCI 2011-03-21
+// -----------------------------------------------------------------------------
+void DEC_PopulationFunctions::ReintegrateUrbanBlock( MIL_Population& callerPopulation )
+{
+    callerPopulation.GetOrderManager().CancelMission();
+    callerPopulation.ChangeComposition( 0, 0, 0, 0 );
 }

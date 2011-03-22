@@ -56,6 +56,7 @@ public:
     float GetSafetyGainPerHour() const;
     float GetSafetyLossOnFire() const;
     const T_ConsumptionsMap& GetConsumptions() const;
+    const std::string& GetAngryCrowdMissionType() const;
     //@}
 
     //! @name Operations
@@ -91,6 +92,7 @@ private:
     //! @name Member Data
     //@{
     const std::string strName_;
+    std::string angryCrowdMissionType_;
     unsigned int nID_;
     const MIL_PopulationType* pModel_;
     float safetyGainPerHour_;

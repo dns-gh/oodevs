@@ -439,6 +439,16 @@ void MIL_PopulationElement_ABC::KillAllHumans()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ReintegrateUrbanBlock
+// Created: BCI 2011-03-21
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::ReintegrateUrbanBlock()
+{
+    humans_.ReintegrateUrbanBlock();
+    bHumansUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::Exterminate
 // Created: SBO 2005-12-22
 // -----------------------------------------------------------------------------

@@ -36,6 +36,7 @@ public:
              MIL_PopulationConcentration( MIL_Population& population, unsigned int id );
              MIL_PopulationConcentration( MIL_Population& population, xml::xistream& xis );
              MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, unsigned int nHumans = 0 );
+             MIL_PopulationConcentration( MIL_Population& population, const MT_Vector2D& position, const MIL_PopulationHumans& humans );
     virtual ~MIL_PopulationConcentration();
     //@}
 

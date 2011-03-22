@@ -212,6 +212,7 @@ ADN_People_Data::PeopleInfos* ADN_People_Data::PeopleInfos::CreateCopy()
 {
     PeopleInfos* pCopy = new PeopleInfos();
     pCopy->ptrModel_ = ptrModel_.GetData();
+    pCopy->strAngryCrowdMission_ = strAngryCrowdMission_.GetData();
     pCopy->repartition_ = repartition_;
     pCopy->transferTime_ = transferTime_.GetData();
     pCopy->securityLossOnFire_ = securityLossOnFire_.GetData();
@@ -242,7 +243,8 @@ void ADN_People_Data::PeopleInfos::ReadArchive( xml::xistream& input )
     int index = 0;
     std::string strModel;
     input >> xml::attribute( "name", strName_ )
-          >> xml::attribute( "associated-crowd", strModel );
+          >> xml::attribute( "associated-crowd", strModel )
+          >> xml::optional >> xml::attribute( "angry-crowd-mission", strAngryCrowdMission_ );
 
     ADN_Population_Data::PopulationInfos* pModel = ADN_Workspace::GetWorkspace().GetPopulation().GetData().FindPopulation( strModel );
     if( !pModel )
@@ -325,8 +327,10 @@ void ADN_People_Data::PeopleInfos::WriteArchive( xml::xostream& output, int mosI
     output << xml::start( "population" )
             << xml::attribute( "name", strName_ )
             << xml::attribute( "id", mosId )
-            << xml::attribute( "associated-crowd", ptrModel_.GetData()->strName_ )
-            << xml::start( "repartition" );
+            << xml::attribute( "associated-crowd", ptrModel_.GetData()->strName_ );
+    if( !strAngryCrowdMission_.GetData().empty() )
+        output << xml::attribute( "angry-crowd-mission", strAngryCrowdMission_ );
+    output << xml::start( "repartition" );
     repartition_.WriteArchive( output );
     output  << xml::end
             << xml::start( "schedule" )

@@ -14,10 +14,16 @@
 #include "MIL_AgentServer.h"
 #include "MIL_InhabitantSatisfactions.h"
 #include "Entities/Objects/CrowdCapacity.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Orders/MIL_PopulationMissionType.h"
+#include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Entities/Populations/MIL_Population.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "MIL_LivingArea.h"
 #include "MIL_Schedule.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -290,12 +296,57 @@ void MIL_Inhabitant::UpdateState()
     pSatisfactions_->IncreaseSafety( type_.GetSafetyGainPerHour() );
     pSatisfactions_->SetLodgingSatisfaction( pLivingArea_->ComputeOccupationFactor() );
     const MIL_InhabitantType::T_ConsumptionsMap& consumptions = type_.GetConsumptions();
+    MIL_LivingArea::T_Blocks angryBlocks;
     for( MIL_InhabitantType::CIT_ConsumptionsMap it = consumptions.begin(); it != consumptions.end(); ++it )
-        pSatisfactions_->SetResourceSatisfaction( *it->first, pLivingArea_->Consume( *it->first, it->second ) );
+    {
+        float satisfaction = pLivingArea_->Consume( *it->first, it->second, angryBlocks );
+        pSatisfactions_->SetResourceSatisfaction( *it->first, satisfaction );
+    }
     std::map< std::string, unsigned int > occupations;
     pLivingArea_->GetUsagesOccupation( occupations );
     pSatisfactions_->ComputeMotivationSatisfactions( occupations, nNbrHealthyHumans_ + nNbrWoundedHumans_ );
     pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
+
+    // $$$$ BCI 2011-03-18: gestion des foules en colère => comment faire pour ne pas mettre ça en dur dans la sim?
+    if( !type_.GetAngryCrowdMissionType().empty() )
+    {
+        MIL_EntityManager& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
+        BOOST_FOREACH( const MIL_LivingArea::T_Block& block, angryBlocks )
+        {
+            MIL_Population* pAngryCrowd = entityManager.FindPopulation( *block.pUrbanObject_ );
+            if( !pAngryCrowd )
+            {
+                pLivingArea_->SetOutsideAngry( true, block.pUrbanObject_ );
+                std::string name = "Angry crowd";
+                std::string urbanObjectName = block.pUrbanObject_->GetName();
+                if( !urbanObjectName.empty() )
+                    name += " from " + urbanObjectName;
+                pAngryCrowd = entityManager.CreateCrowd( type_.GetAssociatedCrowdType().GetName(), block.pUrbanObject_->GetLocalisation().ComputeBarycenter(), 0, name, *pArmy_, block.pUrbanObject_ );
+
+            }
+            if( !type_.GetAngryCrowdMissionType().empty() && pAngryCrowd->GetAllHumans() == 0 ) // $$$$ BCI 2011-03-21: bidouille parce qu'on ne peut pas supprimer une foule
+            {
+                if( block.angriness_ < 1.f )// $$$$ BCI 2011-03-21: bidouille parce qu'on ne peut pas supprimer une foule
+                    pLivingArea_->SetOutsideAngry( false, block.pUrbanObject_ );// $$$$ BCI 2011-03-21: bidouille parce qu'on ne peut pas supprimer une foule
+                else
+                {
+                pAngryCrowd->ChangeComposition( block.person_, 0, 0, 0 );
+                pAngryCrowd->Move( block.pUrbanObject_->GetLocalisation().ComputeBarycenter() );
+
+                const  MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( type_.GetAngryCrowdMissionType() );
+                if( !pMissionType )
+                    throw std::runtime_error( "Unknow angry crowd mission type " + type_.GetAngryCrowdMissionType() );
+
+                // $$$$ BCI 2011-03-18: comment faire plus simple pour démarrer une tâche?
+                sword::CrowdOrder msg;
+                msg.mutable_tasker()->set_id( pAngryCrowd->GetID() );
+                msg.mutable_type()->set_id( pMissionType->GetID() );
+                msg.mutable_parameters();
+                pAngryCrowd->OnReceiveOrder( msg );
+                }
+            }            
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

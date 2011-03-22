@@ -74,6 +74,7 @@ MIL_InhabitantType::MIL_InhabitantType( const std::string& strName, xml::xistrea
     pModel_ = MIL_PopulationType::Find( xis.attribute< std::string >( "associated-crowd" ) );
     if( !pModel_ )
         xis.error( "Unknown crowd type" );
+    angryCrowdMissionType_ = xis.attribute< std::string >( "angry-crowd-mission" );
     xis >> xml::start( "safety-level" )
             >> xml::attribute( "gain-per-hour", safetyGainPerHour_ )
             >> xml::attribute( "loss-on-fire", safetyLossOnFire_ )
@@ -124,6 +125,15 @@ const MIL_PopulationType& MIL_InhabitantType::GetAssociatedCrowdType() const
 {
     assert( pModel_ );
     return *pModel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_InhabitantType::GetAngryCrowdMissionType
+// Created: BCI 2011-03-18
+// -----------------------------------------------------------------------------
+const std::string& MIL_InhabitantType::GetAngryCrowdMissionType() const
+{
+    return angryCrowdMissionType_;
 }
 
 // -----------------------------------------------------------------------------

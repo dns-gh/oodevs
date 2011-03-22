@@ -51,6 +51,7 @@ public:
     void KillAll();
     unsigned int ApplyNumberOfDead( unsigned int dead );
     void PullFrom( unsigned int number, MIL_PopulationHumans& humans );
+    void ReintegrateUrbanBlock();
     //@}
 
     //! @name Serialization

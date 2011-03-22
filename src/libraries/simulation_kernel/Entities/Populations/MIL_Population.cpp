@@ -1105,20 +1105,38 @@ void MIL_Population::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     unsigned int wounded = woundedParam.value().Get( 0 ).quantity();
     unsigned int contaminated = contaminatedParam.value().Get( 0 ).quantity();
     unsigned int dead = deadParam.value().Get( 0 ).quantity();
-    float ratio = static_cast< float >( healthy + wounded + contaminated + dead ) / GetAllHumans();
-    MIL_PopulationElement_ABC* last = 0;
-    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+    ChangeComposition( healthy, wounded, contaminated, dead );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::ChangeComposition
+// Created: BCI 2011-03-21
+// -----------------------------------------------------------------------------
+void MIL_Population::ChangeComposition( unsigned int healthy, unsigned int wounded, unsigned int contaminated, unsigned int dead )
+{
+    unsigned int currentAllHumans = GetAllHumans();
+    if( currentAllHumans == 0 )
     {
-        last = *it;
-        ChangeHealthState( **it, healthy, contaminated, wounded, dead, ratio );
+        MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, *vBarycenter_, MIL_PopulationHumans( healthy, contaminated, wounded, dead ) );
+        concentrations_.push_back( pConcentration );
     }
-    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    else
     {
-        last = *it;
-        ChangeHealthState( **it, healthy, contaminated, wounded, dead, ratio );
+        float ratio = static_cast< float >( healthy + wounded + contaminated + dead ) / currentAllHumans;
+        MIL_PopulationElement_ABC* last = 0;
+        for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        {
+            last = *it;
+            ChangeHealthState( **it, healthy, contaminated, wounded, dead, ratio );
+        }
+        for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        {
+            last = *it;
+            ChangeHealthState( **it, healthy, contaminated, wounded, dead, ratio );
+        }
+        if( last )
+            last->PushHumans( MIL_PopulationHumans( healthy, contaminated, wounded, dead ) );
     }
-    if( last )
-        last->PushHumans( MIL_PopulationHumans( healthy, contaminated, wounded, dead ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -1377,3 +1395,22 @@ const std::string& MIL_Population::GetCriticalIntelligence() const
 {
     return criticalIntelligence_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetUrbanBlockAngriness
+// Created: BCI 2011-03-18
+// -----------------------------------------------------------------------------
+double MIL_Population::GetUrbanBlockAngriness() const
+{
+    return urbanBlockAngriness_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetUrbanBlockAngriness
+// Created: BCI 2011-03-18
+// -----------------------------------------------------------------------------
+void MIL_Population::SetUrbanBlockAngriness( double u )
+{
+    urbanBlockAngriness_ = u;
+}
+

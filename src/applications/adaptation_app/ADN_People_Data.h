@@ -105,6 +105,7 @@ public:
     public:
         ADN_Type_String strName_;
         ADN_TypePtr_InVector_ABC<ADN_Population_Data::PopulationInfos> ptrModel_;
+        ADN_Type_String strAngryCrowdMission_;
         ADN_Type_Repartition repartition_;
         ADN_Type_Time transferTime_;
         ADN_Type_Double securityLossOnFire_;

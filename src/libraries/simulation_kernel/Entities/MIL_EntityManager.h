@@ -102,6 +102,7 @@ public:
     MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );
     MIL_Object_ABC* CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name );
+    MIL_Population* CreateCrowd( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& army, UrbanObjectWrapper* pUrbanObject = 0 );
     //@}
 
     //! @name Accessors
@@ -114,6 +115,9 @@ public:
     virtual MIL_AgentPion*      FindAgentPion     ( unsigned int nID ) const;
     virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
+    
+    MIL_Population* FindPopulation( UrbanObjectWrapper& urbanObject ) const;
+
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
     const bool HasInfiniteDotations() const;
     UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
