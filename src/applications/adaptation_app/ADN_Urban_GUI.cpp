@@ -155,7 +155,8 @@ void ADN_Urban_GUI::Build()
     QWidget* pHolder = builder.AddFieldHolder( pGroupAccommodations );
 
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vAccommodationInfosConnectors[ eUrbanAccommodationName ] );
-    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationCapacity ] );
+    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Nominal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationNominalCapacity ] );
+    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Maximal capacity" ), vAccommodationInfosConnectors[ eUrbanAccommodationMaxCapacity ] );
 
     ///////////////////
     // Infrastructures

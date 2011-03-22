@@ -11,9 +11,7 @@
 #define __ADN_Urban_GUI_h_
 
 #include "ADN_GUI_ABC.h"
-#include <qobject.h>
 
-class ADN_Table;
 class ADN_Urban_Data;
 class ADN_ListView_Urban_Type;
 class ADN_ListView_UrbanAccommodation_Type;
@@ -50,7 +48,8 @@ public:
     enum E_UrbanAccommodationGuiElements
     {
         eUrbanAccommodationName,
-        eUrbanAccommodationCapacity,
+        eUrbanAccommodationNominalCapacity,
+        eUrbanAccommodationMaxCapacity,
         eNbrUrbanAccommodationGuiElements
     };
 
@@ -73,16 +72,12 @@ public:
 
 private:
     ADN_Urban_Data& data_;
-
-    ADN_ListView_UrbanMaterial_Type*        pListMaterial_;
-    ADN_ListView_Urban_Type*                pListFacade_;
-    ADN_ListView_Urban_Type*                pListRoofShape_;
-    ADN_ListView_UrbanAccommodation_Type*   pListAccommodation_;
-    ADN_ListView_UrbanInfrastructure_Type*   pListInfrastructure_;
-
-
-    ADN_Urban_AttritionTable*     pAttritionTable_;
+    ADN_ListView_UrbanMaterial_Type* pListMaterial_;
+    ADN_ListView_Urban_Type* pListFacade_;
+    ADN_ListView_Urban_Type* pListRoofShape_;
+    ADN_ListView_UrbanAccommodation_Type* pListAccommodation_;
+    ADN_ListView_UrbanInfrastructure_Type* pListInfrastructure_;
+    ADN_Urban_AttritionTable* pAttritionTable_;
 };
-
 
 #endif // __ADN_Urban_GUI_h_

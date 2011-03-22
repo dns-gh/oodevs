@@ -92,9 +92,9 @@
     </roof-shape-types>
   </urban-block-types>
   <accommodations>
-    <accommodation capacity="0.5" role="Loisir"/>
-    <accommodation capacity="0.07" role="Logement"/>
-    <accommodation capacity="0.2" role="Travail"/>
+    <accommodation max-capacity="0.7" nominal-capacity="0.5" role="Loisir"/>
+    <accommodation max-capacity="0.1" nominal-capacity="0.07" role="Logement"/>
+    <accommodation max-capacity="0.3" nominal-capacity="0.2" role="Travail"/>
   </accommodations>
   <infrastructures>
     <infrastructure name="Ressources eau" symbol="resource-water">
@@ -169,4 +169,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="3072628743" -->
+<!-- signature="3787315770" -->

@@ -598,13 +598,6 @@
     </message>
 </context>
 <context>
-    <name>PopulationAffinities</name>
-    <message>
-        <source>Affinities/%1</source>
-        <translation>Adhésions/%1</translation>
-    </message>
-</context>
-<context>
     <name>Preparation</name>
     <message>
         <source>Army %1</source>

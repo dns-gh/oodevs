@@ -82,7 +82,8 @@ public:
         //! @name Member Data
         //@{
         ADN_Type_String strName_;
-        ADN_Type_Double value_;
+        ADN_Type_Double nominalCapacity_;
+        ADN_Type_Double maxCapacity_;
         //@}
     };
 

@@ -107,5 +107,5 @@ void PHY_AccomodationType::ReadAccomodation( xml::xistream& xis )
     const PHY_AccomodationType*& pAccomodation = accomodations_[ strRole ];
     if( pAccomodation )
         xis.error( "Accomodation " + strRole + " already defined" );
-    pAccomodation = new PHY_AccomodationType( strRole, xis.attribute< float >( "capacity" ) );
+    pAccomodation = new PHY_AccomodationType( strRole, xis.attribute< float >( "nominal-capacity" ) );
 }

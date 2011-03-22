@@ -14,7 +14,6 @@
 
 #include "ADN_ListView.h"
 
-
 // =============================================================================
 /** @class  ADN_ListView_UrbanAccommodation_Type
 @brief  ADN_ListView_UrbanAccommodation_Type
@@ -32,6 +31,5 @@ private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
 };
-
 
 #endif // __ADN_ListView_UrbanAccommodation_Type_h_

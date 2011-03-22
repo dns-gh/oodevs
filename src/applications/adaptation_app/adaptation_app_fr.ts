@@ -5229,10 +5229,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Type</translation>
     </message>
     <message>
-        <source>Capacity</source>
-        <translation>Capacité</translation>
-    </message>
-    <message>
         <source>Infrastructures</source>
         <translation>Infrastructures</translation>
     </message>
@@ -5267,6 +5263,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Activity</source>
         <translation>Activité</translation>
+    </message>
+    <message>
+        <source>Nominal capacity</source>
+        <translation>Capacité nominale</translation>
+    </message>
+    <message>
+        <source>Maximal capacity</source>
+        <translation>Capacité maximale</translation>
     </message>
 </context>
 <context>

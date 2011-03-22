@@ -413,7 +413,8 @@ void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& outp
     std::string strData = strName_.GetData();
     output << xml::start( "accommodation" )
         << xml::attribute( "role",  trim( strData ) )
-        << xml::attribute( "capacity", value_.GetData() )
+        << xml::attribute( "nominal-capacity", nominalCapacity_.GetData() )
+        << xml::attribute( "max-capacity", maxCapacity_.GetData() )
         << xml::end();
 }
 
@@ -422,11 +423,13 @@ void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& outp
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input )
-    : strName_ ( "" )
-    , value_   ( 0 )
+    : strName_        ( "" )
+    , nominalCapacity_( 0 )
+    , maxCapacity_    ( 0 )
 {
     input >> xml::attribute( "role", strName_ )
-          >> xml::attribute( "capacity", value_ );
+          >> xml::attribute( "nominal-capacity", nominalCapacity_ )
+          >> xml::attribute( "max-capacity", maxCapacity_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,7 +438,8 @@ ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input )
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::AccommodationInfos::AccommodationInfos()
     : strName_ ( "" )
-    , value_   ( 0 )
+    , nominalCapacity_( 0 )
+    , maxCapacity_    ( 0 )
 {
     strName_.SetDataName( "le nom de la motivation" );
     strName_.SetParentNode( *this );
