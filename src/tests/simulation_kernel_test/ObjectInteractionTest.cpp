@@ -85,8 +85,6 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_SUITE( ObjectCapacityTestSuite, ObjectCapacityFixture )
-
 // -----------------------------------------------------------------------------
 /* Name: Test VerifyObjectCapacity_Interaction_Contamination_NoNBC
    Create an object prototype able to contaminate.
@@ -95,7 +93,7 @@ BOOST_FIXTURE_TEST_SUITE( ObjectCapacityTestSuite, ObjectCapacityFixture )
 */
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC, ObjectCapacityFixture )
 {
     MIL_ObjectLoader loader;
     {
@@ -134,7 +132,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
 */
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC, ObjectCapacityFixture )
 {
     MIL_ObjectLoader loader;
     {
@@ -176,7 +174,7 @@ Instanciate the object and test if the interaction mechanism is triggered
 */
 // Created: MGD 2009-03-04
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Protection, ObjectCapacityFixture )
 {
     //@TODO test à renforcer après le merge
     MIL_ObjectLoader loader;
@@ -223,7 +221,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
 */
 // Created: LDC 2009-03-05
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped, ObjectCapacityFixture )
 {
     MIL_ObjectLoader loader;
     {
@@ -256,7 +254,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped )
 */
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Supply )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Supply, ObjectCapacityFixture )
 {
     //@TODO test à renforcer après le merge
     MIL_ObjectLoader loader;
@@ -296,7 +294,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Supply )
 */
 // Created: LDC 2009-03-06
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractWithEnemy )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_InteractWithEnemy, ObjectCapacityFixture )
 {
     MIL_ObjectLoader loader;
     {
@@ -327,7 +325,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractWithEnemy )
 // Name: VerifyObjectCapacity_Interaction_Detection
 // Created: SBO 2009-06-08
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection, ObjectCapacityFixture )
 {
     MIL_ObjectLoader loader;
     {
@@ -365,7 +363,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
 // Name: VerifyObjectCapacity_Interaction_Detection2
 // Created: SLG 2010-02-19
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2, ObjectCapacityFixture )
 {
     MIL_ObjectLoader loader;
     {
@@ -419,7 +417,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
 // Name: VerifyObjectCapacity_Interaction_Mine
 // Created: SBO 2009-06-08
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Mine )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Mine, ObjectCapacityFixture )
 {
     MIL_ObjectLoader loader;
     {
@@ -456,7 +454,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Mine )
 // Name: VerifyObjectCapacity_InteractionAttitudeModifier
 // Created: MGD 2010-03-16
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier, ObjectCapacityFixture )
 {
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
@@ -497,7 +495,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
 // Name: VerifyObjectCapacity_InteractionPerception
 // Created: MGD 2010-03-16
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionPerception, ObjectCapacityFixture )
 {
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
@@ -538,7 +536,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
 // Name: VerifyObjectCapacity_InteractionPerception
 // Created: MGD 2010-03-16
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionScattering )
+BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionScattering, ObjectCapacityFixture )
 {
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
@@ -574,5 +572,3 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionScattering )
     BOOST_CHECK( before > concentration.GetTotalLivingHumans() );
     MOCK_EXPECT( army, UnregisterObject ).once();
 }
-
-BOOST_AUTO_TEST_SUITE_END()
