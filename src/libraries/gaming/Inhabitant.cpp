@@ -85,9 +85,9 @@ void Inhabitant::CreateDictionary( Controller& controller )
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Identifier" ), self.id_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Name" ), self.name_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Male" ), male_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Female" ), female_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Children" ), children_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Male" ), self.male_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Female" ), self.female_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Children" ), self.children_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Health" ), self.healthSatisfaction_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Safety" ), self.safetySatisfaction_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Lodging" ), self.lodgingSatisfaction_ );

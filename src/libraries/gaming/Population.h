@@ -112,9 +112,9 @@ private:
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::PopulationType& type_;
-    unsigned int male_;
-    unsigned int female_;
-    unsigned int children_;
+    const unsigned int male_;
+    const unsigned int female_;
+    const unsigned int children_;
     kernel::OptionalValue< std::string > criticalIntelligence_;
     kernel::OptionalValue< float > armedIndividuals_;
     geometry::Rectangle2f boundingBox_;

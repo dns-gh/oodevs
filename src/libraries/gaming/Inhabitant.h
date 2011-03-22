@@ -116,9 +116,9 @@ private:
     kernel::Controllers& controllers_;
     const kernel::InhabitantType& type_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
-    unsigned int male_;
-    unsigned int female_;
-    unsigned int children_;
+    const unsigned int male_;
+    const unsigned int female_;
+    const unsigned int children_;
     unsigned int healthSatisfaction_;
     unsigned int safetySatisfaction_;
     unsigned int lodgingSatisfaction_;

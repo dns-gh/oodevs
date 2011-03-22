@@ -37,15 +37,15 @@ Population::Population( const sword::CrowdCreation& message,
                         const tools::Resolver_ABC< PopulationType >& typeResolver,
                         const StaticModel& staticModel )
     : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ) )
-    , controllers_( controllers )
-    , converter_  ( converter )
-    , type_       ( typeResolver.Get( message.type().id() ) )
-    , male_       ( static_cast< unsigned int >( 100 * message.male() + 0.5f ) )
-    , female_     ( static_cast< unsigned int >( 100 * message.female() + 0.5f ) )
-    , children_   ( static_cast< unsigned int >( 100 * message.children() + 0.5f ) )
-    , nDomination_( 0, false )
+    , controllers_         ( controllers )
+    , converter_           ( converter )
+    , type_                ( typeResolver.Get( message.type().id() ) )
+    , male_                ( static_cast< unsigned int >( 100 * message.male() + 0.5f ) )
+    , female_              ( static_cast< unsigned int >( 100 * message.female() + 0.5f ) )
+    , children_            ( static_cast< unsigned int >( 100 * message.children() + 0.5f ) )
+    , nDomination_         ( 0, false )
     , criticalIntelligence_( "", false )
-    , armedIndividuals_( 0, false )
+    , armedIndividuals_    ( 0, false )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.crowd().id() );
@@ -408,12 +408,12 @@ void Population::CreateDictionary( kernel::Controller& controller )
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Identifier" ), self.id_ );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Name" ), self.name_ );
-    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Critical intelligence" ), criticalIntelligence_ );
-    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Domination" ), nDomination_ );
-    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Armed individuals" ), armedIndividuals_ );
-    dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Male" ), male_ );
-    dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Female" ), female_ );
-    dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Children" ), children_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Critical intelligence" ), self.criticalIntelligence_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Domination" ), self.nDomination_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Armed individuals" ), self.armedIndividuals_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Male" ), self.male_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Female" ), self.female_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "M\\F\\C Repartition/Children" ), self.children_ );
 }
 
 // -----------------------------------------------------------------------------
