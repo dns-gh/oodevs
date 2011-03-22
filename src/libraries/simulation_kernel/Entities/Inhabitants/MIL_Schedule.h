@@ -17,6 +17,7 @@
 class MIL_LivingArea_ABC;
 
 namespace bpt = boost::posix_time;
+
 // =============================================================================
 /** @class  MIL_Schedule
     @brief  MIL schedule
@@ -58,6 +59,7 @@ private:
     //@{
     void ReadEvent( xml::xistream& xis );
     void Check( const Event& event, unsigned int date, unsigned int duration );
+    void Initialize( unsigned int date );
     //@}
 
 private:
@@ -68,6 +70,7 @@ private:
     T_Events events_;
     int occurence_;
     bool isMoving_;
+    bool initialized_;
     //@}
 };
 

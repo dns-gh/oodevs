@@ -37,17 +37,17 @@ BOOST_AUTO_TEST_CASE( wrong_day_in_xml_throws )
 
 namespace
 {
-    class Fixture
+    class InitFixture
     {
     public:
-        Fixture()
+        InitFixture()
             : xis( "<root transfer-time='40m'>"
                    "    <event day='monday' from='22:00' motivation='leisure' to='23:00'/>"
                    "    <event day='friday' from='09:00' motivation='office' to='10:00'/>"
                    "</root>" )
             , schedule( livingArea )
         {
-            schedule.Configure( xis >> xml::start( "root" ) );
+            xis >> xml::start( "root" );
         }
         xml::xistringstream xis;
         MockMIL_LivingArea livingArea;
@@ -66,6 +66,65 @@ namespace
     }
 }
 
+BOOST_FIXTURE_TEST_CASE( population_initialize_his_motivation, InitFixture )
+{
+    {
+        MIL_Schedule schedule( livingArea );
+        schedule.Configure( xis );
+        MOCK_EXPECT( livingArea, StartMotivation ).once().with( "leisure" );
+        MOCK_EXPECT( livingArea, MovePeople ).once();
+        MOCK_EXPECT( livingArea, FinishMoving ).once();
+        schedule.Update( Convert( 2011, 3, 22, 11, 15, 0 ), 1u );
+        mock::verify();
+    }
+    {
+        MIL_Schedule schedule( livingArea );
+        schedule.Configure( xis );
+        MOCK_EXPECT( livingArea, StartMotivation ).once().with( "leisure" );
+        MOCK_EXPECT( livingArea, MovePeople ).once();
+        MOCK_EXPECT( livingArea, FinishMoving ).once();
+        schedule.Update( Convert( 2011, 3, 24, 11, 15, 0 ), 1u );
+        mock::verify();
+    }
+    {
+        MIL_Schedule schedule( livingArea );
+        schedule.Configure( xis );
+        MOCK_EXPECT( livingArea, StartMotivation ).once().with( "office" );
+        MOCK_EXPECT( livingArea, MovePeople ).once();
+        MOCK_EXPECT( livingArea, FinishMoving ).once();
+        schedule.Update( Convert( 2011, 3, 26, 11, 15, 0 ), 1u );
+        mock::verify();
+    }
+    {
+        MIL_Schedule schedule( livingArea );
+        schedule.Configure( xis );
+        MOCK_EXPECT( livingArea, StartMotivation ).once().with( "office" );
+        MOCK_EXPECT( livingArea, MovePeople ).once();
+        MOCK_EXPECT( livingArea, FinishMoving ).once();
+        schedule.Update( Convert( 2011, 3, 28, 11, 15, 0 ), 1u );
+        mock::verify();
+    }
+}
+
+namespace
+{
+    class Fixture : public InitFixture
+    {
+    public:
+        Fixture()
+            : schedule( livingArea )
+        {
+            schedule.Configure( xis );
+            MOCK_EXPECT( livingArea, StartMotivation ).once().with( "office" );
+            MOCK_EXPECT( livingArea, MovePeople ).once();
+            MOCK_EXPECT( livingArea, FinishMoving ).once();
+            schedule.Update( Convert( 2011, 1, 3, 10, 10, 0 ), 1u );
+            mock::verify();
+        }
+        MIL_Schedule schedule;
+    };
+}
+
 BOOST_FIXTURE_TEST_CASE( wrong_time_does_nothing, Fixture )
 {
     schedule.Update( Convert( 2011, 1, 3, 11, 15, 0 ), 1u );
@@ -75,7 +134,6 @@ BOOST_FIXTURE_TEST_CASE( wrong_day_does_nothing, Fixture )
 {
     schedule.Update( Convert( 2011, 1, 4, 22, 0, 0 ), 1u );
 }
-
 
 BOOST_FIXTURE_TEST_CASE( wrong_duration_does_nothing, Fixture )
 {

@@ -10,9 +10,9 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Schedule.h"
 #include "MIL_LivingArea_ABC.h"
-#include "simulation_terrain/TER_Localisation.h"
 #include "tools/xmlcodecs.h"
 #include <boost/foreach.hpp>
+#include <boost/optional.hpp>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -20,9 +20,10 @@
 // Created: LGY 2011-01-19
 // -----------------------------------------------------------------------------
 MIL_Schedule::MIL_Schedule( MIL_LivingArea_ABC& livingArea )
-    : livingArea_( livingArea )
-    , occurence_( 0 )
-    , isMoving_( false )
+    : livingArea_ ( livingArea )
+    , occurence_  ( 0 )
+    , isMoving_   ( false )
+    , initialized_( false )
 {
     // NOTHING
 }
@@ -94,6 +95,8 @@ void MIL_Schedule::ReadEvent( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Schedule::Update( unsigned int date, unsigned int duration )
 {
+    if( !initialized_ )
+        Initialize( date );
     BOOST_FOREACH( const Event& event, events_ )
         Check( event, date, duration );
 }
@@ -117,7 +120,9 @@ void MIL_Schedule::Check( const Event& event, unsigned int date, unsigned int du
         livingArea_.MovePeople( 1 + static_cast< unsigned int >( transferTime_ / 900 ) );
         occurence_++;
     }
-    if( pdate.date().day_of_week() == event.day_ && pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, transferTime_ ) && pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, transferTime_ ) + bpt::time_duration( 0, 0, duration ) ) )
+    if( pdate.date().day_of_week() == event.day_ &&
+        pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, boost::posix_time::time_duration::sec_type( transferTime_ ) ) &&
+        pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, boost::posix_time::time_duration::sec_type( transferTime_ ) ) + bpt::time_duration( 0, 0, duration ) ) )
     {
         livingArea_.FinishMoving();
         occurence_ = 0;
@@ -132,4 +137,38 @@ void MIL_Schedule::Check( const Event& event, unsigned int date, unsigned int du
 bool MIL_Schedule::IsMoving() const
 {
     return isMoving_;
+}
+
+namespace
+{
+    template< typename T >
+    bool Compare( const T& lhs, const T& rhs )
+    {
+        return lhs.day_ < rhs.day_ || ( lhs.day_ == rhs.day_ && lhs.from_ <= rhs.from_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Schedule::Initialize
+// Created: LGY 2011-03-21
+// -----------------------------------------------------------------------------
+void MIL_Schedule::Initialize( unsigned int date )
+{
+    if( !events_.empty() )
+    {
+        std::sort( events_.begin(), events_.end(), boost::bind( &Compare< Event >, _1, _2 ) );
+        boost::optional< std::string > motivation;
+        BOOST_FOREACH( const Event& event, events_ )
+        {
+            bpt::ptime pdate( bpt::from_time_t( date ) );
+            if( event.day_ < pdate.date().day_of_week() || ( event.day_ == pdate.date().day_of_week() && pdate.time_of_day() >= event.from_ ) )
+                motivation = event.motivation_;
+        }
+        if( !motivation )
+            motivation = events_.back().motivation_;
+        livingArea_.StartMotivation( *motivation );
+        livingArea_.MovePeople( 1 );
+        livingArea_.FinishMoving();
+    }
+    initialized_ = true;
 }
