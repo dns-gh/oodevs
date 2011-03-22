@@ -181,3 +181,13 @@ void Facade::UnregisterReflectedCreationListener( Agent& agent )
     T_ReflectedCreationListeners::iterator it = std::find( reflectedCreationListeners_.begin(), reflectedCreationListeners_.end(), &agent );
     reflectedCreationListeners_.erase( it );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Facade::CreateDisaggregationArea
+// Created: SBO 2011-03-22
+// -----------------------------------------------------------------------------
+void Facade::CreateDisaggregationArea( const DtString& name, const DtList& vertices ) const
+{
+    if( IsConnected() )
+        controller_->createDisaggregationArea( vertices, name, name, address_ );
+}

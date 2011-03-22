@@ -42,6 +42,7 @@ namespace plugins
 namespace vrforces
 {
     class Agent;
+    class DisaggregationStrategy_ABC;
     class Facade;
     class ForceResolver_ABC;
 
@@ -64,6 +65,7 @@ public:
     //! @name Operations
     //@{
     virtual void Receive( const sword::SimToClient& message );
+    virtual void Receive( const sword::MessengerToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
     //@}
@@ -94,6 +96,7 @@ private:
     std::auto_ptr< DtFilePrinter > logger_;
     std::auto_ptr< Facade > vrForces_;
     std::auto_ptr< ForceResolver_ABC > forceResolver_;
+    std::auto_ptr< DisaggregationStrategy_ABC > disaggregator_;
     //@}
 };
 

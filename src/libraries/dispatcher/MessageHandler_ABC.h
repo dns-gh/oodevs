@@ -14,6 +14,7 @@ namespace sword
 {
     class SimToClient;
     class AarToClient;
+    class MessengerToClient;
 }
 
 namespace dispatcher
@@ -38,6 +39,7 @@ public:
     //@{
     virtual void Receive( const sword::SimToClient& message ) = 0;
     virtual void Receive( const sword::AarToClient& /*message*/ ) {}
+    virtual void Receive( const sword::MessengerToClient& /*message*/ ) {}
     //@}
 };
 

@@ -9,6 +9,7 @@
 
 #include "vrforces_plugin_pch.h"
 #include "Agent.h"
+#include "DisaggregationStrategy_ABC.h"
 #include "Facade.h"
 #include "ForceResolver_ABC.h"
 #include "protocol/Protocol.h"
@@ -28,16 +29,26 @@ using namespace plugins::vrforces;
 // Name: Agent constructor
 // Created: SBO 2011-01-21
 // -----------------------------------------------------------------------------
-Agent::Agent( DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces )
-    : connection_( connection )
-    , vrForces_  ( vrForces )
-    , id_        ( message.unit().id() )
-    , heading_   ( 0 )
-    , reflected_ ( 0 )
+Agent::Agent( DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation )
+    : disaggregation_( disaggregation )
+    , connection_    ( connection )
+    , vrForces_      ( vrForces )
+    , id_            ( message.unit().id() )
+    , heading_       ( 0 )
+    , reflectedId_   ( DtEntityIdentifier::nullId() )
+    , reflected_     ( 0 )
 {
+    std::stringstream name;
+    name << message.automat().id() << ":"<< id_ << "/" << message.name().c_str();
     DtEntityType type( DtPlatform, DtPlatformDomainLand, DtFrance, 3 /* platoon */, 2 /* armor */, message.pc(), 0 );
-    publisher_.reset( new DtAggregatePublisher( type, &connection_, DtDrStatic, forces.Resolve( id_ ), message.name().c_str() ) );
-    publisher_->asr()->setMarkingText( message.name().c_str() );
+    publisher_.reset( new DtAggregatePublisher( type, &connection_, DtDrStatic, forces.Resolve( id_ ), name.str().c_str() ) );
+    publisher_->asr()->setMarkingText( name.str().c_str() );
+    publisher_->asr()->setNumberOfSilentEntities( 1 );
+    DtSilentEntityList* list = new DtSilentEntityList();
+    list->setEntityType( type );
+    list->setNumberOfEntities( 3 );
+    list->setNumberOfAppearanceRecords( 3 );
+    publisher_->asr()->setSilentEntityList( 0, *list );
     publisher_->tick();
 }
 
@@ -90,6 +101,8 @@ void Agent::Update( const sword::UnitAttributes& message )
         publisher_->asr()->setLocation( coord.geocentric() );
         publisher_->tick();
     }
+    if( message.has_position() )
+        SetAggregated( disaggregation_.IsAggregatedLocation( message.position().latitude(), message.position().longitude() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +114,11 @@ void Agent::SetAggregated( bool aggregated )
     if( ! IsTrueAggregate() && aggregated )
     {
         if( reflected_ )
-            vrForces_.DestroyPseudoAggregate( reflected_->aggregateStateRep()->entityId() );
+            if( DtAggregateStateRepository* asr = reflected_->aggregateStateRep() )
+            {
+                DestroyPseudoAggregate();
+                vrForces_.DestroyPseudoAggregate( asr->entityId() );
+            }
     }
     else if( IsTrueAggregate() && ! aggregated )
         vrForces_.CreatePseudoAggregate( *this );
@@ -129,7 +146,30 @@ void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSi
                               , type
                               , publisher_->asr()->location()
                               , publisher_->asr()->forceId()
-                              , heading_, 0, address );
+                              , heading_
+                              , publisher_->asr()->entityId().string()
+                              , publisher_->asr()->markingText()
+                              , address );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DestroyPseudoAggregate
+// Created: SBO 2011-01-21
+// -----------------------------------------------------------------------------
+void Agent::DestroyPseudoAggregate()
+{
+    if( reflected_ )
+    {
+        DtEntityType type( reflected_->asr()->entityType() );
+        type.setKind( type.kind() - 10 );
+        publisher_.reset( new DtAggregatePublisher( type, &connection_, reflected_->asr()->algorithm(), reflected_->asr()->forceId() ) );
+        publisher_->asr()->setMarkingText( reflected_->asr()->markingText() );
+        publisher_->asr()->setLocation( reflected_->asr()->location() );
+        publisher_->asr()->setOrientation( reflected_->asr()->orientation() );
+        publisher_->tick();
+        reflectedId_ = DtEntityIdentifier::nullId();
+        reflected_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -161,29 +201,5 @@ void Agent::OnCreatePseudoAggregate( const DtString& /*name*/, const DtEntityIde
         that->reflectedId_ = id;
         if( !that->reflected_ )
             that->reflected_ = that->vrForces_.Find( id );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::OnDestroyPseudoAggregate
-// Created: SBO 2011-01-21
-// -----------------------------------------------------------------------------
-void Agent::OnDestroyPseudoAggregate( const DtString& /*name*/, const DtEntityIdentifier& id, void* usr )
-{
-    if( Agent* that = static_cast< Agent* >( usr ) )
-    {
-        if( that->reflected_ )
-        {
-            DtEntityType type( that->reflected_->asr()->entityType() );
-            type.setKind( type.kind() - 10 );
-            that->publisher_.reset( new DtAggregatePublisher( type, &that->connection_, that->reflected_->asr()->algorithm(), that->reflected_->asr()->forceId() ) );
-            that->publisher_->asr()->setMarkingText( that->reflected_->asr()->markingText() );
-            that->publisher_->asr()->setLocation( that->reflected_->asr()->location() );
-            that->publisher_->asr()->setOrientation( that->reflected_->asr()->orientation() );
-            that->publisher_->tick();
-
-        }
-        that->reflectedId_ = DtEntityIdentifier::nullId();
-        that->reflected_ = 0;
     }
 }

@@ -171,6 +171,7 @@ void ClientsNetworker::Send( const sword::MessengerToClient& msg )
     {
         for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
             it->second->Send( msg );
+        plugin_.Receive( msg );
     }
     catch( std::exception& exception )
     {

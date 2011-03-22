@@ -29,6 +29,7 @@ namespace plugins
 {
 namespace vrforces
 {
+    class DisaggregationStrategy_ABC;
     class Facade;
     class ForceResolver_ABC;
 
@@ -44,7 +45,8 @@ class Agent
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces );
+             Agent( DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message
+                  , const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation );
     virtual ~Agent();
     //@}
 
@@ -56,7 +58,6 @@ public:
     //! @name Operations
     //@{
     void Update( const sword::UnitAttributes& message );
-    void SetAggregated( bool aggregated );
     void CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSimulationAddress& address );
     //@}
 
@@ -64,7 +65,6 @@ public:
     //@{
     bool OnCreateReflected( DtReflectedAggregate* obj );
     static void OnCreatePseudoAggregate( const DtString& name, const DtEntityIdentifier& id, void* usr );
-    static void OnDestroyPseudoAggregate( const DtString& name, const DtEntityIdentifier& id, void* usr );
     //@}
 
 private:
@@ -76,12 +76,15 @@ private:
 
     //! @name Helpers
     //@{
+    void SetAggregated( bool aggregated );
     bool IsTrueAggregate() const;
+    void DestroyPseudoAggregate();
     //@}
 
 private:
     //! @name Member data
     //@{
+    const DisaggregationStrategy_ABC& disaggregation_;
     DtExerciseConn& connection_;
     Facade& vrForces_;
     const unsigned long id_;

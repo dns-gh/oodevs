@@ -15,9 +15,11 @@
 
 class DtExerciseConn;
 class DtEntityIdentifier;
+class DtList;
 class DtReflectedAggregate;
 class DtReflectedAggregateList;
 class DtReflectedObject;
+class DtString;
 class DtVrfRemoteController;
 
 namespace plugins
@@ -49,6 +51,7 @@ public:
     const DtReflectedAggregate* Find( const DtEntityIdentifier& id ) const;
     void RegisterReflectedCreationListener( Agent& agent );
     void UnregisterReflectedCreationListener( Agent& agent );
+    void CreateDisaggregationArea( const DtString& name, const DtList& vertices ) const;
     //@}
 
 private:

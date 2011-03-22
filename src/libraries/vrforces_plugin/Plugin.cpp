@@ -10,6 +10,7 @@
 #include "vrforces_plugin_pch.h"
 #include "Plugin.h"
 #include "Agent.h"
+#include "DisaggregationStrategy.h"
 #include "Facade.h"
 #include "ForceResolver.h"
 #include "dispatcher/Config.h"
@@ -33,6 +34,7 @@ Plugin::Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, 
     , logger_       ( new DtFilePrinter( config.BuildSessionChildFile( "vrforces.log" ).c_str() ) )
     , vrForces_     ( new Facade( *connection_ ) )
     , forceResolver_( new ForceResolver( model_ ) )
+    , disaggregator_( new DisaggregationStrategy( *vrForces_ ) )
 {
     DtWarn.attachPrinter( logger_.get() );
     DtInfo.attachPrinter( logger_.get() );
@@ -68,17 +70,20 @@ void Plugin::Receive( const sword::SimToClient& message )
         Update( message.message().unit_attributes() );
     else if( message.message().has_unit_destruction() )
         Destroy( message.message().unit_destruction() );
-    else if( message.message().has_automat_attributes() )
-    {
-        if( message.message().automat_attributes().has_mode() )
-        {
-            const bool aggregated = message.message().automat_attributes().mode() == sword::engaged;
-            const unsigned long id = message.message().automat_attributes().automat().id();
-            T_AutomatAgents::iterator it = automatAgents_.find( id );
-            for( std::set< boost::shared_ptr< Agent > >::const_iterator itAgents = it->second.begin(); itAgents != it->second.end(); ++itAgents )
-                (*itAgents)->SetAggregated( aggregated );
-        }
-    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Plugin::Receive
+// Created: SBO 2011-03-16
+// -----------------------------------------------------------------------------
+void Plugin::Receive( const sword::MessengerToClient& message )
+{
+    if( !connection_.get() )
+        return;
+    if( message.message().has_shape_creation() )
+        disaggregator_->AddArea( message.message().shape_creation() );
+    else if( message.message().has_shape_destruction() )
+        disaggregator_->RemoveArea( message.message().shape_destruction() );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +110,7 @@ void Plugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
 // -----------------------------------------------------------------------------
 void Plugin::Create( const sword::UnitCreation& message )
 {
-    agents_[ message.unit().id() ].reset( new Agent( *connection_, *vrForces_, message, *forceResolver_ ) );
+    agents_[ message.unit().id() ].reset( new Agent( *connection_, *vrForces_, message, *forceResolver_, *disaggregator_ ) );
     automatAgents_[ message.automat().id() ].insert( agents_[ message.unit().id() ] );
     agentAutomat_[ message.unit().id() ] = message.automat().id();
 }
