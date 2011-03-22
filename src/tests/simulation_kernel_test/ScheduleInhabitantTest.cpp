@@ -47,6 +47,7 @@ namespace
                    "</root>" )
             , schedule( livingArea )
         {
+            mock::reset();
             xis >> xml::start( "root" );
         }
         xml::xistringstream xis;
@@ -56,13 +57,9 @@ namespace
 
     unsigned int Convert( unsigned short year, unsigned short month, unsigned short day, unsigned short hour, unsigned short minute, unsigned short sec )
     {
-        boost::gregorian::date date( year, month, day );
-        boost::posix_time::time_duration time( hour, minute, sec );
-        boost::local_time::time_zone_ptr pZone( new boost::local_time::posix_time_zone( "GMT+00:00" ) );
-        boost::local_time::local_date_time dateTime( date, time, pZone, false );
+        boost::posix_time::ptime now( boost::gregorian::date( year, month, day ), boost::posix_time::time_duration( hour, minute, sec ) );
         boost::posix_time::ptime epoch( boost::gregorian::date( 1970, 1, 1 ) );
-        boost::posix_time::time_duration diff = dateTime.utc_time() - epoch;
-        return diff.total_seconds();
+        return ( now - epoch ).total_seconds();
     }
 }
 
