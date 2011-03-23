@@ -352,7 +352,7 @@ void ADN_Models_Data::ModelInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", strDiaType_ )
           >> xml::attribute( "file", strFile_ )
-          >> xml::optional() >> xml::attribute( "masalife", isMasalife_ )
+          >> xml::attribute( "masalife", isMasalife_ )
           >> xml::start( "missions" )
             >> xml::list( "mission", *this, &ADN_Models_Data::ModelInfos::ReadMission )
         >> xml::end

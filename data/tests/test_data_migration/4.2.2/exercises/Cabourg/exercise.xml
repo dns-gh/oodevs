@@ -13,6 +13,6 @@
   <orbat file="orbat.xml"/>
   <weather file="weather.xml"/>
   <terrain name="Cabourg"/>
-  <model dataset="ada" physical="france"/>
+  <model dataset="@DATASET@" physical="@PHYSICAL@"/>
 </exercise>
 <!-- signature="3885974077" -->

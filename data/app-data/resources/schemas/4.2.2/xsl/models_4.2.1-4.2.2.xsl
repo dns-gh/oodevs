@@ -8,13 +8,13 @@
 	</xsl:template>
 
     <xsl:template match="@dia-type">
+        <xsl:copy/>
         <xsl:choose>
             <xsl:when test="contains(.,'net.masagroup')">
                 <xsl:attribute name="masalife">true</xsl:attribute>
-                <xsl:copy/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:copy/>
+                <xsl:attribute name="masalife">false</xsl:attribute>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

@@ -92,10 +92,15 @@
   <migration from="4.2.1" to="4.2.2">
     <upgrade schema="schemas/4.2.1/physical/Physical.xsd" apply="schemas/4.2.2/xsl/physical_4.2.1-4.2.2.xsl"/>
     <upgrade schema="schemas/4.2.1/physical/Fires.xsd" apply="schemas/4.2.2/xsl/fires_4.2.1-4.2.2.xsl"/>
+    <upgrade schema="schemas/4.2.1/physical/Models.xsd" apply="schemas/4.2.2/xsl/models_4.2.1-4.2.2.xsl"/>
   </migration>
   <migration from="4.2.2" to="4.3.0">
     <upgrade schema="schemas/4.2.2/physical/Inhabitants.xsd" apply="schemas/4.3.0/xsl/inhabitants_4.2.2-4.3.0.xsl"/>
     <upgrade schema="schemas/4.2.2/physical/Crowds.xsd" apply="schemas/4.3.0/xsl/crowds_4.2.2-4.3.0.xsl"/>
     <upgrade schema="schemas/4.2.2/physical/UrbanTypes.xsd" apply="schemas/4.3.0/xsl/urban_4.2.2-4.3.0.xsl"/>
+    <upgrade schema="schemas/4.2.2/physical/Objects.xsd" apply="schemas/4.3.0/xsl/objects_4.2.2-4.3.0.xsl"/>
+    <upgrade schema="schemas/4.2.2/physical/Models.xsd" apply="schemas/4.3.0/xsl/models_4.2.2-4.3.0.xsl"/>
+    <upgrade schema="schemas/4.2.2/exercise/orbat.xsd" apply="schemas/4.3.0/xsl/orbat_4.2.2-4.3.0.xsl"/>
+    
   </migration>
 </migrations>

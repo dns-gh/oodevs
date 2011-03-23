@@ -86,7 +86,11 @@ void UrbanObjectWrapper::InitializeAttributes()
     Initialize( TER_Localisation( TER_Localisation::ePolygon , vector ) );
     // resource network
     if( const urban::ResourceNetworkAttribute* resource = object_->Retrieve< urban::ResourceNetworkAttribute >() )
-        Get< ResourceNetworkCapacity >().Initialize( *resource );
+    {
+        ResourceNetworkCapacity* capacity = Retrieve< ResourceNetworkCapacity >();
+        if( capacity )
+            capacity->Initialize( *resource );
+    }
     if( const urban::InfrastructureAttribute* infra = object_->Retrieve< urban::InfrastructureAttribute >() )
         if( const PHY_InfrastructureType* infraType = PHY_InfrastructureType::Find( infra->GetType() ) )
         {

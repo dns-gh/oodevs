@@ -269,7 +269,7 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, 
         xis.error( "Duplicate model name" );
 
     bool isMasalife = false;
-    xis >> xml::optional >> xml::attribute( "masalife", isMasalife );
+    xis >> xml::attribute( "masalife", isMasalife );
     //Key is net.masagroup for masalife, none for others.
     std::string key = isMasalife ? "net.masagroup" : "none";
 
