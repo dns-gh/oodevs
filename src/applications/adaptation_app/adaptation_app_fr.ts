@@ -5276,6 +5276,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Maximal capacity</source>
         <translation>Capacité maximale</translation>
     </message>
+    <message>
+        <source>Default nominal capacity</source>
+        <translation>Capacité nominale par défaut</translation>
+    </message>
+    <message>
+        <source>Default maximal capacity</source>
+        <translation>Capacité maximale par défaut</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Weapon_Wizard</name>

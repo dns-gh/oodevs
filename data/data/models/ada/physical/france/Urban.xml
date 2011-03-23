@@ -92,6 +92,7 @@
     </roof-shape-types>
   </urban-block-types>
   <accommodations>
+    <accommodation max-capacity="1" nominal-capacity="0.1" role="default"/>
     <accommodation max-capacity="0.7" nominal-capacity="0.5" role="Loisir"/>
     <accommodation max-capacity="0.1" nominal-capacity="0.07" role="Logement"/>
     <accommodation max-capacity="0.3" nominal-capacity="0.2" role="Travail"/>
@@ -169,4 +170,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="0783060646" -->
+<!-- signature="2645442104" -->

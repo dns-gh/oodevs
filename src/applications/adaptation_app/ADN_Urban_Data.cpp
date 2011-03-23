@@ -26,12 +26,14 @@ using namespace helpers;
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
 ADN_Urban_Data::ADN_Urban_Data()
-    : ADN_Data_ABC()
-    , vMaterials_ ()
-    , vFacades_   ()
-    , vRoofShapes_()
-    , vAccommodations_()
-    , vInfrastructures_()
+    : ADN_Data_ABC           ()
+    , vMaterials_            ()
+    , vFacades_              ()
+    , vRoofShapes_           ()
+    , vAccommodations_       ()
+    , vInfrastructures_      ()
+    , defaultNominalCapacity_( 0.1 )
+    , defaultMaxCapacity_    ( 1 )
 {
 
     ReadInfrastructureSymbols();
@@ -45,6 +47,8 @@ ADN_Urban_Data::ADN_Urban_Data()
     vAccommodations_.SetItemTypeName( "le type motivation" );
     vInfrastructures_.SetNodeName( "la liste des types d'infrastructure" );
     vInfrastructures_.SetItemTypeName( "le type infrastructure" );
+    defaultNominalCapacity_.SetDataName( "la capacité nominale par défaut" );
+    defaultMaxCapacity_.SetDataName( "la capacité max par défaut" );
 }
 
 //-----------------------------------------------------------------------------
@@ -76,6 +80,8 @@ void ADN_Urban_Data::Reset()
     vRoofShapes_.Reset();
     vAccommodations_.Reset();
     vInfrastructures_.Reset();
+    defaultNominalCapacity_ = 0.1;
+    defaultMaxCapacity_ = 1;
 }
 
 class ADN_String_Cmp : public std::unary_function< ADN_Type_String* , bool >
@@ -386,7 +392,12 @@ void ADN_Urban_Data::ReadAccommodations( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::ReadAccommodation( xml::xistream& input  )
 {
-    vAccommodations_.AddItem( new AccommodationInfos( input ) );
+    std::string role = input.attribute< std::string >( "role" );
+    if( role == "default" )
+        input >> xml::attribute( "nominal-capacity", defaultNominalCapacity_ )
+              >> xml::attribute( "max-capacity", defaultMaxCapacity_ );
+    else
+        vAccommodations_.AddItem( new AccommodationInfos( input, role ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -395,13 +406,15 @@ void ADN_Urban_Data::ReadAccommodation( xml::xistream& input  )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
 {
-    if( !vAccommodations_.empty() )
-    {
-        output << xml::start( "accommodations" );
-        for( CIT_AccommodationInfos_Vector it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
-            ( *it )->WriteAccommodation( output );
-        output << xml::end;
-    }
+    output << xml::start( "accommodations" )
+            << xml::start( "accommodation" )
+                << xml::attribute( "role", "default" )
+                << xml::attribute( "nominal-capacity", defaultNominalCapacity_.GetData() )
+                << xml::attribute( "max-capacity", defaultMaxCapacity_.GetData() )
+            << xml::end();
+    for( CIT_AccommodationInfos_Vector it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
+        ( *it )->WriteAccommodation( output );
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -412,7 +425,7 @@ void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& outp
 {
     std::string strData = strName_.GetData();
     output << xml::start( "accommodation" )
-        << xml::attribute( "role",  trim( strData ) )
+        << xml::attribute( "role", trim( strData ) )
         << xml::attribute( "nominal-capacity", nominalCapacity_.GetData() )
         << xml::attribute( "max-capacity", maxCapacity_.GetData() )
         << xml::end();
@@ -422,13 +435,12 @@ void ADN_Urban_Data::AccommodationInfos::WriteAccommodation( xml::xostream& outp
 // Name: ADN_Urban_Data::AccommodationInfos constructor
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
-ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input )
-    : strName_        ( "" )
+ADN_Urban_Data::AccommodationInfos::AccommodationInfos( xml::xistream& input, const std::string& role )
+    : strName_        ( role )
     , nominalCapacity_( 0 )
     , maxCapacity_    ( 0 )
 {
-    input >> xml::attribute( "role", strName_ )
-          >> xml::attribute( "nominal-capacity", nominalCapacity_ )
+    input >> xml::attribute( "nominal-capacity", nominalCapacity_ )
           >> xml::attribute( "max-capacity", maxCapacity_ );
 }
 

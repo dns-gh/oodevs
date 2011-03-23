@@ -71,7 +71,7 @@ public:
     {
     public:
                  AccommodationInfos();
-        explicit AccommodationInfos( xml::xistream& input );
+        explicit AccommodationInfos( xml::xistream& input, const std::string& role );
         virtual ~AccommodationInfos();
 
         virtual std::string GetNodeName();
@@ -215,7 +215,6 @@ private:
 
     void ReadInfrastructureSymbols();
     void ReadInfrastructureSymbol( xml::xistream& input );
-
     //@}
 
 private:
@@ -227,6 +226,13 @@ private:
     T_AccommodationInfos_Vector vAccommodations_;
     T_InfrastructureInfos_Vector vInfrastructures_;
     T_SymbolsInfraInfos_Vector vInfrasSymbols_;
+    //@}
+
+public:
+    //! @name Member Data
+    //@{
+    ADN_Type_Double defaultNominalCapacity_;
+    ADN_Type_Double defaultMaxCapacity_;
     //@}
 };
 
