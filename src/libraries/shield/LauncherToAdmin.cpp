@@ -33,9 +33,9 @@ void LauncherToAdmin::Convert( const sword::ConnectionAck& from, MsgsLauncherToA
                               ( sword::ConnectionAck::incompatible_protocol_version, MsgsLauncherToAdmin::MsgConnectionAck::incompatible_protocol_version )
                               ( sword::ConnectionAck::exercise_already_running, MsgsLauncherToAdmin::MsgConnectionAck::exercise_already_running ) );
     CONVERT( context );
-    CONVERT( context );
-    to->mutable_server_version()->set_value( from.server_version().value() );
-    ConvertNetworkAddress( from.dispatcher_address(), to->mutable_dispatcher_address() );
+    if( from.has_server_version() && from.server_version().has_value() )
+        to->mutable_server_version()->set_value( from.server_version().value() );
+    CONVERT_CB_TO( dispatcher_address, ConvertNetworkAddress );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ void LauncherToAdmin::Convert( const sword::ControlStartExerciseAck& from, MsgsL
                               ( sword::ControlStartExerciseAck::bad_exercise_name, MsgsLauncherToAdmin::MsgControlStartAck::bad_exercise_name )
                               ( sword::ControlStartExerciseAck::exercise_already_running, MsgsLauncherToAdmin::MsgControlStartAck::exercise_already_running )
                               ( sword::ControlStartExerciseAck::invalid_checkpoint, MsgsLauncherToAdmin::MsgControlStartAck::invalid_checkpoint ) );
-    ConvertExercise( from.exercise(), to->mutable_exercise() );
+    CONVERT_CB_TO( exercise, ConvertExercise );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ void LauncherToAdmin::Convert( const sword::ControlStopExerciseAck& from, MsgsLa
     CONVERT_ENUM( error_code, ( sword::ControlStopExerciseAck::success, MsgsLauncherToAdmin::MsgControlStopAck::success )
                               ( sword::ControlStopExerciseAck::bad_exercise_name, MsgsLauncherToAdmin::MsgControlStopAck::bad_exercise_name )
                               ( sword::ControlStopExerciseAck::exercise_not_running, MsgsLauncherToAdmin::MsgControlStopAck::exercise_not_running ) );
-    ConvertExercise( from.exercise(), to->mutable_exercise() );
+    CONVERT_CB_TO( exercise, ConvertExercise );
     CONVERT_SIMULATION_STATE( simulation_state );
 }
 

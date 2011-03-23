@@ -20,7 +20,8 @@ void ClientToAuthentication::Convert( const MsgsClientToAuthentication::MsgAuthe
 {
     CONVERT( login );
     CONVERT( password );
-    to->mutable_version()->set_value( from.version().value() );
+    if( from.has_version() && from.version().has_value() )
+        to->mutable_version()->set_value( from.version().value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +30,7 @@ void ClientToAuthentication::Convert( const MsgsClientToAuthentication::MsgAuthe
 // -----------------------------------------------------------------------------
 void ClientToAuthentication::Convert( const MsgsClientToAuthentication::MsgProfileCreationRequest& from, sword::ProfileCreationRequest* to )
 {
-    ConvertProfile( from.profile(), to->mutable_profile() );
+    CONVERT_CB_TO( profile, ConvertProfile );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +40,7 @@ void ClientToAuthentication::Convert( const MsgsClientToAuthentication::MsgProfi
 void ClientToAuthentication::Convert( const MsgsClientToAuthentication::MsgProfileUpdateRequest& from, sword::ProfileUpdateRequest* to )
 {
     CONVERT( login );
-    ConvertProfile( from.profile(), to->mutable_profile() );
+    CONVERT_CB_TO( profile, ConvertProfile );
 }
 
 // -----------------------------------------------------------------------------

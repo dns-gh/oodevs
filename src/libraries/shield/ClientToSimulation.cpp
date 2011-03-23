@@ -54,7 +54,8 @@ void ClientToSimulation::Convert( const Common::MsgControlResume& /*from*/, swor
 // -----------------------------------------------------------------------------
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgControlDatetimeChange& from, sword::ControlDateTimeChange* to )
 {
-    to->mutable_date_time()->set_data( from.date_time().data() );
+    if( from.has_date_time() && from.date_time().has_data() )
+        to->mutable_date_time()->set_data( from.date_time().data() );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,8 +118,8 @@ void ClientToSimulation::Convert( const Common::MsgCrowdOrder& from, sword::Crow
 // -----------------------------------------------------------------------------
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgFragOrder& from, sword::FragOrder* to )
 {
-    ConvertTasker( from.tasker(), to->mutable_tasker() );
-    if( from.has_frag_order() )
+    CONVERT_CB_TO( tasker, ConvertTasker );
+    if( from.has_frag_order() && from.frag_order().has_id() )
         to->mutable_type()->set_id( from.frag_order().id() );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
@@ -141,7 +142,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitCreationRequest&
 {
     CONVERT_ID( type );
     CONVERT_ID( superior );
-    ConvertCoordLatLong( from.position(), to->mutable_position() );
+    CONVERT_CB_TO( position, ConvertCoordLatLong );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +151,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitCreationRequest&
 // -----------------------------------------------------------------------------
 void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& from, sword::UnitMagicAction* to )
 {
-    ConvertTasker( from.tasker(), to->mutable_tasker() );
+    CONVERT_CB_TO( tasker, ConvertTasker );
     CONVERT_ENUM( type, ( MsgsClientToSim::MsgUnitMagicAction::move_to, sword::UnitMagicAction::move_to )
                         ( MsgsClientToSim::MsgUnitMagicAction::surrender_to, sword::UnitMagicAction::surrender_to )
                         ( MsgsClientToSim::MsgUnitMagicAction::cancel_surrender, sword::UnitMagicAction::cancel_surrender )

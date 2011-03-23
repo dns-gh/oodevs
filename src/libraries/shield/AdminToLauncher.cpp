@@ -18,7 +18,8 @@ using namespace shield;
 // -----------------------------------------------------------------------------
 void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgConnectionRequest& from, sword::ConnectionRequest* to )
 {
-    to->mutable_client_version()->set_value( from.client_version().value() );
+    if( from.has_client_version() && from.client_version().has_value() )
+        to->mutable_client_version()->set_value( from.client_version().value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -27,7 +28,7 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgConnectionRequest& 
 // -----------------------------------------------------------------------------
 void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgControlStart& from, sword::ControlStartExercise* to )
 {
-    ConvertExercise( from.exercise(), to->mutable_exercise() );
+    CONVERT_CB_TO( exercise, ConvertExercise );
     CONVERT_ENUM( mode, ( MsgsAdminToLauncher::MsgControlStart::play, sword::ControlStartExercise::play )
                         ( MsgsAdminToLauncher::MsgControlStart::replay, sword::ControlStartExercise::replay ) );
     CONVERT( use_after_action_analysis );
@@ -41,7 +42,7 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgControlStart& from,
 // -----------------------------------------------------------------------------
 void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgControlStop& from, sword::ControlStopExercise* to )
 {
-    ConvertExercise( from.exercise(), to->mutable_exercise() );
+    CONVERT_CB_TO( exercise, ConvertExercise );
 }
 
 // -----------------------------------------------------------------------------

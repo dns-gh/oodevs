@@ -149,7 +149,7 @@ void MessengerToClient::Convert( const sword::PhaseLineDestructionRequestAck& fr
 void MessengerToClient::Convert( const sword::IntelligenceCreation& from, MsgsMessengerToClient::MsgIntelligenceCreation* to )
 {
     CONVERT_ID( id );
-    ConvertIntelligence( from.intelligence(), to->mutable_intelligence() );
+    CONVERT_CB_TO( intelligence, ConvertIntelligence );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,10 +166,8 @@ void MessengerToClient::Convert( const sword::IntelligenceUpdate& from, MsgsMess
     if( from.has_level() )
         ConvertNatureLevel( from, to );
     CONVERT( embarked );
-    if( from.has_location() )
-        ConvertCoordLatLong( from.location(), to->mutable_location() );
-    if( from.has_diplomacy() )
-        CONVERT_DIPLOMACY( diplomacy, diplomacy );
+    CONVERT_CB_TO( location, ConvertCoordLatLong );
+    CONVERT_DIPLOMACY( diplomacy, diplomacy );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,7 +186,7 @@ void MessengerToClient::Convert( const sword::IntelligenceDestruction& from, Msg
 void MessengerToClient::Convert( const sword::ShapeCreation& from, MsgsMessengerToClient::MsgShapeCreation* to )
 {
     CONVERT_ID( id );
-    ConvertShape( from.shape(), to->mutable_shape() );
+    CONVERT_CB_TO( shape, ConvertShape );
 }
 
 // -----------------------------------------------------------------------------
@@ -258,8 +256,10 @@ void MessengerToClient::Convert( const sword::ShapeUpdateRequestAck& from, MsgsM
 // -----------------------------------------------------------------------------
 void MessengerToClient::Convert( const sword::TextMessage& from, Common::MsgTextMessage* to )
 {
-    to->mutable_source()->set_profile( from.source().profile() );
-    to->mutable_target()->set_profile( from.target().profile() );
+    if( from.has_source() && from.source().has_profile() )
+        to->mutable_source()->set_profile( from.source().profile() );
+    if( from.has_target() && from.target().has_profile() )
+        to->mutable_target()->set_profile( from.target().profile() );
     CONVERT( message );
 }
 
@@ -270,8 +270,9 @@ void MessengerToClient::Convert( const sword::TextMessage& from, Common::MsgText
 void MessengerToClient::Convert( const sword::MarkerCreation& from, MsgsMessengerToClient::MsgMarkerCreation* to )
 {
     CONVERT_ID( marker );
-    ConvertMarker( from.definition(), to->mutable_definition() );
-    to->mutable_date()->set_data( from.date().data() );
+    CONVERT_CB_TO( definition, ConvertMarker );
+    if( from.has_date() && from.date().has_data() )
+        to->mutable_date()->set_data( from.date().data() );
 }
 
 // -----------------------------------------------------------------------------
@@ -281,7 +282,8 @@ void MessengerToClient::Convert( const sword::MarkerCreation& from, MsgsMessenge
 void MessengerToClient::Convert( const sword::MarkerUpdate& from, MsgsMessengerToClient::MsgMarkerUpdate* to )
 {
     CONVERT_ID( marker );
-    to->mutable_date()->set_data( from.date().data() );
+    if( from.has_date() && from.date().has_data() )
+        to->mutable_date()->set_data( from.date().data() );
     CONVERT( name );
     CONVERT( number );
     CONVERT( description );

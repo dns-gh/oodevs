@@ -74,7 +74,7 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimaDestruction
 // -----------------------------------------------------------------------------
 void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgIntelligenceCreationRequest& from, sword::IntelligenceCreationRequest* to )
 {
-    ConvertIntelligence( from.intelligence(), to->mutable_intelligence() );
+    CONVERT_CB_TO( intelligence, ConvertIntelligence );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +102,7 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgIntelligenceDes
 // -----------------------------------------------------------------------------
 void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgShapeCreationRequest& from, sword::ShapeCreationRequest* to )
 {
-    ConvertShape( from.shape(), to->mutable_shape() );
+    CONVERT_CB_TO( shape, ConvertShape );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,8 +133,10 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgShapeDestructio
 // -----------------------------------------------------------------------------
 void ClientToMessenger::Convert( const Common::MsgTextMessage& from, sword::TextMessage* to )
 {
-    to->mutable_source()->set_profile( from.source().profile() );
-    to->mutable_target()->set_profile( from.target().profile() );
+    if( from.has_source() && from.source().has_profile() )
+        to->mutable_source()->set_profile( from.source().profile() );
+    if( from.has_target() && from.target().has_profile() )
+        to->mutable_target()->set_profile( from.target().profile() );
     CONVERT( message );
 }
 
@@ -144,7 +146,7 @@ void ClientToMessenger::Convert( const Common::MsgTextMessage& from, sword::Text
 // -----------------------------------------------------------------------------
 void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgMarkerCreationRequest& from, sword::MarkerCreationRequest* to )
 {
-    ConvertMarker( from.marker(), to->mutable_marker() );
+    CONVERT_CB_TO( marker, ConvertMarker );
 }
 
 // -----------------------------------------------------------------------------
