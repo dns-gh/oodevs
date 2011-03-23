@@ -15,4 +15,7 @@
 #include <map>
 #include <vector>
 
+#undef max
+#include <geometry/types.h>
+
 #endif // __vrforces_plugin_pch_h_

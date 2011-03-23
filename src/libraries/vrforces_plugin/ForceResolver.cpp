@@ -10,7 +10,6 @@
 #include "vrforces_plugin_pch.h"
 #include "ForceResolver.h"
 #include "clients_kernel/Karma.h"
-#undef max
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Model_ABC.h"

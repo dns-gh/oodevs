@@ -13,7 +13,9 @@
 #include "DisaggregationStrategy.h"
 #include "Facade.h"
 #include "ForceResolver.h"
+#include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Config.h"
+#include "dispatcher/Model_ABC.h"
 #include "protocol/Protocol.h"
 #pragma warning( push, 0 )
 #include <vl/exConnInit.h>
@@ -110,7 +112,7 @@ void Plugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
 // -----------------------------------------------------------------------------
 void Plugin::Create( const sword::UnitCreation& message )
 {
-    agents_[ message.unit().id() ].reset( new Agent( *connection_, *vrForces_, message, *forceResolver_, *disaggregator_ ) );
+    agents_[ message.unit().id() ].reset( new Agent( model_.Agents().Get( message.unit().id() ), *connection_, *vrForces_, message, *forceResolver_, *disaggregator_ ) );
 }
 
 // -----------------------------------------------------------------------------

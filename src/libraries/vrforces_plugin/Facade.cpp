@@ -105,7 +105,6 @@ void Facade::OnAggregateAddition( DtReflectedAggregate* obj, void* userData )
     {
         that->reflected_[ obj->aggregateStateRep()->entityId().string() ] = obj;
         for( T_ReflectedCreationListeners::iterator it = that->reflectedCreationListeners_.begin(); it != that->reflectedCreationListeners_.end(); )
-        {
             if( (*it)->OnCreateReflected( obj ) )
             {
                 T_ReflectedCreationListeners::iterator itDelete = it;
@@ -114,7 +113,6 @@ void Facade::OnAggregateAddition( DtReflectedAggregate* obj, void* userData )
             }
             else
                 ++it;
-        }
     }
 }
 

@@ -10,6 +10,7 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
+#include <boost/shared_ptr.hpp>
 #include <vlpi/entityidentifier.h>
 
 class DtAggregatePublisher;
@@ -18,6 +19,13 @@ class DtReflectedAggregate;
 class DtSimulationAddress;
 class DtString;
 class DtVrfRemoteController;
+
+namespace kernel
+{
+    class Agent_ABC;
+    class AgentType;
+    class ComponentType;
+}
 
 namespace sword
 {
@@ -32,6 +40,7 @@ namespace vrforces
     class DisaggregationStrategy_ABC;
     class Facade;
     class ForceResolver_ABC;
+    class Subordinate;
 
 // =============================================================================
 /** @class  Agent
@@ -45,7 +54,7 @@ class Agent
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message
+             Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message
                   , const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation );
     virtual ~Agent();
     //@}
@@ -64,7 +73,6 @@ public:
     //! @name Callbacks
     //@{
     bool OnCreateReflected( DtReflectedAggregate* obj );
-    static void OnCreatePseudoAggregate( const DtString& name, const DtEntityIdentifier& id, void* usr );
     //@}
 
 private:
@@ -74,11 +82,25 @@ private:
     Agent& operator=( const Agent& ); //!< Assignment operator
     //@}
 
+    //! @name Callbacks
+    //@{
+    static void OnCreatePseudoAggregate( const DtString& name, const DtEntityIdentifier& id, void* usr );
+    //@}
+
     //! @name Helpers
     //@{
+    void CreateSubordinates( const kernel::AgentType& type );
+    void AddSubordinates( unsigned int index, unsigned int count, const kernel::ComponentType& type );
+    void AddSubordinateEntity( DtVrfRemoteController& controller, const DtSimulationAddress& address, const DtEntityType& type, const std::string& identifier );
+    void UpdateLocation( const sword::UnitAttributes& message );
     void SetAggregated( bool aggregated );
     bool IsTrueAggregate() const;
     void DestroyPseudoAggregate();
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< boost::shared_ptr< Subordinate > > T_Subordinates;
     //@}
 
 private:
@@ -92,6 +114,8 @@ private:
     std::auto_ptr< DtAggregatePublisher > publisher_;
     DtEntityIdentifier reflectedId_;
     const DtReflectedAggregate* reflected_;
+    T_Subordinates subordinates_;
+    const kernel::AgentType& type_;
     //@}
 };
 
