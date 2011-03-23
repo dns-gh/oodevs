@@ -2051,7 +2051,8 @@ void SimulationToClient::Convert( const sword::UrbanCreation& from, MsgsSimToCli
 void SimulationToClient::Convert( const sword::UrbanUpdate& from, MsgsSimToClient::MsgUrbanUpdate* to )
 {
     CONVERT_ID( object );
-    ConvertLocation( from.location(), to->mutable_location() );
+    if( from.has_location() )
+        ConvertLocation( from.location(), to->mutable_location() );
     if( from.has_attributes() )
         ConvertUrbanAttributes( from.attributes(), to->mutable_attributes() );
 }
