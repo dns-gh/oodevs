@@ -55,9 +55,9 @@ public:
     virtual std::string GetSessionsDir() const;
     virtual std::string GetSessionDir( const std::string& session ) const;
 
-    virtual std::string GetWeatherFile () const;
-    virtual std::string GetOrbatFile   () const;
-    virtual std::string GetUrbanFile   () const;
+    virtual std::string GetWeatherFile() const;
+    virtual std::string GetOrbatFile() const;
+    virtual std::string GetUrbanFile() const;
     virtual std::string GetUrbanStateFile() const;
     virtual std::string GetProfilesFile() const;
     virtual std::string GetPopulationFile() const;

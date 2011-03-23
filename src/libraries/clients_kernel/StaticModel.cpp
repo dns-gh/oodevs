@@ -30,7 +30,7 @@ StaticModel::StaticModel()
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
     , levels_             ( *new FormationLevels() )
-    , extensionTypes_    ( *new ExtensionTypes() )
+    , extensionTypes_     ( *new ExtensionTypes() )
     , atlasNatures_       ( *new AtlasNatures() )
 {
     // NOTHING

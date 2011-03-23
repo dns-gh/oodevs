@@ -38,9 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    void Register  ( tools::Observer_ABC& observer );
+    void Register( tools::Observer_ABC& observer );
     void Unregister( tools::Observer_ABC& observer );
-    void Update  ( tools::Observer_ABC& observer );
+    void Update( tools::Observer_ABC& observer );
     //@}
 
 private:

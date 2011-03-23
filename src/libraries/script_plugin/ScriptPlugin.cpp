@@ -57,7 +57,7 @@ ScriptPlugin::ScriptPlugin( Model_ABC& model, const kernel::StaticModel& staticM
     , factory_     ( new ExtensionFactory( *controller_, *converter_, publisher ) )
     , time_        ( -1 )
     , reset_       ( true )
-    , loaded_    ( false )
+    , loaded_      ( false )
     , tickDuration_( 10 )
 {
     model_.RegisterFactory( *factory_ );
