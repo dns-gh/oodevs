@@ -14,9 +14,11 @@ ParamLocationCompositeList.cpp \
 ParamLocationList.cpp \
 ParamMissionObjective.cpp \
 ParamMissionObjectiveList.cpp \
+ParamNumericList.cpp \
 ParamObjectKnowledgeList.cpp \
 ParamObstacle.cpp \
 ParamObstacleList.cpp \
 ParamPathList.cpp \
+
 
 TRANSLATIONS = actions_gui_fr.ts actions_gui_es.ts
