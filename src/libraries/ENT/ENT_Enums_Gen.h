@@ -10,23 +10,6 @@
 #ifndef __ENT_Enums_Gen_h_
 #define __ENT_Enums_Gen_h_
 
-
-enum E_ChangeHierarchyErrorCode
-{
-    eChangeHierarchyErrorCode_NoError,
-    eChangeHierarchyErrorCode_ErrorInvalidPion,
-    eChangeHierarchyErrorCode_ErrorInvalidAutomate,
-    eChangeHierarchyErrorCode_ErrorInvalidAutomateTc2,
-    eChangeHierarchyErrorCode_ErrorInvalidAutomateMaintenance,
-    eChangeHierarchyErrorCode_ErrorInvalidAutomateSante,
-    eChangeHierarchyErrorCode_ErrorInvalidAutomateRavitaillement,
-    eChangeHierarchyErrorCode_ErrorUnitSurrendered,
-    eChangeHierarchyErrorCode_ErrorInvalidCamp,
-    eChangeHierarchyErrorCode_ErrorInvalidGroupeConnaissance,
-    eChangeHierarchyErrorCode_ErrorCampsIncompatibles,
-    eNbrChangeHierarchyErrorCode
-};
-
 enum E_LocationType
 {
     eLocationType_Circle,
@@ -60,15 +43,6 @@ enum E_AmmunitionFamily
     eAmmunitionFamily_MissileSol,
     eAmmunitionFamily_Mitraille,
     eNbrAmmunitionFamily
-};
-
-enum E_UnitIdentificationLevel
-{
-    eUnitIdentificationLevel_Identifiee,
-    eUnitIdentificationLevel_Reconnue,
-    eUnitIdentificationLevel_Detectee,
-    eUnitIdentificationLevel_Signale,
-    eNbrUnitIdentificationLevel
 };
 
 enum E_NatureLevel
@@ -118,13 +92,6 @@ enum E_Diplomacy
     eNbrDiplomacy
 };
 
-enum E_ChangeDiplomacyErrorCode
-{
-    eChangeDiplomacyErrorCode_NoError,
-    eChangeDiplomacyErrorCode_ErrorInvalidCamp,
-    eNbrChangeDiplomacyErrorCode
-};
-
 enum E_ForceRatioStatus
 {
     eForceRatioStatus_None,
@@ -158,16 +125,6 @@ enum E_Roe
     eRoe_TirSurRiposte,
     eRoe_TirInterdit,
     eNbrRoe
-};
-
-enum E_UnitErrorCode
-{
-    eUnitErrorCode_NoError,
-    eUnitErrorCode_ErrorInvalidUnit,
-    eUnitErrorCode_ErrorAutomateEmbraye,
-    eUnitErrorCode_ErrorInvalidAttribute,
-    eUnitErrorCode_ErrorUnitSurrendered,
-    eNbrUnitErrorCode
 };
 
 enum E_UnitPosture
@@ -225,40 +182,6 @@ enum E_UnitExperience
     eNbrUnitExperience
 };
 
-enum E_AutomatMode
-{
-    eAutomatMode_Embraye,
-    eAutomatMode_Debraye,
-    eNbrAutomatMode
-};
-
-enum E_SetAutomatModeErrorCode
-{
-    eSetAutomatModeErrorCode_NoError,
-    eSetAutomatModeErrorCode_ErrorInvalidUnit,
-    eSetAutomatModeErrorCode_ErrorNotAllowed,
-    eNbrSetAutomatModeErrorCode
-};
-
-enum E_ControlErrorCode
-{
-    eControlErrorCode_NoError,
-    eControlErrorCode_ErrorAlreadyStarted,
-    eControlErrorCode_ErrorNotStarted,
-    eControlErrorCode_ErrorNotPaused,
-    eControlErrorCode_ErrorAlreadyPaused,
-    eControlErrorCode_ErrorInvalidTimeFactor,
-    eNbrControlErrorCode
-};
-
-enum E_SimulationState
-{
-    eSimulationState_Running,
-    eSimulationState_Paused,
-    eSimulationState_Stopped,
-    eNbrSimulationState
-};
-
 enum E_LightingType
 {
     eLightingType_JourSansNuage,
@@ -285,47 +208,6 @@ enum E_WeatherType
     eWeatherType_Snow,
     eWeatherType_Smoke,
     eNbrWeatherType
-};
-
-enum E_FireEffectType
-{
-    eFireEffectType_Fumigene,
-    eFireEffectType_Eclairant,
-    eNbrFireEffectType
-};
-
-enum E_InfoContextErrorCode
-{
-    eInfoContextErrorCode_NoError,
-    eInfoContextErrorCode_ErrorInvalidId,
-    eInfoContextErrorCode_ErrorInvalidGeometry,
-    eInfoContextErrorCode_ErrorInvalidLimaFunction,
-    eInfoContextErrorCode_ErrorInvalidDiffusion,
-    eNbrInfoContextErrorCode
-};
-
-enum E_LimaType
-{
-    eLimaType_LigneDebouche,
-    eLimaType_LigneChangementAttitude,
-    eLimaType_LigneCoordination,
-    eLimaType_LigneInterdire,
-    eLimaType_LigneObjectif,
-    eLimaType_LigneCoupArret,
-    eLimaType_LigneRecueil,
-    eLimaType_LigneDebutMission,
-    eLimaType_LigneFinMission,
-    eLimaType_LigneIdentificationAccueil,
-    eNbrLimaType
-};
-
-enum E_LogMaintenanceRegimeTravail
-{
-    eLogMaintenanceRegimeTravail_Regime1,
-    eLogMaintenanceRegimeTravail_Regime2,
-    eLogMaintenanceRegimeTravail_Regime3,
-    eLogMaintenanceRegimeTravail_Regime4,
-    eNbrLogMaintenanceRegimeTravail
 };
 
 enum E_LogMaintenanceHandlingStatus
@@ -359,22 +241,6 @@ enum E_LogSupplyHandlingStatus
     eNbrLogSupplyHandlingStatus
 };
 
-enum E_LogSupplyChangeQuotasAck
-{
-    eLogSupplyChangeQuotasAck_NoError,
-    eLogSupplyChangeQuotasAck_ErrorInvalidDonneur,
-    eLogSupplyChangeQuotasAck_ErrorInvalidReceveur,
-    eNbrLogSupplyChangeQuotasAck
-};
-
-enum E_LogSupplyPushFlowAck
-{
-    eLogSupplyPushFlowAck_NoError,
-    eLogSupplyPushFlowAck_ErrorInvalidDonneur,
-    eLogSupplyPushFlowAck_ErrorInvalidReceveur,
-    eNbrLogSupplyPushFlowAck
-};
-
 enum E_LogMedicalHandlingStatus
 {
     eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceReleve,
@@ -406,60 +272,6 @@ enum E_DemolitionTargetType
     eDemolitionTargetType_Preliminary,
     eDemolitionTargetType_Reserved,
     eNbrDemolitionTargetType
-};
-
-enum E_ObjectErrorCode
-{
-    eObjectErrorCode_NoError,
-    eObjectErrorCode_ErrorInvalidObject,
-    eObjectErrorCode_ErrorInvalidId,
-    eObjectErrorCode_ErrorInvalidCamp,
-    eObjectErrorCode_ErrorInvalidLocalisation,
-    eObjectErrorCode_ErrorMissingSpecificAttributes,
-    eObjectErrorCode_ErrorInvalidSpecificAttributes,
-    eNbrObjectErrorCode
-};
-
-enum E_OrderErrorCode
-{
-    eOrderErrorCode_NoError,
-    eOrderErrorCode_ErrorInvalidUnit,
-    eOrderErrorCode_ErrorInvalidLimit,
-    eOrderErrorCode_ErrorInvalidLima,
-    eOrderErrorCode_ErrorInvalidMission,
-    eOrderErrorCode_ErrorInvalidMissionParameters,
-    eOrderErrorCode_ErrorUnitCannotReceiveOrder,
-    eOrderErrorCode_ErrorInvalidOrderConduite,
-    eOrderErrorCode_ErrorInvalidOrderMission,
-    eOrderErrorCode_ErrorInvalidOrderInitial,
-    eOrderErrorCode_ErrorInvalidOrderConduiteParameters,
-    eOrderErrorCode_ErrorUnitSurrendered,
-    eOrderErrorCode_ErrorInvalidLimaFunction,
-    eNbrOrderErrorCode
-};
-
-enum E_ReportType
-{
-    eReportType_Message,
-    eReportType_Operationel,
-    eReportType_EvenementExceptionnel,
-    eReportType_Warning,
-    eNbrReportType
-};
-
-enum E_AutomatOrderFormation
-{
-    eAutomatOrderFormation_UnEchelon,
-    eAutomatOrderFormation_DeuxEchelons,
-    eNbrAutomatOrderFormation
-};
-
-enum E_PopulationErrorCode
-{
-    ePopulationErrorCode_NoError,
-    ePopulationErrorCode_ErrorInvalidUnit,
-    ePopulationErrorCode_ErrorInvalidAttribute,
-    eNbrPopulationErrorCode
 };
 
 enum E_PopulationAttitude

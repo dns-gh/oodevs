@@ -9,22 +9,6 @@
 
 #include "ENT_Tr_Gen.h"
 
-ENT_Tr::T_ConverterChangeHierarchyErrorCode ENT_Tr::ChangeHierarchyErrorCodeConverter_[] =
-{
-    T_ConverterChangeHierarchyErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeHierarchyErrorCode_NoError ),
-    T_ConverterChangeHierarchyErrorCode( "error invalid pion", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid pion" ), eChangeHierarchyErrorCode_ErrorInvalidPion ),
-    T_ConverterChangeHierarchyErrorCode( "error invalid automate", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate" ), eChangeHierarchyErrorCode_ErrorInvalidAutomate ),
-    T_ConverterChangeHierarchyErrorCode( "error invalid automate tc2", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate tc2" ), eChangeHierarchyErrorCode_ErrorInvalidAutomateTc2 ),
-    T_ConverterChangeHierarchyErrorCode( "error invalid automate maintenance", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate maintenance" ), eChangeHierarchyErrorCode_ErrorInvalidAutomateMaintenance ),
-    T_ConverterChangeHierarchyErrorCode( "error invalid automate sante", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate sante" ), eChangeHierarchyErrorCode_ErrorInvalidAutomateSante ),
-    T_ConverterChangeHierarchyErrorCode( "error invalid automate ravitaillement", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid automate ravitaillement" ), eChangeHierarchyErrorCode_ErrorInvalidAutomateRavitaillement ),
-    T_ConverterChangeHierarchyErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eChangeHierarchyErrorCode_ErrorUnitSurrendered ),
-    T_ConverterChangeHierarchyErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eChangeHierarchyErrorCode_ErrorInvalidCamp ),
-    T_ConverterChangeHierarchyErrorCode( "error invalid groupe connaissance", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid groupe connaissance" ), eChangeHierarchyErrorCode_ErrorInvalidGroupeConnaissance ),
-    T_ConverterChangeHierarchyErrorCode( "error camps incompatibles", QT_TRANSLATE_NOOP( "ENT_Tr", "error camps incompatibles" ), eChangeHierarchyErrorCode_ErrorCampsIncompatibles ),
-    T_ConverterChangeHierarchyErrorCode( "", "", (E_ChangeHierarchyErrorCode)-1 )
-};
-
 ENT_Tr::T_ConverterLocationType ENT_Tr::LocationTypeConverter_[] =
 {
     T_ConverterLocationType( "circle", QT_TRANSLATE_NOOP( "ENT_Tr", "circle" ), eLocationType_Circle ),
@@ -58,15 +42,6 @@ ENT_Tr::T_ConverterAmmunitionFamily ENT_Tr::AmmunitionFamilyConverter_[] =
     T_ConverterAmmunitionFamily( "missile sol", QT_TRANSLATE_NOOP( "ENT_Tr", "missile" ), eAmmunitionFamily_MissileSol ),
     T_ConverterAmmunitionFamily( "mitraille", QT_TRANSLATE_NOOP( "ENT_Tr", "bullet" ), eAmmunitionFamily_Mitraille ),
     T_ConverterAmmunitionFamily( "", "", (E_AmmunitionFamily)-1 )
-};
-
-ENT_Tr::T_ConverterUnitIdentificationLevel ENT_Tr::UnitIdentificationLevelConverter_[] =
-{
-    T_ConverterUnitIdentificationLevel( "identifiee", QT_TRANSLATE_NOOP( "ENT_Tr", "identifiee" ), eUnitIdentificationLevel_Identifiee ),
-    T_ConverterUnitIdentificationLevel( "reconnue", QT_TRANSLATE_NOOP( "ENT_Tr", "reconnue" ), eUnitIdentificationLevel_Reconnue ),
-    T_ConverterUnitIdentificationLevel( "detectee", QT_TRANSLATE_NOOP( "ENT_Tr", "detectee" ), eUnitIdentificationLevel_Detectee ),
-    T_ConverterUnitIdentificationLevel( "signale", QT_TRANSLATE_NOOP( "ENT_Tr", "signale" ), eUnitIdentificationLevel_Signale ),
-    T_ConverterUnitIdentificationLevel( "", "", (E_UnitIdentificationLevel)-1 )
 };
 
 ENT_Tr::T_ConverterNatureLevel ENT_Tr::NatureLevelConverter_[] =
@@ -116,13 +91,6 @@ ENT_Tr::T_ConverterDiplomacy ENT_Tr::DiplomacyConverter_[] =
     T_ConverterDiplomacy( "", "", (E_Diplomacy)-1 )
 };
 
-ENT_Tr::T_ConverterChangeDiplomacyErrorCode ENT_Tr::ChangeDiplomacyErrorCodeConverter_[] =
-{
-    T_ConverterChangeDiplomacyErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eChangeDiplomacyErrorCode_NoError ),
-    T_ConverterChangeDiplomacyErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eChangeDiplomacyErrorCode_ErrorInvalidCamp ),
-    T_ConverterChangeDiplomacyErrorCode( "", "", (E_ChangeDiplomacyErrorCode)-1 )
-};
-
 ENT_Tr::T_ConverterForceRatioStatus ENT_Tr::ForceRatioStatusConverter_[] =
 {
     T_ConverterForceRatioStatus( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), eForceRatioStatus_None ),
@@ -156,16 +124,6 @@ ENT_Tr::T_ConverterRoe ENT_Tr::RoeConverter_[] =
     T_ConverterRoe( "tir sur riposte", QT_TRANSLATE_NOOP( "ENT_Tr", "retaliation only" ), eRoe_TirSurRiposte ),
     T_ConverterRoe( "tir interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "forbidden fire" ), eRoe_TirInterdit ),
     T_ConverterRoe( "", "", (E_Roe)-1 )
-};
-
-ENT_Tr::T_ConverterUnitErrorCode ENT_Tr::UnitErrorCodeConverter_[] =
-{
-    T_ConverterUnitErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eUnitErrorCode_NoError ),
-    T_ConverterUnitErrorCode( "error invalid unit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid unit" ), eUnitErrorCode_ErrorInvalidUnit ),
-    T_ConverterUnitErrorCode( "error automate embraye", QT_TRANSLATE_NOOP( "ENT_Tr", "error automate embraye" ), eUnitErrorCode_ErrorAutomateEmbraye ),
-    T_ConverterUnitErrorCode( "error invalid attribute", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid attribute" ), eUnitErrorCode_ErrorInvalidAttribute ),
-    T_ConverterUnitErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eUnitErrorCode_ErrorUnitSurrendered ),
-    T_ConverterUnitErrorCode( "", "", (E_UnitErrorCode)-1 )
 };
 
 ENT_Tr::T_ConverterUnitPosture ENT_Tr::UnitPostureConverter_[] =
@@ -223,40 +181,6 @@ ENT_Tr::T_ConverterUnitExperience ENT_Tr::UnitExperienceConverter_[] =
     T_ConverterUnitExperience( "", "", (E_UnitExperience)-1 )
 };
 
-ENT_Tr::T_ConverterAutomatMode ENT_Tr::AutomatModeConverter_[] =
-{
-    T_ConverterAutomatMode( "embraye", QT_TRANSLATE_NOOP( "ENT_Tr", "engaged" ), eAutomatMode_Embraye ),
-    T_ConverterAutomatMode( "debraye", QT_TRANSLATE_NOOP( "ENT_Tr", "disengaged" ), eAutomatMode_Debraye ),
-    T_ConverterAutomatMode( "", "", (E_AutomatMode)-1 )
-};
-
-ENT_Tr::T_ConverterSetAutomatModeErrorCode ENT_Tr::SetAutomatModeErrorCodeConverter_[] =
-{
-    T_ConverterSetAutomatModeErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eSetAutomatModeErrorCode_NoError ),
-    T_ConverterSetAutomatModeErrorCode( "error invalid unit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid unit" ), eSetAutomatModeErrorCode_ErrorInvalidUnit ),
-    T_ConverterSetAutomatModeErrorCode( "error not allowed", QT_TRANSLATE_NOOP( "ENT_Tr", "error not allowed" ), eSetAutomatModeErrorCode_ErrorNotAllowed ),
-    T_ConverterSetAutomatModeErrorCode( "", "", (E_SetAutomatModeErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterControlErrorCode ENT_Tr::ControlErrorCodeConverter_[] =
-{
-    T_ConverterControlErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eControlErrorCode_NoError ),
-    T_ConverterControlErrorCode( "error already started", QT_TRANSLATE_NOOP( "ENT_Tr", "error already started" ), eControlErrorCode_ErrorAlreadyStarted ),
-    T_ConverterControlErrorCode( "error not started", QT_TRANSLATE_NOOP( "ENT_Tr", "error not started" ), eControlErrorCode_ErrorNotStarted ),
-    T_ConverterControlErrorCode( "error not paused", QT_TRANSLATE_NOOP( "ENT_Tr", "error not paused" ), eControlErrorCode_ErrorNotPaused ),
-    T_ConverterControlErrorCode( "error already paused", QT_TRANSLATE_NOOP( "ENT_Tr", "error already paused" ), eControlErrorCode_ErrorAlreadyPaused ),
-    T_ConverterControlErrorCode( "error invalid time factor", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid time factor" ), eControlErrorCode_ErrorInvalidTimeFactor ),
-    T_ConverterControlErrorCode( "", "", (E_ControlErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterSimulationState ENT_Tr::SimulationStateConverter_[] =
-{
-    T_ConverterSimulationState( "running", QT_TRANSLATE_NOOP( "ENT_Tr", "running" ), eSimulationState_Running ),
-    T_ConverterSimulationState( "paused", QT_TRANSLATE_NOOP( "ENT_Tr", "paused" ), eSimulationState_Paused ),
-    T_ConverterSimulationState( "stopped", QT_TRANSLATE_NOOP( "ENT_Tr", "stopped" ), eSimulationState_Stopped ),
-    T_ConverterSimulationState( "", "", (E_SimulationState)-1 )
-};
-
 ENT_Tr::T_ConverterLightingType ENT_Tr::LightingTypeConverter_[] =
 {
     T_ConverterLightingType( "jour sans nuage", QT_TRANSLATE_NOOP( "ENT_Tr", "Very sunny day" ), eLightingType_JourSansNuage ),
@@ -283,47 +207,6 @@ ENT_Tr::T_ConverterWeatherType ENT_Tr::WeatherTypeConverter_[] =
     T_ConverterWeatherType( "neige", QT_TRANSLATE_NOOP( "ENT_Tr", "Snow" ), eWeatherType_Snow ),
     T_ConverterWeatherType( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "Smoke" ), eWeatherType_Smoke ),
     T_ConverterWeatherType( "", "", (E_WeatherType)-1 )
-};
-
-ENT_Tr::T_ConverterFireEffectType ENT_Tr::FireEffectTypeConverter_[] =
-{
-    T_ConverterFireEffectType( "fumigene", QT_TRANSLATE_NOOP( "ENT_Tr", "smoke" ), eFireEffectType_Fumigene ),
-    T_ConverterFireEffectType( "eclairant", QT_TRANSLATE_NOOP( "ENT_Tr", "illumination shell" ), eFireEffectType_Eclairant ),
-    T_ConverterFireEffectType( "", "", (E_FireEffectType)-1 )
-};
-
-ENT_Tr::T_ConverterInfoContextErrorCode ENT_Tr::InfoContextErrorCodeConverter_[] =
-{
-    T_ConverterInfoContextErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eInfoContextErrorCode_NoError ),
-    T_ConverterInfoContextErrorCode( "error invalid id", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid id" ), eInfoContextErrorCode_ErrorInvalidId ),
-    T_ConverterInfoContextErrorCode( "error invalid geometry", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid geometry" ), eInfoContextErrorCode_ErrorInvalidGeometry ),
-    T_ConverterInfoContextErrorCode( "error invalid lima function", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima function" ), eInfoContextErrorCode_ErrorInvalidLimaFunction ),
-    T_ConverterInfoContextErrorCode( "error invalid diffusion", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid diffusion" ), eInfoContextErrorCode_ErrorInvalidDiffusion ),
-    T_ConverterInfoContextErrorCode( "", "", (E_InfoContextErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterLimaType ENT_Tr::LimaTypeConverter_[] =
-{
-    T_ConverterLimaType( "ligne debouche", QT_TRANSLATE_NOOP( "ENT_Tr", "line of departure" ), eLimaType_LigneDebouche ),
-    T_ConverterLimaType( "ligne changement attitude", QT_TRANSLATE_NOOP( "ENT_Tr", "posture switching line" ), eLimaType_LigneChangementAttitude ),
-    T_ConverterLimaType( "ligne coordination", QT_TRANSLATE_NOOP( "ENT_Tr", "coordination line" ), eLimaType_LigneCoordination ),
-    T_ConverterLimaType( "ligne interdire", QT_TRANSLATE_NOOP( "ENT_Tr", "deny line" ), eLimaType_LigneInterdire ),
-    T_ConverterLimaType( "ligne objectif", QT_TRANSLATE_NOOP( "ENT_Tr", "line of objectives" ), eLimaType_LigneObjectif ),
-    T_ConverterLimaType( "ligne coup arret", QT_TRANSLATE_NOOP( "ENT_Tr", "block line" ), eLimaType_LigneCoupArret ),
-    T_ConverterLimaType( "ligne recueil", QT_TRANSLATE_NOOP( "ENT_Tr", "rearward line" ), eLimaType_LigneRecueil ),
-    T_ConverterLimaType( "ligne debut mission", QT_TRANSLATE_NOOP( "ENT_Tr", "starting line" ), eLimaType_LigneDebutMission ),
-    T_ConverterLimaType( "ligne fin mission", QT_TRANSLATE_NOOP( "ENT_Tr", "finish line" ), eLimaType_LigneFinMission ),
-    T_ConverterLimaType( "ligne identification accueil", QT_TRANSLATE_NOOP( "ENT_Tr", "identification and reception line" ), eLimaType_LigneIdentificationAccueil ),
-    T_ConverterLimaType( "", "", (E_LimaType)-1 )
-};
-
-ENT_Tr::T_ConverterLogMaintenanceRegimeTravail ENT_Tr::LogMaintenanceRegimeTravailConverter_[] =
-{
-    T_ConverterLogMaintenanceRegimeTravail( "regime 1", QT_TRANSLATE_NOOP( "ENT_Tr", "shift type 1" ), eLogMaintenanceRegimeTravail_Regime1 ),
-    T_ConverterLogMaintenanceRegimeTravail( "regime 2", QT_TRANSLATE_NOOP( "ENT_Tr", "shift type 2" ), eLogMaintenanceRegimeTravail_Regime2 ),
-    T_ConverterLogMaintenanceRegimeTravail( "regime 3", QT_TRANSLATE_NOOP( "ENT_Tr", "shift type 3" ), eLogMaintenanceRegimeTravail_Regime3 ),
-    T_ConverterLogMaintenanceRegimeTravail( "regime 4", QT_TRANSLATE_NOOP( "ENT_Tr", "shift type 4" ), eLogMaintenanceRegimeTravail_Regime4 ),
-    T_ConverterLogMaintenanceRegimeTravail( "", "", (E_LogMaintenanceRegimeTravail)-1 )
 };
 
 ENT_Tr::T_ConverterLogMaintenanceHandlingStatus ENT_Tr::LogMaintenanceHandlingStatusConverter_[] =
@@ -357,22 +240,6 @@ ENT_Tr::T_ConverterLogSupplyHandlingStatus ENT_Tr::LogSupplyHandlingStatusConver
     T_ConverterLogSupplyHandlingStatus( "", "", (E_LogSupplyHandlingStatus)-1 )
 };
 
-ENT_Tr::T_ConverterLogSupplyChangeQuotasAck ENT_Tr::LogSupplyChangeQuotasAckConverter_[] =
-{
-    T_ConverterLogSupplyChangeQuotasAck( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eLogSupplyChangeQuotasAck_NoError ),
-    T_ConverterLogSupplyChangeQuotasAck( "error invalid donneur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid donneur" ), eLogSupplyChangeQuotasAck_ErrorInvalidDonneur ),
-    T_ConverterLogSupplyChangeQuotasAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receveur" ), eLogSupplyChangeQuotasAck_ErrorInvalidReceveur ),
-    T_ConverterLogSupplyChangeQuotasAck( "", "", (E_LogSupplyChangeQuotasAck)-1 )
-};
-
-ENT_Tr::T_ConverterLogSupplyPushFlowAck ENT_Tr::LogSupplyPushFlowAckConverter_[] =
-{
-    T_ConverterLogSupplyPushFlowAck( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eLogSupplyPushFlowAck_NoError ),
-    T_ConverterLogSupplyPushFlowAck( "error invalid donneur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid donneur" ), eLogSupplyPushFlowAck_ErrorInvalidDonneur ),
-    T_ConverterLogSupplyPushFlowAck( "error invalid receveur", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid receveur" ), eLogSupplyPushFlowAck_ErrorInvalidReceveur ),
-    T_ConverterLogSupplyPushFlowAck( "", "", (E_LogSupplyPushFlowAck)-1 )
-};
-
 ENT_Tr::T_ConverterLogMedicalHandlingStatus ENT_Tr::LogMedicalHandlingStatusConverter_[] =
 {
     T_ConverterLogMedicalHandlingStatus( "attente disponibilite ambulance releve", QT_TRANSLATE_NOOP( "ENT_Tr", "waiting for evacuation ambulance" ), eLogMedicalHandlingStatus_AttenteDisponibiliteAmbulanceReleve ),
@@ -404,60 +271,6 @@ ENT_Tr::T_ConverterDemolitionTargetType ENT_Tr::DemolitionTargetTypeConverter_[]
     T_ConverterDemolitionTargetType( "preliminary", QT_TRANSLATE_NOOP( "ENT_Tr", "preliminary" ), eDemolitionTargetType_Preliminary ),
     T_ConverterDemolitionTargetType( "reserved", QT_TRANSLATE_NOOP( "ENT_Tr", "reserved" ), eDemolitionTargetType_Reserved ),
     T_ConverterDemolitionTargetType( "", "", (E_DemolitionTargetType)-1 )
-};
-
-ENT_Tr::T_ConverterObjectErrorCode ENT_Tr::ObjectErrorCodeConverter_[] =
-{
-    T_ConverterObjectErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eObjectErrorCode_NoError ),
-    T_ConverterObjectErrorCode( "error invalid object", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid object" ), eObjectErrorCode_ErrorInvalidObject ),
-    T_ConverterObjectErrorCode( "error invalid id", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid id" ), eObjectErrorCode_ErrorInvalidId ),
-    T_ConverterObjectErrorCode( "error invalid camp", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid camp" ), eObjectErrorCode_ErrorInvalidCamp ),
-    T_ConverterObjectErrorCode( "error invalid localisation", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid localisation" ), eObjectErrorCode_ErrorInvalidLocalisation ),
-    T_ConverterObjectErrorCode( "error missing specific attributes", QT_TRANSLATE_NOOP( "ENT_Tr", "error missing specific attributes" ), eObjectErrorCode_ErrorMissingSpecificAttributes ),
-    T_ConverterObjectErrorCode( "error invalid specific attributes", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid specific attributes" ), eObjectErrorCode_ErrorInvalidSpecificAttributes ),
-    T_ConverterObjectErrorCode( "", "", (E_ObjectErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterOrderErrorCode ENT_Tr::OrderErrorCodeConverter_[] =
-{
-    T_ConverterOrderErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), eOrderErrorCode_NoError ),
-    T_ConverterOrderErrorCode( "error invalid unit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid unit" ), eOrderErrorCode_ErrorInvalidUnit ),
-    T_ConverterOrderErrorCode( "error invalid limit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid limit" ), eOrderErrorCode_ErrorInvalidLimit ),
-    T_ConverterOrderErrorCode( "error invalid lima", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima" ), eOrderErrorCode_ErrorInvalidLima ),
-    T_ConverterOrderErrorCode( "error invalid mission", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid mission" ), eOrderErrorCode_ErrorInvalidMission ),
-    T_ConverterOrderErrorCode( "error invalid mission parameters", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid mission parameters" ), eOrderErrorCode_ErrorInvalidMissionParameters ),
-    T_ConverterOrderErrorCode( "error unit cannot receive order", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit cannot receive order" ), eOrderErrorCode_ErrorUnitCannotReceiveOrder ),
-    T_ConverterOrderErrorCode( "error invalid order conduite", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order conduite" ), eOrderErrorCode_ErrorInvalidOrderConduite ),
-    T_ConverterOrderErrorCode( "error invalid order mission", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order mission" ), eOrderErrorCode_ErrorInvalidOrderMission ),
-    T_ConverterOrderErrorCode( "error invalid order initial", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order initial" ), eOrderErrorCode_ErrorInvalidOrderInitial ),
-    T_ConverterOrderErrorCode( "error invalid order conduite parameters", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid order conduite parameters" ), eOrderErrorCode_ErrorInvalidOrderConduiteParameters ),
-    T_ConverterOrderErrorCode( "error unit surrendered", QT_TRANSLATE_NOOP( "ENT_Tr", "error unit surrendered" ), eOrderErrorCode_ErrorUnitSurrendered ),
-    T_ConverterOrderErrorCode( "error invalid lima function", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid lima function" ), eOrderErrorCode_ErrorInvalidLimaFunction ),
-    T_ConverterOrderErrorCode( "", "", (E_OrderErrorCode)-1 )
-};
-
-ENT_Tr::T_ConverterReportType ENT_Tr::ReportTypeConverter_[] =
-{
-    T_ConverterReportType( "message", QT_TRANSLATE_NOOP( "ENT_Tr", "message" ), eReportType_Message ),
-    T_ConverterReportType( "operationel", QT_TRANSLATE_NOOP( "ENT_Tr", "operational" ), eReportType_Operationel ),
-    T_ConverterReportType( "evenement exceptionnel", QT_TRANSLATE_NOOP( "ENT_Tr", "event" ), eReportType_EvenementExceptionnel ),
-    T_ConverterReportType( "warning", QT_TRANSLATE_NOOP( "ENT_Tr", "warning" ), eReportType_Warning ),
-    T_ConverterReportType( "", "", (E_ReportType)-1 )
-};
-
-ENT_Tr::T_ConverterAutomatOrderFormation ENT_Tr::AutomatOrderFormationConverter_[] =
-{
-    T_ConverterAutomatOrderFormation( "un echelon", QT_TRANSLATE_NOOP( "ENT_Tr", "one echelon" ), eAutomatOrderFormation_UnEchelon ),
-    T_ConverterAutomatOrderFormation( "deux echelons", QT_TRANSLATE_NOOP( "ENT_Tr", "two echelons" ), eAutomatOrderFormation_DeuxEchelons ),
-    T_ConverterAutomatOrderFormation( "", "", (E_AutomatOrderFormation)-1 )
-};
-
-ENT_Tr::T_ConverterPopulationErrorCode ENT_Tr::PopulationErrorCodeConverter_[] =
-{
-    T_ConverterPopulationErrorCode( "no error", QT_TRANSLATE_NOOP( "ENT_Tr", "no error" ), ePopulationErrorCode_NoError ),
-    T_ConverterPopulationErrorCode( "error invalid unit", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid unit" ), ePopulationErrorCode_ErrorInvalidUnit ),
-    T_ConverterPopulationErrorCode( "error invalid attribute", QT_TRANSLATE_NOOP( "ENT_Tr", "error invalid attribute" ), ePopulationErrorCode_ErrorInvalidAttribute ),
-    T_ConverterPopulationErrorCode( "", "", (E_PopulationErrorCode)-1 )
 };
 
 ENT_Tr::T_ConverterPopulationAttitude ENT_Tr::PopulationAttitudeConverter_[] =
@@ -516,60 +329,32 @@ ENT_Tr::T_ConverterActionParameter ENT_Tr::ActionParameterConverter_[] =
 //-----------------------------------------------------------------------------
 void ENT_Tr::InitTranslations()
 {
-    InitTr( ChangeHierarchyErrorCodeConverter_, "ENT_Tr" );
     InitTr( LocationTypeConverter_, "ENT_Tr" );
     InitTr( DotationFamilyConverter_, "ENT_Tr" );
     InitTr( AmmunitionFamilyConverter_, "ENT_Tr" );
-    InitTr( UnitIdentificationLevelConverter_, "ENT_Tr" );
     InitTr( NatureLevelConverter_, "ENT_Tr" );
     InitTr( HumanWoundConverter_, "ENT_Tr" );
     InitTr( HumanRankConverter_, "ENT_Tr" );
     InitTr( DiplomacyConverter_, "ENT_Tr" );
-    InitTr( ChangeDiplomacyErrorCodeConverter_, "ENT_Tr" );
     InitTr( ForceRatioStatusConverter_, "ENT_Tr" );
     InitTr( MeetingEngagementStatusConverter_, "ENT_Tr" );
     InitTr( OperationalStatusConverter_, "ENT_Tr" );
     InitTr( RoeConverter_, "ENT_Tr" );
-    InitTr( UnitErrorCodeConverter_, "ENT_Tr" );
     InitTr( UnitPostureConverter_, "ENT_Tr" );
     InitTr( FireAvailabilityConverter_, "ENT_Tr" );
     InitTr( PopulationRoeConverter_, "ENT_Tr" );
     InitTr( UnitTirednessConverter_, "ENT_Tr" );
     InitTr( UnitMoraleConverter_, "ENT_Tr" );
     InitTr( UnitExperienceConverter_, "ENT_Tr" );
-    InitTr( AutomatModeConverter_, "ENT_Tr" );
-    InitTr( SetAutomatModeErrorCodeConverter_, "ENT_Tr" );
-    InitTr( ControlErrorCodeConverter_, "ENT_Tr" );
-    InitTr( SimulationStateConverter_, "ENT_Tr" );
     InitTr( LightingTypeConverter_, "ENT_Tr" );
     InitTr( WeatherTypeConverter_, "ENT_Tr" );
-    InitTr( FireEffectTypeConverter_, "ENT_Tr" );
-    InitTr( InfoContextErrorCodeConverter_, "ENT_Tr" );
-    InitTr( LimaTypeConverter_, "ENT_Tr" );
-    InitTr( LogMaintenanceRegimeTravailConverter_, "ENT_Tr" );
     InitTr( LogMaintenanceHandlingStatusConverter_, "ENT_Tr" );
     InitTr( LogSupplyHandlingStatusConverter_, "ENT_Tr" );
-    InitTr( LogSupplyChangeQuotasAckConverter_, "ENT_Tr" );
-    InitTr( LogSupplyPushFlowAckConverter_, "ENT_Tr" );
     InitTr( LogMedicalHandlingStatusConverter_, "ENT_Tr" );
     InitTr( DemolitionTargetTypeConverter_, "ENT_Tr" );
-    InitTr( ObjectErrorCodeConverter_, "ENT_Tr" );
-    InitTr( OrderErrorCodeConverter_, "ENT_Tr" );
-    InitTr( ReportTypeConverter_, "ENT_Tr" );
-    InitTr( AutomatOrderFormationConverter_, "ENT_Tr" );
-    InitTr( PopulationErrorCodeConverter_, "ENT_Tr" );
     InitTr( PopulationAttitudeConverter_, "ENT_Tr" );
     InitTr( LocationConverter_, "ENT_Tr" );
     InitTr( ActionParameterConverter_, "ENT_Tr" );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromChangeHierarchyErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromChangeHierarchyErrorCode( E_ChangeHierarchyErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ChangeHierarchyErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -597,15 +382,6 @@ const std::string& ENT_Tr::ConvertFromDotationFamily( E_DotationFamily nValue, E
 const std::string& ENT_Tr::ConvertFromAmmunitionFamily( E_AmmunitionFamily nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( AmmunitionFamilyConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitIdentificationLevel
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitIdentificationLevel( E_UnitIdentificationLevel nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( UnitIdentificationLevelConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -645,15 +421,6 @@ const std::string& ENT_Tr::ConvertFromDiplomacy( E_Diplomacy nValue, ENT_Tr_ABC:
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromChangeDiplomacyErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromChangeDiplomacyErrorCode( E_ChangeDiplomacyErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ChangeDiplomacyErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromForceRatioStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -687,15 +454,6 @@ const std::string& ENT_Tr::ConvertFromOperationalStatus( E_OperationalStatus nVa
 const std::string& ENT_Tr::ConvertFromRoe( E_Roe nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( RoeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromUnitErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromUnitErrorCode( E_UnitErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( UnitErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -752,42 +510,6 @@ const std::string& ENT_Tr::ConvertFromUnitExperience( E_UnitExperience nValue, E
     return ENT_Tr::InverseFindInConverter( UnitExperienceConverter_, nValue, nConverterType );
 }
 
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromAutomatMode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAutomatMode( E_AutomatMode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( AutomatModeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromSetAutomatModeErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromSetAutomatModeErrorCode( E_SetAutomatModeErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( SetAutomatModeErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromControlErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromControlErrorCode( E_ControlErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ControlErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromSimulationState
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromSimulationState( E_SimulationState nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( SimulationStateConverter_, nValue, nConverterType );
-}
-
 // -----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromLightingType
 // Created: JSR 2010-07-12
@@ -804,42 +526,6 @@ const std::string& ENT_Tr::ConvertFromLightingType( E_LightingType nValue, E_Con
 const std::string& ENT_Tr::ConvertFromWeatherType( E_WeatherType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( WeatherTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromFireEffectType
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromFireEffectType( E_FireEffectType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( FireEffectTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromInfoContextErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromInfoContextErrorCode( E_InfoContextErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( InfoContextErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLimaType
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLimaType( E_LimaType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( LimaTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogMaintenanceRegimeTravail
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogMaintenanceRegimeTravail( E_LogMaintenanceRegimeTravail nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( LogMaintenanceRegimeTravailConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -861,24 +547,6 @@ const std::string& ENT_Tr::ConvertFromLogSupplyHandlingStatus( E_LogSupplyHandli
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogSupplyChangeQuotasAck
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogSupplyChangeQuotasAck( E_LogSupplyChangeQuotasAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( LogSupplyChangeQuotasAckConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromLogSupplyPushFlowAck
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromLogSupplyPushFlowAck( E_LogSupplyPushFlowAck nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( LogSupplyPushFlowAckConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromLogMedicalHandlingStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -888,57 +556,12 @@ const std::string& ENT_Tr::ConvertFromLogMedicalHandlingStatus( E_LogMedicalHand
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromObjectErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromObjectErrorCode( E_ObjectErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ObjectErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertFromDemolitionTargetType
 // Created: AGR
 //-----------------------------------------------------------------------------
 const std::string& ENT_Tr::ConvertFromDemolitionTargetType( E_DemolitionTargetType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( DemolitionTargetTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromOrderErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromOrderErrorCode( E_OrderErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( OrderErrorCodeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromReportType
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromReportType( E_ReportType nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( ReportTypeConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromAutomatOrderFormation
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromAutomatOrderFormation( E_AutomatOrderFormation nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( AutomatOrderFormationConverter_, nValue, nConverterType );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertFromPopulationErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-const std::string& ENT_Tr::ConvertFromPopulationErrorCode( E_PopulationErrorCode nValue, ENT_Tr_ABC::E_Conversion nConverterType )
-{
-    return ENT_Tr::InverseFindInConverter( PopulationErrorCodeConverter_, nValue, nConverterType );
 }
 
 //-----------------------------------------------------------------------------
@@ -968,16 +591,6 @@ const std::string& ENT_Tr::ConvertFromActionParameter( E_ActionParameter nValue,
     return ENT_Tr::InverseFindInConverter( ActionParameterConverter_, nValue, nConverterType );
 }
 
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToChangeHierarchyErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ChangeHierarchyErrorCode ENT_Tr::ConvertToChangeHierarchyErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ChangeHierarchyErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLocationType
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1002,15 +615,6 @@ E_DotationFamily ENT_Tr::ConvertToDotationFamily( const std::string& strName )
 E_AmmunitionFamily ENT_Tr::ConvertToAmmunitionFamily( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( AmmunitionFamilyConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitIdentificationLevel
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_UnitIdentificationLevel ENT_Tr::ConvertToUnitIdentificationLevel( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( UnitIdentificationLevelConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1050,15 +654,6 @@ E_Diplomacy ENT_Tr::ConvertToDiplomacy( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToChangeDiplomacyErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ChangeDiplomacyErrorCode ENT_Tr::ConvertToChangeDiplomacyErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ChangeDiplomacyErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToForceRatioStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1092,15 +687,6 @@ E_OperationalStatus ENT_Tr::ConvertToOperationalStatus( const std::string& strNa
 E_Roe ENT_Tr::ConvertToRoe( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( RoeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToUnitErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_UnitErrorCode ENT_Tr::ConvertToUnitErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( UnitErrorCodeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1158,84 +744,12 @@ E_UnitExperience ENT_Tr::ConvertToUnitExperience( const std::string& strName )
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToAutomatMode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_AutomatMode ENT_Tr::ConvertToAutomatMode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( AutomatModeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToSetAutomatModeErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_SetAutomatModeErrorCode ENT_Tr::ConvertToSetAutomatModeErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( SetAutomatModeErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToControlErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ControlErrorCode ENT_Tr::ConvertToControlErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ControlErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToSimulationState
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_SimulationState ENT_Tr::ConvertToSimulationState( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( SimulationStateConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToWeatherType
 // Created: AGR
 //-----------------------------------------------------------------------------
 E_WeatherType ENT_Tr::ConvertToWeatherType( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( WeatherTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToFireEffectType
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_FireEffectType ENT_Tr::ConvertToFireEffectType( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( FireEffectTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToInfoContextErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_InfoContextErrorCode ENT_Tr::ConvertToInfoContextErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( InfoContextErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLimaType
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LimaType ENT_Tr::ConvertToLimaType( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( LimaTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogMaintenanceRegimeTravail
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LogMaintenanceRegimeTravail ENT_Tr::ConvertToLogMaintenanceRegimeTravail( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( LogMaintenanceRegimeTravailConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------
@@ -1257,24 +771,6 @@ E_LogSupplyHandlingStatus ENT_Tr::ConvertToLogSupplyHandlingStatus( const std::s
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogSupplyChangeQuotasAck
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LogSupplyChangeQuotasAck ENT_Tr::ConvertToLogSupplyChangeQuotasAck( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( LogSupplyChangeQuotasAckConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToLogSupplyPushFlowAck
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_LogSupplyPushFlowAck ENT_Tr::ConvertToLogSupplyPushFlowAck( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( LogSupplyPushFlowAckConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToLogMedicalHandlingStatus
 // Created: AGR
 //-----------------------------------------------------------------------------
@@ -1284,57 +780,12 @@ E_LogMedicalHandlingStatus ENT_Tr::ConvertToLogMedicalHandlingStatus( const std:
 }
 
 //-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToObjectErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ObjectErrorCode ENT_Tr::ConvertToObjectErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ObjectErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
 // Name: ENT_Tr::ConvertToDemolitionTargetType
 // Created: AGR
 //-----------------------------------------------------------------------------
 E_DemolitionTargetType ENT_Tr::ConvertToDemolitionTargetType( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( DemolitionTargetTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToOrderErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_OrderErrorCode ENT_Tr::ConvertToOrderErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( OrderErrorCodeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToReportType
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_ReportType ENT_Tr::ConvertToReportType( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( ReportTypeConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToAutomatOrderFormation
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_AutomatOrderFormation ENT_Tr::ConvertToAutomatOrderFormation( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( AutomatOrderFormationConverter_, strName );
-}
-
-//-----------------------------------------------------------------------------
-// Name: ENT_Tr::ConvertToPopulationErrorCode
-// Created: AGR
-//-----------------------------------------------------------------------------
-E_PopulationErrorCode ENT_Tr::ConvertToPopulationErrorCode( const std::string& strName )
-{
-    return ENT_Tr::FindInConverter( PopulationErrorCodeConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

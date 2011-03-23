@@ -2,51 +2,6 @@
 <context>
     <name>ENT_Tr</name>
     <message>
-        <source>no error</source>
-        <translation>No hay error</translation>
-    </message>
-    <message>
-        <source>error invalid pion</source>
-        <translation>Error unidad inválida</translation>
-    </message>
-    <message>
-        <source>error invalid automate</source>
-        <translation>error autómata inválido
-</translation>
-    </message>
-    <message>
-        <source>error invalid automate tc2</source>
-        <translation>error autómata TC2 inválido</translation>
-    </message>
-    <message>
-        <source>error invalid automate maintenance</source>
-        <translation>error autómata de mantenimiento inválido</translation>
-    </message>
-    <message>
-        <source>error invalid automate sante</source>
-        <translation>error autómata de salud inválido</translation>
-    </message>
-    <message>
-        <source>error invalid automate ravitaillement</source>
-        <translation>error autómata de abastecimiento inválido</translation>
-    </message>
-    <message>
-        <source>error unit surrendered</source>
-        <translation>error unidad se rindió</translation>
-    </message>
-    <message>
-        <source>error invalid camp</source>
-        <translation>error campo inválido</translation>
-    </message>
-    <message>
-        <source>error invalid groupe connaissance</source>
-        <translation>error grupo de conocimiento inválido</translation>
-    </message>
-    <message>
-        <source>error camps incompatibles</source>
-        <translation>error campos incompatibles</translation>
-    </message>
-    <message>
         <source>circle</source>
         <translation>círculo</translation>
     </message>
@@ -73,22 +28,6 @@
     <message>
         <source>mine</source>
         <translation>mina</translation>
-    </message>
-    <message>
-        <source>identifiee</source>
-        <translation>identificada</translation>
-    </message>
-    <message>
-        <source>reconnue</source>
-        <translation>reconocida</translation>
-    </message>
-    <message>
-        <source>detectee</source>
-        <translation>detectada</translation>
-    </message>
-    <message>
-        <source>signale</source>
-        <translation>señalada</translation>
     </message>
     <message>
         <source>none</source>
@@ -147,144 +86,12 @@
         <translation>xxxxx</translation>
     </message>
     <message>
-        <source>error invalid unit</source>
-        <translation>error unidad inválida</translation>
-    </message>
-    <message>
-        <source>error automate embraye</source>
-        <translation>error autómata embragado(acoplado)</translation>
-    </message>
-    <message>
-        <source>error invalid attribute</source>
-        <translation>error atributo inválido</translation>
-    </message>
-    <message>
         <source>veteran</source>
         <translation>veterano</translation>
     </message>
     <message>
-        <source>error not allowed</source>
-        <translation>error, operación no permitida</translation>
-    </message>
-    <message>
-        <source>error already started</source>
-        <translation>error, ya está iniciado</translation>
-    </message>
-    <message>
-        <source>error not started</source>
-        <translation>error, no está iniciado</translation>
-    </message>
-    <message>
-        <source>error not paused</source>
-        <translation>error, no está en pausa</translation>
-    </message>
-    <message>
-        <source>error already paused</source>
-        <translation>error, ya está en pausa</translation>
-    </message>
-    <message>
-        <source>error invalid time factor</source>
-        <translation>error, factor de tiempo inválido</translation>
-    </message>
-    <message>
-        <source>running</source>
-        <translation>en ejecución</translation>
-    </message>
-    <message>
-        <source>paused</source>
-        <translation>pausado</translation>
-    </message>
-    <message>
-        <source>stopped</source>
-        <translation>detenido</translation>
-    </message>
-    <message>
-        <source>error invalid id</source>
-        <translation>error, identificador inválido</translation>
-    </message>
-    <message>
-        <source>error invalid geometry</source>
-        <translation>error, geometria inválida</translation>
-    </message>
-    <message>
-        <source>error invalid lima function</source>
-        <translation>error, función lima inválida</translation>
-    </message>
-    <message>
-        <source>error invalid diffusion</source>
-        <translation>error, difusión inválida</translation>
-    </message>
-    <message>
-        <source>error invalid donneur</source>
-        <translation>error, donante inválido</translation>
-    </message>
-    <message>
-        <source>error invalid receveur</source>
-        <translation>error, receptor inválido</translation>
-    </message>
-    <message>
-        <source>error invalid object</source>
-        <translation>error, objeto inválido</translation>
-    </message>
-    <message>
-        <source>error invalid localisation</source>
-        <translation>error, localización inválida</translation>
-    </message>
-    <message>
-        <source>error missing specific attributes</source>
-        <translation>error, faltan atributos específicos</translation>
-    </message>
-    <message>
-        <source>error invalid specific attributes</source>
-        <translation>error, atributos especificos inválidos</translation>
-    </message>
-    <message>
         <source>reserved</source>
         <translation>reservado</translation>
-    </message>
-    <message>
-        <source>error invalid limit</source>
-        <translation>error, límite inválido</translation>
-    </message>
-    <message>
-        <source>error invalid lima</source>
-        <translation>error, lima inválida</translation>
-    </message>
-    <message>
-        <source>error invalid mission</source>
-        <translation>error, misión inválida</translation>
-    </message>
-    <message>
-        <source>error invalid mission parameters</source>
-        <translation>error, parámetros de misión inválidos</translation>
-    </message>
-    <message>
-        <source>error unit cannot receive order</source>
-        <translation>error, la unidad no puede recibir órdenes</translation>
-    </message>
-    <message>
-        <source>error invalid order conduite</source>
-        <translation>error, orden de conducta inválido</translation>
-    </message>
-    <message>
-        <source>error invalid order mission</source>
-        <translation>error, misión inválida</translation>
-    </message>
-    <message>
-        <source>error invalid order initial</source>
-        <translation>error, orden inicial inválida</translation>
-    </message>
-    <message>
-        <source>error invalid order conduite parameters</source>
-        <translation>error, parámetros de orden de conducta inválidos</translation>
-    </message>
-    <message>
-        <source>message</source>
-        <translation>mensaje</translation>
-    </message>
-    <message>
-        <source>warning</source>
-        <translation>advertencia</translation>
     </message>
     <message>
         <source>agressive</source>
@@ -511,78 +318,6 @@
         <translation>novato</translation>
     </message>
     <message>
-        <source>engaged</source>
-        <translation>embragado(acoplado)</translation>
-    </message>
-    <message>
-        <source>disengaged</source>
-        <translation>desembragado(desacoplado)</translation>
-    </message>
-    <message>
-        <source>smoke</source>
-        <translation>humo</translation>
-    </message>
-    <message>
-        <source>illumination shell</source>
-        <translation>obus de iluminación</translation>
-    </message>
-    <message>
-        <source>line of departure</source>
-        <translation>línea de partida</translation>
-    </message>
-    <message>
-        <source>posture switching line</source>
-        <translation>línea de cambio de actitud</translation>
-    </message>
-    <message>
-        <source>coordination line</source>
-        <translation>línea de coordinación</translation>
-    </message>
-    <message>
-        <source>deny line</source>
-        <translation>línea de negación</translation>
-    </message>
-    <message>
-        <source>line of objectives</source>
-        <translation>línea de objetivos</translation>
-    </message>
-    <message>
-        <source>block line</source>
-        <translation>línea de bloqueo</translation>
-    </message>
-    <message>
-        <source>rearward line</source>
-        <translation>línea de retaguardia</translation>
-    </message>
-    <message>
-        <source>starting line</source>
-        <translation>línea de inicio de misión</translation>
-    </message>
-    <message>
-        <source>finish line</source>
-        <translation>línea de fin de misión</translation>
-    </message>
-    <message>
-        <source>identification and reception line</source>
-        <translation>línea de identificación y recepción</translation>
-    </message>
-    <message>
-        <source>shift type 1</source>
-        <translation>cambio tipo 1</translation>
-    </message>
-    <message>
-        <source>shift type 2</source>
-        <translation>cambio tipo 2</translation>
-    </message>
-    <message>
-        <source>shift type 3</source>
-        <translation>cambio tipo 3</translation>
-    </message>
-    <message>
-        <source>shift type 4</source>
-        <translation>cambio tipo 4</translation>
-    </message>
-    <message>
         <source>moving toward logistic system</source>
         <translation>moviendo hacia cadena logística</translation>
     </message>
@@ -733,18 +468,6 @@
     <message>
         <source>collection ambulance unloading</source>
         <translation>ambulancia de recolección descargando</translation>
-    </message>
-    <message>
-        <source>event</source>
-        <translation>evento</translation>
-    </message>
-    <message>
-        <source>one echelon</source>
-        <translation>un escalón</translation>
-    </message>
-    <message>
-        <source>two echelons</source>
-        <translation>dos escalones</translation>
     </message>
     <message>
         <source>quiet</source>

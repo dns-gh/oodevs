@@ -2,51 +2,6 @@
 <context>
     <name>ENT_Tr</name>
     <message>
-        <source>no error</source>
-        <translation>pas d&apos;erreur</translation>
-    </message>
-    <message>
-        <source>error invalid pion</source>
-        <translation>erreur unité non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid automate</source>
-        <translation>erreur automate non-valide
-</translation>
-    </message>
-    <message>
-        <source>error invalid automate tc2</source>
-        <translation>erreur automate TC2 non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid automate maintenance</source>
-        <translation>erreur automate maintenance non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid automate sante</source>
-        <translation>erreur automate santé non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid automate ravitaillement</source>
-        <translation>erreur automate ravitaillement non-valide</translation>
-    </message>
-    <message>
-        <source>error unit surrendered</source>
-        <translation>erreur unité rendue</translation>
-    </message>
-    <message>
-        <source>error invalid camp</source>
-        <translation>erreur camp non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid groupe connaissance</source>
-        <translation>erreur groupe de connaissance non-valide</translation>
-    </message>
-    <message>
-        <source>error camps incompatibles</source>
-        <translation>erreur camps incompatibles</translation>
-    </message>
-    <message>
         <source>circle</source>
         <translation>cercle</translation>
     </message>
@@ -73,22 +28,6 @@
     <message>
         <source>mine</source>
         <translation>mine</translation>
-    </message>
-    <message>
-        <source>identifiee</source>
-        <translation>identifiée</translation>
-    </message>
-    <message>
-        <source>reconnue</source>
-        <translation>reconnue</translation>
-    </message>
-    <message>
-        <source>detectee</source>
-        <translation>détectée</translation>
-    </message>
-    <message>
-        <source>signale</source>
-        <translation>signalée</translation>
     </message>
     <message>
         <source>none</source>
@@ -147,144 +86,12 @@
         <translation>xxxxx</translation>
     </message>
     <message>
-        <source>error invalid unit</source>
-        <translation>erreur unité non-valide</translation>
-    </message>
-    <message>
-        <source>error automate embraye</source>
-        <translation>erreur automate embrayé</translation>
-    </message>
-    <message>
-        <source>error invalid attribute</source>
-        <translation>erreur attributs non-valide</translation>
-    </message>
-    <message>
         <source>veteran</source>
         <translation>vétéran</translation>
     </message>
     <message>
-        <source>error not allowed</source>
-        <translation>erreur opération non autorisée</translation>
-    </message>
-    <message>
-        <source>error already started</source>
-        <translation>erreur simulation déjà démarrée</translation>
-    </message>
-    <message>
-        <source>error not started</source>
-        <translation>erreur simulation non démarrée</translation>
-    </message>
-    <message>
-        <source>error not paused</source>
-        <translation>erreur simulation non pausée</translation>
-    </message>
-    <message>
-        <source>error already paused</source>
-        <translation>erreur simulation déjà en pause</translation>
-    </message>
-    <message>
-        <source>error invalid time factor</source>
-        <translation>erreur facteur d&apos;accélération non-valide</translation>
-    </message>
-    <message>
-        <source>running</source>
-        <translation>en cours d&apos;exécution</translation>
-    </message>
-    <message>
-        <source>paused</source>
-        <translation>en pause</translation>
-    </message>
-    <message>
-        <source>stopped</source>
-        <translation>poste reflexe</translation>
-    </message>
-    <message>
-        <source>error invalid id</source>
-        <translation>erreur identifiant non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid geometry</source>
-        <translation>erreur géométrie non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid lima function</source>
-        <translation>erreur fonction de lima non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid diffusion</source>
-        <translation>erreur diffusion non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid donneur</source>
-        <translation>erreur donneur non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid receveur</source>
-        <translation>erreur réceptionneur non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid object</source>
-        <translation>erreur objet non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid localisation</source>
-        <translation>erreur localisation non-valide</translation>
-    </message>
-    <message>
-        <source>error missing specific attributes</source>
-        <translation>erreur certains attributs spécifiques sont manquants</translation>
-    </message>
-    <message>
-        <source>error invalid specific attributes</source>
-        <translation>erreur certains attributs spécifiques sont non-valides</translation>
-    </message>
-    <message>
         <source>reserved</source>
         <translation>de manoeuvre</translation>
-    </message>
-    <message>
-        <source>error invalid limit</source>
-        <translation>erreur limite non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid lima</source>
-        <translation>erreur lima non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid mission</source>
-        <translation>erreur mission non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid mission parameters</source>
-        <translation>erreur paramètre de mission non-valide</translation>
-    </message>
-    <message>
-        <source>error unit cannot receive order</source>
-        <translation>erreur l&apos;unité ne peut pas recevoir cet ordre</translation>
-    </message>
-    <message>
-        <source>error invalid order conduite</source>
-        <translation>erreur ordre de conduite non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid order mission</source>
-        <translation>erreur mission non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid order initial</source>
-        <translation>erreur ordre initial non-valide</translation>
-    </message>
-    <message>
-        <source>error invalid order conduite parameters</source>
-        <translation>erreur paramètre de l&apos;ordre de conduite non-valide</translation>
-    </message>
-    <message>
-        <source>message</source>
-        <translation>message</translation>
-    </message>
-    <message>
-        <source>warning</source>
-        <translation>avertissement</translation>
     </message>
     <message>
         <source>agressive</source>
@@ -511,78 +318,6 @@
         <translation>conscrit</translation>
     </message>
     <message>
-        <source>engaged</source>
-        <translation>embrayé</translation>
-    </message>
-    <message>
-        <source>disengaged</source>
-        <translation>débrayé</translation>
-    </message>
-    <message>
-        <source>smoke</source>
-        <translation>fumée</translation>
-    </message>
-    <message>
-        <source>illumination shell</source>
-        <translation>obus éclairant</translation>
-    </message>
-    <message>
-        <source>line of departure</source>
-        <translation>ligne de débouché</translation>
-    </message>
-    <message>
-        <source>posture switching line</source>
-        <translation>ligne de changement d&apos;attitude</translation>
-    </message>
-    <message>
-        <source>coordination line</source>
-        <translation>ligne de coordination</translation>
-    </message>
-    <message>
-        <source>deny line</source>
-        <translation>ligne interdire</translation>
-    </message>
-    <message>
-        <source>line of objectives</source>
-        <translation>ligne d&apos;objectif</translation>
-    </message>
-    <message>
-        <source>block line</source>
-        <translation>ligne de coup d&apos;arrêt</translation>
-    </message>
-    <message>
-        <source>rearward line</source>
-        <translation>ligne de recueil</translation>
-    </message>
-    <message>
-        <source>starting line</source>
-        <translation>ligne de début de mission</translation>
-    </message>
-    <message>
-        <source>finish line</source>
-        <translation>ligne de fin de mission</translation>
-    </message>
-    <message>
-        <source>identification and reception line</source>
-        <translation>ligne d&apos;identification accueil</translation>
-    </message>
-    <message>
-        <source>shift type 1</source>
-        <translation>bordée type 1</translation>
-    </message>
-    <message>
-        <source>shift type 2</source>
-        <translation>bordée type 2</translation>
-    </message>
-    <message>
-        <source>shift type 3</source>
-        <translation>bordée type 3</translation>
-    </message>
-    <message>
-        <source>shift type 4</source>
-        <translation>bordée type 4</translation>
-    </message>
-    <message>
         <source>moving toward logistic system</source>
         <translation>déplacement vers chaîne logistique</translation>
     </message>
@@ -733,18 +468,6 @@
     <message>
         <source>collection ambulance unloading</source>
         <translation>ambulance de collecte en déchargement</translation>
-    </message>
-    <message>
-        <source>event</source>
-        <translation>événement</translation>
-    </message>
-    <message>
-        <source>one echelon</source>
-        <translation>un échellon</translation>
-    </message>
-    <message>
-        <source>two echelons</source>
-        <translation>deux échellons</translation>
     </message>
     <message>
         <source>quiet</source>
@@ -960,15 +683,15 @@
     </message>
     <message>
         <source>danger direction</source>
-        <translation>direction dangereuse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>limit 1</source>
-        <translation>limite 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>limit 2</source>
-        <translation>limite 2</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
