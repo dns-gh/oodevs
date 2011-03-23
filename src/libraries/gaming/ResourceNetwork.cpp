@@ -213,7 +213,7 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
     node.consumption_ = msg.has_consumption() ? msg.consumption() : 0;
     node.needs_ = msg.has_max_consumption() ? msg.max_consumption() : 0;
     unsigned int currentConsumption = msg.has_current_consumption() ? msg.current_consumption() : 0;
-    node.satisfaction_ = node.needs_ != 0 ? ( static_cast< float >( currentConsumption ) / node.needs_ ) : 1.f;
+    node.satisfaction_ = node.needs_ != 0 ? ( static_cast< float >( currentConsumption ) / static_cast< float >( node.needs_ ) ) : 1.f;
     node.critical_ = msg.has_critical() ? msg.critical() : false;
     node.links_.clear();
     node.totalFlow_ = 0;

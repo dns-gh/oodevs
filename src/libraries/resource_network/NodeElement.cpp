@@ -211,15 +211,16 @@ void NodeElement::AddConsumption( double consumption )
 // -----------------------------------------------------------------------------
 void NodeElement::Consume( float& functionalState )
 {
-    unsigned int consumptionAmount = consumptionAmount_;
+    unsigned int currentConsumption = currentConsumption_;
     unsigned int maxConsumption = maxConsumption_;
+    currentConsumption_ = 0;
     if( isActivated_ )
     {
         unsigned int consumption = static_cast< unsigned int >( modifier_ * consumptionAmount_ );
         if( consumption > 0 && consumption > immediateStock_ )
         {
-            immediateStock_ = 0;
             currentConsumption_ += immediateStock_;
+            immediateStock_ = 0;
             functionalState_ = consumptionCritical_ ? static_cast< float >( immediateStock_ ) / consumption : 1;
             functionalState *= functionalState_;
         }
@@ -249,7 +250,7 @@ void NodeElement::Consume( float& functionalState )
         maxConsumption_ += externalConsumption;
         externalConsumption_ = 0;
     }
-    if( consumptionAmount != consumptionAmount_ || maxConsumption != maxConsumption_ )
+    if( currentConsumption != currentConsumption_ || maxConsumption != maxConsumption_ )
         needUpdate_ = true;
 }
 
