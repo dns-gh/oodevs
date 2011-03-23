@@ -354,7 +354,7 @@
 
     <target name="application.replayer_app" depends="application.dispatcher_dll,library.dispatcher,library.3a,library.score_plugin" description="build Sword replayer executable with crossbow">
         <build-app name="replayer_app" depends="terrain,boost,flexlm,qt,xerces,xalan,protobuf" pattern="replayer_app"
-            libs="HLA,libFedTime,tools,directia-${platform}-mt-4_6,
+            libs="tools,directia-${platform}-mt-4_6,
                   dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
@@ -1115,7 +1115,7 @@
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEXO_PACK=defense-worldwide"/>
             <arg value="/DUNINSTALL_LOG=uninstall-defense-worldwide"/>
-			<arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
+            <arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
@@ -1126,7 +1126,7 @@
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEXO_PACK=defense-france"/>
             <arg value="/DUNINSTALL_LOG=uninstall-defense-france"/>
-			<arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
+            <arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
@@ -1137,7 +1137,7 @@
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEXO_PACK=defense-scipio"/>
             <arg value="/DUNINSTALL_LOG=uninstall-defense-scipio"/>
-			<arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
+            <arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
@@ -1148,7 +1148,7 @@
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEXO_PACK=security-worldwide"/>
             <arg value="/DUNINSTALL_LOG=uninstall-security-worldwide"/>
-			<arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
+            <arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
             <arg value="/X!include sword-security.nsh"/>
         </nsis>
     </target>
@@ -1159,7 +1159,7 @@
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEXO_PACK=security-masa"/>
             <arg value="/DUNINSTALL_LOG=uninstall-security-masa"/>
-			<arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
+            <arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
             <arg value="/X!include sword-security.nsh"/>
         </nsis>
     </target>
