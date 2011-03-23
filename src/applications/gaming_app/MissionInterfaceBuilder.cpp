@@ -35,6 +35,7 @@
 #include "actions_gui/ParamMissionObjective.h"
 #include "actions_gui/ParamMissionObjectiveList.h"
 #include "actions_gui/ParamNumericField.h"
+#include "actions_gui/ParamNumericList.h"
 #include "actions_gui/ParamObstacle.h"
 #include "actions_gui/ParamObstacleList.h"
 #include "actions_gui/ParamObjectKnowledge.h"
@@ -91,9 +92,11 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["resourcetype"]        = &MissionInterfaceBuilder::BuildDotation;
     builderFunctors_["natureatlas"]         = &MissionInterfaceBuilder::BuildAtlasNature;
 
+
     builderFunctors_["boolean"]             = &MissionInterfaceBuilder::BuildBoolean;
     builderFunctors_["heading"]             = &MissionInterfaceBuilder::BuildDirection;
     builderFunctors_["integer"]             = &MissionInterfaceBuilder::BuildNumeric;
+    builderFunctors_["integerlist"]         = &MissionInterfaceBuilder::BuildNumericList;
     builderFunctors_["datetime"]            = &MissionInterfaceBuilder::BuildParamDateTime;
     builderFunctors_["string"]              = &MissionInterfaceBuilder::BuildString;
 
@@ -250,6 +253,15 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildDirection( const OrderPar
 actions::gui::Param_ABC& MissionInterfaceBuilder::BuildNumeric( const OrderParameter& parameter ) const
 {
     return *new actions::gui::ParamNumericField( parameter, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildNumericList
+// Created: MMC 2011-03-22
+// -----------------------------------------------------------------------------
+actions::gui::Param_ABC& MissionInterfaceBuilder::BuildNumericList( const OrderParameter& parameter ) const
+{
+    return *new actions::gui::ParamNumericList( missionInterface_, parameter, controllers_.actions_, true );
 }
 
 // -----------------------------------------------------------------------------

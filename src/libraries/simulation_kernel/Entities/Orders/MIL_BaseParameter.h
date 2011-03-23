@@ -58,6 +58,7 @@ public:
     virtual bool ToEquipmentType( const PHY_ComposanteTypePion*& ) const;
     virtual bool ToGDH( float& value ) const;
     virtual bool ToNumeric( float& value ) const;
+    virtual bool ToNumericList( std::vector< float >& value ) const;
     virtual bool ToGenObject( boost::shared_ptr< DEC_Gen_Object >& ) const;
     virtual bool ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen_Object > >& ) const;
     virtual bool ToMaintenancePriorities( T_MaintenancePriorityVector& ) const;

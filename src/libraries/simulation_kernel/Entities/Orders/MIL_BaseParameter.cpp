@@ -57,6 +57,15 @@ bool MIL_BaseParameter::ToNumeric( float& ) const
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToString
+// Created: MMC 2011-03-22
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToNumericList( std::vector< float >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToString
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
 bool MIL_BaseParameter::ToString( std::string& ) const

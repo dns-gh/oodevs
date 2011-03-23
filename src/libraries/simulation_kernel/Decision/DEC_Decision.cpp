@@ -744,6 +744,17 @@ bool NumericFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::bind
     NumericFunction( refMission, name, element );
     return true;
 }
+void NumericListFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+     std::vector< float > value;
+     if( element.ToNumericList( value ) )
+         refMission[ name ] = value;
+}
+bool NumericListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    NumericListFunction(  refMission, name, element );
+    return true;
+}
 void GenObjectFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_Gen_Object > value;
@@ -906,7 +917,9 @@ void InitFunctions()
         functors[ "ResourceType" ] = DotationTypeFunction;
         functors[ "EquipmentType" ] = EquipmentTypeFunction;
         functors[ "Numeric" ] = NumericFunction;
+        functors[ "NumericList" ] = NumericListFunction;
         functors[ "Integer" ] = NumericFunction;
+        functors[ "NumericList" ] = NumericListFunction;
         functors[ "PlannedWork" ] = GenObjectFunction;
         functors[ "PlannedWorkList" ] = GenObjectListFunction;
         functors[ "MaintenancePriorities" ] = MaintenancePrioritiesFunction;
@@ -922,7 +935,9 @@ void InitFunctions()
         functorsBM[ "GDH" ] = GDHFunctionBM;
         functorsBM[ "NatureAtlas" ] = NatureAtlasFunctionBM;
         functorsBM[ "Numeric" ] = NumericFunctionBM;
+        functorsBM[ "NumericList" ] = NumericListFunctionBM;
         functorsBM[ "Integer" ] = NumericFunctionBM;
+        functorsBM[ "IntegerList" ] = NumericListFunctionBM;
         functorsBM[ "Point" ] = PointFunctionBM;
         functorsBM[ "PointList" ] = PointListFunctionBM;
         functorsBM[ "Polygon" ] = AreaFunctionBM;

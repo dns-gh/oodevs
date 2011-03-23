@@ -103,6 +103,7 @@ public:
     virtual bool ToBool( bool& ) const = 0;
     virtual bool ToId( int& ) const = 0;
     virtual bool ToNumeric( float& ) const = 0;
+    virtual bool ToNumericList( std::vector< float >& ) const = 0;
     virtual bool ToString( std::string& asn ) const = 0;
     virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& ) const = 0;
     virtual bool ToElement( sword::MissionParameter_Value& ) const = 0;

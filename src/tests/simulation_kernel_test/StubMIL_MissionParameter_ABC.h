@@ -88,6 +88,8 @@ public:
     { throw; }
     virtual bool ToNumeric( float& ) const
     { throw; }
+    virtual bool ToNumericList( std::vector< float >& ) const
+    { throw; }
     virtual bool ToObjectiveList( sword::MissionObjectiveList& ) const
     { throw; }
     virtual bool ToObjectKnowledge( sword::ObjectKnowledgeId& ) const

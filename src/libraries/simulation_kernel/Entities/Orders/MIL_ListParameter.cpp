@@ -89,6 +89,22 @@ bool MIL_ListParameter::ToList( std::vector< boost::shared_ptr<MIL_MissionParame
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ListParameter::ToNumericList
+// Created: MMC 2011-03-23
+// -----------------------------------------------------------------------------
+bool MIL_ListParameter::ToNumericList( std::vector< float >& result ) const
+{
+    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    {
+        float param = 0.0f;
+        if( !(*it)->ToNumeric( param ) )
+            return false;
+        result.push_back( param );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ListParameter::ToPathList
 // Created: MGD 2010-11-15
 // -----------------------------------------------------------------------------
