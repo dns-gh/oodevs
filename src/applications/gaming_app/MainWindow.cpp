@@ -385,7 +385,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     pMissionPanel_->hide();
     replayerToolbar->hide();
-    aar->hide();
+    aar->SetStartup();
 
     new XPSPlayer( this, controllers_ );
 }

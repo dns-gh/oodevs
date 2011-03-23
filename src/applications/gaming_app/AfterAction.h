@@ -50,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    void hide();
+    void SetStartup();
     //@}
 
 private:
@@ -75,6 +75,7 @@ private:
     QDockWindow* aarDock_;
     QTabWidget* functionsTab_;
     bool aar_;
+    bool firstUpdate_;
     //@}
 };
 

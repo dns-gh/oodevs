@@ -32,6 +32,7 @@ AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, ItemFac
     : window_      ( window )
     , functionsTab_( 0 )
     , aar_         ( false )
+    , firstUpdate_ ( true )
 {
     CreateAfterActionDock( window, controllers, factory, model, layer, staticModel, plotFactory );
     controllers.Register( *this );
@@ -87,18 +88,20 @@ void AfterAction::NotifyCreated( const AfterActionRequest& )
 // -----------------------------------------------------------------------------
 void AfterAction::NotifyUpdated( const Services& services )
 {
+    if( !firstUpdate_ )
+        aar_ = aarDock_->isShown();
+    firstUpdate_ = false;
     const bool isAar = services.HasService< aar::Service >() && services.HasService< replay::Service >();
     window_->setAppropriate( aarDock_, isAar );
-    if( ! aarDock_->isVisible() )
-        aarDock_->setShown( isAar && !aar_ );
-    aar_ = isAar;
+    aarDock_->setShown( aar_ && isAar );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AfterAction::hide
-// Created: AGE 2007-09-28
+// Name: AfterAction::SetStartup
+// Created: FPO 2011-03-17
 // -----------------------------------------------------------------------------
-void AfterAction::hide()
+void AfterAction::SetStartup()
 {
+    aar_ = aarDock_->isShown();
     aarDock_->hide();
 }
