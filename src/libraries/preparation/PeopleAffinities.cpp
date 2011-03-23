@@ -90,6 +90,9 @@ void PeopleAffinities::InitializeAffinities()
 {
     tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
     while( it.HasMoreElements() )
-        if( affinities_.find( it.NextElement().GetId() ) == affinities_.end() )
-            affinities_[ it.NextElement().GetId() ] = 0.f;
+    {
+        const kernel::Team_ABC&next = it.NextElement();
+        if( affinities_.find( next.GetId() ) == affinities_.end() )
+            affinities_[ next.GetId() ] = 0.f;
+    }
 }
