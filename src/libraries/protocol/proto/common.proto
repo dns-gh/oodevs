@@ -944,17 +944,18 @@ message ResourceNetwork {
         required int32      capacity  = 3; //!< The capacity
         required uint32     flow      = 4; //!< The flow identifier
     }
-    required ResourceNetworkType resource        = 1;  //!< The resource network type
-    repeated Link                link            = 2;  //!< The link
-    required bool                enabled         = 3;  //!< Whether the network is enabled or not
-    optional uint32              max_stock       = 4;  //!< The maximum stock
-    optional uint32              stock           = 5;  //!< The current stock
-    optional uint32              production      = 6;  //!< The current production
-    optional uint32              consumption     = 7;  //!< The current consumption
-    optional bool                critical        = 8;  //!< @todo What's this ?
-    optional uint32              initial_stock   = 9;  //!< The initial stock
-    optional uint32              max_production  = 10; //!< The maximum production
-    optional uint32              max_consumption = 11; //!< The maximum consumption
+    required ResourceNetworkType resource            = 1;  //!< The resource network type
+    repeated Link                link                = 2;  //!< The link
+    required bool                enabled             = 3;  //!< Whether the network is enabled or not
+    optional uint32              max_stock           = 4;  //!< The maximum stock
+    optional uint32              stock               = 5;  //!< The current stock
+    optional uint32              production          = 6;  //!< The current production
+    optional uint32              consumption         = 7;  //!< The current consumption
+    optional bool                critical            = 8;  //!< @todo What's this ?
+    optional uint32              initial_stock       = 9;  //!< The initial stock
+    optional uint32              max_production      = 10; //!< The maximum production
+    optional uint32              max_consumption     = 11; //!< The maximum consumption
+    optional uint32              current_consumption = 12; //!< The current consumption
 }
 
 /** @struct ObjectAttributeResourceNetwork

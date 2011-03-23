@@ -200,6 +200,8 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
     unsigned int oldMaxStock = node.maxStock_;
     unsigned int oldProduction = node.production_;
     unsigned int oldConsumption = node.consumption_;
+    unsigned int oldNeeds = node.needs_;
+    float oldSatisfaction = node.satisfaction_;
     bool oldCritical = node.critical_;
     unsigned int oldStock = node.stock_;
     unsigned int oldFlow = node.totalFlow_;
@@ -209,6 +211,9 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
     node.maxStock_ = msg.has_max_stock() ? msg.max_stock() : 0;
     node.stock_ = msg.has_stock() ? msg.stock() : 0;
     node.consumption_ = msg.has_consumption() ? msg.consumption() : 0;
+    node.needs_ = msg.has_max_consumption() ? msg.max_consumption() : 0;
+    unsigned int currentConsumption = msg.has_current_consumption() ? msg.current_consumption() : 0;
+    node.satisfaction_ = node.needs_ != 0 ? ( static_cast< float >( currentConsumption ) / node.needs_ ) : 1.f;
     node.critical_ = msg.has_critical() ? msg.critical() : false;
     node.links_.clear();
     node.totalFlow_ = 0;
@@ -237,6 +242,10 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
             controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Consumption" ) ) );
         if( node.critical_ != oldCritical )
             controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ) ) );
+        if( node.needs_ != oldNeeds )
+            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Needs" ) ) );
+        if( node.satisfaction_ != oldSatisfaction )
+            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Satisfaction" ) ) );
     }
 }
 
@@ -279,5 +288,7 @@ void ResourceNetwork::CreateDictionary( PropertiesDictionary& dico ) const
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Production" ), node->second.production_ );
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Consumption" ), node->second.consumption_ );
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ), node->second.critical_ );
+        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Needs" ), node->second.needs_ );
+        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Satisfaction" ), node->second.satisfaction_ );
     }
 }

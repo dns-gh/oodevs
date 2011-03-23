@@ -48,18 +48,22 @@ public:
     struct ResourceNode
     {
         ResourceNode()
-            : isEnabled_  ( true )
-            , production_ ( 0 )
-            , consumption_( 0 )
-            , critical_   ( false )
-            , maxStock_   ( 0 )
-            , stock_      ( 0 )
-            , totalFlow_  ( 0 )
+            : isEnabled_   ( true )
+            , production_  ( 0 )
+            , consumption_ ( 0 )
+            , needs_       ( 0 )
+            , satisfaction_( 0 )
+            , critical_    ( false )
+            , maxStock_    ( 0 )
+            , stock_       ( 0 )
+            , totalFlow_   ( 0 )
         {}
 
         bool isEnabled_;
         unsigned int production_;
         unsigned int consumption_;
+        unsigned int needs_;
+        float satisfaction_;
         bool critical_;
         unsigned int maxStock_;
         unsigned int stock_;

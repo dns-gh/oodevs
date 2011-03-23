@@ -45,6 +45,8 @@ class ResourceNetworkAttribute : public UrbanObjectAttribute_ABC
         unsigned int stock_;
         unsigned int production_;
         unsigned int consumption_;
+        unsigned int maxConsumption_;
+        unsigned int currentConsumption_;
         bool critical_;
     };
 

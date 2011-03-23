@@ -29,6 +29,8 @@ NodeElement::NodeElement()
     , immediateStock_     ( 0 )
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( 0 )
+    , maxConsumption_     ( 0 )
+    , currentConsumption_ ( 0 )
     , externalConsumption_( 0 )
     , consumptionCritical_( false )
     , modifier_           ( 1. )
@@ -53,6 +55,8 @@ NodeElement::NodeElement( unsigned long resourceId, const std::string& resourceN
     , immediateStock_     ( 0 )
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( 0 )
+    , maxConsumption_     ( 0 )
+    , currentConsumption_ ( 0 )
     , externalConsumption_( 0 )
     , consumptionCritical_( false )
     , modifier_           ( 1. )
@@ -77,6 +81,8 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
     , immediateStock_     ( 0 )
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( 0 )
+    , maxConsumption_     ( 0 )
+    , currentConsumption_ ( 0 )
     , externalConsumption_( 0 )
     , consumptionCritical_( false )
     , modifier_           ( 1. )
@@ -102,6 +108,8 @@ NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& n
     , receivedQuantity_   ( 0 )
     , consumptionAmount_  ( node.consumption_ )
     , externalConsumption_( 0 )
+    , maxConsumption_     ( 0 )
+    , currentConsumption_ ( 0 )
     , consumptionCritical_( node.critical_ )
     , modifier_           ( 1. )
     , needUpdate_         ( true )
@@ -126,6 +134,8 @@ NodeElement::NodeElement( const NodeElement& from )
     , immediateStock_     ( from.immediateStock_ )
     , receivedQuantity_   ( from.receivedQuantity_ )
     , consumptionAmount_  ( from.consumptionAmount_ )
+    , maxConsumption_     ( 0 )
+    , currentConsumption_ ( 0 )
     , externalConsumption_( from.externalConsumption_ )
     , consumptionCritical_( from.consumptionCritical_ )
     , modifier_           ( from.modifier_ )
@@ -201,12 +211,15 @@ void NodeElement::AddConsumption( double consumption )
 // -----------------------------------------------------------------------------
 void NodeElement::Consume( float& functionalState )
 {
+    unsigned int consumptionAmount = consumptionAmount_;
+    unsigned int maxConsumption = maxConsumption_;
     if( isActivated_ )
     {
         unsigned int consumption = static_cast< unsigned int >( modifier_ * consumptionAmount_ );
         if( consumption > 0 && consumption > immediateStock_ )
         {
             immediateStock_ = 0;
+            currentConsumption_ += immediateStock_;
             functionalState_ = consumptionCritical_ ? static_cast< float >( immediateStock_ ) / consumption : 1;
             functionalState *= functionalState_;
         }
@@ -214,7 +227,9 @@ void NodeElement::Consume( float& functionalState )
         {
             functionalState_ = 1;
             immediateStock_ -= consumption;
+            currentConsumption_ += consumption;
         }
+        maxConsumption_ = consumption;
     }
     if( externalConsumption_ > 0 )
     {
@@ -223,14 +238,19 @@ void NodeElement::Consume( float& functionalState )
         {
             consumptionState_ = 1.f;
             immediateStock_ -= externalConsumption;
+            currentConsumption_ += externalConsumption;
         }
         else
         {
             consumptionState_ = static_cast< float >( immediateStock_ ) / externalConsumption;
+            currentConsumption_ += immediateStock_;
             immediateStock_ = 0;
         }
+        maxConsumption_ += externalConsumption;
         externalConsumption_ = 0;
     }
+    if( consumptionAmount != consumptionAmount_ || maxConsumption != maxConsumption_ )
+        needUpdate_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -385,6 +405,8 @@ void NodeElement::Serialize( sword::ResourceNetwork& msg ) const
         msg.set_production( productionCapacity_ );
     msg.set_consumption( consumptionAmount_ );
     msg.set_critical( consumptionCritical_ );
+    msg.set_max_consumption( maxConsumption_ );
+    msg.set_current_consumption( currentConsumption_ );
     for( CIT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         ( *it )->Serialize( *msg.add_link() );
     needUpdate_ = false;

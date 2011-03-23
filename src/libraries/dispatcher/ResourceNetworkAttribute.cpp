@@ -99,6 +99,8 @@ void ResourceNetworkAttribute::Update( const sword::ResourceNetwork& from )
     to.production_ = from.has_production() ? from.production() : 0;
     to.consumption_ = from.has_consumption() ? from.consumption() : 0;
     to.critical_ = from.has_critical() ? from.critical() : false;
+    to.maxConsumption_ = from.has_max_consumption() ? from.max_consumption() : 0;
+    to.currentConsumption_ = from.has_current_consumption() ? from.current_consumption() : 0;
     for( int j = 0; j < from.link_size(); ++j )
     {
         const sword::ResourceNetwork_Link& linkFrom = from.link( j );
@@ -129,6 +131,10 @@ void ResourceNetworkAttribute::Send( sword::ResourceNetwork& message, const Reso
         message.set_stock( network.stock_ );
     if( network.production_ )
         message.set_production( network.production_ );
+    if( network.currentConsumption_ )
+        message.set_current_consumption( network.currentConsumption_ );
+    if( network.maxConsumption_ )
+        message.set_max_consumption( network.maxConsumption_ );
     if( network.consumption_ )
     {
         message.set_consumption( network.consumption_ );

@@ -118,6 +118,8 @@ private:
     unsigned int immediateStock_;
     unsigned int receivedQuantity_;
     unsigned int consumptionAmount_;
+    unsigned int maxConsumption_;
+    unsigned int currentConsumption_;
     double externalConsumption_;
     bool consumptionCritical_;
     float modifier_;

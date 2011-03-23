@@ -1265,6 +1265,14 @@
         <source>Enabled</source>
         <translation>Activé</translation>
     </message>
+    <message>
+        <source>Needs</source>
+        <translation>Besoins</translation>
+    </message>
+    <message>
+        <source>Satisfaction</source>
+        <translation>Satisfaction</translation>
+    </message>
 </context>
 <context>
     <name>Score</name>

@@ -1265,6 +1265,14 @@
         <source>Vital consumption</source>
         <translation>Consumo vital</translation>
     </message>
+    <message>
+        <source>Needs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfaction</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Score</name>
