@@ -43,7 +43,7 @@ DisPlugin::DisPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& co
     : model_    ( model )
     , network_  ( new UdpNetwork( xis.attribute< std::string >( "server" ), xis.attribute< unsigned short >( "port" ) ) )
     , converter_( new kernel::CoordinateConverter( config ) )
-    , resolver_ ( new rpr::EntityTypeResolver( config.BuildPhysicalChildFile( "dis.xml" ) ) )
+    , resolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
     , factory_  ( new DisExtensionFactory( *network_, *this, *converter_, *resolver_, xis ) )
     , fires_    ( new FireManager( *network_, *this, (unsigned char)xis.attribute< unsigned short >( "exercise"  ) ) )
     , timeStep_ ( ReadTimeStep( config.GetSessionFile() ) )

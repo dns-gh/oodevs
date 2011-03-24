@@ -12,6 +12,7 @@
 
 #include "clients_kernel/ApproximativeMap.h"
 #include "rpr/EntityType.h"
+#include <boost/noncopyable.hpp>
 #include <map>
 
 namespace kernel
@@ -22,6 +23,7 @@ namespace kernel
 namespace xml
 {
     class xistream;
+    class xisubstream;
 }
 
 namespace rpr
@@ -33,12 +35,12 @@ namespace rpr
 */
 // Created: AGE 2008-04-04
 // =============================================================================
-class EntityTypeResolver
+class EntityTypeResolver : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit EntityTypeResolver( const std::string& mappingFile );
+    explicit EntityTypeResolver( xml::xisubstream xis );
     virtual ~EntityTypeResolver();
     //@}
 
@@ -48,12 +50,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EntityTypeResolver( const EntityTypeResolver& );            //!< Copy constructor
-    EntityTypeResolver& operator=( const EntityTypeResolver& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadEntry( xml::xistream& xis );

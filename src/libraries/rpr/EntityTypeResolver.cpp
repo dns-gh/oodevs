@@ -17,14 +17,12 @@ using namespace rpr;
 // Name: EntityTypeResolver constructor
 // Created: AGE 2008-04-04
 // -----------------------------------------------------------------------------
-EntityTypeResolver::EntityTypeResolver( const std::string& mappingFile )
+EntityTypeResolver::EntityTypeResolver( xml::xisubstream xis )
 {
-    xml::xifstream xis( mappingFile );
     std::string defaultType;
     xis >> xml::start( "dis-mapping" )
             >> xml::attribute( "default", defaultType )
-            >> xml::list( "entry", *this, &EntityTypeResolver::ReadEntry )
-        >> xml::end;
+            >> xml::list( "entry", *this, &EntityTypeResolver::ReadEntry );
     default_ = rpr::EntityType( defaultType );
 }
 
