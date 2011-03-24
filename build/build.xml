@@ -27,7 +27,7 @@
     -->
     <target name="libraries" depends="library.tools,library.MT_Tools,library.ENT,library.protocol,library.simulation_terrain,library.simulation_kernel,
                                       library.clients_kernel,library.clients_gui,library.actions,library.actions,library.actions_gui,library.reports,
-                                      library.gaming,library.preparation,library.plugins,library.3a,library.mission_tester" description="build all libraries"/>
+                                      library.gaming,library.preparation,library.plugins,library.3a,library.mission_tester,library.orbat_generator" description="build all libraries"/>
 
     <target name="library.tools" description="build tools static library">
         <build-lib name="tools" pattern="lib${ant.project.name}_tools-${platform}-mt@{suffix}" suffix="-gd">
@@ -248,7 +248,11 @@
     <target name="library.mission_tester" depends="library.clients_kernel,library.actions,library.client_proxy" description="build mission tester lib">
         <build-lib name="mission_tester" pattern="lib${ant.project.name}_mission_tester-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
-                                            
+
+    <target name="library.orbat_generator" description="build orbat generator lib">
+        <build-lib name="orbat_generator" pattern="lib${ant.project.name}_orbat_generator-${platform}-mt@{suffix}" suffix="-gd"/>
+    </target>
+
     <!--
     ============================================================================
      applications
@@ -263,7 +267,7 @@
     <target name="applications.clients" description="build Sword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app,
                      application.loadtester_app,application.import_app,application.wise_driver_dll,
-                     application.mission_tester_app"/>
+                     application.mission_tester_app,application.orbat_generator_app"/>
 
     <target name="applications.frontends" description="build Sword Frontend executables"
             depends="application.selftraining_app,application.frontend_app,application.package_app"/>
@@ -494,6 +498,11 @@
             <syslibset libs="geocoord"/>
         </build-app>
     </target>
+    
+    <target name="application.orbat_generator_app" depends="library.orbat_generator" description="build application">
+        <build-app name="orbat_generator_app" subsystem="console" depends="boost,xerces,xalan"
+            libs="lib${ant.project.name}_orbat_generator-${platform}-mt@{suffix}"/>
+    </target>
 
     <!--
     ============================================================================
@@ -588,7 +597,7 @@
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,application.simulation_kernel_test,
                                  application.integration_decisionnal_test,protocol_test,checkpoint_test,import_test,
-                                 actions_test,launcher_test,reports_test,flood_test,mission_tester_test" description="run all tests"/>
+                                 actions_test,launcher_test,reports_test,flood_test,mission_tester_test,orbat_generator_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xerces,terrain,boost,protobuf" libs="lib${ant.project.name}_3a-${platform}-mt@{suffix},lib${ant.project.name}_protocol-${platform}-mt"/>
@@ -696,6 +705,12 @@
         </build-test>
     </target>
 
+    <target name="orbat_generator_test" depends="library.orbat_generator">
+        <build-test name="orbat_generator" depends="boost,xalan,xerces"
+            libs="lib${ant.project.name}_orbat_generator-${platform}-mt"/>
+    </target>
+    
+    
     <target name="flood_test" depends="library.flood">
         <build-test name="flood" depends="boost" libs="lib${ant.project.name}_flood-${platform}-mt"/>
     </target>
