@@ -15,6 +15,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Objects/StructuralCapacity.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeUrban.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -133,4 +134,18 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
         rRapForValue *= 1.2;
     rRapForValue = std::max( 0.2, std::min( 5., rRapForValue ) );
     return static_cast< float >( rRapForValue );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_UrbanObjectFunctions::DestroyUrbanBlock
+// Created: LGY 2011-03-24
+// -----------------------------------------------------------------------------
+void DEC_UrbanObjectFunctions::DestroyUrbanBlock( UrbanObjectWrapper* pUrbanObject, double percentage )
+{
+    if( pUrbanObject )
+    {
+        StructuralCapacity* pCapacity = pUrbanObject->Retrieve< StructuralCapacity >();
+        if( pCapacity )
+            pCapacity->Build( -percentage );
+    }
 }
