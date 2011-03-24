@@ -27,6 +27,11 @@ namespace dispatcher
     class Agent;
 }
 
+namespace rpr
+{
+    class EntityTypeResolver;
+}
+
 namespace plugins
 {
 namespace dis
@@ -34,7 +39,6 @@ namespace dis
     class UdpNetwork;
     class Time_ABC;
     class IdentifierFactory_ABC;
-    class DisTypeResolver;
 
 // =============================================================================
 /** @class  DisExtension
@@ -49,7 +53,7 @@ class DisExtension : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const DisTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame );
+             DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame );
     virtual ~DisExtension();
     //@}
 
@@ -83,7 +87,7 @@ private:
     IdentifierFactory_ABC& id_;
     const kernel::CoordinateConverter_ABC& converter_;
     UdpNetwork&            network_;
-    const DisTypeResolver& resolver_;
+    const rpr::EntityTypeResolver& resolver_;
     dispatcher::Agent&     holder_;
     rpr::ForceIdentifier   forceId_;
     const unsigned char    exercise_;

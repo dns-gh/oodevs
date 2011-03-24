@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DisTypeResolver_h_
-#define __DisTypeResolver_h_
+#ifndef __EntityTypeResolver_h_
+#define __EntityTypeResolver_h_
 
 #include "clients_kernel/ApproximativeMap.h"
 #include "rpr/EntityType.h"
@@ -24,24 +24,22 @@ namespace xml
     class xistream;
 }
 
-namespace plugins
-{
-namespace dis
+namespace rpr
 {
 
 // =============================================================================
-/** @class  DisTypeResolver
-    @brief  DisTypeResolver
+/** @class  EntityTypeResolver
+    @brief  EntityTypeResolver
 */
 // Created: AGE 2008-04-04
 // =============================================================================
-class DisTypeResolver
+class EntityTypeResolver
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DisTypeResolver( const std::string& mappingFile );
-    virtual ~DisTypeResolver();
+    explicit EntityTypeResolver( const std::string& mappingFile );
+    virtual ~EntityTypeResolver();
     //@}
 
     //! @name Operations
@@ -52,8 +50,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    DisTypeResolver( const DisTypeResolver& );            //!< Copy constructor
-    DisTypeResolver& operator=( const DisTypeResolver& ); //!< Assignment operator
+    EntityTypeResolver( const EntityTypeResolver& );            //!< Copy constructor
+    EntityTypeResolver& operator=( const EntityTypeResolver& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -71,6 +69,5 @@ private:
 };
 
 }
-}
 
-#endif // __DisTypeResolver_h_
+#endif // __EntityTypeResolver_h_

@@ -22,7 +22,7 @@ using namespace plugins::dis;
 // Name: DisExtensionFactory constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const DisTypeResolver& resolver, xml::xistream& xis )
+DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver& resolver, xml::xistream& xis )
     : network_( network )
     , time_( time )
     , converter_( converter )

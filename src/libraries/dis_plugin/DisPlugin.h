@@ -24,6 +24,11 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
+namespace rpr
+{
+    class EntityTypeResolver;
+}
+
 namespace sword
 {
     class SimToClient;
@@ -40,7 +45,6 @@ namespace dis
 {
     class UdpNetwork;
     class DisExtensionFactory;
-    class DisTypeResolver;
     class FireManager;
 
 // =============================================================================
@@ -79,7 +83,7 @@ private:
     dispatcher::Model_ABC& model_;
     std::auto_ptr< UdpNetwork > network_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
-    std::auto_ptr< DisTypeResolver > resolver_;
+    std::auto_ptr< rpr::EntityTypeResolver > resolver_;
     std::auto_ptr< DisExtensionFactory > factory_;
     std::auto_ptr< FireManager > fires_;
     unsigned long timeStep_;

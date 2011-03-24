@@ -7,42 +7,41 @@
 //
 // *****************************************************************************
 
-#include "dis_plugin_pch.h"
-#include "DisTypeResolver.h"
+#include "EntityTypeResolver.h"
 #include "clients_kernel/ComponentType.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace plugins::dis;
+using namespace rpr;
 
 // -----------------------------------------------------------------------------
-// Name: DisTypeResolver constructor
+// Name: EntityTypeResolver constructor
 // Created: AGE 2008-04-04
 // -----------------------------------------------------------------------------
-DisTypeResolver::DisTypeResolver( const std::string& mappingFile )
+EntityTypeResolver::EntityTypeResolver( const std::string& mappingFile )
 {
     xml::xifstream xis( mappingFile );
     std::string defaultType;
     xis >> xml::start( "dis-mapping" )
             >> xml::attribute( "default", defaultType )
-            >> xml::list( "entry", *this, &DisTypeResolver::ReadEntry )
+            >> xml::list( "entry", *this, &EntityTypeResolver::ReadEntry )
         >> xml::end;
     default_ = rpr::EntityType( defaultType );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisTypeResolver destructor
+// Name: EntityTypeResolver destructor
 // Created: AGE 2008-04-04
 // -----------------------------------------------------------------------------
-DisTypeResolver::~DisTypeResolver()
+EntityTypeResolver::~EntityTypeResolver()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisTypeResolver::Find
+// Name: EntityTypeResolver::Find
 // Created: AGE 2008-04-04
 // -----------------------------------------------------------------------------
-rpr::EntityType DisTypeResolver::Find( const kernel::ComponentType& component ) const
+rpr::EntityType EntityTypeResolver::Find( const kernel::ComponentType& component ) const
 {
     rpr::EntityType& type = resolved_[ &component ];
     if( type == rpr::EntityType() )
@@ -54,10 +53,10 @@ rpr::EntityType DisTypeResolver::Find( const kernel::ComponentType& component ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisTypeResolver::ReadEntry
+// Name: EntityTypeResolver::ReadEntry
 // Created: AGE 2008-04-04
 // -----------------------------------------------------------------------------
-void DisTypeResolver::ReadEntry( xml::xistream& xis )
+void EntityTypeResolver::ReadEntry( xml::xistream& xis )
 {
     types_.Add( xis.attribute< std::string >( "name" ), rpr::EntityType( xis.attribute< std::string >( "dis" ) ) );
 }

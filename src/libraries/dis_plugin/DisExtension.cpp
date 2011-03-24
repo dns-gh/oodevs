@@ -12,7 +12,6 @@
 #include "EntityStatePDU.h"
 #include "Time_ABC.h"
 #include "IdentifierFactory_ABC.h"
-#include "DisTypeResolver.h"
 #include "tic_plugin/TicExtension_ABC.h"
 #include "tic_plugin/Platform_ABC.h"
 #include "tic_plugin/PlatformAdapter.h"
@@ -22,6 +21,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Karma.h"
+#include "rpr/EntityTypeResolver.h"
 #include "UdpNetwork.h"
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
@@ -33,7 +33,7 @@ using namespace plugins::dis;
 // Name: DisExtension constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const DisTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame )
+DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame )
     : time_     ( time )
     , id_       ( id )
     , converter_( converter )

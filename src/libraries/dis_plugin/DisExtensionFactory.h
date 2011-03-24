@@ -31,13 +31,17 @@ namespace dispatcher
     class Side;
 }
 
+namespace rpr
+{
+    class EntityTypeResolver;
+}
+
 namespace plugins
 {
 namespace dis
 {
     class UdpNetwork;
     class Time_ABC;
-    class DisTypeResolver;
 
 // =============================================================================
 /** @class  DisExtensionFactory
@@ -51,7 +55,7 @@ class DisExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher:
 public:
     //! @name Constructors/Destructor
     //@{
-             DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const DisTypeResolver& resolver, xml::xistream& xis );
+             DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver& resolver, xml::xistream& xis );
     virtual ~DisExtensionFactory();
     //@}
 
@@ -74,7 +78,7 @@ private:
     UdpNetwork& network_;
     const Time_ABC& time_;
     const kernel::CoordinateConverter_ABC& converter_;
-    const DisTypeResolver& resolver_;
+    const rpr::EntityTypeResolver& resolver_;
     const unsigned short site_;
     const unsigned short application_;
     const unsigned char  exercise_;
