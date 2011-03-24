@@ -94,7 +94,7 @@ void SimulationToClient::ConvertOrderAckToSpecificOrderAck( const sword::TaskCre
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::FragOrderAck& from, MsgsSimToClient::MsgFragOrderAck* to )
 {
-    CONVERT_CB_TO( tasker, ConvertTasker );
+    CONVERT_CB( tasker, ConvertTasker );
     ConvertOrderAckErrorCode( from, to );
 }
 
@@ -234,10 +234,8 @@ void SimulationToClient::Convert( const sword::LogSupplyChangeQuotasAck& from, M
 void SimulationToClient::Convert( const sword::ControlInformation& from, MsgsSimToClient::MsgControlInformation* to )
 {
     CONVERT( current_tick );
-    if( from.has_initial_date_time() && from.initial_date_time().has_data() )
-        to->mutable_initial_date_time()->set_data( from.initial_date_time().data() );
-    if( from.has_date_time() && from.date_time().has_data() )
-        to->mutable_date_time()->set_data( from.date_time().data() );
+    CONVERT_DATE( initial_date_time );
+    CONVERT_DATE( date_time );
     CONVERT( tick_duration );
     CONVERT( time_factor );
     CONVERT( checkpoint_frequency );
@@ -265,8 +263,7 @@ void SimulationToClient::Convert( const sword::ControlProfilingInformation& from
 void SimulationToClient::Convert( const sword::ControlBeginTick& from, MsgsSimToClient::MsgControlBeginTick* to )
 {
     CONVERT( current_tick );
-    if( from.has_date_time() && from.date_time().has_data() )
-        to->mutable_date_time()->set_data( from.date_time().data() );
+    CONVERT_DATE( date_time );
 }
 
 // -----------------------------------------------------------------------------
@@ -421,10 +418,10 @@ void SimulationToClient::Convert( const sword::FormationCreation& from, MsgsSimT
     CONVERT_ID( parent );
     ConvertNatureLevel( from, to );
     CONVERT( name );
-    CONVERT_CB_TO( extension, ConvertExtension );
+    CONVERT_CB( extension, ConvertExtension );
     CONVERT( app6symbol );
     ConvertLogisticLevel( from, to );
-    CONVERT_CB_TO( color, ConvertRgbColor );
+    CONVERT_CB( color, ConvertRgbColor );
 }
 
 // -----------------------------------------------------------------------------
@@ -436,8 +433,8 @@ void SimulationToClient::Convert( const sword::PartyCreation& from, MsgsSimToCli
     CONVERT_ID( party );
     CONVERT( name );
     CONVERT_DIPLOMACY( type, type );
-    CONVERT_CB_TO( extension, ConvertExtension );
-    CONVERT_CB_TO( color, ConvertRgbColor );
+    CONVERT_CB( extension, ConvertExtension );
+    CONVERT_CB( color, ConvertRgbColor );
 }
 
 // -----------------------------------------------------------------------------
@@ -449,13 +446,13 @@ void SimulationToClient::Convert( const sword::AutomatCreation& from, MsgsSimToC
     CONVERT_ID( automat );
     CONVERT_ID( type );
     CONVERT_TO( name, nom );
-    CONVERT_CB_TO( parent, ConvertParentEntity );
+    CONVERT_CB( parent, ConvertParentEntity );
     CONVERT_ID( party );
     CONVERT_ID( knowledge_group );
-    CONVERT_CB_TO( extension, ConvertExtension );
+    CONVERT_CB( extension, ConvertExtension );
     CONVERT( app6symbol );
     ConvertLogisticLevel( from, to );
-    CONVERT_CB_TO( color, ConvertRgbColor );
+    CONVERT_CB( color, ConvertRgbColor );
 }
 
 namespace
@@ -518,7 +515,7 @@ void SimulationToClient::Convert( const sword::UnitCreation& from, MsgsSimToClie
     CONVERT_TO( name, nom );
     CONVERT_ID( automat );
     CONVERT( pc );
-    CONVERT_CB_TO( color, ConvertRgbColor );
+    CONVERT_CB( color, ConvertRgbColor );
 }
 
 namespace
@@ -593,8 +590,8 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     CONVERT_LIST_TO( resource_dotations, dotation_eff_ressource, elem, ConvertResourceDotation );
     CONVERT_LIST_TO( lent_equipments, equipements_pretes, elem, ConvertLentEquipment );
     CONVERT_LIST_TO( borrowed_equipments, equipements_empruntes, elem, ConvertBorrowedEquipment );
-    CONVERT_CB_TO( position, ConvertCoordLatLong );
-    CONVERT_CB_TO( direction, ConvertHeading );
+    CONVERT_CB( position, ConvertCoordLatLong );
+    CONVERT_CB( direction, ConvertHeading );
     CONVERT_TO( height, hauteur );
     CONVERT( altitude );
     CONVERT_TO( speed, vitesse );
@@ -612,8 +609,8 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     CONVERT_TO( installation, etat_installation );
     CONVERT_TO( protective_suits, en_tenue_de_protection_nbc );
     CONVERT_LIST_TO( contamination_agents, contamine_par_agents_nbc, elem, ConvertIdentifier );
-    CONVERT_CB( contamination_state, etat_contamination, ConvertContaminationState );
-    CONVERT_CB_TO( communications, ConvertContaminations );
+    CONVERT_CB_TO( contamination_state, etat_contamination, ConvertContaminationState );
+    CONVERT_CB( communications, ConvertContaminations );
     CONVERT( radio_emitter_disabled );
     CONVERT( radio_receiver_disabled );
     CONVERT_TO( radar_active, radar_actif );
@@ -644,7 +641,7 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     CONVERT_ID( surrendered_unit );
     CONVERT_TO( prisoner, prisonnier );
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );
-    CONVERT_CB_TO( extension, ConvertExtension );
+    CONVERT_CB( extension, ConvertExtension );
     CONVERT( critical_intelligence );
     for( int i = 0; i < from.adhesions().size(); ++i )
         ConvertPartyAdhesion( from.adhesions( i ), to->add_adhesions() );
@@ -710,9 +707,9 @@ void SimulationToClient::Convert( const sword::UnitChangeSuperior& from, Common:
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::ChangeLogisticLinks& from, Common::MsgChangeLogisticLinks* to )
 {
-    CONVERT_CB_TO( requester, ConvertParentEntity );
+    CONVERT_CB( requester, ConvertParentEntity );
     CONVERT_ID_TO( combat_train, tc2 );
-    CONVERT_CB_TO( logistic_base, ConvertParentEntity );
+    CONVERT_CB( logistic_base, ConvertParentEntity );
 }
 
 // -----------------------------------------------------------------------------
@@ -743,7 +740,7 @@ namespace
 void SimulationToClient::Convert( const sword::AutomatChangeSuperior& from, Common::MsgAutomatChangeSuperior* to )
 {
     CONVERT_ID( automat );
-    CONVERT_CB_TO( superior, ConvertSuperior );
+    CONVERT_CB( superior, ConvertSuperior );
 }
 
 // -----------------------------------------------------------------------------
@@ -781,8 +778,8 @@ void SimulationToClient::Convert( const sword::UnitKnowledgeUpdate& from, MsgsSi
     CONVERT_IDENTIFICATION_LEVEL( max_identification_level );
     CONVERT_TO( operational_state, etat_op );
     CONVERT_TO( dead, mort );
-    CONVERT_CB_TO( position, ConvertCoordLatLong );
-    CONVERT_CB_TO( direction, ConvertHeading );
+    CONVERT_CB( position, ConvertCoordLatLong );
+    CONVERT_CB( direction, ConvertHeading );
     CONVERT( speed );
     CONVERT_ID( party );
     CONVERT_TO( command_post, nature_pc );
@@ -810,7 +807,7 @@ namespace
     {
         CONVERT_ID( unit );
         CONVERT_ID( crowd );
-        CONVERT_CB_TO( position, ConvertCoordLatLong );
+        CONVERT_CB( position, ConvertCoordLatLong );
     }
 }
 
@@ -822,7 +819,7 @@ void SimulationToClient::Convert( const sword::StartUnitFire& from, MsgsSimToCli
 {
     CONVERT_ID( fire );
     CONVERT_ID( firing_unit );
-    CONVERT_CB_TO( target, ConvertUnitFireTarget );
+    CONVERT_CB( target, ConvertUnitFireTarget );
     CONVERT_ENUM( type, ( sword::StartUnitFire::direct, Common::direct )
                         ( sword::StartUnitFire::indirect, Common::indirect ) );
     CONVERT_ID( ammunition );
@@ -913,7 +910,7 @@ void SimulationToClient::Convert( const sword::Explosion& from, MsgsSimToClient:
 void SimulationToClient::Convert( const sword::StartFireEffect& from, MsgsSimToClient::MsgStartFireEffect* to )
 {
     CONVERT_ID( fire_effect );
-    CONVERT_CB_TO( location, ConvertLocation );
+    CONVERT_CB( location, ConvertLocation );
     CONVERT_ENUM( type, ( sword::StartFireEffect::smoke, Common::smoke )
                         ( sword::StartFireEffect::light, Common::light )
                         ( sword::StartFireEffect::explosion, Common::explosion )
@@ -936,12 +933,11 @@ void SimulationToClient::Convert( const sword::StopFireEffect& from, MsgsSimToCl
 void SimulationToClient::Convert( const sword::Report& from, MsgsSimToClient::MsgReport* to )
 {
     CONVERT_ID( report );
-    CONVERT_CB_TO( source, ConvertTasker );
+    CONVERT_CB( source, ConvertTasker );
     CONVERT_ID( type );
     if( from.has_category() )
         to->mutable_category()->set_id( from.category() );
-    if( from.has_time() && from.time().has_data() )
-        to->mutable_time()->set_data( from.time().data() );
+    CONVERT_DATE( time );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 
@@ -952,7 +948,7 @@ void SimulationToClient::Convert( const sword::Report& from, MsgsSimToClient::Ms
 void SimulationToClient::Convert( const sword::InvalidateReport& from, MsgsSimToClient::MsgInvalidateReport* to )
 {
     CONVERT_ID( report );
-    CONVERT_CB_TO( source, ConvertTasker );
+    CONVERT_CB( source, ConvertTasker );
 }
 
 // -----------------------------------------------------------------------------
@@ -961,7 +957,7 @@ void SimulationToClient::Convert( const sword::InvalidateReport& from, MsgsSimTo
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::DecisionalState& from, MsgsSimToClient::MsgDecisionalState* to )
 {
-    CONVERT_CB_TO( source, ConvertTasker );
+    CONVERT_CB( source, ConvertTasker );
     CONVERT( key );
     CONVERT( value );
 }
@@ -972,7 +968,7 @@ void SimulationToClient::Convert( const sword::DecisionalState& from, MsgsSimToC
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::DebugPoints& from, MsgsSimToClient::MsgDebugPoints* to )
 {
-    CONVERT_CB_TO( source, ConvertTasker );
+    CONVERT_CB( source, ConvertTasker );
     CONVERT_LIST( coordinates, elem, ConvertCoordLatLong );
 }
 
@@ -981,7 +977,7 @@ namespace
     template< typename From, typename To >
     void ConvertVisionCone( const From& from, To* to )
     {
-        CONVERT_CB_TO( origin, ConvertCoordLatLong );
+        CONVERT_CB( origin, ConvertCoordLatLong );
         CONVERT( height );
         CONVERT( sensor );
         CONVERT_LIST( directions, elem, ConvertHeading );
@@ -1120,7 +1116,7 @@ namespace
     template< typename From, typename To >
     void ConvertLocatedQuantity( const From& from, To* to )
     {
-        CONVERT_CB_TO( coordinate, ConvertCoordLatLong );
+        CONVERT_CB( coordinate, ConvertCoordLatLong );
         CONVERT( quantity );
     }
     template< typename From, typename To >
@@ -1173,9 +1169,9 @@ namespace
                              ( sword::combustion, Common::combustion )
                              ( sword::decline, Common::decline )
                              ( sword::extinguished, Common::extinguished ) );
-        CONVERT_CB_TO( pre_ignition, ConvertPreIgnition );
-        CONVERT_CB_TO( combustion, ConvertCombustion );
-        CONVERT_CB_TO( decline, ConvertDecline );
+        CONVERT_CB( pre_ignition, ConvertPreIgnition );
+        CONVERT_CB( combustion, ConvertCombustion );
+        CONVERT_CB( decline, ConvertDecline );
     }
     template< typename From, typename To >
     void ConvertStockResource( const From& from, To* to )
@@ -1220,9 +1216,9 @@ namespace
     template< typename From, typename To >
     void ConvertObjectAttributes( const From& from, To* to )
     {
-        CONVERT_CB_TO( construction, ConvertObjectAttributeConstruction );
-        CONVERT_CB_TO( obstacle, ConvertObjectAttributeObstacle );
-        CONVERT_CB_TO( mine, ConvertObjectAttributeMine );
+        CONVERT_CB( construction, ConvertObjectAttributeConstruction );
+        CONVERT_CB( obstacle, ConvertObjectAttributeObstacle );
+        CONVERT_CB( mine, ConvertObjectAttributeMine );
         if( from.has_activity_time() )
             to->mutable_activity_time()->set_value( from.activity_time().value() );
         if( from.has_bypass() )
@@ -1232,9 +1228,9 @@ namespace
         if( from.has_nbc() && from.nbc().has_danger_level() )
             to->mutable_nbc()->set_danger_level( from.nbc().danger_level() );
         CONVERT_LIST( nbc, nbc_agents, ConvertIdentifier );
-        CONVERT_CB_TO( crossing_site, ConvertObjectAttributeCrossingSite );
-        CONVERT_CB_TO( supply_route, ConvertObjectAttributeSupplyRoute );
-        CONVERT_CB_TO( toxic_cloud, ConvertObjectAttributeToxicCloud );
+        CONVERT_CB( crossing_site, ConvertObjectAttributeCrossingSite );
+        CONVERT_CB( supply_route, ConvertObjectAttributeSupplyRoute );
+        CONVERT_CB( toxic_cloud, ConvertObjectAttributeToxicCloud );
         if( from.has_fire() )
         {
             if( from.fire().has_class_name() )
@@ -1260,7 +1256,7 @@ namespace
         if( from.has_interaction_height() )
             to->mutable_interaction_height()->set_height( from.interaction_height().height() );
         CONVERT_LIST( stock, resources, ConvertStockResource );
-        CONVERT_CB_TO( nbc_agent, ConvertObjectAttributeNBCType );
+        CONVERT_CB( nbc_agent, ConvertObjectAttributeNBCType );
         if( from.has_effect_delay() )
             to->mutable_effect_delay()->set_value( from.effect_delay().value() );
         if( from.has_seal_off() )
@@ -1279,8 +1275,8 @@ void SimulationToClient::Convert( const sword::ObjectCreation& from, MsgsSimToCl
     CONVERT_ID( type );
     CONVERT( name );
     CONVERT_ID( party );
-    CONVERT_CB_TO( location, ConvertLocation );
-    CONVERT_CB_TO( attributes, ConvertObjectAttributes );
+    CONVERT_CB( location, ConvertLocation );
+    CONVERT_CB( attributes, ConvertObjectAttributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -1299,8 +1295,8 @@ void SimulationToClient::Convert( const sword::ObjectDestruction& from, MsgsSimT
 void SimulationToClient::Convert( const sword::ObjectUpdate& from, MsgsSimToClient::MsgObjectUpdate* to )
 {
     CONVERT_ID( object );
-    CONVERT_CB_TO( location, ConvertLocation );
-    CONVERT_CB_TO( attributes, ConvertObjectAttributes );
+    CONVERT_CB( location, ConvertLocation );
+    CONVERT_CB( attributes, ConvertObjectAttributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -1313,7 +1309,7 @@ void SimulationToClient::Convert( const sword::ObjectKnowledgeCreation& from, Ms
     CONVERT_ID( party );
     CONVERT_ID( object );
     CONVERT_ID( type );
-    CONVERT_CB_TO( attributes, ConvertObjectAttributes );
+    CONVERT_CB( attributes, ConvertObjectAttributes );
     CONVERT_ID( knowledge_group );
 }
 
@@ -1327,8 +1323,8 @@ void SimulationToClient::Convert( const sword::ObjectKnowledgeUpdate& from, Msgs
     CONVERT_ID( party );
     CONVERT_ID( object );
     CONVERT( relevance );
-    CONVERT_CB_TO( location, ConvertLocation );
-    CONVERT_CB_TO( attributes, ConvertObjectAttributes );
+    CONVERT_CB( location, ConvertLocation );
+    CONVERT_CB( attributes, ConvertObjectAttributes );
     CONVERT( perceived );
     CONVERT_LIST( perceiving_automats, elem, ConvertIdentifier );
     CONVERT_ID( knowledge_group );
@@ -1427,7 +1423,7 @@ void SimulationToClient::Convert( const sword::LogMedicalState& from, MsgsSimToC
 {
     CONVERT_ID( unit );
     CONVERT_TO( chain, chaine_activee );
-    CONVERT_CB( priorities, priorites, ConvertLogMedicalPriorities );
+    CONVERT_CB_TO( priorities, priorites, ConvertLogMedicalPriorities );
     CONVERT_LIST_TO( tactical_priorities, tactical_priorities, elem, ConvertIdentifier );
     CONVERT_LIST_TO( evacuation_ambulances, disponibilites_ambulances_releve, elem, ConvertLogMedicalEquipmentAvailability );
     CONVERT_LIST_TO( collection_ambulances, disponibilites_ambulances_ramassage, elem, ConvertLogMedicalEquipmentAvailability );
@@ -1532,8 +1528,8 @@ void SimulationToClient::Convert( const sword::LogSupplyHandlingUpdate& from, Ms
 {
     CONVERT_ID( request );
     CONVERT_ID( consumer );
-    CONVERT_CB_TO( supplier, ConvertParentEntity );
-    CONVERT_CB_TO( convoy_provider, ConvertParentEntity );
+    CONVERT_CB( supplier, ConvertParentEntity );
+    CONVERT_CB( convoy_provider, ConvertParentEntity );
     CONVERT_ID( convoying_unit );
     CONVERT_ENUM_TO( state, etat, ( sword::LogSupplyHandlingUpdate::convoy_waiting_for_transporters, MsgsSimToClient::convoi_en_attente_camions )
                                   ( sword::LogSupplyHandlingUpdate::convoy_forming, MsgsSimToClient::convoi_constitution )
@@ -1604,7 +1600,7 @@ namespace
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::LogSupplyQuotas& from, MsgsSimToClient::MsgLogSupplyQuotas* to )
 {
-    CONVERT_CB_TO( supplied, ConvertParentEntity );
+    CONVERT_CB( supplied, ConvertParentEntity );
     CONVERT_LIST( quotas, elem, ConvertDotationQuota );
 }
 
@@ -1618,7 +1614,7 @@ void SimulationToClient::Convert( const sword::CrowdCreation& from, MsgsSimToCli
     CONVERT_ID( type );
     CONVERT_TO( name, nom );
     CONVERT_ID( party );
-    CONVERT_CB_TO( extension, ConvertExtension );
+    CONVERT_CB( extension, ConvertExtension );
     CONVERT( male );
     CONVERT( female );
     CONVERT( children );
@@ -1646,7 +1642,7 @@ void SimulationToClient::Convert( const sword::CrowdConcentrationCreation& from,
 {
     CONVERT_ID( concentration );
     CONVERT_ID( crowd );
-    CONVERT_CB_TO( position, ConvertCoordLatLong );
+    CONVERT_CB( position, ConvertCoordLatLong );
 }
 
 // -----------------------------------------------------------------------------
@@ -1716,7 +1712,7 @@ void SimulationToClient::Convert( const sword::CrowdFlowUpdate& from, MsgsSimToC
     CONVERT_ID( crowd );
     if( from.has_parts() && from.parts().has_location() )
         ConvertLocation( from.parts().location(), to->mutable_parts()->mutable_location() );
-    CONVERT_CB_TO( direction, ConvertHeading );
+    CONVERT_CB( direction, ConvertHeading );
     CONVERT( speed );
     CONVERT( healthy );
     CONVERT( wounded );
@@ -1769,7 +1765,7 @@ void SimulationToClient::Convert( const sword::CrowdConcentrationKnowledgeCreati
     CONVERT_ID( crowd );
     CONVERT_ID( knowledge_group );
     CONVERT_ID( concentration );
-    CONVERT_CB_TO( position, ConvertCoordLatLong );
+    CONVERT_CB( position, ConvertCoordLatLong );
 }
 
 // -----------------------------------------------------------------------------
@@ -1845,7 +1841,7 @@ void SimulationToClient::Convert( const sword::CrowdFlowKnowledgeUpdate& from, M
     CONVERT_ID( knowledge_group );
     CONVERT_ID( flow );
     CONVERT_LIST_TO( parts, portions_flux, elem, ConvertFlowPart );
-    CONVERT_CB_TO( direction, ConvertHeading );
+    CONVERT_CB( direction, ConvertHeading );
     CONVERT_TO( speed, vitesse );
     CONVERT_TO( alive, nb_humains_vivants );
     CONVERT_TO( dead, nb_humains_morts );
@@ -1988,10 +1984,10 @@ namespace
     template< typename From, typename To >
     void ConvertUrbanAttributes( const From& from, To* to )
     {
-        CONVERT_CB_TO( architecture, ConvertUrbanArchitecture );
+        CONVERT_CB( architecture, ConvertUrbanArchitecture );
         if( from.has_structure() && from.structure().has_state() )
             to->mutable_structure()->set_state( from.structure().state() );
-        CONVERT_CB_TO( color, ConvertRgbaColor );
+        CONVERT_CB( color, ConvertRgbaColor );
         CONVERT_LIST( infrastructures, resource_network, ConvertResourceNetwork );
         if( from.has_infrastructures() && from.infrastructures().has_infrastructure() )
             ConvertInfrastructure( from.infrastructures().infrastructure(), to->mutable_infrastructures()->mutable_infrastructure() );
@@ -2008,8 +2004,8 @@ void SimulationToClient::Convert( const sword::UrbanCreation& from, MsgsSimToCli
 {
     CONVERT_ID( object );
     CONVERT( name );
-    CONVERT_CB_TO( location, ConvertLocation );
-    CONVERT_CB_TO( attributes, ConvertUrbanAttributes );
+    CONVERT_CB( location, ConvertLocation );
+    CONVERT_CB( attributes, ConvertUrbanAttributes );
     CONVERT_ID( parent );
 }
 
@@ -2020,8 +2016,8 @@ void SimulationToClient::Convert( const sword::UrbanCreation& from, MsgsSimToCli
 void SimulationToClient::Convert( const sword::UrbanUpdate& from, MsgsSimToClient::MsgUrbanUpdate* to )
 {
     CONVERT_ID( object );
-    CONVERT_CB_TO( location, ConvertLocation );
-    CONVERT_CB_TO( attributes, ConvertUrbanAttributes );
+    CONVERT_CB( location, ConvertLocation );
+    CONVERT_CB( attributes, ConvertUrbanAttributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -2160,7 +2156,7 @@ namespace
     {
         CONVERT( temperature );
         CONVERT( wind_speed );
-        CONVERT_CB_TO( wind_direction, ConvertHeading );
+        CONVERT_CB( wind_direction, ConvertHeading );
         CONVERT( cloud_floor );
         CONVERT( cloud_ceiling );
         CONVERT( cloud_density );
@@ -2192,7 +2188,7 @@ namespace
 void SimulationToClient::Convert( const sword::ControlGlobalWeather& from, MsgsSimToClient::MsgControlGlobalWeather* to )
 {
     CONVERT_ID( weather );
-    CONVERT_CB_TO( attributes, ConvertWeatherAttributes );
+    CONVERT_CB( attributes, ConvertWeatherAttributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -2202,9 +2198,9 @@ void SimulationToClient::Convert( const sword::ControlGlobalWeather& from, MsgsS
 void SimulationToClient::Convert( const sword::ControlLocalWeatherCreation& from, MsgsSimToClient::MsgControlLocalWeatherCreation* to )
 {
     CONVERT_ID( weather );
-    CONVERT_CB( top_left, top_left_coordinate, ConvertCoordLatLong );
-    CONVERT_CB( bottom_right, bottom_right_coordinate, ConvertCoordLatLong );
-    CONVERT_CB_TO( attributes, ConvertWeatherAttributes );
+    CONVERT_CB_TO( top_left, top_left_coordinate, ConvertCoordLatLong );
+    CONVERT_CB_TO( bottom_right, bottom_right_coordinate, ConvertCoordLatLong );
+    CONVERT_CB( attributes, ConvertWeatherAttributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -2282,7 +2278,7 @@ void SimulationToClient::Convert( const sword::PopulationCreation& from, MsgsSim
     CONVERT_ID( type );
     CONVERT( name );
     CONVERT( text );
-    CONVERT_CB_TO( extension, ConvertExtension );
+    CONVERT_CB( extension, ConvertExtension );
     for( int i = 0; i < from.objects().size(); ++i )
         to->add_objects()->set_id( from.objects( i ).id() );
 }
@@ -2332,7 +2328,7 @@ void SimulationToClient::Convert( const sword::PopulationUpdate& from, MsgsSimTo
     CONVERT( dead );
     for( int i = 0; i < from.adhesions().size(); ++i )
         ConvertPartyAdhesion( from.adhesions( i ), to->add_adhesions() );
-    CONVERT_CB_TO( satisfaction, ConvertSatisfaction );
+    CONVERT_CB( satisfaction, ConvertSatisfaction );
     CONVERT_LIST( satisfaction, resources, ConvertResourceSatisfaction );
     CONVERT_LIST( satisfaction, motivations, ConvertMotivationSatisfaction );
     CONVERT( motivation );

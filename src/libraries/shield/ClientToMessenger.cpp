@@ -74,7 +74,7 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgLimaDestruction
 // -----------------------------------------------------------------------------
 void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgIntelligenceCreationRequest& from, sword::IntelligenceCreationRequest* to )
 {
-    CONVERT_CB_TO( intelligence, ConvertIntelligence );
+    CONVERT_CB( intelligence, ConvertIntelligence );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +102,7 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgIntelligenceDes
 // -----------------------------------------------------------------------------
 void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgShapeCreationRequest& from, sword::ShapeCreationRequest* to )
 {
-    CONVERT_CB_TO( shape, ConvertShape );
+    CONVERT_CB( shape, ConvertShape );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ void ClientToMessenger::Convert( const Common::MsgTextMessage& from, sword::Text
 // -----------------------------------------------------------------------------
 void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgMarkerCreationRequest& from, sword::MarkerCreationRequest* to )
 {
-    CONVERT_CB_TO( marker, ConvertMarker );
+    CONVERT_CB( marker, ConvertMarker );
 }
 
 // -----------------------------------------------------------------------------

@@ -28,7 +28,7 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgConnectionRequest& 
 // -----------------------------------------------------------------------------
 void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgControlStart& from, sword::ControlStartExercise* to )
 {
-    CONVERT_CB_TO( exercise, ConvertExercise );
+    CONVERT_CB( exercise, ConvertExercise );
     CONVERT_ENUM( mode, ( MsgsAdminToLauncher::MsgControlStart::play, sword::ControlStartExercise::play )
                         ( MsgsAdminToLauncher::MsgControlStart::replay, sword::ControlStartExercise::replay ) );
     CONVERT( use_after_action_analysis );
@@ -42,7 +42,7 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgControlStart& from,
 // -----------------------------------------------------------------------------
 void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgControlStop& from, sword::ControlStopExercise* to )
 {
-    CONVERT_CB_TO( exercise, ConvertExercise );
+    CONVERT_CB( exercise, ConvertExercise );
 }
 
 // -----------------------------------------------------------------------------

@@ -83,10 +83,16 @@ namespace shield
     for( int i = 0; i < from.elem().size(); ++i ) \
         to->add_##elem( ConvertEnum( from.elem( i ), boost::assign::map_list_of mapping ) )
 
-#define CONVERT_CB( from_field, to_field, callback ) \
+#define CONVERT_CB_TO( from_field, to_field, callback ) \
     if( from.has_##from_field() ) \
         callback( from.from_field(), to->mutable_##to_field() )
-#define CONVERT_CB_TO( field, callback ) \
-    CONVERT_CB( field, field, callback )
+#define CONVERT_CB( field, callback ) \
+    CONVERT_CB_TO( field, field, callback )
+
+#define CONVERT_DATE_TO( from_field, to_field ) \
+    if( from.has_##from_field() && from.from_field().has_data() ) \
+        to->mutable_##to_field()->set_data( from.from_field().data() )
+#define CONVERT_DATE( field ) \
+    CONVERT_DATE_TO( field, field )
 
 #endif // shield_Tools_h

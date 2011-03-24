@@ -20,10 +20,8 @@ using namespace shield;
 void ReplayToClient::Convert( const sword::ControlReplayInformation& from, MsgsReplayToClient::MsgControlReplayInformation* to )
 {
     CONVERT( current_tick );
-    if( from.has_initial_date_time() && from.initial_date_time().has_data() )
-        to->mutable_initial_date_time()->set_data( from.initial_date_time().data() );
-    if( from.has_date_time() && from.date_time().has_data() )
-        to->mutable_date_time()->set_data( from.date_time().data() );
+    CONVERT_DATE( initial_date_time );
+    CONVERT_DATE( date_time );
     CONVERT( tick_duration );
     CONVERT( time_factor );
     CONVERT_SIMULATION_STATE( status );

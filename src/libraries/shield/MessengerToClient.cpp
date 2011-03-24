@@ -149,7 +149,7 @@ void MessengerToClient::Convert( const sword::PhaseLineDestructionRequestAck& fr
 void MessengerToClient::Convert( const sword::IntelligenceCreation& from, MsgsMessengerToClient::MsgIntelligenceCreation* to )
 {
     CONVERT_ID( id );
-    CONVERT_CB_TO( intelligence, ConvertIntelligence );
+    CONVERT_CB( intelligence, ConvertIntelligence );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ void MessengerToClient::Convert( const sword::IntelligenceUpdate& from, MsgsMess
     if( from.has_level() )
         ConvertNatureLevel( from, to );
     CONVERT( embarked );
-    CONVERT_CB_TO( location, ConvertCoordLatLong );
+    CONVERT_CB( location, ConvertCoordLatLong );
     CONVERT_DIPLOMACY( diplomacy, diplomacy );
 }
 
@@ -186,7 +186,7 @@ void MessengerToClient::Convert( const sword::IntelligenceDestruction& from, Msg
 void MessengerToClient::Convert( const sword::ShapeCreation& from, MsgsMessengerToClient::MsgShapeCreation* to )
 {
     CONVERT_ID( id );
-    CONVERT_CB_TO( shape, ConvertShape );
+    CONVERT_CB( shape, ConvertShape );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,9 +270,8 @@ void MessengerToClient::Convert( const sword::TextMessage& from, Common::MsgText
 void MessengerToClient::Convert( const sword::MarkerCreation& from, MsgsMessengerToClient::MsgMarkerCreation* to )
 {
     CONVERT_ID( marker );
-    CONVERT_CB_TO( definition, ConvertMarker );
-    if( from.has_date() && from.date().has_data() )
-        to->mutable_date()->set_data( from.date().data() );
+    CONVERT_CB( definition, ConvertMarker );
+    CONVERT_DATE( date );
 }
 
 // -----------------------------------------------------------------------------
@@ -282,8 +281,7 @@ void MessengerToClient::Convert( const sword::MarkerCreation& from, MsgsMessenge
 void MessengerToClient::Convert( const sword::MarkerUpdate& from, MsgsMessengerToClient::MsgMarkerUpdate* to )
 {
     CONVERT_ID( marker );
-    if( from.has_date() && from.date().has_data() )
-        to->mutable_date()->set_data( from.date().data() );
+    CONVERT_DATE( date );
     CONVERT( name );
     CONVERT( number );
     CONVERT( description );

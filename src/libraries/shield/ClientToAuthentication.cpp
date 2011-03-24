@@ -30,7 +30,7 @@ void ClientToAuthentication::Convert( const MsgsClientToAuthentication::MsgAuthe
 // -----------------------------------------------------------------------------
 void ClientToAuthentication::Convert( const MsgsClientToAuthentication::MsgProfileCreationRequest& from, sword::ProfileCreationRequest* to )
 {
-    CONVERT_CB_TO( profile, ConvertProfile );
+    CONVERT_CB( profile, ConvertProfile );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +40,7 @@ void ClientToAuthentication::Convert( const MsgsClientToAuthentication::MsgProfi
 void ClientToAuthentication::Convert( const MsgsClientToAuthentication::MsgProfileUpdateRequest& from, sword::ProfileUpdateRequest* to )
 {
     CONVERT( login );
-    CONVERT_CB_TO( profile, ConvertProfile );
+    CONVERT_CB( profile, ConvertProfile );
 }
 
 // -----------------------------------------------------------------------------

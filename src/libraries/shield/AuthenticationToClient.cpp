@@ -22,12 +22,11 @@ void AuthenticationToClient::Convert( const sword::AuthenticationResponse& from,
                               ( sword::AuthenticationResponse::invalid_login, MsgsAuthenticationToClient::MsgAuthenticationResponse::invalid_login )
                               ( sword::AuthenticationResponse::too_many_connections, MsgsAuthenticationToClient::MsgAuthenticationResponse::too_many_connections )
                               ( sword::AuthenticationResponse::mismatched_protocol_version, MsgsAuthenticationToClient::MsgAuthenticationResponse::mismatched_protocol_version ) );
-    CONVERT_CB_TO( profile, ConvertProfile );
+    CONVERT_CB( profile, ConvertProfile );
     CONVERT_LIST( profiles, elem, ConvertProfileDescription );
     if( from.has_server_version() && from.server_version().has_value() )
         to->mutable_server_version()->set_value( from.server_version().value() );
-    if( from.has_restart_date_time() && from.restart_date_time().has_data() )
-        to->mutable_restart_date_time()->set_data( from.restart_date_time().data() );
+    CONVERT_DATE( restart_date_time );
     CONVERT( terrain_name );
 }
 
@@ -37,7 +36,7 @@ void AuthenticationToClient::Convert( const sword::AuthenticationResponse& from,
 // -----------------------------------------------------------------------------
 void AuthenticationToClient::Convert( const sword::ProfileCreation& from, MsgsAuthenticationToClient::MsgProfileCreation* to )
 {
-    CONVERT_CB_TO( profile, ConvertProfile );
+    CONVERT_CB( profile, ConvertProfile );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +59,7 @@ void AuthenticationToClient::Convert( const sword::ProfileCreationRequestAck& fr
 void AuthenticationToClient::Convert( const sword::ProfileUpdate& from, MsgsAuthenticationToClient::MsgProfileUpdate* to )
 {
     CONVERT( login );
-    CONVERT_CB_TO( profile, ConvertProfile );
+    CONVERT_CB( profile, ConvertProfile );
 }
 
 // -----------------------------------------------------------------------------
