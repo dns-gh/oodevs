@@ -101,6 +101,8 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
         AddMagic( tr( "Stop alert" ), SLOT( StopAlert() ), magicMenu );
         AddMagic( tr( "Confine" ), SLOT( Confine() ), magicMenu );
         AddMagic( tr( "Stop confine" ), SLOT( StopConfine() ), magicMenu );
+        AddMagic( tr( "Evacuate" ), SLOT( Evacuate() ), magicMenu );
+        AddMagic( tr( "Stop evacuate" ), SLOT( StopEvacuate() ), magicMenu );
         if( entity.Retrieve< Infrastructure_ABC >() )
         {
             AddValuedMagic( magicMenu, menu, tr( "Change Threshold" ), SLOT( ChangeThreshold() ) );
@@ -279,6 +281,41 @@ void ObjectMagicOrdersInterface::Disable()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::Enable
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::Enable()
+{
+    if( !selectedEntity_ )
+        return;
+    if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
+    {
+        ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_infrastructure );
+        list.AddBool( "Enabled", true );
+        actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::ChangeThreshold
+// Created: SLG 2011-01-18
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::ChangeThreshold()
+{
+    if( !selectedEntity_ )
+        return;
+    if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
+        if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
+        {
+            ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+            list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_infrastructure );
+            list.AddNumeric( "Threshold", 0.01f * editor->text().toFloat() );
+            actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+        }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectMagicOrdersInterface::Alert
 // Created: BCI 2011-02-28
 // -----------------------------------------------------------------------------
@@ -335,36 +372,29 @@ void ObjectMagicOrdersInterface::StopConfine()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::Enable
-// Created: SLG 2011-01-18
+// Name: ObjectMagicOrdersInterface::Evacuate
+// Created: ABR 2011-03-23
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::Enable()
+void ObjectMagicOrdersInterface::Evacuate()
 {
     if( !selectedEntity_ )
         return;
-    if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
-    {
-        ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-        list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_infrastructure );
-        list.AddBool( "Enabled", true );
-        actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
-    }
+    ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_evacuated );
+    list.AddBool( "Evacuated", true );
+    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectMagicOrdersInterface::ChangeThreshold
-// Created: SLG 2011-01-18
+// Name: ObjectMagicOrdersInterface::StopEvacuate
+// Created: ABR 2011-03-23
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::ChangeThreshold()
+void ObjectMagicOrdersInterface::StopEvacuate()
 {
     if( !selectedEntity_ )
         return;
-    if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
-        if( const Infrastructure_ABC* infrastructure = selectedEntity_->Retrieve< Infrastructure_ABC >() )
-        {
-            ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
-            list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_infrastructure );
-            list.AddNumeric( "Threshold", 0.01f * editor->text().toFloat() );
-            actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
-        }
+    ParameterList& list = *new ParameterList( OrderParameter( "Structural", "list", false ) );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_evacuated );
+    list.AddBool( "Evacuated", false );
+    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
 }

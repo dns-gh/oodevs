@@ -435,6 +435,9 @@ sword::ObjectMagicActionAck_ErrorCode UrbanObjectWrapper::OnUpdate( const google
         case sword::ObjectMagicAction_Attribute_confined:
             OnReceiveSetConfined( attribute );
             break;
+        case sword::ObjectMagicAction_Attribute_evacuated:
+            OnReceiveSetEvacuated( attribute );
+            break;
         default:
             break;
         }
@@ -451,7 +454,7 @@ void UrbanObjectWrapper::OnReceiveSetAlerted( const sword::MissionParameter_Valu
     if( attribute.list_size() > 1 )
     {
         bool alerted = attribute.list( 1 ).booleanvalue();
-        for( T_Inhabitants::const_iterator it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+        for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
             it->first->SetAlerted( alerted, this );
     }
 }
@@ -465,7 +468,30 @@ void UrbanObjectWrapper::OnReceiveSetConfined( const sword::MissionParameter_Val
     if( attribute.list_size() > 1 )
     {
         bool confined = attribute.list( 1 ).booleanvalue();
-        for( T_Inhabitants::const_iterator it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+        for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
             it->first->SetConfined( confined, this );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::OnReceiveSetEvacuated
+// Created: ABR 2011-03-23
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::OnReceiveSetEvacuated( const sword::MissionParameter_Value& attribute )
+{
+    if( attribute.list_size() > 1 )
+    {
+        bool evacuated = attribute.list( 1 ).booleanvalue();
+        for( IT_LivingAreas it = livingAreas_.begin(); it != livingAreas_.end(); ++it )
+            ( *it )->SetEvacuated( evacuated, this );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::AddLivingArea
+// Created: ABR 2011-03-24
+// -----------------------------------------------------------------------------
+void UrbanObjectWrapper::AddLivingArea( MIL_LivingArea& livingArea )
+{
+    livingAreas_.push_back( &livingArea );
 }

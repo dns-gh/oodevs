@@ -94,7 +94,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
         >> xml::end;
 
     unsigned long population = nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_;
-    pLivingArea_.reset( new MIL_LivingArea( xis, population ) );
+    pLivingArea_.reset( new MIL_LivingArea( xis, population, *this ) );
     pLivingArea_->Register( *this );
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
     type_.InitializeSchedule( *pSchedule_ );
@@ -544,4 +544,13 @@ void MIL_Inhabitant::DestroyInhabitantMovingObject()
 {
     pPopulationMovingObject_->MarkForDestruction();
     pPopulationMovingObject_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::ReStartMotivation
+// Created: ABR 2011-03-22
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::ReStartMotivation()
+{
+    pSchedule_->RestartLastEvent();
 }

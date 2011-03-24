@@ -66,15 +66,19 @@
     </message>
     <message>
         <source>Resident</source>
-        <translation type="unfinished"></translation>
+        <translation>Résident</translation>
     </message>
     <message>
         <source>Alerted</source>
-        <translation type="unfinished"></translation>
+        <translation>Alerté</translation>
     </message>
     <message>
         <source>Confined</source>
-        <translation type="unfinished"></translation>
+        <translation>Confiné</translation>
+    </message>
+    <message>
+        <source>Evacuated</source>
+        <translationEvacué</translation>
     </message>
 </context>
 <context>

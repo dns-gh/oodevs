@@ -659,6 +659,10 @@
         <source>Satisfactions/Resource/</source>
         <translation>Satisfaction/Ressource/</translation>
     </message>
+    <message>
+        <source>Evacuated</source>
+        <translation>Evacué</translation>
+    </message>
 </context>
 <context>
     <name>Intelligence</name>

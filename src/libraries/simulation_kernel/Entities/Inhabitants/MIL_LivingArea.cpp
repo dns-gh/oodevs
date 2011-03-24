@@ -14,6 +14,7 @@
 #include "PHY_ResourceNetworkType.h"
 #include "PHY_AccomodationType.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Objects/MedicalCapacity.h"
 #include "Entities/Objects/InfrastructureCapacity.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
@@ -33,7 +34,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LivingArea )
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
 MIL_LivingArea::MIL_LivingArea()
-    : hasChanged_( false )
+    : hasChanged_ ( false )
+    , pInhabitant_( 0 )
 {
     LoadAccommodations();
 }
@@ -42,10 +44,11 @@ MIL_LivingArea::MIL_LivingArea()
 // Name: MIL_LivingArea constructor
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population )
-    : population_( population )
-    , hasChanged_( false )
-    , area_      ( 0.f )
+MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population, MIL_Inhabitant& inhabitant )
+    : population_       ( population )
+    , hasChanged_       ( false )
+    , area_             ( 0.f )
+    , pInhabitant_      ( &inhabitant )
 {
     xis >> xml::start( "living-area" )
             >> xml::list( "urban-block", *this, &MIL_LivingArea::ReadUrbanBlock )
@@ -100,6 +103,7 @@ void MIL_LivingArea::ReadUrbanBlock( xml::xistream& xis )
         xis.error( "Error in loading living urban block of population" );
     area_ += object->GetLivingSpace() * GetStructuralState( *object );
     blocks_.push_back( T_Block( object ) );
+    object->AddLivingArea( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +148,8 @@ void MIL_LivingArea::Register( MIL_StructuralStateNotifier_ABC& structural )
 void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_LivingArea_ABC >( *this );
-    file >> population_;
+    file >> population_
+         >> pInhabitant_;
     unsigned int size;
     file >> size;
     unsigned int objectId;
@@ -159,7 +164,10 @@ void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
              >> confined;
         UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( objectId ) );
         if( object )
+        {
             blocks_.push_back( T_Block( object, person, alerted, confined ) );
+            object->AddLivingArea( *this );
+        }
     }
 }
 
@@ -170,7 +178,8 @@ void MIL_LivingArea::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_LivingArea::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_LivingArea_ABC >( *this );
-    file << population_;
+    file << population_
+         << pInhabitant_;
     unsigned int size = blocks_.size();
     file << size;
     unsigned int id;
@@ -196,6 +205,7 @@ void MIL_LivingArea::SendFullState( client::PopulationUpdate& msg ) const
         block.set_number( urbanBlock.person_ );
         block.set_alerted( urbanBlock.alerted_ );
         block.set_confined( urbanBlock.confined_ );
+        block.set_evacuated( urbanBlock.evacuated_ );
     }
 }
 
@@ -348,9 +358,7 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
                 identifiers_.begin()->second += tmp;
         }
         BOOST_FOREACH( const T_Block& block, GetNonConfinedBlocks() )
-        {
             peopleMovingBlock_[ block.pUrbanObject_->GetID() ] = block.person_;
-        }
         hasChanged_ = true;
     }
 }
@@ -390,7 +398,7 @@ void MIL_LivingArea::MovePeople( int occurence )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_LivingArea::MovePeople
+// Name: MIL_LivingArea::FinishMoving
 // Created: SLG 2011-02-03
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::FinishMoving()
@@ -431,8 +439,8 @@ unsigned int MIL_LivingArea::GetOccupation( const T_Block& block, const std::str
 MIL_LivingArea::T_Blocks MIL_LivingArea::GetBlockUsage( const std::string& motivation ) const
 {
     T_Blocks blocks;
-    BOOST_FOREACH( const T_Block& block, GetNonConfinedBlocks() )
-        if( GetProportion( block, motivation ) != 0.f )
+    BOOST_FOREACH( const T_Block& block, blocks_ )
+        if( !block.evacuated_ && GetProportion( block, motivation ) != 0.f )
             blocks.push_back( block );
     return blocks;
 }
@@ -476,14 +484,19 @@ float MIL_LivingArea::GetProportion( const T_Block& block, const std::string& mo
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::Alert( const TER_Localisation& localisation )
 {
+    bool hasBeenAlerted = false;
     BOOST_FOREACH( T_Block& block, blocks_ )
     {
         if( block.pUrbanObject_->Intersect2DWithLocalisation( localisation ) )
         {
             block.alerted_ = true;
             hasChanged_ = true;
+            hasBeenAlerted = true;
         }
     }
+    assert( pInhabitant_ );
+    if( hasBeenAlerted )
+        pInhabitant_->ReStartMotivation();
 }
 
 // -----------------------------------------------------------------------------
@@ -492,15 +505,10 @@ void MIL_LivingArea::Alert( const TER_Localisation& localisation )
 // -----------------------------------------------------------------------------
 bool MIL_LivingArea::IsAlerted( const TER_Localisation& localisation ) const
 {
-    int count = 0;
-    int total = 0;
     BOOST_FOREACH( const T_Block& block, blocks_ )
-    {
         if( block.alerted_ && block.pUrbanObject_->Intersect2DWithLocalisation( localisation ) )
-            ++count;
-        ++total;
-    }
-    return count > 0 && total > 0;
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -509,14 +517,19 @@ bool MIL_LivingArea::IsAlerted( const TER_Localisation& localisation ) const
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::SetAlerted( bool alerted, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
 {
+    bool hasBeenAlerted = false;
     BOOST_FOREACH( T_Block& block, blocks_ )
     {
         if( pUrbanObject == 0 || pUrbanObject == block.pUrbanObject_ )
         {
             block.alerted_ = alerted;
             hasChanged_ = true;
+            hasBeenAlerted = true;
         }
     }
+    assert( pInhabitant_ );
+    if( hasBeenAlerted )
+        pInhabitant_->ReStartMotivation();
 }
 
 // -----------------------------------------------------------------------------
@@ -525,14 +538,19 @@ void MIL_LivingArea::SetAlerted( bool alerted, UrbanObjectWrapper* pUrbanObject 
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::SetConfined( bool confined, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
 {
+    bool hasBeenConfined = false;
     BOOST_FOREACH( T_Block& block, blocks_ )
     {
         if( pUrbanObject == 0 || pUrbanObject == block.pUrbanObject_ )
         {
             block.confined_ = confined;
             hasChanged_ = true;
+            hasBeenConfined = true;
         }
     }
+    assert( pInhabitant_ );
+    if( hasBeenConfined )
+        pInhabitant_->ReStartMotivation();
 }
 
 // -----------------------------------------------------------------------------
@@ -556,14 +574,40 @@ void MIL_LivingArea::SetOutsideAngry( bool outsideAngry, UrbanObjectWrapper* pUr
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::Confine( const TER_Localisation& localisation )
 {
+    bool hasBeenConfined = false;
     BOOST_FOREACH( T_Block& block, blocks_ )
     {
         if( block.pUrbanObject_->IsContainedByLocalisation( localisation ) )
         {
             block.confined_ = true;
             hasChanged_ = true;
+            hasBeenConfined = true;
         }
     }
+    assert( pInhabitant_ );
+    if( hasBeenConfined )
+        pInhabitant_->ReStartMotivation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::SetEvacuated
+// Created: ABR 2011-03-23
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::SetEvacuated( bool evacuated, UrbanObjectWrapper* pUrbanObject /*= 0*/ )
+{
+    bool hasBeenEvacuated = false;
+    BOOST_FOREACH( T_Block& block, blocks_ )
+    {
+        if( pUrbanObject == 0 || pUrbanObject == block.pUrbanObject_ )
+        {
+            block.evacuated_ = evacuated;
+            hasChanged_ = true;
+            hasBeenEvacuated = true;
+        }
+    }
+    assert( pInhabitant_ );
+    if( hasBeenEvacuated )
+        pInhabitant_->ReStartMotivation();
 }
 
 // -----------------------------------------------------------------------------

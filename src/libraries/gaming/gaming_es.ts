@@ -659,6 +659,10 @@
         <source>Satisfactions/Resource/</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Evacuated</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Intelligence</name>

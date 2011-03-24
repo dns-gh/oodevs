@@ -2394,6 +2394,14 @@ Motivo: %3
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation type="unfinished">Ingrese un valor y luego presione &apos;enter&apos;</translation>
     </message>
+    <message>
+        <source>Evacuate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop evacuate</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ObjectPanel</name>

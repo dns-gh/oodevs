@@ -2394,6 +2394,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
     </message>
+    <message>
+        <source>Evacuate</source>
+        <translation>Evacuer</translation>
+    </message>
+    <message>
+        <source>Stop evacuate</source>
+        <translation>Fin de l'évacuation</translation>
+    </message>
 </context>
 <context>
     <name>ObjectPanel</name>

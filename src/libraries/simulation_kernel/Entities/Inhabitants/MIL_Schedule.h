@@ -12,11 +12,14 @@
 
 #include "MIL_Schedule_ABC.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/optional.hpp>
 #include <vector>
 
 class MIL_LivingArea_ABC;
 
 namespace bpt = boost::posix_time;
+
+class bpt::ptime;
 
 // =============================================================================
 /** @class  MIL_Schedule
@@ -38,6 +41,8 @@ public:
     virtual void Configure( xml::xistream& xis );
     virtual void Update( unsigned int date, unsigned int duration );
     virtual bool IsMoving() const;
+    virtual void AddEvent( const std::string& motivation, double transfertTimeInSecond = 0. );
+    virtual void RestartLastEvent();
     //@}
 
 private:
@@ -49,6 +54,8 @@ private:
         boost::posix_time::time_duration from_;
         boost::posix_time::time_duration to_;
         std::string motivation_;
+        int occurence_;
+        int transfertTime_;
     };
 
     typedef std::vector< Event > T_Events;
@@ -58,7 +65,7 @@ private:
     //! @name Helpers
     //@{
     void ReadEvent( xml::xistream& xis );
-    void Check( const Event& event, unsigned int date, unsigned int duration );
+    bool Check( Event& event, const bpt::ptime& pdate, unsigned int duration );
     void Initialize( unsigned int date );
     //@}
 
@@ -66,11 +73,13 @@ private:
     //! @name Member data
     //@{
     MIL_LivingArea_ABC& livingArea_;
-    double transferTime_;
     T_Events events_;
-    int occurence_;
+    double transferTime_;
+    //int occurence_;
     bool isMoving_;
     bool initialized_;
+    boost::optional< Event > optionalEvent_;
+    boost::optional< std::string > currentMotivation_;
     //@}
 };
 

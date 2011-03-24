@@ -72,6 +72,8 @@ private slots:
     void StopAlert();
     void Confine();
     void StopConfine();
+    void Evacuate();
+    void StopEvacuate();
     //@}
 
 private:

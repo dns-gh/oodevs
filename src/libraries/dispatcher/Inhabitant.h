@@ -63,6 +63,7 @@ private:
         unsigned int number_;
         bool alerted_;
         bool confined_;
+        bool evacuated_;
     };
     typedef std::map< unsigned int, T_Block > T_UrbanBlocks;
     typedef std::map< std::string, std::string > T_Extensions;

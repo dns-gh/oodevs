@@ -86,6 +86,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         block.number_ = occupation.number();
         block.alerted_ = occupation.alerted();
         block.confined_ = occupation.confined();
+        block.evacuated_ = occupation.evacuated();
     }
     for( int i = 0; i < msg.adhesions_size(); ++i )
     {
@@ -152,6 +153,7 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         block.set_number( urbanBlock.second.number_ );
         block.set_alerted( urbanBlock.second.alerted_ );
         block.set_confined( urbanBlock.second.confined_ );
+        block.set_evacuated( urbanBlock.second.evacuated_ );
     }
     BOOST_FOREACH( const T_Affinities::value_type& affinity, affinities_ )
     {

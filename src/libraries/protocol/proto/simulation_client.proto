@@ -2287,10 +2287,11 @@ message PopulationUpdate {
         @brief Defines a block occupation
     */
     message BlockOccupation {
-         required ObjectId object  = 1; //!< The block object identifier
-         required int32    number  = 2; //!< The number of persons
-         required bool     alerted = 3; //!< Whether the population has been alerted or not
-         required bool     confined = 4;//!< Whether the population is confined into this block or not
+         required ObjectId object    = 1; //!< The block object identifier
+         required int32    number    = 2; //!< The number of persons
+         required bool     alerted   = 3; //!< Whether the population has been alerted or not
+         required bool     confined  = 4; //!< Whether the population is confined into this block or not
+         required bool     evacuated = 5; //!< Whether the population is evacuated into this block or not
      }
     required PopulationId    id           = 1; //!< The population identifier
     optional int32           healthy      = 2; //!< The number of healthy persons

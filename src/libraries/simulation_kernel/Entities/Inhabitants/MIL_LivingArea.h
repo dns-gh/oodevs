@@ -27,6 +27,7 @@ namespace client
     class PopulationUpdate;
 }
 
+class MIL_Inhabitant;
 class MIL_StructuralStateNotifier_ABC;
 class PHY_ResourceNetworkType;
 class UrbanObjectWrapper;
@@ -43,7 +44,7 @@ class MIL_LivingArea : public MIL_LivingArea_ABC
 public:
     struct T_Block
     {
-        T_Block( UrbanObjectWrapper* pUrbanObject, unsigned int person = 0, bool alerted = false, bool confined = false )
+        T_Block( UrbanObjectWrapper* pUrbanObject, unsigned int person = 0, bool alerted = false, bool confined = false, bool evacuated = false )
             : pUrbanObject_( pUrbanObject )
             , person_      ( person )
             , angriness_   ( 0.f )
@@ -57,6 +58,7 @@ public:
         float angriness_;
         bool alerted_;
         bool confined_;
+        bool evacuated_;
         bool outsideAngry_;
     };
 
@@ -68,7 +70,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_LivingArea();
-             MIL_LivingArea( xml::xistream& xis, unsigned long population );
+             MIL_LivingArea( xml::xistream& xis, unsigned long population, MIL_Inhabitant& inhabitant );
     virtual ~MIL_LivingArea();
     //@}
 
@@ -93,8 +95,8 @@ public:
     void SetAlerted( bool, UrbanObjectWrapper* pUrbanObject = 0 );
     void Confine( const TER_Localisation& localisation );
     void SetConfined( bool, UrbanObjectWrapper* pUrbanObject = 0 );
+    void SetEvacuated( bool, UrbanObjectWrapper* pUrbanObject = 0 );
     void SetOutsideAngry( bool, UrbanObjectWrapper* pUrbanObject );
-
     float Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption, T_Blocks& angryBlocks );
     //@}
 
@@ -130,6 +132,7 @@ private:
 private:
     //! @name Member data
     //@{
+    MIL_Inhabitant* pInhabitant_;
     unsigned long population_;
     T_Accommodations accommodations_;
     T_Blocks blocks_;

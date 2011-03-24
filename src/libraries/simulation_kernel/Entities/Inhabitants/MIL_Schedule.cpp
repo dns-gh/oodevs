@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Schedule.h"
 #include "MIL_LivingArea_ABC.h"
+#include "MIL_AgentServer.h"
 #include "tools/xmlcodecs.h"
 #include <boost/foreach.hpp>
 #include <boost/optional.hpp>
@@ -21,7 +22,6 @@
 // -----------------------------------------------------------------------------
 MIL_Schedule::MIL_Schedule( MIL_LivingArea_ABC& livingArea )
     : livingArea_ ( livingArea )
-    , occurence_  ( 0 )
     , isMoving_   ( false )
     , initialized_( false )
 {
@@ -84,9 +84,44 @@ void MIL_Schedule::ReadEvent( xml::xistream& xis )
     Event event;
     event.day_= ConvertDay( xis.attribute< std::string >( "day" ) );
     event.from_ = ConvertTime( xis.attribute< std::string >( "from" ) );
-    event.to_ = ConvertTime( xis.attribute< std::string >( "to" ) );
+    event.to_ = ConvertTime( xis.attribute< std::string >( "to" ) ); // Useless
     event.motivation_ = xis.attribute< std::string >( "motivation" );
+    event.transfertTime_ = transferTime_;
+    event.occurence_ = 0;
     events_.push_back( event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Schedule::AddEvent
+// Created: ABR 2011-03-23
+// -----------------------------------------------------------------------------
+void MIL_Schedule::AddEvent( const std::string& motivation, double transfertTimeInSecond /*= 0.*/ )
+{
+    bpt::ptime pdate( bpt::from_time_t( MIL_AgentServer::GetWorkspace().GetRealTime() ) );
+    unsigned int duration = MIL_AgentServer::GetWorkspace().GetTickDuration();
+    double transfertTime = ( transfertTimeInSecond ) ? transfertTimeInSecond : transferTime_;
+
+    Event event;
+    event.day_= pdate.date().day_of_week();
+    event.from_ = pdate.time_of_day();
+    event.to_ = pdate.time_of_day() + bpt::time_duration( 0, 0, transfertTime ); // Useless
+    event.motivation_ = motivation;
+    event.transfertTime_ = transfertTime;
+    event.occurence_ = 0;
+
+    optionalEvent_ = event;
+    Check( *optionalEvent_, pdate, duration );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Schedule::RestartLastEvent
+// Created: ABR 2011-03-22
+// -----------------------------------------------------------------------------
+void MIL_Schedule::RestartLastEvent()
+{
+    if( !currentMotivation_ )
+        return;
+    AddEvent( *currentMotivation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,37 +132,59 @@ void MIL_Schedule::Update( unsigned int date, unsigned int duration )
 {
     if( !initialized_ )
         Initialize( date );
-    BOOST_FOREACH( const Event& event, events_ )
-        Check( event, date, duration );
+
+    bool hasAlreadyMoveSomebody = false;
+    bpt::ptime pdate( bpt::from_time_t( date ) );
+
+    BOOST_FOREACH( Event& event, events_ )
+        hasAlreadyMoveSomebody = hasAlreadyMoveSomebody || Check( event, pdate, duration );
+
+    if( optionalEvent_ )
+    {
+        if( hasAlreadyMoveSomebody )
+            optionalEvent_ = boost::none;
+        else
+            Check( *optionalEvent_, pdate, duration );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Schedule::Check
 // Created: LGY 2011-01-20
 // -----------------------------------------------------------------------------
-void MIL_Schedule::Check( const Event& event, unsigned int date, unsigned int duration )
+bool MIL_Schedule::Check( Event& event, const bpt::ptime& pdate, unsigned int duration )
 {
-    bpt::ptime pdate( bpt::from_time_t( date ) );
-    if( pdate.date().day_of_week() == event.day_ && pdate.time_of_day() >= event.from_ && pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, duration ) ) )
+    bool result = false;
+    bool goodDay = pdate.date().day_of_week() == event.day_;
+    if( goodDay &&
+        pdate.time_of_day() >= event.from_ &&
+        pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, duration ) )  )
     {
-        occurence_ = 0;
+        event.occurence_ = 0;
         livingArea_.StartMotivation( event.motivation_ );
+        currentMotivation_ = event.motivation_;
         isMoving_ = true;
-        occurence_++;
+        event.occurence_++;
+        result = true;
     }
-    if( pdate.date().day_of_week() == event.day_ && pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, 900 * occurence_ ) && pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, 900 * occurence_ ) + bpt::time_duration( 0, 0, duration ) ) )
+    if( goodDay &&
+        pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, 900 * event.occurence_ ) &&
+        pdate.time_of_day() < event.from_ + bpt::time_duration( 0, 0, 900 * event.occurence_ ) + bpt::time_duration( 0, 0, duration ) )
     {
-        livingArea_.MovePeople( 1 + static_cast< unsigned int >( transferTime_ / 900 ) );
-        occurence_++;
+        livingArea_.MovePeople( 1 + static_cast< unsigned int >( event.transfertTime_ / 900 ) );
+        event.occurence_++;
+        result = true;
     }
-    if( pdate.date().day_of_week() == event.day_ &&
-        pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, boost::posix_time::time_duration::sec_type( transferTime_ ) ) &&
-        pdate.time_of_day() < ( event.from_ + bpt::time_duration( 0, 0, boost::posix_time::time_duration::sec_type( transferTime_ ) ) + bpt::time_duration( 0, 0, duration ) ) )
+    if( goodDay &&
+        pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, boost::posix_time::time_duration::sec_type( event.transfertTime_ ) ) &&
+        pdate.time_of_day() < event.from_ + bpt::time_duration( 0, 0, boost::posix_time::time_duration::sec_type( event.transfertTime_ ) ) + bpt::time_duration( 0, 0, duration ) )
     {
         livingArea_.FinishMoving();
-        occurence_ = 0;
+        event.occurence_ = 0;
         isMoving_ = false;
+        result = true;
     }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +224,6 @@ void MIL_Schedule::Initialize( unsigned int date )
         if( !motivation )
             motivation = events_.back().motivation_;
         livingArea_.StartMotivation( *motivation );
-        livingArea_.MovePeople( 1 );
         livingArea_.FinishMoving();
     }
     initialized_ = true;

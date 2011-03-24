@@ -187,7 +187,8 @@ message ObjectMagicAction {
         usages             = 20;
         confined           = 21;
         alerted            = 22;
-        resource_network   = 23;
+        evacuated          = 23;
+        resource_network   = 24;
     }
     required ObjectId          object     = 1; //!< The object identifier
     required Type              type       = 2; //!< The type of magic action

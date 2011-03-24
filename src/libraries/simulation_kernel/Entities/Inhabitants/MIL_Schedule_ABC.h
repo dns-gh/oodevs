@@ -37,6 +37,7 @@ public:
     virtual void Configure( xml::xistream& xis ) = 0;
     virtual void Update( unsigned int date, unsigned int duration ) = 0;
     virtual bool IsMoving() const = 0;
+    virtual void RestartLastEvent() = 0;
     //@}
 };
 

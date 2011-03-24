@@ -95,6 +95,7 @@ public:
     //@{
     void UpdateInhabitants( MIL_LivingArea& livingArea, unsigned int number );
     unsigned int GetTotalInhabitants() const;
+    void AddLivingArea( MIL_LivingArea& livingArea );
     //@}
 
 private:
@@ -107,13 +108,18 @@ private:
     void SendFullStateCapacity( sword::UrbanAttributes& msg ) const;
     void OnReceiveSetAlerted( const sword::MissionParameter_Value& attribute );
     void OnReceiveSetConfined( const sword::MissionParameter_Value& attribute );
+    void OnReceiveSetEvacuated( const sword::MissionParameter_Value& attribute );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, float > T_Motivations;
-    typedef std::map< MIL_LivingArea*, unsigned int > T_Inhabitants;
+    typedef std::map< std::string, float >                  T_Motivations;
+
+    typedef std::vector< MIL_LivingArea* >                  T_LivingAreas;
+    typedef T_LivingAreas::iterator                        IT_LivingAreas;
+
+    typedef std::map< MIL_LivingArea*, unsigned int >       T_Inhabitants;
     typedef T_Inhabitants::const_iterator                 CIT_Inhabitants;
     //@}
 
@@ -122,6 +128,7 @@ private:
     //@{
     const urban::TerrainObject_ABC* object_;
     T_Inhabitants inhabitants_;
+    T_LivingAreas livingAreas_;
     //@}
 };
 
