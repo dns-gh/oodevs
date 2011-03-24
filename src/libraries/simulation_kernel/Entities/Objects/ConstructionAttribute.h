@@ -82,7 +82,6 @@ public:
     //! @name Operations
     //@{
     void Build( double rDeltaPercentage );
-    void Improve( double rDeltaPercentage );
     void NotifyBuildByGen();
     void NotifyStopBuildByGen();
     void Set( double percentage );

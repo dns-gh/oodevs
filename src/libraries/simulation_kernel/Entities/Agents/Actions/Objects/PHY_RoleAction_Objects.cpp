@@ -35,6 +35,8 @@
 #include "Entities/Objects/ExtinguishableCapacity.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Objects/StructuralCapacity.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
@@ -128,14 +130,18 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
         return eNoCapacity;
 
     // $$$$ TODO: refactor to handle more than a single resource
-    const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
-    const unsigned int nDotationNeeded = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
+    const ConstructionAttribute* pAttribute = object.RetrieveAttribute< ConstructionAttribute >();
     const PHY_DotationCategory* pDotationCategory = 0;
-    if( nDotationNeeded )
+    unsigned int nDotationNeeded = 0u;
+    if( pAttribute )
     {
-        pDotationCategory = object.Get< BuildableCapacity >().GetDotationCategory();
-        if( pDotationCategory && !dataComputer.HasDotations( *pDotationCategory, nDotationNeeded ) )
-            return eNoMoreDotation;
+        nDotationNeeded = pAttribute->GetDotationNeededForConstruction( rDeltaPercentage );
+        if( nDotationNeeded )
+        {
+            pDotationCategory = object.Get< BuildableCapacity >().GetDotationCategory();
+            if( pDotationCategory && !dataComputer.HasDotations( *pDotationCategory, nDotationNeeded ) )
+                return eNoMoreDotation;
+        }
     }
 
     pion_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
@@ -484,6 +490,21 @@ int PHY_RoleAction_Objects::ResumeWork( boost::shared_ptr< DEC_Knowledge_Object 
         return Construct( object );
     else if( object().CanBeMined() && !object().IsFullyMined() )
         return Mine( object );
+    return eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::ResumeWork
+// Created: LGY 2011-03-23
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::ResumeWork( UrbanObjectWrapper* pUrbanBlock )
+{
+    MIL_Object_ABC* pObject = pUrbanBlock;
+    if( !pObject )
+        return eImpossible;
+    MIL_Object_ABC& object = *pObject;
+    if( ! object().IsBuilt() )
+        return Construct( object );
     return eFinished;
 }
 

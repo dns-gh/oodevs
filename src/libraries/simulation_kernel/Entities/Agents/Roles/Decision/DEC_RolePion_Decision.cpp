@@ -53,6 +53,7 @@
 #include "Entities/Agents/Actions/Objects/PHY_ActionOccupyObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionAnimateObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionResumeWorkObject.h"
+#include "Entities/Agents/Actions/Objects/PHY_ActionResumeWorkUrbanBlock.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionDistributeObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionSupplyObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionExtractFromStockObject.h"
@@ -371,6 +372,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionOccupyObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartReprendreTravauxObjet" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionResumeWorkObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_ReparerBlocUrbain" ] =
+        boost::function< unsigned int( UrbanObjectWrapper* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionResumeWorkUrbanBlock, UrbanObjectWrapper* >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC__StartAnimerObjet" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionAnimateObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartDistributionObjet" ] =

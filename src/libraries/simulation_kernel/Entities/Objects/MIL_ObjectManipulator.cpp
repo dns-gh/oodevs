@@ -86,7 +86,10 @@ void MIL_ObjectManipulator::Construct()
 // -----------------------------------------------------------------------------
 void MIL_ObjectManipulator::Construct( double rDeltaPercentage )
 {
-    object_.GetAttribute< ConstructionAttribute >().Build( rDeltaPercentage );
+    if( StructuralCapacity* pCapacity = object_.Retrieve< StructuralCapacity >() )
+        pCapacity->Build( rDeltaPercentage );
+    else
+        object_.GetAttribute< ConstructionAttribute >().Build( rDeltaPercentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -327,7 +330,11 @@ bool MIL_ObjectManipulator::IsBypassed() const
 // -----------------------------------------------------------------------------
 bool MIL_ObjectManipulator::IsBuilt() const
 {
-    return !object_.IsMarkedForDestruction() && object_.GetAttribute< ConstructionAttribute >().GetState() >= 1.;
+    if( object_.IsMarkedForDestruction() )
+        return false;
+    if( const ConstructionAttribute* pAttribute = object_.RetrieveAttribute< ConstructionAttribute >() )
+        return pAttribute->GetState() >= 1.f;
+    return object_.Get< StructuralCapacity >().GetStructuralState() >= 1.f;
 }
 
 // -----------------------------------------------------------------------------
@@ -366,7 +373,6 @@ double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, 
         speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( agent ) );
     return speed;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManipulator::GetSizeCoef

@@ -238,3 +238,12 @@ void StructuralCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Ag
 {
     agents_.erase( std::find( agents_.begin(), agents_.end(), &agent ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: StructuralCapacity::Build
+// Created: LGY 2011-03-23
+// -----------------------------------------------------------------------------
+void StructuralCapacity::Build( double rDeltaPercentage )
+{
+    structuralState_ = std::max( 0., std::min( 1., structuralState_ + rDeltaPercentage ) );
+}

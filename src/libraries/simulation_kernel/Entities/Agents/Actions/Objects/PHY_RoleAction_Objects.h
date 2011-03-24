@@ -25,6 +25,7 @@ class MIL_ObjectType_ABC;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class PHY_DotationCategory;
+class UrbanObjectWrapper;
 
 // =============================================================================
 // @class  PHY_RoleAction_Objects
@@ -64,6 +65,7 @@ public:
     int GetFinalReturnCode() const;
     int Construct( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int ResumeWork( UrbanObjectWrapper* pUrbanBlock );
     int Destroy( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int Mine( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int Demine( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
