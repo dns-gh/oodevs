@@ -154,3 +154,19 @@ void Application::OnTimer()
 {
     launcherClient_->Update();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Application::notify
+// Created: SBO 2011-03-24
+// -----------------------------------------------------------------------------
+bool Application::notify( QObject* emitter, QEvent* event )
+{
+    if( event && event->type() == QEvent::User + 666 )
+        if( QString* message = static_cast< QString* >( static_cast< QCustomEvent* >( event )->data() ) )
+        {
+            QMessageBox::critical( 0, tools::translate( "Application", "Error" ), *message );
+            delete message;
+            return true;
+        }
+    return QApplication::notify( emitter, event );
+}

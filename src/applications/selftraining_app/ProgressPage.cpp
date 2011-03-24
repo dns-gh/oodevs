@@ -105,5 +105,6 @@ void ProgressPage::NotifyStopped()
 void ProgressPage::NotifyError( const std::string& error )
 {
     NotifyStopped();
-    QMessageBox::critical( 0, tools::translate( "ProgressPage", "Error" ), error.c_str() );
+    QString* message = new QString( error.c_str() );
+    QApplication::postEvent( qApp, new QCustomEvent( static_cast< QEvent::Type >( QEvent::User + 666 ), static_cast< void* >( message ) ) );
 }

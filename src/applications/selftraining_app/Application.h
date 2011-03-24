@@ -71,6 +71,7 @@ private:
     //! @name Helpers
     //@{
     void AddTranslator( const char* t, const QString& locale );
+    virtual bool notify( QObject* emitter, QEvent* event );
     //@}
 
 private:

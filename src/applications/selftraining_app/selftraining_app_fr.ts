@@ -453,13 +453,6 @@
     </message>
 </context>
 <context>
-    <name>ProgressPage</name>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
-    </message>
-</context>
-<context>
     <name>QuitPage</name>
     <message>
         <source>Please confirm</source>
