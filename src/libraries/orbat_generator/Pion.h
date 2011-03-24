@@ -33,14 +33,14 @@ class Pion : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Pion( bool posteDeCommandement, std::string type, std::string posi );
+             Pion( bool posteDeCommandement, const std::string type, const std::string posi );
     virtual ~Pion();
     //@}
 
 public:
     //! @name Operations
     //@{
-    void Pion::InsertIntoOrbat( xml::xostream& orbat, IdNameGenerator& idNameGen );
+    void Pion::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen );
     //@}
 
 private:
@@ -51,8 +51,8 @@ private:
 private:
     //! @name Member data
     //@{    
-    std::string type_;
-    std::string posi_;
+    const std::string type_;
+    const std::string posi_;
     const bool pc_;
     //@}
 };

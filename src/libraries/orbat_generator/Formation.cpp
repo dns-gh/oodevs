@@ -6,6 +6,7 @@
 // Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
+#include "orbat_generator_pch.h"
 #include "Formation.h"
 #include <boost/lexical_cast.hpp>
 #include <iostream>
@@ -37,7 +38,7 @@ Formation::~Formation()
 // Name: Formation::InsertIntoOrbat
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-void Formation::InsertIntoOrbat( xml::xostream& orbat, IdNameGenerator& idNameGen, unsigned int KnowledgeGroupId )
+void Formation::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen, unsigned int KnowledgeGroupId )
 {
     unsigned int id = idNameGen.ComputeFormationId();
     std::string name = idNameGen.ComputeFormationName();

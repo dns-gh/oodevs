@@ -6,8 +6,10 @@
 // Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
+#include "orbat_generator_pch.h"
 #include "IdNameGenerator.h"
 #include <iostream>
+#include <xeumeuleu/xml.hpp>
 
 using namespace orbat_generator;
 
@@ -15,13 +17,28 @@ using namespace orbat_generator;
 // Name: IdNameGenerator constructor
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-IdNameGenerator::IdNameGenerator()
+IdNameGenerator::IdNameGenerator( xml::xisubstream xis )
     : partyId_    ( 0 )
     , formationId_( 0 )
     , automateId_ ( 0 )
     , pionId_     ( 0 )
 {
-    // NOTHING
+    xis >> xml::start( "structure" )
+          >> xml::attribute( "pattern", pattern_ )
+          >> xml::start( "party" )
+            >> xml::attribute( "pattern", partyName_ )
+          >> xml::end
+          >> xml::start( "formation" )
+            >> xml::attribute( "pattern", formationName_ )
+          >> xml::end
+          >> xml::start( "automat" )
+              >> xml::attribute( "pattern", automateName_ )
+          >> xml::end
+          >> xml::start( "unit" )
+              >> xml::attribute( "pattern", pionName_ )
+          >> xml::end
+          >> xml::start( "crowd" )
+              >> xml::attribute( "pattern", crowdName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,34 +52,36 @@ IdNameGenerator::~IdNameGenerator()
 
 // -----------------------------------------------------------------------------
 // Name: IdNameGenerator::Init
-// Created: RCD 2011-03-14
+// Created: RCD 2011-03-22
 // -----------------------------------------------------------------------------
-void IdNameGenerator::Init( std::string pattern, std::string partyPattern, std::string formationPattern, std::string automatePattern, std::string pionPattern, std::string crowdPattern )
+void IdNameGenerator::RewindAll() const
 {
-    pattern_ = pattern;
-    Rewind( crowdName_ = crowdPattern );
-    Rewind( partyName_ = partyPattern );
-    Rewind( formationName_ = formationPattern );
-    Rewind( automateName_ = automatePattern );
-    Rewind( pionName_ = pionPattern );
+    Rewind( crowdName_ );
+    Rewind( partyName_ );
+    Rewind( formationName_ );
+    Rewind( automateName_ );
+    Rewind( pionName_ );
+    partyId_ = 0;
+    formationId_ = 0;
+    automateId_ = 0;
+    pionId_ = 0 ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: IdNameGenerator::ComputeAutomateId
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-unsigned int IdNameGenerator::ComputeAutomateId()
+unsigned int IdNameGenerator::ComputeAutomateId() const
 {
-    unsigned int id = partyId_ + formationId_ * 100 + ++automateId_ * 10000;
     pionId_ = 0;
-    return id;
+    return partyId_ + formationId_ * 100 + ++automateId_ * 10000;
 }
 
 // -----------------------------------------------------------------------------
 // Name: IdNameGenerator::ComputeAutomateName
 // Created: RCD 2011-03-07
 // -----------------------------------------------------------------------------
-std::string IdNameGenerator::ComputeAutomateName()
+std::string IdNameGenerator::ComputeAutomateName() const
 {
     std::string completeName;
     Increment( automateName_ );
@@ -84,18 +103,17 @@ std::string IdNameGenerator::ComputeAutomateName()
 // Name: IdNameGenerator::ComputeFormationId
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-unsigned int IdNameGenerator::ComputeFormationId()
+unsigned int IdNameGenerator::ComputeFormationId() const
 {
-    unsigned int id = partyId_ + ++formationId_ * 100;
     automateId_ = pionId_ = 0;
-    return id;
+    return partyId_ + ( ++formationId_ ) * 100;;
 }
 
 // -----------------------------------------------------------------------------
 // Name: IdNameGenerator::ComputeFormationName
 // Created: RCD 2011-03-07
 // -----------------------------------------------------------------------------
-std::string IdNameGenerator::ComputeFormationName()
+std::string IdNameGenerator::ComputeFormationName() const
 {
     std::string completeName;
     Increment( formationName_ );
@@ -118,18 +136,17 @@ std::string IdNameGenerator::ComputeFormationName()
 // Name: IdNameGenerator::ComputePartyId
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-unsigned int IdNameGenerator::ComputePartyId()
+unsigned int IdNameGenerator::ComputePartyId() const
 {
-    unsigned int id = ++partyId_;
     automateId_ = formationId_ = pionId_ = 0;
-    return id;
+    return ++partyId_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: IdNameGenerator::ComputePartyName
 // Created: RCD 2011-03-07
 // -----------------------------------------------------------------------------
-std::string IdNameGenerator::ComputePartyName()
+std::string IdNameGenerator::ComputePartyName() const
 {
     std::string completeName;
     Increment( partyName_ );
@@ -153,17 +170,16 @@ std::string IdNameGenerator::ComputePartyName()
 // Name: IdNameGenerator::ComputePionId
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-unsigned int IdNameGenerator::ComputePionId()
+unsigned int IdNameGenerator::ComputePionId() const
 {
-    unsigned int id = partyId_ + formationId_ * 100 + automateId_ * 10000 + ++pionId_ * 10000000;
-    return id;
+    return partyId_ + formationId_ * 100 + automateId_ * 10000 + ++pionId_ * 10000000;
 }
 
 // -----------------------------------------------------------------------------
 // Name: IdNameGenerator::ComputePionName
 // Created: RCD 2011-03-07
 // -----------------------------------------------------------------------------
-std::string IdNameGenerator::ComputePionName()
+std::string IdNameGenerator::ComputePionName() const
 {
     std::string completeName;
     Increment( pionName_ );
@@ -184,7 +200,7 @@ std::string IdNameGenerator::ComputePionName()
 // Name: IdNameGenerator::ComputeCrowdName
 // Created: RCD 2011-03-07
 // -----------------------------------------------------------------------------
-std::string IdNameGenerator::ComputeCrowdName()
+std::string IdNameGenerator::ComputeCrowdName() const
 {
     Increment( crowdName_ );
     std::string completeName = pattern_;
@@ -204,7 +220,7 @@ std::string IdNameGenerator::ComputeCrowdName()
 // Name: IdNameGenerator::Replace
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-void IdNameGenerator::RegReplace( std::string& name, std::string& toReplace, std::string replaceBy )
+void IdNameGenerator::RegReplace( std::string& name, std::string& toReplace, std::string replaceBy ) const
 {
     unsigned int pos = name.find( toReplace );
     if ( !( pos > name.length() - 4 ) )
@@ -215,19 +231,19 @@ void IdNameGenerator::RegReplace( std::string& name, std::string& toReplace, std
 // Name: IdNameGenerator::Increment
 // Created: RCD 2011-03-08
 // -----------------------------------------------------------------------------
-void IdNameGenerator::Increment( std::string& name )
+void IdNameGenerator::Increment( std::string& name ) const
 {
     bool done = false;
-    unsigned int pos = name.length() - 1;
+    int pos = name.length() - 1;
     while( !done && pos >= 0 )
     {
         switch( name[ pos ] )
         {
         case '9' : name[ pos ] = '0';
-                   ++pos;
+                   --pos;
                    break;
         case 'z' : name[ pos ] = 'a';
-                   ++pos;
+                   --pos;
                    break;
         default  : ++name[ pos ];
                    done = true;
@@ -239,16 +255,13 @@ void IdNameGenerator::Increment( std::string& name )
 // Name: IdNameGenerator::Rewind
 // Created: RCD 2011-03-08
 // -----------------------------------------------------------------------------
-void IdNameGenerator::Rewind( std::string& name )
+void IdNameGenerator::Rewind( std::string& name ) const
 {
     for( unsigned int pos = 0; pos < name.length(); ++pos )
     {
         if( name[ pos ] >= '0' && name[ pos ] <= '9' )
             name[ pos ] = '0';
         else
-            if( pos == name.length() - 1 )
-                name[ pos ] = 'z';
-            else
-                name[ pos ] = 'a';
+            name[ pos ] = 'z';
     }
 }

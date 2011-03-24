@@ -126,6 +126,7 @@ namespace
             , inputXis( "<config type='automats'>"
                         "    <structure pattern='[$P][$F][$A][$U]' point='31TCM1007287483'>"
                         "        <party           pattern='aa'  quantity='2' />"
+                        "        <object          pattern='111' quantity='0' />"
                         "        <formation       pattern='111' quantity='2' level='ii' />"
                         "        <formation       pattern='111' quantity='3' level='iii' />"
                         "        <automat         pattern='111' quantity='7' />"
@@ -153,9 +154,16 @@ BOOST_FIXTURE_TEST_CASE( orbat_generator_creates_a_well_formed_orbat_file, Fixtu
 {
     inputXis >> xml::start( "config" );
     Facade facade( inputXis, base );
-    xml::xostringstream xos;
-    facade.CreateOrbat( xos );
-    BOOST_CHECK_XML_EQUAL( expected, xos.str() );
+    {
+        xml::xostringstream xos;
+        facade.CreateOrbat( xos );
+        BOOST_CHECK_XML_EQUAL( expected, xos.str() );
+    }
+    {
+        xml::xostringstream xos;
+        facade.CreateOrbat( xos );
+        BOOST_CHECK_XML_EQUAL( expected, xos.str() );
+    }
 }
 
 // -----------------------------------------------------------------------------

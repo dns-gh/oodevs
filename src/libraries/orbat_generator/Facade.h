@@ -32,29 +32,31 @@ class Facade : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Facade( xml::xistream& xis, bfs::path base );
+             Facade( xml::xistream& xis, const bfs::path& base );
     virtual ~Facade();
     //@}
 
 public:
     //! @name Operations
     //@{
-    void Facade::CreateOrbat( xml::xostream& xos );
-    std::string Facade::ComputeSignature( std::istream& is );
+    void CreateOrbat( xml::xostream& xos );
+    std::string ComputeSignature( std::istream& is ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void Facade::RetrieveData( xml::xistream& xis, unsigned int& partyQty, unsigned int& formationQty, unsigned int& automateQty, unsigned int& unitQty, unsigned int& crowdQty, std::vector< std::string >& formationsRecord );
-    void Facade::FillCrowds( xml::xistream& xis, unsigned int& crowdQty );
-    void Facade::ListExcluded( xml::xistream& xis );
-    void Facade::FillParty( xml::xistream& xis, xml::xistream& physXis );
-    void Facade::FillFormation( xml::xistream& xis, xml::xistream& physXis );
-    void Facade::FillAutomate( xml::xistream& xis, unsigned int& automateQty, unsigned int& pionQty, const std::string& odbType );
-    void Facade::FillPion( xml::xistream& xis, unsigned int& pionsParAutomate );
-    void Facade::ListFormations( xml::xistream& xis, std::vector< std::string >& formationsRecord, std::string& formationPattern );
-    void Facade::AddCrowds( xml::xostream& orbat );
+    void RetrieveData( xml::xisubstream xis, unsigned int& automateQuantity, unsigned int& unitQuantity, unsigned int& crowdQuantity );
+    void ReadCrowds( xml::xisubstream xis, unsigned int crowdQuantity );
+    void FillCrowds( xml::xistream& xis );
+    void ListExcluded( xml::xistream& xis );
+    void FillParty( xml::xistream& xis, xml::xistream& physXis );
+    void FillFormation( xml::xistream& xis, xml::xistream& physXis );
+    void ReadAutomates( xml::xisubstream xis, const std::string& type, unsigned int automateQuantity, unsigned int unitQuantity );
+    void FillAutomate( xml::xistream& xis, unsigned int& automateQuantity, unsigned int& pionQuantity, const std::string& odbType );
+    void FillPion( xml::xistream& xis, unsigned int& pionsParAutomate );
+    void ListFormations( xml::xistream& xis, std::vector< std::string >& formationsRecord );
+    void AddCrowds( xml::xostream& orbat );
     //@}
 
 private:
@@ -63,7 +65,7 @@ private:
     std::string defaultPoint_;
     std::vector< std::string > excludes_;
     std::vector< std::string > crowds_;
-    IdNameGenerator idNameGen_;
+    const IdNameGenerator idNameGen_;
     std::vector< boost::shared_ptr< Formation > > formations_;
     std::vector< boost::shared_ptr< Party > > parties_;
     std::vector< boost::shared_ptr< Automate > > automates_;

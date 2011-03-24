@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 
+#include <string>
 #include "orbat_generator/Facade.h"
 #include <boost/filesystem.hpp>
 #pragma warning( push, 0 )

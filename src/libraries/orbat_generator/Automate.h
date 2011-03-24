@@ -36,21 +36,21 @@ class Automate : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Automate( std::string type, std::vector< boost::shared_ptr< Pion > > pions, const std::string& odbType );
+             Automate( const std::string type, std::vector< boost::shared_ptr< Pion > > pions, const std::string& odbType );
     virtual ~Automate();
     //@}
 
 public:
     //! @name Operations
     //@{
-    void Automate::InsertIntoOrbat( xml::xostream& orbat, IdNameGenerator& idNameGen, unsigned int KnowledgeGroupId );
+    void Automate::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen, unsigned int knowledgeGroupId );
     //@}
 
 private:
     //! @name Member data
     //@{    
     bool engaged_;
-    std::string type_;
+    const std::string type_;
     std::vector< boost::shared_ptr< Pion > > pions_;
     //@}
 };

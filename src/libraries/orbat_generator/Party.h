@@ -43,16 +43,16 @@ class Party : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Party( PartySide side );
+             Party( const PartySide& side );
     virtual ~Party();
     //@}
 
 public:
     //! @name Operations
     //@{
-    void Party::GenerateDiplomacy( xml::xostream& orbat, unsigned int& id, std::string side );
-    void Party::GenerateDiplomacy( xml::xostream& orbat, unsigned int& id, std::vector< boost::shared_ptr< Party > > parties );
-    void Party::InsertIntoOrbat( xml::xostream& orbat, IdNameGenerator& idGen );
+    void Party::GenerateDiplomacy( xml::xostream& orbat, const unsigned int id, const std::string& side );
+    void Party::GenerateDiplomacy( xml::xostream& orbat, const unsigned int id, std::vector< boost::shared_ptr< Party > > parties );
+    void Party::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idGen );
     void Party::AddFormation( boost::shared_ptr< Formation > formation );
     void Party::AddAutomate( boost::shared_ptr< Automate > automate );
     //@}
@@ -61,7 +61,7 @@ private:
     //! @name Member data
     //@{    
     std::vector< boost::shared_ptr< Formation > > formations_;
-    std::string side_;
+    const std::string side_;
     unsigned int current_;
     //@}
 };

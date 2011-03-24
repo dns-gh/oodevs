@@ -6,6 +6,7 @@
 // Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
+#include "orbat_generator_pch.h"
 #include "Party.h"
 #include <boost/lexical_cast.hpp>
 #include <iostream>
@@ -15,7 +16,7 @@ using namespace orbat_generator;
 
 namespace
 {
-    std::string PartySideToString( const PartySide& side ) 
+    const std::string PartySideToString( const PartySide& side ) 
     {
         if( side == Friend )
             return "friend";
@@ -31,7 +32,7 @@ namespace
 // Name: Party constructor
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-Party::Party( PartySide side )
+Party::Party( const PartySide& side )
     : side_   ( PartySideToString( side ) )
     , current_( 0 )
 {
@@ -51,7 +52,7 @@ Party::~Party()
 // Name: Party::InsertIntoOrbat
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-void Party::InsertIntoOrbat( xml::xostream& orbat, IdNameGenerator& idNameGen )
+void Party::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen )
 {
     unsigned int id = idNameGen.ComputePartyId();
     std::string name = idNameGen.ComputePartyName();
@@ -63,7 +64,7 @@ void Party::InsertIntoOrbat( xml::xostream& orbat, IdNameGenerator& idNameGen )
             << xml::end
             << xml::start( "tactical" );
     for ( unsigned int it = 0; it < formations_.size(); ++it )
-        formations_[it]->InsertIntoOrbat( orbat, idNameGen, 1000 * id );
+        formations_[ it ]->InsertIntoOrbat( orbat, idNameGen, 1000 * id );
     orbat   << xml::end
             << xml::start( "communication" )
               << xml::start( "knowledge-group" )
@@ -85,10 +86,10 @@ void Party::InsertIntoOrbat( xml::xostream& orbat, IdNameGenerator& idNameGen )
 // Name: Party::GenerateDiplomacy
 // Created: RCD 2011-03-07
 // -----------------------------------------------------------------------------
-void Party::GenerateDiplomacy( xml::xostream& orbat, unsigned int& id, std::vector< boost::shared_ptr< Party > > parties )
+void Party::GenerateDiplomacy( xml::xostream& orbat, const unsigned int id, std::vector< boost::shared_ptr< Party > > parties )
 {
     orbat << xml::start( "party" )
-            << xml::attribute( "id", id+1 );
+            << xml::attribute( "id", id + 1 );
     for( unsigned int it = 0; it < parties.size(); ++it )
     {
         if( it != id )
@@ -101,7 +102,7 @@ void Party::GenerateDiplomacy( xml::xostream& orbat, unsigned int& id, std::vect
 // Name: Party::GenerateDiplomacy
 // Created: RCD 2011-03-07
 // -----------------------------------------------------------------------------
-void Party::GenerateDiplomacy( xml::xostream& orbat, unsigned int& id, std::string side )
+void Party::GenerateDiplomacy( xml::xostream& orbat, const unsigned int id, const std::string& side )
 {
     orbat << xml::start( "relationship" );
     if( side_ == "neutral" || side == "neutral" )

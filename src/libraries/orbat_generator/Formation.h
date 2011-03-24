@@ -33,14 +33,14 @@ class Formation : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( std::string type );
+    explicit Formation( std::string type );
     virtual ~Formation();
     //@}
 
 public:
     //! @name Operations
     //@{
-    void Formation::InsertIntoOrbat( xml::xostream& orbat, IdNameGenerator& idNameGen, unsigned int KnowledgeGroupId );
+    void Formation::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen, unsigned int KnowledgeGroupId );
     void Formation::AddAutomate( boost::shared_ptr< Automate > automate );
     //@}
 

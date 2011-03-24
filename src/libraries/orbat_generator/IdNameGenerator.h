@@ -10,12 +10,10 @@
 #define orbat_generator_IdNameGenerator_h
 
 #include <boost/noncopyable.hpp>
-#include <xeumeuleu/xml.hpp>
 
 namespace xml
 {
-    class xistream;
-    class xostream;
+    class xisubstream;
 }
 
 namespace orbat_generator
@@ -31,46 +29,46 @@ class IdNameGenerator : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             IdNameGenerator::IdNameGenerator();
+    explicit IdNameGenerator( xml::xisubstream xis );
     virtual ~IdNameGenerator();
     //@}
 
 public:
     //! @name Operations
     //@{
-    void IdNameGenerator::Init( std::string pattern, std::string partyPattern, std::string formationPattern, std::string automatePattern, std::string pionPattern, std::string crowdPattern );
-    unsigned int IdNameGenerator::ComputePionId();
-    std::string IdNameGenerator::ComputePionName();
-    unsigned int IdNameGenerator::ComputePartyId();
-    std::string IdNameGenerator::ComputePartyName();
-    unsigned int IdNameGenerator::ComputeFormationId();
-    std::string IdNameGenerator::ComputeFormationName();
-    unsigned int IdNameGenerator::ComputeAutomateId();
-    std::string IdNameGenerator::ComputeAutomateName();
-    std::string IdNameGenerator::ComputeCrowdName();
+    unsigned int ComputePionId() const;
+    std::string ComputePionName() const;
+    unsigned int ComputePartyId() const;
+    std::string ComputePartyName() const;
+    unsigned int ComputeFormationId() const;
+    std::string ComputeFormationName() const;
+    unsigned int ComputeAutomateId() const;
+    std::string ComputeAutomateName() const;
+    std::string ComputeCrowdName() const;
+    void RewindAll() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void IdNameGenerator::Rewind( std::string& name );
-    void IdNameGenerator::Increment( std::string& name );
-    void IdNameGenerator::RegReplace( std::string& name, std::string& toReplace, std::string replaceBy );
+    void Rewind( std::string& name ) const;
+    void Increment( std::string& name ) const;
+    void RegReplace( std::string& name, std::string& toReplace, std::string replaceBy ) const;
     //@}
 
 private:
     //! @name Member data
     //@{    
-    std::string  crowdName_;
-    std::string  pionName_;
-    std::string  formationName_;
-    std::string  partyName_;
-    std::string  automateName_;
-    std::string  pattern_;
-    unsigned int partyId_;
-    unsigned int formationId_;
-    unsigned int automateId_;
-    unsigned int pionId_;
+    mutable std::string  crowdName_;
+    mutable std::string  pionName_;
+    mutable std::string  formationName_;
+    mutable std::string  partyName_;
+    mutable std::string  automateName_;
+    mutable std::string  pattern_;
+    mutable unsigned int partyId_;
+    mutable unsigned int formationId_;
+    mutable unsigned int automateId_;
+    mutable unsigned int pionId_;
     //@}
 };
 

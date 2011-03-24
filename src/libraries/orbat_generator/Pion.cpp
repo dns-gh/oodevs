@@ -6,6 +6,7 @@
 // Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
+#include "orbat_generator_pch.h"
 #include "Pion.h"
 #include <boost/lexical_cast.hpp>
 #include <iostream>
@@ -17,7 +18,7 @@ using namespace orbat_generator;
 // Name: Pion constructor
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-Pion::Pion( bool posteDeCommandement, std::string type, std::string posi )
+Pion::Pion( bool posteDeCommandement, const std::string type, const std::string posi )
     : pc_   ( posteDeCommandement )
     , type_ ( type )
     , posi_ ( posi )
@@ -38,7 +39,7 @@ Pion::~Pion()
 // Name: Pion::InsertIntoOrbat
 // Created: RCD 2011-03-02
 // -----------------------------------------------------------------------------
-void Pion::InsertIntoOrbat( xml::xostream& orbat, IdNameGenerator& idNameGen )
+void Pion::InsertIntoOrbat( xml::xostream& orbat, const IdNameGenerator& idNameGen )
 {
     unsigned int id = idNameGen.ComputePionId();
     std::string name = idNameGen.ComputePionName();
