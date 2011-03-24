@@ -22,9 +22,9 @@ using namespace sword;
 // -----------------------------------------------------------------------------
 CommandPublisher::CommandPublisher( kernel::Controllers& controllers, Publisher_ABC& publisher )
     : controllers_( controllers )
-    , publisher_( publisher )
-    , profile_( controllers_ )
-    , messenger_( false )
+    , publisher_  ( publisher )
+    , profile_    ( controllers_ )
+    , messenger_  ( false )
 {
     controllers_.Register( *this );
 }
@@ -35,9 +35,9 @@ CommandPublisher::CommandPublisher( kernel::Controllers& controllers, Publisher_
 // -----------------------------------------------------------------------------
 CommandPublisher::CommandPublisher( kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile )
     : controllers_( controllers )
-    , publisher_( publisher )
-    , profile_( controllers_, &profile )
-    , messenger_( false )
+    , publisher_  ( publisher )
+    , profile_    ( controllers_, &profile )
+    , messenger_  ( false )
 {
     controllers_.Register( *this );
 }

@@ -17,7 +17,7 @@ namespace sword
 
 // =============================================================================
 /** @class  SwordMessagePublisher_ABC
-    @brief  SwordMessagePublisher_ABC
+    @brief  Sword message publisher definition
 */
 // Created: SEB 2010-10-14
 // =============================================================================
