@@ -108,7 +108,7 @@ void DisExtension::AddPlatform( const plugins::tic::Platform_ABC& platform )
     EntityStatePDU pdu( time_.GetTime(), exercise_, it->second );
     pdu.SetForceId   ( forceId_ );
     pdu.SetEntityName( MakeName( holder_, platform ) );
-    pdu.SetEntityType( resolver_.Find( platform.GetType() ) );
+    pdu.SetEntityType( resolver_.Find( platform.GetType().GetName() ) );
     switch( platform.GetState() )
     {
     default:

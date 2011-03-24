@@ -15,11 +15,6 @@
 #include <boost/noncopyable.hpp>
 #include <map>
 
-namespace kernel
-{
-    class ComponentType;
-}
-
 namespace xml
 {
     class xistream;
@@ -46,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    rpr::EntityType Find( const kernel::ComponentType& component ) const;
+    rpr::EntityType Find( const std::string& name ) const;
     //@}
 
 private:
@@ -59,7 +54,7 @@ private:
     //! @name Member data
     //@{
     kernel::ApproximativeMap< rpr::EntityType > types_;
-    mutable std::map< const kernel::ComponentType*, rpr::EntityType > resolved_;
+    mutable std::map< std::string, rpr::EntityType > resolved_;
     rpr::EntityType default_;
     //@}
 };

@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "EntityTypeResolver.h"
-#include "clients_kernel/ComponentType.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace rpr;
@@ -39,12 +38,12 @@ EntityTypeResolver::~EntityTypeResolver()
 // Name: EntityTypeResolver::Find
 // Created: AGE 2008-04-04
 // -----------------------------------------------------------------------------
-rpr::EntityType EntityTypeResolver::Find( const kernel::ComponentType& component ) const
+rpr::EntityType EntityTypeResolver::Find( const std::string& name ) const
 {
-    rpr::EntityType& type = resolved_[ &component ];
+    rpr::EntityType& type = resolved_[ name ];
     if( type == rpr::EntityType() )
     {
-        const rpr::EntityType* resolved = types_.Find( component.GetName() );
+        const rpr::EntityType* resolved = types_.Find( name );
         type = resolved ? *resolved : default_;
     }
     return type;
