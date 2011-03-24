@@ -33,8 +33,7 @@ void LauncherToAdmin::Convert( const sword::ConnectionAck& from, MsgsLauncherToA
                               ( sword::ConnectionAck::incompatible_protocol_version, MsgsLauncherToAdmin::MsgConnectionAck::incompatible_protocol_version )
                               ( sword::ConnectionAck::exercise_already_running, MsgsLauncherToAdmin::MsgConnectionAck::exercise_already_running ) );
     CONVERT( context );
-    if( from.has_server_version() && from.server_version().has_value() )
-        to->mutable_server_version()->set_value( from.server_version().value() );
+    CONVERT_VERSION( server_version );
     CONVERT_CB( dispatcher_address, ConvertNetworkAddress );
 }
 

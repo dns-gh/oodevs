@@ -20,8 +20,7 @@ void ClientToAuthentication::Convert( const MsgsClientToAuthentication::MsgAuthe
 {
     CONVERT( login );
     CONVERT( password );
-    if( from.has_version() && from.version().has_value() )
-        to->mutable_version()->set_value( from.version().value() );
+    CONVERT_VERSION( version );
 }
 
 // -----------------------------------------------------------------------------

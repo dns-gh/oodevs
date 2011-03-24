@@ -13,6 +13,9 @@
 #define SHIELD_SIMULATION
 #include "CommonTools.h"
 
+#define CONVERT_VERSION( field ) \
+    to->mutable_####field()->set_value( Version::ProtocolVersion().value() )
+
 namespace shield
 {
     template< typename From, typename To >

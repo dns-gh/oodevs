@@ -17,6 +17,7 @@
 namespace sword
 {
     bool CheckCompatibility( const sword::ProtocolVersion& version );
+    bool CheckCompatibility( const std::string& version1, const std::string& version2 );
 }
 
 #endif // protocol_Version_h

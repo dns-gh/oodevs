@@ -18,8 +18,7 @@ using namespace shield;
 // -----------------------------------------------------------------------------
 void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgConnectionRequest& from, sword::ConnectionRequest* to )
 {
-    if( from.has_client_version() && from.client_version().has_value() )
-        to->mutable_client_version()->set_value( from.client_version().value() );
+    CONVERT_VERSION( client_version );
 }
 
 // -----------------------------------------------------------------------------

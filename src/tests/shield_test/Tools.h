@@ -107,16 +107,17 @@ namespace shield
             if( ! actual.IsInitialized() )
                 return false;
             BOOST_REQUIRE_EQUAL( c.fields_, actual.descriptor()->field_count() );
-            const std::string s =  actual.ShortDebugString();
-            //for( std::size_t pos = 0; pos != std::min( s.size(), c.expected_.size() ); ++pos )
-            //    if( s[pos] != c.expected_[pos] )
-            //    {
-            //        BOOST_ERROR( "Mismatch starting at position " << pos << ": " << s[pos] << " != " << c.expected_[pos] );
-            //        return false;
-            //    }
-            //BOOST_CHECK_MESSAGE( s.find( ": 0 " ) == std::string::npos, "one of the value fields is 0 : " + s );
-            //BOOST_CHECK_MESSAGE( s.find( ": \"\" " ) == std::string::npos, "one of the string fields is empty !" + s );
-            return s.size() == c.expected_.size();
+            const std::string s = actual.ShortDebugString();
+            for( std::size_t pos = 0; pos != std::min( s.size(), c.expected_.size() ); ++pos )
+                if( s[pos] != c.expected_[pos] )
+                {
+                    BOOST_ERROR( "Mismatch starting at position " << pos << ": " << '\n'
+                        << "..." << &s[pos] << '\n'
+                        << " != " << '\n'
+                        << "..." << &c.expected_[pos] );
+                    return false;
+                }
+            return s == c.expected_;
         }
 
         friend std::ostream& operator<<( std::ostream& os, const constraint& c )

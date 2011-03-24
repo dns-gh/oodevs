@@ -19,9 +19,8 @@
 
 namespace
 {
-    std::vector< std::string > Split( const sword::ProtocolVersion& version )
+    std::vector< std::string > Split( const std::string& value )
     {
-        std::string value = version.value();
         std::vector< std::string > result;
         boost::algorithm::split( result, value, boost::algorithm::is_any_of( "." ), boost::algorithm::token_compress_on );
         return result;
@@ -30,12 +29,21 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: sword::CheckCompatibility
+// Created: MCO 2011-03-24
+// -----------------------------------------------------------------------------
+bool sword::CheckCompatibility( const std::string& version1, const std::string& version2 )
+{
+    const std::vector< std::string > actual = Split( version1 );
+    const std::vector< std::string > expected = Split( version2 );
+    return actual.size() > 1 && expected.size() > 1 &&
+        actual[ 0 ] == expected[ 0 ] && actual[ 1 ] == expected[ 1 ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: sword::CheckCompatibility
 // Created: MCO 2011-01-31
 // -----------------------------------------------------------------------------
 bool sword::CheckCompatibility( const sword::ProtocolVersion& version )
 {
-    const std::vector< std::string > actual = Split( version );
-    const std::vector< std::string > expected = Split( sword::ProtocolVersion() );
-    return actual.size() > 1 && expected.size() > 1 &&
-        actual[ 0 ] == expected[ 0 ] && actual[ 1 ] == expected[ 1 ];
+    return CheckCompatibility( version.value(), sword::ProtocolVersion().value() );
 }

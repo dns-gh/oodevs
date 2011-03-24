@@ -12,6 +12,13 @@
 
 #define SHIELD_CLIENT
 #include "CommonTools.h"
+#include "protocol/Version.h"
+
+#define CONVERT_VERSION( field ) \
+    if( sword::CheckCompatibility( from.field().value(), Version::ProtocolVersion().value() ) ) \
+        to->mutable_##field()->set_value( sword::ProtocolVersion().value() ); \
+    else \
+        to->mutable_##field()->set_value( "0.0.0" )
 
 namespace shield
 {

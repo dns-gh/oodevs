@@ -19,7 +19,7 @@ BOOST_FIXTURE_TEST_CASE( connection_ack_from_launcher_is_converted, ContextFixtu
     content.mutable_connection_ack()->mutable_server_version()->set_value( "version" );
     content.mutable_connection_ack()->mutable_dispatcher_address()->set_ip( "ip" );
     content.mutable_connection_ack()->mutable_dispatcher_address()->set_port( 8 );
-    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { connection_ack { error_code: invalid_connection context: 7 server_version { value: \"version\" } dispatcher_address { ip: \"ip\" port: 8 } } }" ) );
+    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { connection_ack { error_code: invalid_connection context: 7 server_version { value: \"" + Version::ProtocolVersion().value() + "\" } dispatcher_address { ip: \"ip\" port: 8 } } }" ) );
     converter.ReceiveLauncherToAdmin( "unused endpoint", msg );
 }
 

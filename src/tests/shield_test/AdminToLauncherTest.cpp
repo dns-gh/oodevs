@@ -12,10 +12,17 @@
 
 using namespace shield;
 
-BOOST_FIXTURE_TEST_CASE( connection_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
+BOOST_FIXTURE_TEST_CASE( connection_request_to_launcher_is_converted_when_version_check_fails, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
 {
-    content.mutable_connection_request()->mutable_client_version()->set_value( "version" );
-    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { connection_request { client_version { value: \"version\" } } }" ) );
+    content.mutable_connection_request()->mutable_client_version()->set_value( "0.0.1" );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { connection_request { client_version { value: \"0.0.0\" } } }" ) );
+    converter.ReceiveAdminToLauncher( "client endpoint", msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( connection_request_to_launcher_is_converted_when_version_check_succeeds, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
+{
+    content.mutable_connection_request()->mutable_client_version()->set_value( Version::ProtocolVersion().value() );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { connection_request { client_version { value: \"" + sword::ProtocolVersion().value() + "\" } } }" ) );
     converter.ReceiveAdminToLauncher( "client endpoint", msg );
 }
 

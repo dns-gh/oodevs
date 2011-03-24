@@ -12,12 +12,21 @@
 
 using namespace shield;
 
-BOOST_FIXTURE_TEST_CASE( authentication_request_from_client_is_converted, ContextFixture< MsgsClientToAuthentication::MsgClientToAuthentication > )
+BOOST_FIXTURE_TEST_CASE( authentication_request_from_client_is_converted_when_version_check_fails, ContextFixture< MsgsClientToAuthentication::MsgClientToAuthentication > )
 {
     content.mutable_authentication_request()->set_login( "login" );
     content.mutable_authentication_request()->set_password( "password" );
-    content.mutable_authentication_request()->mutable_version()->set_value( "1.2.3" );
-    MOCK_EXPECT( server, SendClientToAuthentication ).once().with( constraint( msg, "context: 42 message { authentication_request { login: \"login\" password: \"password\" version { value: \"1.2.3\" } } }" ) );
+    content.mutable_authentication_request()->mutable_version()->set_value( "0.0.1" );
+    MOCK_EXPECT( server, SendClientToAuthentication ).once().with( constraint( msg, "context: 42 message { authentication_request { login: \"login\" password: \"password\" version { value: \"0.0.0\" } } }" ) );
+    converter.ReceiveClientToAuthentication( "client endpoint", msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( authentication_request_from_client_is_converted_when_version_check_succeeds, ContextFixture< MsgsClientToAuthentication::MsgClientToAuthentication > )
+{
+    content.mutable_authentication_request()->set_login( "login" );
+    content.mutable_authentication_request()->set_password( "password" );
+    content.mutable_authentication_request()->mutable_version()->set_value( Version::ProtocolVersion().value() );
+    MOCK_EXPECT( server, SendClientToAuthentication ).once().with( constraint( msg, "context: 42 message { authentication_request { login: \"login\" password: \"password\" version { value: \"" + sword::ProtocolVersion().value() + "\" } } }" ) );
     converter.ReceiveClientToAuthentication( "client endpoint", msg );
 }
 

@@ -24,8 +24,7 @@ void AuthenticationToClient::Convert( const sword::AuthenticationResponse& from,
                               ( sword::AuthenticationResponse::mismatched_protocol_version, MsgsAuthenticationToClient::MsgAuthenticationResponse::mismatched_protocol_version ) );
     CONVERT_CB( profile, ConvertProfile );
     CONVERT_LIST( profiles, elem, ConvertProfileDescription );
-    if( from.has_server_version() && from.server_version().has_value() )
-        to->mutable_server_version()->set_value( from.server_version().value() );
+    CONVERT_VERSION( server_version );
     CONVERT_DATE( restart_date_time );
     CONVERT( terrain_name );
 }
