@@ -162,7 +162,7 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
         if( pTerrainObject )
         {
             if( message.attributes().has_structure() && pTerrainObject->Retrieve< kernel::StructuralStateAttribute_ABC >() == 0 )
-                pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( controllers_.controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
+                pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( *pTerrainObject, controllers_.controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
 
             if( pTerrainObject->Retrieve< kernel::ResourceNetwork_ABC >() == 0 )
             {

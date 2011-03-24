@@ -12,6 +12,8 @@
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/DictionaryUpdated.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -20,8 +22,9 @@ using namespace kernel;
 // Name: StructuralStateAttribute constructor
 // Created: JSR 2010-09-01
 // -----------------------------------------------------------------------------
-StructuralStateAttribute::StructuralStateAttribute( kernel::Controller& controller, PropertiesDictionary& dictionary )
-    : controller_     ( controller )
+StructuralStateAttribute::StructuralStateAttribute( kernel::Entity_ABC& entity, kernel::Controller& controller, PropertiesDictionary& dictionary )
+    : entity_         ( entity )
+    , controller_     ( controller )
     , structuralState_( 100 )
 {
     CreateDictionary( dictionary );
@@ -73,6 +76,6 @@ void StructuralStateAttribute::UpdateData( const T& message )
     if( message.has_structure() )
     {
         structuralState_ = message.structure().state();
-        controller_.Update( *static_cast< StructuralStateAttribute_ABC* >( this ) );
+        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Block", "Info/StructuralState" ) ) );
     }
 }

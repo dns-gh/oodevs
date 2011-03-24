@@ -16,6 +16,7 @@ namespace kernel
 {
     class Controller;
     class PropertiesDictionary;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -29,7 +30,7 @@ class StructuralStateAttribute : public kernel::StructuralStateAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             StructuralStateAttribute( kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
+             StructuralStateAttribute( kernel::Entity_ABC& entity, kernel::Controller& controller, kernel::PropertiesDictionary& dictionary );
     virtual ~StructuralStateAttribute();
     //@}
 
@@ -54,6 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     unsigned int structuralState_;
     //@}
