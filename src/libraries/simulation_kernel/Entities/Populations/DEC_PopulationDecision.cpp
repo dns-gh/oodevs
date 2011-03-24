@@ -23,6 +23,7 @@
 #include "Decision/DEC_MiscFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_OrdersFunctions.h"
+#include "Decision/DEC_UrbanObjectFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"
@@ -139,6 +140,8 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< unsigned int( float ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPions, float >, boost::ref( GetPopulation() ), _1 ) );
     brain[ "DEC__StartTirSurPion" ] =
         boost::function< unsigned int( float, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, unsigned int >, boost::ref( GetPopulation() ), _1, _2 ) );
+    brain[ "DEC_DetruireBlocUrbain" ] =
+        boost::function< void( UrbanObjectWrapper*, double )>( boost::bind( &DEC_UrbanObjectFunctions::DestroyUrbanBlock, _1,_2 ) );
 
     // Self
     brain[ "DEC_GetPosition" ] =
