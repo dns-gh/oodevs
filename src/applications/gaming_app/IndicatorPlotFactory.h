@@ -22,6 +22,7 @@ class IndicatorRequest;
 class IndicatorPlot;
 class Publisher_ABC;
 class Services;
+class Simulation;
 
 // =============================================================================
 /** @class  IndicatorPlotFactory
@@ -35,7 +36,7 @@ class IndicatorPlotFactory : public tools::Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorPlotFactory( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, IndicatorExportDialog& exportDialog );
+             IndicatorPlotFactory( QMainWindow* mainWindow, kernel::Controllers& controllers, Publisher_ABC& publisher, IndicatorExportDialog& exportDialog, const Simulation& simulation );
     virtual ~IndicatorPlotFactory();
     //@}
 
@@ -64,6 +65,7 @@ private:
     Publisher_ABC& publisher_;
     IndicatorExportDialog& exportDialog_;
     bool hasReplay_;
+    const Simulation& simulation_;
     //@}
 };
 

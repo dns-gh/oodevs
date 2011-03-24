@@ -25,16 +25,17 @@ using namespace kernel;
 // Name: IndicatorPlot constructor
 // Created: AGE 2007-09-26
 // -----------------------------------------------------------------------------
-IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock, IndicatorExportDialog& exportDialog, bool interactive )
+IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock,
+                              IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick )
     : gui::GQ_Plot( parent, "IndicatorPlot" )
-    , controllers_( controllers )
-    , publisher_( publisher )
-    , interactive_( interactive )
-    , dock_( dock )
+    , controllers_ ( controllers )
+    , publisher_   ( publisher )
+    , interactive_ ( interactive )
+    , dock_        ( dock )
     , exportDialog_( exportDialog )
-    , tickData_( 0 )
-    , min_( 0 )
-    , max_( -std::numeric_limits< double >::infinity() )
+    , tickData_    ( 0 )
+    , min_         ( 0 )
+    , max_         ( -std::numeric_limits< double >::infinity() )
 {
     setAcceptDrops( true );
     setFocusPolicy( QWidget::ClickFocus );
@@ -54,8 +55,9 @@ IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publish
     SetBackgroundColor( Qt::white );
     setMinimumWidth( 320 );
     setMinimumHeight( 200 );
-
     controllers_.Register( *this );
+    Add( request );
+    SetTickData( currentTick );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,15 +225,7 @@ void IndicatorPlot::OnExportData()
 // -----------------------------------------------------------------------------
 void IndicatorPlot::NotifyUpdated( const Simulation& simulation )
 {
-    if( ! tickData_ )
-    {
-        tickData_ = new gui::GQ_PlotData( 0, *this );
-        RegisterPlotData( *tickData_ );
-    }
-    tickData_->SetLinePen( red );
-    tickData_->ClearData();
-    tickData_->AddPoint( simulation.GetCurrentTick(), min_       );
-    tickData_->AddPoint( simulation.GetCurrentTick(), max_ * 1.1 );
+    SetTickData( simulation.GetCurrentTick() );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,4 +245,21 @@ void IndicatorPlot::dropEvent( QDropEvent* e )
 {
     if( const IndicatorRequest* request = gui::ValuedDragObject::GetValue< const IndicatorRequest >( e ) )
         Add( *request );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorPlot::SetTickData
+// Created: FPO 2011-03-23
+// -----------------------------------------------------------------------------
+void IndicatorPlot::SetTickData( double currentTickPosition )
+{
+    if( ! tickData_ )
+    {
+        tickData_ = new gui::GQ_PlotData( 0, *this );
+        RegisterPlotData( *tickData_ );
+    }
+    tickData_->SetLinePen( red );
+    tickData_->ClearData();
+    tickData_->AddPoint( currentTickPosition, min_ );
+    tickData_->AddPoint( currentTickPosition, max_ * 1.1 );
 }

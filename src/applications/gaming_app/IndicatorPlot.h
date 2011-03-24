@@ -39,7 +39,8 @@ class IndicatorPlot : public gui::GQ_Plot
 public:
     //! @name Constructors/Destructor
     //@{
-             IndicatorPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock, IndicatorExportDialog& exportDialog, bool interactive );
+             IndicatorPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock,
+                            IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick );
     virtual ~IndicatorPlot();
     //@}
 
@@ -72,6 +73,7 @@ private:
     virtual void NotifyUpdated( const IndicatorRequest& request );
     virtual void NotifyDeleted( const IndicatorRequest& request );
     void UpdatePlot( gui::GQ_PlotData* plot, const IndicatorRequest& request, unsigned int from );
+    void SetTickData( double currentTick );
     //@}
 
     //! @name Types

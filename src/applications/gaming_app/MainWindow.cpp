@@ -321,7 +321,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *paramLayer, profile );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this, config_ );
-    IndicatorPlotFactory* plotFactory = new IndicatorPlotFactory( this, controllers_, publisher, *indicatorExportDialog );
+    IndicatorPlotFactory* plotFactory = new IndicatorPlotFactory( this, controllers_, publisher, *indicatorExportDialog, simulation );
     AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, *paramLayer, staticModel_, *plotFactory );
 
     // Actions panel
