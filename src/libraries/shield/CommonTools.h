@@ -107,7 +107,7 @@ namespace shield
         CONVERT( nature );
         ConvertNatureLevel( from, to );
         CONVERT( embarked );
-        ConvertCoordLatLong( from.location(), to->mutable_location() );
+        CONVERT_CB_TO( location, ConvertCoordLatLong );
         CONVERT_DIPLOMACY( diplomacy, diplomacy );
         CONVERT_ID( formation );
     }
@@ -161,7 +161,7 @@ namespace shield
     void ConvertProperty( const From& from, To* to )
     {
         CONVERT( name );
-        ConvertPropertyValue( from.value(), to->mutable_value() );
+        CONVERT_CB_TO( value, ConvertPropertyValue );
     }
     template< typename From, typename To >
     void ConvertProperties( const From& from, To* to )
@@ -183,7 +183,7 @@ namespace shield
     void ConvertPlannedWork( const From& from, To* to )
     {
         CONVERT( type );
-        ConvertLocation( from.position(), to->mutable_position() );
+        CONVERT_CB_TO( position, ConvertLocation );
         CONVERT_ENUM( type_obstacle, ( sword::ObstacleType::preliminary, Common::ObstacleType::preliminary )
                                      ( sword::ObstacleType::reserved, Common::ObstacleType::reserved ) );
 #ifdef SHIELD_SIMULATION
@@ -205,10 +205,10 @@ namespace shield
     void ConvertObjective( const From& from, To* to )
     {
 #ifdef SHIELD_CLIENT
-        ConvertLocation( from.localisation(), to->mutable_location() );
+        CONVERT_CB( localisation, location, ConvertLocation );
         to->mutable_time()->set_data( from.horaire().data() );
 #elif defined SHIELD_SIMULATION
-        ConvertLocation( from.location(), to->mutable_localisation() );
+        CONVERT_CB( location, localisation, ConvertLocation );
         to->mutable_horaire()->set_data( from.time().data() );
 #endif
     }
@@ -238,19 +238,14 @@ namespace shield
     {
         CONVERT( booleanvalue );
         CONVERT( intvalue );
-        if( from.has_heading() )
-            ConvertHeading( from.heading(), to->mutable_heading() );
+        CONVERT_CB_TO( heading, ConvertHeading );
         CONVERT( enumeration );
         if( from.has_datetime() )
             to->mutable_datetime()->set_data( from.datetime().data() );
-        if( from.has_point() )
-            ConvertLocationElem( from.point(), to->mutable_point() );
-        if( from.has_area() )
-            ConvertLocationElem( from.area(), to->mutable_area() );
-        if( from.has_path() )
-            ConvertLocationElem( from.path(), to->mutable_path() );
-        if( from.has_limit() )
-            ConvertLocationElem( from.limit(), to->mutable_limit() );
+        CONVERT_CB_TO( point, ConvertLocationElem );
+        CONVERT_CB_TO( area, ConvertLocationElem );
+        CONVERT_CB_TO( path, ConvertLocationElem );
+        CONVERT_CB_TO( limit, ConvertLocationElem );
         CONVERT_LIST( phaseline, elem, ConvertLimaOrder );
         CONVERT_ID( automat );
         CONVERT_ID( agent );
@@ -258,8 +253,7 @@ namespace shield
         CONVERT_ID( crowdknowledge );
         CONVERT_ID( objectknowledge );
         CONVERT_ID( urbanknowledge );
-        if( from.has_plannedwork() )
-            ConvertPlannedWork( from.plannedwork(), to->mutable_plannedwork() );
+        CONVERT_CB_TO( plannedwork, ConvertPlannedWork );
 #ifdef SHIELD_CLIENT
         if( from.has_atlasnature() )
             to->mutable_nature()->set_flags( from.atlasnature().nature() );
@@ -269,14 +263,12 @@ namespace shield
 #endif
         CONVERT_ID( resourcetype );
         CONVERT_LIST( logmaintenancepriorities, elem, ConvertIdentifier );
-        if( from.has_logmedicalpriorities() )
-            ConvertLogMedicalPriorities( from.logmedicalpriorities(), to->mutable_logmedicalpriorities() );
+        CONVERT_CB_TO( logmedicalpriorities, ConvertLogMedicalPriorities );
         CONVERT( areal );
         CONVERT_LIST( pathlist, elem, ConvertLocationElem );
         CONVERT_LIST( pointlist, elem, ConvertLocationElem );
         CONVERT_LIST( polygonlist, elem, ConvertLocationElem );
-        if( from.has_location() )
-            ConvertLocation( from.location(), to->mutable_location() );
+        CONVERT_CB_TO( location, ConvertLocation );
         CONVERT_LIST( locationlist, elem, ConvertLocation );
         CONVERT_LIST( unitlist, elem, ConvertIdentifier );
         CONVERT_LIST( automatlist, elem, ConvertIdentifier );
@@ -290,8 +282,7 @@ namespace shield
         CONVERT_ID_TO( indirectfire, tirindirect );
 #endif
         CONVERT( acharstr );
-        if( from.has_missionobjective() )
-            ConvertObjective( from.missionobjective(), to->mutable_missionobjective() );
+        CONVERT_CB_TO( missionobjective, ConvertObjective );
         CONVERT_LIST( missionobjectivelist, elem, ConvertObjective );
 #ifdef SHIELD_CLIENT
         CONVERT_LIST_TO( limasorder, phaselines, elem, ConvertLimaOrder );
@@ -322,8 +313,7 @@ namespace shield
         CONVERT_ID( type );
         CONVERT_LIST( parameters, elem, ConvertMissionParameter );
         CONVERT( label );
-        if( from.has_symbollocation() )
-            ConvertLocation( from.symbollocation(), to->mutable_symbollocation() );
+        CONVERT_CB_TO( symbollocation, ConvertLocation );
         if( from.has_start_time() )
             to->mutable_start_time()->set_data( from.start_time().data() );
     }
