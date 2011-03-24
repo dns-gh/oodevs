@@ -241,7 +241,6 @@ namespace shield
         CONVERT_CB( heading, ConvertHeading );
         CONVERT( enumeration );
         CONVERT_DATE( datetime );
-        CONVERT_DATE( datetime );
         CONVERT_CB( point, ConvertLocationElem );
         CONVERT_CB( area, ConvertLocationElem );
         CONVERT_CB( path, ConvertLocationElem );
