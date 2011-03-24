@@ -675,7 +675,7 @@ bool PopulationKnowledgeFunctionBM( directia::brain::Brain& brain, directia::too
     DEC_Knowledge_Population* value = 0;
     if( element.ToPopulationKnowledge( value ) && value )
     {
-        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.population" ], name, value, false );//@TODO MGD Add CompositeReachable for Population?
+        knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.population" ], name, value->GetID(), false );//@TODO MGD Add CompositeReachable for Population?
          return true;
     }
     return false;

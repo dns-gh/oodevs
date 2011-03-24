@@ -308,7 +308,9 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
 
     // Critical Intelligence
     brain[ "DEC_ObtenirRenseignementCritiqueSurPion" ] = &DEC_KnowledgeAgentFunctions::GetCriticalIntelligence;
-    brain[ "DEC_ObtenirRenseignementCritiqueSurFoule" ] = &DEC_KnowledgePopulationFunctions::GetCriticalIntelligence;
+    brain[ "DEC_ObtenirRenseignementCritiqueSurFoule" ] =
+         boost::function< std::string( int ) >(boost::bind( &DEC_KnowledgePopulationFunctions::GetCriticalIntelligence, boost::cref( GetPion() ), _1 ) );
+   
 }
 
 // -----------------------------------------------------------------------------
@@ -695,7 +697,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool (int, TER_Localisation*) >(boost::bind( &DEC_KnowledgePopulationFunctions::IsInZone < MIL_AgentPion >, boost::cref( GetPion() ), _1 , _2 ) );
     brain[ "DEC_ConnaissancePopulation_PointPlusProche" ] =
         boost::function< boost::shared_ptr<MT_Vector2D> (int) >(boost::bind( &DEC_KnowledgePopulationFunctions::ClosestPoint, boost::cref( GetPion() ), _1 ) );
-    brain[ "DEC_ConnaissancePopulation_Securiser" ] =
+     brain[ "DEC_ConnaissancePopulation_Securiser" ] =
         boost::function< void (int) >(boost::bind( &DEC_KnowledgePopulationFunctions::Secure, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissancePopulation_PointSecurisation" ] =
         boost::function< boost::shared_ptr<MT_Vector2D> (int) > (boost::bind( &DEC_KnowledgePopulationFunctions::SecuringPoint, boost::cref( GetPion() ), _1  ) );

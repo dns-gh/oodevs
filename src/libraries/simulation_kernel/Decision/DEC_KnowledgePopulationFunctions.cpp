@@ -131,8 +131,14 @@ bool DEC_KnowledgePopulationFunctions::IsPerceivedByAgent( const MIL_AgentPion& 
 // Name: DEC_KnowledgePopulationFunctions::GetCriticalIntelligence
 // Created: ABR 2011-03-16
 // -----------------------------------------------------------------------------
-const std::string DEC_KnowledgePopulationFunctions::GetCriticalIntelligence( DEC_Knowledge_Population* pKnowledge )
+std::string DEC_KnowledgePopulationFunctions::GetCriticalIntelligence( const MIL_AgentPion& caller, int knowledgeId )
 {
-    pKnowledge->SetCriticalIntelligenceFromPopulationKnown();
-    return pKnowledge->GetCriticalIntelligence();
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    if( !pKnowledge )
+        return "";
+    else
+    {
+        pKnowledge->SetCriticalIntelligenceFromPopulationKnown();
+        return pKnowledge->GetCriticalIntelligence();
+    }
 }

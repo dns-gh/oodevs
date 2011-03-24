@@ -503,6 +503,10 @@
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="359" message="La mission ne peut être effectuée sur un automate sans mission"/>
+  <report category="operational" id="360" message="Renseignement critique recueilli : %1">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="361" message="La cible ne possède pas de renseignement critique"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -514,4 +518,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="2498461099" -->
+<!-- signature="2359082808" -->

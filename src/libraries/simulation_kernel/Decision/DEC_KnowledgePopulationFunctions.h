@@ -38,7 +38,7 @@ public:
                            static boost::shared_ptr< MT_Vector2D > SecuringPoint ( const MIL_AgentPion& caller, int knowledgeId );
                            static bool IsEnemy( const MIL_AgentPion& caller, int knowledgeId );
                            static int Exterminate( MIL_AgentPion& caller, int knowledgeId, float surface, const PHY_DotationCategory* dotation );
-                           static const std::string GetCriticalIntelligence( DEC_Knowledge_Population* pKnowledge );
+                           static std::string GetCriticalIntelligence( const MIL_AgentPion& caller, int knowledgeId );
     //@}
 };
 

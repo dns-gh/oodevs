@@ -523,9 +523,7 @@ MT_Vector2D MIL_Population::GetClosestPoint( const MT_Vector2D& refPos ) const
     {
         if( ( **itConcentration ).IsDead() )
             continue;
-        MT_Vector2D nearestPointTmp;
-        if( !( **itConcentration ).GetLocation().ComputeNearestPoint( refPos, nearestPointTmp ) )
-            continue;
+        MT_Vector2D nearestPointTmp = ( **itConcentration ).GetLocation().ComputeBarycenter();
         double rDistance = refPos.Distance( nearestPointTmp );
         if( rDistance < rMinDistance )
         {
