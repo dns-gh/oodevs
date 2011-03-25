@@ -11386,10 +11386,17 @@
     </crowd>
     <crowd dia-type="net.masagroup.sword.military.crowd.roles.Crowd" file="BMCrowd.bms" masalife="true" name="net.masagroup.sword.military.crowd.roles.Crowd">
       <missions>
-        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES Faire Mouvement">
+          <fragorder name="Population Changer Attitude"/>
+        </mission>
+        <mission name="Agresser">
+          <fragorder name="Population Changer Attitude"/>
+        </mission>
       </missions>
-      <fragorders/>
+      <fragorders>
+        <fragorder name="Population Changer Attitude"/>
+      </fragorders>
     </crowd>
   </crowd>
 </models>
-<!-- signature="2607985295" -->
+<!-- signature="1040383052" -->
