@@ -74,8 +74,11 @@ namespace shield
 
 #define CONVERT_LIST_TO( from_field, to_field, elem, callback ) \
     if( from.has_##from_field() ) \
+    { \
+        to->mutable_##to_field(); \
         for( int i = 0; i < from.from_field().elem().size(); ++i ) \
-            callback( from.from_field().elem( i ), to->mutable_##to_field()->add_##elem() )
+            callback( from.from_field().elem( i ), to->mutable_##to_field()->add_##elem() ); \
+    }
 #define CONVERT_LIST( field, elem, callback ) \
     CONVERT_LIST_TO( field, field, elem, callback )
 
