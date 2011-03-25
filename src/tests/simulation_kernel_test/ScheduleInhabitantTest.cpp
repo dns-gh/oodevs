@@ -69,7 +69,6 @@ BOOST_FIXTURE_TEST_CASE( population_initialize_his_motivation, InitFixture )
         MIL_Schedule schedule( livingArea );
         schedule.Configure( xis );
         MOCK_EXPECT( livingArea, StartMotivation ).once().with( "leisure" );
-        MOCK_EXPECT( livingArea, MovePeople ).once();
         MOCK_EXPECT( livingArea, FinishMoving ).once();
         schedule.Update( Convert( 2011, 3, 22, 11, 15, 0 ), 1u );
         mock::verify();
@@ -78,7 +77,6 @@ BOOST_FIXTURE_TEST_CASE( population_initialize_his_motivation, InitFixture )
         MIL_Schedule schedule( livingArea );
         schedule.Configure( xis );
         MOCK_EXPECT( livingArea, StartMotivation ).once().with( "leisure" );
-        MOCK_EXPECT( livingArea, MovePeople ).once();
         MOCK_EXPECT( livingArea, FinishMoving ).once();
         schedule.Update( Convert( 2011, 3, 24, 11, 15, 0 ), 1u );
         mock::verify();
@@ -87,7 +85,6 @@ BOOST_FIXTURE_TEST_CASE( population_initialize_his_motivation, InitFixture )
         MIL_Schedule schedule( livingArea );
         schedule.Configure( xis );
         MOCK_EXPECT( livingArea, StartMotivation ).once().with( "office" );
-        MOCK_EXPECT( livingArea, MovePeople ).once();
         MOCK_EXPECT( livingArea, FinishMoving ).once();
         schedule.Update( Convert( 2011, 3, 26, 11, 15, 0 ), 1u );
         mock::verify();
@@ -96,7 +93,6 @@ BOOST_FIXTURE_TEST_CASE( population_initialize_his_motivation, InitFixture )
         MIL_Schedule schedule( livingArea );
         schedule.Configure( xis );
         MOCK_EXPECT( livingArea, StartMotivation ).once().with( "office" );
-        MOCK_EXPECT( livingArea, MovePeople ).once();
         MOCK_EXPECT( livingArea, FinishMoving ).once();
         schedule.Update( Convert( 2011, 3, 28, 11, 15, 0 ), 1u );
         mock::verify();
@@ -113,7 +109,6 @@ namespace
         {
             schedule.Configure( xis );
             MOCK_EXPECT( livingArea, StartMotivation ).once().with( "office" );
-            MOCK_EXPECT( livingArea, MovePeople ).once();
             MOCK_EXPECT( livingArea, FinishMoving ).once();
             schedule.Update( Convert( 2011, 1, 3, 10, 10, 0 ), 1u );
             mock::verify();
