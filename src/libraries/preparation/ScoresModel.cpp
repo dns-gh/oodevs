@@ -279,11 +279,14 @@ void ScoresModel::IterateParties( const std::string& content, const std::string&
         std::string unitList;
         const kernel::Entity_ABC& entity = it.NextElement();
         AddUnitToList( unitList, entity );
-        std::string newContent = content;
-        std::string newName = name + " (" + entity.GetName().ascii() + ")";
-        boost::algorithm::replace_all( newContent, name, newName);
-        boost::algorithm::replace_all( newContent, toReplace, unitList );
-        CreateScoreFromString( newContent );
+        if( !unitList.empty() )
+        {
+            std::string newContent = content;
+            std::string newName = name + " (" + entity.GetName().ascii() + ")";
+            boost::algorithm::replace_all( newContent, name, newName);
+            boost::algorithm::replace_all( newContent, toReplace, unitList );
+            CreateScoreFromString( newContent );
+        }
     }
 }
 
