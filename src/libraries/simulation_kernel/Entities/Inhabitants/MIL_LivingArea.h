@@ -50,6 +50,7 @@ public:
             , angriness_   ( 0.f )
             , alerted_     ( alerted )
             , confined_    ( confined )
+            , evacuated_   ( evacuated )
             , outsideAngry_( false )
         {}
 
