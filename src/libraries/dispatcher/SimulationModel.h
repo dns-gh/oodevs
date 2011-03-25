@@ -10,8 +10,6 @@
 #ifndef __SimulationModel_h_
 #define __SimulationModel_h_
 
-#include <boost/optional.hpp>
-
 namespace sword
 {
     enum EnumSimulationState;
@@ -73,7 +71,6 @@ private:
    //$$$ BULLSHIT
    bool         bSendVisionCones_;
    bool         bProfilingEnabled_;
-   boost::optional< std::string > nLocalTime_;
 };
 
 }
