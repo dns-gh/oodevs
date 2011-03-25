@@ -242,6 +242,8 @@ void SimulationToClient::Convert( const sword::ControlInformation& from, MsgsSim
     CONVERT_SIMULATION_STATE( status );
     CONVERT( send_vision_cones );
     CONVERT( profiling_enabled );
+    if( from.has_reload_real_time() )
+        to->mutable_reload_real_time()->set_data( from.reload_real_time().data() );
 }
 
 // -----------------------------------------------------------------------------

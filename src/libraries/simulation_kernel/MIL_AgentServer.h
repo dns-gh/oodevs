@@ -16,6 +16,7 @@
 #include "MT_Tools/MT_Timer_ABC.h"
 #include "MT_Tools/MT_TimerManager.h"
 #include "MIL_Time_ABC.h"
+#include <boost/optional.hpp>
 
 namespace resource
 {
@@ -175,6 +176,7 @@ private:
     unsigned int nSimTime_;
     unsigned int nInitialRealTime_;
     unsigned int nRealTime_;
+    boost::optional< std::string > nLocalTime_;
     MIL_EffectManager* pEffectManager_;
     MIL_EntityManager* pEntityManager_;
     DEC_Workspace* pWorkspaceDIA_;
