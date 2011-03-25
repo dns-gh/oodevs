@@ -13,6 +13,7 @@
 #include "dispatcher/Registrable_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/filesystem/fstream.hpp>
 #include <vector>
 #include <map>
 
@@ -93,13 +94,17 @@ public:
     void Update( const sword::Indicator& message );
     void Update( const sword::SimToClient& message );
     void RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const sword::PlotRequest& request );
-    void Export( const std::string& path ) const;
+    void Export() const;
+    void SimplifiedExport( const std::string& path ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, Score* > T_Scores;
+    typedef boost::shared_ptr< Score > T_Score;
+    typedef std::map< std::string, T_Score > T_Scores;
+    typedef boost::shared_ptr< Task > T_Task;
+    typedef std::vector< T_Task > T_Tasks;
     //@}
 
     //! @name Helpers
@@ -109,23 +114,26 @@ private:
     virtual void RegisterIn( directia::brain::Brain& brain );
     boost::shared_ptr< Variable > CreateVariable( const std::string& name, const std::string& type, const std::string& value );
     void ComputeIndicator( const std::string& name, const std::string& formula, const std::vector< boost::shared_ptr< Variable > >& variables );
+    unsigned int AddHeader( std::ostream& file ) const;
+    void AddLine( std::ostream& file, unsigned int index ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     dispatcher::ClientPublisher_ABC& clients_;
-    std::vector< boost::shared_ptr< Task > > tasks_;
+    T_Tasks tasks_;
     std::auto_ptr< IndicatorBuilder > builder_;
     std::auto_ptr< aar::StaticModel > model_;
     T_Scores scores_;
     QDateTime initialDateTime_;
     bool dateTimeInitialized_;
     unsigned int tickDuration_;
+    const std::string sessionDir_;
     //@}
 };
 
-    }
+}
 }
 
 #endif // __ScoresModel_h_

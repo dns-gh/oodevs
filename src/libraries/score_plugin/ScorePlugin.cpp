@@ -68,7 +68,10 @@ void ScorePlugin::Receive( const sword::SimToClient& wrapper )
 {
     scores_->Update( wrapper );
     if( wrapper.message().has_control_checkpoint_save_end() )
-        scores_->Export( config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() ) );
+    {
+        scores_->Export();
+        scores_->SimplifiedExport( config_.GetCheckpointDirectory( wrapper.message().control_checkpoint_save_end().name() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

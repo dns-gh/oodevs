@@ -21,7 +21,6 @@
 #include <boost/foreach.hpp>
 #include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
-#include <fstream>
 
 namespace bfs = boost::filesystem;
 
@@ -37,6 +36,7 @@ namespace
         extended.insert(  6, '-' ); extended.insert(  4, '-' );
         return QDateTime::fromString( extended, Qt::ISODate );
     }
+    const std::string separator = ";";
 }
 
 // -----------------------------------------------------------------------------
@@ -49,6 +49,7 @@ ScoresModel::ScoresModel( const tools::SessionConfig& config, dispatcher::Client
     , dateTimeInitialized_( false )
     , tickDuration_       ( 0 )
     , model_              ( new aar::StaticModel( config ) )
+    , sessionDir_         ( config.GetSessionDir() )
 {
     // NOTHING
 }
@@ -59,8 +60,7 @@ ScoresModel::ScoresModel( const tools::SessionConfig& config, dispatcher::Client
 // -----------------------------------------------------------------------------
 ScoresModel::~ScoresModel()
 {
-    for( T_Scores::const_iterator it = scores_.begin(); it != scores_.end(); ++it )
-        delete it->second;
+    Export();
 }
 
 // -----------------------------------------------------------------------------
@@ -73,8 +73,7 @@ void ScoresModel::Load( const std::string& file )
     {
         xml::xifstream xis( file );
         xis >> xml::start( "scores" )
-                >> xml::list( "score", *this, &ScoresModel::ReadIndicators )
-            >> xml::end;
+                >> xml::list( "score", *this, &ScoresModel::ReadIndicators );
     }
 }
 
@@ -84,7 +83,7 @@ void ScoresModel::Load( const std::string& file )
 // -----------------------------------------------------------------------------
 void ScoresModel::ReadIndicators( xml::xistream& xis )
 {
-    scores_[ xis.attribute< std::string >( "name" ) ] = new Score();
+    scores_[ xis.attribute< std::string >( "name" ) ] = T_Score( new Score() );
     xis >> xml::start( "indicators" )
             >> xml::list( "indicator", *this, &ScoresModel::ReadIndicator )
         >> xml::end;
@@ -124,7 +123,7 @@ void ScoresModel::Update( const sword::Indicator& message )
 // -----------------------------------------------------------------------------
 void ScoresModel::Update( const sword::SimToClient& message )
 {
-    BOOST_FOREACH( const std::vector< boost::shared_ptr< Task > >::value_type& task, tasks_ )
+    BOOST_FOREACH( const T_Task& task, tasks_ )
         task->Receive( message );
     if( !dateTimeInitialized_ && message.message().has_control_information() )
     {
@@ -202,36 +201,75 @@ void ScoresModel::ComputeIndicator( const std::string& name, const std::string& 
 // Name: ScoresModel::Export
 // Created: ABR 2011-02-08
 // -----------------------------------------------------------------------------
-void ScoresModel::Export( const std::string& path ) const
+void ScoresModel::Export() const
 {
     if( dateTimeInitialized_ )
         try
         {
-            std::ofstream file( ( path + std::string( "/scores.csv" ) ).c_str() );
-            const std::string sep = ";";
-            unsigned int size = 0;
-
-            file << "Tick" << sep << "Time";
-            BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
-            {
-                file << sep << score.first;
-                if ( ! size )
-                    size = score.second->size();
-                else if ( size != score.second->size() )
-                    throw std::runtime_error( __FUNCTION__ ": not the same number of score." );
-            }
-            file << std::endl;
+            bfs::path bfspath( sessionDir_ + "/scores.csv" );
+            bfs::ofstream file( bfspath );
+            const unsigned int size = AddHeader( file );
             for( unsigned int index = 0; index < size; ++index )
-            {
-                file << index << sep << initialDateTime_.addSecs( index * tickDuration_ ).toString( Qt::ISODate ).ascii();
-                BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
-                    file << sep << score.second->at( index );
-                file << std::endl;
-            }
-            file.close();
+                AddLine( file, index );
         }
         catch ( exception* e )
         {
             throw std::runtime_error( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e->what() ) );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoresModel::SimplifiedExport
+// Created: FPO 2011-03-24
+// -----------------------------------------------------------------------------
+void ScoresModel::SimplifiedExport( const std::string& path ) const
+{
+    if( dateTimeInitialized_ )
+        try
+        {
+            bfs::path bfspath( path + "/scores.csv" );
+            bfs::ofstream file( bfspath );
+            const unsigned int size = AddHeader( file );
+            if( size )
+            {
+                AddLine( file, 0 );
+                AddLine( file, size - 1 );
+            }
+        }
+        catch ( exception* e )
+        {
+            throw std::runtime_error( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e->what() ) );
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoresModel::AddHeader
+// Created: FPO 2011-03-24
+// -----------------------------------------------------------------------------
+unsigned int ScoresModel::AddHeader( std::ostream& file ) const
+{
+    unsigned int size = 0;
+    file << "Tick" << separator << "Time";
+    BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
+    {
+        file << separator << score.first;
+        if ( ! size )
+            size = score.second->size();
+        else if ( size != score.second->size() )
+            throw std::runtime_error( __FUNCTION__ ": not the same number of score." );
+    }
+    file << std::endl;
+    return size;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoresModel::AddLine
+// Created: FPO 2011-03-24
+// -----------------------------------------------------------------------------
+void ScoresModel::AddLine( std::ostream& file, unsigned int index ) const
+{
+    file << index << separator << initialDateTime_.addSecs( index * tickDuration_ ).toString( Qt::ISODate ).ascii();
+    BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
+        file << separator << score.second->at( index );
+    file << std::endl;
 }
