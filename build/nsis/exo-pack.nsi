@@ -63,7 +63,7 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "Scripting demo" "test" "s_exo3"
         !insertmacro OT.AddExercise "9_cases" "Angers_x9" "s_exo4"
         !insertmacro OT.AddExercise "Musoria Border Defense" "Paris_Est" "s_exo5"
-        !insertmacro OT.AddExercise "tutorials\Generalities" "Paris_Est" "s_exo6"
+        !insertmacro OT.AddExercise "tutorials\01 - Generalities" "Paris_Est" "s_exo6"
     !else if "${EXO_PACK}" == "defense-france"
         ; Exercises
         !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo1"
